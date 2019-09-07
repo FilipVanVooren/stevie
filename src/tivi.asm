@@ -57,10 +57,10 @@ prog0   data  0                     ; No more items following
 *--------------------------------------------------------------
 * SPECTRA2 startup options
 *--------------------------------------------------------------
-;spfclr  equ   >f5                   ; Foreground/Background color for font.
-;spfbck  equ   >05                   ; Screen background color.
-spfclr  equ   >a1                   ; Foreground/Background color for font.
-spfbck  equ   >01                   ; Screen background color.
+spfclr  equ   >f5                   ; Foreground/Background color for font.
+spfbck  equ   >05                   ; Screen background color.
+;spfclr  equ   >a1                   ; Foreground/Background color for font.
+;spfbck  equ   >01                   ; Screen background color.
 
 *--------------------------------------------------------------
 * Scratchpad memory

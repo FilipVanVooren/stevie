@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0001               ***************************************************************
 0002               *
 0003               *                          TiVi Editor
@@ -7,7 +7,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0005               *                (c)2018-2019 // Filip van Vooren
 0006               *
 0007               ***************************************************************
-0008               * File: tivi.asm                    ; Version 190907-4143
+0008               * File: tivi.asm                    ; Version 190907-10594
 0009               *--------------------------------------------------------------
 0010               * TI-99/4a Advanced Editor & IDE
 0011               *--------------------------------------------------------------
@@ -53,8 +53,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0046 6012 6854             data  runlib
 0047               
 0049               
-0050 6014 1054             byte  16
-0051 6015 ....             text  'TIVI 190907-4143'
+0050 6014 1154             byte  17
+0051 6015 ....             text  'TIVI 190907-10594'
 0052                       even
 0053               
 0061               *--------------------------------------------------------------
@@ -500,7 +500,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0007 6058 00E2     graph1  byte  >00,>e2,>00,>0e,>01,>06,>02,SPFBCK,0,32
      605A 000E 
      605C 0106 
-     605E 0201 
+     605E 0205 
      6060 0020 
 0008               *
 0009               * ; VDP#0 Control bits
@@ -529,7 +529,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0032 6062 00F2     tx4024  byte  >00,>f2,>00,>0e,>01,>06,>00,SPFCLR,0,40
      6064 000E 
      6066 0106 
-     6068 00A1 
+     6068 00F5 
      606A 0028 
 0033               *
 0034               * ; VDP#0 Control bits
@@ -559,7 +559,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0058 606C 04F0     tx8024  byte  >04,>f0,>00,>3f,>02,>40,>03,SPFCLR,0,80
      606E 003F 
      6070 0240 
-     6072 03A1 
+     6072 03F5 
      6074 0050 
 0059               *
 0060               * ; VDP#0 Control bits
@@ -589,7 +589,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0084 6076 04F0     tx8030  byte  >04,>f0,>00,>3f,>02,>40,>03,SPFCLR,0,80
      6078 003F 
      607A 0240 
-     607C 03A1 
+     607C 03F5 
      607E 0050 
 0085               *
 0086               * ; VDP#0 Control bits
@@ -2722,7 +2722,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0464 68C6 06A0  32         bl    @filv
      68C8 60BA 
 0465 68CA 0FC0             data  pctadr,spfclr,16      ; Load color table
-     68CC 00A1 
+     68CC 00F5 
      68CE 0010 
 0466               *--------------------------------------------------------------
 0467               * Check if there is a F18A present
@@ -2758,14 +2758,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
      68F4 0040 
 0498 68F6 0460  28         b     @main                 ; Give control to main program
      68F8 68FA 
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0065               *--------------------------------------------------------------
 0066               * SPECTRA2 startup options
 0067               *--------------------------------------------------------------
-0068               ;spfclr  equ   >f5                   ; Foreground/Background color for font.
-0069               ;spfbck  equ   >05                   ; Screen background color.
-0070      00A1     spfclr  equ   >a1                   ; Foreground/Background color for font.
-0071      0001     spfbck  equ   >01                   ; Screen background color.
+0068      00F5     spfclr  equ   >f5                   ; Foreground/Background color for font.
+0069      0005     spfbck  equ   >05                   ; Screen background color.
+0070               ;spfclr  equ   >a1                   ; Foreground/Background color for font.
+0071               ;spfbck  equ   >01                   ; Screen background color.
 0072               
 0073               *--------------------------------------------------------------
 0074               * Scratchpad memory
@@ -4153,7 +4153,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0878 6E68 0460  28         b     @ed_wait              ; Back to editor main
      6E6A 69AC 
 0879               
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0269               
 0270               
 0271               
@@ -4745,7 +4745,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0225               
 0226               
 0227               
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0509               
 0510               
 0511               ***************************************************************
@@ -5050,7 +5050,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0250               idx.pointer.get.$$:
 0251 7188 0460  28         b     @poprt                ; Return to caller
      718A 6092 
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0515               
 0516               
 0517               ***************************************************************
@@ -5449,7 +5449,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0313 72E0 0460  28         b     @poprt                ; Return to caller
      72E2 6092 
 0314               
-**** **** ****     > tivi.asm.4143
+**** **** ****     > tivi.asm.10594
 0521               
 0522               
 0523               ***************************************************************
@@ -5477,8 +5477,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0535               *                       Strings
 0536               ***************************************************************
 0537               txt_title
-0538 7300 1054             byte  16
-0539 7301 ....             text  'TIVI 190907-4143'
+0538 7300 1154             byte  17
+0539 7301 ....             text  'TIVI 190907-10594'
 0540                       even
 0541               
 0542               txt_delim
