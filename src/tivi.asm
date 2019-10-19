@@ -35,6 +35,7 @@ skip_virtual_keyboard   equ  1      ; Skip virtual keyboard scan
 skip_random_generator   equ  1      ; Skip random functions 
 skip_cpu_hexsupport     equ  1      ; Skip mkhex, puthex 
 skip_cpu_crc16          equ  1      ; Skip CPU memory CRC-16 calculation
+skip_iosupport          equ  1      ; Skip support for file I/O, dsrlnk
 
 *--------------------------------------------------------------
 * Cartridge header
