@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0001               ***************************************************************
 0002               *
 0003               *                          TiVi Editor
@@ -7,7 +7,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0005               *                (c)2018-2019 // Filip van Vooren
 0006               *
 0007               ***************************************************************
-0008               * File: tivi.asm                    ; Version 191013-24920
+0008               * File: tivi.asm                    ; Version 191019-2077
 0009               *--------------------------------------------------------------
 0010               * TI-99/4a Advanced Editor & IDE
 0011               *--------------------------------------------------------------
@@ -53,8 +53,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0046 6012 6E30             data  runlib
 0047               
 0049               
-0050 6014 1154             byte  17
-0051 6015 ....             text  'TIVI 191013-24920'
+0050 6014 1054             byte  16
+0051 6015 ....             text  'TIVI 191019-2077'
 0052                       even
 0053               
 0061               *--------------------------------------------------------------
@@ -67,10 +67,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0003               *             / __)(  _ \( ___)/ __)(_  _)(  _ \  /__\  (__ \
 0004               *             \__ \ )___/ )__)( (__   )(   )   / /(__)\  / _/
 0005               *             (___/(__)  (____)\___) (__) (_)\_)(__)(__)(____)
-0006               *    v1.3
+0006               *    v2.0
 0007               *                TMS9900 Monitor with Arcade Game support
 0008               *                                  for
-0009               *                     the Texas Instruments TI-99/4A
+0009               *              the Texas Instruments TI-99/4A Home Computer
 0010               *
 0011               *                      2010-2019 by Filip Van Vooren
 0012               *
@@ -88,7 +88,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0024               * skip_cpu_cpu_copy         equ  1  ; Skip CPU  to CPU copy functions
 0025               * skip_grom_cpu_copy        equ  1  ; Skip GROM to CPU copy functions
 0026               * skip_grom_vram_copy       equ  1  ; Skip GROM to VRAM copy functions
-0027               
+0027               *
 0028               * == VDP
 0029               * skip_textmode_support     equ  1  ; Skip 40x24 textmode support
 0030               * skip_vdp_f18a_support     equ  1  ; Skip f18a support
@@ -119,12 +119,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0055               * skip_cpu_hexsupport       equ  1  ; Skip mkhex, puthex
 0056               * skip_cpu_numsupport       equ  1  ; Skip mknum, putnum, trimnum
 0057               * skip_cpu_crc16            equ  1  ; Skip CPU memory CRC-16 calculation
-0058               
+0058               *
 0059               * == Kernel/Multitasking
 0060               * skip_timer_alloc          equ  1  ; Skip support for timers allocation
 0061               * skip_mem_paging           equ  1  ; Skip support for memory paging
 0062               * skip_iosupport            equ  1  ; Skip support for file I/O, dsrlnk
-0063               
+0063               *
 0064               * == Startup behaviour
 0065               * startup_backup_scrpad     equ  1  ; Backup scratchpad @>8300:>83ff to @>2000
 0066               * startup_keep_vdpdiskbuf   equ  1  ; Keep VDP memory reseved for 3 VDP disk buffers
@@ -3249,140 +3249,220 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0206               *                            TIMERS
 0207               *//////////////////////////////////////////////////////////////
 0208               
-0209               ***************************************************************
-0210               * TMGR - X - Start Timer/Thread scheduler
-0211               ***************************************************************
-0212               *  B @TMGR
-0213               *--------------------------------------------------------------
-0214               *  REMARKS
-0215               *  Timer/Thread scheduler. Normally called from MAIN.
-0216               *  This is basically the kernel keeping everything togehter.
-0217               *  Do not forget to set BTIHI to highest slot in use.
-0218               *
-0219               *  Register usage in TMGR8 - TMGR11
-0220               *  TMP0  = Pointer to timer table
-0221               *  R10LB = Use as slot counter
-0222               *  TMP2  = 2nd word of slot data
-0223               *  TMP3  = Address of routine to call
-0224               ********@*****@*********************@**************************
-0225 6D46 0300  24 tmgr    limi  0                     ; No interrupt processing
+0209                       copy  "timers_tmgr.asm"          ; Timers / Thread scheduler
+**** **** ****     > timers_tmgr.asm
+0001               * FILE......: timers_tmgr.asm
+0002               * Purpose...: Timers / Thread scheduler
+0003               
+0004               ***************************************************************
+0005               * TMGR - X - Start Timers/Thread scheduler
+0006               ***************************************************************
+0007               *  B @TMGR
+0008               *--------------------------------------------------------------
+0009               *  REMARKS
+0010               *  Timer/Thread scheduler. Normally called from MAIN.
+0011               *  This is basically the kernel keeping everything togehter.
+0012               *  Do not forget to set BTIHI to highest slot in use.
+0013               *
+0014               *  Register usage in TMGR8 - TMGR11
+0015               *  TMP0  = Pointer to timer table
+0016               *  R10LB = Use as slot counter
+0017               *  TMP2  = 2nd word of slot data
+0018               *  TMP3  = Address of routine to call
+0019               ********@*****@*********************@**************************
+0020 6D46 0300  24 tmgr    limi  0                     ; No interrupt processing
      6D48 0000 
-0226               *--------------------------------------------------------------
-0227               * Read VDP status register
-0228               *--------------------------------------------------------------
-0229 6D4A D360  34 tmgr1   movb  @vdps,r13             ; Save copy of VDP status register in R13
+0021               *--------------------------------------------------------------
+0022               * Read VDP status register
+0023               *--------------------------------------------------------------
+0024 6D4A D360  34 tmgr1   movb  @vdps,r13             ; Save copy of VDP status register in R13
      6D4C 8802 
-0230               *--------------------------------------------------------------
-0231               * Latch sprite collision flag
-0232               *--------------------------------------------------------------
-0233 6D4E 2360  38         coc   @wbit2,r13            ; C flag on ?
+0025               *--------------------------------------------------------------
+0026               * Latch sprite collision flag
+0027               *--------------------------------------------------------------
+0028 6D4E 2360  38         coc   @wbit2,r13            ; C flag on ?
      6D50 602A 
-0234 6D52 1602  14         jne   tmgr1a                ; No, so move on
-0235 6D54 E0A0  34         soc   @wbit12,config        ; Latch bit 12 in config register
+0029 6D52 1602  14         jne   tmgr1a                ; No, so move on
+0030 6D54 E0A0  34         soc   @wbit12,config        ; Latch bit 12 in config register
      6D56 603E 
-0236               *--------------------------------------------------------------
-0237               * Interrupt flag
-0238               *--------------------------------------------------------------
-0239 6D58 2360  38 tmgr1a  coc   @wbit0,r13            ; Interupt flag set ?
+0031               *--------------------------------------------------------------
+0032               * Interrupt flag
+0033               *--------------------------------------------------------------
+0034 6D58 2360  38 tmgr1a  coc   @wbit0,r13            ; Interupt flag set ?
      6D5A 6026 
-0240 6D5C 1311  14         jeq   tmgr4                 ; Yes, process slots 0..n
-0241               *--------------------------------------------------------------
-0242               * Run speech player
-0243               *--------------------------------------------------------------
-0249               *--------------------------------------------------------------
-0250               * Run kernel thread
-0251               *--------------------------------------------------------------
-0252 6D5E 20A0  38 tmgr2   coc   @wbit8,config         ; Kernel thread blocked ?
+0035 6D5C 1311  14         jeq   tmgr4                 ; Yes, process slots 0..n
+0036               *--------------------------------------------------------------
+0037               * Run speech player
+0038               *--------------------------------------------------------------
+0044               *--------------------------------------------------------------
+0045               * Run kernel thread
+0046               *--------------------------------------------------------------
+0047 6D5E 20A0  38 tmgr2   coc   @wbit8,config         ; Kernel thread blocked ?
      6D60 6036 
-0253 6D62 1305  14         jeq   tmgr3                 ; Yes, skip to user hook
-0254 6D64 20A0  38         coc   @wbit9,config         ; Kernel thread enabled ?
+0048 6D62 1305  14         jeq   tmgr3                 ; Yes, skip to user hook
+0049 6D64 20A0  38         coc   @wbit9,config         ; Kernel thread enabled ?
      6D66 6038 
-0255 6D68 1602  14         jne   tmgr3                 ; No, skip to user hook
-0256 6D6A 0460  28         b     @kthread              ; Run kernel thread
-     6D6C 6E10 
-0257               *--------------------------------------------------------------
-0258               * Run user hook
-0259               *--------------------------------------------------------------
-0260 6D6E 20A0  38 tmgr3   coc   @wbit6,config         ; User hook blocked ?
+0050 6D68 1602  14         jne   tmgr3                 ; No, skip to user hook
+0051 6D6A 0460  28         b     @kthread              ; Run kernel thread
+     6D6C 6DE4 
+0052               *--------------------------------------------------------------
+0053               * Run user hook
+0054               *--------------------------------------------------------------
+0055 6D6E 20A0  38 tmgr3   coc   @wbit6,config         ; User hook blocked ?
      6D70 6032 
-0261 6D72 13EB  14         jeq   tmgr1
-0262 6D74 20A0  38         coc   @wbit7,config         ; User hook enabled ?
+0056 6D72 13EB  14         jeq   tmgr1
+0057 6D74 20A0  38         coc   @wbit7,config         ; User hook enabled ?
      6D76 6034 
-0263 6D78 16E8  14         jne   tmgr1
-0264 6D7A C120  34         mov   @wtiusr,tmp0
+0058 6D78 16E8  14         jne   tmgr1
+0059 6D7A C120  34         mov   @wtiusr,tmp0
      6D7C 832E 
-0265 6D7E 0454  20         b     *tmp0                 ; Run user hook
-0266               *--------------------------------------------------------------
-0267               * Do internal housekeeping
-0268               *--------------------------------------------------------------
-0269 6D80 40A0  34 tmgr4   szc   @tmdat,config         ; Unblock kernel thread and user hook
+0060 6D7E 0454  20         b     *tmp0                 ; Run user hook
+0061               *--------------------------------------------------------------
+0062               * Do internal housekeeping
+0063               *--------------------------------------------------------------
+0064 6D80 40A0  34 tmgr4   szc   @tmdat,config         ; Unblock kernel thread and user hook
      6D82 6DE2 
-0270 6D84 C10A  18         mov   r10,tmp0
-0271 6D86 0244  22         andi  tmp0,>00ff            ; Clear HI byte
+0065 6D84 C10A  18         mov   r10,tmp0
+0066 6D86 0244  22         andi  tmp0,>00ff            ; Clear HI byte
      6D88 00FF 
-0272 6D8A 20A0  38         coc   @wbit2,config         ; PAL flag set ?
+0067 6D8A 20A0  38         coc   @wbit2,config         ; PAL flag set ?
      6D8C 602A 
-0273 6D8E 1303  14         jeq   tmgr5
-0274 6D90 0284  22         ci    tmp0,60               ; 1 second reached ?
+0068 6D8E 1303  14         jeq   tmgr5
+0069 6D90 0284  22         ci    tmp0,60               ; 1 second reached ?
      6D92 003C 
-0275 6D94 1002  14         jmp   tmgr6
-0276 6D96 0284  22 tmgr5   ci    tmp0,50
+0070 6D94 1002  14         jmp   tmgr6
+0071 6D96 0284  22 tmgr5   ci    tmp0,50
      6D98 0032 
-0277 6D9A 1101  14 tmgr6   jlt   tmgr7                 ; No, continue
-0278 6D9C 1001  14         jmp   tmgr8
-0279 6D9E 058A  14 tmgr7   inc   r10                   ; Increase tick counter
-0280               *--------------------------------------------------------------
-0281               * Loop over slots
-0282               *--------------------------------------------------------------
-0283 6DA0 C120  34 tmgr8   mov   @wtitab,tmp0          ; Pointer to timer table
+0072 6D9A 1101  14 tmgr6   jlt   tmgr7                 ; No, continue
+0073 6D9C 1001  14         jmp   tmgr8
+0074 6D9E 058A  14 tmgr7   inc   r10                   ; Increase tick counter
+0075               *--------------------------------------------------------------
+0076               * Loop over slots
+0077               *--------------------------------------------------------------
+0078 6DA0 C120  34 tmgr8   mov   @wtitab,tmp0          ; Pointer to timer table
      6DA2 832C 
-0284 6DA4 024A  22         andi  r10,>ff00             ; Use R10LB as slot counter. Reset.
+0079 6DA4 024A  22         andi  r10,>ff00             ; Use R10LB as slot counter. Reset.
      6DA6 FF00 
-0285 6DA8 C1D4  26 tmgr9   mov   *tmp0,tmp3            ; Is slot empty ?
-0286 6DAA 1316  14         jeq   tmgr11                ; Yes, get next slot
-0287               *--------------------------------------------------------------
-0288               *  Check if slot should be executed
-0289               *--------------------------------------------------------------
-0290 6DAC 05C4  14         inct  tmp0                  ; Second word of slot data
-0291 6DAE 0594  26         inc   *tmp0                 ; Update tick count in slot
-0292 6DB0 C194  26         mov   *tmp0,tmp2            ; Get second word of slot data
-0293 6DB2 9820  54         cb    @tmp2hb,@tmp2lb       ; Slot target count = Slot internal counter ?
+0080 6DA8 C1D4  26 tmgr9   mov   *tmp0,tmp3            ; Is slot empty ?
+0081 6DAA 1316  14         jeq   tmgr11                ; Yes, get next slot
+0082               *--------------------------------------------------------------
+0083               *  Check if slot should be executed
+0084               *--------------------------------------------------------------
+0085 6DAC 05C4  14         inct  tmp0                  ; Second word of slot data
+0086 6DAE 0594  26         inc   *tmp0                 ; Update tick count in slot
+0087 6DB0 C194  26         mov   *tmp0,tmp2            ; Get second word of slot data
+0088 6DB2 9820  54         cb    @tmp2hb,@tmp2lb       ; Slot target count = Slot internal counter ?
      6DB4 830C 
      6DB6 830D 
-0294 6DB8 1608  14         jne   tmgr10                ; No, get next slot
-0295 6DBA 0246  22         andi  tmp2,>ff00            ; Clear internal counter
+0089 6DB8 1608  14         jne   tmgr10                ; No, get next slot
+0090 6DBA 0246  22         andi  tmp2,>ff00            ; Clear internal counter
      6DBC FF00 
-0296 6DBE C506  30         mov   tmp2,*tmp0            ; Update timer table
-0297               *--------------------------------------------------------------
-0298               *  Run slot, we only need TMP0 to survive
-0299               *--------------------------------------------------------------
-0300 6DC0 C804  38         mov   tmp0,@wtitmp          ; Save TMP0
+0091 6DBE C506  30         mov   tmp2,*tmp0            ; Update timer table
+0092               *--------------------------------------------------------------
+0093               *  Run slot, we only need TMP0 to survive
+0094               *--------------------------------------------------------------
+0095 6DC0 C804  38         mov   tmp0,@wtitmp          ; Save TMP0
      6DC2 8330 
-0301 6DC4 0697  24         bl    *tmp3                 ; Call routine in slot
-0302 6DC6 C120  34 slotok  mov   @wtitmp,tmp0          ; Restore TMP0
+0096 6DC4 0697  24         bl    *tmp3                 ; Call routine in slot
+0097 6DC6 C120  34 slotok  mov   @wtitmp,tmp0          ; Restore TMP0
      6DC8 8330 
-0303               *--------------------------------------------------------------
-0304               *  Prepare for next slot
-0305               *--------------------------------------------------------------
-0306 6DCA 058A  14 tmgr10  inc   r10                   ; Next slot
-0307 6DCC 9820  54         cb    @r10lb,@btihi         ; Last slot done ?
+0098               *--------------------------------------------------------------
+0099               *  Prepare for next slot
+0100               *--------------------------------------------------------------
+0101 6DCA 058A  14 tmgr10  inc   r10                   ; Next slot
+0102 6DCC 9820  54         cb    @r10lb,@btihi         ; Last slot done ?
      6DCE 8315 
      6DD0 8314 
-0308 6DD2 1504  14         jgt   tmgr12                ; yes, Wait for next VDP interrupt
-0309 6DD4 05C4  14         inct  tmp0                  ; Offset for next slot
-0310 6DD6 10E8  14         jmp   tmgr9                 ; Process next slot
-0311 6DD8 05C4  14 tmgr11  inct  tmp0                  ; Skip 2nd word of slot data
-0312 6DDA 10F7  14         jmp   tmgr10                ; Process next slot
-0313 6DDC 024A  22 tmgr12  andi  r10,>ff00             ; Use R10LB as tick counter. Reset.
+0103 6DD2 1504  14         jgt   tmgr12                ; yes, Wait for next VDP interrupt
+0104 6DD4 05C4  14         inct  tmp0                  ; Offset for next slot
+0105 6DD6 10E8  14         jmp   tmgr9                 ; Process next slot
+0106 6DD8 05C4  14 tmgr11  inct  tmp0                  ; Skip 2nd word of slot data
+0107 6DDA 10F7  14         jmp   tmgr10                ; Process next slot
+0108 6DDC 024A  22 tmgr12  andi  r10,>ff00             ; Use R10LB as tick counter. Reset.
      6DDE FF00 
-0314 6DE0 10B4  14         jmp   tmgr1
-0315 6DE2 0280     tmdat   data  >0280                 ; Bit 8 (kernel thread) and bit 6 (user hook)
-0316               
-0317               
-0319                        copy  "timer_alloc.asm"    ; Timer slot calculation
-**** **** ****     > timer_alloc.asm
+0109 6DE0 10B4  14         jmp   tmgr1
+0110 6DE2 0280     tmdat   data  >0280                 ; Bit 8 (kernel thread) and bit 6 (user hook)
+0111               
+**** **** ****     > runlib.asm
+0210                       copy  "timers_kthread.asm"       ; Timers / Kernel thread
+**** **** ****     > timers_kthread.asm
+0001               * FILE......: timers_kthread.asm
+0002               * Purpose...: Timers / The kernel thread
+0003               
+0004               
+0005               ***************************************************************
+0006               * KTHREAD - The kernel thread
+0007               *--------------------------------------------------------------
+0008               *  REMARKS
+0009               *  You should not call the kernel thread manually.
+0010               *  Instead control it via the CONFIG register.
+0011               *
+0012               *  The kernel thread is responsible for running the sound
+0013               *  player and doing keyboard scan.
+0014               ********@*****@*********************@**************************
+0015 6DE4 E0A0  34 kthread soc   @wbit8,config         ; Block kernel thread
+     6DE6 6036 
+0016               *--------------------------------------------------------------
+0017               * Run sound player
+0018               *--------------------------------------------------------------
+0020               *       <<skipped>>
+0026               *--------------------------------------------------------------
+0027               * Scan virtual keyboard
+0028               *--------------------------------------------------------------
+0029               kthread_kb
+0031               *       <<skipped>>
+0035               *--------------------------------------------------------------
+0036               * Scan real keyboard
+0037               *--------------------------------------------------------------
+0041 6DE8 06A0  32         bl    @realkb               ; Scan full keyboard
+     6DEA 6422 
+0043               *--------------------------------------------------------------
+0044               kthread_exit
+0045 6DEC 0460  28         b     @tmgr3                ; Exit
+     6DEE 6D6E 
+**** **** ****     > runlib.asm
+0211                       copy  "timers_hooks.asm"         ; Timers / User hooks
+**** **** ****     > timers_hooks.asm
+0001               * FILE......: timers_kthread.asm
+0002               * Purpose...: Timers / User hooks
+0003               
+0004               
+0005               ***************************************************************
+0006               * MKHOOK - Allocate user hook
+0007               ***************************************************************
+0008               *  BL    @MKHOOK
+0009               *  DATA  P0
+0010               *--------------------------------------------------------------
+0011               *  P0 = Address of user hook
+0012               *--------------------------------------------------------------
+0013               *  REMARKS
+0014               *  The user hook gets executed after the kernel thread.
+0015               *  The user hook must always exit with "B @HOOKOK"
+0016               ********@*****@*********************@**************************
+0017 6DF0 C83B  50 mkhook  mov   *r11+,@wtiusr         ; Set user hook address
+     6DF2 832E 
+0018 6DF4 E0A0  34         soc   @wbit7,config         ; Enable user hook
+     6DF6 6034 
+0019 6DF8 045B  20 mkhoo1  b     *r11                  ; Return
+0020      6D4A     hookok  equ   tmgr1                 ; Exit point for user hook
+0021               
+0022               
+0023               ***************************************************************
+0024               * CLHOOK - Clear user hook
+0025               ***************************************************************
+0026               *  BL    @CLHOOK
+0027               ********@*****@*********************@**************************
+0028 6DFA 04E0  34 clhook  clr   @wtiusr               ; Unset user hook address
+     6DFC 832E 
+0029 6DFE 0242  22         andi  config,>feff          ; Disable user hook (bit 7=0)
+     6E00 FEFF 
+0030 6E02 045B  20         b     *r11                  ; Return
+**** **** ****     > runlib.asm
+0212               
+0214                       copy  "timers_alloc.asm"         ; Timers / Slot calculation
+**** **** ****     > timers_alloc.asm
 0001               * FILE......: timer_alloc.asm
-0002               * Purpose...: Support code for timer allocation
+0002               * Purpose...: Timers / Timer allocation
 0003               
 0004               
 0005               ***************************************************************
@@ -3397,33 +3477,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0014               *  P0 = Slot number, target count
 0015               *  P1 = Subroutine to call via BL @xxxx if slot is fired
 0016               ********@*****@*********************@**************************
-0017 6DE4 C13B  30 mkslot  mov   *r11+,tmp0
-0018 6DE6 C17B  30         mov   *r11+,tmp1
+0017 6E04 C13B  30 mkslot  mov   *r11+,tmp0
+0018 6E06 C17B  30         mov   *r11+,tmp1
 0019               *--------------------------------------------------------------
 0020               *  Calculate address of slot
 0021               *--------------------------------------------------------------
-0022 6DE8 C184  18         mov   tmp0,tmp2
-0023 6DEA 0966  56         srl   tmp2,6                ; Right align & TMP2 = TMP2 * 4
-0024 6DEC A1A0  34         a     @wtitab,tmp2          ; Add table base
-     6DEE 832C 
+0022 6E08 C184  18         mov   tmp0,tmp2
+0023 6E0A 0966  56         srl   tmp2,6                ; Right align & TMP2 = TMP2 * 4
+0024 6E0C A1A0  34         a     @wtitab,tmp2          ; Add table base
+     6E0E 832C 
 0025               *--------------------------------------------------------------
 0026               *  Add slot to table
 0027               *--------------------------------------------------------------
-0028 6DF0 CD85  34         mov   tmp1,*tmp2+           ; Store address of subroutine
-0029 6DF2 0A84  56         sla   tmp0,8                ; Get rid of slot number
-0030 6DF4 C584  30         mov   tmp0,*tmp2            ; Store target count and reset tick count
+0028 6E10 CD85  34         mov   tmp1,*tmp2+           ; Store address of subroutine
+0029 6E12 0A84  56         sla   tmp0,8                ; Get rid of slot number
+0030 6E14 C584  30         mov   tmp0,*tmp2            ; Store target count and reset tick count
 0031               *--------------------------------------------------------------
 0032               *  Check for end of list
 0033               *--------------------------------------------------------------
-0034 6DF6 881B  46         c     *r11,@whffff          ; End of list ?
-     6DF8 6046 
-0035 6DFA 1301  14         jeq   mkslo1                ; Yes, exit
-0036 6DFC 10F3  14         jmp   mkslot                ; Process next entry
+0034 6E16 881B  46         c     *r11,@whffff          ; End of list ?
+     6E18 6046 
+0035 6E1A 1301  14         jeq   mkslo1                ; Yes, exit
+0036 6E1C 10F3  14         jmp   mkslot                ; Process next entry
 0037               *--------------------------------------------------------------
 0038               *  Exit
 0039               *--------------------------------------------------------------
-0040 6DFE 05CB  14 mkslo1  inct  r11
-0041 6E00 045B  20         b     *r11                  ; Exit
+0040 6E1E 05CB  14 mkslo1  inct  r11
+0041 6E20 045B  20         b     *r11                  ; Exit
 0042               
 0043               
 0044               ***************************************************************
@@ -3434,214 +3514,149 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0049               *--------------------------------------------------------------
 0050               *  P0 = Slot number
 0051               ********@*****@*********************@**************************
-0052 6E02 C13B  30 clslot  mov   *r11+,tmp0
-0053 6E04 0A24  56 xlslot  sla   tmp0,2                ; TMP0 = TMP0*4
-0054 6E06 A120  34         a     @wtitab,tmp0          ; Add table base
-     6E08 832C 
-0055 6E0A 04F4  30         clr   *tmp0+                ; Clear 1st word of slot
-0056 6E0C 04D4  26         clr   *tmp0                 ; Clear 2nd word of slot
-0057 6E0E 045B  20         b     *r11                  ; Exit
+0052 6E22 C13B  30 clslot  mov   *r11+,tmp0
+0053 6E24 0A24  56 xlslot  sla   tmp0,2                ; TMP0 = TMP0*4
+0054 6E26 A120  34         a     @wtitab,tmp0          ; Add table base
+     6E28 832C 
+0055 6E2A 04F4  30         clr   *tmp0+                ; Clear 1st word of slot
+0056 6E2C 04D4  26         clr   *tmp0                 ; Clear 2nd word of slot
+0057 6E2E 045B  20         b     *r11                  ; Exit
 **** **** ****     > runlib.asm
-0321               
-0322               
-0323               ***************************************************************
-0324               * KTHREAD - The kernel thread
-0325               *--------------------------------------------------------------
-0326               *  REMARKS
-0327               *  You should not call the kernel thread manually.
-0328               *  Instead control it via the CONFIG register.
-0329               *
-0330               *  The kernel thread is responsible for running the sound
-0331               *  player and doing keyboard scan.
-0332               ********@*****@*********************@**************************
-0333 6E10 E0A0  34 kthread soc   @wbit8,config         ; Block kernel thread
-     6E12 6036 
-0334               *--------------------------------------------------------------
-0335               * Run sound player
-0336               *--------------------------------------------------------------
-0338               *       <<skipped>>
-0344               *--------------------------------------------------------------
-0345               * Scan virtual keyboard
-0346               *--------------------------------------------------------------
-0347               kthread_kb
-0349               *       <<skipped>>
-0353               *--------------------------------------------------------------
-0354               * Scan real keyboard
-0355               *--------------------------------------------------------------
-0359 6E14 06A0  32         bl    @realkb               ; Scan full keyboard
-     6E16 6422 
-0361               *--------------------------------------------------------------
-0362               kthread_exit
-0363 6E18 0460  28         b     @tmgr3                ; Exit
-     6E1A 6D6E 
-0364               
-0365               
-0366               
-0367               ***************************************************************
-0368               * MKHOOK - Allocate user hook
-0369               ***************************************************************
-0370               *  BL    @MKHOOK
-0371               *  DATA  P0
-0372               *--------------------------------------------------------------
-0373               *  P0 = Address of user hook
-0374               *--------------------------------------------------------------
-0375               *  REMARKS
-0376               *  The user hook gets executed after the kernel thread.
-0377               *  The user hook must always exit with "B @HOOKOK"
-0378               ********@*****@*********************@**************************
-0379 6E1C C83B  50 mkhook  mov   *r11+,@wtiusr         ; Set user hook address
-     6E1E 832E 
-0380 6E20 E0A0  34         soc   @wbit7,config         ; Enable user hook
-     6E22 6034 
-0381 6E24 045B  20 mkhoo1  b     *r11                  ; Return
-0382      6D4A     hookok  equ   tmgr1                 ; Exit point for user hook
-0383               
-0384               
-0385               ***************************************************************
-0386               * CLHOOK - Clear user hook
-0387               ***************************************************************
-0388               *  BL    @CLHOOK
-0389               ********@*****@*********************@**************************
-0390 6E26 04E0  34 clhook  clr   @wtiusr               ; Unset user hook address
-     6E28 832E 
-0391 6E2A 0242  22         andi  config,>feff          ; Disable user hook (bit 7=0)
-     6E2C FEFF 
-0392 6E2E 045B  20         b     *r11                  ; Return
-0393               
-0394               
-0395               
-0396               *//////////////////////////////////////////////////////////////
-0397               *                    RUNLIB INITIALISATION
-0398               *//////////////////////////////////////////////////////////////
-0399               
-0400               ***************************************************************
-0401               *  RUNLIB - Runtime library initalisation
-0402               ***************************************************************
-0403               *  B  @RUNLIB
-0404               *--------------------------------------------------------------
-0405               *  REMARKS
-0406               *  If R1 in WS1 equals >FFFF we return to the TI title screen
-0407               *  after clearing scratchpad memory.
-0408               *  Use 'B @RUNLI1' to exit your program.
-0409               ********@*****@*********************@**************************
-0414 6E30 04E0  34 runlib  clr   @>8302                ; Reset exit flag (R1 in workspace WS1!)
+0216               
+0217               
+0218               
+0219               *//////////////////////////////////////////////////////////////
+0220               *                    RUNLIB INITIALISATION
+0221               *//////////////////////////////////////////////////////////////
+0222               
+0223               ***************************************************************
+0224               *  RUNLIB - Runtime library initalisation
+0225               ***************************************************************
+0226               *  B  @RUNLIB
+0227               *--------------------------------------------------------------
+0228               *  REMARKS
+0229               *  If R1 in WS1 equals >FFFF we return to the TI title screen
+0230               *  after clearing scratchpad memory.
+0231               *  Use 'B @RUNLI1' to exit your program.
+0232               ********@*****@*********************@**************************
+0237 6E30 04E0  34 runlib  clr   @>8302                ; Reset exit flag (R1 in workspace WS1!)
      6E32 8302 
-0416               *--------------------------------------------------------------
-0417               * Alternative entry point
-0418               *--------------------------------------------------------------
-0419 6E34 0300  24 runli1  limi  0                     ; Turn off interrupts
+0239               *--------------------------------------------------------------
+0240               * Alternative entry point
+0241               *--------------------------------------------------------------
+0242 6E34 0300  24 runli1  limi  0                     ; Turn off interrupts
      6E36 0000 
-0420 6E38 02E0  18         lwpi  ws1                   ; Activate workspace 1
+0243 6E38 02E0  18         lwpi  ws1                   ; Activate workspace 1
      6E3A 8300 
-0421 6E3C C0E0  34         mov   @>83c0,r3             ; Get random seed from OS monitor
+0244 6E3C C0E0  34         mov   @>83c0,r3             ; Get random seed from OS monitor
      6E3E 83C0 
-0422               *--------------------------------------------------------------
-0423               * Clear scratch-pad memory from R4 upwards
-0424               *--------------------------------------------------------------
-0425 6E40 0202  20 runli2  li    r2,>8308
+0245               *--------------------------------------------------------------
+0246               * Clear scratch-pad memory from R4 upwards
+0247               *--------------------------------------------------------------
+0248 6E40 0202  20 runli2  li    r2,>8308
      6E42 8308 
-0426 6E44 04F2  30 runli3  clr   *r2+                  ; Clear scratchpad >8306->83FF
-0427 6E46 0282  22         ci    r2,>8400
+0249 6E44 04F2  30 runli3  clr   *r2+                  ; Clear scratchpad >8306->83FF
+0250 6E46 0282  22         ci    r2,>8400
      6E48 8400 
-0428 6E4A 16FC  14         jne   runli3
-0429               *--------------------------------------------------------------
-0430               * Exit to TI-99/4A title screen ?
-0431               *--------------------------------------------------------------
-0432 6E4C 0281  22         ci    r1,>ffff              ; Exit flag set ?
+0251 6E4A 16FC  14         jne   runli3
+0252               *--------------------------------------------------------------
+0253               * Exit to TI-99/4A title screen ?
+0254               *--------------------------------------------------------------
+0255 6E4C 0281  22         ci    r1,>ffff              ; Exit flag set ?
      6E4E FFFF 
-0433 6E50 1602  14         jne   runli4                ; No, continue
-0434 6E52 0420  54         blwp  @0                    ; Yes, bye bye
+0256 6E50 1602  14         jne   runli4                ; No, continue
+0257 6E52 0420  54         blwp  @0                    ; Yes, bye bye
      6E54 0000 
-0435               *--------------------------------------------------------------
-0436               * Determine if VDP is PAL or NTSC
-0437               *--------------------------------------------------------------
-0438 6E56 C803  38 runli4  mov   r3,@waux1             ; Store random seed
+0258               *--------------------------------------------------------------
+0259               * Determine if VDP is PAL or NTSC
+0260               *--------------------------------------------------------------
+0261 6E56 C803  38 runli4  mov   r3,@waux1             ; Store random seed
      6E58 833C 
-0439 6E5A 04C1  14         clr   r1                    ; Reset counter
-0440 6E5C 0202  20         li    r2,10                 ; We test 10 times
+0262 6E5A 04C1  14         clr   r1                    ; Reset counter
+0263 6E5C 0202  20         li    r2,10                 ; We test 10 times
      6E5E 000A 
-0441 6E60 C0E0  34 runli5  mov   @vdps,r3
+0264 6E60 C0E0  34 runli5  mov   @vdps,r3
      6E62 8802 
-0442 6E64 20E0  38         coc   @wbit0,r3             ; Interupt flag set ?
+0265 6E64 20E0  38         coc   @wbit0,r3             ; Interupt flag set ?
      6E66 6026 
-0443 6E68 1302  14         jeq   runli6
-0444 6E6A 0581  14         inc   r1                    ; Increase counter
-0445 6E6C 10F9  14         jmp   runli5
-0446 6E6E 0602  14 runli6  dec   r2                    ; Next test
-0447 6E70 16F7  14         jne   runli5
-0448 6E72 0281  22         ci    r1,>1250              ; Max for NTSC reached ?
+0266 6E68 1302  14         jeq   runli6
+0267 6E6A 0581  14         inc   r1                    ; Increase counter
+0268 6E6C 10F9  14         jmp   runli5
+0269 6E6E 0602  14 runli6  dec   r2                    ; Next test
+0270 6E70 16F7  14         jne   runli5
+0271 6E72 0281  22         ci    r1,>1250              ; Max for NTSC reached ?
      6E74 1250 
-0449 6E76 1202  14         jle   runli7                ; No, so it must be NTSC
-0450 6E78 0262  22         ori   config,palon          ; Yes, it must be PAL, set flag
+0272 6E76 1202  14         jle   runli7                ; No, so it must be NTSC
+0273 6E78 0262  22         ori   config,palon          ; Yes, it must be PAL, set flag
      6E7A 602A 
-0451               *--------------------------------------------------------------
-0452               * Copy machine code to scratchpad (prepare tight loop)
-0453               *--------------------------------------------------------------
-0454 6E7C 0201  20 runli7  li    r1,mccode             ; Machinecode to patch
+0274               *--------------------------------------------------------------
+0275               * Copy machine code to scratchpad (prepare tight loop)
+0276               *--------------------------------------------------------------
+0277 6E7C 0201  20 runli7  li    r1,mccode             ; Machinecode to patch
      6E7E 6080 
-0455 6E80 0202  20         li    r2,mcloop+2           ; Scratch-pad reserved for machine code
+0278 6E80 0202  20         li    r2,mcloop+2           ; Scratch-pad reserved for machine code
      6E82 8322 
-0456 6E84 CCB1  46         mov   *r1+,*r2+             ; Copy 1st instruction
-0457 6E86 CCB1  46         mov   *r1+,*r2+             ; Copy 2nd instruction
-0458 6E88 CCB1  46         mov   *r1+,*r2+             ; Copy 3rd instruction
-0459               *--------------------------------------------------------------
-0460               * Initialize registers, memory, ...
-0461               *--------------------------------------------------------------
-0462 6E8A 04C1  14 runli9  clr   r1
-0463 6E8C 04C2  14         clr   r2
-0464 6E8E 04C3  14         clr   r3
-0465 6E90 0209  20         li    stack,>8400           ; Set stack
+0279 6E84 CCB1  46         mov   *r1+,*r2+             ; Copy 1st instruction
+0280 6E86 CCB1  46         mov   *r1+,*r2+             ; Copy 2nd instruction
+0281 6E88 CCB1  46         mov   *r1+,*r2+             ; Copy 3rd instruction
+0282               *--------------------------------------------------------------
+0283               * Initialize registers, memory, ...
+0284               *--------------------------------------------------------------
+0285 6E8A 04C1  14 runli9  clr   r1
+0286 6E8C 04C2  14         clr   r2
+0287 6E8E 04C3  14         clr   r3
+0288 6E90 0209  20         li    stack,>8400           ; Set stack
      6E92 8400 
-0466 6E94 020F  20         li    r15,vdpw              ; Set VDP write address
+0289 6E94 020F  20         li    r15,vdpw              ; Set VDP write address
      6E96 8C00 
-0470               *--------------------------------------------------------------
-0471               * Setup video memory
-0472               *--------------------------------------------------------------
-0477 6E98 06A0  32         bl    @filv                 ; Clear all of 16K VDP memory
+0293               *--------------------------------------------------------------
+0294               * Setup video memory
+0295               *--------------------------------------------------------------
+0300 6E98 06A0  32         bl    @filv                 ; Clear all of 16K VDP memory
      6E9A 60BA 
-0478 6E9C 0000             data  >0000,>00,>3fff
+0301 6E9C 0000             data  >0000,>00,>3fff
      6E9E 0000 
      6EA0 3FFF 
-0480 6EA2 06A0  32         bl    @filv
+0303 6EA2 06A0  32         bl    @filv
      6EA4 60BA 
-0481 6EA6 0FC0             data  pctadr,spfclr,16      ; Load color table
+0304 6EA6 0FC0             data  pctadr,spfclr,16      ; Load color table
      6EA8 00F5 
      6EAA 0010 
-0482               *--------------------------------------------------------------
-0483               * Check if there is a F18A present
-0484               *--------------------------------------------------------------
-0488 6EAC 06A0  32         bl    @f18unl               ; Unlock the F18A
+0305               *--------------------------------------------------------------
+0306               * Check if there is a F18A present
+0307               *--------------------------------------------------------------
+0311 6EAC 06A0  32         bl    @f18unl               ; Unlock the F18A
      6EAE 6392 
-0489 6EB0 06A0  32         bl    @f18chk               ; Check if F18A is there
+0312 6EB0 06A0  32         bl    @f18chk               ; Check if F18A is there
      6EB2 63AC 
-0490 6EB4 06A0  32         bl    @f18lck               ; Lock the F18A again
+0313 6EB4 06A0  32         bl    @f18lck               ; Lock the F18A again
      6EB6 63A2 
-0492               *--------------------------------------------------------------
-0493               * Check if there is a speech synthesizer attached
-0494               *--------------------------------------------------------------
-0496               *       <<skipped>>
-0500               *--------------------------------------------------------------
-0501               * Load video mode table & font
-0502               *--------------------------------------------------------------
-0503 6EB8 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
+0315               *--------------------------------------------------------------
+0316               * Check if there is a speech synthesizer attached
+0317               *--------------------------------------------------------------
+0319               *       <<skipped>>
+0323               *--------------------------------------------------------------
+0324               * Load video mode table & font
+0325               *--------------------------------------------------------------
+0326 6EB8 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
      6EBA 6114 
-0504 6EBC 6076             data  spvmod                ; Equate selected video mode table
-0505 6EBE 0204  20         li    tmp0,spfont           ; Get font option
+0327 6EBC 6076             data  spvmod                ; Equate selected video mode table
+0328 6EBE 0204  20         li    tmp0,spfont           ; Get font option
      6EC0 000C 
-0506 6EC2 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
-0507 6EC4 1304  14         jeq   runlid                ; Yes, skip it
-0508 6EC6 06A0  32         bl    @ldfnt
+0329 6EC2 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
+0330 6EC4 1304  14         jeq   runlid                ; Yes, skip it
+0331 6EC6 06A0  32         bl    @ldfnt
      6EC8 617C 
-0509 6ECA 1100             data  fntadr,spfont         ; Load specified font
+0332 6ECA 1100             data  fntadr,spfont         ; Load specified font
      6ECC 000C 
-0510               *--------------------------------------------------------------
-0511               * Branch to main program
-0512               *--------------------------------------------------------------
-0513 6ECE 0262  22 runlid  ori   config,>0040          ; Enable kernel thread (bit 9 on)
+0333               *--------------------------------------------------------------
+0334               * Branch to main program
+0335               *--------------------------------------------------------------
+0336 6ECE 0262  22 runlid  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      6ED0 0040 
-0514 6ED2 0460  28         b     @main                 ; Give control to main program
+0337 6ED2 0460  28         b     @main                 ; Give control to main program
      6ED4 6ED6 
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0065               *--------------------------------------------------------------
 0066               * SPECTRA2 startup options
 0067               *--------------------------------------------------------------
@@ -3817,7 +3832,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
      6F48 832C 
 0209               
 0210 6F4A 06A0  32         bl    @mkslot
-     6F4C 6DE4 
+     6F4C 6E04 
 0211 6F4E 0001                   data >0001,task0      ; Task 0 - Update screen
      6F50 7448 
 0212 6F52 0101                   data >0101,task1      ; Task 1 - Update cursor position
@@ -3827,7 +3842,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
      6F5A FFFF 
 0214               
 0215 6F5C 06A0  32         bl    @mkhook
-     6F5E 6E1C 
+     6F5E 6DF0 
 0216 6F60 6F66                   data editor           ; Setup user hook
 0217               
 0218 6F62 0460  28         b     @tmgr                 ; Start timers and kthread
@@ -5036,7 +5051,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0878 7444 0460  28         b     @ed_wait              ; Back to editor main
      7446 6F88 
 0879               
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0269               
 0270               
 0271               
@@ -5628,7 +5643,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0225               
 0226               
 0227               
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0509               
 0510               
 0511               ***************************************************************
@@ -5933,7 +5948,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0250               idx.pointer.get.$$:
 0251 7764 0460  28         b     @poprt                ; Return to caller
      7766 6092 
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0515               
 0516               
 0517               ***************************************************************
@@ -6332,7 +6347,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0313 78BC 0460  28         b     @poprt                ; Return to caller
      78BE 6092 
 0314               
-**** **** ****     > tivi.asm.24920
+**** **** ****     > tivi.asm.2077
 0521               
 0522               
 0523               ***************************************************************
@@ -6360,8 +6375,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0535               *                       Strings
 0536               ***************************************************************
 0537               txt_title
-0538 78DC 1154             byte  17
-0539 78DD ....             text  'TIVI 191013-24920'
+0538 78DC 1054             byte  16
+0539 78DD ....             text  'TIVI 191019-2077'
 0540                       even
 0541               
 0542               txt_delim
