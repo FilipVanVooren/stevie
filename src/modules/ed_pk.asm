@@ -144,7 +144,7 @@ ed_pk.action.up:
         ;-------------------------------------------------------
         ; Crunch current line if dirty 
         ;-------------------------------------------------------
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.up.cursor
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
@@ -202,7 +202,7 @@ ed_pk.action.down:
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.down.move
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
@@ -460,7 +460,7 @@ ed_pk.action.ppage.topline:
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
 ed_pk.action.ppage.crunch:
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.ppage.refresh
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
@@ -503,7 +503,7 @@ ed_pk.action.npage.topline:
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
 ed_pk.action.npage.crunch:
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.npage.refresh
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
@@ -720,7 +720,7 @@ ed_pk.action.ins_line:
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.ins_line.insert
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
@@ -759,7 +759,7 @@ ed_pk.action.enter:
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
-        c     @fb.row.dirty,@whffff
+        c     @fb.row.dirty,@w$ffff
         jne   ed_pk.action.enter.upd_counter
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
