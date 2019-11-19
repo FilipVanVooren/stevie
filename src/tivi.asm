@@ -29,8 +29,8 @@ skip_vdp_viewport       equ  1      ; Skip viewport functions
 skip_vdp_rle_decompress equ  1      ; Skip RLE decompress to VRAM
 skip_vdp_px2yx_calc     equ  1      ; Skip pixel to YX calculation
 skip_sound_player       equ  1      ; Skip inclusion of sound player code
-skip_tms52xx_detection  equ  1      ; Skip speech synthesizer detection
-skip_tms52xx_player     equ  1      ; Skip inclusion of speech player code
+skip_speech_detection   equ  1      ; Skip speech synthesizer detection
+skip_speech_player      equ  1      ; Skip inclusion of speech player code
 skip_virtual_keyboard   equ  1      ; Skip virtual keyboard scan
 skip_random_generator   equ  1      ; Skip random functions 
 skip_cpu_hexsupport     equ  1      ; Skip mkhex, puthex 
