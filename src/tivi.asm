@@ -9,12 +9,36 @@
 *--------------------------------------------------------------
 * TI-99/4a Advanced Editor & IDE
 *--------------------------------------------------------------
-* 2018-11-01   Development started
-********@*****@*********************@**************************
-        save  >6000,>7fff
-        aorg  >6000
+* TiVi memory layout
+*
+* Mem range   Bytes    Hex   Purpose
+* =========   =====   ====   ==================================
+* 8300-83ff     256   >100   scrpad spectra2 layout
+* 2000-20ff     256   >100   scrpad backup 1: GPL layout
+* 2100-21ff     256   >100   scrpad backup 2: paged out spectra2
+* 2200-22ff     256   >100   TiVi frame buffer structure
+* 2300-23ff     256   >100   TiVi editor buffer structure
+* 2400-24ff     256   >100   TiVi file handling structure
+* 2500-25ff     256   >100   Free for future use
+* 2600-264f      80   >050   Free for future use
+* 2650-2faf    2480   >9b0   Frame buffer 80x31
+* 2fb0-2fff      80   >050   Free for future use
+* 3000-3fff    4096  >1000   Index 
+* a000-fffb   24574  >5ffe   Editor buffer
 *--------------------------------------------------------------
-debug                  equ  1       ; Turn on debugging
+* SAMS 4k pages in transparent mode
+*
+* Low memory expansion
+* 2000-2fff 3000-3fff
+*
+* High memory expansion
+* a000-afff b000-bfff c000-cfff d000-dfff e000-efff f000-ffff
+*--------------------------------------------------------------
+* 
+*--------------------------------------------------------------
+* EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES
+*--------------------------------------------------------------
+debug                   equ  1      ; Turn on spectra2 debugging
 *--------------------------------------------------------------
 * Skip unused spectra2 code modules for reduced code size
 *--------------------------------------------------------------
@@ -35,11 +59,92 @@ skip_virtual_keyboard   equ  1      ; Skip virtual keyboard scan
 skip_random_generator   equ  1      ; Skip random functions 
 skip_cpu_hexsupport     equ  1      ; Skip mkhex, puthex 
 skip_cpu_crc16          equ  1      ; Skip CPU memory CRC-16 calculation
-skip_iosupport          equ  1      ; Skip support for file I/O, dsrlnk
+*--------------------------------------------------------------
+* SPECTRA2 startup options
+*--------------------------------------------------------------
+startup_backup_scrpad   equ  1      ; Backup scratchpad @>8300:>83ff to @>2000
+startup_keep_vdpmemory  equ  1      ; Do not clear VDP vram upon startup
+spfclr                  equ  >f5    ; Foreground/Background color for font.
+spfbck                  equ  >05    ; Screen background color.
+*--------------------------------------------------------------
+* Scratchpad memory                 @>8300-83ff     (256 bytes)
+*--------------------------------------------------------------
+;               equ  >8342          ; >8342-834F **free***
+parm1           equ  >8350          ; Function parameter 1
+parm2           equ  >8352          ; Function parameter 2
+parm3           equ  >8354          ; Function parameter 3
+parm4           equ  >8356          ; Function parameter 4
+parm5           equ  >8358          ; Function parameter 5
+parm6           equ  >835a          ; Function parameter 6
+parm7           equ  >835c          ; Function parameter 7
+parm8           equ  >835e          ; Function parameter 8
+outparm1        equ  >8360          ; Function output parameter 1
+outparm2        equ  >8362          ; Function output parameter 2
+outparm3        equ  >8364          ; Function output parameter 3
+outparm4        equ  >8366          ; Function output parameter 4
+outparm5        equ  >8368          ; Function output parameter 5
+outparm6        equ  >836a          ; Function output parameter 6
+outparm7        equ  >836c          ; Function output parameter 7
+outparm8        equ  >836e          ; Function output parameter 8
+timers          equ  >8370          ; Timer table
+ramsat          equ  >8380          ; Sprite Attribute Table in RAM
+rambuf          equ  >8390          ; RAM workbuffer 1
+*--------------------------------------------------------------
+* Frame buffer structure            @>2200-22ff     (256 bytes)
+*--------------------------------------------------------------
+fb.top.ptr      equ  >2200          ; Pointer to frame buffer
+fb.current      equ  fb.top.ptr+2   ; Pointer to current position in frame buffer
+fb.topline      equ  fb.top.ptr+4   ; Top line in frame buffer (matching line X in editor buffer)
+fb.row          equ  fb.top.ptr+6   ; Current row in frame buffer (offset 0 .. @fb.screenrows)
+fb.row.length   equ  fb.top.ptr+8   ; Length of current row in frame buffer 
+fb.row.dirty    equ  fb.top.ptr+10  ; Current row dirty flag in frame buffer
+fb.column       equ  fb.top.ptr+12  ; Current column in frame buffer
+fb.colsline     equ  fb.top.ptr+14  ; Columns per row in frame buffer
+fb.curshape     equ  fb.top.ptr+16  ; Cursor shape & colour
+fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
+fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
+fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
+fb.screenrows   equ  fb.top.ptr+24  ; Number of rows on physical screen
+*--------------------------------------------------------------
+* Editor buffer structure           @>2300-23ff     (256 bytes)
+*--------------------------------------------------------------
+edb.top.ptr     equ  >2300          ; Pointer to editor buffer
+edb.index.ptr   equ  edb.top.ptr+2  ; Pointer to index
+edb.lines       equ  edb.top.ptr+4  ; Total lines in editor buffer
+edb.dirty       equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
+edb.next_free   equ  edb.top.ptr+8  ; Pointer to next free line
+edb.insmode     equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
+*--------------------------------------------------------------
+* File handling structures          @>2400-24ff     (256 bytes)
+*--------------------------------------------------------------
+tfh.top         equ  >2400          ; TiVi file handling structures
+dsrlnk.dsrlws   equ  tfh.top        ; Address of dsrlnk workspace 32 bytes                                
+dsrlnk.namsto   equ  tfh.top + 32   ; 8-byte RAM buffer for storing device name
+file.pab.ptr    equ  tfh.top + 40   ; Pointer to VDP PAB, required by level 2 FIO
+*--------------------------------------------------------------
+* Free for future use               @>2500-264f     (336 bytes)
+*--------------------------------------------------------------
+free.mem1       equ  >2500          ; >2500-25ff   256 bytes
+free.mem2       equ  >2600          ; >2600-264f    80 bytes
+*--------------------------------------------------------------
+* Frame buffer                      @>2650-2fff    (2480 bytes)
+* Index buffer                      @>3000-3fff    (4096 bytes)
+* Editor buffer                     @>a000-ffff   (24576 bytes)
+*--------------------------------------------------------------
+fb.top          equ  >2650          ; Frame buffer low memory 2400 bytes (80x30)
+idx.top         equ  >3000          ; Top of index
+edb.top         equ  >a000          ; Editor buffer high memory
+*--------------------------------------------------------------
+
+
+
 
 *--------------------------------------------------------------
 * Cartridge header
 *--------------------------------------------------------------
+        save  >6000,>7fff
+        aorg  >6000
+
 grmhdr  byte  >aa,1,1,0,0,0
         data  prog0
         byte  0,0,0,0,0,0,0,0
@@ -55,78 +160,6 @@ prog0   data  0                     ; No more items following
 * Include required files
 *--------------------------------------------------------------
         copy  "%%spectra2%%/runlib.asm"
-*--------------------------------------------------------------
-* SPECTRA2 startup options
-*--------------------------------------------------------------
-spfclr  equ   >f5                   ; Foreground/Background color for font.
-spfbck  equ   >05                   ; Screen background color.
-;spfclr  equ   >a1                   ; Foreground/Background color for font.
-;spfbck  equ   >01                   ; Screen background color.
-
-*--------------------------------------------------------------
-* Scratchpad memory
-*--------------------------------------------------------------
-;           equ  >8342              ; >8342-834F **free***
-parm1       equ  >8350              ; Function parameter 1
-parm2       equ  >8352              ; Function parameter 2
-parm3       equ  >8354              ; Function parameter 3
-parm4       equ  >8356              ; Function parameter 4
-parm5       equ  >8358              ; Function parameter 5
-parm6       equ  >835a              ; Function parameter 6
-parm7       equ  >835c              ; Function parameter 7
-parm8       equ  >835e              ; Function parameter 8
-outparm1    equ  >8360              ; Function output parameter 1
-outparm2    equ  >8362              ; Function output parameter 2
-outparm3    equ  >8364              ; Function output parameter 3
-outparm4    equ  >8366              ; Function output parameter 4
-outparm5    equ  >8368              ; Function output parameter 5
-outparm6    equ  >836a              ; Function output parameter 6
-outparm7    equ  >836c              ; Function output parameter 7
-outparm8    equ  >836e              ; Function output parameter 8
-timers      equ  >8370              ; Timer table
-ramsat      equ  >8380              ; Sprite Attribute Table in RAM
-rambuf      equ  >8390              ; RAM workbuffer 1
-
-
-*--------------------------------------------------------------
-* Frame buffer structure @ >2000
-* Frame buffer itself    @ >3000 - >3fff
-*--------------------------------------------------------------
-fb.top.ptr      equ  >2000          ; Pointer to frame buffer
-fb.current      equ  fb.top.ptr+2   ; Pointer to current position in frame buffer
-fb.topline      equ  fb.top.ptr+4   ; Top line in frame buffer (matching line X in editor buffer)
-fb.row          equ  fb.top.ptr+6   ; Current row in frame buffer (offset 0 .. @fb.screenrows)
-fb.row.length   equ  fb.top.ptr+8   ; Length of current row in frame buffer 
-fb.row.dirty    equ  fb.top.ptr+10  ; Current row dirty flag in frame buffer
-fb.column       equ  fb.top.ptr+12  ; Current column in frame buffer
-fb.colsline     equ  fb.top.ptr+14  ; Columns per row in frame buffer
-fb.curshape     equ  fb.top.ptr+16  ; Cursor shape & colour
-fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
-fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
-fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
-fb.screenrows   equ  fb.top.ptr+24  ; Number of rows on physical screen
-fb.top          equ  >3000          ; Frame buffer low memory 2400 bytes (80x30)
-;                    >200c-20ff     ; ** FREE **
-
-
-*--------------------------------------------------------------
-* Editor buffer structure @ >2100
-*--------------------------------------------------------------
-edb.top.ptr     equ  >2100          ; Pointer to editor buffer
-edb.index.ptr   equ  >2102          ; Pointer to index
-edb.lines       equ  >2104          ; Total lines in editor buffer
-edb.dirty       equ  >2108          ; Editor buffer dirty flag (Text changed!)
-edb.next_free   equ  >210a          ; Pointer to next free line
-edb.insmode     equ  >210c          ; Editor insert mode (>0000 overwrite / >ffff insert)
-edb.top         equ  >a000          ; Editor buffer high memory 24576 bytes
-;                    >2102-21ff     ; ** FREE **
-
-
-*--------------------------------------------------------------
-* Index @ >2200 - >2fff
-*--------------------------------------------------------------
-idx.top        equ  >2200           ; Top of index
-
 
 *--------------------------------------------------------------
 * Video mode configuration
@@ -138,7 +171,6 @@ pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprpdt  equ   >1800                 ; VDP sprite pattern table
 sprsat  equ   >2000                 ; VDP sprite attribute table
-
 
 
 ***************************************************************
