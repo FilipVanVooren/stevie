@@ -90,6 +90,12 @@ timers          equ  >8370          ; Timer table
 ramsat          equ  >8380          ; Sprite Attribute Table in RAM
 rambuf          equ  >8390          ; RAM workbuffer 1
 *--------------------------------------------------------------
+* Scratchpad backup 1               @>2000-20ff     (256 bytes)
+* Scratchpad backup 2               @>2100-21ff     (256 bytes)
+*--------------------------------------------------------------
+scrpad.backup1  equ  >2000          ; Backup GPL layout
+scrpad.backup2  equ  >2100          ; Backup spectra2 layout
+*--------------------------------------------------------------
 * Frame buffer structure            @>2200-22ff     (256 bytes)
 *--------------------------------------------------------------
 fb.top.ptr      equ  >2200          ; Pointer to frame buffer
@@ -120,7 +126,13 @@ edb.insmode     equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >fff
 tfh.top         equ  >2400          ; TiVi file handling structures
 dsrlnk.dsrlws   equ  tfh.top        ; Address of dsrlnk workspace 32 bytes                                
 dsrlnk.namsto   equ  tfh.top + 32   ; 8-byte RAM buffer for storing device name
-file.pab.ptr    equ  tfh.top + 40   ; Pointer to VDP PAB, required by level 2 FIO
+tfh.pabstat     equ  tfh.top + 40   ; Copy of VDP PAB status byte
+tfh.ioresult    equ  tfh.top + 42   ; DSRLNK IO-status after file operation
+tfh.records     equ  tfh.top + 44   ; File records counter
+tfh.reclen      equ  tfh.top + 46   ; Current record length
+tfh.kilobytes   equ  tfh.top + 48   ; Kilobytes processed (read/written)
+tfh.counter     equ  tfh.top + 50   ; Internal counter used in TiVi file operations
+file.pab.ptr    equ  tfh.top + 52   ; Pointer to VDP PAB, required by level 2 FIO
 *--------------------------------------------------------------
 * Free for future use               @>2500-264f     (336 bytes)
 *--------------------------------------------------------------
@@ -181,15 +193,22 @@ main    coc   @wbit1,config         ; F18a detected?
         blwp  @0                    ; Exit for now if no F18a detected
 
 main.continue:
+        bl    @scroff               ; Turn screen off
         bl    @f18unl               ; Unlock the F18a
         bl    @putvr                ; Turn on 30 rows mode.
-        data  >3140                 ; F18a VR49 (>31), bit 40
-
+              data >3140            ; F18a VR49 (>31), bit 40
+        ;------------------------------------------------------
+        ; Initialize VDP SIT
+        ;------------------------------------------------------
+        bl    @filv
+              data >0000,32,31*80   ; Clear VDP SIT 
+        bl    @scron                ; Turn screen on
         ;------------------------------------------------------
         ; Initialize low + high memory expansion
         ;------------------------------------------------------
         bl    @film
-              data >2000,00,8*1024  ; Clear 8k low-memory
+              data >2200,00,8*1024-256*2
+                                    ; Clear part of 8k low-memory
 
         bl    @film
               data >a000,00,24*1024 ; Clear 24k high-memory
@@ -208,17 +227,14 @@ main.continue:
         bl    @cpym2v
               data sprpdt,cursors,3*8
                                     ; Load sprite cursor patterns
-
-        bl    @putat
-              byte 29,0
-              data txt_title        ; Show TiVi banner
-
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
+
+        bl    @tfh.file.dv80.read
 
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
@@ -530,19 +546,25 @@ task.botline.$$
 ***************************************************************
 *                  fb - Framebuffer module
 ***************************************************************
-        copy  "fb.asm"
+        copy  "framebuffer.asm"
 
 
 ***************************************************************
 *              idx - Index management module
 ***************************************************************
-        copy  "idx.asm"
+        copy  "index.asm"
 
 
 ***************************************************************
 *               edb - Editor Buffer module
 ***************************************************************
-        copy  "edb.asm"
+        copy  "editorbuffer.asm"
+
+
+***************************************************************
+*               edb - Editor Buffer module
+***************************************************************
+        copy  "filehandler.asm"
 
 
 ***************************************************************
@@ -559,10 +581,27 @@ cursors:
 ***************************************************************
 *                       Strings
 ***************************************************************
-txt_title    #string 'TIVI %%build_date%%'
 txt_delim    #string ','
 txt_marker   #string '*EOF*'
 txt_bottom   #string '  BOT'
 txt_ovrwrite #string '   '
 txt_insert   #string 'INS'
 end          data    $ 
+
+
+
+***************************************************************
+* PAB for accessing DV/80 file
+********@*****@*********************@**************************
+pab     byte  io.op.open            ;  0    - OPEN
+        byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
+        data  vrecbuf               ;  2-3  - Record buffer in VDP memory
+        byte  80                    ;  4    - Record length (80 characters maximum)
+        byte  00                    ;  5    - Character count
+        data  >0000                 ;  6-7  - Seek record (only for fixed records)
+        byte  >00                   ;  8    - Screen offset (cassette DSR only)
+fname   byte  15                    ;  9    - File descriptor length
+        text 'DSK1.SPEECHDOCS'      ; 10-.. - File descriptor (Device + '.' + File name)
+
+
+        even

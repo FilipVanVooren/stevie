@@ -1,4 +1,4 @@
-* FILE......: edb.asm
+* FILE......: editorbuffer.asm
 * Purpose...: TiVi Editor - Editor Buffer module
 
 *//////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-* FILE......: fb.asm
+* FILE......: framebuffer.asm
 * Purpose...: TiVi Editor - Framebuffer module
 
 *//////////////////////////////////////////////////////////////
