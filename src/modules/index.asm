@@ -95,7 +95,7 @@ idx.entry.update.$$:
 
 ***************************************************************
 * idx.entry.delete
-* Delete index entry - Closing gap created by delete
+* Delete index entry - Close gap created by delete
 ***************************************************************
 * bl @idx.entry.delete
 *--------------------------------------------------------------

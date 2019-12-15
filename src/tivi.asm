@@ -111,6 +111,7 @@ fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
 fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
 fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
 fb.screenrows   equ  fb.top.ptr+24  ; Number of rows on physical screen
+fb.end          equ  fb.top.ptr+26  ; Free from here on
 *--------------------------------------------------------------
 * Editor buffer structure           @>2300-23ff     (256 bytes)
 *--------------------------------------------------------------
@@ -120,19 +121,22 @@ edb.lines       equ  edb.top.ptr+4  ; Total lines in editor buffer
 edb.dirty       equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
 edb.next_free   equ  edb.top.ptr+8  ; Pointer to next free line
 edb.insmode     equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
+edb.end         equ  edb.top.ptr+12 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
 tfh.top         equ  >2400          ; TiVi file handling structures
 dsrlnk.dsrlws   equ  tfh.top        ; Address of dsrlnk workspace 32 bytes                                
 dsrlnk.namsto   equ  tfh.top + 32   ; 8-byte RAM buffer for storing device name
-tfh.pabstat     equ  tfh.top + 40   ; Copy of VDP PAB status byte
-tfh.ioresult    equ  tfh.top + 42   ; DSRLNK IO-status after file operation
-tfh.records     equ  tfh.top + 44   ; File records counter
-tfh.reclen      equ  tfh.top + 46   ; Current record length
-tfh.kilobytes   equ  tfh.top + 48   ; Kilobytes processed (read/written)
-tfh.counter     equ  tfh.top + 50   ; Internal counter used in TiVi file operations
-file.pab.ptr    equ  tfh.top + 52   ; Pointer to VDP PAB, required by level 2 FIO
+file.pab.ptr    equ  tfh.top + 40   ; Pointer to VDP PAB, required by level 2 FIO
+tfh.pabstat     equ  tfh.top + 42   ; Copy of VDP PAB status byte
+tfh.ioresult    equ  tfh.top + 44   ; DSRLNK IO-status after file operation
+tfh.records     equ  tfh.top + 46   ; File records counter
+tfh.reclen      equ  tfh.top + 48   ; Current record length
+tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
+tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
+tfh.membuffer   equ  tfh.top + 54   ; 80 bytes file memory buffer 
+tfh.end         equ  tfh.top + 134  ; Free from here on
 *--------------------------------------------------------------
 * Free for future use               @>2500-264f     (336 bytes)
 *--------------------------------------------------------------
@@ -600,8 +604,13 @@ pab     byte  io.op.open            ;  0    - OPEN
         byte  00                    ;  5    - Character count
         data  >0000                 ;  6-7  - Seek record (only for fixed records)
         byte  >00                   ;  8    - Screen offset (cassette DSR only)
-fname   byte  15                    ;  9    - File descriptor length
-        text 'DSK1.SPEECHDOCS'      ; 10-.. - File descriptor (Device + '.' + File name)
+
+fname   byte  12                    ;  9    - File descriptor length
+        text 'DSK2.XBEADOC'         ; 10-.. - File descriptor (Device + '.' + File name) 
+
+
+;fname   byte  15                    ;  9    - File descriptor length
+;        text 'DSK2.SPEECHDOCS'      ; 10-.. - File descriptor (Device + '.' + File name)
 
 
         even
