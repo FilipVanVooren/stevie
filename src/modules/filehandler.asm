@@ -5,12 +5,6 @@
 *                     Load and save files
 *//////////////////////////////////////////////////////////////
 
-;--------------------------------------------------------------
-; VDP space for PAB and file buffer
-;--------------------------------------------------------------
-vpab    equ   >0300                 ; VDP PAB    @>0300
-vrecbuf equ   >0400                 ; VDP Buffer @>0400
-
 
 ***************************************************************
 * tfh.file.dv80.read
@@ -38,9 +32,29 @@ tfh.file.dv80.read:
         clr   @tfh.kilobytes        ; Clear kilobytes processed
         clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
         clr   @tfh.ioresult         ; Clear status register contents
+        ;------------------------------------------------------
+        ; Show loading indicators
+        ;------------------------------------------------------
+        bl    @putat
+              byte 29,0
+              data txt_loading      ; Display "Loading...."
 
+        bl    @putat
+              byte 29,11
+              data fname            ; Display device/filename              
+
+        bl    @putat
+              byte 29,61
+              data txt_kb           ; Show "kb" string
+
+        bl    @putat
+              byte 29,67
+              data txt_lines        ; Display "Lines" string
+        ;------------------------------------------------------
+        ; Copy PAB to VDP destination
+        ;------------------------------------------------------
         bl    @cpym2v
-              data vpab,pab,25      ; Copy PAB to VDP
+              data tfh.vpab,pab,25  ; Copy PAB to VDP
         ;------------------------------------------------------
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
@@ -50,7 +64,7 @@ tfh.file.dv80.read:
         ; Open DV/80 file
         ;------------------------------------------------------
         bl    @file.open
-              data vpab             ; Pass file descriptor to DSRLNK
+              data tfh.vpab         ; Pass file descriptor to DSRLNK
         coc   @wbit2,tmp2           ; Equal bit set?
         jeq   tfh.file.dv80.read.error
                                     ; Yes, IO error occured
@@ -62,7 +76,7 @@ tfh.file.dv80.read.record:
         clr   @tfh.reclen           ; Reset record length
 
         bl    @file.record.read     ; Read record
-              data vpab             ; tmp0=Status byte
+              data tfh.vpab         ; tmp0=Status byte
                                     ; tmp1=Bytes read
                                     ; tmp2=Status register contents upon DSRLNK return
 
@@ -90,12 +104,13 @@ tfh.file.dv80.read.display:
         ; Display results
         ;------------------------------------------------------
         bl    @putnum
-              byte 29,0
-              data tfh.records,rambuf,>3020
+              byte 29,56            ; Show kilobytes read
+              data tfh.kilobytes,rambuf,>3020
 
         bl    @putnum
-              byte 29,7
-              data tfh.kilobytes,rambuf,>3020
+              byte 29,73            ; Show lines read
+              data tfh.records,rambuf,>3020
+
         ;------------------------------------------------------
         ; Check if a file error occured
         ;------------------------------------------------------
@@ -108,7 +123,7 @@ tfh.file.dv80.read.check:
         ; Copy record from VDP record buffer to editor buffer
         ;------------------------------------------------------
 tfh.file.dv80.read.addline:
-        li    tmp0,vrecbuf          ; VDP source address
+        li    tmp0,tfh.vrecbuf          ; VDP source address
         mov   @edb.next_free,tmp1   ; RAM target address
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy
         jeq   tfh.file.dv80.read.emptyline
@@ -165,6 +180,10 @@ tfh.file.dv80.read.error:
 tfh.file.dv80.read.eof:        
         bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
+
+        bl    @hchar
+              byte  29,0,32,10
+              data  EOL             ; Clear line
 
         seto  @edb.dirty            ; Text changed
 

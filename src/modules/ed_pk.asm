@@ -61,6 +61,7 @@ keymap_actions
         ; Other action keys
         ;-------------------------------------------------------
         data  key_quit1,ed_pk.action.quit           ; Quit TiVi
+        data  key_quit2,ed_pk.action.loadfile       ; Load file for now
         data  >ffff                                 ; EOL
 
 
@@ -877,3 +878,13 @@ ed_pk.action.char.overwrite:
 ed_pk.action.char.$$:
         b     @ed_wait              ; Back to editor main
 
+
+
+
+ed_pk.action.loadfile
+        bl    @edb.init             ; Initialize editor buffer
+        bl    @idx.init             ; Initialize index
+        bl    @fb.init              ; Initialize framebuffer
+
+        bl    @tfh.file.dv80.read
+        b     @ed_wait              ; Back to editor main

@@ -34,7 +34,16 @@
 * High memory expansion
 * a000-afff b000-bfff c000-cfff d000-dfff e000-efff f000-ffff
 *--------------------------------------------------------------
-* 
+* TiVi VDP layout
+*
+* Mem range   Bytes    Hex   Purpose
+* =========   =====   ====   ==================================
+* 0000-095f    2400    960   PNT - Pattern Name Table
+* 0960-09af      80     50   File record buffer (DIS/VAR 80)
+* 0fc0                       PCT - Pattern Color Table         
+* 1000                       PDT - Pattern Descriptor Table
+* 1800                       SPT - Sprite Pattern Table
+* 2000                       SAT - Sprite Attribute List 
 *--------------------------------------------------------------
 * EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES
 *--------------------------------------------------------------
@@ -45,7 +54,6 @@ debug                   equ  1      ; Turn on spectra2 debugging
 skip_rom_bankswitch     equ  1      ; Skip ROM bankswitching support
 skip_grom_cpu_copy      equ  1      ; Skip GROM to CPU copy functions
 skip_grom_vram_copy     equ  1      ; Skip GROM to VDP vram copy functions
-skip_vdp_hchar          equ  1      ; Skip hchar, xhchar
 skip_vdp_vchar          equ  1      ; Skip vchar, xvchar
 skip_vdp_boxes          equ  1      ; Skip filbox, putbox
 skip_vdp_bitmap         equ  1      ; Skip bitmap functions
@@ -137,6 +145,8 @@ tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
 tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
 tfh.membuffer   equ  tfh.top + 54   ; 80 bytes file memory buffer 
 tfh.end         equ  tfh.top + 134  ; Free from here on
+tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory (max 255 bytes)
+tfh.vpab        equ  >0a60          ; Address of PAB in VDP memory
 *--------------------------------------------------------------
 * Free for future use               @>2500-264f     (336 bytes)
 *--------------------------------------------------------------
@@ -238,7 +248,7 @@ main.continue:
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
 
-        bl    @tfh.file.dv80.read
+        ;bl    @tfh.file.dv80.read
 
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
@@ -588,8 +598,11 @@ cursors:
 txt_delim    #string ','
 txt_marker   #string '*EOF*'
 txt_bottom   #string '  BOT'
-txt_ovrwrite #string '   '
+txt_ovrwrite #string 'OVR'
 txt_insert   #string 'INS'
+txt_loading  #string 'Loading...'
+txt_kb       #string 'kb'
+txt_lines    #string 'Lines'
 end          data    $ 
 
 
@@ -599,15 +612,14 @@ end          data    $
 ********@*****@*********************@**************************
 pab     byte  io.op.open            ;  0    - OPEN
         byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
-        data  vrecbuf               ;  2-3  - Record buffer in VDP memory
+        data  tfh.vrecbuf           ;  2-3  - Record buffer in VDP memory
         byte  80                    ;  4    - Record length (80 characters maximum)
         byte  00                    ;  5    - Character count
         data  >0000                 ;  6-7  - Seek record (only for fixed records)
         byte  >00                   ;  8    - Screen offset (cassette DSR only)
 
 fname   byte  12                    ;  9    - File descriptor length
-        text 'DSK2.XBEADOC'         ; 10-.. - File descriptor (Device + '.' + File name) 
-
+        text 'DSK3.XBEADOC'         ; 10-.. - File descriptor (Device + '.' + File name) 
 
 ;fname   byte  15                    ;  9    - File descriptor length
 ;        text 'DSK2.SPEECHDOCS'      ; 10-.. - File descriptor (Device + '.' + File name)
