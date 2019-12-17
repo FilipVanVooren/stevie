@@ -886,5 +886,9 @@ ed_pk.action.loadfile
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
 
-        bl    @tfh.file.dv80.read
+        li    tmp0,fdname2
+        mov   tmp0,@parm1           ; Get File descriptor
+
+        bl    @tfh.file.dv80.read   ; Read specified file
+        
         b     @ed_wait              ; Back to editor main

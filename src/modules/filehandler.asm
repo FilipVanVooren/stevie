@@ -13,6 +13,7 @@
 *  bl   @tfh.file.dv80.read
 *--------------------------------------------------------------
 * INPUT
+* parm1 = pointer to length-prefixed file descriptor 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -33,16 +34,22 @@ tfh.file.dv80.read:
         clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
         clr   @tfh.ioresult         ; Clear status register contents
         ;------------------------------------------------------
-        ; Show loading indicators
+        ; Show loading indicator
         ;------------------------------------------------------
         bl    @putat
               byte 29,0
               data txt_loading      ; Display "Loading...."
+        ;------------------------------------------------------
+        ; Show file descriptor
+        ;------------------------------------------------------
+        bl    @at
+              byte 29,11            ; Cursor YX position
 
-        bl    @putat
-              byte 29,11
-              data fname            ; Display device/filename              
-
+        mov   @parm1,tmp1           ; Get pointer to file descriptor
+        bl    @xutst0               ; Display device/filename
+        ;------------------------------------------------------
+        ; Show 
+        ;------------------------------------------------------
         bl    @putat
               byte 29,61
               data txt_kb           ; Show "kb" string
@@ -51,10 +58,20 @@ tfh.file.dv80.read:
               byte 29,67
               data txt_lines        ; Display "Lines" string
         ;------------------------------------------------------
-        ; Copy PAB to VDP destination
+        ; Copy PAB header to VDP
         ;------------------------------------------------------
         bl    @cpym2v
-              data tfh.vpab,pab,25  ; Copy PAB to VDP
+              data tfh.vpab,tfh.file.dv80.pab.header,9
+                                    ; Copy PAB header to VDP
+        ;------------------------------------------------------
+        ; Append file descriptor to PAB header in VDP
+        ;------------------------------------------------------
+        li    tmp0,tfh.vpab + 9     ; VDP destination        
+        mov   @parm1,tmp1           ; Get pointer to file descriptor
+        movb  *tmp1,tmp2            ; Get file descriptor length
+        srl   tmp2,8                ; Right justify
+        inc   tmp2                  ; Include length byte as well
+        bl    @xpym2v               ; Append file descriptor to VDP PAB
         ;------------------------------------------------------
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
@@ -194,3 +211,21 @@ tfh.file.dv80.read.eof:
 *--------------------------------------------------------------
 tfh.file.dv80.read_exit:
         b     @poprt                ; Return to caller
+
+
+***************************************************************
+* PAB for accessing DV/80 file
+********@*****@*********************@**************************
+tfh.file.dv80.pab.header:
+        byte  io.op.open            ;  0    - OPEN
+        byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
+        data  tfh.vrecbuf           ;  2-3  - Record buffer in VDP memory
+        byte  80                    ;  4    - Record length (80 characters maximum)
+        byte  00                    ;  5    - Character count
+        data  >0000                 ;  6-7  - Seek record (only for fixed records)
+        byte  >00                   ;  8    - Screen offset (cassette DSR only)
+        ;------------------------------------------------------
+        ; File descriptor part (variable length)
+        ;------------------------------------------------------        
+        ; byte  12                  ;  9    - File descriptor length
+        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor (Device + '.' + File name) 

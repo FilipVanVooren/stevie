@@ -248,8 +248,6 @@ main.continue:
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
 
-        ;bl    @tfh.file.dv80.read
-
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------
@@ -585,7 +583,7 @@ task.botline.$$
 *                      Constants
 ***************************************************************
 romsat:
-        data >0303,>000f              ; Cursor YX, shape and colour
+        data >0303,>000f              ; Cursor YX, initial shape and colour
 
 cursors:
         data >0000,>0000,>0000,>001c  ; Cursor 1 - Insert mode
@@ -607,22 +605,15 @@ end          data    $
 
 
 
-***************************************************************
-* PAB for accessing DV/80 file
-********@*****@*********************@**************************
-pab     byte  io.op.open            ;  0    - OPEN
-        byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
-        data  tfh.vrecbuf           ;  2-3  - Record buffer in VDP memory
-        byte  80                    ;  4    - Record length (80 characters maximum)
-        byte  00                    ;  5    - Character count
-        data  >0000                 ;  6-7  - Seek record (only for fixed records)
-        byte  >00                   ;  8    - Screen offset (cassette DSR only)
+fdname   byte  12                    ; File descriptor length
+         text 'DSK3.XBEADOC'         ; File descriptor (Device + '.' + File name) 
+         even
 
-fname   byte  12                    ;  9    - File descriptor length
-        text 'DSK3.XBEADOC'         ; 10-.. - File descriptor (Device + '.' + File name) 
+fdname2  byte  15                    ;  File descriptor length
+         text 'DSK1.SPEECHDOCS'      ;  File descriptor (Device + '.' + File name)
 
-;fname   byte  15                    ;  9    - File descriptor length
-;        text 'DSK2.SPEECHDOCS'      ; 10-.. - File descriptor (Device + '.' + File name)
+fdname3  byte  12                    ;  File descriptor length
+         text 'DSK2.XBEADOC'         ;  File descriptor (Device + '.' + File name)
 
 
         even
