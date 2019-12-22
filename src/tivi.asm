@@ -11,39 +11,45 @@
 *--------------------------------------------------------------
 * TiVi memory layout
 *
-* Mem range   Bytes    Hex   Purpose
-* =========   =====   ====   ==================================
-* 8300-83ff     256   >100   scrpad spectra2 layout
-* 2000-20ff     256   >100   scrpad backup 1: GPL layout
-* 2100-21ff     256   >100   scrpad backup 2: paged out spectra2
-* 2200-22ff     256   >100   TiVi frame buffer structure
-* 2300-23ff     256   >100   TiVi editor buffer structure
-* 2400-24ff     256   >100   TiVi file handling structure
-* 2500-25ff     256   >100   Free for future use
-* 2600-264f      80   >050   Free for future use
-* 2650-2faf    2480   >9b0   Frame buffer 80x31
-* 2fb0-2fff      80   >050   Free for future use
-* 3000-3fff    4096  >1000   Index 
-* a000-fffb   24574  >5ffe   Editor buffer
+* Mem range   Bytes    Hex    Purpose
+* =========   =====   ====    ==================================
+* 2000-20ff     256   >0100   scrpad backup 1: GPL layout
+* 2100-21ff     256   >0100   scrpad backup 2: paged out spectra2
+* 2200-22ff     256   >0100   TiVi frame buffer structure
+* 2300-23ff     256   >0100   TiVi editor buffer structure
+* 2400-24ff     256   >0100   TiVi file handling structure
+* 2500-25ff     256   >0100   Free for future use
+* 2600-264f      80   >0050   Free for future use
+* 2650-2faf    2400   >0960   Frame buffer 80x30
+* 2fb0-2fff     160   >00a0   Free for future use
+* 3000-3fff    4096   >0000   Index 
+* 8300-83ff     256   >0100   scrpad spectra2 layout
+* a000-fffb   24574   >5ffe   Editor buffer
 *--------------------------------------------------------------
 * SAMS 4k pages in transparent mode
 *
 * Low memory expansion
-* 2000-2fff 3000-3fff
+* 2000-2fff 4k  Scratchpad backup / TiVi structures
+* 3000-3fff 4k  Index
 *
 * High memory expansion
-* a000-afff b000-bfff c000-cfff d000-dfff e000-efff f000-ffff
+* a000-afff 4k  Editor buffer
+* b000-bfff 4k  Editor buffer 
+* c000-cfff 4k  Editor buffer 
+* d000-dfff 4k  Editor buffer 
+* e000-efff 4k  Editor buffer 
+* f000-ffff 4k  Editor buffer
 *--------------------------------------------------------------
 * TiVi VDP layout
 *
-* Mem range   Bytes    Hex   Purpose
-* =========   =====   ====   ==================================
-* 0000-095f    2400    960   PNT - Pattern Name Table
-* 0960-09af      80     50   File record buffer (DIS/VAR 80)
-* 0fc0                       PCT - Pattern Color Table         
-* 1000                       PDT - Pattern Descriptor Table
-* 1800                       SPT - Sprite Pattern Table
-* 2000                       SAT - Sprite Attribute List 
+* Mem range   Bytes    Hex    Purpose
+* =========   =====   ====    =================================
+* 0000-095f    2400   >0960   PNT - Pattern Name Table
+* 0960-09af      80   >0050   File record buffer (DIS/VAR 80)
+* 0fc0                        PCT - Pattern Color Table         
+* 1000                        PDT - Pattern Descriptor Table
+* 1800                        SPT - Sprite Pattern Table
+* 2000                        SAT - Sprite Attribute List 
 *--------------------------------------------------------------
 * EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES  EQUATES
 *--------------------------------------------------------------
@@ -160,6 +166,7 @@ free.mem2       equ  >2600          ; >2600-264f    80 bytes
 fb.top          equ  >2650          ; Frame buffer low memory 2400 bytes (80x30)
 idx.top         equ  >3000          ; Top of index
 edb.top         equ  >a000          ; Editor buffer high memory
+edb.size        equ  24576          ; Editor buffer size
 *--------------------------------------------------------------
 
 

@@ -34,27 +34,21 @@ tfh.file.dv80.read:
         clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
         clr   @tfh.ioresult         ; Clear status register contents
         ;------------------------------------------------------
-        ; Show loading indicator
+        ; Show loading indicator and file descriptor
         ;------------------------------------------------------
+        bl    @hchar
+              byte 29,0,32,80
+              data EOL
         
-
         bl    @putat
               byte 29,0
               data txt_loading      ; Display "Loading...."
-        ;------------------------------------------------------
-        ; Show file descriptor
-        ;------------------------------------------------------
+
         bl    @at
               byte 29,11            ; Cursor YX position
 
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
-        ;------------------------------------------------------
-        ; Show 
-        ;------------------------------------------------------
-        bl    @putat
-              byte 29,61
-              data txt_kb           ; Show "kb" string
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
@@ -188,6 +182,10 @@ tfh.file.dv80.read.eof:
         ;------------------------------------------------------
         ; Display final results
         ;------------------------------------------------------
+        bl    @hchar
+              byte 29,0,32,10       ; Erase loading indicator
+              data EOL
+
         bl    @putnum
               byte 29,56            ; Show kilobytes read
               data tfh.kilobytes,rambuf,>3020

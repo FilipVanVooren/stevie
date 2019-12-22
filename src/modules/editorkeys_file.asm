@@ -18,6 +18,9 @@ edkey.action.loadfile.dv80:
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
+        bl    @filv
+              data sprsat,>0000,4   ; Turn off sprites (cursor)
+
         mov   @fb.screenrows,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!

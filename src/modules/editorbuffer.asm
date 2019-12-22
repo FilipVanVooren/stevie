@@ -32,7 +32,8 @@ edb.init:
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free   ; Set pointer to next free line in editor buffer
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
-        clr   @edb.lines            ; Lines=
+        clr   @edb.lines            ; Lines=0
+
 edb.init.$$:        
         ;------------------------------------------------------
         ; Exit
@@ -229,7 +230,8 @@ edb.line.unpack.copy.word:
 edb.line.unpack.clear:
         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
-        inc   tmp0                  ; Don't erase last character 
+;;  test bug 2019-12-22        
+;;        inc   tmp0                  ; Don't erase last character 
         clr   tmp1                  ; Fill with >00
         mov   @fb.colsline,tmp2
         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
