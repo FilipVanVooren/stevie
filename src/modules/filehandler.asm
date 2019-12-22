@@ -36,6 +36,8 @@ tfh.file.dv80.read:
         ;------------------------------------------------------
         ; Show loading indicator
         ;------------------------------------------------------
+        
+
         bl    @putat
               byte 29,0
               data txt_loading      ; Display "Loading...."
@@ -53,10 +55,6 @@ tfh.file.dv80.read:
         bl    @putat
               byte 29,61
               data txt_kb           ; Show "kb" string
-
-        bl    @putat
-              byte 29,67
-              data txt_lines        ; Display "Lines" string
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
@@ -118,17 +116,6 @@ tfh.file.dv80.read.display:
         bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
         ;------------------------------------------------------
-        ; Display results
-        ;------------------------------------------------------
-        bl    @putnum
-              byte 29,56            ; Show kilobytes read
-              data tfh.kilobytes,rambuf,>3020
-
-        bl    @putnum
-              byte 29,73            ; Show lines read
-              data tfh.records,rambuf,>3020
-
-        ;------------------------------------------------------
         ; Check if a file error occured
         ;------------------------------------------------------
 tfh.file.dv80.read.check:     
@@ -140,16 +127,17 @@ tfh.file.dv80.read.check:
         ; Copy record from VDP record buffer to editor buffer
         ;------------------------------------------------------
 tfh.file.dv80.read.addline:
-        li    tmp0,tfh.vrecbuf          ; VDP source address
+        li    tmp0,tfh.vrecbuf      ; VDP source address
         mov   @edb.next_free,tmp1   ; RAM target address
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy
         jeq   tfh.file.dv80.read.emptyline
-                                    ; Special handling for empty
+                                    ; Special handling for empty line
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
         ;------------------------------------------------------
         ; Prepare for index update
         ;------------------------------------------------------
         mov   @tfh.records,@parm1   ; parm1 = Line number
+        dec   @parm1                ;         Adjust for base 0 index
         mov   @edb.next_free,@parm2 ; parm2 = Pointer to line in editor buffer
         mov   @tfh.reclen,@parm3    ; parm3 = Line length
         jmp   tfh.file.dv80.read.updindex
@@ -197,15 +185,22 @@ tfh.file.dv80.read.error:
 tfh.file.dv80.read.eof:        
         bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
+        ;------------------------------------------------------
+        ; Display final results
+        ;------------------------------------------------------
+        bl    @putnum
+              byte 29,56            ; Show kilobytes read
+              data tfh.kilobytes,rambuf,>3020
 
-        bl    @hchar
-              byte  29,0,32,10
-              data  EOL             ; Clear line
+        bl    @putat
+              byte 29,61
+              data txt_kb           ; Show "kb" string
 
-        seto  @edb.dirty            ; Text changed
+        bl    @putnum
+              byte 29,73            ; Show lines read
+              data tfh.records,rambuf,>3020
 
-        clr   @parm1                ; parm1 = goto line 1
-        bl    @fb.refresh           ; Refresh frame buffer
+        seto  @edb.dirty            ; Text changed in editor buffer!
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

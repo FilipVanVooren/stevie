@@ -72,8 +72,8 @@ skip_cpu_crc16          equ  1      ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 startup_backup_scrpad   equ  1      ; Backup scratchpad @>8300:>83ff to @>2000
 startup_keep_vdpmemory  equ  1      ; Do not clear VDP vram upon startup
-spfclr                  equ  >f5    ; Foreground/Background color for font.
-spfbck                  equ  >05    ; Screen background color.
+spfclr                  equ  >f4    ; Foreground/Background color for font.
+spfbck                  equ  >04    ; Screen background color.
 *--------------------------------------------------------------
 * Scratchpad memory                 @>8300-83ff     (256 bytes)
 *--------------------------------------------------------------
@@ -287,7 +287,7 @@ editor  coc   @wbit11,config        ; ANYKEY pressed ?
 *--------------------------------------------------------------
 ed_new_key
         mov   @waux1,@waux2         ; Save as previous key
-        jmp   ed_pk
+        jmp   edkey                 ; Process key
 *--------------------------------------------------------------
 * Clear keyboard buffer if no key pressed
 *--------------------------------------------------------------
@@ -316,10 +316,13 @@ ed_exit b     @hookok               ; Return
 
 
 ***************************************************************
-*              ed_pk - Editor Process Key module
+*                Tivi - Editor keyboard actions
 ***************************************************************
-        copy  "ed_pk.asm"
-
+        copy  "editorkeys_init.asm" ; Initialisation & setup
+        copy  "editorkeys_mov.asm"  ; Actions for movement keys
+        copy  "editorkeys_mod.asm"  ; Actions for modifier keys
+        copy  "editorkeys_misc.asm" ; Actions for miscelanneous keys
+        copy  "editorkeys_file.asm" ; Actions for file related keys
 
 
 
@@ -574,7 +577,7 @@ task.botline.$$
 
 
 ***************************************************************
-*               edb - Editor Buffer module
+*               fh - File handling module
 ***************************************************************
         copy  "filehandler.asm"
 
@@ -604,16 +607,13 @@ txt_lines    #string 'Lines'
 end          data    $ 
 
 
-
-fdname   byte  12                    ; File descriptor length
-         text 'DSK3.XBEADOC'         ; File descriptor (Device + '.' + File name) 
-         even
-
-fdname2  byte  15                    ;  File descriptor length
-         text 'DSK1.SPEECHDOCS'      ;  File descriptor (Device + '.' + File name)
-
-fdname3  byte  12                    ;  File descriptor length
-         text 'DSK2.XBEADOC'         ;  File descriptor (Device + '.' + File name)
-
-
-        even
+fdname0      #string 'DSK3.CONIO'
+fdname1      #string 'DSK1.SPEECHDOCS'
+fdname2      #string 'DSK3.BITDOC'
+fdname3      #string 'DSK3.XBEADOC'
+fdname4      #string 'DSK3.C99MAN1'
+fdname5      #string 'DSK3.C99MAN2'
+fdname6      #string 'DSK3.C99MAN3'
+fdname7      #string 'DSK3.C99SPECS'
+fdname8      #string 'DSK3.RANDOM#C'
+fdname9      #string 'DSK3.RNDTST#C'

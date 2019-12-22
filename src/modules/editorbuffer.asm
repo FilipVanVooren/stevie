@@ -32,6 +32,7 @@ edb.init:
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free   ; Set pointer to next free line in editor buffer
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
+        clr   @edb.lines            ; Lines=
 edb.init.$$:        
         ;------------------------------------------------------
         ; Exit

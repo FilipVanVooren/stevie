@@ -1,7 +1,7 @@
 XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
-**** **** ****     > tivi.lst.asm.32418
+**** **** ****     > tivi.lst.asm.16154
 0001               XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
-0002               **** **** ****     > tivi.asm.32205
+0002               **** **** ****     > tivi.asm.15989
 0003               0001               ***************************************************************
 0004               0002               *
 0005               0003               *                          TiVi Editor
@@ -9,7 +9,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0007               0005               *                (c)2018-2019 // Filip van Vooren
 0008               0006               *
 0009               0007               ***************************************************************
-0010               0008               * File: tivi.asm                    ; Version 191217-32205
+0010               0008               * File: tivi.asm                    ; Version 191222-15989
 0011               0009               *--------------------------------------------------------------
 0012               0010               * TI-99/4a Advanced Editor & IDE
 0013               0011               *--------------------------------------------------------------
@@ -76,8 +76,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 1.7.0
 0074               0072               *--------------------------------------------------------------
 0075               0073      0001     startup_backup_scrpad   equ  1      ; Backup scratchpad @>8300:>83ff to @>2000
 0076               0074      0001     startup_keep_vdpmemory  equ  1      ; Do not clear VDP vram upon startup
-0077               0075      00F5     spfclr                  equ  >f5    ; Foreground/Background color for font.
-0078               0076      0005     spfbck                  equ  >05    ; Screen background color.
+0077               0075      00F4     spfclr                  equ  >f4    ; Foreground/Background color for font.
+0078               0076      0004     spfbck                  equ  >04    ; Screen background color.
 0079               0077               *--------------------------------------------------------------
 0080               0078               * Scratchpad memory                 @>8300-83ff     (256 bytes)
 0081               0079               *--------------------------------------------------------------
