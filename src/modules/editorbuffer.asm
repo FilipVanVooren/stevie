@@ -193,7 +193,8 @@ edb.line.unpack:
         ;------------------------------------------------------
         bl    @edb.line.getlength   ; Get length of line
                                     ; parm1 = Line number
-        mov   @outparm1,@rambuf+8   ; Bytes to copy         
+        mov   @outparm1,@rambuf+8   ; Bytes to copy      
+                   
         jeq   edb.line.unpack.clear ; Clear line if length=0
         ;------------------------------------------------------
         ; Index. Calculate address of entry and get pointer
@@ -208,9 +209,13 @@ edb.line.unpack.copy:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         mov   @rambuf+8,tmp2        ; Bytes to copy 
-
+        ;------------------------------------------------------
+        ; Special treatment for lines with length <= 2
+        ;------------------------------------------------------  
         ci    tmp2,2
-        jle   edb.line.unpack.copy.word
+        jeq   edb.line.unpack.copy.word
+        ci    tmp2,1
+        jeq   edb.line.unpack.copy.byte
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
@@ -220,18 +225,19 @@ edb.line.unpack.copy:
                                     ;   tmp2 = Bytes to copy
         jmp   edb.line.unpack.clear
         ;------------------------------------------------------
-        ; Copy single word
+        ; Copy single word (could be uneven address)
         ;------------------------------------------------------
 edb.line.unpack.copy.word:
-        mov   *tmp0,*tmp1           ; Copy word 
+        movb  *tmp0+,*tmp1+         ; Copy byte
+edb.line.unpack.copy.byte:        
+        movb  *tmp0+,*tmp1+         ; Copy byte
         ;------------------------------------------------------
         ; Clear rest of row in framebuffer
         ;------------------------------------------------------
 edb.line.unpack.clear:
         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
-;;  test bug 2019-12-22        
-;;        inc   tmp0                  ; Don't erase last character 
+        inc   tmp0                  ; Don't erase last character 
         clr   tmp1                  ; Fill with >00
         mov   @fb.colsline,tmp2
         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear

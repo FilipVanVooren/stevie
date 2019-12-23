@@ -148,7 +148,7 @@ tfh.file.dv80.read.emptyline:
 tfh.file.dv80.read.updindex:   
         bl    @idx.entry.update     ; Update index (parm1, parm2, parm3)     
         a     @tfh.reclen,@edb.next_free
-                                    ; Update pointer to next free line
+                                    ; Update pointer to next free line                                    
         inc   @edb.lines            ; lines=lines+1                
 
         bl    @mem.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)

@@ -160,15 +160,20 @@ free.mem1       equ  >2500          ; >2500-25ff   256 bytes
 free.mem2       equ  >2600          ; >2600-264f    80 bytes
 *--------------------------------------------------------------
 * Frame buffer                      @>2650-2fff    (2480 bytes)
-* Index buffer                      @>3000-3fff    (4096 bytes)
-* Editor buffer                     @>a000-ffff   (24576 bytes)
 *--------------------------------------------------------------
 fb.top          equ  >2650          ; Frame buffer low memory 2400 bytes (80x30)
+fb.size         equ  2480           ; Frame buffer size
+*--------------------------------------------------------------
+* Index                             @>3000-3fff    (4096 bytes)
+*--------------------------------------------------------------
 idx.top         equ  >3000          ; Top of index
+idx.size        equ  4096           ; Index size
+*--------------------------------------------------------------
+* Editor buffer                     @>a000-ffff   (24576 bytes)
+*--------------------------------------------------------------
 edb.top         equ  >a000          ; Editor buffer high memory
 edb.size        equ  24576          ; Editor buffer size
 *--------------------------------------------------------------
-
 
 
 

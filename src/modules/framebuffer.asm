@@ -37,6 +37,11 @@ fb.init
         mov   tmp0,@fb.screenrows   ; Physical rows on screen = 29
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
+        ; Clear frame buffer
+        ;------------------------------------------------------
+        bl    @film
+        data  fb.top,>00,fb.size    ; Clear it all the way
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.init.$$
