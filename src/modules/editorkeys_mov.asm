@@ -7,7 +7,7 @@
 *---------------------------------------------------------------
 edkey.action.left:
         mov   @fb.column,tmp0
-        jeq   !jmp2b                ; column=0 ? Skip further processing
+        jeq   !                     ; column=0 ? Skip further processing
         ;-------------------------------------------------------
         ; Update
         ;-------------------------------------------------------
@@ -17,7 +17,7 @@ edkey.action.left:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!jmp2b  b     @ed_wait              ; Back to editor main
+!       b     @ed_wait              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -25,7 +25,7 @@ edkey.action.left:
 *---------------------------------------------------------------
 edkey.action.right:
         c     @fb.column,@fb.row.length
-        jhe   !jmp2b                ; column > length line ? Skip further processing
+        jhe   !                     ; column > length line ? Skip further processing
         ;-------------------------------------------------------
         ; Update
         ;-------------------------------------------------------
@@ -35,7 +35,7 @@ edkey.action.right:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!jmp2b  b     @ed_wait              ; Back to editor main
+!       b     @ed_wait              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -99,7 +99,7 @@ edkey.action.up.$$:
 *---------------------------------------------------------------
 edkey.action.down:
         c     @fb.row,@edb.lines    ; Last line in editor buffer ? 
-        jeq   !jmp2b                ; Yes, skip further processing
+        jeq   !                     ; Yes, skip further processing
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -157,7 +157,7 @@ edkey.action.down.set_cursorx:
         ;-------------------------------------------------------
 edkey.action.down.$$:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!jmp2b  b     @ed_wait              ; Back to editor main
+!       b     @ed_wait              ; Back to editor main
 
 
 
@@ -189,7 +189,7 @@ edkey.action.end:
 *---------------------------------------------------------------
 edkey.action.pword:
         mov   @fb.column,tmp0
-        jeq   !jmp2b                ; column=0 ? Skip further processing
+        jeq   !                     ; column=0 ? Skip further processing
         ;-------------------------------------------------------
         ; Prepare 2 char buffer
         ;-------------------------------------------------------
@@ -248,7 +248,7 @@ edkey.action.pword_done:
         ;-------------------------------------------------------
 edkey.action.pword.$$:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!jmp2b  b     @ed_wait              ; Back to editor main
+!       b     @ed_wait              ; Back to editor main
 
 
 
@@ -259,7 +259,7 @@ edkey.action.nword:
         clr   tmp4                  ; Reset multiple spaces mode
         mov   @fb.column,tmp0
         c     tmp0,@fb.row.length
-        jhe   !jmp2b                ; column=last char ? Skip further processing
+        jhe   !                     ; column=last char ? Skip further processing
         ;-------------------------------------------------------
         ; Prepare 2 char buffer
         ;-------------------------------------------------------
@@ -331,7 +331,7 @@ edkey.action.nword_done:
         ;-------------------------------------------------------
 edkey.action.nword.$$:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!jmp2b  b     @ed_wait              ; Back to editor main
+!       b     @ed_wait              ; Back to editor main
 
 
 

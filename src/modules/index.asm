@@ -80,12 +80,6 @@ idx.entry.update:
         movb  tmp2,tmp1             ; Set packed length (identical for now!)
         mov   tmp1,@idx.top+2(tmp0) ; Update index slot -> Lengths 
         ;------------------------------------------------------
-        ; Set EOL marker if necessary
-        ;------------------------------------------------------      
-*       c     @parm1,@edb.lines     ; line > total lines in editor buffer ?
-*       jlt   idx.entry.update.$$   ; No, exit
-*       seto  @idx.top+4(tmp0)      ; Set EOL marker
-        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 idx.entry.update.$$:

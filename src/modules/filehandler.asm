@@ -124,8 +124,12 @@ tfh.file.dv80.read.addline:
         li    tmp0,tfh.vrecbuf      ; VDP source address
         mov   @edb.next_free,tmp1   ; RAM target address
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy
+
         jeq   tfh.file.dv80.read.emptyline
-                                    ; Special handling for empty line
+                                    ; Special handling for empty line        
+        ;------------------------------------------------------
+        ; Copy record from VDP RAM to CPU RAM
+        ;------------------------------------------------------
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
         ;------------------------------------------------------
         ; Prepare for index update

@@ -621,7 +621,7 @@ end          data    $
 
 fdname0      #string 'DSK3.CONIO'
 fdname1      #string 'DSK1.SPEECHDOCS'
-fdname2      #string 'DSK3.BITDOC'
+fdname2      #string 'DSK1.XBEADOC'
 fdname3      #string 'DSK3.XBEADOC'
 fdname4      #string 'DSK3.C99MAN1'
 fdname5      #string 'DSK3.C99MAN2'

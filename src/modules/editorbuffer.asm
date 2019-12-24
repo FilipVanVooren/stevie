@@ -193,15 +193,25 @@ edb.line.unpack:
         ;------------------------------------------------------
         bl    @edb.line.getlength   ; Get length of line
                                     ; parm1 = Line number
-        mov   @outparm1,@rambuf+8   ; Bytes to copy      
-                   
-        jeq   edb.line.unpack.clear ; Clear line if length=0
+        mov   @outparm1,@rambuf+8   ; Bytes to copy                         
         ;------------------------------------------------------
         ; Index. Calculate address of entry and get pointer
         ;------------------------------------------------------
         bl    @idx.pointer.get      ; Get pointer to editor buffer entry
                                     ; parm1 = Line number
         mov   @outparm1,@rambuf+4   ; Source memory address in editor buffer
+        ;------------------------------------------------------
+        ; Clear end of future row in framebuffer
+        ;------------------------------------------------------
+edb.line.unpack.clear:
+        mov   @rambuf+6,tmp0        ; Start of row in frame buffer
+        a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
+        szc   @wbit1,tmp0           ; (1) Make address even (faster fill MOV)
+        clr   tmp1                  ; Fill with >00
+        mov   @fb.colsline,tmp2
+        s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
+        inc   tmp2                  ; Compensate due to (1) 
+        bl    @xfilm                ; Clear rest of row
         ;------------------------------------------------------
         ; Copy line from editor buffer to frame buffer
         ;------------------------------------------------------
@@ -212,6 +222,7 @@ edb.line.unpack.copy:
         ;------------------------------------------------------
         ; Special treatment for lines with length <= 2
         ;------------------------------------------------------  
+        jeq   edb.line.unpack.$$    ; Exit if length = 0
         ci    tmp2,2
         jeq   edb.line.unpack.copy.word
         ci    tmp2,1
@@ -223,25 +234,14 @@ edb.line.unpack.copy:
                                     ;   tmp0 = Source address
                                     ;   tmp1 = Target address 
                                     ;   tmp2 = Bytes to copy
-        jmp   edb.line.unpack.clear
+        jmp   edb.line.unpack.$$
         ;------------------------------------------------------
-        ; Copy single word (could be uneven address)
+        ; Copy single word (could be on uneven address!)
         ;------------------------------------------------------
 edb.line.unpack.copy.word:
         movb  *tmp0+,*tmp1+         ; Copy byte
 edb.line.unpack.copy.byte:        
         movb  *tmp0+,*tmp1+         ; Copy byte
-        ;------------------------------------------------------
-        ; Clear rest of row in framebuffer
-        ;------------------------------------------------------
-edb.line.unpack.clear:
-        mov   @rambuf+6,tmp0        ; Start of row in frame buffer
-        a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
-        inc   tmp0                  ; Don't erase last character 
-        clr   tmp1                  ; Fill with >00
-        mov   @fb.colsline,tmp2
-        s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
-        bl    @xfilm                ; Clear rest of row
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
