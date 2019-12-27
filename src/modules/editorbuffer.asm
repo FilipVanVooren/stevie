@@ -85,24 +85,47 @@ edb.line.pack:
 edb.line.pack.scan:
         movb  *tmp1+,tmp2           ; Get char
         srl   tmp2,8                ; Right justify
-        jeq   edb.line.pack.idx     ; Stop scan if >00 found
+        jeq   edb.line.pack.checklength
+                                    ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         jmp   edb.line.pack.scan    ; Next character
         ;------------------------------------------------------
-        ; Update index entry
+        ; Handle line placement depending on length
         ;------------------------------------------------------
-edb.line.pack.idx:
-        mov   @fb.topline,@parm1    ; parm1 = fb.topline + fb.row
-        a     @fb.row,@parm1        ; 
+edb.line.pack.checklength:
+        mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
+        a     @fb.row,@parm1        ; /
+
         mov   tmp0,@rambuf+4        ; Save length of line
-        jne   edb.line.pack.idx.normal 
-                                    ; tmp0 != 0 ?
+        jgt   edb.line.pack.checklength2
         ;------------------------------------------------------
         ; Special handling if empty line (length=0)
         ;------------------------------------------------------
-        clr   @parm2                ; Set pointer to >0000
-        clr   @parm3                ; Set length of line = 0
+        clr   @parm2                ; Clear line content
+
+        clr   @parm3                ; Set length of line
         bl    @idx.entry.update     ; parm1=fb.topline + fb.row
+                                    ; parm2=line content
+                                    ; parm3=line length
+
+        jmp   edb.line.pack.$$      ; Exit
+        ;------------------------------------------------------
+        ; Put line content in index itself if line length <= 2
+        ;------------------------------------------------------
+edb.line.pack.checklength2:
+        ci    tmp0,2
+        jgt   edb.line.pack.idx.normal
+
+        clr   @parm2
+        mov   @rambuf+2,tmp1
+        movb  *tmp1+,@parm2         ; Copy 1st charcter
+        movb  *tmp1+,@parm2+1       ; Copy 2nd charcter
+
+        mov   tmp0,@parm3           ; Set length of line
+        bl    @idx.entry.update     ; parm1=fb.topline + fb.row
+                                    ; parm2=line content
+                                    ; parm3=line length
+
         jmp   edb.line.pack.$$      ; Exit
         ;------------------------------------------------------
         ; Update index and store line in editor buffer
@@ -110,27 +133,17 @@ edb.line.pack.idx:
 edb.line.pack.idx.normal:
         mov   @edb.next_free,@parm2 ; Block where packed string will reside
         mov   @rambuf+4,tmp2        ; Number of bytes to copy
+
         mov   tmp0,@parm3           ; Set length of line
         bl    @idx.entry.update     ; parm1=fb.topline + fb.row
+                                    ; parm2=pointer to line in editor buffer
+                                    ; parm3=line length
         ;------------------------------------------------------
         ; Pack line from framebuffer to editor buffer
         ;------------------------------------------------------
         mov   @rambuf+2,tmp0        ; Source for memory copy
         mov   @edb.next_free,tmp1   ; Destination for memory copy
         mov   @rambuf+4,tmp2        ; Number of bytes to copy
-        ;------------------------------------------------------
-        ; Pack line from framebuffer to editor buffer
-        ;------------------------------------------------------
-        mov   @rambuf+2,tmp0        ; Source for memory copy
-        ci    tmp2,2
-        jgt   edb.line.pack.idx.normal.copy
-        ;------------------------------------------------------
-        ; Special handling 1-2 bytes copy
-        ;------------------------------------------------------
-        mov   *tmp0,*tmp1           ; Copy word
-        li    tmp0,2                ; Set length=2
-        a     tmp0,@edb.next_free   ; Update pointer to next free block
-        jmp   edb.line.pack.$$      ; Exit
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
@@ -217,6 +230,8 @@ edb.line.unpack.clear:
         ;------------------------------------------------------
 edb.line.unpack.copy:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
+                                    ; or line content itself if line length <= 2.
+
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         mov   @rambuf+8,tmp2        ; Bytes to copy 
         ;------------------------------------------------------
@@ -239,9 +254,10 @@ edb.line.unpack.copy:
         ; Copy single word (could be on uneven address!)
         ;------------------------------------------------------
 edb.line.unpack.copy.word:
-        movb  *tmp0+,*tmp1+         ; Copy byte
-edb.line.unpack.copy.byte:        
-        movb  *tmp0+,*tmp1+         ; Copy byte
+        mov   tmp0,*tmp1            ; Copy word 
+        jmp   edb.line.unpack.$$
+edb.line.unpack.copy.byte:
+        movb  tmp0,*tmp1+           ; Copy byte
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

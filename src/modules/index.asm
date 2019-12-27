@@ -56,6 +56,7 @@ idx.init.$$:
 * INPUT
 * @parm1    = Line number in editor buffer
 * @parm2    = Pointer to line in editor buffer 
+*             (or line content if length <= 2)
 * @parm3    = Length of line
 *--------------------------------------------------------------
 * OUTPUT
