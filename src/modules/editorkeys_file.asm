@@ -35,6 +35,7 @@ edkey.action.loadfile:
         ; Read DV80 file and display
         ;-------------------------------------------------------
         bl    @tfh.file.read        ; Read specified file
+        clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty         
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
 
 

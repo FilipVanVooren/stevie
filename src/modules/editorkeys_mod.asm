@@ -6,6 +6,7 @@
 * Delete character
 *---------------------------------------------------------------
 edkey.action.del_char:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         ;-------------------------------------------------------
         ; Sanity check 1
@@ -50,6 +51,7 @@ edkey.action.del_char.$$:
 * Delete until end of line
 *---------------------------------------------------------------
 edkey.action.del_eol:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.del_eol.$$
@@ -87,6 +89,7 @@ edkey.action.del_eol.$$:
 * Delete current line
 *---------------------------------------------------------------
 edkey.action.del_line:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;-------------------------------------------------------
         ; Special treatment if only 1 line in file
         ;-------------------------------------------------------
@@ -135,6 +138,7 @@ edkey.action.ins_char.ws
         li    tmp0,>2000            ; White space
         mov   tmp0,@parm1
 edkey.action.ins_char:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         ;-------------------------------------------------------
         ; Sanity check 1 - Empty line
@@ -199,6 +203,7 @@ edkey.action.ins_char.$$:
 * Insert new line
 *---------------------------------------------------------------
 edkey.action.ins_line:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
@@ -243,6 +248,7 @@ edkey.action.enter:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.enter.upd_counter
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
@@ -326,6 +332,7 @@ edkey.action.ins_onoff.$$:
 * Process character
 *---------------------------------------------------------------
 edkey.action.char:
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         movb  tmp1,@parm1           ; Store character for insert
         mov   @edb.insmode,tmp0     ; Insert or overwrite ?
         jeq   edkey.action.char.overwrite

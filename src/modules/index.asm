@@ -58,6 +58,7 @@ idx.init.$$:
 * @parm2    = Pointer to line in editor buffer 
 *             (or line content if length <= 2)
 * @parm3    = Length of line
+* @parm4    = SAMS bank
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to updated index entry
@@ -73,13 +74,15 @@ idx.entry.update:
         sla   tmp0,2                ; line number * 4
         mov   @parm2,@idx.top(tmp0) ; Update index slot -> Pointer
         ;------------------------------------------------------
-        ; Set packed / unpacked length of string and update
+        ; Put SAMS bank and length of string into index
         ;------------------------------------------------------
-        mov   @parm3,tmp1           ; Set unpacked length
-        mov   tmp1,tmp2
-        swpb  tmp2
-        movb  tmp2,tmp1             ; Set packed length (identical for now!)
-        mov   tmp1,@idx.top+2(tmp0) ; Update index slot -> Lengths 
+        mov   @parm3,tmp1           ; Put line length in LSB tmp1
+
+        mov   @parm4,tmp2           ; \
+        swpb  tmp2                  ; | Put SAMS bank in MSB tmp1
+        movb  tmp2,tmp1             ; / 
+
+        mov   tmp1,@idx.top+2(tmp0) ; Update index slot -> SAMS Bank/Length
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

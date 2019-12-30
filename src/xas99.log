@@ -1,13 +1,13 @@
 Preprocessing source file.... PASS 1
 Preprocessing source file.... PASS 2
 ************************************************
-Assembly started ........ 19-12-27 22:13:37
+Assembly started ........ 19-12-30 20:50:07
 Source file ............. tivi.asm
-Assembly run ............ .tivi/tivi.28024/xas99run.out
-Preprocessed source ..... .tivi/tivi.28024/tivi.asm.28024
+Assembly run ............ .tivi/tivi.27541/xas99run.out
+Preprocessed source ..... .tivi/tivi.27541/tivi.asm.27541
 ROM cart binary ......... bin/tivic.bin
 List file ............... tivi.lst.asm
-Run suffix .............. 191227-28024
+Run suffix .............. 191230-27541
 ************************************************
 Highest ROM address...... 
 ***** Assembly process returned with RC=0

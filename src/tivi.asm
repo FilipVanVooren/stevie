@@ -22,7 +22,7 @@
 * 2600-264f      80   >0050   Free for future use
 * 2650-2faf    2400   >0960   Frame buffer 80x30
 * 2fb0-2fff     160   >00a0   Free for future use
-* 3000-3fff    4096   >0000   Index 
+* 3000-3fff    4096   >1000   Index 
 * 8300-83ff     256   >0100   scrpad spectra2 layout
 * a000-fffb   24574   >5ffe   Editor buffer
 *--------------------------------------------------------------
@@ -129,13 +129,14 @@ fb.end          equ  fb.top.ptr+26  ; Free from here on
 *--------------------------------------------------------------
 * Editor buffer structure           @>2300-23ff     (256 bytes)
 *--------------------------------------------------------------
-edb.top.ptr     equ  >2300          ; Pointer to editor buffer
-edb.index.ptr   equ  edb.top.ptr+2  ; Pointer to index
-edb.lines       equ  edb.top.ptr+4  ; Total lines in editor buffer
-edb.dirty       equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
-edb.next_free   equ  edb.top.ptr+8  ; Pointer to next free line
-edb.insmode     equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
-edb.end         equ  edb.top.ptr+12 ; Free from here on
+edb.top.ptr         equ  >2300          ; Pointer to editor buffer
+edb.index.ptr       equ  edb.top.ptr+2  ; Pointer to index
+edb.lines           equ  edb.top.ptr+4  ; Total lines in editor buffer
+edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
+edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
+edb.next_free.page  equ  edb.top.ptr+10 ; SAMS page of next free line
+edb.insmode         equ  edb.top.ptr+12 ; Editor insert mode (>0000 overwrite / >ffff insert)
+edb.end             equ  edb.top.ptr+14 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
@@ -485,17 +486,32 @@ task.botline.show_mode.overwrite:
         bl    @putat
               byte  29,50
               data  txt_ovrwrite
-        jmp   task.botline.show_linecol
+        jmp   task.botline.show_changed
         ;------------------------------------------------------
         ; Insert  mode
         ;------------------------------------------------------
-task.botline.show_mode.insert
+task.botline.show_mode.insert:
         bl    @putat
               byte  29,50
               data  txt_insert
         ;------------------------------------------------------
-        ; Show "line,column"
+        ; Show if text was changed in editor buffer
+        ;------------------------------------------------------        
+task.botline.show_changed:
+        mov   @edb.dirty,tmp0
+        jeq   task.botline.show_changed.clear
         ;------------------------------------------------------
+        ; Show "*"
+        ;------------------------------------------------------        
+        bl    @putat
+              byte 29,54
+              data txt_star
+        jmp   task.botline.show_linecol
+        ;------------------------------------------------------
+        ; Show "line,column"
+        ;------------------------------------------------------        
+task.botline.show_changed.clear:        
+        nop
 task.botline.show_linecol:
         mov   @fb.row,@parm1 
         bl    @fb.row2line 
@@ -613,6 +629,7 @@ txt_marker   #string '*EOF*'
 txt_bottom   #string '  BOT'
 txt_ovrwrite #string 'OVR'
 txt_insert   #string 'INS'
+txt_star     #string '*'
 txt_loading  #string 'Loading...'
 txt_kb       #string 'kb'
 txt_lines    #string 'Lines'

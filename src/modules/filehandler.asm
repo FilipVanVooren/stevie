@@ -136,9 +136,11 @@ tfh.file.read.check:
         ; Handle line with length > 2
         ;------------------------------------------------------
 tfh.file.read.addline.normal:
-        mov   @edb.next_free,tmp1   ; RAM target address in editor buffer
-        mov   @edb.next_free,@parm2 ; parm2 = Pointer to line in editor buffer
-        a     @tfh.reclen,@edb.next_free
+        mov   @edb.next_free.ptr,tmp1 
+                                    ; RAM target address in editor buffer
+        mov   @edb.next_free.ptr,@parm2
+                                    ; parm2 = Pointer to line in editor buffer
+        a     @tfh.reclen,@edb.next_free.ptr
                                     ; Update pointer to next free line
         ;------------------------------------------------------
         ; Copy record from VDP record buffer to editor buffer
@@ -170,12 +172,16 @@ tfh.file.read.emptyline:
         ;------------------------------------------------------
         ; Update index
         ;------------------------------------------------------
-tfh.file.read.updindex:   
+tfh.file.read.updindex:
+        mov   @edb.next_free.page,@parm4
+                                    ; SAMS page where line will reside
+
         bl    @idx.entry.update     ; Update index 
                                     ;   parm1 = Line number in editor buffer
                                     ;   parm2 = Pointer to line in editor buffer 
                                     ;           (or line content if length <= 2)
                                     ;   parm3 = Length of line
+                                    ;   parm4 = SAMS page
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
@@ -199,12 +205,22 @@ tfh.file.read.display:
 * Stop reading file if high memory expansion gets full
 ******************************************************
 tfh.file.read.checkmem:
-        mov   @edb.next_free,tmp0
+        mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
-        jgt   tfh.file.read.eof
+        jle   tfh.file.read.next
+
+        jmp   tfh.file.read.eof     ; NO SAMS SUPPORT FOR NOW
+        ;------------------------------------------------------
+        ; Next SAMS page
+        ;------------------------------------------------------
+        inc   @edb.next_free.page   ; Next SAMS page
+        li    tmp0,edb.top
+        mov   tmp0,@edb.next_free.ptr
+                                    ; Reset to top of editor buffer
         ;------------------------------------------------------
         ; Next record
         ;------------------------------------------------------
+tfh.file.read.next:        
         bl    @mem.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
 

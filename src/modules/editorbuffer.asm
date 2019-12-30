@@ -30,7 +30,8 @@ edb.init:
         ;------------------------------------------------------
         li    tmp0,edb.top
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
-        mov   tmp0,@edb.next_free   ; Set pointer to next free line in editor buffer
+        mov   tmp0,@edb.next_free.ptr
+                                    ; Set pointer to next free line in editor buffer
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
         clr   @edb.lines            ; Lines=0
 
@@ -131,7 +132,8 @@ edb.line.pack.checklength2:
         ; Update index and store line in editor buffer
         ;------------------------------------------------------
 edb.line.pack.idx.normal:
-        mov   @edb.next_free,@parm2 ; Block where packed string will reside
+        mov   @edb.next_free.ptr,@parm2 
+                                    ; Block where packed string will reside
         mov   @rambuf+4,tmp2        ; Number of bytes to copy
 
         mov   tmp0,@parm3           ; Set length of line
@@ -142,7 +144,8 @@ edb.line.pack.idx.normal:
         ; Pack line from framebuffer to editor buffer
         ;------------------------------------------------------
         mov   @rambuf+2,tmp0        ; Source for memory copy
-        mov   @edb.next_free,tmp1   ; Destination for memory copy
+        mov   @edb.next_free.ptr,tmp1 
+                                    ; Destination for memory copy
         mov   @rambuf+4,tmp2        ; Number of bytes to copy
         ;------------------------------------------------------
         ; Copy memory block
@@ -152,7 +155,7 @@ edb.line.pack.idx.normal.copy:
                                     ;   tmp0 = source
                                     ;   tmp1 = destination
                                     ;   tmp2 = bytes to copy
-        a     @rambuf+4,@edb.next_free
+        a     @rambuf+4,@edb.next_free.ptr
                                     ; Update pointer to next free block 
         ;------------------------------------------------------
         ; Exit
