@@ -20,7 +20,8 @@
 * Register usage
 * tmp0, tmp1, tmp2, tmp4
 *--------------------------------------------------------------
-* Memory usage
+* The frame buffer is temporarily used for compressing the line
+* before it is moved to the editor buffer
 ********@*****@*********************@**************************
 tfh.file.read:
         dect  stack
@@ -76,10 +77,10 @@ tfh.file.read:
         bl    @file.open
               data tfh.vpab         ; Pass file descriptor to DSRLNK
         coc   @wbit2,tmp2           ; Equal bit set?
-        jeq   tfh.file.read.error
-                                    ; Yes, IO error occured
+        jne   tfh.file.read.record
+        b     @tfh.file.read.error  ; Yes, IO error occured
         ;------------------------------------------------------
-        ; Read file record
+        ; Step 1: Read file record
         ;------------------------------------------------------
 tfh.file.read.record:        
         inc   @tfh.records          ; Update counter        
@@ -94,7 +95,7 @@ tfh.file.read.record:
         mov   tmp1,@tfh.reclen      ; Save bytes read
         mov   tmp2,@tfh.ioresult    ; Save status register contents
         ;------------------------------------------------------
-        ; Calculate kilobytes processed
+        ; 1a: Calculate kilobytes processed
         ;------------------------------------------------------
         a     tmp1,@tfh.counter    
         a     @tfh.counter,tmp1
@@ -104,13 +105,13 @@ tfh.file.read.record:
         ai    tmp1,-1024            ; Remove KB portion and keep bytes
         mov   tmp1,@tfh.counter
         ;------------------------------------------------------
-        ; Load spectra scratchpad layout
+        ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
 !       bl    @mem.scrpad.backup    ; Backup GPL layout to >2000
         bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
         ;------------------------------------------------------
-        ; Check if a file error occured
+        ; 1c: Check if a file error occured
         ;------------------------------------------------------
 tfh.file.read.check:     
         mov   @tfh.ioresult,tmp2   
@@ -118,41 +119,56 @@ tfh.file.read.check:
         jeq   tfh.file.read.error
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; Prepare for copying record from VDP
+        ; 1d: Copy line from VDP buffer to RAM buffer
         ;------------------------------------------------------
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
-
-        jeq   tfh.file.read.emptyline
-                                    ; Special handling for empty line
-                                    
-        ci    tmp2,2                ; Check line length                                                                  
-        jgt   tfh.file.read.addline.normal
-        ;------------------------------------------------------
-        ; Handle line with length <= 2
-        ;------------------------------------------------------
-        li    tmp1,parm2            ; Store line content in @parm2 itself
-        jmp   tfh.file.read.addline.vcopy
-        ;------------------------------------------------------
-        ; Handle line with length > 2
-        ;------------------------------------------------------
-tfh.file.read.addline.normal:
-        mov   @edb.next_free.ptr,tmp1 
-                                    ; RAM target address in editor buffer
-        mov   @edb.next_free.ptr,@parm2
-                                    ; parm2 = Pointer to line in editor buffer
-        a     @tfh.reclen,@edb.next_free.ptr
-                                    ; Update pointer to next free line
-        ;------------------------------------------------------
-        ; Copy record from VDP record buffer to editor buffer
-        ;------------------------------------------------------
-tfh.file.read.addline.vcopy:        
         li    tmp0,tfh.vrecbuf      ; VDP source address
+        li    tmp1,fb.top           ; RAM target address
+        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
+        jeq   tfh.file.read.emptyline
+                                    ; Handle empty line
+
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ;   tmp0 = VDP source address
                                     ;   tmp1 = RAM target address
                                     ;   tmp2 = Bytes to copy
         ;------------------------------------------------------
-        ; Prepare for index update
+        ; Step 2: Compress line and copy to editor buffer
+        ;------------------------------------------------------
+        ; Decompress stuff goes here
+        ;------------------------------------------------------
+        ; 2a: Handle line with length <= 2
+        ;------------------------------------------------------
+        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
+        ci    tmp2,2                ; Check line length                                                                  
+        jgt   tfh.file.read.addline.normal
+        ;------------------------------------------------------
+        ; 2b: Store line content in index itself
+        ;------------------------------------------------------
+        li    tmp0,fb.top      
+        li    tmp1,parm2            ; Line content into @parm2
+        mov   *tmp0,*tmp1           ; Copy line as word (even if only 1 byte)
+        jmp   tfh.file.read.prepindex
+        ;------------------------------------------------------
+        ; 2b: Handle line with length > 2
+        ;------------------------------------------------------
+tfh.file.read.addline.normal:
+        mov   @edb.next_free.ptr,tmp1 
+                                    ; RAM target address in editor buffer
+        mov   tmp1,@parm2           ; parm2 = Pointer to line in editor buffer
+
+        a     tmp2,@edb.next_free.ptr
+                                    ; Update pointer to next free line
+        ;------------------------------------------------------
+        ; 2c: Copy (compressed) line to editor buffer
+        ;------------------------------------------------------
+tfh.file.read.addline.copy:        
+        li    tmp0,fb.top           ; RAM source address
+        bl    @xpym2m               ; Copy memory block from CPU to CPU
+                                    ;   tmp0 = RAM source address
+                                    ;   tmp1 = RAM target address
+                                    ;   tmp2 = Bytes to copy
+        ;------------------------------------------------------
+        ; Step 4: Prepare for index update
         ;------------------------------------------------------
 tfh.file.read.prepindex:
         mov   @tfh.records,@parm1   ; parm1 = Line number
@@ -170,7 +186,7 @@ tfh.file.read.emptyline:
         clr   @parm2                ; parm2 = Pointer to >0000
         clr   @parm3                ; parm3 = Line length
         ;------------------------------------------------------
-        ; Update index
+        ; Step 5: Update index
         ;------------------------------------------------------
 tfh.file.read.updindex:
         mov   @edb.next_free.page,@parm4
@@ -185,9 +201,13 @@ tfh.file.read.updindex:
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
-        ; Display results
+        ; 5a: Display results
         ;------------------------------------------------------
 tfh.file.read.display:
+        bl    @putnum
+              byte 29,73            ; Show lines read
+              data edb.lines,rambuf,>3020
+
         c     @tfh.kilobytes,tmp4
         jeq   tfh.file.read.checkmem
 
