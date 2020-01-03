@@ -134,7 +134,19 @@ tfh.file.read.check:
         ;------------------------------------------------------
         ; Step 2: Compress line and copy to editor buffer
         ;------------------------------------------------------
-        ; Decompress stuff goes here
+        ; Compress stuff goes here
+
+        bl    @film 
+              data fb.top+160,>00,80*2
+
+
+
+
+        li   tmp0,fb.top            ; RAM source address
+        li   tmp1,fb.top+160        ; RAM target address
+        mov  @tfh.reclen,tmp2       ; Length of string
+        bl   @xcpu2rle              ; RLE encode
+
         ;------------------------------------------------------
         ; 2a: Handle line with length <= 2
         ;------------------------------------------------------
@@ -244,7 +256,7 @@ tfh.file.read.next:
         bl    @mem.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
 
-        jmp   tfh.file.read.record
+        b     @tfh.file.read.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
