@@ -136,7 +136,8 @@ edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed
 edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
 edb.next_free.page  equ  edb.top.ptr+10 ; SAMS page of next free line
 edb.insmode         equ  edb.top.ptr+12 ; Editor insert mode (>0000 overwrite / >ffff insert)
-edb.end             equ  edb.top.ptr+14 ; Free from here on
+edb.rle             equ  edb.top.ptr+14 ; RLE compression activated
+edb.end             equ  edb.top.ptr+16 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------

@@ -13,7 +13,8 @@
 *  bl   @tfh.file.read
 *--------------------------------------------------------------
 * INPUT
-* parm1 = pointer to length-prefixed file descriptor 
+* parm1 = pointer to length-prefixed file descriptor
+* parm2 = RLE compression on (>FFFF) or off (0) 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -119,49 +120,67 @@ tfh.file.read.check:
         jeq   tfh.file.read.error
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 1d: Copy line from VDP buffer to RAM buffer
+        ; 1d: Decide on copy line from VDP buffer to editor
+        ;     buffer (RLE off) or RAM buffer (RLE on)
         ;------------------------------------------------------
         li    tmp0,tfh.vrecbuf      ; VDP source address
-        li    tmp1,fb.top           ; RAM target address
+  
+        mov   @parm2,@parm2         ; RLE compression wanted?
+        jne   !                     ; Yes, do RLE compression
+        mov   @edb.next_free.ptr,tmp1
+                                    ; RAM target address (RLE off)                                    
+        jmp   tfh.file.read.check.emptyline
+
+!       li    tmp1,fb.top           ; RAM target address (RLE on)
+        ;------------------------------------------------------
+        ; Step 1e: Copy line from VDP to CPU memory
+        ;------------------------------------------------------
+tfh.file.read.check.emptyline:
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
         jeq   tfh.file.read.emptyline
                                     ; Handle empty line
-
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ;   tmp0 = VDP source address
                                     ;   tmp1 = RAM target address
                                     ;   tmp2 = Bytes to copy
         ;------------------------------------------------------
-        ; Step 2: Compress line and copy to editor buffer
+        ; Step 2: Check if RLE compression wanted
         ;------------------------------------------------------
-        ; Compress stuff goes here
-
-        bl    @film 
-              data fb.top+160,>00,80*2
-
-
-
-
-        li   tmp0,fb.top            ; RAM source address
-        li   tmp1,fb.top+160        ; RAM target address
-        mov  @tfh.reclen,tmp2       ; Length of string
-        bl   @xcpu2rle              ; RLE encode
-
+        mov   @parm2,@parm2         ; RLE compression on?
+        jne   tfh.file.read.rle_compress
+                                    ; Yes, do RLE compression
         ;------------------------------------------------------
-        ; 2a: Handle line with length <= 2
+        ; Step 2a: No RLE compression on line
         ;------------------------------------------------------
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
+        mov   @tfh.reclen,tmp2      ; Number of bytes to copy
+        jmp   tfh.file.read.check.linelength
+        ;------------------------------------------------------
+        ; Step 2b: RLE compression on line => compress
+        ;------------------------------------------------------
+tfh.file.read.rle_compress:        
+        ;bl    @film 
+        ;      data fb.top+160,>00,80*2
+
+        li    tmp0,fb.top           ; RAM source address
+        li    tmp1,fb.top+160       ; RAM target address
+        mov   @tfh.reclen,tmp2      ; Length of string
+        bl    @xcpu2rle             ; RLE encode
+        mov   @waux1,tmp2           ; Number of RLE compressed bytes to copy        
+        ;------------------------------------------------------
+        ; 2c: Handle line with length <= 2
+        ;------------------------------------------------------
+tfh.file.read.check.linelength:                    
         ci    tmp2,2                ; Check line length                                                                  
         jgt   tfh.file.read.addline.normal
         ;------------------------------------------------------
-        ; 2b: Store line content in index itself
+        ; 2d: Store line content in index itself
         ;------------------------------------------------------
-        li    tmp0,fb.top      
+        li    tmp0,fb.top+160      
         li    tmp1,parm2            ; Line content into @parm2
         mov   *tmp0,*tmp1           ; Copy line as word (even if only 1 byte)
         jmp   tfh.file.read.prepindex
         ;------------------------------------------------------
-        ; 2b: Handle line with length > 2
+        ; 2e: Handle line with length > 2
         ;------------------------------------------------------
 tfh.file.read.addline.normal:
         mov   @edb.next_free.ptr,tmp1 
@@ -171,10 +190,10 @@ tfh.file.read.addline.normal:
         a     tmp2,@edb.next_free.ptr
                                     ; Update pointer to next free line
         ;------------------------------------------------------
-        ; 2c: Copy (compressed) line to editor buffer
+        ; 2e: Copy (compressed) line to editor buffer
         ;------------------------------------------------------
 tfh.file.read.addline.copy:        
-        li    tmp0,fb.top           ; RAM source address
+        li    tmp0,fb.top+160       ; RAM source address
         bl    @xpym2m               ; Copy memory block from CPU to CPU
                                     ;   tmp0 = RAM source address
                                     ;   tmp1 = RAM target address
@@ -186,7 +205,8 @@ tfh.file.read.prepindex:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index        
                                     ; parm2 = Already set
-        mov   @tfh.reclen,@parm3    ; parm3 = Line length
+;       mov   @tfh.reclen,@parm3    ; parm3 = Line length
+        mov   @waux1,@parm3         ; parm3 = Compressed Line length
         jmp   tfh.file.read.updindex
                                     ; Update index
         ;------------------------------------------------------
@@ -240,7 +260,6 @@ tfh.file.read.checkmem:
         mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
         jle   tfh.file.read.next
-
         jmp   tfh.file.read.eof     ; NO SAMS SUPPORT FOR NOW
         ;------------------------------------------------------
         ; Next SAMS page
