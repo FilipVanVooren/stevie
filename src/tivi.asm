@@ -151,8 +151,9 @@ tfh.records     equ  tfh.top + 46   ; File records counter
 tfh.reclen      equ  tfh.top + 48   ; Current record length
 tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
 tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
-tfh.membuffer   equ  tfh.top + 54   ; 80 bytes file memory buffer 
-tfh.end         equ  tfh.top + 134  ; Free from here on
+tfh.rleonload   equ  tfh.top + 54   ; RLE compression needed during file load
+tfh.membuffer   equ  tfh.top + 56   ; 80 bytes file memory buffer 
+tfh.end         equ  tfh.top + 136  ; Free from here on
 tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory (max 255 bytes)
 tfh.vpab        equ  >0a60          ; Address of PAB in VDP memory
 *--------------------------------------------------------------
@@ -633,6 +634,7 @@ txt_insert   #string 'INS'
 txt_star     #string '*'
 txt_loading  #string 'Loading...'
 txt_kb       #string 'kb'
+txt_rle      #string 'RLE'
 txt_lines    #string 'Lines'
 end          data    $ 
 

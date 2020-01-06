@@ -6,11 +6,13 @@
 * Load DV/80 text file into editor
 *---------------------------------------------------------------
 * Input
-* @tmp0 = Pointer to length-prefixed string containing device
+* tmp0  = Pointer to length-prefixed string containing device
 *         and filename
+* parm1 = >FFFF for RLE compression on load, otherwise >0000
 *---------------------------------------------------------------
 edkey.action.loadfile:
         mov   tmp0,@parm1           ; Setup file to load
+        clr   @parm2                ; NO RLE COMPRESSION
 
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
@@ -34,7 +36,9 @@ edkey.action.loadfile:
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
+        seto  @parm2                ; RLE compression on during file load
         bl    @tfh.file.read        ; Read specified file
+
         clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty         
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
 

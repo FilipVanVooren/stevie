@@ -14,7 +14,7 @@
 *--------------------------------------------------------------
 * INPUT
 * parm1 = pointer to length-prefixed file descriptor
-* parm2 = RLE compression on (>FFFF) or off (0) 
+* parm2 = RLE compression on (>FFFF) or off >0000) 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -27,6 +27,7 @@
 tfh.file.read:
         dect  stack
         mov   r11,*stack            ; Save return address
+        mov   @parm2,@tfh.rleonload ; Save RLE compression wanted status
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
@@ -37,7 +38,7 @@ tfh.file.read:
         clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
         clr   @tfh.ioresult         ; Clear status register contents
         ;------------------------------------------------------
-        ; Show loading indicator and file descriptor
+        ; Show loading indicators and file descriptor
         ;------------------------------------------------------
         bl    @hchar
               byte 29,0,32,80
@@ -47,11 +48,16 @@ tfh.file.read:
               byte 29,0
               data txt_loading      ; Display "Loading...."
 
-        bl    @at
+        c     @tfh.rleonload,@w$ffff
+        jne   !                                           
+        bl    @putat
+              byte 29,68
+              data txt_rle          ; Display "RLE"
+
+!       bl    @at
               byte 29,11            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
-
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
@@ -125,8 +131,9 @@ tfh.file.read.check:
         ;------------------------------------------------------
         li    tmp0,tfh.vrecbuf      ; VDP source address
   
-        mov   @parm2,@parm2         ; RLE compression wanted?
-        jne   !                     ; Yes, do RLE compression
+        c     @tfh.rleonload,@w$ffff
+                                    ; RLE compression on?
+        jeq   !                     ; Yes, do RLE compression
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target address (RLE off)                                    
         jmp   tfh.file.read.check.emptyline
@@ -146,8 +153,9 @@ tfh.file.read.check.emptyline:
         ;------------------------------------------------------
         ; Step 2: Check if RLE compression wanted
         ;------------------------------------------------------
-        mov   @parm2,@parm2         ; RLE compression on?
-        jne   tfh.file.read.rle_compress
+        c     @tfh.rleonload,@w$ffff
+                                    ; RLE compression on?
+        jeq   tfh.file.read.rle_compress
                                     ; Yes, do RLE compression
         ;------------------------------------------------------
         ; Step 2a: No RLE compression on line
@@ -158,7 +166,7 @@ tfh.file.read.check.emptyline:
         ; Step 2b: RLE compression on line => compress
         ;------------------------------------------------------
 tfh.file.read.rle_compress:        
-        ;bl    @film 
+        ;bl    @film                ; DEBUG ONLY
         ;      data fb.top+160,>00,80*2
 
         li    tmp0,fb.top           ; RAM source address
@@ -190,9 +198,11 @@ tfh.file.read.addline.normal:
         a     tmp2,@edb.next_free.ptr
                                     ; Update pointer to next free line
         ;------------------------------------------------------
-        ; 2e: Copy (compressed) line to editor buffer
+        ; 2e: Copy compressed line to editor buffer
         ;------------------------------------------------------
-tfh.file.read.addline.copy:        
+        c     @tfh.rleonload,@w$ffff
+                                    ; RLE compression on?
+        jne   tfh.file.read.prepindex        
         li    tmp0,fb.top+160       ; RAM source address
         bl    @xpym2m               ; Copy memory block from CPU to CPU
                                     ;   tmp0 = RAM source address
@@ -205,8 +215,9 @@ tfh.file.read.prepindex:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index        
                                     ; parm2 = Already set
-;       mov   @tfh.reclen,@parm3    ; parm3 = Line length
-        mov   @waux1,@parm3         ; parm3 = Compressed Line length
+
+        mov   @tfh.reclen,@parm3    ; parm3 = Line length
+!       mov   @waux1,@parm4         ; parm4 = Compressed Line length
         jmp   tfh.file.read.updindex
                                     ; Update index
         ;------------------------------------------------------
@@ -221,15 +232,12 @@ tfh.file.read.emptyline:
         ; Step 5: Update index
         ;------------------------------------------------------
 tfh.file.read.updindex:
-        mov   @edb.next_free.page,@parm4
-                                    ; SAMS page where line will reside
-
         bl    @idx.entry.update     ; Update index 
                                     ;   parm1 = Line number in editor buffer
                                     ;   parm2 = Pointer to line in editor buffer 
                                     ;           (or line content if length <= 2)
-                                    ;   parm3 = Length of line
-                                    ;   parm4 = SAMS page
+                                    ;   parm3 = Length of original line
+                                    ;   parm4 = Length of RLE compressed line
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------

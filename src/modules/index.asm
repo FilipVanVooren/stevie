@@ -58,7 +58,7 @@ idx.init.$$:
 * @parm2    = Pointer to line in editor buffer 
 *             (or line content if length <= 2)
 * @parm3    = Length of line
-* @parm4    = SAMS bank
+* @parm4    = Length of RLE compressed line
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to updated index entry
@@ -79,10 +79,10 @@ idx.entry.update:
         mov   @parm3,tmp1           ; Put line length in LSB tmp1
 
         mov   @parm4,tmp2           ; \
-        swpb  tmp2                  ; | Put SAMS bank in MSB tmp1
+        swpb  tmp2                  ; | Put length of RLE compressed line in MSB tmp1
         movb  tmp2,tmp1             ; / 
 
-        mov   tmp1,@idx.top+2(tmp0) ; Update index slot -> SAMS Bank/Length
+        mov   tmp1,@idx.top+2(tmp0) ; Update index slot -> RLE length/Length
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
