@@ -649,4 +649,3 @@ fdname6      #string 'DSK3.C99MAN3'
 fdname7      #string 'DSK3.C99SPECS'
 fdname8      #string 'DSK3.RANDOM#C'
 fdname9      #string 'DSK3.RNDTST#C'
-
