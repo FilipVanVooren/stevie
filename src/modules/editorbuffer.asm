@@ -104,7 +104,7 @@ edb.line.pack.checklength:
         ;------------------------------------------------------
         ; 1. Update index
         ;------------------------------------------------------
-edb.line.pack.idx.normal:
+edb.line.pack.update_index:
         mov   @edb.next_free.ptr,@parm2 
                                     ; Block where line will reside
 
@@ -129,19 +129,42 @@ edb.line.pack.idx.normal:
         ;------------------------------------------------------
         ; 3. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------
+edb.line.pack.copyline:        
+        ci    tmp2,2
+        jne   edb.line.pack.copyline.checkbyte
+        mov   *tmp0,*tmp1           ; Copy single word
+        jmp   !
+
+edb.line.pack.copyline.checkbyte:
+        ci    tmp2,1
+        jne   edb.line.pack.copyline.block
+        movb  *tmp0,*tmp1           ; Copy single byte
+        jmp   !
+
+edb.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
                                     ;   tmp0 = source
                                     ;   tmp1 = destination
                                     ;   tmp2 = bytes to copy
-        a     @rambuf+4,@edb.next_free.ptr
+
+        ;------------------------------------------------------
+        ; 4. Update pointer to next free line, assure it is even
+        ;------------------------------------------------------
+!       a     @rambuf+4,@edb.next_free.ptr
                                     ; Update pointer to next free block 
 
+        mov   @edb.next_free.ptr,tmp0
+        andi  tmp0,1                ; Uneven ?
+        jeq   edb.line.pack.exit    ; Exit if even
+        inc   @edb.next_free.ptr    ; Make it even
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 edb.line.pack.exit:
         mov   @rambuf,@fb.column    ; Retrieve @fb.column
         b     @poprt                ; Return to caller
+
+
 
 
 ***************************************************************
