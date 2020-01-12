@@ -13,13 +13,13 @@ edkey.action.del_char:
         ;-------------------------------------------------------
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
-        jeq   edkey.action.del_char.$$
+        jeq   edkey.action.del_char.exit
                                     ; Exit if empty line
         ;-------------------------------------------------------
         ; Sanity check 2
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
-        jeq   edkey.action.del_char.$$
+        jeq   edkey.action.del_char.exit
                                     ; Exit if at EOL
         ;-------------------------------------------------------
         ; Prepare for delete operation
@@ -43,7 +43,7 @@ edkey.action.del_char_loop:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.del_char.$$:
+edkey.action.del_char.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -54,7 +54,7 @@ edkey.action.del_eol:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         mov   @fb.row.length,tmp2   ; Get line length
-        jeq   edkey.action.del_eol.$$
+        jeq   edkey.action.del_eol.exit
                                     ; Exit if empty line
         ;-------------------------------------------------------
         ; Prepare for erase operation
@@ -81,7 +81,7 @@ edkey.action.del_eol_loop:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.del_eol.$$:
+edkey.action.del_eol.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -119,12 +119,12 @@ edkey.action.del_line:
         mov   @fb.topline,tmp0
         a     @fb.row,tmp0
         c     tmp0,@edb.lines       ; Was last line?
-        jle   edkey.action.del_line.$$
+        jle   edkey.action.del_line.exit
         b     @edkey.action.up      ; One line up
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.del_line.$$:
+edkey.action.del_line.exit:
         b     @edkey.action.home    ; Move cursor to home and return
 
 
@@ -191,7 +191,7 @@ edkey.action.ins_char.sanity
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_char.$$:
+edkey.action.ins_char.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -231,7 +231,7 @@ edkey.action.ins_line.insert:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_line.$$:
+edkey.action.ins_line.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -299,7 +299,7 @@ edkey.action.newline.rest:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.newline.$$:
+edkey.action.newline.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -320,7 +320,7 @@ edkey.action.ins_onoff.loop:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_onoff.$$:
+edkey.action.ins_onoff.exit:
         b     @task2.cur_visible    ; Update cursor shape
 
 
@@ -358,10 +358,10 @@ edkey.action.char.overwrite:
         ; Update line length in frame buffer
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
-        jlt   edkey.action.char.$$  ; column < length line ? Skip further processing
+        jlt   edkey.action.char.exit  ; column < length line ? Skip further processing
         mov   @fb.column,@fb.row.length
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.char.$$:
+edkey.action.char.exit:
         b     @ed_wait              ; Back to editor main

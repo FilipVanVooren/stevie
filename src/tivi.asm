@@ -22,7 +22,7 @@
 * 2600-264f      80   >0050   Free for future use
 * 2650-2faf    2400   >0960   Frame buffer 80x30
 * 2fb0-2fff     160   >00a0   Free for future use
-* 3000-3fff    4096   >1000   Index 
+* 3000-3fff    4096   >1000   Index for 2048 lines
 * 8300-83ff     256   >0100   scrpad spectra2 layout
 * a000-fffb   24574   >5ffe   Editor buffer
 *--------------------------------------------------------------

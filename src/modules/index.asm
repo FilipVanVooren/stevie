@@ -15,7 +15,7 @@
 * added and only the offset (0000 -> 5fff) is stored in the index
 * itself.
 * 
-* The pointers' MSB high-nibble  determines the SAMS bank to use:
+* The pointers' MSB high-nibble determines the SAMS bank to use:
 *
 *   0 > SAMS bank 0
 *   1 > SAMS bank 0
@@ -67,7 +67,7 @@ idx.init:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-idx.init.$$:        
+idx.init.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -154,7 +154,7 @@ idx.entry.delete:
         ; Special treatment if last line
         ;------------------------------------------------------
         clr   @idx.top(tmp0)
-        jmp   idx.entry.delete.$$
+        jmp   idx.entry.delete.exit
         ;------------------------------------------------------
         ; Reorganize index entries 
         ;------------------------------------------------------
@@ -167,7 +167,7 @@ idx.entry.delete.reorg:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
-idx.entry.delete.$$:
+idx.entry.delete.exit:
         b     *r11                  ; Return
 
 
@@ -235,7 +235,7 @@ idx.entry.insert.$$:
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to editor buffer line content
-* @outparm2 = SAMS page (>0 - >a)
+* @outparm2 = SAMS bank (>0 - >a)
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
@@ -265,7 +265,7 @@ idx.pointer.get:
         mov   tmp2,@outparm2        ; Return SAMS bank
         jmp   idx.pointer.get.addbase
         ;------------------------------------------------------
-        ; 
+        ; SAMS Bank 0 (or only 32K memory expansion)
         ;------------------------------------------------------
 idx.pointer.get.samsbank0:
         clr   @outparm2             ; SAMS bank 0        

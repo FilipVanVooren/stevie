@@ -78,7 +78,7 @@ edkey.action.up.cursor_up:
 edkey.action.up.set_cursorx:
         bl    @edb.line.getlength2  ; Get length current line
         c     @fb.column,@fb.row.length
-        jle   edkey.action.up.$$
+        jle   edkey.action.up.exit
         ;-------------------------------------------------------
         ; Adjust cursor column position
         ;-------------------------------------------------------
@@ -88,7 +88,7 @@ edkey.action.up.set_cursorx:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.up.$$:
+edkey.action.up.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         b     @ed_wait              ; Back to editor main
 
@@ -145,7 +145,7 @@ edkey.action.down.cursor:
 edkey.action.down.set_cursorx:                
         bl    @edb.line.getlength2  ; Get length current line
         c     @fb.column,@fb.row.length
-        jle   edkey.action.down.$$  ; Exit
+        jle   edkey.action.down.exit  ; Exit
         ;-------------------------------------------------------
         ; Adjust cursor column position
         ;-------------------------------------------------------
@@ -155,7 +155,7 @@ edkey.action.down.set_cursorx:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.down.$$:
+edkey.action.down.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 !       b     @ed_wait              ; Back to editor main
 
@@ -246,7 +246,7 @@ edkey.action.pword_done:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.pword.$$:
+edkey.action.pword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 !       b     @ed_wait              ; Back to editor main
 
@@ -329,7 +329,7 @@ edkey.action.nword_done:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.nword.$$:
+edkey.action.nword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 !       b     @ed_wait              ; Back to editor main
 
@@ -344,7 +344,7 @@ edkey.action.ppage:
         ; Sanity check
         ;-------------------------------------------------------
         mov   @fb.topline,tmp0      ; Exit if already on line 1 
-        jeq   edkey.action.ppage.$$
+        jeq   edkey.action.ppage.exit
         ;-------------------------------------------------------
         ; Special treatment top page
         ;-------------------------------------------------------
@@ -374,7 +374,7 @@ edkey.action.ppage.refresh:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ppage.$$:
+edkey.action.ppage.exit:
         clr   @fb.row
         inc   @fb.row               ; Set fb.row=1
         clr   @fb.column
@@ -394,7 +394,7 @@ edkey.action.npage:
         mov   @fb.topline,tmp0
         a     @fb.screenrows,tmp0
         c     tmp0,@edb.lines       ; Exit if on last page
-        jgt   edkey.action.npage.$$
+        jgt   edkey.action.npage.exit
         ;-------------------------------------------------------
         ; Adjust topline
         ;-------------------------------------------------------
@@ -417,7 +417,7 @@ edkey.action.npage.refresh:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.npage.$$:
+edkey.action.npage.exit:
         b     @ed_wait              ; Back to editor main
 
 
@@ -444,7 +444,7 @@ edkey.action.top.refresh:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.top.$$:
+edkey.action.top.exit:
         clr   @fb.row               ; Editor line 0
         clr   @fb.column            ; Editor column 0
         clr   tmp0                  ; Set VDP cursor on line 0, column 0
