@@ -162,7 +162,7 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.refresh.$$
+fb.refresh.exit
         b    @poprt                 ; Return to caller
 
 

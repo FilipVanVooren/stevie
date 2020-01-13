@@ -28,7 +28,9 @@ edb.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
-        li    tmp0,edb.top
+        li    tmp0,edb.top+2        ; Skip offset 0 so that it can't be confused
+                                    ; with null pointer (has offset 0)
+
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
                                     ; Set pointer to next free line in editor buffer
@@ -207,14 +209,6 @@ edb.line.unpack:
         a     tmp2,tmp1             ; Add base to offset
         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
 
-        ;------------------------------------------------------
-        ; Index. Calculate address of entry and get pointer
-        ;------------------------------------------------------
-        bl    @idx.pointer.get      ; Get pointer to editor buffer entry
-                                    ; parm1 = Line number
-
-        inct  @outparm1             ; Skip line prefix
-        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
 
         ;------------------------------------------------------        
         ; Get length of line to unpack
@@ -222,7 +216,18 @@ edb.line.unpack:
         bl    @edb.line.getlength   ; Get length of line
                                     ; parm1 = Line number
 
-        mov   @outparm1,@rambuf+8   ; Bytes to copy                         
+        mov   @outparm1,@rambuf+8   ; Bytes to copy 
+        jeq   edb.line.unpack.clear ; Skip index processing if empty line anyway                       
+
+        ;------------------------------------------------------
+        ; Index. Calculate address of entry and get pointer
+        ;------------------------------------------------------
+        bl    @idx.pointer.get      ; Get pointer to editor buffer entry
+                                    ; parm1 = Line number
+        
+
+        inct  @outparm1             ; Skip line prefix
+        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
 
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
@@ -231,11 +236,9 @@ edb.line.unpack.clear:
         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
 
-        szc   @wbit1,tmp0           ; (1) Make address even (faster fill MOV)
         clr   tmp1                  ; Fill with >00
         mov   @fb.colsline,tmp2
         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
-        inc   tmp2                  ; Compensate due to (1) 
 
         bl    @xfilm                ; tmp0 = Target address
                                     ; tmp1 = Byte to fill
@@ -245,13 +248,11 @@ edb.line.unpack.clear:
         ; Copy line from editor buffer to frame buffer
         ;------------------------------------------------------
 edb.line.unpack.copy:
-        mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
-                                    ; or line content itself if line length <= 2.
-
-        mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         mov   @rambuf+8,tmp2        ; Bytes to copy 
         jeq   edb.line.unpack.exit  ; Exit if length = 0
 
+        mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
+        mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
@@ -259,8 +260,6 @@ edb.line.unpack.copy:
                                     ;   tmp0 = Source address
                                     ;   tmp1 = Target address 
                                     ;   tmp2 = Bytes to copy
-        jmp   edb.line.unpack.exit
-
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -290,13 +289,22 @@ edb.line.getlength:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
+        ; Initialisation
+        ;------------------------------------------------------
+        clr   @outparm1             ; Reset length
+        clr   @outparm2             ; Reset SAMS bank
+        ;------------------------------------------------------
         ; Get length
         ;------------------------------------------------------
-        bl    @idx.pointer.get
+        bl    @idx.pointer.get      ; Get pointer to line
+        mov   @outparm1,tmp0        ; Is pointer set?
+        jeq   edb.line.getlength.exit
+                                    ; Exit early if NULL pointer
 
-        mov   @outparm1,tmp0
+        ;------------------------------------------------------
+        ; Process line prefix
+        ;------------------------------------------------------
         mov   *tmp0,tmp1            ; Get line prefix
-
         andi  tmp1,>00ff            ; Get rid of MSB
         mov   tmp1,@outparm1        ; Save line length
         ;------------------------------------------------------

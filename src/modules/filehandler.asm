@@ -19,7 +19,7 @@
 * OUTPUT
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp4
+* tmp0, tmp1, tmp2, tmp3, tmp4
 *--------------------------------------------------------------
 * The frame buffer is temporarily used for compressing the line
 * before it is moved to the editor buffer
@@ -146,6 +146,10 @@ tfh.file.read.check.emptyline:
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
         jeq   tfh.file.read.emptyline
                                     ; Handle empty line
+
+        mov   tmp2,@edb.next_free.ptr
+        inct  @edb.next_free.ptr    ; Save line length in line prefix
+
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ;   tmp0 = VDP source address
                                     ;   tmp1 = RAM target address
@@ -161,7 +165,7 @@ tfh.file.read.check.emptyline:
         ; Step 2a: No RLE compression on line
         ;------------------------------------------------------
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy
-        jmp   tfh.file.read.check.linelength
+        jmp   tfh.file.read.addline.normal
         ;------------------------------------------------------
         ; Step 2b: RLE compression on line => compress
         ;------------------------------------------------------
@@ -173,30 +177,28 @@ tfh.file.read.rle_compress:
         li    tmp1,fb.top+160       ; RAM target address
         mov   @tfh.reclen,tmp2      ; Length of string
         bl    @xcpu2rle             ; RLE encode
-        mov   @waux1,tmp2           ; Number of RLE compressed bytes to copy        
+        mov   @waux1,tmp2           ; Number of RLE compressed bytes to copy
+
         ;------------------------------------------------------
-        ; 2c: Handle line with length <= 2
-        ;------------------------------------------------------
-tfh.file.read.check.linelength:                    
-        ci    tmp2,2                ; Check line length                                                                  
-        jgt   tfh.file.read.addline.normal
-        ;------------------------------------------------------
-        ; 2d: Store line content in index itself
-        ;------------------------------------------------------
-        li    tmp0,fb.top+160      
-        li    tmp1,parm2            ; Line content into @parm2
-        mov   *tmp0,*tmp1           ; Copy line as word (even if only 1 byte)
-        jmp   tfh.file.read.prepindex
-        ;------------------------------------------------------
-        ; 2e: Handle line with length > 2
+        ; Step 2c: Set line prefix
         ;------------------------------------------------------
 tfh.file.read.addline.normal:
+
+        mov   @tfh.reclen,tmp3      ; \ Line prefix MSB is "real" length if RLE encoded.
+        swpb  tmp3                  ; | Line prefix LSB is "compressed" length if RLE encoded, 
+        movb  tmp3,tmp2             ; / otherwise normal length.
+
         mov   @edb.next_free.ptr,tmp1 
                                     ; RAM target address in editor buffer
+        mov   tmp2,*tmp1            ; Save line prefix
+        inct  @edb.next_free.ptr    ; Add offset
+        andi  tmp2,>00ff            ; Get rid of MSB 
+
         mov   tmp1,@parm2           ; parm2 = Pointer to line in editor buffer
 
         a     tmp2,@edb.next_free.ptr
                                     ; Update pointer to next free line
+                                    
         ;------------------------------------------------------
         ; 2e: Copy compressed line to editor buffer
         ;------------------------------------------------------
@@ -209,15 +211,12 @@ tfh.file.read.addline.normal:
                                     ;   tmp1 = RAM target address
                                     ;   tmp2 = Bytes to copy
         ;------------------------------------------------------
-        ; Step 4: Prepare for index update
+        ; Step 3: Prepare for index update
         ;------------------------------------------------------
 tfh.file.read.prepindex:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index        
                                     ; parm2 = Already set
-
-        mov   @tfh.reclen,@parm3    ; parm3 = Line length
-!       mov   @waux1,@parm4         ; parm4 = Compressed Line length
         jmp   tfh.file.read.updindex
                                     ; Update index
         ;------------------------------------------------------
@@ -227,7 +226,6 @@ tfh.file.read.emptyline:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
-        clr   @parm3                ; parm3 = Line length
         ;------------------------------------------------------
         ; Step 5: Update index
         ;------------------------------------------------------
@@ -235,9 +233,6 @@ tfh.file.read.updindex:
         bl    @idx.entry.update     ; Update index 
                                     ;   parm1 = Line number in editor buffer
                                     ;   parm2 = Pointer to line in editor buffer 
-                                    ;           (or line content if length <= 2)
-                                    ;   parm3 = Length of original line
-                                    ;   parm4 = Length of RLE compressed line
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------

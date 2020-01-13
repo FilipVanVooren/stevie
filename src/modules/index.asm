@@ -33,6 +33,10 @@
 *   d > SAMS bank 8
 *   e > SAMS bank 9
 *   f > SAMS bank A
+*
+* First line in editor buffer starts at offset 2 (a002), this
+* allows index to contain "null" pointers which mean empty line
+* without reference to editor buffer.
 ***************************************************************
 
 

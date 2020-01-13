@@ -36,7 +36,6 @@ edkey.action.loadfile:
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
-        seto  @parm2                ; RLE compression on during file load
         bl    @tfh.file.read        ; Read specified file
 
         clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty         
