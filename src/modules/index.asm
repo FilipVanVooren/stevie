@@ -99,6 +99,7 @@ idx.entry.update:
         ; Calculate offset
         ;------------------------------------------------------      
         mov   @parm2,tmp1
+        jeq   idx.entry.update.save ; Special handling for empty line
         ai    tmp1,-edb.top         ; Substract editor buffer base,
                                     ; we only store the offset
 

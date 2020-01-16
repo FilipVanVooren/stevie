@@ -14,7 +14,7 @@
 *--------------------------------------------------------------
 * INPUT
 * parm1 = pointer to length-prefixed file descriptor
-* parm2 = RLE compression on (>FFFF) or off >0000) 
+* parm2 = RLE compression on (>FFFF) or off ()>0000) 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -129,105 +129,107 @@ tfh.file.read.check:
         ; 1d: Decide on copy line from VDP buffer to editor
         ;     buffer (RLE off) or RAM buffer (RLE on)
         ;------------------------------------------------------
-        li    tmp0,tfh.vrecbuf      ; VDP source address
-  
         c     @tfh.rleonload,@w$ffff
                                     ; RLE compression on?
-        jeq   !                     ; Yes, do RLE compression
+        jeq   tfh.file.read.compression
+                                    ; Yes, do RLE compression
+        ;------------------------------------------------------
+        ; Step 2: Process line without doing RLE compression
+        ;------------------------------------------------------
+tfh.file.read.nocompression:        
+        li    tmp0,tfh.vrecbuf      ; VDP source address
         mov   @edb.next_free.ptr,tmp1
-                                    ; RAM target address (RLE off)                                    
-        jmp   tfh.file.read.check.emptyline
+                                    ; RAM target in editor buffer
 
-!       li    tmp1,fb.top           ; RAM target address (RLE on)
-        ;------------------------------------------------------
-        ; Step 1e: Copy line from VDP to CPU memory
-        ;------------------------------------------------------
-tfh.file.read.check.emptyline:
+        mov   tmp1,@parm2           ; Needed in step 4b (index update)
+
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
-        jeq   tfh.file.read.emptyline
+        jeq   tfh.file.read.prepindex.emptyline
                                     ; Handle empty line
-
-        mov   tmp2,@edb.next_free.ptr
-        inct  @edb.next_free.ptr    ; Save line length in line prefix
+        ;------------------------------------------------------
+        ; 2a: Copy line from VDP to CPU editor buffer
+        ;------------------------------------------------------        
+                                    ; Save line prefix                                             
+        movb  tmp2,*tmp1+           ; \ MSB to line prefix
+        swpb  tmp2                  ; |
+        movb  tmp2,*tmp1+           ; | LSB to line prefix
+        swpb  tmp2                  ; / 
+        
+        inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
+        a     tmp2,@edb.next_free.ptr
+                                    ; Add line length 
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ;   tmp0 = VDP source address
                                     ;   tmp1 = RAM target address
                                     ;   tmp2 = Bytes to copy
+                                        
+        jmp   tfh.file.read.prepindex
+                                    ; Prepare for updating index
         ;------------------------------------------------------
-        ; Step 2: Check if RLE compression wanted
+        ; Step 3: Process line and do RLE compression
         ;------------------------------------------------------
-        c     @tfh.rleonload,@w$ffff
-                                    ; RLE compression on?
-        jeq   tfh.file.read.rle_compress
-                                    ; Yes, do RLE compression
-        ;------------------------------------------------------
-        ; Step 2a: No RLE compression on line
-        ;------------------------------------------------------
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy
-        jmp   tfh.file.read.addline.normal
-        ;------------------------------------------------------
-        ; Step 2b: RLE compression on line => compress
-        ;------------------------------------------------------
-tfh.file.read.rle_compress:        
-        ;bl    @film                ; DEBUG ONLY
-        ;      data fb.top+160,>00,80*2
+tfh.file.read.compression:         
+        li    tmp0,tfh.vrecbuf      ; VDP source address        
+        li    tmp1,fb.top           ; RAM target address 
+        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
+        jeq   tfh.file.read.prepindex.emptyline
+                                    ; Handle empty line
 
-        li    tmp0,fb.top           ; RAM source address
-        li    tmp1,fb.top+160       ; RAM target address
+        bl    @xpyv2m               ; Copy memory block from VDP to CPU
+                                    ;   tmp0 = VDP source address
+                                    ;   tmp1 = RAM target address
+                                    ;   tmp2 = Bytes to copy
+
+        ;------------------------------------------------------
+        ; 3a: RLE compression on line
+        ;------------------------------------------------------
+        li    tmp0,fb.top           ; RAM source of uncompressed line
+        li    tmp1,fb.top+160       ; RAM target for compressed line
         mov   @tfh.reclen,tmp2      ; Length of string
-        bl    @xcpu2rle             ; RLE encode
-        mov   @waux1,tmp2           ; Number of RLE compressed bytes to copy
-
+        bl    @xcpu2rle             ; RLE compression
         ;------------------------------------------------------
-        ; Step 2c: Set line prefix
+        ; 3b: Set line prefix
+        ;------------------------------------------------------                
+        mov   @waux1,tmp2           ; Length of RLE compressed string        
+        swpb  tmp2                  ; 
+        movb  tmp2,*tmp1+           ; Length byte to line prefix
+
+        mov   @tfh.reclen,tmp2      ; Length of uncompressed string
+        swpb  tmp2 
+        movb  tmp2,*tmp1+           ; Length byte to line prefix
+        swpb  tmp2                  ; Restore value again -> for @xpym2m
+        inct  @edb.next_free.ptr    ; Keep pointer synced
         ;------------------------------------------------------
-tfh.file.read.addline.normal:
-
-        mov   @tfh.reclen,tmp3      ; \ Line prefix MSB is "real" length if RLE encoded.
-        swpb  tmp3                  ; | Line prefix LSB is "compressed" length if RLE encoded, 
-        movb  tmp3,tmp2             ; / otherwise normal length.
-
-        mov   @edb.next_free.ptr,tmp1 
-                                    ; RAM target address in editor buffer
-        mov   tmp2,*tmp1            ; Save line prefix
-        inct  @edb.next_free.ptr    ; Add offset
-        andi  tmp2,>00ff            ; Get rid of MSB 
-
-        mov   tmp1,@parm2           ; parm2 = Pointer to line in editor buffer
-
-        a     tmp2,@edb.next_free.ptr
-                                    ; Update pointer to next free line
-                                    
+        ; 3c: Copy compressed line to editor buffer
         ;------------------------------------------------------
-        ; 2e: Copy compressed line to editor buffer
-        ;------------------------------------------------------
-        c     @tfh.rleonload,@w$ffff
-                                    ; RLE compression on?
-        jne   tfh.file.read.prepindex        
         li    tmp0,fb.top+160       ; RAM source address
+        mov   @waux1,tmp2           ; Get compressed length again
+
         bl    @xpym2m               ; Copy memory block from CPU to CPU
                                     ;   tmp0 = RAM source address
                                     ;   tmp1 = RAM target address
                                     ;   tmp2 = Bytes to copy
+
+        a     @waux1,@edb.next_free.ptr
+                                    ; Update pointer to next free line
         ;------------------------------------------------------
-        ; Step 3: Prepare for index update
+        ; Step 4: Update index
         ;------------------------------------------------------
 tfh.file.read.prepindex:
-        mov   @tfh.records,@parm1   ; parm1 = Line number
-        dec   @parm1                ;         Adjust for base 0 index        
-                                    ; parm2 = Already set
+        mov   @edb.lines,@parm1     ; parm1 = Line number
+                                    ; parm2 = Must allready be set!
         jmp   tfh.file.read.updindex
                                     ; Update index
         ;------------------------------------------------------
-        ; Special handling for empty line
+        ; 4a: Special handling for empty line
         ;------------------------------------------------------
-tfh.file.read.emptyline:
+tfh.file.read.prepindex.emptyline:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
         ;------------------------------------------------------
-        ; Step 5: Update index
+        ; 4b: Do actual index update
         ;------------------------------------------------------
 tfh.file.read.updindex:
         bl    @idx.entry.update     ; Update index 
@@ -236,7 +238,7 @@ tfh.file.read.updindex:
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
-        ; 5a: Display results
+        ; Step 5: Display results
         ;------------------------------------------------------
 tfh.file.read.display:
         bl    @putnum

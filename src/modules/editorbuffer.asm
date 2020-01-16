@@ -304,8 +304,11 @@ edb.line.getlength:
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
-        mov   *tmp0,tmp1            ; Get line prefix
-        andi  tmp1,>00ff            ; Get rid of MSB
+        movb  *tmp0+,tmp1           ; Get compressed length
+        swpb  tmp1
+        movb  *tmp0+,tmp1           ; Get uncompressed length
+        swpb  tmp1
+        andi  tmp1,>00ff            ; Get rid of MSB (compressed length)
         mov   tmp1,@outparm1        ; Save line length
         ;------------------------------------------------------
         ; Exit
