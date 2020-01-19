@@ -153,7 +153,10 @@ fb.refresh:
         ; Unpack line to frame buffer
         ;------------------------------------------------------
 fb.refresh.unpack_line:
-        bl    @edb.line.unpack
+        bl    @edb.line.unpack      ; Unpack line
+                                    ; \ .  parm1 = Line to unpack
+                                    ; / .  parm2 = Target row in frame buffer
+
         inc   @parm1                ; Next line in editor buffer
         inc   @parm2                ; Next row in frame buffer
         c     @parm2,@fb.screenrows ; Last row reached ?

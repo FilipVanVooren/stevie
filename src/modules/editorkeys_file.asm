@@ -5,18 +5,21 @@
 *---------------------------------------------------------------
 * Load DV/80 text file into editor
 *---------------------------------------------------------------
-* Input
+* b     @edkey.action.loadfile 
+*--------------------------------------------------------------- 
+* INPUT
 * tmp0  = Pointer to length-prefixed string containing device
 *         and filename
 * parm1 = >FFFF for RLE compression on load, otherwise >0000
 *---------------------------------------------------------------
 edkey.action.loadfile:
+        mov   @parm1,@parm2         ; RLE compression on/off        
         mov   tmp0,@parm1           ; Setup file to load
-        clr   @parm2                ; NO RLE COMPRESSION
 
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
-        bl    @fb.init              ; Initialize framebuffer        
+        bl    @fb.init              ; Initialize framebuffer
+        mov   @parm2,@edb.rle       ; Save RLE compression        
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
@@ -29,22 +32,26 @@ edkey.action.loadfile:
 
         clr   tmp0                  ; VDP target address
         li    tmp1,32               ; Character to fill
-        bl    @xfilv                ; Fill VDP
-                                    ; tmp0 = VDP target address
-                                    ; tmp1 = Byte to fill
-                                    ; tmp2 = Bytes to copy                                    
+
+        bl    @xfilv                ; Fill VDP memory
+                                    ; \ .  tmp0 = VDP target address
+                                    ; | .  tmp1 = Byte to fill
+                                    ; / .  tmp2 = Bytes to copy                                    
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
         bl    @tfh.file.read        ; Read specified file
+                                    ; \ .  parm1 = Pointer to length prefixed file descriptor
+                                    ; / .  parm2 = RLE compression on (>FFFF) or off (>0000)
 
-        clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty         
+        clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
 
 
 
 edkey.action.buffer0:
         li   tmp0,fdname0
+        seto @parm1                 ; RLE encoding on
         jmp  edkey.action.loadfile
                                     ; Load DIS/VAR 80 file into editor buffer 
 edkey.action.buffer1:
@@ -54,6 +61,7 @@ edkey.action.buffer1:
 
 edkey.action.buffer2:
         li   tmp0,fdname2
+        seto @parm1                 ; RLE encoding on        
         jmp  edkey.action.loadfile
                                     ; Load DIS/VAR 80 file into editor buffer 
 

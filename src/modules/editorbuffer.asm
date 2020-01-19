@@ -36,6 +36,7 @@ edb.init:
                                     ; Set pointer to next free line in editor buffer
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
         clr   @edb.lines            ; Lines=0
+        clr   @edb.rle              ; RLE compression off
 
 edb.init.exit:        
         ;------------------------------------------------------
@@ -111,9 +112,10 @@ edb.line.pack.update_index:
                                     ; Block where line will reside
 
         clr   @parm3                ; SAMS bank 
-        bl    @idx.entry.update     ; parm1 (line number) = fb.topline + fb.row
-                                    ; parm2 (pointer)     = pointer to line in editor buffer
-                                    ; parm3 (SAMS bank)   = 0
+        bl    @idx.entry.update     ; Update index
+                                    ; \ .  parm1 = Line number in editor buffer
+                                    ; | .  parm2 = pointer to line in editor buffer
+                                    ; / .  parm3 = SAMS bank (0-A)
 
         ;------------------------------------------------------
         ; 2. Set line prefix in editor buffer
@@ -183,14 +185,15 @@ edb.line.pack.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
 * Memory usage
-* rambuf   = Saved @parm1 of edb.line.unpack
-* rambuf+2 = Saved @parm2 of edb.line.unpack
-* rambuf+4 = Source memory address in editor buffer
-* rambuf+6 = Destination memory address in frame buffer
-* rambuf+8 = Length of unpacked line
+* rambuf    = Saved @parm1 of edb.line.unpack
+* rambuf+2  = Saved @parm2 of edb.line.unpack
+* rambuf+4  = Source memory address in editor buffer
+* rambuf+6  = Destination memory address in frame buffer
+* rambuf+8  = Length of RLE (decompressed) line
+* rambuf+10 = Length of RLE compressed line
 ********@*****@*********************@**************************
 edb.line.unpack:
         dect  stack
@@ -208,23 +211,26 @@ edb.line.unpack:
         mov   @fb.top.ptr,tmp2
         a     tmp2,tmp1             ; Add base to offset
         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
-
-
         ;------------------------------------------------------        
         ; Get length of line to unpack
         ;------------------------------------------------------
         bl    @edb.line.getlength   ; Get length of line
-                                    ; parm1 = Line number
+                                    ; \ .  parm1    = Line number
+                                    ; | o  outparm1 = Line length (uncompressed)
+                                    ; | o  outparm2 = Line length (compressed)
+                                    ; / o  outparm3 = SAMS bank (>0 - >a)
 
-        mov   @outparm1,@rambuf+8   ; Bytes to copy 
+        mov   @outparm2,@rambuf+10  ; Save length of RLE compressed line
+        mov   @outparm1,@rambuf+8   ; Save length of RLE (decompressed) line
         jeq   edb.line.unpack.clear ; Skip index processing if empty line anyway                       
 
         ;------------------------------------------------------
         ; Index. Calculate address of entry and get pointer
         ;------------------------------------------------------
-        bl    @idx.pointer.get      ; Get pointer to editor buffer entry
-                                    ; parm1 = Line number
-        
+        bl    @idx.pointer.get      ; Get pointer to line
+                                    ; \ .  parm1    = Line number
+                                    ; | o  outparm1 = Pointer to line
+                                    ; / o  outparm2 = SAMS bank
 
         inct  @outparm1             ; Skip line prefix
         mov   @outparm1,@rambuf+4   ; Source memory address for block copy
@@ -239,27 +245,45 @@ edb.line.unpack.clear:
         clr   tmp1                  ; Fill with >00
         mov   @fb.colsline,tmp2
         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
+        inc   tmp2
 
-        bl    @xfilm                ; tmp0 = Target address
-                                    ; tmp1 = Byte to fill
-                                    ; tmp2 = Repeat count
+        bl    @xfilm                ; Fill CPU memory
+                                    ; \ .  tmp0 = Target address
+                                    ; | .  tmp1 = Byte to fill
+                                    ; / .  tmp2 = Repeat count
 
         ;------------------------------------------------------
-        ; Copy line from editor buffer to frame buffer
+        ; Prepare for unpacking data
         ;------------------------------------------------------
-edb.line.unpack.copy:
-        mov   @rambuf+8,tmp2        ; Bytes to copy 
+edb.line.unpack.prepare: 
+        mov   @rambuf+8,tmp2        ; Line length
         jeq   edb.line.unpack.exit  ; Exit if length = 0
-
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
+        ;------------------------------------------------------
+        ; Either RLE decompress or do normal memory copy
+        ;------------------------------------------------------
+        mov   @edb.rle,tmp3
+        jeq   edb.line.unpack.copy.uncompressed
+        ;------------------------------------------------------
+        ; Uncompress RLE line to frame buffer
+        ;------------------------------------------------------
+        mov   @rambuf+10,tmp2       ; Line compressed length
+
+        bl    @xrle2cpu             ; RLE decompress to CPU memory
+                                    ; \ .  tmp0 = ROM/RAM source address
+                                    ; | .  tmp1 = RAM target address
+                                    ; / .  tmp2 = Length of RLE encoded data
+        jmp   edb.line.unpack.exit
+
+edb.line.unpack.copy.uncompressed:
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
         bl    @xpym2m               ; Copy line to frame buffer
-                                    ;   tmp0 = Source address
-                                    ;   tmp1 = Target address 
-                                    ;   tmp2 = Bytes to copy
+                                    ; \ .  tmp0 = Source address
+                                    ; | .  tmp1 = Target address 
+                                    ; / .  tmp2 = Bytes to copy
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -279,11 +303,12 @@ edb.line.unpack.exit:
 * @parm1 = Line number
 *--------------------------------------------------------------
 * OUTPUT
-* @outparm1 = Length of line
-* @outparm2 = SAMS bank (>0 - >a)
+* @outparm1 = Length of line (uncompressed)
+* @outparm2 = Length of line (compressed)
+* @outparm3 = SAMS bank (>0 - >a)
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0,tmp1,tmp2
 ********@*****@*********************@**************************
 edb.line.getlength:
         dect  stack
@@ -291,25 +316,33 @@ edb.line.getlength:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        clr   @outparm1             ; Reset length
-        clr   @outparm2             ; Reset SAMS bank
+        clr   @outparm1             ; Reset uncompressed length
+        clr   @outparm2             ; Reset compressed length
+        clr   @outparm3             ; Reset SAMS bank
         ;------------------------------------------------------
         ; Get length
         ;------------------------------------------------------
         bl    @idx.pointer.get      ; Get pointer to line
+                                    ; \  parm1    = Line number
+                                    ; |  outparm1 = Pointer to line
+                                    ; /  outparm2 = SAMS bank
+
         mov   @outparm1,tmp0        ; Is pointer set?
         jeq   edb.line.getlength.exit
                                     ; Exit early if NULL pointer
-
+        mov   @outparm2,@outparm3   ; Save SAMS bank
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
+        clr   tmp1
         movb  *tmp0+,tmp1           ; Get compressed length
         swpb  tmp1
+        mov   tmp1,@outparm2        ; Save length
+
+        clr   tmp1
         movb  *tmp0+,tmp1           ; Get uncompressed length
         swpb  tmp1
-        andi  tmp1,>00ff            ; Get rid of MSB (compressed length)
-        mov   tmp1,@outparm1        ; Save line length
+        mov   tmp1,@outparm1        ; Save length
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

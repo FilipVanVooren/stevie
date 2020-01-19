@@ -14,7 +14,7 @@
 *--------------------------------------------------------------
 * INPUT
 * parm1 = pointer to length-prefixed file descriptor
-* parm2 = RLE compression on (>FFFF) or off ()>0000) 
+* parm2 = RLE compression on (>FFFF) or off (>0000) 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -93,10 +93,11 @@ tfh.file.read.record:
         inc   @tfh.records          ; Update counter        
         clr   @tfh.reclen           ; Reset record length
 
-        bl    @file.record.read     ; Read record
-              data tfh.vpab         ; tmp0=Status byte
-                                    ; tmp1=Bytes read
-                                    ; tmp2=Status register contents upon DSRLNK return
+        bl    @file.record.read     ; Read file record
+              data tfh.vpab         ; \ .  p0   = Address of PAB in VDP RAM (without +9 offset!)
+                                    ; | o  tmp0 = Status byte
+                                    ; | o  tmp1 = Bytes read
+                                    ; / o  tmp2 = Status register contents upon DSRLNK return
 
         mov   tmp0,@tfh.pabstat     ; Save VDP PAB status byte
         mov   tmp1,@tfh.reclen      ; Save bytes read
@@ -160,9 +161,9 @@ tfh.file.read.nocompression:
                                     ; Add line length 
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ;   tmp0 = VDP source address
-                                    ;   tmp1 = RAM target address
-                                    ;   tmp2 = Bytes to copy
+                                    ; \ .  tmp0 = VDP source address
+                                    ; | .  tmp1 = RAM target address
+                                    ; / .  tmp2 = Bytes to copy
                                         
         jmp   tfh.file.read.prepindex
                                     ; Prepare for updating index
@@ -177,9 +178,9 @@ tfh.file.read.compression:
                                     ; Handle empty line
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ;   tmp0 = VDP source address
-                                    ;   tmp1 = RAM target address
-                                    ;   tmp2 = Bytes to copy
+                                    ; \ .  tmp0 = VDP source address
+                                    ; | .  tmp1 = RAM target address
+                                    ; / .  tmp2 = Bytes to copy
 
         ;------------------------------------------------------
         ; 3a: RLE compression on line
@@ -187,10 +188,18 @@ tfh.file.read.compression:
         li    tmp0,fb.top           ; RAM source of uncompressed line
         li    tmp1,fb.top+160       ; RAM target for compressed line
         mov   @tfh.reclen,tmp2      ; Length of string
+
         bl    @xcpu2rle             ; RLE compression
+                                    ; \ .  tmp0  = ROM/RAM source address
+                                    ; | .  tmp1  = RAM target address
+                                    ; | .  tmp2  = Length uncompressed data
+                                    ; / o  waux1 = Length RLE encoded string
         ;------------------------------------------------------
         ; 3b: Set line prefix
         ;------------------------------------------------------                
+        mov   @edb.next_free.ptr,tmp1
+                                    ; RAM target address
+        mov   tmp1,@parm2           ; Pointer to line in editor buffer
         mov   @waux1,tmp2           ; Length of RLE compressed string        
         swpb  tmp2                  ; 
         movb  tmp2,*tmp1+           ; Length byte to line prefix
@@ -198,18 +207,17 @@ tfh.file.read.compression:
         mov   @tfh.reclen,tmp2      ; Length of uncompressed string
         swpb  tmp2 
         movb  tmp2,*tmp1+           ; Length byte to line prefix
-        swpb  tmp2                  ; Restore value again -> for @xpym2m
         inct  @edb.next_free.ptr    ; Keep pointer synced
         ;------------------------------------------------------
         ; 3c: Copy compressed line to editor buffer
         ;------------------------------------------------------
-        li    tmp0,fb.top+160       ; RAM source address
-        mov   @waux1,tmp2           ; Get compressed length again
+        li    tmp0,fb.top+160       ; RAM source address        
+        mov   @waux1,tmp2           ; Length of RLE compressed string                
 
         bl    @xpym2m               ; Copy memory block from CPU to CPU
-                                    ;   tmp0 = RAM source address
-                                    ;   tmp1 = RAM target address
-                                    ;   tmp2 = Bytes to copy
+                                    ; \ .  tmp0 = RAM source address
+                                    ; | .  tmp1 = RAM target address
+                                    ; / .  tmp2 = Bytes to copy
 
         a     @waux1,@edb.next_free.ptr
                                     ; Update pointer to next free line
@@ -232,9 +240,12 @@ tfh.file.read.prepindex.emptyline:
         ; 4b: Do actual index update
         ;------------------------------------------------------
 tfh.file.read.updindex:
+        clr   @parm3
         bl    @idx.entry.update     ; Update index 
-                                    ;   parm1 = Line number in editor buffer
-                                    ;   parm2 = Pointer to line in editor buffer 
+                                    ; \ .  parm1    = Line number in editor buffer
+                                    ; | .  parm2    = Pointer to line in editor buffer 
+                                    ; | .  parm3    = SAMS bank (0-A)
+                                    ; / o  outparm1 = Pointer to updated index entry
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
@@ -291,7 +302,7 @@ tfh.file.read.error:
         ci    tmp0,io.err.eof       ; EOF reached ?
         jeq   tfh.file.read.eof
                                     ; All good. File closed by DSRLNK 
-        b     @crash_handler        ; A File error occured. System crashed
+        bl    @crash_handler        ; A File error occured. System crashed
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
