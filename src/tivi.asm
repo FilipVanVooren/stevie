@@ -71,7 +71,6 @@ skip_speech_detection   equ  1      ; Skip speech synthesizer detection
 skip_speech_player      equ  1      ; Skip inclusion of speech player code
 skip_virtual_keyboard   equ  1      ; Skip virtual keyboard scan
 skip_random_generator   equ  1      ; Skip random functions 
-skip_cpu_hexsupport     equ  1      ; Skip mkhex, puthex 
 skip_cpu_crc16          equ  1      ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 * SPECTRA2 startup options

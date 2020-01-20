@@ -301,8 +301,12 @@ tfh.file.read.error:
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
         jeq   tfh.file.read.eof
-                                    ; All good. File closed by DSRLNK 
-        bl    @crash_handler        ; A File error occured. System crashed
+                                    ; All good. File closed by DSRLNK
+        ;------------------------------------------------------
+        ; File error occured
+        ;------------------------------------------------------     
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @crash                ; / Crash and halt system
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
