@@ -90,15 +90,14 @@ edb.line.pack:
 edb.line.pack.scan:
         movb  *tmp1+,tmp2           ; Get char
         srl   tmp2,8                ; Right justify
-        jeq   edb.line.pack.checklength
-                                    ; Stop scan if >00 found
+        jeq   edb.line.pack.prepare ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         jmp   edb.line.pack.scan    ; Next character
 
         ;------------------------------------------------------
-        ; Handle line placement depending on length
+        ; Prepare for storing line
         ;------------------------------------------------------
-edb.line.pack.checklength:
+edb.line.pack.prepare:
         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
         a     @fb.row,@parm1        ; /
 
@@ -127,7 +126,10 @@ edb.line.pack.update_index:
         inct  @edb.next_free.ptr    ; Adjust pointer
 
         mov   @rambuf+4,tmp2        ; Get line length
-        mov   tmp2,*tmp1+           ; Set line length as line prefix
+        inc   tmp1                  ; Skip MSB for now (compressed length)
+        swpb  tmp2
+        movb  tmp2,*tmp1+           ; Set line length as line prefix
+        swpb  tmp2
         jeq   edb.line.pack.exit    ; Nothing to copy if empty line
 
         ;------------------------------------------------------
@@ -136,31 +138,23 @@ edb.line.pack.update_index:
 edb.line.pack.copyline:        
         ci    tmp2,2
         jne   edb.line.pack.copyline.checkbyte
-        mov   *tmp0,*tmp1           ; Copy single word
+        movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
+        movb  *tmp0+,*tmp1+         ; / uneven address
         jmp   !
-
 edb.line.pack.copyline.checkbyte:
         ci    tmp2,1
         jne   edb.line.pack.copyline.block
         movb  *tmp0,*tmp1           ; Copy single byte
         jmp   !
-
 edb.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
                                     ;   tmp0 = source
                                     ;   tmp1 = destination
                                     ;   tmp2 = bytes to copy
 
-        ;------------------------------------------------------
-        ; 4. Update pointer to next free line, assure it is even
-        ;------------------------------------------------------
 !       a     @rambuf+4,@edb.next_free.ptr
-                                    ; Update pointer to next free block 
+                                    ; Update pointer to next free line
 
-        mov   @edb.next_free.ptr,tmp0
-        andi  tmp0,1                ; Uneven ?
-        jeq   edb.line.pack.exit    ; Exit if even
-        inc   @edb.next_free.ptr    ; Make it even
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -365,21 +359,23 @@ edb.line.getlength.exit:
 * @fb.row.length = Length of row
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0
 ********@*****@*********************@**************************
 edb.line.getlength2:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
+        ; Calculate line in editor buffer
+        ;------------------------------------------------------
+        mov   @fb.topline,tmp0      ; Get top line in frame buffer
+        a     @fb.row,tmp0          ; Get current row in frame buffer        
+        ;------------------------------------------------------
         ; Get length
         ;------------------------------------------------------
-        mov   @fb.column,@rambuf    ; Save @fb.column
-        mov   @fb.topline,tmp0      ; Get top line in frame buffer
-        a     @fb.row,tmp0          ; Get current row in frame buffer
-        sla   tmp0,2                ; Line number * 4
-        mov   @idx.top+2(tmp0),tmp1 ; Get index entry line length
-        andi  tmp1,>00ff            ; Get rid of SAMS page
-        mov   tmp1,@fb.row.length   ; Save row length
+        mov   tmp0,@parm1           
+        bl    @edb.line.getlength
+        mov   @outparm1,@fb.row.length
+                                    ; Save row length
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
