@@ -261,6 +261,14 @@ main.continue:
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
 
+        bl    @sams.mapping.on      ; Turn SAMS mapping mode on
+
+        bl    @sams.bank            ; \ Switch to SAMS bank
+              data 1,>a000          ; | .  p0 = SAMS bank 1
+                                    ; / .  p1 = Memory range >a000-afff
+
+        bl    @sams.mapping.off     ; Turn SAMS mapping mode off
+
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------
