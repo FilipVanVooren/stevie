@@ -23,7 +23,7 @@
 *--------------------------------------------------------------
 * The frame buffer is temporarily used for compressing the line
 * before it is moved to the editor buffer
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 tfh.file.read:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -76,7 +76,7 @@ tfh.file.read:
         ;------------------------------------------------------
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
-        bl    @mem.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
+        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300
         ;------------------------------------------------------
         ; Open file
@@ -115,8 +115,8 @@ tfh.file.read.record:
         ;------------------------------------------------------
         ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
-!       bl    @mem.scrpad.backup    ; Backup GPL layout to >2000
-        bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
+!       bl    @cpu.scrpad.backup    ; Backup GPL layout to >2000
+        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
@@ -288,7 +288,7 @@ tfh.file.read.checkmem:
         ; Next record
         ;------------------------------------------------------
 tfh.file.read.next:        
-        bl    @mem.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
+        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
 
         b     @tfh.file.read.record
@@ -311,7 +311,7 @@ tfh.file.read.error:
         ; End-Of-File reached
         ;------------------------------------------------------     
 tfh.file.read.eof:        
-        bl    @mem.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
+        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
         ;------------------------------------------------------
         ; Display final results
@@ -342,7 +342,7 @@ tfh.file.read_exit:
 
 ***************************************************************
 * PAB for accessing DV/80 file
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 tfh.file.pab.header:
         byte  io.op.open            ;  0    - OPEN
         byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY

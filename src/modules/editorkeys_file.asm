@@ -51,7 +51,6 @@ edkey.action.loadfile:
 
 edkey.action.buffer0:
         li   tmp0,fdname0
-        seto @parm1                 ; RLE encoding on
         jmp  edkey.action.loadfile
                                     ; Load DIS/VAR 80 file into editor buffer 
 edkey.action.buffer1:
@@ -61,7 +60,6 @@ edkey.action.buffer1:
 
 edkey.action.buffer2:
         li   tmp0,fdname2
-        seto @parm1                 ; RLE encoding on        
         jmp  edkey.action.loadfile
                                     ; Load DIS/VAR 80 file into editor buffer 
 

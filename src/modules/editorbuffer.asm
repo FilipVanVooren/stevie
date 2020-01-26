@@ -67,7 +67,7 @@ edb.init.exit:
 * rambuf   = Saved @fb.column
 * rambuf+2 = Saved beginning of row
 * rambuf+4 = Saved length of row
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 edb.line.pack:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -188,7 +188,7 @@ edb.line.pack.exit:
 * rambuf+6  = Destination memory address in frame buffer
 * rambuf+8  = Length of RLE (decompressed) line
 * rambuf+10 = Length of RLE compressed line
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 edb.line.unpack:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -303,7 +303,7 @@ edb.line.unpack.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 edb.line.getlength:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -360,7 +360,7 @@ edb.line.getlength.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 edb.line.getlength2:
         dect  stack
         mov   r11,*stack            ; Save return address

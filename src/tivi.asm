@@ -13,6 +13,7 @@
 *
 * Mem range   Bytes    Hex    Purpose
 * =========   =====   ====    ==================================
+* 8300-83ff     256   >0100   scrpad spectra2 layout
 * 2000-20ff     256   >0100   scrpad backup 1: GPL layout
 * 2100-21ff     256   >0100   scrpad backup 2: paged out spectra2
 * 2200-22ff     256   >0100   TiVi frame buffer structure
@@ -23,7 +24,6 @@
 * 2650-2faf    2400   >0960   Frame buffer 80x30
 * 2fb0-2fff     160   >00a0   Free for future use
 * 3000-3fff    4096   >1000   Index for 2048 lines
-* 8300-83ff     256   >0100   scrpad spectra2 layout
 * a000-fffb   24574   >5ffe   Editor buffer
 *--------------------------------------------------------------
 * SAMS 4k pages in transparent mode
@@ -178,7 +178,6 @@ edb.size        equ  24576          ; Editor buffer size
 *--------------------------------------------------------------
 
 
-
 *--------------------------------------------------------------
 * Cartridge header
 *--------------------------------------------------------------
@@ -215,7 +214,7 @@ sprsat  equ   >2000                 ; VDP sprite attribute table
 
 ***************************************************************
 * Main
-********@*****@*********************@**************************
+********|*****|*********************|**************************
 main    coc   @wbit1,config         ; F18a detected?
         jeq   main.continue
         blwp  @0                    ; Exit for now if no F18a detected
@@ -648,3 +647,13 @@ fdname6      #string 'DSK3.C99MAN3'
 fdname7      #string 'DSK3.C99SPECS'
 fdname8      #string 'DSK3.RANDOM#C'
 fdname9      #string 'DSK1.INVADERS'
+
+
+***************************************************************
+*                  Sanity check on ROM size
+***************************************************************
+ .ifgt $, >7fff
+        .error 'Aborted. Cartridge program too large!'
+ .else
+         data $   ; ROM size OK.
+ .endif
