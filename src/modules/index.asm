@@ -11,31 +11,10 @@
 * the editor buffer.
 * 
 * The editor buffer always resides at (a000 -> ffff) for a total
-* of 24K. Therefor when dereferencing, the base >a000 is to be 
-* added and only the offset (0000 -> 5fff) is stored in the index
-* itself.
-* 
-* The pointers' MSB high-nibble determines the SAMS bank to use:
-*
-*   0 > SAMS bank 0
-*   1 > SAMS bank 0
-*   2 > SAMS bank 0
-*   3 > SAMS bank 0
-*   4 > SAMS bank 0
-*   5 > SAMS bank 0
-*   6 > SAMS bank 1
-*   7 > SAMS bank 2
-*   8 > SAMS bank 3
-*   9 > SAMS bank 4
-*   a > SAMS bank 5
-*   b > SAMS bank 6
-*   c > SAMS bank 7
-*   d > SAMS bank 8
-*   e > SAMS bank 9
-*   f > SAMS bank A
+* of 24K. 
 *
 * First line in editor buffer starts at offset 2 (a002), this
-* allows index to contain "null" pointers which mean empty line
+* allows index to contain "null" pointers, aka empty lines
 * without reference to editor buffer.
 ***************************************************************
 
@@ -85,7 +64,7 @@ idx.init.exit:
 * INPUT
 * @parm1    = Line number in editor buffer
 * @parm2    = Pointer to line in editor buffer 
-* @parm3    = SAMS bank (0-A)
+* @parm3    = SAMS bank
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to updated index entry
@@ -100,15 +79,11 @@ idx.entry.update:
         ;------------------------------------------------------      
         mov   @parm2,tmp1
         jeq   idx.entry.update.save ; Special handling for empty line
-        ai    tmp1,-edb.top         ; Substract editor buffer base,
-                                    ; we only store the offset
 
         ;------------------------------------------------------
-        ; Inject SAMS bank into high-nibble MSB of pointer
-        ;------------------------------------------------------      
+        ; SAMS bank
+        ;------------------------------------------------------ 
         mov   @parm3,tmp2
-        jeq   idx.entry.update.save ; Skip for SAMS bank 0
-
         ; <still to do>
 
         ;------------------------------------------------------
@@ -240,7 +215,7 @@ idx.entry.insert.$$:
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to editor buffer line content
-* @outparm2 = SAMS bank (>0 - >a)
+* @outparm2 = SAMS page
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
@@ -257,28 +232,11 @@ idx.pointer.get:
         ;------------------------------------------------------      
         sla   tmp0,1                ; line number * 2
         mov   @idx.top(tmp0),tmp1   ; Get offset
-        ;------------------------------------------------------
-        ; Get SAMS bank
-        ;------------------------------------------------------      
-        mov   tmp1,tmp2
-        srl   tmp2,12               ; Remove offset part
-
-        ci    tmp2,5                ; SAMS bank 0                
-        jle   idx.pointer.get.samsbank0
-
-        ai    tmp2,-5               ; Get SAMS bank
-        mov   tmp2,@outparm2        ; Return SAMS bank
-        jmp   idx.pointer.get.addbase
-        ;------------------------------------------------------
-        ; SAMS Bank 0 (or only 32K memory expansion)
-        ;------------------------------------------------------
-idx.pointer.get.samsbank0:
         clr   @outparm2             ; SAMS bank 0        
         ;------------------------------------------------------
-        ; Add base
+        ; Return parameter
         ;------------------------------------------------------
-idx.pointer.get.addbase:
-        ai    tmp1,edb.top          ; Add base of editor buffer
+idx.pointer.get.parm:
         mov   tmp1,@outparm1        ; Index slot -> Pointer        
         ;------------------------------------------------------
         ; Exit

@@ -9,10 +9,11 @@
 *--------------------------------------------------------------
 * TI-99/4a Advanced Editor & IDE
 *--------------------------------------------------------------
-* TiVi memory layout
+* TiVi memory layout.
+* See file "modules/memory.asm" for further details.
 *
 * Mem range   Bytes    Hex    Purpose
-* =========   =====   ====    ==================================
+* =========   =====    ===    ==================================
 * 8300-83ff     256   >0100   scrpad spectra2 layout
 * 2000-20ff     256   >0100   scrpad backup 1: GPL layout
 * 2100-21ff     256   >0100   scrpad backup 2: paged out spectra2
@@ -24,21 +25,18 @@
 * 2650-2faf    2400   >0960   Frame buffer 80x30
 * 2fb0-2fff     160   >00a0   Free for future use
 * 3000-3fff    4096   >1000   Index for 2048 lines
-* a000-fffb   24574   >5ffe   Editor buffer
+* a000-ffff   24576   >6000   Editor buffer
 *--------------------------------------------------------------
-* SAMS 4k pages in transparent mode
-*
-* Low memory expansion
-* 2000-2fff 4k  Scratchpad backup / TiVi structures
-* 3000-3fff 4k  Index
-*
-* High memory expansion
-* a000-afff 4k  Editor buffer
-* b000-bfff 4k  Editor buffer 
-* c000-cfff 4k  Editor buffer 
-* d000-dfff 4k  Editor buffer 
-* e000-efff 4k  Editor buffer 
-* f000-ffff 4k  Editor buffer
+* Mem range  Bytes     SAMS   Purpose
+* =========  =====     ====   =======
+* 2000-2fff   4096     no     Scratchpad/GPL backup, TiVi structures
+* 3000-3fff   4096     yes    Index, Shadow index          
+* a000-afff   4096     yes    Editor buffer
+* b000-bfff   4096     yes    Editor buffer 
+* c000-cfff   4096     yes    Editor buffer 
+* d000-dfff   4096     yes    Editor buffer 
+* e000-efff   4096     yes    Editor buffer 
+* f000-ffff   4096     yes    Editor buffer
 *--------------------------------------------------------------
 * TiVi VDP layout
 *
@@ -240,6 +238,11 @@ main.continue:
         bl    @film
               data >a000,00,24*1024 ; Clear 24k high-memory
         ;------------------------------------------------------
+        ; Load SAMS default memory layout
+        ;------------------------------------------------------
+        bl    @mem.setup.sams.layout
+                                    ; Initialize SAMS layout
+        ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------
         bl    @smag1x               ; Sprite magnification 1x
@@ -260,15 +263,6 @@ main.continue:
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
-
-        bl    @sams.mapping.on      ; Turn SAMS mapping mode on
-
-        bl    @sams.bank            ; \ Switch to SAMS bank
-              data 1,>a000          ; | .  p0 = SAMS bank 1
-                                    ; / .  p1 = Memory range >a000-afff
-
-        bl    @sams.mapping.off     ; Turn SAMS mapping mode off
-
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------
@@ -592,25 +586,27 @@ task.botline.$$
         mov   @fb.yxsave,@wyx
         b     @slotok                ; Exit running task
 
- 
+
 
 ***************************************************************
-*                  fb - Framebuffer module
+*              mem - Memory Management module
+***************************************************************
+        copy  "memory.asm"
+
+***************************************************************
+*                 fb - Framebuffer module
 ***************************************************************
         copy  "framebuffer.asm"
-
 
 ***************************************************************
 *              idx - Index management module
 ***************************************************************
         copy  "index.asm"
 
-
 ***************************************************************
 *               edb - Editor Buffer module
 ***************************************************************
         copy  "editorbuffer.asm"
-
 
 ***************************************************************
 *               fh - File handling module
