@@ -134,6 +134,7 @@ edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
 edb.next_free.page  equ  edb.top.ptr+10 ; SAMS page of next free line
 edb.insmode         equ  edb.top.ptr+12 ; Editor insert mode (>0000 overwrite / >ffff insert)
 edb.rle             equ  edb.top.ptr+14 ; RLE compression activated
+edb.samspage        equ  edb.top.ptr+16 ; Current SAMS page
 edb.end             equ  edb.top.ptr+16 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
@@ -169,10 +170,15 @@ fb.size         equ  2480           ; Frame buffer size
 idx.top         equ  >3000          ; Top of index
 idx.size        equ  4096           ; Index size
 *--------------------------------------------------------------
-* Editor buffer                     @>a000-ffff   (24576 bytes)
+* SAMS shadow index                 @>a000-Afff    (4096 bytes)
 *--------------------------------------------------------------
-edb.top         equ  >a000          ; Editor buffer high memory
-edb.size        equ  24576          ; Editor buffer size
+idx.shadow.top  equ  >a000          ; Top of shadow index
+idx.shadow.size equ  4096           ; Shadow index size
+*--------------------------------------------------------------
+* Editor buffer                     @>b000-ffff   (20380 bytes)
+*--------------------------------------------------------------
+edb.top         equ  >b000          ; Editor buffer high memory
+edb.size        equ  20380          ; Editor buffer size
 *--------------------------------------------------------------
 
 

@@ -124,13 +124,13 @@ tfh.file.read.record:
 tfh.file.read.check:     
         mov   @tfh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jeq   tfh.file.read.error
-                                    ; Yes, so handle file error
+        jne   !                     ; No, goto (1d)
+        b     @tfh.file.read.error  ; Yes, so handle file error
         ;------------------------------------------------------
         ; 1d: Decide on copy line from VDP buffer to editor
         ;     buffer (RLE off) or RAM buffer (RLE on)
         ;------------------------------------------------------
-        c     @tfh.rleonload,@w$ffff
+!       c     @tfh.rleonload,@w$ffff
                                     ; RLE compression on?
         jeq   tfh.file.read.compression
                                     ; Yes, do RLE compression
@@ -149,7 +149,16 @@ tfh.file.read.nocompression:
                                     ; Handle empty line
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
-        ;------------------------------------------------------        
+        ;------------------------------------------------------         
+        mov   tmp0,tmp3             ; Backup tmp0
+        mov   tmp1,tmp4             ; Backup tmp1
+        mov   @edb.samspage,tmp0    ; Current SAMS page
+        bl    @xsams.page           ; Switch to SAMS page
+                                    ; \ . tmp0 = SAMS page
+                                    ; / . tmp1 = Memory address        
+        mov   tmp4,tmp1             ; Restore tmp1
+        mov   tmp3,tmp0             ; Restore tmp0
+
                                     ; Save line prefix                                             
         movb  tmp2,*tmp1+           ; \ MSB to line prefix
         swpb  tmp2                  ; |
@@ -244,7 +253,7 @@ tfh.file.read.updindex:
         bl    @idx.entry.update     ; Update index 
                                     ; \ .  parm1    = Line number in editor buffer
                                     ; | .  parm2    = Pointer to line in editor buffer 
-                                    ; | .  parm3    = SAMS bank (0-A)
+                                    ; | .  parm3    = SAMS page
                                     ; / o  outparm1 = Pointer to updated index entry
 
         inc   @edb.lines            ; lines=lines+1                
@@ -276,6 +285,13 @@ tfh.file.read.checkmem:
         mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
         jle   tfh.file.read.next
+
+        li    tmp0,8
+        mov   tmp0,@edb.samspage    ; Next SAMS page
+        li    tmp0,edb.top
+        mov   tmp0,@edb.next_free.ptr
+        jmp   tfh.file.read.next   
+
         jmp   tfh.file.read.eof     ; NO SAMS SUPPORT FOR NOW
         ;------------------------------------------------------
         ; Next SAMS page

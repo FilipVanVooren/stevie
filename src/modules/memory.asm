@@ -25,6 +25,9 @@ mem.setup.sams.layout:
         ;------------------------------------------------------        
         bl    @sams.layout
               data data.tivi.sams.layout
+
+        li    tmp0,3                ; Start with page 3
+        mov   tmp0,@edb.samspage    ; Set current SAMS page 
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -110,14 +110,24 @@ edb.line.pack.update_index:
         mov   @edb.next_free.ptr,@parm2 
                                     ; Block where line will reside
 
-        clr   @parm3                ; SAMS bank 
+        mov   @edb.samspage,@parm3  ; Get SAMS page
         bl    @idx.entry.update     ; Update index
                                     ; \ .  parm1 = Line number in editor buffer
                                     ; | .  parm2 = pointer to line in editor buffer
-                                    ; / .  parm3 = SAMS bank (0-A)
+                                    ; / .  parm3 = SAMS page
 
         ;------------------------------------------------------
-        ; 2. Set line prefix in editor buffer
+        ; 2. Switch to required SAMS page
+        ;------------------------------------------------------
+        mov   @edb.samspage,tmp0    ; Current SAMS page
+        mov   @edb.next_free.ptr,tmp1
+                                    ; Pointer to line in editor buffer
+        bl    @xsams.page           ; Switch to SAMS page
+                                    ; \ . tmp0 = SAMS page
+                                    ; / . tmp1 = Memory address
+
+        ;------------------------------------------------------
+        ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
         mov   @rambuf+2,tmp0        ; Source for memory copy
         mov   @edb.next_free.ptr,tmp1 
@@ -133,7 +143,7 @@ edb.line.pack.update_index:
         jeq   edb.line.pack.exit    ; Nothing to copy if empty line
 
         ;------------------------------------------------------
-        ; 3. Copy line from framebuffer to editor buffer
+        ; 4. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------
 edb.line.pack.copyline:        
         ci    tmp2,2
@@ -224,7 +234,13 @@ edb.line.unpack:
         bl    @idx.pointer.get      ; Get pointer to line
                                     ; \ .  parm1    = Line number
                                     ; | o  outparm1 = Pointer to line
-                                    ; / o  outparm2 = SAMS bank
+                                    ; / o  outparm2 = SAMS page
+
+        mov   @outparm2,tmp0        ; SAMS page
+        mov   @outparm1,tmp1        ; Memory address
+        bl    @xsams.page           ; Activate SAMS page
+                                    ; \ .  tmp0 = SAMS page
+                                    ; / .  tmp1 = Memory address
 
         inct  @outparm1             ; Skip line prefix
         mov   @outparm1,@rambuf+4   ; Source memory address for block copy
@@ -299,7 +315,7 @@ edb.line.unpack.exit:
 * OUTPUT
 * @outparm1 = Length of line (uncompressed)
 * @outparm2 = Length of line (compressed)
-* @outparm3 = SAMS bank (>0 - >a)
+* @outparm3 = SAMS page
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
@@ -319,12 +335,12 @@ edb.line.getlength:
         bl    @idx.pointer.get      ; Get pointer to line
                                     ; \  parm1    = Line number
                                     ; |  outparm1 = Pointer to line
-                                    ; /  outparm2 = SAMS bank
+                                    ; /  outparm2 = SAMS page
 
         mov   @outparm1,tmp0        ; Is pointer set?
         jeq   edb.line.getlength.exit
                                     ; Exit early if NULL pointer
-        mov   @outparm2,@outparm3   ; Save SAMS bank
+        mov   @outparm2,@outparm3   ; Save SAMS page
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
