@@ -157,6 +157,8 @@ tfh.file.read.sams:
         ;------------------------------------------------------ 
 tfh.file.read.sams.switch:        
         mov   @edb.next_free.ptr,tmp1
+                                    ; Beginning of line
+
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
@@ -202,6 +204,36 @@ tfh.file.read.nocompression:
         a     tmp2,@edb.next_free.ptr
                                     ; Add line length 
 
+        ;------------------------------------------------------
+        ; 2b: Handle line split accross 2 consecutive SAMS pages
+        ;------------------------------------------------------ 
+        mov   tmp0,tmp3             ; Backup tmp0
+        mov   tmp1,tmp4             ; Backup tmp1
+
+        mov   tmp1,tmp0             ; Get pointer to beginning of line
+        srl   tmp0,12               ; Only keep high-nibble
+
+        mov   @edb.next_free.ptr,tmp1
+                                    ; Get pointer to next line (aka end of line)
+        srl   tmp1,12               ; Only keep high-nibble
+
+        c     tmp0,tmp1             ; Are they in the same segment?
+        jeq   !                     ; Yes, skip setting SAMS page
+
+        mov   @tfh.sams.page,tmp0   ; Get current SAMS page
+        inc   tmp0                  ; Increase SAMS page
+        mov   @edb.next_free.ptr,tmp1
+                                    ; Get pointer to next line (aka end of line)
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address         
+
+!       mov   tmp4,tmp1             ; Restore tmp1
+        mov   tmp3,tmp0             ; Restore tmp0
+        ;------------------------------------------------------
+        ; 2c: Do actual copy
+        ;------------------------------------------------------         
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
@@ -215,7 +247,7 @@ tfh.file.read.nocompression:
 tfh.file.read.compression:         
         li    tmp0,tfh.vrecbuf      ; VDP source address        
         li    tmp1,fb.top           ; RAM target address 
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
+        mov   @tfh.reclen,tmp2      ; Number of bytes to copy                
         jeq   tfh.file.read.prepindex.emptyline
                                     ; Handle empty line
 
@@ -354,6 +386,9 @@ tfh.file.read.error:
 tfh.file.read.eof:        
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
+
+        bl    @mem.setup.sams.layout
+                                    ; Restore SAMS default memory layout              
         ;------------------------------------------------------
         ; Display final results
         ;------------------------------------------------------
@@ -374,6 +409,9 @@ tfh.file.read.eof:
               data tfh.records,rambuf,>3020
 
         seto  @edb.dirty            ; Text changed in editor buffer!
+
+        
+            
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
