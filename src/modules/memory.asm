@@ -24,10 +24,7 @@ mem.setup.sams.layout:
         ; Set SAMS standard layout
         ;------------------------------------------------------        
         bl    @sams.layout
-              data data.tivi.sams.layout
-
-        li    tmp0,3                ; Start with page 3
-        mov   tmp0,@edb.samspage    ; Set current SAMS page 
+              data mem.sams.layout.data
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -37,7 +34,7 @@ mem.setup.sams.layout.exit:
 ***************************************************************
 * SAMS page layout table for TiVi (16 words)
 *--------------------------------------------------------------
-data.tivi.sams.layout:
+mem.sams.layout.data:
         data  >2000,>0000           ; >2000-2fff, SAMS page >00
         data  >3000,>0001           ; >3000-3fff, SAMS page >01
         data  >a000,>0002           ; >a000-afff, SAMS page >02

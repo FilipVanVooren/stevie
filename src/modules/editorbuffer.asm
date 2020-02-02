@@ -34,9 +34,11 @@ edb.init:
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
                                     ; Set pointer to next free line in editor buffer
+
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
         clr   @edb.lines            ; Lines=0
         clr   @edb.rle              ; RLE compression off
+
 
 edb.init.exit:        
         ;------------------------------------------------------
@@ -107,24 +109,30 @@ edb.line.pack.prepare:
         ; 1. Update index
         ;------------------------------------------------------
 edb.line.pack.update_index:
-        mov   @edb.next_free.ptr,@parm2 
-                                    ; Block where line will reside
+        mov   @edb.next_free.ptr,tmp0
+        mov   tmp0,@parm2           ; Block where line will reside
 
-        mov   @edb.samspage,@parm3  ; Get SAMS page
+        bl    @xsams.page.get       ; Get SAMS page
+                                    ; \ i  tmp0  = Memory address
+                                    ; | o  waux1 = SAMS page number
+                                    ; / o  waux2 = Address of SAMS register
+
+        mov   @waux1,@parm3         ; Save SAMS page number
+                                
         bl    @idx.entry.update     ; Update index
-                                    ; \ .  parm1 = Line number in editor buffer
-                                    ; | .  parm2 = pointer to line in editor buffer
-                                    ; / .  parm3 = SAMS page
+                                    ; \ i  parm1 = Line number in editor buffer
+                                    ; | i  parm2 = pointer to line in editor buffer
+                                    ; / i  parm3 = SAMS page
 
         ;------------------------------------------------------
         ; 2. Switch to required SAMS page
         ;------------------------------------------------------
-        mov   @edb.samspage,tmp0    ; Current SAMS page
-        mov   @edb.next_free.ptr,tmp1
+        ;mov   @edb.sams.page,tmp0   ; Current SAMS page
+        ;mov   @edb.next_free.ptr,tmp1
                                     ; Pointer to line in editor buffer
-        bl    @xsams.page           ; Switch to SAMS page
-                                    ; \ . tmp0 = SAMS page
-                                    ; / . tmp1 = Memory address
+  ;     bl    @xsams.page           ; Switch to SAMS page
+                                    ; \ i  tmp0 = SAMS page
+                                    ; / i  tmp1 = Memory address
 
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
@@ -158,9 +166,9 @@ edb.line.pack.copyline.checkbyte:
         jmp   !
 edb.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
-                                    ;   tmp0 = source
-                                    ;   tmp1 = destination
-                                    ;   tmp2 = bytes to copy
+                                    ; \ i  tmp0 = source
+                                    ; | i  tmp1 = destination
+                                    ; / i  tmp2 = bytes to copy
 
 !       a     @rambuf+4,@edb.next_free.ptr
                                     ; Update pointer to next free line
@@ -219,10 +227,10 @@ edb.line.unpack:
         ; Get length of line to unpack
         ;------------------------------------------------------
         bl    @edb.line.getlength   ; Get length of line
-                                    ; \ .  parm1    = Line number
+                                    ; \ i  parm1    = Line number
                                     ; | o  outparm1 = Line length (uncompressed)
                                     ; | o  outparm2 = Line length (compressed)
-                                    ; / o  outparm3 = SAMS bank (>0 - >a)
+                                    ; / o  outparm3 = SAMS page
 
         mov   @outparm2,@rambuf+10  ; Save length of RLE compressed line
         mov   @outparm1,@rambuf+8   ; Save length of RLE (decompressed) line
@@ -232,15 +240,15 @@ edb.line.unpack:
         ; Index. Calculate address of entry and get pointer
         ;------------------------------------------------------
         bl    @idx.pointer.get      ; Get pointer to line
-                                    ; \ .  parm1    = Line number
+                                    ; \ i  parm1    = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
 
         mov   @outparm2,tmp0        ; SAMS page
         mov   @outparm1,tmp1        ; Memory address
-        bl    @xsams.page           ; Activate SAMS page
-                                    ; \ .  tmp0 = SAMS page
-                                    ; / .  tmp1 = Memory address
+        bl    @xsams.page.set       ; Switch SAMS memory page
+                                    ; \ i  tmp0 = SAMS page
+                                    ; / i  tmp1 = Memory address
 
         inct  @outparm1             ; Skip line prefix
         mov   @outparm1,@rambuf+4   ; Source memory address for block copy
@@ -258,10 +266,9 @@ edb.line.unpack.clear:
         inc   tmp2
 
         bl    @xfilm                ; Fill CPU memory
-                                    ; \ .  tmp0 = Target address
-                                    ; | .  tmp1 = Byte to fill
-                                    ; / .  tmp2 = Repeat count
-
+                                    ; \ i  tmp0 = Target address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Repeat count
         ;------------------------------------------------------
         ; Prepare for unpacking data
         ;------------------------------------------------------
@@ -281,19 +288,18 @@ edb.line.unpack.prepare:
         mov   @rambuf+10,tmp2       ; Line compressed length
 
         bl    @xrle2cpu             ; RLE decompress to CPU memory
-                                    ; \ .  tmp0 = ROM/RAM source address
-                                    ; | .  tmp1 = RAM target address
-                                    ; / .  tmp2 = Length of RLE encoded data
+                                    ; \ i  tmp0 = ROM/RAM source address
+                                    ; | i  tmp1 = RAM target address
+                                    ; / i  tmp2 = Length of RLE encoded data
         jmp   edb.line.unpack.exit
-
-edb.line.unpack.copy.uncompressed:
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
+edb.line.unpack.copy.uncompressed:        
         bl    @xpym2m               ; Copy line to frame buffer
-                                    ; \ .  tmp0 = Source address
-                                    ; | .  tmp1 = Target address 
-                                    ; / .  tmp2 = Bytes to copy
+                                    ; \ i  tmp0 = Source address
+                                    ; | i  tmp1 = Target address 
+                                    ; / i  tmp2 = Bytes to copy
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -333,9 +339,9 @@ edb.line.getlength:
         ; Get length
         ;------------------------------------------------------
         bl    @idx.pointer.get      ; Get pointer to line
-                                    ; \  parm1    = Line number
-                                    ; |  outparm1 = Pointer to line
-                                    ; /  outparm2 = SAMS page
+                                    ; \ i  parm1    = Line number
+                                    ; | o  outparm1 = Pointer to line
+                                    ; / o  outparm2 = SAMS page
 
         mov   @outparm1,tmp0        ; Is pointer set?
         jeq   edb.line.getlength.exit

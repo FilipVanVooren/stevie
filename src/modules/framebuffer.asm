@@ -154,8 +154,8 @@ fb.refresh:
         ;------------------------------------------------------
 fb.refresh.unpack_line:
         bl    @edb.line.unpack      ; Unpack line
-                                    ; \ .  parm1 = Line to unpack
-                                    ; / .  parm2 = Target row in frame buffer
+                                    ; \ i  parm1 = Line to unpack
+                                    ; / i  parm2 = Target row in frame buffer
 
         inc   @parm1                ; Next line in editor buffer
         inc   @parm2                ; Next row in frame buffer
@@ -165,8 +165,8 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.refresh.exit
-        b    @poprt                 ; Return to caller
+fb.refresh.exit:
+        b     @poprt                ; Return to caller
 
 
 
@@ -181,7 +181,7 @@ fb.refresh.exit
 * @outparm1 = Column containing first non-blank character
 * @outparm2 = Character
 ********|*****|*********************|**************************
-fb.get.firstnonblank
+fb.get.firstnonblank:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -210,26 +210,20 @@ fb.get.firstnonblank.loop:
         ;------------------------------------------------------
         ; Non-blank character found
         ;------------------------------------------------------
-fb.get.firstnonblank.match
+fb.get.firstnonblank.match:
         s     @fb.current,tmp0      ; Calculate column
         dec   tmp0
         mov   tmp0,@outparm1        ; Save column
         movb  tmp1,@outparm2        ; Save character
-        jmp   fb.get.firstnonblank.$$
+        jmp   fb.get.firstnonblank.exit
         ;------------------------------------------------------
         ; No non-blank character found
         ;------------------------------------------------------
-fb.get.firstnonblank.nomatch
+fb.get.firstnonblank.nomatch:
         clr   @outparm1             ; X=0
         clr   @outparm2             ; Null
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.get.firstnonblank.$$
+fb.get.firstnonblank.exit:
         b    @poprt                 ; Return to caller
-
-
-
-
-
-

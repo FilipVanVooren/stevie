@@ -2,7 +2,7 @@
 * Purpose...: File handling module
 
 *//////////////////////////////////////////////////////////////
-*                     Load and save files
+*                  Read file into editor buffer
 *//////////////////////////////////////////////////////////////
 
 
@@ -37,6 +37,11 @@ tfh.file.read:
         clr   tmp4                  ; Clear kilobytes processed display counter        
         clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
         clr   @tfh.ioresult         ; Clear status register contents
+
+        li    tmp0,3
+        mov   tmp0,@tfh.sams.page   ; Set current SAMS page
+        mov   tmp0,@tfh.sams.hpage  ; Set highest SAMS page in use
+
         ;------------------------------------------------------
         ; Show loading indicators and file descriptor
         ;------------------------------------------------------
@@ -94,7 +99,7 @@ tfh.file.read.record:
         clr   @tfh.reclen           ; Reset record length
 
         bl    @file.record.read     ; Read file record
-              data tfh.vpab         ; \ .  p0   = Address of PAB in VDP RAM (without +9 offset!)
+              data tfh.vpab         ; \ i  p0   = Address of PAB in VDP RAM (without +9 offset!)
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read
                                     ; / o  tmp2 = Status register contents upon DSRLNK return
@@ -124,20 +129,57 @@ tfh.file.read.record:
 tfh.file.read.check:     
         mov   @tfh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   !                     ; No, goto (1d)
+        jne   tfh.file.read.sams    ; No, goto (1d)
         b     @tfh.file.read.error  ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 1d: Decide on copy line from VDP buffer to editor
+        ; 1d: Check if SAMS page needs to be set
+        ;------------------------------------------------------ 
+tfh.file.read.sams:        
+        mov   @edb.next_free.ptr,tmp0
+        bl    @xsams.page.get       ; Get SAMS page
+                                    ; \ i  tmp0  = Memory address
+                                    ; | o  waux1 = SAMS page number
+                                    ; / o  waux2 = Address of SAMS register
+
+        mov   @waux1,tmp0           ; Save SAMS page number
+        c     tmp0,@tfh.sams.page   ; Compare page with current SAMS page
+        jeq   tfh.file.read.rlecheck
+                                    ; Same, skip to (1g)
+        ;------------------------------------------------------
+        ; 1e: Increase SAMS page if necessary
+        ;------------------------------------------------------ 
+        c     tmp0,@tfh.sams.hpage  ; Compare page with highest SAMS page
+        jgt   tfh.file.read.sams.switch
+                                    ; Switch page
+        ai    tmp0,5                ; Next range >b000 - ffff
+        ;------------------------------------------------------
+        ; 1f: Switch to SAMS page
+        ;------------------------------------------------------ 
+tfh.file.read.sams.switch:        
+        mov   @edb.next_free.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address
+
+        mov   tmp0,@tfh.sams.page   ; Save current SAMS page
+
+        c     tmp0,@tfh.sams.hpage  ; Current SAMS page > highest SAMS page?
+        jle   tfh.file.read.rlecheck
+                                    ; No, skip to (1g)
+        mov   tmp0,@tfh.sams.hpage  ; Update highest SAMS page
+        ;------------------------------------------------------
+        ; 1g: Decide on copy line from VDP buffer to editor
         ;     buffer (RLE off) or RAM buffer (RLE on)
         ;------------------------------------------------------
-!       c     @tfh.rleonload,@w$ffff
+tfh.file.read.rlecheck:        
+        c     @tfh.rleonload,@w$ffff
                                     ; RLE compression on?
         jeq   tfh.file.read.compression
                                     ; Yes, do RLE compression
         ;------------------------------------------------------
         ; Step 2: Process line without doing RLE compression
         ;------------------------------------------------------
-tfh.file.read.nocompression:        
+tfh.file.read.nocompression:
         li    tmp0,tfh.vrecbuf      ; VDP source address
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target in editor buffer
@@ -150,15 +192,6 @@ tfh.file.read.nocompression:
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
         ;------------------------------------------------------         
-        mov   tmp0,tmp3             ; Backup tmp0
-        mov   tmp1,tmp4             ; Backup tmp1
-        mov   @edb.samspage,tmp0    ; Current SAMS page
-        bl    @xsams.page           ; Switch to SAMS page
-                                    ; \ . tmp0 = SAMS page
-                                    ; / . tmp1 = Memory address        
-        mov   tmp4,tmp1             ; Restore tmp1
-        mov   tmp3,tmp0             ; Restore tmp0
-
                                     ; Save line prefix                                             
         movb  tmp2,*tmp1+           ; \ MSB to line prefix
         swpb  tmp2                  ; |
@@ -170,9 +203,9 @@ tfh.file.read.nocompression:
                                     ; Add line length 
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ; \ .  tmp0 = VDP source address
-                                    ; | .  tmp1 = RAM target address
-                                    ; / .  tmp2 = Bytes to copy
+                                    ; \ i  tmp0 = VDP source address
+                                    ; | i  tmp1 = RAM target address
+                                    ; / i  tmp2 = Bytes to copy
                                         
         jmp   tfh.file.read.prepindex
                                     ; Prepare for updating index
@@ -187,10 +220,9 @@ tfh.file.read.compression:
                                     ; Handle empty line
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ; \ .  tmp0 = VDP source address
-                                    ; | .  tmp1 = RAM target address
-                                    ; / .  tmp2 = Bytes to copy
-
+                                    ; \ i  tmp0 = VDP source address
+                                    ; | i  tmp1 = RAM target address
+                                    ; / i  tmp2 = Bytes to copy
         ;------------------------------------------------------
         ; 3a: RLE compression on line
         ;------------------------------------------------------
@@ -199,9 +231,9 @@ tfh.file.read.compression:
         mov   @tfh.reclen,tmp2      ; Length of string
 
         bl    @xcpu2rle             ; RLE compression
-                                    ; \ .  tmp0  = ROM/RAM source address
-                                    ; | .  tmp1  = RAM target address
-                                    ; | .  tmp2  = Length uncompressed data
+                                    ; \ i  tmp0  = ROM/RAM source address
+                                    ; | i  tmp1  = RAM target address
+                                    ; | i  tmp2  = Length uncompressed data
                                     ; / o  waux1 = Length RLE encoded string
         ;------------------------------------------------------
         ; 3b: Set line prefix
@@ -224,9 +256,9 @@ tfh.file.read.compression:
         mov   @waux1,tmp2           ; Length of RLE compressed string                
 
         bl    @xpym2m               ; Copy memory block from CPU to CPU
-                                    ; \ .  tmp0 = RAM source address
-                                    ; | .  tmp1 = RAM target address
-                                    ; / .  tmp2 = Bytes to copy
+                                    ; \ i  tmp0 = RAM source address
+                                    ; | i  tmp1 = RAM target address
+                                    ; / i  tmp2 = Bytes to copy
 
         a     @waux1,@edb.next_free.ptr
                                     ; Update pointer to next free line
@@ -236,6 +268,8 @@ tfh.file.read.compression:
 tfh.file.read.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
                                     ; parm2 = Must allready be set!
+        mov   @tfh.sams.page,@parm3 ; parm3 = SAMS page number
+                                    
         jmp   tfh.file.read.updindex
                                     ; Update index
         ;------------------------------------------------------
@@ -245,15 +279,15 @@ tfh.file.read.prepindex.emptyline:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
+        seto  @parm3                ; parm3 = SAMS not used >FFFF
         ;------------------------------------------------------
         ; 4b: Do actual index update
-        ;------------------------------------------------------
-tfh.file.read.updindex:
-        clr   @parm3
+        ;------------------------------------------------------                                    
+tfh.file.read.updindex:                
         bl    @idx.entry.update     ; Update index 
-                                    ; \ .  parm1    = Line number in editor buffer
-                                    ; | .  parm2    = Pointer to line in editor buffer 
-                                    ; | .  parm3    = SAMS page
+                                    ; \ i  parm1    = Line number in editor buffer
+                                    ; | i  parm2    = Pointer to line in editor buffer 
+                                    ; | i  parm3    = SAMS page
                                     ; / o  outparm1 = Pointer to updated index entry
 
         inc   @edb.lines            ; lines=lines+1                
@@ -285,21 +319,13 @@ tfh.file.read.checkmem:
         mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
         jle   tfh.file.read.next
-
-        li    tmp0,8
-        mov   tmp0,@edb.samspage    ; Next SAMS page
-        li    tmp0,edb.top
+        ;------------------------------------------------------
+        ; Address range b000-ffff full, switch SAMS pages
+        ;------------------------------------------------------
+        li    tmp0,edb.top+2        ; Reset to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
+                                    
         jmp   tfh.file.read.next   
-
-        jmp   tfh.file.read.eof     ; NO SAMS SUPPORT FOR NOW
-        ;------------------------------------------------------
-        ; Next SAMS page
-        ;------------------------------------------------------
-        inc   @edb.next_free.page   ; Next SAMS page
-        li    tmp0,edb.top
-        mov   tmp0,@edb.next_free.ptr
-                                    ; Reset to top of editor buffer
         ;------------------------------------------------------
         ; Next record
         ;------------------------------------------------------
@@ -316,13 +342,12 @@ tfh.file.read.error:
         mov   @tfh.pabstat,tmp0     ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   tfh.file.read.eof
-                                    ; All good. File closed by DSRLNK
+        jeq   tfh.file.read.eof     ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------     
         mov   r11,@>ffce            ; \ Save caller address        
-        bl    @crash                ; / Crash and halt system
+        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     

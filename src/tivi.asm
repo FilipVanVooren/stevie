@@ -2,12 +2,13 @@
 * 
 *                          TiVi Editor
 *
-*                (c)2018-2019 // Filip van Vooren
+*                (c)2018-2020 // Filip van Vooren
 *
 ***************************************************************
 * File: tivi.asm                    ; Version %%build_date%%
 *--------------------------------------------------------------
-* TI-99/4a Advanced Editor & IDE
+* A 21th century Programming Editor for the 20th century 
+* Texas Instruments TI-99/4a Home Computer.
 *--------------------------------------------------------------
 * TiVi memory layout.
 * See file "modules/memory.asm" for further details.
@@ -24,19 +25,20 @@
 * 2600-264f      80   >0050   Free for future use
 * 2650-2faf    2400   >0960   Frame buffer 80x30
 * 2fb0-2fff     160   >00a0   Free for future use
-* 3000-3fff    4096   >1000   Index for 2048 lines
-* a000-ffff   24576   >6000   Editor buffer
+* 3000-3fff    4096   >1000   Index 2048 lines
+* a000-afff    4096   >1000   Shadow Index 2048 lines
+* b000-ffff   20480   >5000   Editor buffer
 *--------------------------------------------------------------
 * Mem range  Bytes     SAMS   Purpose
 * =========  =====     ====   =======
 * 2000-2fff   4096     no     Scratchpad/GPL backup, TiVi structures
-* 3000-3fff   4096     yes    Index, Shadow index          
-* a000-afff   4096     yes    Editor buffer
-* b000-bfff   4096     yes    Editor buffer 
-* c000-cfff   4096     yes    Editor buffer 
-* d000-dfff   4096     yes    Editor buffer 
-* e000-efff   4096     yes    Editor buffer 
-* f000-ffff   4096     yes    Editor buffer
+* 3000-3fff   4096     yes    Main index
+* a000-afff   4096     yes    Shadow index
+* b000-bfff   4096     yes    Editor buffer \
+* c000-cfff   4096     yes    Editor buffer |  20kb continious 
+* d000-dfff   4096     yes    Editor buffer |  address space.
+* e000-efff   4096     yes    Editor buffer | 
+* f000-ffff   4096     yes    Editor buffer /
 *--------------------------------------------------------------
 * TiVi VDP layout
 *
@@ -131,11 +133,9 @@ edb.index.ptr       equ  edb.top.ptr+2  ; Pointer to index
 edb.lines           equ  edb.top.ptr+4  ; Total lines in editor buffer
 edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
 edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
-edb.next_free.page  equ  edb.top.ptr+10 ; SAMS page of next free line
-edb.insmode         equ  edb.top.ptr+12 ; Editor insert mode (>0000 overwrite / >ffff insert)
-edb.rle             equ  edb.top.ptr+14 ; RLE compression activated
-edb.samspage        equ  edb.top.ptr+16 ; Current SAMS page
-edb.end             equ  edb.top.ptr+16 ; Free from here on
+edb.insmode         equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
+edb.rle             equ  edb.top.ptr+12 ; RLE compression activated
+edb.end             equ  edb.top.ptr+14 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
@@ -150,8 +150,10 @@ tfh.reclen      equ  tfh.top + 48   ; Current record length
 tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
 tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
 tfh.rleonload   equ  tfh.top + 54   ; RLE compression needed during file load
-tfh.membuffer   equ  tfh.top + 56   ; 80 bytes file memory buffer 
-tfh.end         equ  tfh.top + 136  ; Free from here on
+tfh.sams.page   equ  tfh.top + 56   ; Current SAMS page during file operation
+tfh.sams.hpage  equ  tfh.top + 58   ; Highest SAMS page in use so far for file operation
+tfh.membuffer   equ  tfh.top + 60   ; 80 bytes file memory buffer 
+tfh.end         equ  tfh.top + 140  ; Free from here on
 tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory (max 255 bytes)
 tfh.vpab        equ  >0a60          ; Address of PAB in VDP memory
 *--------------------------------------------------------------
@@ -170,12 +172,16 @@ fb.size         equ  2480           ; Frame buffer size
 idx.top         equ  >3000          ; Top of index
 idx.size        equ  4096           ; Index size
 *--------------------------------------------------------------
-* SAMS shadow index                 @>a000-Afff    (4096 bytes)
+* SAMS shadow index                 @>a000-afff    (4096 bytes)
 *--------------------------------------------------------------
 idx.shadow.top  equ  >a000          ; Top of shadow index
 idx.shadow.size equ  4096           ; Shadow index size
 *--------------------------------------------------------------
-* Editor buffer                     @>b000-ffff   (20380 bytes)
+* Editor buffer                     @>b000-bfff    (4096 bytes)
+*                                   @>c000-cfff    (4096 bytes)
+*                                   @>d000-dfff    (4096 bytes)
+*                                   @>e000-efff    (4096 bytes)
+*                                   @>f000-ffff    (4096 bytes)
 *--------------------------------------------------------------
 edb.top         equ  >b000          ; Editor buffer high memory
 edb.size        equ  20380          ; Editor buffer size
@@ -476,7 +482,7 @@ task2.cur_visible.cursorshape:
 *--------------------------------------------------------------
 * Copy ramsat to VDP SAT and show bottom line - Tasks 1,2
 *--------------------------------------------------------------
-task.sub_copy_ramsat
+task.sub_copy_ramsat:
         bl    @cpym2v
               data sprsat,ramsat,4   ; Update sprite
 
@@ -484,7 +490,7 @@ task.sub_copy_ramsat
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
-task.botline.show_mode
+task.botline.show_mode:
         mov   @edb.insmode,tmp0
         jne   task.botline.show_mode.insert
         ;------------------------------------------------------

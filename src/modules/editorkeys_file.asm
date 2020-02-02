@@ -34,15 +34,15 @@ edkey.action.loadfile:
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory
-                                    ; \ .  tmp0 = VDP target address
-                                    ; | .  tmp1 = Byte to fill
-                                    ; / .  tmp2 = Bytes to copy                                    
+                                    ; \ i  tmp0 = VDP target address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Bytes to copy                                    
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
         bl    @tfh.file.read        ; Read specified file
-                                    ; \ .  parm1 = Pointer to length prefixed file descriptor
-                                    ; / .  parm2 = RLE compression on (>FFFF) or off (>0000)
+                                    ; \ i  parm1 = Pointer to length prefixed file descriptor
+                                    ; / i  parm2 = RLE compression on (>FFFF) or off (>0000)
 
         clr   @edb.dirty            ; Editor buffer completely replaced, no longer dirty
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
