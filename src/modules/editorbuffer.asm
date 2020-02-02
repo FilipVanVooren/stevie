@@ -197,7 +197,7 @@ edb.line.pack.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3
+* tmp0,tmp1,tmp2,tmp3,tmp4
 *--------------------------------------------------------------
 * Memory usage
 * rambuf    = Saved @parm1 of edb.line.unpack
@@ -245,7 +245,8 @@ edb.line.unpack:
                                     ; / o  outparm2 = SAMS page
 
         mov   @outparm2,tmp0        ; SAMS page
-        mov   @outparm1,tmp1        ; Memory address
+        mov   @outparm1,tmp1        ; Memory address        
+
         bl    @xsams.page.set       ; Switch SAMS memory page
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address

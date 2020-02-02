@@ -21,8 +21,8 @@
 * Register usage
 * tmp0, tmp1, tmp2, tmp3, tmp4
 *--------------------------------------------------------------
-* The frame buffer is temporarily used for compressing the line
-* before it is moved to the editor buffer
+* The frame buffer is used as temporary buffer if RLE 
+* compression is enabled.
 ********|*****|*********************|**************************
 tfh.file.read:
         dect  stack
@@ -179,7 +179,7 @@ tfh.file.read.rlecheck:
         jeq   tfh.file.read.compression
                                     ; Yes, do RLE compression
         ;------------------------------------------------------
-        ; Step 2: Process line without doing RLE compression
+        ; Step 2: Process line without RLE compression
         ;------------------------------------------------------
 tfh.file.read.nocompression:
         li    tmp0,tfh.vrecbuf      ; VDP source address
@@ -203,7 +203,6 @@ tfh.file.read.nocompression:
         inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
         a     tmp2,@edb.next_free.ptr
                                     ; Add line length 
-
         ;------------------------------------------------------
         ; 2b: Handle line split accross 2 consecutive SAMS pages
         ;------------------------------------------------------ 
@@ -242,7 +241,7 @@ tfh.file.read.nocompression:
         jmp   tfh.file.read.prepindex
                                     ; Prepare for updating index
         ;------------------------------------------------------
-        ; Step 3: Process line and do RLE compression
+        ; Step 3: Process line with RLE compression
         ;------------------------------------------------------
 tfh.file.read.compression:         
         li    tmp0,tfh.vrecbuf      ; VDP source address        
@@ -408,10 +407,7 @@ tfh.file.read.eof:
               byte 29,73            ; Show lines read
               data tfh.records,rambuf,>3020
 
-        seto  @edb.dirty            ; Text changed in editor buffer!
-
-        
-            
+        seto  @edb.dirty            ; Text changed in editor buffer!            
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
