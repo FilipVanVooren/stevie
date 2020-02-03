@@ -237,22 +237,24 @@ edb.line.unpack:
         jeq   edb.line.unpack.clear ; Skip index processing if empty line anyway                       
 
         ;------------------------------------------------------
-        ; Index. Calculate address of entry and get pointer
+        ; Get pointer to line & page-in editor buffer pages
         ;------------------------------------------------------
-        bl    @idx.pointer.get      ; Get pointer to line
-                                    ; \ i  parm1    = Line number
+        bl    @xmem.edb.sams.pagein ; Activate editor buffer SAMS page for line
+                                    ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
 
-        mov   @outparm2,tmp0        ; SAMS page
-        mov   @outparm1,tmp1        ; Memory address        
-
-        bl    @xsams.page.set       ; Switch SAMS memory page
-                                    ; \ i  tmp0 = SAMS page
-                                    ; / i  tmp1 = Memory address
-
         inct  @outparm1             ; Skip line prefix
         mov   @outparm1,@rambuf+4   ; Source memory address for block copy
+
+        ;------------------------------------------------------
+        ; Handle possible "line split" between 2 consecutive pages
+        ;------------------------------------------------------
+        inct  tmp0                  ; Consider next line
+        bl    @xmem.edb.sams.pagein ; Activate editor buffer SAMS page for line
+                                    ; \ i  tmp0     = Line number
+                                    ; | o  outparm1 = Pointer to line
+                                    ; / o  outparm2 = SAMS page
 
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
@@ -279,10 +281,17 @@ edb.line.unpack.prepare:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
+        ; Check before copy
+        ;------------------------------------------------------
+edb.line.unpack.copy.uncompressed:     
+        ci    tmp2,80               ; Check line length;
+        jle   !
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system       
+        ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
-edb.line.unpack.copy.uncompressed:        
-        bl    @xpym2m               ; Copy line to frame buffer
+!       bl    @xpym2m               ; Copy line to frame buffer
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Target address 
                                     ; / i  tmp2 = Bytes to copy

@@ -53,7 +53,7 @@ tfh.file.read.sams:
         mov   @parm4,@tfh.callback3 ; Loading indicator 3
         mov   @parm5,@tfh.callback4 ; File I/O error handler
         ;------------------------------------------------------
-        ; Sanity checks
+        ; Sanity check
         ;------------------------------------------------------
         mov   @tfh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?
@@ -79,7 +79,7 @@ tfh.file.read.sams:
         jmp   tfh.file.read.sams.load1
                                     ; All checks passed, continue.
 
-                                    ;--------------------------                                    
+                                    ;-------------------------- 
                                     ; Sanity check failed
                                     ;--------------------------
 !       mov   r11,@>ffce            ; \ Save caller address        
