@@ -279,21 +279,6 @@ edb.line.unpack.prepare:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
-        ; Either RLE decompress or do normal memory copy
-        ;------------------------------------------------------
-        mov   @edb.rle,tmp3
-        jeq   edb.line.unpack.copy.uncompressed
-        ;------------------------------------------------------
-        ; Uncompress RLE line to frame buffer
-        ;------------------------------------------------------
-        mov   @rambuf+10,tmp2       ; Line compressed length
-
-        bl    @xrle2cpu             ; RLE decompress to CPU memory
-                                    ; \ i  tmp0 = ROM/RAM source address
-                                    ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Length of RLE encoded data
-        jmp   edb.line.unpack.exit
-        ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
 edb.line.unpack.copy.uncompressed:        

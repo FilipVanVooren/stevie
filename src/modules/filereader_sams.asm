@@ -1,5 +1,5 @@
-* FILE......: filehandler.asm
-* Purpose...: File handling module
+* FILE......: filereader_sams.asm
+* Purpose...: File read module with SAMS support
 
 *//////////////////////////////////////////////////////////////
 *                  Read file into editor buffer
@@ -7,30 +7,33 @@
 
 
 ***************************************************************
-* tfh.file.read
-* Read file into editor buffer
+* tfh.file.read.sams
+* Read file into editor buffer with SAMS support
 ***************************************************************
-*  bl   @tfh.file.read
+*  bl   @tfh.file.read.sams
 *--------------------------------------------------------------
 * INPUT
-* parm1 = pointer to length-prefixed file descriptor
-* parm2 = RLE compression on (>FFFF) or off (>0000) 
+* parm1 = Pointer to length-prefixed file descriptor
+* parm2 = Pointer to callback function "loading indicator 1"
+* parm3 = Pointer to callback function "loading indicator 2"
+* parm4 = Pointer to callback function "loading indicator 3"
+* parm5 = Pointer to callback function "File I/O error handler"
+* parm6 = Not used yet (starting line in file)
+* parm7 = Not used yet (starting line in editor buffer)
+* parm8 = Not used yet (number of lines to read)
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2, tmp3, tmp4
-*--------------------------------------------------------------
-* The frame buffer is used as temporary buffer if RLE 
-* compression is enabled.
 ********|*****|*********************|**************************
-tfh.file.read:
+tfh.file.read.sams:
         dect  stack
         mov   r11,*stack            ; Save return address
-        mov   @parm2,@tfh.rleonload ; Save RLE compression wanted status
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
+        clr   @tfh.rleonload        ; No RLE compression!        
         clr   @tfh.records          ; Reset records counter
         clr   @tfh.counter          ; Clear internal counter
         clr   @tfh.kilobytes        ; Clear kilobytes processed
@@ -41,31 +44,56 @@ tfh.file.read:
         li    tmp0,3
         mov   tmp0,@tfh.sams.page   ; Set current SAMS page
         mov   tmp0,@tfh.sams.hpage  ; Set highest SAMS page in use
-
         ;------------------------------------------------------
-        ; Show loading indicators and file descriptor
+        ; Save parameters / callback functions
         ;------------------------------------------------------
-        bl    @hchar
-              byte 29,0,32,80
-              data EOL
-        
-        bl    @putat
-              byte 29,0
-              data txt_loading      ; Display "Loading...."
+        mov   @parm1,@tfh.fname.ptr ; Pointer to file descriptor
+        mov   @parm2,@tfh.callback1 ; Loading indicator 1
+        mov   @parm3,@tfh.callback2 ; Loading indicator 2
+        mov   @parm4,@tfh.callback3 ; Loading indicator 3
+        mov   @parm5,@tfh.callback4 ; File I/O error handler
+        ;------------------------------------------------------
+        ; Sanity checks
+        ;------------------------------------------------------
+        mov   @tfh.callback1,tmp0
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   !                     ; Yes, crash!
 
-        c     @tfh.rleonload,@w$ffff
-        jne   !                                           
-        bl    @putat
-              byte 29,68
-              data txt_rle          ; Display "RLE"
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   !                     ; Yes, crash!
 
-!       bl    @at
-              byte 29,11            ; Cursor YX position
-        mov   @parm1,tmp1           ; Get pointer to file descriptor
-        bl    @xutst0               ; Display device/filename
+        mov   @tfh.callback2,tmp0
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   !                     ; Yes, crash!
+
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   !                     ; Yes, crash!
+
+        mov   @tfh.callback3,tmp0
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   !                     ; Yes, crash!
+
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   !                     ; Yes, crash!
+         
+        jmp   tfh.file.read.sams.load1
+                                    ; All checks passed, continue.
+
+                                    ;--------------------------                                    
+                                    ; Sanity check failed
+                                    ;--------------------------
+!       mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system        
+        ;------------------------------------------------------
+        ; Show "loading indicator 1"
+        ;------------------------------------------------------
+tfh.file.read.sams.load1:        
+        mov   @tfh.callback1,tmp0
+        bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
+tfh.file.read.sams.pabheader:        
         bl    @cpym2v
               data tfh.vpab,tfh.file.pab.header,9
                                     ; Copy PAB header to VDP
@@ -73,7 +101,7 @@ tfh.file.read:
         ; Append file descriptor to PAB header in VDP
         ;------------------------------------------------------
         li    tmp0,tfh.vpab + 9     ; VDP destination        
-        mov   @parm1,tmp1           ; Get pointer to file descriptor
+        mov   @tfh.fname.ptr,tmp1   ; Get pointer to file descriptor
         movb  *tmp1,tmp2            ; Get file descriptor length
         srl   tmp2,8                ; Right justify
         inc   tmp2                  ; Include length byte as well
@@ -89,12 +117,13 @@ tfh.file.read:
         bl    @file.open
               data tfh.vpab         ; Pass file descriptor to DSRLNK
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   tfh.file.read.record
-        b     @tfh.file.read.error  ; Yes, IO error occured
+        jne   tfh.file.read.sams.record
+        b     @tfh.file.read.sams.error  
+                                    ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 1: Read file record
         ;------------------------------------------------------
-tfh.file.read.record:        
+tfh.file.read.sams.record:        
         inc   @tfh.records          ; Update counter        
         clr   @tfh.reclen           ; Reset record length
 
@@ -126,15 +155,17 @@ tfh.file.read.record:
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
         ;------------------------------------------------------
-tfh.file.read.check:     
+tfh.file.read.sams.check_fioerr:     
         mov   @tfh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   tfh.file.read.sams    ; No, goto (1d)
-        b     @tfh.file.read.error  ; Yes, so handle file error
+        jne   tfh.file.read.sams.check_setpage 
+                                    ; No, goto (1d)
+        b     @tfh.file.read.sams.error  
+                                    ; Yes, so handle file error
         ;------------------------------------------------------
         ; 1d: Check if SAMS page needs to be set
         ;------------------------------------------------------ 
-tfh.file.read.sams:        
+tfh.file.read.sams.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
         bl    @xsams.page.get       ; Get SAMS page
                                     ; \ i  tmp0  = Memory address
@@ -143,8 +174,8 @@ tfh.file.read.sams:
 
         mov   @waux1,tmp0           ; Save SAMS page number
         c     tmp0,@tfh.sams.page   ; Compare page with current SAMS page
-        jeq   tfh.file.read.rlecheck
-                                    ; Same, skip to (1g)
+        jeq   tfh.file.read.sams.nocompression
+                                    ; Same, skip to (2)
         ;------------------------------------------------------
         ; 1e: Increase SAMS page if necessary
         ;------------------------------------------------------ 
@@ -166,22 +197,13 @@ tfh.file.read.sams.switch:
         mov   tmp0,@tfh.sams.page   ; Save current SAMS page
 
         c     tmp0,@tfh.sams.hpage  ; Current SAMS page > highest SAMS page?
-        jle   tfh.file.read.rlecheck
-                                    ; No, skip to (1g)
+        jle   tfh.file.read.sams.nocompression
+                                    ; No, skip to (2)
         mov   tmp0,@tfh.sams.hpage  ; Update highest SAMS page
         ;------------------------------------------------------
-        ; 1g: Decide on copy line from VDP buffer to editor
-        ;     buffer (RLE off) or RAM buffer (RLE on)
+        ; Step 2: Process line (without RLE compression)
         ;------------------------------------------------------
-tfh.file.read.rlecheck:        
-        c     @tfh.rleonload,@w$ffff
-                                    ; RLE compression on?
-        jeq   tfh.file.read.compression
-                                    ; Yes, do RLE compression
-        ;------------------------------------------------------
-        ; Step 2: Process line without RLE compression
-        ;------------------------------------------------------
-tfh.file.read.nocompression:
+tfh.file.read.sams.nocompression:
         li    tmp0,tfh.vrecbuf      ; VDP source address
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target in editor buffer
@@ -189,7 +211,7 @@ tfh.file.read.nocompression:
         mov   tmp1,@parm2           ; Needed in step 4b (index update)
 
         mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
-        jeq   tfh.file.read.prepindex.emptyline
+        jeq   tfh.file.read.sams.prepindex.emptyline
                                     ; Handle empty line
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
@@ -238,75 +260,22 @@ tfh.file.read.nocompression:
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy
                                         
-        jmp   tfh.file.read.prepindex
+        jmp   tfh.file.read.sams.prepindex
                                     ; Prepare for updating index
-        ;------------------------------------------------------
-        ; Step 3: Process line with RLE compression
-        ;------------------------------------------------------
-tfh.file.read.compression:         
-        li    tmp0,tfh.vrecbuf      ; VDP source address        
-        li    tmp1,fb.top           ; RAM target address 
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy                
-        jeq   tfh.file.read.prepindex.emptyline
-                                    ; Handle empty line
-
-        bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ; \ i  tmp0 = VDP source address
-                                    ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy
-        ;------------------------------------------------------
-        ; 3a: RLE compression on line
-        ;------------------------------------------------------
-        li    tmp0,fb.top           ; RAM source of uncompressed line
-        li    tmp1,fb.top+160       ; RAM target for compressed line
-        mov   @tfh.reclen,tmp2      ; Length of string
-
-        bl    @xcpu2rle             ; RLE compression
-                                    ; \ i  tmp0  = ROM/RAM source address
-                                    ; | i  tmp1  = RAM target address
-                                    ; | i  tmp2  = Length uncompressed data
-                                    ; / o  waux1 = Length RLE encoded string
-        ;------------------------------------------------------
-        ; 3b: Set line prefix
-        ;------------------------------------------------------                
-        mov   @edb.next_free.ptr,tmp1
-                                    ; RAM target address
-        mov   tmp1,@parm2           ; Pointer to line in editor buffer
-        mov   @waux1,tmp2           ; Length of RLE compressed string        
-        swpb  tmp2                  ; 
-        movb  tmp2,*tmp1+           ; Length byte to line prefix
-
-        mov   @tfh.reclen,tmp2      ; Length of uncompressed string
-        swpb  tmp2 
-        movb  tmp2,*tmp1+           ; Length byte to line prefix
-        inct  @edb.next_free.ptr    ; Keep pointer synced
-        ;------------------------------------------------------
-        ; 3c: Copy compressed line to editor buffer
-        ;------------------------------------------------------
-        li    tmp0,fb.top+160       ; RAM source address        
-        mov   @waux1,tmp2           ; Length of RLE compressed string                
-
-        bl    @xpym2m               ; Copy memory block from CPU to CPU
-                                    ; \ i  tmp0 = RAM source address
-                                    ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy
-
-        a     @waux1,@edb.next_free.ptr
-                                    ; Update pointer to next free line
         ;------------------------------------------------------
         ; Step 4: Update index
         ;------------------------------------------------------
-tfh.file.read.prepindex:
+tfh.file.read.sams.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
                                     ; parm2 = Must allready be set!
         mov   @tfh.sams.page,@parm3 ; parm3 = SAMS page number
                                     
-        jmp   tfh.file.read.updindex
+        jmp   tfh.file.read.sams.updindex
                                     ; Update index
         ;------------------------------------------------------
         ; 4a: Special handling for empty line
         ;------------------------------------------------------
-tfh.file.read.prepindex.emptyline:
+tfh.file.read.sams.prepindex.emptyline:
         mov   @tfh.records,@parm1   ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
@@ -314,7 +283,7 @@ tfh.file.read.prepindex.emptyline:
         ;------------------------------------------------------
         ; 4b: Do actual index update
         ;------------------------------------------------------                                    
-tfh.file.read.updindex:                
+tfh.file.read.sams.updindex:                
         bl    @idx.entry.update     ; Update index 
                                     ; \ i  parm1    = Line number in editor buffer
                                     ; | i  parm2    = Pointer to line in editor buffer 
@@ -325,94 +294,78 @@ tfh.file.read.updindex:
         ;------------------------------------------------------
         ; Step 5: Display results
         ;------------------------------------------------------
-tfh.file.read.display:
-        bl    @putnum
-              byte 29,73            ; Show lines read
-              data edb.lines,rambuf,>3020
-
-        c     @tfh.kilobytes,tmp4
-        jeq   tfh.file.read.checkmem
-
-        mov   @tfh.kilobytes,tmp4   ; Save for compare
-
-        bl    @putnum
-              byte 29,56            ; Show kilobytes read
-              data tfh.kilobytes,rambuf,>3020
-
-        bl    @putat
-              byte 29,61
-              data txt_kb           ; Show "kb" string
-
-******************************************************
-* Stop reading file if high memory expansion gets full
-******************************************************
-tfh.file.read.checkmem:
+tfh.file.read.sams.display:
+        mov   @tfh.callback2,tmp0   ; Get pointer to "Loading indicator 2"
+        bl    *tmp0                 ; Run callback function                                    
+        ;------------------------------------------------------
+        ; Step 6: Check if reaching memory high-limit >ffa0
+        ;------------------------------------------------------
+tfh.file.read.sams.checkmem:
         mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
-        jle   tfh.file.read.next
+        jle   tfh.file.read.sams.next
         ;------------------------------------------------------
-        ; Address range b000-ffff full, switch SAMS pages
+        ; 6a: Address range b000-ffff full, switch SAMS pages
         ;------------------------------------------------------
         li    tmp0,edb.top+2        ; Reset to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
                                     
-        jmp   tfh.file.read.next   
+        jmp   tfh.file.read.sams.next   
         ;------------------------------------------------------
-        ; Next record
+        ; 6b: Next record
         ;------------------------------------------------------
-tfh.file.read.next:        
+tfh.file.read.sams.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
 
-        b     @tfh.file.read.record
+        b     @tfh.file.read.sams.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-tfh.file.read.error:        
+tfh.file.read.sams.error:        
         mov   @tfh.pabstat,tmp0     ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   tfh.file.read.eof     ; All good. File closed by DSRLNK
+        jeq   tfh.file.read.sams.eof 
+                                    ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
-        ;------------------------------------------------------     
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system
-        ;------------------------------------------------------
-        ; End-Of-File reached
-        ;------------------------------------------------------     
-tfh.file.read.eof:        
+        ;------------------------------------------------------ 
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
 
         bl    @mem.setup.sams.layout
-                                    ; Restore SAMS default memory layout              
+                                    ; Restore SAMS default memory layout               
+
+        mov   @tfh.callback4,tmp0   ; Get pointer to "File I/O error handler"
+        bl    *tmp0                 ; Run callback function  
+        jmp   tfh.file.read.sams.exit
         ;------------------------------------------------------
-        ; Display final results
+        ; End-Of-File reached
+        ;------------------------------------------------------     
+tfh.file.read.sams.eof:        
+        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
+              data scrpad.backup2   ; / >2100->8300
+
+        bl    @mem.setup.sams.layout
+                                    ; Restore SAMS default memory layout                                                                                  
         ;------------------------------------------------------
-        bl    @hchar
-              byte 29,0,32,10       ; Erase loading indicator
-              data EOL
-
-        bl    @putnum
-              byte 29,56            ; Show kilobytes read
-              data tfh.kilobytes,rambuf,>3020
-
-        bl    @putat
-              byte 29,61
-              data txt_kb           ; Show "kb" string
-
-        bl    @putnum
-              byte 29,73            ; Show lines read
-              data tfh.records,rambuf,>3020
-
+        ; Show "loading indicator 3" (final)
+        ;------------------------------------------------------
         seto  @edb.dirty            ; Text changed in editor buffer!            
+
+        mov   @tfh.callback3,tmp0   ; Get pointer to "Loading indicator 3"
+        bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-tfh.file.read_exit:
+tfh.file.read.sams.exit:
         b     @poprt                ; Return to caller
+
+
+
+
 
 
 ***************************************************************

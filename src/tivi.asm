@@ -57,21 +57,23 @@ debug                   equ  1      ; Turn on spectra2 debugging
 *--------------------------------------------------------------
 * Skip unused spectra2 code modules for reduced code size
 *--------------------------------------------------------------
-skip_rom_bankswitch     equ  1      ; Skip ROM bankswitching support
-skip_grom_cpu_copy      equ  1      ; Skip GROM to CPU copy functions
-skip_grom_vram_copy     equ  1      ; Skip GROM to VDP vram copy functions
-skip_vdp_vchar          equ  1      ; Skip vchar, xvchar
-skip_vdp_boxes          equ  1      ; Skip filbox, putbox
-skip_vdp_bitmap         equ  1      ; Skip bitmap functions
-skip_vdp_viewport       equ  1      ; Skip viewport functions
-skip_vdp_rle_decompress equ  1      ; Skip RLE decompress to VRAM
-skip_vdp_px2yx_calc     equ  1      ; Skip pixel to YX calculation
-skip_sound_player       equ  1      ; Skip inclusion of sound player code
-skip_speech_detection   equ  1      ; Skip speech synthesizer detection
-skip_speech_player      equ  1      ; Skip inclusion of speech player code
-skip_virtual_keyboard   equ  1      ; Skip virtual keyboard scan
-skip_random_generator   equ  1      ; Skip random functions 
-skip_cpu_crc16          equ  1      ; Skip CPU memory CRC-16 calculation
+skip_rom_bankswitch       equ  1    ; Skip ROM bankswitching support
+skip_grom_cpu_copy        equ  1    ; Skip GROM to CPU copy functions
+skip_grom_vram_copy       equ  1    ; Skip GROM to VDP vram copy functions
+skip_vdp_vchar            equ  1    ; Skip vchar, xvchar
+skip_vdp_boxes            equ  1    ; Skip filbox, putbox
+skip_vdp_bitmap           equ  1    ; Skip bitmap functions
+skip_vdp_viewport         equ  1    ; Skip viewport functions
+skip_cpu_rle_compress     equ  1    ; Skip CPU RLE compression
+skip_cpu_rle_decompress   equ  1    ; Skip CPU RLE decompression
+skip_vdp_rle_decompress   equ  1    ; Skip VDP RLE decompression
+skip_vdp_px2yx_calc       equ  1    ; Skip pixel to YX calculation
+skip_sound_player         equ  1    ; Skip inclusion of sound player code
+skip_speech_detection     equ  1    ; Skip speech synthesizer detection
+skip_speech_player        equ  1    ; Skip inclusion of speech player code
+skip_virtual_keyboard     equ  1    ; Skip virtual keyboard scan
+skip_random_generator     equ  1    ; Skip random functions 
+skip_cpu_crc16            equ  1    ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 * SPECTRA2 startup options
 *--------------------------------------------------------------
@@ -149,11 +151,16 @@ tfh.records     equ  tfh.top + 46   ; File records counter
 tfh.reclen      equ  tfh.top + 48   ; Current record length
 tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
 tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
-tfh.rleonload   equ  tfh.top + 54   ; RLE compression needed during file load
+tfh.fname.ptr   equ  tfh.top + 54   ; Pointer to device and filename
 tfh.sams.page   equ  tfh.top + 56   ; Current SAMS page during file operation
 tfh.sams.hpage  equ  tfh.top + 58   ; Highest SAMS page in use so far for file operation
-tfh.membuffer   equ  tfh.top + 60   ; 80 bytes file memory buffer 
-tfh.end         equ  tfh.top + 140  ; Free from here on
+tfh.callback1   equ  tfh.top + 60   ; Pointer to callback function 1
+tfh.callback2   equ  tfh.top + 62   ; Pointer to callback function 2
+tfh.callback3   equ  tfh.top + 64   ; Pointer to callback function 3
+tfh.callback4   equ  tfh.top + 66   ; Pointer to callback function 4 
+tfh.rleonload   equ  tfh.top + 68   ; RLE compression needed during file load
+tfh.membuffer   equ  tfh.top + 70   ; 80 bytes file memory buffer 
+tfh.end         equ  tfh.top + 150  ; Free from here on
 tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory (max 255 bytes)
 tfh.vpab        equ  >0a60          ; Address of PAB in VDP memory
 *--------------------------------------------------------------
@@ -621,9 +628,14 @@ task.botline.$$
         copy  "editorbuffer.asm"
 
 ***************************************************************
-*               fh - File handling module
+*               fh - File handling modules
 ***************************************************************
-        copy  "filehandler.asm"
+        copy  "filereader_sams.asm"
+
+***************************************************************
+*               fm - File manager modules
+***************************************************************
+        copy  "filemanager_loadfile.asm"
 
 
 ***************************************************************
@@ -650,6 +662,7 @@ txt_loading  #string 'Loading...'
 txt_kb       #string 'kb'
 txt_rle      #string 'RLE'
 txt_lines    #string 'Lines'
+txt_ioerr    #string 'Load failed:'
 end          data    $ 
 
 
