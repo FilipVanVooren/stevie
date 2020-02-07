@@ -79,15 +79,12 @@ xmem.edb.sams.pagein:
         ; Sanity check
         ;------------------------------------------------------
         c     tmp0,@edb.lines       ; Non-existing line?
-        jgt   !                     ; Yes, crash!
-        
-        jmp   mem.edb.sams.pagein.lookup
+        jlt   mem.edb.sams.pagein.lookup
                                     ; All checks passed, continue
-
                                     ;-------------------------- 
                                     ; Sanity check failed
                                     ;--------------------------
-!       mov   r11,@>ffce            ; \ Save caller address        
+        mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Lookup SAMS page for line in parm1

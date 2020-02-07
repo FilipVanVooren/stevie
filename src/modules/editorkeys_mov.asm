@@ -144,8 +144,10 @@ edkey.action.down.cursor:
         ;-------------------------------------------------------        
 edkey.action.down.set_cursorx:                
         bl    @edb.line.getlength2  ; Get length current line
+        
         c     @fb.column,@fb.row.length
-        jle   edkey.action.down.exit  ; Exit
+        jle   edkey.action.down.exit  
+                                    ; Exit
         ;-------------------------------------------------------
         ; Adjust cursor column position
         ;-------------------------------------------------------

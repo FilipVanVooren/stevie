@@ -223,6 +223,17 @@ edb.line.unpack:
         mov   @fb.top.ptr,tmp2
         a     tmp2,tmp1             ; Add base to offset
         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
+        ;------------------------------------------------------
+        ; Get pointer to line & page-in editor buffer page
+        ;------------------------------------------------------
+        mov   @parm1,tmp0
+        bl    @xmem.edb.sams.pagein ; Activate editor buffer SAMS page for line
+                                    ; \ i  tmp0     = Line number
+                                    ; | o  outparm1 = Pointer to line
+                                    ; / o  outparm2 = SAMS page
+
+        inct  @outparm1             ; Skip line prefix
+        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
         ;------------------------------------------------------        
         ; Get length of line to unpack
         ;------------------------------------------------------
@@ -234,27 +245,25 @@ edb.line.unpack:
 
         mov   @outparm2,@rambuf+10  ; Save length of RLE compressed line
         mov   @outparm1,@rambuf+8   ; Save length of RLE (decompressed) line
-        jeq   edb.line.unpack.clear ; Skip index processing if empty line anyway                       
-
-        ;------------------------------------------------------
-        ; Get pointer to line & page-in editor buffer pages
-        ;------------------------------------------------------
-        bl    @xmem.edb.sams.pagein ; Activate editor buffer SAMS page for line
-                                    ; \ i  tmp0     = Line number
-                                    ; | o  outparm1 = Pointer to line
-                                    ; / o  outparm2 = SAMS page
-
-        inct  @outparm1             ; Skip line prefix
-        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
-
+        jeq   edb.line.unpack.clear ; Skip "split line" check if empty line anyway                       
         ;------------------------------------------------------
         ; Handle possible "line split" between 2 consecutive pages
         ;------------------------------------------------------
-        inct  tmp0                  ; Consider next line
-        bl    @xmem.edb.sams.pagein ; Activate editor buffer SAMS page for line
-                                    ; \ i  tmp0     = Line number
-                                    ; | o  outparm1 = Pointer to line
-                                    ; / o  outparm2 = SAMS page
+        mov     @rambuf+4,tmp0          ; Pointer to line
+        mov     tmp0,tmp1               ; Pointer to line
+        a       @rambuf+8,tmp1          ; Add length of line
+
+        andi    tmp0,>f000              ; Only keep high nibble
+        andi    tmp1,>f000              ; Only keep high nibble
+        c       tmp0,tmp1               ; Same segment?
+        jeq     edb.line.unpack.clear   ; Yes, so skip
+
+        mov     @outparm3,tmp0          ; Get SAMS page
+        inc     tmp0                    ; Next sams page
+
+        bl      @xsams.page.set         ; \ Set SAMS memory page
+                                        ; | i  tmp0 = SAMS page number
+                                        ; / i  tmp1 = Memory Address
 
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
