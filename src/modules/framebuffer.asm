@@ -159,13 +159,18 @@ fb.refresh.unpack_line:
 
         inc   @parm1                ; Next line in editor buffer
         inc   @parm2                ; Next row in frame buffer
-        c     @parm2,@fb.screenrows ; Last row reached ?
+
+        c     @parm1,@edb.lines     ; Last row in editor buffer reached?
+        jlt   !
+        jmp   fb.refresh.exit
+
+!       c     @parm2,@fb.screenrows ; Bottom row in frame buffer reached ?
         jlt   fb.refresh.unpack_line
-        seto  @fb.dirty             ; Refresh screen
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.refresh.exit:
+        seto  @fb.dirty             ; Refresh screen
         b     @poprt                ; Return to caller
 
 

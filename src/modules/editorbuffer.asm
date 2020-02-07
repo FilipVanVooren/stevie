@@ -190,7 +190,7 @@ edb.line.pack.exit:
 *  bl   @edb.line.unpack
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Line to unpack from editor buffer
+* @parm1 = Line to unpack in editor buffer
 * @parm2 = Target row in frame buffer
 *--------------------------------------------------------------
 * OUTPUT
@@ -211,9 +211,16 @@ edb.line.unpack:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
+        ; Sanity check
+        ;------------------------------------------------------
+        c     @parm1,@edb.lines     ; Beyond editor buffer ?
+        jlt   !
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system     
+        ;------------------------------------------------------
         ; Save parameters
         ;------------------------------------------------------
-        mov   @parm1,@rambuf       
+!       mov   @parm1,@rambuf       
         mov   @parm2,@rambuf+2  
         ;------------------------------------------------------
         ; Calculate offset in frame buffer
@@ -249,21 +256,22 @@ edb.line.unpack:
         ;------------------------------------------------------
         ; Handle possible "line split" between 2 consecutive pages
         ;------------------------------------------------------
-        mov     @rambuf+4,tmp0          ; Pointer to line
-        mov     tmp0,tmp1               ; Pointer to line
-        a       @rambuf+8,tmp1          ; Add length of line
+        mov     @rambuf+4,tmp0      ; Pointer to line
+        mov     tmp0,tmp1           ; Pointer to line
+        a       @rambuf+8,tmp1      ; Add length of line
 
-        andi    tmp0,>f000              ; Only keep high nibble
-        andi    tmp1,>f000              ; Only keep high nibble
-        c       tmp0,tmp1               ; Same segment?
-        jeq     edb.line.unpack.clear   ; Yes, so skip
+        andi    tmp0,>f000          ; Only keep high nibble
+        andi    tmp1,>f000          ; Only keep high nibble
+        c       tmp0,tmp1           ; Same segment?
+        jeq     edb.line.unpack.clear   
+                                    ; Yes, so skip
 
-        mov     @outparm3,tmp0          ; Get SAMS page
-        inc     tmp0                    ; Next sams page
+        mov     @outparm3,tmp0      ; Get SAMS page
+        inc     tmp0                ; Next sams page
 
-        bl      @xsams.page.set         ; \ Set SAMS memory page
-                                        ; | i  tmp0 = SAMS page number
-                                        ; / i  tmp1 = Memory Address
+        bl      @xsams.page.set     ; \ Set SAMS memory page
+                                    ; | i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory Address
 
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
