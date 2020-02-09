@@ -140,11 +140,20 @@ fb.calc_pointer.$$
 *--------------------------------------------------------------
 * OUTPUT
 * none
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fb.refresh:
         dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        ;------------------------------------------------------        
         ; Setup starting position in index
         ;------------------------------------------------------
         mov   @parm1,@fb.topline   
@@ -159,21 +168,47 @@ fb.refresh.unpack_line:
 
         inc   @parm1                ; Next line in editor buffer
         inc   @parm2                ; Next row in frame buffer
+        ;------------------------------------------------------
+        ; Last row in editor buffer reached ?
+        ;------------------------------------------------------
+        c     @parm1,@edb.lines     
+        jlt   !                     ; no, do next check
 
-        c     @parm1,@edb.lines     ; Last row in editor buffer reached?
-        jlt   !
+        ;------------------------------------------------------
+        ; Erase until end of frame buffer
+        ;------------------------------------------------------
+        mov   @parm2,tmp0           ; Current row
+        mov   @fb.screenrows,tmp1   ; Rows framebuffer
+        s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
+        mpy   @fb.colsline,tmp1     ; columns per row * tmp1 (Result in tmp2!)
+        
+        mpy   @fb.colsline,tmp0     ; Offset = columns per row * tmp0 (Result in tmp1!)
+        a     @fb.top.ptr,tmp1      ; Add framebuffer base
+
+        mov   tmp1,tmp0             ; tmp0 = Memory start address
+        li    tmp1,32               ; Clear with space
+
+        bl    @xfilm                ; \ Fill memory
+                                    ; | i  tmp0 = Memory start address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Number of bytes to fill
         jmp   fb.refresh.exit
-
-!       c     @parm2,@fb.screenrows ; Bottom row in frame buffer reached ?
+        ;------------------------------------------------------
+        ; Bottom row in frame buffer reached ?
+        ;------------------------------------------------------
+!       c     @parm2,@fb.screenrows 
         jlt   fb.refresh.unpack_line
+                                    ; No, unpack next line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.refresh.exit:
         seto  @fb.dirty             ; Refresh screen
-        b     @poprt                ; Return to caller
-
-
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
