@@ -5,6 +5,50 @@
 *        TiVi Editor - Tasks implementation
 *//////////////////////////////////////////////////////////////
 
+****************************************************************
+* Editor - spectra2 user hook
+****************************************************************
+editor  coc   @wbit11,config        ; ANYKEY pressed ?
+        jne   ed_clear_kbbuffer     ; No, clear buffer and exit
+*---------------------------------------------------------------
+* Identical key pressed ?
+*---------------------------------------------------------------
+        szc   @wbit11,config        ; Reset ANYKEY
+        c     @waux1,@waux2         ; Still pressing previous key?
+        jeq   ed_wait
+*--------------------------------------------------------------
+* New key pressed
+*--------------------------------------------------------------
+ed_new_key
+        mov   @waux1,@waux2         ; Save as previous key
+        b     @edkey                ; Process key
+*--------------------------------------------------------------
+* Clear keyboard buffer if no key pressed
+*--------------------------------------------------------------
+ed_clear_kbbuffer
+        clr   @waux1
+        clr   @waux2
+*--------------------------------------------------------------
+* Delay to avoid key bouncing
+*-------------------------------------------------------------- 
+ed_wait
+        li    tmp0,1800             ; Key delay to avoid bouncing keys
+        ;------------------------------------------------------
+        ; Delay loop
+        ;------------------------------------------------------
+ed_wait_loop
+        dec   tmp0
+        jne   ed_wait_loop
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+ed_exit b     @hookok               ; Return
+
+
+
+
+
+
 ***************************************************************
 * Task 0 - Copy frame buffer to VDP
 ***************************************************************
@@ -112,13 +156,13 @@ task2.cur_visible:
         ; Cursor in insert mode
         ;------------------------------------------------------
 task2.cur_visible.insert_mode:
-        li    tmp0,>000f
+        li    tmp0,>0008
         jmp   task2.cur_visible.cursorshape
         ;------------------------------------------------------
         ; Cursor in overwrite mode
         ;------------------------------------------------------
 task2.cur_visible.overwrite_mode:
-        li    tmp0,>020f
+        li    tmp0,>0208
         ;------------------------------------------------------
         ; Set cursor shape
         ;------------------------------------------------------
@@ -137,6 +181,27 @@ task.sub_copy_ramsat:
               data sprsat,ramsat,4   ; Update sprite
 
         mov   @wyx,@fb.yxsave
+
+        ;-------------------------------------------------------
+        ; Draw border line
+        ;-------------------------------------------------------
+        bl    @hchar
+              byte 28,0,1,80
+              data EOL
+        ;------------------------------------------------------
+        ; Show buffer number
+        ;------------------------------------------------------
+        bl    @putat 
+              byte  29,0
+              data  txt_bufnum
+        ;------------------------------------------------------
+        ; Show current file
+        ;------------------------------------------------------
+        bl    @at
+              byte  29,3             ; Position cursor
+
+        mov   @edb.filename.ptr,tmp1 ; Get string to display
+        bl    @xutst0                ; Display string
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -226,7 +291,7 @@ task.botline.show_linecol:
         jne   task.botline.show_lines_in_buffer
 
         bl    @putat
-              byte 29,73
+              byte 29,75
               data txt_bottom
 
         jmp   task.botline.exit
@@ -237,7 +302,7 @@ task.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
         inc   @waux1                 ; Offset 1
         bl    @putnum
-              byte 29,73             ; YX
+              byte 29,75             ; YX
               data waux1,rambuf
               byte 48
               byte 32

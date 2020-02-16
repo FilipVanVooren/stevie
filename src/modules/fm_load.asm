@@ -18,6 +18,8 @@ fm.loadfile:
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
+        mov   @parm1,@edb.filename.ptr
+                                    ; Set filename
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
@@ -78,11 +80,11 @@ fm.loadfile.callback.indicator1:
         ; Show loading indicators and file descriptor
         ;------------------------------------------------------
         bl    @hchar
-              byte 29,0,32,80
+              byte 29,3,32,77
               data EOL
         
         bl    @putat
-              byte 29,0
+              byte 29,3
               data txt_loading      ; Display "Loading...."
 
         c     @tfh.rleonload,@w$ffff
@@ -92,7 +94,7 @@ fm.loadfile.callback.indicator1:
               data txt_rle          ; Display "RLE"
 
 !       bl    @at
-              byte 29,11            ; Cursor YX position
+              byte 29,14            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
@@ -114,7 +116,7 @@ fm.loadfile.callback.indicator2:
         mov   r11,*stack            ; Save return address
 
         bl    @putnum
-              byte 29,73            ; Show lines read
+              byte 29,75            ; Show lines read
               data edb.lines,rambuf,>3020
 
         c     @tfh.kilobytes,tmp4
@@ -150,7 +152,7 @@ fm.loadfile.callback.indicator3:
 
 
         bl    @hchar
-              byte 29,0,32,10       ; Erase loading indicator
+              byte 29,3,32,50       ; Erase loading indicator
               data EOL
 
         bl    @putnum
@@ -162,7 +164,7 @@ fm.loadfile.callback.indicator3:
               data txt_kb           ; Show "kb" string
 
         bl    @putnum
-              byte 29,73            ; Show lines read
+              byte 29,75            ; Show lines read
               data tfh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Exit

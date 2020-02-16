@@ -137,6 +137,7 @@ edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed
 edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
 edb.insmode         equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
 edb.rle             equ  edb.top.ptr+12 ; RLE compression activated
+edb.filename.ptr    equ  edb.top.ptr+14 ; Pointer to length-prefixed string with current filename
 edb.end             equ  edb.top.ptr+14 ; Free from here on
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
@@ -254,12 +255,15 @@ sprsat  equ   >2000                 ; VDP sprite attribute table
 *                      Constants
 ***************************************************************
 romsat:
-        data >0303,>000f              ; Cursor YX, initial shape and colour
+        data >0303,>0008              ; Cursor YX, initial shape and colour
 
 cursors:
         data >0000,>0000,>0000,>001c  ; Cursor 1 - Insert mode
         data >1010,>1010,>1010,>1000  ; Cursor 2 - Insert mode
         data >1c1c,>1c1c,>1c1c,>1c00  ; Cursor 3 - Overwrite mode
+
+line:
+        data >0080,>0000,>ff00,>ff00  ; A double line        
 
 ***************************************************************
 *                       Strings
@@ -275,6 +279,8 @@ txt_kb       #string 'kb'
 txt_rle      #string 'RLE'
 txt_lines    #string 'Lines'
 txt_ioerr    #string 'Load failed:'
+txt_bufnum   #string '#1'
+txt_newfile  #string '[New file]'
 end          data    $ 
 
 

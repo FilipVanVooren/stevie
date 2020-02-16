@@ -33,7 +33,7 @@ fb.init
         clr   @fb.column            ; Current column=0
         li    tmp0,80 
         mov   tmp0,@fb.colsline     ; Columns per row=80
-        li    tmp0,29
+        li    tmp0,28
         mov   tmp0,@fb.screenrows   ; Physical rows on screen = 29
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
