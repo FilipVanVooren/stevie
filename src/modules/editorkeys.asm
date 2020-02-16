@@ -1,48 +1,52 @@
-* FILE......: editorkeys_init.asm
-* Purpose...: Initialisation & setup key press actions
+* FILE......: editorkeys.asm
+* Purpose...: Initialisation & setup key actions
 
 
 *---------------------------------------------------------------
 * Movement keys
 *---------------------------------------------------------------
-key_left      equ >0800                      ; fctn  + s
-key_right     equ >0900                      ; fctn  + d
-key_up        equ >0b00                      ; fctn  + e
-key_down      equ >0a00                      ; fctn  + x
-key_home      equ >8100                      ; ctrl  + a
-key_end       equ >8600                      ; ctrl  + f 
-key_pword     equ >9300                      ; ctrl  + s
-key_nword     equ >8400                      ; ctrl  + d
-key_ppage     equ >8500                      ; ctrl  + e
-key_npage     equ >9800                      ; ctrl  + x
-key_tpage     equ >9400                      ; ctrl  + t
-key_bpage     equ >8200                      ; ctrl  + b
+key_left      equ >0800                      ; fctn + s
+key_right     equ >0900                      ; fctn + d
+key_up        equ >0b00                      ; fctn + e
+key_down      equ >0a00                      ; fctn + x
+key_home      equ >8100                      ; ctrl + a
+key_end       equ >8600                      ; ctrl + f 
+key_pword     equ >9300                      ; ctrl + s
+key_nword     equ >8400                      ; ctrl + d
+key_ppage     equ >8500                      ; ctrl + e
+key_npage     equ >9800                      ; ctrl + x
+key_tpage     equ >9400                      ; ctrl + t
+key_bpage     equ >8200                      ; ctrl + b
 *---------------------------------------------------------------
 * Modifier keys
 *---------------------------------------------------------------
 key_enter       equ >0d00                    ; enter
-key_del_char    equ >0300                    ; fctn  + 1 
-key_del_line    equ >0700                    ; fctn  + 3
-key_del_eol     equ >8b00                    ; ctrl  + k
-key_ins_char    equ >0400                    ; fctn  + 2
-key_ins_onoff   equ >b900                    ; fctn  + .
-key_ins_line    equ >0e00                    ; fctn  + 5
-key_quit1       equ >0500                    ; fctn  + +
-key_quit2       equ >9d00                    ; ctrl  + +
+key_del_char    equ >0300                    ; fctn + 1 
+key_del_line    equ >0700                    ; fctn + 3
+key_del_eol     equ >8b00                    ; ctrl + k
+key_ins_char    equ >0400                    ; fctn + 2
+key_ins_onoff   equ >b900                    ; fctn + .
+key_ins_line    equ >0e00                    ; fctn + 5
+key_quit1       equ >0500                    ; fctn + +
+key_quit2       equ >9d00                    ; ctrl + +
 *---------------------------------------------------------------
 * File buffer keys
 *---------------------------------------------------------------
-key_buf0        equ >b000                    ; ctrl  + 0
-key_buf1        equ >b100                    ; ctrl  + 1
-key_buf2        equ >b200                    ; ctrl  + 2
-key_buf3        equ >b300                    ; ctrl  + 3
-key_buf4        equ >b400                    ; ctrl  + 4
-key_buf5        equ >b500                    ; ctrl  + 5
-key_buf6        equ >b600                    ; ctrl  + 6
-key_buf7        equ >b700                    ; ctrl  + 7
-key_buf8        equ >9e00                    ; ctrl  + 8
-key_buf9        equ >9f00                    ; ctrl  + 9
-
+key_buf0        equ >b000                    ; ctrl + 0
+key_buf1        equ >b100                    ; ctrl + 1
+key_buf2        equ >b200                    ; ctrl + 2
+key_buf3        equ >b300                    ; ctrl + 3
+key_buf4        equ >b400                    ; ctrl + 4
+key_buf5        equ >b500                    ; ctrl + 5
+key_buf6        equ >b600                    ; ctrl + 6
+key_buf7        equ >b700                    ; ctrl + 7
+key_buf8        equ >9e00                    ; ctrl + 8
+key_buf9        equ >9f00                    ; ctrl + 9
+*---------------------------------------------------------------
+* Misc keys
+*---------------------------------------------------------------
+key_fbup        equ >c400                    ; fctn + n
+key_fbdown      equ >c600                    ; fctn + b
 
 
 *---------------------------------------------------------------
@@ -80,6 +84,8 @@ keymap_actions
         ; Other action keys
         ;-------------------------------------------------------
         data  key_quit1,edkey.action.quit           ; Quit TiVi
+        data  key_fbup,edkey.action.fbup            ; Framebuffer 1 row up
+        data  key_fbup,edkey.action.fbdown          ; Framebuffer 1 row down
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------

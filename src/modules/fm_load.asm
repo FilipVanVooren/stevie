@@ -1,4 +1,4 @@
-* FILE......: filemanager_loadfile.asm
+* FILE......: fm_load.asm
 * Purpose...: High-level file manager module
 
 *---------------------------------------------------------------
