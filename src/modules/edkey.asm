@@ -1,4 +1,4 @@
-* FILE......: editorkeys.asm
+* FILE......: edkey.asm
 * Purpose...: Initialisation & setup key actions
 
 
@@ -67,7 +67,8 @@ keymap_actions
         data  key_nword,edkey.action.nword          ; Move cursor next word
         data  key_ppage,edkey.action.ppage          ; Move cursor previous page
         data  key_npage,edkey.action.npage          ; Move cursor next page
-        data  key_tpage,edkey.action.top            ; Move cursor to top of file
+        data  key_tpage,edkey.action.top            ; Move cursor to file top
+        data  key_bpage,edkey.action.bot            ; Move cursor to file bottom
         ;-------------------------------------------------------
         ; Modifier keys - Delete
         ;-------------------------------------------------------

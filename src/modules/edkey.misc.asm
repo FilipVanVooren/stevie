@@ -1,4 +1,4 @@
-* FILE......: editorkeys_aux.asm
+* FILE......: edkey.misc.asm
 * Purpose...: Actions for miscelanneous keys
 
 

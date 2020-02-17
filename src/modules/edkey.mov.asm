@@ -1,4 +1,4 @@
-* FILE......: editorkeys_mov.asm
+* FILE......: edkey.mov.asm
 * Purpose...: Actions for movement keys
 
 
@@ -452,3 +452,38 @@ edkey.action.top.exit:
         clr   tmp0                  ; Set VDP cursor on line 0, column 0
         mov   tmp0,@wyx             ; 
         b     @ed_wait              ; Back to editor main
+
+
+
+*---------------------------------------------------------------
+* Goto bottom of file
+*---------------------------------------------------------------
+edkey.action.bot:
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.bot.refresh
+        bl    @edb.line.pack        ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Refresh page
+        ;-------------------------------------------------------
+edkey.action.bot.refresh:        
+        c     @edb.lines,@fb.screenrows
+                                    ; Skip if whole editor buffer on screen
+        jle   !
+        mov   @edb.lines,tmp0
+        s     @fb.screenrows,tmp0
+        mov   tmp0,@fb.topline      ; Set to last page in editor buffer
+        mov   tmp0,@parm1
+        bl    @fb.refresh           ; Refresh frame buffer
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.bot.exit:
+        clr   @fb.row               ; Editor line 0
+        clr   @fb.column            ; Editor column 0
+        clr   tmp0                  ; Set VDP cursor on line 0, column 0
+        mov   tmp0,@wyx             ; Set cursor
+!       b     @ed_wait              ; Back to editor main

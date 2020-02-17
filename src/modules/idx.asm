@@ -1,4 +1,4 @@
-* FILE......: index.asm
+* FILE......: idx.asm
 * Purpose...: TiVi Editor - Index module
 
 *//////////////////////////////////////////////////////////////

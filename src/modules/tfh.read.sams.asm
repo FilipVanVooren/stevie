@@ -1,5 +1,5 @@
-* FILE......: fh_sams.asm
-* Purpose...: File read module: SAMS implementation
+* FILE......: tfh.read.sams.asm
+* Purpose...: File reader module (SAMS implementation)
 
 *//////////////////////////////////////////////////////////////
 *                  Read file into editor buffer

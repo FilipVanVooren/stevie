@@ -126,7 +126,6 @@ fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
 fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
 fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
 fb.screenrows   equ  fb.top.ptr+24  ; Number of rows on physical screen
-fb.end          equ  fb.top.ptr+26  ; Free from here on
 *--------------------------------------------------------------
 * Editor buffer structure           @>2300-23ff     (256 bytes)
 *--------------------------------------------------------------
@@ -138,7 +137,7 @@ edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
 edb.insmode         equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
 edb.rle             equ  edb.top.ptr+12 ; RLE compression activated
 edb.filename.ptr    equ  edb.top.ptr+14 ; Pointer to length-prefixed string with current filename
-edb.end             equ  edb.top.ptr+14 ; Free from here on
+edb.sams.page       equ  edb.top.ptr+16 ; Current SAMS page
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
@@ -237,18 +236,18 @@ sprsat  equ   >2000                 ; VDP sprite attribute table
 *                     TiVi support modules
 ***************************************************************
         copy  "editor.asm"          ; Main editor
-        copy  "editorkeys.asm"      ; Actions initalisation
-        copy  "editorkeys_mov.asm"  ; Actions for movement keys
-        copy  "editorkeys_mod.asm"  ; Actions for modifier keys
-        copy  "editorkeys_misc.asm" ; Actions for miscelanneous keys
-        copy  "editorkeys_file.asm" ; Actions for file related keys
-        copy  "memory.asm"          ; mem - Memory Management module
-        copy  "framebuffer.asm"     ; fb  - Framebuffer module
-        copy  "index.asm"           ; idx - Index management module
-        copy  "editorbuffer.asm"    ; edb - Editor Buffer module
-        copy  "fh_sams.asm"         ; fh  - File handling module
-        copy  "fm_load.asm"         ; fm  - File manager module
-        copy  "tasks.asm"           ; tsk - Tasks module
+        copy  "edkey.asm"           ; Actions
+        copy  "edkey.mov.asm"       ; Actions for movement keys
+        copy  "edkey.mod.asm"       ; Actions for modifier keys
+        copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
+        copy  "edkey.file.asm"      ; Actions for file related keys
+        copy  "mem.asm"             ; mem      - Memory Management
+        copy  "fb.asm"              ; fb       - Framebuffer
+        copy  "idx.asm"             ; idx      - Index management
+        copy  "edb.asm"             ; edb      - Editor Buffer
+        copy  "tfh.read.sams.asm"   ; tfh.sams - File handler read file (SAMS)                                
+        copy  "fm.load.asm"         ; fm.load  - File manager loadfile
+        copy  "tasks.asm"           ; tsk      - Tasks
 
 
 ***************************************************************

@@ -1,4 +1,4 @@
-* FILE......: editorbuffer.asm
+* FILE......: edb.asm
 * Purpose...: TiVi Editor - Editor Buffer module
 
 *//////////////////////////////////////////////////////////////
@@ -120,8 +120,7 @@ edb.line.pack.update_index:
                                     ; | o  waux1 = SAMS page number
                                     ; / o  waux2 = Address of SAMS register
 
-        mov   @waux1,@parm3         ; Save SAMS page number
-                                
+        mov   @waux1,@parm3                                
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
                                     ; | i  parm2 = pointer to line in editor buffer
@@ -130,17 +129,22 @@ edb.line.pack.update_index:
         ;------------------------------------------------------
         ; 2. Switch to required SAMS page
         ;------------------------------------------------------
-        ;mov   @edb.sams.page,tmp0   ; Current SAMS page
-        ;mov   @edb.next_free.ptr,tmp1
+        c     @edb.sams.page,@parm3 ; Stay on page?
+        jeq   !                     ; Yes, skip setting page
+
+        mov   @parm3,tmp0           ; get SAMS page
+        mov   @edb.next_free.ptr,tmp1
                                     ; Pointer to line in editor buffer
-  ;     bl    @xsams.page           ; Switch to SAMS page
+        bl    @xsams.page.set       ; Switch to SAMS page
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address
+
+        mov   tmp0,@tfh.sams.page   ; Save current SAMS page
 
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
-        mov   @rambuf+2,tmp0        ; Source for memory copy
+!       mov   @rambuf+2,tmp0        ; Source for memory copy
         mov   @edb.next_free.ptr,tmp1 
                                     ; Address of line in editor buffer
 
@@ -242,6 +246,9 @@ edb.line.unpack:
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
 
+        mov   @outparm2,@edb.sams.page 
+                                    ; Save current SAMS page                                    
+
         inct  @outparm1             ; Skip line prefix
         mov   @outparm1,@rambuf+4   ; Source memory address for block copy
         ;------------------------------------------------------        
@@ -304,7 +311,7 @@ edb.line.unpack.prepare:
         ; Check before copy
         ;------------------------------------------------------
 edb.line.unpack.copy.uncompressed:     
-        ci    tmp2,80               ; Check line length;
+        ci    tmp2,80               ; Check line length
         jle   !
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system       

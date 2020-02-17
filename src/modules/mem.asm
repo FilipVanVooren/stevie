@@ -1,4 +1,4 @@
-* FILE......: memory.asm
+* FILE......: mem.asm
 * Purpose...: TiVi Editor - Memory management (SAMS)
 
 *//////////////////////////////////////////////////////////////
@@ -95,8 +95,12 @@ mem.edb.sams.pagein.lookup:
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
 
+        mov   @outparm1,tmp1        ; Memory address
+        jeq   mem.edb.sams.pagein.exit
+                                    ; Nothing to page-in if empty line
+
         mov   @outparm2,tmp0        ; SAMS page
-        mov   @outparm1,tmp1        ; Memory address        
+
         ;------------------------------------------------------
         ; Activate SAMS page where specified line is stored
         ;------------------------------------------------------

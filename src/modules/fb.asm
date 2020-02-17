@@ -1,4 +1,4 @@
-* FILE......: framebuffer.asm
+* FILE......: fb.asm
 * Purpose...: TiVi Editor - Framebuffer module
 
 *//////////////////////////////////////////////////////////////
@@ -159,6 +159,11 @@ fb.refresh:
         mov   @parm1,@fb.topline   
         clr   @parm2                ; Target row in frame buffer
         ;------------------------------------------------------
+        ; Check if already at EOF
+        ;------------------------------------------------------
+        c     @parm1,@edb.lines    ; EOF reached? 
+        jeq   fb.refresh.erase_eob ; Yes, no need to unpack
+        ;------------------------------------------------------
         ; Unpack line to frame buffer
         ;------------------------------------------------------
 fb.refresh.unpack_line:
@@ -173,16 +178,20 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
         c     @parm1,@edb.lines     
         jlt   !                     ; no, do next check
-
+                                    ; yes, erase until end of frame buffer
         ;------------------------------------------------------
         ; Erase until end of frame buffer
         ;------------------------------------------------------
+fb.refresh.erase_eob:
         mov   @parm2,tmp0           ; Current row
         mov   @fb.screenrows,tmp1   ; Rows framebuffer
         s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
-        mpy   @fb.colsline,tmp1     ; columns per row * tmp1 (Result in tmp2!)
+        mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
+
+        mov   tmp2,tmp2             ; Already at end of frame buffer?
+        jeq   fb.refresh.exit       ; Yes, so exit
         
-        mpy   @fb.colsline,tmp0     ; Offset = columns per row * tmp0 (Result in tmp1!)
+        mpy   @fb.colsline,tmp0     ; cols per row * tmp0 (Result in tmp1!)
         a     @fb.top.ptr,tmp1      ; Add framebuffer base
 
         mov   tmp1,tmp0             ; tmp0 = Memory start address

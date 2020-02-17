@@ -1,4 +1,4 @@
-* FILE......: editorkeys_fíle.asm
+* FILE......: edkey.fíle.asm
 * Purpose...: File related actions (load file, save file, ...)
 
 

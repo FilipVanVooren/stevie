@@ -1,4 +1,4 @@
-* FILE......: editorkeys_mod.asm
+* FILE......: edkey.mod.asm
 * Purpose...: Actions for modifier keys
 
 
