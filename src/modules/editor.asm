@@ -73,13 +73,12 @@ main.continue:
               data sprpdt,cursors,3*8
                                     ; Load sprite cursor patterns
                                     
-
         bl    @cpym2v
-              data >1008,line,8     ; Load line pattern
-
+              data >1008,lines,16   ; Load line patterns
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
+        bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer

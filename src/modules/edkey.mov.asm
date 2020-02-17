@@ -122,7 +122,7 @@ edkey.action.down.move:
         ;-------------------------------------------------------
         ; Check if scrolling required
         ;-------------------------------------------------------
-        mov   @fb.screenrows,tmp0
+        mov   @fb.scrrows,tmp0
         dec   tmp0
         c     @fb.row,tmp0
         jlt   edkey.action.down.cursor
@@ -350,7 +350,7 @@ edkey.action.ppage:
         ;-------------------------------------------------------
         ; Special treatment top page
         ;-------------------------------------------------------
-        c     tmp0,@fb.screenrows   ; topline > rows on screen?
+        c     tmp0,@fb.scrrows   ; topline > rows on screen?
         jgt   edkey.action.ppage.topline 
         clr   @fb.topline           ; topline = 0
         jmp   edkey.action.ppage.crunch
@@ -358,7 +358,7 @@ edkey.action.ppage:
         ; Adjust topline
         ;-------------------------------------------------------
 edkey.action.ppage.topline:
-        s     @fb.screenrows,@fb.topline         
+        s     @fb.scrrows,@fb.topline         
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -394,14 +394,14 @@ edkey.action.npage:
         ; Sanity check
         ;-------------------------------------------------------
         mov   @fb.topline,tmp0
-        a     @fb.screenrows,tmp0
+        a     @fb.scrrows,tmp0
         c     tmp0,@edb.lines       ; Exit if on last page
         jgt   edkey.action.npage.exit
         ;-------------------------------------------------------
         ; Adjust topline
         ;-------------------------------------------------------
 edkey.action.npage.topline:
-        a     @fb.screenrows,@fb.topline         
+        a     @fb.scrrows,@fb.topline         
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -470,11 +470,11 @@ edkey.action.bot:
         ; Refresh page
         ;-------------------------------------------------------
 edkey.action.bot.refresh:        
-        c     @edb.lines,@fb.screenrows
+        c     @edb.lines,@fb.scrrows
                                     ; Skip if whole editor buffer on screen
         jle   !
         mov   @edb.lines,tmp0
-        s     @fb.screenrows,tmp0
+        s     @fb.scrrows,tmp0
         mov   tmp0,@fb.topline      ; Set to last page in editor buffer
         mov   tmp0,@parm1
         bl    @fb.refresh           ; Refresh frame buffer

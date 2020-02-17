@@ -45,8 +45,7 @@ key_buf9        equ >9f00                    ; ctrl + 9
 *---------------------------------------------------------------
 * Misc keys
 *---------------------------------------------------------------
-key_fbup        equ >c400                    ; fctn + n
-key_fbdown      equ >c600                    ; fctn + b
+key_cmdb_tog    equ >c400                    ; fctn + n
 
 
 *---------------------------------------------------------------
@@ -85,8 +84,7 @@ keymap_actions
         ; Other action keys
         ;-------------------------------------------------------
         data  key_quit1,edkey.action.quit           ; Quit TiVi
-        data  key_fbup,edkey.action.fbup            ; Framebuffer 1 row up
-        data  key_fbup,edkey.action.fbdown          ; Framebuffer 1 row down
+        data  key_cmdb_tog,edkey.action.cmdb.toggle ; Toggle command buffer pane
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------

@@ -57,9 +57,9 @@ task0   mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
         ;------------------------------------------------------
-        c     @edb.lines,@fb.screenrows
+        c     @edb.lines,@fb.scrrows
         jlt   task0.setrows.small
-        mov   @fb.screenrows,tmp1   ; Lines to copy
+        mov   @fb.scrrows,tmp1      ; Lines to copy
         jmp   task0.copy.framebuffer
         ;------------------------------------------------------
         ; Less lines in editor buffer as rows in frame buffer 
@@ -89,7 +89,7 @@ task0.copy.framebuffer:
         mov   @edb.lines,tmp0
         s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
         inc   tmp0                  ; Y++
-        c     @fb.screenrows,tmp0   ; Hide if last line on screen
+        c     @fb.scrrows,tmp0   ; Hide if last line on screen
         jle   task0.exit
         ;-------------------------------------------------------
         ; Draw EOF marker 
@@ -109,20 +109,34 @@ task0.draw_marker:
         mov   @wyx,tmp0
         srl   tmp0,8                ; Right justify                
         inc   tmp0                  ; One time adjust
-        c     @fb.screenrows,tmp0   ; Don't spill on last line on screen
+        c     @fb.scrrows,tmp0      ; Don't spill on last line on screen
         jeq   !
         li    tmp2,colrow+colrow-5  ; Repeat count for 2 lines
-        jmp   task0.draw_marker.line
+        jmp   task0.draw_marker.empty.line
 !       li    tmp2,colrow-5         ; Repeat count for 1 line
         ;-------------------------------------------------------
         ; Draw empty line
         ;-------------------------------------------------------
-task0.draw_marker.line:        
+task0.draw_marker.empty.line
         dec   tmp0                  ; One time adjust
         bl    @yx2pnt               ; Set VDP address in tmp0
         li    tmp1,32               ; Character to write (whitespace)
         bl    @xfilv                ; Write characters
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
+        ;-------------------------------------------------------
+        ; Draw line
+        ;-------------------------------------------------------
+        mov   @fb.scrrows,tmp0
+        swpb  tmp0
+        mov   tmp0,@wyx
+        bl    @yx2pnt               ; Set VDP address in tmp0
+        li    tmp1,2                ; Character to write (double line)
+        li    tmp2,80      
+        bl    @xfilv                ; Write characters
+
+
+        mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
+
 *--------------------------------------------------------------
 * Task 0 - Exit
 *--------------------------------------------------------------
@@ -177,20 +191,30 @@ task2.cur_visible.cursorshape:
 * Copy ramsat to VDP SAT and show bottom line - Tasks 1,2
 *--------------------------------------------------------------
 task.sub_copy_ramsat:
+        dect  stack
+        mov   tmp0,*stack            ; Push tmp0
+
         bl    @cpym2v
-              data sprsat,ramsat,4   ; Update sprite
+              data sprsat,ramsat,4   ; Copy sprite SAT to VDP
 
         mov   @wyx,@fb.yxsave
-
         ;-------------------------------------------------------
         ; Draw border line
         ;-------------------------------------------------------
+        mov   @fb.scrrows,tmp0
+        ci    tmp0,28
+        jeq   !
         bl    @hchar
+              byte 28,0,2,80
+              data EOL
+        jmp   task.botline.bufnum
+!       bl    @hchar
               byte 28,0,1,80
               data EOL
         ;------------------------------------------------------
         ; Show buffer number
         ;------------------------------------------------------
+task.botline.bufnum
         bl    @putat 
               byte  29,0
               data  txt_bufnum
@@ -311,4 +335,5 @@ task.botline.show_lines_in_buffer:
         ;------------------------------------------------------
 task.botline.exit
         mov   @fb.yxsave,@wyx
+        mov   *stack+,tmp0           ; Pop tmp0
         b     @slotok                ; Exit running task

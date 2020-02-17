@@ -267,14 +267,14 @@ edkey.action.newline:
         ;-------------------------------------------------------
         ; Scroll 1 line if cursor at bottom row of screen
         ;-------------------------------------------------------
-        mov   @fb.screenrows,tmp0
+        mov   @fb.scrrows,tmp0
         dec   tmp0
         c     @fb.row,tmp0
         jlt   edkey.action.newline.down
         ;-------------------------------------------------------
         ; Scroll
         ;-------------------------------------------------------
-        mov   @fb.screenrows,tmp0
+        mov   @fb.scrrows,tmp0
         mov   @fb.topline,@parm1
         inc   @parm1
         bl    @fb.refresh

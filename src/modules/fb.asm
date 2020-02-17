@@ -34,7 +34,8 @@ fb.init
         li    tmp0,80 
         mov   tmp0,@fb.colsline     ; Columns per row=80
         li    tmp0,28
-        mov   tmp0,@fb.screenrows   ; Physical rows on screen = 29
+        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 28
+        mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
         ; Clear frame buffer
@@ -58,7 +59,7 @@ fb.init.$$
 *--------------------------------------------------------------
 * INPUT
 * @fb.topline = Top line in frame buffer
-* @parm1      = Row in frame buffer (offset 0..@fb.screenrows)
+* @parm1      = Row in frame buffer (offset 0..@fb.scrrows)
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Matching line in editor buffer
@@ -96,7 +97,7 @@ fb.row2line$$:
 * INPUT
 * @fb.top       = Address of top row in frame buffer
 * @fb.topline   = Top line in frame buffer
-* @fb.row       = Current row in frame buffer (offset 0..@fb.screenrows)
+* @fb.row       = Current row in frame buffer (offset 0..@fb.scrrows)
 * @fb.column    = Current column in frame buffer
 * @fb.colsline  = Columns per line in frame buffer
 *--------------------------------------------------------------
@@ -184,7 +185,7 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
 fb.refresh.erase_eob:
         mov   @parm2,tmp0           ; Current row
-        mov   @fb.screenrows,tmp1   ; Rows framebuffer
+        mov   @fb.scrrows,tmp1   ; Rows framebuffer
         s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
         mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
 
@@ -205,7 +206,7 @@ fb.refresh.erase_eob:
         ;------------------------------------------------------
         ; Bottom row in frame buffer reached ?
         ;------------------------------------------------------
-!       c     @parm2,@fb.screenrows 
+!       c     @parm2,@fb.scrrows 
         jlt   fb.refresh.unpack_line
                                     ; No, unpack next line
         ;------------------------------------------------------

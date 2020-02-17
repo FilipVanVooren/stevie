@@ -114,9 +114,11 @@ scrpad.backup2  equ  >2100          ; Backup spectra2 layout
 * Frame buffer structure            @>2200-22ff     (256 bytes)
 *--------------------------------------------------------------
 fb.top.ptr      equ  >2200          ; Pointer to frame buffer
-fb.current      equ  fb.top.ptr+2   ; Pointer to current position in frame buffer
-fb.topline      equ  fb.top.ptr+4   ; Top line in frame buffer (matching line X in editor buffer)
-fb.row          equ  fb.top.ptr+6   ; Current row in frame buffer (offset 0 .. @fb.screenrows)
+fb.current      equ  fb.top.ptr+2   ; Pointer to current pos. in frame buffer
+fb.topline      equ  fb.top.ptr+4   ; Top line in frame buffer (matching 
+                                    ; line X in editor buffer).
+fb.row          equ  fb.top.ptr+6   ; Current row in frame buffer
+                                    ; (offset 0 .. @fb.scrrows)
 fb.row.length   equ  fb.top.ptr+8   ; Length of current row in frame buffer 
 fb.row.dirty    equ  fb.top.ptr+10  ; Current row dirty flag in frame buffer
 fb.column       equ  fb.top.ptr+12  ; Current column in frame buffer
@@ -125,48 +127,60 @@ fb.curshape     equ  fb.top.ptr+16  ; Cursor shape & colour
 fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
 fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
 fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
-fb.screenrows   equ  fb.top.ptr+24  ; Number of rows on physical screen
+fb.scrrows      equ  fb.top.ptr+24  ; Rows on physical screen for framebuffer
+fb.scrrows.max  equ  fb.top.ptr+26  ; Max # of rows on physical screen for fb
+fb.end          equ  fb.top.ptr+28  ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure           @>2300-23ff     (256 bytes)
 *--------------------------------------------------------------
 edb.top.ptr         equ  >2300          ; Pointer to editor buffer
 edb.index.ptr       equ  edb.top.ptr+2  ; Pointer to index
 edb.lines           equ  edb.top.ptr+4  ; Total lines in editor buffer
-edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty flag (Text changed!)
+edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
-edb.insmode         equ  edb.top.ptr+10 ; Editor insert mode (>0000 overwrite / >ffff insert)
+edb.insmode         equ  edb.top.ptr+10 ; Insert mode (>ffff = insert)
 edb.rle             equ  edb.top.ptr+12 ; RLE compression activated
-edb.filename.ptr    equ  edb.top.ptr+14 ; Pointer to length-prefixed string with current filename
+edb.filename.ptr    equ  edb.top.ptr+14 ; Pointer to length-prefixed string 
+                                        ; with current filename.
 edb.sams.page       equ  edb.top.ptr+16 ; Current SAMS page
+edb.end             equ  edb.top.ptr+18 ; End of structure
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
 tfh.top         equ  >2400          ; TiVi file handling structures
-dsrlnk.dsrlws   equ  tfh.top        ; Address of dsrlnk workspace 32 bytes                                
+dsrlnk.dsrlws   equ  tfh.top        ; Address of dsrlnk workspace 32 bytes      
 dsrlnk.namsto   equ  tfh.top + 32   ; 8-byte RAM buffer for storing device name
-file.pab.ptr    equ  tfh.top + 40   ; Pointer to VDP PAB, required by level 2 FIO
+file.pab.ptr    equ  tfh.top + 40   ; Pointer to VDP PAB,required by level 2 FIO
 tfh.pabstat     equ  tfh.top + 42   ; Copy of VDP PAB status byte
 tfh.ioresult    equ  tfh.top + 44   ; DSRLNK IO-status after file operation
 tfh.records     equ  tfh.top + 46   ; File records counter
 tfh.reclen      equ  tfh.top + 48   ; Current record length
 tfh.kilobytes   equ  tfh.top + 50   ; Kilobytes processed (read/written)
-tfh.counter     equ  tfh.top + 52   ; Internal counter used in TiVi file operations
+tfh.counter     equ  tfh.top + 52   ; Counter used in TiVi file operations
 tfh.fname.ptr   equ  tfh.top + 54   ; Pointer to device and filename
 tfh.sams.page   equ  tfh.top + 56   ; Current SAMS page during file operation
-tfh.sams.hpage  equ  tfh.top + 58   ; Highest SAMS page in use so far for file operation
+tfh.sams.hpage  equ  tfh.top + 58   ; Highest SAMS page used for file operation
 tfh.callback1   equ  tfh.top + 60   ; Pointer to callback function 1
 tfh.callback2   equ  tfh.top + 62   ; Pointer to callback function 2
 tfh.callback3   equ  tfh.top + 64   ; Pointer to callback function 3
 tfh.callback4   equ  tfh.top + 66   ; Pointer to callback function 4 
 tfh.rleonload   equ  tfh.top + 68   ; RLE compression needed during file load
 tfh.membuffer   equ  tfh.top + 70   ; 80 bytes file memory buffer 
-tfh.end         equ  tfh.top + 150  ; Free from here on
-tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory (max 255 bytes)
+tfh.end         equ  tfh.top + 150  ; End of structure
+
+tfh.vrecbuf     equ  >0960          ; Address of record buffer in VDP memory
 tfh.vpab        equ  >0a60          ; Address of PAB in VDP memory
 *--------------------------------------------------------------
-* Free for future use               @>2500-264f     (336 bytes)
+* Command buffer structure          @>2500-25ff     (256 bytes)
 *--------------------------------------------------------------
-free.mem1       equ  >2500          ; >2500-25ff   256 bytes
+cmdb.top        equ  >2500          ; TiVi command buffer structures
+cmdb.visible    equ  cmdb.top + 2   ; Command buffer visible? (>ffff = visible)
+cmdb.scrrows    equ  cmdb.top + 4   ; Current size of cmdb pane (in rows)
+cmdb.default    equ  cmdb.top + 6   ; Default size of cmdb pane (in rows)
+cmdb.end        equ  cmdb.top + 8   ; End of structure
+*--------------------------------------------------------------
+* Free for future use               @>2500-264f     (80 bytes)
+*--------------------------------------------------------------
 free.mem2       equ  >2600          ; >2600-264f    80 bytes
 *--------------------------------------------------------------
 * Frame buffer                      @>2650-2fff    (2480 bytes)
@@ -245,6 +259,7 @@ sprsat  equ   >2000                 ; VDP sprite attribute table
         copy  "fb.asm"              ; fb       - Framebuffer
         copy  "idx.asm"             ; idx      - Index management
         copy  "edb.asm"             ; edb      - Editor Buffer
+        copy  "cmdb.asm"            ; cmdb     - Command Buffer
         copy  "tfh.read.sams.asm"   ; tfh.sams - File handler read file (SAMS)                                
         copy  "fm.load.asm"         ; fm.load  - File manager loadfile
         copy  "tasks.asm"           ; tsk      - Tasks
@@ -261,8 +276,9 @@ cursors:
         data >1010,>1010,>1010,>1000  ; Cursor 2 - Insert mode
         data >1c1c,>1c1c,>1c1c,>1c00  ; Cursor 3 - Overwrite mode
 
-line:
-        data >0080,>0000,>ff00,>ff00  ; A double line        
+lines:
+        data >0080,>0000,>ff00,>ff00  ; Ruler and double line        
+        data >0000,>0000,>ff00,>ff00  ; Double line                
 
 ***************************************************************
 *                       Strings
@@ -277,7 +293,7 @@ txt_loading  #string 'Loading...'
 txt_kb       #string 'kb'
 txt_rle      #string 'RLE'
 txt_lines    #string 'Lines'
-txt_ioerr    #string 'Load failed:'
+txt_ioerr    #string '* I/O error occured. Could not load file.'
 txt_bufnum   #string '#1'
 txt_newfile  #string '[New file]'
 end          data    $ 

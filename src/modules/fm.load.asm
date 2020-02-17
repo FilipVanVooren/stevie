@@ -26,7 +26,7 @@ fm.loadfile:
         bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
-        mov   @fb.screenrows,tmp1
+        mov   @fb.scrrows,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
 
@@ -183,20 +183,19 @@ fm.loadfile.callback.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
 
-
         bl    @hchar
-              byte 29,0,32,30       ; Erase loading indicator
+              byte 29,0,32,50       ; Erase loading indicator
               data EOL
 
         bl    @putat
-              byte 29,0             ; Display message
+              byte 27,0             ; Display message
               data txt_ioerr
 
-        bl    @at                   ; Position cursor
-              byte 29,13
+        li    tmp0,txt_newfile
+        mov   tmp0,@edb.filename.ptr
 
-        mov   @tfh.fname.ptr,tmp1   ; Get file descriptor
-        bl    @xutst0               ; Show file descriptor
+        mov   @cmdb.scrrows,@parm1
+        bl    @cmdb.show
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
