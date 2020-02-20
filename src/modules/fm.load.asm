@@ -30,7 +30,7 @@ fm.loadfile:
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
 
-        clr   tmp0                  ; VDP target address
+        li    tmp0,80               ; VDP target address (2nd line on screen!)
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory

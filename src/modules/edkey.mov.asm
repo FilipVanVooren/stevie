@@ -55,7 +55,7 @@ edkey.action.up:
 edkey.action.up.cursor:
         mov   @fb.row,tmp0
         jgt   edkey.action.up.cursor_up
-                                    ; Move cursor up if fb.row>0
+                                    ; Move cursor up if fb.row > 0
         mov   @fb.topline,tmp0      ; Do we need to scroll?
         jeq   edkey.action.up.set_cursorx
                                     ; At top, only position cursor X
@@ -378,7 +378,6 @@ edkey.action.ppage.refresh:
         ;-------------------------------------------------------
 edkey.action.ppage.exit:
         clr   @fb.row
-        inc   @fb.row               ; Set fb.row=1
         clr   @fb.column
         li    tmp0,>0100            ; Set VDP cursor on line 1, column 0
         mov   tmp0,@wyx             ; In edkey.action up cursor is moved up
@@ -447,10 +446,10 @@ edkey.action.top.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.top.exit:
-        clr   @fb.row               ; Editor line 0
-        clr   @fb.column            ; Editor column 0
-        clr   tmp0                  ; Set VDP cursor on line 0, column 0
-        mov   tmp0,@wyx             ; 
+        clr   @fb.row               ; Frame buffer line 0
+        clr   @fb.column            ; Frame buffer column 0
+        li    tmp0,>0100
+        mov   tmp0,@wyx             ; Set VDP cursor on line 1, column 0
         b     @ed_wait              ; Back to editor main
 
 
@@ -484,6 +483,6 @@ edkey.action.bot.refresh:
 edkey.action.bot.exit:
         clr   @fb.row               ; Editor line 0
         clr   @fb.column            ; Editor column 0
-        clr   tmp0                  ; Set VDP cursor on line 0, column 0
+        li    tmp0,>0100            ; Set VDP cursor on line 1, column 0
         mov   tmp0,@wyx             ; Set cursor
 !       b     @ed_wait              ; Back to editor main

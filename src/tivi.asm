@@ -226,6 +226,7 @@ prog0   data  0                     ; No more items following
  .else
         #string 'TIVI'
  .endif
+
 *--------------------------------------------------------------
 * Include required files
 *--------------------------------------------------------------
@@ -296,6 +297,7 @@ txt_lines    #string 'Lines'
 txt_ioerr    #string '* I/O error occured. Could not load file.'
 txt_bufnum   #string '#1'
 txt_newfile  #string '[New file]'
+txt_tivi     #string 'TiVi beta %%build_date%%'
 end          data    $ 
 
 

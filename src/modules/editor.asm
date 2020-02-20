@@ -89,7 +89,7 @@ main.continue:
         mov   tmp0,@btihi           ; Highest slot in use
  
         bl    @at
-        data  >0000                 ; Cursor YX position = >0000
+        data  >0100                 ; Cursor YX position = >0000
 
         li    tmp0,timers
         mov   tmp0,@wtitab

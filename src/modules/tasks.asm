@@ -73,7 +73,7 @@ task0.setrows.small:
 task0.copy.framebuffer:
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
-        clr   tmp0                  ; VDP target address
+        li    tmp0,80               ; VDP target address (2nd line on screen!)                                  
         mov   @fb.top.ptr,tmp1      ; RAM Source address
         ;------------------------------------------------------
         ; Copy memory block
@@ -88,8 +88,8 @@ task0.copy.framebuffer:
         ;-------------------------------------------------------
         mov   @edb.lines,tmp0
         s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
-        inc   tmp0                  ; Y++
-        c     @fb.scrrows,tmp0   ; Hide if last line on screen
+        inct  tmp0                  ; Y = Y + 2
+        c     @fb.scrrows,tmp0      ; Hide if last line on screen
         jle   task0.exit
         ;-------------------------------------------------------
         ; Draw EOF marker 
@@ -124,15 +124,15 @@ task0.draw_marker.empty.line
         bl    @xfilv                ; Write characters
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
         ;-------------------------------------------------------
-        ; Draw line
+        ; Draw "double" bottom line
         ;-------------------------------------------------------
-        mov   @fb.scrrows,tmp0
-        swpb  tmp0
-        mov   tmp0,@wyx
-        bl    @yx2pnt               ; Set VDP address in tmp0
-        li    tmp1,2                ; Character to write (double line)
-        li    tmp2,80      
-        bl    @xfilv                ; Write characters
+;        mov   @fb.scrrows,tmp0
+;        swpb  tmp0
+;        mov   tmp0,@wyx
+;        bl    @yx2pnt               ; Set VDP address in tmp0
+;        li    tmp1,2                ; Character to write (double line)
+;        li    tmp2,80      
+;        bl    @xfilv                ; Write characters
 
 
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
@@ -202,7 +202,7 @@ task.sub_copy_ramsat:
         ; Draw border line
         ;-------------------------------------------------------
         mov   @fb.scrrows,tmp0
-        ci    tmp0,28
+        ci    tmp0,27
         jeq   !
         bl    @hchar
               byte 28,0,2,80

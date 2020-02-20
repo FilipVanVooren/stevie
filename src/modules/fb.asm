@@ -31,17 +31,30 @@ fb.init
         clr   @fb.topline           ; Top line in framebuffer
         clr   @fb.row               ; Current row=0
         clr   @fb.column            ; Current column=0
+
         li    tmp0,80 
         mov   tmp0,@fb.colsline     ; Columns per row=80
-        li    tmp0,28
-        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 28
+
+        li    tmp0,27
+        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 27
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
+
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
         ; Clear frame buffer
         ;------------------------------------------------------
         bl    @film
         data  fb.top,>00,fb.size    ; Clear it all the way
+        ;------------------------------------------------------
+        ; Show banner (line above frame buffer, not part of it)
+        ;------------------------------------------------------
+        bl    @hchar
+              byte 0,0,2,80         ; Double line
+              data EOL
+
+        bl    @putat
+              byte 0,58
+              data txt_tivi         ; Banner
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
