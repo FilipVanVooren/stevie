@@ -53,12 +53,12 @@ fb.init
               data EOL
 
         bl    @putat
-              byte 0,58
+              byte 0,30
               data txt_tivi         ; Banner
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.init.$$
+fb.init.exit
         b     @poprt                ; Return to caller
 
 
@@ -167,6 +167,12 @@ fb.refresh:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        ;------------------------------------------------------
+        ; Update SAMS shadow registers in RAM
+        ;------------------------------------------------------
+        bl    @sams.copy.layout     ; Copy SAMS memory layout
+              data tv.sams.2000     ; \ i  p0 = Pointer to 8 words RAM buffer
+                                    ; /
         ;------------------------------------------------------        
         ; Setup starting position in index
         ;------------------------------------------------------

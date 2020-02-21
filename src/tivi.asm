@@ -18,7 +18,8 @@
 * 8300-83ff     256   >0100   scrpad spectra2 layout
 * 2000-20ff     256   >0100   scrpad backup 1: GPL layout
 * 2100-21ff     256   >0100   scrpad backup 2: paged out spectra2
-* 2200-22ff     256   >0100   TiVi frame buffer structure
+* 2200-227f     128   >0080   TiVi editor structure
+* 2280-22ff     128   >0080   TiVi frame buffer structure
 * 2300-23ff     256   >0100   TiVi editor buffer structure
 * 2400-24ff     256   >0100   TiVi file handling structure
 * 2500-25ff     256   >0100   Free for future use
@@ -111,39 +112,55 @@ rambuf          equ  >8390          ; RAM workbuffer 1
 scrpad.backup1  equ  >2000          ; Backup GPL layout
 scrpad.backup2  equ  >2100          ; Backup spectra2 layout
 *--------------------------------------------------------------
-* Frame buffer structure            @>2200-22ff     (256 bytes)
+* TiVi Editor shared structures     @>2200-227f     (128 bytes)
 *--------------------------------------------------------------
-fb.top.ptr      equ  >2200          ; Pointer to frame buffer
-fb.current      equ  fb.top.ptr+2   ; Pointer to current pos. in frame buffer
-fb.topline      equ  fb.top.ptr+4   ; Top line in frame buffer (matching 
+tv.top          equ  >2200          ; Structure begin
+tv.sams.2000    equ  tv.top + 0     ; SAMS page for memory range >2000-2fff
+tv.sams.3000    equ  tv.top + 2     ; SAMS page for memory range >3000-3fff
+tv.sams.a000    equ  tv.top + 4     ; SAMS page for memory range >a000-afff
+tv.sams.b000    equ  tv.top + 6     ; SAMS page for memory range >b000-bfff
+tv.sams.c000    equ  tv.top + 8     ; SAMS page for memory range >c000-cfff
+tv.sams.d000    equ  tv.top + 10    ; SAMS page for memory range >d000-dfff
+tv.sams.e000    equ  tv.top + 12    ; SAMS page for memory range >e000-efff
+tv.sams.f000    equ  tv.top + 14    ; SAMS page for memory range >f000-ffff
+tv.act_buffer   equ  tv.top + 16    ; Active editor buffer (0-9) 
+tv.end          equ  tv.top + 18    ; End of structure
+*--------------------------------------------------------------
+* Frame buffer structure            @>2280-22ff     (128 bytes)
+*--------------------------------------------------------------
+fb.struct       equ  >2280          ; Structure begin
+fb.top.ptr      equ  >2280          ; Pointer to frame buffer
+fb.current      equ  fb.struct + 2  ; Pointer to current pos. in frame buffer
+fb.topline      equ  fb.struct + 4  ; Top line in frame buffer (matching 
                                     ; line X in editor buffer).
-fb.row          equ  fb.top.ptr+6   ; Current row in frame buffer
+fb.row          equ  fb.struct + 6  ; Current row in frame buffer
                                     ; (offset 0 .. @fb.scrrows)
-fb.row.length   equ  fb.top.ptr+8   ; Length of current row in frame buffer 
-fb.row.dirty    equ  fb.top.ptr+10  ; Current row dirty flag in frame buffer
-fb.column       equ  fb.top.ptr+12  ; Current column in frame buffer
-fb.colsline     equ  fb.top.ptr+14  ; Columns per row in frame buffer
-fb.curshape     equ  fb.top.ptr+16  ; Cursor shape & colour
-fb.curtoggle    equ  fb.top.ptr+18  ; Cursor shape toggle
-fb.yxsave       equ  fb.top.ptr+20  ; Copy of WYX
-fb.dirty        equ  fb.top.ptr+22  ; Frame buffer dirty flag
-fb.scrrows      equ  fb.top.ptr+24  ; Rows on physical screen for framebuffer
-fb.scrrows.max  equ  fb.top.ptr+26  ; Max # of rows on physical screen for fb
-fb.end          equ  fb.top.ptr+28  ; End of structure
+fb.row.length   equ  fb.struct + 8  ; Length of current row in frame buffer 
+fb.row.dirty    equ  fb.struct + 10 ; Current row dirty flag in frame buffer
+fb.column       equ  fb.struct + 12 ; Current column in frame buffer
+fb.colsline     equ  fb.struct + 14 ; Columns per row in frame buffer
+fb.curshape     equ  fb.struct + 16 ; Cursor shape & colour
+fb.curtoggle    equ  fb.struct + 18 ; Cursor shape toggle
+fb.yxsave       equ  fb.struct + 20 ; Copy of WYX
+fb.dirty        equ  fb.struct + 22 ; Frame buffer dirty flag
+fb.scrrows      equ  fb.struct + 24 ; Rows on physical screen for framebuffer
+fb.scrrows.max  equ  fb.struct + 26 ; Max # of rows on physical screen for fb
+fb.end          equ  fb.struct + 28 ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure           @>2300-23ff     (256 bytes)
 *--------------------------------------------------------------
-edb.top.ptr         equ  >2300          ; Pointer to editor buffer
-edb.index.ptr       equ  edb.top.ptr+2  ; Pointer to index
-edb.lines           equ  edb.top.ptr+4  ; Total lines in editor buffer
-edb.dirty           equ  edb.top.ptr+6  ; Editor buffer dirty (Text changed!)
-edb.next_free.ptr   equ  edb.top.ptr+8  ; Pointer to next free line
-edb.insmode         equ  edb.top.ptr+10 ; Insert mode (>ffff = insert)
-edb.rle             equ  edb.top.ptr+12 ; RLE compression activated
-edb.filename.ptr    equ  edb.top.ptr+14 ; Pointer to length-prefixed string 
-                                        ; with current filename.
-edb.sams.page       equ  edb.top.ptr+16 ; Current SAMS page
-edb.end             equ  edb.top.ptr+18 ; End of structure
+edb.struct        equ  >2300           ; Begin structure
+edb.top.ptr       equ  >2300           ; Pointer to editor buffer
+edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
+edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer
+edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
+edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
+edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
+edb.rle           equ  edb.struct + 12 ; RLE compression activated
+edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string 
+                                       ; with current filename.
+edb.sams.page     equ  edb.struct + 16 ; Current SAMS page
+edb.end           equ  edb.struct + 18 ; End of structure
 *--------------------------------------------------------------
 * File handling structures          @>2400-24ff     (256 bytes)
 *--------------------------------------------------------------
