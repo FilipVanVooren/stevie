@@ -204,7 +204,7 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
 fb.refresh.erase_eob:
         mov   @parm2,tmp0           ; Current row
-        mov   @fb.scrrows,tmp1   ; Rows framebuffer
+        mov   @fb.scrrows,tmp1      ; Rows framebuffer
         s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
         mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
 
