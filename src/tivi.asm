@@ -115,14 +115,14 @@ scrpad.backup2  equ  >2100          ; Backup spectra2 layout
 * TiVi Editor shared structures     @>2200-227f     (128 bytes)
 *--------------------------------------------------------------
 tv.top          equ  >2200          ; Structure begin
-tv.sams.2000    equ  tv.top + 0     ; SAMS page for memory range >2000-2fff
-tv.sams.3000    equ  tv.top + 2     ; SAMS page for memory range >3000-3fff
-tv.sams.a000    equ  tv.top + 4     ; SAMS page for memory range >a000-afff
-tv.sams.b000    equ  tv.top + 6     ; SAMS page for memory range >b000-bfff
-tv.sams.c000    equ  tv.top + 8     ; SAMS page for memory range >c000-cfff
-tv.sams.d000    equ  tv.top + 10    ; SAMS page for memory range >d000-dfff
-tv.sams.e000    equ  tv.top + 12    ; SAMS page for memory range >e000-efff
-tv.sams.f000    equ  tv.top + 14    ; SAMS page for memory range >f000-ffff
+tv.sams.2000    equ  tv.top + 0     ; SAMS shadow register memory >2000-2fff
+tv.sams.3000    equ  tv.top + 2     ; SAMS shadow register memory >3000-3fff
+tv.sams.a000    equ  tv.top + 4     ; SAMS shadow register memory >a000-afff
+tv.sams.b000    equ  tv.top + 6     ; SAMS shadow register memory >b000-bfff
+tv.sams.c000    equ  tv.top + 8     ; SAMS shadow register memory >c000-cfff
+tv.sams.d000    equ  tv.top + 10    ; SAMS shadow register memory >d000-dfff
+tv.sams.e000    equ  tv.top + 12    ; SAMS shadow register memory >e000-efff
+tv.sams.f000    equ  tv.top + 14    ; SAMS shadow register memory >f000-ffff
 tv.act_buffer   equ  tv.top + 16    ; Active editor buffer (0-9) 
 tv.end          equ  tv.top + 18    ; End of structure
 *--------------------------------------------------------------
@@ -259,9 +259,6 @@ pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprpdt  equ   >1800                 ; VDP sprite pattern table
 sprsat  equ   >2000                 ; VDP sprite attribute table
-
-
-
 
 
 ***************************************************************

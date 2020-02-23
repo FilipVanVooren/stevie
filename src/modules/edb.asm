@@ -33,7 +33,8 @@ edb.init:
 
         mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
-                                    ; Set pointer to next free line in editor buffer
+                                    ; Set pointer to next free line in 
+                                    ; editor buffer
 
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
         clr   @edb.lines            ; Lines=0
@@ -123,7 +124,8 @@ edb.line.pack.update_index:
         mov   @waux1,@parm3                                
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
-                                    ; | i  parm2 = pointer to line in editor buffer
+                                    ; | i  parm2 = pointer to line in 
+                                    ; |            editor buffer
                                     ; / i  parm3 = SAMS page
 
         ;------------------------------------------------------
@@ -262,7 +264,7 @@ edb.line.unpack:
 
         mov   @outparm2,@rambuf+10  ; Save length of RLE compressed line
         mov   @outparm1,@rambuf+8   ; Save length of RLE (decompressed) line
-        jeq   edb.line.unpack.clear ; Skip "split line" check if empty line anyway                       
+        jeq   edb.line.unpack.clear ; Skip "split line" check if empty line
         ;------------------------------------------------------
         ; Handle possible "line split" between 2 consecutive pages
         ;------------------------------------------------------
