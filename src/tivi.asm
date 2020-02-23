@@ -2,13 +2,12 @@
 * 
 *                          TiVi Editor
 *
-*                (c)2018-2020 // Filip van Vooren
+*       A 21th century Programming Editor for the 1981 
+*         Texas Instruments TI-99/4a Home Computer.
 *
+*              (c)2018-2020 // Filip van Vooren
 ***************************************************************
 * File: tivi.asm                    ; Version %%build_date%%
-*--------------------------------------------------------------
-* A 21th century Programming Editor for the 20th century 
-* Texas Instruments TI-99/4a Home Computer.
 *--------------------------------------------------------------
 * TiVi memory layout.
 * See file "modules/memory.asm" for further details.
@@ -231,7 +230,7 @@ edb.size        equ  20380          ; Editor buffer size
 *--------------------------------------------------------------
         save  >6000,>7fff
         aorg  >6000
-
+        bank  0
 grmhdr  byte  >aa,1,1,0,0,0
         data  prog0
         byte  0,0,0,0,0,0,0,0
@@ -335,3 +334,10 @@ fdname9      #string 'DSK1.INVADERS'
  .else
          data $   ; ROM size OK.
  .endif
+
+
+   
+;   save  >6000,>7fff
+;   aorg  >6000
+;   bank  1
+;        copy  "%%spectra2%%/runlib.asm"

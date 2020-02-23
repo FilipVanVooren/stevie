@@ -128,10 +128,12 @@ tfh.file.read.sams.record:
         clr   @tfh.reclen           ; Reset record length
 
         bl    @file.record.read     ; Read file record
-              data tfh.vpab         ; \ i  p0   = Address of PAB in VDP RAM (without +9 offset!)
+              data tfh.vpab         ; \ i  p0   = Address of PAB in VDP RAM 
+                                    ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read
-                                    ; / o  tmp2 = Status register contents upon DSRLNK return
+                                    ; | o  tmp2 = Status register contents 
+                                    ; /           upon DSRLNK return
 
         mov   tmp0,@tfh.pabstat     ; Save VDP PAB status byte
         mov   tmp1,@tfh.reclen      ; Save bytes read
@@ -285,10 +287,12 @@ tfh.file.read.sams.prepindex.emptyline:
         ;------------------------------------------------------                                    
 tfh.file.read.sams.updindex:                
         bl    @idx.entry.update     ; Update index 
-                                    ; \ i  parm1    = Line number in editor buffer
-                                    ; | i  parm2    = Pointer to line in editor buffer 
+                                    ; \ i  parm1    = Line num in editor buffer
+                                    ; | i  parm2    = Pointer to line in editor 
+                                    ; |               buffer 
                                     ; | i  parm3    = SAMS page
-                                    ; / o  outparm1 = Pointer to updated index entry
+                                    ; | o  outparm1 = Pointer to updated index
+                                    ; /               entry
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
@@ -375,12 +379,13 @@ tfh.file.pab.header:
         byte  io.op.open            ;  0    - OPEN
         byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
         data  tfh.vrecbuf           ;  2-3  - Record buffer in VDP memory
-        byte  80                    ;  4    - Record length (80 characters maximum)
+        byte  80                    ;  4    - Record length (80 chars max)
         byte  00                    ;  5    - Character count
-        data  >0000                 ;  6-7  - Seek record (only for fixed records)
+        data  >0000                 ;  6-7  - Seek record (only for fixed recs)
         byte  >00                   ;  8    - Screen offset (cassette DSR only)
         ;------------------------------------------------------
         ; File descriptor part (variable length)
         ;------------------------------------------------------        
         ; byte  12                  ;  9    - File descriptor length
-        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor (Device + '.' + File name) 
+        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
+                                    ;         (Device + '.' + File name)          

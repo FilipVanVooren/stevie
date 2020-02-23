@@ -358,7 +358,7 @@ edkey.action.char.overwrite:
         ; Update line length in frame buffer
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
-        jlt   edkey.action.char.exit  ; column < length line ? Skip further processing
+        jlt   edkey.action.char.exit  ; column < length line ? Skip processing
         mov   @fb.column,@fb.row.length
         ;-------------------------------------------------------
         ; Exit

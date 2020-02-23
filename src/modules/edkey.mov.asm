@@ -25,7 +25,7 @@ edkey.action.left:
 *---------------------------------------------------------------
 edkey.action.right:
         c     @fb.column,@fb.row.length
-        jhe   !                     ; column > length line ? Skip further processing
+        jhe   !                     ; column > length line ? Skip processing
         ;-------------------------------------------------------
         ; Update
         ;-------------------------------------------------------
