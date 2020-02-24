@@ -5,16 +5,7 @@
 *            TiVi Editor - Main editor module
 *//////////////////////////////////////////////////////////////
 
-*--------------------------------------------------------------
-* Video mode configuration
-*--------------------------------------------------------------
-spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-colrow  equ   80                    ; Columns per row
-pctadr  equ   >0fc0                 ; VDP color table base
-fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprpdt  equ   >1800                 ; VDP sprite pattern table
-sprsat  equ   >2000                 ; VDP sprite attribute table
+
 
 
 

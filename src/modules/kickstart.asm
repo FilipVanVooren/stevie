@@ -2,8 +2,7 @@
 * Purpose...: Bankswitch routine for starting TiVi
 
 ***************************************************************
-* kickstart
-* Kickstart ROM bank 0
+* TiVi Cartridge Header & kickstart ROM bank 0
 ***************************************************************
 * 
 *--------------------------------------------------------------
@@ -33,10 +32,5 @@
         .endif
 
         aorg  kickstart
-        clr   @>6002                ; Switch to bank 0
-
-        bl    @cpym2m
-              data >6000,>2000,8192
-                                    ; Copy 8K bank to low memory expansion
-
-        b     @runlib        
+        clr   @>6000                ; Switch to bank 0
+        b     @runlib               ; Initialize runtime library
