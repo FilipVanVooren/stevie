@@ -15,7 +15,6 @@
 * =========   =====    ===    ==================================
 * 2000-3fff   8192     no     TiVi program code
 * 6000-7fff   8192     no     Spectra2 library program code (cartridge space)
-* 8300-83ff    256     no     Scratchpad memory for spectra2 and TiVi
 * a000-afff   4096     no     Scratchpad/GPL backup, TiVi structures
 * b000-bfff   4096     no     Command buffer
 * c000-cfff   4096     yes    Main index

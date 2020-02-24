@@ -12,13 +12,31 @@
 ***************************************************************
 * BANK 1 - TiVi support modules
 ********|*****|*********************|**************************
+        aorg  2000                  ; 
+        copy  "%%spectra2%%/runlib.asm"
+
+*--------------------------------------------------------------
+* Video mode configuration
+*--------------------------------------------------------------
+spfclr  equ   >f4                   ; Foreground/Background color for font.
+spfbck  equ   >04                   ; Screen background color.
+spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+colrow  equ   80                    ; Columns per row
+pctadr  equ   >0fc0                 ; VDP color table base
+fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+sprpdt  equ   >1800                 ; VDP sprite pattern table
+sprsat  equ   >2000                 ; VDP sprite attribute table
+
+main    b    @main.tivi
+
+
         aorg  >6000
         save  >6000,>7fff           ; Save bank 1
         copy  "header.asm"
         copy  "kickstart.asm"       ; Kickstart code
         #string 'bank 1'        
 
-        xorg  >2000                 ; Relocate support modules to >2000->3fff        
         copy  "editor.asm"          ; Main editor
         copy  "edkey.asm"           ; Actions
         copy  "edkey.mov.asm"       ; Actions for movement keys
