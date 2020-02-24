@@ -5,11 +5,24 @@
 *            TiVi Editor - Main editor module
 *//////////////////////////////////////////////////////////////
 
+*--------------------------------------------------------------
+* Video mode configuration
+*--------------------------------------------------------------
+spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+colrow  equ   80                    ; Columns per row
+pctadr  equ   >0fc0                 ; VDP color table base
+fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+sprpdt  equ   >1800                 ; VDP sprite pattern table
+sprsat  equ   >2000                 ; VDP sprite attribute table
+
+
+
 ***************************************************************
 * main
 * Initialize editor
 ***************************************************************
-* bl @edb.init
+* b   @main.tivi
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -21,13 +34,14 @@
 * -
 *--------------------------------------------------------------
 * Notes
+* Main entry point for TiVi editor 
 ***************************************************************
 
 
 ***************************************************************
 * Main
 ********|*****|*********************|**************************
-main:
+main.tivi:
         coc   @wbit1,config         ; F18a detected?
         jeq   main.continue
         blwp  @0                    ; Exit for now if no F18a detected

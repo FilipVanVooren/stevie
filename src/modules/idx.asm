@@ -8,21 +8,21 @@
 ***************************************************************
 * The index contains 2 major parts:
 *
-* 1) Main index (3000 - 3fff)
+* 1) Main index (c000 - cfff)
 *
 *    Size of index page is 4K and allows indexing of 2048 lines.
 *    Each index slot (1 word) contains the pointer to the line
 *    in the editor buffer.
 * 
-* 2) Shadow index (a000 - afff)
+* 2) Shadow SAMS pages index (d000 - dfff)
 *
 *    Size of index page is 4K and allows indexing of 2048 lines.
 *    Each index slot (1 word) contains the SAMS page where the
 *    line in the editor buffer resides
 *
 *  
-* The editor buffer itself always resides at (b000 -> ffff) for 
-* a total of 20kb.
+* The editor buffer itself always resides at (e000 -> ffff) for 
+* a total of 8kb.
 * First line in editor buffer starts at offset 2 (b002), this
 * allows the index to contain "null" pointers, aka empty lines
 * without reference to editor buffer.
