@@ -35,14 +35,14 @@ mem.setup.sams.layout.exit:
 * SAMS page layout table for TiVi (16 words)
 *--------------------------------------------------------------
 mem.sams.layout.data:
-        data  >2000,>0000           ; >2000-2fff, SAMS page >00
-        data  >3000,>0001           ; >3000-3fff, SAMS page >01
-        data  >a000,>0002           ; >a000-afff, SAMS page >02
-        data  >b000,>0003           ; >b000-bfff, SAMS page >03
-        data  >c000,>0004           ; >c000-cfff, SAMS page >04
-        data  >d000,>0005           ; >d000-dfff, SAMS page >05
-        data  >e000,>0006           ; >e000-efff, SAMS page >06
-        data  >f000,>0007           ; >f000-ffff, SAMS page >07
+        data  >2000,>0002           ; >2000-2fff, SAMS page >00
+        data  >3000,>0003           ; >3000-3fff, SAMS page >01
+        data  >a000,>000a           ; >a000-afff, SAMS page >02
+        data  >b000,>000b           ; >b000-bfff, SAMS page >03
+        data  >c000,>000c           ; >c000-cfff, SAMS page >04
+        data  >d000,>000d           ; >d000-dfff, SAMS page >05
+        data  >e000,>0010           ; >e000-efff, SAMS page >10
+        data  >f000,>0011           ; >f000-ffff, SAMS page >11
 
 
 

@@ -52,10 +52,6 @@ main.continue:
         ; Initialize low + high memory expansion
         ;------------------------------------------------------
         bl    @film
-              data >2200,00,8*1024-256*2
-                                    ; Clear part of 8k low-memory
-
-        bl    @film
               data >a000,00,24*1024 ; Clear 24k high-memory
         ;------------------------------------------------------
         ; Load SAMS default memory layout

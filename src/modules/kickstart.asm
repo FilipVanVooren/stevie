@@ -18,19 +18,21 @@
 
 *--------------------------------------------------------------
 * Cartridge header
-*--------------------------------------------------------------
+********|*****|*********************|**************************
         byte  >aa,1,1,0,0,0
         data  $+10
         byte  0,0,0,0,0,0,0,0
         data  0                     ; No more items following
-        data  kickstart
+        data  kickstart.code1
 
         .ifdef debug
               #string 'TIVI %%build_date%%'
         .else
               #string 'TIVI'
-        .endif
+        .endif         
 
-        aorg  kickstart
+*--------------------------------------------------------------
+* Kickstart bank 0
+********|*****|*********************|**************************
+        aorg  kickstart.code1
         clr   @>6000                ; Switch to bank 0
-        b     @runlib               ; Initialize runtime library

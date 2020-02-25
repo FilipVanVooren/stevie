@@ -54,11 +54,12 @@ skip_cpu_crc16            equ  1    ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 * SPECTRA2 / TiVi startup options
 *--------------------------------------------------------------
-debug                    equ  1     ; Turn on spectra2 debugging
-startup_backup_scrpad    equ  1     ; Backup scratchpad @>8300:>83ff to @>2000
-startup_keep_vdpmemory   equ  1     ; Do not clear VDP vram upon startup
-kickstart                equ   >6100   ; Uniform aorg address accross ROM banks
-cpu.scrpad.tgt           equ   >a000   ; Destination cpu.scrpad.backup/restore
+debug                     equ  1    ; Turn on spectra2 debugging
+startup_backup_scrpad     equ  1    ; Backup scratchpad @>8300:>83ff to @>2000
+startup_keep_vdpmemory    equ  1    ; Do not clear VDP vram upon startup
+kickstart.code1           equ  >6030; Uniform aorg entry address accross banks
+kickstart.code2           equ  >6050; Uniform aorg entry address start of code
+cpu.scrpad.tgt            equ  >a000; Destination cpu.scrpad.backup/restore
 
 *--------------------------------------------------------------
 * Scratchpad memory                 @>8300-83ff     (256 bytes)

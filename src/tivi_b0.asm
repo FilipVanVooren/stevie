@@ -13,12 +13,48 @@
 * BANK 0 - Spectra2 library
 ********|*****|*********************|**************************
         aorg  >6000
-        save  >6000,>7fff           ; Save bank 0
-
-        copy  "header.asm"
-        copy  "kickstart.asm"
-        #string 'bank 0'        
+        save  >6000,>7fff           ; Save bank 0 (1st bank)
+        copy  "header.asm"          ; Equates TiVi configuration
+        copy  "kickstart.asm"       ; Cartridge header
+***************************************************************
+* Copy runtime library to destination >2000 - >3fff
+********|*****|*********************|**************************
+kickstart.init:
+        li    r0,reloc+2            ; Start of code to relocate
+        li    r1,>2000
+        li    r2,512                ; Copy 8K (512 * 4 words)
+kickstart.loop:        
+        mov   *r0+,*r1+
+        mov   *r0+,*r1+        
+        mov   *r0+,*r1+        
+        mov   *r0+,*r1+        
+        dec   r2
+        jne   kickstart.loop      
+        b     @runlib               ; Start spectra2 library        
+***************************************************************
+* TiVi entry point after spectra2 initialisation
+********|*****|*********************|**************************
+        aorg  kickstart.code2
+main    clr   @>6002                ; Jump to bank 1 (2nd bank)
+                                    ;--------------------------
+                                    ; Should not get here
+                                    ;--------------------------
+        li    r0,main                                    
+        mov   r0,@>ffce             ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system           
+***************************************************************
+* Spectra2 library
+********|*****|*********************|**************************
+reloc   nop                         ; Anchor for copy command
+        xorg >2000                  ; Relocate all spectra2 code to >2000
         copy  "%%spectra2%%/runlib.asm"
+
+        .ifgt $, >7fff
+              .error 'Aborted. Bank 0 cartridge program too large!'
+        .else
+              data $                ; Bank 0 ROM size OK.
+        .endif
+
 
 *--------------------------------------------------------------
 * Video mode configuration
@@ -31,12 +67,4 @@ colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprpdt  equ   >1800                 ; VDP sprite pattern table
-sprsat  equ   >2000                 ; VDP sprite attribute table
-
-main    jmp   $
-
-        .ifgt $, >7fff
-              .error 'Aborted. Bank 0 cartridge program too large!'
-        .else
-              data $                ; Bank 0 ROM size OK.
-        .endif
+sprsat  equ   >2000                 ; VDP sprite attribute table        
