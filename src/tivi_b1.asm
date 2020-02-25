@@ -18,6 +18,9 @@
         copy  "kickstart.asm"       ; Cartridge header
         aorg  >2000                 ; Relocated spectra2 in low memory expansion
         copy  "%%spectra2%%/runlib.asm"
+                                    ; Relocated spectra2 was loaded in bank 0.
+                                    ; Only including it here, so that all
+                                    ; references get satisfied during assembly.
 
 ***************************************************************
 * TiVi entry point after spectra2 initialisation
