@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b1.asm.19071
+**** **** ****     > tivi_b1.asm.16877
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b1.asm                 ; Version 200225-19071
+0009               * File: tivi_b1.asm                 ; Version 200229-16877
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi.asm                    ; Version 200225-19071
+0009               * File: tivi.asm                    ; Version 200229-16877
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -225,7 +225,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0205      E000     edb.top         equ  >e000          ; Editor buffer high memory
 0206      2000     edb.size        equ  8192           ; Editor buffer size
 0207               *--------------------------------------------------------------
-**** **** ****     > tivi_b1.asm.19071
+**** **** ****     > tivi_b1.asm.16877
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -262,7 +262,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200225-19071'
+0031 6015 ....             text  'TIVI 200229-16877'
 0032                       even
 0033               
 0041               
@@ -272,7 +272,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b1.asm.19071
+**** **** ****     > tivi_b1.asm.16877
 0019                       aorg  >2000                 ; Relocated spectra2 in low memory expansion
 0020                       copy  "/mnt/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
 **** **** ****     > runlib.asm
@@ -993,7 +993,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 21C0 1642             byte  22
-0249 21C1 ....             text  'Build-ID  200225-19071'
+0249 21C1 ....             text  'Build-ID  200229-16877'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4609,18 +4609,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2DC4 0040 
 0363 2DC6 0460  28         b     @main                 ; Give control to main program
      2DC8 6050 
-**** **** ****     > tivi_b1.asm.19071
-0021               
-0022               ***************************************************************
-0023               * TiVi entry point after spectra2 initialisation
-0024               ********|*****|*********************|**************************
-0025                       aorg  kickstart.code2
-0026 6050 04E0  34 main    clr   @>6002                ; Jump to bank 1
+**** **** ****     > tivi_b1.asm.16877
+0021                                                   ; Relocated spectra2 was loaded in bank 0.
+0022                                                   ; Only including it here, so that all
+0023                                                   ; references get satisfied during assembly.
+0024               
+0025               ***************************************************************
+0026               * TiVi entry point after spectra2 initialisation
+0027               ********|*****|*********************|**************************
+0028                       aorg  kickstart.code2
+0029 6050 04E0  34 main    clr   @>6002                ; Jump to bank 1
      6052 6002 
-0027 6054 0460  28         b     @main.tivi            ; Start editor
+0030 6054 0460  28         b     @main.tivi            ; Start editor
      6056 6058 
-0028               
-0029                       copy  "editor.asm"          ; Main editor
+0031               
+0032                       copy  "editor.asm"          ; Main editor
 **** **** ****     > editor.asm
 0001               * FILE......: editor.asm
 0002               * Purpose...: TiVi Editor - Main editor module
@@ -4772,8 +4775,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      60F8 2C26 
 0107               
 0108               
-**** **** ****     > tivi_b1.asm.19071
-0030                       copy  "edkey.asm"           ; Actions
+**** **** ****     > tivi_b1.asm.16877
+0033                       copy  "edkey.asm"           ; Actions
 **** **** ****     > edkey.asm
 0001               * FILE......: edkey.asm
 0002               * Purpose...: Initialisation & setup key actions
@@ -4939,8 +4942,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0128               edkey.do_action.set:
 0129 6196 0460  28         b    @edkey.action.char     ; Add character to buffer
      6198 6622 
-**** **** ****     > tivi_b1.asm.19071
-0031                       copy  "edkey.mov.asm"       ; Actions for movement keys
+**** **** ****     > tivi_b1.asm.16877
+0034                       copy  "edkey.mov.asm"       ; Actions for movement keys
 **** **** ****     > edkey.mov.asm
 0001               * FILE......: edkey.mov.asm
 0002               * Purpose...: Actions for movement keys
@@ -5579,8 +5582,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6440 832A 
 0488 6442 0460  28 !       b     @ed_wait              ; Back to editor main
      6444 6F1A 
-**** **** ****     > tivi_b1.asm.19071
-0032                       copy  "edkey.mod.asm"       ; Actions for modifier keys
+**** **** ****     > tivi_b1.asm.16877
+0035                       copy  "edkey.mod.asm"       ; Actions for modifier keys
 **** **** ****     > edkey.mod.asm
 0001               * FILE......: edkey.mod.asm
 0002               * Purpose...: Actions for modifier keys
@@ -6074,8 +6077,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0366               edkey.action.char.exit:
 0367 665E 0460  28         b     @ed_wait              ; Back to editor main
      6660 6F1A 
-**** **** ****     > tivi_b1.asm.19071
-0033                       copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
+**** **** ****     > tivi_b1.asm.16877
+0036                       copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
 **** **** ****     > edkey.misc.asm
 0001               * FILE......: edkey.misc.asm
 0002               * Purpose...: Actions for miscelanneous keys
@@ -6139,8 +6142,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      668A A296 
 0051               
 0052 668C 069B  24         bl    *r11
-**** **** ****     > tivi_b1.asm.19071
-0034                       copy  "edkey.file.asm"      ; Actions for file related keys
+**** **** ****     > tivi_b1.asm.16877
+0037                       copy  "edkey.file.asm"      ; Actions for file related keys
 **** **** ****     > edkey.file.asm
 0001               * FILE......: edkey.fíle.asm
 0002               * Purpose...: File related actions (load file, save file, ...)
@@ -6191,8 +6194,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      66CC 6DCA 
 0037 66CE 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      66D0 63D6 
-**** **** ****     > tivi_b1.asm.19071
-0035                       copy  "mem.asm"             ; mem      - Memory Management
+**** **** ****     > tivi_b1.asm.16877
+0038                       copy  "mem.asm"             ; mem      - Memory Management
 **** **** ****     > mem.asm
 0001               * FILE......: mem.asm
 0002               * Purpose...: TiVi Editor - Memory management (SAMS)
@@ -6369,8 +6372,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0151 6764 C2F9  30         mov   *stack+,r11           ; Pop r11
 0152 6766 045B  20         b     *r11                  ; Return to caller
 0153               
-**** **** ****     > tivi_b1.asm.19071
-0036                       copy  "fb.asm"              ; fb       - Framebuffer
+**** **** ****     > tivi_b1.asm.16877
+0039                       copy  "fb.asm"              ; fb       - Framebuffer
 **** **** ****     > fb.asm
 0001               * FILE......: fb.asm
 0002               * Purpose...: TiVi Editor - Framebuffer module
@@ -6731,8 +6734,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0297               fb.get.firstnonblank.exit:
 0298 68A4 0460  28         b    @poprt                 ; Return to caller
      68A6 2212 
-**** **** ****     > tivi_b1.asm.19071
-0037                       copy  "idx.asm"             ; idx      - Index management
+**** **** ****     > tivi_b1.asm.16877
+0040                       copy  "idx.asm"             ; idx      - Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
 0002               * Purpose...: TiVi Editor - Index module
@@ -7063,8 +7066,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0281               idx.pointer.get.exit:
 0282 697C 0460  28         b     @poprt                ; Return to caller
      697E 2212 
-**** **** ****     > tivi_b1.asm.19071
-0038                       copy  "edb.asm"             ; edb      - Editor Buffer
+**** **** ****     > tivi_b1.asm.16877
+0041                       copy  "edb.asm"             ; edb      - Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
 0002               * Purpose...: TiVi Editor - Editor Buffer module
@@ -7600,8 +7603,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0429 6B5A 0460  28         b     @poprt                ; Return to caller
      6B5C 2212 
 0430               
-**** **** ****     > tivi_b1.asm.19071
-0039                       copy  "cmdb.asm"            ; cmdb     - Command Buffer
+**** **** ****     > tivi_b1.asm.16877
+0042                       copy  "cmdb.asm"            ; cmdb     - Command Buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
 0002               * Purpose...: TiVi Editor - Command Buffer module
@@ -7746,8 +7749,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0123                       ;------------------------------------------------------
 0124 6BB6 0460  28         b     @poprt                ; Return to caller
      6BB8 2212 
-**** **** ****     > tivi_b1.asm.19071
-0040                       copy  "tfh.read.sams.asm"   ; tfh.sams - File handler read file (SAMS)
+**** **** ****     > tivi_b1.asm.16877
+0043                       copy  "tfh.read.sams.asm"   ; tfh.sams - File handler read file (SAMS)
 **** **** ****     > tfh.read.sams.asm
 0001               * FILE......: tfh.read.sams.asm
 0002               * Purpose...: File reader module (SAMS implementation)
@@ -8248,8 +8251,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0389                       ; byte  12                  ;  9    - File descriptor length
 0390                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0391                                                   ;         (Device + '.' + File name)
-**** **** ****     > tivi_b1.asm.19071
-0041                       copy  "fm.load.asm"         ; fm.load  - File manager loadfile
+**** **** ****     > tivi_b1.asm.16877
+0044                       copy  "fm.load.asm"         ; fm.load  - File manager loadfile
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm_load.asm
 0002               * Purpose...: High-level file manager module
@@ -8518,8 +8521,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0202               fm.loadfile.callback.fioerr.exit:
 0203 6EF2 0460  28         b     @poprt                ; Return to caller
      6EF4 2212 
-**** **** ****     > tivi_b1.asm.19071
-0042                       copy  "tasks.asm"           ; tsk      - Tasks
+**** **** ****     > tivi_b1.asm.16877
+0045                       copy  "tasks.asm"           ; tsk      - Tasks
 **** **** ****     > tasks.asm
 0001               * FILE......: tasks.asm
 0002               * Purpose...: TiVi Editor - Tasks module
@@ -8966,8 +8969,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338 70EA C139  30         mov   *stack+,tmp0           ; Pop tmp0
 0339 70EC 0460  28         b     @slotok                ; Exit running task
      70EE 2CA6 
-**** **** ****     > tivi_b1.asm.19071
-0043                       copy  "data.asm"            ; data     - Data segment
+**** **** ****     > tivi_b1.asm.16877
+0046                       copy  "data.asm"            ; data     - Data segment
 **** **** ****     > data.asm
 0001               * FILE......: data.asm
 0002               * Purpose...: TiVi Editor - data segment (constants, strings, ...)
@@ -9073,7 +9076,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0086               
 0087               txt_tivi
 0088 7188 1654             byte  22
-0089 7189 ....             text  'TiVi beta 200225-19071'
+0089 7189 ....             text  'TiVi beta 200229-16877'
 0090                       even
 0091               
 0092 71A0 71A0     end          data    $
@@ -9129,19 +9132,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0142 7223 ....             text  'DSK1.INVADERS'
 0143                       even
 0144               
-**** **** ****     > tivi_b1.asm.19071
-0044               
-0048 7230 7230                   data $                ; Bank 1 ROM size OK.
-0050               
-0051               *--------------------------------------------------------------
-0052               * Video mode configuration
-0053               *--------------------------------------------------------------
-0054      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0055      0004     spfbck  equ   >04                   ; Screen background color.
-0056      21F6     spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
-0057      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0058      0050     colrow  equ   80                    ; Columns per row
-0059      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0060      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0061      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
-0062      2000     sprsat  equ   >2000                 ; VDP sprite attribute table
+**** **** ****     > tivi_b1.asm.16877
+0047               
+0051 7230 7230                   data $                ; Bank 1 ROM size OK.
+0053               
+0054               *--------------------------------------------------------------
+0055               * Video mode configuration
+0056               *--------------------------------------------------------------
+0057      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0058      0004     spfbck  equ   >04                   ; Screen background color.
+0059      21F6     spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+0060      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0061      0050     colrow  equ   80                    ; Columns per row
+0062      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0063      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0064      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
+0065      2000     sprsat  equ   >2000                 ; VDP sprite attribute table

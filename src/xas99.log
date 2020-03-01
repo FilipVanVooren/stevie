@@ -1,82 +1,82 @@
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/basic_cpu_vdp.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cmdb.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/copy_cpu_cpu.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/copy_cpu_vram.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/copy_grom_cpu.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/copy_grom_vram.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/copy_vram_cpu.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_constants.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_crash.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_crc16.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_hexsupport.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_numsupport.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_rle_compress.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_rle_decompress.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_sams_support.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_scrpad_backrest.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_scrpad_paging.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/cpu_strings.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/data.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/dummy.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edb.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/editor.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edkey.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edkey.file.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edkey.misc.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edkey.mod.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/edkey.mov.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_config.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_fio.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_memsetup.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_param.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_portaddr.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/equ_registers.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/fb.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/fio_dsrlnk.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/fio_level2.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/fm.load.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/header.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/idx.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/keyb_real.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/keyb_virtual.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/kickstart.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/mem.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/rnd_support.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/rom_bankswitch.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/runlib.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/runlib.lst.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/snd_player.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/speech_detect.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/speech_player.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/tasks.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/template.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/tfh.read.sams.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/timers_alloc.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/timers_hooks.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/timers_kthread.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/timers_tmgr.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/tivi_b1.asm.19071
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_bitmap.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_boxes.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_cursor.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_f18a_support.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_hchar.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_intscr.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_px2yx_calc.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_rle_decompress.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_sprites.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_tables.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_vchar.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_viewport.asm
-Preprocessing source file.... .tivi_b1/tivi_b1.19071/vdp_yx2px_calc.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/basic_cpu_vdp.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cmdb.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/copy_cpu_cpu.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/copy_cpu_vram.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/copy_grom_cpu.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/copy_grom_vram.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/copy_vram_cpu.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_constants.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_crash.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_crc16.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_hexsupport.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_numsupport.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_rle_compress.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_rle_decompress.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_sams_support.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_scrpad_backrest.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_scrpad_paging.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/cpu_strings.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/data.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/dummy.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edb.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/editor.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edkey.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edkey.file.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edkey.misc.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edkey.mod.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/edkey.mov.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_config.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_fio.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_memsetup.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_param.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_portaddr.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/equ_registers.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/fb.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/fio_dsrlnk.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/fio_level2.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/fm.load.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/header.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/idx.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/keyb_real.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/keyb_virtual.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/kickstart.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/mem.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/rnd_support.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/rom_bankswitch.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/runlib.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/runlib.lst.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/snd_player.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/speech_detect.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/speech_player.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/tasks.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/template.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/tfh.read.sams.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/timers_alloc.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/timers_hooks.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/timers_kthread.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/timers_tmgr.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/tivi_b0.asm.2105
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_bitmap.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_boxes.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_cursor.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_f18a_support.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_hchar.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_intscr.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_px2yx_calc.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_rle_decompress.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_sprites.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_tables.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_vchar.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_viewport.asm
+Preprocessing source file.... .tivi_b0/tivi_b0.2105/vdp_yx2px_calc.asm
 ************************************************
-Assembly started ........ 20-02-25 20:30:43
-Source file ............. tivi_b1.asm
-Assembly run ............ .tivi_b1/tivi_b1.19071/xas99run.out
-Preprocessed source ..... .tivi_b1/tivi_b1.19071/tivi_b1.asm.19071
-ROM cart binary ......... tivi_b1.bin
-List file ............... tivi_b1.lst.asm
-Run suffix .............. 200225-19071
+Assembly started ........ 20-03-01 16:37:18
+Source file ............. tivi_b0.asm
+Assembly run ............ .tivi_b0/tivi_b0.2105/xas99run.out
+Preprocessed source ..... .tivi_b0/tivi_b0.2105/tivi_b0.asm.2105
+ROM cart binary ......... tivi_b0.bin
+List file ............... tivi_b0.lst.asm
+Run suffix .............. 200301-2105
 ************************************************
 Highest ROM address...... 
 > basic_cpu_vdp.asm <2> 0465 - Warning: Possible branch/jump optimization
@@ -84,10 +84,5 @@ Highest ROM address......
 > cpu_scrpad_paging.asm <2> 0055 - Warning: Possible branch/jump optimization
 > timers_tmgr.asm <2> 0051 - Warning: Possible branch/jump optimization
 > timers_kthread.asm <2> 0045 - Warning: Possible branch/jump optimization
-> tivi_b1.asm.19071 <2> 0027 - Warning: Possible branch/jump optimization
-> edkey.mov.asm <2> 0416 - Warning: Possible branch/jump optimization
-> edkey.mod.asm <2> 0099 - Warning: Possible branch/jump optimization
-> edkey.mod.asm <2> 0190 - Warning: Possible branch/jump optimization
-> tfh.read.sams.asm <2> 0165 - Warning: Possible branch/jump optimization
-Warning: Unreferenced constants: DSRLNK.$0008 END GRAPH1 PREFIX SPCODE TX4024 TX8024
+Warning: Unreferenced constants: DSRLNK.$0008 GRAPH1 PREFIX SPCODE TX4024 TX8024
 ***** Assembly process returned with RC=0

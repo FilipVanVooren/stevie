@@ -1,0 +1,23 @@
+# TiVi build-project for mixer
+project:      
+  name:        TiVi Editor
+
+directories:
+  modules:     modules
+  banks:       banks
+  binaries:    ../bin
+  
+source:
+  - tivi_b0.asm
+  - tivi_b1.asm
+
+banks:
+  - tivi_b0.bin
+  - tivi_b1.bin
+
+binaries:
+  output:      tivi.bin
+
+  copies:
+    - /DS414/9900bin/tivi.bin
+    - /media/q0tws01/FINALGROM/tifun/tivi.bin
