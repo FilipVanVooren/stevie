@@ -78,13 +78,18 @@ edkey.action.color.switch
         ;-------------------------------------------------------
         ; Dump color combination to VDP color table
         ;-------------------------------------------------------
-        li    tmp0,>0fc0             ; Start of VDP color table
-        li    tmp2,16                ; Number of bytes to fill
+        ori   tmp1,>0700
+        mov   tmp1,tmp0
+        bl    @putvrx
+    
 
-        bl    @xfilv                 ; Fill VDP memory
-                                     ; \ i tmp0 = VDP destination
-                                     ; | i tmp1 = Byte to fill
-                                     ; / i tmp2 = Number of bytes to fill
+        ;li    tmp0,>0fc0             ; Start of VDP color table
+        ;li    tmp2,16                ; Number of bytes to fill
+
+        ;bl    @xfilv                 ; Fill VDP memory
+        ;                             ; \ i tmp0 = VDP destination
+        ;                             ; | i tmp1 = Byte to fill
+        ;                            ; / i tmp2 = Number of bytes to fill
 
         mov   *stack+,r11            ; Pop R11
         b     @ed_wait               ; Back to editor main
