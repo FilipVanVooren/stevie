@@ -3,18 +3,25 @@
 
 ***************************************************************
 *                      Constants
-***************************************************************
+********|*****|*********************|**************************
 romsat:
-        data >0303,>0008              ; Cursor YX, initial shape and colour
+        data  >0303,>000B           ; Cursor YX, initial shape and colour
 
 cursors:
-        data >0000,>0000,>0000,>001c  ; Cursor 1 - Insert mode
-        data >1010,>1010,>1010,>1000  ; Cursor 2 - Insert mode
-        data >1c1c,>1c1c,>1c1c,>1c00  ; Cursor 3 - Overwrite mode
+        data >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
+        data >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
+        data >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
 
 lines:
-        data >0080,>0000,>ff00,>ff00  ; Ruler and double line        
-        data >0000,>0000,>ff00,>ff00  ; Double line                
+        data >0080,>0000,>ff00,>ff00 ; Ruler and double line        
+        data >0000,>0000,>ff00,>ff00 ; Double line                
+
+
+tv.data.colorscheme:                ; Foreground - Background - Bg. Pane
+        data  >f404                 ; White      - Dark blue  - Dark blue
+        data  >f101                 ; White      - Black      - Black
+        data  >1707                 ; Black      - Cyan       - Cyan
+
 
 ***************************************************************
 *                       Strings

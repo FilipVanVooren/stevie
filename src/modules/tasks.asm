@@ -170,7 +170,7 @@ task2.cur_visible:
         ; Cursor in insert mode
         ;------------------------------------------------------
 task2.cur_visible.insert_mode:
-        li    tmp0,>0008
+        li    tmp0,>000B
         jmp   task2.cur_visible.cursorshape
         ;------------------------------------------------------
         ; Cursor in overwrite mode

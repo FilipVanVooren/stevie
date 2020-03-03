@@ -1,12 +1,9 @@
-* FILE......: editor.asm
+* FILE......: main.asm
 * Purpose...: TiVi Editor - Main editor module
 
 *//////////////////////////////////////////////////////////////
 *            TiVi Editor - Main editor module
 *//////////////////////////////////////////////////////////////
-
-
-
 
 
 ***************************************************************
@@ -79,6 +76,7 @@ main.continue:
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
+        bl    @tv.init              ; Initialize TiVi editor config
         bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
@@ -93,7 +91,7 @@ main.continue:
         data  >0100                 ; Cursor YX position = >0000
 
         li    tmp0,timers
-        mov   tmp0,@wtitab
+        mov   tmp0,@wtitab        
 
         bl    @mkslot
               data >0001,task0      ; Task 0 - Update screen

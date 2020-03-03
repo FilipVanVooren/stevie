@@ -29,12 +29,13 @@
 main    clr   @>6002                ; Jump to bank 1
         b     @main.tivi            ; Start editor
 
-        copy  "editor.asm"          ; Main editor
+        copy  "main.asm"            ; Main file (entrypoint)
         copy  "edkey.asm"           ; Actions
         copy  "edkey.mov.asm"       ; Actions for movement keys
         copy  "edkey.mod.asm"       ; Actions for modifier keys
         copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
         copy  "edkey.file.asm"      ; Actions for file related keys
+        copy  "tv.asm"              ; tv       - Main editor configuration
         copy  "mem.asm"             ; mem      - Memory Management
         copy  "fb.asm"              ; fb       - Framebuffer
         copy  "idx.asm"             ; idx      - Index management

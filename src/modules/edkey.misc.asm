@@ -49,4 +49,42 @@ edkey.action.fbdown:
         inc   @fb.scrrows
         seto  @fb.dirty
 
-        bl    *r11
+        bl    *r11  ; should this not be b *11 ??????
+
+
+*---------------------------------------------------------------
+* Cycle colors
+*---------------------------------------------------------------
+edkey.action.color.cycle:
+        dect  stack
+        mov   r11,*stack             ; Push return address
+
+        mov   @tv.colorscheme,tmp0   ; Load color scheme index
+        ci    tmp0,2
+        jlt   !
+        clr   tmp0
+        jmp   edkey.action.color.switch
+!       inc   tmp0        
+*---------------------------------------------------------------
+* Do actual color switch
+*---------------------------------------------------------------
+edkey.action.color.switch
+        mov   tmp0,@tv.colorscheme   ; Save color scheme index
+        sla   tmp0,1                 ; Offset into color scheme data table
+        ai    tmp0,tv.data.colorscheme
+                                     ; Add base for color scheme data table
+        movb  *tmp0,tmp1             ; Get foreground / background color
+        srl   tmp1,8                 ; MSB to LSB
+        ;-------------------------------------------------------
+        ; Dump color combination to VDP color table
+        ;-------------------------------------------------------
+        li    tmp0,>0fc0             ; Start of VDP color table
+        li    tmp2,16                ; Number of bytes to fill
+
+        bl    @xfilv                 ; Fill VDP memory
+                                     ; \ i tmp0 = VDP destination
+                                     ; | i tmp1 = Byte to fill
+                                     ; / i tmp2 = Number of bytes to fill
+
+        mov   *stack+,r11            ; Pop R11
+        b     @ed_wait               ; Back to editor main

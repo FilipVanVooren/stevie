@@ -46,6 +46,7 @@ key_buf9        equ >9f00                    ; ctrl + 9
 * Misc keys
 *---------------------------------------------------------------
 key_cmdb_tog    equ >c400                    ; fctn + n
+key_cycle       equ >9a00                    ; ctrl + z
 
 
 *---------------------------------------------------------------
@@ -85,6 +86,7 @@ keymap_actions
         ;-------------------------------------------------------
         data  key_quit1,edkey.action.quit           ; Quit TiVi
         data  key_cmdb_tog,edkey.action.cmdb.toggle ; Toggle command buffer pane
+        data  key_cycle,edkey.action.color.cycle    ; Cycle color scheme                                  
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------

@@ -103,7 +103,8 @@ tv.sams.d000    equ  tv.top + 10    ; SAMS shadow register memory >d000-dfff
 tv.sams.e000    equ  tv.top + 12    ; SAMS shadow register memory >e000-efff
 tv.sams.f000    equ  tv.top + 14    ; SAMS shadow register memory >f000-ffff
 tv.act_buffer   equ  tv.top + 16    ; Active editor buffer (0-9)
-tv.end          equ  tv.top + 18    ; End of structure
+tv.colorscheme  equ  tv.top + 18    ; Current color scheme (0-4)
+tv.end          equ  tv.top + 20    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a280-a2ff     (128 bytes)
 *--------------------------------------------------------------

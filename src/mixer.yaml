@@ -4,8 +4,8 @@ project:
 
 directories:
   modules:     modules
-  banks:       banks
-  binaries:    ../bin
+  banks:       bin
+  binaries:    bin
   
 source:
   - tivi_b0.asm
