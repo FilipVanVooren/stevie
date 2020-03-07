@@ -109,11 +109,10 @@ cmdb.hide:
         ;------------------------------------------------------
         ; Hide command buffer pane
         ;------------------------------------------------------
-        clr   @cmdb.visible         ; Hide pane
-        mov   @fb.scrrows.max,tmp0
-        mov   tmp0,@fb.scrrows      ; Resize framebuffer
+        mov   @fb.scrrows.max,@fb.scrrows
+                                    ; Resize framebuffer
 
-        seto  @cmdb.visible         ; Show pane
+        clr   @cmdb.visible         ; Hide pane
         seto  @fb.dirty             ; Redraw framebuffer
 cmdb.hide.exit:
         ;------------------------------------------------------

@@ -49,11 +49,11 @@ fb.init
         ; Show banner (line above frame buffer, not part of it)
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,0,2,80         ; Double line
+              byte 0,0,1,80         ; Double line at top
               data EOL
 
         bl    @putat
-              byte 0,30
+              byte 0,28
               data txt_tivi         ; Banner
         ;------------------------------------------------------
         ; Exit

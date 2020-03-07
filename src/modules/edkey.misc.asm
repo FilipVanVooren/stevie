@@ -15,8 +15,8 @@ edkey.action.quit:
 * Show/Hide command buffer pane
 ********|*****|*********************|**************************
 edkey.action.cmdb.toggle:
-        inv   @cmdb.visible
-*       jeq   edkey.action.cmdb.hide
+        mov   @cmdb.visible,tmp0
+        jne   edkey.action.cmdb.hide
         ;-------------------------------------------------------
         ; Show pane
         ;-------------------------------------------------------
@@ -38,7 +38,7 @@ edkey.action.cmdb.hide:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.toggle.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @ed_wait               ; Back to editor main
 
 
 
@@ -49,7 +49,7 @@ edkey.action.fbdown:
         inc   @fb.scrrows
         seto  @fb.dirty
 
-        bl    *r11  ; should this not be b *11 ??????
+        b     *r11  
 
 
 *---------------------------------------------------------------
@@ -68,7 +68,7 @@ edkey.action.color.cycle:
 *---------------------------------------------------------------
 * Do actual color switch
 *---------------------------------------------------------------
-edkey.action.color.switch
+edkey.action.color.switch:
         mov   tmp0,@tv.colorscheme   ; Save color scheme index
         sla   tmp0,1                 ; Offset into color scheme data table
         ai    tmp0,tv.data.colorscheme

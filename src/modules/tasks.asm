@@ -126,13 +126,13 @@ task0.draw_marker.empty.line
         ;-------------------------------------------------------
         ; Draw "double" bottom line
         ;-------------------------------------------------------
-;        mov   @fb.scrrows,tmp0
-;        swpb  tmp0
-;        mov   tmp0,@wyx
-;        bl    @yx2pnt               ; Set VDP address in tmp0
-;        li    tmp1,2                ; Character to write (double line)
-;        li    tmp2,80      
-;        bl    @xfilv                ; Write characters
+        mov   @fb.scrrows,tmp0
+        swpb  tmp0
+        mov   tmp0,@wyx
+        bl    @yx2pnt               ; Set VDP address in tmp0
+        li    tmp1,2                ; Character to write (double line)
+        li    tmp2,80      
+        bl    @xfilv                ; Write characters
 
 
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
@@ -205,11 +205,11 @@ task.sub_copy_ramsat:
         ci    tmp0,27
         jeq   !
         bl    @hchar
-              byte 28,0,2,80
+              byte 28,0,2,80         ; Bottom line
               data EOL
         jmp   task.botline.bufnum
 !       bl    @hchar
-              byte 28,0,1,80
+              byte 28,0,2,80         ; Bottom line
               data EOL
         ;------------------------------------------------------
         ; Show buffer number

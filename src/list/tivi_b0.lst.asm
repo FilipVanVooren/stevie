@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b0.asm.10781
+**** **** ****     > tivi_b0.asm.19581
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b0.asm                 ; Version 200303-10781
+0009               * File: tivi_b0.asm                 ; Version 200307-19581
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi.asm                    ; Version 200303-10781
+0009               * File: tivi.asm                    ; Version 200307-19581
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -123,109 +123,110 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103      A20C     tv.sams.e000    equ  tv.top + 12    ; SAMS shadow register memory >e000-efff
 0104      A20E     tv.sams.f000    equ  tv.top + 14    ; SAMS shadow register memory >f000-ffff
 0105      A210     tv.act_buffer   equ  tv.top + 16    ; Active editor buffer (0-9)
-0106      A212     tv.end          equ  tv.top + 18    ; End of structure
-0107               *--------------------------------------------------------------
-0108               * Frame buffer structure            @>a280-a2ff     (128 bytes)
-0109               *--------------------------------------------------------------
-0110      A280     fb.struct       equ  >a280          ; Structure begin
-0111      A280     fb.top.ptr      equ  fb.struct      ; Pointer to frame buffer
-0112      A282     fb.current      equ  fb.struct + 2  ; Pointer to current pos. in frame buffer
-0113      A284     fb.topline      equ  fb.struct + 4  ; Top line in frame buffer (matching
-0114                                                   ; line X in editor buffer).
-0115      A286     fb.row          equ  fb.struct + 6  ; Current row in frame buffer
-0116                                                   ; (offset 0 .. @fb.scrrows)
-0117      A288     fb.row.length   equ  fb.struct + 8  ; Length of current row in frame buffer
-0118      A28A     fb.row.dirty    equ  fb.struct + 10 ; Current row dirty flag in frame buffer
-0119      A28C     fb.column       equ  fb.struct + 12 ; Current column in frame buffer
-0120      A28E     fb.colsline     equ  fb.struct + 14 ; Columns per row in frame buffer
-0121      A290     fb.curshape     equ  fb.struct + 16 ; Cursor shape & colour
-0122      A292     fb.curtoggle    equ  fb.struct + 18 ; Cursor shape toggle
-0123      A294     fb.yxsave       equ  fb.struct + 20 ; Copy of WYX
-0124      A296     fb.dirty        equ  fb.struct + 22 ; Frame buffer dirty flag
-0125      A298     fb.scrrows      equ  fb.struct + 24 ; Rows on physical screen for framebuffer
-0126      A29A     fb.scrrows.max  equ  fb.struct + 26 ; Max # of rows on physical screen for fb
-0127      A29C     fb.end          equ  fb.struct + 28 ; End of structure
-0128               *--------------------------------------------------------------
-0129               * Editor buffer structure           @>a300-a3ff     (256 bytes)
-0130               *--------------------------------------------------------------
-0131      A300     edb.struct        equ  >a300           ; Begin structure
-0132      A300     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
-0133      A302     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-0134      A304     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer
-0135      A306     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
-0136      A308     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
-0137      A30A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0138      A30C     edb.rle           equ  edb.struct + 12 ; RLE compression activated
-0139      A30E     edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
-0140                                                      ; with current filename.
-0141      A310     edb.sams.page     equ  edb.struct + 16 ; Current SAMS page
-0142      A312     edb.end           equ  edb.struct + 18 ; End of structure
-0143               *--------------------------------------------------------------
-0144               * File handling structures          @>a400-a4ff     (256 bytes)
-0145               *--------------------------------------------------------------
-0146      A400     tfh.struct      equ  >a400           ; TiVi file handling structures
-0147      A400     dsrlnk.dsrlws   equ  tfh.struct      ; Address of dsrlnk workspace 32 bytes
-0148      A420     dsrlnk.namsto   equ  tfh.struct + 32 ; 8-byte RAM buffer for storing device name
-0149      A428     file.pab.ptr    equ  tfh.struct + 40 ; Pointer to VDP PAB, needed by level 2 FIO
-0150      A42A     tfh.pabstat     equ  tfh.struct + 42 ; Copy of VDP PAB status byte
-0151      A42C     tfh.ioresult    equ  tfh.struct + 44 ; DSRLNK IO-status after file operation
-0152      A42E     tfh.records     equ  tfh.struct + 46 ; File records counter
-0153      A430     tfh.reclen      equ  tfh.struct + 48 ; Current record length
-0154      A432     tfh.kilobytes   equ  tfh.struct + 50 ; Kilobytes processed (read/written)
-0155      A434     tfh.counter     equ  tfh.struct + 52 ; Counter used in TiVi file operations
-0156      A436     tfh.fname.ptr   equ  tfh.struct + 54 ; Pointer to device and filename
-0157      A438     tfh.sams.page   equ  tfh.struct + 56 ; Current SAMS page during file operation
-0158      A43A     tfh.sams.hpage  equ  tfh.struct + 58 ; Highest SAMS page used for file operation
-0159      A43C     tfh.callback1   equ  tfh.struct + 60 ; Pointer to callback function 1
-0160      A43E     tfh.callback2   equ  tfh.struct + 62 ; Pointer to callback function 2
-0161      A440     tfh.callback3   equ  tfh.struct + 64 ; Pointer to callback function 3
-0162      A442     tfh.callback4   equ  tfh.struct + 66 ; Pointer to callback function 4
-0163      A444     tfh.rleonload   equ  tfh.struct + 68 ; RLE compression needed during file load
-0164      A446     tfh.membuffer   equ  tfh.struct + 70 ; 80 bytes file memory buffer
-0165      A496     tfh.end         equ  tfh.struct +150 ; End of structure
-0166      0960     tfh.vrecbuf     equ  >0960           ; VDP address record buffer
-0167      0A60     tfh.vpab        equ  >0a60           ; VDP address PAB
-0168               *--------------------------------------------------------------
-0169               * Command buffer structure          @>a500-a5ff     (256 bytes)
-0170               *--------------------------------------------------------------
-0171      A500     cmdb.struct     equ  >a500          ; Command Buffer structure
-0172      A500     cmdb.top.ptr    equ  cmdb.struct    ; Pointer to command buffer
-0173      A502     cmdb.visible    equ  cmdb.struct+2  ; Command buffer visible? (>ffff = visible)
-0174      A504     cmdb.scrrows    equ  cmdb.struct+4  ; Current size of cmdb pane (in rows)
-0175      A506     cmdb.default    equ  cmdb.struct+6  ; Default size of cmdb pane (in rows)
-0176      A508     cmdb.end        equ  cmdb.struct+8  ; End of structure
-0177               *--------------------------------------------------------------
-0178               * Free for future use               @>a600-a64f     (80 bytes)
-0179               *--------------------------------------------------------------
-0180      A600     free.mem2       equ  >a600          ; >b600-b64f    80 bytes
-0181               *--------------------------------------------------------------
-0182               * Frame buffer                      @>a650-afff    (2480 bytes)
-0183               *--------------------------------------------------------------
-0184      A650     fb.top          equ  >a650          ; Frame buffer low memory 2400 bytes (80x30)
-0185      09B0     fb.size         equ  2480           ; Frame buffer size
-0186               *--------------------------------------------------------------
-0187               * Command buffer                    @>b000-bfff    (4096 bytes)
-0188               *--------------------------------------------------------------
-0189      B000     cmdb.top        equ  >b000          ; Top of command buffer
-0190      1000     cmdb.size       equ  4096           ; Command buffer size
-0191               *--------------------------------------------------------------
-0192               * Index                             @>c000-cfff    (4096 bytes)
-0193               *--------------------------------------------------------------
-0194      C000     idx.top         equ  >c000          ; Top of index
-0195      1000     idx.size        equ  4096           ; Index size
-0196               *--------------------------------------------------------------
-0197               * SAMS shadow pages index           @>d000-dfff    (4096 bytes)
-0198               *--------------------------------------------------------------
-0199      D000     idx.shadow.top  equ  >d000          ; Top of shadow index
-0200      1000     idx.shadow.size equ  4096           ; Shadow index size
-0201               *--------------------------------------------------------------
-0202               * Editor buffer                     @>e000-efff    (4096 bytes)
-0203               *                                   @>f000-ffff    (4096 bytes)
-0204               *--------------------------------------------------------------
-0205      E000     edb.top         equ  >e000          ; Editor buffer high memory
-0206      2000     edb.size        equ  8192           ; Editor buffer size
-0207               *--------------------------------------------------------------
-**** **** ****     > tivi_b0.asm.10781
+0106      A212     tv.colorscheme  equ  tv.top + 18    ; Current color scheme (0-4)
+0107      A214     tv.end          equ  tv.top + 20    ; End of structure
+0108               *--------------------------------------------------------------
+0109               * Frame buffer structure            @>a280-a2ff     (128 bytes)
+0110               *--------------------------------------------------------------
+0111      A280     fb.struct       equ  >a280          ; Structure begin
+0112      A280     fb.top.ptr      equ  fb.struct      ; Pointer to frame buffer
+0113      A282     fb.current      equ  fb.struct + 2  ; Pointer to current pos. in frame buffer
+0114      A284     fb.topline      equ  fb.struct + 4  ; Top line in frame buffer (matching
+0115                                                   ; line X in editor buffer).
+0116      A286     fb.row          equ  fb.struct + 6  ; Current row in frame buffer
+0117                                                   ; (offset 0 .. @fb.scrrows)
+0118      A288     fb.row.length   equ  fb.struct + 8  ; Length of current row in frame buffer
+0119      A28A     fb.row.dirty    equ  fb.struct + 10 ; Current row dirty flag in frame buffer
+0120      A28C     fb.column       equ  fb.struct + 12 ; Current column in frame buffer
+0121      A28E     fb.colsline     equ  fb.struct + 14 ; Columns per row in frame buffer
+0122      A290     fb.curshape     equ  fb.struct + 16 ; Cursor shape & colour
+0123      A292     fb.curtoggle    equ  fb.struct + 18 ; Cursor shape toggle
+0124      A294     fb.yxsave       equ  fb.struct + 20 ; Copy of WYX
+0125      A296     fb.dirty        equ  fb.struct + 22 ; Frame buffer dirty flag
+0126      A298     fb.scrrows      equ  fb.struct + 24 ; Rows on physical screen for framebuffer
+0127      A29A     fb.scrrows.max  equ  fb.struct + 26 ; Max # of rows on physical screen for fb
+0128      A29C     fb.end          equ  fb.struct + 28 ; End of structure
+0129               *--------------------------------------------------------------
+0130               * Editor buffer structure           @>a300-a3ff     (256 bytes)
+0131               *--------------------------------------------------------------
+0132      A300     edb.struct        equ  >a300           ; Begin structure
+0133      A300     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
+0134      A302     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
+0135      A304     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer
+0136      A306     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
+0137      A308     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
+0138      A30A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
+0139      A30C     edb.rle           equ  edb.struct + 12 ; RLE compression activated
+0140      A30E     edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
+0141                                                      ; with current filename.
+0142      A310     edb.sams.page     equ  edb.struct + 16 ; Current SAMS page
+0143      A312     edb.end           equ  edb.struct + 18 ; End of structure
+0144               *--------------------------------------------------------------
+0145               * File handling structures          @>a400-a4ff     (256 bytes)
+0146               *--------------------------------------------------------------
+0147      A400     tfh.struct      equ  >a400           ; TiVi file handling structures
+0148      A400     dsrlnk.dsrlws   equ  tfh.struct      ; Address of dsrlnk workspace 32 bytes
+0149      A420     dsrlnk.namsto   equ  tfh.struct + 32 ; 8-byte RAM buffer for storing device name
+0150      A428     file.pab.ptr    equ  tfh.struct + 40 ; Pointer to VDP PAB, needed by level 2 FIO
+0151      A42A     tfh.pabstat     equ  tfh.struct + 42 ; Copy of VDP PAB status byte
+0152      A42C     tfh.ioresult    equ  tfh.struct + 44 ; DSRLNK IO-status after file operation
+0153      A42E     tfh.records     equ  tfh.struct + 46 ; File records counter
+0154      A430     tfh.reclen      equ  tfh.struct + 48 ; Current record length
+0155      A432     tfh.kilobytes   equ  tfh.struct + 50 ; Kilobytes processed (read/written)
+0156      A434     tfh.counter     equ  tfh.struct + 52 ; Counter used in TiVi file operations
+0157      A436     tfh.fname.ptr   equ  tfh.struct + 54 ; Pointer to device and filename
+0158      A438     tfh.sams.page   equ  tfh.struct + 56 ; Current SAMS page during file operation
+0159      A43A     tfh.sams.hpage  equ  tfh.struct + 58 ; Highest SAMS page used for file operation
+0160      A43C     tfh.callback1   equ  tfh.struct + 60 ; Pointer to callback function 1
+0161      A43E     tfh.callback2   equ  tfh.struct + 62 ; Pointer to callback function 2
+0162      A440     tfh.callback3   equ  tfh.struct + 64 ; Pointer to callback function 3
+0163      A442     tfh.callback4   equ  tfh.struct + 66 ; Pointer to callback function 4
+0164      A444     tfh.rleonload   equ  tfh.struct + 68 ; RLE compression needed during file load
+0165      A446     tfh.membuffer   equ  tfh.struct + 70 ; 80 bytes file memory buffer
+0166      A496     tfh.end         equ  tfh.struct +150 ; End of structure
+0167      0960     tfh.vrecbuf     equ  >0960           ; VDP address record buffer
+0168      0A60     tfh.vpab        equ  >0a60           ; VDP address PAB
+0169               *--------------------------------------------------------------
+0170               * Command buffer structure          @>a500-a5ff     (256 bytes)
+0171               *--------------------------------------------------------------
+0172      A500     cmdb.struct     equ  >a500          ; Command Buffer structure
+0173      A500     cmdb.top.ptr    equ  cmdb.struct    ; Pointer to command buffer
+0174      A502     cmdb.visible    equ  cmdb.struct+2  ; Command buffer visible? (>ffff = visible)
+0175      A504     cmdb.scrrows    equ  cmdb.struct+4  ; Current size of cmdb pane (in rows)
+0176      A506     cmdb.default    equ  cmdb.struct+6  ; Default size of cmdb pane (in rows)
+0177      A508     cmdb.end        equ  cmdb.struct+8  ; End of structure
+0178               *--------------------------------------------------------------
+0179               * Free for future use               @>a600-a64f     (80 bytes)
+0180               *--------------------------------------------------------------
+0181      A600     free.mem2       equ  >a600          ; >b600-b64f    80 bytes
+0182               *--------------------------------------------------------------
+0183               * Frame buffer                      @>a650-afff    (2480 bytes)
+0184               *--------------------------------------------------------------
+0185      A650     fb.top          equ  >a650          ; Frame buffer low memory 2400 bytes (80x30)
+0186      09B0     fb.size         equ  2480           ; Frame buffer size
+0187               *--------------------------------------------------------------
+0188               * Command buffer                    @>b000-bfff    (4096 bytes)
+0189               *--------------------------------------------------------------
+0190      B000     cmdb.top        equ  >b000          ; Top of command buffer
+0191      1000     cmdb.size       equ  4096           ; Command buffer size
+0192               *--------------------------------------------------------------
+0193               * Index                             @>c000-cfff    (4096 bytes)
+0194               *--------------------------------------------------------------
+0195      C000     idx.top         equ  >c000          ; Top of index
+0196      1000     idx.size        equ  4096           ; Index size
+0197               *--------------------------------------------------------------
+0198               * SAMS shadow pages index           @>d000-dfff    (4096 bytes)
+0199               *--------------------------------------------------------------
+0200      D000     idx.shadow.top  equ  >d000          ; Top of shadow index
+0201      1000     idx.shadow.size equ  4096           ; Shadow index size
+0202               *--------------------------------------------------------------
+0203               * Editor buffer                     @>e000-efff    (4096 bytes)
+0204               *                                   @>f000-ffff    (4096 bytes)
+0205               *--------------------------------------------------------------
+0206      E000     edb.top         equ  >e000          ; Editor buffer high memory
+0207      2000     edb.size        equ  8192           ; Editor buffer size
+0208               *--------------------------------------------------------------
+**** **** ****     > tivi_b0.asm.19581
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -262,7 +263,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200303-10781'
+0031 6015 ....             text  'TIVI 200307-19581'
 0032                       even
 0033               
 0041               
@@ -272,7 +273,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b0.asm.10781
+**** **** ****     > tivi_b0.asm.19581
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1031,7 +1032,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 6222 1642             byte  22
-0249 6223 ....             text  'Build-ID  200303-10781'
+0249 6223 ....             text  'Build-ID  200307-19581'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4647,7 +4648,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E26 0040 
 0363 6E28 0460  28         b     @main                 ; Give control to main program
      6E2A 6050 
-**** **** ****     > tivi_b0.asm.10781
+**** **** ****     > tivi_b0.asm.19581
 0051               
 0055 6E2C 2DCA                   data $                ; Bank 0 ROM size OK.
 0057               
