@@ -79,9 +79,9 @@ task0.copy.framebuffer:
         ; Copy memory block
         ;------------------------------------------------------
         bl    @xpym2v               ; Copy to VDP
-                                    ; tmp0 = VDP target address
-                                    ; tmp1 = RAM source address
-                                    ; tmp2 = Bytes to copy
+                                    ; \ i  tmp0 = VDP target address
+                                    ; | i  tmp1 = RAM source address
+                                    ; / i  tmp2 = Bytes to copy
         clr   @fb.dirty             ; Reset frame buffer dirty flag
         ;-------------------------------------------------------
         ; Draw EOF marker at end-of-file
@@ -90,7 +90,7 @@ task0.copy.framebuffer:
         s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
         inct  tmp0                  ; Y = Y + 2
         c     @fb.scrrows,tmp0      ; Hide if last line on screen
-        jle   task0.exit
+        jle   task0.draw_double.line
         ;-------------------------------------------------------
         ; Draw EOF marker 
         ;-------------------------------------------------------
@@ -117,29 +117,31 @@ task0.draw_marker:
         ;-------------------------------------------------------
         ; Draw empty line
         ;-------------------------------------------------------
-task0.draw_marker.empty.line
+task0.draw_marker.empty.line:
         dec   tmp0                  ; One time adjust
         bl    @yx2pnt               ; Set VDP address in tmp0
         li    tmp1,32               ; Character to write (whitespace)
         bl    @xfilv                ; Write characters
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
         ;-------------------------------------------------------
-        ; Draw "double" bottom line
+        ; Draw "double" bottom line (above command buffer)
         ;-------------------------------------------------------
+task0.draw_double.line:
         mov   @fb.scrrows,tmp0
-        swpb  tmp0
+        inc   tmp0                  ; 1st Line after frame buffer boundary
+        swpb  tmp0                  ; LSB to MSB
         mov   tmp0,@wyx
         bl    @yx2pnt               ; Set VDP address in tmp0
         li    tmp1,2                ; Character to write (double line)
         li    tmp2,80      
-        bl    @xfilv                ; Write characters
-
-
+        bl    @xfilv                ; \ Fill VDP memory
+                                    ; | i  tmp0 = VDP destination
+                                    ; | i  tmp1 = Byte to write
+                                    ; / i  tmp2 = Number of bstes to write                                    
         mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
-
-*--------------------------------------------------------------
-* Task 0 - Exit
-*--------------------------------------------------------------
+        ;------------------------------------------------------
+        ; Task 0 - Exit
+        ;------------------------------------------------------
 task0.exit:
         b     @slotok
 
@@ -199,17 +201,21 @@ task.sub_copy_ramsat:
 
         mov   @wyx,@fb.yxsave
         ;-------------------------------------------------------
-        ; Draw border line
+        ; Show command buffer content
         ;-------------------------------------------------------
+        mov   @cmdb.visible,tmp0     ; Show command buffer?
+        jeq   task.botline.double_border
+                                     ; No, skip command buffer
+        bl    @cmdb.refresh                                             
+        ;-------------------------------------------------------
+        ; Draw bottom double border line (Y=28)
+        ;-------------------------------------------------------
+task.botline.double_border:        
         mov   @fb.scrrows,tmp0
         ci    tmp0,27
-        jeq   !
-        bl    @hchar
-              byte 28,0,2,80         ; Bottom line
-              data EOL
-        jmp   task.botline.bufnum
+        jeq   task.botline.bufnum
 !       bl    @hchar
-              byte 28,0,2,80         ; Bottom line
+              byte 28,0,3,80         ; Bottom double line
               data EOL
         ;------------------------------------------------------
         ; Show buffer number

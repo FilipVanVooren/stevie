@@ -22,24 +22,36 @@
 * none
 *--------------------------------------------------------------
 * Notes
-***************************************************************
+********|*****|*********************|**************************
 cmdb.init:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
-        clr   @cmdb.visible         ; Hide command buffer 
+        li    tmp0,cmdb.top         ; \ Set pointer to command buffer
+        mov   tmp0,@cmdb.top.ptr    ; /
 
-        li    tmp0,5
-        mov   tmp0,@cmdb.default    ; Set default size
-        mov   tmp0,@cmdb.scrrows    ; Set current size
+        clr   @cmdb.visible         ; Hide command buffer 
+        li    tmp0,8
+        mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
+        mov   tmp0,@cmdb.default    ; Set default command buffer size
+
+        clr   @cmdb.top_yx          ; Screen Y of 1st row in cmdb pane
+        clr   @cmdb.lines           ; Number of lines in cmdb buffer
+        clr   @cmdb.dirty           ; Command buffer is clean
+        ;------------------------------------------------------
+        ; Clear command buffer
+        ;------------------------------------------------------
+        bl    @film
+        data  cmdb.top,>00,cmdb.size 
+                                    ; Clear it all the way
 cmdb.init.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-        b     @poprt                ; Return to caller
-
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 
@@ -51,7 +63,7 @@ cmdb.init.exit:
 * bl @cmdb.show
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Size (in row)
+* none
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -60,20 +72,20 @@ cmdb.init.exit:
 * none
 *--------------------------------------------------------------
 * Notes
-***************************************************************
+********|*****|*********************|**************************
 cmdb.show:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------
-        mov   @parm1,@cmdb.scrrows  ; Set pane size
-
         mov   @fb.scrrows.max,tmp0
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
+        
+        inct  tmp0                  ; Line below cmdb top border line
+        sla   tmp0,8                ; LSB to MSB
+        mov   tmp0,@cmdb.top_yx     ; Set command buffer top row
 
         seto  @cmdb.visible         ; Show pane
         seto  @fb.dirty             ; Redraw framebuffer
@@ -81,8 +93,8 @@ cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-        mov   *stack+,tmp0          ; Pop tmp0
-        b     @poprt                ; Return to caller
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 
@@ -118,4 +130,44 @@ cmdb.hide.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-        b     @poprt                ; Return to caller        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* cmdb.refresh
+* Refresh command buffer content
+***************************************************************
+* bl @cmdb.refresh
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* none
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.refresh:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Show command buffer content
+        ;------------------------------------------------------
+        mov  @cmdb.top_yx,@wyx
+        bl    @putstr               ; Show cmdb header string
+              data txt_cmdb
+
+        
+
+cmdb.refresh.exit:
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+

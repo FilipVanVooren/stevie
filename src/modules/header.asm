@@ -169,12 +169,16 @@ tfh.vpab        equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
 * Command buffer structure          @>a500-a5ff     (256 bytes)
 *--------------------------------------------------------------
-cmdb.struct     equ  >a500          ; Command Buffer structure
-cmdb.top.ptr    equ  cmdb.struct    ; Pointer to command buffer
-cmdb.visible    equ  cmdb.struct+2  ; Command buffer visible? (>ffff = visible)
-cmdb.scrrows    equ  cmdb.struct+4  ; Current size of cmdb pane (in rows)
-cmdb.default    equ  cmdb.struct+6  ; Default size of cmdb pane (in rows)
-cmdb.end        equ  cmdb.struct+8  ; End of structure
+cmdb.struct     equ  >a500            ; Command Buffer structure
+cmdb.top.ptr    equ  cmdb.struct      ; Pointer to command buffer
+cmdb.visible    equ  cmdb.struct + 2  ; Command buffer visible? (>ffff=visible)
+cmdb.scrrows    equ  cmdb.struct + 4  ; Current size of cmdb pane (in rows)
+cmdb.default    equ  cmdb.struct + 6  ; Default size of cmdb pane (in rows)
+cmdb.top_yx     equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
+cmdb.lines      equ  cmdb.struct + 10 ; Total lines in editor buffer
+cmdb.dirty      equ  cmdb.struct + 12 ; Editor buffer dirty (Text changed!)
+cmdb.
+cmdb.end        equ  cmdb.struct + 14 ; End of structure
 *--------------------------------------------------------------
 * Free for future use               @>a600-a64f     (80 bytes)
 *--------------------------------------------------------------

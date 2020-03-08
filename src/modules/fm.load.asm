@@ -18,6 +18,7 @@ fm.loadfile:
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
+        bl    @cmdb.hide            ; Hide command buffer
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
         ;-------------------------------------------------------

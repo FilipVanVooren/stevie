@@ -16,12 +16,14 @@
         save  >6000,>7fff           ; Save bank 1
         copy  "header.asm"          ; Equates TiVi configuration
         copy  "kickstart.asm"       ; Cartridge header
-        aorg  >2000                 ; Relocated spectra2 in low memory expansion
+
+        aorg  >2000                 
         copy  "%%spectra2%%/runlib.asm"
-                                    ; Relocated spectra2 was loaded in bank 0.
+                                    ; Relocated spectra2 in low memory expansion
+                                    ; was loaded into RAM from bank 0.
+                                    ; 
                                     ; Only including it here, so that all
                                     ; references get satisfied during assembly.
-
 ***************************************************************
 * TiVi entry point after spectra2 initialisation
 ********|*****|*********************|**************************
