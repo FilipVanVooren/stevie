@@ -76,6 +76,8 @@ cmdb.init.exit:
 cmdb.show:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------
@@ -93,6 +95,7 @@ cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
@@ -114,7 +117,7 @@ cmdb.show.exit:
 * none
 *--------------------------------------------------------------
 * Notes
-***************************************************************
+********|*****|*********************|**************************
 cmdb.hide:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -155,19 +158,36 @@ cmdb.hide.exit:
 cmdb.refresh:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Show command buffer content
+        ; Show Command buffer content
         ;------------------------------------------------------
-        mov  @cmdb.top_yx,@wyx
-        bl    @putstr               ; Show cmdb header string
-              data txt_cmdb
+        mov   @wyx,@cmdb.yxsave     ; Save YX position
 
-        
+        mov   @cmdb.top_yx,@wyx
+        bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
 
+        mov   @cmdb.top.ptr,tmp1    ; Top of command buffer        
+        li    tmp2,7*80
+
+        bl    @xpym2v               ; \ Copy CPU memory to VDP memory
+                                    ; | i  tmp0 = VDP target address
+                                    ; | i  tmp1 = RAM source address
+                                    ; / i  tmp2 = Number of bytes to copy       
+
+        mov   @cmdb.yxsave,@wyx     ; Restore YX position
 cmdb.refresh.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 

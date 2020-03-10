@@ -175,10 +175,10 @@ cmdb.visible    equ  cmdb.struct + 2  ; Command buffer visible? (>ffff=visible)
 cmdb.scrrows    equ  cmdb.struct + 4  ; Current size of cmdb pane (in rows)
 cmdb.default    equ  cmdb.struct + 6  ; Default size of cmdb pane (in rows)
 cmdb.top_yx     equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
-cmdb.lines      equ  cmdb.struct + 10 ; Total lines in editor buffer
-cmdb.dirty      equ  cmdb.struct + 12 ; Editor buffer dirty (Text changed!)
-cmdb.
-cmdb.end        equ  cmdb.struct + 14 ; End of structure
+cmdb.yxsave     equ  cmdb.struct + 10 ; Copy of WYX
+cmdb.lines      equ  cmdb.struct + 12 ; Total lines in editor buffer
+cmdb.dirty      equ  cmdb.struct + 14 ; Editor buffer dirty (Text changed!)
+cmdb.end        equ  cmdb.struct + 16 ; End of structure
 *--------------------------------------------------------------
 * Free for future use               @>a600-a64f     (80 bytes)
 *--------------------------------------------------------------

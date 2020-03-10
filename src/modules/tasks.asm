@@ -122,7 +122,6 @@ task0.draw_marker.empty.line:
         bl    @yx2pnt               ; Set VDP address in tmp0
         li    tmp1,32               ; Character to write (whitespace)
         bl    @xfilv                ; Write characters
-        mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
         ;-------------------------------------------------------
         ; Draw "double" bottom line (above command buffer)
         ;-------------------------------------------------------
@@ -131,9 +130,16 @@ task0.draw_double.line:
         inc   tmp0                  ; 1st Line after frame buffer boundary
         swpb  tmp0                  ; LSB to MSB
         mov   tmp0,@wyx
+
+        bl    @putstr
+              data txt_cmdb         ; Show text "Command Buffer"
+
+        bl    @setx                 ; Set cursor to screen column 14
+              data 14
+
         bl    @yx2pnt               ; Set VDP address in tmp0
-        li    tmp1,2                ; Character to write (double line)
-        li    tmp2,80      
+        li    tmp1,3                ; Character to write (double line)
+        li    tmp2,66      
         bl    @xfilv                ; \ Fill VDP memory
                                     ; | i  tmp0 = VDP destination
                                     ; | i  tmp1 = Byte to write
@@ -201,12 +207,12 @@ task.sub_copy_ramsat:
 
         mov   @wyx,@fb.yxsave
         ;-------------------------------------------------------
-        ; Show command buffer content
+        ; Show command buffer
         ;-------------------------------------------------------
         mov   @cmdb.visible,tmp0     ; Show command buffer?
         jeq   task.botline.double_border
-                                     ; No, skip command buffer
-        bl    @cmdb.refresh                                             
+                                     ; No, skip
+        bl    @cmdb.refresh          ; Refresh command buffer content
         ;-------------------------------------------------------
         ; Draw bottom double border line (Y=28)
         ;-------------------------------------------------------
