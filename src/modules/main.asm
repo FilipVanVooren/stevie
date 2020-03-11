@@ -95,7 +95,7 @@ main.continue:
 
         bl    @mkslot
               data >0001,task0      ; Task 0 - Update screen
-              data >0101,task1      ; Task 1 - Update cursor position
+              data >0102,task1      ; Task 1 - Update cursor position
               data >020f,task2,eol  ; Task 2 - Toggle cursor shape
 
         bl    @mkhook

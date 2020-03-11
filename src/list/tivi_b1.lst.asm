@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b1.asm                 ; Version 200311-25769
+0009               * File: tivi_b1.asm                 ; Version 200311-29500
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi.asm                    ; Version 200311-25769
+0009               * File: tivi.asm                    ; Version 200311-29500
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -230,7 +230,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0210      E000     edb.top         equ  >e000          ; Editor buffer high memory
 0211      2000     edb.size        equ  8192           ; Editor buffer size
 0212               *--------------------------------------------------------------
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -267,7 +267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200311-25769'
+0031 6015 ....             text  'TIVI 200311-29500'
 0032                       even
 0033               
 0041               
@@ -277,7 +277,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0019               
 0020                       aorg  >2000
 0021                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
@@ -999,7 +999,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 21C0 1642             byte  22
-0249 21C1 ....             text  'Build-ID  200311-25769'
+0249 21C1 ....             text  'Build-ID  200311-29500'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4615,7 +4615,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2DC4 0040 
 0363 2DC6 0460  28         b     @main                 ; Give control to main program
      2DC8 6050 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0022                                                   ; Relocated spectra2 in low memory expansion
 0023                                                   ; was loaded into RAM from bank 0.
 0024                                                   ;
@@ -4767,7 +4767,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      60E4 2CE4 
 0097 60E6 0001                   data >0001,task0      ; Task 0 - Update screen
      60E8 6FC2 
-0098 60EA 0101                   data >0101,task1      ; Task 1 - Update cursor position
+0098 60EA 0102                   data >0102,task1      ; Task 1 - Update cursor position
      60EC 7070 
 0099 60EE 020F                   data >020f,task2,eol  ; Task 2 - Toggle cursor shape
      60F0 707E 
@@ -4781,7 +4781,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      60FC 2C26 
 0105               
 0106               
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0035                       copy  "edkey.asm"           ; Actions
 **** **** ****     > edkey.asm
 0001               * FILE......: edkey.asm
@@ -4951,7 +4951,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0130               edkey.do_action.set:
 0131 619E 0460  28         b    @edkey.action.char     ; Add character to buffer
      61A0 662A 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0036                       copy  "edkey.mov.asm"       ; Actions for movement keys
 **** **** ****     > edkey.mov.asm
 0001               * FILE......: edkey.mov.asm
@@ -5591,7 +5591,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6448 832A 
 0488 644A 0460  28 !       b     @ed_wait              ; Back to editor main
      644C 6FB6 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0037                       copy  "edkey.mod.asm"       ; Actions for modifier keys
 **** **** ****     > edkey.mod.asm
 0001               * FILE......: edkey.mod.asm
@@ -6086,7 +6086,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0366               edkey.action.char.exit:
 0367 6666 0460  28         b     @ed_wait              ; Back to editor main
      6668 6FB6 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0038                       copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
 **** **** ****     > edkey.misc.asm
 0001               * FILE......: edkey.misc.asm
@@ -6185,7 +6185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0080 66BC C2F9  30         mov   *stack+,r11            ; Pop R11
 0081 66BE 0460  28         b     @ed_wait               ; Back to editor main
      66C0 6FB6 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0039                       copy  "edkey.file.asm"      ; Actions for file related keys
 **** **** ****     > edkey.file.asm
 0001               * FILE......: edkey.fíle.asm
@@ -6238,7 +6238,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6702 6E62 
 0037 6704 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      6706 63DE 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0040                       copy  "tv.asm"              ; tv       - Main editor configuration
 **** **** ****     > tv.asm
 0001               * FILE......: tv.asm
@@ -6281,7 +6281,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               tv.init.exit:
 0038 6710 0460  28         b     @poprt                ; Return to caller
      6712 2212 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0041                       copy  "mem.asm"             ; mem      - Memory Management
 **** **** ****     > mem.asm
 0001               * FILE......: mem.asm
@@ -6459,7 +6459,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0151 67A6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0152 67A8 045B  20         b     *r11                  ; Return to caller
 0153               
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0042                       copy  "fb.asm"              ; fb       - Framebuffer
 **** **** ****     > fb.asm
 0001               * FILE......: fb.asm
@@ -6821,7 +6821,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0297               fb.get.firstnonblank.exit:
 0298 68E6 0460  28         b    @poprt                 ; Return to caller
      68E8 2212 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0043                       copy  "idx.asm"             ; idx      - Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
@@ -7153,7 +7153,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0281               idx.pointer.get.exit:
 0282 69BE 0460  28         b     @poprt                ; Return to caller
      69C0 2212 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0044                       copy  "edb.asm"             ; edb      - Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
@@ -7690,7 +7690,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0429 6B9C 0460  28         b     @poprt                ; Return to caller
      6B9E 2212 
 0430               
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0045                       copy  "cmdb.asm"            ; cmdb     - Command Buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
@@ -7918,7 +7918,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0191 6C4E C2F9  30         mov   *stack+,r11           ; Pop r11
 0192 6C50 045B  20         b     *r11                  ; Return to caller
 0193               
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0046                       copy  "tfh.read.sams.asm"   ; tfh.sams - File handler read file (SAMS)
 **** **** ****     > tfh.read.sams.asm
 0001               * FILE......: tfh.read.sams.asm
@@ -8420,7 +8420,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0389                       ; byte  12                  ;  9    - File descriptor length
 0390                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0391                                                   ;         (Device + '.' + File name)
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0047                       copy  "fm.load.asm"         ; fm.load  - File manager loadfile
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm_load.asm
@@ -8692,7 +8692,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0203               fm.loadfile.callback.fioerr.exit:
 0204 6F8E 0460  28         b     @poprt                ; Return to caller
      6F90 2212 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0048                       copy  "tasks.asm"           ; tsk      - Tasks
 **** **** ****     > tasks.asm
 0001               * FILE......: tasks.asm
@@ -9164,7 +9164,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0356 71A8 C139  30         mov   *stack+,tmp0           ; Pop tmp0
 0357 71AA 0460  28         b     @slotok                ; Exit running task
      71AC 2CA6 
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0049                       copy  "data.asm"            ; data     - Data segment
 **** **** ****     > data.asm
 0001               * FILE......: data.asm
@@ -9297,7 +9297,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103               
 0104 7274 1804     txt_tivi     byte    24
 0105                            byte    4
-0106 7276 ....                  text    'TiVi beta 200311-25769'
+0106 7276 ....                  text    'TiVi beta 200311-29500'
 0107 728C 0500                  byte    5
 0108 728E 728E     end          data    $
 0109               
@@ -9352,7 +9352,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0158 7311 ....             text  'DSK1.INVADERS'
 0159                       even
 0160               
-**** **** ****     > tivi_b1.asm.25769
+**** **** ****     > tivi_b1.asm.29500
 0050               
 0054 731E 731E                   data $                ; Bank 1 ROM size OK.
 0056               
