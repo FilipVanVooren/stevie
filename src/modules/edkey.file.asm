@@ -3,8 +3,8 @@
 
 
 edkey.action.buffer0:
-        li   tmp0,fdname0
-        jmp  edkey.action.rest
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / File error occured. Halt system.
 edkey.action.buffer1:
         li   tmp0,fdname1
         jmp  edkey.action.rest

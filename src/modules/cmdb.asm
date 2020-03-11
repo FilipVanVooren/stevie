@@ -37,7 +37,7 @@ cmdb.init:
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
         mov   tmp0,@cmdb.default    ; Set default command buffer size
 
-        clr   @cmdb.top_yx          ; Screen Y of 1st row in cmdb pane
+        clr   @cmdb.yxtop           ; Screen Y of 1st row in cmdb pane
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
         ;------------------------------------------------------
@@ -86,8 +86,8 @@ cmdb.show:
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
         
         inct  tmp0                  ; Line below cmdb top border line
-        sla   tmp0,8                ; LSB to MSB
-        mov   tmp0,@cmdb.top_yx     ; Set command buffer top row
+        sla   tmp0,8                ; LSB to MSB (Y), X=0
+        mov   tmp0,@cmdb.yxtop      ; Set command buffer top row
 
         seto  @cmdb.visible         ; Show pane
         seto  @fb.dirty             ; Redraw framebuffer
@@ -169,7 +169,7 @@ cmdb.refresh:
         ;------------------------------------------------------
         mov   @wyx,@cmdb.yxsave     ; Save YX position
 
-        mov   @cmdb.top_yx,@wyx
+        mov   @cmdb.yxtop,@wyx
         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
 
         mov   @cmdb.top.ptr,tmp1    ; Top of command buffer        

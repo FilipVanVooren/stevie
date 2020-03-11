@@ -54,6 +54,7 @@ ed_exit b     @hookok               ; Return
 ***************************************************************
 task0   mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task0.exit            ; No, skip update
+        mov   @wyx,@fb.yxsave       ; Backup VDP cursor position        
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
         ;------------------------------------------------------
@@ -95,9 +96,9 @@ task0.copy.framebuffer:
         ; Draw EOF marker 
         ;-------------------------------------------------------
 task0.draw_marker:
-        mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
-        sla   tmp0,8                ; X=0
+        sla   tmp0,8                ; Move LSB to MSB (Y), X=0
         mov   tmp0,@wyx             ; Set VDP cursor
+
         bl    @putstr
               data txt_marker       ; Display *EOF*
         ;-------------------------------------------------------
@@ -121,7 +122,10 @@ task0.draw_marker.empty.line:
         dec   tmp0                  ; One time adjust
         bl    @yx2pnt               ; Set VDP address in tmp0
         li    tmp1,32               ; Character to write (whitespace)
-        bl    @xfilv                ; Write characters
+        bl    @xfilv                ; Fill VDP memory
+                                    ; i  tmp0 = VDP destination
+                                    ; i  tmp1 = byte to write
+                                    ; i  tmp2 = Number of bytes to write
         ;-------------------------------------------------------
         ; Draw "double" bottom line (above command buffer)
         ;-------------------------------------------------------
@@ -129,7 +133,7 @@ task0.draw_double.line:
         mov   @fb.scrrows,tmp0
         inc   tmp0                  ; 1st Line after frame buffer boundary
         swpb  tmp0                  ; LSB to MSB
-        mov   tmp0,@wyx
+        mov   tmp0,@wyx             ; 
 
         bl    @putstr
               data txt_cmdb         ; Show text "Command Buffer"
@@ -144,7 +148,7 @@ task0.draw_double.line:
                                     ; | i  tmp0 = VDP destination
                                     ; | i  tmp1 = Byte to write
                                     ; / i  tmp2 = Number of bstes to write                                    
-        mov   @fb.yxsave,@wyx       ; Restore VDP cursor postion
+        mov   @fb.yxsave,@wyx       ; Restore cursor postion
         ;------------------------------------------------------
         ; Task 0 - Exit
         ;------------------------------------------------------
@@ -191,6 +195,8 @@ task2.cur_visible.overwrite_mode:
 task2.cur_visible.cursorshape:
         mov   tmp0,@fb.curshape
         mov   tmp0,@ramsat+2
+        jmp   task.sub_copy_ramsat
+
 
 
 

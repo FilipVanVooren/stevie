@@ -174,7 +174,7 @@ cmdb.top.ptr    equ  cmdb.struct      ; Pointer to command buffer
 cmdb.visible    equ  cmdb.struct + 2  ; Command buffer visible? (>ffff=visible)
 cmdb.scrrows    equ  cmdb.struct + 4  ; Current size of cmdb pane (in rows)
 cmdb.default    equ  cmdb.struct + 6  ; Default size of cmdb pane (in rows)
-cmdb.top_yx     equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
+cmdb.yxtop      equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
 cmdb.yxsave     equ  cmdb.struct + 10 ; Copy of WYX
 cmdb.lines      equ  cmdb.struct + 12 ; Total lines in editor buffer
 cmdb.dirty      equ  cmdb.struct + 14 ; Editor buffer dirty (Text changed!)
@@ -186,7 +186,7 @@ free.mem2       equ  >a600          ; >b600-b64f    80 bytes
 *--------------------------------------------------------------
 * Frame buffer                      @>a650-afff    (2480 bytes)
 *--------------------------------------------------------------
-fb.top          equ  >a650          ; Frame buffer low memory 2400 bytes (80x30)
+fb.top          equ  >a650          ; Frame buffer low memory 2480 bytes (80x31)
 fb.size         equ  2480           ; Frame buffer size
 *--------------------------------------------------------------
 * Command buffer                    @>b000-bfff    (4096 bytes)
