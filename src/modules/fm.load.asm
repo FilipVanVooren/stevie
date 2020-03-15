@@ -53,14 +53,20 @@ fm.loadfile:
         li    tmp0,fm.loadfile.callback.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
-        bl    @tfh.file.read.sams   ; Read specified file with SAMS support
-                                    ; \ i  parm1 = Pointer to length prefixed file descriptor
-                                    ; | i  parm2 = Pointer to callback function "loading indicator 1"
-                                    ; | i  parm3 = Pointer to callback function "loading indicator 2"
-                                    ; | i  parm4 = Pointer to callback function "loading indicator 3"
-                                    ; / i  parm5 = Pointer to callback function "File I/O error handler"
+        bl    @fh.file.read.sams    ; Read specified file with SAMS support
+                                    ; \ i  parm1 = Pointer to length prefixed 
+                                    ; |            file descriptor
+                                    ; | i  parm2 = Pointer to callback
+                                    ; |            "loading indicator 1"
+                                    ; | i  parm3 = Pointer to callback
+                                    ; |            "loading indicator 2"
+                                    ; | i  parm4 = Pointer to callback
+                                    ; |            "loading indicator 3"
+                                    ; | i  parm5 = Pointer to callback 
+                                    ; /            "File I/O error handler"
 
-        clr   @edb.dirty            ; Editor buffer fully replaced, no longer dirty
+        clr   @edb.dirty            ; Editor buffer content replaced, not
+                                    ; longer dirty.
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
@@ -88,7 +94,7 @@ fm.loadfile.callback.indicator1:
               byte 29,3
               data txt_loading      ; Display "Loading...."
 
-        c     @tfh.rleonload,@w$ffff
+        c     @fh.rleonload,@w$ffff
         jne   !                                           
         bl    @putat
               byte 29,68
@@ -120,14 +126,14 @@ fm.loadfile.callback.indicator2:
               byte 29,75            ; Show lines read
               data edb.lines,rambuf,>3020
 
-        c     @tfh.kilobytes,tmp4
+        c     @fh.kilobytes,tmp4
         jeq   fm.loadfile.callback.indicator2.exit
 
-        mov   @tfh.kilobytes,tmp4   ; Save for compare
+        mov   @fh.kilobytes,tmp4    ; Save for compare
 
         bl    @putnum
               byte 29,56            ; Show kilobytes read
-              data tfh.kilobytes,rambuf,>3020
+              data fh.kilobytes,rambuf,>3020
 
         bl    @putat
               byte 29,61
@@ -158,7 +164,7 @@ fm.loadfile.callback.indicator3:
 
         bl    @putnum
               byte 29,56            ; Show kilobytes read
-              data tfh.kilobytes,rambuf,>3020
+              data fh.kilobytes,rambuf,>3020
 
         bl    @putat
               byte 29,61
@@ -166,7 +172,7 @@ fm.loadfile.callback.indicator3:
 
         bl    @putnum
               byte 29,75            ; Show lines read
-              data tfh.records,rambuf,>3020
+              data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -141,7 +141,7 @@ edb.line.pack.update_index:
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address
 
-        mov   tmp0,@tfh.sams.page   ; Save current SAMS page
+        mov   tmp0,@fh.sams.page    ; Save current SAMS page
 
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer

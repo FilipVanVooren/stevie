@@ -6,7 +6,7 @@
 *
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
-* File: tivi.asm                    ; Version %%build_date%%
+* File: equates.asm                 ; Version %%build_date%%
 *--------------------------------------------------------------
 * TiVi memory layout.
 * See file "modules/memory.asm" for further details.
@@ -144,69 +144,69 @@ edb.end           equ  edb.struct + 18 ; End of structure
 *--------------------------------------------------------------
 * File handling structures          @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------
-tfh.struct      equ  >a400           ; TiVi file handling structures
-dsrlnk.dsrlws   equ  tfh.struct      ; Address of dsrlnk workspace 32 bytes
-dsrlnk.namsto   equ  tfh.struct + 32 ; 8-byte RAM buffer for storing device name
-file.pab.ptr    equ  tfh.struct + 40 ; Pointer to VDP PAB, needed by level 2 FIO
-tfh.pabstat     equ  tfh.struct + 42 ; Copy of VDP PAB status byte
-tfh.ioresult    equ  tfh.struct + 44 ; DSRLNK IO-status after file operation
-tfh.records     equ  tfh.struct + 46 ; File records counter
-tfh.reclen      equ  tfh.struct + 48 ; Current record length
-tfh.kilobytes   equ  tfh.struct + 50 ; Kilobytes processed (read/written)
-tfh.counter     equ  tfh.struct + 52 ; Counter used in TiVi file operations
-tfh.fname.ptr   equ  tfh.struct + 54 ; Pointer to device and filename
-tfh.sams.page   equ  tfh.struct + 56 ; Current SAMS page during file operation
-tfh.sams.hpage  equ  tfh.struct + 58 ; Highest SAMS page used for file operation
-tfh.callback1   equ  tfh.struct + 60 ; Pointer to callback function 1
-tfh.callback2   equ  tfh.struct + 62 ; Pointer to callback function 2
-tfh.callback3   equ  tfh.struct + 64 ; Pointer to callback function 3
-tfh.callback4   equ  tfh.struct + 66 ; Pointer to callback function 4
-tfh.rleonload   equ  tfh.struct + 68 ; RLE compression needed during file load
-tfh.membuffer   equ  tfh.struct + 70 ; 80 bytes file memory buffer
-tfh.end         equ  tfh.struct +150 ; End of structure
-tfh.vrecbuf     equ  >0960           ; VDP address record buffer
-tfh.vpab        equ  >0a60           ; VDP address PAB
+fh.struct         equ  >a400           ; TiVi file handling structures
+dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
+file.pab.ptr      equ  fh.struct + 40  ; Pointer to VDP PAB, needed by lev 2 FIO
+fh.pabstat        equ  fh.struct + 42  ; Copy of VDP PAB status byte
+fh.ioresult       equ  fh.struct + 44  ; DSRLNK IO-status after file operation
+fh.records        equ  fh.struct + 46  ; File records counter
+fh.reclen         equ  fh.struct + 48  ; Current record length
+fh.kilobytes      equ  fh.struct + 50  ; Kilobytes processed (read/written)
+fh.counter        equ  fh.struct + 52  ; Counter used in TiVi file operations
+fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
+fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
+fh.sams.hpage     equ  fh.struct + 58  ; Highest SAMS page used for file oper.
+fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
+fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
+fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
+fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
+fh.rleonload      equ  fh.struct + 68  ; RLE compression needed during file load
+fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
+fh.end            equ  fh.struct +150  ; End of structure
+fh.vrecbuf        equ  >0960           ; VDP address record buffer
+fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
 * Command buffer structure          @>a500-a5ff     (256 bytes)
 *--------------------------------------------------------------
-cmdb.struct     equ  >a500            ; Command Buffer structure
-cmdb.top.ptr    equ  cmdb.struct      ; Pointer to command buffer
-cmdb.visible    equ  cmdb.struct + 2  ; Command buffer visible? (>ffff=visible)
-cmdb.scrrows    equ  cmdb.struct + 4  ; Current size of cmdb pane (in rows)
-cmdb.default    equ  cmdb.struct + 6  ; Default size of cmdb pane (in rows)
-cmdb.yxtop      equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
-cmdb.yxsave     equ  cmdb.struct + 10 ; Copy of WYX
-cmdb.lines      equ  cmdb.struct + 12 ; Total lines in editor buffer
-cmdb.dirty      equ  cmdb.struct + 14 ; Editor buffer dirty (Text changed!)
-cmdb.end        equ  cmdb.struct + 16 ; End of structure
+cmdb.struct     equ  >a500             ; Command Buffer structure
+cmdb.top.ptr    equ  cmdb.struct       ; Pointer to command buffer
+cmdb.visible    equ  cmdb.struct + 2   ; Command buffer visible? (>ffff=visible)
+cmdb.scrrows    equ  cmdb.struct + 4   ; Current size of cmdb pane (in rows)
+cmdb.default    equ  cmdb.struct + 6   ; Default size of cmdb pane (in rows)
+cmdb.yxtop      equ  cmdb.struct + 8   ; Screen YX of 1st row in cmdb pane
+cmdb.yxsave     equ  cmdb.struct + 10  ; Copy of WYX
+cmdb.lines      equ  cmdb.struct + 12  ; Total lines in editor buffer
+cmdb.dirty      equ  cmdb.struct + 14  ; Editor buffer dirty (Text changed!)
+cmdb.end        equ  cmdb.struct + 16  ; End of structure
 *--------------------------------------------------------------
 * Free for future use               @>a600-a64f     (80 bytes)
 *--------------------------------------------------------------
-free.mem2       equ  >a600          ; >b600-b64f    80 bytes
+free.mem2       equ  >a600             ; >b600-b64f    80 bytes
 *--------------------------------------------------------------
 * Frame buffer                      @>a650-afff    (2480 bytes)
 *--------------------------------------------------------------
-fb.top          equ  >a650          ; Frame buffer low memory 2480 bytes (80x31)
-fb.size         equ  2480           ; Frame buffer size
+fb.top          equ  >a650             ; Frame buffer low mem 2480 bytes (80x31)
+fb.size         equ  2480              ; Frame buffer size
 *--------------------------------------------------------------
 * Command buffer                    @>b000-bfff    (4096 bytes)
 *--------------------------------------------------------------
-cmdb.top        equ  >b000          ; Top of command buffer
-cmdb.size       equ  4096           ; Command buffer size
+cmdb.top        equ  >b000             ; Top of command buffer
+cmdb.size       equ  4096              ; Command buffer size
 *--------------------------------------------------------------
 * Index                             @>c000-cfff    (4096 bytes)
 *--------------------------------------------------------------
-idx.top         equ  >c000          ; Top of index
-idx.size        equ  4096           ; Index size
+idx.top         equ  >c000             ; Top of index
+idx.size        equ  4096              ; Index size
 *--------------------------------------------------------------
 * SAMS shadow pages index           @>d000-dfff    (4096 bytes)
 *--------------------------------------------------------------
-idx.shadow.top  equ  >d000          ; Top of shadow index
-idx.shadow.size equ  4096           ; Shadow index size
+idx.shadow.top  equ  >d000             ; Top of shadow index
+idx.shadow.size equ  4096              ; Shadow index size
 *--------------------------------------------------------------
 * Editor buffer                     @>e000-efff    (4096 bytes)
 *                                   @>f000-ffff    (4096 bytes)
 *--------------------------------------------------------------
-edb.top         equ  >e000          ; Editor buffer high memory
-edb.size        equ  8192           ; Editor buffer size
+edb.top         equ  >e000             ; Editor buffer high memory
+edb.size        equ  8192              ; Editor buffer size
 *--------------------------------------------------------------

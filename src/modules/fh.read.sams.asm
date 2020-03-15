@@ -1,4 +1,4 @@
-* FILE......: tfh.read.sams.asm
+* FILE......: fh.read.sams.asm
 * Purpose...: File reader module (SAMS implementation)
 
 *//////////////////////////////////////////////////////////////
@@ -7,10 +7,10 @@
 
 
 ***************************************************************
-* tfh.file.read.sams
+* fh.file.read.sams
 * Read file into editor buffer with SAMS support
 ***************************************************************
-*  bl   @tfh.file.read.sams
+*  bl   @fh.file.read.sams
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed file descriptor
@@ -27,81 +27,81 @@
 * Register usage
 * tmp0, tmp1, tmp2, tmp3, tmp4
 ********|*****|*********************|**************************
-tfh.file.read.sams:
+fh.file.read.sams:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        clr   @tfh.rleonload        ; No RLE compression!        
-        clr   @tfh.records          ; Reset records counter
-        clr   @tfh.counter          ; Clear internal counter
-        clr   @tfh.kilobytes        ; Clear kilobytes processed
+        clr   @fh.rleonload         ; No RLE compression!        
+        clr   @fh.records           ; Reset records counter
+        clr   @fh.counter           ; Clear internal counter
+        clr   @fh.kilobytes         ; Clear kilobytes processed
         clr   tmp4                  ; Clear kilobytes processed display counter        
-        clr   @tfh.pabstat          ; Clear copy of VDP PAB status byte
-        clr   @tfh.ioresult         ; Clear status register contents
+        clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
+        clr   @fh.ioresult          ; Clear status register contents
 
         li    tmp0,3
-        mov   tmp0,@tfh.sams.page   ; Set current SAMS page
-        mov   tmp0,@tfh.sams.hpage  ; Set highest SAMS page in use
+        mov   tmp0,@fh.sams.page    ; Set current SAMS page
+        mov   tmp0,@fh.sams.hpage   ; Set highest SAMS page in use
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
-        mov   @parm1,@tfh.fname.ptr ; Pointer to file descriptor
-        mov   @parm2,@tfh.callback1 ; Loading indicator 1
-        mov   @parm3,@tfh.callback2 ; Loading indicator 2
-        mov   @parm4,@tfh.callback3 ; Loading indicator 3
-        mov   @parm5,@tfh.callback4 ; File I/O error handler
+        mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
+        mov   @parm2,@fh.callback1  ; Loading indicator 1
+        mov   @parm3,@fh.callback2  ; Loading indicator 2
+        mov   @parm4,@fh.callback3  ; Loading indicator 3
+        mov   @parm5,@fh.callback4  ; File I/O error handler
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
-        mov   @tfh.callback1,tmp0
+        mov   @fh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?
-        jlt   !                     ; Yes, crash!
+        jlt   fh.file.read.crash    ; Yes, crash!
 
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   !                     ; Yes, crash!
+        jgt   fh.file.read.crash    ; Yes, crash!
 
-        mov   @tfh.callback2,tmp0
+        mov   @fh.callback2,tmp0
         ci    tmp0,>6000            ; Insane address ?
-        jlt   !                     ; Yes, crash!
+        jlt   fh.file.read.crash    ; Yes, crash!
 
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   !                     ; Yes, crash!
+        jgt   fh.file.read.crash    ; Yes, crash!
 
-        mov   @tfh.callback3,tmp0
+        mov   @fh.callback3,tmp0
         ci    tmp0,>6000            ; Insane address ?
-        jlt   !                     ; Yes, crash!
+        jlt   fh.file.read.crash    ; Yes, crash!
 
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   !                     ; Yes, crash!
+        jgt   fh.file.read.crash    ; Yes, crash!
          
-        jmp   tfh.file.read.sams.load1
+        jmp   fh.file.read.sams.load1
                                     ; All checks passed, continue.
-
                                     ;-------------------------- 
-                                    ; Sanity check failed
+                                    ; Check failed, crash CPU!
                                     ;--------------------------
-!       mov   r11,@>ffce            ; \ Save caller address        
+fh.file.read.crash:                                    
+        mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Show "loading indicator 1"
         ;------------------------------------------------------
-tfh.file.read.sams.load1:        
-        mov   @tfh.callback1,tmp0
+fh.file.read.sams.load1:        
+        mov   @fh.callback1,tmp0
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-tfh.file.read.sams.pabheader:        
+fh.file.read.sams.pabheader:        
         bl    @cpym2v
-              data tfh.vpab,tfh.file.pab.header,9
+              data fh.vpab,fh.file.pab.header,9
                                     ; Copy PAB header to VDP
         ;------------------------------------------------------
         ; Append file descriptor to PAB header in VDP
         ;------------------------------------------------------
-        li    tmp0,tfh.vpab + 9     ; VDP destination        
-        mov   @tfh.fname.ptr,tmp1   ; Get pointer to file descriptor
+        li    tmp0,fh.vpab + 9      ; VDP destination        
+        mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
         movb  *tmp1,tmp2            ; Get file descriptor length
         srl   tmp2,8                ; Right justify
         inc   tmp2                  ; Include length byte as well
@@ -115,39 +115,39 @@ tfh.file.read.sams.pabheader:
         ; Open file
         ;------------------------------------------------------
         bl    @file.open
-              data tfh.vpab         ; Pass file descriptor to DSRLNK
+              data fh.vpab          ; Pass file descriptor to DSRLNK
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   tfh.file.read.sams.record
-        b     @tfh.file.read.sams.error  
+        jne   fh.file.read.sams.record
+        b     @fh.file.read.sams.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 1: Read file record
         ;------------------------------------------------------
-tfh.file.read.sams.record:        
-        inc   @tfh.records          ; Update counter        
-        clr   @tfh.reclen           ; Reset record length
+fh.file.read.sams.record:        
+        inc   @fh.records           ; Update counter        
+        clr   @fh.reclen            ; Reset record length
 
         bl    @file.record.read     ; Read file record
-              data tfh.vpab         ; \ i  p0   = Address of PAB in VDP RAM 
+              data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
 
-        mov   tmp0,@tfh.pabstat     ; Save VDP PAB status byte
-        mov   tmp1,@tfh.reclen      ; Save bytes read
-        mov   tmp2,@tfh.ioresult    ; Save status register contents
+        mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
+        mov   tmp1,@fh.reclen       ; Save bytes read
+        mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
         ; 1a: Calculate kilobytes processed
         ;------------------------------------------------------
-        a     tmp1,@tfh.counter    
-        a     @tfh.counter,tmp1
+        a     tmp1,@fh.counter    
+        a     @fh.counter,tmp1
         ci    tmp1,1024
         jlt   !
-        inc   @tfh.kilobytes
+        inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion and keep bytes
-        mov   tmp1,@tfh.counter
+        mov   tmp1,@fh.counter
         ;------------------------------------------------------
         ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
@@ -157,17 +157,17 @@ tfh.file.read.sams.record:
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
         ;------------------------------------------------------
-tfh.file.read.sams.check_fioerr:     
-        mov   @tfh.ioresult,tmp2   
+fh.file.read.sams.check_fioerr:     
+        mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   tfh.file.read.sams.check_setpage 
+        jne   fh.file.read.sams.check_setpage 
                                     ; No, goto (1d)
-        b     @tfh.file.read.sams.error  
+        b     @fh.file.read.sams.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
         ; 1d: Check if SAMS page needs to be set
         ;------------------------------------------------------ 
-tfh.file.read.sams.check_setpage:        
+fh.file.read.sams.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
         bl    @xsams.page.get       ; Get SAMS page
                                     ; \ i  tmp0  = Memory address
@@ -175,20 +175,20 @@ tfh.file.read.sams.check_setpage:
                                     ; / o  waux2 = Address of SAMS register
 
         mov   @waux1,tmp0           ; Save SAMS page number
-        c     tmp0,@tfh.sams.page   ; Compare page with current SAMS page
-        jeq   tfh.file.read.sams.nocompression
+        c     tmp0,@fh.sams.page   ; Compare page with current SAMS page
+        jeq   fh.file.read.sams.nocompression
                                     ; Same, skip to (2)
         ;------------------------------------------------------
         ; 1e: Increase SAMS page if necessary
         ;------------------------------------------------------ 
-        c     tmp0,@tfh.sams.hpage  ; Compare page with highest SAMS page
-        jgt   tfh.file.read.sams.switch
+        c     tmp0,@fh.sams.hpage   ; Compare page with highest SAMS page
+        jgt   fh.file.read.sams.switch
                                     ; Switch page
         ai    tmp0,5                ; Next range >b000 - ffff
         ;------------------------------------------------------
         ; 1f: Switch to SAMS page
         ;------------------------------------------------------ 
-tfh.file.read.sams.switch:        
+fh.file.read.sams.switch:        
         mov   @edb.next_free.ptr,tmp1
                                     ; Beginning of line
 
@@ -196,24 +196,24 @@ tfh.file.read.sams.switch:
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
 
-        mov   tmp0,@tfh.sams.page   ; Save current SAMS page
+        mov   tmp0,@fh.sams.page    ; Save current SAMS page 
 
-        c     tmp0,@tfh.sams.hpage  ; Current SAMS page > highest SAMS page?
-        jle   tfh.file.read.sams.nocompression
+        c     tmp0,@fh.sams.hpage   ; Current SAMS page > highest SAMS page?
+        jle   fh.file.read.sams.nocompression
                                     ; No, skip to (2)
-        mov   tmp0,@tfh.sams.hpage  ; Update highest SAMS page
+        mov   tmp0,@fh.sams.hpage   ; Update highest SAMS page
         ;------------------------------------------------------
         ; Step 2: Process line (without RLE compression)
         ;------------------------------------------------------
-tfh.file.read.sams.nocompression:
-        li    tmp0,tfh.vrecbuf      ; VDP source address
+fh.file.read.sams.nocompression:
+        li    tmp0,fh.vrecbuf       ; VDP source address
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target in editor buffer
 
         mov   tmp1,@parm2           ; Needed in step 4b (index update)
 
-        mov   @tfh.reclen,tmp2      ; Number of bytes to copy        
-        jeq   tfh.file.read.sams.prepindex.emptyline
+        mov   @fh.reclen,tmp2       ; Number of bytes to copy        
+        jeq   fh.file.read.sams.prepindex.emptyline
                                     ; Handle empty line
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
@@ -243,7 +243,7 @@ tfh.file.read.sams.nocompression:
         c     tmp0,tmp1             ; Are they in the same segment?
         jeq   !                     ; Yes, skip setting SAMS page
 
-        mov   @tfh.sams.page,tmp0   ; Get current SAMS page
+        mov   @fh.sams.page,tmp0    ; Get current SAMS page
         inc   tmp0                  ; Increase SAMS page
         mov   @edb.next_free.ptr,tmp1
                                     ; Get pointer to next line (aka end of line)
@@ -262,30 +262,30 @@ tfh.file.read.sams.nocompression:
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy
                                         
-        jmp   tfh.file.read.sams.prepindex
+        jmp   fh.file.read.sams.prepindex
                                     ; Prepare for updating index
         ;------------------------------------------------------
         ; Step 4: Update index
         ;------------------------------------------------------
-tfh.file.read.sams.prepindex:
+fh.file.read.sams.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
                                     ; parm2 = Must allready be set!
-        mov   @tfh.sams.page,@parm3 ; parm3 = SAMS page number
+        mov   @fh.sams.page,@parm3  ; parm3 = SAMS page number
                                     
-        jmp   tfh.file.read.sams.updindex
+        jmp   fh.file.read.sams.updindex
                                     ; Update index
         ;------------------------------------------------------
         ; 4a: Special handling for empty line
         ;------------------------------------------------------
-tfh.file.read.sams.prepindex.emptyline:
-        mov   @tfh.records,@parm1   ; parm1 = Line number
+fh.file.read.sams.prepindex.emptyline:
+        mov   @fh.records,@parm1    ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
         seto  @parm3                ; parm3 = SAMS not used >FFFF
         ;------------------------------------------------------
         ; 4b: Do actual index update
         ;------------------------------------------------------                                    
-tfh.file.read.sams.updindex:                
+fh.file.read.sams.updindex:                
         bl    @idx.entry.update     ; Update index 
                                     ; \ i  parm1    = Line num in editor buffer
                                     ; | i  parm2    = Pointer to line in editor 
@@ -298,40 +298,48 @@ tfh.file.read.sams.updindex:
         ;------------------------------------------------------
         ; Step 5: Display results
         ;------------------------------------------------------
-tfh.file.read.sams.display:
-        mov   @tfh.callback2,tmp0   ; Get pointer to "Loading indicator 2"
+fh.file.read.sams.display:
+        mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Step 6: Check if reaching memory high-limit >ffa0
         ;------------------------------------------------------
-tfh.file.read.sams.checkmem:
+fh.file.read.sams.checkmem:
         mov   @edb.next_free.ptr,tmp0
         ci    tmp0,>ffa0
-        jle   tfh.file.read.sams.next
+        jle   fh.file.read.sams.next
         ;------------------------------------------------------
         ; 6a: Address range b000-ffff full, switch SAMS pages
         ;------------------------------------------------------
         li    tmp0,edb.top+2        ; Reset to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
                                     
-        jmp   tfh.file.read.sams.next   
+        jmp   fh.file.read.sams.next   
         ;------------------------------------------------------
         ; 6b: Next record
         ;------------------------------------------------------
-tfh.file.read.sams.next:        
+fh.file.read.sams.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
+        
 
-        b     @tfh.file.read.sams.record
+        ;-------------------------------------------------------
+        ; ** TEMPORARY FIX for 4KB INDEX LIMIT **
+        ;-------------------------------------------------------
+        mov   @edb.lines,tmp0
+        ci    tmp0,2047
+        jeq   fh.file.read.sams.eof
+
+        b     @fh.file.read.sams.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-tfh.file.read.sams.error:        
-        mov   @tfh.pabstat,tmp0     ; Get VDP PAB status byte
+fh.file.read.sams.error:        
+        mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   tfh.file.read.sams.eof 
+        jeq   fh.file.read.sams.eof 
                                     ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
@@ -342,13 +350,13 @@ tfh.file.read.sams.error:
         bl    @mem.setup.sams.layout
                                     ; Restore SAMS default memory layout               
 
-        mov   @tfh.callback4,tmp0   ; Get pointer to "File I/O error handler"
+        mov   @fh.callback4,tmp0    ; Get pointer to "File I/O error handler"
         bl    *tmp0                 ; Run callback function  
-        jmp   tfh.file.read.sams.exit
+        jmp   fh.file.read.sams.exit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
-tfh.file.read.sams.eof:        
+fh.file.read.sams.eof:        
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
 
@@ -359,12 +367,12 @@ tfh.file.read.sams.eof:
         ;------------------------------------------------------
         seto  @edb.dirty            ; Text changed in editor buffer!            
 
-        mov   @tfh.callback3,tmp0   ; Get pointer to "Loading indicator 3"
+        mov   @fh.callback3,tmp0    ; Get pointer to "Loading indicator 3"
         bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-tfh.file.read.sams.exit:
+fh.file.read.sams.exit:
         b     @poprt                ; Return to caller
 
 
@@ -375,10 +383,10 @@ tfh.file.read.sams.exit:
 ***************************************************************
 * PAB for accessing DV/80 file
 ********|*****|*********************|**************************
-tfh.file.pab.header:
+fh.file.pab.header:
         byte  io.op.open            ;  0    - OPEN
         byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
-        data  tfh.vrecbuf           ;  2-3  - Record buffer in VDP memory
+        data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
         byte  80                    ;  4    - Record length (80 chars max)
         byte  00                    ;  5    - Character count
         data  >0000                 ;  6-7  - Seek record (only for fixed recs)

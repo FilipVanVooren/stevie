@@ -23,7 +23,7 @@
 *  
 * The editor buffer itself always resides at (e000 -> ffff) for 
 * a total of 8kb.
-* First line in editor buffer starts at offset 2 (b002), this
+* First line in editor buffer starts at offset 2 (c002), this
 * allows the index to contain "null" pointers, aka empty lines
 * without reference to editor buffer.
 ***************************************************************

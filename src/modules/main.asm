@@ -76,7 +76,7 @@ main.continue:
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
-        bl    @tv.init              ; Initialize TiVi editor config
+        bl    @tivi.init            ; Initialize TiVi editor config
         bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
@@ -88,7 +88,7 @@ main.continue:
         mov   tmp0,@btihi           ; Highest slot in use
  
         bl    @at
-        data  >0100                 ; Cursor YX position = >0000
+              data  >0100           ; Cursor YX position = >0000
 
         li    tmp0,timers
         mov   tmp0,@wtitab        

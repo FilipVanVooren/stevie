@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b0.asm.20376
+**** **** ****     > tivi_b0.asm.15994
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b0.asm                 ; Version 200311-20376
+0009               * File: tivi_b0.asm                 ; Version 200315-15994
 0010               
 0011               
 0012               ***************************************************************
@@ -16,8 +16,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0014               ********|*****|*********************|**************************
 0015                       aorg  >6000
 0016                       save  >6000,>7fff           ; Save bank 0 (1st bank)
-0017                       copy  "header.asm"          ; Equates TiVi configuration
-**** **** ****     > header.asm
+0017                       copy  "equates.asm"         ; Equates TiVi configuration
+**** **** ****     > equates.asm
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi.asm                    ; Version 200311-20376
+0009               * File: equates.asm                 ; Version 200315-15994
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -164,73 +164,73 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0144               *--------------------------------------------------------------
 0145               * File handling structures          @>a400-a4ff     (256 bytes)
 0146               *--------------------------------------------------------------
-0147      A400     tfh.struct      equ  >a400           ; TiVi file handling structures
-0148      A400     dsrlnk.dsrlws   equ  tfh.struct      ; Address of dsrlnk workspace 32 bytes
-0149      A420     dsrlnk.namsto   equ  tfh.struct + 32 ; 8-byte RAM buffer for storing device name
-0150      A428     file.pab.ptr    equ  tfh.struct + 40 ; Pointer to VDP PAB, needed by level 2 FIO
-0151      A42A     tfh.pabstat     equ  tfh.struct + 42 ; Copy of VDP PAB status byte
-0152      A42C     tfh.ioresult    equ  tfh.struct + 44 ; DSRLNK IO-status after file operation
-0153      A42E     tfh.records     equ  tfh.struct + 46 ; File records counter
-0154      A430     tfh.reclen      equ  tfh.struct + 48 ; Current record length
-0155      A432     tfh.kilobytes   equ  tfh.struct + 50 ; Kilobytes processed (read/written)
-0156      A434     tfh.counter     equ  tfh.struct + 52 ; Counter used in TiVi file operations
-0157      A436     tfh.fname.ptr   equ  tfh.struct + 54 ; Pointer to device and filename
-0158      A438     tfh.sams.page   equ  tfh.struct + 56 ; Current SAMS page during file operation
-0159      A43A     tfh.sams.hpage  equ  tfh.struct + 58 ; Highest SAMS page used for file operation
-0160      A43C     tfh.callback1   equ  tfh.struct + 60 ; Pointer to callback function 1
-0161      A43E     tfh.callback2   equ  tfh.struct + 62 ; Pointer to callback function 2
-0162      A440     tfh.callback3   equ  tfh.struct + 64 ; Pointer to callback function 3
-0163      A442     tfh.callback4   equ  tfh.struct + 66 ; Pointer to callback function 4
-0164      A444     tfh.rleonload   equ  tfh.struct + 68 ; RLE compression needed during file load
-0165      A446     tfh.membuffer   equ  tfh.struct + 70 ; 80 bytes file memory buffer
-0166      A496     tfh.end         equ  tfh.struct +150 ; End of structure
-0167      0960     tfh.vrecbuf     equ  >0960           ; VDP address record buffer
-0168      0A60     tfh.vpab        equ  >0a60           ; VDP address PAB
+0147      A400     fh.struct         equ  >a400           ; TiVi file handling structures
+0148      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+0149      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
+0150      A428     file.pab.ptr      equ  fh.struct + 40  ; Pointer to VDP PAB, needed by lev 2 FIO
+0151      A42A     fh.pabstat        equ  fh.struct + 42  ; Copy of VDP PAB status byte
+0152      A42C     fh.ioresult       equ  fh.struct + 44  ; DSRLNK IO-status after file operation
+0153      A42E     fh.records        equ  fh.struct + 46  ; File records counter
+0154      A430     fh.reclen         equ  fh.struct + 48  ; Current record length
+0155      A432     fh.kilobytes      equ  fh.struct + 50  ; Kilobytes processed (read/written)
+0156      A434     fh.counter        equ  fh.struct + 52  ; Counter used in TiVi file operations
+0157      A436     fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
+0158      A438     fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
+0159      A43A     fh.sams.hpage     equ  fh.struct + 58  ; Highest SAMS page used for file oper.
+0160      A43C     fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
+0161      A43E     fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
+0162      A440     fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
+0163      A442     fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
+0164      A444     fh.rleonload      equ  fh.struct + 68  ; RLE compression needed during file load
+0165      A446     fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
+0166      A496     fh.end            equ  fh.struct +150  ; End of structure
+0167      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
+0168      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
 0169               *--------------------------------------------------------------
 0170               * Command buffer structure          @>a500-a5ff     (256 bytes)
 0171               *--------------------------------------------------------------
-0172      A500     cmdb.struct     equ  >a500            ; Command Buffer structure
-0173      A500     cmdb.top.ptr    equ  cmdb.struct      ; Pointer to command buffer
-0174      A502     cmdb.visible    equ  cmdb.struct + 2  ; Command buffer visible? (>ffff=visible)
-0175      A504     cmdb.scrrows    equ  cmdb.struct + 4  ; Current size of cmdb pane (in rows)
-0176      A506     cmdb.default    equ  cmdb.struct + 6  ; Default size of cmdb pane (in rows)
-0177      A508     cmdb.top_yx     equ  cmdb.struct + 8  ; Screen YX of 1st row in cmdb pane
-0178      A50A     cmdb.yxsave     equ  cmdb.struct + 10 ; Copy of WYX
-0179      A50C     cmdb.lines      equ  cmdb.struct + 12 ; Total lines in editor buffer
-0180      A50E     cmdb.dirty      equ  cmdb.struct + 14 ; Editor buffer dirty (Text changed!)
-0181      A510     cmdb.end        equ  cmdb.struct + 16 ; End of structure
+0172      A500     cmdb.struct     equ  >a500             ; Command Buffer structure
+0173      A500     cmdb.top.ptr    equ  cmdb.struct       ; Pointer to command buffer
+0174      A502     cmdb.visible    equ  cmdb.struct + 2   ; Command buffer visible? (>ffff=visible)
+0175      A504     cmdb.scrrows    equ  cmdb.struct + 4   ; Current size of cmdb pane (in rows)
+0176      A506     cmdb.default    equ  cmdb.struct + 6   ; Default size of cmdb pane (in rows)
+0177      A508     cmdb.yxtop      equ  cmdb.struct + 8   ; Screen YX of 1st row in cmdb pane
+0178      A50A     cmdb.yxsave     equ  cmdb.struct + 10  ; Copy of WYX
+0179      A50C     cmdb.lines      equ  cmdb.struct + 12  ; Total lines in editor buffer
+0180      A50E     cmdb.dirty      equ  cmdb.struct + 14  ; Editor buffer dirty (Text changed!)
+0181      A510     cmdb.end        equ  cmdb.struct + 16  ; End of structure
 0182               *--------------------------------------------------------------
 0183               * Free for future use               @>a600-a64f     (80 bytes)
 0184               *--------------------------------------------------------------
-0185      A600     free.mem2       equ  >a600          ; >b600-b64f    80 bytes
+0185      A600     free.mem2       equ  >a600             ; >b600-b64f    80 bytes
 0186               *--------------------------------------------------------------
 0187               * Frame buffer                      @>a650-afff    (2480 bytes)
 0188               *--------------------------------------------------------------
-0189      A650     fb.top          equ  >a650          ; Frame buffer low memory 2400 bytes (80x30)
-0190      09B0     fb.size         equ  2480           ; Frame buffer size
+0189      A650     fb.top          equ  >a650             ; Frame buffer low mem 2480 bytes (80x31)
+0190      09B0     fb.size         equ  2480              ; Frame buffer size
 0191               *--------------------------------------------------------------
 0192               * Command buffer                    @>b000-bfff    (4096 bytes)
 0193               *--------------------------------------------------------------
-0194      B000     cmdb.top        equ  >b000          ; Top of command buffer
-0195      1000     cmdb.size       equ  4096           ; Command buffer size
+0194      B000     cmdb.top        equ  >b000             ; Top of command buffer
+0195      1000     cmdb.size       equ  4096              ; Command buffer size
 0196               *--------------------------------------------------------------
 0197               * Index                             @>c000-cfff    (4096 bytes)
 0198               *--------------------------------------------------------------
-0199      C000     idx.top         equ  >c000          ; Top of index
-0200      1000     idx.size        equ  4096           ; Index size
+0199      C000     idx.top         equ  >c000             ; Top of index
+0200      1000     idx.size        equ  4096              ; Index size
 0201               *--------------------------------------------------------------
 0202               * SAMS shadow pages index           @>d000-dfff    (4096 bytes)
 0203               *--------------------------------------------------------------
-0204      D000     idx.shadow.top  equ  >d000          ; Top of shadow index
-0205      1000     idx.shadow.size equ  4096           ; Shadow index size
+0204      D000     idx.shadow.top  equ  >d000             ; Top of shadow index
+0205      1000     idx.shadow.size equ  4096              ; Shadow index size
 0206               *--------------------------------------------------------------
 0207               * Editor buffer                     @>e000-efff    (4096 bytes)
 0208               *                                   @>f000-ffff    (4096 bytes)
 0209               *--------------------------------------------------------------
-0210      E000     edb.top         equ  >e000          ; Editor buffer high memory
-0211      2000     edb.size        equ  8192           ; Editor buffer size
+0210      E000     edb.top         equ  >e000             ; Editor buffer high memory
+0211      2000     edb.size        equ  8192              ; Editor buffer size
 0212               *--------------------------------------------------------------
-**** **** ****     > tivi_b0.asm.20376
+**** **** ****     > tivi_b0.asm.15994
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -267,7 +267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200311-20376'
+0031 6015 ....             text  'TIVI 200315-15994'
 0032                       even
 0033               
 0041               
@@ -277,7 +277,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b0.asm.20376
+**** **** ****     > tivi_b0.asm.15994
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1036,7 +1036,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 6222 1642             byte  22
-0249 6223 ....             text  'Build-ID  200311-20376'
+0249 6223 ....             text  'Build-ID  200315-15994'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4652,7 +4652,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E26 0040 
 0363 6E28 0460  28         b     @main                 ; Give control to main program
      6E2A 6050 
-**** **** ****     > tivi_b0.asm.20376
+**** **** ****     > tivi_b0.asm.15994
 0051               
 0055 6E2C 2DCA                   data $                ; Bank 0 ROM size OK.
 0057               

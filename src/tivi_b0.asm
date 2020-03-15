@@ -14,7 +14,7 @@
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 0 (1st bank)
-        copy  "header.asm"          ; Equates TiVi configuration
+        copy  "equates.asm"         ; Equates TiVi configuration
         copy  "kickstart.asm"       ; Cartridge header
 ***************************************************************
 * Copy runtime library to destination >2000 - >3fff
