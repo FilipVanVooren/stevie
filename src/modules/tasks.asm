@@ -182,19 +182,19 @@ task2.cur_visible:
         ; Cursor in insert mode
         ;------------------------------------------------------
 task2.cur_visible.insert_mode:
-        li    tmp0,>000B
+        clr   tmp0
         jmp   task2.cur_visible.cursorshape
         ;------------------------------------------------------
         ; Cursor in overwrite mode
         ;------------------------------------------------------
 task2.cur_visible.overwrite_mode:
-        li    tmp0,>0208
+        li    tmp0,>0200
         ;------------------------------------------------------
         ; Set cursor shape
         ;------------------------------------------------------
 task2.cur_visible.cursorshape:
-        mov   tmp0,@fb.curshape
-        mov   tmp0,@ramsat+2
+        movb  tmp0,@tv.curshape      ; Save cursor shape  
+        mov   @tv.curshape,@ramsat+2 ; Get cursor shape and color
         jmp   task.sub_copy_ramsat
 
 
@@ -208,8 +208,10 @@ task.sub_copy_ramsat:
         dect  stack
         mov   tmp0,*stack            ; Push tmp0
 
-        bl    @cpym2v
-              data sprsat,ramsat,4   ; Copy sprite SAT to VDP
+        bl    @cpym2v                ; Copy sprite SAT to VDP
+              data sprsat,ramsat,4   ; \ i  tmp0 = VDP destination
+                                     ; | i  tmp1 = ROM/RAM source
+                                     ; / i  tmp2 = Number of bytes to write
 
         mov   @wyx,@fb.yxsave
         ;-------------------------------------------------------

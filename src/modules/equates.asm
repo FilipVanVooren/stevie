@@ -104,7 +104,8 @@ tv.sams.e000    equ  tv.top + 12    ; SAMS shadow register memory >e000-efff
 tv.sams.f000    equ  tv.top + 14    ; SAMS shadow register memory >f000-ffff
 tv.act_buffer   equ  tv.top + 16    ; Active editor buffer (0-9)
 tv.colorscheme  equ  tv.top + 18    ; Current color scheme (0-4)
-tv.end          equ  tv.top + 20    ; End of structure
+tv.curshape     equ  tv.top + 20    ; Cursor shape and color
+tv.end          equ  tv.top + 22    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a280-a2ff     (128 bytes)
 *--------------------------------------------------------------
@@ -119,7 +120,7 @@ fb.row.length   equ  fb.struct + 8  ; Length of current row in frame buffer
 fb.row.dirty    equ  fb.struct + 10 ; Current row dirty flag in frame buffer
 fb.column       equ  fb.struct + 12 ; Current column in frame buffer
 fb.colsline     equ  fb.struct + 14 ; Columns per row in frame buffer
-fb.curshape     equ  fb.struct + 16 ; Cursor shape & colour
+fb.free1        equ  fb.struct + 16 ; **FREE FOR USE**
 fb.curtoggle    equ  fb.struct + 18 ; Cursor shape toggle
 fb.yxsave       equ  fb.struct + 20 ; Copy of WYX
 fb.dirty        equ  fb.struct + 22 ; Frame buffer dirty flag

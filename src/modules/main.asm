@@ -64,7 +64,7 @@ main.continue:
         bl    @cpym2m
               data romsat,ramsat,4  ; Load sprite SAT
 
-        mov   @romsat+2,@fb.curshape
+        mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
 
         bl    @cpym2v

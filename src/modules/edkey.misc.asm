@@ -62,20 +62,27 @@ edkey.action.color.cycle:
 !       inc   tmp0        
 *---------------------------------------------------------------
 * Do actual color switch
-*---------------------------------------------------------------
+********|*****|*********************|**************************
 edkey.action.color.switch:
         mov   tmp0,@tv.colorscheme  ; Save color scheme index
         sla   tmp0,1                ; Offset into color scheme data table
         ai    tmp0,tv.data.colorscheme
                                     ; Add base for color scheme data table
         movb  *tmp0,tmp1            ; Get foreground / background color
-        srl   tmp1,8                ; MSB to LSB
+        ;-------------------------------------------------------
+        ; Dump cursor FG color to sprite table (SAT)
+        ;-------------------------------------------------------
+        mov   tmp1,tmp2             ; Get work copy
+        srl   tmp2,4                ; Move nibble to right
+        andi  tmp2,>0f00
+        movb  tmp2,@ramsat+3        ; Update FG color in sprite table (SAT)
+        movb  tmp2,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
         ; Dump color combination to VDP color table
         ;-------------------------------------------------------
+        srl   tmp1,8                ; MSB to LSB
         ori   tmp1,>0700
         mov   tmp1,tmp0
         bl    @putvrx
-    
-        mov   *stack+,r11            ; Pop R11
-        b     @ed_wait               ; Back to editor main
+        mov   *stack+,r11           ; Pop R11
+        b     @ed_wait              ; Back to editor main
