@@ -40,9 +40,11 @@ edb.init:
         clr   @edb.lines            ; Lines=0
         clr   @edb.rle              ; RLE compression off
 
-        li    tmp0,txt_newfile
+        li    tmp0,txt.newfile      ; "New file"
         mov   tmp0,@edb.filename.ptr
 
+        li    tmp0,txt.filetype.none
+        mov   tmp0,@edb.filetype.ptr
 
 edb.init.exit:        
         ;------------------------------------------------------

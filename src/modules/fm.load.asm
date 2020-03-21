@@ -67,6 +67,10 @@ fm.loadfile:
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.
+
+        li    tmp0,txt.filetype.DV80                                     
+        mov   tmp0,@edb.filetype.ptr
+                                    ; Set filetype display string
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
@@ -92,13 +96,13 @@ fm.loadfile.callback.indicator1:
         
         bl    @putat
               byte 29,3
-              data txt_loading      ; Display "Loading...."
+              data txt.loading      ; Display "Loading...."
 
         c     @fh.rleonload,@w$ffff
         jne   !                                           
         bl    @putat
               byte 29,68
-              data txt_rle          ; Display "RLE"
+              data txt.rle          ; Display "RLE"
 
 !       bl    @at
               byte 29,14            ; Cursor YX position
@@ -137,7 +141,7 @@ fm.loadfile.callback.indicator2:
 
         bl    @putat
               byte 29,61
-              data txt_kb           ; Show "kb" string
+              data txt.kb           ; Show "kb" string
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -168,7 +172,7 @@ fm.loadfile.callback.indicator3:
 
         bl    @putat
               byte 29,61
-              data txt_kb           ; Show "kb" string
+              data txt.kb           ; Show "kb" string
 
         bl    @putnum
               byte 29,75            ; Show lines read
@@ -185,7 +189,7 @@ fm.loadfile.callback.indicator3.exit:
 * Callback function "File I/O error handler"
 *---------------------------------------------------------------
 * Is expected to be passed as parm5 to @tfh.file.read
-*--------------------------------------------------------------- 
+********|*****|*********************|**************************
 fm.loadfile.callback.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -193,13 +197,34 @@ fm.loadfile.callback.fioerr:
         bl    @hchar
               byte 29,0,32,50       ; Erase loading indicator
               data EOL
+        
+        ;------------------------------------------------------
+        ; Display I/O error message
+        ;------------------------------------------------------
+        bl    @cpym2m               
+              data txt.ioerr+1
+              data cmdb.top
+              data 41               ; Error message
 
-        bl    @putat
-              byte 27,0             ; Display message
-              data txt_ioerr
 
-        li    tmp0,txt_newfile
+        mov   @edb.filename.ptr,tmp0
+        movb  *tmp0,tmp2            ; Get length byte
+        srl   tmp2,8                ; Right align
+        inc   tmp0                  ; Skip length byte
+        li    tmp1,cmdb.top + 42    ; RAM destination address
+
+        bl    @xpym2m               ; \ Copy CPU memory to CPU memory
+                                    ; | i  tmp0 = ROM/RAM source
+                                    ; | i  tmp1 = RAM destination
+                                    ; / i  tmp2 = Bytes top copy
+
+
+        li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr
+
+        li    tmp0,txt.filetype.none
+        mov   tmp0,@edb.filetype.ptr
+                                    ; Empty filetype string
 
         mov   @cmdb.scrrows,@parm1
         bl    @cmdb.show

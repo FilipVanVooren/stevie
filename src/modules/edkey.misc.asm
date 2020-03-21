@@ -55,7 +55,7 @@ edkey.action.color.cycle:
         mov   r11,*stack            ; Push return address
 
         mov   @tv.colorscheme,tmp0  ; Load color scheme index
-        ci    tmp0,2
+        ci    tmp0,3                ; 4th entry reached?
         jlt   !
         clr   tmp0
         jmp   edkey.action.color.switch

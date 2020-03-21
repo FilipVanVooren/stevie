@@ -5,7 +5,7 @@
 *                      Constants
 ********|*****|*********************|**************************
 romsat:
-        data  >0303,>000B           ; Cursor YX, initial shape and colour
+        data  >0303,>000f           ; Cursor YX, initial shape and colour
 
 cursors:
         data >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
@@ -20,32 +20,34 @@ lines:
         data >0000,>0f0f,>0f0f,>0000 ; Double line top right corner
 
 
-
-
 tv.data.colorscheme:                ; Foreground | Background | Bg. Pane
         data  >f404                 ; White      | Dark blue  | Dark blue
         data  >f101                 ; White      | Black      | Black
         data  >1707                 ; Black      | Cyan       | Cyan
+        data  >1f0f                 ; Black      | White      | White
 
 
 ***************************************************************
 *                       Strings
 ***************************************************************
-txt_delim    #string ','
-txt_marker   #string '*EOF*'
-txt_bottom   #string '  BOT'
-txt_ovrwrite #string 'OVR'
-txt_insert   #string 'INS'
-txt_star     #string '*'
-txt_loading  #string 'Loading...'
-txt_kb       #string 'kb'
-txt_rle      #string 'RLE'
-txt_lines    #string 'Lines'
-txt_ioerr    #string '* I/O error occured. Could not load file.'
-txt_bufnum   #string '#1'
-txt_newfile  #string '[New file]'
-txt_cmdb     #string 'Command Buffer'
-txt_tivi     byte    24
+txt.delim          #string ','
+txt.marker         #string '*EOF*'
+txt.bottom         #string '  BOT'
+txt.ovrwrite       #string 'OVR'
+txt.insert         #string 'INS'
+txt.star           #string '*'
+txt.loading        #string 'Loading...'
+txt.kb             #string 'kb'
+txt.rle            #string 'RLE'
+txt.lines          #string 'Lines'
+txt.ioerr          #string '> I/O error occured. Could not load file:'
+txt.bufnum         #string '#1'
+txt.newfile        #string '[New file]'
+txt.cmdb           #string 'Command Buffer'
+txt.filetype.dv80  #string 'DIS/VAR80 '
+txt.filetype.none  #string '          '
+
+txt.tivi     byte    24
              byte    4
              text    'TiVi beta %%build_date%%'
              byte    5

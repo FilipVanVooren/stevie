@@ -140,8 +140,10 @@ edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
 edb.rle           equ  edb.struct + 12 ; RLE compression activated
 edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
                                        ; with current filename.
-edb.sams.page     equ  edb.struct + 16 ; Current SAMS page
-edb.end           equ  edb.struct + 18 ; End of structure
+edb.filetype.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
+                                       ; with current file type.                                    
+edb.sams.page     equ  edb.struct + 18 ; Current SAMS page
+edb.end           equ  edb.struct + 20 ; End of structure
 *--------------------------------------------------------------
 * File handling structures          @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------

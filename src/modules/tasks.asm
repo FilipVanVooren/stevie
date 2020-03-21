@@ -100,7 +100,7 @@ task0.draw_marker:
         mov   tmp0,@wyx             ; Set VDP cursor
 
         bl    @putstr
-              data txt_marker       ; Display *EOF*
+              data txt.marker       ; Display *EOF*
         ;-------------------------------------------------------
         ; Draw empty line after (and below) EOF marker
         ;-------------------------------------------------------
@@ -136,7 +136,7 @@ task0.draw_double.line:
         mov   tmp0,@wyx             ; 
 
         bl    @putstr
-              data txt_cmdb         ; Show text "Command Buffer"
+              data txt.cmdb         ; Show text "Command Buffer"
 
         bl    @setx                 ; Set cursor to screen column 14
               data 14
@@ -234,18 +234,24 @@ task.botline.double_border:
         ;------------------------------------------------------
         ; Show buffer number
         ;------------------------------------------------------
-task.botline.bufnum
+task.botline.bufnum:
         bl    @putat 
               byte  29,0
-              data  txt_bufnum
+              data  txt.bufnum
         ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------
+task.botline.show_file:        
         bl    @at
               byte  29,3             ; Position cursor
-
         mov   @edb.filename.ptr,tmp1 ; Get string to display
         bl    @xutst0                ; Display string
+
+        bl    @at
+              byte  29,35            ; Position cursor
+
+        mov   @edb.filetype.ptr,tmp1 ; Get string to display
+        bl    @xutst0                ; Display Filetype string
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -258,7 +264,7 @@ task.botline.show_mode:
 task.botline.show_mode.overwrite:
         bl    @putat
               byte  29,50
-              data  txt_ovrwrite
+              data  txt.ovrwrite
         jmp   task.botline.show_changed
         ;------------------------------------------------------
         ; Insert  mode
@@ -266,7 +272,7 @@ task.botline.show_mode.overwrite:
 task.botline.show_mode.insert:
         bl    @putat
               byte  29,50
-              data  txt_insert
+              data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
         ;------------------------------------------------------        
@@ -278,7 +284,7 @@ task.botline.show_changed:
         ;------------------------------------------------------        
         bl    @putat
               byte 29,54
-              data txt_star
+              data txt.star
         jmp   task.botline.show_linecol
         ;------------------------------------------------------
         ; Show "line,column"
@@ -302,7 +308,7 @@ task.botline.show_linecol:
         ;------------------------------------------------------
         bl    @putat
               byte  29,69
-              data  txt_delim
+              data  txt.delim
         ;------------------------------------------------------
         ; Show column
         ;------------------------------------------------------
@@ -336,7 +342,7 @@ task.botline.show_linecol:
 
         bl    @putat
               byte 29,75
-              data txt_bottom
+              data txt.bottom
 
         jmp   task.botline.exit
         ;------------------------------------------------------

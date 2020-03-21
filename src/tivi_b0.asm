@@ -57,6 +57,7 @@ reloc   nop                         ; Anchor for copy command
 
 
 *--------------------------------------------------------------
+
 * Video mode configuration
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
