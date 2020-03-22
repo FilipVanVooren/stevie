@@ -28,12 +28,11 @@ edkey.action.cmdb.show:
         ;-------------------------------------------------------
 edkey.action.cmdb.hide:
         bl    @cmdb.hide            ; Hide command buffer pane
-
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.toggle.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 
@@ -85,4 +84,4 @@ edkey.action.color.switch:
         mov   tmp1,tmp0
         bl    @putvrx
         mov   *stack+,r11           ; Pop R11
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main

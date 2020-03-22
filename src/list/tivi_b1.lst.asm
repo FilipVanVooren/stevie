@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b1.asm.14640
+**** **** ****     > tivi_b1.asm.19999
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b1.asm                 ; Version 200322-14640
+0009               * File: tivi_b1.asm                 ; Version 200322-19999
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200322-14640
+0009               * File: equates.asm                 ; Version 200322-19999
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -234,7 +234,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0214      E000     edb.top         equ  >e000             ; Editor buffer high memory
 0215      2000     edb.size        equ  8192              ; Editor buffer size
 0216               *--------------------------------------------------------------
-**** **** ****     > tivi_b1.asm.14640
+**** **** ****     > tivi_b1.asm.19999
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -271,7 +271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200322-14640'
+0031 6015 ....             text  'TIVI 200322-19999'
 0032                       even
 0033               
 0041               
@@ -281,7 +281,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b1.asm.14640
+**** **** ****     > tivi_b1.asm.19999
 0019               
 0020                       aorg  >2000
 0021                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
@@ -1003,7 +1003,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 21C0 1642             byte  22
-0249 21C1 ....             text  'Build-ID  200322-14640'
+0249 21C1 ....             text  'Build-ID  200322-19999'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4619,7 +4619,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2DC4 0040 
 0363 2DC6 0460  28         b     @main                 ; Give control to main program
      2DC8 6050 
-**** **** ****     > tivi_b1.asm.14640
+**** **** ****     > tivi_b1.asm.19999
 0022                                                   ; Relocated spectra2 in low memory expansion
 0023                                                   ; was loaded into RAM from bank 0.
 0024                                                   ;
@@ -4629,12 +4629,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0028               * TiVi entry point after spectra2 initialisation
 0029               ********|*****|*********************|**************************
 0030                       aorg  kickstart.code2
-0031 6050 04E0  34 main    clr   @>6002                ; Jump to bank 1
+0031               main:
+0032 6050 04E0  34         clr   @>6002                ; Jump to bank 1
      6052 6002 
-0032 6054 0460  28         b     @main.tivi            ; Start editor
+0033 6054 0460  28         b     @main.tivi            ; Start editor
      6056 6058 
-0033               
-0034                       copy  "main.asm"            ; Main file (entrypoint)
+0034               
+0035                       copy  "main.asm"            ; Main file (entrypoint)
 **** **** ****     > main.asm
 0001               * FILE......: main.asm
 0002               * Purpose...: TiVi Editor - Main editor module
@@ -4785,181 +4786,183 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      60FC 2C26 
 0106               
 0107               
-**** **** ****     > tivi_b1.asm.14640
-0035                       copy  "edkey.asm"           ; Actions
+**** **** ****     > tivi_b1.asm.19999
+0036                       copy  "edkey.asm"           ; Actions
 **** **** ****     > edkey.asm
 0001               * FILE......: edkey.asm
 0002               * Purpose...: Initialisation & setup key actions
 0003               
-0004               
-0005               
-0006               
-0007               
-0008               *---------------------------------------------------------------
-0009               * Movement keys
-0010               *---------------------------------------------------------------
-0011      0800     key_left      equ >0800                      ; fctn + s
-0012      0900     key_right     equ >0900                      ; fctn + d
-0013      0B00     key_up        equ >0b00                      ; fctn + e
-0014      0A00     key_down      equ >0a00                      ; fctn + x
-0015      8100     key_home      equ >8100                      ; ctrl + a
-0016      8600     key_end       equ >8600                      ; ctrl + f
-0017      9300     key_pword     equ >9300                      ; ctrl + s
-0018      8400     key_nword     equ >8400                      ; ctrl + d
-0019      8500     key_ppage     equ >8500                      ; ctrl + e
-0020      9800     key_npage     equ >9800                      ; ctrl + x
-0021      9400     key_tpage     equ >9400                      ; ctrl + t
-0022      8200     key_bpage     equ >8200                      ; ctrl + b
-0023               *---------------------------------------------------------------
-0024               * Modifier keys
-0025               *---------------------------------------------------------------
-0026      0D00     key_enter       equ >0d00                    ; enter
-0027      0300     key_del_char    equ >0300                    ; fctn + 1
-0028      0700     key_del_line    equ >0700                    ; fctn + 3
-0029      8B00     key_del_eol     equ >8b00                    ; ctrl + k
-0030      0400     key_ins_char    equ >0400                    ; fctn + 2
-0031      B900     key_ins_onoff   equ >b900                    ; fctn + .
-0032      0E00     key_ins_line    equ >0e00                    ; fctn + 5
-0033      0500     key_quit1       equ >0500                    ; fctn + +
-0034      9D00     key_quit2       equ >9d00                    ; ctrl + +
-0035               *---------------------------------------------------------------
-0036               * File buffer keys
-0037               *---------------------------------------------------------------
-0038      B000     key_buf0        equ >b000                    ; ctrl + 0
-0039      B100     key_buf1        equ >b100                    ; ctrl + 1
-0040      B200     key_buf2        equ >b200                    ; ctrl + 2
-0041      B300     key_buf3        equ >b300                    ; ctrl + 3
-0042      B400     key_buf4        equ >b400                    ; ctrl + 4
-0043      B500     key_buf5        equ >b500                    ; ctrl + 5
-0044      B600     key_buf6        equ >b600                    ; ctrl + 6
-0045      B700     key_buf7        equ >b700                    ; ctrl + 7
-0046      9E00     key_buf8        equ >9e00                    ; ctrl + 8
-0047      9F00     key_buf9        equ >9f00                    ; ctrl + 9
-0048               *---------------------------------------------------------------
-0049               * Misc keys
-0050               *---------------------------------------------------------------
-0051      0F00     key_cmdb_tog    equ >0f00                    ; fctn + 9
-0052      9A00     key_cycle       equ >9a00                    ; ctrl + z
-0053               
-0054               
-0055               *---------------------------------------------------------------
-0056               * Action keys mapping <-> actions table
-0057               *---------------------------------------------------------------
-0058               keymap_actions
-0059                       ;-------------------------------------------------------
-0060                       ; Movement keys
-0061                       ;-------------------------------------------------------
-0062 60FE 0D00             data  key_enter,edkey.action.enter          ; New line
+0004               *---------------------------------------------------------------
+0005               * Movement keys
+0006               *---------------------------------------------------------------
+0007      0800     key_left        equ >0800                    ; fctn + s
+0008      0900     key_right       equ >0900                    ; fctn + d
+0009      0B00     key_up          equ >0b00                    ; fctn + e
+0010      0A00     key_down        equ >0a00                    ; fctn + x
+0011      8100     key_home        equ >8100                    ; ctrl + a
+0012      8600     key_end         equ >8600                    ; ctrl + f
+0013      9300     key_pword       equ >9300                    ; ctrl + s
+0014      8400     key_nword       equ >8400                    ; ctrl + d
+0015      8500     key_ppage       equ >8500                    ; ctrl + e
+0016      9800     key_npage       equ >9800                    ; ctrl + x
+0017      9400     key_tpage       equ >9400                    ; ctrl + t
+0018      8200     key_bpage       equ >8200                    ; ctrl + b
+0019               *---------------------------------------------------------------
+0020               * Modifier keys
+0021               *---------------------------------------------------------------
+0022      0D00     key_enter       equ >0d00                    ; enter
+0023      0300     key_del_char    equ >0300                    ; fctn + 1
+0024      0700     key_del_line    equ >0700                    ; fctn + 3
+0025      8B00     key_del_eol     equ >8b00                    ; ctrl + k
+0026      0400     key_ins_char    equ >0400                    ; fctn + 2
+0027      B900     key_ins_onoff   equ >b900                    ; fctn + .
+0028      0E00     key_ins_line    equ >0e00                    ; fctn + 5
+0029      0500     key_quit1       equ >0500                    ; fctn + +
+0030      9D00     key_quit2       equ >9d00                    ; ctrl + +
+0031               *---------------------------------------------------------------
+0032               * File buffer keys
+0033               *---------------------------------------------------------------
+0034      B000     key_buf0        equ >b000                    ; ctrl + 0
+0035      B100     key_buf1        equ >b100                    ; ctrl + 1
+0036      B200     key_buf2        equ >b200                    ; ctrl + 2
+0037      B300     key_buf3        equ >b300                    ; ctrl + 3
+0038      B400     key_buf4        equ >b400                    ; ctrl + 4
+0039      B500     key_buf5        equ >b500                    ; ctrl + 5
+0040      B600     key_buf6        equ >b600                    ; ctrl + 6
+0041      B700     key_buf7        equ >b700                    ; ctrl + 7
+0042      9E00     key_buf8        equ >9e00                    ; ctrl + 8
+0043      9F00     key_buf9        equ >9f00                    ; ctrl + 9
+0044               *---------------------------------------------------------------
+0045               * Misc keys
+0046               *---------------------------------------------------------------
+0047      0F00     key_cmdb_tog    equ >0f00                    ; fctn + 9
+0048      9A00     key_color_cycle equ >9a00                    ; ctrl + z
+0049               
+0050               
+0051               *---------------------------------------------------------------
+0052               * Action keys mapping <-> actions table
+0053               *---------------------------------------------------------------
+0054               keymap_actions.editor:
+0055                       ;-------------------------------------------------------
+0056                       ; Movement keys
+0057                       ;-------------------------------------------------------
+0058 60FE 0D00             data  key_enter,edkey.action.enter          ; New line
      6100 65AC 
-0063 6102 0800             data  key_left,edkey.action.left            ; Move cursor left
+0059 6102 0800             data  key_left,edkey.action.left            ; Move cursor left
      6104 61A2 
-0064 6106 0900             data  key_right,edkey.action.right          ; Move cursor right
+0060 6106 0900             data  key_right,edkey.action.right          ; Move cursor right
      6108 61B8 
-0065 610A 0B00             data  key_up,edkey.action.up                ; Move cursor up
+0061 610A 0B00             data  key_up,edkey.action.up                ; Move cursor up
      610C 61D0 
-0066 610E 0A00             data  key_down,edkey.action.down            ; Move cursor down
+0062 610E 0A00             data  key_down,edkey.action.down            ; Move cursor down
      6110 6222 
-0067 6112 8100             data  key_home,edkey.action.home            ; Move cursor to line begin
+0063 6112 8100             data  key_home,edkey.action.home            ; Move cursor to line begin
      6114 628E 
-0068 6116 8600             data  key_end,edkey.action.end              ; Move cursor to line end
+0064 6116 8600             data  key_end,edkey.action.end              ; Move cursor to line end
      6118 62A6 
-0069 611A 9300             data  key_pword,edkey.action.pword          ; Move cursor previous word
+0065 611A 9300             data  key_pword,edkey.action.pword          ; Move cursor previous word
      611C 62BA 
-0070 611E 8400             data  key_nword,edkey.action.nword          ; Move cursor next word
+0066 611E 8400             data  key_nword,edkey.action.nword          ; Move cursor next word
      6120 630C 
-0071 6122 8500             data  key_ppage,edkey.action.ppage          ; Move cursor previous page
+0067 6122 8500             data  key_ppage,edkey.action.ppage          ; Move cursor previous page
      6124 636C 
-0072 6126 9800             data  key_npage,edkey.action.npage          ; Move cursor next page
+0068 6126 9800             data  key_npage,edkey.action.npage          ; Move cursor next page
      6128 63B2 
-0073 612A 9400             data  key_tpage,edkey.action.top            ; Move cursor to file top
+0069 612A 9400             data  key_tpage,edkey.action.top            ; Move cursor to file top
      612C 63DE 
-0074 612E 8200             data  key_bpage,edkey.action.bot            ; Move cursor to file bottom
+0070 612E 8200             data  key_bpage,edkey.action.bot            ; Move cursor to file bottom
      6130 640E 
-0075                       ;-------------------------------------------------------
-0076                       ; Modifier keys - Delete
-0077                       ;-------------------------------------------------------
-0078 6132 0300             data  key_del_char,edkey.action.del_char    ; Delete character
+0071                       ;-------------------------------------------------------
+0072                       ; Modifier keys - Delete
+0073                       ;-------------------------------------------------------
+0074 6132 0300             data  key_del_char,edkey.action.del_char    ; Delete character
      6134 644E 
-0079 6136 8B00             data  key_del_eol,edkey.action.del_eol      ; Delete until end of line
+0075 6136 8B00             data  key_del_eol,edkey.action.del_eol      ; Delete until end of line
      6138 6486 
-0080 613A 0700             data  key_del_line,edkey.action.del_line    ; Delete current line
+0076 613A 0700             data  key_del_line,edkey.action.del_line    ; Delete current line
      613C 64BA 
-0081                       ;-------------------------------------------------------
-0082                       ; Modifier keys - Insert
-0083                       ;-------------------------------------------------------
-0084 613E 0400             data  key_ins_char,edkey.action.ins_char.ws ; Insert whitespace
+0077                       ;-------------------------------------------------------
+0078                       ; Modifier keys - Insert
+0079                       ;-------------------------------------------------------
+0080 613E 0400             data  key_ins_char,edkey.action.ins_char.ws ; Insert whitespace
      6140 6512 
-0085 6142 B900             data  key_ins_onoff,edkey.action.ins_onoff  ; Insert mode on/off
+0081 6142 B900             data  key_ins_onoff,edkey.action.ins_onoff  ; Insert mode on/off
      6144 661A 
-0086 6146 0E00             data  key_ins_line,edkey.action.ins_line    ; Insert new line
+0082 6146 0E00             data  key_ins_line,edkey.action.ins_line    ; Insert new line
      6148 6568 
-0087                       ;-------------------------------------------------------
-0088                       ; Other action keys
-0089                       ;-------------------------------------------------------
-0090 614A 0500             data  key_quit1,edkey.action.quit           ; Quit TiVi
+0083                       ;-------------------------------------------------------
+0084                       ; Other action keys
+0085                       ;-------------------------------------------------------
+0086 614A 0500             data  key_quit1,edkey.action.quit           ; Quit TiVi
      614C 666A 
-0091 614E 0F00             data  key_cmdb_tog,edkey.action.cmdb.toggle ; Toggle command buffer pane
+0087 614E 0F00             data  key_cmdb_tog,edkey.action.cmdb.toggle ; Toggle command buffer pane
      6150 6672 
-0092 6152 9A00             data  key_cycle,edkey.action.color.cycle    ; Cycle color scheme
+0088 6152 9A00             data  key_color_cycle,edkey.action.color.cycle
      6154 6690 
-0093                       ;-------------------------------------------------------
-0094                       ; Editor/File buffer keys
-0095                       ;-------------------------------------------------------
-0096 6156 B000             data  key_buf0,edkey.action.buffer0
+0089                                                                   ; Cycle color scheme
+0090                       ;-------------------------------------------------------
+0091                       ; Editor/File buffer keys
+0092                       ;-------------------------------------------------------
+0093 6156 B000             data  key_buf0,edkey.action.buffer0
      6158 66D2 
-0097 615A B100             data  key_buf1,edkey.action.buffer1
+0094 615A B100             data  key_buf1,edkey.action.buffer1
      615C 66DA 
-0098 615E B200             data  key_buf2,edkey.action.buffer2
+0095 615E B200             data  key_buf2,edkey.action.buffer2
      6160 66E0 
-0099 6162 B300             data  key_buf3,edkey.action.buffer3
+0096 6162 B300             data  key_buf3,edkey.action.buffer3
      6164 66E6 
-0100 6166 B400             data  key_buf4,edkey.action.buffer4
+0097 6166 B400             data  key_buf4,edkey.action.buffer4
      6168 66EC 
-0101 616A B500             data  key_buf5,edkey.action.buffer5
+0098 616A B500             data  key_buf5,edkey.action.buffer5
      616C 66F2 
-0102 616E B600             data  key_buf6,edkey.action.buffer6
+0099 616E B600             data  key_buf6,edkey.action.buffer6
      6170 66F8 
-0103 6172 B700             data  key_buf7,edkey.action.buffer7
+0100 6172 B700             data  key_buf7,edkey.action.buffer7
      6174 66FE 
-0104 6176 9E00             data  key_buf8,edkey.action.buffer8
+0101 6176 9E00             data  key_buf8,edkey.action.buffer8
      6178 6704 
-0105 617A 9F00             data  key_buf9,edkey.action.buffer9
+0102 617A 9F00             data  key_buf9,edkey.action.buffer9
      617C 670A 
-0106 617E FFFF             data  >ffff                                 ; EOL
-0107               
-0108               
-0109               
-0110               ****************************************************************
-0111               * Editor - Process key
-0112               ****************************************************************
-0113 6180 C160  34 edkey   mov   @waux1,tmp1           ; Get key value
+0103 617E FFFF             data  >ffff                                 ; EOL
+0104               
+0105               
+0106               
+0107               ****************************************************************
+0108               * Editor - Process key
+0109               ****************************************************************
+0110               edkey.key.process:
+0111 6180 C160  34         mov   @waux1,tmp1           ; Get key value
      6182 833C 
-0114 6184 0245  22         andi  tmp1,>ff00            ; Get rid of LSB
+0112 6184 0245  22         andi  tmp1,>ff00            ; Get rid of LSB
      6186 FF00 
-0115               
-0116 6188 0206  20         li    tmp2,keymap_actions   ; Load keyboard map
+0113               
+0114 6188 0206  20         li    tmp2,keymap_actions.editor
      618A 60FE 
-0117 618C 0707  14         seto  tmp3                  ; EOL marker
-0118                       ;-------------------------------------------------------
-0119                       ; Iterate over keyboard map for matching key
-0120                       ;-------------------------------------------------------
-0121               edkey.check_next_key:
-0122 618E 81D6  26         c     *tmp2,tmp3            ; EOL reached ?
-0123 6190 1306  14         jeq   edkey.do_action.set   ; Yes, so go add letter
+0115                                                   ; Load keyboard map
+0116 618C 0707  14         seto  tmp3                  ; EOL marker
+0117                       ;-------------------------------------------------------
+0118                       ; Iterate over keyboard map for matching key
+0119                       ;-------------------------------------------------------
+0120               edkey.key.check_next:
+0121 618E 81D6  26         c     *tmp2,tmp3            ; EOL reached ?
+0122 6190 1306  14         jeq   edkey.key.process.addbuffer
+0123                                                   ; Yes, so go add character to buffer
 0124               
 0125 6192 8D85  34         c     tmp1,*tmp2+           ; Key matched?
-0126 6194 1302  14         jeq   edkey.do_action       ; Yes, do action
-0127 6196 05C6  14         inct  tmp2                  ; No, skip action
-0128 6198 10FA  14         jmp   edkey.check_next_key  ; Next key
-0129               
-0130               edkey.do_action:
-0131 619A C196  26         mov  *tmp2,tmp2             ; Get action address
-0132 619C 0456  20         b    *tmp2                  ; Process key action
-0133               edkey.do_action.set:
-0134 619E 0460  28         b    @edkey.action.char     ; Add character to buffer
+0126 6194 1302  14         jeq   edkey.key.process.action
+0127                                                   ; Yes, do action
+0128 6196 05C6  14         inct  tmp2                  ; No, skip action
+0129 6198 10FA  14         jmp   edkey.key.check_next  ; Next key
+0130               
+0131               edkey.key.process.action:
+0132 619A C196  26         mov  *tmp2,tmp2             ; Get action address
+0133 619C 0456  20         b    *tmp2                  ; Process key action
+0134               
+0135               edkey.key.process.addbuffer:
+0136 619E 0460  28         b    @edkey.action.char     ; Add character to buffer
      61A0 662A 
-**** **** ****     > tivi_b1.asm.14640
-0036                       copy  "edkey.mov.asm"       ; Actions for movement keys
+**** **** ****     > tivi_b1.asm.19999
+0037                       copy  "edkey.mov.asm"       ; Actions for movement keys
 **** **** ****     > edkey.mov.asm
 0001               
 0002               
@@ -5600,8 +5603,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6448 832A 
 0490 644A 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
      644C 7008 
-**** **** ****     > tivi_b1.asm.14640
-0037                       copy  "edkey.mod.asm"       ; Actions for modifier keys
+**** **** ****     > tivi_b1.asm.19999
+0038                       copy  "edkey.mod.asm"       ; Actions for modifier keys
 **** **** ****     > edkey.mod.asm
 0001               * FILE......: edkey.mod.asm
 0002               * Purpose...: Actions for modifier keys
@@ -5659,7 +5662,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0044                       ; Exit
 0045                       ;-------------------------------------------------------
 0046               edkey.action.del_char.exit:
-0047 6482 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0047 6482 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6484 7008 
 0048               
 0049               
@@ -5708,7 +5711,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0082                       ; Exit
 0083                       ;-------------------------------------------------------
 0084               edkey.action.del_eol.exit:
-0085 64B6 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0085 64B6 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      64B8 7008 
 0086               
 0087               
@@ -5857,7 +5860,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0192                       ; Exit
 0193                       ;-------------------------------------------------------
 0194               edkey.action.ins_char.exit:
-0195 6564 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0195 6564 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6566 7008 
 0196               
 0197               
@@ -5916,7 +5919,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0232                       ; Exit
 0233                       ;-------------------------------------------------------
 0234               edkey.action.ins_line.exit:
-0235 65A8 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0235 65A8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      65AA 7008 
 0236               
 0237               
@@ -6010,7 +6013,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0300                       ; Exit
 0301                       ;-------------------------------------------------------
 0302               edkey.action.newline.exit:
-0303 6616 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0303 6616 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6618 7008 
 0304               
 0305               
@@ -6034,58 +6037,58 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0321                       ; Exit
 0322                       ;-------------------------------------------------------
 0323               edkey.action.ins_onoff.exit:
-0324               ;       b     @task2.cur_visible    ; Update cursor shape
-0325 6626 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
-     6628 7008 
+0324 6626 0460  28         b     @task.vdp.cursor      ; Update cursor shape
+     6628 70FC 
+0325               
 0326               
 0327               
 0328               
-0329               
-0330               
+0329               *---------------------------------------------------------------
+0330               * Process character
 0331               *---------------------------------------------------------------
-0332               * Process character
-0333               *---------------------------------------------------------------
-0334               edkey.action.char:
-0335 662A 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+0332               edkey.action.char:
+0333 662A 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      662C A306 
-0336 662E D805  38         movb  tmp1,@parm1           ; Store character for insert
+0334 662E D805  38         movb  tmp1,@parm1           ; Store character for insert
      6630 8350 
-0337 6632 C120  34         mov   @edb.insmode,tmp0     ; Insert or overwrite ?
+0335 6632 C120  34         mov   @edb.insmode,tmp0     ; Insert or overwrite ?
      6634 A30A 
-0338 6636 1302  14         jeq   edkey.action.char.overwrite
+0336 6636 1302  14         jeq   edkey.action.char.overwrite
+0337                       ;-------------------------------------------------------
+0338                       ; Insert mode
 0339                       ;-------------------------------------------------------
-0340                       ; Insert mode
-0341                       ;-------------------------------------------------------
-0342               edkey.action.char.insert:
-0343 6638 0460  28         b     @edkey.action.ins_char
+0340               edkey.action.char.insert:
+0341 6638 0460  28         b     @edkey.action.ins_char
      663A 651A 
+0342                       ;-------------------------------------------------------
+0343                       ; Overwrite mode
 0344                       ;-------------------------------------------------------
-0345                       ; Overwrite mode
-0346                       ;-------------------------------------------------------
-0347               edkey.action.char.overwrite:
-0348 663C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0345               edkey.action.char.overwrite:
+0346 663C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
      663E 6822 
-0349 6640 C120  34         mov   @fb.current,tmp0      ; Get pointer
+0347 6640 C120  34         mov   @fb.current,tmp0      ; Get pointer
      6642 A282 
-0350               
-0351 6644 D520  46         movb  @parm1,*tmp0          ; Store character in editor buffer
+0348               
+0349 6644 D520  46         movb  @parm1,*tmp0          ; Store character in editor buffer
      6646 8350 
-0352 6648 0720  34         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
+0350 6648 0720  34         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
      664A A28A 
-0353 664C 0720  34         seto  @fb.dirty             ; Trigger screen refresh
+0351 664C 0720  34         seto  @fb.dirty             ; Trigger screen refresh
      664E A296 
-0354               
-0355 6650 05A0  34         inc   @fb.column            ; Column++ in screen buffer
+0352               
+0353 6650 05A0  34         inc   @fb.column            ; Column++ in screen buffer
      6652 A28C 
-0356 6654 05A0  34         inc   @wyx                  ; Column++ VDP cursor
+0354 6654 05A0  34         inc   @wyx                  ; Column++ VDP cursor
      6656 832A 
+0355                       ;-------------------------------------------------------
+0356                       ; Update line length in frame buffer
 0357                       ;-------------------------------------------------------
-0358                       ; Update line length in frame buffer
-0359                       ;-------------------------------------------------------
-0360 6658 8820  54         c     @fb.column,@fb.row.length
+0358 6658 8820  54         c     @fb.column,@fb.row.length
      665A A28C 
      665C A288 
-0361 665E 1103  14         jlt   edkey.action.char.exit  ; column < length line ? Skip processing
+0359 665E 1103  14         jlt   edkey.action.char.exit
+0360                                                   ; column < length line ? Skip processing
+0361               
 0362 6660 C820  54         mov   @fb.column,@fb.row.length
      6662 A28C 
      6664 A288 
@@ -6093,10 +6096,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0364                       ; Exit
 0365                       ;-------------------------------------------------------
 0366               edkey.action.char.exit:
-0367 6666 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0367 6666 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6668 7008 
-**** **** ****     > tivi_b1.asm.14640
-0038                       copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
+**** **** ****     > tivi_b1.asm.19999
+0039                       copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
 **** **** ****     > edkey.misc.asm
 0001               * FILE......: edkey.misc.asm
 0002               * Purpose...: Actions for miscelanneous keys
@@ -6133,79 +6136,78 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0029               edkey.action.cmdb.hide:
 0030 667E 06A0  32         bl    @cmdb.hide            ; Hide command buffer pane
      6680 6C1C 
-0031               
-0032                       ;-------------------------------------------------------
-0033                       ; Exit
-0034                       ;-------------------------------------------------------
-0035               edkey.action.cmdb.toggle.exit:
-0036 6682 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0031                       ;-------------------------------------------------------
+0032                       ; Exit
+0033                       ;-------------------------------------------------------
+0034               edkey.action.cmdb.toggle.exit:
+0035 6682 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6684 7008 
+0036               
 0037               
 0038               
-0039               
-0040               *---------------------------------------------------------------
-0041               * Framebuffer down 1 row
-0042               *---------------------------------------------------------------
-0043               edkey.action.fbdown:
-0044 6686 05A0  34         inc   @fb.scrrows
+0039               *---------------------------------------------------------------
+0040               * Framebuffer down 1 row
+0041               *---------------------------------------------------------------
+0042               edkey.action.fbdown:
+0043 6686 05A0  34         inc   @fb.scrrows
      6688 A298 
-0045 668A 0720  34         seto  @fb.dirty
+0044 668A 0720  34         seto  @fb.dirty
      668C A296 
-0046               
-0047 668E 045B  20         b     *r11
+0045               
+0046 668E 045B  20         b     *r11
+0047               
 0048               
-0049               
-0050               *---------------------------------------------------------------
-0051               * Cycle colors
-0052               ********|*****|*********************|**************************
-0053               edkey.action.color.cycle:
-0054 6690 0649  14         dect  stack
-0055 6692 C64B  30         mov   r11,*stack            ; Push return address
-0056               
-0057 6694 C120  34         mov   @tv.colorscheme,tmp0  ; Load color scheme index
+0049               *---------------------------------------------------------------
+0050               * Cycle colors
+0051               ********|*****|*********************|**************************
+0052               edkey.action.color.cycle:
+0053 6690 0649  14         dect  stack
+0054 6692 C64B  30         mov   r11,*stack            ; Push return address
+0055               
+0056 6694 C120  34         mov   @tv.colorscheme,tmp0  ; Load color scheme index
      6696 A212 
-0058 6698 0284  22         ci    tmp0,3                ; 4th entry reached?
+0057 6698 0284  22         ci    tmp0,3                ; 4th entry reached?
      669A 0003 
-0059 669C 1102  14         jlt   !
-0060 669E 04C4  14         clr   tmp0
-0061 66A0 1001  14         jmp   edkey.action.color.switch
-0062 66A2 0584  14 !       inc   tmp0
-0063               *---------------------------------------------------------------
-0064               * Do actual color switch
-0065               ********|*****|*********************|**************************
-0066               edkey.action.color.switch:
-0067 66A4 C804  38         mov   tmp0,@tv.colorscheme  ; Save color scheme index
+0058 669C 1102  14         jlt   !
+0059 669E 04C4  14         clr   tmp0
+0060 66A0 1001  14         jmp   edkey.action.color.switch
+0061 66A2 0584  14 !       inc   tmp0
+0062               *---------------------------------------------------------------
+0063               * Do actual color switch
+0064               ********|*****|*********************|**************************
+0065               edkey.action.color.switch:
+0066 66A4 C804  38         mov   tmp0,@tv.colorscheme  ; Save color scheme index
      66A6 A212 
-0068 66A8 0A14  56         sla   tmp0,1                ; Offset into color scheme data table
-0069 66AA 0224  22         ai    tmp0,tv.data.colorscheme
+0067 66A8 0A14  56         sla   tmp0,1                ; Offset into color scheme data table
+0068 66AA 0224  22         ai    tmp0,tv.data.colorscheme
      66AC 726A 
-0070                                                   ; Add base for color scheme data table
-0071 66AE D154  26         movb  *tmp0,tmp1            ; Get foreground / background color
-0072                       ;-------------------------------------------------------
-0073                       ; Dump cursor FG color to sprite table (SAT)
-0074                       ;-------------------------------------------------------
-0075 66B0 C185  18         mov   tmp1,tmp2             ; Get work copy
-0076 66B2 0946  56         srl   tmp2,4                ; Move nibble to right
-0077 66B4 0246  22         andi  tmp2,>0f00
+0069                                                   ; Add base for color scheme data table
+0070 66AE D154  26         movb  *tmp0,tmp1            ; Get foreground / background color
+0071                       ;-------------------------------------------------------
+0072                       ; Dump cursor FG color to sprite table (SAT)
+0073                       ;-------------------------------------------------------
+0074 66B0 C185  18         mov   tmp1,tmp2             ; Get work copy
+0075 66B2 0946  56         srl   tmp2,4                ; Move nibble to right
+0076 66B4 0246  22         andi  tmp2,>0f00
      66B6 0F00 
-0078 66B8 D806  38         movb  tmp2,@ramsat+3        ; Update FG color in sprite table (SAT)
+0077 66B8 D806  38         movb  tmp2,@ramsat+3        ; Update FG color in sprite table (SAT)
      66BA 8383 
-0079 66BC D806  38         movb  tmp2,@tv.curshape+1   ; Save cursor color
+0078 66BC D806  38         movb  tmp2,@tv.curshape+1   ; Save cursor color
      66BE A215 
-0080                       ;-------------------------------------------------------
-0081                       ; Dump color combination to VDP color table
-0082                       ;-------------------------------------------------------
-0083 66C0 0985  56         srl   tmp1,8                ; MSB to LSB
-0084 66C2 0265  22         ori   tmp1,>0700
+0079                       ;-------------------------------------------------------
+0080                       ; Dump color combination to VDP color table
+0081                       ;-------------------------------------------------------
+0082 66C0 0985  56         srl   tmp1,8                ; MSB to LSB
+0083 66C2 0265  22         ori   tmp1,>0700
      66C4 0700 
-0085 66C6 C105  18         mov   tmp1,tmp0
-0086 66C8 06A0  32         bl    @putvrx
+0084 66C6 C105  18         mov   tmp1,tmp0
+0085 66C8 06A0  32         bl    @putvrx
      66CA 2314 
-0087 66CC C2F9  30         mov   *stack+,r11           ; Pop R11
-0088 66CE 0460  28         b     @hook.keyscan.bounce              ; Back to editor main
+0086 66CC C2F9  30         mov   *stack+,r11           ; Pop R11
+0087 66CE 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      66D0 7008 
-**** **** ****     > tivi_b1.asm.14640
-0039                       copy  "edkey.file.asm"      ; Actions for file related keys
+**** **** ****     > tivi_b1.asm.19999
+0040                       copy  "edkey.file.asm"      ; Actions for file related keys
 **** **** ****     > edkey.file.asm
 0001               * FILE......: edkey.fíle.asm
 0002               * Purpose...: File related actions (load file, save file, ...)
@@ -6257,8 +6259,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6712 6E90 
 0037 6714 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      6716 63DE 
-**** **** ****     > tivi_b1.asm.14640
-0040                       copy  "tivi.asm"            ; Main editor configuration
+**** **** ****     > tivi_b1.asm.19999
+0041                       copy  "tivi.asm"            ; Main editor configuration
 **** **** ****     > tivi.asm
 0001               * FILE......: tivi.asm
 0002               * Purpose...: TiVi Editor - Main editor configuration
@@ -6300,8 +6302,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               tivi.init.exit:
 0038 6720 0460  28         b     @poprt                ; Return to caller
      6722 2212 
-**** **** ****     > tivi_b1.asm.14640
-0041                       copy  "mem.asm"             ; Memory Management
+**** **** ****     > tivi_b1.asm.19999
+0042                       copy  "mem.asm"             ; Memory Management
 **** **** ****     > mem.asm
 0001               * FILE......: mem.asm
 0002               * Purpose...: TiVi Editor - Memory management (SAMS)
@@ -6478,8 +6480,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0151 67B6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0152 67B8 045B  20         b     *r11                  ; Return to caller
 0153               
-**** **** ****     > tivi_b1.asm.14640
-0042                       copy  "fb.asm"              ; Framebuffer
+**** **** ****     > tivi_b1.asm.19999
+0043                       copy  "fb.asm"              ; Framebuffer
 **** **** ****     > fb.asm
 0001               * FILE......: fb.asm
 0002               * Purpose...: TiVi Editor - Framebuffer module
@@ -6842,8 +6844,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0298               fb.get.firstnonblank.exit:
 0299 68FA 0460  28         b    @poprt                 ; Return to caller
      68FC 2212 
-**** **** ****     > tivi_b1.asm.14640
-0043                       copy  "idx.asm"             ; Index management
+**** **** ****     > tivi_b1.asm.19999
+0044                       copy  "idx.asm"             ; Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
 0002               * Purpose...: TiVi Editor - Index module
@@ -7174,8 +7176,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0281               idx.pointer.get.exit:
 0282 69D2 0460  28         b     @poprt                ; Return to caller
      69D4 2212 
-**** **** ****     > tivi_b1.asm.14640
-0044                       copy  "edb.asm"             ; Editor Buffer
+**** **** ****     > tivi_b1.asm.19999
+0045                       copy  "edb.asm"             ; Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
 0002               * Purpose...: TiVi Editor - Editor Buffer module
@@ -7715,8 +7717,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0431 6BB8 0460  28         b     @poprt                ; Return to caller
      6BBA 2212 
 0432               
-**** **** ****     > tivi_b1.asm.14640
-0045                       copy  "cmdb.asm"            ; Command Buffer
+**** **** ****     > tivi_b1.asm.19999
+0046                       copy  "cmdb.asm"            ; Command Buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
 0002               * Purpose...: TiVi Editor - Command Buffer module
@@ -7949,8 +7951,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0195 6C72 C2F9  30         mov   *stack+,r11           ; Pop r11
 0196 6C74 045B  20         b     *r11                  ; Return to caller
 0197               
-**** **** ****     > tivi_b1.asm.14640
-0046                       copy  "fh.read.sams.asm"    ; File handler read file
+**** **** ****     > tivi_b1.asm.19999
+0047                       copy  "fh.read.sams.asm"    ; File handler read file
 **** **** ****     > fh.read.sams.asm
 0001               * FILE......: fh.read.sams.asm
 0002               * Purpose...: File reader module (SAMS implementation)
@@ -8461,8 +8463,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0397                       ; byte  12                  ;  9    - File descriptor length
 0398                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0399                                                   ;         (Device + '.' + File name)
-**** **** ****     > tivi_b1.asm.14640
-0047                       copy  "fm.load.asm"         ; File manager loadfile
+**** **** ****     > tivi_b1.asm.19999
+0048                       copy  "fm.load.asm"         ; File manager loadfile
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm_load.asm
 0002               * Purpose...: High-level file manager module
@@ -8771,8 +8773,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0234               fm.loadfile.callback.fioerr.exit:
 0235 6FE0 0460  28         b     @poprt                ; Return to caller
      6FE2 2212 
-**** **** ****     > tivi_b1.asm.14640
-0048                       copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning
+**** **** ****     > tivi_b1.asm.19999
+0049                       copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning
 **** **** ****     > hook.keyscan.asm
 0001               * FILE......: hook.keyscan.asm
 0002               * Purpose...: TiVi Editor - Keyboard handling (spectra2 user hook)
@@ -8805,7 +8807,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0025 6FF6 C820  54         mov   @waux1,@waux2         ; Save as previous key
      6FF8 833C 
      6FFA 833E 
-0026 6FFC 0460  28         b     @edkey                ; Process key
+0026 6FFC 0460  28         b     @edkey.key.process    ; Process key
      6FFE 6180 
 0027               *--------------------------------------------------------------
 0028               * Clear keyboard buffer if no key pressed
@@ -8832,8 +8834,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046               *--------------------------------------------------------------
 0047 7010 0460  28         b     @hookok               ; Return
      7012 2C2A 
-**** **** ****     > tivi_b1.asm.14640
-0049                       copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
+**** **** ****     > tivi_b1.asm.19999
+0050                       copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
 **** **** ****     > task.vdp.panes.asm
 0001               * FILE......: task.vdp.panes.asm
 0002               * Purpose...: TiVi Editor - VDP draw editor panes
@@ -8848,7 +8850,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0011               task.vdp.panes:
 0012 7014 C120  34         mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
      7016 A296 
-0013 7018 1362  14         jeq   task.vdp.panes.exit   ; No, skip update
+0013 7018 1360  14         jeq   task.vdp.panes.exit   ; No, skip update
 0014 701A C820  54         mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
      701C 832A 
      701E A294 
@@ -9001,22 +9003,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0126                       ;-------------------------------------------------------
 0127 70D0 C120  34         mov   @cmdb.visible,tmp0     ; Show command buffer?
      70D2 A502 
-0128 70D4 1304  14         jeq   task.vdp.panes.exit    ; No, skip
+0128 70D4 1302  14         jeq   task.vdp.panes.exit    ; No, skip
 0129 70D6 06A0  32         bl    @cmdb.refresh          ; Refresh command buffer content
      70D8 6C3A 
-0130                       ;-------------------------------------------------------
-0131                       ; Show status bottom line
-0132                       ;-------------------------------------------------------
-0133 70DA 06A0  32         bl    @pane.botline.draw     ; Draw status bottom line
+0130                       ;------------------------------------------------------
+0131                       ; Exit task
+0132                       ;------------------------------------------------------
+0133               task.vdp.panes.exit:
+0134 70DA 06A0  32         bl    @pane.botline.draw     ; Draw status bottom line
      70DC 7132 
-0134                       ;------------------------------------------------------
-0135                       ; Exit task
-0136                       ;------------------------------------------------------
-0137               task.vdp.panes.exit:
-0138 70DE 0460  28         b     @slotok
+0135 70DE 0460  28         b     @slotok
      70E0 2CA6 
-**** **** ****     > tivi_b1.asm.14640
-0050                       copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
+**** **** ****     > tivi_b1.asm.19999
+0051                       copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
 **** **** ****     > task.vdp.sat.asm
 0001               * FILE......: task.vdp.sat.asm
 0002               * Purpose...: TiVi Editor - VDP copy SAT
@@ -9049,8 +9048,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023               task.vdp.copy.sat.exit:
 0024 70F8 0460  28         b     @slotok                ; Exit task
      70FA 2CA6 
-**** **** ****     > tivi_b1.asm.14640
-0051                       copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
+**** **** ****     > tivi_b1.asm.19999
+0052                       copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
 **** **** ****     > task.vdp.cursor.asm
 0001               * FILE......: task.vdp.cursor.asm
 0002               * Purpose...: TiVi Editor - VDP sprite cursor
@@ -9117,8 +9116,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052               task.vdp.cursor.exit:
 0053 712E 0460  28         b     @slotok                ; Exit task
      7130 2CA6 
-**** **** ****     > tivi_b1.asm.14640
-0052                       copy  "pane.botline.asm"    ; Pane status bottom line
+**** **** ****     > tivi_b1.asm.19999
+0053                       copy  "pane.botline.asm"    ; Pane status bottom line
 **** **** ****     > pane.botline.asm
 0001               * FILE......: pane.botline.asm
 0002               * Purpose...: TiVi Editor - Pane status bottom line
@@ -9329,8 +9328,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0159 7220 C139  30         mov   *stack+,tmp0           ; Pop tmp0
 0160 7222 C2F9  30         mov   *stack+,r11            ; Pop r11
 0161 7224 045B  20         b     *r11                   ; Return
-**** **** ****     > tivi_b1.asm.14640
-0053                       copy  "data.asm"            ; Data segment
+**** **** ****     > tivi_b1.asm.19999
+0054                       copy  "data.asm"            ; Data segment
 **** **** ****     > data.asm
 0001               * FILE......: data.asm
 0002               * Purpose...: TiVi Editor - data segment (constants, strings, ...)
@@ -9481,7 +9480,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0122               
 0123 7314 1804     txt.tivi     byte    24
 0124                            byte    4
-0125 7316 ....                  text    'TiVi beta 200322-14640'
+0125 7316 ....                  text    'TiVi beta 200322-19999'
 0126 732C 0500                  byte    5
 0127 732E 732E     end          data    $
 0128               
@@ -9536,19 +9535,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0177 73B1 ....             text  'DSK1.INVADERS'
 0178                       even
 0179               
-**** **** ****     > tivi_b1.asm.14640
-0054               
-0058 73BE 73BE                   data $                ; Bank 1 ROM size OK.
-0060               
-0061               *--------------------------------------------------------------
-0062               * Video mode configuration
-0063               *--------------------------------------------------------------
-0064      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0065      0004     spfbck  equ   >04                   ; Screen background color.
-0066      21F6     spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
-0067      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0068      0050     colrow  equ   80                    ; Columns per row
-0069      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0070      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0071      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
-0072      2000     sprsat  equ   >2000                 ; VDP sprite attribute table
+**** **** ****     > tivi_b1.asm.19999
+0055               
+0059 73BE 73BE                   data $                ; Bank 1 ROM size OK.
+0061               
+0062               *--------------------------------------------------------------
+0063               * Video mode configuration
+0064               *--------------------------------------------------------------
+0065      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0066      0004     spfbck  equ   >04                   ; Screen background color.
+0067      21F6     spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+0068      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0069      0050     colrow  equ   80                    ; Columns per row
+0070      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0071      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0072      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
+0073      2000     sprsat  equ   >2000                 ; VDP sprite attribute table

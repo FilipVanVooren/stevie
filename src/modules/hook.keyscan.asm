@@ -23,7 +23,7 @@ hook.keyscan:
 *--------------------------------------------------------------
 hook.keyscan.newkey:
         mov   @waux1,@waux2         ; Save as previous key
-        b     @edkey                ; Process key
+        b     @edkey.key.process    ; Process key
 *--------------------------------------------------------------
 * Clear keyboard buffer if no key pressed
 *--------------------------------------------------------------

@@ -1,25 +1,21 @@
 * FILE......: edkey.asm
 * Purpose...: Initialisation & setup key actions
 
-
-
-
-
 *---------------------------------------------------------------
 * Movement keys
 *---------------------------------------------------------------
-key_left      equ >0800                      ; fctn + s
-key_right     equ >0900                      ; fctn + d
-key_up        equ >0b00                      ; fctn + e
-key_down      equ >0a00                      ; fctn + x
-key_home      equ >8100                      ; ctrl + a
-key_end       equ >8600                      ; ctrl + f 
-key_pword     equ >9300                      ; ctrl + s
-key_nword     equ >8400                      ; ctrl + d
-key_ppage     equ >8500                      ; ctrl + e
-key_npage     equ >9800                      ; ctrl + x
-key_tpage     equ >9400                      ; ctrl + t
-key_bpage     equ >8200                      ; ctrl + b
+key_left        equ >0800                    ; fctn + s
+key_right       equ >0900                    ; fctn + d
+key_up          equ >0b00                    ; fctn + e
+key_down        equ >0a00                    ; fctn + x
+key_home        equ >8100                    ; ctrl + a
+key_end         equ >8600                    ; ctrl + f 
+key_pword       equ >9300                    ; ctrl + s
+key_nword       equ >8400                    ; ctrl + d
+key_ppage       equ >8500                    ; ctrl + e
+key_npage       equ >9800                    ; ctrl + x
+key_tpage       equ >9400                    ; ctrl + t
+key_bpage       equ >8200                    ; ctrl + b
 *---------------------------------------------------------------
 * Modifier keys
 *---------------------------------------------------------------
@@ -49,13 +45,13 @@ key_buf9        equ >9f00                    ; ctrl + 9
 * Misc keys
 *---------------------------------------------------------------
 key_cmdb_tog    equ >0f00                    ; fctn + 9
-key_cycle       equ >9a00                    ; ctrl + z
+key_color_cycle equ >9a00                    ; ctrl + z
 
 
 *---------------------------------------------------------------
 * Action keys mapping <-> actions table
 *---------------------------------------------------------------
-keymap_actions
+keymap_actions.editor:
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------
@@ -89,7 +85,8 @@ keymap_actions
         ;-------------------------------------------------------
         data  key_quit1,edkey.action.quit           ; Quit TiVi
         data  key_cmdb_tog,edkey.action.cmdb.toggle ; Toggle command buffer pane
-        data  key_cycle,edkey.action.color.cycle    ; Cycle color scheme                                  
+        data  key_color_cycle,edkey.action.color.cycle
+                                                    ; Cycle color scheme                                  
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------
@@ -110,25 +107,30 @@ keymap_actions
 ****************************************************************
 * Editor - Process key
 ****************************************************************
-edkey   mov   @waux1,tmp1           ; Get key value
+edkey.key.process:
+        mov   @waux1,tmp1           ; Get key value
         andi  tmp1,>ff00            ; Get rid of LSB
 
-        li    tmp2,keymap_actions   ; Load keyboard map
+        li    tmp2,keymap_actions.editor 
+                                    ; Load keyboard map
         seto  tmp3                  ; EOL marker
         ;-------------------------------------------------------
         ; Iterate over keyboard map for matching key
         ;-------------------------------------------------------
-edkey.check_next_key:
+edkey.key.check_next:
         c     *tmp2,tmp3            ; EOL reached ?
-        jeq   edkey.do_action.set   ; Yes, so go add letter
+        jeq   edkey.key.process.addbuffer
+                                    ; Yes, so go add character to buffer
 
         c     tmp1,*tmp2+           ; Key matched?
-        jeq   edkey.do_action       ; Yes, do action
+        jeq   edkey.key.process.action
+                                    ; Yes, do action
         inct  tmp2                  ; No, skip action
-        jmp   edkey.check_next_key  ; Next key
+        jmp   edkey.key.check_next  ; Next key
 
-edkey.do_action:
+edkey.key.process.action:
         mov  *tmp2,tmp2             ; Get action address
         b    *tmp2                  ; Process key action
-edkey.do_action.set:
+
+edkey.key.process.addbuffer:
         b    @edkey.action.char     ; Add character to buffer        

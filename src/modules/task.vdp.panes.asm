@@ -125,14 +125,11 @@ task.vdp.panes.draw_double.draw:
         ; Show command buffer
         ;-------------------------------------------------------
         mov   @cmdb.visible,tmp0     ; Show command buffer?
-        jeq   task.vdp.panes.exit    ; No, skip
+        jeq   task.vdp.panes.exit    ; No, skip 
         bl    @cmdb.refresh          ; Refresh command buffer content
-        ;-------------------------------------------------------
-        ; Show status bottom line
-        ;-------------------------------------------------------        
-        bl    @pane.botline.draw     ; Draw status bottom line
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:
+        bl    @pane.botline.draw     ; Draw status bottom line
         b     @slotok

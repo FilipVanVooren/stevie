@@ -28,7 +28,8 @@
 * TiVi entry point after spectra2 initialisation
 ********|*****|*********************|**************************
         aorg  kickstart.code2
-main    clr   @>6002                ; Jump to bank 1
+main:   
+        clr   @>6002                ; Jump to bank 1
         b     @main.tivi            ; Start editor
 
         copy  "main.asm"            ; Main file (entrypoint)

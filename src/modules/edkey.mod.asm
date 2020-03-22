@@ -44,7 +44,7 @@ edkey.action.del_char_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_char.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -82,7 +82,7 @@ edkey.action.del_eol_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_eol.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -192,7 +192,7 @@ edkey.action.ins_char.sanity
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_char.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 
@@ -232,7 +232,7 @@ edkey.action.ins_line.insert:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_line.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 
@@ -300,7 +300,7 @@ edkey.action.newline.rest:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.newline.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 
@@ -320,10 +320,8 @@ edkey.action.ins_onoff.loop:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_onoff.exit:
-;       b     @task2.cur_visible    ; Update cursor shape
-        b     @hook.keyscan.bounce              ; Back to editor main
-
+edkey.action.ins_onoff.exit: 
+        b     @task.vdp.cursor      ; Update cursor shape  
 
 
 
@@ -358,10 +356,12 @@ edkey.action.char.overwrite:
         ; Update line length in frame buffer
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
-        jlt   edkey.action.char.exit  ; column < length line ? Skip processing
+        jlt   edkey.action.char.exit
+                                    ; column < length line ? Skip processing
+
         mov   @fb.column,@fb.row.length
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.char.exit:
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
