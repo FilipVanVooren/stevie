@@ -45,11 +45,11 @@ main    clr   @>6002                ; Jump to bank 1
         copy  "cmdb.asm"            ; Command Buffer
         copy  "fh.read.sams.asm"    ; File handler read file
         copy  "fm.load.asm"         ; File manager loadfile
-        copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning
-        copy  "task.asm"            ; Code shared between tasks
+        copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning        
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
+        copy  "pane.botline.asm"    ; Pane status bottom line
         copy  "data.asm"            ; Data segment
 
         .ifgt $, >7fff

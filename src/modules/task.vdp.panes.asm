@@ -6,7 +6,7 @@
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
-* Task - VDP draw editor panes (frame buffer, CMDB, ...)
+* Task - VDP draw editor panes (frame buffer, CMDB, status line)
 ***************************************************************
 task.vdp.panes:
         mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
@@ -125,10 +125,14 @@ task.vdp.panes.draw_double.draw:
         ; Show command buffer
         ;-------------------------------------------------------
         mov   @cmdb.visible,tmp0     ; Show command buffer?
-        jeq   task.vdp.panes.exit             ; No, skip
+        jeq   task.vdp.panes.exit    ; No, skip
         bl    @cmdb.refresh          ; Refresh command buffer content
+        ;-------------------------------------------------------
+        ; Show status bottom line
+        ;-------------------------------------------------------        
+        bl    @pane.botline.draw     ; Draw status bottom line
         ;------------------------------------------------------
-        ; Task 0 - Exit
+        ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:
         b     @slotok

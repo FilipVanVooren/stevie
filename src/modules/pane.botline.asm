@@ -1,85 +1,92 @@
-* FILE......: task.asm
-* Purpose...: TiVi Editor - Code shared between tasks
+* FILE......: pane.botline.asm
+* Purpose...: TiVi Editor - Pane status bottom line
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Code shared between tasks
+*              TiVi Editor - Pane status bottom line
 *//////////////////////////////////////////////////////////////
 
-
+***************************************************************
+* pane.botline.draw
+* Draw TiVi status bottom line
+***************************************************************
+* bl  @pane.botline.draw
 *--------------------------------------------------------------
-* Copy ramsat to VDP SAT and show bottom line - Tasks 1,2
+* OUTPUT
+* none
 *--------------------------------------------------------------
-task.sub_copy_ramsat:
+* Register usage
+* tmp0
+********|*****|*********************|**************************
+pane.botline.draw:
         dect  stack
-        mov   tmp0,*stack            ; Push tmp0
-
-        bl    @cpym2v                ; Copy sprite SAT to VDP
-              data sprsat,ramsat,4   ; \ i  tmp0 = VDP destination
-                                     ; | i  tmp1 = ROM/RAM source
-                                     ; / i  tmp2 = Number of bytes to write
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
 
         mov   @wyx,@fb.yxsave
         ;------------------------------------------------------
         ; Show buffer number
         ;------------------------------------------------------
-task.botline.bufnum:
+pane.botline.bufnum:
         bl    @putat 
               byte  29,0
               data  txt.bufnum
         ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------
-task.botline.show_file:        
+pane.botline.show_file:        
         bl    @at
-              byte  29,3             ; Position cursor
-        mov   @edb.filename.ptr,tmp1 ; Get string to display
-        bl    @xutst0                ; Display string
+              byte  29,3            ; Position cursor
+        mov   @edb.filename.ptr,tmp1
+                                    ; Get string to display
+        bl    @xutst0               ; Display string
 
         bl    @at
-              byte  29,35            ; Position cursor
+              byte  29,35           ; Position cursor
 
-        mov   @edb.filetype.ptr,tmp1 ; Get string to display
-        bl    @xutst0                ; Display Filetype string
+        mov   @edb.filetype.ptr,tmp1
+                                    ; Get string to display
+        bl    @xutst0               ; Display Filetype string
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
-task.botline.show_mode:
+pane.botline.show_mode:
         mov   @edb.insmode,tmp0
-        jne   task.botline.show_mode.insert
+        jne   pane.botline.show_mode.insert
         ;------------------------------------------------------
         ; Overwrite mode
         ;------------------------------------------------------
-task.botline.show_mode.overwrite:
+pane.botline.show_mode.overwrite:
         bl    @putat
               byte  29,50
               data  txt.ovrwrite
-        jmp   task.botline.show_changed
+        jmp   pane.botline.show_changed
         ;------------------------------------------------------
         ; Insert  mode
         ;------------------------------------------------------
-task.botline.show_mode.insert:
+pane.botline.show_mode.insert:
         bl    @putat
               byte  29,50
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
         ;------------------------------------------------------        
-task.botline.show_changed:
+pane.botline.show_changed:
         mov   @edb.dirty,tmp0
-        jeq   task.botline.show_changed.clear
+        jeq   pane.botline.show_changed.clear
         ;------------------------------------------------------
         ; Show "*"
         ;------------------------------------------------------        
         bl    @putat
               byte 29,54
               data txt.star
-        jmp   task.botline.show_linecol
+        jmp   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Show "line,column"
         ;------------------------------------------------------        
-task.botline.show_changed.clear:        
+pane.botline.show_changed.clear:        
         nop
-task.botline.show_linecol:
+pane.botline.show_linecol:
         mov   @fb.row,@parm1 
         bl    @fb.row2line 
         inc   @outparm1
@@ -126,17 +133,17 @@ task.botline.show_linecol:
         mov   @fb.row,@parm1 
         bl    @fb.row2line 
         c     @edb.lines,@outparm1
-        jne   task.botline.show_lines_in_buffer
+        jne   pane.botline.show_lines_in_buffer
 
         bl    @putat
               byte 29,75
               data txt.bottom
 
-        jmp   task.botline.exit
+        jmp   pane.botline.exit
         ;------------------------------------------------------
         ; Show lines in buffer
         ;------------------------------------------------------
-task.botline.show_lines_in_buffer:
+pane.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
         inc   @waux1                 ; Offset 1
         bl    @putnum
@@ -147,7 +154,8 @@ task.botline.show_lines_in_buffer:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-task.botline.exit:
+pane.botline.exit:
         mov   @fb.yxsave,@wyx
         mov   *stack+,tmp0           ; Pop tmp0
-        b     @slotok                ; Exit running task
+        mov   *stack+,r11            ; Pop r11
+        b     *r11                   ; Return
