@@ -10,7 +10,7 @@
 ****************************************************************
 hook.keyscan:
         coc   @wbit11,config        ; ANYKEY pressed ?
-        jne   task.keyb.hook.clear_kbbuffer
+        jne   hook.keyscan.clear_kbbuffer
                                     ; No, clear buffer and exit
 *---------------------------------------------------------------
 * Identical key pressed ?
