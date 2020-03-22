@@ -116,7 +116,8 @@ cmdb.show.exit:
 * Register usage
 * none
 *--------------------------------------------------------------
-* Notes
+* Hiding the command buffer automatically passes pane focus
+* to frame buffer.
 ********|*****|*********************|**************************
 cmdb.hide:
         dect  stack
@@ -128,7 +129,10 @@ cmdb.hide:
                                     ; Resize framebuffer
 
         clr   @cmdb.visible         ; Hide pane
+        clr   @cmdb.hasfocus        ; Remove focus from CMDB
         seto  @fb.dirty             ; Redraw framebuffer
+        seto  @fb.hasfocus          ; Framebuffer has focus!
+
 cmdb.hide.exit:
         ;------------------------------------------------------
         ; Exit

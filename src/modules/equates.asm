@@ -120,7 +120,7 @@ fb.row.length   equ  fb.struct + 8  ; Length of current row in frame buffer
 fb.row.dirty    equ  fb.struct + 10 ; Current row dirty flag in frame buffer
 fb.column       equ  fb.struct + 12 ; Current column in frame buffer
 fb.colsline     equ  fb.struct + 14 ; Columns per row in frame buffer
-fb.free1        equ  fb.struct + 16 ; **FREE FOR USE**
+fb.hasfocus     equ  fb.struct + 16 ; Frame buffer pane has focus (>ffff = yes)
 fb.curtoggle    equ  fb.struct + 18 ; Cursor shape toggle
 fb.yxsave       equ  fb.struct + 20 ; Copy of WYX
 fb.dirty        equ  fb.struct + 22 ; Frame buffer dirty flag
@@ -181,7 +181,8 @@ cmdb.yxtop      equ  cmdb.struct + 8   ; Screen YX of 1st row in cmdb pane
 cmdb.yxsave     equ  cmdb.struct + 10  ; Copy of WYX
 cmdb.lines      equ  cmdb.struct + 12  ; Total lines in editor buffer
 cmdb.dirty      equ  cmdb.struct + 14  ; Editor buffer dirty (Text changed!)
-cmdb.end        equ  cmdb.struct + 16  ; End of structure
+cmdb.hasfocus   equ  cmdb.struct + 16  ; CMDB pane has focus (>ffff=yes)
+cmdb.end        equ  cmdb.struct + 18  ; End of structure
 *--------------------------------------------------------------
 * Free for future use               @>a600-a64f     (80 bytes)
 *--------------------------------------------------------------

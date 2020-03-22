@@ -321,8 +321,8 @@ edkey.action.ins_onoff.loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_onoff.exit:
-        b     @task2.cur_visible    ; Update cursor shape
-
+;       b     @task2.cur_visible    ; Update cursor shape
+        b     @ed_wait              ; Back to editor main
 
 
 

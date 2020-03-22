@@ -94,9 +94,10 @@ main.continue:
         mov   tmp0,@wtitab        
 
         bl    @mkslot
-              data >0001,task0      ; Task 0 - Update screen
-              data >0102,task1      ; Task 1 - Update cursor position
-              data >020f,task2,eol  ; Task 2 - Toggle cursor shape
+              data >0001,task.vdp.panes    ; Task 0 - Draw VDP editor panes
+              data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
+              data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
+              data eol
 
         bl    @mkhook
               data editor           ; Setup user hook

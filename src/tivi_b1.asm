@@ -45,7 +45,10 @@ main    clr   @>6002                ; Jump to bank 1
         copy  "cmdb.asm"            ; cmdb         - Command Buffer
         copy  "fh.read.sams.asm"    ; fh.read.sams - File handler read file
         copy  "fm.load.asm"         ; fm.load      - File manager loadfile
-        copy  "tasks.asm"           ; tsk          - Tasks
+        copy  "task.asm"            ; *****        - Code shared between tasks
+        copy  "task.vdp.panes.asm"  ; *****        - VDP draw editor panes
+        copy  "task.vdp.sat.asm"    ; *****        - VDP copy SAT
+        copy  "task.vdp.cursor.asm" ; *****        - VDP set cursor shape
         copy  "data.asm"            ; data         - Data segment
 
         .ifgt $, >7fff
