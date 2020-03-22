@@ -17,7 +17,7 @@ edkey.action.left:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -35,7 +35,7 @@ edkey.action.right:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -90,7 +90,7 @@ edkey.action.up.set_cursorx:
         ;-------------------------------------------------------
 edkey.action.up.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -159,7 +159,7 @@ edkey.action.down.set_cursorx:
         ;-------------------------------------------------------
 edkey.action.down.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -172,7 +172,7 @@ edkey.action.home:
         mov   tmp0,@wyx             ; VDP cursor column=0
         clr   @fb.column
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 *---------------------------------------------------------------
 * Cursor end of line
@@ -182,7 +182,7 @@ edkey.action.end:
         mov   tmp0,@fb.column
         bl    @xsetx                ; Set VDP cursor column position
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -250,7 +250,7 @@ edkey.action.pword_done:
         ;-------------------------------------------------------
 edkey.action.pword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -333,7 +333,7 @@ edkey.action.nword_done:
         ;-------------------------------------------------------
 edkey.action.nword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -419,7 +419,7 @@ edkey.action.npage.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.npage.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -450,7 +450,7 @@ edkey.action.top.exit:
         clr   @fb.column            ; Frame buffer column 0
         li    tmp0,>0100
         mov   tmp0,@wyx             ; Set VDP cursor on line 1, column 0
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -485,4 +485,4 @@ edkey.action.bot.exit:
         clr   @fb.column            ; Editor column 0
         li    tmp0,>0100            ; Set VDP cursor on line 1, column 0
         mov   tmp0,@wyx             ; Set cursor
-!       b     @ed_wait              ; Back to editor main
+!       b     @hook.keyscan.bounce              ; Back to editor main

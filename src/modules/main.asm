@@ -100,7 +100,7 @@ main.continue:
               data eol
 
         bl    @mkhook
-              data editor           ; Setup user hook
+              data hook.keyscan     ; Setup user hook
 
         b     @tmgr                 ; Start timers and kthread
 

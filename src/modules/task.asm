@@ -5,54 +5,6 @@
 *        TiVi Editor - Code shared between tasks
 *//////////////////////////////////////////////////////////////
 
-****************************************************************
-* Editor - spectra2 user hook
-****************************************************************
-editor  coc   @wbit11,config        ; ANYKEY pressed ?
-        jne   ed_clear_kbbuffer     ; No, clear buffer and exit
-*---------------------------------------------------------------
-* Identical key pressed ?
-*---------------------------------------------------------------
-        szc   @wbit11,config        ; Reset ANYKEY
-        c     @waux1,@waux2         ; Still pressing previous key?
-        jeq   ed_wait
-*--------------------------------------------------------------
-* New key pressed
-*--------------------------------------------------------------
-ed_new_key
-        mov   @waux1,@waux2         ; Save as previous key
-        b     @edkey                ; Process key
-*--------------------------------------------------------------
-* Clear keyboard buffer if no key pressed
-*--------------------------------------------------------------
-ed_clear_kbbuffer
-        clr   @waux1
-        clr   @waux2
-*--------------------------------------------------------------
-* Delay to avoid key bouncing
-*-------------------------------------------------------------- 
-ed_wait
-        li    tmp0,1800             ; Key delay to avoid bouncing keys
-        ;------------------------------------------------------
-        ; Delay loop
-        ;------------------------------------------------------
-ed_wait_loop
-        dec   tmp0
-        jne   ed_wait_loop
-*--------------------------------------------------------------
-* Exit
-*--------------------------------------------------------------
-ed_exit b     @hookok               ; Return
-
-
-
-
-
-
-
-
-
-
 
 *--------------------------------------------------------------
 * Copy ramsat to VDP SAT and show bottom line - Tasks 1,2

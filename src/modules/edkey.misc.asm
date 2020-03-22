@@ -33,7 +33,7 @@ edkey.action.cmdb.hide:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.toggle.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -85,4 +85,4 @@ edkey.action.color.switch:
         mov   tmp1,tmp0
         bl    @putvrx
         mov   *stack+,r11           ; Pop R11
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main

@@ -44,7 +44,7 @@ edkey.action.del_char_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_char.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -82,7 +82,7 @@ edkey.action.del_eol_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_eol.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -192,7 +192,7 @@ edkey.action.ins_char.sanity
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_char.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -232,7 +232,7 @@ edkey.action.ins_line.insert:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_line.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -300,7 +300,7 @@ edkey.action.newline.rest:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.newline.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -322,7 +322,7 @@ edkey.action.ins_onoff.loop:
         ;-------------------------------------------------------
 edkey.action.ins_onoff.exit:
 ;       b     @task2.cur_visible    ; Update cursor shape
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main
 
 
 
@@ -364,4 +364,4 @@ edkey.action.char.overwrite:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.char.exit:
-        b     @ed_wait              ; Back to editor main
+        b     @hook.keyscan.bounce              ; Back to editor main

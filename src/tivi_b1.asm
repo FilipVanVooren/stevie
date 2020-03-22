@@ -37,19 +37,20 @@ main    clr   @>6002                ; Jump to bank 1
         copy  "edkey.mod.asm"       ; Actions for modifier keys
         copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
         copy  "edkey.file.asm"      ; Actions for file related keys
-        copy  "tivi.asm"            ; tv           - Main editor configuration
-        copy  "mem.asm"             ; mem          - Memory Management
-        copy  "fb.asm"              ; fb           - Framebuffer
-        copy  "idx.asm"             ; idx          - Index management
-        copy  "edb.asm"             ; edb          - Editor Buffer
-        copy  "cmdb.asm"            ; cmdb         - Command Buffer
-        copy  "fh.read.sams.asm"    ; fh.read.sams - File handler read file
-        copy  "fm.load.asm"         ; fm.load      - File manager loadfile
-        copy  "task.asm"            ; *****        - Code shared between tasks
-        copy  "task.vdp.panes.asm"  ; *****        - VDP draw editor panes
-        copy  "task.vdp.sat.asm"    ; *****        - VDP copy SAT
-        copy  "task.vdp.cursor.asm" ; *****        - VDP set cursor shape
-        copy  "data.asm"            ; data         - Data segment
+        copy  "tivi.asm"            ; Main editor configuration
+        copy  "mem.asm"             ; Memory Management
+        copy  "fb.asm"              ; Framebuffer
+        copy  "idx.asm"             ; Index management
+        copy  "edb.asm"             ; Editor Buffer
+        copy  "cmdb.asm"            ; Command Buffer
+        copy  "fh.read.sams.asm"    ; File handler read file
+        copy  "fm.load.asm"         ; File manager loadfile
+        copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning
+        copy  "task.asm"            ; Code shared between tasks
+        copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
+        copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
+        copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
+        copy  "data.asm"            ; Data segment
 
         .ifgt $, >7fff
               .error 'Aborted. Bank 1 cartridge program too large!'

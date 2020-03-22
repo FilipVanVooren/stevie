@@ -1,4 +1,4 @@
-* FILE......: tasks.vdp.panes.asm
+* FILE......: task.vdp.panes.asm
 * Purpose...: TiVi Editor - VDP draw editor panes
 
 *//////////////////////////////////////////////////////////////
