@@ -5,11 +5,11 @@
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------
 key.fctn.0    equ >0000             ; fctn + 0
-key.fctn.1    equ >0000             ; fctn + 1
-key.fctn.2    equ >0000             ; fctn + 2
-key.fctn.3    equ >0000             ; fctn + 3
+key.fctn.1    equ >0300             ; fctn + 1
+key.fctn.2    equ >0400             ; fctn + 2
+key.fctn.3    equ >0700             ; fctn + 3
 key.fctn.4    equ >0000             ; fctn + 4
-key.fctn.5    equ >0000             ; fctn + 5
+key.fctn.5    equ >0e00             ; fctn + 5
 key.fctn.6    equ >0000             ; fctn + 6
 key.fctn.7    equ >0000             ; fctn + 7
 key.fctn.8    equ >0000             ; fctn + 8
@@ -108,7 +108,7 @@ keymap_actions.editor:
         data  key.fctn.e, txt.fctn.e, edkey.action.up
         data  key.fctn.x, txt.fctn.x, edkey.action.down
         data  key.ctrl.a, txt.ctrl.a, edkey.action.home
-        data  key.ctrl.e, txt.ctrl.e, edkey.action.end   
+        data  key.ctrl.f, txt.ctrl.f, edkey.action.end   
         data  key.ctrl.s, txt.ctrl.s, edkey.action.pword
         data  key.ctrl.d, txt.ctrl.d, edkey.action.nword
         data  key.ctrl.e, txt.ctrl.e, edkey.action.ppage
