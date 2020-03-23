@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b0.asm.13352
+**** **** ****     > tivi_b0.asm.16894
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b0.asm                 ; Version 200322-13352
+0009               * File: tivi_b0.asm                 ; Version 200323-16894
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200322-13352
+0009               * File: equates.asm                 ; Version 200323-16894
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout.
 0012               * See file "modules/memory.asm" for further details.
@@ -234,7 +234,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0214      E000     edb.top         equ  >e000             ; Editor buffer high memory
 0215      2000     edb.size        equ  8192              ; Editor buffer size
 0216               *--------------------------------------------------------------
-**** **** ****     > tivi_b0.asm.13352
+**** **** ****     > tivi_b0.asm.16894
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -271,7 +271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200322-13352'
+0031 6015 ....             text  'TIVI 200323-16894'
 0032                       even
 0033               
 0041               
@@ -281,7 +281,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b0.asm.13352
+**** **** ****     > tivi_b0.asm.16894
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1040,7 +1040,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 6222 1642             byte  22
-0249 6223 ....             text  'Build-ID  200322-13352'
+0249 6223 ....             text  'Build-ID  200323-16894'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4656,7 +4656,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E26 0040 
 0363 6E28 0460  28         b     @main                 ; Give control to main program
      6E2A 6050 
-**** **** ****     > tivi_b0.asm.13352
+**** **** ****     > tivi_b0.asm.16894
 0051               
 0055 6E2C 2DCA                   data $                ; Bank 0 ROM size OK.
 0057               

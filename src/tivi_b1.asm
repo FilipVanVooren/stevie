@@ -31,7 +31,9 @@
 main:   
         clr   @>6002                ; Jump to bank 1
         b     @main.tivi            ; Start editor
-
+        ;-----------------------------------------------------------------------
+        ; Include files
+        ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
         copy  "edkey.asm"           ; Actions
         copy  "edkey.mov.asm"       ; Actions for movement keys
@@ -51,7 +53,9 @@ main:
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
         copy  "pane.botline.asm"    ; Pane status bottom line
-        copy  "data.asm"            ; Data segment
+        copy  "data.constants.asm"  ; Data segment - Constants
+        copy  "data.strings.asm"    ; Data segment - Strings
+        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
 
         .ifgt $, >7fff
               .error 'Aborted. Bank 1 cartridge program too large!'
