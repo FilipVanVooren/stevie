@@ -3,8 +3,8 @@
 
 
 edkey.action.buffer0:
-        mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / File error occured. Halt system.
+        li   tmp0,fdname0
+        jmp  edkey.action.rest
 edkey.action.buffer1:
         li   tmp0,fdname1
         jmp  edkey.action.rest
@@ -32,6 +32,10 @@ edkey.action.buffer8:
 edkey.action.buffer9:
         li   tmp0,fdname9
         jmp  edkey.action.rest
+
 edkey.action.rest:
-        bl   @fm.loadfile           ; Load DIS/VAR 80 file into editor buffer 
+        bl   @fm.loadfile           ; \ Load DIS/VAR 80 file into editor buffer 
+                                    ; | i  tmp0 = Pointer to device and filename
+                                    ; /
+
         b    @edkey.action.top      ; Goto 1st line in editor buffer 

@@ -32,7 +32,7 @@ txt.tivi     byte    24
              byte    5
              even
 
-fdname0      #string 'DSK1.INVADERS'
+fdname0      #string 'DSK1.FWDOC/PSRV'
 fdname1      #string 'DSK1.SPEECHDOCS'
 fdname2      #string 'DSK1.XBEADOC'
 fdname3      #string 'DSK3.XBEADOC'
