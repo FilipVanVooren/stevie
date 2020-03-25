@@ -10,12 +10,13 @@ edkey.key.process:
         andi  tmp1,>ff00            ; Get rid of LSB
         seto  tmp3                  ; EOL marker
 
-        mov   @fb.hasfocus,tmp2     ; Framebuffer has focus ?
-        jne   edkey.key.process.loadmap.editor
+        mov   @tv.pane.focus,tmp2
+        ci    tmp2,pane.focus.fb    ; Framebuffer has focus ?  
+        jeq   edkey.key.process.loadmap.editor
                                     ; Yes, so load editor keymap
 
-        mov   @cmdb.hasfocus,tmp2   ; Command buffer has focus ?
-        jne   edkey.key.process.loadmap.cmdb
+        ci    tmp2,pane.focus.cmdb  ; Command buffer has focus ?
+        jeq   edkey.key.process.loadmap.cmdb
                                     ; Yes, so load CMDB keymap
         ;-------------------------------------------------------
         ; Pane without focus, crash

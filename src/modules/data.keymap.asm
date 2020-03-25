@@ -166,8 +166,8 @@ keymap_actions.cmdb:
         data  key.fctn.d, txt.fctn.d, edkey.action.right
         data  key.fctn.e, txt.fctn.e, edkey.action.noop
         data  key.fctn.x, txt.fctn.x, edkey.action.noop
-        data  key.ctrl.a, txt.ctrl.a, edkey.action.home
-        data  key.ctrl.f, txt.ctrl.f, edkey.action.end   
+        data  key.ctrl.a, txt.ctrl.a, edkey.action.noop
+        data  key.ctrl.f, txt.ctrl.f, edkey.action.noop  
         data  key.ctrl.s, txt.ctrl.s, edkey.action.noop
         data  key.ctrl.d, txt.ctrl.d, edkey.action.noop
         data  key.ctrl.e, txt.ctrl.e, edkey.action.noop

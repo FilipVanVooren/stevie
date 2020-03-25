@@ -39,7 +39,7 @@ fb.init
         mov   tmp0,@fb.scrrows      ; Physical rows on screen = 27
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
 
-        seto  @fb.hasfocus          ; Frame buffer has focus!
+        clr   @tv.pane.focus        ; Frame buffer has focus!
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
         ; Clear frame buffer
