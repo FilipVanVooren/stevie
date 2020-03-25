@@ -8,10 +8,32 @@
 edkey.key.process:
         mov   @waux1,tmp1           ; Get key value
         andi  tmp1,>ff00            ; Get rid of LSB
-
-        li    tmp2,keymap_actions.editor 
-                                    ; Load keyboard map
         seto  tmp3                  ; EOL marker
+
+        mov   @fb.hasfocus,tmp2     ; Framebuffer has focus ?
+        jne   edkey.key.process.loadmap.editor
+                                    ; Yes, so load editor keymap
+
+        mov   @cmdb.hasfocus,tmp2   ; Command buffer has focus ?
+        jne   edkey.key.process.loadmap.cmdb
+                                    ; Yes, so load CMDB keymap
+        ;-------------------------------------------------------
+        ; Pane without focus, crash
+        ;-------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / File error occured. Halt system.
+        ;-------------------------------------------------------
+        ; Use editor keyboard map
+        ;-------------------------------------------------------
+edkey.key.process.loadmap.editor:        
+        li    tmp2,keymap_actions.editor 
+        jmp   edkey.key.check_next
+        ;-------------------------------------------------------
+        ; Use CMDB keyboard map
+        ;-------------------------------------------------------
+edkey.key.process.loadmap.cmdb:                
+        li    tmp2,keymap_actions.cmdb
+        jne   edkey.key.check_next
         ;-------------------------------------------------------
         ; Iterate over keyboard map for matching action key
         ;-------------------------------------------------------

@@ -34,7 +34,7 @@ hook.keyscan.clear_kbbuffer:
 * Delay to avoid key bouncing
 *-------------------------------------------------------------- 
 hook.keyscan.bounce:
-        li    tmp0,1800             ; Avoid key bouncing
+        li    tmp0,2000             ; Avoid key bouncing
         ;------------------------------------------------------
         ; Delay loop
         ;------------------------------------------------------

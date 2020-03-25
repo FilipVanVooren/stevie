@@ -11,12 +11,13 @@
 * TiVi memory layout.
 * See file "modules/memory.asm" for further details.
 *
-* Mem range   Bytes    Hex    Purpose
-* =========   =====    ===    ==================================
-* 2000-3fff   8192     no     TiVi program code
-* 6000-7fff   8192     no     Spectra2 library program code (cartridge space)
-* a000-afff   4096     no     Scratchpad/GPL backup, TiVi structures
-* b000-bfff   4096     no     Command buffer
+* Mem range   Bytes    SAMS   Purpose
+* =========   =====    ====   ==================================
+* 2000-3fff   8192            Spectra2 library
+* 6000-7fff   8192            bank 0: spectra2 library + copy code
+*                             bank 1: TiVi program code
+* a000-afff   4096            Scratchpad/GPL backup, TiVi structures
+* b000-bfff   4096            Command buffer
 * c000-cfff   4096     yes    Main index
 * d000-dfff   4096     yes    Shadow SAMS pages index
 * e000-efff   4096     yes    Editor buffer 4k

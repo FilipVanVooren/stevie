@@ -90,7 +90,9 @@ cmdb.show:
         mov   tmp0,@cmdb.yxtop      ; Set command buffer top row
 
         seto  @cmdb.visible         ; Show pane
+        seto  @cmdb.hasfocus        ; CMDB pane has focus 
         seto  @fb.dirty             ; Redraw framebuffer
+        clr   @fb.hasfocus          ; Framebuffer has no focus
 cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
@@ -132,7 +134,6 @@ cmdb.hide:
         clr   @cmdb.hasfocus        ; Remove focus from CMDB
         seto  @fb.dirty             ; Redraw framebuffer
         seto  @fb.hasfocus          ; Framebuffer has focus!
-
 cmdb.hide.exit:
         ;------------------------------------------------------
         ; Exit
