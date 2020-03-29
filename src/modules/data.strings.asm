@@ -18,18 +18,16 @@ txt.ioerr          #string '> I/O error occured. Could not load file:'
 txt.bufnum         #string '#1'
 txt.newfile        #string '[New file]'
 
-
-txt.cmdb.cmdb       #string 'Command Buffer '
-txt.cmdb.catalog    #string 'File catalog '
+txt.cmdb.catalog    #string 'File catalog'
 
 
 txt.filetype.dv80  #string 'DIS/VAR80 '
 txt.filetype.none  #string '          '
 
-txt.tivi     byte    24
-             byte    4
-             text    'TiVi beta %%build_date%%'
-             byte    5
+txt.tivi     byte    12
+             byte    10
+             text    'TiVi v1.00'
+             byte    11
              even
 
 fdname0      #string 'DSK1.FWDOC/PSRV'

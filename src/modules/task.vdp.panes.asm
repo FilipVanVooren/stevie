@@ -11,6 +11,10 @@
 task.vdp.panes:
         mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task.vdp.panes.exit   ; No, skip update
+        ;------------------------------------------------------
+        ; Show banner line
+        ;------------------------------------------------------
+        bl    @pane.topline.draw        
         mov   @wyx,@fb.yxsave       ; Backup VDP cursor position        
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
@@ -95,17 +99,14 @@ task.vdp.panes.draw_double.line:
         mov   @cmdb.visible,tmp0    ; Command buffer hidden ?
         jeq   !                     ; Yes, full double line
         ;-------------------------------------------------------
-        ; Double line with "header" label
+        ; Double line with corners
         ;-------------------------------------------------------
-        bl    @putstr
-              data txt.cmdb.cmdb    ; Show text "Command Buffer"
-
-        bl    @setx                 ; Set cursor to screen column 15
-              data 15
-        li    tmp2,65               ; Repeat 65x
+        bl    @setx                 ; Set cursor to screen column 17
+              data 1
+        li    tmp2,78               ; Repeat 78x
         jmp   task.vdp.panes.draw_double.draw
         ;-------------------------------------------------------
-        ; Continious double line (80 characters)
+        ; Continuous double line (80 characters)
         ;-------------------------------------------------------
 !       bl    @setx                 ; Set cursor to screen column 0
               data 0
@@ -126,7 +127,17 @@ task.vdp.panes.draw_double.draw:
         ;-------------------------------------------------------
         mov   @cmdb.visible,tmp0     ; Show command buffer?
         jeq   task.vdp.panes.exit    ; No, skip 
+
         bl    @cmdb.refresh          ; Refresh command buffer content
+
+        bl    @vchar
+              byte 20,0,4,1          ; Top left corner              
+              byte 21,0,6,7          ; Left vertical double line
+              byte 28,0,8,1          ; Bottom left corner
+              byte 20,79,5,1         ; Top right corner
+              byte 21,79,7,7         ; Right vertical double line
+              byte 28,79,9,1         ; Bottom right corner
+              data EOL
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------

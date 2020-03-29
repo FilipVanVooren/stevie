@@ -94,10 +94,10 @@ pane.botline.show_linecol:
         ; Show line
         ;------------------------------------------------------
         bl    @putnum
-              byte  29,64            ; YX
+              byte  29,64           ; YX
               data  outparm1,rambuf
-              byte  48               ; ASCII offset 
-              byte  32               ; Padding character
+              byte  48              ; ASCII offset 
+              byte  32              ; Padding character
         ;------------------------------------------------------
         ; Show comma
         ;------------------------------------------------------
@@ -108,25 +108,25 @@ pane.botline.show_linecol:
         ; Show column
         ;------------------------------------------------------
         bl    @film
-              data rambuf+6,32,12    ; Clear work buffer with space character
+              data rambuf+6,32,12   ; Clear work buffer with space character
 
         mov   @fb.column,@waux1
-        inc   @waux1                 ; Offset 1
+        inc   @waux1                ; Offset 1
 
-        bl    @mknum                 ; Convert unsigned number to string
+        bl    @mknum                ; Convert unsigned number to string
               data  waux1,rambuf
-              byte  48               ; ASCII offset
-              byte  32               ; Fill character
+              byte  48              ; ASCII offset
+              byte  32              ; Fill character
 
-        bl    @trimnum               ; Trim number to the left
+        bl    @trimnum              ; Trim number to the left
               data  rambuf,rambuf+6,32
 
         li    tmp0,>0200
-        movb  tmp0,@rambuf+6         ; "Fix" number length to clear junk chars 
+        movb  tmp0,@rambuf+6        ; "Fix" number length to clear junk chars 
                                 
         bl    @putat
               byte 29,70
-              data rambuf+6          ; Show column
+              data rambuf+6         ; Show column
         ;------------------------------------------------------
         ; Show lines in buffer unless on last line in file
         ;------------------------------------------------------
@@ -145,9 +145,9 @@ pane.botline.show_linecol:
         ;------------------------------------------------------
 pane.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
-        inc   @waux1                 ; Offset 1
+        inc   @waux1                ; Offset 1
         bl    @putnum
-              byte 29,75             ; YX
+              byte 29,75            ; YX
               data waux1,rambuf
               byte 48
               byte 32
@@ -156,6 +156,6 @@ pane.botline.show_lines_in_buffer:
         ;------------------------------------------------------
 pane.botline.exit:
         mov   @fb.yxsave,@wyx
-        mov   *stack+,tmp0           ; Pop tmp0
-        mov   *stack+,r11            ; Pop r11
-        b     *r11                   ; Return
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return

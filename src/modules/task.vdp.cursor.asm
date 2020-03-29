@@ -12,7 +12,7 @@ task.vdp.cursor:
         inv   @fb.curtoggle          ; Flip cursor shape flag
         jeq   task.vdp.cursor.visible
         clr   @ramsat+2              ; Hide cursor
-        jmp  task.vdp.cursor.copy.sat
+        jmp   task.vdp.cursor.copy.sat
                                      ; Update VDP SAT and exit task
 task.vdp.cursor.visible:
         mov   @edb.insmode,tmp0      ; Get Editor buffer insert mode

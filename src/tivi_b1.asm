@@ -52,6 +52,7 @@ main:
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
+        copy  "pane.topline.asm"    ; Pane banner top line
         copy  "pane.botline.asm"    ; Pane status bottom line
         copy  "data.constants.asm"  ; Data segment - Constants
         copy  "data.strings.asm"    ; Data segment - Strings

@@ -38,7 +38,6 @@
 *--------------------------------------------------------------
 skip_grom_cpu_copy        equ  1    ; Skip GROM to CPU copy functions
 skip_grom_vram_copy       equ  1    ; Skip GROM to VDP vram copy functions
-skip_vdp_vchar            equ  1    ; Skip vchar, xvchar
 skip_vdp_boxes            equ  1    ; Skip filbox, putbox
 skip_vdp_bitmap           equ  1    ; Skip bitmap functions
 skip_vdp_viewport         equ  1    ; Skip viewport functions
@@ -108,6 +107,8 @@ tv.colorscheme  equ  tv.top + 18    ; Current color scheme (0-4)
 tv.curshape     equ  tv.top + 20    ; Cursor shape and color
 tv.pane.focus   equ  tv.top + 22    ; Identify pane that has focus
 tv.end          equ  tv.top + 22    ; End of structure
+pane.focus.fb   equ  0              ; Editor pane has focus
+pane.focus.cmdb equ  1              ; Command buffer pane has focus
 *--------------------------------------------------------------
 * Frame buffer structure            @>a280-a2ff     (128 bytes)
 *--------------------------------------------------------------
@@ -218,5 +219,3 @@ edb.size        equ  8192              ; Editor buffer size
 *--------------------------------------------------------------
 
 
-pane.focus.fb   equ  0                 ; Editor pane has focus
-pane.focus.cmdb equ  1                 ; Command buffer pane has focus

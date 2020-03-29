@@ -47,16 +47,6 @@ fb.init
         bl    @film
         data  fb.top,>00,fb.size    ; Clear it all the way
         ;------------------------------------------------------
-        ; Show banner (line above frame buffer, not part of it)
-        ;------------------------------------------------------
-        bl    @hchar
-              byte 0,0,1,80         ; Double line at top
-              data EOL
-
-        bl    @putat
-              byte 0,28
-              data txt.tivi         ; Banner
-        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.init.exit

@@ -72,7 +72,8 @@ main.continue:
                                     ; Load sprite cursor patterns
                                     
         bl    @cpym2v
-              data >1008,lines,5*8  ; Load line patterns
+              data >1008,patterns,11*8  
+                                    ; Load character patterns
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------

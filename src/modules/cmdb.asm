@@ -95,6 +95,7 @@ cmdb.show:
         mov   tmp0,@tv.pane.focus   ; /
 
         seto  @fb.dirty             ; Redraw framebuffer
+        
 cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
