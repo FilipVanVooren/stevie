@@ -81,12 +81,16 @@ cmdb.show:
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------
+        mov   @wyx,@cmdb.fb.yxsave
+                                    ; Save YX position in frame buffer
+
         mov   @fb.scrrows.max,tmp0
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
         
         inct  tmp0                  ; Line below cmdb top border line
         sla   tmp0,8                ; LSB to MSB (Y), X=0
+        inc   tmp0                  ; X=1
         mov   tmp0,@cmdb.yxtop      ; Set command buffer top row
 
         seto  @cmdb.visible         ; Show pane
@@ -110,7 +114,7 @@ cmdb.show.exit:
 * cmdb.hide
 * Hide command buffer pane
 ***************************************************************
-* bl @cmdb.show
+* bl @cmdb.hide
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -133,7 +137,9 @@ cmdb.hide:
         mov   @fb.scrrows.max,@fb.scrrows
                                     ; Resize framebuffer
 
-        clr   @cmdb.visible         ; Hide pane
+        mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
+
+        clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!
 
@@ -188,7 +194,9 @@ cmdb.refresh:
                                     ; | i  tmp1 = RAM source address
                                     ; / i  tmp2 = Number of bytes to copy       
 
-        mov   @cmdb.yxsave,@wyx     ; Restore YX position
+        mov   @cmdb.yxsave,@fb.yxsave 
+        mov   @cmdb.yxsave,@wyx        
+                                    ; Restore YX position
 cmdb.refresh.exit:
         ;------------------------------------------------------
         ; Exit

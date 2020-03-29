@@ -25,12 +25,13 @@ pane.topline.draw:
         ; Show banner (line above frame buffer, not part of it)
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,0,1,80         ; Double line at top
+              byte 0,0,1,34         ; Double line at top (left)
+              byte 0,46,1,34        ; Double line at top (right)
               data EOL
 
         bl    @putat
               byte 0,34
-              data txt.tivi         ; TiVi banner
+              data txt.tivi         ; TiVi banner (middle)
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

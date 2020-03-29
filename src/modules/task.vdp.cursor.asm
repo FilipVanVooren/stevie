@@ -21,13 +21,28 @@ task.vdp.cursor.visible:
         ; Cursor in insert mode
         ;------------------------------------------------------
 task.vdp.cursor.visible.insert_mode:
-        clr   tmp0
+        mov   @tv.pane.focus,tmp0    ; Get pane with focus
+        jeq   task.vdp.cursor.visible.insert_mode.fb
+                                     ; Framebuffer has focus
+        ci    tmp0,pane.focus.cmdb
+        jeq   task.vdp.cursor.visible.insert_mode.cmdb
+        ;------------------------------------------------------
+        ; Editor cursor (insert mode)
+        ;------------------------------------------------------
+task.vdp.cursor.visible.insert_mode.fb:        
+        clr   tmp0                   ; Cursor editor insert mode 
         jmp   task.vdp.cursor.visible.cursorshape
+        ;------------------------------------------------------
+        ; Command buffer cursor (insert mode)
+        ;------------------------------------------------------
+task.vdp.cursor.visible.insert_mode.cmdb:        
+        li    tmp0,>0100             ; Cursor CMDB insert mode
+        jmp   task.vdp.cursor.visible.cursorshape        
         ;------------------------------------------------------
         ; Cursor in overwrite mode
         ;------------------------------------------------------
 task.vdp.cursor.visible.overwrite_mode:
-        li    tmp0,>0200
+        li    tmp0,>0200             ; Cursor overwrite mode
         ;------------------------------------------------------
         ; Set cursor shape
         ;------------------------------------------------------

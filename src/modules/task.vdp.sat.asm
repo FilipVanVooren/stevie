@@ -24,12 +24,14 @@ task.vdp.copy.sat:
         ; Command buffer has focus, position cursor
         ;------------------------------------------------------        
 task.vdp.copy.sat.cmdb:
-        mov   @cmdb.yxtop,@wyx     
+        mov   @cmdb.yxtop,@wyx      ; Position cursor in CMDB pane        
         ;------------------------------------------------------
         ; Position cursor
         ;------------------------------------------------------
 !       soc   @wbit0,config         ; Sprite adjustment on
-        bl    @yx2px                ; Calculate pixel position, result in tmp0
+        bl    @yx2px                ; \ Calculate pixel position
+                                    ; | i  @WYX = Cursor YX
+                                    ; / o  tmp0 = Pixel YX
         mov   tmp0,@ramsat          ; Set cursor YX
         
         bl    @cpym2v               ; Copy sprite SAT to VDP
