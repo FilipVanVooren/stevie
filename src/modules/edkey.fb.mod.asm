@@ -1,5 +1,5 @@
-* FILE......: edkey.mod.asm
-* Purpose...: Actions for modifier keys
+* FILE......: edkey.fb.mod.asm
+* Purpose...: Actions for modifier keys in frame buffer pane.
 
 
 *---------------------------------------------------------------
@@ -134,7 +134,7 @@ edkey.action.del_line.exit:
 *
 * @parm1 = high byte has character to insert
 *---------------------------------------------------------------
-edkey.action.ins_char.ws
+edkey.action.ins_char.ws:
         li    tmp0,>2000            ; White space
         mov   tmp0,@parm1
 edkey.action.ins_char:

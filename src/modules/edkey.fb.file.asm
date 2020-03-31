@@ -1,5 +1,5 @@
-* FILE......: edkey.fíle.asm
-* Purpose...: File related actions (load file, save file, ...)
+* FILE......: edkey.fb.fíle.asm
+* Purpose...: File related actions in frame buffer pane.
 
 
 edkey.action.buffer0:

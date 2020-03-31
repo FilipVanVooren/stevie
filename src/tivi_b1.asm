@@ -35,11 +35,12 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
-        copy  "edkey.asm"           ; Actions
-        copy  "edkey.mov.asm"       ; Actions for movement keys
-        copy  "edkey.mod.asm"       ; Actions for modifier keys
-        copy  "edkey.misc.asm"      ; Actions for miscelanneous keys
-        copy  "edkey.file.asm"      ; Actions for file related keys
+        copy  "edkey.asm"           ; Keyboard actions
+        copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
+        copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
+        copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
+        copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
+        copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
         copy  "tivi.asm"            ; Main editor configuration
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer

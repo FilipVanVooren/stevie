@@ -1,7 +1,5 @@
-
-
-* FILE......: edkey.mov.asm
-* Purpose...: Actions for movement keys
+* FILE......: edkey.fb.mov.asm
+* Purpose...: Actions for movement keys in frame buffer pane.
 
 
 *---------------------------------------------------------------

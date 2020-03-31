@@ -46,7 +46,7 @@ main.continue:
               data >0000,32,31*80   ; Clear VDP SIT 
         bl    @scron                ; Turn screen on
         ;------------------------------------------------------
-        ; Initialize low + high memory expansion
+        ; Initialize high memory expansion
         ;------------------------------------------------------
         bl    @film
               data >a000,00,24*1024 ; Clear 24k high-memory

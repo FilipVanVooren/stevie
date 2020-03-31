@@ -33,11 +33,13 @@ cmdb.init:
         mov   tmp0,@cmdb.top.ptr    ; /
 
         clr   @cmdb.visible         ; Hide command buffer 
-        li    tmp0,8
+        li    tmp0,10
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
         mov   tmp0,@cmdb.default    ; Set default command buffer size
 
-        clr   @cmdb.yxtop           ; Screen Y of 1st row in cmdb pane
+        li    tmp0,>1b02            ; Y=27, X=2
+        mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
+
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
         ;------------------------------------------------------
@@ -91,7 +93,7 @@ cmdb.show:
         inct  tmp0                  ; Line below cmdb top border line
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         inc   tmp0                  ; X=1
-        mov   tmp0,@cmdb.yxtop      ; Set command buffer top row
+        mov   tmp0,@cmdb.yxtop      ; Set command buffer cursor
 
         seto  @cmdb.visible         ; Show pane
 
@@ -179,7 +181,7 @@ cmdb.refresh:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Show Command buffer content
+        ; Dump Command buffer content
         ;------------------------------------------------------
         mov   @wyx,@cmdb.yxsave     ; Save YX position
 
@@ -187,12 +189,19 @@ cmdb.refresh:
         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
 
         mov   @cmdb.top.ptr,tmp1    ; Top of command buffer        
-        li    tmp2,7*80
+        li    tmp2,9*80
 
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
                                     ; | i  tmp0 = VDP target address
                                     ; | i  tmp1 = RAM source address
                                     ; / i  tmp2 = Number of bytes to copy       
+
+        ;------------------------------------------------------
+        ; Show command buffer prompt
+        ;------------------------------------------------------
+        bl    @putat
+              byte 27,1
+              data txt.cmdb.prompt
 
         mov   @cmdb.yxsave,@fb.yxsave 
         mov   @cmdb.yxsave,@wyx        

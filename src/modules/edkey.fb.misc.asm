@@ -1,5 +1,5 @@
-* FILE......: edkey.misc.asm
-* Purpose...: Actions for miscelanneous keys
+* FILE......: edkey.fb.misc.asm
+* Purpose...: Actions for miscelanneous keys in frame buffer pane.
 
 
 *---------------------------------------------------------------

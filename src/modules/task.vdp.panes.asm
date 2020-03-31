@@ -131,11 +131,11 @@ task.vdp.panes.draw_double.draw:
         bl    @cmdb.refresh          ; Refresh command buffer content
 
         bl    @vchar
-              byte 20,0,4,1          ; Top left corner              
-              byte 21,0,6,7          ; Left vertical double line
+              byte 18,0,4,1          ; Top left corner              
+              byte 18,79,5,1         ; Top right corner              
+              byte 19,0,6,9          ; Left vertical double line
+              byte 19,79,7,9         ; Right vertical double line              
               byte 28,0,8,1          ; Bottom left corner
-              byte 20,79,5,1         ; Top right corner
-              byte 21,79,7,7         ; Right vertical double line
               byte 28,79,9,1         ; Bottom right corner
               data EOL
         ;------------------------------------------------------

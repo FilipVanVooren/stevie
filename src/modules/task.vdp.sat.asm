@@ -24,7 +24,7 @@ task.vdp.copy.sat:
         ; Command buffer has focus, position cursor
         ;------------------------------------------------------        
 task.vdp.copy.sat.cmdb:
-        mov   @cmdb.yxtop,@wyx      ; Position cursor in CMDB pane        
+        mov   @cmdb.cursor,@wyx     ; Position cursor in CMDB pane        
         ;------------------------------------------------------
         ; Position cursor
         ;------------------------------------------------------

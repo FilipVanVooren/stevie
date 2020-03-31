@@ -14,11 +14,13 @@ txt.loading        #string 'Loading...'
 txt.kb             #string 'kb'
 txt.rle            #string 'RLE'
 txt.lines          #string 'Lines'
-txt.ioerr          #string '> I/O error occured. Could not load file:'
+txt.ioerr          #string '! I/O error occured. Could not load file:'
 txt.bufnum         #string '#1'
 txt.newfile        #string '[New file]'
 
-txt.cmdb.catalog    #string 'File catalog'
+txt.cmdb.prompt    #string '>'
+txt.cmdb.hint      #string 'Hint: Type "help" for command list.'
+txt.cmdb.catalog   #string 'File catalog'
 
 
 txt.filetype.dv80  #string 'DIS/VAR80 '

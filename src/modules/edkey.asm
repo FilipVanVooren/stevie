@@ -1,5 +1,5 @@
 * FILE......: edkey.asm
-* Purpose...: Process keyboard key press
+* Purpose...: Process keyboard key press. Shared code for all panes
 
 
 ****************************************************************
@@ -62,4 +62,22 @@ edkey.key.process.action:
         ; Add character to buffer
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
+        mov  @tv.pane.focus,tmp0    ; Framebuffer has focus?
+        jne  !
+        ;-------------------------------------------------------
+        ; Frame buffer
+        ;-------------------------------------------------------
         b    @edkey.action.char     ; Add character to buffer        
+        ;-------------------------------------------------------
+        ; CMDB buffer
+        ;-------------------------------------------------------
+!       ci   tmp1,pane.focus.cmdb   ; CMDB has focus ?
+        jne  edkey.key.process.crash
+        b    @edkey.cmdb.action.char
+                                    ; Add character to buffer        
+        ;-------------------------------------------------------
+        ; Crash
+        ;-------------------------------------------------------
+edkey.key.process.crash:
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / File error occured. Halt system.
