@@ -40,10 +40,15 @@ fh.file.read.sams:
         clr   tmp4                  ; Clear kilobytes processed display counter        
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents
+       
+        mov   @edb.top.ptr,tmp0
+        bl    @xsams.page.get       ; Get SAMS page
+                                    ; \ i  tmp0  = Memory address
+                                    ; | o  waux1 = SAMS page number
+                                    ; / o  waux2 = Address of SAMS register
 
-        li    tmp0,3
-        mov   tmp0,@fh.sams.page    ; Set current SAMS page
-        mov   tmp0,@fh.sams.hpage   ; Set highest SAMS page in use
+        mov   @waux1,@fh.sams.page  ; Set current SAMS page
+        mov   @waux1,@fh.sams.hpage ; Set highest SAMS page in use
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -151,9 +156,9 @@ fh.file.read.sams.record:
         ;------------------------------------------------------
         ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
-!       bl    @cpu.scrpad.backup    ; Backup GPL layout to >2000
+!       bl    @cpu.scrpad.backup    ; Backup GPL layout to @cpu.scrpad.tgt
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
+              data scrpad.backup2   ; / @scrpad.backup2 to >8300
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
         ;------------------------------------------------------
@@ -169,39 +174,28 @@ fh.file.read.sams.check_fioerr:
         ;------------------------------------------------------ 
 fh.file.read.sams.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
-        bl    @xsams.page.get       ; Get SAMS page
-                                    ; \ i  tmp0  = Memory address
-                                    ; | o  waux1 = SAMS page number
-                                    ; / o  waux2 = Address of SAMS register
-
-        mov   @waux1,tmp0           ; Save SAMS page number
-        c     tmp0,@fh.sams.page   ; Compare page with current SAMS page
-        jeq   fh.file.read.sams.nocompression
-                                    ; Same, skip to (2)
+        andi  tmp0,>0fff            ; Get rid off highest nibble        
+        a     @fh.reclen,tmp0       ; Add length of line just read
+        inc   tmp0                  ; +1 for length prefix
+        ci    tmp0,>1000            ; 4K boundary reached?
+        jlt   fh.file.read.sams.nocompression
+                                    ; Not yet so skip SAMS page switch
         ;------------------------------------------------------
-        ; 1e: Increase SAMS page if necessary
+        ; 1e: Increase SAMS page
         ;------------------------------------------------------ 
-        c     tmp0,@fh.sams.hpage   ; Compare page with highest SAMS page
-        jgt   fh.file.read.sams.switch
-                                    ; Switch page
-        ai    tmp0,5                ; Next range >b000 - ffff
+        inc   @fh.sams.page         ; Next SAMS page
+        mov   @fh.sams.page,@fh.sams.hpage
+                                    ; Set highest SAMS page
+        mov   @edb.top.ptr,@edb.next_free.ptr
+                                    ; Start at top of SAMS page again
         ;------------------------------------------------------
         ; 1f: Switch to SAMS page
         ;------------------------------------------------------ 
-fh.file.read.sams.switch:        
-        mov   @edb.next_free.ptr,tmp1
-                                    ; Beginning of line
-
+        mov   @fh.sams.page,tmp0
+        mov   @edb.top.ptr,tmp1
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
-
-        mov   tmp0,@fh.sams.page    ; Save current SAMS page 
-
-        c     tmp0,@fh.sams.hpage   ; Current SAMS page > highest SAMS page?
-        jle   fh.file.read.sams.nocompression
-                                    ; No, skip to (2)
-        mov   tmp0,@fh.sams.hpage   ; Update highest SAMS page
         ;------------------------------------------------------
         ; Step 2: Process line (without RLE compression)
         ;------------------------------------------------------

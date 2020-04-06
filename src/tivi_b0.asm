@@ -22,7 +22,7 @@
 kickstart.init:
         li    r0,reloc+2            ; Start of code to relocate
         li    r1,>2000
-        li    r2,512                ; Copy 8K (512 * 4 words)
+        li    r2,896                ; Copy 7K (512 * 4 * word size)
 kickstart.loop:        
         mov   *r0+,*r1+
         mov   *r0+,*r1+        
