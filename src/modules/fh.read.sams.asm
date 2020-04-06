@@ -221,45 +221,13 @@ fh.file.read.sams.nocompression:
         inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
         a     tmp2,@edb.next_free.ptr
                                     ; Add line length 
-        ;------------------------------------------------------
-        ; 2b: Handle line split accross 2 consecutive SAMS pages
-        ;------------------------------------------------------ 
-        mov   tmp0,tmp3             ; Backup tmp0
-        mov   tmp1,tmp4             ; Backup tmp1
 
-        mov   tmp1,tmp0             ; Get pointer to beginning of line
-        srl   tmp0,12               ; Only keep high-nibble
-
-        mov   @edb.next_free.ptr,tmp1
-                                    ; Get pointer to next line (aka end of line)
-        srl   tmp1,12               ; Only keep high-nibble
-
-        c     tmp0,tmp1             ; Are they in the same segment?
-        jeq   !                     ; Yes, skip setting SAMS page
-
-        mov   @fh.sams.page,tmp0    ; Get current SAMS page
-        inc   tmp0                  ; Increase SAMS page
-        mov   @edb.next_free.ptr,tmp1
-                                    ; Get pointer to next line (aka end of line)
-
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address         
-
-!       mov   tmp4,tmp1             ; Restore tmp1
-        mov   tmp3,tmp0             ; Restore tmp0
-        ;------------------------------------------------------
-        ; 2c: Do actual copy
-        ;------------------------------------------------------         
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy
-                                        
-        jmp   fh.file.read.sams.prepindex
-                                    ; Prepare for updating index
+                                    ; / i  tmp2 = Bytes to copy                                        
         ;------------------------------------------------------
-        ; Step 4: Update index
+        ; Step 3: Update index
         ;------------------------------------------------------
 fh.file.read.sams.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
@@ -269,7 +237,7 @@ fh.file.read.sams.prepindex:
         jmp   fh.file.read.sams.updindex
                                     ; Update index
         ;------------------------------------------------------
-        ; 4a: Special handling for empty line
+        ; 3a: Special handling for empty line
         ;------------------------------------------------------
 fh.file.read.sams.prepindex.emptyline:
         mov   @fh.records,@parm1    ; parm1 = Line number
@@ -277,7 +245,7 @@ fh.file.read.sams.prepindex.emptyline:
         clr   @parm2                ; parm2 = Pointer to >0000
         seto  @parm3                ; parm3 = SAMS not used >FFFF
         ;------------------------------------------------------
-        ; 4b: Do actual index update
+        ; 3b: Do actual index update
         ;------------------------------------------------------                                    
 fh.file.read.sams.updindex:                
         bl    @idx.entry.update     ; Update index 
@@ -290,33 +258,17 @@ fh.file.read.sams.updindex:
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
-        ; Step 5: Display results
+        ; Step 4: Display results
         ;------------------------------------------------------
 fh.file.read.sams.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; Step 6: Check if reaching memory high-limit >ffa0
-        ;------------------------------------------------------
-fh.file.read.sams.checkmem:
-        mov   @edb.next_free.ptr,tmp0
-        ci    tmp0,>ffa0
-        jle   fh.file.read.sams.next
-        ;------------------------------------------------------
-        ; 6a: Address range b000-ffff full, switch SAMS pages
-        ;------------------------------------------------------
-        li    tmp0,edb.top+2        ; Reset to top of editor buffer
-        mov   tmp0,@edb.next_free.ptr
-                                    
-        jmp   fh.file.read.sams.next   
-        ;------------------------------------------------------
-        ; 6b: Next record
+        ; 4a: Next record
         ;------------------------------------------------------
 fh.file.read.sams.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
-        
-
         ;-------------------------------------------------------
         ; ** TEMPORARY FIX for 4KB INDEX LIMIT **
         ;-------------------------------------------------------
