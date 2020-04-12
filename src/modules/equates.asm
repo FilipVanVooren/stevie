@@ -46,7 +46,7 @@
 * b000-bfff    4096           Index page
 * c000-cfff    4096           Editor buffer page
 * d000-dfff    4096           Editor buffer page
-* e000-efff    4096           Frame buffer page
+* e000-efff    4096           *FREE*
 * f000-ffff    4096           *FREE* for future use
 *
 *
@@ -231,10 +231,9 @@ idx.top           equ  >c000           ; Top of index
 idx.size          equ  4096            ; Index size
 *--------------------------------------------------------------
 * Editor buffer                     @>d000-dfff    (4096 bytes)
-*                                   @>e000-efff    (4096 bytes)
 *--------------------------------------------------------------
 edb.top           equ  >d000           ; Editor buffer high memory
-edb.size          equ  8192            ; Editor buffer size
+edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
 * SAMS shadow pages index           @>f000-ffff    (4096 bytes)
 *--------------------------------------------------------------

@@ -264,29 +264,7 @@ edb.line.unpack:
                                     ; | o  outparm2 = Line length (compressed)
                                     ; / o  outparm3 = SAMS page
 
-        mov   @outparm2,@rambuf+10  ; Save length of RLE compressed line
-        mov   @outparm1,@rambuf+8   ; Save length of RLE (decompressed) line
-        jeq   edb.line.unpack.clear ; Skip "split line" check if empty line
-        ;------------------------------------------------------
-        ; Handle possible "line split" between 2 consecutive pages
-        ;------------------------------------------------------
-        mov     @rambuf+4,tmp0      ; Pointer to line
-        mov     tmp0,tmp1           ; Pointer to line
-        a       @rambuf+8,tmp1      ; Add length of line
-
-        andi    tmp0,>f000          ; Only keep high nibble
-        andi    tmp1,>f000          ; Only keep high nibble
-        c       tmp0,tmp1           ; Same segment?
-        jeq     edb.line.unpack.clear   
-                                    ; Yes, so skip
-
-        mov     @outparm3,tmp0      ; Get SAMS page
-        inc     tmp0                ; Next sams page
-
-        bl      @xsams.page.set     ; \ Set SAMS memory page
-                                    ; | i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory Address
-
+        mov   @outparm1,@rambuf+8   ; Save length of RLE (uncompressed) line
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
         ;------------------------------------------------------

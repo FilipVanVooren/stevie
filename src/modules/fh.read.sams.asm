@@ -174,11 +174,20 @@ fh.file.read.sams.check_fioerr:
         ;------------------------------------------------------ 
 fh.file.read.sams.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
+                                    ;--------------------------
+                                    ; Sanity check
+                                    ;-------------------------- 
+        ci    tmp0,edb.top + edb.size
+                                    ; Insane address ?
+        jgt   fh.file.read.crash    ; Yes, crash!
+                                    ;--------------------------
+                                    ; Check overflow
+                                    ;-------------------------- 
         andi  tmp0,>0fff            ; Get rid off highest nibble        
         a     @fh.reclen,tmp0       ; Add length of line just read
-        inc   tmp0                  ; +1 for length prefix
+        inct  tmp0                  ; +2 for line prefix
         ci    tmp0,>1000            ; 4K boundary reached?
-        jlt   fh.file.read.sams.nocompression
+        jlt   fh.file.read.sams.process_line
                                     ; Not yet so skip SAMS page switch
         ;------------------------------------------------------
         ; 1e: Increase SAMS page
@@ -197,9 +206,9 @@ fh.file.read.sams.check_setpage:
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
         ;------------------------------------------------------
-        ; Step 2: Process line (without RLE compression)
+        ; Step 2: Process line
         ;------------------------------------------------------
-fh.file.read.sams.nocompression:
+fh.file.read.sams.process_line:
         li    tmp0,fh.vrecbuf       ; VDP source address
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target in editor buffer

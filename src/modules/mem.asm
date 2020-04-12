@@ -103,7 +103,8 @@ mem.edb.sams.pagein.lookup:
         mov   @outparm2,tmp0        ; SAMS page
         mov   @outparm1,tmp1        ; Memory address        
         jeq   mem.edb.sams.pagein.exit
-                                    ; Nothing to page-in if empty line
+                                    ; Nothing to page-in if NULL pointer 
+                                    ; (=empty line)
         ;------------------------------------------------------
         ; 1. Determine if requested SAMS page is already active 
         ;------------------------------------------------------
