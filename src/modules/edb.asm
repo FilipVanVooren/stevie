@@ -216,7 +216,6 @@ edb.line.pack.exit:
 * rambuf+4  = Source memory address in editor buffer
 * rambuf+6  = Destination memory address in frame buffer
 * rambuf+8  = Length of RLE (decompressed) line
-* rambuf+10 = Length of RLE compressed line
 ********|*****|*********************|**************************
 edb.line.unpack:
         dect  stack
@@ -292,7 +291,7 @@ edb.line.unpack.prepare:
         ;------------------------------------------------------
         ; Check before copy
         ;------------------------------------------------------
-edb.line.unpack.copy.uncompressed:     
+edb.line.unpack.copy:     
         ci    tmp2,80               ; Check line length
         jle   !
         mov   r11,@>ffce            ; \ Save caller address        
