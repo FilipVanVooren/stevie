@@ -186,7 +186,7 @@ fh.file.read.sams.check_setpage:
         andi  tmp0,>0fff            ; Get rid off highest nibble        
         a     @fh.reclen,tmp0       ; Add length of line just read
         inct  tmp0                  ; +2 for line prefix
-        ci    tmp0,>1000            ; 4K boundary reached?
+        ci    tmp0,>1000 - 16       ; 4K boundary reached?
         jlt   fh.file.read.sams.process_line
                                     ; Not yet so skip SAMS page switch
         ;------------------------------------------------------
@@ -221,7 +221,7 @@ fh.file.read.sams.process_line:
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
         ;------------------------------------------------------         
-                                    ; Save line prefix                                             
+                                    ; Put line length word before string
         movb  tmp2,*tmp1+           ; \ MSB to line prefix
         swpb  tmp2                  ; |
         movb  tmp2,*tmp1+           ; | LSB to line prefix
@@ -229,12 +229,22 @@ fh.file.read.sams.process_line:
         
         inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
         a     tmp2,@edb.next_free.ptr
-                                    ; Add line length 
+                                    ; Add line length         
 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                        
+
+        ;------------------------------------------------------
+        ; 2b: Align pointer to multiple of 16 memory address
+        ;------------------------------------------------------ 
+        mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+        neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+        andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+        a     tmp0,@edb.next_free.ptr  ; / Chapter 2
+
+
         ;------------------------------------------------------
         ; Step 3: Update index
         ;------------------------------------------------------

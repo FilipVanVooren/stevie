@@ -20,9 +20,9 @@
         aorg  >2000                 
         copy  "%%spectra2%%/runlib.asm"
                                     ; Relocated spectra2 in low memory expansion
-                                    ; was loaded into RAM from bank 0.
+                                    ; Is copied to RAM from bank 0.
                                     ; 
-                                    ; Only including it here, so that all
+                                    ; Including it here too, so that all
                                     ; references get satisfied during assembly.
 ***************************************************************
 * TiVi entry point after spectra2 initialisation

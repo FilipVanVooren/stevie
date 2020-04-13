@@ -43,11 +43,11 @@
 * a400-a4ff     256           File handle structure
 * a500-afff    2792           *FREE*
 *
-* b000-bfff    4096           Index page
-* c000-cfff    4096           Editor buffer page
+* b000-bfff    4096           Command buffer
+* c000-cfff    4096           Index
 * d000-dfff    4096           Editor buffer page
 * e000-efff    4096           *FREE*
-* f000-ffff    4096           *FREE* for future use
+* f000-ffff    4096           Shadow index
 *
 *
 * VDP RAM

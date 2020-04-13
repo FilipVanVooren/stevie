@@ -14,15 +14,15 @@
 *    Each index slot (1 word) contains the pointer to the line
 *    in the editor buffer.
 * 
-* 2) Shadow SAMS pages index (d000 - dfff)
+* 2) Shadow SAMS pages index (f000 - ffff)
 *
 *    Size of index page is 4K and allows indexing of 2048 lines.
 *    Each index slot (1 word) contains the SAMS page where the
 *    line in the editor buffer resides
 *
 *  
-* The editor buffer itself always resides at (e000 -> ffff) for 
-* a total of 8kb.
+* The editor buffer itself always resides at (d000 -> dfff) for 
+* a total of 4kb.
 * First line in editor buffer starts at offset 2 (c002), this
 * allows the index to contain "null" pointers, aka empty lines
 * without reference to editor buffer.
