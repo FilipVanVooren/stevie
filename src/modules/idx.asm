@@ -28,10 +28,6 @@
 *        All support routines must assure that length-prefixed string in
 *        Editor buffer always start on a 16 byte boundary for being
 *        accessible via index.
-*
-* First line in editor buffer starts at index slot 2 (c002), this
-* allows the index to contain "null" pointers, aka empty lines
-* without reference to editor buffer.
 ***************************************************************
 
 
@@ -91,6 +87,8 @@ idx.init.exit:
 idx.entry.update:        
         mov   @parm1,tmp0           ; Get line number
         mov   @parm2,tmp1           ; Get pointer
+        jeq   idx.entry.update.clear
+                                    ; Special handling for "null"-pointer
         ;------------------------------------------------------
         ; Calculate LSB value index slot (pointer offset)
         ;------------------------------------------------------      
@@ -107,12 +105,20 @@ idx.entry.update:
 idx.entry.update.save:        
         sla   tmp0,1                ; line number * 2
         mov   tmp1,@idx.top(tmp0)   ; Update index slot
+        jmp   idx.entry.update.exit
+        ;------------------------------------------------------
+        ; Special handling for "null"-pointer
+        ;------------------------------------------------------      
+idx.entry.update.clear:
+        sla   tmp0,1                ; line number * 2
+        clr   @idx.top(tmp0)        ; Clear index slot
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 idx.entry.update.exit:
         mov   tmp0,@outparm1        ; Pointer to updated index entry
         b     *r11                  ; Return
+
 
 
 ***************************************************************
@@ -253,6 +259,8 @@ idx.pointer.get:
         mov   @parm1,tmp0           ; Line number in editor buffer        
         sla   tmp0,1                ; line number * 2
         mov   @idx.top(tmp0),tmp1   ; Get slot entry
+        jeq   idx.pointer.get.parm.null
+                                    ; Skip if index slot empty
         ;------------------------------------------------------
         ; Calculate MSB (SAMS page)
         ;------------------------------------------------------      
@@ -270,6 +278,13 @@ idx.pointer.get:
 idx.pointer.get.parm:
         mov   tmp1,@outparm1        ; Index slot -> Pointer        
         mov   tmp2,@outparm2        ; Index slot -> SAMS page
+        jmp   idx.pointer.get.exit
+        ;------------------------------------------------------
+        ; Special handling for "null"-pointer
+        ;------------------------------------------------------
+idx.pointer.get.parm.null:
+        clr   @outparm1
+        clr   @outparm2
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
