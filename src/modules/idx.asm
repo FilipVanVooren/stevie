@@ -6,24 +6,30 @@
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
-* The index contains 2 major parts:
-*
-* 1) Main index (c000 - cfff)
-*
-*    Size of index page is 4K and allows indexing of 2048 lines.
-*    Each index slot (1 word) contains the pointer to the line
-*    in the editor buffer.
+*  Size of index page is 4K and allows indexing of 2048 lines
+*  per page.
 * 
-* 2) Shadow SAMS pages index (f000 - ffff)
+*  Each index slot (word) has the format:
+*    +-----+-----+
+*    | MSB | LSB |   
+*    +-----|-----+   LSB = Pointer offset 00-ff.
+*                      
+*  MSB = SAMS Page 00-ff
+*        Allows addressing of up to 256 4K SAMS pages (1024 KB)
+*    
+*  LSB = Pointer offset in range 00-ff
 *
-*    Size of index page is 4K and allows indexing of 2048 lines.
-*    Each index slot (1 word) contains the SAMS page where the
-*    line in the editor buffer resides
+*        To calculate pointer to line in Editor buffer:
+*        Pointer address = edb.top + (LSB * 16)
 *
-*  
-* The editor buffer itself always resides at (d000 -> dfff) for 
-* a total of 4kb.
-* First line in editor buffer starts at offset 2 (c002), this
+*        Note that the editor buffer itself resides in own 4K memory range
+*        starting at edb.top
+*
+*        All support routines must assure that length-prefixed string in
+*        Editor buffer always start on a 16 byte boundary for being
+*        accessible via index.
+*
+* First line in editor buffer starts at index slot 2 (c002), this
 * allows the index to contain "null" pointers, aka empty lines
 * without reference to editor buffer.
 ***************************************************************
@@ -53,14 +59,10 @@ idx.init:
         li    tmp0,idx.top
         mov   tmp0,@edb.index.ptr   ; Set pointer to index in editor structure
         ;------------------------------------------------------
-        ; Clear index
+        ; Clear index page
         ;------------------------------------------------------
         bl    @film
-        data  idx.top,>00,idx.size  ; Clear main index
-
-        bl    @film
-        data  idx.shadow.top,>00,idx.shadow.size  
-                                    ; Clear shadow index
+        data  idx.top,>00,idx.size  ; Clear index
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -77,7 +79,7 @@ idx.init.exit:
 *--------------------------------------------------------------
 * INPUT
 * @parm1    = Line number in editor buffer
-* @parm2    = Pointer to line in editor buffer 
+* @parm2    = Pointer to line in editor buffer
 * @parm3    = SAMS page
 *--------------------------------------------------------------
 * OUTPUT
@@ -86,27 +88,25 @@ idx.init.exit:
 * Register usage
 * tmp0,tmp1,tmp2
 *--------------------------------------------------------------
-idx.entry.update:
-        mov   @parm1,tmp0           ; Line number in editor buffer
+idx.entry.update:        
+        mov   @parm1,tmp0           ; Get line number
+        mov   @parm2,tmp1           ; Get pointer
         ;------------------------------------------------------
-        ; Calculate offset
+        ; Calculate LSB value index slot (pointer offset)
         ;------------------------------------------------------      
-        mov   @parm2,tmp1
-        jeq   idx.entry.update.save ; Special handling for empty line
-
+        andi  tmp1,>0fff            ; Remove high-nibble from pointer
+        srl   tmp1,4                ; Get offset (divide by 16)
         ;------------------------------------------------------
-        ; SAMS bank
-        ;------------------------------------------------------ 
-        mov   @parm3,tmp2           ; Get SAMS page
-
+        ; Calculate MSB value index slot (SAMS page)
+        ;------------------------------------------------------      
+        swpb  @parm3
+        movb  @parm3,tmp1           ; Put SAMS page in MSB
         ;------------------------------------------------------
         ; Update index slot
         ;------------------------------------------------------      
 idx.entry.update.save:        
         sla   tmp0,1                ; line number * 2
-        mov   tmp1,@idx.top(tmp0)   ; Update index slot -> Pointer
-        mov   tmp2,@idx.shadow.top(tmp0)
-                                    ; Update SAMS page
+        mov   tmp1,@idx.top(tmp0)   ; Update index slot
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
@@ -154,7 +154,6 @@ idx.entry.delete:
         ;------------------------------------------------------
 idx.entry.delete.reorg:
         mov   @idx.top+2(tmp0),@idx.top+0(tmp0)
-        mov   @idx.shadow.top+2(tmp0),@idx.shadow.top+0(tmp0)
         inct  tmp0                  ; Next index entry
         dec   tmp2                  ; tmp2--
         jne   idx.entry.delete.reorg
@@ -162,9 +161,8 @@ idx.entry.delete.reorg:
         ;------------------------------------------------------
         ; Last line 
         ;------------------------------------------------------      
-idx.entry.delete.lastline
+idx.entry.delete.lastline:
         clr   @idx.top(tmp0)
-        clr   @idx.shadow.top(tmp0)                
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
@@ -204,13 +202,9 @@ idx.entry.insert:
         ; Special treatment if last line
         ;------------------------------------------------------
         mov   @idx.top+0(tmp0),@idx.top+2(tmp0)
-                                    ; Move pointer
+                                    ; Move index entry
         clr   @idx.top+0(tmp0)      ; Clear new index entry
 
-        mov   @idx.shadow.top+0(tmp0),@idx.shadow.top+2(tmp0)
-                                    ; Move SAMS page         
-        clr   @idx.shadow.top+0(tmp0) 
-                                    ; Clear new index entry
         jmp   idx.entry.insert.exit
         ;------------------------------------------------------
         ; Reorganize index entries 
@@ -219,18 +213,13 @@ idx.entry.insert.reorg:
         inct  tmp2                  ; Adjust one time
 
 !       mov   @idx.top+0(tmp0),@idx.top+2(tmp0)
-                                    ; Move pointer
-
-        mov   @idx.shadow.top+0(tmp0),@idx.shadow.top+2(tmp0)
-                                    ; Move SAMS page
+                                    ; Move index entry
 
         dect  tmp0                  ; Previous index entry
         dec   tmp2                  ; tmp2--
         jne   -!                    ; Loop unless completed
 
         clr   @idx.top+4(tmp0)      ; Clear new index entry
-        clr   @idx.shadow.top+4(tmp0) 
-                                    ; Clear new index entry
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
@@ -259,18 +248,24 @@ idx.pointer.get:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Get pointer
-        ;------------------------------------------------------
-        mov   @parm1,tmp0           ; Line number in editor buffer
-        ;------------------------------------------------------
-        ; Calculate index entry 
+        ; Get slot entry
         ;------------------------------------------------------      
+        mov   @parm1,tmp0           ; Line number in editor buffer        
         sla   tmp0,1                ; line number * 2
-        mov   @idx.top(tmp0),tmp1   ; Get pointer
-        mov   @idx.shadow.top(tmp0),tmp2   
-                                    ; Get SAMS page
+        mov   @idx.top(tmp0),tmp1   ; Get slot entry
         ;------------------------------------------------------
-        ; Return parameter
+        ; Calculate MSB (SAMS page)
+        ;------------------------------------------------------      
+        mov   tmp1,tmp2             ; \
+        srl   tmp2,8                ; / Right align SAMS page
+        ;------------------------------------------------------
+        ; Calculate LSB (pointer address)
+        ;------------------------------------------------------      
+        andi  tmp1,>00ff            ; Get rid of MSB (SAMS page)
+        sla   tmp1,4                ; Multiply with 16
+        ai    tmp1,edb.top          ; Add editor buffer base address
+        ;------------------------------------------------------
+        ; Return parameters
         ;------------------------------------------------------
 idx.pointer.get.parm:
         mov   tmp1,@outparm1        ; Index slot -> Pointer        

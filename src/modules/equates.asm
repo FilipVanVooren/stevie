@@ -235,7 +235,5 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >d000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* SAMS shadow pages index           @>f000-ffff    (4096 bytes)
+* *** FREE ***                      @>f000-ffff    (4096 bytes)
 *--------------------------------------------------------------
-idx.shadow.top    equ  >f000           ; Top of shadow index
-idx.shadow.size   equ  4096            ; Shadow index size
