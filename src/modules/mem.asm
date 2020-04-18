@@ -76,10 +76,6 @@ xmem.edb.sams.pagein:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
@@ -101,52 +97,29 @@ mem.edb.sams.pagein.lookup:
                                     ; / o  outparm2 = SAMS page
 
         mov   @outparm2,tmp0        ; SAMS page
-        mov   @outparm1,tmp1        ; Memory address        
+        mov   @outparm1,tmp1        ; Pointer to line        
         jeq   mem.edb.sams.pagein.exit
                                     ; Nothing to page-in if NULL pointer 
                                     ; (=empty line)
+        ;------------------------------------------------------        
+        ; Determine if requested SAMS page is already active
         ;------------------------------------------------------
-        ; 1. Determine if requested SAMS page is already active 
-        ;------------------------------------------------------
-        andi  tmp1,>f000            ; Reduce address to 4K chunks 
-        clr   tmp2                  ; Offset in SAMS shadow registers table
-        li    tmp3,sams.copy.layout.data + 6
-                                    ; Entry >b000  in SAMS memory range table
-        ;------------------------------------------------------
-        ; Loop over memory ranges
-        ;------------------------------------------------------
-mem.edb.sams.pagein.compare.loop:        
-        c     *tmp3+,tmp1           ; Does memory range match?
-        jeq   !                     ; Yes, now check SAMS page
-
-        inct  tmp2                  ; Next range
-        ci    tmp2,12               ; All ranges checked?
-        jne   mem.edb.sams.pagein.compare.loop
-                                    ; Not yet, check next range
-        ;------------------------------------------------------
-        ; Invalid memory range. Should never get here
-        ;------------------------------------------------------
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system        
-        ;------------------------------------------------------
-        ; 2. Determine if requested SAMS page is already active
-        ;------------------------------------------------------
-!       ai    tmp2,tv.sams.2000     ; Add offset for SAMS shadow register
-        c     *tmp2,tmp0            ; Requested SAMS page already active?
+        c     @tv.sams.d000,tmp0    ; Compare with active page editor buffer
         jeq   mem.edb.sams.pagein.exit
-                                    ; Yes, so exit
+                                    ; Request page already active. Exit.
         ;------------------------------------------------------
         ; Activate requested SAMS page
         ;-----------------------------------------------------
         bl    @xsams.page.set       ; Switch SAMS memory page
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address
+
+        mov   @outparm2,@tv.sams.d000
+                                    ; Set page in shadow registers
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 mem.edb.sams.pagein.exit:
-        mov   *stack+,tmp3          ; Pop tmp1
-        mov   *stack+,tmp2          ; Pop tmp1
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11

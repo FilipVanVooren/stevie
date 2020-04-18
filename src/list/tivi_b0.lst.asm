@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b0.asm.20670
+**** **** ****     > tivi_b0.asm.23485
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b0.asm                 ; Version 200414-20670
+0009               * File: tivi_b0.asm                 ; Version 200418-23485
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200414-20670
+0009               * File: equates.asm                 ; Version 200418-23485
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -257,7 +257,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0237               *--------------------------------------------------------------
 0238               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0239               *--------------------------------------------------------------
-**** **** ****     > tivi_b0.asm.20670
+**** **** ****     > tivi_b0.asm.23485
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -294,7 +294,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200414-20670'
+0031 6015 ....             text  'TIVI 200418-23485'
 0032                       even
 0033               
 0041               
@@ -304,7 +304,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b0.asm.20670
+**** **** ****     > tivi_b0.asm.23485
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1063,7 +1063,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 6222 1642             byte  22
-0249 6223 ....             text  'Build-ID  200414-20670'
+0249 6223 ....             text  'Build-ID  200418-23485'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -2266,10 +2266,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0298               
 0299               
 0300               ***************************************************************
-0301               * sams.reset.layout
+0301               * sams.layout.reset
 0302               * Reset SAMS memory banks to standard layout
 0303               ***************************************************************
-0304               * bl  @sams.reset.layout
+0304               * bl  @sams.layout.reset
 0305               *--------------------------------------------------------------
 0306               * OUTPUT
 0307               * none
@@ -2277,7 +2277,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0309               * Register usage
 0310               * none
 0311               ********|*****|*********************|**************************
-0312               sams.reset.layout:
+0312               sams.layout.reset:
 0313 65FA 0649  14         dect  stack
 0314 65FC C64B  30         mov   r11,*stack            ; Save return address
 0315                       ;------------------------------------------------------
@@ -2285,17 +2285,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0317                       ;------------------------------------------------------
 0318 65FE 06A0  32         bl    @sams.layout
      6600 2562 
-0319 6602 25A6                   data sams.reset.layout.data
+0319 6602 25A6                   data sams.layout.standard
 0320                       ;------------------------------------------------------
 0321                       ; Exit
 0322                       ;------------------------------------------------------
-0323               sams.reset.layout.exit:
+0323               sams.layout.reset.exit:
 0324 6604 C2F9  30         mov   *stack+,r11           ; Pop r11
 0325 6606 045B  20         b     *r11                  ; Return to caller
 0326               ***************************************************************
 0327               * SAMS standard page layout table (16 words)
 0328               *--------------------------------------------------------------
-0329               sams.reset.layout.data:
+0329               sams.layout.standard:
 0330 6608 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
      660A 0002 
 0331 660C 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
@@ -2316,10 +2316,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0339               
 0340               
 0341               ***************************************************************
-0342               * sams.copy.layout
+0342               * sams.layout.copy
 0343               * Copy SAMS memory layout
 0344               ***************************************************************
-0345               * bl  @sams.copy.layout
+0345               * bl  @sams.layout.copy
 0346               *     data P0
 0347               *--------------------------------------------------------------
 0348               * P0 = Pointer to 8 words RAM buffer for results
@@ -2331,7 +2331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0354               * Register usage
 0355               * tmp0, tmp1, tmp2, tmp3
 0356               ***************************************************************
-0357               sams.copy.layout:
+0357               sams.layout.copy:
 0358 6628 C1FB  30         mov   *r11+,tmp3            ; Get P0
 0359               
 0360 662A 0649  14         dect  stack
@@ -2347,14 +2347,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0370                       ;------------------------------------------------------
 0371                       ; Copy SAMS layout
 0372                       ;------------------------------------------------------
-0373 663E 0205  20         li    tmp1,sams.copy.layout.data
+0373 663E 0205  20         li    tmp1,sams.layout.copy.data
      6640 25FE 
 0374 6642 0206  20         li    tmp2,8                ; Set loop counter
      6644 0008 
 0375                       ;------------------------------------------------------
 0376                       ; Set SAMS memory pages
 0377                       ;------------------------------------------------------
-0378               sams.copy.layout.loop:
+0378               sams.layout.copy.loop:
 0379 6646 C135  30         mov   *tmp1+,tmp0           ; Get memory address
 0380 6648 06A0  32         bl    @xsams.page.get       ; \ Get SAMS page
      664A 24C4 
@@ -2365,11 +2365,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      664E 833C 
 0385               
 0386 6650 0606  14         dec   tmp2                  ; Next iteration
-0387 6652 16F9  14         jne   sams.copy.layout.loop ; Loop until done
+0387 6652 16F9  14         jne   sams.layout.copy.loop ; Loop until done
 0388                       ;------------------------------------------------------
 0389                       ; Exit
 0390                       ;------------------------------------------------------
-0391               sams.copy.layout.exit:
+0391               sams.layout.copy.exit:
 0392 6654 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
 0393 6656 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
 0394 6658 C179  30         mov   *stack+,tmp1          ; Pop tmp1
@@ -2379,7 +2379,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0398               ***************************************************************
 0399               * SAMS memory range table (8 words)
 0400               *--------------------------------------------------------------
-0401               sams.copy.layout.data:
+0401               sams.layout.copy.data:
 0402 6660 2000             data  >2000                 ; >2000-2fff
 0403 6662 3000             data  >3000                 ; >3000-3fff
 0404 6664 A000             data  >a000                 ; >a000-afff
@@ -4758,7 +4758,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E76 0040 
 0363 6E78 0460  28         b     @main                 ; Give control to main program
      6E7A 6050 
-**** **** ****     > tivi_b0.asm.20670
+**** **** ****     > tivi_b0.asm.23485
 0051               
 0055 6E7C 2E1A                   data $                ; Bank 0 ROM size OK.
 0057               
