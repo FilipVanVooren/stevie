@@ -25,6 +25,8 @@
 edb.init:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
@@ -50,7 +52,9 @@ edb.init.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-        b     @poprt                ; Return to caller
+        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller        
 
 
 
@@ -208,18 +212,24 @@ edb.line.pack.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3,tmp4
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Memory usage
 * rambuf    = Saved @parm1 of edb.line.unpack
 * rambuf+2  = Saved @parm2 of edb.line.unpack
 * rambuf+4  = Source memory address in editor buffer
 * rambuf+6  = Destination memory address in frame buffer
-* rambuf+8  = Length of RLE (decompressed) line
+* rambuf+8  = Length of line
 ********|*****|*********************|**************************
 edb.line.unpack:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
@@ -251,19 +261,28 @@ edb.line.unpack:
 
         mov   @outparm2,@edb.sams.page 
                                     ; Save current SAMS page                                    
-
-        inct  @outparm1             ; Skip line prefix
-        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
-        ;------------------------------------------------------        
-        ; Get length of line to unpack
         ;------------------------------------------------------
-        bl    @edb.line.getlength   ; Get length of line
-                                    ; \ i  parm1    = Line number
-                                    ; | o  outparm1 = Line length (uncompressed)
-                                    ; | o  outparm2 = Line length (compressed)
-                                    ; / o  outparm3 = SAMS page
+        ; Handle empty line
+        ;------------------------------------------------------        
+        mov   @outparm1,tmp0        ; Get pointer to line
+        jne   !                     ; Check if pointer is set
+        clr   @rambuf+8             ; Set length=0
+        jmp   edb.line.unpack.clear
+        ;------------------------------------------------------
+        ; Get line length
+        ;------------------------------------------------------ 
+!       mov   *tmp0,tmp1            ; Get line length
+        mov   tmp1,@rambuf+8        ; Save line length
 
-        mov   @outparm1,@rambuf+8   ; Save length of RLE (uncompressed) line
+        inct  @outparm1             ; Skip line prefix        
+        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
+        ;------------------------------------------------------
+        ; Sanity check on line length
+        ;------------------------------------------------------        
+        ci    tmp1,80               ; Sanity check on line length, crash
+        jle   edb.line.unpack.clear ; if length > 80.        
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
         ;------------------------------------------------------
@@ -307,8 +326,11 @@ edb.line.unpack.copy:
         ; Exit
         ;------------------------------------------------------
 edb.line.unpack.exit:
-        b     @poprt                ; Return to caller
-
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 
@@ -322,22 +344,27 @@ edb.line.unpack.exit:
 * @parm1 = Line number
 *--------------------------------------------------------------
 * OUTPUT
-* @outparm1 = Length of line (uncompressed)
-* @outparm2 = Length of line (compressed)
-* @outparm3 = SAMS page
+* @outparm1 = Length of line
+* @outparm2 = SAMS page
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0,tmp1
+*--------------------------------------------------------------
+* Remarks
+* Expects that the affected SAMS page is already paged-in!
 ********|*****|*********************|**************************
 edb.line.getlength:
         dect  stack
-        mov   r11,*stack            ; Save return address
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        clr   @outparm1             ; Reset uncompressed length
-        clr   @outparm2             ; Reset compressed length
-        clr   @outparm3             ; Reset SAMS bank
+        clr   @outparm1             ; Reset length
+        clr   @outparm2             ; Reset SAMS bank
         ;------------------------------------------------------
         ; Get length
         ;------------------------------------------------------
@@ -349,25 +376,18 @@ edb.line.getlength:
         mov   @outparm1,tmp0        ; Is pointer set?
         jeq   edb.line.getlength.exit
                                     ; Exit early if NULL pointer
-        mov   @outparm2,@outparm3   ; Save SAMS page
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
-        clr   tmp1
-        movb  *tmp0+,tmp1           ; Get compressed length
-        swpb  tmp1
-        mov   tmp1,@outparm2        ; Save length
-
-        clr   tmp1
-        movb  *tmp0+,tmp1           ; Get uncompressed length
-        swpb  tmp1
-        mov   tmp1,@outparm1        ; Save length
+        mov   *tmp0,@outparm1       ; Save length
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 edb.line.getlength.exit:
-        b     @poprt                ; Return to caller
-
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 

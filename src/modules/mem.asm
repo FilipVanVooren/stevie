@@ -65,7 +65,7 @@ mem.sams.layout.data:
 * outparm2 = SAMS page
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0, tmp1
 ***************************************************************
 mem.edb.sams.pagein:
         mov   *r11+,tmp0            ; Get p0
