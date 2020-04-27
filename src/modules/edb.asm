@@ -30,13 +30,10 @@ edb.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
-        li    tmp0,edb.top+2        ; Skip offset 0 so that it can't be confused
-                                    ; with null pointer (has offset 0)
-
-        mov   tmp0,@edb.top.ptr     ; Set pointer to top of editor buffer
+        li    tmp0,edb.top          ; \
+        mov   tmp0,@edb.top.ptr     ; / Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
-                                    ; Set pointer to next free line in 
-                                    ; editor buffer
+                                    ; Set pointer to next free line
 
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
         clr   @edb.lines            ; Lines=0
