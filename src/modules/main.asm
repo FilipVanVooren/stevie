@@ -51,10 +51,9 @@ main.continue:
         bl    @film
               data >a000,00,24*1024 ; Clear 24k high-memory
         ;------------------------------------------------------
-        ; Load SAMS default memory layout
+        ; Setup SAMS windows
         ;------------------------------------------------------
-        bl    @mem.setup.sams.layout
-                                    ; Initialize SAMS layout
+        bl    @mem.sams.layout      ; Initialize SAMS layout
         ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------

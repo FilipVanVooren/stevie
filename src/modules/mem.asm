@@ -6,7 +6,7 @@
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
-* mem.setup.sams.layout
+* mem.sams.layout
 * Setup SAMS memory pages for TiVi
 ***************************************************************
 * bl  @mem.setup.sams.layout
@@ -17,7 +17,7 @@
 * Register usage
 * none
 ***************************************************************
-mem.setup.sams.layout:
+mem.sams.layout:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -25,10 +25,13 @@ mem.setup.sams.layout:
         ;------------------------------------------------------        
         bl    @sams.layout
               data mem.sams.layout.data
+
+        bl    @sams.layout.copy
+              data tv.sams.2000     ; Get SAMS windows
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-mem.setup.sams.layout.exit:
+mem.sams.layout.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 ***************************************************************
@@ -43,8 +46,6 @@ mem.sams.layout.data:
         data  >d000,>0030           ; >d000-dfff, SAMS page >30
         data  >e000,>0010           ; >e000-efff, SAMS page >10
         data  >f000,>0011           ; >f000-ffff, SAMS page >11
-
-
 
 
 ***************************************************************
@@ -125,3 +126,5 @@ mem.edb.sams.pagein.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
         
+
+

@@ -41,10 +41,12 @@
 * a200-a2ff     256           Editor buffer structure
 * a300-a3ff     256           Command buffer structure   
 * a400-a4ff     256           File handle structure
-* a500-afff    2792           *FREE*
+* a500-a5ff     256           Index structure
+* a600-af5f    2400           Frame buffer
+* af60-afff     ???           *FREE*
 *
 * b000-bfff    4096           Command buffer
-* c000-cfff    4096           Index
+* c000-cfff    4096           Index buffer page
 * d000-dfff    4096           Editor buffer page
 * e000-efff    4096           *FREE*
 * f000-ffff    4096           Shadow index
@@ -121,14 +123,14 @@ scrpad.backup2    equ  >3f00           ; Backup spectra2 layout
 * TiVi Editor shared structures     @>a000-a0ff     (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a000           ; Structure begin
-tv.sams.2000      equ  tv.top + 0      ; SAMS shadow register memory >2000-2fff
-tv.sams.3000      equ  tv.top + 2      ; SAMS shadow register memory >3000-3fff
-tv.sams.a000      equ  tv.top + 4      ; SAMS shadow register memory >a000-afff
-tv.sams.b000      equ  tv.top + 6      ; SAMS shadow register memory >b000-bfff
-tv.sams.c000      equ  tv.top + 8      ; SAMS shadow register memory >c000-cfff
-tv.sams.d000      equ  tv.top + 10     ; SAMS shadow register memory >d000-dfff
-tv.sams.e000      equ  tv.top + 12     ; SAMS shadow register memory >e000-efff
-tv.sams.f000      equ  tv.top + 14     ; SAMS shadow register memory >f000-ffff
+tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
+tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
+tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
+tv.sams.b000      equ  tv.top + 6      ; SAMS window >b000-bfff
+tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
+tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
+tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
+tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
 tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color
@@ -204,7 +206,7 @@ fh.kilobytes      equ  fh.struct + 50  ; Kilobytes processed (read/written)
 fh.counter        equ  fh.struct + 52  ; Counter used in TiVi file operations
 fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
 fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
-fh.sams.hpage     equ  fh.struct + 58  ; Highest SAMS page used for file oper.
+fh.sams.hipage    equ  fh.struct + 58  ; Highest SAMS page used for file oper.
 fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
@@ -214,6 +216,13 @@ fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
 fh.end            equ  fh.struct +150  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
+*--------------------------------------------------------------
+* Index structure                   @>a500-a5ff     (256 bytes)
+*--------------------------------------------------------------
+idx.struct        equ  >a500           ; TiVi index structure
+idx.sams.page     equ  idx.struct      ; Current SAMS page
+idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
+idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
 *--------------------------------------------------------------
 * Frame buffer                      @>a600-afff    (2560 bytes)
 *--------------------------------------------------------------

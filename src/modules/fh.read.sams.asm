@@ -48,7 +48,8 @@ fh.file.read.sams:
                                     ; / o  waux2 = Address of SAMS register
 
         mov   @waux1,@fh.sams.page  ; Set current SAMS page
-        mov   @waux1,@fh.sams.hpage ; Set highest SAMS page in use
+        mov   @waux1,@fh.sams.hipage
+                                    ; Set highest SAMS page in use
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -193,7 +194,7 @@ fh.file.read.sams.check_setpage:
         ; 1e: Increase SAMS page
         ;------------------------------------------------------ 
         inc   @fh.sams.page         ; Next SAMS page
-        mov   @fh.sams.page,@fh.sams.hpage
+        mov   @fh.sams.page,@fh.sams.hipage
                                     ; Set highest SAMS page
         mov   @edb.top.ptr,@edb.next_free.ptr
                                     ; Start at top of SAMS page again
@@ -291,9 +292,9 @@ fh.file.read.sams.next:
         ;-------------------------------------------------------
         ; ** TEMPORARY FIX for 4KB INDEX LIMIT **
         ;-------------------------------------------------------
-        mov   @edb.lines,tmp0
-        ci    tmp0,2047
-        jeq   fh.file.read.sams.eof
+        ;mov   @edb.lines,tmp0
+        ;ci    tmp0,2047
+        ;jeq   fh.file.read.sams.eof
 
         b     @fh.file.read.sams.record
                                     ; Next record
@@ -312,8 +313,7 @@ fh.file.read.sams.error:
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
 
-        bl    @mem.setup.sams.layout
-                                    ; Restore SAMS default memory layout               
+        bl    @mem.sams.layout      ; Restore SAMS windows
 
         mov   @fh.callback4,tmp0    ; Get pointer to "File I/O error handler"
         bl    *tmp0                 ; Run callback function  
@@ -325,8 +325,7 @@ fh.file.read.sams.eof:
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
 
-        bl    @mem.setup.sams.layout
-                                    ; Restore SAMS default memory layout                                                                                  
+        bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Show "loading indicator 3" (final)
         ;------------------------------------------------------
