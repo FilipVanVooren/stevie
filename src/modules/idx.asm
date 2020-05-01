@@ -94,7 +94,7 @@ idx.init.exit:
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module.
-*  Activate SAMS page containing required index slot entry.
+*  Activates SAMS page containing required index slot entry.
 *--------------------------------------------------------------
 idx._samspage.get:
         dect  stack
@@ -228,117 +228,6 @@ idx.entry.update.exit:
         b     *r11                  ; Return to caller
 
 
-
-***************************************************************
-* idx.entry.delete
-* Delete index entry - Close gap created by delete
-***************************************************************
-* bl @idx.entry.delete
-*--------------------------------------------------------------
-* INPUT
-* @parm1    = Line number in editor buffer to delete
-* @parm2    = Line number of last line to check for reorg
-*--------------------------------------------------------------
-* OUTPUT
-* @outparm1 = Pointer to deleted line (for undo)
-*--------------------------------------------------------------
-* Register usage
-* tmp0,tmp2
-*--------------------------------------------------------------
-idx.entry.delete:
-        mov   @parm1,tmp0           ; Line number in editor buffer
-        ;------------------------------------------------------
-        ; Calculate address of index entry and save pointer
-        ;------------------------------------------------------      
-        sla   tmp0,1                ; line number * 2
-        mov   @idx.top(tmp0),@outparm1 
-                                    ; Pointer to deleted line
-        ;------------------------------------------------------
-        ; Prepare for index reorg
-        ;------------------------------------------------------
-        mov   @parm2,tmp2           ; Get last line to check
-        s     @parm1,tmp2           ; Calculate loop 
-        jne   idx.entry.delete.reorg
-        ;------------------------------------------------------
-        ; Special treatment if last line
-        ;------------------------------------------------------
-        jmp   idx.entry.delete.lastline
-        ;------------------------------------------------------
-        ; Reorganize index entries 
-        ;------------------------------------------------------
-idx.entry.delete.reorg:
-        mov   @idx.top+2(tmp0),@idx.top+0(tmp0)
-        inct  tmp0                  ; Next index entry
-        dec   tmp2                  ; tmp2--
-        jne   idx.entry.delete.reorg
-                                    ; Loop unless completed
-        ;------------------------------------------------------
-        ; Last line 
-        ;------------------------------------------------------      
-idx.entry.delete.lastline:
-        clr   @idx.top(tmp0)
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------      
-idx.entry.delete.exit:
-        b     *r11                  ; Return
-
-
-***************************************************************
-* idx.entry.insert
-* Insert index entry
-***************************************************************
-* bl @idx.entry.insert
-*--------------------------------------------------------------
-* INPUT
-* @parm1    = Line number in editor buffer to insert
-* @parm2    = Line number of last line to check for reorg
-*--------------------------------------------------------------
-* OUTPUT
-* NONE
-*--------------------------------------------------------------
-* Register usage
-* tmp0,tmp2
-*--------------------------------------------------------------
-idx.entry.insert:
-        mov   @parm2,tmp0           ; Last line number in editor buffer
-        ;------------------------------------------------------
-        ; Calculate address of index entry and save pointer
-        ;------------------------------------------------------      
-        sla   tmp0,1                ; line number * 2
-        ;------------------------------------------------------
-        ; Prepare for index reorg
-        ;------------------------------------------------------
-        mov   @parm2,tmp2           ; Get last line to check
-        s     @parm1,tmp2           ; Calculate loop 
-        jne   idx.entry.insert.reorg
-        ;------------------------------------------------------
-        ; Special treatment if last line
-        ;------------------------------------------------------
-        mov   @idx.top+0(tmp0),@idx.top+2(tmp0)
-                                    ; Move index entry
-        clr   @idx.top+0(tmp0)      ; Clear new index entry
-
-        jmp   idx.entry.insert.exit
-        ;------------------------------------------------------
-        ; Reorganize index entries 
-        ;------------------------------------------------------
-idx.entry.insert.reorg:
-        inct  tmp2                  ; Adjust one time
-
-!       mov   @idx.top+0(tmp0),@idx.top+2(tmp0)
-                                    ; Move index entry
-
-        dect  tmp0                  ; Previous index entry
-        dec   tmp2                  ; tmp2--
-        jne   -!                    ; Loop unless completed
-
-        clr   @idx.top+4(tmp0)      ; Clear new index entry
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------      
-idx.entry.insert.exit:
-        b     *r11                  ; Return
 
 
 

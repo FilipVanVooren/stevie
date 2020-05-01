@@ -45,6 +45,8 @@ main:
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
         copy  "idx.asm"             ; Index management
+        copy  "idx.delete.asm"      ; Index management - delete slot
+        copy  "idx.insert.asm"      ; Index management - insert slot
         copy  "edb.asm"             ; Editor Buffer
         copy  "cmdb.asm"            ; Command Buffer
         copy  "fh.read.sams.asm"    ; File handler read file
