@@ -79,7 +79,7 @@ idx.init.exit:
 
 ***************************************************************
 * idx._samspage.get
-* Get SAMS page for index (only to be called from inside idx)
+* Get SAMS page for index
 ***************************************************************
 * bl @idx._samspage.get
 *--------------------------------------------------------------
@@ -87,10 +87,14 @@ idx.init.exit:
 * tmp0 = Line number
 *--------------------------------------------------------------
 * OUTPUT
-* @outparm1 = Offset for index entry
+* @outparm1 = Offset for index entry in index SAMS page
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2
+*--------------------------------------------------------------
+*  Remarks
+*  Private, only to be called from inside idx module.
+*  Activate SAMS page containing required index slot entry.
 *--------------------------------------------------------------
 idx._samspage.get:
         dect  stack
@@ -116,21 +120,22 @@ idx._samspage.get:
         mov   tmp2,@outparm1        ; Offset index entry
 
         a     @idx.sams.lopage,tmp1 ; Add SAMS page base
-        c     tmp1,@tv.sams.c000    ; Page already active?
+        c     tmp1,@idx.sams.page   ; Page already active?
 
         jeq   idx._samspage.get.exit
                                     ; Yes, so exit
         ;------------------------------------------------------
         ; Activate SAMS index page
         ;------------------------------------------------------
+        mov   tmp1,@idx.sams.page   ; Set current SAMS page
+        mov   tmp1,@tv.sams.c000    ; Also keep SAMS window synced in TiVi
+
         mov   tmp1,tmp0             ; Destination SAMS page
         li    tmp1,>c000            ; Memory window for index page
 
         bl    @xsams.page.set       ; Switch to SAMS page
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address
-
-        mov   tmp0,@idx.sams.page   ; Set current SAMS page
         ;------------------------------------------------------
         ; Check if new highest SAMS index page
         ;------------------------------------------------------

@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > tivi_b0.asm.10794
+**** **** ****     > tivi_b0.asm.12888
 0001               ***************************************************************
 0002               *                          TiVi Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: tivi_b0.asm                 ; Version 200428-10794
+0009               * File: tivi_b0.asm                 ; Version 200501-12888
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200428-10794
+0009               * File: equates.asm                 ; Version 200501-12888
 0010               *--------------------------------------------------------------
 0011               * TiVi memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -143,14 +143,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0123               * TiVi Editor shared structures     @>a000-a0ff     (256 bytes)
 0124               *--------------------------------------------------------------
 0125      A000     tv.top            equ  >a000           ; Structure begin
-0126      A000     tv.sams.2000      equ  tv.top + 0      ; SAMS shadow register memory >2000-2fff
-0127      A002     tv.sams.3000      equ  tv.top + 2      ; SAMS shadow register memory >3000-3fff
-0128      A004     tv.sams.a000      equ  tv.top + 4      ; SAMS shadow register memory >a000-afff
-0129      A006     tv.sams.b000      equ  tv.top + 6      ; SAMS shadow register memory >b000-bfff
-0130      A008     tv.sams.c000      equ  tv.top + 8      ; SAMS shadow register memory >c000-cfff
-0131      A00A     tv.sams.d000      equ  tv.top + 10     ; SAMS shadow register memory >d000-dfff
-0132      A00C     tv.sams.e000      equ  tv.top + 12     ; SAMS shadow register memory >e000-efff
-0133      A00E     tv.sams.f000      equ  tv.top + 14     ; SAMS shadow register memory >f000-ffff
+0126      A000     tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
+0127      A002     tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
+0128      A004     tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
+0129      A006     tv.sams.b000      equ  tv.top + 6      ; SAMS window >b000-bfff
+0130      A008     tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
+0131      A00A     tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
+0132      A00C     tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
+0133      A00E     tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
 0134      A010     tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 0135      A012     tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
 0136      A014     tv.curshape       equ  tv.top + 20     ; Cursor shape and color
@@ -241,8 +241,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0221               *--------------------------------------------------------------
 0222      A500     idx.struct        equ  >a500           ; TiVi index structure
 0223      A500     idx.sams.page     equ  idx.struct      ; Current SAMS page
-0224      A502     idx.sams.hipage   equ  idx.struct + 2  ; Highest SAMS page
-0225               
+0224      A502     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
+0225      A504     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
 0226               *--------------------------------------------------------------
 0227               * Frame buffer                      @>a600-afff    (2560 bytes)
 0228               *--------------------------------------------------------------
@@ -266,7 +266,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               *--------------------------------------------------------------
 0247               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0248               *--------------------------------------------------------------
-**** **** ****     > tivi_b0.asm.10794
+**** **** ****     > tivi_b0.asm.12888
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -303,7 +303,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1154             byte  17
-0031 6015 ....             text  'TIVI 200428-10794'
+0031 6015 ....             text  'TIVI 200501-12888'
 0032                       even
 0033               
 0041               
@@ -313,7 +313,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > tivi_b0.asm.10794
+**** **** ****     > tivi_b0.asm.12888
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1072,7 +1072,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 6222 1642             byte  22
-0249 6223 ....             text  'Build-ID  200428-10794'
+0249 6223 ....             text  'Build-ID  200501-12888'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -2038,7 +2038,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0077 653A C804  38         mov   tmp0,@waux2           ; Save address of SAMS register
      653C 833E 
 0078               *--------------------------------------------------------------
-0079               * Switch memory bank to specified SAMS page
+0079               * Get SAMS page number
 0080               *--------------------------------------------------------------
 0081 653E 020C  20         li    r12,>1e00             ; SAMS CRU address
      6540 1E00 
@@ -4767,7 +4767,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E76 0040 
 0363 6E78 0460  28         b     @main                 ; Give control to main program
      6E7A 6050 
-**** **** ****     > tivi_b0.asm.10794
+**** **** ****     > tivi_b0.asm.12888
 0051               
 0055 6E7C 2E1A                   data $                ; Bank 0 ROM size OK.
 0057               

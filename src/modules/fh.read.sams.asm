@@ -289,12 +289,6 @@ fh.file.read.sams.display:
 fh.file.read.sams.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->2100, 2000->8300        
-        ;-------------------------------------------------------
-        ; ** TEMPORARY FIX for 4KB INDEX LIMIT **
-        ;-------------------------------------------------------
-        ;mov   @edb.lines,tmp0
-        ;ci    tmp0,2047
-        ;jeq   fh.file.read.sams.eof
 
         b     @fh.file.read.sams.record
                                     ; Next record
