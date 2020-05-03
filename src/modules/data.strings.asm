@@ -32,16 +32,16 @@ txt.tivi     byte    12
              byte    11
              even
 
-fdname0      #string 'DSK1.FWDOC/PSRV'
 fdname1      #string 'DSK1.SPEECHDOCS'
-fdname2      #string 'DSK1.XBEADOC'
-fdname3      #string 'DSK3.XBEADOC'
-fdname4      #string 'DSK3.C99MAN1'
-fdname5      #string 'DSK3.C99MAN2'
-fdname6      #string 'DSK3.C99MAN3'
-fdname7      #string 'DSK3.C99SPECS'
-fdname8      #string 'DSK3.RANDOM#C'
-fdname9      #string 'DSK1.INVADERS'
+fdname2      #string 'DSK5.SPEECHDOCS'
+fdname3      #string 'DSK5.XBEADOC'
+fdname4      #string 'DSK5.C99MAN1'
+fdname5      #string 'DSK5.C99MAN2'
+fdname6      #string 'DSK5.C99MAN3'
+fdname7      #string 'DSK5.C99SPECS'
+fdname8      #string 'DSK5.RANDOM#C'
+fdname9      #string 'DSK5.INVADERS'
+fdname0      #string 'DSK5.NR80'
 
 
 *---------------------------------------------------------------

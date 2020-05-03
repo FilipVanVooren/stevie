@@ -70,15 +70,21 @@ idx.entry.delete:
         ; Reorganize index entries 
         ;------------------------------------------------------
 idx.entry.delete.reorg:
-        mov   @parm2,tmp1
-        ci    tmp1,2048             ; No more than 2048 lines in index
-        jle   idx.entry.delete.reorg.simple
+        c     @idx.sams.page,@idx.sams.hipage
+        jeq   idx.entry.delete.reorg.simple
+                                    ; If only one SAMS index page or at last
+                                    ; SAMS index page then do simple reorg        
         ;------------------------------------------------------
-        ; Call table
+        ; Complex index reorganization (spanning multiple index pages)
+        ;------------------------------------------------------
+idx.entry.delete.reorg.complex:        
+;       bl    @idx.entry.delete._reorg.complex                                          
+        jmp   idx.entry.delete.lastline
+        ;------------------------------------------------------
+        ; Simple index reorganization
         ;------------------------------------------------------
 idx.entry.delete.reorg.simple:
         bl    @idx.entry.delete._reorg.simple                                          
-        jmp   idx.entry.delete.lastline
         ;------------------------------------------------------
         ; Last line 
         ;------------------------------------------------------      
