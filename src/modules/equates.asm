@@ -45,11 +45,11 @@
 * a600-af5f    2400           Frame buffer
 * af60-afff     ???           *FREE*
 *
-* b000-bfff    4096           Command buffer
-* c000-cfff    4096           Index buffer page
-* d000-dfff    4096           Editor buffer page
+* b000-bfff    4096           Index buffer page
+* c000-cfff    4096           Editor buffer page
+* d000-dfff    4096           Command buffer
 * e000-efff    4096           *FREE*
-* f000-ffff    4096           Shadow index
+* f000-ffff    4096           *????*
 *
 *
 * VDP RAM
@@ -229,20 +229,20 @@ idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
 fb.top            equ  >a600           ; Frame buffer (80x30)
 fb.size           equ  80*30           ; Frame buffer size                                     
 *--------------------------------------------------------------
-* Command buffer                    @>b000-bfff    (4096 bytes)
+* Index                             @>b000-bfff    (4096 bytes)
 *--------------------------------------------------------------
-cmdb.top          equ  >b000           ; Top of command buffer
-cmdb.size         equ  4096            ; Command buffer size
-*--------------------------------------------------------------
-* Index                             @>c000-cfff    (4096 bytes)
-*--------------------------------------------------------------
-idx.top           equ  >c000           ; Top of index
+idx.top           equ  >b000           ; Top of index
 idx.size          equ  4096            ; Index size
 *--------------------------------------------------------------
-* Editor buffer                     @>d000-dfff    (4096 bytes)
+* Editor buffer                     @>c000-cfff    (4096 bytes)
 *--------------------------------------------------------------
-edb.top           equ  >d000           ; Editor buffer high memory
+edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
+*--------------------------------------------------------------
+* Command buffer                    @>d000-dfff    (4096 bytes)
+*--------------------------------------------------------------
+cmdb.top          equ  >d000           ; Top of command buffer
+cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
 * *** FREE ***                      @>f000-ffff    (4096 bytes)
 *--------------------------------------------------------------

@@ -78,6 +78,125 @@ idx.init.exit:
 
 
 ***************************************************************
+* _idx.sams.mapcolumn.on
+* Flatten SAMS index pages into continious memory region.
+* Gives 20 KB of index space (2048 * 5 = 10240 lines per file) 
+*
+* >b000  1st index page
+* >c000  2nd index page
+* >d000  3rd index page
+* >e000  4th index page
+* >f000  5th index page
+***************************************************************
+* bl @_idx.sams.mapcolumn.on
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2
+*--------------------------------------------------------------
+*  Remarks
+*  Private, only to be called from inside idx module
+*--------------------------------------------------------------
+_idx.sams.mapcolumn.on:
+        dect  stack
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+*--------------------------------------------------------------
+* Map index pages into memory window  (b000-?????)
+*--------------------------------------------------------------
+        mov   @idx.sams.lopage,tmp0
+        li    tmp1,idx.top
+
+        mov   @idx.sams.hipage,tmp2
+        s     @idx.sams.lopage,tmp2 ; Set loop counter
+        ;-------------------------------------------------------
+        ; Sanity check
+        ;-------------------------------------------------------      
+        ci    tmp2,5                ; Crash if too many index pages
+        jlt   !
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system     
+        ;-------------------------------------------------------
+        ; Loop over banks
+        ;------------------------------------------------------- 
+!       bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0  = SAMS page number
+                                    ; / i  tmp1  = Memory address
+
+        inc   tmp0                  ; Next SAMS index page
+        ai    tmp1,>1000            ; Next memory region
+        dec   tmp2                  ; Update loop counter
+        jgt   -!                    ; Next iteration
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+_idx.sams.mapcolumn.on.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop return address
+        b     *r11                  ; Return to caller       
+
+
+***************************************************************
+* _idx.sams.mapcolumn.off
+* Restore normal SAMS layout again (single index page)
+***************************************************************
+* bl @_idx.sams.mapcolumn.off
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2, tmp3
+*--------------------------------------------------------------
+*  Remarks
+*  Private, only to be called from inside idx module
+*--------------------------------------------------------------
+_idx.sams.mapcolumn.off:
+        dect  stack
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+*--------------------------------------------------------------
+* Map index pages into memory window  (b000-?????)
+*--------------------------------------------------------------
+        li    tmp1,idx.top
+        li    tmp2,5                ; Always 5 pages
+        li    tmp3,tv.sams.b000     ; Pointer to fist SAMS page
+        ;-------------------------------------------------------
+        ; Loop over banks
+        ;------------------------------------------------------- 
+!       mov   *tmp3+,tmp0           ; Get SAMS page
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0  = SAMS page number
+                                    ; / i  tmp1  = Memory address
+
+        ai    tmp1,>1000            ; Next memory region
+        dec   tmp2                  ; Update loop counter
+        jgt   -!                    ; Next iteration
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+_idx.sams.mapcolumn.off.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop return address
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
 * idx._samspage.get
 * Get SAMS page for index
 ***************************************************************
