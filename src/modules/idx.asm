@@ -57,7 +57,7 @@ idx.init:
         li    tmp0,idx.top
         mov   tmp0,@edb.index.ptr   ; Set pointer to index in editor structure
 
-        mov   @tv.sams.c000,tmp0
+        mov   @tv.sams.b000,tmp0    
         mov   tmp0,@idx.sams.page   ; Set current SAMS page
         mov   tmp0,@idx.sams.lopage ; Set 1st SAMS page
         mov   tmp0,@idx.sams.hipage ; Set last SAMS page
@@ -106,12 +106,13 @@ _idx.sams.mapcolumn.on:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
 *--------------------------------------------------------------
-* Map index pages into memory window  (b000-?????)
+* Map index pages into memory window  (b000-ffff)
 *--------------------------------------------------------------
-        mov   @idx.sams.lopage,tmp0
-        li    tmp1,idx.top
+        mov   @idx.sams.lopage,tmp0 ; Get lowest index page
+        li    tmp1,idx.top          
 
-        mov   @idx.sams.hipage,tmp2
+        mov   @idx.sams.hipage,tmp2 ; Get highest index page
+        inc   tmp2                  ; +1 loop adjustment
         s     @idx.sams.lopage,tmp2 ; Set loop counter
         ;-------------------------------------------------------
         ; Sanity check
@@ -247,10 +248,10 @@ idx._samspage.get:
         ; Activate SAMS index page
         ;------------------------------------------------------
         mov   tmp1,@idx.sams.page   ; Set current SAMS page
-        mov   tmp1,@tv.sams.c000    ; Also keep SAMS window synced in TiVi
+        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in TiVi
 
         mov   tmp1,tmp0             ; Destination SAMS page
-        li    tmp1,>c000            ; Memory window for index page
+        li    tmp1,>b000            ; Memory window for index page
 
         bl    @xsams.page.set       ; Switch to SAMS page
                                     ; \ i  tmp0 = SAMS page

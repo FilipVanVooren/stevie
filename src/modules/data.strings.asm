@@ -32,8 +32,8 @@ txt.tivi     byte    12
              byte    11
              even
 
-fdname1      #string 'DSK1.SPEECHDOCS'
-fdname2      #string 'DSK5.SPEECHDOCS'
+fdname1      #string 'DSK1.TMS9900_C'
+fdname2      #string 'DSK1.NR80'
 fdname3      #string 'DSK5.XBEADOC'
 fdname4      #string 'DSK5.C99MAN1'
 fdname5      #string 'DSK5.C99MAN2'
