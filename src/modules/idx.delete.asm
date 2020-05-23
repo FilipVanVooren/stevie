@@ -11,7 +11,7 @@
 
 ***************************************************************
 * _idx.entry.delete.reorg
-* Reorganize index slot entries (single SAMS page)
+* Reorganize index slot entries
 ***************************************************************
 * bl @_idx.entry.delete.reorg
 *--------------------------------------------------------------

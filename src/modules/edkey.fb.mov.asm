@@ -448,8 +448,7 @@ edkey.action.top.refresh:
 edkey.action.top.exit:
         clr   @fb.row               ; Frame buffer line 0
         clr   @fb.column            ; Frame buffer column 0
-        li    tmp0,>0100
-        mov   tmp0,@wyx             ; Set VDP cursor on line 1, column 0
+        clr   @wyx                  ; Set VDP cursor on row 0, column 0
         b     @hook.keyscan.bounce  ; Back to editor main
 
 

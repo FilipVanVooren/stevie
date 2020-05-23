@@ -11,11 +11,7 @@
 task.vdp.panes:
         mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task.vdp.panes.exit   ; No, skip update
-        ;------------------------------------------------------
-        ; Show banner line
-        ;------------------------------------------------------
-        bl    @pane.topline.draw        
-        mov   @wyx,@fb.yxsave       ; Backup VDP cursor position        
+        mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
         ;------------------------------------------------------
@@ -35,7 +31,7 @@ task.vdp.panes.setrows.small:
 task.vdp.panes.copy.framebuffer:
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
-        li    tmp0,80               ; VDP target address (2nd line on screen!)                                  
+        clr   tmp0                  ; VDP target address (1nd line on screen!)
         mov   @fb.top.ptr,tmp1      ; RAM Source address
         ;------------------------------------------------------
         ; Copy memory block
@@ -50,7 +46,7 @@ task.vdp.panes.copy.framebuffer:
         ;-------------------------------------------------------
         mov   @edb.lines,tmp0
         s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
-        inct  tmp0                  ; Y = Y + 2
+        inc   tmp0                  ; Y = Y + 1
         c     @fb.scrrows,tmp0      ; Hide if last line on screen
         jle   task.vdp.panes.draw_double.line
         ;-------------------------------------------------------
@@ -91,8 +87,7 @@ task.vdp.panes.draw_marker.empty.line:
         ; Draw "double" bottom line (above command buffer)
         ;-------------------------------------------------------
 task.vdp.panes.draw_double.line:
-        mov   @fb.scrrows,tmp0
-        inc   tmp0                  ; 1st Line after frame buffer boundary
+        mov   @fb.scrrows,tmp0      ; 1st Line after frame buffer boundary
         swpb  tmp0                  ; LSB to MSB
         mov   tmp0,@wyx             ; Save YX
 

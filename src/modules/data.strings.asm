@@ -32,16 +32,16 @@ txt.tivi     byte    12
              byte    11
              even
 
-fdname1      #string 'DSK1.TMS9900_C'
-fdname2      #string 'DSK1.NR80'
-fdname3      #string 'DSK5.XBEADOC'
-fdname4      #string 'DSK5.C99MAN1'
-fdname5      #string 'DSK5.C99MAN2'
-fdname6      #string 'DSK5.C99MAN3'
-fdname7      #string 'DSK5.C99SPECS'
-fdname8      #string 'DSK5.RANDOM#C'
-fdname9      #string 'DSK5.INVADERS'
-fdname0      #string 'DSK5.NR80'
+fdname1      #string 'TIPI.TIVI.TMS9900_C'
+fdname2      #string 'TIPI.TIVI.NR80'
+fdname3      #string 'TIPI.TIVI.XBEADOC'
+fdname4      #string 'TIPI.TIVI.C99MAN1'
+fdname5      #string 'TIPI.TIVI.C99MAN2'
+fdname6      #string 'TIPI.TIVI.C99MAN3'
+fdname7      #string 'TIPI.TIVI.C99SPECS'
+fdname8      #string 'TIPI.TIVI.RANDOM#C'
+fdname9      #string 'TIPI.TIVI.INVADERS'
+fdname0      #string 'TIPI.TIVI.NR80'
 
 
 *---------------------------------------------------------------
