@@ -2,7 +2,7 @@
 * Purpose...: Bankswitch routine for starting stevie
 
 ***************************************************************
-* stevie Cartridge Header & kickstart ROM bank 0
+* Stevie Cartridge Header & kickstart ROM bank 0
 ***************************************************************
 * 
 *--------------------------------------------------------------

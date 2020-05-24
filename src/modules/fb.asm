@@ -1,5 +1,5 @@
 * FILE......: fb.asm
-* Purpose...: stevie Editor - Framebuffer module
+* Purpose...: Stevie Editor - Framebuffer module
 
 *//////////////////////////////////////////////////////////////
 *          RAM Framebuffer for handling screen output
@@ -35,8 +35,8 @@ fb.init
         li    tmp0,80 
         mov   tmp0,@fb.colsline     ; Columns per row=80
 
-        li    tmp0,28
-        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 28
+        li    tmp0,29
+        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 29
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
 
         clr   @tv.pane.focus        ; Frame buffer has focus!

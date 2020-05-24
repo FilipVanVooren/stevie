@@ -41,7 +41,7 @@ main:
         copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
         copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "stevie.asm"            ; Main editor configuration
+        copy  "stevie.asm"          ; Main editor configuration
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
         copy  "idx.asm"             ; Index management
@@ -72,10 +72,10 @@ main:
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
 spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprpdt  equ   >1800                 ; VDP sprite pattern table
-sprsat  equ   >2000                 ; VDP sprite attribute table
+sprsat  equ   >2180                 ; VDP sprite attribute table
+sprpdt  equ   >2800                 ; VDP sprite pattern table

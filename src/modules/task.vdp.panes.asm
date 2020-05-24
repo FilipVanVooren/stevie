@@ -1,8 +1,8 @@
 * FILE......: task.vdp.panes.asm
-* Purpose...: stevie Editor - VDP draw editor panes
+* Purpose...: Stevie Editor - VDP draw editor panes
 
 *//////////////////////////////////////////////////////////////
-*        stevie Editor - Tasks implementation
+*        Stevie Editor - Tasks implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************

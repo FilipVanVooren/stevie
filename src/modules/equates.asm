@@ -1,5 +1,5 @@
 ***************************************************************
-*                          stevie Editor
+*                          Stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -59,9 +59,10 @@
 * 0000-095f    2400   >0960   PNT - Pattern Name Table
 * 0960-09af      80   >0050   File record buffer (DIS/VAR 80)
 * 0fc0                        PCT - Pattern Color Table
-* 1000                        PDT - Pattern Descriptor Table
-* 1800                        SPT - Sprite Pattern Table
-* 2000                        SAT - Sprite Attribute List
+* 1000-17ff    2048   >0800   PDT - Pattern Descriptor Table
+* 1800-215f    2400   >0960   TAT - Tile Attribute Table (pos. based colors)
+* 2180                        SAT - Sprite Attribute List
+* 2800                        SPT - Sprite Pattern Table. Must be on 2K boundary
 *--------------------------------------------------------------
 * Skip unused spectra2 code modules for reduced code size
 *--------------------------------------------------------------
@@ -81,7 +82,7 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
-* SPECTRA2 / stevie startup options
+* SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to 

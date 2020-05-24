@@ -1,8 +1,8 @@
 * FILE......: task.vdp.sat.asm
-* Purpose...: stevie Editor - VDP copy SAT
+* Purpose...: Stevie Editor - VDP copy SAT
 
 *//////////////////////////////////////////////////////////////
-*        stevie Editor - Tasks implementation
+*        Stevie Editor - Tasks implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************

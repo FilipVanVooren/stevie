@@ -18,7 +18,7 @@ fm.loadfile:
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
-        bl    @cmdb.hide            ; Hide command buffer
+        bl    @pane.cmdb.hide       ; Hide command buffer pane
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
         ;-------------------------------------------------------
@@ -227,7 +227,7 @@ fm.loadfile.callback.fioerr:
                                     ; Empty filetype string
 
         mov   @cmdb.scrrows,@parm1
-        bl    @cmdb.show
+        bl    @pane.cmdb.show       ; Show command buffer pane
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

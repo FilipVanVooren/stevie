@@ -1,13 +1,13 @@
 * FILE......: mem.asm
-* Purpose...: stevie Editor - Memory management (SAMS)
+* Purpose...: Stevie Editor - Memory management (SAMS)
 
 *//////////////////////////////////////////////////////////////
-*                  stevie Editor - Memory Management
+*                  Stevie Editor - Memory Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
 * mem.sams.layout
-* Setup SAMS memory pages for stevie
+* Setup SAMS memory pages for Stevie
 ***************************************************************
 * bl  @mem.setup.sams.layout
 *--------------------------------------------------------------

@@ -1,8 +1,8 @@
 * FILE......: cmdb.asm
-* Purpose...: stevie Editor - Command Buffer module
+* Purpose...: Stevie Editor - Command Buffer module
 
 *//////////////////////////////////////////////////////////////
-*        stevie Editor - Command Buffer implementation
+*        Stevie Editor - Command Buffer implementation
 *//////////////////////////////////////////////////////////////
 
 
@@ -58,99 +58,6 @@ cmdb.init.exit:
 
 
 
-***************************************************************
-* cmdb.show
-* Show command buffer pane
-***************************************************************
-* bl @cmdb.show
-*--------------------------------------------------------------
-* INPUT
-* none
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* none
-*--------------------------------------------------------------
-* Notes
-********|*****|*********************|**************************
-cmdb.show:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        ;------------------------------------------------------
-        ; Show command buffer pane
-        ;------------------------------------------------------
-        mov   @wyx,@cmdb.fb.yxsave
-                                    ; Save YX position in frame buffer
-
-        mov   @fb.scrrows.max,tmp0
-        s     @cmdb.scrrows,tmp0
-        mov   tmp0,@fb.scrrows      ; Resize framebuffer
-        
-        inct  tmp0                  ; Line below cmdb top border line
-        sla   tmp0,8                ; LSB to MSB (Y), X=0
-        inc   tmp0                  ; X=1
-        mov   tmp0,@cmdb.yxtop      ; Set command buffer cursor
-
-        seto  @cmdb.visible         ; Show pane
-
-        li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
-        mov   tmp0,@tv.pane.focus   ; /
-
-        seto  @fb.dirty             ; Redraw framebuffer
-        
-cmdb.show.exit:
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-
-***************************************************************
-* cmdb.hide
-* Hide command buffer pane
-***************************************************************
-* bl @cmdb.hide
-*--------------------------------------------------------------
-* INPUT
-* none
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* none
-*--------------------------------------------------------------
-* Hiding the command buffer automatically passes pane focus
-* to frame buffer.
-********|*****|*********************|**************************
-cmdb.hide:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Hide command buffer pane
-        ;------------------------------------------------------
-        mov   @fb.scrrows.max,@fb.scrrows
-                                    ; Resize framebuffer
-
-        mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
-
-        clr   @cmdb.visible         ; Hide command buffer pane
-        seto  @fb.dirty             ; Redraw framebuffer
-        clr   @tv.pane.focus        ; Framebuffer has focus!
-
-cmdb.hide.exit:
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
 
 
 

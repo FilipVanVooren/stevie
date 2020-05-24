@@ -1,8 +1,8 @@
 * FILE......: stevie.asm
-* Purpose...: stevie Editor - Main editor configuration
+* Purpose...: Stevie Editor - Main editor configuration
 
 *//////////////////////////////////////////////////////////////
-*              stevie Editor - Main editor configuration
+*              Stevie Editor - Main editor configuration
 *//////////////////////////////////////////////////////////////
 
 

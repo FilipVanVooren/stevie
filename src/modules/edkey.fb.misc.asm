@@ -27,13 +27,13 @@ edkey.action.cmdb.toggle:
         ; Show pane
         ;-------------------------------------------------------
 edkey.action.cmdb.show:        
-        bl    @cmdb.show            ; Show command buffer pane
+        bl    @pane.cmdb.show       ; Show command buffer pane
         jmp   edkey.action.cmdb.toggle.exit
         ;-------------------------------------------------------
         ; Hide pane
         ;-------------------------------------------------------
 edkey.action.cmdb.hide:
-        bl    @cmdb.hide            ; Hide command buffer pane
+        bl    @pane.cmdb.hide       ; Hide command buffer pane
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

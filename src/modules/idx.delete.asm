@@ -1,8 +1,8 @@
 * FILE......: idx_delete.asm
-* Purpose...: stevie Editor - Delete index slot
+* Purpose...: Stevie Editor - Delete index slot
 
 *//////////////////////////////////////////////////////////////
-*              stevie Editor - Index Management
+*              Stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 

@@ -1,8 +1,8 @@
 * FILE......: idx.insert.asm
-* Purpose...: stevie Editor - Insert index slot
+* Purpose...: Stevie Editor - Insert index slot
 
 *//////////////////////////////////////////////////////////////
-*                  stevie Editor - Index Management
+*                  Stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 

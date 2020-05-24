@@ -1,8 +1,8 @@
 * FILE......: idx.asm
-* Purpose...: stevie Editor - Index module
+* Purpose...: Stevie Editor - Index module
 
 *//////////////////////////////////////////////////////////////
-*                  stevie Editor - Index Management
+*                  Stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
