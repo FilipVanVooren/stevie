@@ -33,7 +33,7 @@ stevie.tx8030:
         byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
 
 romsat:
-        data  >0303,>000f             ; Cursor YX, initial shape and colour
+        data  >0303,>0001             ; Cursor YX, initial shape and colour
 
 cursors:
         data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode

@@ -78,21 +78,26 @@ task.vdp.panes.draw_marker:
 task.vdp.panes.draw_marker.empty.line:
         dec   tmp0                  ; One time adjust
         bl    @yx2pnt               ; Set VDP address in tmp0
+                                    ; \ i  @wyx = Cursor position
+                                    ; / o  tmp0 = VDP address
+                                    
         li    tmp1,32               ; Character to write (whitespace)
         bl    @xfilv                ; Fill VDP memory
-                                    ; i  tmp0 = VDP destination
-                                    ; i  tmp1 = byte to write
-                                    ; i  tmp2 = Number of bytes to write
+                                    ; \ i  tmp0 = VDP destination
+                                    ; | i  tmp1 = byte to write
+                                    ; / i  tmp2 = Number of bytes to write
+
+        mov   @fb.yxsave,@wyx       ; Restore cursor postion                                    
         ;-------------------------------------------------------
         ; Show command buffer
         ;-------------------------------------------------------
 task.vdp.panes.draw.cmdb:                
-        mov   @cmdb.visible,tmp0     ; Show command buffer?        
-        jeq   task.vdp.panes.exit    ; No, skip 
-        bl    @pane.cmdb.draw        ; Draw command buffer
+        mov   @cmdb.visible,tmp0    ; Show command buffer?        
+        jeq   task.vdp.panes.exit   ; No, skip 
+        bl    @pane.cmdb.draw       ; Draw command buffer
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:
-        bl    @pane.botline.draw     ; Draw status bottom line
+        bl    @pane.botline.draw    ; Draw status bottom line
         b     @slotok
