@@ -1,13 +1,13 @@
 * FILE......: pane.botline.asm
-* Purpose...: TiVi Editor - Pane status bottom line
+* Purpose...: stevie Editor - Pane status bottom line
 
 *//////////////////////////////////////////////////////////////
-*              TiVi Editor - Pane status bottom line
+*              stevie Editor - Pane status bottom line
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
 * pane.botline.draw
-* Draw TiVi status bottom line
+* Draw stevie status bottom line
 ***************************************************************
 * bl  @pane.botline.draw
 *--------------------------------------------------------------

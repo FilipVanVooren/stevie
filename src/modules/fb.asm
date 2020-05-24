@@ -1,5 +1,5 @@
 * FILE......: fb.asm
-* Purpose...: TiVi Editor - Framebuffer module
+* Purpose...: stevie Editor - Framebuffer module
 
 *//////////////////////////////////////////////////////////////
 *          RAM Framebuffer for handling screen output

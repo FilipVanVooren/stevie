@@ -1,8 +1,8 @@
 * FILE......: edb.asm
-* Purpose...: TiVi Editor - Editor Buffer module
+* Purpose...: stevie Editor - Editor Buffer module
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Editor Buffer implementation
+*        stevie Editor - Editor Buffer implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************

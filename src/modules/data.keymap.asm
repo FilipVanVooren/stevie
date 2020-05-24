@@ -1,5 +1,5 @@
 * FILE......: data.keymap.asm
-* Purpose...: TiVi Editor - data segment (keyboard mapping)
+* Purpose...: stevie Editor - data segment (keyboard mapping)
 
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys

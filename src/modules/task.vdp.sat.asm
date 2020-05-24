@@ -1,8 +1,8 @@
 * FILE......: task.vdp.sat.asm
-* Purpose...: TiVi Editor - VDP copy SAT
+* Purpose...: stevie Editor - VDP copy SAT
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Tasks implementation
+*        stevie Editor - Tasks implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************

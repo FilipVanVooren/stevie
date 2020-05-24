@@ -1,8 +1,8 @@
 * FILE......: idx.asm
-* Purpose...: TiVi Editor - Index module
+* Purpose...: stevie Editor - Index module
 
 *//////////////////////////////////////////////////////////////
-*                  TiVi Editor - Index Management
+*                  stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
@@ -248,7 +248,7 @@ idx._samspage.get:
         ; Activate SAMS index page
         ;------------------------------------------------------
         mov   tmp1,@idx.sams.page   ; Set current SAMS page
-        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in TiVi
+        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in stevie
 
         mov   tmp1,tmp0             ; Destination SAMS page
         li    tmp1,>b000            ; Memory window for index page

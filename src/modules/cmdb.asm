@@ -1,8 +1,8 @@
 * FILE......: cmdb.asm
-* Purpose...: TiVi Editor - Command Buffer module
+* Purpose...: stevie Editor - Command Buffer module
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Command Buffer implementation
+*        stevie Editor - Command Buffer implementation
 *//////////////////////////////////////////////////////////////
 
 

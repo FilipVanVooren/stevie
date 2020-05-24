@@ -1,5 +1,5 @@
 * FILE......: data.constants.asm
-* Purpose...: TiVi Editor - data segment (constants)
+* Purpose...: stevie Editor - data segment (constants)
 
 ***************************************************************
 *                      Constants
@@ -35,7 +35,7 @@ tv.data.colorscheme:                ; Foreground | Background | Bg. Pane
 
 
 ***************************************************************
-* SAMS page layout table for TiVi (16 words)
+* SAMS page layout table for stevie (16 words)
 *--------------------------------------------------------------
 mem.sams.layout.data:
         data  >2000,>0002           ; >2000-2fff, SAMS page >02

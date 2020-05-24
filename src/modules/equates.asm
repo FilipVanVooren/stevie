@@ -1,5 +1,5 @@
 ***************************************************************
-*                          TiVi Editor
+*                          stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -8,7 +8,7 @@
 ***************************************************************
 * File: equates.asm                 ; Version %%build_date%%
 *--------------------------------------------------------------
-* TiVi memory layout
+* stevie memory layout
 * See file "modules/mem.asm" for further details.
 *
 *
@@ -29,14 +29,14 @@
 * Mem range   Bytes    BANK   Purpose
 * =========   =====    ====   ==================================
 * 6000-7fff    8192       0   SP2 ROM CODE + copy to RAM code
-* 6000-7fff    8192       1   TiVi program code
+* 6000-7fff    8192       1   stevie program code
 *
 *
 * HIGH MEMORY EXPANSION (a000-ffff)
 *
 * Mem range   Bytes    BANK   Purpose
 * =========   =====    ====   ==================================
-* a000-a0ff     256           TiVI Editor shared structure
+* a000-a0ff     256           stevie Editor shared structure
 * a100-a1ff     256           Framebuffer structure
 * a200-a2ff     256           Editor buffer structure
 * a300-a3ff     256           Command buffer structure   
@@ -81,7 +81,7 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
-* SPECTRA2 / TiVi startup options
+* SPECTRA2 / stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to 
@@ -120,7 +120,7 @@ cpu.scrpad.tgt    equ  >3e00           ; Destination cpu.scrpad.backup/restore
 scrpad.backup1    equ  >3e00           ; Backup GPL layout
 scrpad.backup2    equ  >3f00           ; Backup spectra2 layout
 *--------------------------------------------------------------
-* TiVi Editor shared structures     @>a000-a0ff     (256 bytes)
+* stevie Editor shared structures     @>a000-a0ff     (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a000           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
@@ -194,7 +194,7 @@ cmdb.end          equ  cmdb.struct + 20; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------
-fh.struct         equ  >a400           ; TiVi file handling structures
+fh.struct         equ  >a400           ; stevie file handling structures
 dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
 dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
 file.pab.ptr      equ  fh.struct + 40  ; Pointer to VDP PAB, needed by lev 2 FIO
@@ -203,7 +203,7 @@ fh.ioresult       equ  fh.struct + 44  ; DSRLNK IO-status after file operation
 fh.records        equ  fh.struct + 46  ; File records counter
 fh.reclen         equ  fh.struct + 48  ; Current record length
 fh.kilobytes      equ  fh.struct + 50  ; Kilobytes processed (read/written)
-fh.counter        equ  fh.struct + 52  ; Counter used in TiVi file operations
+fh.counter        equ  fh.struct + 52  ; Counter used in stevie file operations
 fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
 fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
 fh.sams.hipage    equ  fh.struct + 58  ; Highest SAMS page used for file oper.
@@ -219,7 +219,7 @@ fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
 * Index structure                   @>a500-a5ff     (256 bytes)
 *--------------------------------------------------------------
-idx.struct        equ  >a500           ; TiVi index structure
+idx.struct        equ  >a500           ; stevie index structure
 idx.sams.page     equ  idx.struct      ; Current SAMS page
 idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
 idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page

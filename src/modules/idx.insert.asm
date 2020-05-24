@@ -1,8 +1,8 @@
 * FILE......: idx.insert.asm
-* Purpose...: TiVi Editor - Insert index slot
+* Purpose...: stevie Editor - Insert index slot
 
 *//////////////////////////////////////////////////////////////
-*                  TiVi Editor - Index Management
+*                  stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 

@@ -1,6 +1,6 @@
-# TiVi build-project for mixer
+# stevie build-project for mixer
 project:      
-  name:        TiVi Editor
+  name:        Stevie Editor
 
 directories:
   modules:     modules
@@ -8,16 +8,16 @@ directories:
   binaries:    bin
   
 source:
-  - tivi_b0.asm
-  - tivi_b1.asm
+  - stevie_b0.asm
+  - stevie_b1.asm
 
 banks:
-  - tivi_b0.bin
-  - tivi_b1.bin
+  - stevie_b0.bin
+  - stevie_b1.bin
 
 binaries:
-  output:      tivi.bin
+  output:      stevie.bin
 
   copies:
-    - /DS414/9900bin/tivi.bin
-    - /media/q0tws01/FINALGROM/tifun/tivi.bin
+    - /DS414/9900bin/stevie.bin
+    - /media/q0tws01/FINALGROM/tifun/stevie.bin

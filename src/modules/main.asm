@@ -1,8 +1,8 @@
 * FILE......: main.asm
-* Purpose...: TiVi Editor - Main editor module
+* Purpose...: stevie Editor - Main editor module
 
 *//////////////////////////////////////////////////////////////
-*            TiVi Editor - Main editor module
+*            stevie Editor - Main editor module
 *//////////////////////////////////////////////////////////////
 
 
@@ -10,7 +10,7 @@
 * main
 * Initialize editor
 ***************************************************************
-* b   @main.tivi
+* b   @main.stevie
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -22,14 +22,14 @@
 * -
 *--------------------------------------------------------------
 * Notes
-* Main entry point for TiVi editor 
+* Main entry point for stevie editor 
 ***************************************************************
 
 
 ***************************************************************
 * Main
 ********|*****|*********************|**************************
-main.tivi:
+main.stevie:
         coc   @wbit1,config         ; F18a detected?
         jeq   main.continue
         blwp  @0                    ; Exit for now if no F18a detected
@@ -76,7 +76,7 @@ main.continue:
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
-        bl    @tivi.init            ; Initialize TiVi editor config
+        bl    @stevie.init            ; Initialize stevie editor config
         bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index

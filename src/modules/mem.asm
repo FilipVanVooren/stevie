@@ -1,13 +1,13 @@
 * FILE......: mem.asm
-* Purpose...: TiVi Editor - Memory management (SAMS)
+* Purpose...: stevie Editor - Memory management (SAMS)
 
 *//////////////////////////////////////////////////////////////
-*                  TiVi Editor - Memory Management
+*                  stevie Editor - Memory Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
 * mem.sams.layout
-* Setup SAMS memory pages for TiVi
+* Setup SAMS memory pages for stevie
 ***************************************************************
 * bl  @mem.setup.sams.layout
 *--------------------------------------------------------------

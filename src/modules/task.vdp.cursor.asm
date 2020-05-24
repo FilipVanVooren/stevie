@@ -1,8 +1,8 @@
 * FILE......: task.vdp.cursor.asm
-* Purpose...: TiVi Editor - VDP sprite cursor
+* Purpose...: stevie Editor - VDP sprite cursor
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Tasks implementation
+*        stevie Editor - Tasks implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************

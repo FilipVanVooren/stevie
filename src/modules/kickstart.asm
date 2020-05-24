@@ -1,8 +1,8 @@
 * FILE......: kickstart.asm
-* Purpose...: Bankswitch routine for starting TiVi
+* Purpose...: Bankswitch routine for starting stevie
 
 ***************************************************************
-* TiVi Cartridge Header & kickstart ROM bank 0
+* stevie Cartridge Header & kickstart ROM bank 0
 ***************************************************************
 * 
 *--------------------------------------------------------------
@@ -26,9 +26,9 @@
         data  kickstart.code1
 
         .ifdef debug
-              #string 'TIVI %%build_date%%'
+              #string 'STEVIE %%build_date%%'
         .else
-              #string 'TIVI'
+              #string 'STEVIE'
         .endif         
 
 *--------------------------------------------------------------
