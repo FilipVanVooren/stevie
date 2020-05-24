@@ -1,8 +1,8 @@
-* FILE......: tivi.asm
-* Purpose...: TiVi Editor - Main editor configuration
+* FILE......: stevie.asm
+* Purpose...: stevie Editor - Main editor configuration
 
 *//////////////////////////////////////////////////////////////
-*              TiVi Editor - Main editor configuration
+*              stevie Editor - Main editor configuration
 *//////////////////////////////////////////////////////////////
 
 
@@ -10,7 +10,7 @@
 * tv.init
 * Initialize main editor
 ***************************************************************
-* bl @tivi.init
+* bl @stevie.init
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -23,7 +23,7 @@
 *--------------------------------------------------------------
 * Notes
 ***************************************************************
-tivi.init:
+stevie.init:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -34,5 +34,5 @@ tivi.init:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-tivi.init.exit:        
+stevie.init.exit:        
         b     @poprt                ; Return to caller

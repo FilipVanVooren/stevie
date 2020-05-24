@@ -1,8 +1,8 @@
 * FILE......: hook.keyscan.asm
-* Purpose...: TiVi Editor - Keyboard handling (spectra2 user hook)
+* Purpose...: stevie Editor - Keyboard handling (spectra2 user hook)
 
 *//////////////////////////////////////////////////////////////
-*        TiVi Editor - Keyboard handling (spectra2 user hook)
+*        stevie Editor - Keyboard handling (spectra2 user hook)
 *//////////////////////////////////////////////////////////////
 
 ****************************************************************

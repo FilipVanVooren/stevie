@@ -1,5 +1,5 @@
 * FILE......: data.strings.asm
-* Purpose...: TiVi Editor - data segment (strings)
+* Purpose...: stevie Editor - data segment (strings)
 
 ***************************************************************
 *                       Strings
@@ -26,22 +26,22 @@ txt.cmdb.catalog   #string 'File catalog'
 txt.filetype.dv80  #string 'DIS/VAR80 '
 txt.filetype.none  #string '          '
 
-txt.tivi     byte    12
+txt.stevie     byte    12
              byte    10
-             text    'TiVi v1.00'
+             text    'stevie v1.00'
              byte    11
              even
 
-fdname0      #string 'DSK1.FWDOC/PSRV'
-fdname1      #string 'DSK1.SPEECHDOCS'
-fdname2      #string 'DSK1.XBEADOC'
-fdname3      #string 'DSK3.XBEADOC'
-fdname4      #string 'DSK3.C99MAN1'
-fdname5      #string 'DSK3.C99MAN2'
-fdname6      #string 'DSK3.C99MAN3'
-fdname7      #string 'DSK3.C99SPECS'
-fdname8      #string 'DSK3.RANDOM#C'
-fdname9      #string 'DSK1.INVADERS'
+fdname1      #string 'TIPI.stevie.TMS9900_C'
+fdname2      #string 'TIPI.stevie.NR80'
+fdname3      #string 'DSK1.XBEADOC'
+fdname4      #string 'TIPI.stevie.C99MAN1'
+fdname5      #string 'TIPI.stevie.C99MAN2'
+fdname6      #string 'TIPI.stevie.C99MAN3'
+fdname7      #string 'TIPI.stevie.C99SPECS'
+fdname8      #string 'TIPI.stevie.RANDOM#C'
+fdname9      #string 'TIPI.stevie.INVADERS'
+fdname0      #string 'TIPI.stevie.NR80'
 
 
 *---------------------------------------------------------------

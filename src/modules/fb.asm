@@ -1,5 +1,5 @@
 * FILE......: fb.asm
-* Purpose...: TiVi Editor - Framebuffer module
+* Purpose...: stevie Editor - Framebuffer module
 
 *//////////////////////////////////////////////////////////////
 *          RAM Framebuffer for handling screen output
@@ -35,8 +35,8 @@ fb.init
         li    tmp0,80 
         mov   tmp0,@fb.colsline     ; Columns per row=80
 
-        li    tmp0,27
-        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 27
+        li    tmp0,28
+        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 28
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
 
         clr   @tv.pane.focus        ; Frame buffer has focus!
@@ -158,12 +158,6 @@ fb.refresh:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        ;------------------------------------------------------
-        ; Update SAMS shadow registers in RAM
-        ;------------------------------------------------------
-        bl    @sams.copy.layout     ; Copy SAMS memory layout
-              data tv.sams.2000     ; \ i  p0 = Pointer to 8 words RAM buffer
-                                    ; /
         ;------------------------------------------------------        
         ; Setup starting position in index
         ;------------------------------------------------------

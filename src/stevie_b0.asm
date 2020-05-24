@@ -1,12 +1,12 @@
 ***************************************************************
-*                          TiVi Editor
+*                         Stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
 *
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
-* File: tivi_b0.asm                 ; Version %%build_date%%
+* File: stevie_b0.asm               ; Version %%build_date%%
 
 
 ***************************************************************

@@ -1,36 +1,36 @@
 ***************************************************************
-*                          TiVi Editor
+*                          Stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
 *
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
-* File: tivi_b1.asm                 ; Version %%build_date%%
+* File: stevie_b1.asm                 ; Version %%build_date%%
 
 
 ***************************************************************
-* BANK 1 - TiVi support modules
+* BANK 1 - Stevie support modules
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 1
-        copy  "equates.asm"         ; Equates TiVi configuration
+        copy  "equates.asm"         ; Equates stevie configuration
         copy  "kickstart.asm"       ; Cartridge header
 
         aorg  >2000                 
         copy  "%%spectra2%%/runlib.asm"
                                     ; Relocated spectra2 in low memory expansion
-                                    ; was loaded into RAM from bank 0.
+                                    ; Is copied to RAM from bank 0.
                                     ; 
-                                    ; Only including it here, so that all
+                                    ; Including it here too, so that all
                                     ; references get satisfied during assembly.
 ***************************************************************
-* TiVi entry point after spectra2 initialisation
+* stevie entry point after spectra2 initialisation
 ********|*****|*********************|**************************
         aorg  kickstart.code2
 main:   
         clr   @>6002                ; Jump to bank 1
-        b     @main.tivi            ; Start editor
+        b     @main.stevie          ; Start editor
         ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
@@ -41,10 +41,12 @@ main:
         copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
         copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "tivi.asm"            ; Main editor configuration
+        copy  "stevie.asm"            ; Main editor configuration
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
         copy  "idx.asm"             ; Index management
+        copy  "idx.delete.asm"      ; Index management - delete slot
+        copy  "idx.insert.asm"      ; Index management - insert slot
         copy  "edb.asm"             ; Editor Buffer
         copy  "cmdb.asm"            ; Command Buffer
         copy  "fh.read.sams.asm"    ; File handler read file
@@ -53,8 +55,8 @@ main:
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-        copy  "pane.topline.asm"    ; Pane banner top line
-        copy  "pane.botline.asm"    ; Pane status bottom line
+        copy  "pane.cmdb.asm"       ; Command buffer pane
+        copy  "pane.botline.asm"    ; Status line pane
         copy  "data.constants.asm"  ; Data segment - Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping

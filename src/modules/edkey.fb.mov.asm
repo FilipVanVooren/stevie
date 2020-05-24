@@ -350,7 +350,7 @@ edkey.action.ppage:
         ;-------------------------------------------------------
         ; Special treatment top page
         ;-------------------------------------------------------
-        c     tmp0,@fb.scrrows   ; topline > rows on screen?
+        c     tmp0,@fb.scrrows      ; topline > rows on screen?
         jgt   edkey.action.ppage.topline 
         clr   @fb.topline           ; topline = 0
         jmp   edkey.action.ppage.crunch
@@ -379,9 +379,8 @@ edkey.action.ppage.refresh:
 edkey.action.ppage.exit:
         clr   @fb.row
         clr   @fb.column
-        li    tmp0,>0100            ; Set VDP cursor on line 1, column 0
-        mov   tmp0,@wyx             ; In edkey.action up cursor is moved up
-        b     @edkey.action.up      ; Do rest of logic
+        clr   @wyx                  ; Set VDP cursor on row 0, column 0
+        b     @edkey.action.up      ; In edkey.action up cursor is moved up
 
 
 
@@ -448,8 +447,7 @@ edkey.action.top.refresh:
 edkey.action.top.exit:
         clr   @fb.row               ; Frame buffer line 0
         clr   @fb.column            ; Frame buffer column 0
-        li    tmp0,>0100
-        mov   tmp0,@wyx             ; Set VDP cursor on line 1, column 0
+        clr   @wyx                  ; Set VDP cursor on row 0, column 0
         b     @hook.keyscan.bounce  ; Back to editor main
 
 

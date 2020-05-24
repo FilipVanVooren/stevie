@@ -1,13 +1,13 @@
 * FILE......: mem.asm
-* Purpose...: TiVi Editor - Memory management (SAMS)
+* Purpose...: stevie Editor - Memory management (SAMS)
 
 *//////////////////////////////////////////////////////////////
-*                  TiVi Editor - Memory Management
+*                  stevie Editor - Memory Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
-* mem.setup.sams.layout
-* Setup SAMS memory pages for TiVi
+* mem.sams.layout
+* Setup SAMS memory pages for stevie
 ***************************************************************
 * bl  @mem.setup.sams.layout
 *--------------------------------------------------------------
@@ -17,7 +17,7 @@
 * Register usage
 * none
 ***************************************************************
-mem.setup.sams.layout:
+mem.sams.layout:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -25,38 +25,28 @@ mem.setup.sams.layout:
         ;------------------------------------------------------        
         bl    @sams.layout
               data mem.sams.layout.data
+
+        bl    @sams.layout.copy
+              data tv.sams.2000     ; Get SAMS windows
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-mem.setup.sams.layout.exit:
+mem.sams.layout.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-***************************************************************
-* SAMS page layout table for TiVi (16 words)
-*--------------------------------------------------------------
-mem.sams.layout.data:
-        data  >2000,>0002           ; >2000-2fff, SAMS page >00
-        data  >3000,>0003           ; >3000-3fff, SAMS page >01
-        data  >a000,>000a           ; >a000-afff, SAMS page >02
-        data  >b000,>000b           ; >b000-bfff, SAMS page >03
-        data  >c000,>000c           ; >c000-cfff, SAMS page >04
-        data  >d000,>000d           ; >d000-dfff, SAMS page >05
-        data  >e000,>0010           ; >e000-efff, SAMS page >10
-        data  >f000,>0011           ; >f000-ffff, SAMS page >11
-
 
 
 
 ***************************************************************
-* mem.edb.sams.pagein
+* mem.edb.sams.mappage
 * Activate editor buffer SAMS page for line
 ***************************************************************
-* bl  @mem.edb.sams.pagein
+* bl  @mem.edb.sams.mappage
 *     data p0
 *--------------------------------------------------------------
 * p0 = Line number in editor buffer
 *--------------------------------------------------------------
-* bl  @xmem.edb.sams.pagein
+* bl  @xmem.edb.sams.mappage
 * 
 * tmp0 = Line number in editor buffer
 *--------------------------------------------------------------
@@ -65,26 +55,22 @@ mem.sams.layout.data:
 * outparm2 = SAMS page
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0, tmp1
 ***************************************************************
-mem.edb.sams.pagein:
+mem.edb.sams.mappage:
         mov   *r11+,tmp0            ; Get p0
-xmem.edb.sams.pagein:
+xmem.edb.sams.mappage:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
         c     tmp0,@edb.lines       ; Non-existing line?
-        jlt   mem.edb.sams.pagein.lookup
+        jlt   mem.edb.sams.mappage.lookup
                                     ; All checks passed, continue
                                     ;-------------------------- 
                                     ; Sanity check failed
@@ -94,60 +80,40 @@ xmem.edb.sams.pagein:
         ;------------------------------------------------------
         ; Lookup SAMS page for line in parm1
         ;------------------------------------------------------
-mem.edb.sams.pagein.lookup:        
+mem.edb.sams.mappage.lookup:        
         bl    @idx.pointer.get      ; Get pointer to line
                                     ; \ i  parm1    = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
 
         mov   @outparm2,tmp0        ; SAMS page
-        mov   @outparm1,tmp1        ; Memory address        
-        jeq   mem.edb.sams.pagein.exit
-                                    ; Nothing to page-in if empty line
+        mov   @outparm1,tmp1        ; Pointer to line        
+        jeq   mem.edb.sams.mappage.exit
+                                    ; Nothing to page-in if NULL pointer 
+                                    ; (=empty line)
+        ;------------------------------------------------------        
+        ; Determine if requested SAMS page is already active
         ;------------------------------------------------------
-        ; 1. Determine if requested SAMS page is already active 
-        ;------------------------------------------------------
-        andi  tmp1,>f000            ; Reduce address to 4K chunks 
-        clr   tmp2                  ; Offset in SAMS shadow registers table
-        li    tmp3,sams.copy.layout.data + 6
-                                    ; Entry >b000  in SAMS memory range table
-        ;------------------------------------------------------
-        ; Loop over memory ranges
-        ;------------------------------------------------------
-mem.edb.sams.pagein.compare.loop:        
-        c     *tmp3+,tmp1           ; Does memory range match?
-        jeq   !                     ; Yes, now check SAMS page
-
-        inct  tmp2                  ; Next range
-        ci    tmp2,12               ; All ranges checked?
-        jne   mem.edb.sams.pagein.compare.loop
-                                    ; Not yet, check next range
-        ;------------------------------------------------------
-        ; Invalid memory range. Should never get here
-        ;------------------------------------------------------
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system        
-        ;------------------------------------------------------
-        ; 2. Determine if requested SAMS page is already active
-        ;------------------------------------------------------
-!       ai    tmp2,tv.sams.2000     ; Add offset for SAMS shadow register
-        c     *tmp2,tmp0            ; Requested SAMS page already active?
-        jeq   mem.edb.sams.pagein.exit
-                                    ; Yes, so exit
+        c     @tv.sams.c000,tmp0    ; Compare with active page editor buffer
+        jeq   mem.edb.sams.mappage.exit
+                                    ; Request page already active. Exit.
         ;------------------------------------------------------
         ; Activate requested SAMS page
         ;-----------------------------------------------------
         bl    @xsams.page.set       ; Switch SAMS memory page
                                     ; \ i  tmp0 = SAMS page
                                     ; / i  tmp1 = Memory address
+
+        mov   @outparm2,@tv.sams.c000
+                                    ; Set page in shadow registers
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-mem.edb.sams.pagein.exit:
-        mov   *stack+,tmp3          ; Pop tmp1
-        mov   *stack+,tmp2          ; Pop tmp1
+mem.edb.sams.mappage.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
         
+
+
