@@ -132,7 +132,7 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
         data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
-        data  key.ctrl.z, txt.ctrl.z, edkey.action.color.cycle
+        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------
@@ -191,7 +191,7 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
         data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
-        data  key.ctrl.z, txt.ctrl.z, edkey.action.color.cycle
+        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------

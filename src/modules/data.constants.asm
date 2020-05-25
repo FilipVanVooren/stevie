@@ -55,11 +55,6 @@ patterns.box:
         data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
 
 
-tv.data.colorscheme:                ; Foreground | Background | Bg. Pane
-        data  >f404                 ; White      | Dark blue  | Dark blue
-        data  >f101                 ; White      | Black      | Black
-        data  >1707                 ; Black      | Cyan       | Cyan
-        data  >1f0f                 ; Black      | White      | White
 
 
 ***************************************************************
@@ -81,3 +76,16 @@ mem.sams.layout.data:
         data  >d000,>000d           ; >d000-dfff, SAMS page >0d
         data  >e000,>000e           ; >e000-efff, SAMS page >0e
         data  >f000,>000f           ; >f000-ffff, SAMS page >0f        
+
+
+
+
+
+***************************************************************
+* Stevie color schemes table
+*--------------------------------------------------------------
+tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
+        data  >f41c                 ; White      | Dark blue  | Dark blue
+        data  >f101                 ; White      | Black      | Black
+        data  >1707                 ; Black      | Cyan       | Cyan
+        data  >1f0f                 ; Black      | White      | White        

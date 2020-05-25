@@ -58,10 +58,10 @@ main.continue:
         ; Initialize position-based colors (VDP TAT)
         ;------------------------------------------------------
         bl    @filv
-              data >1800,>f0,29*80  ; Setup position based colors
+              data >1800,>f0,29*80  ; Colors for frame buffer area
 
         bl    @filv
-              data >2110,>1f,1*80   ; Setup position based colors            
+              data >2110,>1f,1*80   ; Colors for bottom line pane
         ;------------------------------------------------------
         ; Complete F18A VDP setup
         ;------------------------------------------------------

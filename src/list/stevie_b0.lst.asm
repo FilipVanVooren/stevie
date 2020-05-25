@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.89593
+**** **** ****     > stevie_b0.asm.154211
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200524-89593
+0009               * File: stevie_b0.asm               ; Version 200525-154211
 0010               
 0011               
 0012               ***************************************************************
@@ -19,14 +19,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0017                       copy  "equates.asm"         ; Equates TiVi configuration
 **** **** ****     > equates.asm
 0001               ***************************************************************
-0002               *                          stevie Editor
+0002               *                          Stevie Editor
 0003               *
 0004               *       A 21th century Programming Editor for the 1981
 0005               *         Texas Instruments TI-99/4a Home Computer.
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200524-89593
+0009               * File: equates.asm                 ; Version 200525-154211
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -267,14 +267,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0247               *--------------------------------------------------------------
 0248               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0249               *--------------------------------------------------------------
-**** **** ****     > stevie_b0.asm.89593
+**** **** ****     > stevie_b0.asm.154211
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
 0002               * Purpose...: Bankswitch routine for starting stevie
 0003               
 0004               ***************************************************************
-0005               * stevie Cartridge Header & kickstart ROM bank 0
+0005               * Stevie Cartridge Header & kickstart ROM bank 0
 0006               ***************************************************************
 0007               *
 0008               *--------------------------------------------------------------
@@ -303,8 +303,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026 6012 6030             data  kickstart.code1
 0027               
 0029               
-0030 6014 1353             byte  19
-0031 6015 ....             text  'STEVIE 200524-89593'
+0030 6014 1453             byte  20
+0031 6015 ....             text  'STEVIE 200525-154211'
 0032                       even
 0033               
 0041               
@@ -314,7 +314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.89593
+**** **** ****     > stevie_b0.asm.154211
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1072,8 +1072,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0245                       even
 0246               
 0247               cpu.crash.msg.id
-0248 6224 1642             byte  22
-0249 6225 ....             text  'Build-ID  200524-89593'
+0248 6224 1742             byte  23
+0249 6225 ....             text  'Build-ID  200525-154211'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4768,7 +4768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E78 0040 
 0363 6E7A 0460  28         b     @main                 ; Give control to main program
      6E7C 6050 
-**** **** ****     > stevie_b0.asm.89593
+**** **** ****     > stevie_b0.asm.154211
 0051               
 0055 6E7E 2E1C                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -4778,7 +4778,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0061                       copy  "data.constants.asm"  ; Data segment - Constants
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
-0002               * Purpose...: stevie Editor - data segment (constants)
+0002               * Purpose...: Stevie Editor - data segment (constants)
 0003               
 0004               ***************************************************************
 0005               *                      Constants
@@ -4816,8 +4816,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E88 0050 
 0034               
 0035               romsat:
-0036 6E8A 0303             data  >0303,>000f             ; Cursor YX, initial shape and colour
-     6E8C 000F 
+0036 6E8A 0303             data  >0303,>0001             ; Cursor YX, initial shape and colour
+     6E8C 0001 
 0037               
 0038               cursors:
 0039 6E8E 0000             data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
@@ -4881,41 +4881,49 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6EFC 0000 
 0056               
 0057               
-0058               tv.data.colorscheme:                ; Foreground | Background | Bg. Pane
-0059 6EFE F404             data  >f404                 ; White      | Dark blue  | Dark blue
-0060 6F00 F101             data  >f101                 ; White      | Black      | Black
-0061 6F02 1707             data  >1707                 ; Black      | Cyan       | Cyan
-0062 6F04 1F0F             data  >1f0f                 ; Black      | White      | White
-0063               
-0064               
-0065               ***************************************************************
-0066               * SAMS page layout table for stevie (16 words)
-0067               *--------------------------------------------------------------
-0068               mem.sams.layout.data:
-0069 6F06 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     6F08 0002 
-0070 6F0A 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     6F0C 0003 
-0071 6F0E A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     6F10 000A 
-0072               
-0073 6F12 B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
-     6F14 0010 
-0074                                                   ; \ The index can allocate
-0075                                                   ; / pages >10 to >2f.
-0076               
-0077 6F16 C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
-     6F18 0030 
-0078                                                   ; \ Editor buffer can allocate
-0079                                                   ; / pages >30 to >ff.
+0058               
+0059               
+0060               ***************************************************************
+0061               * SAMS page layout table for stevie (16 words)
+0062               *--------------------------------------------------------------
+0063               mem.sams.layout.data:
+0064 6EFE 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     6F00 0002 
+0065 6F02 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     6F04 0003 
+0066 6F06 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     6F08 000A 
+0067               
+0068 6F0A B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
+     6F0C 0010 
+0069                                                   ; \ The index can allocate
+0070                                                   ; / pages >10 to >2f.
+0071               
+0072 6F0E C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
+     6F10 0030 
+0073                                                   ; \ Editor buffer can allocate
+0074                                                   ; / pages >30 to >ff.
+0075               
+0076 6F12 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+     6F14 000D 
+0077 6F16 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+     6F18 000E 
+0078 6F1A F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+     6F1C 000F 
+0079               
 0080               
-0081 6F1A D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-     6F1C 000D 
-0082 6F1E E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
-     6F20 000E 
-0083 6F22 F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-     6F24 000F 
-**** **** ****     > stevie_b0.asm.89593
+0081               
+0082               
+0083               
+0084               ***************************************************************
+0085               * Stevie color schemes table
+0086               *--------------------------------------------------------------
+0087               tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
+0088 6F1E F404             data  >f404                 ; White      | Dark blue  | Dark blue
+0089 6F20 F101             data  >f101                 ; White      | Black      | Black
+0090 6F22 1707             data  >1707                 ; Black      | Cyan       | Cyan
+0091 6F24 1F0F             data  >1f0f                 ; Black      | White      | White
+**** **** ****     > stevie_b0.asm.154211
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------
