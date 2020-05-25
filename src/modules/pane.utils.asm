@@ -24,7 +24,8 @@ pane.action.colorscheme.cycle:
         mov   tmp0,*stack           ; Push tmp0
 
         mov   @tv.colorscheme,tmp0  ; Load color scheme index
-        ci    tmp0,3                ; 4th entry reached?
+        ci    tmp0,tv.colorscheme.entries
+                                    ; Last entry reached?
         jlt   !
         clr   tmp0
         jmp   pane.action.colorscheme.switch

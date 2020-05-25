@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm                 ; Version 200525-157109
+0009               * File: stevie_b1.asm                 ; Version 200525-158774
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200525-157109
+0009               * File: equates.asm                 ; Version 200525-158774
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -267,7 +267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0247               *--------------------------------------------------------------
 0248               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0249               *--------------------------------------------------------------
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -304,7 +304,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200525-157109'
+0031 6015 ....             text  'STEVIE 200525-158774'
 0032                       even
 0033               
 0041               
@@ -314,7 +314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0019               
 0020                       aorg  >2000
 0021                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
@@ -1036,7 +1036,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0246               
 0247               cpu.crash.msg.id
 0248 21C2 1742             byte  23
-0249 21C3 ....             text  'Build-ID  200525-157109'
+0249 21C3 ....             text  'Build-ID  200525-158774'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4731,7 +4731,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2E16 0040 
 0363 2E18 0460  28         b     @main                 ; Give control to main program
      2E1A 6050 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0022                                                   ; Relocated spectra2 in low memory expansion
 0023                                                   ; Is copied to RAM from bank 0.
 0024                                                   ;
@@ -4929,7 +4929,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      611C 2C78 
 0127               
 0128               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0038                       copy  "edkey.asm"           ; Keyboard actions
 **** **** ****     > edkey.asm
 0001               * FILE......: edkey.asm
@@ -5032,7 +5032,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6178 FFCE 
 0083 617A 06A0  32         bl    @cpu.crash            ; / File error occured. Halt system.
      617C 2030 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0039                       copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys
 **** **** ****     > edkey.fb.mov.asm
 0001               * FILE......: edkey.fb.mov.asm
@@ -5668,7 +5668,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      641C 832A 
 0486 641E 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
      6420 707A 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0040                       copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
 **** **** ****     > edkey.fb.mod.asm
 0001               * FILE......: edkey.fb.mod.asm
@@ -6163,7 +6163,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0366               edkey.action.char.exit:
 0367 663A 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      663C 707A 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0041                       copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
 **** **** ****     > edkey.fb.misc.asm
 0001               * FILE......: edkey.fb.misc.asm
@@ -6228,7 +6228,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0051               
 0052 6666 045B  20         b     *r11
 0053               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0042                       copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
 **** **** ****     > edkey.fb.file.asm
 0001               * FILE......: edkey.fb.fíle.asm
@@ -6284,7 +6284,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0040               
 0041 66A8 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      66AA 63B6 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0043                       copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
 **** **** ****     > edkey.cmdb.mod.asm
 0001               * FILE......: edkey.cmdb.mod.asm
@@ -6371,7 +6371,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0068               edkey.cmdb.action.char.exit:
 0069 66F8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      66FA 707A 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0044                       copy  "stevie.asm"          ; Main editor configuration
 **** **** ****     > stevie.asm
 0001               * FILE......: stevie.asm
@@ -6413,7 +6413,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036               stevie.init.exit:
 0037 6704 0460  28         b     @poprt                ; Return to caller
      6706 2214 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0045                       copy  "mem.asm"             ; Memory Management
 **** **** ****     > mem.asm
 0001               * FILE......: mem.asm
@@ -6547,7 +6547,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0117               
 0118               
 0119               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0046                       copy  "fb.asm"              ; Framebuffer
 **** **** ****     > fb.asm
 0001               * FILE......: fb.asm
@@ -6891,7 +6891,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0282               fb.get.firstnonblank.exit:
 0283 6886 0460  28         b    @poprt                 ; Return to caller
      6888 2214 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0047                       copy  "idx.asm"             ; Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
@@ -7375,7 +7375,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0423 6A20 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0424 6A22 C2F9  30         mov   *stack+,r11           ; Pop r11
 0425 6A24 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0048                       copy  "idx.delete.asm"      ; Index management - delete slot
 **** **** ****     > idx.delete.asm
 0001               * FILE......: idx_delete.asm
@@ -7506,7 +7506,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 6A7C C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0113 6A7E C2F9  30         mov   *stack+,r11           ; Pop r11
 0114 6A80 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0049                       copy  "idx.insert.asm"      ; Index management - insert slot
 **** **** ****     > idx.insert.asm
 0001               * FILE......: idx.insert.asm
@@ -7581,7 +7581,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0061                       ;------------------------------------------------------
 0062               idx.entry.insert.exit:
 0063 6AB0 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0050                       copy  "edb.asm"             ; Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
@@ -8105,7 +8105,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0426 6C8C 0460  28         b     @poprt                ; Return to caller
      6C8E 2214 
 0427               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0051                       copy  "cmdb.asm"            ; Command Buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
@@ -8259,7 +8259,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0123 6D10 C2F9  30         mov   *stack+,r11           ; Pop r11
 0124 6D12 045B  20         b     *r11                  ; Return to caller
 0125               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0052                       copy  "fh.read.sams.asm"    ; File handler read file
 **** **** ****     > fh.read.sams.asm
 0001               * FILE......: fh.read.sams.asm
@@ -8727,7 +8727,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0355                       ; byte  12                  ;  9    - File descriptor length
 0356                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0357                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0053                       copy  "fm.load.asm"         ; File manager loadfile
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm_load.asm
@@ -9036,7 +9036,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0234               fm.loadfile.callback.fioerr.exit:
 0235 7052 0460  28         b     @poprt                ; Return to caller
      7054 2214 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0054                       copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning
 **** **** ****     > hook.keyscan.asm
 0001               * FILE......: hook.keyscan.asm
@@ -9097,7 +9097,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046               *--------------------------------------------------------------
 0047 7082 0460  28         b     @hookok               ; Return
      7084 2C7C 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0055                       copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
 **** **** ****     > task.vdp.panes.asm
 0001               * FILE......: task.vdp.panes.asm
@@ -9233,7 +9233,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7112 72C0 
 0103 7114 0460  28         b     @slotok
      7116 2CF8 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0056                       copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
 **** **** ****     > task.vdp.sat.asm
 0001               * FILE......: task.vdp.sat.asm
@@ -9294,7 +9294,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0044               task.vdp.copy.sat.exit:
 0045 7148 0460  28         b     @slotok               ; Exit task
      714A 2CF8 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0057                       copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
 **** **** ****     > task.vdp.cursor.asm
 0001               * FILE......: task.vdp.cursor.asm
@@ -9380,7 +9380,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0067               task.vdp.cursor.exit:
 0068 7190 0460  28         b     @slotok                ; Exit task
      7192 2CF8 
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0058                       copy  "pane.utils.asm"      ; Utilities used in panes
 **** **** ****     > pane.utils.asm
 0001               * FILE......: pane.utils.asm
@@ -9410,133 +9410,134 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0025               
 0026 719C C120  34         mov   @tv.colorscheme,tmp0  ; Load color scheme index
      719E A012 
-0027 71A0 0284  22         ci    tmp0,3                ; 4th entry reached?
-     71A2 0003 
-0028 71A4 1102  14         jlt   !
-0029 71A6 04C4  14         clr   tmp0
-0030 71A8 1001  14         jmp   pane.action.colorscheme.switch
-0031 71AA 0584  14 !       inc   tmp0
-0032                       ;-------------------------------------------------------
-0033                       ; switch to new color scheme
-0034                       ;-------------------------------------------------------
-0035               pane.action.colorscheme.switch:
-0036 71AC C804  38         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
+0027 71A0 0284  22         ci    tmp0,tv.colorscheme.entries
+     71A2 0004 
+0028                                                   ; Last entry reached?
+0029 71A4 1102  14         jlt   !
+0030 71A6 04C4  14         clr   tmp0
+0031 71A8 1001  14         jmp   pane.action.colorscheme.switch
+0032 71AA 0584  14 !       inc   tmp0
+0033                       ;-------------------------------------------------------
+0034                       ; switch to new color scheme
+0035                       ;-------------------------------------------------------
+0036               pane.action.colorscheme.switch:
+0037 71AC C804  38         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
      71AE A012 
-0037 71B0 06A0  32         bl    @pane.action.colorscheme.load
+0038 71B0 06A0  32         bl    @pane.action.colorscheme.load
      71B2 71BA 
-0038                       ;-------------------------------------------------------
-0039                       ; Exit
-0040                       ;-------------------------------------------------------
-0041               pane.action.colorscheme.cycle.exit:
-0042 71B4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0043 71B6 C2F9  30         mov   *stack+,r11           ; Pop R11
-0044 71B8 045B  20         b     *r11                  ; Return to caller
-0045               
+0039                       ;-------------------------------------------------------
+0040                       ; Exit
+0041                       ;-------------------------------------------------------
+0042               pane.action.colorscheme.cycle.exit:
+0043 71B4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0044 71B6 C2F9  30         mov   *stack+,r11           ; Pop R11
+0045 71B8 045B  20         b     *r11                  ; Return to caller
 0046               
 0047               
 0048               
 0049               
-0050               ***************************************************************
-0051               * pane.action.color.load
-0052               * Load color scheme
-0053               ***************************************************************
-0054               * bl  @pane.action.colorscheme.load
-0055               *--------------------------------------------------------------
-0056               * INPUT
-0057               * @tv.colorscheme = Index into color scheme table
-0058               *--------------------------------------------------------------
-0059               * OUTPUT
-0060               * none
-0061               *--------------------------------------------------------------
-0062               * Register usage
-0063               * tmp0,tmp1,tmp2,tmp3
-0064               ********|*****|*********************|**************************
-0065               pane.action.colorscheme.load:
-0066 71BA 0649  14         dect  stack
-0067 71BC C64B  30         mov   r11,*stack            ; Save return address
-0068 71BE 0649  14         dect  stack
-0069 71C0 C644  30         mov   tmp0,*stack           ; Push tmp0
-0070 71C2 0649  14         dect  stack
-0071 71C4 C645  30         mov   tmp1,*stack           ; Push tmp1
-0072 71C6 0649  14         dect  stack
-0073 71C8 C646  30         mov   tmp2,*stack           ; Push tmp2
-0074 71CA 0649  14         dect  stack
-0075 71CC C647  30         mov   tmp3,*stack           ; Push tmp3
-0076 71CE 06A0  32         bl    @scroff               ; Turn screen off
+0050               
+0051               ***************************************************************
+0052               * pane.action.color.load
+0053               * Load color scheme
+0054               ***************************************************************
+0055               * bl  @pane.action.colorscheme.load
+0056               *--------------------------------------------------------------
+0057               * INPUT
+0058               * @tv.colorscheme = Index into color scheme table
+0059               *--------------------------------------------------------------
+0060               * OUTPUT
+0061               * none
+0062               *--------------------------------------------------------------
+0063               * Register usage
+0064               * tmp0,tmp1,tmp2,tmp3
+0065               ********|*****|*********************|**************************
+0066               pane.action.colorscheme.load:
+0067 71BA 0649  14         dect  stack
+0068 71BC C64B  30         mov   r11,*stack            ; Save return address
+0069 71BE 0649  14         dect  stack
+0070 71C0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0071 71C2 0649  14         dect  stack
+0072 71C4 C645  30         mov   tmp1,*stack           ; Push tmp1
+0073 71C6 0649  14         dect  stack
+0074 71C8 C646  30         mov   tmp2,*stack           ; Push tmp2
+0075 71CA 0649  14         dect  stack
+0076 71CC C647  30         mov   tmp3,*stack           ; Push tmp3
+0077 71CE 06A0  32         bl    @scroff               ; Turn screen off
      71D0 2610 
-0077                       ;-------------------------------------------------------
-0078                       ; Get foreground/background color
-0079                       ;-------------------------------------------------------
-0080 71D2 C120  34         mov   @tv.colorscheme,tmp0  ; Get color scheme index
+0078                       ;-------------------------------------------------------
+0079                       ; Get foreground/background color
+0080                       ;-------------------------------------------------------
+0081 71D2 C120  34         mov   @tv.colorscheme,tmp0  ; Get color scheme index
      71D4 A012 
-0081 71D6 0A14  56         sla   tmp0,1                ; Offset into color scheme data table
-0082 71D8 0224  22         ai    tmp0,tv.colorscheme.table
+0082 71D6 0A14  56         sla   tmp0,1                ; Offset into color scheme data table
+0083 71D8 0224  22         ai    tmp0,tv.colorscheme.table
      71DA 7452 
-0083                                                   ; Add base for color scheme data table
-0084 71DC C1D4  26         mov   *tmp0,tmp3            ; Get fg/bg color
-0085                       ;-------------------------------------------------------
-0086                       ; Dump cursor FG color to sprite table (SAT)
-0087                       ;-------------------------------------------------------
-0088 71DE C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
-0089 71E0 0945  56         srl   tmp1,4                ; Move nibble to right
-0090 71E2 0245  22         andi  tmp1,>0f00
+0084                                                   ; Add base for color scheme data table
+0085 71DC C1D4  26         mov   *tmp0,tmp3            ; Get fg/bg color
+0086                       ;-------------------------------------------------------
+0087                       ; Dump cursor FG color to sprite table (SAT)
+0088                       ;-------------------------------------------------------
+0089 71DE C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
+0090 71E0 0945  56         srl   tmp1,4                ; Move nibble to right
+0091 71E2 0245  22         andi  tmp1,>0f00
      71E4 0F00 
-0091 71E6 D805  38         movb  tmp1,@ramsat+3        ; Update FG color in sprite table (SAT)
+0092 71E6 D805  38         movb  tmp1,@ramsat+3        ; Update FG color in sprite table (SAT)
      71E8 8383 
-0092 71EA D805  38         movb  tmp1,@tv.curshape+1   ; Save cursor color
+0093 71EA D805  38         movb  tmp1,@tv.curshape+1   ; Save cursor color
      71EC A015 
-0093                       ;-------------------------------------------------------
-0094                       ; Dump colors to VDP register 7 (text mode)
-0095                       ;-------------------------------------------------------
-0096 71EE C147  18         mov   tmp3,tmp1             ; Get work copy
-0097 71F0 0985  56         srl   tmp1,8                ; MSB to LSB
-0098 71F2 0265  22         ori   tmp1,>0700
+0094                       ;-------------------------------------------------------
+0095                       ; Dump colors to VDP register 7 (text mode)
+0096                       ;-------------------------------------------------------
+0097 71EE C147  18         mov   tmp3,tmp1             ; Get work copy
+0098 71F0 0985  56         srl   tmp1,8                ; MSB to LSB
+0099 71F2 0265  22         ori   tmp1,>0700
      71F4 0700 
-0099 71F6 C105  18         mov   tmp1,tmp0
-0100 71F8 06A0  32         bl    @putvrx               ; Write VDP register
+0100 71F6 C105  18         mov   tmp1,tmp0
+0101 71F8 06A0  32         bl    @putvrx               ; Write VDP register
      71FA 2316 
-0101                       ;-------------------------------------------------------
-0102                       ; Dump colors for frame buffer pane (TAT)
-0103                       ;-------------------------------------------------------
-0104 71FC 0204  20         li    tmp0,>1800            ; VDP start address (frame buffer area)
+0102                       ;-------------------------------------------------------
+0103                       ; Dump colors for frame buffer pane (TAT)
+0104                       ;-------------------------------------------------------
+0105 71FC 0204  20         li    tmp0,>1800            ; VDP start address (frame buffer area)
      71FE 1800 
-0105 7200 C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
-0106 7202 0985  56         srl   tmp1,8                ; MSB to LSB
-0107 7204 0206  20         li    tmp2,29*80            ; Number of bytes to fill
+0106 7200 C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
+0107 7202 0985  56         srl   tmp1,8                ; MSB to LSB
+0108 7204 0206  20         li    tmp2,29*80            ; Number of bytes to fill
      7206 0910 
-0108 7208 06A0  32         bl    @xfilv                ; Fill colors
+0109 7208 06A0  32         bl    @xfilv                ; Fill colors
      720A 2276 
-0109                                                   ; i \  tmp0 = start address
-0110                                                   ; i |  tmp1 = byte to fill
-0111                                                   ; i /  tmp2 = number of bytes to fill
-0112                       ;-------------------------------------------------------
-0113                       ; Dump colors for bottom status line pane (TAT)
-0114                       ;-------------------------------------------------------
-0115 720C 0204  20         li    tmp0,>2110            ; VDP start address (bottom status line)
+0110                                                   ; i \  tmp0 = start address
+0111                                                   ; i |  tmp1 = byte to fill
+0112                                                   ; i /  tmp2 = number of bytes to fill
+0113                       ;-------------------------------------------------------
+0114                       ; Dump colors for bottom status line pane (TAT)
+0115                       ;-------------------------------------------------------
+0116 720C 0204  20         li    tmp0,>2110            ; VDP start address (bottom status line)
      720E 2110 
-0116 7210 C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
-0117 7212 0245  22         andi  tmp1,>00ff            ; Only keep LSB
+0117 7210 C147  18         mov   tmp3,tmp1             ; Get work copy fg/bg color
+0118 7212 0245  22         andi  tmp1,>00ff            ; Only keep LSB
      7214 00FF 
-0118 7216 0206  20         li    tmp2,80               ; Number of bytes to fill
+0119 7216 0206  20         li    tmp2,80               ; Number of bytes to fill
      7218 0050 
-0119 721A 06A0  32         bl    @xfilv                ; Fill colors
+0120 721A 06A0  32         bl    @xfilv                ; Fill colors
      721C 2276 
-0120                                                   ; i \  tmp0 = start address
-0121                                                   ; i |  tmp1 = byte to fill
-0122                                                   ; i /  tmp2 = number of bytes to fill
-0123                       ;-------------------------------------------------------
-0124                       ; Exit
-0125                       ;-------------------------------------------------------
-0126               pane.action.colorscheme.load.exit:
-0127 721E 06A0  32         bl    @scron                ; Turn screen on
+0121                                                   ; i \  tmp0 = start address
+0122                                                   ; i |  tmp1 = byte to fill
+0123                                                   ; i /  tmp2 = number of bytes to fill
+0124                       ;-------------------------------------------------------
+0125                       ; Exit
+0126                       ;-------------------------------------------------------
+0127               pane.action.colorscheme.load.exit:
+0128 721E 06A0  32         bl    @scron                ; Turn screen on
      7220 2618 
-0128 7222 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0129 7224 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0130 7226 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0131 7228 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0132 722A C2F9  30         mov   *stack+,r11           ; Pop R11
-0133 722C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.157109
+0129 7222 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0130 7224 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0131 7226 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0132 7228 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0133 722A C2F9  30         mov   *stack+,r11           ; Pop R11
+0134 722C 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b1.asm.158774
 0059                       copy  "pane.cmdb.asm"       ; Command buffer pane
 **** **** ****     > pane.cmdb.asm
 0001               * FILE......: pane.cmdb.asm
@@ -9708,7 +9709,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139                       ;------------------------------------------------------
 0140 72BC C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 72BE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0060                       copy  "pane.botline.asm"    ; Status line pane
 **** **** ****     > pane.botline.asm
 0001               * FILE......: pane.botline.asm
@@ -9920,7 +9921,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0159 73AE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0160 73B0 C2F9  30         mov   *stack+,r11           ; Pop r11
 0161 73B2 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0061                       copy  "data.constants.asm"  ; Data segment - Constants
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -10064,12 +10065,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0084               ***************************************************************
 0085               * Stevie color schemes table
 0086               *--------------------------------------------------------------
-0087               tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
-0088 7452 F41C             data  >f41c                 ; White      | Dark blue  | Dark blue
-0089 7454 F101             data  >f101                 ; White      | Black      | Black
-0090 7456 1707             data  >1707                 ; Black      | Cyan       | Cyan
-0091 7458 1F0F             data  >1f0f                 ; Black      | White      | White
-**** **** ****     > stevie_b1.asm.157109
+0087               * MSB  high-nibble    Foreground color frame buffer and cursor sprite
+0088               * MSB  low-nibble     Background color frame buffer and background pane
+0089               * LSB  high-nibble    Foreground color bottom line pane
+0090               * LSB  low-nibble     Background color bottom line pane
+0091               *--------------------------------------------------------------
+0092      0004     tv.colorscheme.entries   equ 4      ; Entries in table
+0093               tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
+0094 7452 F41C             data  >f41c                 ; White      | Dark blue  | Dark blue
+0095 7454 F13A             data  >f13a                 ; White      | Black      | Black
+0096 7456 174B             data  >174b                 ; Black      | Cyan       | Cyan
+0097 7458 1F53             data  >1f53                 ; Black      | White      | White
+0098               
+**** **** ****     > stevie_b1.asm.158774
 0062                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -10625,7 +10633,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0551 78C5 ....             text  'enter'
 0552                       even
 0553               
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0063                       copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -10967,7 +10975,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0209                       ; End of list
 0210                       ;-------------------------------------------------------
 0211 7A4C FFFF             data  EOL                           ; EOL
-**** **** ****     > stevie_b1.asm.157109
+**** **** ****     > stevie_b1.asm.158774
 0064               
 0068 7A4E 7A4E                   data $                ; Bank 1 ROM size OK.
 0070               

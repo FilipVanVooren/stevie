@@ -82,10 +82,17 @@ mem.sams.layout.data:
 
 
 ***************************************************************
-* Stevie color schemes table
+* Stevie color schemes table   
 *--------------------------------------------------------------
+* MSB  high-nibble    Foreground color frame buffer and cursor sprite
+* MSB  low-nibble     Background color frame buffer and background pane
+* LSB  high-nibble    Foreground color bottom line pane
+* LSB  low-nibble     Background color bottom line pane
+*--------------------------------------------------------------
+tv.colorscheme.entries   equ 4      ; Entries in table
 tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
         data  >f41c                 ; White      | Dark blue  | Dark blue
-        data  >f101                 ; White      | Black      | Black
-        data  >1707                 ; Black      | Cyan       | Cyan
-        data  >1f0f                 ; Black      | White      | White        
+        data  >f13a                 ; White      | Black      | Black
+        data  >174b                 ; Black      | Cyan       | Cyan
+        data  >1f53                 ; Black      | White      | White
+                        
