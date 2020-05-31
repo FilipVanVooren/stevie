@@ -2,7 +2,7 @@
 * Purpose...: High-level file manager module
 
 *---------------------------------------------------------------
-* Load file into editor
+* Load file into editor buffer
 *---------------------------------------------------------------
 * bl    @fm.loadfile
 *--------------------------------------------------------------- 
@@ -81,6 +81,7 @@ fm.loadfile.exit:
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 1"
+* Open file
 *---------------------------------------------------------------
 * Is expected to be passed as parm2 to @tfh.file.read
 *--------------------------------------------------------------- 
@@ -98,13 +99,7 @@ fm.loadfile.callback.indicator1:
               byte 29,3
               data txt.loading      ; Display "Loading...."
 
-        c     @fh.rleonload,@w$ffff
-        jne   !                                           
-        bl    @putat
-              byte 29,68
-              data txt.rle          ; Display "RLE"
-
-!       bl    @at
+        bl    @at
               byte 29,14            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
@@ -120,6 +115,7 @@ fm.loadfile.callback.indicator1.exit:
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 2"
 *---------------------------------------------------------------
+* Read line
 * Is expected to be passed as parm3 to @tfh.file.read
 *--------------------------------------------------------------- 
 fm.loadfile.callback.indicator2:
@@ -154,6 +150,7 @@ fm.loadfile.callback.indicator2.exit:
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 3"
+* Close file
 *---------------------------------------------------------------
 * Is expected to be passed as parm4 to @tfh.file.read
 *--------------------------------------------------------------- 

@@ -55,7 +55,12 @@ main:
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-        copy  "pane.utils.asm"      ; Utilities used in panes        
+
+        copy  "pane.utils.colorscheme.asm"
+                                    ; Colorscheme handling in panges 
+        copy  "pane.utils.tipiclock.asm"
+                                    ; Colorscheme    
+
         copy  "pane.cmdb.asm"       ; Command buffer pane
         copy  "pane.botline.asm"    ; Status line pane
         copy  "data.constants.asm"  ; Data segment - Constants

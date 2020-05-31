@@ -8,19 +8,16 @@
 
 ***************************************************************
 * fh.file.read.sams
-* Read file into editor buffer with SAMS support
+* Read file with SAMS support
 ***************************************************************
 *  bl   @fh.file.read.sams
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed file descriptor
-* parm2 = Pointer to callback function "loading indicator 1"
-* parm3 = Pointer to callback function "loading indicator 2"
-* parm4 = Pointer to callback function "loading indicator 3"
-* parm5 = Pointer to callback function "File I/O error handler"
-* parm6 = Not used yet (starting line in file)
-* parm7 = Not used yet (starting line in editor buffer)
-* parm8 = Not used yet (number of lines to read)
+* parm2 = Pointer to callback function "Before Open file"
+* parm3 = Pointer to callback function "Read line from file"
+* parm4 = Pointer to callback function "Close file"
+* parm5 = Pointer to callback function "File I/O error"
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -32,8 +29,7 @@ fh.file.read.sams:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Initialisation
-        ;------------------------------------------------------
-        clr   @fh.rleonload         ; No RLE compression!        
+        ;------------------------------------------------------   
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.kilobytes         ; Clear kilobytes processed
@@ -54,10 +50,10 @@ fh.file.read.sams:
         ; Save parameters / callback functions
         ;------------------------------------------------------
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
-        mov   @parm2,@fh.callback1  ; Loading indicator 1
-        mov   @parm3,@fh.callback2  ; Loading indicator 2
-        mov   @parm4,@fh.callback3  ; Loading indicator 3
-        mov   @parm5,@fh.callback4  ; File I/O error handler
+        mov   @parm2,@fh.callback1  ; Callback function "Open file"
+        mov   @parm3,@fh.callback2  ; Callback function "Read line from file"
+        mov   @parm4,@fh.callback3  ; Callback function "Close" file"
+        mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
@@ -91,7 +87,7 @@ fh.file.read.crash:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
-        ; Show "loading indicator 1"
+        ; Callback "Before Open file"
         ;------------------------------------------------------
 fh.file.read.sams.load1:        
         mov   @fh.callback1,tmp0
@@ -236,7 +232,6 @@ fh.file.read.sams.process_line:
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                        
-
         ;------------------------------------------------------
         ; 2b: Align pointer to multiple of 16 memory address
         ;------------------------------------------------------ 
@@ -244,8 +239,6 @@ fh.file.read.sams.process_line:
         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-
-
         ;------------------------------------------------------
         ; Step 3: Update index
         ;------------------------------------------------------
@@ -278,7 +271,7 @@ fh.file.read.sams.updindex:
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
-        ; Step 4: Display results
+        ; Step 4: Callback "Read line from file"
         ;------------------------------------------------------
 fh.file.read.sams.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
@@ -308,8 +301,10 @@ fh.file.read.sams.error:
               data scrpad.backup2   ; / >2100->8300
 
         bl    @mem.sams.layout      ; Restore SAMS windows
-
-        mov   @fh.callback4,tmp0    ; Get pointer to "File I/O error handler"
+        ;------------------------------------------------------
+        ; Callback "File I/O error"
+        ;------------------------------------------------------
+        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.read.sams.exit
         ;------------------------------------------------------
@@ -321,20 +316,16 @@ fh.file.read.sams.eof:
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
-        ; Show "loading indicator 3" (final)
+        ; Callback "Close file"
         ;------------------------------------------------------
-        seto  @edb.dirty            ; Text changed in editor buffer!            
-
-        mov   @fh.callback3,tmp0    ; Get pointer to "Loading indicator 3"
+        mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fh.file.read.sams.exit:
-        b     @poprt                ; Return to caller
-
-
-
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 

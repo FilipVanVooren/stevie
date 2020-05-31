@@ -212,7 +212,7 @@ fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
-fh.rleonload      equ  fh.struct + 68  ; RLE compression needed during file load
+fh.free           equ  fh.struct + 68  ; no longer used
 fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
 fh.end            equ  fh.struct +150  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer

@@ -26,22 +26,23 @@ txt.cmdb.catalog   #string 'File catalog'
 txt.filetype.dv80  #string 'DIS/VAR80 '
 txt.filetype.none  #string '          '
 
-txt.stevie     byte    12
-             byte    10
-             text    'stevie v1.00'
-             byte    11
-             even
+txt.stevie         byte    12
+                   byte    10
+                   text    'stevie v1.00'
+                   byte    11
+                   even
 
-fdname1      #string 'TIPI.TIVI.TMS9900_C'
-fdname2      #string 'TIPI.TIVI.NR80'
-fdname3      #string 'DSK1.XBEADOC'
-fdname4      #string 'TIPI.TIVI.C99MAN1'
-fdname5      #string 'TIPI.TIVI.C99MAN2'
-fdname6      #string 'TIPI.TIVI.C99MAN3'
-fdname7      #string 'TIPI.TIVI.C99SPECS'
-fdname8      #string 'TIPI.TIVI.RANDOM#C'
-fdname9      #string 'TIPI.TIVI.INVADERS'
-fdname0      #string 'TIPI.TIVI.NR80'
+fdname1            #string 'TIPI.TIVI.TMS9900_C'
+fdname2            #string 'TIPI.TIVI.NR80'
+fdname3            #string 'DSK1.XBEADOC'
+fdname4            #string 'TIPI.TIVI.C99MAN1'
+fdname5            #string 'TIPI.TIVI.C99MAN2'
+fdname6            #string 'TIPI.TIVI.C99MAN3'
+fdname7            #string 'TIPI.TIVI.C99SPECS'
+fdname8            #string 'TIPI.TIVI.RANDOM#C'
+fdname9            #string 'TIPI.TIVI.INVADERS'
+fdname0            #string 'TIPI.TIVI.NR80'
+fdname.clock       #string 'PI.CLOCK'
 
 
 *---------------------------------------------------------------
