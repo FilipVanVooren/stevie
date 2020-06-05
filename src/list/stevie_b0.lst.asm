@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.154211
+**** **** ****     > stevie_b0.asm.77483
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200525-154211
+0009               * File: stevie_b0.asm               ; Version 200605-77483
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200525-154211
+0009               * File: equates.asm                 ; Version 200605-77483
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -232,7 +232,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0212      A43E     fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
 0213      A440     fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
 0214      A442     fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
-0215      A444     fh.rleonload      equ  fh.struct + 68  ; RLE compression needed during file load
+0215      A444     fh.free           equ  fh.struct + 68  ; no longer used
 0216      A446     fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
 0217      A496     fh.end            equ  fh.struct +150  ; End of structure
 0218      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
@@ -267,7 +267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0247               *--------------------------------------------------------------
 0248               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0249               *--------------------------------------------------------------
-**** **** ****     > stevie_b0.asm.154211
+**** **** ****     > stevie_b0.asm.77483
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -303,8 +303,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026 6012 6030             data  kickstart.code1
 0027               
 0029               
-0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200525-154211'
+0030 6014 1353             byte  19
+0031 6015 ....             text  'STEVIE 200605-77483'
 0032                       even
 0033               
 0041               
@@ -314,7 +314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.154211
+**** **** ****     > stevie_b0.asm.77483
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >3fff
 0021               ********|*****|*********************|**************************
@@ -1072,8 +1072,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0245                       even
 0246               
 0247               cpu.crash.msg.id
-0248 6224 1742             byte  23
-0249 6225 ....             text  'Build-ID  200525-154211'
+0248 6224 1642             byte  22
+0249 6225 ....             text  'Build-ID  200605-77483'
 0250                       even
 0251               
 **** **** ****     > runlib.asm
@@ -4735,42 +4735,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E50 26CE 
 0333 6E52 06A0  32         bl    @f18lck               ; Lock the F18A again
      6E54 26C4 
-0335               *--------------------------------------------------------------
-0336               * Check if there is a speech synthesizer attached
-0337               *--------------------------------------------------------------
-0339               *       <<skipped>>
-0343               *--------------------------------------------------------------
-0344               * Load video mode table & font
-0345               *--------------------------------------------------------------
-0346 6E56 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
-     6E58 22DA 
-0347 6E5A 2E1E             data  spvmod                ; Equate selected video mode table
-0348 6E5C 0204  20         li    tmp0,spfont           ; Get font option
-     6E5E 000C 
-0349 6E60 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
-0350 6E62 1304  14         jeq   runlid                ; Yes, skip it
-0351 6E64 06A0  32         bl    @ldfnt
-     6E66 2342 
-0352 6E68 1100             data  fntadr,spfont         ; Load specified font
-     6E6A 000C 
-0353               *--------------------------------------------------------------
-0354               * Did a system crash occur before runlib was called?
-0355               *--------------------------------------------------------------
-0356 6E6C 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
-     6E6E 4A4A 
-0357 6E70 1602  14         jne   runlie                ; No, continue
-0358 6E72 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
-     6E74 2090 
-0359               *--------------------------------------------------------------
-0360               * Branch to main program
-0361               *--------------------------------------------------------------
-0362 6E76 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
-     6E78 0040 
-0363 6E7A 0460  28         b     @main                 ; Give control to main program
-     6E7C 6050 
-**** **** ****     > stevie_b0.asm.154211
+0334               
+0335 6E56 06A0  32         bl    @putvr                ; Reset all F18a extended registers
+     6E58 2314 
+0336 6E5A 3201                   data >3201            ; F18a VR50 (>32), bit 1
+0338               *--------------------------------------------------------------
+0339               * Check if there is a speech synthesizer attached
+0340               *--------------------------------------------------------------
+0342               *       <<skipped>>
+0346               *--------------------------------------------------------------
+0347               * Load video mode table & font
+0348               *--------------------------------------------------------------
+0349 6E5C 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
+     6E5E 22DA 
+0350 6E60 2E24             data  spvmod                ; Equate selected video mode table
+0351 6E62 0204  20         li    tmp0,spfont           ; Get font option
+     6E64 000C 
+0352 6E66 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
+0353 6E68 1304  14         jeq   runlid                ; Yes, skip it
+0354 6E6A 06A0  32         bl    @ldfnt
+     6E6C 2342 
+0355 6E6E 1100             data  fntadr,spfont         ; Load specified font
+     6E70 000C 
+0356               *--------------------------------------------------------------
+0357               * Did a system crash occur before runlib was called?
+0358               *--------------------------------------------------------------
+0359 6E72 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
+     6E74 4A4A 
+0360 6E76 1602  14         jne   runlie                ; No, continue
+0361 6E78 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
+     6E7A 2090 
+0362               *--------------------------------------------------------------
+0363               * Branch to main program
+0364               *--------------------------------------------------------------
+0365 6E7C 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
+     6E7E 0040 
+0366 6E80 0460  28         b     @main                 ; Give control to main program
+     6E82 6050 
+**** **** ****     > stevie_b0.asm.77483
 0051               
-0055 6E7E 2E1C                   data $                ; Bank 0 ROM size OK.
+0055 6E84 2E22                   data $                ; Bank 0 ROM size OK.
 0057               
 0058               
 0059               *--------------------------------------------------------------
@@ -4809,76 +4813,76 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               * ; VDP#7 Set foreground/background color
 0031               ***************************************************************
 0032               stevie.tx8030:
-0033 6E80 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
-     6E82 003F 
-     6E84 0243 
-     6E86 05F4 
-     6E88 0050 
+0033 6E86 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
+     6E88 003F 
+     6E8A 0243 
+     6E8C 05F4 
+     6E8E 0050 
 0034               
 0035               romsat:
-0036 6E8A 0303             data  >0303,>0001             ; Cursor YX, initial shape and colour
-     6E8C 0001 
+0036 6E90 0303             data  >0303,>0001             ; Cursor YX, initial shape and colour
+     6E92 0001 
 0037               
 0038               cursors:
-0039 6E8E 0000             data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
-     6E90 0000 
-     6E92 0000 
-     6E94 001C 
-0040 6E96 1010             data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
-     6E98 1010 
-     6E9A 1010 
-     6E9C 1000 
-0041 6E9E 1C1C             data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
-     6EA0 1C1C 
-     6EA2 1C1C 
-     6EA4 1C00 
+0039 6E94 0000             data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
+     6E96 0000 
+     6E98 0000 
+     6E9A 001C 
+0040 6E9C 1010             data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
+     6E9E 1010 
+     6EA0 1010 
+     6EA2 1000 
+0041 6EA4 1C1C             data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
+     6EA6 1C1C 
+     6EA8 1C1C 
+     6EAA 1C00 
 0042               
 0043               patterns:
-0044 6EA6 0000             data  >0000,>ff00,>00ff,>0080 ; 01. Double line top + ruler
-     6EA8 FF00 
-     6EAA 00FF 
-     6EAC 0080 
-0045 6EAE 0080             data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom
-     6EB0 0000 
-     6EB2 FF00 
-     6EB4 FF00 
-0046               patterns.box:
-0047 6EB6 0000             data  >0000,>0000,>ff00,>ff00 ; 03. Double line bottom
-     6EB8 0000 
+0044 6EAC 0000             data  >0000,>ff00,>00ff,>0080 ; 01. Double line top + ruler
+     6EAE FF00 
+     6EB0 00FF 
+     6EB2 0080 
+0045 6EB4 0080             data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom
+     6EB6 0000 
+     6EB8 FF00 
      6EBA FF00 
-     6EBC FF00 
-0048 6EBE 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
-     6EC0 0000 
-     6EC2 FF80 
-     6EC4 BFA0 
-0049 6EC6 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
-     6EC8 0000 
-     6ECA FC04 
-     6ECC F414 
-0050 6ECE A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
-     6ED0 A0A0 
-     6ED2 A0A0 
-     6ED4 A0A0 
-0051 6ED6 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
-     6ED8 1414 
-     6EDA 1414 
-     6EDC 1414 
-0052 6EDE A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
-     6EE0 A0A0 
-     6EE2 BF80 
-     6EE4 FF00 
-0053 6EE6 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
-     6EE8 1414 
-     6EEA F404 
-     6EEC FC00 
-0054 6EEE 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
-     6EF0 C0C0 
-     6EF2 C0C0 
-     6EF4 0080 
-0055 6EF6 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
-     6EF8 0F0F 
-     6EFA 0F0F 
-     6EFC 0000 
+0046               patterns.box:
+0047 6EBC 0000             data  >0000,>0000,>ff00,>ff00 ; 03. Double line bottom
+     6EBE 0000 
+     6EC0 FF00 
+     6EC2 FF00 
+0048 6EC4 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
+     6EC6 0000 
+     6EC8 FF80 
+     6ECA BFA0 
+0049 6ECC 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
+     6ECE 0000 
+     6ED0 FC04 
+     6ED2 F414 
+0050 6ED4 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
+     6ED6 A0A0 
+     6ED8 A0A0 
+     6EDA A0A0 
+0051 6EDC 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
+     6EDE 1414 
+     6EE0 1414 
+     6EE2 1414 
+0052 6EE4 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
+     6EE6 A0A0 
+     6EE8 BF80 
+     6EEA FF00 
+0053 6EEC 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
+     6EEE 1414 
+     6EF0 F404 
+     6EF2 FC00 
+0054 6EF4 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
+     6EF6 C0C0 
+     6EF8 C0C0 
+     6EFA 0080 
+0055 6EFC 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+     6EFE 0F0F 
+     6F00 0F0F 
+     6F02 0000 
 0056               
 0057               
 0058               
@@ -4887,29 +4891,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0061               * SAMS page layout table for stevie (16 words)
 0062               *--------------------------------------------------------------
 0063               mem.sams.layout.data:
-0064 6EFE 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     6F00 0002 
-0065 6F02 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     6F04 0003 
-0066 6F06 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     6F08 000A 
+0064 6F04 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     6F06 0002 
+0065 6F08 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     6F0A 0003 
+0066 6F0C A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     6F0E 000A 
 0067               
-0068 6F0A B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
-     6F0C 0010 
+0068 6F10 B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
+     6F12 0010 
 0069                                                   ; \ The index can allocate
 0070                                                   ; / pages >10 to >2f.
 0071               
-0072 6F0E C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
-     6F10 0030 
+0072 6F14 C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
+     6F16 0030 
 0073                                                   ; \ Editor buffer can allocate
 0074                                                   ; / pages >30 to >ff.
 0075               
-0076 6F12 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-     6F14 000D 
-0077 6F16 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
-     6F18 000E 
-0078 6F1A F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-     6F1C 000F 
+0076 6F18 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+     6F1A 000D 
+0077 6F1C E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+     6F1E 000E 
+0078 6F20 F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+     6F22 000F 
 0079               
 0080               
 0081               
@@ -4918,18 +4922,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0084               ***************************************************************
 0085               * Stevie color schemes table
 0086               *--------------------------------------------------------------
-0087               tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
-0088 6F1E F404             data  >f404                 ; White      | Dark blue  | Dark blue
-0089 6F20 F101             data  >f101                 ; White      | Black      | Black
-0090 6F22 1707             data  >1707                 ; Black      | Cyan       | Cyan
-0091 6F24 1F0F             data  >1f0f                 ; Black      | White      | White
-**** **** ****     > stevie_b0.asm.154211
+0087               * MSB  high-nibble    Foreground color frame buffer and cursor sprite
+0088               * MSB  low-nibble     Background color frame buffer and background pane
+0089               * LSB  high-nibble    Foreground color bottom line pane
+0090               * LSB  low-nibble     Background color bottom line pane
+0091               *--------------------------------------------------------------
+0092      0004     tv.colorscheme.entries   equ 4      ; Entries in table
+0093               tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
+0094 6F24 F41C             data  >f41c                 ; White      | Dark blue  | Dark blue
+0095 6F26 F13A             data  >f13a                 ; White      | Black      | Black
+0096 6F28 174B             data  >174b                 ; Black      | Cyan       | Cyan
+0097 6F2A 1F53             data  >1f53                 ; Black      | White      | White
+0098               
+**** **** ****     > stevie_b0.asm.77483
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------
 0065      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
 0066      0004     spfbck  equ   >04                   ; Screen background color.
-0067      2E1E     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0067      2E24     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
 0068      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 0069      0050     colrow  equ   80                    ; Columns per row
 0070      0FC0     pctadr  equ   >0fc0                 ; VDP color table base

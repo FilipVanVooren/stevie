@@ -41,16 +41,16 @@ fm.loadfile:
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
-        li    tmp0,fm.loadfile.callback.indicator1
+        li    tmp0,fm.loadfile.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
-        li    tmp0,fm.loadfile.callback.indicator2
+        li    tmp0,fm.loadfile.cb.indicator2
         mov   tmp0,@parm3           ; Register callback 2
 
-        li    tmp0,fm.loadfile.callback.indicator3
+        li    tmp0,fm.loadfile.cb.indicator3
         mov   tmp0,@parm4           ; Register callback 3
 
-        li    tmp0,fm.loadfile.callback.fioerr
+        li    tmp0,fm.loadfile.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
         bl    @fh.file.read.sams    ; Read specified file with SAMS support
@@ -85,7 +85,7 @@ fm.loadfile.exit:
 *---------------------------------------------------------------
 * Is expected to be passed as parm2 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator1:
+fm.loadfile.cb.indicator1:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -106,7 +106,7 @@ fm.loadfile.callback.indicator1:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator1.exit:        
+fm.loadfile.cb.indicator1.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -118,7 +118,7 @@ fm.loadfile.callback.indicator1.exit:
 * Read line
 * Is expected to be passed as parm3 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator2:
+fm.loadfile.cb.indicator2:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -127,7 +127,7 @@ fm.loadfile.callback.indicator2:
               data edb.lines,rambuf,>3020
 
         c     @fh.kilobytes,tmp4
-        jeq   fm.loadfile.callback.indicator2.exit
+        jeq   fm.loadfile.cb.indicator2.exit
 
         mov   @fh.kilobytes,tmp4    ; Save for compare
 
@@ -141,7 +141,7 @@ fm.loadfile.callback.indicator2:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator2.exit:        
+fm.loadfile.cb.indicator2.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -154,7 +154,7 @@ fm.loadfile.callback.indicator2.exit:
 *---------------------------------------------------------------
 * Is expected to be passed as parm4 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator3:
+fm.loadfile.cb.indicator3:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -177,7 +177,7 @@ fm.loadfile.callback.indicator3:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator3.exit:        
+fm.loadfile.cb.indicator3.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -187,7 +187,7 @@ fm.loadfile.callback.indicator3.exit:
 *---------------------------------------------------------------
 * Is expected to be passed as parm5 to @tfh.file.read
 ********|*****|*********************|**************************
-fm.loadfile.callback.fioerr:
+fm.loadfile.cb.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -228,5 +228,5 @@ fm.loadfile.callback.fioerr:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.fioerr.exit:        
+fm.loadfile.cb.fioerr.exit:        
         b     @poprt                ; Return to caller        

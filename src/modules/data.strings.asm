@@ -32,7 +32,7 @@ txt.stevie         byte    12
                    byte    11
                    even
 
-fdname1            #string 'TIPI.TIVI.TMS9900_C'
+fdname1            #string 'PI.CLOCK'
 fdname2            #string 'TIPI.TIVI.NR80'
 fdname3            #string 'DSK1.XBEADOC'
 fdname4            #string 'TIPI.TIVI.C99MAN1'
