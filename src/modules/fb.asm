@@ -200,7 +200,7 @@ fb.refresh.erase_eob:
         a     @fb.top.ptr,tmp1      ; Add framebuffer base
 
         mov   tmp1,tmp0             ; tmp0 = Memory start address
-        li    tmp1,32               ; Clear with space
+        clr   tmp1                  ; Clear with >00 character
 
         bl    @xfilm                ; \ Fill memory
                                     ; | i  tmp0 = Memory start address
