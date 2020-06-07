@@ -221,7 +221,10 @@ edkey.action.ins_line.insert:
 
         mov   @edb.lines,@parm2     ; Last line to reorganize 
         bl    @idx.entry.insert     ; Reorganize index
-        inc   @edb.lines            ; One line more in editor buffer
+                                    ; \ i  parm1 = Line for insert
+                                    ; / i  parm2 = Last line to reorg
+
+        inc   @edb.lines            ; One line added to editor buffer
         ;-------------------------------------------------------
         ; Refresh frame buffer and physical screen
         ;-------------------------------------------------------

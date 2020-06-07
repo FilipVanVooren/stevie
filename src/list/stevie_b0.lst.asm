@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.217138
+**** **** ****     > stevie_b0.asm.226709
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200607-217138
+0009               * File: stevie_b0.asm               ; Version 200607-226709
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200607-217138
+0009               * File: equates.asm                 ; Version 200607-226709
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -267,7 +267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0247               *--------------------------------------------------------------
 0248               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0249               *--------------------------------------------------------------
-**** **** ****     > stevie_b0.asm.217138
+**** **** ****     > stevie_b0.asm.226709
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -304,7 +304,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200607-217138'
+0031 6015 ....             text  'STEVIE 200607-226709'
 0032                       even
 0033               
 0041               
@@ -314,7 +314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.217138
+**** **** ****     > stevie_b0.asm.226709
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >2fff
 0021               ********|*****|*********************|**************************
@@ -471,105 +471,109 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0007               * R1      **free not used**
 0008               * R2      Config register
 0009               * R3      Extended config register
-0010               * R4-R8   Temporary registers/variables (tmp0-tmp4)
-0011               * R9      Stack pointer
-0012               * R10     Highest slot in use + Timer counter
-0013               * R11     Subroutine return address
-0014               * R12     CRU
-0015               * R13     Copy of VDP status byte and counter for sound player
-0016               * R14     Copy of VDP register #0 and VDP register #1 bytes
-0017               * R15     VDP read/write address
-0018               *--------------------------------------------------------------
-0019               * Special purpose registers
-0020               * R0      shift count
-0021               * R12     CRU
-0022               * R13     WS     - when using LWPI, BLWP, RTWP
-0023               * R14     PC     - when using LWPI, BLWP, RTWP
-0024               * R15     STATUS - when using LWPI, BLWP, RTWP
-0025               ***************************************************************
-0026               * Define registers
-0027               ********|*****|*********************|**************************
-0028      0000     r0      equ   0
-0029      0001     r1      equ   1
-0030      0002     r2      equ   2
-0031      0003     r3      equ   3
-0032      0004     r4      equ   4
-0033      0005     r5      equ   5
-0034      0006     r6      equ   6
-0035      0007     r7      equ   7
-0036      0008     r8      equ   8
-0037      0009     r9      equ   9
-0038      000A     r10     equ   10
-0039      000B     r11     equ   11
-0040      000C     r12     equ   12
-0041      000D     r13     equ   13
-0042      000E     r14     equ   14
-0043      000F     r15     equ   15
-0044               ***************************************************************
-0045               * Define register equates
-0046               ********|*****|*********************|**************************
-0047      0002     config  equ   r2                    ; Config register
-0048      0003     xconfig equ   r3                    ; Extended config register
-0049      0004     tmp0    equ   r4                    ; Temp register 0
-0050      0005     tmp1    equ   r5                    ; Temp register 1
-0051      0006     tmp2    equ   r6                    ; Temp register 2
-0052      0007     tmp3    equ   r7                    ; Temp register 3
-0053      0008     tmp4    equ   r8                    ; Temp register 4
-0054      0009     stack   equ   r9                    ; Stack pointer
-0055      000E     vdpr01  equ   r14                   ; Copy of VDP#0 and VDP#1 bytes
-0056      000F     vdprw   equ   r15                   ; Contains VDP read/write address
-0057               ***************************************************************
-0058               * Define MSB/LSB equates for registers
-0059               ********|*****|*********************|**************************
-0060      8300     r0hb    equ   ws1                   ; HI byte R0
-0061      8301     r0lb    equ   ws1+1                 ; LO byte R0
-0062      8302     r1hb    equ   ws1+2                 ; HI byte R1
-0063      8303     r1lb    equ   ws1+3                 ; LO byte R1
-0064      8304     r2hb    equ   ws1+4                 ; HI byte R2
-0065      8305     r2lb    equ   ws1+5                 ; LO byte R2
-0066      8306     r3hb    equ   ws1+6                 ; HI byte R3
-0067      8307     r3lb    equ   ws1+7                 ; LO byte R3
-0068      8308     r4hb    equ   ws1+8                 ; HI byte R4
-0069      8309     r4lb    equ   ws1+9                 ; LO byte R4
-0070      830A     r5hb    equ   ws1+10                ; HI byte R5
-0071      830B     r5lb    equ   ws1+11                ; LO byte R5
-0072      830C     r6hb    equ   ws1+12                ; HI byte R6
-0073      830D     r6lb    equ   ws1+13                ; LO byte R6
-0074      830E     r7hb    equ   ws1+14                ; HI byte R7
-0075      830F     r7lb    equ   ws1+15                ; LO byte R7
-0076      8310     r8hb    equ   ws1+16                ; HI byte R8
-0077      8311     r8lb    equ   ws1+17                ; LO byte R8
-0078      8312     r9hb    equ   ws1+18                ; HI byte R9
-0079      8313     r9lb    equ   ws1+19                ; LO byte R9
-0080      8314     r10hb   equ   ws1+20                ; HI byte R10
-0081      8315     r10lb   equ   ws1+21                ; LO byte R10
-0082      8316     r11hb   equ   ws1+22                ; HI byte R11
-0083      8317     r11lb   equ   ws1+23                ; LO byte R11
-0084      8318     r12hb   equ   ws1+24                ; HI byte R12
-0085      8319     r12lb   equ   ws1+25                ; LO byte R12
-0086      831A     r13hb   equ   ws1+26                ; HI byte R13
-0087      831B     r13lb   equ   ws1+27                ; LO byte R13
-0088      831C     r14hb   equ   ws1+28                ; HI byte R14
-0089      831D     r14lb   equ   ws1+29                ; LO byte R14
-0090      831E     r15hb   equ   ws1+30                ; HI byte R15
-0091      831F     r15lb   equ   ws1+31                ; LO byte R15
-0092               ********|*****|*********************|**************************
-0093      8308     tmp0hb  equ   ws1+8                 ; HI byte R4
-0094      8309     tmp0lb  equ   ws1+9                 ; LO byte R4
-0095      830A     tmp1hb  equ   ws1+10                ; HI byte R5
-0096      830B     tmp1lb  equ   ws1+11                ; LO byte R5
-0097      830C     tmp2hb  equ   ws1+12                ; HI byte R6
-0098      830D     tmp2lb  equ   ws1+13                ; LO byte R6
-0099      830E     tmp3hb  equ   ws1+14                ; HI byte R7
-0100      830F     tmp3lb  equ   ws1+15                ; LO byte R7
-0101      8310     tmp4hb  equ   ws1+16                ; HI byte R8
-0102      8311     tmp4lb  equ   ws1+17                ; LO byte R8
-0103               ********|*****|*********************|**************************
-0104      8314     btihi   equ   ws1+20                ; Highest slot in use (HI byte R10)
-0105      831A     bvdpst  equ   ws1+26                ; Copy of VDP status register (HI byte R13)
-0106      831C     vdpr0   equ   ws1+28                ; High byte of R14. Is VDP#0 byte
-0107      831D     vdpr1   equ   ws1+29                ; Low byte  of R14. Is VDP#1 byte
-0108               ***************************************************************
+0010               * R4      Temporary register/variable tmp0
+0011               * R5      Temporary register/variable tmp1
+0012               * R6      Temporary register/variable tmp2
+0013               * R7      Temporary register/variable tmp3
+0014               * R8      Temporary register/variable tmp4
+0015               * R9      Stack pointer
+0016               * R10     Highest slot in use + Timer counter
+0017               * R11     Subroutine return address
+0018               * R12     CRU
+0019               * R13     Copy of VDP status byte and counter for sound player
+0020               * R14     Copy of VDP register #0 and VDP register #1 bytes
+0021               * R15     VDP read/write address
+0022               *--------------------------------------------------------------
+0023               * Special purpose registers
+0024               * R0      shift count
+0025               * R12     CRU
+0026               * R13     WS     - when using LWPI, BLWP, RTWP
+0027               * R14     PC     - when using LWPI, BLWP, RTWP
+0028               * R15     STATUS - when using LWPI, BLWP, RTWP
+0029               ***************************************************************
+0030               * Define registers
+0031               ********|*****|*********************|**************************
+0032      0000     r0      equ   0
+0033      0001     r1      equ   1
+0034      0002     r2      equ   2
+0035      0003     r3      equ   3
+0036      0004     r4      equ   4
+0037      0005     r5      equ   5
+0038      0006     r6      equ   6
+0039      0007     r7      equ   7
+0040      0008     r8      equ   8
+0041      0009     r9      equ   9
+0042      000A     r10     equ   10
+0043      000B     r11     equ   11
+0044      000C     r12     equ   12
+0045      000D     r13     equ   13
+0046      000E     r14     equ   14
+0047      000F     r15     equ   15
+0048               ***************************************************************
+0049               * Define register equates
+0050               ********|*****|*********************|**************************
+0051      0002     config  equ   r2                    ; Config register
+0052      0003     xconfig equ   r3                    ; Extended config register
+0053      0004     tmp0    equ   r4                    ; Temp register 0
+0054      0005     tmp1    equ   r5                    ; Temp register 1
+0055      0006     tmp2    equ   r6                    ; Temp register 2
+0056      0007     tmp3    equ   r7                    ; Temp register 3
+0057      0008     tmp4    equ   r8                    ; Temp register 4
+0058      0009     stack   equ   r9                    ; Stack pointer
+0059      000E     vdpr01  equ   r14                   ; Copy of VDP#0 and VDP#1 bytes
+0060      000F     vdprw   equ   r15                   ; Contains VDP read/write address
+0061               ***************************************************************
+0062               * Define MSB/LSB equates for registers
+0063               ********|*****|*********************|**************************
+0064      8300     r0hb    equ   ws1                   ; HI byte R0
+0065      8301     r0lb    equ   ws1+1                 ; LO byte R0
+0066      8302     r1hb    equ   ws1+2                 ; HI byte R1
+0067      8303     r1lb    equ   ws1+3                 ; LO byte R1
+0068      8304     r2hb    equ   ws1+4                 ; HI byte R2
+0069      8305     r2lb    equ   ws1+5                 ; LO byte R2
+0070      8306     r3hb    equ   ws1+6                 ; HI byte R3
+0071      8307     r3lb    equ   ws1+7                 ; LO byte R3
+0072      8308     r4hb    equ   ws1+8                 ; HI byte R4
+0073      8309     r4lb    equ   ws1+9                 ; LO byte R4
+0074      830A     r5hb    equ   ws1+10                ; HI byte R5
+0075      830B     r5lb    equ   ws1+11                ; LO byte R5
+0076      830C     r6hb    equ   ws1+12                ; HI byte R6
+0077      830D     r6lb    equ   ws1+13                ; LO byte R6
+0078      830E     r7hb    equ   ws1+14                ; HI byte R7
+0079      830F     r7lb    equ   ws1+15                ; LO byte R7
+0080      8310     r8hb    equ   ws1+16                ; HI byte R8
+0081      8311     r8lb    equ   ws1+17                ; LO byte R8
+0082      8312     r9hb    equ   ws1+18                ; HI byte R9
+0083      8313     r9lb    equ   ws1+19                ; LO byte R9
+0084      8314     r10hb   equ   ws1+20                ; HI byte R10
+0085      8315     r10lb   equ   ws1+21                ; LO byte R10
+0086      8316     r11hb   equ   ws1+22                ; HI byte R11
+0087      8317     r11lb   equ   ws1+23                ; LO byte R11
+0088      8318     r12hb   equ   ws1+24                ; HI byte R12
+0089      8319     r12lb   equ   ws1+25                ; LO byte R12
+0090      831A     r13hb   equ   ws1+26                ; HI byte R13
+0091      831B     r13lb   equ   ws1+27                ; LO byte R13
+0092      831C     r14hb   equ   ws1+28                ; HI byte R14
+0093      831D     r14lb   equ   ws1+29                ; LO byte R14
+0094      831E     r15hb   equ   ws1+30                ; HI byte R15
+0095      831F     r15lb   equ   ws1+31                ; LO byte R15
+0096               ********|*****|*********************|**************************
+0097      8308     tmp0hb  equ   ws1+8                 ; HI byte R4
+0098      8309     tmp0lb  equ   ws1+9                 ; LO byte R4
+0099      830A     tmp1hb  equ   ws1+10                ; HI byte R5
+0100      830B     tmp1lb  equ   ws1+11                ; LO byte R5
+0101      830C     tmp2hb  equ   ws1+12                ; HI byte R6
+0102      830D     tmp2lb  equ   ws1+13                ; LO byte R6
+0103      830E     tmp3hb  equ   ws1+14                ; HI byte R7
+0104      830F     tmp3lb  equ   ws1+15                ; LO byte R7
+0105      8310     tmp4hb  equ   ws1+16                ; HI byte R8
+0106      8311     tmp4lb  equ   ws1+17                ; LO byte R8
+0107               ********|*****|*********************|**************************
+0108      8314     btihi   equ   ws1+20                ; Highest slot in use (HI byte R10)
+0109      831A     bvdpst  equ   ws1+26                ; Copy of VDP status register (HI byte R13)
+0110      831C     vdpr0   equ   ws1+28                ; High byte of R14. Is VDP#0 byte
+0111      831D     vdpr1   equ   ws1+29                ; Low byte  of R14. Is VDP#1 byte
+0112               ***************************************************************
 **** **** ****     > runlib.asm
 0078                       copy  "equ_portaddr.asm"         ; Equates runlib hw port addresses
 **** **** ****     > equ_portaddr.asm
@@ -1090,7 +1094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 623C 1742             byte  23
-0260 623D ....             text  'Build-ID  200607-217138'
+0260 623D ....             text  'Build-ID  200607-226709'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4795,7 +4799,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E9C 0040 
 0366 6E9E 0460  28         b     @main                 ; Give control to main program
      6EA0 6050 
-**** **** ****     > stevie_b0.asm.217138
+**** **** ****     > stevie_b0.asm.226709
 0051               
 0055 6EA2 2E40                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -4957,7 +4961,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0096 6F46 174B             data  >174b                 ; Black      | Cyan       | Cyan
 0097 6F48 1F53             data  >1f53                 ; Black      | White      | White
 0098               
-**** **** ****     > stevie_b0.asm.217138
+**** **** ****     > stevie_b0.asm.226709
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------

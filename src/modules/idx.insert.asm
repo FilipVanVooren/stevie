@@ -23,14 +23,15 @@ _idx.entry.insert.reorg:
         ; Reorganize index entries 
         ;------------------------------------------------------
         inct  tmp2                  ; Adjust one time
-!       mov   @idx.top+0(tmp0),@idx.top+2(tmp0)
+
+!       mov   @idx.top(tmp0),@idx.top+2(tmp0)
                                     ; Move index entry
 
         dect  tmp0                  ; Previous index entry
         dec   tmp2                  ; tmp2--
         jne   -!                    ; Loop unless completed
 
-        clr   @idx.top+4(tmp0)      ; Clear new index entry
+        clr   @idx.top(tmp0)        ; Clear new index entry
         b     *r11                  ; Return to caller
 
 
@@ -72,7 +73,6 @@ idx.entry.insert:
                                     ; / o  outparm1 = Slot offset in SAMS page
 
         mov   @outparm1,tmp0        ; Index offset
-        mov   @outparm1,tmp0        ; Index offset
         ;------------------------------------------------------
         ; Prepare for index reorg
         ;------------------------------------------------------
@@ -87,7 +87,7 @@ idx.entry.insert.reorg:
         c     @idx.sams.page,@idx.sams.hipage
         jeq   idx.entry.insert.reorg.simple
                                     ; If only one SAMS index page or at last
-                                    ; SAMS index page then do simple reorg        
+                                    ; SAMS index page, then do simple reorg.        
         ;------------------------------------------------------
         ; Complex index reorganization (multiple SAMS pages)
         ;------------------------------------------------------
