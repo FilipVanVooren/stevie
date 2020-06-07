@@ -36,7 +36,7 @@
 *
 * Mem range   Bytes    BANK   Purpose
 * =========   =====    ====   ==================================
-* a000-a0ff     256           stevie Editor shared structure
+* a000-a0ff     256           Stevie Editor shared structure
 * a100-a1ff     256           Framebuffer structure
 * a200-a2ff     256           Editor buffer structure
 * a300-a3ff     256           Command buffer structure   

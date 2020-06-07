@@ -28,6 +28,9 @@ mem.sams.layout:
 
         bl    @sams.layout.copy
               data tv.sams.2000     ; Get SAMS windows
+
+        mov   @tv.sams.c000,@edb.sams.page
+                                    ; Track editor buffer SAMS page
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

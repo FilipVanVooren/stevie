@@ -58,7 +58,7 @@ idx.entry.delete:
         ;------------------------------------------------------      
         mov   @parm1,tmp0           ; Line number in editor buffer
 
-        bl    @idx._samspage.get    ; Get SAMS page for index
+        bl    @_idx.samspage.get    ; Get SAMS page for index
                                     ; \ i  tmp0     = Line number
                                     ; / o  outparm1 = Slot offset in SAMS page
         

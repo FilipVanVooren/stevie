@@ -58,7 +58,7 @@ patterns.box:
 
 
 ***************************************************************
-* SAMS page layout table for stevie (16 words)
+* SAMS page layout table for Stevie (16 words)
 *--------------------------------------------------------------
 mem.sams.layout.data:
         data  >2000,>0002           ; >2000-2fff, SAMS page >02

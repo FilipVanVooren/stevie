@@ -17,12 +17,12 @@
         copy  "equates.asm"         ; Equates TiVi configuration
         copy  "kickstart.asm"       ; Cartridge header
 ***************************************************************
-* Copy runtime library to destination >2000 - >3fff
+* Copy runtime library to destination >2000 - >2fff
 ********|*****|*********************|**************************
 kickstart.init:
         li    r0,reloc+2            ; Start of code to relocate
         li    r1,>2000
-        li    r2,512                ; Copy 8K (512 * 4 words)
+        li    r2,512                ; Copy 4K (256 * 4 words)
 kickstart.loop:        
         mov   *r0+,*r1+
         mov   *r0+,*r1+        
