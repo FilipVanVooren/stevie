@@ -188,7 +188,10 @@ edb.line.pack.copyline.block:
         ;------------------------------------------------------
         ; 5: Align pointer to multiple of 16 memory address
         ;------------------------------------------------------ 
-!       mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+!       a     @rambuf+4,@edb.next_free.ptr
+                                       ; Add length of line
+
+        mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
@@ -284,8 +287,9 @@ edb.line.unpack:
         ;------------------------------------------------------
         ; Sanity check on line length
         ;------------------------------------------------------        
-        ci    tmp1,80               ; Sanity check on line length, crash
-        jle   edb.line.unpack.clear ; if length > 80.        
+        ci    tmp1,80               ; \ Continue if length <= 80
+        jle   edb.line.unpack.clear ; / 
+
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
