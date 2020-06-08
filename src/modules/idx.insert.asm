@@ -21,19 +21,22 @@
 _idx.entry.insert.reorg:
         ;------------------------------------------------------
         ; Reorganize index entries 
+        ;------------------------------------------------------        
+        a     @idx.top,tmp0         ; Add index base to offset
+        mov   tmp0,tmp1             ; a = current index slot
+        inct  tmp1                  ; b = next index slot
+        clr   tmp3                  ; c = temporary register
+        clr   tmp4                  ; d = temporary register
         ;------------------------------------------------------
-        inct  tmp2                  ; Adjust one time
-
-!       mov   @idx.top(tmp0),@idx.top+2(tmp0)
-                                    ; Move index entry
-
-        dect  tmp0                  ; Previous index entry
+        ; Loop over index entries (lookahead + 1)
+        ;------------------------------------------------------        
+!       mov   tmp4,tmp3             ; d -> c  (from previous iteration)
+        mov   *tmp1,tmp4            ; b -> d  (for next iteration)
+        mov   *tmp0,*tmp1+          ; a -> b
+        mov   tmp3,*tmp0+           ; c -> a  
         dec   tmp2                  ; tmp2--
         jne   -!                    ; Loop unless completed
-
-        clr   @idx.top(tmp0)        ; Clear new index entry
         b     *r11                  ; Return to caller
-
 
 
 
@@ -63,10 +66,14 @@ idx.entry.insert:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
         ; Get index slot
         ;------------------------------------------------------      
-        mov   @parm1,tmp0           ; Line number in editor buffer
+        mov   @parm1,tmp0           ; Line number to insert at
 
         bl    @_idx.samspage.get    ; Get SAMS page for index
                                     ; \ i  tmp0     = Line number
@@ -111,6 +118,8 @@ idx.entry.insert.reorg.simple:
         ; Exit
         ;------------------------------------------------------      
 idx.entry.insert.exit:
+        mov   *stack+,tmp4          ; Pop tmp4
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0                
