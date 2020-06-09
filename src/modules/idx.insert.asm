@@ -38,7 +38,7 @@ _idx.entry.insert.reorg.crash:
 !       ai    tmp0,idx.top          ; Add index base to offset
         mov   tmp0,tmp1             ; a = current slot
         inct  tmp1                  ; b = current slot + 2
-        inct  tmp2                  ; One time adjustment for current line
+        inc   tmp2                  ; One time adjustment for current line
         ;------------------------------------------------------
         ; Loop backwards from end of index up to insert point
         ;------------------------------------------------------        
