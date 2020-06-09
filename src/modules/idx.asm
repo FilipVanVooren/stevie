@@ -45,7 +45,7 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0
-***************************************************************
+********|*****|*********************|**************************
 idx.init:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -95,7 +95,7 @@ idx.init.exit:
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.sams.mapcolumn.on:
         dect  stack
         mov   r11,*stack            ; Push return address
@@ -154,7 +154,7 @@ _idx.sams.mapcolumn.on.exit:
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.sams.mapcolumn.off:
         dect  stack
         mov   r11,*stack            ; Push return address
@@ -215,7 +215,7 @@ _idx.sams.mapcolumn.off.exit:
 *  Remarks
 *  Private, only to be called from inside idx module.
 *  Activates SAMS page containing required index slot entry.
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.samspage.get:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -248,7 +248,7 @@ _idx.samspage.get:
         ; Activate SAMS index page
         ;------------------------------------------------------
         mov   tmp1,@idx.sams.page   ; Set current SAMS page
-        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in stevie
+        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in Stevie
 
         mov   tmp1,tmp0             ; Destination SAMS page
         li    tmp1,>b000            ; Memory window for index page
@@ -290,7 +290,7 @@ _idx.samspage.get.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.entry.update:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -368,7 +368,7 @@ idx.entry.update.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.pointer.get:
         dect  stack
         mov   r11,*stack            ; Save return address

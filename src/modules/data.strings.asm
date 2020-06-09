@@ -40,8 +40,8 @@ fdname5            #string 'TIPI.TIVI.C99MAN2'
 fdname6            #string 'TIPI.TIVI.C99MAN3'
 fdname7            #string 'TIPI.TIVI.C99SPECS'
 fdname8            #string 'TIPI.TIVI.RANDOM#C'
-fdname9            #string 'TIPI.TIVI.INVADERS'
-fdname0            #string 'TIPI.TIVI.NR80'
+fdname9            #string 'DSK1.INVADERS'
+fdname0            #string 'DSK1.NR80'
 fdname.clock       #string 'PI.CLOCK'
 
 

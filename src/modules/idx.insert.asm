@@ -17,25 +17,48 @@
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from idx_entry_delete
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.entry.insert.reorg:
+        ;------------------------------------------------------
+        ; sanity check
+        ;------------------------------------------------------ 
+        ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
+                                    ; (max 5 SAMS pages with 2048 index entries)
+
+        jle   !                     ; Continue if ok
+        ;------------------------------------------------------
+        ; Crash and burn
+        ;------------------------------------------------------        
+_idx.entry.insert.reorg.crash:        
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
         ; Reorganize index entries 
         ;------------------------------------------------------        
-        a     @idx.top,tmp0         ; Add index base to offset
-        mov   tmp0,tmp1             ; a = current index slot
-        inct  tmp1                  ; b = next index slot
-        clr   tmp3                  ; c = temporary register
-        clr   tmp4                  ; d = temporary register
+!       ai    tmp0,idx.top          ; Add index base to offset
+        mov   tmp0,tmp1             ; a = current slot
+        inct  tmp1                  ; b = current slot + 2
+        inct  tmp2                  ; One time adjustment for current line
         ;------------------------------------------------------
-        ; Loop over index entries (lookahead + 1)
+        ; Loop backwards from end of index up to insert point
         ;------------------------------------------------------        
-!       mov   tmp4,tmp3             ; d -> c  (from previous iteration)
-        mov   *tmp1,tmp4            ; b -> d  (for next iteration)
-        mov   *tmp0,*tmp1+          ; a -> b
-        mov   tmp3,*tmp0+           ; c -> a  
-        dec   tmp2                  ; tmp2--
-        jne   -!                    ; Loop unless completed
+_idx.entry.insert.reorg.loop:
+
+        ; ci  tmp0,>b000                      ; \ Assert during debugging only
+        ; jlt _idx.entry.insert.reorg.crash   ; / Has performance impact!
+
+        mov   *tmp0,*tmp1           ; Copy a -> b
+        dect  tmp0                  ; Move pointer up
+        dect  tmp1                  ; Move pointer up
+        dec   tmp2                  ; Next index entry
+        jgt   _idx.entry.insert.reorg.loop
+                                    ; Repeat until done
+        ;------------------------------------------------------
+        ; Clear index entry at insert point
+        ;------------------------------------------------------         
+        inct  tmp0                  ; \ Clear index entry for line
+        clr   *tmp0                 ; / following insert point
+
         b     *r11                  ; Return to caller
 
 
@@ -56,7 +79,7 @@ _idx.entry.insert.reorg:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.entry.insert:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -68,18 +91,6 @@ idx.entry.insert:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
-        ;------------------------------------------------------
-        ; Get index slot
-        ;------------------------------------------------------      
-        mov   @parm1,tmp0           ; Line number to insert at
-
-        bl    @_idx.samspage.get    ; Get SAMS page for index
-                                    ; \ i  tmp0     = Line number
-                                    ; / o  outparm1 = Slot offset in SAMS page
-
-        mov   @outparm1,tmp0        ; Index offset
         ;------------------------------------------------------
         ; Prepare for index reorg
         ;------------------------------------------------------
@@ -91,19 +102,26 @@ idx.entry.insert:
         ; Reorganize index entries 
         ;------------------------------------------------------
 idx.entry.insert.reorg:
-        c     @idx.sams.page,@idx.sams.hipage
-        jeq   idx.entry.insert.reorg.simple
-                                    ; If only one SAMS index page or at last
-                                    ; SAMS index page, then do simple reorg.        
+        mov   @parm2,tmp3
+        ci    tmp3,2048
+        jle   idx.entry.insert.reorg.simple
+                                    ; Do simple reorg only if single
+                                    ; SAMS index page, otherwise complex reorg.
         ;------------------------------------------------------
         ; Complex index reorganization (multiple SAMS pages)
         ;------------------------------------------------------
 idx.entry.insert.reorg.complex:        
         bl    @_idx.sams.mapcolumn.on
-                                    ; Index in continious memory region                
+                                    ; Index in continious memory region    
+                                    ; b000 - ffff (5 SAMS pages)            
+
+        mov   @parm2,tmp0           ; Last line number in editor buffer
+        sla   tmp0,1                ; tmp0 * 2
 
         bl    @_idx.entry.insert.reorg
                                     ; Reorganize index
+                                    ; \ i  tmp0 = Last line in index
+                                    ; / i  tmp2 = Num. of index entries to move
 
         bl    @_idx.sams.mapcolumn.off 
                                     ; Restore memory window layout
@@ -113,12 +131,19 @@ idx.entry.insert.reorg.complex:
         ; Simple index reorganization
         ;------------------------------------------------------
 idx.entry.insert.reorg.simple:
+        mov   @parm2,tmp0           ; Last line number in editor buffer
+
+        bl    @_idx.samspage.get    ; Get SAMS page for index
+                                    ; \ i  tmp0     = Line number
+                                    ; / o  outparm1 = Slot offset in SAMS page
+
+        mov   @outparm1,tmp0        ; Index offset
+
         bl    @_idx.entry.insert.reorg
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 idx.entry.insert.exit:
-        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
