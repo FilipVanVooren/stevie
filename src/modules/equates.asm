@@ -134,9 +134,10 @@ tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
 tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
 tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
-tv.curshape       equ  tv.top + 20     ; Cursor shape and color
-tv.pane.focus     equ  tv.top + 22     ; Identify pane that has focus
-tv.end            equ  tv.top + 22     ; End of structure
+tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
+tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
+tv.pane.focus     equ  tv.top + 24     ; Identify pane that has focus
+tv.end            equ  tv.top + 24     ; End of structure
 pane.focus.fb     equ  0               ; Editor pane has focus
 pane.focus.cmdb   equ  1               ; Command buffer pane has focus
 *--------------------------------------------------------------

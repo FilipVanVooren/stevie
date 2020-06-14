@@ -23,8 +23,8 @@ txt.cmdb.hint      #string 'Hint: Type "help" for command list.'
 txt.cmdb.catalog   #string 'File catalog'
 
 
-txt.filetype.dv80  #string 'DIS/VAR80 '
-txt.filetype.none  #string '          '
+txt.filetype.dv80  #string 'DV80'
+txt.filetype.none  #string '    '
 
 txt.stevie         byte    12
                    byte    10

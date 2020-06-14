@@ -24,7 +24,7 @@ pane.action.colorscheme.cycle:
         mov   tmp0,*stack           ; Push tmp0
 
         mov   @tv.colorscheme,tmp0  ; Load color scheme index
-        ci    tmp0,tv.colorscheme.entries
+        ci    tmp0,tv.colorscheme.entries - 1
                                     ; Last entry reached?
         jlt   !
         clr   tmp0
@@ -36,6 +36,12 @@ pane.action.colorscheme.cycle:
 pane.action.colorscheme.switch:
         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
         bl    @pane.action.colorscheme.load
+        ;-------------------------------------------------------
+        ; Delay
+        ;-------------------------------------------------------        
+        li    tmp0,12000        
+!       dec   tmp0
+        jne   -!
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -74,23 +80,19 @@ pane.action.colorscheme.load:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4
         bl    @scroff               ; Turn screen off        
         ;-------------------------------------------------------
         ; Get foreground/background color
         ;-------------------------------------------------------
         mov   @tv.colorscheme,tmp0  ; Get color scheme index 
-        sla   tmp0,1                ; Offset into color scheme data table
+        sla   tmp0,2                ; Offset into color scheme data table
         ai    tmp0,tv.colorscheme.table
                                     ; Add base for color scheme data table
-        mov   *tmp0,tmp3            ; Get fg/bg color
-        ;-------------------------------------------------------
-        ; Dump cursor FG color to sprite table (SAT)
-        ;-------------------------------------------------------
-        mov   tmp3,tmp1             ; Get work copy fg/bg color        
-        srl   tmp1,4                ; Move nibble to right
-        andi  tmp1,>0f00
-        movb  tmp1,@ramsat+3        ; Update FG color in sprite table (SAT)
-        movb  tmp1,@tv.curshape+1   ; Save cursor color
+        mov   *tmp0+,tmp3           ; Get fg/bg color
+        mov   *tmp0,tmp4            ; Get cursor colors
+        mov   tmp4,@tv.curcolor     ; Save cursor colors
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -122,10 +124,17 @@ pane.action.colorscheme.load:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
+        ; Dump cursor FG color to sprite table (SAT)
+        ;-------------------------------------------------------
+        andi  tmp4,>0f00
+        movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
+        movb  tmp4,@tv.curshape+1   ; Save cursor color                                    
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 pane.action.colorscheme.load.exit:
         bl    @scron                ; Turn screen on
+        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

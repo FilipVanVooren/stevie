@@ -84,15 +84,32 @@ mem.sams.layout.data:
 ***************************************************************
 * Stevie color schemes table   
 *--------------------------------------------------------------
-* MSB  high-nibble    Foreground color frame buffer and cursor sprite
-* MSB  low-nibble     Background color frame buffer and background pane
-* LSB  high-nibble    Foreground color bottom line pane
-* LSB  low-nibble     Background color bottom line pane
+* Word 1
+*    MSB  high-nibble    Foreground color frame buffer and cursor sprite
+*    MSB  low-nibble     Background color frame buffer and background pane
+*    LSB  high-nibble    Foreground color bottom line pane
+*    LSB  low-nibble     Background color bottom line pane
+*
+* Word 2
+*    MSB  high-nibble    0
+*    MSB  low-nibble     Cursor foreground color 1
+*    LSB  high-nibble    0
+*    LSB  low-nibble     Cursor foreground color 2
 *--------------------------------------------------------------
-tv.colorscheme.entries   equ 4      ; Entries in table
-tv.colorscheme.table:               ; Foreground | Background | Bg. Pane
-        data  >f41c                 ; White      | Dark blue  | Dark blue
-        data  >f13a                 ; White      | Black      | Black
-        data  >174b                 ; Black      | Cyan       | Cyan
-        data  >1f53                 ; Black      | White      | White
-                        
+tv.colorscheme.entries   equ 9      ; Entries in table
+
+tv.colorscheme.table:   
+                   ;----------------------+-----------------------|-------------
+                   ; Framebuffer          | Bottom line pane      | Cursor color
+                   ; Fg. / Bg.            | Fg. / Bg.             |  1 / 2
+                   ;-----------------------------+----------------|-------------                   
+ data  >f41f,>0101 ; White + Dark blue    | Black + White         | Black+Black
+ data  >f41c,>0f0f ; White + Dark blue    | Black + Dark green    | White+White
+ data  >a11a,>0f0f ; Dark yellow + Black  | Black + Dark yellow   | White+White
+ data  >2112,>0f0f ; Medium green + Black | Black + Medium green  | White+White
+ data  >e11e,>0f0f ; Grey + Black         | Black + Grey          | White+White
+ data  >1771,>0606 ; Black + Cyan         | Cyan  + Black         | Red  +Red
+ data  >1f10,>010f ; Black + White        | Black + Transparant   | White+White
+ data  >a1f0,>0f0f ; Dark yellow + Black  | White + Transparant   | White+White
+ data  >21f0,>0f0f ; Medium green + Black | White + Transparant   | White+White
+ 
