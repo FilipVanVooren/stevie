@@ -20,7 +20,7 @@
 ********|*****|*********************|**************************
 _idx.entry.insert.reorg:
         ;------------------------------------------------------
-        ; sanity check
+        ; sanity check 1
         ;------------------------------------------------------ 
         ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
                                     ; (max 5 SAMS pages with 2048 index entries)
@@ -40,13 +40,19 @@ _idx.entry.insert.reorg.crash:
         inct  tmp1                  ; b = current slot + 2
         inc   tmp2                  ; One time adjustment for current line
         ;------------------------------------------------------
+        ; Sanity check 2
+        ;------------------------------------------------------
+        mov   tmp2,tmp3             ; Number of slots to reorganize
+        sla   tmp3,1                ; adjust to slot size
+        neg   tmp3                  ; tmp3 = -tmp3
+        a     tmp0,tmp3             ; tmp3 = tmp3 + tmp0
+        ci    tmp3,idx.top - 2      ; Address before top of index ?
+        jlt   _idx.entry.insert.reorg.crash
+                                    ; If yes, crash
+        ;------------------------------------------------------
         ; Loop backwards from end of index up to insert point
         ;------------------------------------------------------        
 _idx.entry.insert.reorg.loop:
-
-        ; ci  tmp0,>b000                      ; \ Assert during debugging only
-        ; jlt _idx.entry.insert.reorg.crash   ; / Has performance impact!
-
         mov   *tmp0,*tmp1           ; Copy a -> b
         dect  tmp0                  ; Move pointer up
         dect  tmp1                  ; Move pointer up

@@ -55,7 +55,7 @@ main:
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-
+   
         copy  "pane.utils.colorscheme.asm"
                                     ; Colorscheme handling in panges 
         copy  "pane.utils.tipiclock.asm"
