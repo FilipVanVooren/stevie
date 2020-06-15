@@ -172,7 +172,7 @@ edkey.action.home:
         mov   tmp0,@wyx             ; VDP cursor column=0
         clr   @fb.column
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 *---------------------------------------------------------------
 * Cursor end of line
@@ -182,7 +182,7 @@ edkey.action.end:
         mov   tmp0,@fb.column
         bl    @xsetx                ; Set VDP cursor column position
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @hook.keyscan.bounce              ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 

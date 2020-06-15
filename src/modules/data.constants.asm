@@ -41,7 +41,7 @@ cursors:
         data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
 
 patterns:
-        data  >0000,>ff00,>00ff,>0080 ; 01. Double line top + ruler
+        data  >0000,>0000,>00ff,>0000 ; 01. Single line
         data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom                        
 patterns.box:        
         data  >0000,>0000,>ff00,>ff00 ; 03. Double line bottom

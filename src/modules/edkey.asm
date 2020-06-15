@@ -9,7 +9,9 @@ edkey.key.process:
         mov   @waux1,tmp1           ; Get key value
         andi  tmp1,>ff00            ; Get rid of LSB
         seto  tmp3                  ; EOL marker
-
+        ;-------------------------------------------------------
+        ; Process key depending on pane with focus
+        ;-------------------------------------------------------
         mov   @tv.pane.focus,tmp2
         ci    tmp2,pane.focus.fb    ; Framebuffer has focus ?  
         jeq   edkey.key.process.loadmap.editor
@@ -24,13 +26,13 @@ edkey.key.process:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / File error occured. Halt system.
         ;-------------------------------------------------------
-        ; Use editor keyboard map
+        ; Load Editor keyboard map
         ;-------------------------------------------------------
 edkey.key.process.loadmap.editor:        
         li    tmp2,keymap_actions.editor 
         jmp   edkey.key.check_next
         ;-------------------------------------------------------
-        ; Use CMDB keyboard map
+        ; Load CMDB keyboard map
         ;-------------------------------------------------------
 edkey.key.process.loadmap.cmdb:                
         li    tmp2,keymap_actions.cmdb
@@ -59,22 +61,20 @@ edkey.key.process.action:
         mov   *tmp2,tmp2            ; Get action address
         b     *tmp2                 ; Process key action
         ;-------------------------------------------------------
-        ; Add character to buffer
+        ; Add character to appropriate buffer
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
-        mov  @tv.pane.focus,tmp0    ; Framebuffer has focus?
-        jne  !
-        ;-------------------------------------------------------
-        ; Frame buffer
-        ;-------------------------------------------------------
-        b    @edkey.action.char     ; Add character to buffer        
+        mov  @tv.pane.focus,tmp0    ; Frame buffer has focus?
+        jne  !                      ; No, skip frame buffer 
+        b    @edkey.action.char     ; Add character to frame buffer        
         ;-------------------------------------------------------
         ; CMDB buffer
         ;-------------------------------------------------------
-!       ci   tmp1,pane.focus.cmdb   ; CMDB has focus ?
+!       ci   tmp0,pane.focus.cmdb   ; CMDB has focus ?
         jne  edkey.key.process.crash
+                                    ; No, crash
         b    @edkey.cmdb.action.char
-                                    ; Add character to buffer        
+                                    ; Add character to CMDB buffer        
         ;-------------------------------------------------------
         ; Crash
         ;-------------------------------------------------------

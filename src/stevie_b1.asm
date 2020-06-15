@@ -40,7 +40,9 @@ main:
         copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
         copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
         copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
+        copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Actions for miscelanneous keys        
         copy  "stevie.asm"          ; Main editor configuration
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer

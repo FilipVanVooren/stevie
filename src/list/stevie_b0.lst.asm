@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.225554
+**** **** ****     > stevie_b0.asm.292068
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200614-225554
+0009               * File: stevie_b0.asm               ; Version 200615-292068
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200614-225554
+0009               * File: equates.asm                 ; Version 200615-292068
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -268,7 +268,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0248               *--------------------------------------------------------------
 0249               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0250               *--------------------------------------------------------------
-**** **** ****     > stevie_b0.asm.225554
+**** **** ****     > stevie_b0.asm.292068
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -305,7 +305,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200614-225554'
+0031 6015 ....             text  'STEVIE 200615-292068'
 0032                       even
 0033               
 0041               
@@ -315,7 +315,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.225554
+**** **** ****     > stevie_b0.asm.292068
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >2fff
 0021               ********|*****|*********************|**************************
@@ -1095,7 +1095,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 623C 1742             byte  23
-0260 623D ....             text  'Build-ID  200614-225554'
+0260 623D ....             text  'Build-ID  200615-292068'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4800,7 +4800,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6E9C 0040 
 0366 6E9E 0460  28         b     @main                 ; Give control to main program
      6EA0 6050 
-**** **** ****     > stevie_b0.asm.225554
+**** **** ****     > stevie_b0.asm.292068
 0051               
 0055 6EA2 2E40                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -4866,10 +4866,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6EC8 1C00 
 0042               
 0043               patterns:
-0044 6ECA 0000             data  >0000,>ff00,>00ff,>0080 ; 01. Double line top + ruler
-     6ECC FF00 
+0044 6ECA 0000             data  >0000,>0000,>00ff,>0000 ; 01. Single line
+     6ECC 0000 
      6ECE 00FF 
-     6ED0 0080 
+     6ED0 0000 
 0045 6ED2 0080             data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom
      6ED4 0000 
      6ED6 FF00 
@@ -4988,7 +4988,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0114 6F62 21F0      data  >21f0,>0f0f ; Medium green + Black | White + Transparant   | White+White
      6F64 0F0F 
 0115               
-**** **** ****     > stevie_b0.asm.225554
+**** **** ****     > stevie_b0.asm.292068
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------

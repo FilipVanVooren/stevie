@@ -37,7 +37,7 @@ cmdb.init:
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
         mov   tmp0,@cmdb.default    ; Set default command buffer size
 
-        li    tmp0,>1b02            ; Y=27, X=2
+        li    tmp0,>1b01            ; Y=27, X=1
         mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
 
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
@@ -91,32 +91,33 @@ cmdb.refresh:
         ; Dump Command buffer content
         ;------------------------------------------------------
         mov   @wyx,@cmdb.yxsave     ; Save YX position
+        mov   @cmdb.yxtop,@wyx      ; Screen position top of CMDB pane
 
-        mov   @cmdb.yxtop,@wyx
         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
+                                    ; \ i  @wyx = Cursor position
+                                    ; / o  tmp0 = VDP target address
 
         mov   @cmdb.top.ptr,tmp1    ; Top of command buffer        
-        li    tmp2,9*80
+        li    tmp2,5*80
 
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
                                     ; | i  tmp0 = VDP target address
                                     ; | i  tmp1 = RAM source address
                                     ; / i  tmp2 = Number of bytes to copy       
-
         ;------------------------------------------------------
         ; Show command buffer prompt
         ;------------------------------------------------------
         bl    @putat
-              byte 27,1
+              byte 27,0
               data txt.cmdb.prompt
 
         mov   @cmdb.yxsave,@fb.yxsave 
         mov   @cmdb.yxsave,@wyx        
                                     ; Restore YX position
-cmdb.refresh.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+cmdb.refresh.exit:        
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

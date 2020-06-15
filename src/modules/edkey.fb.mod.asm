@@ -330,7 +330,7 @@ edkey.action.ins_onoff.exit:
 
 
 *---------------------------------------------------------------
-* Process character
+* Process character (frame buffer)
 *---------------------------------------------------------------
 edkey.action.char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
