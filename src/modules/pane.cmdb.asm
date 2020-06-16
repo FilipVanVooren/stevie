@@ -21,16 +21,20 @@ pane.cmdb.draw:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Draw command buffer
+        ; Command buffer header line
         ;------------------------------------------------------
-        bl    @putat
-              byte 18,0
-              data txt.cmdb.title
+        mov   @cmdb.yxtop,@wyx      ; Cursor at top of 
+        bl    @putstr
+              data txt.cmdb.title   ; Display title
 
-        bl    @hchar
-              byte 18,15,1,65        ; Horizontal top line
-              data EOL              
+        bl    @setx
+              data 14               ; Position cursor
 
+        bl    @putstr               ; Display horizontal line
+              data txt.cmdb.hbar
+        ;------------------------------------------------------
+        ; Command buffer content
+        ;------------------------------------------------------
         bl    @cmdb.refresh         ; Refresh command buffer content
         ;------------------------------------------------------
         ; Exit
@@ -72,16 +76,19 @@ pane.cmdb.show:
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
         
-        inct  tmp0                  ; Line below cmdb top border line
         sla   tmp0,8                ; LSB to MSB (Y), X=0
-        inc   tmp0                  ; X=1
-        mov   tmp0,@cmdb.yxtop      ; Set command buffer cursor
+        mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
 
         seto  @cmdb.visible         ; Show pane
         seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)
 
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
+
+        mov   @cmdb.yxprompt,tmp0   ; Put CMDB cursor at beginning of line
+        inc   tmp0                  ;
+        mov   tmp0,@cmdb.cursor     ;
+        
 pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit

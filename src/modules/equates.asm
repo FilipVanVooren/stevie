@@ -68,6 +68,7 @@
 *--------------------------------------------------------------
 skip_grom_cpu_copy        equ  1       ; Skip GROM to CPU copy functions
 skip_grom_vram_copy       equ  1       ; Skip GROM to VDP vram copy functions
+skip_vdp_vchar            equ  1       ; Skip vchar, xvchar
 skip_vdp_boxes            equ  1       ; Skip filbox, putbox
 skip_vdp_bitmap           equ  1       ; Skip bitmap functions
 skip_vdp_viewport         equ  1       ; Skip viewport functions
@@ -182,19 +183,21 @@ edb.end           equ  edb.struct + 20 ; End of structure
 * Command buffer structure          @>a300-a3ff     (256 bytes)
 *--------------------------------------------------------------
 cmdb.struct       equ  >a300           ; Command Buffer structure
-cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer
+cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
 cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-cmdb.scrrows      equ  cmdb.struct + 4 ; Current size of CMDB pane (in rows)
-cmdb.default      equ  cmdb.struct + 6 ; Default size of CMDB pane (in rows)
-cmdb.cursor       equ  cmdb.struct + 8 ; Screen YX of cursor in CMDB pane
-cmdb.yxsave       equ  cmdb.struct + 10; Copy of WYX
-cmdb.yxtop        equ  cmdb.struct + 12; YX position of first row in CMDB pane
-cmdb.column       equ  cmdb.struct + 14; Current column in CMDB
-cmdb.length       equ  cmdb.struct + 16; Length of current row in CMDB 
-cmdb.lines        equ  cmdb.struct + 18; Total lines in CMDB
-cmdb.dirty        equ  cmdb.struct + 20; Command buffer dirty (Text changed!)
-cmdb.fb.yxsave    equ  cmdb.struct + 22; Copy of FB WYX when entering cmdb pane
-cmdb.end          equ  cmdb.struct + 24; End of structure
+cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
+cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
+cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
+cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
+cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
+cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
+cmdb.column       equ  cmdb.struct + 18; Current column in CMDB
+cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
+cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
+cmdb.command      equ  cmdb.struct + 26; Current comand (80 bytes max.)
+cmdb.end          equ  cmdb.struct +106; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------

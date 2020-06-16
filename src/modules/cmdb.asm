@@ -37,8 +37,11 @@ cmdb.init:
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
         mov   tmp0,@cmdb.default    ; Set default command buffer size
 
-        li    tmp0,>1b01            ; Y=27, X=1
+        li    tmp0,>1c00            ; Y=28, X=0
+        mov   tmp0,@cmdb.yxprompt   ; Screen position of prompt in cmdb pane
+        inc   tmp0
         mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
+        
 
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
@@ -91,14 +94,16 @@ cmdb.refresh:
         ; Dump Command buffer content
         ;------------------------------------------------------
         mov   @wyx,@cmdb.yxsave     ; Save YX position
-        mov   @cmdb.yxtop,@wyx      ; Screen position top of CMDB pane
+        mov   @cmdb.yxprompt,@wyx   ; Screen position top of CMDB pane
+
+        inc   @wyx                  ; X +1 for prompt
 
         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP target address
 
-        mov   @cmdb.top.ptr,tmp1    ; Top of command buffer        
-        li    tmp2,5*80
+        li    tmp1,cmdb.command     ; Address of current command
+        li    tmp2,1*79             ; Command length
 
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
                                     ; | i  tmp0 = VDP target address
@@ -107,8 +112,8 @@ cmdb.refresh:
         ;------------------------------------------------------
         ; Show command buffer prompt
         ;------------------------------------------------------
-        bl    @putat
-              byte 27,0
+        mov   @cmdb.yxprompt,@wyx
+        bl    @putstr
               data txt.cmdb.prompt
 
         mov   @cmdb.yxsave,@fb.yxsave 

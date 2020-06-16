@@ -12,7 +12,7 @@ edkey.action.cmdb.left:
         ; Update
         ;-------------------------------------------------------
         dec   @cmdb.column          ; Column-- in command buffer
-        dec   @wyx                  ; Column-- VDP cursor
+        dec   @cmdb.cursor          ; Column-- CMDB cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -29,7 +29,7 @@ edkey.action.cmdb.right:
         ; Update
         ;-------------------------------------------------------
         inc   @cmdb.column          ; Column++ in command buffer
-        inc   @wyx                  ; Column++ VDP cursor
+        inc   @cmdb.cursor          ; Column++ CMDB cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -41,9 +41,12 @@ edkey.action.cmdb.right:
 * Cursor beginning of line
 *---------------------------------------------------------------
 edkey.action.cmdb.home:
-        bl    @setx
-              data 0                 ; VDP cursor column=0
-        clr   @cmdb.column
+        li    tmp0,1
+        mov   tmp0,@cmdb.column      ; First column
+
+        movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
+        mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
+        
         b     @hook.keyscan.bounce   ; Back to editor main
 
 *---------------------------------------------------------------
@@ -52,5 +55,4 @@ edkey.action.cmdb.home:
 edkey.action.cmdb.end:
         mov   @fb.row.length,tmp0
         mov   tmp0,@fb.column
-        bl    @xsetx                 ; Set VDP cursor column position
         b     @hook.keyscan.bounce   ; Back to editor main

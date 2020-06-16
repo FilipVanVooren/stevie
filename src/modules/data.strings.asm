@@ -20,8 +20,16 @@ txt.newfile        #string '[New file]'
 
 txt.cmdb.prompt    #string '>'
 txt.cmdb.hint      #string 'Hint: Type "help" for command list.'
-txt.cmdb.catalog   #string 'File catalog'
 txt.cmdb.title     #string 'Command buffer'
+
+txt.cmdb.hbar      byte    66
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1
+
+                   even
+
 
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
