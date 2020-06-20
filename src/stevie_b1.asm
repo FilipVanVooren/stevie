@@ -35,6 +35,10 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
+
+        ;-----------------------------------------------------------------------
+        ; Keyboard actions
+        ;-----------------------------------------------------------------------
         copy  "edkey.asm"           ; Keyboard actions
         copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
         copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
@@ -43,7 +47,10 @@ main:
         copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
         copy  "edkey.cmdb.misc.asm" ; cmdb pane - Actions for miscelanneous keys        
-        copy  "stevie.asm"          ; Main editor configuration
+        ;-----------------------------------------------------------------------
+        ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
+        ;-----------------------------------------------------------------------
+        copy  "tv.asm"              ; Main editor configuration        
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
         copy  "idx.asm"             ; Index management
@@ -51,20 +58,35 @@ main:
         copy  "idx.insert.asm"      ; Index management - insert slot
         copy  "edb.asm"             ; Editor Buffer
         copy  "cmdb.asm"            ; Command Buffer
+        copy  "errline.asm"         ; Error line
+        ;-----------------------------------------------------------------------
+        ; File handling
+        ;-----------------------------------------------------------------------
         copy  "fh.read.sams.asm"    ; File handler read file
         copy  "fm.load.asm"         ; File manager loadfile
+        ;-----------------------------------------------------------------------
+        ; User hook, background tasks
+        ;-----------------------------------------------------------------------
         copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning        
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-   
+        ;-----------------------------------------------------------------------
+        ; Screen pane utilities
+        ;-----------------------------------------------------------------------         
         copy  "pane.utils.colorscheme.asm"
                                     ; Colorscheme handling in panges 
         copy  "pane.utils.tipiclock.asm"
-                                    ; Colorscheme    
-
-        copy  "pane.cmdb.asm"       ; Command buffer pane
-        copy  "pane.botline.asm"    ; Status line pane
+                                    ; TIPI clock
+        ;-----------------------------------------------------------------------
+        ; Screen panes 
+        ;-----------------------------------------------------------------------   
+        copy  "pane.cmdb.asm"       ; Command buffer
+        copy  "pane.errline.asm"    ; Error line
+        copy  "pane.botline.asm"    ; Status line
+        ;-----------------------------------------------------------------------
+        ; Program data
+        ;----------------------------------------------------------------------- 
         copy  "data.constants.asm"  ; Data segment - Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping

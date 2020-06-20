@@ -89,7 +89,7 @@ task.vdp.panes.clear_screen:
         mov   @wyx,tmp1             ; 
         srl   tmp1,8                ; tmp1 = cursor Y position
         neg   tmp1                  ; tmp1 = -Y position 
-        a     @fb.scrrows.max,tmp1  ; tmp1 = -Y position + fb.scrrows.max 
+        a     @fb.scrrows,tmp1      ; tmp1 = -Y position + fb.scrrows
 
         mpy   tmp0,tmp1             ; tmp2 = tmp0 * tmp1
         ai    tmp2, -5              ; Adjust offset (becaise of *EOF* string)

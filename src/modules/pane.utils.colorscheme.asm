@@ -55,7 +55,7 @@ pane.action.colorscheme.cycle.exit:
 
 
 ***************************************************************
-* pane.action.color.load
+* pane.action.colorscheme.load
 * Load color scheme
 ***************************************************************
 * bl  @pane.action.colorscheme.load
@@ -67,7 +67,7 @@ pane.action.colorscheme.cycle.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3
+* tmp0,tmp1,tmp2,tmp3,tmp4
 ********|*****|*********************|**************************
 pane.action.colorscheme.load:
         dect  stack
@@ -90,14 +90,15 @@ pane.action.colorscheme.load:
         sla   tmp0,2                ; Offset into color scheme data table
         ai    tmp0,tv.colorscheme.table
                                     ; Add base for color scheme data table
-        mov   *tmp0+,tmp3           ; Get fg/bg color
+        mov   *tmp0+,tmp3           ; Get colors  (fb + status line)
+        mov   tmp3,@tv.color        ; Save colors
         mov   *tmp0,tmp4            ; Get cursor colors
         mov   tmp4,@tv.curcolor     ; Save cursor colors
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
         mov   tmp3,tmp1             ; Get work copy
-        srl   tmp1,8                ; MSB to LSB
+        srl   tmp1,8                ; MSB to LSB (frame buffer colors)
         ori   tmp1,>0700
         mov   tmp1,tmp0
         bl    @putvrx               ; Write VDP register
@@ -105,19 +106,30 @@ pane.action.colorscheme.load:
         ; Dump colors for frame buffer pane (TAT)
         ;-------------------------------------------------------
         li    tmp0,>1800            ; VDP start address (frame buffer area)
-        mov   tmp3,tmp1             ; Get work copy fg/bg color
-        srl   tmp1,8                ; MSB to LSB
+        mov   tmp3,tmp1             ; Get work copy of colors
+        srl   tmp1,8                ; MSB to LSB (frame buffer colors)
         li    tmp2,29*80            ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
+        ; Dump colors for error line pane (TAT)
+        ;-------------------------------------------------------
+        mov   @tv.error.visible,tmp0
+        jeq   pane.action.colorscheme.statusline
+                                    ; Skip if error line pane is hidden
+                                    
+        li    tmp1,>00f6            ; White on dark red
+        bl    @pane.action.colorscheme.errline
+                                    ; Load color combination for error line
+        ;-------------------------------------------------------
         ; Dump colors for bottom status line pane (TAT)
         ;-------------------------------------------------------
+pane.action.colorscheme.statusline:        
         li    tmp0,>2110            ; VDP start address (bottom status line)
         mov   tmp3,tmp1             ; Get work copy fg/bg color
-        andi  tmp1,>00ff            ; Only keep LSB
+        andi  tmp1,>00ff            ; Only keep LSB (status line colors)
         li    tmp2,80               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
@@ -141,3 +153,49 @@ pane.action.colorscheme.load.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
+  
+
+
+***************************************************************
+* pane.action.colorscheme.errline
+* Load color scheme for error line
+***************************************************************
+* bl  @pane.action.colorscheme.errline
+*--------------------------------------------------------------
+* INPUT
+* @tmp1 = Foreground / Background color
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2
+********|*****|*********************|**************************
+pane.action.colorscheme.errline:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        ;-------------------------------------------------------
+        ; Load error line colors
+        ;-------------------------------------------------------
+        li    tmp0,>2070            ; VDP start address (bottom status line)
+        li    tmp2,160              ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+pane.action.colorscheme.errline.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
+

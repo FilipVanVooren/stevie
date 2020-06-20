@@ -85,10 +85,7 @@ pane.cmdb.show:
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 
-        mov   @cmdb.yxprompt,tmp0   ; Put CMDB cursor at beginning of line
-        inc   tmp0                  ;
-        mov   tmp0,@cmdb.cursor     ;
-        
+        bl    @cmdb.cmd.clear;      ; Clear current command        
 pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
@@ -124,10 +121,16 @@ pane.cmdb.hide:
         ; Hide command buffer pane
         ;------------------------------------------------------
         mov   @fb.scrrows.max,@fb.scrrows
-                                    ; Resize framebuffer
-
-        mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
-
+        ;------------------------------------------------------
+        ; Adjust frame buffer size if error pane visible
+        ;------------------------------------------------------
+        mov   @tv.error.visible,@tv.error.visible
+        jeq   !  
+        dect  @fb.scrrows           
+        ;------------------------------------------------------
+        ; Hide command buffer pane (rest)
+        ;------------------------------------------------------
+!       mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!

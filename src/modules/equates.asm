@@ -83,6 +83,11 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
+* Stevie specific equates
+*--------------------------------------------------------------
+pane.focus.fb             equ  0       ; Editor pane has focus
+pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+*--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
@@ -122,7 +127,7 @@ cpu.scrpad.tgt    equ  >3e00           ; Destination cpu.scrpad.backup/restore
 scrpad.backup1    equ  >3e00           ; Backup GPL layout
 scrpad.backup2    equ  >3f00           ; Backup spectra2 layout
 *--------------------------------------------------------------
-* stevie Editor shared structures     @>a000-a0ff     (256 bytes)
+* Stevie Editor shared structures     @>a000-a0ff     (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a000           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
@@ -137,10 +142,11 @@ tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
-tv.pane.focus     equ  tv.top + 24     ; Identify pane that has focus
-tv.end            equ  tv.top + 24     ; End of structure
-pane.focus.fb     equ  0               ; Editor pane has focus
-pane.focus.cmdb   equ  1               ; Command buffer pane has focus
+tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
+tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
+tv.error.visible  equ  tv.top + 28     ; Error pane visible
+tv.error.msg      equ  tv.top + 30     ; Error message (max. 160 characters)
+tv.end            equ  tv.top + 190    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a100-a1ff     (256 bytes)
 *--------------------------------------------------------------

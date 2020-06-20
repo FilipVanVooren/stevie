@@ -85,8 +85,8 @@ mem.sams.layout.data:
 * Stevie color schemes table   
 *--------------------------------------------------------------
 * Word 1
-*    MSB  high-nibble    Foreground color frame buffer and cursor sprite
-*    MSB  low-nibble     Background color frame buffer and background pane
+*    MSB  high-nibble    Foreground color frame buffer
+*    MSB  low-nibble     Background color frame buffer
 *    LSB  high-nibble    Foreground color bottom line pane
 *    LSB  low-nibble     Background color bottom line pane
 *

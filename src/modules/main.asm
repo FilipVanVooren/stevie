@@ -39,6 +39,7 @@ main.continue:
         ; Setup F18A VDP
         ;------------------------------------------------------
         bl    @scroff               ; Turn screen off
+
         bl    @f18unl               ; Unlock the F18a
         bl    @putvr                ; Turn on 30 rows mode.
               data >3140            ; F18a VR49 (>31), bit 40
@@ -48,24 +49,11 @@ main.continue:
 
         BL    @putvr                ; Set VDP TAT base address for position
               data >0360            ; based attributes (>40 * >60 = >1800)
-
         ;------------------------------------------------------
         ; Clear screen (VDP SIT)
         ;------------------------------------------------------
         bl    @filv
               data >0000,32,30*80   ; Clear screen
-        ;------------------------------------------------------
-        ; Initialize position-based colors (VDP TAT)
-        ;------------------------------------------------------
-        bl    @filv
-              data >1800,>f0,29*80  ; Colors for frame buffer area
-
-        bl    @filv
-              data >2110,>1f,1*80   ; Colors for bottom line pane
-        ;------------------------------------------------------
-        ; Complete F18A VDP setup
-        ;------------------------------------------------------
-        bl    @scron                ; Turn screen on
         ;------------------------------------------------------
         ; Initialize high memory expansion
         ;------------------------------------------------------
@@ -97,11 +85,13 @@ main.continue:
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
-        bl    @stevie.init          ; Initialize Stevie editor config
-        bl    @cmdb.init            ; Initialize command buffer
-        bl    @edb.init             ; Initialize editor buffer
-        bl    @idx.init             ; Initialize index
-        bl    @fb.init              ; Initialize framebuffer
+        bl    @tv.init              ; Initialize editor configuration
+        bl    @tv.reset             ; Reset editor
+        ;------------------------------------------------------
+        ; Load colorscheme amd turn on screen
+        ;------------------------------------------------------
+        bl    @pane.action.colorscheme.Load
+                                    ; Load color scheme and turn on screen
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------
@@ -124,5 +114,3 @@ main.continue:
               data hook.keyscan     ; Setup user hook
 
         b     @tmgr                 ; Start timers and kthread
-
-

@@ -13,12 +13,11 @@
 fm.loadfile:
         dect  stack
         mov   r11,*stack            ; Save return address
-
+        ;-------------------------------------------------------
+        ; Reset editor
+        ;-------------------------------------------------------
         mov   tmp0,@parm1           ; Setup file to load
-        bl    @edb.init             ; Initialize editor buffer
-        bl    @idx.init             ; Initialize index
-        bl    @fb.init              ; Initialize framebuffer
-        bl    @pane.cmdb.hide       ; Hide command buffer pane
+        bl    @tv.reset             ; Reset editor
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
         ;-------------------------------------------------------
@@ -31,13 +30,19 @@ fm.loadfile:
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
 
+ 
+        bl    @scroff               ; Turn off screen
+        
         clr   tmp0                  ; VDP target address (1nd row on screen!)
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill
-                                    ; / i  tmp2 = Bytes to copy                                    
+                                    ; / i  tmp2 = Bytes to copy
+
+        bl    @pane.action.colorscheme.Load
+                                    ; Load color scheme and turn on screen
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
@@ -193,38 +198,38 @@ fm.loadfile.cb.fioerr:
 
         bl    @hchar
               byte 29,0,32,50       ; Erase loading indicator
-              data EOL
-        
+              data EOL        
         ;------------------------------------------------------
-        ; Display I/O error message
+        ; Build I/O error message
         ;------------------------------------------------------
         bl    @cpym2m               
               data txt.ioerr+1
-              data cmdb.top
-              data 41               ; Error message
-
+              data tv.error.msg+1
+              data 34               ; Error message
 
         mov   @edb.filename.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
         inc   tmp0                  ; Skip length byte
-        li    tmp1,cmdb.top + 42    ; RAM destination address
+        li    tmp1,tv.error.msg+34  ; RAM destination address
 
         bl    @xpym2m               ; \ Copy CPU memory to CPU memory
                                     ; | i  tmp0 = ROM/RAM source
                                     ; | i  tmp1 = RAM destination
                                     ; / i  tmp2 = Bytes top copy
-
-
+        ;------------------------------------------------------
+        ; Reset filename to "new file"
+        ;------------------------------------------------------
         li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr
 
         li    tmp0,txt.filetype.none
         mov   tmp0,@edb.filetype.ptr
                                     ; Empty filetype string
-
-        mov   @cmdb.scrrows,@parm1
-        bl    @pane.cmdb.show       ; Show command buffer pane
+        ;------------------------------------------------------
+        ; Display I/O error message
+        ;------------------------------------------------------
+        bl    @pane.errline.show    ; Show error line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

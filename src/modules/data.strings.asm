@@ -14,7 +14,7 @@ txt.loading        #string 'Loading...'
 txt.kb             #string 'kb'
 txt.rle            #string 'RLE'
 txt.lines          #string 'Lines'
-txt.ioerr          #string '! I/O error occured. Could not load file:'
+txt.ioerr          #string 'I/O error. Failed loading file: '
 txt.bufnum         #string '#1'
 txt.newfile        #string '[New file]'
 
