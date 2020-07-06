@@ -97,15 +97,15 @@ fm.loadfile.cb.indicator1:
         ; Show loading indicators and file descriptor
         ;------------------------------------------------------
         bl    @hchar
-              byte 29,3,32,77
+              byte 29,0,32,80
               data EOL
         
         bl    @putat
-              byte 29,3
+              byte 29,0
               data txt.loading      ; Display "Loading...."
 
         bl    @at
-              byte 29,14            ; Cursor YX position
+              byte 29,11            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
@@ -211,7 +211,7 @@ fm.loadfile.cb.fioerr:
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
         inc   tmp0                  ; Skip length byte
-        li    tmp1,tv.error.msg+34  ; RAM destination address
+        li    tmp1,tv.error.msg+33  ; RAM destination address
 
         bl    @xpym2m               ; \ Copy CPU memory to CPU memory
                                     ; | i  tmp0 = ROM/RAM source

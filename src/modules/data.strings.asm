@@ -4,6 +4,10 @@
 ***************************************************************
 *                       Strings
 ***************************************************************
+
+;--------------------------------------------------------------
+; Strings for status line pane
+;--------------------------------------------------------------
 txt.delim          #string ','
 txt.marker         #string '*EOF*'
 txt.bottom         #string '  BOT'
@@ -14,25 +18,35 @@ txt.loading        #string 'Loading...'
 txt.kb             #string 'kb'
 txt.rle            #string 'RLE'
 txt.lines          #string 'Lines'
-txt.ioerr          #string 'I/O error. Failed loading file: '
-txt.bufnum         #string '#1'
+txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
+txt.filetype.dv80  #string 'DV80'
+txt.filetype.none  #string '    '
 
+
+;--------------------------------------------------------------
+; Strings for error line pane
+;--------------------------------------------------------------
+txt.ioerr          #string 'I/O error. Failed loading file: '
+
+
+;--------------------------------------------------------------
+; Strings for command buffer
+;--------------------------------------------------------------
 txt.cmdb.prompt    #string '>'
-txt.cmdb.hint      #string 'Hint: Type "help" for command list.'
+txt.cmdb.hint      #string 'FCTN-9=Exit    CTRL-E=Previous    CTRL-X=Next'
+
 txt.cmdb.title     #string 'Command buffer'
+txt.cmdb.loadfile  #string 'Load text file'
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                    byte    1,1,1,1,1,1
-
                    even
 
 
-txt.filetype.dv80  #string 'DV80'
-txt.filetype.none  #string '    '
 
 txt.stevie         byte    12
                    byte    10

@@ -42,7 +42,7 @@ pane.botline.show_file:
         bl    @xutst0               ; Display string
 
         bl    @at
-              byte  29,35           ; Position cursor
+              byte  29,44           ; Position cursor
 
         mov   @edb.filetype.ptr,tmp1
                                     ; Get string to display

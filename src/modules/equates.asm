@@ -202,8 +202,10 @@ cmdb.column       equ  cmdb.struct + 18; Current column in CMDB
 cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
 cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-cmdb.command      equ  cmdb.struct + 26; Current comand (80 bytes max.)
-cmdb.end          equ  cmdb.struct +106; End of structure
+cmdb.pantitle     equ  cmdb.struct + 26; Pointer to length-prefixed string
+cmdb.cmdlen       equ  cmdb.struct + 28; Length of current command (byte!)
+cmdb.cmd          equ  cmdb.struct + 29; Current comand (80 bytes max.)
+cmdb.end          equ  cmdb.struct +109; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------

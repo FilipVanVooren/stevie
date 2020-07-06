@@ -33,15 +33,9 @@ cmdb.init:
         mov   tmp0,@cmdb.top.ptr    ; /
 
         clr   @cmdb.visible         ; Hide command buffer 
-        li    tmp0,10
+        li    tmp0,4
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
-        mov   tmp0,@cmdb.default    ; Set default command buffer size
-
-        li    tmp0,>1a00            ; Y=26, X=0
-        mov   tmp0,@cmdb.yxprompt   ; Screen position of prompt in cmdb pane
-        inc   tmp0
-        mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
-        
+        mov   tmp0,@cmdb.default    ; Set default command buffer size        
 
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
@@ -102,7 +96,7 @@ cmdb.refresh:
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP target address
 
-        li    tmp1,cmdb.command     ; Address of current command
+        li    tmp1,cmdb.cmd         ; Address of current command
         li    tmp2,1*79             ; Command length
 
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
@@ -162,8 +156,9 @@ cmdb.cmd.clear:
         ;------------------------------------------------------
         ; Clear command
         ;------------------------------------------------------
-        bl    @film                 ; Clear buffer
-              data  cmdb.command,>00,80
+        clr   @cmdb.cmdlen          ; Reset length 
+        bl    @film                 ; Clear command
+              data  cmdb.cmd,>00,80
         ;------------------------------------------------------
         ; Put cursor at beginning of line
         ;------------------------------------------------------

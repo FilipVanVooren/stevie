@@ -59,7 +59,9 @@ task.vdp.cursor.copy.sat:
                                      ; / i  tmp2 = Number of bytes to write
         ;-------------------------------------------------------
         ; Show status bottom line
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------  
+        mov   @cmdb.visible,tmp0     ; Check if CMDB pane is visible
+        jne   task.vdp.cursor.exit   ; Exit, if visible
         bl    @pane.botline.draw     ; Draw status bottom line
         ;------------------------------------------------------
         ; Exit

@@ -160,11 +160,15 @@ keymap_actions.editor:
 keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Movement keys
-        ;-------------------------------------------------------
+        ;-------------------------------------------------------        
         data  key.fctn.s, txt.fctn.s, edkey.action.cmdb.left
         data  key.fctn.d, txt.fctn.d, edkey.action.cmdb.right
         data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
         data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
+        ;-------------------------------------------------------
+        ; Modified keys
+        ;-------------------------------------------------------
+        data  key.enter, txt.enter, edkey.action.cmdb.enter
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------

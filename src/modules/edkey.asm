@@ -73,7 +73,7 @@ edkey.key.process.addbuffer:
 !       ci   tmp0,pane.focus.cmdb   ; CMDB has focus ?
         jne  edkey.key.process.crash
                                     ; No, crash
-        b    @edkey.cmdb.action.char
+        b    @edkey.action.cmdb.char
                                     ; Add character to CMDB buffer        
         ;-------------------------------------------------------
         ; Crash

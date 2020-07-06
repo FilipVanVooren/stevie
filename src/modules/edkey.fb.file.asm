@@ -6,8 +6,9 @@ edkey.action.buffer0:
         li   tmp0,fdname0
         jmp  edkey.action.rest
 edkey.action.buffer1:
-        li   tmp0,fdname1
-        jmp  edkey.action.rest
+        li   tmp0,txt.cmdb.loadfile
+        mov  tmp0,@cmdb.pantitle
+        b    @edkey.action.cmdb.show
 edkey.action.buffer2:
         li   tmp0,fdname2
         jmp  edkey.action.rest

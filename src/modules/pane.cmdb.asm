@@ -23,15 +23,35 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Command buffer header line
         ;------------------------------------------------------
-        mov   @cmdb.yxtop,@wyx      ; Cursor at top of 
-        bl    @putstr
-              data txt.cmdb.title   ; Display title
+        mov   @cmdb.yxtop,@wyx      ; \
+        mov   @cmdb.pantitle,tmp1   ; | Display pane title
+        bl    @xutst0               ; / 
 
         bl    @setx
               data 14               ; Position cursor
 
         bl    @putstr               ; Display horizontal line
               data txt.cmdb.hbar
+        ;------------------------------------------------------
+        ; Display hint in status line
+        ;------------------------------------------------------
+        movb  @txt.cmdb.hint,tmp0   ; Get length byte of hint
+        srl   tmp0,8                ; Right justify
+        mov   tmp0,tmp2
+        neg   tmp2
+        ai    tmp2,80               ; Number of bytes to fill
+        ai    tmp0,>0910            ; VDP start address (bottom status line)
+        li    tmp1,32               ; Byte to fill
+
+        bl    @xfilv                ; Clear line
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+
+        bl    @putat                ; Display hint
+              byte 29,0
+              data txt.cmdb.hint
+        
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------
@@ -78,6 +98,11 @@ pane.cmdb.show:
         
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
+
+        ai    tmp0,>0100
+        mov   tmp0,@cmdb.yxprompt   ; Screen position of prompt in cmdb pane
+        inc   tmp0
+        mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
 
         seto  @cmdb.visible         ; Show pane
         seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)
@@ -134,10 +159,15 @@ pane.cmdb.hide:
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!
-
-pane.cmdb.hide.exit:
+        ;------------------------------------------------------
+        ; Clear status line
+        ;------------------------------------------------------
+        bl    @hchar
+              byte 29,0,32,80
+              data EOL
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+pane.cmdb.hide.exit:        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
