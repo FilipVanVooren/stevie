@@ -131,7 +131,6 @@ keymap_actions.editor:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
         data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Editor/File buffer keys

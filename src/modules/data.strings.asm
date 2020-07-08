@@ -24,7 +24,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
 
-txt.keys.loaddv80  #string 'FCTN-9=Back    CTRL-E=Previous    CTRL-X=Next'
+txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-E=Previous    FCTN-X=Next'
 
 
 
