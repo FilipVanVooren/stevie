@@ -84,7 +84,7 @@ pane.action.colorscheme.load:
         mov   tmp4,*stack           ; Push tmp4
         bl    @scroff               ; Turn screen off        
         ;-------------------------------------------------------
-        ; Get foreground/background color
+        ; Get framebuffer foreground/background color
         ;-------------------------------------------------------
         mov   @tv.colorscheme,tmp0  ; Get color scheme index 
         sla   tmp0,2                ; Offset into color scheme data table
@@ -92,8 +92,18 @@ pane.action.colorscheme.load:
                                     ; Add base for color scheme data table
         mov   *tmp0+,tmp3           ; Get colors  (fb + status line)
         mov   tmp3,@tv.color        ; Save colors
-        mov   *tmp0,tmp4            ; Get cursor colors
-        mov   tmp4,@tv.curcolor     ; Save cursor colors
+        ;-------------------------------------------------------
+        ; Get and save cursor color
+        ;-------------------------------------------------------
+        mov   *tmp0,tmp4            ; Get cursor color
+        andi  tmp4,>00ff            ; Only keep LSB
+        mov   tmp4,@tv.curcolor     ; Save cursor color
+        ;-------------------------------------------------------
+        ; Get CMDB pane foreground/background color
+        ;-------------------------------------------------------
+        mov   *tmp0,tmp4            ; Get CMDB pane
+        andi  tmp4,>ff00            ; Only keep MSB
+        srl   tmp4,8                ; MSB to LSB
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -114,8 +124,24 @@ pane.action.colorscheme.load:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
+        ; Dump colors for CMDB pane (TAT)
+        ;-------------------------------------------------------
+pane.action.colorscheme.cmdbpane:        
+        mov   @cmdb.visible,tmp0
+        jeq   pane.action.colorscheme.errpane
+                                    ; Skip if CMDB pane is hidden
+
+        li    tmp0,>1fd0            ; VDP start address (bottom status line)
+        mov   tmp4,tmp1             ; Get work copy fg/bg color
+        li    tmp2,5*80             ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+        ;-------------------------------------------------------
         ; Dump colors for error line pane (TAT)
         ;-------------------------------------------------------
+pane.action.colorscheme.errpane:        
         mov   @tv.error.visible,tmp0
         jeq   pane.action.colorscheme.statusline
                                     ; Skip if error line pane is hidden
@@ -138,7 +164,9 @@ pane.action.colorscheme.statusline:
         ;-------------------------------------------------------
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------
-        andi  tmp4,>0f00
+pane.action.colorscheme.cursorcolor:
+        mov   @tv.curcolor,tmp4     ; Get cursor color        
+        sla   tmp4,8                ; Move to MSB
         movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
         movb  tmp4,@tv.curshape+1   ; Save cursor color                                    
         ;-------------------------------------------------------
@@ -183,8 +211,8 @@ pane.action.colorscheme.errline:
         ;-------------------------------------------------------
         ; Load error line colors
         ;-------------------------------------------------------
-        li    tmp0,>2070            ; VDP start address (bottom status line)
-        li    tmp2,160              ; Number of bytes to fill
+        li    tmp0,>20C0            ; VDP start address (error line)
+        li    tmp2,80               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill

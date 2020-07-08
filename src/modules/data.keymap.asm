@@ -69,7 +69,7 @@ key.ctrl.h    equ >0000             ; ctrl + h
 key.ctrl.i    equ >0000             ; ctrl + i
 key.ctrl.j    equ >0000             ; ctrl + j
 key.ctrl.k    equ >0000             ; ctrl + k
-key.ctrl.l    equ >0000             ; ctrl + l
+key.ctrl.l    equ >8c00             ; ctrl + l
 key.ctrl.m    equ >0000             ; ctrl + m
 key.ctrl.n    equ >0000             ; ctrl + n
 key.ctrl.o    equ >0000             ; ctrl + o
@@ -146,6 +146,7 @@ keymap_actions.editor:
         data  key.ctrl.7, txt.ctrl.7, edkey.action.buffer7
         data  key.ctrl.8, txt.ctrl.8, edkey.action.buffer8
         data  key.ctrl.9, txt.ctrl.9, edkey.action.buffer9
+        data  key.ctrl.l, txt.ctrl.l, edkey.action.dialog.dv80
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -173,7 +174,7 @@ keymap_actions.cmdb:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
+        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
         data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; End of list

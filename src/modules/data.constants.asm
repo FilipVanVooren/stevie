@@ -91,25 +91,23 @@ mem.sams.layout.data:
 *    LSB  low-nibble     Background color bottom line pane
 *
 * Word 2
-*    MSB  high-nibble    0
-*    MSB  low-nibble     Cursor foreground color 1
+*    MSB  high-nibble    Foreground color cmdb pane
+*    MSB  low-nibble     Background color cmdb pane
 *    LSB  high-nibble    0
-*    LSB  low-nibble     Cursor foreground color 2
+*    LSB  low-nibble     Cursor foreground color
 *--------------------------------------------------------------
 tv.colorscheme.entries   equ 9      ; Entries in table
 
-tv.colorscheme.table:   
-                   ;----------------------+-----------------------|-------------
-                   ; Framebuffer          | Bottom line pane      | Cursor color
-                   ; Fg. / Bg.            | Fg. / Bg.             |  1 / 2
-                   ;-----------------------------+----------------|-------------                   
- data  >f41f,>0101 ; White + Dark blue    | Black + White         | Black+Black
- data  >f41c,>0f0f ; White + Dark blue    | Black + Dark green    | White+White
- data  >a11a,>0f0f ; Dark yellow + Black  | Black + Dark yellow   | White+White
- data  >2112,>0f0f ; Medium green + Black | Black + Medium green  | White+White
- data  >e11e,>0f0f ; Grey + Black         | Black + Grey          | White+White
- data  >1771,>0606 ; Black + Cyan         | Cyan  + Black         | Red  +Red
- data  >1f10,>010f ; Black + White        | Black + Transparant   | White+White
- data  >a1f0,>0f0f ; Dark yellow + Black  | White + Transparant   | White+White
- data  >21f0,>0f0f ; Medium green + Black | White + Transparant   | White+White
+tv.colorscheme.table:                  
+                         ; #  Framebuffer        | Status line        | CMDB
+                         ; ----------------------|--------------------|---------
+ data  >f41f,>f001       ; 1  White/dark blue    | Black/white        | White
+ data  >f41c,>f00f       ; 2  White/dark blue    | Black/dark green   | White
+ data  >a11a,>f00f       ; 3  Dark yellow/black  | Black/dark yellow  | White
+ data  >2112,>f00f       ; 4  Medium green/black | Black/medium green | White
+ data  >e11e,>f00f       ; 5  Grey/black         | Black/grey         | White
+ data  >1771,>1006       ; 6  Black/cyan         | Cyan/black         | Black
+ data  >1ff1,>1001       ; 7  Black/white        | White/black        | Black
+ data  >a1f0,>1a0f       ; 8  Dark yellow/black  | White/transparent  | inverse
+ data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
  

@@ -6,9 +6,8 @@ edkey.action.buffer0:
         li   tmp0,fdname0
         jmp  edkey.action.rest
 edkey.action.buffer1:
-        li   tmp0,txt.cmdb.loadfile
-        mov  tmp0,@cmdb.pantitle
-        b    @edkey.action.cmdb.show
+        li   tmp0,fdname1
+        jmp  edkey.action.rest
 edkey.action.buffer2:
         li   tmp0,fdname2
         jmp  edkey.action.rest
@@ -40,3 +39,12 @@ edkey.action.rest:
                                     ; /
 
         b    @edkey.action.top      ; Goto 1st line in editor buffer 
+
+
+
+edkey.action.dialog.dv80:
+        li   tmp0,txt.cmdb.loaddv80
+        mov  tmp0,@cmdb.pantitle
+        li   tmp0,txt.cmdb.hintdv80
+        mov  tmp0,@cmdb.panhint
+        b    @edkey.action.cmdb.show

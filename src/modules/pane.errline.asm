@@ -36,11 +36,11 @@ pane.errline.show:
         ; Show error line content
         ;------------------------------------------------------
         bl    @putat                ; Display error message
-              byte 27,0
+              byte 28,0
               data tv.error.msg        
 
         mov   @fb.scrrows.max,tmp0
-        dect  tmp0
+        dec   tmp0
         mov   tmp0,@fb.scrrows      ; Decrease size of frame buffer
 
         seto  @tv.error.visible     ; Error line is visible

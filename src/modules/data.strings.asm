@@ -24,6 +24,10 @@ txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
 
+txt.keys.loaddv80  #string 'FCTN-9=Back    CTRL-E=Previous    CTRL-X=Next'
+
+
+
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------
@@ -33,11 +37,14 @@ txt.ioerr          #string 'I/O error. Failed loading file: '
 ;--------------------------------------------------------------
 ; Strings for command buffer
 ;--------------------------------------------------------------
-txt.cmdb.prompt    #string '>'
-txt.cmdb.hint      #string 'FCTN-9=Exit    CTRL-E=Previous    CTRL-X=Next'
-
 txt.cmdb.title     #string 'Command buffer'
-txt.cmdb.loadfile  #string 'Load text file'
+txt.cmdb.prompt    #string '>'
+txt.cmdb.loaddv80  #string 'Load DV80 file'
+
+txt.cmdb.hintdv80  byte    80
+                   text    'HINT: Specify disk device, path/filename and press '
+                   text    'ENTER.                        '
+                   even
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
