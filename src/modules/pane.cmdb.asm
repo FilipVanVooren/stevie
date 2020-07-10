@@ -195,20 +195,20 @@ pane.cmdb.hide:
         ;------------------------------------------------------
         mov   @tv.error.visible,@tv.error.visible
         jeq   !  
-        dect  @fb.scrrows           
-        ;------------------------------------------------------
-        ; Hide command buffer pane (rest)
-        ;------------------------------------------------------
-!       mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
-        clr   @cmdb.visible         ; Hide command buffer pane
-        seto  @fb.dirty             ; Redraw framebuffer
-        clr   @tv.pane.focus        ; Framebuffer has focus!
+        dec   @fb.scrrows           
         ;------------------------------------------------------
         ; Clear error/hint & status line
         ;------------------------------------------------------
-        bl    @hchar
+!       bl    @hchar
               byte 28,0,32,80*2
               data EOL
+        ;------------------------------------------------------
+        ; Hide command buffer pane (rest)
+        ;------------------------------------------------------
+        mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
+        clr   @cmdb.visible         ; Hide command buffer pane
+        seto  @fb.dirty             ; Redraw framebuffer
+        clr   @tv.pane.focus        ; Framebuffer has focus!
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
