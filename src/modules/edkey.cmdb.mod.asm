@@ -11,8 +11,6 @@ edkey.action.cmdb.char:
         li    tmp0,cmdb.cmd         ; Get beginning of command
         a     @cmdb.column,tmp0     ; Add current column to command
         movb  tmp1,*tmp0            ; Add character
-        li    tmp1,>0100
-        ab    tmp1,@cmdb.cmdlen     ; Adjust command length        
         inc   @cmdb.column          ; Next column
         inc   @cmdb.cursor          ; Next column cursor
         ;-------------------------------------------------------
@@ -28,6 +26,16 @@ edkey.action.cmdb.char.exit:
 * Enter
 *---------------------------------------------------------------
 edkey.action.cmdb.enter:
+        ;-------------------------------------------------------
+        ; Get length of null terminated string
+        ;-------------------------------------------------------
+        bl    @string.getlen0      ; Get length
+              data cmdb.cmd,0      ; \ i  p0    = Pointer to C-style string
+                                   ; | i  p1    = Termination character
+                                   ; / o  waux1 = Length of string
+        mov   @waux1,tmp0          
+        sla   tmp0,8               ; LSB to MSB 
+        movb  tmp0,@cmdb.cmdlen    ; Save length of string
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
