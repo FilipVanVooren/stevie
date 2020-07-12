@@ -1,13 +1,13 @@
 * FILE......: mem.asm
-* Purpose...: stevie Editor - Memory management (SAMS)
+* Purpose...: Stevie Editor - Memory management (SAMS)
 
 *//////////////////////////////////////////////////////////////
-*                  stevie Editor - Memory Management
+*                  Stevie Editor - Memory Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
 * mem.sams.layout
-* Setup SAMS memory pages for stevie
+* Setup SAMS memory pages for Stevie
 ***************************************************************
 * bl  @mem.setup.sams.layout
 *--------------------------------------------------------------
@@ -28,6 +28,9 @@ mem.sams.layout:
 
         bl    @sams.layout.copy
               data tv.sams.2000     ; Get SAMS windows
+
+        mov   @tv.sams.c000,@edb.sams.page
+                                    ; Track editor buffer SAMS page
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

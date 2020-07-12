@@ -1,5 +1,5 @@
 ***************************************************************
-*                          stevie Editor
+*                          Stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -36,7 +36,7 @@
 *
 * Mem range   Bytes    BANK   Purpose
 * =========   =====    ====   ==================================
-* a000-a0ff     256           stevie Editor shared structure
+* a000-a0ff     256           Stevie Editor shared structure
 * a100-a1ff     256           Framebuffer structure
 * a200-a2ff     256           Editor buffer structure
 * a300-a3ff     256           Command buffer structure   
@@ -59,14 +59,16 @@
 * 0000-095f    2400   >0960   PNT - Pattern Name Table
 * 0960-09af      80   >0050   File record buffer (DIS/VAR 80)
 * 0fc0                        PCT - Pattern Color Table
-* 1000                        PDT - Pattern Descriptor Table
-* 1800                        SPT - Sprite Pattern Table
-* 2000                        SAT - Sprite Attribute List
+* 1000-17ff    2048   >0800   PDT - Pattern Descriptor Table
+* 1800-215f    2400   >0960   TAT - Tile Attribute Table (pos. based colors)
+* 2180                        SAT - Sprite Attribute List
+* 2800                        SPT - Sprite Pattern Table. Must be on 2K boundary
 *--------------------------------------------------------------
 * Skip unused spectra2 code modules for reduced code size
 *--------------------------------------------------------------
 skip_grom_cpu_copy        equ  1       ; Skip GROM to CPU copy functions
 skip_grom_vram_copy       equ  1       ; Skip GROM to VDP vram copy functions
+skip_vdp_vchar            equ  1       ; Skip vchar, xvchar
 skip_vdp_boxes            equ  1       ; Skip filbox, putbox
 skip_vdp_bitmap           equ  1       ; Skip bitmap functions
 skip_vdp_viewport         equ  1       ; Skip viewport functions
@@ -81,7 +83,12 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
-* SPECTRA2 / stevie startup options
+* Stevie specific equates
+*--------------------------------------------------------------
+pane.focus.fb             equ  0       ; Editor pane has focus
+pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+*--------------------------------------------------------------
+* SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to 
@@ -120,7 +127,7 @@ cpu.scrpad.tgt    equ  >3e00           ; Destination cpu.scrpad.backup/restore
 scrpad.backup1    equ  >3e00           ; Backup GPL layout
 scrpad.backup2    equ  >3f00           ; Backup spectra2 layout
 *--------------------------------------------------------------
-* stevie Editor shared structures     @>a000-a0ff     (256 bytes)
+* Stevie Editor shared structures     @>a000-a0ff     (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a000           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
@@ -133,11 +140,13 @@ tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
 tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
 tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
-tv.curshape       equ  tv.top + 20     ; Cursor shape and color
-tv.pane.focus     equ  tv.top + 22     ; Identify pane that has focus
-tv.end            equ  tv.top + 22     ; End of structure
-pane.focus.fb     equ  0               ; Editor pane has focus
-pane.focus.cmdb   equ  1               ; Command buffer pane has focus
+tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
+tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
+tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
+tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
+tv.error.visible  equ  tv.top + 28     ; Error pane visible
+tv.error.msg      equ  tv.top + 30     ; Error message (max. 160 characters)
+tv.end            equ  tv.top + 190    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a100-a1ff     (256 bytes)
 *--------------------------------------------------------------
@@ -180,17 +189,24 @@ edb.end           equ  edb.struct + 20 ; End of structure
 * Command buffer structure          @>a300-a3ff     (256 bytes)
 *--------------------------------------------------------------
 cmdb.struct       equ  >a300           ; Command Buffer structure
-cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer
+cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
 cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-cmdb.scrrows      equ  cmdb.struct + 4 ; Current size of cmdb pane (in rows)
-cmdb.default      equ  cmdb.struct + 6 ; Default size of cmdb pane (in rows)
-cmdb.cursor       equ  cmdb.struct + 8 ; Screen YX of cursor in cmdb pane
-cmdb.yxsave       equ  cmdb.struct + 10; Copy of WYX
-cmdb.yxtop        equ  cmdb.struct + 12; YX position of first row in cmdb pane
-cmdb.lines        equ  cmdb.struct + 14; Total lines in editor buffer
-cmdb.dirty        equ  cmdb.struct + 16; Editor buffer dirty (Text changed!)
-cmdb.fb.yxsave    equ  cmdb.struct + 18; Copy of FB WYX when entering cmdb pane
-cmdb.end          equ  cmdb.struct + 20; End of structure
+cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
+cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
+cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
+cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
+cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
+cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
+cmdb.column       equ  cmdb.struct + 18; Current column in CMDB
+cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
+cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
+cmdb.pantitle     equ  cmdb.struct + 26; Pointer to string with pane title
+cmdb.panhint      equ  cmdb.struct + 28; Pointer to string with pane hint
+cmdb.cmdlen       equ  cmdb.struct + 30; Length of current command (byte!)
+cmdb.cmd          equ  cmdb.struct + 31; Current comand (80 bytes max.)
+cmdb.end          equ  cmdb.struct +111; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------
@@ -211,7 +227,7 @@ fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
-fh.rleonload      equ  fh.struct + 68  ; RLE compression needed during file load
+fh.free           equ  fh.struct + 68  ; no longer used
 fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
 fh.end            equ  fh.struct +150  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer

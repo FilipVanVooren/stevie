@@ -39,3 +39,12 @@ edkey.action.rest:
                                     ; /
 
         b    @edkey.action.top      ; Goto 1st line in editor buffer 
+
+
+
+edkey.action.dialog.dv80:
+        li   tmp0,txt.cmdb.loaddv80
+        mov  tmp0,@cmdb.pantitle
+        li   tmp0,txt.cmdb.hintdv80
+        mov  tmp0,@cmdb.panhint
+        b    @edkey.action.cmdb.show

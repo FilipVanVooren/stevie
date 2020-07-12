@@ -1,9 +1,13 @@
 * FILE......: data.strings.asm
-* Purpose...: stevie Editor - data segment (strings)
+* Purpose...: Stevie Editor - data segment (strings)
 
 ***************************************************************
 *                       Strings
 ***************************************************************
+
+;--------------------------------------------------------------
+; Strings for status line pane
+;--------------------------------------------------------------
 txt.delim          #string ','
 txt.marker         #string '*EOF*'
 txt.bottom         #string '  BOT'
@@ -14,34 +18,60 @@ txt.loading        #string 'Loading...'
 txt.kb             #string 'kb'
 txt.rle            #string 'RLE'
 txt.lines          #string 'Lines'
-txt.ioerr          #string '! I/O error occured. Could not load file:'
-txt.bufnum         #string '#1'
+txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
+txt.filetype.dv80  #string 'DV80'
+txt.filetype.none  #string '    '
 
+
+txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-E=Previous    FCTN-X=Next'
+
+
+
+;--------------------------------------------------------------
+; Strings for error line pane
+;--------------------------------------------------------------
+txt.ioerr          #string 'I/O error. Failed loading file: '
+
+
+;--------------------------------------------------------------
+; Strings for command buffer
+;--------------------------------------------------------------
+txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-txt.cmdb.hint      #string 'Hint: Type "help" for command list.'
-txt.cmdb.catalog   #string 'File catalog'
+txt.cmdb.loaddv80  #string 'Load DV80 file'
+
+txt.cmdb.hintdv80  byte    80
+                   text    'HINT: Specify disk device, path/filename and press '
+                   text    'ENTER.                        '
+                   even
+
+txt.cmdb.hbar      byte    66
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                   byte    1,1,1,1,1,1
+                   even
 
 
-txt.filetype.dv80  #string 'DIS/VAR80 '
-txt.filetype.none  #string '          '
 
-txt.stevie     byte    12
-             byte    10
-             text    'stevie v1.00'
-             byte    11
-             even
+txt.stevie         byte    12
+                   byte    10
+                   text    'stevie v1.00'
+                   byte    11
+                   even
 
-fdname1      #string 'TIPI.stevie.TMS9900_C'
-fdname2      #string 'TIPI.stevie.NR80'
-fdname3      #string 'DSK1.XBEADOC'
-fdname4      #string 'TIPI.stevie.C99MAN1'
-fdname5      #string 'TIPI.stevie.C99MAN2'
-fdname6      #string 'TIPI.stevie.C99MAN3'
-fdname7      #string 'TIPI.stevie.C99SPECS'
-fdname8      #string 'TIPI.stevie.RANDOM#C'
-fdname9      #string 'TIPI.stevie.INVADERS'
-fdname0      #string 'TIPI.stevie.NR80'
+fdname1            #string 'PI.CLOCK'
+fdname2            #string 'TIPI.TIVI.NR80'
+fdname3            #string 'DSK1.XBEADOC'
+fdname4            #string 'TIPI.TIVI.C99MAN1'
+fdname5            #string 'TIPI.TIVI.C99MAN2'
+fdname6            #string 'TIPI.TIVI.C99MAN3'
+fdname7            #string 'TIPI.TIVI.C99SPECS'
+fdname8            #string 'TIPI.TIVI.RANDOM#C'
+fdname9            #string 'DSK1.INVADERS'
+fdname0            #string 'DSK1.NR80'
+fdname.clock       #string 'PI.CLOCK'
 
 
 *---------------------------------------------------------------

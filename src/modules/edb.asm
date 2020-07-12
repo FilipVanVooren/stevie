@@ -1,8 +1,8 @@
 * FILE......: edb.asm
-* Purpose...: stevie Editor - Editor Buffer module
+* Purpose...: Stevie Editor - Editor Buffer module
 
 *//////////////////////////////////////////////////////////////
-*        stevie Editor - Editor Buffer implementation
+*        Stevie Editor - Editor Buffer implementation
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
@@ -124,7 +124,8 @@ edb.line.pack.update_index:
                                     ; | o  waux1 = SAMS page number
                                     ; / o  waux2 = Address of SAMS register
 
-        mov   @waux1,@parm3                                
+        mov   @waux1,@parm3         ; Setup parm3
+
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
                                     ; | i  parm2 = pointer to line in 
@@ -145,6 +146,7 @@ edb.line.pack.update_index:
                                     ; / i  tmp1 = Memory address
 
         mov   tmp0,@fh.sams.page    ; Save current SAMS page
+                                    ; TODO - Why is @fh.xxx accessed here?
 
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
@@ -171,20 +173,28 @@ edb.line.pack.copyline:
         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
         movb  *tmp0+,*tmp1+         ; / uneven address
         jmp   !
+
 edb.line.pack.copyline.checkbyte:
         ci    tmp2,1
         jne   edb.line.pack.copyline.block
         movb  *tmp0,*tmp1           ; Copy single byte
         jmp   !
+
 edb.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
-
+        ;------------------------------------------------------
+        ; 5: Align pointer to multiple of 16 memory address
+        ;------------------------------------------------------ 
 !       a     @rambuf+4,@edb.next_free.ptr
-                                    ; Update pointer to next free line
+                                       ; Add length of line
 
+        mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+        neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+        andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+        a     tmp0,@edb.next_free.ptr  ; / Chapter 2
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -277,8 +287,9 @@ edb.line.unpack:
         ;------------------------------------------------------
         ; Sanity check on line length
         ;------------------------------------------------------        
-        ci    tmp1,80               ; Sanity check on line length, crash
-        jle   edb.line.unpack.clear ; if length > 80.        
+        ci    tmp1,80               ; \ Continue if length <= 80
+        jle   edb.line.unpack.clear ; / 
+
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------

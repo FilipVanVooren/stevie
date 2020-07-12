@@ -1,8 +1,8 @@
 * FILE......: idx.asm
-* Purpose...: stevie Editor - Index module
+* Purpose...: Stevie Editor - Index module
 
 *//////////////////////////////////////////////////////////////
-*                  stevie Editor - Index Management
+*                  Stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
@@ -45,7 +45,7 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0
-***************************************************************
+********|*****|*********************|**************************
 idx.init:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -95,7 +95,7 @@ idx.init.exit:
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.sams.mapcolumn.on:
         dect  stack
         mov   r11,*stack            ; Push return address
@@ -154,7 +154,7 @@ _idx.sams.mapcolumn.on.exit:
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.sams.mapcolumn.off:
         dect  stack
         mov   r11,*stack            ; Push return address
@@ -215,8 +215,8 @@ _idx.sams.mapcolumn.off.exit:
 *  Remarks
 *  Private, only to be called from inside idx module.
 *  Activates SAMS page containing required index slot entry.
-*--------------------------------------------------------------
-idx._samspage.get:
+********|*****|*********************|**************************
+_idx.samspage.get:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -242,13 +242,13 @@ idx._samspage.get:
         a     @idx.sams.lopage,tmp1 ; Add SAMS page base
         c     tmp1,@idx.sams.page   ; Page already active?
 
-        jeq   idx._samspage.get.exit
+        jeq   _idx.samspage.get.exit
                                     ; Yes, so exit
         ;------------------------------------------------------
         ; Activate SAMS index page
         ;------------------------------------------------------
         mov   tmp1,@idx.sams.page   ; Set current SAMS page
-        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in stevie
+        mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in Stevie
 
         mov   tmp1,tmp0             ; Destination SAMS page
         li    tmp1,>b000            ; Memory window for index page
@@ -260,13 +260,13 @@ idx._samspage.get:
         ; Check if new highest SAMS index page
         ;------------------------------------------------------
         c     tmp0,@idx.sams.hipage ; New highest page?        
-        jle   idx._samspage.get.exit 
+        jle   _idx.samspage.get.exit 
                                     ; No, exit
         mov   tmp0,@idx.sams.hipage ; Yes, set highest SAMS index page        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-idx._samspage.get.exit:
+_idx.samspage.get.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0                
@@ -290,7 +290,7 @@ idx._samspage.get.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.entry.update:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -315,11 +315,13 @@ idx.entry.update:
         ;------------------------------------------------------      
         swpb  @parm3
         movb  @parm3,tmp1           ; Put SAMS page in MSB
+        swpb  @parm3                ; \ Restore original order again, 
+                                    ; / important for messing up caller parm3!
         ;------------------------------------------------------
         ; Update index slot
         ;------------------------------------------------------      
 idx.entry.update.save:
-        bl    @idx._samspage.get    ; Get SAMS page for index
+        bl    @_idx.samspage.get    ; Get SAMS page for index
                                     ; \ i  tmp0     = Line number
                                     ; / o  outparm1 = Slot offset in SAMS page
 
@@ -331,7 +333,7 @@ idx.entry.update.save:
         ; Special handling for "null"-pointer
         ;------------------------------------------------------      
 idx.entry.update.clear:
-        bl    @idx._samspage.get    ; Get SAMS page for index
+        bl    @_idx.samspage.get    ; Get SAMS page for index
                                     ; \ i  tmp0     = Line number
                                     ; / o  outparm1 = Slot offset in SAMS page
 
@@ -366,7 +368,7 @@ idx.entry.update.exit:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.pointer.get:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -381,7 +383,7 @@ idx.pointer.get:
         ;------------------------------------------------------      
         mov   @parm1,tmp0           ; Line number in editor buffer        
 
-        bl    @idx._samspage.get    ; Get SAMS page with index slot
+        bl    @_idx.samspage.get    ; Get SAMS page with index slot
                                     ; \ i  tmp0     = Line number
                                     ; / o  outparm1 = Slot offset in SAMS page
 

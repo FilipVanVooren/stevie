@@ -218,10 +218,13 @@ edkey.action.ins_line.insert:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         mov   @fb.topline,@parm1    
         a     @fb.row,@parm1        ; Line number to insert
-
         mov   @edb.lines,@parm2     ; Last line to reorganize 
+        
         bl    @idx.entry.insert     ; Reorganize index
-        inc   @edb.lines            ; One line more in editor buffer
+                                    ; \ i  parm1 = Line for insert
+                                    ; / i  parm2 = Last line to reorg
+
+        inc   @edb.lines            ; One line added to editor buffer
         ;-------------------------------------------------------
         ; Refresh frame buffer and physical screen
         ;-------------------------------------------------------
@@ -327,7 +330,7 @@ edkey.action.ins_onoff.exit:
 
 
 *---------------------------------------------------------------
-* Process character
+* Process character (frame buffer)
 *---------------------------------------------------------------
 edkey.action.char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)

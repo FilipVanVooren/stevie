@@ -1,13 +1,13 @@
 * FILE......: pane.botline.asm
-* Purpose...: stevie Editor - Pane status bottom line
+* Purpose...: Stevie Editor - Pane status bottom line
 
 *//////////////////////////////////////////////////////////////
-*              stevie Editor - Pane status bottom line
+*              Stevie Editor - Pane status bottom line
 *//////////////////////////////////////////////////////////////
 
 ***************************************************************
 * pane.botline.draw
-* Draw stevie status bottom line
+* Draw Stevie status bottom line
 ***************************************************************
 * bl  @pane.botline.draw
 *--------------------------------------------------------------
@@ -42,7 +42,7 @@ pane.botline.show_file:
         bl    @xutst0               ; Display string
 
         bl    @at
-              byte  29,35           ; Position cursor
+              byte  29,44           ; Position cursor
 
         mov   @edb.filetype.ptr,tmp1
                                     ; Get string to display

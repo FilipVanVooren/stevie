@@ -1,8 +1,8 @@
 * FILE......: idx_delete.asm
-* Purpose...: stevie Editor - Delete index slot
+* Purpose...: Stevie Editor - Delete index slot
 
 *//////////////////////////////////////////////////////////////
-*              stevie Editor - Index Management
+*              Stevie Editor - Index Management
 *//////////////////////////////////////////////////////////////
 
 
@@ -17,17 +17,23 @@
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from idx_entry_delete
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 _idx.entry.delete.reorg:
         ;------------------------------------------------------
         ; Reorganize index entries 
         ;------------------------------------------------------
-!       mov   @idx.top+2(tmp0),@idx.top+0(tmp0)
-        inct  tmp0                  ; Next index entry
+        ai    tmp0,idx.top          ; Add index base to offset        
+        mov   tmp0,tmp1             ; a = current slot
+        inct  tmp1                  ; b = current slot + 2
+        ;------------------------------------------------------
+        ; Loop forward until end of index
+        ;------------------------------------------------------
+_idx.entry.delete.reorg.loop:        
+        mov   *tmp1+,*tmp0+         ; Copy b -> a       
         dec   tmp2                  ; tmp2--
-        jne   -!                    ; Loop unless completed
+        jne   _idx.entry.delete.reorg.loop
+                                    ; Loop unless completed
         b     *r11                  ; Return to caller
-
 
 
 
@@ -43,7 +49,7 @@ _idx.entry.delete.reorg:
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp2
-*--------------------------------------------------------------
+********|*****|*********************|**************************
 idx.entry.delete:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -53,12 +59,14 @@ idx.entry.delete:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Get index slot
         ;------------------------------------------------------      
         mov   @parm1,tmp0           ; Line number in editor buffer
 
-        bl    @idx._samspage.get    ; Get SAMS page for index
+        bl    @_idx.samspage.get    ; Get SAMS page for index
                                     ; \ i  tmp0     = Line number
                                     ; / o  outparm1 = Slot offset in SAMS page
         
@@ -74,10 +82,11 @@ idx.entry.delete:
         ; Reorganize index entries 
         ;------------------------------------------------------
 idx.entry.delete.reorg:
-        c     @idx.sams.page,@idx.sams.hipage
-        jeq   idx.entry.delete.reorg.simple
-                                    ; If only one SAMS index page or at last
-                                    ; SAMS index page then do simple reorg        
+        mov   @parm2,tmp3
+        ci    tmp3,2048
+        jle   idx.entry.delete.reorg.simple
+                                    ; Do simple reorg only if single
+                                    ; SAMS index page, otherwise complex reorg.
         ;------------------------------------------------------
         ; Complex index reorganization (multiple SAMS pages)
         ;------------------------------------------------------
@@ -102,11 +111,12 @@ idx.entry.delete.reorg.simple:
         ; Last line 
         ;------------------------------------------------------      
 idx.entry.delete.lastline:
-        clr   @idx.top(tmp0)
+        clr   *tmp0
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 idx.entry.delete.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0                

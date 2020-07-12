@@ -1,5 +1,5 @@
 * FILE......: data.keymap.asm
-* Purpose...: stevie Editor - data segment (keyboard mapping)
+* Purpose...: Stevie Editor - data segment (keyboard mapping)
 
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
@@ -69,7 +69,7 @@ key.ctrl.h    equ >0000             ; ctrl + h
 key.ctrl.i    equ >0000             ; ctrl + i
 key.ctrl.j    equ >0000             ; ctrl + j
 key.ctrl.k    equ >0000             ; ctrl + k
-key.ctrl.l    equ >0000             ; ctrl + l
+key.ctrl.l    equ >8c00             ; ctrl + l
 key.ctrl.m    equ >0000             ; ctrl + m
 key.ctrl.n    equ >0000             ; ctrl + n
 key.ctrl.o    equ >0000             ; ctrl + o
@@ -131,8 +131,7 @@ keymap_actions.editor:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
-        data  key.ctrl.z, txt.ctrl.z, edkey.action.color.cycle
+        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------
@@ -146,6 +145,7 @@ keymap_actions.editor:
         data  key.ctrl.7, txt.ctrl.7, edkey.action.buffer7
         data  key.ctrl.8, txt.ctrl.8, edkey.action.buffer8
         data  key.ctrl.9, txt.ctrl.9, edkey.action.buffer9
+        data  key.ctrl.l, txt.ctrl.l, edkey.action.dialog.dv80
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -160,51 +160,21 @@ keymap_actions.editor:
 keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Movement keys
+        ;-------------------------------------------------------        
+        data  key.fctn.s, txt.fctn.s, edkey.action.cmdb.left
+        data  key.fctn.d, txt.fctn.d, edkey.action.cmdb.right
+        data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
+        data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
         ;-------------------------------------------------------
-        data  key.enter, txt.enter, edkey.action.enter
-        data  key.fctn.s, txt.fctn.s, edkey.action.left
-        data  key.fctn.d, txt.fctn.d, edkey.action.right
-        data  key.fctn.e, txt.fctn.e, edkey.action.noop
-        data  key.fctn.x, txt.fctn.x, edkey.action.noop
-        data  key.ctrl.a, txt.ctrl.a, edkey.action.noop
-        data  key.ctrl.f, txt.ctrl.f, edkey.action.noop  
-        data  key.ctrl.s, txt.ctrl.s, edkey.action.noop
-        data  key.ctrl.d, txt.ctrl.d, edkey.action.noop
-        data  key.ctrl.e, txt.ctrl.e, edkey.action.noop
-        data  key.ctrl.x, txt.ctrl.x, edkey.action.noop
-        data  key.ctrl.t, txt.ctrl.t, edkey.action.noop
-        data  key.ctrl.b, txt.ctrl.b, edkey.action.noop
+        ; Modified keys
         ;-------------------------------------------------------
-        ; Modifier keys - Delete
-        ;-------------------------------------------------------
-        data  key.fctn.1, txt.fctn.1, edkey.action.del_char
-        data  key.ctrl.k, txt.ctrl.k, edkey.action.del_eol
-        data  key.fctn.3, txt.fctn.3, edkey.action.noop
-        ;-------------------------------------------------------
-        ; Modifier keys - Insert
-        ;-------------------------------------------------------
-        data  key.fctn.2, txt.fctn.2, edkey.action.ins_char.ws
-        data  key.fctn.dot, txt.fctn.dot, edkey.action.ins_onoff
-        data  key.fctn.5, txt.fctn.5, edkey.action.noop
+        data  key.enter, txt.enter, edkey.action.cmdb.enter
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.toggle
-        data  key.ctrl.z, txt.ctrl.z, edkey.action.color.cycle
-        ;-------------------------------------------------------
-        ; Editor/File buffer keys
-        ;-------------------------------------------------------
-        data  key.ctrl.0, txt.ctrl.0, edkey.action.buffer0
-        data  key.ctrl.1, txt.ctrl.1, edkey.action.buffer1
-        data  key.ctrl.2, txt.ctrl.2, edkey.action.buffer2
-        data  key.ctrl.3, txt.ctrl.3, edkey.action.buffer3
-        data  key.ctrl.4, txt.ctrl.4, edkey.action.buffer4
-        data  key.ctrl.5, txt.ctrl.5, edkey.action.buffer5
-        data  key.ctrl.6, txt.ctrl.6, edkey.action.buffer6
-        data  key.ctrl.7, txt.ctrl.7, edkey.action.buffer7
-        data  key.ctrl.8, txt.ctrl.8, edkey.action.buffer8
-        data  key.ctrl.9, txt.ctrl.9, edkey.action.buffer9
+        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
+        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

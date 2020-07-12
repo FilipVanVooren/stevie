@@ -31,17 +31,26 @@
 main:   
         clr   @>6002                ; Jump to bank 1
         b     @main.stevie          ; Start editor
-        ;-----------------------------------------------------------------------
+        ;----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
+
+        ;-----------------------------------------------------------------------
+        ; Keyboard actions
+        ;-----------------------------------------------------------------------
         copy  "edkey.asm"           ; Keyboard actions
         copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
         copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
         copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
         copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
+        copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "stevie.asm"            ; Main editor configuration
+        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Actions for miscelanneous keys        
+        ;-----------------------------------------------------------------------
+        ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
+        ;-----------------------------------------------------------------------
+        copy  "tv.asm"              ; Main editor configuration        
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
         copy  "idx.asm"             ; Index management
@@ -49,14 +58,35 @@ main:
         copy  "idx.insert.asm"      ; Index management - insert slot
         copy  "edb.asm"             ; Editor Buffer
         copy  "cmdb.asm"            ; Command Buffer
+        copy  "errline.asm"         ; Error line
+        ;-----------------------------------------------------------------------
+        ; File handling
+        ;-----------------------------------------------------------------------
         copy  "fh.read.sams.asm"    ; File handler read file
         copy  "fm.load.asm"         ; File manager loadfile
+        ;-----------------------------------------------------------------------
+        ; User hook, background tasks
+        ;-----------------------------------------------------------------------
         copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning        
         copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
         copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-        copy  "pane.cmdb.asm"       ; Command buffer pane
-        copy  "pane.botline.asm"    ; Status line pane
+        ;-----------------------------------------------------------------------
+        ; Screen pane utilities
+        ;-----------------------------------------------------------------------         
+        copy  "pane.utils.colorscheme.asm"
+                                    ; Colorscheme handling in panges 
+        copy  "pane.utils.tipiclock.asm"
+                                    ; TIPI clock
+        ;-----------------------------------------------------------------------
+        ; Screen panes 
+        ;-----------------------------------------------------------------------   
+        copy  "pane.cmdb.asm"       ; Command buffer
+        copy  "pane.errline.asm"    ; Error line
+        copy  "pane.botline.asm"    ; Status line
+        ;-----------------------------------------------------------------------
+        ; Program data
+        ;----------------------------------------------------------------------- 
         copy  "data.constants.asm"  ; Data segment - Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
@@ -72,10 +102,10 @@ main:
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   tx8030                ; Video mode.   See VIDTAB for details.
+spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
 spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprpdt  equ   >1800                 ; VDP sprite pattern table
-sprsat  equ   >2000                 ; VDP sprite attribute table
+sprsat  equ   >2180                 ; VDP sprite attribute table
+sprpdt  equ   >2800                 ; VDP sprite pattern table

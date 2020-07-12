@@ -2,7 +2,7 @@
 * Purpose...: High-level file manager module
 
 *---------------------------------------------------------------
-* Load file into editor
+* Load file into editor buffer
 *---------------------------------------------------------------
 * bl    @fm.loadfile
 *--------------------------------------------------------------- 
@@ -13,12 +13,11 @@
 fm.loadfile:
         dect  stack
         mov   r11,*stack            ; Save return address
-
+        ;-------------------------------------------------------
+        ; Reset editor
+        ;-------------------------------------------------------
         mov   tmp0,@parm1           ; Setup file to load
-        bl    @edb.init             ; Initialize editor buffer
-        bl    @idx.init             ; Initialize index
-        bl    @fb.init              ; Initialize framebuffer
-        bl    @cmdb.hide            ; Hide command buffer
+        bl    @tv.reset             ; Reset editor
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
         ;-------------------------------------------------------
@@ -31,26 +30,32 @@ fm.loadfile:
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
 
+ 
+        bl    @scroff               ; Turn off screen
+        
         clr   tmp0                  ; VDP target address (1nd row on screen!)
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill
-                                    ; / i  tmp2 = Bytes to copy                                    
+                                    ; / i  tmp2 = Bytes to copy
+
+        bl    @pane.action.colorscheme.Load
+                                    ; Load color scheme and turn on screen
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
-        li    tmp0,fm.loadfile.callback.indicator1
+        li    tmp0,fm.loadfile.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
-        li    tmp0,fm.loadfile.callback.indicator2
+        li    tmp0,fm.loadfile.cb.indicator2
         mov   tmp0,@parm3           ; Register callback 2
 
-        li    tmp0,fm.loadfile.callback.indicator3
+        li    tmp0,fm.loadfile.cb.indicator3
         mov   tmp0,@parm4           ; Register callback 3
 
-        li    tmp0,fm.loadfile.callback.fioerr
+        li    tmp0,fm.loadfile.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
         bl    @fh.file.read.sams    ; Read specified file with SAMS support
@@ -81,37 +86,32 @@ fm.loadfile.exit:
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 1"
+* Open file
 *---------------------------------------------------------------
 * Is expected to be passed as parm2 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator1:
+fm.loadfile.cb.indicator1:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Show loading indicators and file descriptor
         ;------------------------------------------------------
         bl    @hchar
-              byte 29,3,32,77
+              byte 29,0,32,80
               data EOL
         
         bl    @putat
-              byte 29,3
+              byte 29,0
               data txt.loading      ; Display "Loading...."
 
-        c     @fh.rleonload,@w$ffff
-        jne   !                                           
-        bl    @putat
-              byte 29,68
-              data txt.rle          ; Display "RLE"
-
-!       bl    @at
-              byte 29,14            ; Cursor YX position
+        bl    @at
+              byte 29,11            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator1.exit:        
+fm.loadfile.cb.indicator1.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -120,9 +120,10 @@ fm.loadfile.callback.indicator1.exit:
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 2"
 *---------------------------------------------------------------
+* Read line
 * Is expected to be passed as parm3 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator2:
+fm.loadfile.cb.indicator2:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -131,7 +132,7 @@ fm.loadfile.callback.indicator2:
               data edb.lines,rambuf,>3020
 
         c     @fh.kilobytes,tmp4
-        jeq   fm.loadfile.callback.indicator2.exit
+        jeq   fm.loadfile.cb.indicator2.exit
 
         mov   @fh.kilobytes,tmp4    ; Save for compare
 
@@ -145,7 +146,7 @@ fm.loadfile.callback.indicator2:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator2.exit:        
+fm.loadfile.cb.indicator2.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -154,10 +155,11 @@ fm.loadfile.callback.indicator2.exit:
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 3"
+* Close file
 *---------------------------------------------------------------
 * Is expected to be passed as parm4 to @tfh.file.read
 *--------------------------------------------------------------- 
-fm.loadfile.callback.indicator3:
+fm.loadfile.cb.indicator3:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -180,7 +182,7 @@ fm.loadfile.callback.indicator3:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.indicator3.exit:        
+fm.loadfile.cb.indicator3.exit:        
         b     @poprt                ; Return to caller
 
 
@@ -190,46 +192,46 @@ fm.loadfile.callback.indicator3.exit:
 *---------------------------------------------------------------
 * Is expected to be passed as parm5 to @tfh.file.read
 ********|*****|*********************|**************************
-fm.loadfile.callback.fioerr:
+fm.loadfile.cb.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
 
         bl    @hchar
               byte 29,0,32,50       ; Erase loading indicator
-              data EOL
-        
+              data EOL        
         ;------------------------------------------------------
-        ; Display I/O error message
+        ; Build I/O error message
         ;------------------------------------------------------
         bl    @cpym2m               
               data txt.ioerr+1
-              data cmdb.top
-              data 41               ; Error message
-
+              data tv.error.msg+1
+              data 34               ; Error message
 
         mov   @edb.filename.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
         inc   tmp0                  ; Skip length byte
-        li    tmp1,cmdb.top + 42    ; RAM destination address
+        li    tmp1,tv.error.msg+33  ; RAM destination address
 
         bl    @xpym2m               ; \ Copy CPU memory to CPU memory
                                     ; | i  tmp0 = ROM/RAM source
                                     ; | i  tmp1 = RAM destination
                                     ; / i  tmp2 = Bytes top copy
-
-
+        ;------------------------------------------------------
+        ; Reset filename to "new file"
+        ;------------------------------------------------------
         li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr
 
         li    tmp0,txt.filetype.none
         mov   tmp0,@edb.filetype.ptr
                                     ; Empty filetype string
-
-        mov   @cmdb.scrrows,@parm1
-        bl    @cmdb.show
+        ;------------------------------------------------------
+        ; Display I/O error message
+        ;------------------------------------------------------
+        bl    @pane.errline.show    ; Show error line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.callback.fioerr.exit:        
+fm.loadfile.cb.fioerr.exit:        
         b     @poprt                ; Return to caller        
