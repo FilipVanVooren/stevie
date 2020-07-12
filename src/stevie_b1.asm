@@ -42,11 +42,12 @@ main:
         copy  "edkey.asm"           ; Keyboard actions
         copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
         copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
-        copy  "edkey.fb.misc.asm"   ; fb pane   - Actions for miscelanneous keys
-        copy  "edkey.fb.file.asm"   ; fb pane   - Actions for file related keys
+        copy  "edkey.fb.misc.asm"   ; fb pane   - Miscelanneous actions
+        copy  "edkey.fb.file.asm"   ; fb pane   - File related actions
         copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Actions for miscelanneous keys        
+        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Miscelanneous actions
+        copy  "edkey.cmdb.file.asm" ; cmdb pane - File related actions
         ;-----------------------------------------------------------------------
         ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
         ;-----------------------------------------------------------------------
@@ -73,9 +74,10 @@ main:
         copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
-        ;-----------------------------------------------------------------------         
+        ;-----------------------------------------------------------------------
+        copy  "pane.utils.asm"      ; Pane utility functions
         copy  "pane.utils.colorscheme.asm"
-                                    ; Colorscheme handling in panges 
+                                    ; Colorscheme handling in panes 
         copy  "pane.utils.tipiclock.asm"
                                     ; TIPI clock
         ;-----------------------------------------------------------------------

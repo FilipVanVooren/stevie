@@ -168,7 +168,8 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Modified keys
         ;-------------------------------------------------------
-        data  key.enter, txt.enter, edkey.action.cmdb.enter
+        data  key.fctn.3, txt.fctn.3, edkey.action.cmdb.clear
+        data  key.enter, txt.enter, edkey.action.cmdb.loadfile
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------

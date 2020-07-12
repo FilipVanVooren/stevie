@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.203998
+**** **** ****     > stevie_b0.asm.278823
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200711-203998
+0009               * File: stevie_b0.asm               ; Version 200712-278823
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200711-203998
+0009               * File: equates.asm                 ; Version 200712-278823
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -282,7 +282,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0262               *--------------------------------------------------------------
 0263               * *** FREE ***                      @>f000-ffff    (4096 bytes)
 0264               *--------------------------------------------------------------
-**** **** ****     > stevie_b0.asm.203998
+**** **** ****     > stevie_b0.asm.278823
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -319,7 +319,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200711-203998'
+0031 6015 ....             text  'STEVIE 200712-278823'
 0032                       even
 0033               
 0041               
@@ -329,7 +329,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.203998
+**** **** ****     > stevie_b0.asm.278823
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >2fff
 0021               ********|*****|*********************|**************************
@@ -1110,7 +1110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 623C 1742             byte  23
-0260 623D ....             text  'Build-ID  200711-203998'
+0260 623D ....             text  'Build-ID  200712-278823'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -3500,15 +3500,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103               
 0104               
 0105               ***************************************************************
-0106               * string.getlen0 - Get length of C-style string
+0106               * string.getlenc - Get length of C-style string
 0107               ***************************************************************
-0108               *  bl   @string.getlen0
+0108               *  bl   @string.getlenc
 0109               *       data p0,p1
 0110               *--------------------------------------------------------------
 0111               *  P0 = Pointer to C-style string
 0112               *  P1 = String termination character
 0113               *--------------------------------------------------------------
-0114               *  bl   @xstring.getlen0
+0114               *  bl   @xstring.getlenc
 0115               *
 0116               *  TMP0 = Pointer to C-style string
 0117               *  TMP1 = Termination character
@@ -3516,7 +3516,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119               *  OUTPUT:
 0120               *  @waux1 = Length of string
 0121               ********|*****|*********************|**************************
-0122               string.getlen0:
+0122               string.getlenc:
 0123 6AC6 0649  14         dect  stack
 0124 6AC8 C64B  30         mov   r11,*stack            ; Save return address
 0125 6ACA 0649  14         dect  stack
@@ -3534,7 +3534,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0137                       ;-----------------------------------------------------------------------
 0138                       ; Register version
 0139                       ;-----------------------------------------------------------------------
-0140               xstring.getlen0:
+0140               xstring.getlenc:
 0141 6ADC 0649  14         dect  stack
 0142 6ADE C64B  30         mov   r11,*stack            ; Save return address
 0143 6AE0 0649  14         dect  stack
@@ -3549,29 +3549,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0152                       ;-----------------------------------------------------------------------
 0153                       ; Scan string for termination character
 0154                       ;-----------------------------------------------------------------------
-0155               string.getlen0.loop:
+0155               string.getlenc.loop:
 0156 6AEC 0586  14         inc   tmp2
 0157 6AEE 9174  28         cb    *tmp0+,tmp1           ; Compare character
-0158 6AF0 1304  14         jeq   string.getlen0.putlength
+0158 6AF0 1304  14         jeq   string.getlenc.putlength
 0159                       ;-----------------------------------------------------------------------
 0160                       ; Sanity check on string length
 0161                       ;-----------------------------------------------------------------------
 0162 6AF2 0286  22         ci    tmp2,255
      6AF4 00FF 
-0163 6AF6 1505  14         jgt   string.getlen0.panic
-0164 6AF8 10F9  14         jmp   string.getlen0.loop
+0163 6AF6 1505  14         jgt   string.getlenc.panic
+0164 6AF8 10F9  14         jmp   string.getlenc.loop
 0165                       ;-----------------------------------------------------------------------
 0166                       ; Return length
 0167                       ;-----------------------------------------------------------------------
-0168               string.getlen0.putlength:
+0168               string.getlenc.putlength:
 0169 6AFA 0606  14         dec   tmp2                  ; One time adjustment
 0170 6AFC C806  38         mov   tmp2,@waux1           ; Store length
      6AFE 833C 
-0171 6B00 1004  14         jmp   string.getlen0.exit   ; Exit
+0171 6B00 1004  14         jmp   string.getlenc.exit   ; Exit
 0172                       ;-----------------------------------------------------------------------
 0173                       ; CPU crash
 0174                       ;-----------------------------------------------------------------------
-0175               string.getlen0.panic:
+0175               string.getlenc.panic:
 0176 6B02 C80B  38         mov   r11,@>ffce            ; \ Save caller address
      6B04 FFCE 
 0177 6B06 06A0  32         bl    @cpu.crash            ; / Crash and halt system
@@ -3579,7 +3579,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0178                       ;----------------------------------------------------------------------
 0179                       ; Exit
 0180                       ;----------------------------------------------------------------------
-0181               string.getlen0.exit:
+0181               string.getlenc.exit:
 0182 6B0A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
 0183 6B0C C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0184 6B0E C139  30         mov   *stack+,tmp0          ; Pop tmp0
@@ -4931,7 +4931,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F06 0040 
 0371 6F08 0460  28         b     @main                 ; Give control to main program
      6F0A 6050 
-**** **** ****     > stevie_b0.asm.203998
+**** **** ****     > stevie_b0.asm.278823
 0051               
 0055 6F0C 2EAA                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -5117,7 +5117,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 6FCC 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      6FCE F20F 
 0113               
-**** **** ****     > stevie_b0.asm.203998
+**** **** ****     > stevie_b0.asm.278823
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------

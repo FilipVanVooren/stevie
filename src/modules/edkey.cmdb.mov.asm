@@ -41,9 +41,9 @@ edkey.action.cmdb.right:
 * Cursor beginning of line
 *---------------------------------------------------------------
 edkey.action.cmdb.home:
-        li    tmp0,1
+        clr   tmp0
         mov   tmp0,@cmdb.column      ; First column
-
+        inc   tmp0
         movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
         mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
         
@@ -53,6 +53,13 @@ edkey.action.cmdb.home:
 * Cursor end of line
 *---------------------------------------------------------------
 edkey.action.cmdb.end:
-        mov   @fb.row.length,tmp0
-        mov   tmp0,@fb.column
+        movb  @cmdb.cmdlen,tmp0      ; Get length byte of current command
+        srl   tmp0,8                 ; Right justify
+        mov   tmp0,@cmdb.column      ; Save column position
+        inc   tmp0                   ; One time adjustment command prompt        
+        ai    tmp0,>1a00             ; Y=26
+        mov   tmp0,@cmdb.cursor      ; Set cursor position
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------        
         b     @hook.keyscan.bounce   ; Back to editor main

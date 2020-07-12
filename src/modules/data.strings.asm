@@ -41,10 +41,7 @@ txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
 txt.cmdb.loaddv80  #string 'Load DV80 file'
 
-txt.cmdb.hintdv80  byte    80
-                   text    'HINT: Specify disk device, path/filename and press '
-                   text    'ENTER.                        '
-                   even
+txt.cmdb.hintdv80  #string 'HINT: Specify filename and press enter.'
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

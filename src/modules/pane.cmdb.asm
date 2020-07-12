@@ -64,30 +64,19 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display pane hint in command buffer
         ;------------------------------------------------------
-        bl    @at                   ; \ 
-              byte 28,0             ; | Display pane hint
-        mov   @cmdb.panhint,tmp1    ; |
-        bl    @xutst0               ; /             
+        li    tmp0,>1c00            ; Y=28, X=0
+        mov   tmp0,@parm1           ; Set parameter
+        mov   @cmdb.panhint,@parm2  ; Pane hint to display
+
+        bl    @pane.show_hintx      ; Display pane hint
+                                    ; \ i  parm1 = Pointer to string with hint
+                                    ; / i  parm2 = YX position
         ;------------------------------------------------------
         ; Display keys in status line
         ;------------------------------------------------------
-        movb  @txt.keys.loaddv80,tmp0  
-                                    ; Get length byte of hint
-        srl   tmp0,8                ; Right justify
-        mov   tmp0,tmp2
-        neg   tmp2
-        ai    tmp2,80               ; Number of bytes to fill
-        ai    tmp0,>0910            ; VDP start address (bottom status line)
-        li    tmp1,32               ; Byte to fill
-
-        bl    @xfilv                ; Clear line
-                                    ; i \  tmp0 = start address
-                                    ; i |  tmp1 = byte to fill
-                                    ; i /  tmp2 = number of bytes to fill
-
-        bl    @putat                ; Display key hint
-              byte 29,0
-              data txt.keys.loaddv80        
+        bl    @pane.show_hint       ; Display pane hint
+              byte  29,0            ; Y = 29, X=0
+              data  txt.keys.loaddv80 
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------

@@ -164,7 +164,8 @@ cmdb.cmd.clear:
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,tmp0   
         inc   tmp0                  
-        mov   tmp0,@cmdb.cursor             
+        mov   tmp0,@cmdb.cursor     ; Position cursor
+              
 cmdb.cmd.clear.exit:
         ;------------------------------------------------------
         ; Exit
@@ -174,3 +175,50 @@ cmdb.cmd.clear.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+
+
+
+
+***************************************************************
+* cmdb.getlength
+* Get length of current command
+***************************************************************
+* bl @cmdb.getlength
+*--------------------------------------------------------------
+* INPUT
+* @cmdb.cmd
+*--------------------------------------------------------------
+* OUTPUT
+* @cmdb.cmdlen
+*--------------------------------------------------------------
+* Register usage
+* tmp0
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.cmd.getlength:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Get length of null terminated string
+        ;-------------------------------------------------------
+        bl    @string.getlenc      ; Get length of C-style string
+              data cmdb.cmd,0      ; \ i  p0    = Pointer to C-style string
+                                   ; | i  p1    = Termination character
+                                   ; / o  waux1 = Length of string
+        mov   @waux1,tmp0          
+        sla   tmp0,8               ; LSB to MSB 
+        movb  tmp0,@cmdb.cmdlen    ; Save length of string
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+cmdb.cmd.getlength.exit:        
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+        
