@@ -191,7 +191,8 @@ cmdb.cmd.clear.exit:
 * @cmdb.cmd
 *--------------------------------------------------------------
 * OUTPUT
-* @cmdb.cmdlen
+* @cmdb.cmdlen  (Length in MSB)
+* @outparm1     (Length in LSB)
 *--------------------------------------------------------------
 * Register usage
 * tmp0
@@ -211,8 +212,9 @@ cmdb.cmd.getlength:
                                    ; | i  p1    = Termination character
                                    ; / o  waux1 = Length of string
         mov   @waux1,tmp0          
+        mov   tmp0,@outparm1       ; Save length of string
         sla   tmp0,8               ; LSB to MSB 
-        movb  tmp0,@cmdb.cmdlen    ; Save length of string
+        movb  tmp0,@cmdb.cmdlen    ; Save length of string        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

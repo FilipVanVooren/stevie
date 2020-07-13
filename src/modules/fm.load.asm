@@ -135,7 +135,7 @@ fm.loadfile.cb.indicator2:
         ;------------------------------------------------------
         dect  stack
         mov   r11,*stack            ; Save return address
-        
+
         mov   @fh.kilobytes,@fh.kilobytes.prev
                                     ; Save for compare
 
@@ -169,7 +169,6 @@ fm.loadfile.cb.indicator2.exit:
 fm.loadfile.cb.indicator3:
         dect  stack
         mov   r11,*stack            ; Save return address
-
 
         bl    @hchar
               byte 29,3,32,50       ; Erase loading indicator

@@ -12,10 +12,25 @@ edkey.action.cmdb.loadfile:
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
         bl    @cmdb.cmd.getlength   ; Get length of current command
-        li    tmp0,cmdb.cmdlen      ; Length-prefixed command string
+        mov   @outparm1,tmp0        ; Length == 0 ?
+        jne   !                     ; No, load file
+        ;-------------------------------------------------------
+        ; No filename specified
+        ;-------------------------------------------------------        
+        bl    @pane.errline.show    ; Show error line
+
+        jmp   edkey.action.cmdb.loadfile.exit
+        ;-------------------------------------------------------
+        ; Load specified file
+        ;-------------------------------------------------------
+!       bl    @cpym2m
+              data cmdb.cmdlen,heap.top,80
+                                    ; Copy filename from command line to buffer
+
+        li    tmp0,heap.top         ; 1st line in heap
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  tmp0 = Pointer to length-prefixed
-                                    ; /           string "dev.filename"
+                                    ; /           device/filename string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

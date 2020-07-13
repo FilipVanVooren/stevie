@@ -48,8 +48,8 @@
 * b000-bfff    4096           Index buffer page
 * c000-cfff    4096           Editor buffer page
 * d000-dfff    4096           Command buffer
-* e000-efff    4096           *FREE*
-* f000-ffff    4096           *????*
+* e000-efff    4096           Heap
+* f000-ffff    4096           *FREE*
 *
 *
 * VDP RAM
@@ -139,7 +139,7 @@ tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
 tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
 tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
 tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
-tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-4)
+tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
@@ -204,7 +204,7 @@ cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
 cmdb.pantitle     equ  cmdb.struct + 26; Pointer to string with pane title
 cmdb.panhint      equ  cmdb.struct + 28; Pointer to string with pane hint
-cmdb.cmdlen       equ  cmdb.struct + 30; Length of current command (byte!)
+cmdb.cmdlen       equ  cmdb.struct + 30; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 31; Current command (80 bytes max.)
 cmdb.end          equ  cmdb.struct +111; End of structure
 *--------------------------------------------------------------
@@ -260,5 +260,6 @@ edb.size          equ  4096            ; Editor buffer size
 cmdb.top          equ  >d000           ; Top of command buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
-* *** FREE ***                      @>f000-ffff    (4096 bytes)
+* Heap                              @>e000-efff    (4096 bytes)
 *--------------------------------------------------------------
+heap.top          equ  >e000           ; Top of heap
