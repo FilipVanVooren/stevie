@@ -32,7 +32,7 @@ txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-E=Previous    FCTN-X=Next'
 ; Strings for error line pane
 ;--------------------------------------------------------------
 txt.ioerr          #string 'I/O error. Failed loading file: '
-txt.io.nofile      #string 'No filename specified'
+txt.io.nofile      #string 'I/O error. No filename specified.'
 
 
 ;--------------------------------------------------------------

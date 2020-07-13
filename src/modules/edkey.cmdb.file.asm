@@ -16,8 +16,12 @@ edkey.action.cmdb.loadfile:
         jne   !                     ; No, load file
         ;-------------------------------------------------------
         ; No filename specified
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------    
         bl    @pane.errline.show    ; Show error line
+
+        bl    @pane.show_hint
+              byte 28,0
+              data txt.io.nofile
 
         jmp   edkey.action.cmdb.loadfile.exit
         ;-------------------------------------------------------

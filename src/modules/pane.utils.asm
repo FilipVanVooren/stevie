@@ -10,11 +10,11 @@
 * pane.show_hintx
 * Show hint message
 ***************************************************************
-* bl  @pane.hint
+* bl  @pane.show_hintx
 *--------------------------------------------------------------
 * INPUT
-* parm1 = Cursor YX position
-* parm2 = Pointer to Length-prefixed string
+* @parm1 = Cursor YX position
+* @parm2 = Pointer to Length-prefixed string
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -83,12 +83,12 @@ pane.show_hintx.exit:
 * pane.show_hint
 * Show hint message (data parameter version)
 ***************************************************************
-* bl  @pane.hint
-*     data parm1,parm2
+* bl  @pane.show_hint
+*     data p1,p2
 *--------------------------------------------------------------
 * INPUT
-* parm1 = Cursor YX position
-* parm2 = Pointer to Length-prefixed string
+* p1 = Cursor YX position
+* p2 = Pointer to Length-prefixed string
 *--------------------------------------------------------------
 * OUTPUT
 * none
