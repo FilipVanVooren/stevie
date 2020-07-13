@@ -22,18 +22,24 @@
 * OUTPUT
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 fh.file.read.sams:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------   
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
-        clr   @fh.kilobytes         ; Clear kilobytes processed
-        clr   tmp4                  ; Clear kilobytes processed display counter        
+        clr   @fh.kilobytes         ; \ Clear kilobytes processed
+        clr   @fh.kilobytes.prev    ; /
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents
        
@@ -324,9 +330,11 @@ fh.file.read.sams.eof:
 * Exit
 *--------------------------------------------------------------
 fh.file.read.sams.exit:
-        mov   *stack+,r11           ; Pop r11
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-
 
 
 ***************************************************************

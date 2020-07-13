@@ -122,19 +122,26 @@ fm.loadfile.cb.indicator1.exit:
 *---------------------------------------------------------------
 * Read line
 * Is expected to be passed as parm3 to @tfh.file.read
+* Optimized for performance
 *--------------------------------------------------------------- 
 fm.loadfile.cb.indicator2:
+        ;------------------------------------------------------
+        ; Check if updated counters should be displayed
+        ;------------------------------------------------------
+        c     @fh.kilobytes,@fh.kilobytes.prev
+        jeq   !
+        ;------------------------------------------------------
+        ; Display updated counters
+        ;------------------------------------------------------
         dect  stack
         mov   r11,*stack            ; Save return address
+        
+        mov   @fh.kilobytes,@fh.kilobytes.prev
+                                    ; Save for compare
 
         bl    @putnum
               byte 29,75            ; Show lines read
               data edb.lines,rambuf,>3020
-
-        c     @fh.kilobytes,tmp4
-        jeq   fm.loadfile.cb.indicator2.exit
-
-        mov   @fh.kilobytes,tmp4    ; Save for compare
 
         bl    @putnum
               byte 29,56            ; Show kilobytes read
@@ -146,9 +153,9 @@ fm.loadfile.cb.indicator2:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.cb.indicator2.exit:        
-        b     @poprt                ; Return to caller
-
+fm.loadfile.cb.indicator2.exit:
+        mov   *stack+,r11           ; Pop R11
+!       b     *r11                  ; Return to caller
 
 
 

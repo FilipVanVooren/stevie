@@ -227,7 +227,7 @@ fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
-fh.free           equ  fh.struct + 68  ; no longer used
+fh.kilobytes.prev equ  fh.struct + 68  ; Kilobytes process (previous)
 fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
 fh.end            equ  fh.struct +150  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
