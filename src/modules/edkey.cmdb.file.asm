@@ -27,7 +27,10 @@ edkey.action.cmdb.loadfile:
         ;-------------------------------------------------------
         ; Load specified file
         ;-------------------------------------------------------
-!       bl    @cpym2m
+!       sla   tmp0,8               ; LSB to MSB 
+        movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+
+        bl    @cpym2m
               data cmdb.cmdlen,heap.top,80
                                     ; Copy filename from command line to buffer
 

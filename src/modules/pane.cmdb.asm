@@ -138,7 +138,7 @@ pane.cmdb.show:
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 
-        bl    @cmdb.cmd.clear;      ; Clear current command        
+        ;bl    @cmdb.cmd.clear      ; Clear current command        
 
         bl    @pane.errline.hide    ; Hide error pane
 
@@ -198,6 +198,14 @@ pane.cmdb.hide:
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!
+        ;------------------------------------------------------
+        ; Reload current color scheme
+        ;------------------------------------------------------
+        seto  @parm1                ; Do not turn screen off while
+                                    ; reloading color scheme
+
+        bl    @pane.action.colorscheme.load
+                                    ; Reload color scheme
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

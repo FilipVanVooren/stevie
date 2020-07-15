@@ -80,6 +80,14 @@ edkey.action.cmdb.char:
         inc   @cmdb.cursor          ; Next column cursor
 
         bl    @cmdb.cmd.getlength   ; Get length of current command
+                                    ; \ i  @cmdb.cmd = Command string
+                                    ; / o  @outparm1 = Length of command
+        ;-------------------------------------------------------
+        ; Addjust length
+        ;-------------------------------------------------------
+        mov   @outparm1,tmp0
+        sla   tmp0,8               ; LSB to MSB 
+        movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

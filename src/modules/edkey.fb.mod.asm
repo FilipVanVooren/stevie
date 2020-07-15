@@ -333,6 +333,22 @@ edkey.action.ins_onoff.exit:
 * Process character (frame buffer)
 *---------------------------------------------------------------
 edkey.action.char:
+        ;-------------------------------------------------------
+        ; Sanity checks
+        ;-------------------------------------------------------
+        movb  tmp1,tmp0             ; Get keycode
+        srl   tmp0,8                ; MSB to LSB
+
+        ci    tmp0,32               ; Keycode < ASCII 32 ?
+        jlt   edkey.action.char.exit
+                                    ; Yes, skip
+
+        ci    tmp0,126              ; Keycode > ASCII 126 ?
+        jgt   edkey.action.char.exit
+                                    ; Yes, skip
+        ;-------------------------------------------------------
+        ; Setup
+        ;-------------------------------------------------------
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         movb  tmp1,@parm1           ; Store character for insert
         mov   @edb.insmode,tmp0     ; Insert or overwrite ?

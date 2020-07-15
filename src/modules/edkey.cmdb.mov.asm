@@ -23,7 +23,8 @@ edkey.action.cmdb.left:
 * Cursor right
 *---------------------------------------------------------------
 edkey.action.cmdb.right:
-        c     @cmdb.column,@cmdb.length
+        bl    @cmdb.cmd.getlength
+        c     @cmdb.column,@outparm1
         jhe   !                     ; column > length line ? Skip processing
         ;-------------------------------------------------------
         ; Update

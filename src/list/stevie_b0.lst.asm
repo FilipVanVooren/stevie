@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.472073
+**** **** ****     > stevie_b0.asm.490354
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200715-472073
+0009               * File: stevie_b0.asm               ; Version 200715-490354
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200715-472073
+0009               * File: equates.asm                 ; Version 200715-490354
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -67,7 +67,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0047               *
 0048               * b000-bfff    4096           Index buffer page
 0049               * c000-cfff    4096           Editor buffer page
-0050               * d000-dfff    4096           Command buffer
+0050               * d000-dfff    4096           Command history buffer
 0051               * e000-efff    4096           Heap
 0052               * f000-ffff    4096           *FREE*
 0053               *
@@ -275,15 +275,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0255      C000     edb.top           equ  >c000           ; Editor buffer high memory
 0256      1000     edb.size          equ  4096            ; Editor buffer size
 0257               *--------------------------------------------------------------
-0258               * Command buffer                    @>d000-dfff    (4096 bytes)
+0258               * Command history buffer            @>d000-dfff    (4096 bytes)
 0259               *--------------------------------------------------------------
-0260      D000     cmdb.top          equ  >d000           ; Top of command buffer
+0260      D000     cmdb.top          equ  >d000           ; Top of command history buffer
 0261      1000     cmdb.size         equ  4096            ; Command buffer size
 0262               *--------------------------------------------------------------
 0263               * Heap                              @>e000-efff    (4096 bytes)
 0264               *--------------------------------------------------------------
 0265      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.472073
+**** **** ****     > stevie_b0.asm.490354
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -320,7 +320,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0029               
 0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200715-472073'
+0031 6015 ....             text  'STEVIE 200715-490354'
 0032                       even
 0033               
 0041               
@@ -330,7 +330,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.472073
+**** **** ****     > stevie_b0.asm.490354
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >2fff
 0021               ********|*****|*********************|**************************
@@ -1111,7 +1111,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 623C 1742             byte  23
-0260 623D ....             text  'Build-ID  200715-472073'
+0260 623D ....             text  'Build-ID  200715-490354'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4954,7 +4954,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F20 0040 
 0371 6F22 0460  28         b     @main                 ; Give control to main program
      6F24 6050 
-**** **** ****     > stevie_b0.asm.472073
+**** **** ****     > stevie_b0.asm.490354
 0051               
 0055 6F26 2EC4                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -5010,10 +5010,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F38 0000 
      6F3A 0000 
      6F3C 001C 
-0040 6F3E FFFF             data  >ffff,>ffff,>ffff,>ffff ; Cursor 2 - Insert mode
-     6F40 FFFF 
-     6F42 FFFF 
-     6F44 FFFF 
+0040 6F3E 1C1C             data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 2 - Insert mode
+     6F40 1C1C 
+     6F42 1C1C 
+     6F44 1C00 
 0041 6F46 1C1C             data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
      6F48 1C1C 
      6F4A 1C1C 
@@ -5140,7 +5140,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 6FE6 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      6FE8 F20F 
 0113               
-**** **** ****     > stevie_b0.asm.472073
+**** **** ****     > stevie_b0.asm.490354
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------

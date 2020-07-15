@@ -62,6 +62,7 @@ pane.action.colorscheme.cycle.exit:
 *--------------------------------------------------------------
 * INPUT
 * @tv.colorscheme = Index into color scheme table
+* @parm1          = Skip screen off if >FFFF
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -82,11 +83,17 @@ pane.action.colorscheme.load:
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
+        ;-------------------------------------------------------
+        ; Turn screen of
+        ;-------------------------------------------------------
+        mov   @parm1,tmp0
+        ci    tmp0,>ffff            ; Skip flag set?
+        jeq   !                     ; Yes, so skip screen off
         bl    @scroff               ; Turn screen off        
         ;-------------------------------------------------------
         ; Get framebuffer foreground/background color
         ;-------------------------------------------------------
-        mov   @tv.colorscheme,tmp0  ; Get color scheme index 
+!       mov   @tv.colorscheme,tmp0  ; Get color scheme index 
         sla   tmp0,2                ; Offset into color scheme data table
         ai    tmp0,tv.colorscheme.table
                                     ; Add base for color scheme data table

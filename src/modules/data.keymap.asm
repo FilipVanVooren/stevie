@@ -167,6 +167,7 @@ keymap_actions.cmdb:
         data  key.fctn.s, txt.fctn.s, edkey.action.cmdb.left
         data  key.fctn.d, txt.fctn.d, edkey.action.cmdb.right
         data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
+        data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
         ;-------------------------------------------------------
         ; Modified keys
         ;-------------------------------------------------------
@@ -176,8 +177,11 @@ keymap_actions.cmdb:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
         data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
+        ;-------------------------------------------------------
+        ; Dialog keys
+        ;-------------------------------------------------------
+        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

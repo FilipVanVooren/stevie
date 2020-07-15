@@ -24,7 +24,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
 
-txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-E=Previous    FCTN-X=Next'
+txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-3=Clear    CTRL-A=Home    CTRL-F=End'
 
 
 
@@ -42,7 +42,7 @@ txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
 txt.cmdb.loaddv80  #string 'Load DV80 file'
 
-txt.cmdb.hintdv80  #string 'HINT: Specify filename and press enter.'
+txt.cmdb.hintdv80  #string 'HINT: Specify filename and press ENTER.'
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

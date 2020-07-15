@@ -20,7 +20,7 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-fb.init
+fb.init:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -49,8 +49,9 @@ fb.init
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.init.exit
-        b     @poprt                ; Return to caller
+fb.init.exit:
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 
@@ -87,7 +88,8 @@ fb.row2line:
         ; Exit
         ;------------------------------------------------------
 fb.row2line$$:
-        b    @poprt                 ; Return to caller
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 
@@ -128,8 +130,10 @@ fb.calc_pointer:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.calc_pointer.$$
-        b    @poprt                 ; Return to caller
+fb.calc_pointer.exit:
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
 
 
 
@@ -280,4 +284,5 @@ fb.get.firstnonblank.nomatch:
         ; Exit
         ;------------------------------------------------------
 fb.get.firstnonblank.exit:
-        b    @poprt                 ; Return to caller
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller

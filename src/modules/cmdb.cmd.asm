@@ -1,3 +1,10 @@
+* FILE......: cmdb_cmd.asm
+* Purpose...: Stevie Editor - Command line
+
+*//////////////////////////////////////////////////////////////
+*        Stevie Editor - Command line handling
+*//////////////////////////////////////////////////////////////
+
 ***************************************************************
 * cmdb.cmd.clear
 * Clear current command
@@ -61,19 +68,16 @@ cmdb.cmd.clear.exit:
 * @cmdb.cmd
 *--------------------------------------------------------------
 * OUTPUT
-* @cmdb.cmdlen  (Length in MSB)
-* @outparm1     (Length in LSB)
+* @outparm1
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* none
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
 cmdb.cmd.getlength:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
         ; Get length of null terminated string
         ;-------------------------------------------------------
@@ -81,14 +85,61 @@ cmdb.cmd.getlength:
               data cmdb.cmd,0      ; \ i  p0    = Pointer to C-style string
                                    ; | i  p1    = Termination character
                                    ; / o  waux1 = Length of string
-        mov   @waux1,tmp0          
-        mov   tmp0,@outparm1       ; Save length of string
-        sla   tmp0,8               ; LSB to MSB 
-        movb  tmp0,@cmdb.cmdlen    ; Save length of string        
+        mov   @waux1,@outparm1     ; Save length of string
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 cmdb.cmd.getlength.exit:        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+
+
+***************************************************************
+* cmdb.cmd.addhist
+* Add command to history
+***************************************************************
+* bl @cmdb.cmd.addhist
+*--------------------------------------------------------------
+* INPUT
+* 
+* @cmdb.cmd
+*--------------------------------------------------------------
+* OUTPUT
+* @outparm1     (Length in LSB)
+*--------------------------------------------------------------
+* Register usage
+* tmp0
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.cmd.history.add:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+
+        bl    @cmdb.cmd.getlength   ; Get length of command
+                                    ; \ i  @cmdb.cmd
+                                    ; / o  @outparm1
+        ;------------------------------------------------------
+        ; Sanity check
+        ;------------------------------------------------------
+        mov   @outparm1,tmp0        ; Check length
+        jeq   cmdb.cmd.history.add.exit
+                                    ; Exit early if length = 0
+        ;------------------------------------------------------
+        ; Add command to history
+        ;------------------------------------------------------
+        
+
+
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+cmdb.cmd.history.add.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

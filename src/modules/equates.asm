@@ -47,7 +47,7 @@
 *
 * b000-bfff    4096           Index buffer page
 * c000-cfff    4096           Editor buffer page
-* d000-dfff    4096           Command buffer
+* d000-dfff    4096           Command history buffer
 * e000-efff    4096           Heap
 * f000-ffff    4096           *FREE*
 *
@@ -255,9 +255,9 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* Command buffer                    @>d000-dfff    (4096 bytes)
+* Command history buffer            @>d000-dfff    (4096 bytes)
 *--------------------------------------------------------------
-cmdb.top          equ  >d000           ; Top of command buffer
+cmdb.top          equ  >d000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
 * Heap                              @>e000-efff    (4096 bytes)
