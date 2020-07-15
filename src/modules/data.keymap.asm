@@ -145,7 +145,10 @@ keymap_actions.editor:
         data  key.ctrl.7, txt.ctrl.7, edkey.action.buffer7
         data  key.ctrl.8, txt.ctrl.8, edkey.action.buffer8
         data  key.ctrl.9, txt.ctrl.9, edkey.action.buffer9
-        data  key.ctrl.l, txt.ctrl.l, edkey.action.dialog.dv80
+        ;-------------------------------------------------------
+        ; Dialog keys
+        ;-------------------------------------------------------
+        data  key.ctrl.l, txt.ctrl.l, dialog.loaddv80        
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -164,7 +167,6 @@ keymap_actions.cmdb:
         data  key.fctn.s, txt.fctn.s, edkey.action.cmdb.left
         data  key.fctn.d, txt.fctn.d, edkey.action.cmdb.right
         data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
-        data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
         ;-------------------------------------------------------
         ; Modified keys
         ;-------------------------------------------------------

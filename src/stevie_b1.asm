@@ -58,7 +58,11 @@ main:
         copy  "idx.delete.asm"      ; Index management - delete slot
         copy  "idx.insert.asm"      ; Index management - insert slot
         copy  "edb.asm"             ; Editor Buffer
-        copy  "cmdb.asm"            ; Command Buffer
+        ;-----------------------------------------------------------------------
+        ; Command buffer handling
+        ;-----------------------------------------------------------------------
+        copy  "cmdb.asm"            ; Command buffer shared code
+        copy  "cmdb.cmd.asm"        ; Command line handling
         copy  "errline.asm"         ; Error line
         ;-----------------------------------------------------------------------
         ; File handling
@@ -81,11 +85,16 @@ main:
         copy  "pane.utils.tipiclock.asm"
                                     ; TIPI clock
         ;-----------------------------------------------------------------------
-        ; Screen panes 
+        ; Screen panes
         ;-----------------------------------------------------------------------   
         copy  "pane.cmdb.asm"       ; Command buffer
         copy  "pane.errline.asm"    ; Error line
         copy  "pane.botline.asm"    ; Status line
+        ;-----------------------------------------------------------------------
+        ; Dialogs
+        ;-----------------------------------------------------------------------   
+        copy  "dialog.file.load.asm"
+                                    ; Dialog "Load DV80 file"
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
