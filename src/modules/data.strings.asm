@@ -24,7 +24,13 @@ txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
 
+
+;--------------------------------------------------------------
+; Dialog strings
+;--------------------------------------------------------------
 txt.keys.loaddv80  #string 'FCTN-9=Back    FCTN-3=Clear    CTRL-A=Home    CTRL-F=End'
+
+
 
 
 
@@ -58,6 +64,10 @@ txt.stevie         byte    12
                    text    'stevie v1.00'
                    byte    11
                    even
+
+txt.colorscheme    #string 'COLOR SCHEME: '
+
+
 
 fdname1            #string 'PI.CLOCK'
 fdname2            #string 'TIPI.TIVI.NR80'

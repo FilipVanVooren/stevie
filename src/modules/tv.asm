@@ -32,6 +32,7 @@ tv.init:
         ; Initialize
         ;------------------------------------------------------
         clr   @tv.colorscheme       ; Set default color scheme 
+        clr   @tv.task.oneshot      ; Reset pointer to oneshot task
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

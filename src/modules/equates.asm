@@ -144,9 +144,10 @@ tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
 tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
-tv.error.visible  equ  tv.top + 28     ; Error pane visible
-tv.error.msg      equ  tv.top + 30     ; Error message (max. 160 characters)
-tv.end            equ  tv.top + 190    ; End of structure
+tv.task.oneshot   equ  tv.top + 28     ; Pointer to one-shot routine
+tv.error.visible  equ  tv.top + 30     ; Error pane visible
+tv.error.msg      equ  tv.top + 32     ; Error message (max. 160 characters)
+tv.end            equ  tv.top + 192    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a100-a1ff     (256 bytes)
 *--------------------------------------------------------------

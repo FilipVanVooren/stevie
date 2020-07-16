@@ -37,11 +37,36 @@ pane.action.colorscheme.switch:
         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
         bl    @pane.action.colorscheme.load
         ;-------------------------------------------------------
+        ; Show current color scheme message
+        ;-------------------------------------------------------  
+        mov   @wyx,@waux1           ; Save cursor YX position
+
+        bl    @filv
+              data >183C,>1F,20     ; VDP start address (frame buffer area)
+
+        bl    @putat
+              byte 0,60
+              data txt.colorscheme  ; Show color scheme message
+
+        bl    @putnum
+              byte 0,75
+              data tv.colorscheme,rambuf,>3020
+
+        mov   @waux1,@wyx           ; Restore cursor YX position
+        ;-------------------------------------------------------
         ; Delay
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------  
         li    tmp0,12000        
 !       dec   tmp0
         jne   -!
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing message
+        ;-------------------------------------------------------  
+        li    tmp0,pane.action.colorscheme.task.callback
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -49,8 +74,27 @@ pane.action.colorscheme.cycle.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-        
+        ;-------------------------------------------------------
+        ; Remove colorscheme message (triggered by oneshot task)
+        ;-------------------------------------------------------
+pane.action.colorscheme.task.callback:
+        dect  stack
+        mov   r11,*stack            ; Push return address
+       
+        bl    @filv 
+              data >003C,>00,20     ; Remove message
 
+        seto  @parm1
+        bl    @pane.action.colorscheme.load
+                                    ; Reload current colorscheme
+                                    ; \ i  parm1 = Do not turn screen off
+                                    ; /
+
+        seto  @fb.dirty             ; Trigger frame buffer refresh
+        clr   @tv.task.oneshot      ; Reset oneshot task        
+        
+        mov   *stack+,r11           ; Pop R11        
+        b     *r11                  ; Return to task
 
 
 

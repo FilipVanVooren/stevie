@@ -95,7 +95,7 @@ main.continue:
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------
-        li    tmp0,>0200
+        li    tmp0,>0300
         mov   tmp0,@btihi           ; Highest slot in use
  
         bl    @at
@@ -108,6 +108,7 @@ main.continue:
               data >0001,task.vdp.panes    ; Task 0 - Draw VDP editor panes
               data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
               data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
+              data >032f,task.oneshot      ; Task 3 - One shot task
               data eol
 
         bl    @mkhook
