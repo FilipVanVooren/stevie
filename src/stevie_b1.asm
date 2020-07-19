@@ -68,7 +68,8 @@ main:
         ; File handling
         ;-----------------------------------------------------------------------
         copy  "fh.read.sams.asm"    ; File handler read file
-        copy  "fm.load.asm"         ; File manager loadfile
+        copy  "fm.load.asm"         ; File manager load file into editor
+        copy  "fm.browse.asm"       ; File manager browse support routines
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
-* FILE......: fm_load.asm
-* Purpose...: High-level file manager module
+* FILE......: fm.load.asm
+* Purpose...: File Manager - Load file
 
 *---------------------------------------------------------------
 * Load file into editor buffer
@@ -80,7 +80,8 @@ fm.loadfile:
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
-        b     @poprt                ; Return to caller
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
 
 
 
@@ -111,8 +112,9 @@ fm.loadfile.cb.indicator1:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.cb.indicator1.exit:        
-        b     @poprt                ; Return to caller
+fm.loadfile.cb.indicator1.exit:
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
 
 
 
@@ -188,8 +190,9 @@ fm.loadfile.cb.indicator3:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.cb.indicator3.exit:        
-        b     @poprt                ; Return to caller
+fm.loadfile.cb.indicator3.exit:
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
 
 
 
@@ -239,5 +242,6 @@ fm.loadfile.cb.fioerr:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.cb.fioerr.exit:        
-        b     @poprt                ; Return to caller        
+fm.loadfile.cb.fioerr.exit:
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller

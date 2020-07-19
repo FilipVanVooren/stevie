@@ -43,8 +43,9 @@ key.fctn.z    equ >0000             ; fctn + z
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys extra
 *---------------------------------------------------------------
-key.fctn.dot  equ >b900             ; fctn + .
-key.fctn.plus equ >0500             ; fctn + +
+key.fctn.dot    equ >b900           ; fctn + .
+key.fctn.comma  equ >b800           ; fctn + ,
+key.fctn.plus   equ >0500           ; fctn + +
 *---------------------------------------------------------------
 * Keyboard scancodes - control keys
 *-------------|---------------------|---------------------------
@@ -87,11 +88,111 @@ key.ctrl.z    equ >9a00             ; ctrl + z
 *---------------------------------------------------------------
 * Keyboard scancodes - control keys extra
 *---------------------------------------------------------------
-key.ctrl.plus equ >9d00             ; ctrl + +
+key.ctrl.dot    equ >9b00           ; ctrl + .
+key.ctrl.comma  equ >8000           ; ctrl + ,
+key.ctrl.plus   equ >9d00           ; ctrl + +
 *---------------------------------------------------------------
 * Special keys
 *---------------------------------------------------------------
 key.enter     equ >0d00             ; enter
+
+
+
+*---------------------------------------------------------------
+* Keyboard labels - Function keys
+*---------------------------------------------------------------
+txt.fctn.0     #string 'fctn + 0'
+txt.fctn.1     #string 'fctn + 1'
+txt.fctn.2     #string 'fctn + 2'
+txt.fctn.3     #string 'fctn + 3'
+txt.fctn.4     #string 'fctn + 4'
+txt.fctn.5     #string 'fctn + 5'
+txt.fctn.6     #string 'fctn + 6'
+txt.fctn.7     #string 'fctn + 7'
+txt.fctn.8     #string 'fctn + 8'
+txt.fctn.9     #string 'fctn + 9'
+txt.fctn.a     #string 'fctn + a'
+txt.fctn.b     #string 'fctn + b'
+txt.fctn.c     #string 'fctn + c'
+txt.fctn.d     #string 'fctn + d'
+txt.fctn.e     #string 'fctn + e'
+txt.fctn.f     #string 'fctn + f'
+txt.fctn.g     #string 'fctn + g'
+txt.fctn.h     #string 'fctn + h'
+txt.fctn.i     #string 'fctn + i'
+txt.fctn.j     #string 'fctn + j'
+txt.fctn.k     #string 'fctn + k'
+txt.fctn.l     #string 'fctn + l'
+txt.fctn.m     #string 'fctn + m'
+txt.fctn.n     #string 'fctn + n'
+txt.fctn.o     #string 'fctn + o'
+txt.fctn.p     #string 'fctn + p'
+txt.fctn.q     #string 'fctn + q'
+txt.fctn.r     #string 'fctn + r'
+txt.fctn.s     #string 'fctn + s'
+txt.fctn.t     #string 'fctn + t'
+txt.fctn.u     #string 'fctn + u'
+txt.fctn.v     #string 'fctn + v'
+txt.fctn.w     #string 'fctn + w'
+txt.fctn.x     #string 'fctn + x'
+txt.fctn.y     #string 'fctn + y'
+txt.fctn.z     #string 'fctn + z'
+*---------------------------------------------------------------
+* Keyboard labels - Function keys extra
+*---------------------------------------------------------------
+txt.fctn.dot   #string 'fctn + .'
+txt.fctn.plus  #string 'fctn + +'
+
+txt.ctrl.dot   #string 'ctrl + .'
+txt.ctrl.comma #string 'ctrl + ,'
+*---------------------------------------------------------------
+* Keyboard labels - Control keys
+*---------------------------------------------------------------
+txt.ctrl.0     #string 'ctrl + 0'
+txt.ctrl.1     #string 'ctrl + 1'
+txt.ctrl.2     #string 'ctrl + 2'
+txt.ctrl.3     #string 'ctrl + 3'
+txt.ctrl.4     #string 'ctrl + 4'
+txt.ctrl.5     #string 'ctrl + 5'
+txt.ctrl.6     #string 'ctrl + 6'
+txt.ctrl.7     #string 'ctrl + 7'
+txt.ctrl.8     #string 'ctrl + 8'
+txt.ctrl.9     #string 'ctrl + 9'
+txt.ctrl.a     #string 'ctrl + a'
+txt.ctrl.b     #string 'ctrl + b'
+txt.ctrl.c     #string 'ctrl + c'
+txt.ctrl.d     #string 'ctrl + d'
+txt.ctrl.e     #string 'ctrl + e'
+txt.ctrl.f     #string 'ctrl + f'
+txt.ctrl.g     #string 'ctrl + g'
+txt.ctrl.h     #string 'ctrl + h'
+txt.ctrl.i     #string 'ctrl + i'
+txt.ctrl.j     #string 'ctrl + j'
+txt.ctrl.k     #string 'ctrl + k'
+txt.ctrl.l     #string 'ctrl + l'
+txt.ctrl.m     #string 'ctrl + m'
+txt.ctrl.n     #string 'ctrl + n'
+txt.ctrl.o     #string 'ctrl + o'
+txt.ctrl.p     #string 'ctrl + p'
+txt.ctrl.q     #string 'ctrl + q'
+txt.ctrl.r     #string 'ctrl + r'
+txt.ctrl.s     #string 'ctrl + s'
+txt.ctrl.t     #string 'ctrl + t'
+txt.ctrl.u     #string 'ctrl + u'
+txt.ctrl.v     #string 'ctrl + v'
+txt.ctrl.w     #string 'ctrl + w'
+txt.ctrl.x     #string 'ctrl + x'
+txt.ctrl.y     #string 'ctrl + y'
+txt.ctrl.z     #string 'ctrl + z'
+*---------------------------------------------------------------
+* Keyboard labels - control keys extra
+*---------------------------------------------------------------
+txt.ctrl.plus  #string 'ctrl + +'
+*---------------------------------------------------------------
+* Special keys
+*---------------------------------------------------------------
+txt.enter      #string 'enter'
+
 
 
 
@@ -135,19 +236,21 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Editor/File buffer keys
         ;-------------------------------------------------------
-        data  key.ctrl.0, txt.ctrl.0, edkey.action.buffer0
-        data  key.ctrl.1, txt.ctrl.1, edkey.action.buffer1
-        data  key.ctrl.2, txt.ctrl.2, edkey.action.buffer2
-        data  key.ctrl.3, txt.ctrl.3, edkey.action.buffer3
-        data  key.ctrl.4, txt.ctrl.4, edkey.action.buffer4
-        data  key.ctrl.5, txt.ctrl.5, edkey.action.buffer5
-        data  key.ctrl.6, txt.ctrl.6, edkey.action.buffer6
-        data  key.ctrl.7, txt.ctrl.7, edkey.action.buffer7
-        data  key.ctrl.8, txt.ctrl.8, edkey.action.buffer8
-        data  key.ctrl.9, txt.ctrl.9, edkey.action.buffer9
+        data  key.ctrl.0, txt.ctrl.0, edkey.action.fb.buffer0
+        data  key.ctrl.1, txt.ctrl.1, edkey.action.fb.buffer1
+        data  key.ctrl.2, txt.ctrl.2, edkey.action.fb.buffer2
+        data  key.ctrl.3, txt.ctrl.3, edkey.action.fb.buffer3
+        data  key.ctrl.4, txt.ctrl.4, edkey.action.fb.buffer4
+        data  key.ctrl.5, txt.ctrl.5, edkey.action.fb.buffer5
+        data  key.ctrl.6, txt.ctrl.6, edkey.action.fb.buffer6
+        data  key.ctrl.7, txt.ctrl.7, edkey.action.fb.buffer7
+        data  key.ctrl.8, txt.ctrl.8, edkey.action.fb.buffer8
+        data  key.ctrl.9, txt.ctrl.9, edkey.action.fb.buffer9
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
+        data  key.ctrl.comma, txt.ctrl.comma, edkey.action.fb.fname.dec.load
+        data  key.ctrl.dot, txt.ctrl.dot, edkey.action.fb.fname.inc.load
         data  key.ctrl.l, txt.ctrl.l, dialog.loaddv80        
         ;-------------------------------------------------------
         ; End of list
@@ -178,6 +281,11 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
         data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
+        ;-------------------------------------------------------
+        ; File load dialog
+        ;-------------------------------------------------------
+        data  key.ctrl.comma, txt.ctrl.comma, fm.browse.fname.suffix.dec
+        data  key.ctrl.dot, txt.ctrl.dot, fm.browse.fname.suffix.inc
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

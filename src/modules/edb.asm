@@ -200,7 +200,8 @@ edb.line.pack.copyline.block:
         ;------------------------------------------------------
 edb.line.pack.exit:
         mov   @rambuf,@fb.column    ; Retrieve @fb.column
-        b     @poprt                ; Return to caller
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
 
 
 
@@ -434,5 +435,5 @@ edb.line.getlength2:
         ; Exit
         ;------------------------------------------------------
 edb.line.getlength2.exit:
-        b     @poprt                ; Return to caller
-
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
