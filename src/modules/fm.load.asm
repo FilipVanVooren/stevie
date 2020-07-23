@@ -1,22 +1,44 @@
 * FILE......: fm.load.asm
 * Purpose...: File Manager - Load file
 
-*---------------------------------------------------------------
+
+
+***************************************************************
+* fm.loadfile
 * Load file into editor buffer
-*---------------------------------------------------------------
-* bl    @fm.loadfile
-*--------------------------------------------------------------- 
+***************************************************************
+* bl  @fm.loadfile
+*--------------------------------------------------------------
 * INPUT
 * tmp0  = Pointer to length-prefixed string containing both 
 *         device and filename
+*--------------------------------------------------------------- 
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1
 ********|*****|*********************|**************************
 fm.loadfile:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        ;-------------------------------------------------------
+        ; Show dialog "Unsaved changes" if editor buffer dirty
+        ;-------------------------------------------------------
+        mov   @edb.dirty,tmp1
+        jeq   !
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0      
+        mov   *stack+,r11           ; Pop R11
+        b     @dialog.unsaved       ; Show dialog and exit
         ;-------------------------------------------------------
         ; Reset editor
         ;-------------------------------------------------------
-        mov   tmp0,@parm1           ; Setup file to load
+!       mov   tmp0,@parm1           ; Setup file to load
         bl    @tv.reset             ; Reset editor
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
@@ -80,6 +102,8 @@ fm.loadfile:
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0      
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 

@@ -87,6 +87,8 @@ skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+id.dialog.loaddv80        equ  1       ; ID for dialog "Load DV 80 file"
+id.dialog.unsaved         equ  2       ; ID for dialog "Unsaved changes"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -203,11 +205,13 @@ cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
 cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
 cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-cmdb.pantitle     equ  cmdb.struct + 26; Pointer to string with pane title
-cmdb.panhint      equ  cmdb.struct + 28; Pointer to string with pane hint
-cmdb.cmdlen       equ  cmdb.struct + 30; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 31; Current command (80 bytes max.)
-cmdb.end          equ  cmdb.struct +111; End of structure
+cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
+cmdb.panhead      equ  cmdb.struct + 28; Pointer to string with pane header
+cmdb.panhint      equ  cmdb.struct + 30; Pointer to string with pane hint
+cmdb.pankeys      equ  cmdb.struct + 32; Pointer to string with pane keys
+cmdb.cmdlen       equ  cmdb.struct + 34; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 35; Current command (80 bytes max.)
+cmdb.end          equ  cmdb.struct +115; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------

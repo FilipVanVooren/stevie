@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.784967
+**** **** ****     > stevie_b0.asm.10311
 0001               ***************************************************************
 0002               *                         Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200719-784967
+0009               * File: stevie_b0.asm               ; Version 200723-10311
 0010               
 0011               
 0012               ***************************************************************
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200719-784967
+0009               * File: equates.asm                 ; Version 200723-10311
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -284,7 +284,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0264               * Heap                              @>e000-efff    (4096 bytes)
 0265               *--------------------------------------------------------------
 0266      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.784967
+**** **** ****     > stevie_b0.asm.10311
 0018                       copy  "kickstart.asm"       ; Cartridge header
 **** **** ****     > kickstart.asm
 0001               * FILE......: kickstart.asm
@@ -320,8 +320,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026 6012 6030             data  kickstart.code1
 0027               
 0029               
-0030 6014 1453             byte  20
-0031 6015 ....             text  'STEVIE 200719-784967'
+0030 6014 1353             byte  19
+0031 6015 ....             text  'STEVIE 200723-10311'
 0032                       even
 0033               
 0041               
@@ -331,7 +331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045                       aorg  kickstart.code1
 0046 6030 04E0  34         clr   @>6000                ; Switch to bank 0
      6032 6000 
-**** **** ****     > stevie_b0.asm.784967
+**** **** ****     > stevie_b0.asm.10311
 0019               ***************************************************************
 0020               * Copy runtime library to destination >2000 - >2fff
 0021               ********|*****|*********************|**************************
@@ -1111,8 +1111,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 623C 1742             byte  23
-0260 623D ....             text  'Build-ID  200719-784967'
+0259 623C 1642             byte  22
+0260 623D ....             text  'Build-ID  200723-10311'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4975,7 +4975,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F34 0040 
 0371 6F36 0460  28         b     @main                 ; Give control to main program
      6F38 6050 
-**** **** ****     > stevie_b0.asm.784967
+**** **** ****     > stevie_b0.asm.10311
 0051               
 0055 6F3A 2ED8                   data $                ; Bank 0 ROM size OK.
 0057               
@@ -5161,7 +5161,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 6FFA 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      6FFC F20F 
 0113               
-**** **** ****     > stevie_b0.asm.784967
+**** **** ****     > stevie_b0.asm.10311
 0062               
 0063               * Video mode configuration
 0064               *--------------------------------------------------------------

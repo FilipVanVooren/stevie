@@ -24,13 +24,19 @@ txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
 
-
 ;--------------------------------------------------------------
-; Dialog strings
+; Dialog Load DV 80 file
 ;--------------------------------------------------------------
+txt.head.loaddv80  #string 'Load DV80 file'
+txt.hint.loaddv80  #string 'HINT: Specify filename and press ENTER.'
 txt.keys.loaddv80  #string 'F9=Back    F3=Clear    ^A=Home    ^F=End    ^,=Previous    ^.=Next'
 
-
+;--------------------------------------------------------------
+; Dialog "Unsaved changes"
+;--------------------------------------------------------------
+txt.head.unsaved   #string 'Unsaved changes'
+txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
+txt.keys.unsaved   #string 'F9=Back    F6=Proceed anyway   ^S=Save file'
 
 
 
@@ -46,9 +52,8 @@ txt.io.nofile      #string 'I/O error. No filename specified.'
 ;--------------------------------------------------------------
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-txt.cmdb.loaddv80  #string 'Load DV80 file'
 
-txt.cmdb.hintdv80  #string 'HINT: Specify filename and press ENTER.'
+
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

@@ -30,7 +30,7 @@ pane.cmdb.draw:
         ; Command buffer header line
         ;------------------------------------------------------
         mov   @cmdb.yxtop,@wyx      ; \
-        mov   @cmdb.pantitle,tmp1   ; | Display pane title
+        mov   @cmdb.panhead,tmp1    ; | Display pane header
         bl    @xutst0               ; / 
 
         bl    @setx
@@ -74,9 +74,13 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display keys in status line
         ;------------------------------------------------------
-        bl    @pane.show_hint       ; Display pane hint
-              byte  29,0            ; Y = 29, X=0
-              data  txt.keys.loaddv80 
+        li    tmp0,>1d00            ; Y = 29, X=0
+        mov   tmp0,@parm1           ; Set parameter
+        mov   @cmdb.pankeys,@parm2  ; Pane hint to display
+
+        bl    @pane.show_hintx      ; Display pane hint
+                                    ; \ i  parm1 = Pointer to string with hint
+                                    ; / i  parm2 = YX position
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------

@@ -1,16 +1,16 @@
-* FILE......: dialog.file.load.asm
-* Purpose...: Dialog "Load file"
+* FILE......: dialog.file.unsaved.asm
+* Purpose...: Dialog "Unsaved changes"
 
 *//////////////////////////////////////////////////////////////
-*              Stevie Editor - Open DV80 file
+*      Stevie Editor - Unsaved changes in editor buffer
 *//////////////////////////////////////////////////////////////
 
 
 ***************************************************************
-* dialog.load_dv80
-* Open Dialog for loading DV 80 file
+* dialog.unsaved
+* Open Dialog "Unsaved changes"
 ***************************************************************
-* b @dialog.load_dv80
+* b @dialog.unsaved
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -23,17 +23,17 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.loaddv80:
-        li    tmp0,id.dialog.loaddv80
+dialog.unsaved:
+        li    tmp0,id.dialog.unsaved
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.loaddv80
+        li    tmp0,txt.head.unsaved
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.hint.loaddv80
-        mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        li    tmp0,txt.hint.unsaved
+        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
-        li    tmp0,txt.keys.loaddv80
+        li    tmp0,txt.keys.unsaved
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         b     @edkey.action.cmdb.show
