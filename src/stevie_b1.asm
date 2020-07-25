@@ -27,10 +27,9 @@
 ***************************************************************
 * stevie entry point after spectra2 initialisation
 ********|*****|*********************|**************************
-        aorg  kickstart.code2
 main:   
-        clr   @>6002                ; Jump to bank 1
-        b     @main.stevie          ; Start editor
+        aorg  kickstart.code2       ; >6036
+        b     @main.stevie          ; Start editor 
         ;----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------

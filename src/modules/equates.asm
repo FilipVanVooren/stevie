@@ -97,7 +97,7 @@ startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to
                                        ; memory address @cpu.scrpad.tgt
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
 kickstart.code1           equ  >6030   ; Uniform aorg entry addr accross banks
-kickstart.code2           equ  >6050   ; Uniform aorg entry addr start of code
+kickstart.code2           equ  >6036   ; Uniform aorg entry addr accross banks
 *--------------------------------------------------------------
 * Scratchpad memory                 @>8300-83ff     (256 bytes)
 *--------------------------------------------------------------

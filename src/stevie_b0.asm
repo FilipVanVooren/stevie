@@ -17,37 +17,70 @@
         copy  "equates.asm"         ; Equates TiVi configuration
         copy  "kickstart.asm"       ; Cartridge header
 ***************************************************************
-* Copy runtime library to destination >2000 - >2fff
+* Copy SP2 ROM to >2000 - >2fff
 ********|*****|*********************|**************************
 kickstart.init:
-        li    r0,reloc+2            ; Start of code to relocate
+        li    r0,reloc.sp2+2        ; Start of code to relocate
         li    r1,>2000
         li    r2,512                ; Copy 4K (256 * 4 words)
-kickstart.loop:        
+kickstart.copy.sp2:        
         mov   *r0+,*r1+
         mov   *r0+,*r1+        
         mov   *r0+,*r1+        
         mov   *r0+,*r1+        
         dec   r2
-        jne   kickstart.loop      
-        b     @runlib               ; Start spectra2 library        
+        jne   kickstart.copy.sp2
 ***************************************************************
-* TiVi entry point after spectra2 initialisation
+* Copy Stevie ROM to >3000 - >3fff
 ********|*****|*********************|**************************
-        aorg  kickstart.code2
-main    clr   @>6002                ; Jump to bank 1 (2nd bank)
-                                    ;--------------------------
-                                    ; Should not get here
-                                    ;--------------------------
-        li    r0,main                                    
+        li    r0,main+2             ; Start of code to relocate
+        li    r1,>3000
+        li    r2,512                ; Copy 4K (256 * 4 words)
+kickstart.copy.stevie:        
+        mov   *r0+,*r1+
+        mov   *r0+,*r1+        
+        mov   *r0+,*r1+        
+        mov   *r0+,*r1+        
+        dec   r2
+        jne   kickstart.copy.stevie
+***************************************************************
+* Trigger SP2 initialisation
+********|*****|*********************|**************************
+        b     @runlib               ; Start spectra2 library        
+        ;------------------------------------------------------
+        ; Assert. Should not get here! Crash and burn!
+        ;------------------------------------------------------
+        li    r0,main              
         mov   r0,@>ffce             ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system           
 ***************************************************************
-* Spectra2 library
+* SP2 relocated code >2000 - >2fff (4K maximum)
 ********|*****|*********************|**************************
-reloc   nop                         ; Anchor for copy command
-        xorg >2000                  ; Relocate all spectra2 code to >2000
+reloc.sp2:
+        nop                         ; Anchor for copy ROM command
+        xorg >2000                  ; Relocate SP2 code to >2000
         copy  "%%spectra2%%/runlib.asm"
+                                    ; Spectra 2
+        copy  "data.constants.asm"  ; Data segment - Constants  
+
+        ;---------------------------------------;
+        ; TO DO FILL up to >6fff with blanks!!! ;
+        ;---------------------------------------;
+
+***************************************************************
+* Stevie relocated code >3000 - >3fff (4K maximum)
+********|*****|*********************|**************************
+main:
+        nop                         ; Anchor for copy ROM command     
+        xorg  >3000                 ; Relocate Stevie modules to >3000
+        ;------------------------------------------------------
+        ; Activate bank 1
+        ;------------------------------------------------------
+        clr   @>6002                ; Activate bank 1 (2nd bank!)
+        b     @kickstart.code2      ; Jump to entry routine
+
+        copy  "fh.read.sams.asm"    ; File handler read file
+        copy  "mem.asm"             ; Memory Management
 
         .ifgt $, >7fff
               .error 'Aborted. Bank 0 cartridge program too large!'
@@ -55,11 +88,20 @@ reloc   nop                         ; Anchor for copy command
               data $                ; Bank 0 ROM size OK.
         .endif
 
+; >>>>>>>>>>>>>>>> NEEED TO FIX THIS FIRST!!! >>>>>>>>>>>>>>>>>>>>>>>>>><
+
+idx.entry.update:
+        nop
+
+idx.pointer.get:
+        nop        
+
+; >>>>>>>>>>>>>>>> NEEED TO FIX THIS FIRST!!! >>>>>>>>>>>>>>>>>>>>>>>>>><
+
+module.end: 
+        data >dead,>beef,>dead,>beef
 
 *--------------------------------------------------------------
-
-        copy  "data.constants.asm"  ; Data segment - Constants
-
 * Video mode configuration
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
