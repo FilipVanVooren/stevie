@@ -1,0 +1,690 @@
+Last update: februari 21th 2009
+DSK1 FDR / V9T9 / TIFILES COMPARISON
+These are the results of an comparison of the real TI99/4A file descriptor record (FDR), a V9T9 style file header and a TIFILES file header as created by the terminal emulator program Telco when uploading a TI99/4A file to a PC with a serial connection. The comparison is done with DIS/VAR, DIS/FIX, a TI basic and binary PROGRAM file of less than one sector, precisely one sector and less than two sectors. As I expected there is no difference between the header information of a TI basic program and binary data. To my surprise there was no TIFILES header created when uploading DIS/FIX files to the PC.
+
+The physical layout of an FDR on a floppy disk is as follows:
+     +---------------------------------------------+
+   0 |                                             |
+   2 |                                             |
+   4 |                  FILE NAME                  |
+   6 |                                             |
+   8 |                                             |
+     +---------------------------------------------+
+  10 |          EXTENDED RECORD LENGTH             |
+     +---------------------------------------------+
+  12 | FILE STATUS FLAGS   |  NUMBER OF RECS/SEC   |
+     +---------------------------------------------+
+  14 |   NUMBER OF SECTORS CURRENTLY ALLOCATED     |
+     +---------------------------------------------+
+  16 | END OF FILE OFFSET  | LOGICAL RECORD LENGTH |
+     +---------------------------------------------+
+  18 |     NUMBER OF LEVEL 3 RECORDS ALLOCATED     |
+     +---------------------------------------------+
+  20 |         DATE AND TIME OF CREATION           |
+  22 |                                             |
+     +---------------------------------------------+
+  24 |        DATE AND TIME OF LAST UPDATE         |
+  26 |                                             |
+     +---------------------------------------------+  
+  28 |                                             |
+  30 |                                             |
+     ~         DATA CHAIN POINTER BLOCKS           ~
+ 252 |                                             |
+ 254 |                                             |
+     +---------------------------------------------+
+     
+     
+FILE NAME:
+	Contains the file name of the file. The file name can be any
+	combination of up to 10 ASCII characters, except for the space
+	or period characters and the null character. The name is space
+	filled to the right in case of less than 10 characters.
+
+EXTENDED RECORD LENGTH:
+	Contains the record length if it is a data file and has a
+	record length of greater than 255 bytes (not TI original).
+	
+FILE STATUS FLAGS:
+	Defines the data type of the file. The flags are as follows
+	with bit 0 being the least significant bit:
+	
+		bit 0: Program / data file indicator
+			0= Data file
+			1= Program file
+			
+		bit 1: Binary / ASCII data
+			0= ASCII data (DISPLAY file)
+			1= Binary data (INTERNAL or PROGRAM file)
+			
+		bit 2: Reserved
+		
+		bit 3: Write protect flag
+			0= Not write protected
+			1= Write protected
+			
+		bit 4: Reserved
+		bit 5: Reserved
+		bit 6: Reserved
+		
+		bit 7: FIXED / VARIABLE flag
+			0= Fixed length records
+			1= Variable length records
+
+NUMBER OF RECORDS PER SECTOR:
+	Contains the number of records that will fit into a sector in 
+	the case of data files. In the case of FIXED length records 
+	the maximum LOGICAL RECORD LENGTH is 255 and the NUMBER OF 
+	RECORDS PER SECTOR can be calculated by 256 / LOGICAL RECORD 
+	LENGTH. In case of VARIABLE length records the maximum LOGICAL 
+	RECORD LENGTH is 254 bytes and the NUMBER OF RECORDS PER 
+	SECTOR can be calculated by 254 / LOGICAL RECORD LENGTH.
+	
+NUMBER OF SECTORS CURRENTLY ALLOCATED:
+	Contains the number of sectors allocated to this file.
+	
+END OF FILE OFFSET:
+	Contains the offset of the first free byte into the last
+	sector used in case of a program or variable length file.
+
+	A variable length record always starts with a record length 
+	and is closed with a >FF byte.  The END OF FILE OFFSET points 
+	to this location. If a new variable length record is written 
+	the value >FF is replaced by the length byte of the new 
+	record. If the new record does not fit in the free space of 
+	the current sector, a new sector is allocated. Because a 
+	sector of a variable length file always ends with a >FF byte 
+	the maximum length of a record is 254 bytes (256 - 1 byte for 
+	the record length - 1 end byte).
+	
+LOGICAL RECORD LENGTH:
+	Contains the logical record length of a data file. If this
+	entry is zero and it is a data file, then the record length
+	is given in the EXTENDED RECORD LENGTH at bytes 10 and 11
+	((not TI original).
+	
+NUMBER OF LEVEL 3 RECORDS ALLOCATED:
+	In the case of a FIXED length record files, this contains the
+	highest record number actually written to. In case of 
+	VARIABLE length record files this contains the highest sector
+	number actually written to. Note: The bytes in this field are
+	in reverse order.
+	
+DATE AND TIME OF CREATION:
+	Gives the date and time the file was first created on the disk.
+	The meaning of the first (TIME) word is as follows:
+
+               xxxxx xxxxxx xxxxx
+
+                            Seconds/2
+                     Minutes
+               Hours
+               
+	The meaning of the second word (DATE) is as follows:
+
+             xxxxxxx xxxx xxxxx
+
+                          Day of month
+                     Month
+             Years%100
+
+DATE AND TIME OF LAST UPDATE:
+	Gives the date and time the file was last written to.
+	
+DATA CHAIN POINTER BLOCKS:
+	Each data chain pointer block consists of three bytes which
+	indicates a cluster of contiguous sectors. The three bytes
+	are broken down into two three nibble blocks. The first three
+	nibbles indicates the first sector number of the cluster. The
+	second three nibbles indicates the last sector number of the
+	cluster.
+	
+	Byte1: N2 | N1      Byte2: M1 | N3    Byte3: M3 | M2
+	
+	First sector  : N3 | N2 | N1
+	Highest sector: M3 | M2 | M1
+
+
+The FDR data block below is what is found with a sector editor when
+reading out the catalog of a floppy disk.
+
+A V9T9 header is 128 bytes long and consists of the same data as the
+first 20 bytes of an FDR in the same order.
+
+A TIFILES header is also 128 bytes long and contains the 11th through
+the 20th bytes of the FDR. The first 8 bytes of the header is equal
+to "\x07TIFILES". The file information of the FDR is copied to bytes
+9-16 of the TIFILES header. The rest of the 128 bytes may be filled
+with any other character. Most common is >00 or a >CA >53 combination.
+
+Another version of TIFILES header also contain the original TI
+filename in bytes 16-26.
+
+		TIFILES    FDR/V9T9
+		-------    --------
+		Byte 08 <- Byte 14  Number of allocated sectors
+		Byte 09 <- Byte 15  /
+		Byte 10 <- Byte 12  File status flags
+		Byte 11 <- Byte 13  Records per sector
+		Byte 12 <- Byte 16  End of file offset
+		Byte 13 <- Byte 17  Logical record length
+		Byte 14 <- Byte 18  Number of level 3 records
+		Byte 15 <- Byte 19  /
+
+
+
+
+======================================================================
+Filename: DV128_1S
+Display Variable file with a size of less then 1 sector.
+
+Number of records per sector is 254/128 = 1!
+The EOF offset points to the EOF flag (>FF)
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 56 31 32 38 5F 31 53 20 20 00 00 80 01 00 01
+0010 F3 80 01 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53 00 01 80 01 F3 80 01 00
+
+
+0000 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 .THIS IS LINE  1
+0010 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+0020 32 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 2 .THIS IS LINE 
+0030 20 33 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45  3 .THIS IS LINE
+0040 20 20 34 20 10 54 48 49 53 20 49 53 20 4C 49 4E   4 .THIS IS LIN
+0050 45 20 20 35 20 10 54 48 49 53 20 49 53 20 4C 49 E  5 .THIS IS LI
+0060 4E 45 20 20 36 20 10 54 48 49 53 20 49 53 20 4C NE  6 .THIS IS L
+0070 49 4E 45 20 20 37 20 10 54 48 49 53 20 49 53 20 INE  7 .THIS IS 
+0080 4C 49 4E 45 20 20 38 20 10 54 48 49 53 20 49 53 LINE  8 .THIS IS
+0090 20 4C 49 4E 45 20 20 39 20 11 54 48 49 53 20 49  LINE  9 .THIS I
+00A0 53 20 4C 49 4E 45 20 20 31 30 20 11 54 48 49 53 S LINE  10 .THIS
+00B0 20 49 53 20 4C 49 4E 45 20 20 31 31 20 11 54 48  IS LINE  11 .TH
+00C0 49 53 20 49 53 20 4C 49 4E 45 20 20 31 32 20 11 IS IS LINE  12 .
+00D0 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 33 THIS IS LINE  13
+00E0 20 11 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+00F0 31 34 20 FF 00 00 00 00 00 00 00 00 00 00 00 00 14 .............
+EOF-----------^^
+
+
+
+======================================================================
+Filename: DV128_1P
+Display Variable file with a size of precisely 1 sector.
+
+The EOF offset points to the EOF flag (>FF) which is at the very last 
+byte of the sector. Because records of a variable length file always 
+starts with a length byte the maximum record length is 255. In this 
+case the length byte is 255 (>FF), the EOF offset has a value of 0 and 
+there is no >FF byte at the end of the sector. In general: the end of
+a sector is reached when the read offset + record length + 1 is
+greater than the sector size.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 56 31 32 38 5F 31 50 20 20 00 00 80 01 00 01
+0010 FF 80 01 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53 00 01 80 01 FF 80 01 00
+
+
+0000 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 .THIS IS LINE  1
+0010 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+0020 32 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 2 .THIS IS LINE 
+0030 20 33 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45  3 .THIS IS LINE
+0040 20 20 34 20 10 54 48 49 53 20 49 53 20 4C 49 4E   4 .THIS IS LIN
+0050 45 20 20 35 20 10 54 48 49 53 20 49 53 20 4C 49 E  5 .THIS IS LI
+0060 4E 45 20 20 36 20 10 54 48 49 53 20 49 53 20 4C NE  6 .THIS IS L
+0070 49 4E 45 20 20 37 20 10 54 48 49 53 20 49 53 20 INE  7 .THIS IS 
+0080 4C 49 4E 45 20 20 38 20 10 54 48 49 53 20 49 53 LINE  8 .THIS IS
+0090 20 4C 49 4E 45 20 20 39 20 11 54 48 49 53 20 49  LINE  9 .THIS I
+00A0 53 20 4C 49 4E 45 20 20 31 30 20 11 54 48 49 53 S LINE  10 .THIS
+00B0 20 49 53 20 4C 49 4E 45 20 20 31 31 20 11 54 48  IS LINE  11 .TH
+00C0 49 53 20 49 53 20 4C 49 4E 45 20 20 31 32 20 11 IS IS LINE  12 .
+00D0 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 33 THIS IS LINE  13
+00E0 20 11 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+00F0 31 34 20 0B 41 42 43 44 45 46 47 48 49 4A 4B FF 14 .ABCDEFGHIJK.
+EOF-----------------------------------------------^^
+
+
+
+======================================================================
+Filename: DV128_2S
+Display Variable file with a size of less than 2 sectors.
+
+Notice that the first sector still contains a byte with a value of >FF 
+to mark the end of the sector. This does not mean that every byte with 
+a value of >FF marks a sector end. The first byte of every record 
+(here always >10) is the record length. If a record length of >FF 
+(255) is found (and the maximum record length is not 255 and therefore
+this value is not found as the very first byte of a sector, see above) 
+than this means the end of the sector, skip the rest and start reading 
+the next sector.
+
+The last record "ABCDEFGHIJKL" is written in a new sector because
+in the previous sector there was no room for an record length byte
+(>0C) the record (12 bytes) and the end of rector flag (>FF) thus a
+total of 14 bytes.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 56 31 32 38 5F 32 53 20 20 00 00 80 01 00 02
+0010 0D 80 02 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53 00 02 80 01 0D 80 02 00
+
+
+0000 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 .THIS IS LINE  1
+0010 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+0020 32 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 2 .THIS IS LINE 
+0030 20 33 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45  3 .THIS IS LINE
+0040 20 20 34 20 10 54 48 49 53 20 49 53 20 4C 49 4E   4 .THIS IS LIN
+0050 45 20 20 35 20 10 54 48 49 53 20 49 53 20 4C 49 E  5 .THIS IS LI
+0060 4E 45 20 20 36 20 10 54 48 49 53 20 49 53 20 4C NE  6 .THIS IS L
+0070 49 4E 45 20 20 37 20 10 54 48 49 53 20 49 53 20 INE  7 .THIS IS 
+0080 4C 49 4E 45 20 20 38 20 10 54 48 49 53 20 49 53 LINE  8 .THIS IS
+0090 20 4C 49 4E 45 20 20 39 20 11 54 48 49 53 20 49  LINE  9 .THIS I
+00A0 53 20 4C 49 4E 45 20 20 31 30 20 11 54 48 49 53 S LINE  10 .THIS
+00B0 20 49 53 20 4C 49 4E 45 20 20 31 31 20 11 54 48  IS LINE  11 .TH
+00C0 49 53 20 49 53 20 4C 49 4E 45 20 20 31 32 20 11 IS IS LINE  12 .
+00D0 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 33 THIS IS LINE  13
+00E0 20 11 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+00F0 31 34 20 FF 00 00 00 00 00 00 00 00 00 00 00 00 14 .............
+EOSECTOR------^^\-----only space for 12 bytes------/
+0100 0C 41 42 43 44 45 46 47 48 49 4A 4B 4C FF 20 31 .ABCDEFGHIJKL. 1
+EOF-----------------------------------------^^
+0110 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+0120 32 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45 20 2 .THIS IS LINE 
+0130 20 33 20 10 54 48 49 53 20 49 53 20 4C 49 4E 45  3 .THIS IS LINE
+0140 20 20 34 20 10 54 48 49 53 20 49 53 20 4C 49 4E   4 .THIS IS LIN
+0150 45 20 20 35 20 10 54 48 49 53 20 49 53 20 4C 49 E  5 .THIS IS LI
+0160 4E 45 20 20 36 20 10 54 48 49 53 20 49 53 20 4C NE  6 .THIS IS L
+0170 49 4E 45 20 20 37 20 10 54 48 49 53 20 49 53 20 INE  7 .THIS IS 
+0180 4C 49 4E 45 20 20 38 20 10 54 48 49 53 20 49 53 LINE  8 .THIS IS
+0190 20 4C 49 4E 45 20 20 39 20 11 54 48 49 53 20 49  LINE  9 .THIS I
+01A0 53 20 4C 49 4E 45 20 20 31 30 20 11 54 48 49 53 S LINE  10 .THIS
+01B0 20 49 53 20 4C 49 4E 45 20 20 31 31 20 11 54 48  IS LINE  11 .TH
+01C0 49 53 20 49 53 20 4C 49 4E 45 20 20 31 32 20 11 IS IS LINE  12 .
+01D0 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20 31 33 THIS IS LINE  13
+01E0 20 11 54 48 49 53 20 49 53 20 4C 49 4E 45 20 20  .THIS IS LINE  
+01F0 31 34 20 FF 00 00 00 00 00 00 00 00 00 00 00 00 14 .............
+
+
+
+======================================================================
+Filename: DF128_1R
+Display Fixed file with a size of less than 1 sector.
+
+With this file types there is no need for an EOF offset because of the
+fixed record length this can be calculated.
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 46 31 32 38 5F 31 52 20 20 00 00 00 02 00 01
+0010 00 80 01 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 NO HEADER (I did not expect this!)
+
+
+0000 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 31 THIS IS RECORD 1
+0010 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0020 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0030 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0040 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0050 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0060 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0070 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0080 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0090 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00A0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00B0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00D0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00F0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+
+
+
+======================================================================
+Filename: DF128_2R
+Display Fixed file with a size of exactly 1 sector.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 46 31 32 38 5F 32 52 20 20 00 00 00 02 00 01
+0010 00 80 02 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 NO HEADER
+
+0000 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 31 THIS IS RECORD 1
+0010 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0020 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0030 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0040 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0050 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0060 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0070 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0080 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 32 THIS IS RECORD 2
+0090 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00A0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00B0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00C0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00D0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00E0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00F0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+
+
+
+======================================================================
+Filename: DF128_3R
+Display Fixed file with a size of less than 2 sectors.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 44 46 31 32 38 5F 33 52 20 20 00 00 00 02 00 02
+0010 00 80 03 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 NO HEADER
+
+
+0000 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 31 THIS IS RECORD 1
+0010 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0020 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0030 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0040 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0050 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0060 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0070 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0080 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 32 THIS IS RECORD 2
+0090 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00A0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00B0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00C0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00D0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00E0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+00F0 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0100 54 48 49 53 20 49 53 20 52 45 43 4F 52 44 20 33 THIS IS RECORD 3
+0110 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0120 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0130 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0140 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0150 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0160 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0170 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20                 
+0180 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0190 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01A0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01B0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01D0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01F0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+
+
+
+======================================================================
+Filename: PGM1S
+A TI-Basic program with a size of less than 1 sector.
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 31 53 20 20 20 20 20 00 00 01 00 00 01
+0010 41 00 00 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53 00 01 01 00 41 00 00 00
+
+
+0000 00 3D 37 A2 37 9F 37 D7 00 64 37 A4 34 9C C7 30 .=7.7.7..d7.4..0
+0010 54 48 49 53 20 49 53 20 41 20 50 52 4F 47 52 41 THIS IS A PROGRA
+0020 4D 20 57 49 54 48 20 41 20 53 49 5A 45 20 4C 45 M WITH A SIZE LE
+0030 53 53 20 54 48 45 4E 20 31 20 53 45 43 54 4F 52 SS THEN 1 SECTOR
+0040 00 AA 3F FF 11 03 00 11 00 00 28 00 00 00 00 00 ..?.......(.....
+EOF-----^^
+0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0060 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0070 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0080 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0090 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00A0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00B0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00D0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00F0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+
+
+
+======================================================================
+Filename: PGM1P
+A TI-Basic program with a size of exactly 1 sector.
+
+The EOF offset is 0 which means that exactly a complete sector is
+used. A file with no sectors used have not got any sectors allocated!
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 31 50 20 20 20 20 20 00 00 01 00 00 01
+0010 00 00 00 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53 00 01 01 00 00 00 00 00
+
+
+0000 00 1B 36 FB 36 E0 37 D7 00 A0 36 FD 00 96 37 28 ..6.6.7...6...7(
+0010 00 8C 37 47 00 82 37 66 00 78 37 09 00 6E 37 84 ..7G..7f.x7..n7.
+0020 00 64 37 A2 0B 9C C7 07 41 42 43 44 45 46 47 00 .d7.....ABCDEFG.
+0030 1E 9C C7 1A 41 42 43 44 45 46 47 48 49 4A 4B 4C ....ABCDEFGHIJKL
+0040 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 00 1E MNOPQRSTUVWXYZ..
+0050 9C C7 1A 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D ...ABCDEFGHIJKLM
+0060 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 00 1E 9C NOPQRSTUVWXYZ...
+0070 C7 1A 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E ..ABCDEFGHIJKLMN
+0080 4F 50 51 52 53 54 55 56 57 58 59 5A 00 1D 9C C7 OPQRSTUVWXYZ....
+0090 19 41 42 43 44 45 46 48 49 4A 4B 4C 4D 4E 4F 50 .ABCDEFHIJKLMNOP
+00A0 51 52 53 54 55 56 57 58 59 5A 00 1D 9C C7 19 41 QRSTUVWXYZ.....A
+00B0 42 43 44 45 47 48 49 4A 4B 4C 4D 4E 4F 50 51 52 BCDEGHIJKLMNOPQR
+00C0 53 54 55 56 57 58 59 5A 00 36 9C C7 32 54 48 49 STUVWXYZ.6..2THI
+00D0 53 20 49 53 20 41 20 50 52 4F 47 52 41 4D 20 57 S IS A PROGRAM W
+00E0 49 54 43 48 20 41 20 53 49 5A 45 20 4F 46 20 45 ITCH A SIZE OF E
+00F0 58 45 43 54 4C 59 20 31 20 53 45 43 54 4F 52 00 XECTLY 1 SECTOR.
+
+
+
+======================================================================
+Filename: PGM2S
+A TI-Basic program with a size of less than 2 sectors.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 32 53 20 20 20
+0008 20 20 00 00 01 00 00 02
+0010 0C 00 00 00 00 00 00 00
+
+TIFILES (Telco)
+----------------------------------------------------
+0000 07 54 49 46 49 4C 45 53
+0008 00 02 01 00 0C 00 00 00
+
+
+0000 00 3B 36 EF 36 D4 37 D7 00 A0 36 F1 00 96 37 5F .;6.6.7...6...7_
+0010 00 8C 37 7E 00 82 37 9D 00 78 37 40 00 6E 37 BB ..7~..7..x7@.n7.
+0020 00 64 37 10 1E 9C C7 1A 41 42 43 44 45 46 47 48 .d7.....ABCDEFGH
+0030 49 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 IJKLMNOPQRSTUVWX
+0040 59 5A 00 2F 9C C7 2B 54 48 49 53 20 49 53 20 41 YZ./..+THIS IS A
+0050 20 50 52 4F 47 52 41 4D 20 57 49 54 43 48 20 41  PROGRAM WITCH A
+0060 20 53 49 5A 45 20 4F 46 20 32 20 53 45 43 54 4F  SIZE OF 2 SECTO
+0070 52 53 00 1E 9C C7 1A 41 42 43 44 45 46 47 48 49 RS.....ABCDEFGHI
+0080 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 JKLMNOPQRSTUVWXY
+0090 5A 00 1E 9C C7 1A 41 42 43 44 45 46 47 48 49 4A Z.....ABCDEFGHIJ
+00A0 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A KLMNOPQRSTUVWXYZ
+00B0 00 1E 9C C7 1A 41 42 43 44 45 46 47 48 49 4A 4B .....ABCDEFGHIJK
+00C0 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 00 LMNOPQRSTUVWXYZ.
+00D0 1D 9C C7 19 41 42 43 44 45 46 48 49 4A 4B 4C 4D ....ABCDEFHIJKLM
+00E0 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 00 1D 9C NOPQRSTUVWXYZ...
+00F0 C7 19 41 42 43 44 45 47 48 49 4A 4B 4C 4D 4E 4F ..ABCDEGHIJKLMNO
+0100 50 51 52 53 54 55 56 57 58 59 5A 00 AA 3F FF 11 PQRSTUVWXYZ..?..
+EOF--------------------------------------^^
+0110 03 00 11 00 00 28 00 00 00 00 00 00 00 00 00 00 .....(..........
+0120 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0130 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0140 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0150 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0160 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0170 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0180 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+0190 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01A0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01B0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01D0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+01F0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+
+
+
+======================================================================
+Filename: PGMBIN080
+A program file with 128 bytes of binary data.
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 30 38 30 20 00 00 01 00 00 01
+0010 80 00 00 00 00 00 00 00
+
+TIFILES (TELCO)
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 30 38 00 01 01 00 80 00 00 00
+
+
+0000 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ................
+0010 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F ................
+0020 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F  !"#$%&'()*+,-./
+0030 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 0123456789:;<=>?
+0040 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F @ABCDEFGHIJKLMNO
+0050 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F PQRSTUVWXYZ[\]^_
+0060 60 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F `abcdefghijklmno
+0070 70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D 7E 7F pqrstuvwxyz{|}~.
+EOF--VV
+0080 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F ................
+0090 90 91 92 93 94 95 96 97 98 99 9A 9B 9C 9D 9E 9F ................
+00A0 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF ................
+00B0 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF ................
+00C0 C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF ................
+00D0 D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE DF ................
+00E0 E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 EA EB EC ED EE EF ................
+00F0 F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 FA FB FC FD FE FF ................
+
+
+
+======================================================================
+Filename: PGMBIN100
+A program file with 256 bytes of binary data.
+
+Again the EOF offset is 0 which means that exactly a complete sector 
+is used.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 31 30 30 20 00 00 01 00 00 01
+0010 00 00 00 00 00 00 00 00
+
+TIFILES (TELCO)
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 30 38 00 01 01 00 00 00 00 00
+
+
+0000 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ................
+0010 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F ................
+0020 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F  !"#$%&'()*+,-./
+0030 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 0123456789:;<=>?
+0040 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F @ABCDEFGHIJKLMNO
+0050 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F PQRSTUVWXYZ[\]^_
+0060 60 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F `abcdefghijklmno
+0070 70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D 7E 7F pqrstuvwxyz{|}~.
+0080 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F ................
+0090 90 91 92 93 94 95 96 97 98 99 9A 9B 9C 9D 9E 9F ................
+00A0 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF ................
+00B0 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF ................
+00C0 C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF ................
+00D0 D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE DF ................
+00E0 E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 EA EB EC ED EE EF ................
+00F0 F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 FA FB FC FD FE FF ................
+
+
+
+======================================================================
+Filename: PGMBIN180
+A program file with 384 bytes of binary data.
+
+Again the remainder of the second sector contains data of the previous
+sector.
+
+
+FDR / V9T9
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 31 38 30 20 00 00 01 00 00 02
+0010 80 00 00 00 00 00 00 00
+
+TIFILES (TELCO)
+----------------------------------------------------
+0000 50 47 4D 42 49 4E 30 38 00 02 01 00 80 00 00 00
+
+
+0000 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ................
+0010 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F ................
+0020 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F  !"#$%&'()*+,-./
+0030 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 0123456789:;<=>?
+0040 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F @ABCDEFGHIJKLMNO
+0050 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F PQRSTUVWXYZ[\]^_
+0060 60 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F `abcdefghijklmno
+0070 70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D 7E 7F pqrstuvwxyz{|}~.
+0080 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F ................
+0090 90 91 92 93 94 95 96 97 98 99 9A 9B 9C 9D 9E 9F ................
+00A0 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF ................
+00B0 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF ................
+00C0 C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF ................
+00D0 D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE DF ................
+00E0 E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 EA EB EC ED EE EF ................
+00F0 F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 FA FB FC FD FE FF ................
+0100 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ................
+0110 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F ................
+0120 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F  !"#$%&'()*+,-./
+0130 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 0123456789:;<=>?
+0140 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F @ABCDEFGHIJKLMNO
+0150 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F PQRSTUVWXYZ[\]^_
+0160 60 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F `abcdefghijklmno
+0170 70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D 7E 7F pqrstuvwxyz{|}~.
+EOF--VV
+0180 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F ................
+0190 90 91 92 93 94 95 96 97 98 99 9A 9B 9C 9D 9E 9F ................
+01A0 A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AA AB AC AD AE AF ................
+01B0 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 BA BB BC BD BE BF ................
+01C0 C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF ................
+01D0 D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE DF ................
+01E0 E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 EA EB EC ED EE EF ................
+01F0 F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 FA FB FC FD FE FF ................
+
+
+Ti99-geek 

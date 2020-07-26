@@ -1,5 +1,5 @@
 ***************************************************************
-*                         Stevie Editor
+*                          Stevie Editor
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -8,21 +8,40 @@
 ***************************************************************
 * File: stevie_b0.asm               ; Version %%build_date%%
 
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
-* BANK 0 - Spectra2 library
+* BANK 0 - Setup environment for Stevie
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 0 (1st bank)
-        copy  "equates.asm"         ; Equates TiVi configuration
-        copy  "kickstart.asm"       ; Cartridge header
-***************************************************************
-* Copy SP2 ROM to >2000 - >2fff
+*--------------------------------------------------------------
+* Cartridge header
 ********|*****|*********************|**************************
-kickstart.init:
-        li    r0,reloc.sp2+2        ; Start of code to relocate
+        byte  >aa,1,1,0,0,0
+        data  $+10
+        byte  0,0,0,0,0,0,0,0
+        data  0                     ; No more items following
+        data  kickstart.code1
+
+        .ifdef debug
+              #string 'STEVIE %%build_date%%'
+        .else
+              #string 'STEVIE'
+        .endif         
+
+*--------------------------------------------------------------
+* Step 1: Switch to bank 0 (uniform code accross all banks)
+********|*****|*********************|**************************
+        aorg  kickstart.code1       ; >6030
+        clr   @>6000                ; Switch to bank 0
+
+***************************************************************
+* Step 2: Copy SP2 library from ROM to >2000 - >2fff
+********|*****|*********************|**************************
+        li    r0,reloc.sp2          ; Start of code to relocate
         li    r1,>2000
-        li    r2,512                ; Copy 4K (256 * 4 words)
+        li    r2,512                ; Copy 4K (512 * 8 bytes)
 kickstart.copy.sp2:        
         mov   *r0+,*r1+
         mov   *r0+,*r1+        
@@ -30,12 +49,13 @@ kickstart.copy.sp2:
         mov   *r0+,*r1+        
         dec   r2
         jne   kickstart.copy.sp2
+
 ***************************************************************
-* Copy Stevie ROM to >3000 - >3fff
+* Step 3: Copy Stevie resident modules from ROM to >3000 - >3fff
 ********|*****|*********************|**************************
-        li    r0,main+2             ; Start of code to relocate
+        li    r0,reloc.stevie       ; Start of code to relocate
         li    r1,>3000
-        li    r2,512                ; Copy 4K (256 * 4 words)
+        li    r2,512                ; Copy 4K (512 * 8 bytes)
 kickstart.copy.stevie:        
         mov   *r0+,*r1+
         mov   *r0+,*r1+        
@@ -43,8 +63,9 @@ kickstart.copy.stevie:
         mov   *r0+,*r1+        
         dec   r2
         jne   kickstart.copy.stevie
+
 ***************************************************************
-* Trigger SP2 initialisation
+* Step 4: Start SP2 kernel (runs in low MEMEXP)
 ********|*****|*********************|**************************
         b     @runlib               ; Start spectra2 library        
         ;------------------------------------------------------
@@ -53,56 +74,64 @@ kickstart.copy.stevie:
         li    r0,main              
         mov   r0,@>ffce             ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system           
+
 ***************************************************************
-* SP2 relocated code >2000 - >2fff (4K maximum)
+* Step 5: Handover from SP2 kernel to Stevie "main" in low MEMEXP
+********|*****|*********************|**************************
+        ; "main" in low MEMEXP is automatically called by SP2 runlib.
+   
+
+
+
+***************************************************************
+* Code data: Relocated code SP2 >2000 - >2fff (4K maximum)
 ********|*****|*********************|**************************
 reloc.sp2:
-        nop                         ; Anchor for copy ROM command
         xorg >2000                  ; Relocate SP2 code to >2000
         copy  "%%spectra2%%/runlib.asm"
-                                    ; Spectra 2
-        copy  "data.constants.asm"  ; Data segment - Constants  
+                                    ; Spectra 2                                    
+        ;------------------------------------------------------
+        ; End of File marker
+        ;------------------------------------------------------
+        data  >dead,>beef,>dead,>beef
+        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
+        bss  300                    ; Fill remaining space with >00
 
-        ;---------------------------------------;
-        ; TO DO FILL up to >6fff with blanks!!! ;
-        ;---------------------------------------;
+
+
 
 ***************************************************************
-* Stevie relocated code >3000 - >3fff (4K maximum)
+* Code data: Relocated Stevie modules >3000 - >3fff (4K maximum)
 ********|*****|*********************|**************************
-main:
-        nop                         ; Anchor for copy ROM command     
+reloc.stevie:
         xorg  >3000                 ; Relocate Stevie modules to >3000
         ;------------------------------------------------------
-        ; Activate bank 1
+        ; Activate bank 1 and branch to >6036
         ;------------------------------------------------------
+main:        
         clr   @>6002                ; Activate bank 1 (2nd bank!)
         b     @kickstart.code2      ; Jump to entry routine
-
-        copy  "fh.read.sams.asm"    ; File handler read file
-        copy  "mem.asm"             ; Memory Management
+        ;------------------------------------------------------
+        ; Resident Stevie modules >3000 - >3fff
+        ;------------------------------------------------------
+        copy  "data.constants.asm"  ; Data Constants
+        copy  "data.strings.asm"    ; Data segment - Strings
+        ;------------------------------------------------------
+        ; End of File marker
+        ;------------------------------------------------------
+        data  >dead,>beef,>dead,>beef
+        .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
 
         .ifgt $, >7fff
-              .error 'Aborted. Bank 0 cartridge program too large!'
+              .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
         .endif
 
-; >>>>>>>>>>>>>>>> NEEED TO FIX THIS FIRST!!! >>>>>>>>>>>>>>>>>>>>>>>>>><
 
-idx.entry.update:
-        nop
-
-idx.pointer.get:
-        nop        
-
-; >>>>>>>>>>>>>>>> NEEED TO FIX THIS FIRST!!! >>>>>>>>>>>>>>>>>>>>>>>>>><
-
-module.end: 
-        data >dead,>beef,>dead,>beef
 
 *--------------------------------------------------------------
-* Video mode configuration
+* Video mode configuration for SP2
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.

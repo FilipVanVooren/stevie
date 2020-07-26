@@ -118,7 +118,7 @@ fh.file.read.sams.pabheader:
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->2100, 2000->8300
+              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
@@ -287,7 +287,7 @@ fh.file.read.sams.display:
         ;------------------------------------------------------
 fh.file.read.sams.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->2100, 2000->8300        
+              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300        
 
         b     @fh.file.read.sams.record
                                     ; Next record

@@ -6,26 +6,71 @@
 *
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
-* File: stevie_b1.asm                 ; Version %%build_date%%
+* File: stevie_b1.asm               ; Version %%build_date%%
 
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
-* BANK 1 - Stevie support modules
+* BANK 1 - Stevie main editor modules
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 1
-        copy  "equates.asm"         ; Equates stevie configuration
-        copy  "kickstart.asm"       ; Cartridge header
+*--------------------------------------------------------------
+* Cartridge header
+********|*****|*********************|**************************
+        byte  >aa,1,1,0,0,0
+        data  $+10
+        byte  0,0,0,0,0,0,0,0
+        data  0                     ; No more items following
+        data  kickstart.code1
 
+        .ifdef debug
+              #string 'STEVIE %%build_date%%'
+        .else
+              #string 'STEVIE'
+        .endif
+
+*--------------------------------------------------------------
+* Step 1: Switch to bank 0 (uniform code accross all banks)
+********|*****|*********************|**************************
+        aorg  kickstart.code1       ; >6030
+        clr   @>6000                ; Switch to bank 0
+
+*--------------------------------------------------------------
+* Step 2: Satisfy assembler, must know SP2 in low MEMEXP
+********|*****|*********************|**************************
         aorg  >2000                 
         copy  "%%spectra2%%/runlib.asm"
-                                    ; Relocated spectra2 in low memory expansion
-                                    ; Is copied to RAM from bank 0.
-                                    ; 
-                                    ; Including it here too, so that all
-                                    ; references get satisfied during assembly.
+                                    ; Relocated spectra2 in low MEMEXP, was
+                                    ; copied to >2000 from ROM in bank 0
+        ;------------------------------------------------------
+        ; End of File marker
+        ;------------------------------------------------------
+        data >dead,>beef,>dead,>beef     
+        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"                                    
+
+*--------------------------------------------------------------
+* Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
+********|*****|*********************|**************************
+        aorg  >3000
+        ;------------------------------------------------------
+        ; Activate bank 1
+        ;------------------------------------------------------
+        clr   @>6002                ; Activate bank 1 (2nd bank!)
+        b     @kickstart.code2      ; Jump to entry routine
+        ;------------------------------------------------------
+        ; Resident Stevie modules >3000 - >3fff
+        ;------------------------------------------------------
+        copy  "data.constants.asm"  ; Data Constants
+        copy  "data.strings.asm"    ; Data segment - Strings
+        ;------------------------------------------------------
+        ; End of File marker
+        ;------------------------------------------------------        
+        data  >dead,>beef,>dead,>beef
+        .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
+
 ***************************************************************
-* stevie entry point after spectra2 initialisation
+* Step 4: Include main editor modules
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6036
@@ -101,8 +146,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.constants.asm"  ; Data segment - Constants
-        copy  "data.strings.asm"    ; Data segment - Strings
+;        copy  "data.constants.asm"  ; Data segment - Constants
+;        copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
 
         .ifgt $, >7fff
@@ -110,6 +155,9 @@ main:
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
+
+
+
 
 *--------------------------------------------------------------
 * Video mode configuration

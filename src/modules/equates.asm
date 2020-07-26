@@ -12,16 +12,17 @@
 * See file "modules/mem.asm" for further details.
 *
 *
-* LOW MEMORY EXPANSION (2000-3fff)
+* LOW MEMORY EXPANSION (2000-2fff)
 * 
-* Mem range   Bytes    BANK   Purpose
+* Mem range   Bytes    SAMS   Purpose
 * =========   =====    ====   ==================================
-* 2000-2fff    4096           SP2 ROM code 
-* 3000-3bff    3072           SP2 ROM code
-* 3c00-3cff     256           Shared variables - *FREE*          
-* 3d00-3dff     256           Shared variables - *FREE*
-* 3e00-3eff     256           SP2/GPL scratchpad backup 1
-* 3f00-3fff     256           SP2/GPL scratchpad backup 2
+* 2000-2fff    4096           SP2 library
+*
+* LOW MEMORY EXPANSION (3000-3fff)
+*
+* Mem range   Bytes    SAMS   Purpose
+* =========   =====    ====   ==================================
+* 3200-3fff    4096           Resident Stevie Modules
 *
 *
 * CARTRIDGE SPACE (6000-7fff)
@@ -34,7 +35,7 @@
 *
 * HIGH MEMORY EXPANSION (a000-ffff)
 *
-* Mem range   Bytes    BANK   Purpose
+* Mem range   Bytes    SAMS   Purpose
 * =========   =====    ====   ==================================
 * a000-a0ff     256           Stevie Editor shared structure
 * a100-a1ff     256           Framebuffer structure
@@ -49,7 +50,9 @@
 * c000-cfff    4096           Editor buffer page
 * d000-dfff    4096           Command history buffer
 * e000-efff    4096           Heap
-* f000-ffff    4096           *FREE*
+* f000-f0ff     256           SP2/GPL scratchpad backup 1
+* f100-f1ff     256           SP2/GPL scratchpad backup 2
+* f200-ffff    3584           *FREE*
 *
 *
 * VDP RAM
@@ -121,13 +124,6 @@ outparm8          equ  >836e           ; Function output parameter 8
 timers            equ  >8370           ; Timer table
 ramsat            equ  >8380           ; Sprite Attribute Table in RAM
 rambuf            equ  >8390           ; RAM workbuffer 1
-*--------------------------------------------------------------
-* Scratchpad backup 1               @>3e00-3eff     (256 bytes)
-* Scratchpad backup 2               @>3f00-3fff     (256 bytes)
-*--------------------------------------------------------------
-cpu.scrpad.tgt    equ  >3e00           ; Destination cpu.scrpad.backup/restore
-scrpad.backup1    equ  >3e00           ; Backup GPL layout
-scrpad.backup2    equ  >3f00           ; Backup spectra2 layout
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a000-a0ff     (256 bytes)
 *--------------------------------------------------------------
@@ -268,3 +264,10 @@ cmdb.size         equ  4096            ; Command buffer size
 * Heap                              @>e000-efff    (4096 bytes)
 *--------------------------------------------------------------
 heap.top          equ  >e000           ; Top of heap
+*--------------------------------------------------------------
+* Scratchpad backup 1               @>f000-f0ff     (256 bytes)
+* Scratchpad backup 2               @>f100-f1ff     (256 bytes)
+*--------------------------------------------------------------
+cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
+scrpad.backup1    equ  >f000           ; Backup GPL layout
+scrpad.backup2    equ  >f100           ; Backup spectra2 layout
