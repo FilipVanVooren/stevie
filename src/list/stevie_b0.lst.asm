@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.238960
+**** **** ****     > stevie_b0.asm.245866
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200726-238960
+0009               * File: stevie_b0.asm               ; Version 200726-245866
 0010               
 0011                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
@@ -20,7 +20,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.asm                 ; Version 200726-238960
+0009               * File: equates.asm                 ; Version 200726-245866
 0010               *--------------------------------------------------------------
 0011               * stevie memory layout
 0012               * See file "modules/mem.asm" for further details.
@@ -43,8 +43,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0029               *
 0030               * Mem range   Bytes    BANK   Purpose
 0031               * =========   =====    ====   ==================================
-0032               * 6000-7fff    8192       0   SP2 ROM CODE + copy to RAM code
-0033               * 6000-7fff    8192       1   stevie program code
+0032               * 6000-7fff    8192       0   SP2 ROM CODE, copy to RAM code, resident modules
+0033               * 6000-7fff    8192       1   Stevie program code
 0034               *
 0035               *
 0036               * HIGH MEMORY EXPANSION (a000-ffff)
@@ -285,7 +285,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0271      F000     cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
 0272      F000     scrpad.backup1    equ  >f000           ; Backup GPL layout
 0273      F100     scrpad.backup2    equ  >f100           ; Backup spectra2 layout
-**** **** ****     > stevie_b0.asm.238960
+**** **** ****     > stevie_b0.asm.245866
 0012               
 0013               ***************************************************************
 0014               * BANK 0 - Setup environment for Stevie
@@ -308,7 +308,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026               
 0028               
 0029 6014 1453             byte  20
-0030 6015 ....             text  'STEVIE 200726-238960'
+0030 6015 ....             text  'STEVIE 200726-245866'
 0031                       even
 0032               
 0040               
@@ -361,8 +361,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0079                       ;------------------------------------------------------
 0080                       ; Assert. Should not get here! Crash and burn!
 0081                       ;------------------------------------------------------
-0082 6068 0200  20         li    r0,main
-     606A 3000 
+0082 6068 0200  20         li    r0,$                  ; Current location
+     606A 6068 
 0083 606C C800  38         mov   r0,@>ffce             ; \ Save caller address
      606E FFCE 
 0084 6070 06A0  32         bl    @cpu.crash            ; / Crash and halt system
@@ -1122,7 +1122,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624E 1742             byte  23
-0260 624F ....             text  'Build-ID  200726-238960'
+0260 624F ....             text  'Build-ID  200726-245866'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4985,7 +4985,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F46 0040 
 0371 6F48 0460  28         b     @main                 ; Give control to main program
      6F4A 3000 
-**** **** ****     > stevie_b0.asm.238960
+**** **** ****     > stevie_b0.asm.245866
 0100                                                   ; Spectra 2
 0101                       ;------------------------------------------------------
 0102                       ; End of File marker
@@ -5194,7 +5194,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 7146 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7148 F20F 
 0113               
-**** **** ****     > stevie_b0.asm.238960
+**** **** ****     > stevie_b0.asm.245866
 0126                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5454,7 +5454,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0226 73CD ....             text  'PI.CLOCK'
 0227                       even
 0228               
-**** **** ****     > stevie_b0.asm.238960
+**** **** ****     > stevie_b0.asm.245866
 0127                       ;------------------------------------------------------
 0128                       ; End of File marker
 0129                       ;------------------------------------------------------

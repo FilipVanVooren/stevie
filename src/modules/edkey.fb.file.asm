@@ -59,16 +59,32 @@ _edkey.action.rest:
 * none
 ********|*****|*********************|**************************
 edkey.action.fb.fname.inc.load:
-        seto  @parm1                 ; Increase ASCII value of last char        
+        mov   @fh.fname.ptr,@parm1   ; Set pointer to current filename
+        seto  @parm2                 ; Increase ASCII value of char in suffix
+
+_edkey.action.fb.fname.doit:
+        ;------------------------------------------------------
+        ; Update suffix and load file
+        ;------------------------------------------------------
         bl   @fm.browse.fname.suffix.incdec
-        jmp  _edkey.action.fb.fname.loadfile
-edkey.action.fb.fname.dec.load:
-        clr  @parm1                 ; Decrease ASCII value of last char
-        bl   @fm.browse.fname.suffix.incdec
-_edkey.action.fb.fname.loadfile:
+                                     ; Filename suffix adjust
+                                     ; i  \ parm1 = Pointer to filename
+                                     ; i  / parm2 = >FFFF or >0000
+
         li    tmp0,heap.top         ; 1st line in heap
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  tmp0 = Pointer to length-prefixed
                                     ; /           device/filename string
-
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
         b    @edkey.action.top      ; Goto 1st line in editor buffer 
+
+
+edkey.action.fb.fname.dec.load:
+        mov   @fh.fname.ptr,@parm1  ; Set pointer to current filename
+        clr  @parm2                 ; Decrease ASCII value of char in suffix
+        jmp  _edkey.action.fb.fname.doit
+
+
+_edkey.action.fb.fname.loadfile:

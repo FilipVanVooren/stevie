@@ -71,7 +71,7 @@ kickstart.copy.stevie:
         ;------------------------------------------------------
         ; Assert. Should not get here! Crash and burn!
         ;------------------------------------------------------
-        li    r0,main              
+        li    r0,$                  ; Current location
         mov   r0,@>ffce             ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system           
 

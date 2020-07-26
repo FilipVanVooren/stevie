@@ -75,7 +75,7 @@
 main:   
         aorg  kickstart.code2       ; >6036
         b     @main.stevie          ; Start editor 
-        ;----------------------------------------------------------------------
+        ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
@@ -146,10 +146,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-;        copy  "data.constants.asm"  ; Data segment - Constants
-;        copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
-
         .ifgt $, >7fff
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else

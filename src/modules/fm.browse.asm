@@ -8,8 +8,8 @@
 * bl   @fm.browse.fname.suffix
 *--------------------------------------------------------------- 
 * INPUT
-* fh.fname.ptr = Pointer to device and filename
-* parm1        = Increase (>FFFF) or Decrease (>0000) ASCII
+* parm1        = Pointer to device and filename
+* parm2        = Increase (>FFFF) or Decrease (>0000) ASCII
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1
@@ -24,7 +24,7 @@ fm.browse.fname.suffix.incdec:
         ;------------------------------------------------------
         ; Get last character in filename
         ;------------------------------------------------------
-        mov   @fh.fname.ptr,tmp0    ; Get pointer to filename
+        mov   @parm1,tmp0           ; Get pointer to filename
         jeq   fm.browse.fname.suffix.exit
                                     ; Exit early if pointer is nill
 
@@ -40,7 +40,7 @@ fm.browse.fname.suffix.incdec:
         ;------------------------------------------------------
         ; Check mode (increase/decrease) character ASCII value
         ;------------------------------------------------------        
-        mov   @parm1,tmp2           ; Get mode
+        mov   @parm2,tmp2           ; Get mode
         jeq   fm.browse.fname.suffix.dec    
                                     ; Decrease ASCII if mode = 0
         ;------------------------------------------------------

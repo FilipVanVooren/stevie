@@ -29,8 +29,8 @@
 *
 * Mem range   Bytes    BANK   Purpose
 * =========   =====    ====   ==================================
-* 6000-7fff    8192       0   SP2 ROM CODE + copy to RAM code
-* 6000-7fff    8192       1   stevie program code
+* 6000-7fff    8192       0   SP2 ROM CODE, copy to RAM code, resident modules
+* 6000-7fff    8192       1   Stevie program code
 *
 *
 * HIGH MEMORY EXPANSION (a000-ffff)
