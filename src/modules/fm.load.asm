@@ -80,7 +80,7 @@ fm.loadfile:
         li    tmp0,fm.loadfile.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
-        bl    @fh.file.read.sams    ; Read specified file with SAMS support
+        bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  parm1 = Pointer to length prefixed 
                                     ; |            file descriptor
                                     ; | i  parm2 = Pointer to callback

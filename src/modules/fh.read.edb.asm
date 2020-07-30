@@ -1,5 +1,5 @@
-* FILE......: fh.read.sams.asm
-* Purpose...: File reader module (SAMS implementation)
+* FILE......: fh.read.edb.asm
+* Purpose...: File reader module
 
 *//////////////////////////////////////////////////////////////
 *                  Read file into editor buffer
@@ -7,10 +7,10 @@
 
 
 ***************************************************************
-* fh.file.read.sams
-* Read file with SAMS support
+* fh.file.read.edb
+* Read file into editor buffer
 ***************************************************************
-*  bl   @fh.file.read.sams
+*  bl   @fh.file.read.edb
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed file descriptor
@@ -24,7 +24,7 @@
 * Register usage
 * tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
-fh.file.read.sams:
+fh.file.read.edb:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -84,7 +84,7 @@ fh.file.read.sams:
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
          
-        jmp   fh.file.read.sams.load1
+        jmp   fh.file.read.edb.load1
                                     ; All checks passed, continue.
                                     ;-------------------------- 
                                     ; Check failed, crash CPU!
@@ -95,13 +95,13 @@ fh.file.read.crash:
         ;------------------------------------------------------
         ; Callback "Before Open file"
         ;------------------------------------------------------
-fh.file.read.sams.load1:        
+fh.file.read.edb.load1:        
         mov   @fh.callback1,tmp0
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.read.sams.pabheader:        
+fh.file.read.edb.pabheader:        
         bl    @cpym2v
               data fh.vpab,fh.file.pab.header,9
                                     ; Copy PAB header to VDP
@@ -125,13 +125,13 @@ fh.file.read.sams.pabheader:
         bl    @file.open
               data fh.vpab          ; Pass file descriptor to DSRLNK
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.read.sams.record
-        b     @fh.file.read.sams.error  
+        jne   fh.file.read.edb.record
+        b     @fh.file.read.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 1: Read file record
         ;------------------------------------------------------
-fh.file.read.sams.record:        
+fh.file.read.edb.record:        
         inc   @fh.records           ; Update counter        
         clr   @fh.reclen            ; Reset record length
 
@@ -165,17 +165,17 @@ fh.file.read.sams.record:
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
         ;------------------------------------------------------
-fh.file.read.sams.check_fioerr:     
+fh.file.read.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.read.sams.check_setpage 
+        jne   fh.file.read.edb.check_setpage 
                                     ; No, goto (1d)
-        b     @fh.file.read.sams.error  
+        b     @fh.file.read.edb.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
         ; 1d: Check if SAMS page needs to be set
         ;------------------------------------------------------ 
-fh.file.read.sams.check_setpage:        
+fh.file.read.edb.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
                                     ; Sanity check
@@ -190,7 +190,7 @@ fh.file.read.sams.check_setpage:
         a     @fh.reclen,tmp0       ; Add length of line just read
         inct  tmp0                  ; +2 for line prefix
         ci    tmp0,>1000 - 16       ; 4K boundary reached?
-        jlt   fh.file.read.sams.process_line
+        jlt   fh.file.read.edb.process_line
                                     ; Not yet so skip SAMS page switch
         ;------------------------------------------------------
         ; 1e: Increase SAMS page
@@ -211,7 +211,7 @@ fh.file.read.sams.check_setpage:
         ;------------------------------------------------------
         ; Step 2: Process line
         ;------------------------------------------------------
-fh.file.read.sams.process_line:
+fh.file.read.edb.process_line:
         li    tmp0,fh.vrecbuf       ; VDP source address
         mov   @edb.next_free.ptr,tmp1
                                     ; RAM target in editor buffer
@@ -219,7 +219,7 @@ fh.file.read.sams.process_line:
         mov   tmp1,@parm2           ; Needed in step 4b (index update)
 
         mov   @fh.reclen,tmp2       ; Number of bytes to copy        
-        jeq   fh.file.read.sams.prepindex.emptyline
+        jeq   fh.file.read.edb.prepindex.emptyline
                                     ; Handle empty line
         ;------------------------------------------------------
         ; 2a: Copy line from VDP to CPU editor buffer
@@ -248,17 +248,17 @@ fh.file.read.sams.process_line:
         ;------------------------------------------------------
         ; Step 3: Update index
         ;------------------------------------------------------
-fh.file.read.sams.prepindex:
+fh.file.read.edb.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
                                     ; parm2 = Must allready be set!
         mov   @fh.sams.page,@parm3  ; parm3 = SAMS page number
                                     
-        jmp   fh.file.read.sams.updindex
+        jmp   fh.file.read.edb.updindex
                                     ; Update index
         ;------------------------------------------------------
         ; 3a: Special handling for empty line
         ;------------------------------------------------------
-fh.file.read.sams.prepindex.emptyline:
+fh.file.read.edb.prepindex.emptyline:
         mov   @fh.records,@parm1    ; parm1 = Line number
         dec   @parm1                ;         Adjust for base 0 index
         clr   @parm2                ; parm2 = Pointer to >0000
@@ -266,7 +266,7 @@ fh.file.read.sams.prepindex.emptyline:
         ;------------------------------------------------------
         ; 3b: Do actual index update
         ;------------------------------------------------------                                    
-fh.file.read.sams.updindex:                
+fh.file.read.edb.updindex:                
         bl    @idx.entry.update     ; Update index 
                                     ; \ i  parm1    = Line num in editor buffer
                                     ; | i  parm2    = Pointer to line in editor 
@@ -279,26 +279,26 @@ fh.file.read.sams.updindex:
         ;------------------------------------------------------
         ; Step 4: Callback "Read line from file"
         ;------------------------------------------------------
-fh.file.read.sams.display:
+fh.file.read.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; 4a: Next record
         ;------------------------------------------------------
-fh.file.read.sams.next:        
+fh.file.read.edb.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
               data scrpad.backup2   ; / 8300->xxxx, xxxx->8300        
 
-        b     @fh.file.read.sams.record
+        b     @fh.file.read.edb.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-fh.file.read.sams.error:        
+fh.file.read.edb.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.read.sams.eof 
+        jeq   fh.file.read.edb.eof 
                                     ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
@@ -312,11 +312,11 @@ fh.file.read.sams.error:
         ;------------------------------------------------------
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
         bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.sams.exit
+        jmp   fh.file.read.edb.exit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
-fh.file.read.sams.eof:        
+fh.file.read.edb.eof:        
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
 
@@ -329,7 +329,7 @@ fh.file.read.sams.eof:
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.read.sams.exit:
+fh.file.read.edb.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

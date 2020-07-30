@@ -111,7 +111,8 @@ main:
         ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
-        copy  "fh.read.sams.asm"    ; File handler read file
+        copy  "fh.read.edb.asm"     ; Read file to editor buffer
+        copy  "fh.write.edb.asm"    ; Write editor buffer to file
         copy  "fm.load.asm"         ; File manager load file into editor
         copy  "fm.browse.asm"       ; File manager browse support routines
         ;-----------------------------------------------------------------------

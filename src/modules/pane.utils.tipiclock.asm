@@ -36,7 +36,7 @@ pane.tipi.clock:
         li    tmp0,_pane.tipi.clock.cb.datetime
         mov   tmp0,@parm4           ; Register callback 3
 
-        bl    @fh.file.read.sams    ; Read specified file with SAMS support
+        bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  parm1 = Pointer to length prefixed 
                                     ; |            file descriptor
                                     ; | i  parm2 = Pointer to callback
