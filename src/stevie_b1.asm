@@ -114,6 +114,7 @@ main:
         copy  "fh.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.write.edb.asm"    ; Write editor buffer to file
         copy  "fm.load.asm"         ; File manager load file into editor
+        copy  "fm.callbacks.asm"    ; Callbacks for file operations
         copy  "fm.browse.asm"       ; File manager browse support routines
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
