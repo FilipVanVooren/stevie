@@ -1,16 +1,16 @@
-* FILE......: dialog.file.unsaved.asm
-* Purpose...: Dialog "Unsaved changes"
+* FILE......: dialog.save.asm
+* Purpose...: Dialog "Save file"
 
 *//////////////////////////////////////////////////////////////
-*      Stevie Editor - Unsaved changes in editor buffer
+*              Stevie Editor - Save DV80 file
 *//////////////////////////////////////////////////////////////
 
 
 ***************************************************************
-* dialog.unsaved
-* Open Dialog "Unsaved changes"
+* dialog.save
+* Open Dialog for saving file
 ***************************************************************
-* b @dialog.unsaved
+* b @dialog.save
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -23,17 +23,17 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.unsaved:
-        li    tmp0,id.dialog.unsaved
+dialog.save:
+        li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.unsaved
+        li    tmp0,txt.head.save
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.hint.unsaved
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        li    tmp0,txt.hint.save
+        mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        li    tmp0,txt.keys.unsaved
+        li    tmp0,txt.keys.save
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         b     @edkey.action.cmdb.show

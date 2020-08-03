@@ -15,6 +15,7 @@ txt.ovrwrite       #string 'OVR'
 txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
+txt.saving         #string 'Saving...'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
 txt.bufnum         #string '#1 '
@@ -26,16 +27,23 @@ txt.filetype.none  #string '    '
 ;--------------------------------------------------------------
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
-txt.head.loaddv80  #string 'Load DV80 file'
-txt.hint.loaddv80  #string 'HINT: Specify filename and press ENTER.'
-txt.keys.loaddv80  #string 'F9=Back    F3=Clear    ^A=Home    ^F=End    ^,=Previous    ^.=Next'
+txt.head.load      #string 'Load DV80 file'
+txt.hint.load      #string 'HINT: Specify filename and press ENTER to load file.'
+txt.keys.load      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End    ^,=Previous    ^.=Next'
+
+;--------------------------------------------------------------
+; Dialog Save DV 80 file
+;--------------------------------------------------------------
+txt.head.save      #string 'Save DV80 file'
+txt.hint.save      #string 'HINT: Specify filename and press ENTER to save file.'
+txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
 txt.head.unsaved   #string 'Unsaved changes'
 txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
-txt.keys.unsaved   #string 'F9=Back    F6=Proceed anyway   ^S=Save file'
+txt.keys.unsaved   #string 'F9=Back    F6=Proceed anyway   ^K=Save file'
 
 
 
@@ -51,8 +59,6 @@ txt.io.nofile      #string 'I/O error. No filename specified.'
 ;--------------------------------------------------------------
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-
-
 
 txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

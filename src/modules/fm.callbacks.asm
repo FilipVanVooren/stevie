@@ -10,17 +10,43 @@
 fm.loadsave.cb.indicator1:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Show loading indicators and file descriptor
+        ; Check file operation m ode
         ;------------------------------------------------------
         bl    @hchar
               byte 29,0,32,80
-              data EOL
+              data EOL              ; Clear until end of line
         
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+
+        ci    tmp0,fh.fopmode.savefile
+        jeq   fm.loadsave.cb.indicator1.saving
+                                    ; Saving file?
+
+        ci    tmp0,fh.fopmode.readfile
+        jeq   fm.loadsave.cb.indicator1.loading
+                                    ; Loading file?
+        ;------------------------------------------------------
+        ; Display Saving....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.saving:                
+        bl    @putat
+              byte 29,0
+              data txt.saving       ; Display "Saving...."
+        jmp   fm.loadsave.cb.indicator1.filename
+        ;------------------------------------------------------
+        ; Display Loading....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.loading:        
         bl    @putat
               byte 29,0
               data txt.loading      ; Display "Loading...."
-
+        ;------------------------------------------------------
+        ; Display device/filename
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.filename:        
         bl    @at
               byte 29,11            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
@@ -29,6 +55,7 @@ fm.loadsave.cb.indicator1:
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.exit:
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
@@ -120,13 +147,15 @@ fm.loadsave.cb.indicator3.exit:
 fm.loadsave.cb.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
-
-        bl    @hchar
-              byte 29,0,32,50       ; Erase loading indicator
-              data EOL        
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0     
         ;------------------------------------------------------
         ; Build I/O error message
         ;------------------------------------------------------
+        bl    @hchar
+              byte 29,0,32,50       ; Erase loading indicator
+              data EOL   
+
         bl    @cpym2m               
               data txt.ioerr+1
               data tv.error.msg+1
@@ -143,8 +172,13 @@ fm.loadsave.cb.fioerr:
                                     ; | i  tmp1 = RAM destination
                                     ; / i  tmp2 = Bytes to copy
         ;------------------------------------------------------
-        ; Reset filename to "new file"
+        ; Reset filename to "new file" 
         ;------------------------------------------------------
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+
+        ci    tmp0,fh.fopmode.readfile
+        jne   !                     ; Only when reading file
+
         li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr
 
@@ -154,10 +188,11 @@ fm.loadsave.cb.fioerr:
         ;------------------------------------------------------
         ; Display I/O error message
         ;------------------------------------------------------
-        bl    @pane.errline.show    ; Show error line
+!       bl    @pane.errline.show    ; Show error line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.exit:
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

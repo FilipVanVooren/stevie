@@ -90,8 +90,12 @@ skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
-id.dialog.loaddv80        equ  1       ; ID for dialog "Load DV 80 file"
-id.dialog.unsaved         equ  2       ; ID for dialog "Unsaved changes"
+id.dialog.load            equ  1       ; ID for dialog "Load DV 80 file"
+id.dialog.save            equ  2       ; ID for dialog "Save DV 80 file"
+id.dialog.unsaved         equ  3       ; ID for dialog "Unsaved changes"
+fh.fopmode.none           equ  0       ; No file operation in progress
+fh.fopmode.readfile       equ  1       ; Read file from disk to memory
+fh.fopmode.savefile       equ  2       ; Save file from memory to disk
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -145,7 +149,7 @@ tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
 tv.task.oneshot   equ  tv.top + 28     ; Pointer to one-shot routine
 tv.error.visible  equ  tv.top + 30     ; Error pane visible
 tv.error.msg      equ  tv.top + 32     ; Error message (max. 160 characters)
-tv.end            equ  tv.top + 192    ; End of structure
+tv.free           equ  tv.top + 192    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure            @>a100-a1ff     (256 bytes)
 *--------------------------------------------------------------
@@ -160,13 +164,13 @@ fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
 fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
 fb.column         equ  fb.struct + 12  ; Current column in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per row in frame buffer
-fb.free           equ  fb.struct + 16  ; **** free ****
+fb.free1          equ  fb.struct + 16  ; **** free ****
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
 fb.yxsave         equ  fb.struct + 20  ; Copy of WYX
 fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
 fb.scrrows        equ  fb.struct + 24  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 26  ; Max # of rows on physical screen for fb
-fb.end            equ  fb.struct + 28  ; End of structure
+fb.free           equ  fb.struct + 28  ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure           @>a200-a2ff     (256 bytes)
 *--------------------------------------------------------------
@@ -183,7 +187,7 @@ edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
 edb.filetype.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
                                        ; with current file type.                                    
 edb.sams.page     equ  edb.struct + 18 ; Current SAMS page
-edb.end           equ  edb.struct + 20 ; End of structure
+edb.free          equ  edb.struct + 20 ; End of structure
 *--------------------------------------------------------------
 * Command buffer structure          @>a300-a3ff     (256 bytes)
 *--------------------------------------------------------------
@@ -207,7 +211,7 @@ cmdb.panhint      equ  cmdb.struct + 30; Pointer to string with pane hint
 cmdb.pankeys      equ  cmdb.struct + 32; Pointer to string with pane keys
 cmdb.cmdlen       equ  cmdb.struct + 34; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 35; Current command (80 bytes max.)
-cmdb.end          equ  cmdb.struct +115; End of structure
+cmdb.free         equ  cmdb.struct +115; End of structure
 *--------------------------------------------------------------
 * File handle structure             @>a400-a4ff     (256 bytes)
 *--------------------------------------------------------------
@@ -224,13 +228,14 @@ fh.counter        equ  fh.struct + 52  ; Counter used in stevie file operations
 fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
 fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
 fh.sams.hipage    equ  fh.struct + 58  ; Highest SAMS page used for file oper.
-fh.callback1      equ  fh.struct + 60  ; Pointer to callback function 1
-fh.callback2      equ  fh.struct + 62  ; Pointer to callback function 2
-fh.callback3      equ  fh.struct + 64  ; Pointer to callback function 3
-fh.callback4      equ  fh.struct + 66  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 68  ; Kilobytes process (previous)
-fh.membuffer      equ  fh.struct + 70  ; 80 bytes file memory buffer
-fh.end            equ  fh.struct +150  ; End of structure
+fh.fopmode        equ  fh.struct + 60  ; FOP (File Operation Mode)
+fh.callback1      equ  fh.struct + 62  ; Pointer to callback function 1
+fh.callback2      equ  fh.struct + 64  ; Pointer to callback function 2
+fh.callback3      equ  fh.struct + 66  ; Pointer to callback function 3
+fh.callback4      equ  fh.struct + 68  ; Pointer to callback function 4
+fh.kilobytes.prev equ  fh.struct + 70  ; Kilobytes process (previous)
+fh.membuffer      equ  fh.struct + 72  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +152  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------

@@ -55,6 +55,10 @@ fh.file.read.edb:
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
+        li    tmp0,fh.fopmode.readfile
+                                    ; We are going to read a file
+        mov   tmp0,@fh.fopmode      ; Set file operations mode
+
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
         mov   @parm2,@fh.callback1  ; Callback function "Open file"
         mov   @parm3,@fh.callback2  ; Callback function "Read line from file"

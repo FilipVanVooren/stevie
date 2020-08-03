@@ -26,6 +26,8 @@
 cmdb.init:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
@@ -49,6 +51,7 @@ cmdb.init.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 

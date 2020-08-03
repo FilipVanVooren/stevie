@@ -8,7 +8,7 @@ key.fctn.0    equ >0000             ; fctn + 0
 key.fctn.1    equ >0300             ; fctn + 1
 key.fctn.2    equ >0400             ; fctn + 2
 key.fctn.3    equ >0700             ; fctn + 3
-key.fctn.4    equ >0000             ; fctn + 4
+key.fctn.4    equ >0200             ; fctn + 4
 key.fctn.5    equ >0e00             ; fctn + 5
 key.fctn.6    equ >0000             ; fctn + 6
 key.fctn.7    equ >0000             ; fctn + 7
@@ -69,7 +69,7 @@ key.ctrl.g    equ >0000             ; ctrl + g
 key.ctrl.h    equ >0000             ; ctrl + h
 key.ctrl.i    equ >0000             ; ctrl + i
 key.ctrl.j    equ >0000             ; ctrl + j
-key.ctrl.k    equ >0000             ; ctrl + k
+key.ctrl.k    equ >8b00             ; ctrl + k
 key.ctrl.l    equ >8c00             ; ctrl + l
 key.ctrl.m    equ >0000             ; ctrl + m
 key.ctrl.n    equ >0000             ; ctrl + n
@@ -220,8 +220,9 @@ keymap_actions.editor:
         ; Modifier keys - Delete
         ;-------------------------------------------------------
         data  key.fctn.1, txt.fctn.1, edkey.action.del_char
-        data  key.ctrl.k, txt.ctrl.k, edkey.action.del_eol
-        data  key.fctn.3, txt.fctn.3, edkey.action.del_line
+        data  key.fctn.3, txt.fctn.3, edkey.action.del_line        
+        data  key.fctn.4, txt.fctn.4, edkey.action.del_eol
+
         ;-------------------------------------------------------
         ; Modifier keys - Insert
         ;-------------------------------------------------------
@@ -241,7 +242,7 @@ keymap_actions.editor:
         data  key.ctrl.2, txt.ctrl.2, edkey.action.fb.buffer2
         data  key.ctrl.3, txt.ctrl.3, edkey.action.fb.buffer3
         data  key.ctrl.4, txt.ctrl.4, edkey.action.fb.buffer4
-        data  key.ctrl.5, txt.ctrl.5, edkey.action.fb.buffer5
+ ;      data  key.ctrl.5, txt.ctrl.5, edkey.action.fb.buffer5
         data  key.ctrl.6, txt.ctrl.6, edkey.action.fb.buffer6
         data  key.ctrl.7, txt.ctrl.7, edkey.action.fb.buffer7
         data  key.ctrl.8, txt.ctrl.8, edkey.action.fb.buffer8
@@ -251,7 +252,8 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.ctrl.comma, txt.ctrl.comma, edkey.action.fb.fname.dec.load
         data  key.ctrl.dot, txt.ctrl.dot, edkey.action.fb.fname.inc.load
-        data  key.ctrl.l, txt.ctrl.l, dialog.loaddv80        
+        data  key.ctrl.k, txt.ctrl.k, dialog.save                
+        data  key.ctrl.l, txt.ctrl.l, dialog.load
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -272,10 +274,10 @@ keymap_actions.cmdb:
         data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
         data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
         ;-------------------------------------------------------
-        ; Modified keys
+        ; Modifier keys
         ;-------------------------------------------------------
         data  key.fctn.3, txt.fctn.3, edkey.action.cmdb.clear
-        data  key.enter, txt.enter, edkey.action.cmdb.loadfile
+        data  key.enter, txt.enter, edkey.action.cmdb.loadsave
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
