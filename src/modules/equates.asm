@@ -95,7 +95,7 @@ id.dialog.save            equ  2       ; ID for dialog "Save DV 80 file"
 id.dialog.unsaved         equ  3       ; ID for dialog "Unsaved changes"
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-fh.fopmode.savefile       equ  2       ; Save file from memory to disk
+fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------

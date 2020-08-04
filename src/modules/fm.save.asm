@@ -26,8 +26,17 @@ fm.savefile:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
+        ; Initialisation
+        ;-------------------------------------------------------
+        bl    @filv
+              data sprsat,>0000,4   ; Turn off sprites (cursor)
+
+        ;bl    @pane.cmdb.hide       ; Hide CMDB pane
+        ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------
+        mov   tmp0,@parm1           ; Set device and filename
+
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 

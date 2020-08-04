@@ -177,8 +177,9 @@ fb.refresh:
         ;------------------------------------------------------
 fb.refresh.unpack_line:
         bl    @edb.line.unpack      ; Unpack line
-                                    ; \ i  parm1 = Line to unpack
-                                    ; / i  parm2 = Target row in frame buffer
+                                    ; \ i  parm1    = Line to unpack
+                                    ; | i  parm2    = Target row in frame buffer
+                                    ; / o  outparm1 = Length of line
 
         inc   @parm1                ; Next line in editor buffer
         inc   @parm2                ; Next row in frame buffer

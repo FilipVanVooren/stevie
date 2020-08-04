@@ -217,7 +217,7 @@ edb.line.pack.exit:
 * @parm2 = Target row in frame buffer
 *--------------------------------------------------------------
 * OUTPUT
-* none
+* @outparm1 = Length of unpacked line
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
@@ -328,7 +328,9 @@ edb.line.unpack.copy:
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
-!       bl    @xpym2m               ; Copy line to frame buffer
+!       mov   tmp2,@outparm1        ; Length of unpacked line
+
+        bl    @xpym2m               ; Copy line to frame buffer
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Target address 
                                     ; / i  tmp2 = Bytes to copy

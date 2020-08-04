@@ -117,7 +117,11 @@ fh.file.read.edb.pabheader:
         movb  *tmp1,tmp2            ; Get file descriptor length
         srl   tmp2,8                ; Right justify
         inc   tmp2                  ; Include length byte as well
-        bl    @xpym2v               ; Append file descriptor to VDP PAB
+
+        bl    @xpym2v               ; Copy CPU memory to VDP memory
+                                    ; \ i  tmp0 = VDP destination
+                                    ; | i  tmp1 = CPU source
+                                    ; / i  tmp2 = Nimber of bytes to copy
         ;------------------------------------------------------
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
@@ -153,13 +157,13 @@ fh.file.read.edb.record:
         ;------------------------------------------------------
         ; 1a: Calculate kilobytes processed
         ;------------------------------------------------------
-        a     tmp1,@fh.counter    
-        a     @fh.counter,tmp1
-        ci    tmp1,1024
-        jlt   !
+        a     tmp1,@fh.counter      ; Add record length to counter
+        mov   @fh.counter,tmp1      ;
+        ci    tmp1,1024             ; 1 KB boundary reached ?
+        jlt   !                     ; Not yet, goto (1b)
         inc   @fh.kilobytes
-        ai    tmp1,-1024            ; Remove KB portion and keep bytes
-        mov   tmp1,@fh.counter
+        ai    tmp1,-1024            ; Remove KB portion, only keep bytes
+        mov   tmp1,@fh.counter      ; Update counter
         ;------------------------------------------------------
         ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
@@ -334,6 +338,7 @@ fh.file.read.edb.eof:
 * Exit
 *--------------------------------------------------------------
 fh.file.read.edb.exit:
+        clr   @fh.fopmode           ; Set FOP mode to idle operation                                    
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

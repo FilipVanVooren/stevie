@@ -22,6 +22,8 @@ txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
+txt.alpha.up       #string 'AU'
+txt.alpha.down     #string 'AD'
 
 
 ;--------------------------------------------------------------
@@ -50,7 +52,8 @@ txt.keys.unsaved   #string 'F9=Back    F6=Proceed anyway   ^K=Save file'
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------
-txt.ioerr          #string 'I/O error. Failed loading file: '
+txt.ioerr.load     #string 'I/O error. Failed loading file: '
+txt.ioerr.save     #string 'I/O error. Failed saving file: '
 txt.io.nofile      #string 'I/O error. No filename specified.'
 
 

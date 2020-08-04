@@ -21,7 +21,7 @@ fm.loadsave.cb.indicator1:
         
         mov   @fh.fopmode,tmp0      ; Check file operation mode
 
-        ci    tmp0,fh.fopmode.savefile
+        ci    tmp0,fh.fopmode.writefile
         jeq   fm.loadsave.cb.indicator1.saving
                                     ; Saving file?
 
@@ -85,7 +85,7 @@ fm.loadsave.cb.indicator2:
 
         bl    @putnum
               byte 29,75            ; Show lines processed
-              data edb.lines,rambuf,>3020
+              data fh.records,rambuf,>3020
 
         bl    @putnum
               byte 29,56            ; Show kilobytes processed
@@ -156,11 +156,30 @@ fm.loadsave.cb.fioerr:
               byte 29,0,32,50       ; Erase loading indicator
               data EOL   
 
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+        ci    tmp0,fh.fopmode.writefile
+        jeq   fm.loadsave.cb.fioerr.mgs2
+        ;------------------------------------------------------
+        ; Failed loading file
+        ;------------------------------------------------------
+fm.loadsave.cb.fioerr.mgs1:        
         bl    @cpym2m               
-              data txt.ioerr+1
+              data txt.ioerr.load+1
               data tv.error.msg+1
               data 34               ; Error message
-
+        jmp   fm.loadsave.cb.fioerr.mgs3
+        ;------------------------------------------------------        
+        ; Failed saving file
+        ;------------------------------------------------------
+fm.loadsave.cb.fioerr.mgs2:                
+        bl    @cpym2m               
+              data txt.ioerr.save+1
+              data tv.error.msg+1
+              data 34               ; Error message
+        ;------------------------------------------------------
+        ; Add filename to error message
+        ;------------------------------------------------------        
+fm.loadsave.cb.fioerr.mgs3:
         mov   @edb.filename.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align

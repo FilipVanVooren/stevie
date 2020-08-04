@@ -48,6 +48,26 @@ pane.botline.show_file:
                                     ; Get string to display
         bl    @xutst0               ; Display Filetype string
         ;------------------------------------------------------
+        ; ALPHA-Lock key down?
+        ;------------------------------------------------------
+        coc   @wbit10,config
+        jeq   pane.botline.alpha.down
+        ;------------------------------------------------------
+        ; AlPHA-Lock is up
+        ;------------------------------------------------------
+        bl    @putat      
+              byte   29,42
+              data   txt.alpha.down 
+
+        jmp   pane.botline.show_mode
+        ;------------------------------------------------------
+        ; AlPHA-Lock is down
+        ;------------------------------------------------------
+pane.botline.alpha.down:        
+        bl    @putat      
+              byte   29,42
+              data   txt.alpha.down
+        ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
 pane.botline.show_mode:
