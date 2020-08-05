@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 
-        copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "equates.equ"         ; Equates Stevie configuration
 
 ***************************************************************
 * BANK 1 - Stevie main editor modules

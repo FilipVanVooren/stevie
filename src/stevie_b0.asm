@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b0.asm               ; Version %%build_date%%
 
-        copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "equates.equ"         ; Equates Stevie configuration
 
 ***************************************************************
 * BANK 0 - Setup environment for Stevie

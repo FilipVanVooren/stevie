@@ -6,10 +6,9 @@
 *
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
-* File: equates.asm                 ; Version %%build_date%%
+* File: equates.equ                 ; Version %%build_date%%
 *--------------------------------------------------------------
-* stevie memory layout
-* See file "modules/mem.asm" for further details.
+* Stevie memory layout
 *
 *
 * LOW MEMORY EXPANSION (2000-2fff)
@@ -22,7 +21,7 @@
 *
 * Mem range   Bytes    SAMS   Purpose
 * =========   =====    ====   ==================================
-* 3200-3fff    4096           Resident Stevie Modules
+* 3000-3fff    4096           Resident Stevie Modules
 *
 *
 * CARTRIDGE SPACE (6000-7fff)
