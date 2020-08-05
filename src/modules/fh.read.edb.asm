@@ -121,12 +121,13 @@ fh.file.read.edb.pabheader:
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Nimber of bytes to copy
+                                    ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300
+              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
+                                    ; / 512 bytes total to copy           
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
@@ -167,9 +168,12 @@ fh.file.read.edb.record:
         ;------------------------------------------------------
         ; 1b: Load spectra scratchpad layout
         ;------------------------------------------------------
-!       bl    @cpu.scrpad.backup    ; Backup GPL layout to @cpu.scrpad.tgt
+!       bl    @cpu.scrpad.backup    ; \ Backup GPL layout to @cpu.scrpad.tgt
+                                    ; / 256 bytes total to copy  
+
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / @scrpad.backup2 to >8300
+              data scrpad.backup2   ; | @scrpad.backup2 to >8300
+                                    ; / 256 bytes total to copy
         ;------------------------------------------------------
         ; 1c: Check if a file error occured
         ;------------------------------------------------------
@@ -291,7 +295,7 @@ fh.file.read.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; 4a: Next record
+        ; 4a: Next record. Load GPL scratchpad layout.
         ;------------------------------------------------------
 fh.file.read.edb.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
@@ -313,6 +317,7 @@ fh.file.read.edb.error:
         ;------------------------------------------------------ 
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
               data scrpad.backup2   ; / >2100->8300
+              
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------

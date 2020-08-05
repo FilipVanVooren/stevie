@@ -205,7 +205,7 @@ fh.file.write.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Saving indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; Step 3: Next record
+        ; Step 3: Next record. Load GPL scratchpad layout.
         ;------------------------------------------------------
 fh.file.write.edb.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
