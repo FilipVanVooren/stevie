@@ -122,7 +122,8 @@ fh.file.write.edb.pabheader:
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300
+              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
+                                    ; / 512 bytes total to copy      
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
@@ -145,9 +146,12 @@ fh.file.write.edb.record:
         ;------------------------------------------------------
         ; 1a: Load spectra scratchpad layout
         ;------------------------------------------------------
-        bl    @cpu.scrpad.backup    ; Backup GPL layout to @cpu.scrpad.tgt
+        bl    @cpu.scrpad.backup    ; \ Backup GPL layout to @cpu.scrpad.tgt
+                                    ; / 256 bytes total to copy  
+
         bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / @scrpad.backup2 to >8300
+              data scrpad.backup2   ; | @scrpad.backup2 to >8300
+                                    ; / 256 bytes total to copy
         ;------------------------------------------------------
         ; 1b: Unpack current line to framebuffer
         ;------------------------------------------------------
@@ -171,8 +175,18 @@ fh.file.write.edb.record:
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = CPU source address
                                     ; / i  tmp2 = Number of bytes to copy  
+        ;------------------------------------------------------        
+        ; 1d: Write file record
         ;------------------------------------------------------
-        ; 1d: Calculate kilobytes processed
+        bl    @file.record.write    ; Write file record
+              data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
+                                    ; |           (without +9 offset!)
+                                    ; | o  tmp0 = Status byte
+                                    ; | o  tmp1 = Bytes read
+                                    ; | o  tmp2 = Status register contents 
+                                    ; /           upon DSRLNK return
+        ;------------------------------------------------------
+        ; 1e: Calculate kilobytes processed
         ;------------------------------------------------------
         a     @fh.reclen,@fh.counter
                                     ; Add record length to counter
@@ -182,12 +196,6 @@ fh.file.write.edb.record:
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter        
-        ;------------------------------------------------------
-        ; 1e: Load spectra scratchpad layout
-        ;------------------------------------------------------
-!       bl    @cpu.scrpad.backup    ; Backup GPL layout to @cpu.scrpad.tgt
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / @scrpad.backup2 to >8300
         ;------------------------------------------------------
         ; 1f: Check if a file error occured
         ;------------------------------------------------------
@@ -209,9 +217,10 @@ fh.file.write.edb.display:
         ;------------------------------------------------------
 fh.file.write.edb.next:        
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300        
+              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
+                                    ; / 512 bytes total to copy           
 
-        b     @fh.file.write.edb.record
+        jmp   fh.file.write.edb.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler

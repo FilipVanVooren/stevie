@@ -100,7 +100,8 @@ fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to 
-                                       ; memory address @cpu.scrpad.tgt
+                                       ; memory address @cpu.scrpad.tgt when
+                                       ; starting Stevie.
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
 kickstart.code1           equ  >6030   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6036   ; Uniform aorg entry addr accross banks
