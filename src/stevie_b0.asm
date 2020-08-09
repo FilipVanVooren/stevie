@@ -30,6 +30,8 @@
               #string 'STEVIE'
         .endif         
 
+
+
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
@@ -74,19 +76,19 @@ kickstart.step4:
 kickstart.copy:
         ;------------------------------------------------------
         ; Copy memory to destination
-        ; tmp0 = Source CPU address
-        ; tmp1 = Target CPU address
-        ; tmp2 = Bytes to copy/16
+        ; r0 = Source CPU address
+        ; r1 = Target CPU address
+        ; r2 = Bytes to copy/16
         ;------------------------------------------------------
-!       mov   *tmp0+,*tmp1+         ; Copy word 1
-        mov   *tmp0+,*tmp1+         ; Copy word 2
-        mov   *tmp0+,*tmp1+         ; Copy word 3
-        mov   *tmp0+,*tmp1+         ; Copy word 4
-        mov   *tmp0+,*tmp1+         ; Copy word 5
-        mov   *tmp0+,*tmp1+         ; Copy word 6
-        mov   *tmp0+,*tmp1+         ; Copy word 7
-        mov   *tmp0+,*tmp1+         ; Copy word 8                         
-        dec   tmp2
+!       mov   *r0+,*r1+             ; Copy word 1
+        mov   *r0+,*r1+             ; Copy word 2
+        mov   *r0+,*r1+             ; Copy word 3
+        mov   *r0+,*r1+             ; Copy word 4
+        mov   *r0+,*r1+             ; Copy word 5
+        mov   *r0+,*r1+             ; Copy word 6
+        mov   *r0+,*r1+             ; Copy word 7
+        mov   *r0+,*r1+             ; Copy word 8
+        dec   r2
         jne   -!                    ; Loop until done
         b     *r11                  ; Return to caller
 

@@ -126,8 +126,11 @@ fh.file.read.edb.pabheader:
         ; Load GPL scratchpad layout
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
-                                    ; / 512 bytes total to copy           
+              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
+                                    ; |   @cpu.scrpad.tgt -> 8300
+                                    ; |   512 bytes total to copy    
+                                    ; |
+                                    ; /   WS is at >f100 now(!)
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------

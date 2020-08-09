@@ -113,12 +113,14 @@ fh.file.write.edb.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Nimber of bytes to copy
         ;------------------------------------------------------
-        ; Backup SP2 scratchpad to >f100 and load GPL scratchpad
-        ; from @cpu.scrpad.tgt (f000)
+        ; Load GPL scratch pad memory
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; | 8300->xxxx, ->8300
-                                    ; / 512 bytes total to copy      
+              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
+                                    ; |   @cpu.scrpad.tgt -> 8300
+                                    ; |   512 bytes total to copy    
+                                    ; |
+                                    ; /   WS is at >f100 now(!)
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
@@ -139,12 +141,12 @@ fh.file.write.edb.record:
         c     @fh.records,@edb.lines
         jeq   fh.file.write.edb.eof ; Exit when all records processed
         ;------------------------------------------------------
-        ; 1a: Load spectra scratchpad layout
+        ; 1a: Load spectra scratchpad layout again
         ;------------------------------------------------------
-        bl    @cpu.scrpad.backup    ; \ Backup GPL layout to @cpu.scrpad.tgt
+        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
                                     ; / 256 bytes total to copy  
 
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
+        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
               data scrpad.backup2   ; | @scrpad.backup2 to >8300
                                     ; / 256 bytes total to copy
         ;------------------------------------------------------
@@ -173,6 +175,13 @@ fh.file.write.edb.record:
         ;------------------------------------------------------        
         ; 1d: Write file record
         ;------------------------------------------------------
+        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
+              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
+                                    ; |   @cpu.scrpad.tgt -> 8300
+                                    ; |   512 bytes total to copy    
+                                    ; |
+                                    ; /   WS is at >f100 now(!)
+
         bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
@@ -180,6 +189,13 @@ fh.file.write.edb.record:
                                     ; | o  tmp1 = Bytes read
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
+
+        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
+                                    ; / 256 bytes total to copy  
+
+        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
+              data scrpad.backup2   ; | @scrpad.backup2 to >8300
+                                    ; / 256 bytes total to copy
         ;------------------------------------------------------
         ; 1e: Calculate kilobytes processed
         ;------------------------------------------------------
