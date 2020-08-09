@@ -10,19 +10,6 @@
 
         copy  "equates.equ"         ; Equates Stevie configuration
 
-*--------------------------------------------------------------
-* Video mode configuration for SP2
-*--------------------------------------------------------------
-spfclr  equ   >f4                   ; Foreground/Background color for font.
-spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-colrow  equ   80                    ; Columns per row
-pctadr  equ   >0fc0                 ; VDP color table base
-fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table        
-sprpdt  equ   >2800                 ; VDP sprite pattern table
-
 ***************************************************************
 * BANK 0 - Setup environment for Stevie
 ********|*****|*********************|**************************
@@ -146,3 +133,16 @@ main:
         .else
               data $                ; Bank 0 ROM size OK.
         .endif
+
+*--------------------------------------------------------------
+* Video mode configuration for SP2
+*--------------------------------------------------------------
+spfclr  equ   >f4                   ; Foreground/Background color for font.
+spfbck  equ   >04                   ; Screen background color.
+spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+colrow  equ   80                    ; Columns per row
+pctadr  equ   >0fc0                 ; VDP color table base
+fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+sprsat  equ   >2180                 ; VDP sprite attribute table        
+sprpdt  equ   >2800                 ; VDP sprite pattern table
