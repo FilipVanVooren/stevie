@@ -42,12 +42,6 @@ fh.file.write.edb:
         clr   @fh.kilobytes.prev    ; /
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents
-       
-        mov   @edb.top.ptr,tmp0
-        bl    @xsams.page.get       ; Get SAMS page
-                                    ; \ i  tmp0  = Memory address
-                                    ; | o  waux1 = SAMS page number
-                                    ; / o  waux2 = Address of SAMS register
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -119,10 +113,11 @@ fh.file.write.edb.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Nimber of bytes to copy
         ;------------------------------------------------------
-        ; Load GPL scratchpad layout
+        ; Backup SP2 scratchpad to >f100 and load GPL scratchpad
+        ; from @cpu.scrpad.tgt (f000)
         ;------------------------------------------------------
         bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
+              data scrpad.backup2   ; | 8300->xxxx, ->8300
                                     ; / 512 bytes total to copy      
         ;------------------------------------------------------
         ; Open file

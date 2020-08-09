@@ -272,7 +272,9 @@ heap.top          equ  >e000           ; Top of heap
 *--------------------------------------------------------------
 * Scratchpad backup 1               @>f000-f0ff     (256 bytes)
 * Scratchpad backup 2               @>f100-f1ff     (256 bytes)
+* Scratchpad backup 3               @>f200-f2ff     (256 bytes)
 *--------------------------------------------------------------
 cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
-scrpad.backup1    equ  >f000           ; Backup GPL layout
-scrpad.backup2    equ  >f100           ; Backup spectra2 layout
+scrpad.backup1    equ  >f000           ; Backup 1 (GPL layout)
+scrpad.backup2    equ  >f100           ; Backup 2 (spectra2 layout)
+scrpad.backup3    equ  >f200           ; Backup 3 (spectra2 layout)

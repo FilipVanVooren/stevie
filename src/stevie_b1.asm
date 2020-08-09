@@ -10,6 +10,19 @@
 
         copy  "equates.equ"         ; Equates Stevie configuration
 
+*--------------------------------------------------------------
+* Video mode configuration
+*--------------------------------------------------------------
+spfclr  equ   >f4                   ; Foreground/Background color for font.
+spfbck  equ   >04                   ; Screen background color.
+spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+colrow  equ   80                    ; Columns per row
+pctadr  equ   >0fc0                 ; VDP color table base
+fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+sprsat  equ   >2180                 ; VDP sprite attribute table
+sprpdt  equ   >2800                 ; VDP sprite pattern table
+
 ***************************************************************
 * BANK 1 - Stevie main editor modules
 ********|*****|*********************|**************************
@@ -30,13 +43,12 @@
               #string 'STEVIE'
         .endif
 
-*--------------------------------------------------------------
+***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6030
         clr   @>6000                ; Switch to bank 0
-
-*--------------------------------------------------------------
+***************************************************************
 * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
 ********|*****|*********************|**************************
         aorg  >2000                 
@@ -48,8 +60,7 @@
         ;------------------------------------------------------
         data >dead,>beef,>dead,>beef     
         .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"                                    
-
-*--------------------------------------------------------------
+***************************************************************
 * Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
 ********|*****|*********************|**************************
         aorg  >3000
@@ -68,7 +79,6 @@
         ;------------------------------------------------------        
         data  >dead,>beef,>dead,>beef
         .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
-
 ***************************************************************
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
@@ -154,19 +164,3 @@ main:
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
-
-
-
-
-*--------------------------------------------------------------
-* Video mode configuration
-*--------------------------------------------------------------
-spfclr  equ   >f4                   ; Foreground/Background color for font.
-spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-colrow  equ   80                    ; Columns per row
-pctadr  equ   >0fc0                 ; VDP color table base
-fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table
-sprpdt  equ   >2800                 ; VDP sprite pattern table
