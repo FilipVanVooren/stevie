@@ -123,15 +123,6 @@ fh.file.read.edb.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Load GPL scratchpad layout
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
-        ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
         bl    @file.open
@@ -164,31 +155,23 @@ fh.file.read.edb.record:
         a     tmp1,@fh.counter      ; Add record length to counter
         mov   @fh.counter,tmp1      ;
         ci    tmp1,1024             ; 1 KB boundary reached ?
-        jlt   !                     ; Not yet, goto (1b)
+        jlt   fh.file.read.edb.check_fioerr
+                                    ; Not yet, goto (1b)
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter
         ;------------------------------------------------------
-        ; 1b: Load spectra scratchpad layout
-        ;------------------------------------------------------
-!       bl    @cpu.scrpad.backup    ; \ Backup GPL layout to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
-        ;------------------------------------------------------
-        ; 1c: Check if a file error occured
+        ; 1b: Check if a file error occured
         ;------------------------------------------------------
 fh.file.read.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
         jne   fh.file.read.edb.check_setpage 
-                                    ; No, goto (1d)
+                                    ; No, goto (1c)
         b     @fh.file.read.edb.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 1d: Check if SAMS page needs to be set
+        ; 1c: Check if SAMS page needs to be set
         ;------------------------------------------------------ 
 fh.file.read.edb.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
@@ -208,7 +191,7 @@ fh.file.read.edb.check_setpage:
         jlt   fh.file.read.edb.process_line
                                     ; Not yet so skip SAMS page switch
         ;------------------------------------------------------
-        ; 1e: Increase SAMS page
+        ; 1d: Increase SAMS page
         ;------------------------------------------------------ 
         inc   @fh.sams.page         ; Next SAMS page
         mov   @fh.sams.page,@fh.sams.hipage
@@ -301,9 +284,6 @@ fh.file.read.edb.display:
         ; 4a: Next record. Load GPL scratchpad layout.
         ;------------------------------------------------------
 fh.file.read.edb.next:        
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300        
-
         b     @fh.file.read.edb.record
                                     ; Next record
         ;------------------------------------------------------
@@ -318,10 +298,6 @@ fh.file.read.edb.error:
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-              
-
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "File I/O error"
@@ -333,9 +309,6 @@ fh.file.read.edb.error:
         ; End-Of-File reached
         ;------------------------------------------------------     
 fh.file.read.edb.eof:        
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"
