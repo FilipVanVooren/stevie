@@ -16,7 +16,7 @@
 * @parm1 = Cursor YX position
 * @parm2 = Pointer to Length-prefixed string
 *--------------------------------------------------------------
-* OUTPUT
+* OUTPUT test
 * none
 *--------------------------------------------------------------
 * Register usage
