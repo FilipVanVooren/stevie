@@ -106,7 +106,30 @@ startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
 kickstart.code1           equ  >6030   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6036   ; Uniform aorg entry addr accross banks
 *--------------------------------------------------------------
-* Stevie Editor shared structures     @>a000-a0ff     (256 bytes)
+* Stevie work area (scratchpad)       @>2f00-2fff   (256 bytes)
+*--------------------------------------------------------------
+parm1             equ  >2f20           ; Function parameter 1
+parm2             equ  >2f22           ; Function parameter 2
+parm3             equ  >2f24           ; Function parameter 3
+parm4             equ  >2f26           ; Function parameter 4
+parm5             equ  >2f28           ; Function parameter 5
+parm6             equ  >2f2a           ; Function parameter 6
+parm7             equ  >2f2c           ; Function parameter 7
+parm8             equ  >2f2e           ; Function parameter 8
+outparm1          equ  >2f30           ; Function output parameter 1
+outparm2          equ  >2f32           ; Function output parameter 2
+outparm3          equ  >2f34           ; Function output parameter 3
+outparm4          equ  >2f36           ; Function output parameter 4
+outparm5          equ  >2f38           ; Function output parameter 5
+outparm6          equ  >2f3a           ; Function output parameter 6
+outparm7          equ  >2f3c           ; Function output parameter 7
+outparm8          equ  >2f3e           ; Function output parameter 8
+timers            equ  >2f40           ; Timer table
+ramsat            equ  >2f50           ; Sprite Attribute Table in RAM
+rambuf            equ  >2f60           ; RAM workbuffer 1
+
+*--------------------------------------------------------------
+* Stevie Editor shared structures     @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a000           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
@@ -128,7 +151,7 @@ tv.error.visible  equ  tv.top + 30     ; Error pane visible
 tv.error.msg      equ  tv.top + 32     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 192    ; End of structure
 *--------------------------------------------------------------
-* Frame buffer structure            @>a100-a1ff     (256 bytes)
+* Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
 fb.struct         equ  >a100           ; Structure begin
 fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
@@ -149,7 +172,7 @@ fb.scrrows        equ  fb.struct + 24  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 26  ; Max # of rows on physical screen for fb
 fb.free           equ  fb.struct + 28  ; End of structure
 *--------------------------------------------------------------
-* Editor buffer structure           @>a200-a2ff     (256 bytes)
+* Editor buffer structure             @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------
 edb.struct        equ  >a200           ; Begin structure
 edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
@@ -166,7 +189,7 @@ edb.filetype.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
 edb.sams.page     equ  edb.struct + 18 ; Current SAMS page
 edb.free          equ  edb.struct + 20 ; End of structure
 *--------------------------------------------------------------
-* Command buffer structure          @>a300-a3ff     (256 bytes)
+* Command buffer structure            @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
 cmdb.struct       equ  >a300           ; Command Buffer structure
 cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
@@ -190,7 +213,7 @@ cmdb.cmdlen       equ  cmdb.struct + 34; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 35; Current command (80 bytes max.)
 cmdb.free         equ  cmdb.struct +115; End of structure
 *--------------------------------------------------------------
-* File handle structure             @>a400-a4ff     (256 bytes)
+* File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
 fh.struct         equ  >a400           ; stevie file handling structures
 dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
@@ -216,62 +239,40 @@ fh.free           equ  fh.struct +152  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
-* Index structure                   @>a500-a5ff     (256 bytes)
+* Index structure                     @>a500-a5ff   (256 bytes)
 *--------------------------------------------------------------
 idx.struct        equ  >a500           ; stevie index structure
 idx.sams.page     equ  idx.struct      ; Current SAMS page
 idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
 idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
 *--------------------------------------------------------------
-* Frame buffer                      @>a600-afff    (2560 bytes)
+* Frame buffer                        @>a600-afff  (2560 bytes)
 *--------------------------------------------------------------
 fb.top            equ  >a600           ; Frame buffer (80x30)
 fb.size           equ  80*30           ; Frame buffer size                                     
 *--------------------------------------------------------------
-* Index                             @>b000-bfff    (4096 bytes)
+* Index                               @>b000-bfff  (4096 bytes)
 *--------------------------------------------------------------
 idx.top           equ  >b000           ; Top of index
 idx.size          equ  4096            ; Index size
 *--------------------------------------------------------------
-* Editor buffer                     @>c000-cfff    (4096 bytes)
+* Editor buffer                       @>c000-cfff  (4096 bytes)
 *--------------------------------------------------------------
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* Command history buffer            @>d000-dfff    (4096 bytes)
+* Command history buffer              @>d000-dfff  (4096 bytes)
 *--------------------------------------------------------------
 cmdb.top          equ  >d000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
-* Heap                              @>e000-efff    (4096 bytes)
+* Heap                                @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------
 heap.top          equ  >e000           ; Top of heap
 *--------------------------------------------------------------
-* Scratchpad backup 1               @>f000-f0ff     (256 bytes)
-* Scratchpad backup 2               @>f100-f1ff     (256 bytes)
+* Scratchpad backup 1                 @>f000-f0ff   (256 bytes)
+* Scratchpad backup 2                 @>f100-f1ff   (256 bytes)
 *--------------------------------------------------------------
 cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
 scrpad.backup1    equ  >f000           ; Backup 1 (GPL layout)
 scrpad.backup2    equ  >f100           ; Backup 2 (spectra2 layout)
-*--------------------------------------------------------------
-* Stevie work memory                @>f200-f2ff     (256 bytes)
-*--------------------------------------------------------------
-parm1             equ  >f200           ; Function parameter 1
-parm2             equ  >f202           ; Function parameter 2
-parm3             equ  >f204           ; Function parameter 3
-parm4             equ  >f206           ; Function parameter 4
-parm5             equ  >f208           ; Function parameter 5
-parm6             equ  >f20a           ; Function parameter 6
-parm7             equ  >f20c           ; Function parameter 7
-parm8             equ  >f20e           ; Function parameter 8
-outparm1          equ  >f210           ; Function output parameter 1
-outparm2          equ  >f212           ; Function output parameter 2
-outparm3          equ  >f214           ; Function output parameter 3
-outparm4          equ  >f216           ; Function output parameter 4
-outparm5          equ  >f218           ; Function output parameter 5
-outparm6          equ  >f21a           ; Function output parameter 6
-outparm7          equ  >f21c           ; Function output parameter 7
-outparm8          equ  >f21e           ; Function output parameter 8
-timers            equ  >f220           ; Timer table
-ramsat            equ  >f230           ; Sprite Attribute Table in RAM
-rambuf            equ  >f240           ; RAM workbuffer 1

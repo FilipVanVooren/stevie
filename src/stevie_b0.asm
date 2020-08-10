@@ -11,6 +11,13 @@
         copy  "equates.equ"         ; Equates Stevie configuration
 
 ***************************************************************
+* Spectra2 core configuration
+********|*****|*********************|**************************
+sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff 
+                                    ; and grows downwards
+
+
+***************************************************************
 * BANK 0 - Setup environment for Stevie
 ********|*****|*********************|**************************
         aorg  >6000
@@ -29,8 +36,6 @@
         .else
               #string 'STEVIE'
         .endif         
-
-
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -106,6 +111,13 @@ reloc.sp2:
         ;------------------------------------------------------
         data  >dead,>beef,>dead,>beef
         .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
+
+        .ifgt $, >2f00
+              .error '***** Aborted. SP2 library too large!'
+        .else
+              data $                ; Bank 0 ROM size OK.
+        .endif
+
         bss  300                    ; Fill remaining space with >00
 
 ***************************************************************

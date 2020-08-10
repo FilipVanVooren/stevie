@@ -11,6 +11,12 @@
         copy  "equates.equ"         ; Equates Stevie configuration
 
 ***************************************************************
+* Spectra2 core configuration
+********|*****|*********************|**************************
+sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff 
+                                    ; and grows downwards
+
+***************************************************************
 * BANK 1 - Stevie main editor modules
 ********|*****|*********************|**************************
         aorg  >6000
@@ -29,7 +35,6 @@
         .else
               #string 'STEVIE'
         .endif
-
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
