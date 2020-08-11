@@ -125,8 +125,10 @@ fh.file.read.edb.pabheader:
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
-        bl    @file.open
-              data fh.vpab          ; Pass file descriptor to DSRLNK
+        bl    @file.open            ; Open file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+              data io.ft.sf.ivd     ; / i  p1 = File type/mode
+                                    
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.edb.record
         b     @fh.file.read.edb.error  

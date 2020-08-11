@@ -8,14 +8,15 @@
 ***************************************************************
 * File: equates.equ                 ; Version %%build_date%%
 *--------------------------------------------------------------
-* Stevie memory layout
+* Stevie memory map
 *
 *
 * LOW MEMORY EXPANSION (2000-2fff)
 * 
 * Mem range   Bytes    SAMS   Purpose
 * =========   =====    ====   ==================================
-* 2000-2fff    4096           SP2 library
+* 2000-2eff    3840           SP2 library
+* 2f00-2fff     256           SP2 work memory
 *
 * LOW MEMORY EXPANSION (3000-3fff)
 *
@@ -49,9 +50,7 @@
 * c000-cfff    4096           Editor buffer page
 * d000-dfff    4096           Command history buffer
 * e000-efff    4096           Heap
-* f000-f0ff     256           SP2/GPL scratchpad backup 1
-* f100-f1ff     256           SP2/GPL scratchpad backup 2
-* f200-ffff    3584           *FREE*
+* f000-ffff    4096           *FREE*
 *
 *
 * VDP RAM
@@ -84,6 +83,7 @@ skip_speech_player        equ  1       ; Skip inclusion of speech player code
 skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
+skip_mem_paging           equ  1       ; Skip support for memory paging 
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
@@ -99,9 +99,6 @@ fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
-startup_backup_scrpad     equ  1       ; Backup scratchpad 8300-83ff to 
-                                       ; memory address @cpu.scrpad.tgt when
-                                       ; starting Stevie.
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
 kickstart.code1           equ  >6030   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6036   ; Uniform aorg entry addr accross banks
@@ -227,15 +224,16 @@ fh.kilobytes      equ  fh.struct + 50  ; Kilobytes processed (read/written)
 fh.counter        equ  fh.struct + 52  ; Counter used in stevie file operations
 fh.fname.ptr      equ  fh.struct + 54  ; Pointer to device and filename
 fh.sams.page      equ  fh.struct + 56  ; Current SAMS page during file operation
-fh.sams.hipage    equ  fh.struct + 58  ; Highest SAMS page used for file oper.
+fh.sams.hipage    equ  fh.struct + 58  ; Highest SAMS page in file operatition
 fh.fopmode        equ  fh.struct + 60  ; FOP (File Operation Mode)
-fh.callback1      equ  fh.struct + 62  ; Pointer to callback function 1
-fh.callback2      equ  fh.struct + 64  ; Pointer to callback function 2
-fh.callback3      equ  fh.struct + 66  ; Pointer to callback function 3
-fh.callback4      equ  fh.struct + 68  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 70  ; Kilobytes process (previous)
-fh.membuffer      equ  fh.struct + 72  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +152  ; End of structure
+fh.filetype       equ  fh.struct + 62  ; Value for filetype/mode (PAB byte 1)
+fh.callback1      equ  fh.struct + 64  ; Pointer to callback function 1
+fh.callback2      equ  fh.struct + 66  ; Pointer to callback function 2
+fh.callback3      equ  fh.struct + 68  ; Pointer to callback function 3
+fh.callback4      equ  fh.struct + 70  ; Pointer to callback function 4
+fh.kilobytes.prev equ  fh.struct + 72  ; Kilobytes process (previous)
+fh.membuffer      equ  fh.struct + 74  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +154  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------

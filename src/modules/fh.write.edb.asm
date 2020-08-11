@@ -113,24 +113,17 @@ fh.file.write.edb.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Nimber of bytes to copy
         ;------------------------------------------------------
-        ; Load GPL scratch pad memory
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
-        ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
-        bl    @file.open
-              data fh.vpab          ; Pass file descriptor to DSRLNK
+        bl    @file.open            ; Open file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+              data io.ft.sf.ovd     ; / i  p1 = File type/mode
 
         clr   tmp2   ; UGLY UGLY CHECK ME CHECK ME
 
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.write.edb.record
+
         b     @fh.file.write.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
@@ -141,16 +134,7 @@ fh.file.write.edb.record:
         c     @fh.records,@edb.lines
         jeq   fh.file.write.edb.eof ; Exit when all records processed
         ;------------------------------------------------------
-        ; 1a: Load spectra scratchpad layout again
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
-        ;------------------------------------------------------
-        ; 1b: Unpack current line to framebuffer
+        ; 1a: Unpack current line to framebuffer
         ;------------------------------------------------------
         mov   @fh.records,@parm1    ; Line to unpack
         clr   @parm2                ; First row in frame buffer
@@ -160,7 +144,7 @@ fh.file.write.edb.record:
                                     ; | i  parm2    = Target row in frame buffer
                                     ; / o  outparm1 = Length of line
         ;------------------------------------------------------        
-        ; 1c: Copy unpacked line to VDP memory
+        ; 1b: Copy unpacked line to VDP memory
         ;------------------------------------------------------
         li    tmp0,fh.vrecbuf       ; VDP target address
         li    tmp1,fb.top           ; Top of frame buffer in CPU memory
@@ -175,13 +159,6 @@ fh.file.write.edb.record:
         ;------------------------------------------------------        
         ; 1d: Write file record
         ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
-
         bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
@@ -189,13 +166,6 @@ fh.file.write.edb.record:
                                     ; | o  tmp1 = Bytes read
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
-
-        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
         ;------------------------------------------------------
         ; 1e: Calculate kilobytes processed
         ;------------------------------------------------------
@@ -224,15 +194,9 @@ fh.file.write.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Saving indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; Step 3: Next record. Load GPL scratchpad layout.
+        ; Step 3: Next record
         ;------------------------------------------------------
-fh.file.write.edb.next:        
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
-                                    ; / 512 bytes total to copy           
-
         jmp   fh.file.write.edb.record
-                                    ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
@@ -245,9 +209,6 @@ fh.file.write.edb.error:
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "File I/O error"
@@ -259,9 +220,6 @@ fh.file.write.edb.error:
         ; End-Of-File reached
         ;------------------------------------------------------     
 fh.file.write.edb.eof:        
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"

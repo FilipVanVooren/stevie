@@ -100,7 +100,7 @@ kickstart.copy:
 
 
 ***************************************************************
-* Code data: Relocated code SP2 >2000 - >2fff (4K max)
+* Code data: Relocated code SP2 >2000 - >2eff (3840 bytes max)
 ********|*****|*********************|**************************
 reloc.sp2:
         xorg >2000                  ; Relocate SP2 code to >2000
