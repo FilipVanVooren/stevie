@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.554989
+**** **** ****     > stevie_b0.asm.560053
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200811-554989
+0009               * File: stevie_b0.asm               ; Version 200811-560053
 0010               
 0011                       copy  "equates.equ"         ; Equates Stevie configuration
 **** **** ****     > equates.equ
@@ -288,7 +288,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0274      F000     cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
 0275      F000     scrpad.backup1    equ  >f000           ; Backup 1 (GPL layout)
 0276      F100     scrpad.backup2    equ  >f100           ; Backup 2 (spectra2 layout)
-**** **** ****     > stevie_b0.asm.554989
+**** **** ****     > stevie_b0.asm.560053
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -318,7 +318,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0033               
 0035               
 0036 6014 1453             byte  20
-0037 6015 ....             text  'STEVIE 200811-554989'
+0037 6015 ....             text  'STEVIE 200811-560053'
 0038                       even
 0039               
 0047               
@@ -1142,7 +1142,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6254 1742             byte  23
-0260 6255 ....             text  'Build-ID  200811-554989'
+0260 6255 ....             text  'Build-ID  200811-560053'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4266,92 +4266,95 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0197               ********|*****|*********************|**************************
 0198               _file.record.fop:
 0199                       ;------------------------------------------------------
-0200                       ; Set file opcode in VDP PAB
+0200                       ; Write to PAB required?
 0201                       ;------------------------------------------------------
 0202 6CB2 C800  38         mov   r0,@file.pab.ptr      ; Backup of pointer to current VDP PAB
      6CB4 A428 
-0203 6CB6 C100  18         mov   r0,tmp0               ; VDP write address (PAB byte 0)
-0204               
-0205 6CB8 06A0  32         bl    @xvputb               ; Write file opcode to VDP
+0203                       ;------------------------------------------------------
+0204                       ; Set file opcode in VDP PAB
+0205                       ;------------------------------------------------------
+0206 6CB6 C100  18         mov   r0,tmp0               ; VDP write address (PAB byte 0)
+0207               
+0208 6CB8 06A0  32         bl    @xvputb               ; Write file opcode to VDP
      6CBA 22D6 
-0206                                                   ; \ i  tmp0 = VDP target address
-0207                                                   ; / i  tmp1 = Byte to write
-0208                       ;------------------------------------------------------
-0209                       ; Set file type/mode in VDP PAB
-0210                       ;------------------------------------------------------
-0211 6CBC C100  18         mov   r0,tmp0               ; VDP write address (PAB byte 0)
-0212 6CBE 0584  14         inc   tmp0                  ; Next byte in PAB
-0213 6CC0 C160  34         mov   @fh.filetype,tmp1     ; Get file type/mode
+0209                                                   ; \ i  tmp0 = VDP target address
+0210                                                   ; / i  tmp1 = Byte to write
+0211                       ;------------------------------------------------------
+0212                       ; Set file type/mode in VDP PAB
+0213                       ;------------------------------------------------------
+0214 6CBC C100  18         mov   r0,tmp0               ; VDP write address (PAB byte 0)
+0215 6CBE 0584  14         inc   tmp0                  ; Next byte in PAB
+0216 6CC0 C160  34         mov   @fh.filetype,tmp1     ; Get file type/mode
      6CC2 A43E 
-0214               
-0215 6CC4 06A0  32         bl    @xvputb               ; Write file type/mode to VDP
+0217               
+0218 6CC4 06A0  32         bl    @xvputb               ; Write file type/mode to VDP
      6CC6 22D6 
-0216                                                   ; \ i  tmp0 = VDP target address
-0217                                                   ; / i  tmp1 = Byte to write
-0218                       ;------------------------------------------------------
-0219                       ; Prepare for DSRLINK
-0220                       ;------------------------------------------------------
-0221 6CC8 0220  22         ai    r0,9                  ; Move to file descriptor length
+0219                                                   ; \ i  tmp0 = VDP target address
+0220                                                   ; / i  tmp1 = Byte to write
+0221                       ;------------------------------------------------------
+0222                       ; Prepare for DSRLINK
+0223                       ;------------------------------------------------------
+0224 6CC8 0220  22 !       ai    r0,9                  ; Move to file descriptor length
      6CCA 0009 
-0222 6CCC C800  38         mov   r0,@>8356             ; Pass file descriptor to DSRLNK
+0225 6CCC C800  38         mov   r0,@>8356             ; Pass file descriptor to DSRLNK
      6CCE 8356 
-0223               *--------------------------------------------------------------
-0224               * Call DSRLINK for doing file operation
-0225               *--------------------------------------------------------------
-0226 6CD0 C820  54         mov   @>8322,@waux1         ; Save word at @>8322
+0226               *--------------------------------------------------------------
+0227               * Call DSRLINK for doing file operation
+0228               *--------------------------------------------------------------
+0229 6CD0 C820  54         mov   @>8322,@waux1         ; Save word at @>8322
      6CD2 8322 
      6CD4 833C 
-0227               
-0228 6CD6 0420  54         blwp  @dsrlnk               ; Call DSRLNK
+0230               
+0231 6CD6 0420  54         blwp  @dsrlnk               ; Call DSRLNK
      6CD8 2ADC 
-0229 6CDA 0008             data  8                     ;
-0230               *--------------------------------------------------------------
-0231               * Return PAB details to caller
-0232               *--------------------------------------------------------------
-0233               _file.record.fop.pab:
-0234 6CDC 02C6  12         stst  tmp2                  ; Store status register contents in tmp2
-0235                                                   ; Upon DSRLNK return status register EQ bit
-0236                                                   ; 1 = No file error
-0237                                                   ; 0 = File error occured
-0238               
-0239 6CDE C820  54         mov   @waux1,@>8322         ; Restore word at @>83223
+0232 6CDA 0008             data  8                     ;
+0233               *--------------------------------------------------------------
+0234               * Return PAB details to caller
+0235               *--------------------------------------------------------------
+0236               _file.record.fop.pab:
+0237 6CDC 02C6  12         stst  tmp2                  ; Store status register contents in tmp2
+0238                                                   ; Upon DSRLNK return status register EQ bit
+0239                                                   ; 1 = No file error
+0240                                                   ; 0 = File error occured
+0241               
+0242 6CDE C820  54         mov   @waux1,@>8322         ; Restore word at @>83223
      6CE0 833C 
      6CE2 8322 
-0240               *--------------------------------------------------------------
-0241               * Get PAB byte 5 from VDP ram into tmp1 (character count)
-0242               *--------------------------------------------------------------
-0243 6CE4 C120  34         mov   @file.pab.ptr,tmp0    ; Get VDP address of current PAB
+0243               *--------------------------------------------------------------
+0244               * Get PAB byte 5 from VDP ram into tmp1 (character count)
+0245               *--------------------------------------------------------------
+0246 6CE4 C120  34         mov   @file.pab.ptr,tmp0    ; Get VDP address of current PAB
      6CE6 A428 
-0244 6CE8 0224  22         ai    tmp0,5                ; Get address of VDP PAB byte 5
+0247 6CE8 0224  22         ai    tmp0,5                ; Get address of VDP PAB byte 5
      6CEA 0005 
-0245 6CEC 06A0  32         bl    @xvgetb               ; VDP read PAB status byte into tmp0
+0248 6CEC 06A0  32         bl    @xvgetb               ; VDP read PAB status byte into tmp0
      6CEE 22EE 
-0246 6CF0 C144  18         mov   tmp0,tmp1             ; Move to destination
-0247               *--------------------------------------------------------------
-0248               * Get PAB byte 1 from VDP ram into tmp0 (status)
-0249               *--------------------------------------------------------------
-0250 6CF2 C100  18         mov   r0,tmp0               ; VDP PAB byte 1 (status)
-0251                                                   ; as returned by DSRLNK
+0249 6CF0 C144  18         mov   tmp0,tmp1             ; Move to destination
+0250               *--------------------------------------------------------------
+0251               * Get PAB byte 1 from VDP ram into tmp0 (status)
 0252               *--------------------------------------------------------------
-0253               * Exit
-0254               *--------------------------------------------------------------
-0255               ; If an error occured during the IO operation, then the
-0256               ; equal bit in the saved status register (=tmp2) is set to 1.
-0257               ;
-0258               ; Upon return from this IO call you should basically test with:
-0259               ;       coc   @wbit2,tmp2           ; Equal bit set?
-0260               ;       jeq   my_file_io_handler    ; Yes, IO error occured
-0261               ;
-0262               ; Then look for further details in the copy of VDP PAB byte 1
-0263               ; in register tmp0, bits 13-15
+0253 6CF2 C100  18         mov   r0,tmp0               ; VDP PAB byte 1 (status)
+0254                                                   ; as returned by DSRLNK
+0255               *--------------------------------------------------------------
+0256               * Exit
+0257               *--------------------------------------------------------------
+0258               ; If an error occured during the IO operation, then the
+0259               ; equal bit in the saved status register (=tmp2) is set to 1.
+0260               ;
+0261               ; Upon return from this IO call you should basically test with:
+0262               ;       coc   @wbit2,tmp2           ; Equal bit set?
+0263               ;       jeq   my_file_io_handler    ; Yes, IO error occured
 0264               ;
-0265               ;       srl   tmp0,8                ; Right align (only for DSR type >8
-0266               ;                                   ; calls, skip for type >A subprograms!)
-0267               ;       ci    tmp0,io.err.<code>    ; Check for error pattern
-0268               ;       jeq   my_error_handler
-0269               *--------------------------------------------------------------
-0270               _file.record.fop.exit:
-0271 6CF4 0452  20         b     *r2                   ; Return to caller
+0265               ; Then look for further details in the copy of VDP PAB byte 1
+0266               ; in register tmp0, bits 13-15
+0267               ;
+0268               ;       srl   tmp0,8                ; Right align (only for DSR type >8
+0269               ;                                   ; calls, skip for type >A subprograms!)
+0270               ;       ci    tmp0,io.err.<code>    ; Check for error pattern
+0271               ;       jeq   my_error_handler
+0272               *--------------------------------------------------------------
+0273               _file.record.fop.exit:
+0274 6CF4 0452  20         b     *r2                   ; Return to caller
 **** **** ****     > runlib.asm
 0222               
 0223               *//////////////////////////////////////////////////////////////
@@ -4798,7 +4801,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6EA0 0040 
 0367 6EA2 0460  28         b     @main                 ; Give control to main program
      6EA4 3000 
-**** **** ****     > stevie_b0.asm.554989
+**** **** ****     > stevie_b0.asm.560053
 0116                                                   ; Spectra 2
 0117                       ;------------------------------------------------------
 0118                       ; End of File marker
@@ -5007,7 +5010,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 70A2 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      70A4 F20F 
 0113               
-**** **** ****     > stevie_b0.asm.554989
+**** **** ****     > stevie_b0.asm.560053
 0146                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5304,7 +5307,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0263 73D9 ....             text  'PI.CLOCK'
 0264                       even
 0265               
-**** **** ****     > stevie_b0.asm.554989
+**** **** ****     > stevie_b0.asm.560053
 0147                       ;------------------------------------------------------
 0148                       ; End of File marker
 0149                       ;------------------------------------------------------
