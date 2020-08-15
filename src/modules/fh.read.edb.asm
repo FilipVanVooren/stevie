@@ -89,10 +89,10 @@ fh.file.read.edb:
         jgt   fh.file.read.crash    ; Yes, crash!
          
         jmp   fh.file.read.edb.load1
-                                    ; All checks passed, continue.
-                                    ;-------------------------- 
-                                    ; Check failed, crash CPU!
-                                    ;--------------------------
+                                    ; All checks passed, continue
+        ;------------------------------------------------------
+        ; Check failed, crash CPU!
+        ;------------------------------------------------------  
 fh.file.read.crash:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
@@ -295,8 +295,7 @@ fh.file.read.edb.error:
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.read.edb.eof 
-                                    ; All good. File closed by DSRLNK
+        jeq   fh.file.read.edb.eof  ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 

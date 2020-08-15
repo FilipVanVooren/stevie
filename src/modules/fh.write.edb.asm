@@ -51,7 +51,7 @@ fh.file.write.edb:
 
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
         mov   @parm2,@fh.callback1  ; Callback function "Open file"
-        mov   @parm3,@fh.callback2  ; Callback function "Read line from file"
+        mov   @parm3,@fh.callback2  ; Callback function "Write line to file"
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         ;------------------------------------------------------
@@ -80,9 +80,9 @@ fh.file.write.edb:
          
         jmp   fh.file.write.edb.save1
                                     ; All checks passed, continue.
-                                    ;-------------------------- 
-                                    ; Check failed, crash CPU!
-                                    ;--------------------------
+        ;------------------------------------------------------
+        ; Check failed, crash CPU!
+        ;------------------------------------------------------        
 fh.file.write.crash:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
@@ -111,7 +111,7 @@ fh.file.write.edb.pabheader:
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Nimber of bytes to copy
+                                    ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
@@ -122,17 +122,14 @@ fh.file.write.edb.pabheader:
         clr   tmp2   ; UGLY UGLY CHECK ME CHECK ME
 
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.write.edb.record
-
-        b     @fh.file.write.edb.error  
+        jeq   fh.file.write.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 1: Write file record
         ;------------------------------------------------------
 fh.file.write.edb.record:        
-        inc   @fh.records           ; Update counter
         c     @fh.records,@edb.lines
-        jeq   fh.file.write.edb.eof ; Exit when all records processed
+        jgt   fh.file.write.edb.eof ; Exit when all records processed
         ;------------------------------------------------------
         ; 1a: Unpack current line to framebuffer
         ;------------------------------------------------------
@@ -157,17 +154,17 @@ fh.file.write.edb.record:
                                     ; | i  tmp1 = CPU source address
                                     ; / i  tmp2 = Number of bytes to copy  
         ;------------------------------------------------------        
-        ; 1d: Write file record
+        ; 1c: Write file record
         ;------------------------------------------------------
         bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
-                                    ; | o  tmp1 = Bytes read
+                                    ; | o  tmp1 = ?????
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
         ;------------------------------------------------------
-        ; 1e: Calculate kilobytes processed
+        ; 1d: Calculate kilobytes processed
         ;------------------------------------------------------
         a     @fh.reclen,@fh.counter
                                     ; Add record length to counter
@@ -178,10 +175,10 @@ fh.file.write.edb.record:
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter        
         ;------------------------------------------------------
-        ; 1f: Check if a file error occured
+        ; 1e: Check if a file error occured
         ;------------------------------------------------------
 fh.file.write.edb.check_fioerr:     
-        mov   @fh.ioresult,tmp2   
+!       mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
         jne   fh.file.write.edb.display
                                     ; No, goto (2)
@@ -196,6 +193,7 @@ fh.file.write.edb.display:
         ;------------------------------------------------------
         ; Step 3: Next record
         ;------------------------------------------------------
+        inc   @fh.records           ; Update counter
         jmp   fh.file.write.edb.record
         ;------------------------------------------------------
         ; Error handler
@@ -204,8 +202,7 @@ fh.file.write.edb.error:
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.write.edb.eof 
-                                    ; All good. File closed by DSRLNK
+        jeq   fh.file.write.edb.eof ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
