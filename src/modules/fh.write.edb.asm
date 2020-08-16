@@ -117,9 +117,8 @@ fh.file.write.edb.pabheader:
         ;------------------------------------------------------
         bl    @file.open            ; Open file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-              data io.ft.sf.ovd     ; / i  p1 = File type/mode
-
-        clr   tmp2   ; UGLY UGLY CHECK ME CHECK ME
+              data io.seq.out.dis.var
+                                    ; / i  p1 = File type/mode
 
         coc   @wbit2,tmp2           ; Equal bit set?
         jeq   fh.file.write.edb.error  
@@ -170,7 +169,8 @@ fh.file.write.edb.record:
                                     ; Add record length to counter
         mov   @fh.counter,tmp1      ;
         ci    tmp1,1024             ; 1 KB boundary reached ?
-        jlt   !                     ; Not yet, goto (1e)
+        jlt   fh.file.write.edb.check_fioerr
+                                    ; Not yet, goto (1e)
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter        
@@ -178,7 +178,7 @@ fh.file.write.edb.record:
         ; 1e: Check if a file error occured
         ;------------------------------------------------------
 fh.file.write.edb.check_fioerr:     
-!       mov   @fh.ioresult,tmp2   
+        mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
         jne   fh.file.write.edb.display
                                     ; No, goto (2)

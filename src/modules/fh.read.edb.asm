@@ -127,7 +127,8 @@ fh.file.read.edb.pabheader:
         ;------------------------------------------------------
         bl    @file.open            ; Open file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-              data io.ft.sf.ivd     ; / i  p1 = File type/mode
+              data io.seq.inp.dis.var
+                                    ; / i  p1 = File type/mode
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.edb.record
@@ -333,7 +334,7 @@ fh.file.read.edb.exit:
 ********|*****|*********************|**************************
 fh.file.pab.header:
         byte  io.op.open            ;  0    - OPEN
-        byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
+        byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
         data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
         byte  80                    ;  4    - Record length (80 chars max)
         byte  00                    ;  5    - Character count

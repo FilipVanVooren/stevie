@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.560053
+**** **** ****     > stevie_b0.asm.22647
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200811-560053
+0009               * File: stevie_b0.asm               ; Version 200816-22647
 0010               
 0011                       copy  "equates.equ"         ; Equates Stevie configuration
 **** **** ****     > equates.equ
@@ -288,7 +288,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0274      F000     cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
 0275      F000     scrpad.backup1    equ  >f000           ; Backup 1 (GPL layout)
 0276      F100     scrpad.backup2    equ  >f100           ; Backup 2 (spectra2 layout)
-**** **** ****     > stevie_b0.asm.560053
+**** **** ****     > stevie_b0.asm.22647
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -317,8 +317,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0032 6012 6030             data  kickstart.code1
 0033               
 0035               
-0036 6014 1453             byte  20
-0037 6015 ....             text  'STEVIE 200811-560053'
+0036 6014 1353             byte  19
+0037 6015 ....             text  'STEVIE 200816-22647'
 0038                       even
 0039               
 0047               
@@ -1141,8 +1141,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 6254 1742             byte  23
-0260 6255 ....             text  'Build-ID  200811-560053'
+0259 6254 1642             byte  22
+0260 6255 ....             text  'Build-ID  200816-22647'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -3670,7 +3670,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0002               * Purpose...: Equates for file I/O operations
 0003               
 0004               ***************************************************************
-0005               * File IO operations
+0005               * File IO operations - Byte 0 in PAB
 0006               ************************************@**************************
 0007      0000     io.op.open       equ >00            ; OPEN
 0008      0001     io.op.close      equ >01            ; CLOSE
@@ -3683,74 +3683,108 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015      0008     io.op.scratch    equ >08            ; SCRATCH
 0016      0009     io.op.status     equ >09            ; STATUS
 0017               ***************************************************************
-0018               * File types - All relative files are fixed length
-0019               ************************************@**************************
-0020      0001     io.ft.rf.ud      equ >01            ; UPDATE, DISPLAY
-0021      0003     io.ft.rf.od      equ >03            ; OUTPUT, DISPLAY
-0022      0005     io.ft.rf.id      equ >05            ; INPUT,  DISPLAY
-0023      0009     io.ft.rf.ui      equ >09            ; UPDATE, INTERNAL
-0024      000B     io.ft.rf.oi      equ >0b            ; OUTPUT, INTERNAL
-0025      000D     io.ft.rf.ii      equ >0d            ; INPUT,  INTERNAL
-0026               ***************************************************************
-0027               * File types - Sequential files
-0028               ************************************@**************************
-0029      0002     io.ft.sf.ofd     equ >02            ; OUTPUT, FIXED, DISPLAY
-0030      0004     io.ft.sf.ifd     equ >04            ; INPUT,  FIXED, DISPLAY
-0031      0006     io.ft.sf.afd     equ >06            ; APPEND, FIXED, DISPLAY
-0032      000A     io.ft.sf.ofi     equ >0a            ; OUTPUT, FIXED, INTERNAL
-0033      000C     io.ft.sf.ifi     equ >0c            ; INPUT,  FIXED, INTERNAL
-0034      000E     io.ft.sf.afi     equ >0e            ; APPEND, FIXED, INTERNAL
-0035      0012     io.ft.sf.ovd     equ >12            ; OUTPUT, VARIABLE, DISPLAY
-0036      0014     io.ft.sf.ivd     equ >14            ; INPUT,  VARIABLE, DISPLAY
-0037      0016     io.ft.sf.avd     equ >16            ; APPEND, VARIABLE, DISPLAY
-0038      001A     io.ft.sf.ovi     equ >1a            ; OUTPUT, VARIABLE, INTERNAL
-0039      001C     io.ft.sf.ivi     equ >1c            ; INPUT,  VARIABLE, INTERNAL
-0040      001E     io.ft.sf.avi     equ >1e            ; APPEND, VARIABLE, INTERNAL
-0041               
-0042               ***************************************************************
-0043               * File error codes - Bits 13-15 in PAB byte 1
-0044               ************************************@**************************
-0045      0000     io.err.no_error_occured             equ 0
-0046                       ; Error code 0 with condition bit reset, indicates that
-0047                       ; no error has occured
-0048               
-0049      0000     io.err.bad_device_name              equ 0
-0050                       ; Device indicated not in system
-0051                       ; Error code 0 with condition bit set, indicates a
-0052                       ; device not present in system
-0053               
-0054      0001     io.err.device_write_prottected      equ 1
-0055                       ; Device is write protected
-0056               
-0057      0002     io.err.bad_open_attribute           equ 2
-0058                       ; One or more of the OPEN attributes are illegal or do
-0059                       ; not match the file's actual characteristics.
-0060                       ; This could be:
-0061                       ;   * File type
-0062                       ;   * Record length
-0063                       ;   * I/O mode
-0064                       ;   * File organization
-0065               
-0066      0003     io.err.illegal_operation            equ 3
-0067                       ; Either an issued I/O command was not supported, or a
-0068                       ; conflict with the OPEN mode has occured
-0069               
-0070      0004     io.err.out_of_table_buffer_space    equ 4
-0071                       ; The amount of space left on the device is insufficient
-0072                       ; for the requested operation
-0073               
-0074      0005     io.err.eof                          equ 5
-0075                       ; Attempt to read past end of file.
-0076                       ; This error may also be given for non-existing records
-0077                       ; in a relative record file
-0078               
-0079      0006     io.err.device_error                 equ 6
-0080                       ; Covers all hard device errors, such as parity and
-0081                       ; bad medium errors
+0018               * File & data type - Byte 1 in PAB (Bit 0-4)
+0019               ***************************************************************
+0020               * Bit position: 4  3  21  0
+0021               *               |  |  ||   \
+0022               *               |  |  ||    File type
+0023               *               |  |  ||    0 = INTERNAL
+0024               *               |  |  ||    1 = FIXED
+0025               *               |  |  \\
+0026               *               |  |   File operation
+0027               *               |  |   00 - UPDATE
+0028               *               |  |   01 - OUTPUT
+0029               *               |  |   10 - INPUT
+0030               *               |  |   11 - APPEND
+0031               *               |  |
+0032               *               |  \
+0033               *               |   Data type
+0034               *               |   0 = DISPLAY
+0035               *               |   1 = INTERNAL
+0036               *               |
+0037               *               \
+0038               *                Record type
+0039               *                0 = FIXED
+0040               *                1 = VARIABLE
+0041               ***************************************************************
+0042               ; Bit position           43210
+0043               ***************************************************************
+0044      0000     io.seq.upd.dis.var  equ :00000
+0045      0001     io.rel.upd.dis.var  equ :00001
+0046      0003     io.rel.out.dis.var  equ :00011
+0047      0002     io.seq.out.dis.var  equ :00010
+0048      0004     io.seq.inp.dis.var  equ :00100
+0049      0005     io.rel.inp.dis.var  equ :00101
+0050      0006     io.seq.app.dis.var  equ :00110
+0051      0007     io.rel.app.dis.var  equ :00111
+0052      0008     io.seq.upd.int.var  equ :01000
+0053      0009     io.rel.upd.int.var  equ :01001
+0054      000A     io.seq.out.int.var  equ :01010
+0055      000B     io.rel.out.int.var  equ :01011
+0056      000C     io.seq.inp.int.var  equ :01100
+0057      000D     io.rel.inp.int.var  equ :01101
+0058      000E     io.seq.app.int.var  equ :01110
+0059      000F     io.rel.app.int.var  equ :01111
+0060      0010     io.seq.upd.dis.fix  equ :10000
+0061      0011     io.rel.upd.dis.fix  equ :10001
+0062      0012     io.seq.out.dis.fix  equ :10010
+0063      0013     io.rel.out.dis.fix  equ :10011
+0064      0014     io.seq.inp.dis.fix  equ :10100
+0065      0015     io.rel.inp.dis.fix  equ :10101
+0066      0016     io.seq.app.dis.fix  equ :10110
+0067      0017     io.rel.app.dis.fix  equ :10111
+0068      0018     io.seq.upd.int.fix  equ :11000
+0069      0019     io.rel.upd.int.fix  equ :11001
+0070      001A     io.seq.out.int.fix  equ :11010
+0071      001B     io.rel.out.int.fix  equ :11011
+0072      001C     io.seq.inp.int.fix  equ :11100
+0073      001D     io.rel.inp.int.fix  equ :11101
+0074      001E     io.seq.app.int.fix  equ :11110
+0075      001F     io.rel.app.int.fix  equ :11111
+0076               ***************************************************************
+0077               * File error codes - Byte 1 in PAB (Bits 5-7)
+0078               ************************************@**************************
+0079      0000     io.err.no_error_occured             equ 0
+0080                       ; Error code 0 with condition bit reset, indicates that
+0081                       ; no error has occured
 0082               
-0083      0007     io.err.file_error                   equ 7
-0084                       ; Covers all file-related error like: program/data
-0085                       ; file mismatch, non-existing file opened for input mode, etc.
+0083      0000     io.err.bad_device_name              equ 0
+0084                       ; Device indicated not in system
+0085                       ; Error code 0 with condition bit set, indicates a
+0086                       ; device not present in system
+0087               
+0088      0001     io.err.device_write_prottected      equ 1
+0089                       ; Device is write protected
+0090               
+0091      0002     io.err.bad_open_attribute           equ 2
+0092                       ; One or more of the OPEN attributes are illegal or do
+0093                       ; not match the file's actual characteristics.
+0094                       ; This could be:
+0095                       ;   * File type
+0096                       ;   * Record length
+0097                       ;   * I/O mode
+0098                       ;   * File organization
+0099               
+0100      0003     io.err.illegal_operation            equ 3
+0101                       ; Either an issued I/O command was not supported, or a
+0102                       ; conflict with the OPEN mode has occured
+0103               
+0104      0004     io.err.out_of_table_buffer_space    equ 4
+0105                       ; The amount of space left on the device is insufficient
+0106                       ; for the requested operation
+0107               
+0108      0005     io.err.eof                          equ 5
+0109                       ; Attempt to read past end of file.
+0110                       ; This error may also be given for non-existing records
+0111                       ; in a relative record file
+0112               
+0113      0006     io.err.device_error                 equ 6
+0114                       ; Covers all hard device errors, such as parity and
+0115                       ; bad medium errors
+0116               
+0117      0007     io.err.file_error                   equ 7
+0118                       ; Covers all file-related error like: program/data
+0119                       ; file mismatch, non-existing file opened for input mode, etc.
 **** **** ****     > runlib.asm
 0219                       copy  "file_dsrlnk.asm"          ; DSRLNK for peripheral communication
 **** **** ****     > file_dsrlnk.asm
@@ -4801,7 +4835,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6EA0 0040 
 0367 6EA2 0460  28         b     @main                 ; Give control to main program
      6EA4 3000 
-**** **** ****     > stevie_b0.asm.560053
+**** **** ****     > stevie_b0.asm.22647
 0116                                                   ; Spectra 2
 0117                       ;------------------------------------------------------
 0118                       ; End of File marker
@@ -5010,7 +5044,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 70A2 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      70A4 F20F 
 0113               
-**** **** ****     > stevie_b0.asm.560053
+**** **** ****     > stevie_b0.asm.22647
 0146                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5307,7 +5341,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0263 73D9 ....             text  'PI.CLOCK'
 0264                       even
 0265               
-**** **** ****     > stevie_b0.asm.560053
+**** **** ****     > stevie_b0.asm.22647
 0147                       ;------------------------------------------------------
 0148                       ; End of File marker
 0149                       ;------------------------------------------------------
