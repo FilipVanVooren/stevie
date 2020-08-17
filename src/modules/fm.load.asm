@@ -26,7 +26,7 @@ fm.loadfile:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Show dialog "Unsaved changes" if editor buffer dirty
+        ; Show dialog "Unsaved changes" and exit if buffer dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp1
         jeq   !

@@ -128,7 +128,8 @@ fh.file.write.edb.pabheader:
         ;------------------------------------------------------
 fh.file.write.edb.record:        
         c     @fh.records,@edb.lines
-        jgt   fh.file.write.edb.eof ; Exit when all records processed
+        jeq   fh.file.write.edb.done 
+                                    ; Exit when all records processed
         ;------------------------------------------------------
         ; 1a: Unpack current line to framebuffer
         ;------------------------------------------------------
@@ -162,6 +163,9 @@ fh.file.write.edb.record:
                                     ; | o  tmp1 = ?????
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
+
+        mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
+        mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
         ; 1d: Calculate kilobytes processed
         ;------------------------------------------------------
@@ -201,12 +205,11 @@ fh.file.write.edb.display:
 fh.file.write.edb.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
-        ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.write.edb.eof ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
-        bl    @mem.sams.layout      ; Restore SAMS windows
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
@@ -214,10 +217,11 @@ fh.file.write.edb.error:
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.write.edb.exit
         ;------------------------------------------------------
-        ; End-Of-File reached
+        ; All records written. Close file
         ;------------------------------------------------------     
-fh.file.write.edb.eof:        
-        bl    @mem.sams.layout      ; Restore SAMS windows
+fh.file.write.edb.done:
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
