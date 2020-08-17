@@ -132,6 +132,7 @@ fh.file.read.edb.pabheader:
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.edb.record
+        
         b     @fh.file.read.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------

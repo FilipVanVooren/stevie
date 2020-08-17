@@ -26,13 +26,6 @@ fm.savefile:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Initialisation
-        ;-------------------------------------------------------
-        bl    @filv
-              data sprsat,>0000,4   ; Turn off sprites (cursor)
-
-        ;bl    @pane.cmdb.hide       ; Hide CMDB pane
-        ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------
         mov   tmp0,@parm1           ; Set device and filename
@@ -48,6 +41,9 @@ fm.savefile:
 
         li    tmp0,fm.loadsave.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
+
+        bl    @filv
+              data sprsat,>0000,4   ; Turn off sprites (cursor)
 
         bl    @fh.file.write.edb    ; Save file from editor buffer
                                     ; \ i  parm1 = Pointer to length prefixed 
