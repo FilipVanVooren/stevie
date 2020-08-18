@@ -301,6 +301,9 @@ fh.file.read.edb.error:
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "File I/O error"
@@ -312,6 +315,9 @@ fh.file.read.edb.error:
         ; End-Of-File reached
         ;------------------------------------------------------     
 fh.file.read.edb.eof:        
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"
