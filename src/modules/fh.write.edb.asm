@@ -134,12 +134,12 @@ fh.file.write.edb.record:
         ; 1a: Unpack current line to framebuffer
         ;------------------------------------------------------
         mov   @fh.records,@parm1    ; Line to unpack
-        clr   @parm2                ; First row in frame buffer
+        clr   @parm2                ; 1st row in frame buffer
 
         bl    @edb.line.unpack      ; Unpack line
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
-                                    ; / o  outparm1 = Length of line
+                                    ; / o  outparm1 = Length of line                                    
         ;------------------------------------------------------        
         ; 1b: Copy unpacked line to VDP memory
         ;------------------------------------------------------
@@ -148,6 +148,7 @@ fh.file.write.edb.record:
 
         mov   @outparm1,tmp2        ; Length of line
         mov   tmp2,@fh.reclen       ; Set record length
+        jeq   !                     ; Skip VDP copy if empty line
 
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP target address
@@ -156,7 +157,7 @@ fh.file.write.edb.record:
         ;------------------------------------------------------        
         ; 1c: Write file record
         ;------------------------------------------------------
-        bl    @file.record.write    ; Write file record
+!       bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
