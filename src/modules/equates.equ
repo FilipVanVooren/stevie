@@ -124,7 +124,6 @@ outparm8          equ  >2f3e           ; Function output parameter 8
 timers            equ  >2f40           ; Timer table
 ramsat            equ  >2f50           ; Sprite Attribute Table in RAM
 rambuf            equ  >2f60           ; RAM workbuffer 1
-
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
@@ -267,10 +266,3 @@ cmdb.size         equ  4096            ; Command buffer size
 * Heap                                @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------
 heap.top          equ  >e000           ; Top of heap
-*--------------------------------------------------------------
-* Scratchpad backup 1                 @>f000-f0ff   (256 bytes)
-* Scratchpad backup 2                 @>f100-f1ff   (256 bytes)
-*--------------------------------------------------------------
-cpu.scrpad.tgt    equ  >f000           ; Destination cpu.scrpad.backup/restore
-scrpad.backup1    equ  >f000           ; Backup 1 (GPL layout)
-scrpad.backup2    equ  >f100           ; Backup 2 (spectra2 layout)

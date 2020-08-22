@@ -56,8 +56,8 @@ pane.botline.show_file:
         ; AlPHA-Lock is up
         ;------------------------------------------------------
         bl    @putat      
-              byte   29,42
-              data   txt.alpha.down 
+              byte   29,53
+              data   txt.alpha.up 
 
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
@@ -65,7 +65,7 @@ pane.botline.show_file:
         ;------------------------------------------------------
 pane.botline.alpha.down:        
         bl    @putat      
-              byte   29,42
+              byte   29,53
               data   txt.alpha.down
         ;------------------------------------------------------
         ; Show text editing mode

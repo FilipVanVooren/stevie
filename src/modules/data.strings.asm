@@ -22,8 +22,8 @@ txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
-txt.alpha.up       #string 'AU'
-txt.alpha.down     #string 'AD'
+txt.alpha.up       data >010d
+txt.alpha.down     data >010c
 
 
 ;--------------------------------------------------------------
