@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.21475
+**** **** ****     > stevie_b0.asm.83355
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200822-21475
+0009               * File: stevie_b0.asm               ; Version 200823-83355
 0010               
 0011                       copy  "equates.equ"         ; Equates Stevie configuration
 **** **** ****     > equates.equ
@@ -280,7 +280,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0266               * Heap                                @>e000-efff  (4096 bytes)
 0267               *--------------------------------------------------------------
 0268      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.21475
+**** **** ****     > stevie_b0.asm.83355
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -310,7 +310,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0033               
 0035               
 0036 6014 1353             byte  19
-0037 6015 ....             text  'STEVIE 200822-21475'
+0037 6015 ....             text  'STEVIE 200823-83355'
 0038                       even
 0039               
 0047               
@@ -1134,7 +1134,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6254 1642             byte  22
-0260 6255 ....             text  'Build-ID  200822-21475'
+0260 6255 ....             text  'Build-ID  200823-83355'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4876,7 +4876,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6EBE 0040 
 0367 6EC0 0460  28         b     @main                 ; Give control to main program
      6EC2 3000 
-**** **** ****     > stevie_b0.asm.21475
+**** **** ****     > stevie_b0.asm.83355
 0116                                                   ; Spectra 2
 0117                       ;------------------------------------------------------
 0118                       ; End of File marker
@@ -5094,7 +5094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0115 70D0 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      70D2 F20F 
 0116               
-**** **** ****     > stevie_b0.asm.21475
+**** **** ****     > stevie_b0.asm.83355
 0146                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5383,7 +5383,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0255 7403 ....             text  'PI.CLOCK'
 0256                       even
 0257               
-**** **** ****     > stevie_b0.asm.21475
+**** **** ****     > stevie_b0.asm.83355
 0147                       ;------------------------------------------------------
 0148                       ; End of File marker
 0149                       ;------------------------------------------------------
