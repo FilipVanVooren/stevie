@@ -212,31 +212,39 @@ cmdb.free         equ  cmdb.struct +115; End of structure
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
 fh.struct         equ  >a400           ; stevie file handling structures
+;***********************************************************************
+; ATTENTION
+; The dsrlnk variables must form a continuous memory block and keep 
+; their order!
+;***********************************************************************
 dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
 dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
-dsrlnk.savcru     equ  fh.struct + 40  ; CRU address of device in prev. DSR call
-dsrlnk.savent     equ  fh.struct + 42  ; DSR entry addr of prev. DSR call
-dsrlnk.savver     equ  fh.struct + 44  ; Version used in prev. DSR call
-dsrlnk.pabflg     equ  fh.struct + 46  ; Pointer to VDP PAB byte 1 (flag byte)
-fh.pab.ptr        equ  fh.struct + 48  ; Pointer to VDP PAB, for level 3 FIO
-fh.pabstat        equ  fh.struct + 50  ; Copy of VDP PAB status byte
-fh.ioresult       equ  fh.struct + 52  ; DSRLNK IO-status after file operation
-fh.records        equ  fh.struct + 54  ; File records counter
-fh.reclen         equ  fh.struct + 56  ; Current record length
-fh.kilobytes      equ  fh.struct + 58  ; Kilobytes processed (read/written)
-fh.counter        equ  fh.struct + 60  ; Counter used in stevie file operations
-fh.fname.ptr      equ  fh.struct + 62  ; Pointer to device and filename
-fh.sams.page      equ  fh.struct + 64  ; Current SAMS page during file operation
-fh.sams.hipage    equ  fh.struct + 66  ; Highest SAMS page in file operatition
-fh.fopmode        equ  fh.struct + 68  ; FOP (File Operation Mode)
-fh.filetype       equ  fh.struct + 70  ; Value for filetype/mode (PAB byte 1)
-fh.callback1      equ  fh.struct + 72  ; Pointer to callback function 1
-fh.callback2      equ  fh.struct + 74  ; Pointer to callback function 2
-fh.callback3      equ  fh.struct + 76  ; Pointer to callback function 3
-fh.callback4      equ  fh.struct + 78  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 80  ; Kilobytes processed (previous)
-fh.membuffer      equ  fh.struct + 82  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +162  ; End of structure
+dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
+dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
+dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
+dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
+dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
+dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
+dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte) 
+fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
+fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
+fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
+fh.records        equ  fh.struct + 60  ; File records counter
+fh.reclen         equ  fh.struct + 62  ; Current record length
+fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
+fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations
+fh.fname.ptr      equ  fh.struct + 68  ; Pointer to device and filename
+fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
+fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
+fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
+fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
+fh.callback1      equ  fh.struct + 78  ; Pointer to callback function 1
+fh.callback2      equ  fh.struct + 80  ; Pointer to callback function 2
+fh.callback3      equ  fh.struct + 82  ; Pointer to callback function 3
+fh.callback4      equ  fh.struct + 84  ; Pointer to callback function 4
+fh.kilobytes.prev equ  fh.struct + 86  ; Kilobytes processed (previous)
+fh.membuffer      equ  fh.struct + 88  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +168  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
