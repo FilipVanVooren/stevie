@@ -33,7 +33,21 @@ dialog.load:
         li    tmp0,txt.hint.load
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        li    tmp0,txt.keys.load
+        abs   @fh.offsetopcode      ; FastMode is off ? 
+        jeq   ! 
+        ;-------------------------------------------------------
+        ; Show that FastMode is on
+        ;-------------------------------------------------------
+        li    tmp0,txt.keys.load2   ; Highlight FastMode
+        jmp   dialog.load.keylist
+        ;-------------------------------------------------------
+        ; Show that FastMode is off
+        ;-------------------------------------------------------
+!       li    tmp0,txt.keys.load 
+        ;-------------------------------------------------------
+        ; Show dialog
+        ;-------------------------------------------------------
+dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         b     @edkey.action.cmdb.show

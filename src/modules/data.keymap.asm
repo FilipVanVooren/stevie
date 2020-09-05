@@ -286,6 +286,7 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; File load dialog
         ;-------------------------------------------------------
+        data  key.fctn.5, txt.fctn.5, edkey.action.cmdb.fastmode.toggle
         data  key.ctrl.comma, txt.ctrl.comma, fm.browse.fname.suffix.dec
         data  key.ctrl.dot, txt.ctrl.dot, fm.browse.fname.suffix.inc
         ;-------------------------------------------------------

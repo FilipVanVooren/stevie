@@ -16,12 +16,14 @@ txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
 txt.saving         #string 'Saving...'
+txt.fastmode       #string 'FastMode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
 txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
+
 txt.alpha.up       data >010d
 txt.alpha.down     data >010c
 
@@ -31,7 +33,8 @@ txt.alpha.down     data >010c
 ;--------------------------------------------------------------
 txt.head.load      #string 'Load DV80 file'
 txt.hint.load      #string 'HINT: Specify filename and press ENTER to load file.'
-txt.keys.load      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End    ^,=Previous    ^.=Next'
+txt.keys.load      #string 'F9=Back    F3=Clear    F5=FastMode    ^A=Home    ^F=End    ^,=Prev    ^.=Next'
+txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=FastMode    ^A=Home    ^F=End    ^,=Prev    ^.=Next'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
@@ -45,7 +48,7 @@ txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 ;--------------------------------------------------------------
 txt.head.unsaved   #string 'Unsaved changes'
 txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
-txt.keys.unsaved   #string 'F9=Back    F6=Proceed anyway   ^K=Save file'
+txt.keys.unsaved   #string 'F9=Back    F6=Ignore    ^K=Save file'
 
 
 

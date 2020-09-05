@@ -36,5 +36,7 @@ dialog.save:
         li    tmp0,txt.keys.save
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        clr   @fh.offsetopcode      ; Data buffer in VDP RAM
+
         b     @edkey.action.cmdb.show
                                     ; Show dialog in CMDB pane        

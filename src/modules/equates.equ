@@ -238,13 +238,15 @@ fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
 fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
 fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
 fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
-fh.callback1      equ  fh.struct + 78  ; Pointer to callback function 1
-fh.callback2      equ  fh.struct + 80  ; Pointer to callback function 2
-fh.callback3      equ  fh.struct + 82  ; Pointer to callback function 3
-fh.callback4      equ  fh.struct + 84  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 86  ; Kilobytes processed (previous)
-fh.membuffer      equ  fh.struct + 88  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +168  ; End of structure
+fh.offsetopcode   equ  fh.struct + 78  ; Set to >40 for skipping VDP buffer
+fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
+fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
+fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
+fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
+fh.kilobytes.prev equ  fh.struct + 88  ; Kilobytes processed (previous)
+
+fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +170  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
