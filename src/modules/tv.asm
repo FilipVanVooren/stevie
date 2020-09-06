@@ -34,7 +34,7 @@ tv.init:
         clr   @tv.colorscheme       ; Set default color scheme 
         clr   @tv.task.oneshot      ; Reset pointer to oneshot task
         soc   @wbit10,config        ; Assume ALPHA LOCK is down
-        seto  @tv.pane.welcome      ; Show welcome pane
+        clr   @tv.pane.welcome      ; Do not show about page
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
