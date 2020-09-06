@@ -11,7 +11,7 @@ key.fctn.3    equ >0700             ; fctn + 3
 key.fctn.4    equ >0200             ; fctn + 4
 key.fctn.5    equ >0e00             ; fctn + 5
 key.fctn.6    equ >0000             ; fctn + 6
-key.fctn.7    equ >0000             ; fctn + 7
+key.fctn.7    equ >0100             ; fctn + 7
 key.fctn.8    equ >0000             ; fctn + 8
 key.fctn.9    equ >0f00             ; fctn + 9
 key.fctn.a    equ >0000             ; fctn + a
@@ -235,23 +235,11 @@ keymap_actions.editor:
         data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
         data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
-        ; Editor/File buffer keys
-        ;-------------------------------------------------------
-        data  key.ctrl.0, txt.ctrl.0, edkey.action.fb.buffer0
-        data  key.ctrl.1, txt.ctrl.1, edkey.action.fb.buffer1
-        data  key.ctrl.2, txt.ctrl.2, edkey.action.fb.buffer2
-        data  key.ctrl.3, txt.ctrl.3, edkey.action.fb.buffer3
-        data  key.ctrl.4, txt.ctrl.4, edkey.action.fb.buffer4
- ;      data  key.ctrl.5, txt.ctrl.5, edkey.action.fb.buffer5
-        data  key.ctrl.6, txt.ctrl.6, edkey.action.fb.buffer6
-        data  key.ctrl.7, txt.ctrl.7, edkey.action.fb.buffer7
-        data  key.ctrl.8, txt.ctrl.8, edkey.action.fb.buffer8
-        data  key.ctrl.9, txt.ctrl.9, edkey.action.fb.buffer9
-        ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
         data  key.ctrl.comma, txt.ctrl.comma, edkey.action.fb.fname.dec.load
         data  key.ctrl.dot, txt.ctrl.dot, edkey.action.fb.fname.inc.load
+        data  key.fctn.7, txt.fctn.7, edkey.action.about
         data  key.ctrl.k, txt.ctrl.k, dialog.save                
         data  key.ctrl.l, txt.ctrl.l, dialog.load
         ;-------------------------------------------------------

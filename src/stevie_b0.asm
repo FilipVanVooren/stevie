@@ -32,7 +32,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE %%build_date%%'
+              #string 'STEVIE'
         .else
               #string 'STEVIE'
         .endif         

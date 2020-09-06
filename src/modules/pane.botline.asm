@@ -98,7 +98,7 @@ pane.botline.show_changed:
         ; Show "*"
         ;------------------------------------------------------        
         bl    @putat
-              byte 29,54
+              byte 29,56
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------

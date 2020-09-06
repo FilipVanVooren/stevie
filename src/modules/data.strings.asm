@@ -6,6 +6,32 @@
 ***************************************************************
 
 ;--------------------------------------------------------------
+; Strings for welcome pane
+;--------------------------------------------------------------
+txt.wp.program     #string 'Stevie v0.1a'
+txt.wp.purpose     #string 'Programming Editor for the TI-99/4a'
+txt.wp.author      #string '2018-2020 by Filip Van Vooren'
+txt.wp.website     #string 'https://stevie.oratronik.de'
+txt.wp.build       #string 'Build: %%build_date%%'
+
+txt.wp.msg1        #string 'FCTN-7 (F7)   Help, shortcuts, about'
+txt.wp.msg2        #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
+txt.wp.msg3        #string 'FCTN-+        Quit Stevie'
+txt.wp.msg4        #string 'CTRL-L (^L)   Load DV80 file'
+txt.wp.msg5        #string 'CTRL-K (^K)   Save DV80 file'
+txt.wp.msg6        #string 'CTRL-Z (^Z)   Cycle colors'
+
+txt.wp.msg7        byte    56,13
+                   text    ' ALPHA LOCK up     '
+                   byte    12
+                   text    ' ALPHA LOCK down   '
+                   text    '  * Text changed'
+
+txt.wp.msg8        #string 'Press ENTER to return to editor'
+
+
+
+;--------------------------------------------------------------
 ; Strings for status line pane
 ;--------------------------------------------------------------
 txt.delim          #string ','
@@ -50,8 +76,6 @@ txt.head.unsaved   #string 'Unsaved changes'
 txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
 txt.keys.unsaved   #string 'F9=Back    F6=Ignore    ^K=Save file'
 
-
-
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------
@@ -72,8 +96,6 @@ txt.cmdb.hbar      byte    66
                    byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                    byte    1,1,1,1,1,1
                    even
-
-
 
 txt.stevie         byte    12
                    byte    10

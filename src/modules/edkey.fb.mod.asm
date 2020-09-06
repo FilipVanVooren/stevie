@@ -246,6 +246,7 @@ edkey.action.ins_line.exit:
 * Enter
 *---------------------------------------------------------------
 edkey.action.enter:
+        clr  @tv.pane.welcome       ; Do not longer show welcome pane
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------

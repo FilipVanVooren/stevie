@@ -64,16 +64,17 @@ edkey.key.process.action:
         ; Add character to appropriate buffer
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
-        mov  @tv.pane.focus,tmp0    ; Frame buffer has focus?
-        jne  !                      ; No, skip frame buffer 
-        b    @edkey.action.char     ; Add character to frame buffer        
+        mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
+        jne   !                     ; No, skip frame buffer 
+        clr   @tv.pane.welcome      ; Do not longer show welcome pane
+        b     @edkey.action.char    ; Add character to frame buffer        
         ;-------------------------------------------------------
         ; CMDB buffer
         ;-------------------------------------------------------
-!       ci   tmp0,pane.focus.cmdb   ; CMDB has focus ?
-        jne  edkey.key.process.crash
+!       ci    tmp0,pane.focus.cmdb  ; CMDB has focus ?
+        jne   edkey.key.process.crash
                                     ; No, crash
-        b    @edkey.action.cmdb.char
+        b     @edkey.action.cmdb.char
                                     ; Add character to CMDB buffer        
         ;-------------------------------------------------------
         ; Crash
