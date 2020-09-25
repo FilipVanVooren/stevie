@@ -13,7 +13,7 @@ fm.loadsave.cb.indicator1:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Check file operation m ode
+        ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
               byte 29,0,32,80
@@ -51,7 +51,14 @@ fm.loadsave.cb.indicator1.filename:
               byte 29,11            ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
-
+        ;------------------------------------------------------
+        ; Display separators
+        ;------------------------------------------------------
+        bl    @hchar
+              byte 29,48,14,1       ; Vertical line 1
+              byte 29,64,14,1       ; Vertical line 2
+              byte 29,73,14,1       ; Vertical line 3
+              data eol        
         ;------------------------------------------------------
         ; Display fast mode
         ;------------------------------------------------------
@@ -59,9 +66,8 @@ fm.loadsave.cb.indicator1.filename:
         jeq   fm.loadsave.cb.indicator1.exit
 
         bl    @putat
-              byte 29,44
+              byte 29,38
               data txt.fastmode     ; Display "FastMode"
-
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

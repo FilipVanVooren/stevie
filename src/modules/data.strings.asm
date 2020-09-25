@@ -52,6 +52,7 @@ txt.filetype.none  #string '    '
 
 txt.alpha.up       data >010d
 txt.alpha.down     data >010c
+txt.vertline       data >010e
 
 
 ;--------------------------------------------------------------

@@ -40,13 +40,6 @@ pane.botline.show_file:
         mov   @edb.filename.ptr,tmp1
                                     ; Get string to display
         bl    @xutst0               ; Display string
-
-        bl    @at
-              byte  29,44           ; Position cursor
-
-        mov   @edb.filetype.ptr,tmp1
-                                    ; Get string to display
-        bl    @xutst0               ; Display Filetype string
         ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
@@ -111,10 +104,18 @@ pane.botline.show_linecol:
         bl    @fb.row2line 
         inc   @outparm1
         ;------------------------------------------------------
+        ; Show separators
+        ;------------------------------------------------------
+        bl    @hchar
+              byte 29,48,14,1       ; Vertical line 1
+              byte 29,64,14,1       ; Vertical line 2
+              byte 29,73,14,1       ; Vertical line 3
+              data eol
+        ;------------------------------------------------------
         ; Show line
         ;------------------------------------------------------
         bl    @putnum
-              byte  29,64           ; YX
+              byte  29,65           ; YX
               data  outparm1,rambuf
               byte  48              ; ASCII offset 
               byte  32              ; Padding character
@@ -122,7 +123,7 @@ pane.botline.show_linecol:
         ; Show comma
         ;------------------------------------------------------
         bl    @putat
-              byte  29,69
+              byte  29,70
               data  txt.delim
         ;------------------------------------------------------
         ; Show column
@@ -145,7 +146,7 @@ pane.botline.show_linecol:
         movb  tmp0,@rambuf+6        ; "Fix" number length to clear junk chars 
                                 
         bl    @putat
-              byte 29,70
+              byte 29,71
               data rambuf+6         ; Show column
         ;------------------------------------------------------
         ; Show lines in buffer unless on last line in file
@@ -166,6 +167,7 @@ pane.botline.show_linecol:
 pane.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
         inc   @waux1                ; Offset 1
+
         bl    @putnum
               byte 29,75            ; YX
               data waux1,rambuf
