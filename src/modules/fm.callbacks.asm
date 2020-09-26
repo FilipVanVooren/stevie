@@ -54,11 +54,9 @@ fm.loadsave.cb.indicator1.filename:
         ;------------------------------------------------------
         ; Display separators
         ;------------------------------------------------------
-        bl    @hchar
-              byte 29,48,14,1       ; Vertical line 1
-              byte 29,64,14,1       ; Vertical line 2
-              byte 29,73,14,1       ; Vertical line 3
-              data eol        
+        bl    @putat
+              byte 29,73
+              data txt.vertline     ; Vertical line
         ;------------------------------------------------------
         ; Display fast mode
         ;------------------------------------------------------

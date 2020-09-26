@@ -42,7 +42,7 @@ txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
 txt.saving         #string 'Saving...'
-txt.fastmode       #string 'FastMode'
+txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
 txt.bufnum         #string '#1 '
@@ -59,15 +59,15 @@ txt.vertline       data >010e
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
 txt.head.load      #string 'Load DV80 file'
-txt.hint.load      #string 'HINT: Specify filename and press ENTER to load file.'
-txt.keys.load      #string 'F9=Back    F3=Clear    F5=FastMode    ^A=Home    ^F=End    ^,=Prev    ^.=Next'
-txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=FastMode    ^A=Home    ^F=End    ^,=Prev    ^.=Next'
+txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
+txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    ^A=Home    ^F=End'
+txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
 txt.head.save      #string 'Save DV80 file'
-txt.hint.save      #string 'HINT: Specify filename and press ENTER to save file.'
+txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
 txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
