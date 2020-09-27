@@ -241,7 +241,7 @@ edb.line.unpack:
         ; Sanity check
         ;------------------------------------------------------
         c     @parm1,@edb.lines     ; Beyond editor buffer ?
-        jlt   !
+        jle   !
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
