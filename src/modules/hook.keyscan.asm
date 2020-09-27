@@ -17,11 +17,13 @@ hook.keyscan:
 *---------------------------------------------------------------
         szc   @wbit11,config        ; Reset ANYKEY
         c     @waux1,@waux2         ; Still pressing previous key?
-        jeq   hook.keyscan.bounce
+        jeq   hook.keyscan.bounce   ; Do keyboard bounce delay and return
 *--------------------------------------------------------------
 * New key pressed
 *--------------------------------------------------------------
-hook.keyscan.newkey:
+        li    tmp0,2000             ; \
+!       dec   tmp0                  ; | Inline keyboard bounce delay
+        jne   -!                    ; /
         mov   @waux1,@waux2         ; Save as previous key
         b     @edkey.key.process    ; Process key
 *--------------------------------------------------------------
@@ -41,7 +43,5 @@ hook.keyscan.bounce:
 hook.keyscan.bounce.loop:
         dec   tmp0
         jne   hook.keyscan.bounce.loop
-*--------------------------------------------------------------
-* Exit
-*--------------------------------------------------------------
         b     @hookok               ; Return
+

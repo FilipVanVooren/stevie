@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.1768944
+**** **** ****     > stevie_b0.asm.2386742
 0001               ***************************************************************
 0002               *                          Stevie Editor
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 200926-1768944
+0009               * File: stevie_b0.asm               ; Version 200927-2386742
 0010               
 0011                       copy  "equates.equ"         ; Equates Stevie configuration
 **** **** ****     > equates.equ
@@ -295,7 +295,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0281               * Heap                                @>e000-efff  (4096 bytes)
 0282               *--------------------------------------------------------------
 0283      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.1768944
+**** **** ****     > stevie_b0.asm.2386742
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -1149,7 +1149,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6254 1842             byte  24
-0260 6255 ....             text  'Build-ID  200926-1768944'
+0260 6255 ....             text  'Build-ID  200927-2386742'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -3096,79 +3096,80 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0092 68B8 9806  38         cb    tmp2,@kbsmal+40       ; and ASCII of key pressed > 122 ('z') ?
      68BA 287E 
 0093 68BC 1B02  14         jh    realka                ; No, continue
-0094 68BE 0226  22         ai    tmp2,->2000           ; ASCII = ASCII - 32 (lowercase to uppercase!)
+0094 68BE 0226  22         ai    tmp2,->2000           ; ASCII = ASCII-32 (lowercase to uppercase!)
      68C0 E000 
 0095 68C2 C806  38 realka  mov   tmp2,@waux1           ; Store ASCII value of key in WAUX1
      68C4 833C 
 0096 68C6 E0A0  34         soc   @wbit11,config        ; Set ANYKEY flag in CONFIG register
      68C8 2014 
-0097 68CA 020F  20 realkz  li    r15,vdpw              ; Setup VDP write address again after using R15 as temp storage
+0097 68CA 020F  20 realkz  li    r15,vdpw              ; \ Setup VDP write address again after
      68CC 8C00 
-0098 68CE 045B  20         b     *r11                  ; Exit
-0099               ********|*****|*********************|**************************
-0100 68D0 FF00     kbsmal  data  >ff00,>0000,>ff0d,>203D
+0098                                                   ; / using R15 as temp storage
+0099 68CE 045B  20         b     *r11                  ; Exit
+0100               ********|*****|*********************|**************************
+0101 68D0 FF00     kbsmal  data  >ff00,>0000,>ff0d,>203D
      68D2 0000 
      68D4 FF0D 
      68D6 203D 
-0101 68D8 ....             text  'xws29ol.'
-0102 68E0 ....             text  'ced38ik,'
-0103 68E8 ....             text  'vrf47ujm'
-0104 68F0 ....             text  'btg56yhn'
-0105 68F8 ....             text  'zqa10p;/'
-0106 6900 FF00     kbshft  data  >ff00,>0000,>ff0d,>202B
+0102 68D8 ....             text  'xws29ol.'
+0103 68E0 ....             text  'ced38ik,'
+0104 68E8 ....             text  'vrf47ujm'
+0105 68F0 ....             text  'btg56yhn'
+0106 68F8 ....             text  'zqa10p;/'
+0107 6900 FF00     kbshft  data  >ff00,>0000,>ff0d,>202B
      6902 0000 
      6904 FF0D 
      6906 202B 
-0107 6908 ....             text  'XWS@(OL>'
-0108 6910 ....             text  'CED#*IK<'
-0109 6918 ....             text  'VRF$&UJM'
-0110 6920 ....             text  'BTG%^YHN'
-0111 6928 ....             text  'ZQA!)P:-'
-0112 6930 FF00     kbfctn  data  >ff00,>0000,>ff0d,>2005
+0108 6908 ....             text  'XWS@(OL>'
+0109 6910 ....             text  'CED#*IK<'
+0110 6918 ....             text  'VRF$&UJM'
+0111 6920 ....             text  'BTG%^YHN'
+0112 6928 ....             text  'ZQA!)P:-'
+0113 6930 FF00     kbfctn  data  >ff00,>0000,>ff0d,>2005
      6932 0000 
      6934 FF0D 
      6936 2005 
-0113 6938 0A7E             data  >0a7e,>0804,>0f27,>c2B9
+0114 6938 0A7E             data  >0a7e,>0804,>0f27,>c2B9
      693A 0804 
      693C 0F27 
      693E C2B9 
-0114 6940 600B             data  >600b,>0907,>063f,>c1B8
+0115 6940 600B             data  >600b,>0907,>063f,>c1B8
      6942 0907 
      6944 063F 
      6946 C1B8 
-0115 6948 7F5B             data  >7f5b,>7b02,>015f,>c0C3
+0116 6948 7F5B             data  >7f5b,>7b02,>015f,>c0C3
      694A 7B02 
      694C 015F 
      694E C0C3 
-0116 6950 BE5D             data  >be5d,>7d0e,>0cc6,>bfC4
+0117 6950 BE5D             data  >be5d,>7d0e,>0cc6,>bfC4
      6952 7D0E 
      6954 0CC6 
      6956 BFC4 
-0117 6958 5CB9             data  >5cb9,>7c03,>bc22,>bdBA
+0118 6958 5CB9             data  >5cb9,>7c03,>bc22,>bdBA
      695A 7C03 
      695C BC22 
      695E BDBA 
-0118 6960 FF00     kbctrl  data  >ff00,>0000,>ff0d,>209D
+0119 6960 FF00     kbctrl  data  >ff00,>0000,>ff0d,>209D
      6962 0000 
      6964 FF0D 
      6966 209D 
-0119 6968 9897             data  >9897,>93b2,>9f8f,>8c9B
+0120 6968 9897             data  >9897,>93b2,>9f8f,>8c9B
      696A 93B2 
      696C 9F8F 
      696E 8C9B 
-0120 6970 8385             data  >8385,>84b3,>9e89,>8b80
+0121 6970 8385             data  >8385,>84b3,>9e89,>8b80
      6972 84B3 
      6974 9E89 
      6976 8B80 
-0121 6978 9692             data  >9692,>86b4,>b795,>8a8D
+0122 6978 9692             data  >9692,>86b4,>b795,>8a8D
      697A 86B4 
      697C B795 
      697E 8A8D 
-0122 6980 8294             data  >8294,>87b5,>b698,>888E
+0123 6980 8294             data  >8294,>87b5,>b698,>888E
      6982 87B5 
      6984 B698 
      6986 888E 
-0123 6988 9A91             data  >9a91,>81b1,>b090,>9cBB
+0124 6988 9A91             data  >9a91,>81b1,>b090,>9cBB
      698A 81B1 
      698C B090 
      698E 9CBB 
@@ -5031,7 +5032,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F38 0040 
 0367 6F3A 0460  28         b     @main                 ; Give control to main program
      6F3C 3000 
-**** **** ****     > stevie_b0.asm.1768944
+**** **** ****     > stevie_b0.asm.2386742
 0116                                                   ; Spectra 2
 0117                       ;------------------------------------------------------
 0118                       ; End of File marker
@@ -5256,7 +5257,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119 7152 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7154 F20F 
 0120               
-**** **** ****     > stevie_b0.asm.1768944
+**** **** ****     > stevie_b0.asm.2386742
 0146                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5271,7 +5272,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.wp.program
 0012 7156 0C53             byte  12
-0013 7157 ....             text  'Stevie v0.1a'
+0013 7157 ....             text  'Stevie v0.1b'
 0014                       even
 0015               
 0016               txt.wp.purpose
@@ -5291,7 +5292,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.wp.build
 0032 71C2 1542             byte  21
-0033 71C3 ....             text  'Build: 200926-1768944'
+0033 71C3 ....             text  'Build: 200927-2386742'
 0034                       even
 0035               
 0036               
@@ -5627,7 +5628,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0337 7663 ....             text  'PI.CLOCK'
 0338                       even
 0339               
-**** **** ****     > stevie_b0.asm.1768944
+**** **** ****     > stevie_b0.asm.2386742
 0147                       ;------------------------------------------------------
 0148                       ; End of File marker
 0149                       ;------------------------------------------------------

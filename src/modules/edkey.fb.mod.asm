@@ -96,6 +96,7 @@ edkey.action.del_line:
         mov   @edb.lines,tmp0
         jne   !
         clr   @fb.column            ; Column 0
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer
         b     @edkey.action.del_eol ; Delete until end of line
         ;-------------------------------------------------------
         ; Delete entry in index

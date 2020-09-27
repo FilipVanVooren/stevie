@@ -18,7 +18,6 @@
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
-* parm6 = 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------

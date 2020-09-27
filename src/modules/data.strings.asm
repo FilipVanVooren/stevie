@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.wp.program     #string 'Stevie v0.1a'
+txt.wp.program     #string 'Stevie v0.1b'
 txt.wp.purpose     #string 'Programming Editor for the TI-99/4a'
 txt.wp.author      #string '2018-2020 by Filip Van Vooren'
 txt.wp.website     #string 'https://stevie.oratronik.de'
