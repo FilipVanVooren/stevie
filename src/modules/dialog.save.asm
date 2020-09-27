@@ -24,7 +24,17 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.save:
-        li    tmp0,id.dialog.save
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   !                     ; Skip crunching if clean
+        bl    @edb.line.pack        ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+!       li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.save
