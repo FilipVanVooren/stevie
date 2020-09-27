@@ -32,7 +32,7 @@ dialog.save:
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
-        ; Crunch current row if dirty 
+        ; Setup dialog
         ;-------------------------------------------------------
 !       li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
