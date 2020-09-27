@@ -187,7 +187,7 @@ fb.refresh.unpack_line:
         ; Last row in editor buffer reached ?
         ;------------------------------------------------------
         c     @parm1,@edb.lines     
-        jeq   !                     ; no, do next check
+        jlt   !                     ; no, do next check
                                     ; yes, erase until end of frame buffer
         ;------------------------------------------------------
         ; Erase until end of frame buffer
