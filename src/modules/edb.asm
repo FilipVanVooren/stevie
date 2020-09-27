@@ -111,7 +111,6 @@ edb.line.pack.prepare:
         a     @fb.row,@parm1        ; /
 
         mov   tmp0,@rambuf+4        ; Save length of line
-
         ;------------------------------------------------------
         ; 1. Update index
         ;------------------------------------------------------
