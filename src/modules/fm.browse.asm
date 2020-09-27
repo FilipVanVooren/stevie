@@ -22,12 +22,18 @@ fm.browse.fname.suffix.incdec:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
-        ; Get last character in filename
+        ; Sanity check
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get pointer to filename
         jeq   fm.browse.fname.suffix.exit
                                     ; Exit early if pointer is nill
 
+        ci    tmp0,txt.newfile
+        jeq   fm.browse.fname.suffix.exit
+                                    ; Exit early if "New file"
+        ;------------------------------------------------------
+        ; Get last character in filename
+        ;------------------------------------------------------
         movb  *tmp0,tmp1            ; Get length of current filename
         srl   tmp1,8                ; MSB to LSB
 
@@ -53,7 +59,7 @@ fm.browse.fname.suffix.inc:
         jlt   !                     ; Next character
         jeq   fm.browse.fname.suffix.inc.alpha
                                     ; Swith to alpha range A..Z
-        ci    tmp1,132              ; ASCII 132 (char Z) ?
+        ci    tmp1,90               ; ASCII 132 (char Z) ?
         jeq   fm.browse.fname.suffix.exit
                                     ; Already last alpha character, so exit
         jlt   !                     ; Next character
@@ -86,7 +92,7 @@ fm.browse.fname.suffix.dec:
         jlt   fm.browse.fname.suffix.inc.crash
                                     ; Invalid character                                    
         ci    tmp1,132              ; ASCII 132 (char Z) ?
-        jeq   fm.browse.fname.suffix.exit
+        jeq   fm.browse.fname.suffix.exit        
 !       dec   tmp1                  ; Decrease ASCII value
         jmp   fm.browse.fname.suffix.store
 fm.browse.fname.suffix.dec.numeric:

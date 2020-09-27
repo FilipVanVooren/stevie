@@ -31,7 +31,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE %%build_date%%'
+              #string 'STEVIE'
         .else
               #string 'STEVIE'
         .endif
@@ -134,17 +134,16 @@ main:
         copy  "pane.utils.asm"      ; Pane utility functions
         copy  "pane.utils.colorscheme.asm"
                                     ; Colorscheme handling in panes 
-        copy  "pane.utils.tipiclock.asm"
-                                    ; TIPI clock
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
-        copy  "pane.cmdb.asm"       ; Command buffer
+        copy  "pane.cmdb.asm"       ; Command buffer        
         copy  "pane.errline.asm"    ; Error line
         copy  "pane.botline.asm"    ; Status line
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   
+        copy  "dialog.welcome.asm"  ; Dialog "Welcome / About"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    

@@ -18,6 +18,7 @@
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
+* parm6 = 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -89,10 +90,10 @@ fh.file.read.edb:
         jgt   fh.file.read.crash    ; Yes, crash!
          
         jmp   fh.file.read.edb.load1
-                                    ; All checks passed, continue.
-                                    ;-------------------------- 
-                                    ; Check failed, crash CPU!
-                                    ;--------------------------
+                                    ; All checks passed, continue
+        ;------------------------------------------------------
+        ; Check failed, crash CPU!
+        ;------------------------------------------------------  
 fh.file.read.crash:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
@@ -123,31 +124,82 @@ fh.file.read.edb.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Load GPL scratchpad layout
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
-        ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
-        bl    @file.open
-              data fh.vpab          ; Pass file descriptor to DSRLNK
+        bl    @file.open            ; Open file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+              data io.seq.inp.dis.var
+                                    ; / i  p1 = File type/mode
+                                    
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.read.edb.record
+        jne   fh.file.read.edb.check_setpage
+        
         b     @fh.file.read.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
-        ; Step 1: Read file record
+        ; 1a: Check if SAMS page needs to be set
+        ;------------------------------------------------------ 
+fh.file.read.edb.check_setpage:        
+        mov   @edb.next_free.ptr,tmp0
+                                    ;--------------------------
+                                    ; Sanity check
+                                    ;-------------------------- 
+        ci    tmp0,edb.top + edb.size
+                                    ; Insane address ?
+        jgt   fh.file.read.crash    ; Yes, crash!
+                                    ;--------------------------
+                                    ; Check for page overflow
+                                    ;-------------------------- 
+        andi  tmp0,>0fff            ; Get rid off highest nibble        
+        ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
+        ci    tmp0,>1000 - 16       ; 4K boundary reached?
+        jlt   fh.file.read.edb.record
+                                    ; Not yet so skip SAMS page switch
+        ;------------------------------------------------------
+        ; 1b: Increase SAMS page
+        ;------------------------------------------------------ 
+        inc   @fh.sams.page         ; Next SAMS page
+        mov   @fh.sams.page,@fh.sams.hipage
+                                    ; Set highest SAMS page
+        mov   @edb.top.ptr,@edb.next_free.ptr
+                                    ; Start at top of SAMS page again
+        ;------------------------------------------------------
+        ; 1c: Switch to SAMS page
+        ;------------------------------------------------------ 
+        mov   @fh.sams.page,tmp0
+        mov   @edb.top.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address
+        ;------------------------------------------------------
+        ; Step 2: Read file record
         ;------------------------------------------------------
 fh.file.read.edb.record:        
         inc   @fh.records           ; Update counter        
         clr   @fh.reclen            ; Reset record length
 
-        bl    @file.record.read     ; Read file record
+        abs   @fh.offsetopcode
+        jeq   !                     ; Skip CPU buffer logic if offset = 0
+        ;------------------------------------------------------
+        ; 2a: Write address of CPU buffer to VDP PAB bytes 2-3
+        ;------------------------------------------------------
+        mov   @edb.next_free.ptr,tmp1
+        inct  tmp1
+        li    tmp0,fh.vpab + 2
+
+        ori   tmp0,>4000            ; Prepare VDP address for write
+        swpb  tmp0                  ; \
+        movb  tmp0,@vdpa            ; | Set VDP write address
+        swpb  tmp0                  ; | inlined @vdwa call
+        movb  tmp0,@vdpa            ; / 
+
+        movb  tmp1,*r15             ; Write MSB
+        swpb  tmp1
+        movb  tmp1,*r15             ; Write LSB
+        ;------------------------------------------------------
+        ; 2b: Read file record
+        ;------------------------------------------------------
+!       bl    @file.record.read     ; Read file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
@@ -159,72 +211,28 @@ fh.file.read.edb.record:
         mov   tmp1,@fh.reclen       ; Save bytes read
         mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
-        ; 1a: Calculate kilobytes processed
+        ; 2c: Calculate kilobytes processed
         ;------------------------------------------------------
         a     tmp1,@fh.counter      ; Add record length to counter
         mov   @fh.counter,tmp1      ;
         ci    tmp1,1024             ; 1 KB boundary reached ?
-        jlt   !                     ; Not yet, goto (1b)
+        jlt   fh.file.read.edb.check_fioerr
+                                    ; Not yet, goto (2d)
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter
         ;------------------------------------------------------
-        ; 1b: Load spectra scratchpad layout
-        ;------------------------------------------------------
-!       bl    @cpu.scrpad.backup    ; \ Backup GPL layout to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
-        ;------------------------------------------------------
-        ; 1c: Check if a file error occured
+        ; 2d: Check if a file error occured
         ;------------------------------------------------------
 fh.file.read.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.read.edb.check_setpage 
-                                    ; No, goto (1d)
+        jne   fh.file.read.edb.process_line
+                                    ; No, goto (3)
         b     @fh.file.read.edb.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 1d: Check if SAMS page needs to be set
-        ;------------------------------------------------------ 
-fh.file.read.edb.check_setpage:        
-        mov   @edb.next_free.ptr,tmp0
-                                    ;--------------------------
-                                    ; Sanity check
-                                    ;-------------------------- 
-        ci    tmp0,edb.top + edb.size
-                                    ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
-                                    ;--------------------------
-                                    ; Check overflow
-                                    ;-------------------------- 
-        andi  tmp0,>0fff            ; Get rid off highest nibble        
-        a     @fh.reclen,tmp0       ; Add length of line just read
-        inct  tmp0                  ; +2 for line prefix
-        ci    tmp0,>1000 - 16       ; 4K boundary reached?
-        jlt   fh.file.read.edb.process_line
-                                    ; Not yet so skip SAMS page switch
-        ;------------------------------------------------------
-        ; 1e: Increase SAMS page
-        ;------------------------------------------------------ 
-        inc   @fh.sams.page         ; Next SAMS page
-        mov   @fh.sams.page,@fh.sams.hipage
-                                    ; Set highest SAMS page
-        mov   @edb.top.ptr,@edb.next_free.ptr
-                                    ; Start at top of SAMS page again
-        ;------------------------------------------------------
-        ; 1f: Switch to SAMS page
-        ;------------------------------------------------------ 
-        mov   @fh.sams.page,tmp0
-        mov   @edb.top.ptr,tmp1
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address
-        ;------------------------------------------------------
-        ; Step 2: Process line
+        ; Step 3: Process line
         ;------------------------------------------------------
 fh.file.read.edb.process_line:
         li    tmp0,fh.vrecbuf       ; VDP source address
@@ -237,31 +245,40 @@ fh.file.read.edb.process_line:
         jeq   fh.file.read.edb.prepindex.emptyline
                                     ; Handle empty line
         ;------------------------------------------------------
-        ; 2a: Copy line from VDP to CPU editor buffer
-        ;------------------------------------------------------         
-                                    ; Put line length word before string
-        movb  tmp2,*tmp1+           ; \ MSB to line prefix
-        swpb  tmp2                  ; |
-        movb  tmp2,*tmp1+           ; | LSB to line prefix
-        swpb  tmp2                  ; / 
-        
+        ; 3a: Set length of line in CPU editor buffer
+        ;------------------------------------------------------
+        clr   *tmp1                 ; Clear word before string
+        inc   tmp1                  ; Adjust position for length byte string
+        movb  @fh.reclen+1,*tmp1+   ; Put line length byte before string
+       
         inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
         a     tmp2,@edb.next_free.ptr
-                                    ; Add line length         
+                                    ; Add line length 
 
+        abs   @fh.offsetopcode      ; Use CPU buffer if offset > 0
+        jne   fh.file.read.edb.preppointer         
+        ;------------------------------------------------------
+        ; 3b: Copy line from VDP to CPU editor buffer
+        ;------------------------------------------------------
+fh.file.read.edb.vdp2cpu:        
+        ; 
+        ; Executed for devices that need their disk buffer in VDP memory
+        ; (TI Disk Controller, tipi, nanopeb, ...).
+        ; 
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                        
         ;------------------------------------------------------
-        ; 2b: Align pointer to multiple of 16 memory address
+        ; 3c: Align pointer for next line
         ;------------------------------------------------------ 
+fh.file.read.edb.preppointer:        
         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
         ;------------------------------------------------------
-        ; Step 3: Update index
+        ; Step 4: Update index
         ;------------------------------------------------------
 fh.file.read.edb.prepindex:
         mov   @edb.lines,@parm1     ; parm1 = Line number
@@ -271,7 +288,7 @@ fh.file.read.edb.prepindex:
         jmp   fh.file.read.edb.updindex
                                     ; Update index
         ;------------------------------------------------------
-        ; 3a: Special handling for empty line
+        ; 4a: Special handling for empty line
         ;------------------------------------------------------
 fh.file.read.edb.prepindex.emptyline:
         mov   @fh.records,@parm1    ; parm1 = Line number
@@ -279,7 +296,7 @@ fh.file.read.edb.prepindex.emptyline:
         clr   @parm2                ; parm2 = Pointer to >0000
         seto  @parm3                ; parm3 = SAMS not used >FFFF
         ;------------------------------------------------------
-        ; 3b: Do actual index update
+        ; 4b: Do actual index update
         ;------------------------------------------------------                                    
 fh.file.read.edb.updindex:                
         bl    @idx.entry.update     ; Update index 
@@ -292,19 +309,16 @@ fh.file.read.edb.updindex:
 
         inc   @edb.lines            ; lines=lines+1                
         ;------------------------------------------------------
-        ; Step 4: Callback "Read line from file"
+        ; Step 5: Callback "Read line from file"
         ;------------------------------------------------------
 fh.file.read.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; 4a: Next record. Load GPL scratchpad layout.
+        ; 5a: Next record
         ;------------------------------------------------------
 fh.file.read.edb.next:        
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; / 8300->xxxx, xxxx->8300        
-
-        b     @fh.file.read.edb.record
+        b     @fh.file.read.edb.check_setpage
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
@@ -313,14 +327,12 @@ fh.file.read.edb.error:
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.read.edb.eof 
-                                    ; All good. File closed by DSRLNK
+        jeq   fh.file.read.edb.eof  ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-              
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
@@ -333,8 +345,8 @@ fh.file.read.edb.error:
         ; End-Of-File reached
         ;------------------------------------------------------     
 fh.file.read.edb.eof:        
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
@@ -359,7 +371,7 @@ fh.file.read.edb.exit:
 ********|*****|*********************|**************************
 fh.file.pab.header:
         byte  io.op.open            ;  0    - OPEN
-        byte  io.ft.sf.ivd          ;  1    - INPUT, VARIABLE, DISPLAY
+        byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
         data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
         byte  80                    ;  4    - Record length (80 chars max)
         byte  00                    ;  5    - Character count

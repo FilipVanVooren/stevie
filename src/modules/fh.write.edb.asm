@@ -51,7 +51,7 @@ fh.file.write.edb:
 
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
         mov   @parm2,@fh.callback1  ; Callback function "Open file"
-        mov   @parm3,@fh.callback2  ; Callback function "Read line from file"
+        mov   @parm3,@fh.callback2  ; Callback function "Write line to file"
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         ;------------------------------------------------------
@@ -80,9 +80,9 @@ fh.file.write.edb:
          
         jmp   fh.file.write.edb.save1
                                     ; All checks passed, continue.
-                                    ;-------------------------- 
-                                    ; Check failed, crash CPU!
-                                    ;--------------------------
+        ;------------------------------------------------------
+        ; Check failed, crash CPU!
+        ;------------------------------------------------------        
 fh.file.write.crash:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
@@ -111,104 +111,76 @@ fh.file.write.edb.pabheader:
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Nimber of bytes to copy
-        ;------------------------------------------------------
-        ; Load GPL scratch pad memory
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
+                                    ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
-        bl    @file.open
-              data fh.vpab          ; Pass file descriptor to DSRLNK
-
-        clr   tmp2   ; UGLY UGLY CHECK ME CHECK ME
+        bl    @file.open            ; Open file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+              data io.seq.out.dis.var
+                                    ; / i  p1 = File type/mode
 
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.write.edb.record
-        b     @fh.file.write.edb.error  
+        jeq   fh.file.write.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 1: Write file record
         ;------------------------------------------------------
 fh.file.write.edb.record:        
-        inc   @fh.records           ; Update counter
         c     @fh.records,@edb.lines
-        jeq   fh.file.write.edb.eof ; Exit when all records processed
+        jeq   fh.file.write.edb.done 
+                                    ; Exit when all records processed
         ;------------------------------------------------------
-        ; 1a: Load spectra scratchpad layout again
-        ;------------------------------------------------------
-        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
-        ;------------------------------------------------------
-        ; 1b: Unpack current line to framebuffer
+        ; 1a: Unpack current line to framebuffer
         ;------------------------------------------------------
         mov   @fh.records,@parm1    ; Line to unpack
-        clr   @parm2                ; First row in frame buffer
+        clr   @parm2                ; 1st row in frame buffer
 
         bl    @edb.line.unpack      ; Unpack line
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
-                                    ; / o  outparm1 = Length of line
+                                    ; / o  outparm1 = Length of line                                    
         ;------------------------------------------------------        
-        ; 1c: Copy unpacked line to VDP memory
+        ; 1b: Copy unpacked line to VDP memory
         ;------------------------------------------------------
         li    tmp0,fh.vrecbuf       ; VDP target address
         li    tmp1,fb.top           ; Top of frame buffer in CPU memory
 
         mov   @outparm1,tmp2        ; Length of line
         mov   tmp2,@fh.reclen       ; Set record length
+        jeq   !                     ; Skip VDP copy if empty line
 
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = CPU source address
                                     ; / i  tmp2 = Number of bytes to copy  
         ;------------------------------------------------------        
-        ; 1d: Write file record
+        ; 1c: Write file record
         ;------------------------------------------------------
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; |   8300 -> @scrpad.backup2 
-                                    ; |   @cpu.scrpad.tgt -> 8300
-                                    ; |   512 bytes total to copy    
-                                    ; |
-                                    ; /   WS is at >f100 now(!)
-
-        bl    @file.record.write    ; Write file record
+!       bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
-                                    ; | o  tmp1 = Bytes read
+                                    ; | o  tmp1 = ?????
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
 
-        bl    @cpu.scrpad.backup    ; \ Backup GPL scratchpad to @cpu.scrpad.tgt
-                                    ; / 256 bytes total to copy  
-
-        bl    @cpu.scrpad.pgin      ; \ Page in SP2 scratchpad
-              data scrpad.backup2   ; | @scrpad.backup2 to >8300
-                                    ; / 256 bytes total to copy
+        mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
+        mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
-        ; 1e: Calculate kilobytes processed
+        ; 1d: Calculate kilobytes processed
         ;------------------------------------------------------
         a     @fh.reclen,@fh.counter
                                     ; Add record length to counter
         mov   @fh.counter,tmp1      ;
         ci    tmp1,1024             ; 1 KB boundary reached ?
-        jlt   !                     ; Not yet, goto (1e)
+        jlt   fh.file.write.edb.check_fioerr
+                                    ; Not yet, goto (1e)
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter        
         ;------------------------------------------------------
-        ; 1f: Check if a file error occured
+        ; 1e: Check if a file error occured
         ;------------------------------------------------------
 fh.file.write.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   
@@ -224,31 +196,21 @@ fh.file.write.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Saving indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; Step 3: Next record. Load GPL scratchpad layout.
+        ; Step 3: Next record
         ;------------------------------------------------------
-fh.file.write.edb.next:        
-        bl    @cpu.scrpad.pgout     ; \ Swap scratchpad memory (SPECTRA->GPL)
-              data scrpad.backup2   ; | 8300->xxxx, xxxx->8300
-                                    ; / 512 bytes total to copy           
-
+        inc   @fh.records           ; Update counter
         jmp   fh.file.write.edb.record
-                                    ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
 fh.file.write.edb.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
-        ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.write.edb.eof 
-                                    ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-
-        bl    @mem.sams.layout      ; Restore SAMS windows
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
@@ -256,13 +218,11 @@ fh.file.write.edb.error:
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.write.edb.exit
         ;------------------------------------------------------
-        ; End-Of-File reached
+        ; All records written. Close file
         ;------------------------------------------------------     
-fh.file.write.edb.eof:        
-        bl    @cpu.scrpad.pgin      ; \ Swap scratchpad memory (GPL->SPECTRA)
-              data scrpad.backup2   ; / >2100->8300
-
-        bl    @mem.sams.layout      ; Restore SAMS windows
+fh.file.write.edb.done:
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------

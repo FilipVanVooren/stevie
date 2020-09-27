@@ -42,7 +42,8 @@ cursors:
 
 patterns:
         data  >0000,>0000,>00ff,>0000 ; 01. Single line
-        data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom                        
+        data  >0080,>0000,>ff00,>ff00 ; 02. Ruler + double line bottom 
+
 patterns.box:        
         data  >0000,>0000,>ff00,>ff00 ; 03. Double line bottom
         data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
@@ -54,7 +55,13 @@ patterns.box:
         data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner        
         data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
 
+alphalock:
+        data  >0000,>00e0,>e0e0,>e0e0 ; 12. down
+        data  >00e0,>e0e0,>e0e0,>0000 ; 13. up
 
+
+vertline:
+        data  >1010,>1010,>1010,>1010 ; 14. Vertical line
 
 
 ***************************************************************

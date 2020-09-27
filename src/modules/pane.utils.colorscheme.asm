@@ -42,15 +42,16 @@ pane.action.colorscheme.switch:
         mov   @wyx,@waux1           ; Save cursor YX position
 
         bl    @filv
-              data >183C,>1F,20     ; VDP start address (frame buffer area)
-
-        bl    @putat
-              byte 0,60
-              data txt.colorscheme  ; Show color scheme message
+              data >1840,>1F,16     ; VDP start address (frame buffer area)
 
         bl    @putnum
               byte 0,75
               data tv.colorscheme,rambuf,>3020
+
+        bl    @putat
+              byte 0,64
+              data txt.colorscheme  ; Show color scheme message
+
 
         mov   @waux1,@wyx           ; Restore cursor YX position
         ;-------------------------------------------------------

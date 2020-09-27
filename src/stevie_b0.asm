@@ -32,7 +32,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE %%build_date%%'
+              #string 'STEVIE'
         .else
               #string 'STEVIE'
         .endif         
@@ -100,7 +100,7 @@ kickstart.copy:
 
 
 ***************************************************************
-* Code data: Relocated code SP2 >2000 - >2fff (4K max)
+* Code data: Relocated code SP2 >2000 - >2eff (3840 bytes max)
 ********|*****|*********************|**************************
 reloc.sp2:
         xorg >2000                  ; Relocate SP2 code to >2000
