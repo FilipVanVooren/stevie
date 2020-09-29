@@ -59,7 +59,7 @@ txt.vertline       data >010e
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
 txt.head.load      #string 'Load DV80 file'
-txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
+txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/IDE only).'
 txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    ^A=Home    ^F=End'
 txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    ^A=Home    ^F=End'
 

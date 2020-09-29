@@ -95,6 +95,7 @@ id.dialog.unsaved         equ  3       ; ID for dialog "Unsaved changes"
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+pane.botrow               equ  29      ; Bottom row on screen
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------

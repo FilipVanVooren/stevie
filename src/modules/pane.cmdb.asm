@@ -81,10 +81,31 @@ pane.cmdb.draw:
         bl    @pane.show_hintx      ; Display pane hint
                                     ; \ i  parm1 = Pointer to string with hint
                                     ; / i  parm2 = YX position
+
+        ;------------------------------------------------------
+        ; ALPHA-Lock key down?
+        ;------------------------------------------------------
+        coc   @wbit10,config
+        jeq   pane.cmdb.alpha.down
+        ;------------------------------------------------------
+        ; AlPHA-Lock is up
+        ;------------------------------------------------------
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.up 
+
+        jmp   !
+        ;------------------------------------------------------
+        ; AlPHA-Lock is down
+        ;------------------------------------------------------
+pane.cmdb.alpha.down:        
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.down
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------
-        bl    @cmdb.refresh         ; Refresh command buffer content
+!       bl    @cmdb.refresh         ; Refresh command buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -142,8 +163,6 @@ pane.cmdb.show:
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 
-        ;bl    @cmdb.cmd.clear      ; Clear current command        
-
         bl    @pane.errline.hide    ; Hide error pane
 
         bl    @pane.action.colorscheme.load
@@ -193,7 +212,7 @@ pane.cmdb.hide:
         ; Clear error/hint & status line
         ;------------------------------------------------------
 !       bl    @hchar
-              byte 28,0,32,80*2
+              byte pane.botrow-1,0,32,80*2
               data EOL
         ;------------------------------------------------------
         ; Hide command buffer pane (rest)

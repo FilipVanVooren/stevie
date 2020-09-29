@@ -25,41 +25,29 @@ pane.botline.draw:
 
         mov   @wyx,@fb.yxsave
         ;------------------------------------------------------
+        ; Show separators
+        ;------------------------------------------------------
+        bl    @hchar
+              byte pane.botrow,44,14,1       ; Vertical line 1
+              byte pane.botrow,60,14,1       ; Vertical line 2
+              byte pane.botrow,71,14,1       ; Vertical line 3
+              data eol
+        ;------------------------------------------------------
         ; Show buffer number
         ;------------------------------------------------------
 pane.botline.bufnum:
         bl    @putat 
-              byte  29,0
+              byte  pane.botrow,0
               data  txt.bufnum
         ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------
 pane.botline.show_file:        
         bl    @at
-              byte  29,3            ; Position cursor
+              byte  pane.botrow,3   ; Position cursor
         mov   @edb.filename.ptr,tmp1
                                     ; Get string to display
         bl    @xutst0               ; Display string
-        ;------------------------------------------------------
-        ; ALPHA-Lock key down?
-        ;------------------------------------------------------
-        coc   @wbit10,config
-        jeq   pane.botline.alpha.down
-        ;------------------------------------------------------
-        ; AlPHA-Lock is up
-        ;------------------------------------------------------
-        bl    @putat      
-              byte   29,54
-              data   txt.alpha.up 
-
-        jmp   pane.botline.show_mode
-        ;------------------------------------------------------
-        ; AlPHA-Lock is down
-        ;------------------------------------------------------
-pane.botline.alpha.down:        
-        bl    @putat      
-              byte   29,54
-              data   txt.alpha.down
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -71,7 +59,7 @@ pane.botline.show_mode:
         ;------------------------------------------------------
 pane.botline.show_mode.overwrite:
         bl    @putat
-              byte  29,50
+              byte  pane.botrow,46
               data  txt.ovrwrite
         jmp   pane.botline.show_changed
         ;------------------------------------------------------
@@ -79,43 +67,33 @@ pane.botline.show_mode.overwrite:
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
         bl    @putat
-              byte  29,50
+              byte  pane.botrow,46
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
         ;------------------------------------------------------        
 pane.botline.show_changed:
         mov   @edb.dirty,tmp0
-        jeq   pane.botline.show_changed.clear
+        jeq   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Show "*"
         ;------------------------------------------------------        
         bl    @putat
-              byte 29,56
+              byte pane.botrow,50
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Show "line,column"
         ;------------------------------------------------------        
-pane.botline.show_changed.clear:        
-        nop
 pane.botline.show_linecol:
         mov   @fb.row,@parm1 
         bl    @fb.row2line 
         inc   @outparm1
         ;------------------------------------------------------
-        ; Show separators
-        ;------------------------------------------------------
-        bl    @hchar
-              byte 29,48,14,1       ; Vertical line 1
-              byte 29,64,14,1       ; Vertical line 2
-              byte 29,73,14,1       ; Vertical line 3
-              data eol
-        ;------------------------------------------------------
         ; Show line
         ;------------------------------------------------------
         bl    @putnum
-              byte  29,65           ; YX
+              byte  pane.botrow,62  ; YX
               data  outparm1,rambuf
               byte  48              ; ASCII offset 
               byte  32              ; Padding character
@@ -123,7 +101,7 @@ pane.botline.show_linecol:
         ; Show comma
         ;------------------------------------------------------
         bl    @putat
-              byte  29,70
+              byte  pane.botrow,67
               data  txt.delim
         ;------------------------------------------------------
         ; Show column
@@ -146,7 +124,7 @@ pane.botline.show_linecol:
         movb  tmp0,@rambuf+6        ; "Fix" number length to clear junk chars 
                                 
         bl    @putat
-              byte 29,71
+              byte pane.botrow,68
               data rambuf+6         ; Show column
         ;------------------------------------------------------
         ; Show lines in buffer unless on last line in file
@@ -157,7 +135,7 @@ pane.botline.show_linecol:
         jne   pane.botline.show_lines_in_buffer
 
         bl    @putat
-              byte 29,75
+              byte pane.botrow,73
               data txt.bottom
 
         jmp   pane.botline.exit
@@ -169,7 +147,7 @@ pane.botline.show_lines_in_buffer:
         inc   @waux1                ; Offset 1
 
         bl    @putnum
-              byte 29,75            ; YX
+              byte pane.botrow,73   ; YX
               data waux1,rambuf
               byte 48
               byte 32

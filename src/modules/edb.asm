@@ -280,6 +280,7 @@ edb.line.unpack:
         ; Get line length
         ;------------------------------------------------------ 
 !       mov   *tmp0,tmp1            ; Get line length
+        andi  tmp1,>00ff            ; Line can never be more than 80 characters
         mov   tmp1,@rambuf+8        ; Save line length
 
         inct  @outparm1             ; Skip line prefix        

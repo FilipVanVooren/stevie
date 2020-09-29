@@ -76,7 +76,10 @@ edkey.action.up.cursor_up:
         ; Check line length and position cursor
         ;-------------------------------------------------------
 edkey.action.up.set_cursorx:
-        bl    @edb.line.getlength2  ; Get length current line
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
+
         c     @fb.column,@fb.row.length
         jle   edkey.action.up.exit
         ;-------------------------------------------------------
@@ -143,7 +146,9 @@ edkey.action.down.cursor:
         ; Check line length and position cursor
         ;-------------------------------------------------------        
 edkey.action.down.set_cursorx:                
-        bl    @edb.line.getlength2  ; Get length current line
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
         
         c     @fb.column,@fb.row.length
         jle   edkey.action.down.exit  
@@ -441,6 +446,10 @@ edkey.action.top.refresh:
         clr   @fb.topline           ; Set to 1st line in editor buffer
         clr   @parm1
         bl    @fb.refresh           ; Refresh frame buffer
+
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -448,6 +457,7 @@ edkey.action.top.exit:
         clr   @fb.row               ; Frame buffer line 0
         clr   @fb.column            ; Frame buffer column 0
         clr   @wyx                  ; Set VDP cursor on row 0, column 0
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer        
         b     @hook.keyscan.bounce  ; Back to editor main
 
 
@@ -483,4 +493,5 @@ edkey.action.bot.exit:
         clr   @fb.column            ; Editor column 0
         li    tmp0,>0100            ; Set VDP cursor on line 1, column 0
         mov   tmp0,@wyx             ; Set cursor
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer                
 !       b     @hook.keyscan.bounce  ; Back to editor main
