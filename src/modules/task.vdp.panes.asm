@@ -7,8 +7,9 @@
 
 ***************************************************************
 * Task - VDP draw editor panes (frame buffer, CMDB, status line)
-***************************************************************
+********|*****|*********************|**************************
 task.vdp.panes:
+        mov   @wyx,@fb.yxsave       ; Backup cursor
         ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
@@ -32,7 +33,8 @@ task.vdp.panes.alpha_lock.down:
         ;------------------------------------------------------ 
         ; Command buffer visible ?
         ;------------------------------------------------------
-task.vdp.panes.cmdb.check        
+task.vdp.panes.cmdb.check
+        mov   @fb.yxsave,@wyx       ; Restore cursor
         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
         jeq   !                     ; No, skip CMDB pane
         jmp   task.vdp.panes.cmdb.draw

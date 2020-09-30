@@ -31,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .else
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .endif
 
 ***************************************************************
@@ -67,6 +67,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         ;------------------------------------------------------
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
+        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping        
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------        
@@ -82,19 +83,26 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
-
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
         copy  "edkey.asm"           ; Keyboard actions
-        copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
-        copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
-        copy  "edkey.fb.misc.asm"   ; fb pane   - Miscelanneous actions
-        copy  "edkey.fb.file.asm"   ; fb pane   - File related actions
-        copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
-        copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Miscelanneous actions
-        copy  "edkey.cmdb.file.asm" ; cmdb pane - File related actions
+        ;-----------------------------------------------------------------------
+        ;   Frame buffer              
+        ;-----------------------------------------------------------------------
+        copy  "edkey.fb.mov.asm"    ; Actions for movement keys 
+        copy  "edkey.fb.mov.paging.asm"  ; Move page up / down in buffer
+        copy  "edkey.fb.mov.topbot.asm"  ; Move to top / bottom of buffer
+        copy  "edkey.fb.mod.asm"    ; Actions for modifier keys
+        copy  "edkey.fb.misc.asm"   ; Miscelanneous actions
+        copy  "edkey.fb.file.asm"   ; File related actions
+        ;-----------------------------------------------------------------------
+        ;   Command Buffer    
+        ;-----------------------------------------------------------------------
+        copy  "edkey.cmdb.mov.asm"  ; Actions for movement keys 
+        copy  "edkey.cmdb.mod.asm"  ; Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm" ; Miscelanneous actions
+        copy  "edkey.cmdb.file.asm" ; File related actions
         ;-----------------------------------------------------------------------
         ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
         ;-----------------------------------------------------------------------
@@ -150,7 +158,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
+        copy  "data.keymap.actions.asm"
+                                    ; Data segment - Keyboard actions
         .ifgt $, >7fff
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else

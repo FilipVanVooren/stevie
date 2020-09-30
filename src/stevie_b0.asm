@@ -16,7 +16,6 @@
 sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff 
                                     ; and grows downwards
 
-
 ***************************************************************
 * BANK 0 - Setup environment for Stevie
 ********|*****|*********************|**************************
@@ -32,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .else
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .endif         
 
 ***************************************************************
@@ -136,6 +135,8 @@ main:
         ;------------------------------------------------------
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
+        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
+
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------
