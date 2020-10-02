@@ -1,5 +1,5 @@
 ***************************************************************
-*                          Stevie Editor
+*                          Stevie
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.

@@ -58,24 +58,25 @@ txt.vertline       data >010e
 ;--------------------------------------------------------------
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
-txt.head.load      #string 'Load DV80 file'
-txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/IDE only).'
+txt.head.load      #string 'Load DV80 file '
+txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
 txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    ^A=Home    ^F=End'
 txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
-txt.head.save      #string 'Save DV80 file'
+txt.head.save      #string 'Save DV80 file '
 txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
 txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
-txt.head.unsaved   #string 'Unsaved changes'
-txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
-txt.keys.unsaved   #string 'F9=Back    F6=Ignore    ^K=Save file'
+txt.head.unsaved   #string 'Unsaved changes '
+txt.hint.unsaved   #string 'HINT: Press ENTER to save file or F6 to proceed without saving.'
+txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
+txt.warn.unsaved   #string '* You are about to lose changes to the current file!'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane
@@ -91,12 +92,6 @@ txt.io.nofile      #string 'I/O error. No filename specified.'
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
 
-txt.cmdb.hbar      byte    66
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1
-                   even
 
 txt.stevie         byte    12
                    byte    10
@@ -104,20 +99,5 @@ txt.stevie         byte    12
                    byte    11
                    even
 
-txt.colorscheme    #string 'COLOR SCHEME: '
+txt.colorscheme    #string 'Color scheme: '
 
-
-;--------------------------------------------------------------
-; Strings for filenames
-;--------------------------------------------------------------
-fdname1            #string 'PI.CLOCK'
-fdname2            #string 'TIPI.TIVI.NR80'
-fdname3            #string 'DSK1.XBEADOC'
-fdname4            #string 'TIPI.TIVI.C99MAN1'
-fdname5            #string 'TIPI.TIVI.C99MAN2'
-fdname6            #string 'TIPI.TIVI.C99MAN3'
-fdname7            #string 'TIPI.TIVI.C99SPECS'
-fdname8            #string 'TIPI.TIVI.RANDOM#C'
-fdname9            #string 'DSK1.INVADERS'
-fdname0            #string 'DSK1.NR80'
-fdname.clock       #string 'PI.CLOCK'

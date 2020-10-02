@@ -102,10 +102,18 @@ edkey.action.cmdb.char.exit:
 *---------------------------------------------------------------
 edkey.action.cmdb.enter:
         ;-------------------------------------------------------
-        ; Parse command
+        ; Show "Save DV80 file" dialog if "Unsaved changes"
         ;-------------------------------------------------------
-        ; TO BE IMPLEMENTED
+        mov   @cmdb.dialog,tmp0
+        ci    tmp0,id.dialog.unsaved
+        jne   edkey.action.cmdb.enter.loadsave
 
+        b     @dialog.save          ; Show "Save DV80 file" dialog
+        ;-------------------------------------------------------
+        ; Show Load or Save dialog depending on current mode
+        ;-------------------------------------------------------        
+edkey.action.cmdb.enter.loadsave:
+        b     @edkey.action.cmdb.loadsave
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

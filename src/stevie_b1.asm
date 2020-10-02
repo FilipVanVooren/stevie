@@ -1,5 +1,5 @@
 ***************************************************************
-*                          Stevie Editor
+*                          Stevie
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -90,19 +90,20 @@ main:
         ;-----------------------------------------------------------------------
         ;   Frame buffer              
         ;-----------------------------------------------------------------------
-        copy  "edkey.fb.mov.asm"    ; Actions for movement keys 
+        copy  "edkey.fb.mov.asm"         ; Actions for movement keys 
         copy  "edkey.fb.mov.paging.asm"  ; Move page up / down in buffer
         copy  "edkey.fb.mov.topbot.asm"  ; Move to top / bottom of buffer
-        copy  "edkey.fb.mod.asm"    ; Actions for modifier keys
-        copy  "edkey.fb.misc.asm"   ; Miscelanneous actions
-        copy  "edkey.fb.file.asm"   ; File related actions
+        copy  "edkey.fb.mod.asm"         ; Actions for modifier keys
+        copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
+        copy  "edkey.fb.file.asm"        ; File related actions
         ;-----------------------------------------------------------------------
         ;   Command Buffer    
         ;-----------------------------------------------------------------------
-        copy  "edkey.cmdb.mov.asm"  ; Actions for movement keys 
-        copy  "edkey.cmdb.mod.asm"  ; Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm" ; Miscelanneous actions
-        copy  "edkey.cmdb.file.asm" ; File related actions
+        copy  "edkey.cmdb.mov.asm"    ; Actions for movement keys 
+        copy  "edkey.cmdb.mod.asm"    ; Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm"   ; Miscelanneous actions
+        copy  "edkey.cmdb.file.asm"   ; File related actions
+        copy  "edkey.cmdb.dialog.asm" ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
         ;-----------------------------------------------------------------------

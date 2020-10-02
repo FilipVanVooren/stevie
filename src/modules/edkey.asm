@@ -74,6 +74,15 @@ edkey.key.process.addbuffer:
 !       ci    tmp0,pane.focus.cmdb  ; CMDB has focus ?
         jne   edkey.key.process.crash
                                     ; No, crash
+        ;-------------------------------------------------------
+        ; No prompt in "Unsaved changes" dialog
+        ;-------------------------------------------------------
+        li    tmp0,id.dialog.unsaved
+        c     @cmdb.dialog,tmp0
+        jeq   edkey.key.process.exit
+        ;-------------------------------------------------------
+        ; Add character to CMDB
+        ;-------------------------------------------------------
         b     @edkey.action.cmdb.char
                                     ; Add character to CMDB buffer        
         ;-------------------------------------------------------
@@ -82,3 +91,8 @@ edkey.key.process.addbuffer:
 edkey.key.process.crash:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / File error occured. Halt system.
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.key.process.exit:
+       b     @hook.keyscan.bounce   ; Back to editor main        

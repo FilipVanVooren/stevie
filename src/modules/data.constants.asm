@@ -37,7 +37,7 @@ romsat:
 
 cursors:
         data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
-        data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 2 - Insert mode
+        data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
         data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
 
 patterns:
@@ -108,7 +108,7 @@ tv.colorscheme.entries   equ 9      ; Entries in table
 tv.colorscheme.table:                  
                          ; #  Framebuffer        | Status line        | CMDB
                          ; ----------------------|--------------------|---------
- data  >f41f,>f00a       ; 1  White/dark blue    | Black/white        | White
+ data  >f41f,>f001       ; 1  White/dark blue    | Black/white        | White
  data  >f41c,>f00f       ; 2  White/dark blue    | Black/dark green   | White
  data  >a11a,>f00f       ; 3  Dark yellow/black  | Black/dark yellow  | White
  data  >2112,>f00f       ; 4  Medium green/black | Black/medium green | White

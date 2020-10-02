@@ -24,6 +24,16 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.load:
+        ;-------------------------------------------------------
+        ; Show dialog "unsaved changes" if editor buffer dirty
+        ;-------------------------------------------------------
+        mov   @edb.dirty,tmp0
+        jeq   dialog.load.setup
+        b     @dialog.unsaved       ; Show dialog and exit
+        ;-------------------------------------------------------
+        ; Setup dialog
+        ;-------------------------------------------------------
+dialog.load.setup:        
         li    tmp0,id.dialog.load
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 

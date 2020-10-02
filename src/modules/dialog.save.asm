@@ -48,5 +48,7 @@ dialog.save:
 
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
 
+        bl    @pane.cursor.blink    ; Show cursor
+
         b     @edkey.action.cmdb.show
                                     ; Show dialog in CMDB pane        

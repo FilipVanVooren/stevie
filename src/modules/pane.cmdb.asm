@@ -15,7 +15,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 pane.cmdb.draw:
         dect  stack
@@ -29,18 +29,32 @@ pane.cmdb.draw:
         ;------------------------------------------------------        
         ; Command buffer header line
         ;------------------------------------------------------
+        bl    @hchar
+              byte pane.botrow-4,15,1,65
+              data eol
+
         mov   @cmdb.yxtop,@wyx      ; \
         mov   @cmdb.panhead,tmp1    ; | Display pane header
         bl    @xutst0               ; / 
+        ;------------------------------------------------------
+        ; Show warning message if in "Unsaved changes" dialog
+        ;------------------------------------------------------
+        clr   @waux1                ; Default is show prompt
 
-        bl    @setx
-              data 14               ; Position cursor
+        mov   @cmdb.dialog,tmp0
+        ci    tmp0,id.dialog.unsaved
+        jne   pane.cmdb.draw.clear  ; Display normal prompt
 
-        bl    @putstr               ; Display horizontal line
-              data txt.cmdb.hbar
+        bl    @putat                ; \ Show warning message
+              byte pane.botrow-3,0  ; | 
+              data txt.warn.unsaved ; /
+
+        seto  @waux1                ; Hide prompt
+        mov   @txt.warn.unsaved,@cmdb.cmdlen
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------
+pane.cmdb.draw.clear:        
         mov   @cmdb.cmdlen,tmp0     ; \
         srl   tmp0,8                ; | Set cursor after command prompt
         a     @cmdb.yxprompt,tmp0   ; |
@@ -64,7 +78,9 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display pane hint in command buffer
         ;------------------------------------------------------
-        li    tmp0,>1c00            ; Y=28, X=0
+pane.cmdb.draw.hint:        
+        li    tmp0,pane.botrow - 1  ; \
+        sla   tmp0,8                ; / Y=bottom row - 1, X=0
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.panhint,@parm2  ; Pane hint to display
 
@@ -74,14 +90,14 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display keys in status line
         ;------------------------------------------------------
-        li    tmp0,>1d00            ; Y = 29, X=0
+        li    tmp0,pane.botrow      ; \
+        sla   tmp0,8                ; / Y=bottom row, X=0
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.pankeys,@parm2  ; Pane hint to display
 
         bl    @pane.show_hintx      ; Display pane hint
                                     ; \ i  parm1 = Pointer to string with hint
                                     ; / i  parm2 = YX position
-
         ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
@@ -105,7 +121,9 @@ pane.cmdb.alpha.down:
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------
-!       bl    @cmdb.refresh         ; Refresh command buffer content
+        mov   @waux1,tmp0           ; Flag set?
+        jne   pane.cmdb.exit        ; Yes, so exit early
+        bl    @cmdb.refresh         ; Refresh command buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -165,8 +183,13 @@ pane.cmdb.show:
 
         bl    @pane.errline.hide    ; Hide error pane
 
+        seto  @parm1                ; Do not turn screen off while
+                                    ; reloading color scheme
+
         bl    @pane.action.colorscheme.load
-                                    ; Reload colorscheme
+                                    ; Reload color scheme
+                                    ; i  parm1 = Skip screen off if >FFFF
+
 pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
@@ -229,6 +252,11 @@ pane.cmdb.hide:
 
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
+                                    ; i  parm1 = Skip screen off if >FFFF
+        ;------------------------------------------------------
+        ; Show cursor again
+        ;------------------------------------------------------
+        bl    @pane.cursor.blink
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

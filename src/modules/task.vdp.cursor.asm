@@ -30,7 +30,7 @@ task.vdp.cursor.visible.insert_mode:
         ; Editor cursor (insert mode)
         ;------------------------------------------------------
 task.vdp.cursor.visible.insert_mode.fb:        
-        clr   tmp0                   ; Cursor editor insert mode 
+        clr   tmp0                   ; Cursor FB insert mode
         jmp   task.vdp.cursor.visible.cursorshape
         ;------------------------------------------------------
         ; Command buffer cursor (insert mode)
@@ -54,9 +54,9 @@ task.vdp.cursor.visible.cursorshape:
         ;------------------------------------------------------
 task.vdp.cursor.copy.sat:        
         bl    @cpym2v                ; Copy sprite SAT to VDP
-              data sprsat,ramsat,4   ; \ i  tmp0 = VDP destination
-                                     ; | i  tmp1 = ROM/RAM source
-                                     ; / i  tmp2 = Number of bytes to write
+              data sprsat,ramsat,4   ; \ i  p0 = VDP destination
+                                     ; | i  p1 = ROM/RAM source
+                                     ; / i  p2 = Number of bytes to write
         ;-------------------------------------------------------
         ; Show status bottom line
         ;-------------------------------------------------------  

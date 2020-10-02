@@ -70,7 +70,7 @@ keymap_actions.cmdb:
         ; Modifier keys
         ;-------------------------------------------------------
         data  key.fctn.3, txt.fctn.3, edkey.action.cmdb.clear
-        data  key.enter, txt.enter, edkey.action.cmdb.loadsave
+        data  key.enter, txt.enter, edkey.action.cmdb.enter
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
@@ -83,6 +83,7 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
+        data  key.fctn.6, txt.fctn.6, edkey.action.cmdb.proceed
         data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
         ;-------------------------------------------------------
         ; End of list
