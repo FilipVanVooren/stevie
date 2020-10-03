@@ -30,17 +30,17 @@ edkey.key.process:
         ;-------------------------------------------------------
 edkey.key.process.loadmap.editor:        
         li    tmp2,keymap_actions.editor 
-        jmp   edkey.key.check_next
+        jmp   edkey.key.check.next
         ;-------------------------------------------------------
         ; Load CMDB keyboard map
         ;-------------------------------------------------------
 edkey.key.process.loadmap.cmdb:                
         li    tmp2,keymap_actions.cmdb
-        jne   edkey.key.check_next
+        jne   edkey.key.check.next
         ;-------------------------------------------------------
         ; Iterate over keyboard map for matching action key
         ;-------------------------------------------------------
-edkey.key.check_next:
+edkey.key.check.next:
         c     *tmp2,tmp3            ; EOL reached ?
         jeq   edkey.key.process.addbuffer
                                     ; Yes, means no action key pressed, so
@@ -49,24 +49,38 @@ edkey.key.check_next:
         ; Check for action key match
         ;-------------------------------------------------------
         c     tmp1,*tmp2            ; Action key matched?
-        jeq   edkey.key.process.action
-                                    ; Yes, do action
+        jeq   edkey.key.check.scope
+                                    ; Yes, check scope
         ai    tmp2,6                ; Skip current entry
-        jmp   edkey.key.check_next  ; Check next entry
+        jmp   edkey.key.check.next  ; Check next entry
+        ;-------------------------------------------------------
+        ; Check scope of key
+        ;-------------------------------------------------------
+edkey.key.check.scope:
+        inct  tmp2                  ; Move to scope
+        c     *tmp2,@tv.pane.focus  ; (1) Process key if scope matches pane
+        jeq   edkey.key.process.action
+
+        c     *tmp2,@cmdb.dialog    ; (2) Process key if scope matches dialog
+        jeq   edkey.key.process.action
+        ;-------------------------------------------------------
+        ; Key pressed outside valid scope, so just ignore
+        ;-------------------------------------------------------
+        jmp   edkey.key.process.exit        
         ;-------------------------------------------------------
         ; Trigger keyboard action
         ;-------------------------------------------------------
 edkey.key.process.action:
-        ai    tmp2,4                ; Move to action address
+        inct  tmp2                  ; Move to action address
         mov   *tmp2,tmp2            ; Get action address
         b     *tmp2                 ; Process key action
         ;-------------------------------------------------------
-        ; Add character to appropriate buffer
+        ; Add character to editor or cmdb buffer
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
         mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
         jne   !                     ; No, skip frame buffer 
-        clr   @tv.pane.welcome      ; Do not longer show welcome pane
+        clr   @tv.pane.about        ; Do not longer show about pane/dialog
         b     @edkey.action.char    ; Add character to frame buffer        
         ;-------------------------------------------------------
         ; CMDB buffer

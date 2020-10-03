@@ -1,4 +1,4 @@
-* FILE......: edkey.cmdb.mod.asm
+* FILE......: edkey.cmdb.misc.asm
 * Purpose...: Actions for miscelanneous keys in command buffer pane.
 
 

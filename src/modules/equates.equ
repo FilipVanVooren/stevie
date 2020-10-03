@@ -89,9 +89,10 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 *--------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
-id.dialog.load            equ  1       ; ID for dialog "Load DV 80 file"
-id.dialog.save            equ  2       ; ID for dialog "Save DV 80 file"
-id.dialog.unsaved         equ  3       ; ID for dialog "Unsaved changes"
+id.dialog.load            equ  10      ; ID dialog "Load DV 80 file"
+id.dialog.save            equ  11      ; ID dialog "Save DV 80 file"
+id.dialog.unsaved         equ  12      ; ID dialog "Unsaved changes"
+id.dialog.about           equ  13      ; ID dialog "About"
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
@@ -145,7 +146,7 @@ tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
 tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
-tv.pane.welcome   equ  tv.top + 28     ; Welcome pane currently shown 
+tv.pane.about     equ  tv.top + 28     ; About pane currently shown 
 tv.task.oneshot   equ  tv.top + 30     ; Pointer to one-shot routine
 tv.error.visible  equ  tv.top + 32     ; Error pane visible
 tv.error.msg      equ  tv.top + 34     ; Error message (max. 160 characters)

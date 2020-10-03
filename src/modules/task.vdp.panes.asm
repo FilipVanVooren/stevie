@@ -130,13 +130,13 @@ task.vdp.panes.clear_screen:
 
         mov   @fb.yxsave,@wyx       ; Restore cursor postion                                    
         ;-------------------------------------------------------
-        ; Show welcome/about dialog
+        ; Show about dialog
         ;-------------------------------------------------------
-        mov   @tv.pane.welcome,tmp0 ; Show welcome pane?
+        mov   @tv.pane.about,tmp0   ; Show about dialog?
         jeq   task.vdp.panes.botline.draw
                                     ; No, so skip it
              
-        bl    @dialog.welcome       ; Show welcome/about dialog
+        bl    @dialog.about         ; Show about dialog
         ;-------------------------------------------------------
         ; Draw status line
         ;-------------------------------------------------------

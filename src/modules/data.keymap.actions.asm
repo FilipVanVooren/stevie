@@ -1,4 +1,4 @@
-* FILE......: data.keymap.asm
+* FILE......: data.keymap.actions.asm
 * Purpose...: Stevie Editor - data segment (keyboard actions)
 
 *---------------------------------------------------------------
@@ -8,45 +8,45 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------
-        data  key.enter, txt.enter, edkey.action.enter
-        data  key.fctn.s, txt.fctn.s, edkey.action.left
-        data  key.fctn.d, txt.fctn.d, edkey.action.right
-        data  key.fctn.e, txt.fctn.e, edkey.action.up
-        data  key.fctn.x, txt.fctn.x, edkey.action.down
-        data  key.ctrl.a, txt.ctrl.a, edkey.action.home
-        data  key.ctrl.f, txt.ctrl.f, edkey.action.end   
-        data  key.ctrl.s, txt.ctrl.s, edkey.action.pword
-        data  key.ctrl.d, txt.ctrl.d, edkey.action.nword
-        data  key.ctrl.e, txt.ctrl.e, edkey.action.ppage
-        data  key.ctrl.x, txt.ctrl.x, edkey.action.npage
-        data  key.ctrl.t, txt.ctrl.t, edkey.action.top
-        data  key.ctrl.b, txt.ctrl.b, edkey.action.bot
+        data  key.enter, pane.focus.fb, edkey.action.enter
+        data  key.fctn.s, pane.focus.fb, edkey.action.left
+        data  key.fctn.d, pane.focus.fb, edkey.action.right
+        data  key.fctn.e, pane.focus.fb, edkey.action.up
+        data  key.fctn.x, pane.focus.fb, edkey.action.down
+        data  key.ctrl.a, pane.focus.fb, edkey.action.home
+        data  key.ctrl.f, pane.focus.fb, edkey.action.end   
+        data  key.ctrl.s, pane.focus.fb, edkey.action.pword
+        data  key.ctrl.d, pane.focus.fb, edkey.action.nword
+        data  key.ctrl.e, pane.focus.fb, edkey.action.ppage
+        data  key.ctrl.x, pane.focus.fb, edkey.action.npage
+        data  key.ctrl.t, pane.focus.fb, edkey.action.top
+        data  key.ctrl.b, pane.focus.fb, edkey.action.bot
         ;-------------------------------------------------------
         ; Modifier keys - Delete
         ;-------------------------------------------------------
-        data  key.fctn.1, txt.fctn.1, edkey.action.del_char
-        data  key.fctn.3, txt.fctn.3, edkey.action.del_line        
-        data  key.fctn.4, txt.fctn.4, edkey.action.del_eol
+        data  key.fctn.1, pane.focus.fb, edkey.action.del_char
+        data  key.fctn.3, pane.focus.fb, edkey.action.del_line        
+        data  key.fctn.4, pane.focus.fb, edkey.action.del_eol
 
         ;-------------------------------------------------------
         ; Modifier keys - Insert
         ;-------------------------------------------------------
-        data  key.fctn.2, txt.fctn.2, edkey.action.ins_char.ws
-        data  key.fctn.dot, txt.fctn.dot, edkey.action.ins_onoff
-        data  key.fctn.5, txt.fctn.5, edkey.action.ins_line
+        data  key.fctn.2, pane.focus.fb, edkey.action.ins_char.ws
+        data  key.fctn.dot, pane.focus.fb, edkey.action.ins_onoff
+        data  key.fctn.5, pane.focus.fb, edkey.action.ins_line
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
-        data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
+        data  key.fctn.plus, pane.focus.fb, edkey.action.quit
+        data  key.ctrl.z, pane.focus.fb, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
-        data  key.ctrl.comma, txt.ctrl.comma, edkey.action.fb.fname.dec.load
-        data  key.ctrl.dot, txt.ctrl.dot, edkey.action.fb.fname.inc.load
-        data  key.fctn.7, txt.fctn.7, edkey.action.about
-        data  key.ctrl.k, txt.ctrl.k, dialog.save                
-        data  key.ctrl.l, txt.ctrl.l, dialog.load
+        data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
+        data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
+        data  key.fctn.7, pane.focus.fb, edkey.action.about
+        data  key.ctrl.k, pane.focus.fb, dialog.save                
+        data  key.ctrl.l, pane.focus.fb, dialog.load
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -62,30 +62,37 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------        
-        data  key.fctn.s, txt.fctn.s, edkey.action.cmdb.left
-        data  key.fctn.d, txt.fctn.d, edkey.action.cmdb.right
-        data  key.ctrl.a, txt.ctrl.a, edkey.action.cmdb.home
-        data  key.ctrl.f, txt.ctrl.f, edkey.action.cmdb.end
+        data  key.fctn.s, pane.focus.cmdb, edkey.action.cmdb.left
+        data  key.fctn.d, pane.focus.cmdb, edkey.action.cmdb.right
+        data  key.ctrl.a, pane.focus.cmdb, edkey.action.cmdb.home
+        data  key.ctrl.f, pane.focus.cmdb, edkey.action.cmdb.end
         ;-------------------------------------------------------
         ; Modifier keys
         ;-------------------------------------------------------
-        data  key.fctn.3, txt.fctn.3, edkey.action.cmdb.clear
-        data  key.enter, txt.enter, edkey.action.cmdb.enter
+        data  key.fctn.3, pane.focus.cmdb, edkey.action.cmdb.clear
+        data  key.enter, pane.focus.cmdb, edkey.action.cmdb.enter
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
-        data  key.fctn.plus, txt.fctn.plus, edkey.action.quit
-        data  key.ctrl.z, txt.ctrl.z, pane.action.colorscheme.cycle
+        data  key.fctn.plus, pane.focus.cmdb, edkey.action.quit
+        data  key.ctrl.z, pane.focus.cmdb, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; File load dialog
         ;-------------------------------------------------------
-        data  key.fctn.5, txt.fctn.5, edkey.action.cmdb.fastmode.toggle
+        data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
+        ;-------------------------------------------------------
+        ; File save dialog
+        ;-------------------------------------------------------
+        data  key.fctn.5, id.dialog.save, edkey.action.cmdb.fastmode.toggle
+        ;-------------------------------------------------------
+        ; Unsaved changes dialog
+        ;-------------------------------------------------------
+        data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
-        data  key.fctn.6, txt.fctn.6, edkey.action.cmdb.proceed
-        data  key.fctn.9, txt.fctn.9, edkey.action.cmdb.hide
-        ;-------------------------------------------------------
+        data  key.fctn.9, pane.focus.cmdb, edkey.action.cmdb.hide
+        ;------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
         data  EOL                           ; EOL

@@ -152,7 +152,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   
-        copy  "dialog.welcome.asm"  ; Dialog "Welcome / About"
+        copy  "dialog.about.asm"    ; Dialog "About"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    

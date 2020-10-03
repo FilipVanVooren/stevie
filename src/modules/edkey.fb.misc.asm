@@ -15,9 +15,9 @@ edkey.action.quit:
 *---------------------------------------------------------------
 edkey.action.about:
         li    tmp0,>4a4a
-        mov   tmp0,@tv.pane.welcome ; Indicate FCTN-7 call
+        mov   tmp0,@tv.pane.about   ; Indicate FCTN-7 call
 
-        bl    @dialog.welcome       
+        bl    @dialog.about
         b     @hook.keyscan.bounce  ; Back to editor main
 
 *---------------------------------------------------------------
