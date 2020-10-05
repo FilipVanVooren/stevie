@@ -109,7 +109,7 @@ reloc.sp2:
         ; End of File marker
         ;------------------------------------------------------
         data  >dead,>beef,>dead,>beef
-        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
+        .print "***** PC relocated SP2 library @ >2000- ", $, "(dec)"
 
         .ifgt $, >2f00
               .error '***** Aborted. SP2 library too large!'

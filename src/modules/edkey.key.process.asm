@@ -1,4 +1,4 @@
-* FILE......: edkey.asm
+* FILE......: edkey.key.process.asm
 * Purpose...: Process keyboard key press. Shared code for all panes
 
 
@@ -64,16 +64,23 @@ edkey.key.check.scope:
         c     *tmp2,@cmdb.dialog    ; (2) Process key if scope matches dialog
         jeq   edkey.key.process.action
         ;-------------------------------------------------------
-        ; Key pressed outside valid scope, so just ignore
+        ; Key pressed outside valid scope, ignore action entry
         ;-------------------------------------------------------
-        jmp   edkey.key.process.exit        
+        ai    tmp2,4                ; Skip current entry
+        jmp   edkey.key.check.next  ; Process next action entry        
         ;-------------------------------------------------------
         ; Trigger keyboard action
         ;-------------------------------------------------------
 edkey.key.process.action:
         inct  tmp2                  ; Move to action address
         mov   *tmp2,tmp2            ; Get action address
-        b     *tmp2                 ; Process key action
+
+        li    tmp0,id.dialog.unsaved
+        c     @cmdb.dialog,tmp0
+        jeq   !                     ; Skip store pointer if in "Unsaved changes"
+
+        mov   tmp2,@cmdb.action.ptr ; Store action address as pointer
+!       b     *tmp2                 ; Process key action
         ;-------------------------------------------------------
         ; Add character to editor or cmdb buffer
         ;-------------------------------------------------------

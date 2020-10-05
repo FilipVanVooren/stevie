@@ -210,9 +210,10 @@ cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
 cmdb.panhead      equ  cmdb.struct + 28; Pointer to string with pane header
 cmdb.panhint      equ  cmdb.struct + 30; Pointer to string with pane hint
 cmdb.pankeys      equ  cmdb.struct + 32; Pointer to string with pane keys
-cmdb.cmdlen       equ  cmdb.struct + 34; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 35; Current command (80 bytes max.)
-cmdb.free         equ  cmdb.struct +115; End of structure
+cmdb.action.ptr   equ  cmdb.struct + 34; Pointer to function to execute
+cmdb.cmdlen       equ  cmdb.struct + 36; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 37; Current command (80 bytes max.)
+cmdb.free         equ  cmdb.struct +117; End of structure
 *--------------------------------------------------------------
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------

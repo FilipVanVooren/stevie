@@ -7,7 +7,7 @@
 
 ***************************************************************
 * pane.cmdb.draw
-* Draw stevie Command Buffer
+* Draw Stevie Command Buffer in pane
 ***************************************************************
 * bl  @pane.cmdb.draw
 *--------------------------------------------------------------
@@ -102,7 +102,7 @@ pane.cmdb.draw.hint:
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
         coc   @wbit10,config
-        jeq   pane.cmdb.alpha.down
+        jeq   pane.cmdb.draw.alpha.down
         ;------------------------------------------------------
         ; AlPHA-Lock is up
         ;------------------------------------------------------
@@ -110,24 +110,25 @@ pane.cmdb.draw.hint:
               byte   pane.botrow,79
               data   txt.alpha.up 
 
-        jmp   !
+        jmp   pane.cmdb.draw.promptcmd
         ;------------------------------------------------------
         ; AlPHA-Lock is down
         ;------------------------------------------------------
-pane.cmdb.alpha.down:        
+pane.cmdb.draw.alpha.down:        
         bl    @putat      
               byte   pane.botrow,79
               data   txt.alpha.down
         ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------
+pane.cmdb.draw.promptcmd:        
         mov   @waux1,tmp0           ; Flag set?
-        jne   pane.cmdb.exit        ; Yes, so exit early
+        jne   pane.cmdb.draw.exit   ; Yes, so exit early
         bl    @cmdb.refresh         ; Refresh command buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.cmdb.exit:
+pane.cmdb.draw.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

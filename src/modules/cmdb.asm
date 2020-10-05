@@ -41,6 +41,7 @@ cmdb.init:
 
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
+        clr   @cmdb.action.ptr      ; Reset action to execute pointer
         ;------------------------------------------------------
         ; Clear command buffer
         ;------------------------------------------------------

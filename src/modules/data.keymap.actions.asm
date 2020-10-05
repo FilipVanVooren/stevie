@@ -60,6 +60,16 @@ keymap_actions.editor:
 *---------------------------------------------------------------
 keymap_actions.cmdb:
         ;-------------------------------------------------------
+        ; Dialog specific: File load / save
+        ;-------------------------------------------------------
+        data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
+        data  key.fctn.5, id.dialog.save, edkey.action.cmdb.fastmode.toggle
+        ;-------------------------------------------------------
+        ; Dialog specific: Unsaved changes
+        ;-------------------------------------------------------
+        data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
+        data  key.enter, id.dialog.unsaved, dialog.save
+        ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------        
         data  key.fctn.s, pane.focus.cmdb, edkey.action.cmdb.left
@@ -74,24 +84,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
+        data  key.fctn.9, pane.focus.cmdb, edkey.action.cmdb.hide
         data  key.fctn.plus, pane.focus.cmdb, edkey.action.quit
         data  key.ctrl.z, pane.focus.cmdb, pane.action.colorscheme.cycle
-        ;-------------------------------------------------------
-        ; File load dialog
-        ;-------------------------------------------------------
-        data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
-        ;-------------------------------------------------------
-        ; File save dialog
-        ;-------------------------------------------------------
-        data  key.fctn.5, id.dialog.save, edkey.action.cmdb.fastmode.toggle
-        ;-------------------------------------------------------
-        ; Unsaved changes dialog
-        ;-------------------------------------------------------
-        data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
-        ;-------------------------------------------------------
-        ; Dialog keys
-        ;-------------------------------------------------------
-        data  key.fctn.9, pane.focus.cmdb, edkey.action.cmdb.hide
         ;------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

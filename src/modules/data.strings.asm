@@ -27,7 +27,7 @@ txt.about.msg7     byte    56,13
                    text    ' ALPHA LOCK down   '
                    text    '  * Text changed'
 
-txt.about.msg8        #string 'Press ENTER to return to editor'
+txt.about.msg8     #string 'Press ENTER to return to editor'
 
 
 
@@ -74,9 +74,9 @@ txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
 txt.head.unsaved   #string 'Unsaved changes '
-txt.hint.unsaved   #string 'HINT: Press ENTER to save file or F6 to proceed without saving.'
+txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
-txt.warn.unsaved   #string '* You are about to lose changes to the current file!'
+txt.warn.unsaved   #string 'You are about to lose changes to the current file!'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane
@@ -91,7 +91,6 @@ txt.io.nofile      #string 'I/O error. No filename specified.'
 ;--------------------------------------------------------------
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-
 
 txt.stevie         byte    12
                    byte    10

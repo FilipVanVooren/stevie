@@ -86,9 +86,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.asm"           ; Keyboard actions
+        copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
-        ;   Frame buffer              
+        ; Keyboard actions - Frame buffer              
         ;-----------------------------------------------------------------------
         copy  "edkey.fb.mov.asm"         ; Actions for movement keys 
         copy  "edkey.fb.mov.paging.asm"  ; Move page up / down in buffer
@@ -97,7 +97,7 @@ main:
         copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
         copy  "edkey.fb.file.asm"        ; File related actions
         ;-----------------------------------------------------------------------
-        ;   Command Buffer    
+        ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
         copy  "edkey.cmdb.mov.asm"    ; Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"    ; Actions for modifier keys

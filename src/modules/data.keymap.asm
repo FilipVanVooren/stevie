@@ -10,9 +10,9 @@ key.fctn.2    equ >0400             ; fctn + 2
 key.fctn.3    equ >0700             ; fctn + 3
 key.fctn.4    equ >0200             ; fctn + 4
 key.fctn.5    equ >0e00             ; fctn + 5
-key.fctn.6    equ >0000             ; fctn + 6
+key.fctn.6    equ >0c00             ; fctn + 6
 key.fctn.7    equ >0100             ; fctn + 7
-key.fctn.8    equ >0000             ; fctn + 8
+key.fctn.8    equ >0600             ; fctn + 8
 key.fctn.9    equ >0f00             ; fctn + 9
 key.fctn.a    equ >0000             ; fctn + a
 key.fctn.b    equ >0000             ; fctn + b
