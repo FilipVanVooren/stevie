@@ -63,7 +63,6 @@ keymap_actions.cmdb:
         ; Dialog specific: File load / save
         ;-------------------------------------------------------
         data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
-        data  key.fctn.5, id.dialog.save, edkey.action.cmdb.fastmode.toggle
         ;-------------------------------------------------------
         ; Dialog specific: Unsaved changes
         ;-------------------------------------------------------
