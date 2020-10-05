@@ -87,16 +87,24 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
+fh.fopmode.none           equ  0       ; No file operation in progress
+fh.fopmode.readfile       equ  1       ; Read file from disk to memory
+fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+
+*--------------------------------------------------------------
+* Stevie Dialog / Pane specific equates
+*--------------------------------------------------------------
+pane.botrow               equ  29      ; Bottom row on screen
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 id.dialog.load            equ  10      ; ID dialog "Load DV 80 file"
 id.dialog.save            equ  11      ; ID dialog "Save DV 80 file"
-id.dialog.unsaved         equ  12      ; ID dialog "Unsaved changes"
-id.dialog.about           equ  13      ; ID dialog "About"
-fh.fopmode.none           equ  0       ; No file operation in progress
-fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-pane.botrow               equ  29      ; Bottom row on screen
+;-----------------------------------------------------------------
+;   Dialog ID's > 100 indicate that command prompt should be 
+;   hidden and no characters added to buffer
+;-----------------------------------------------------------------
+id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
+id.dialog.about           equ  102     ; ID dialog "About"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -146,11 +154,10 @@ tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
 tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
-tv.pane.about     equ  tv.top + 28     ; About pane currently shown 
-tv.task.oneshot   equ  tv.top + 30     ; Pointer to one-shot routine
-tv.error.visible  equ  tv.top + 32     ; Error pane visible
-tv.error.msg      equ  tv.top + 34     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 194    ; End of structure
+tv.task.oneshot   equ  tv.top + 28     ; Pointer to one-shot routine
+tv.error.visible  equ  tv.top + 30     ; Error pane visible
+tv.error.msg      equ  tv.top + 32     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 192    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

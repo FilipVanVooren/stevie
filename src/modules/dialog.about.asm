@@ -5,11 +5,39 @@
 *              Stevie Editor - About dialog
 *//////////////////////////////////////////////////////////////
 
+*---------------------------------------------------------------
+* Show Stevie welcome/about dialog
+*---------------------------------------------------------------
+edkey.action.about:
+        ;-------------------------------------------------------
+        ; Setup dialog
+        ;-------------------------------------------------------
+        li    tmp0,id.dialog.about
+        mov   tmp0,@cmdb.dialog     ; Set dialog ID
+
+        bl    @dialog.about.content ; display content in modal dialog
+
+        li    tmp0,txt.head.about
+        mov   tmp0,@cmdb.panhead    ; Header for dialog
+
+        li    tmp0,txt.hint.about
+        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+
+        li    tmp0,txt.keys.about
+        mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        b     @edkey.action.cmdb.show
+                                    ; Show dialog in CMDB pane                
+
+
+
+
+
 ***************************************************************
-* dialog.about
-* Show welcome / about dialog
+* dialog.about.content
+* Show content in modal dialog
 ***************************************************************
-* bl  @dialog.about
+* bl  @dialog.about.content
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -17,7 +45,7 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-dialog.about:
+dialog.about.content:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -26,11 +54,6 @@ dialog.about:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        ;-------------------------------------------------------
-        ; Setup dialog
-        ;-------------------------------------------------------
-        li    tmp0,id.dialog.about
-        mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         mov   @wyx,@fb.yxsave       ; Save cursor
         ;-------------------------------------------------------
@@ -95,17 +118,14 @@ dialog.about:
         bl    @putat      
               byte   18,10
               data   txt.about.msg7
-
-        bl    @putat      
-              byte   20,22
-              data   txt.about.msg8
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-dialog.about.exit:
+_dialog.about.content.exit:
         mov   @fb.yxsave,@wyx
         mov   *stack+,tmp2          ; Pop tmp2                
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+

@@ -146,14 +146,14 @@ edkey.action.ins_char:
         ;-------------------------------------------------------
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
-        jeq   edkey.action.ins_char.sanity
-                                    ; Add character in overwrite mode
+        jeq   edkey.action.ins_char.append
+                                    ; Add character in append mode
         ;-------------------------------------------------------
         ; Sanity check 2 - EOL
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
-        jeq   edkey.action.ins_char.sanity
-                                    ; Add character in overwrite mode
+        jeq   edkey.action.ins_char.append
+                                    ; Add character in append mode
         ;-------------------------------------------------------
         ; Prepare for insert operation
         ;-------------------------------------------------------
@@ -168,12 +168,12 @@ edkey.action.skipsanity:
         ;-------------------------------------------------------
         ; Loop from end of line until current character
         ;-------------------------------------------------------
-edkey.action.ins_char_loop:
+edkey.action.ins_char.loop:
         movb  *tmp0,*tmp1           ; Move char to the right
         dec   tmp0
         dec   tmp1
         dec   tmp2
-        jne   edkey.action.ins_char_loop
+        jne   edkey.action.ins_char.loop
         ;-------------------------------------------------------
         ; Set specified character on current position
         ;-------------------------------------------------------
@@ -185,9 +185,9 @@ edkey.action.ins_char_loop:
         seto  @fb.dirty             ; Trigger screen refresh
         inc   @fb.row.length        ; @fb.row.length
         ;-------------------------------------------------------
-        ; Add character in overwrite mode
+        ; Add character in append mode
         ;-------------------------------------------------------
-edkey.action.ins_char.sanity
+edkey.action.ins_char.append:
         b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Exit
@@ -247,7 +247,6 @@ edkey.action.ins_line.exit:
 * Enter
 *---------------------------------------------------------------
 edkey.action.enter:
-        clr  @tv.pane.about         ; Do not longer show about pane/dialog
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------

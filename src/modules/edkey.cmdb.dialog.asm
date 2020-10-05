@@ -48,3 +48,30 @@ edkey.action.cmdb.fastmode.toggle:
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
        b     @hook.keyscan.bounce   ; Back to editor main             
 
+
+
+
+***************************************************************
+* dialog.close
+* Close dialog
+***************************************************************
+* b   @edkey.action.cmdb.close.dialog
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* none
+********|*****|*********************|**************************
+edkey.action.cmdb.close.dialog:
+        ;------------------------------------------------------
+        ; Close dialog
+        ;------------------------------------------------------        
+        clr   @cmdb.dialog          ; Reset dialog ID
+        bl    @pane.cursor.blink    ; Show cursor
+        bl    @pane.cmdb.hide       ; Hide command buffer pane
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.cmdb.close.dialog.exit:
+        b     @hook.keyscan.bounce  ; Back to editor main

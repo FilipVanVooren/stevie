@@ -36,12 +36,19 @@ pane.cmdb.draw:
         mov   @cmdb.yxtop,@wyx      ; \
         mov   @cmdb.panhead,tmp1    ; | Display pane header
         bl    @xutst0               ; / 
+
         ;------------------------------------------------------
-        ; Show warning message if in "Unsaved changes" dialog
+        ; Check dialog id
         ;------------------------------------------------------
         clr   @waux1                ; Default is show prompt
 
-        mov   @cmdb.dialog,tmp0
+        mov   @cmdb.dialog,tmp0        
+        ci    tmp0,100              ; \ Hide prompt and no keyboard 
+        jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 100
+        seto  @waux1                ; / 
+        ;------------------------------------------------------
+        ; Show warning message if in "Unsaved changes" dialog
+        ;------------------------------------------------------
         ci    tmp0,id.dialog.unsaved
         jne   pane.cmdb.draw.clear  ; Display normal prompt
 
@@ -49,7 +56,6 @@ pane.cmdb.draw:
               byte pane.botrow-3,0  ; | 
               data txt.warn.unsaved ; /
 
-        seto  @waux1                ; Hide prompt
         mov   @txt.warn.unsaved,@cmdb.cmdlen
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer

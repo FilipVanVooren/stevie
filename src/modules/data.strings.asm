@@ -27,9 +27,6 @@ txt.about.msg7     byte    56,13
                    text    ' ALPHA LOCK down   '
                    text    '  * Text changed'
 
-txt.about.msg8     #string 'Press ENTER to return to editor'
-
-
 
 ;--------------------------------------------------------------
 ; Strings for status line pane
@@ -77,6 +74,13 @@ txt.head.unsaved   #string 'Unsaved changes '
 txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 txt.warn.unsaved   #string 'You are about to lose changes to the current file!'
+
+;--------------------------------------------------------------
+; Dialog "About"
+;--------------------------------------------------------------
+txt.head.about     #string 'About Stevie '
+txt.hint.about     #string 'HINT: Press F9 or ENTER to return to editor.'
+txt.keys.about     #string 'F9=Back    ENTER=Back'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane

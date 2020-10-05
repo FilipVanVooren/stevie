@@ -87,7 +87,6 @@ edkey.key.process.action:
 edkey.key.process.addbuffer:
         mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
         jne   !                     ; No, skip frame buffer 
-        clr   @tv.pane.about        ; Do not longer show about pane/dialog
         b     @edkey.action.char    ; Add character to frame buffer        
         ;-------------------------------------------------------
         ; CMDB buffer
@@ -96,11 +95,11 @@ edkey.key.process.addbuffer:
         jne   edkey.key.process.crash
                                     ; No, crash
         ;-------------------------------------------------------
-        ; No prompt in "Unsaved changes" dialog
+        ; Don't add character if dialog has ID > 100
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.unsaved
-        c     @cmdb.dialog,tmp0
-        jeq   edkey.key.process.exit
+        mov   @cmdb.dialog,tmp0
+        ci    tmp0,100
+        jgt   edkey.key.process.exit
         ;-------------------------------------------------------
         ; Add character to CMDB
         ;-------------------------------------------------------
