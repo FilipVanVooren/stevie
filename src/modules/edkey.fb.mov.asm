@@ -173,7 +173,7 @@ edkey.action.down.exit:
 *---------------------------------------------------------------
 edkey.action.home:
         mov   @wyx,tmp0
-        andi  tmp0,>ff00
+        andi  tmp0,>ff00            ; Reset cursor X position to 0
         mov   tmp0,@wyx             ; VDP cursor column=0
         clr   @fb.column
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
@@ -183,11 +183,14 @@ edkey.action.home:
 * Cursor end of line
 *---------------------------------------------------------------
 edkey.action.end:
-        mov   @fb.row.length,tmp0
-        mov   tmp0,@fb.column
+        mov   @fb.row.length,tmp0   ; \ Get row length
+        ci    tmp0,80               ; | Adjust if necessary, normally cursor
+        jlt   !                     ; | is right of last character on line,
+        li    tmp0,79               ; / except if 80 characters on line.
+        ;-------------------------------------------------------
+        ; Set cursor X position
+        ;-------------------------------------------------------
+!       mov   tmp0,@fb.column       ; Set X position, cursor following char.        
         bl    @xsetx                ; Set VDP cursor column position
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         b     @hook.keyscan.bounce  ; Back to editor main
-
-
-

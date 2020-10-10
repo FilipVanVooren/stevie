@@ -88,7 +88,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
-        ; Keyboard actions - Frame buffer              
+        ; Keyboard actions - Framebuffer              
         ;-----------------------------------------------------------------------
         copy  "edkey.fb.mov.asm"         ; Actions for movement keys 
         copy  "edkey.fb.mov.word.asm"    ; Move to previous / next word
