@@ -27,6 +27,12 @@ edkey.action.ins_char:
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
+        ; Sanity check 3 - 80 characters maximum
+        ;-------------------------------------------------------
+        ci    tmp2,80               ; Abort if 80th character reached
+        jgt   edkey.action.ins_char.exit
+        jeq   edkey.action.ins_char.exit
+        ;-------------------------------------------------------
         ; Prepare for insert operation
         ;-------------------------------------------------------
 edkey.action.skipsanity:
@@ -51,15 +57,18 @@ edkey.action.ins_char.loop:
         ;-------------------------------------------------------
         movb  @parm1,*tmp1
         ;-------------------------------------------------------
-        ; Save variables
+        ; Save variables and exit
         ;-------------------------------------------------------
         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
         seto  @fb.dirty             ; Trigger screen refresh
         inc   @fb.row.length        ; @fb.row.length
+        jmp   edkey.action.ins_char.exit
         ;-------------------------------------------------------
         ; Add character in append mode
         ;-------------------------------------------------------
 edkey.action.ins_char.append:
+        ci    tmp2,80               ; Abort if 80th character reached
+        jeq   edkey.action.ins_char.exit
         b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Exit
