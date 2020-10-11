@@ -27,11 +27,18 @@ edkey.action.ins_char:
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
-        ; Sanity check 3 - 80 characters maximum
+        ; Sanity check 3 - Overwrite if at column 80 
         ;-------------------------------------------------------
-        ci    tmp2,colrow            ; Abort if 80th character reached
-        jgt   edkey.action.ins_char.exit
-        jeq   edkey.action.ins_char.exit
+        mov   @fb.column,tmp1
+        ci    tmp1,colrow - 1       ; Overwrite if last column in row
+        jlt   !
+        b     @edkey.action.char.overwrite
+        ;-------------------------------------------------------
+        ; Sanity check 4 - 80 characters maximum
+        ;-------------------------------------------------------
+!       mov   @fb.row.length,tmp1
+        ci    tmp1,colrow
+        jeq   edkey.action.ins_char.exit        
         ;-------------------------------------------------------
         ; Prepare for insert operation
         ;-------------------------------------------------------
@@ -61,14 +68,14 @@ edkey.action.ins_char.loop:
         ;-------------------------------------------------------
         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
         seto  @fb.dirty             ; Trigger screen refresh
+        inc   @fb.column
+        inc   @wyx
         inc   @fb.row.length        ; @fb.row.length
         jmp   edkey.action.ins_char.exit
         ;-------------------------------------------------------
         ; Add character in append mode
         ;-------------------------------------------------------
 edkey.action.ins_char.append:
-        ci    tmp2,80               ; Abort if 80th character reached
-        jeq   edkey.action.ins_char.exit
         b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Exit

@@ -137,9 +137,9 @@ edkey.action.char.overwrite:
         ;-------------------------------------------------------
         ; Last column on screen reached?
         ;-------------------------------------------------------
-        mov   @fb.column,tmp1       ; \
-        ci    tmp1,colrow - 2       ; | Last column on screen?
-        jgt   !                     ; / Yes, only overwrite do not set column.
+        mov   @fb.column,tmp1       ; \ Columns are counted from 0 to 79.
+        ci    tmp1,colrow - 2       ; | Last column on screen (X > 78)?
+        jgt   !                     ; / Yes, only overwrite don't increase.
 
         inc   @fb.column            ; Column++ in screen buffer
         inc   @wyx                  ; Column++ VDP cursor
