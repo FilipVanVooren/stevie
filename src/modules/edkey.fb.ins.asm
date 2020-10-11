@@ -29,7 +29,7 @@ edkey.action.ins_char:
         ;-------------------------------------------------------
         ; Sanity check 3 - 80 characters maximum
         ;-------------------------------------------------------
-        ci    tmp2,80               ; Abort if 80th character reached
+        ci    tmp2,colrow            ; Abort if 80th character reached
         jgt   edkey.action.ins_char.exit
         jeq   edkey.action.ins_char.exit
         ;-------------------------------------------------------

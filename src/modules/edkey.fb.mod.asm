@@ -96,7 +96,7 @@ edkey.action.ins_onoff.exit:
 
 
 *---------------------------------------------------------------
-* Process character (frame buffer)
+* Add character (frame buffer)
 *---------------------------------------------------------------
 edkey.action.char:
         ;-------------------------------------------------------
@@ -134,13 +134,19 @@ edkey.action.char.overwrite:
         movb  @parm1,*tmp0          ; Store character in editor buffer
         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
         seto  @fb.dirty             ; Trigger screen refresh
+        ;-------------------------------------------------------
+        ; Last column on screen reached?
+        ;-------------------------------------------------------
+        mov   @fb.column,tmp1       ; \
+        ci    tmp1,colrow - 2       ; | Last column on screen?
+        jgt   !                     ; / Yes, only overwrite do not set column.
 
         inc   @fb.column            ; Column++ in screen buffer
         inc   @wyx                  ; Column++ VDP cursor
         ;-------------------------------------------------------
         ; Update line length in frame buffer
         ;-------------------------------------------------------
-        c     @fb.column,@fb.row.length
+!       c     @fb.column,@fb.row.length
         jlt   edkey.action.char.exit
                                     ; column < length line ? Skip processing
 
