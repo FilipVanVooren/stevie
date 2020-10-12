@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.1521110
+**** **** ****     > stevie_b0.asm.2292963
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 201010-1521110
+0009               * File: stevie_b0.asm               ; Version 201011-2292963
 0010               
 0011                       copy  "equates.equ"         ; Equates Stevie configuration
 **** **** ****     > equates.equ
@@ -271,43 +271,42 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257      A454     fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 0258      A456     fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
 0259      A458     fh.kilobytes.prev equ  fh.struct + 88  ; Kilobytes processed (previous)
-0260               
-0261      A45A     fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
-0262      A4AA     fh.free           equ  fh.struct +170  ; End of structure
-0263      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
-0264      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
-0265               *--------------------------------------------------------------
-0266               * Index structure                     @>a500-a5ff   (256 bytes)
-0267               *--------------------------------------------------------------
-0268      A500     idx.struct        equ  >a500           ; stevie index structure
-0269      A500     idx.sams.page     equ  idx.struct      ; Current SAMS page
-0270      A502     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
-0271      A504     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
-0272               *--------------------------------------------------------------
-0273               * Frame buffer                        @>a600-afff  (2560 bytes)
-0274               *--------------------------------------------------------------
-0275      A600     fb.top            equ  >a600           ; Frame buffer (80x30)
-0276      0960     fb.size           equ  80*30           ; Frame buffer size
-0277               *--------------------------------------------------------------
-0278               * Index                               @>b000-bfff  (4096 bytes)
-0279               *--------------------------------------------------------------
-0280      B000     idx.top           equ  >b000           ; Top of index
-0281      1000     idx.size          equ  4096            ; Index size
-0282               *--------------------------------------------------------------
-0283               * Editor buffer                       @>c000-cfff  (4096 bytes)
-0284               *--------------------------------------------------------------
-0285      C000     edb.top           equ  >c000           ; Editor buffer high memory
-0286      1000     edb.size          equ  4096            ; Editor buffer size
-0287               *--------------------------------------------------------------
-0288               * Command history buffer              @>d000-dfff  (4096 bytes)
-0289               *--------------------------------------------------------------
-0290      D000     cmdb.top          equ  >d000           ; Top of command history buffer
-0291      1000     cmdb.size         equ  4096            ; Command buffer size
-0292               *--------------------------------------------------------------
-0293               * Heap                                @>e000-efff  (4096 bytes)
-0294               *--------------------------------------------------------------
-0295      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.1521110
+0260      A45A     fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
+0261      A4AA     fh.free           equ  fh.struct +170  ; End of structure
+0262      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
+0263      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
+0264               *--------------------------------------------------------------
+0265               * Index structure                     @>a500-a5ff   (256 bytes)
+0266               *--------------------------------------------------------------
+0267      A500     idx.struct        equ  >a500           ; stevie index structure
+0268      A500     idx.sams.page     equ  idx.struct      ; Current SAMS page
+0269      A502     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
+0270      A504     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
+0271               *--------------------------------------------------------------
+0272               * Frame buffer                        @>a600-afff  (2560 bytes)
+0273               *--------------------------------------------------------------
+0274      A600     fb.top            equ  >a600           ; Frame buffer (80x30)
+0275      0960     fb.size           equ  80*30           ; Frame buffer size
+0276               *--------------------------------------------------------------
+0277               * Index                               @>b000-bfff  (4096 bytes)
+0278               *--------------------------------------------------------------
+0279      B000     idx.top           equ  >b000           ; Top of index
+0280      1000     idx.size          equ  4096            ; Index size
+0281               *--------------------------------------------------------------
+0282               * Editor buffer                       @>c000-cfff  (4096 bytes)
+0283               *--------------------------------------------------------------
+0284      C000     edb.top           equ  >c000           ; Editor buffer high memory
+0285      1000     edb.size          equ  4096            ; Editor buffer size
+0286               *--------------------------------------------------------------
+0287               * Command history buffer              @>d000-dfff  (4096 bytes)
+0288               *--------------------------------------------------------------
+0289      D000     cmdb.top          equ  >d000           ; Top of command history buffer
+0290      1000     cmdb.size         equ  4096            ; Command buffer size
+0291               *--------------------------------------------------------------
+0292               * Heap                                @>e000-efff  (4096 bytes)
+0293               *--------------------------------------------------------------
+0294      E000     heap.top          equ  >e000           ; Top of heap
+**** **** ****     > stevie_b0.asm.2292963
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -1160,7 +1159,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6254 1842             byte  24
-0260 6255 ....             text  'Build-ID  201010-1521110'
+0260 6255 ....             text  'Build-ID  201011-2292963'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5043,7 +5042,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F38 0040 
 0367 6F3A 0460  28         b     @main                 ; Give control to main program
      6F3C 3000 
-**** **** ****     > stevie_b0.asm.1521110
+**** **** ****     > stevie_b0.asm.2292963
 0115                                                   ; Spectra 2
 0116                       ;------------------------------------------------------
 0117                       ; End of File marker
@@ -5268,7 +5267,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119 7152 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7154 F20F 
 0120               
-**** **** ****     > stevie_b0.asm.1521110
+**** **** ****     > stevie_b0.asm.2292963
 0145                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5303,7 +5302,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 71C2 1542             byte  21
-0033 71C3 ....             text  'Build: 201010-1521110'
+0033 71C3 ....             text  'Build: 201011-2292963'
 0034                       even
 0035               
 0036               
@@ -5561,7 +5560,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0288                       even
 0289               
 0290               
-**** **** ****     > stevie_b0.asm.1521110
+**** **** ****     > stevie_b0.asm.2292963
 0146                       copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6070,7 +6069,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0504 7915 ....             text  'enter'
 0505                       even
 0506               
-**** **** ****     > stevie_b0.asm.1521110
+**** **** ****     > stevie_b0.asm.2292963
 0147               
 0148                       ;------------------------------------------------------
 0149                       ; End of File marker

@@ -101,8 +101,12 @@ edb.line.pack.scan:
         srl   tmp2,8                ; Right justify
         jeq   edb.line.pack.prepare ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
+        ;------------------------------------------------------
+        ; Not more than 80 characters
+        ;------------------------------------------------------
+        ci    tmp0,colrow
+        jeq   edb.line.pack.prepare ; Stop scan if 80 characters processed
         jmp   edb.line.pack.scan    ; Next character
-
         ;------------------------------------------------------
         ; Prepare for storing line
         ;------------------------------------------------------

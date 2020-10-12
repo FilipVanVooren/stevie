@@ -11,6 +11,7 @@ edkey.action.del_char:
         ;-------------------------------------------------------
         ; Sanity check 1 - Empty line
         ;-------------------------------------------------------
+edkey.action.del_char.sanity1:        
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.del_char.exit
@@ -18,22 +19,39 @@ edkey.action.del_char:
         ;-------------------------------------------------------
         ; Sanity check 2 - Already at EOL
         ;-------------------------------------------------------
-        c     @fb.column,@fb.row.length
-        jeq   edkey.action.del_char.exit
+edkey.action.del_char.sanity2:        
+        mov   tmp2,tmp3             ; \
+        dec   tmp3                  ; / tmp3 = line length - 1
+        c     @fb.column,tmp3
+        jlt   edkey.action.del_char.sanity3
+        jmp   edkey.action.del_char.exit
                                     ; Exit if at EOL
+        ;-------------------------------------------------------
+        ; Sanity check 3 - Abort if row length > 80
+        ;-------------------------------------------------------
+edkey.action.del_char.sanity3:        
+        ci    tmp2,colrow
+        jle   edkey.action.del_char.prep
+                                    ; Continue if row length <= 80
+        ;-----------------------------------------------------------------------
+        ; CPU crash
+        ;-----------------------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system   
         ;-------------------------------------------------------
         ; Prepare for delete operation
         ;-------------------------------------------------------
+edkey.action.del_char.prep:        
         mov   @fb.current,tmp0      ; Get pointer
         mov   tmp0,tmp1             ; \ tmp0 = Current character
         inc   tmp1                  ; / tmp1 = Next character
         ;-------------------------------------------------------
         ; Loop until end of line
         ;-------------------------------------------------------
-edkey.action.del_char_loop:
+edkey.action.del_char.loop:
         movb  *tmp1+,*tmp0+         ; Overwrite current char with next char
         dec   tmp2
-        jne   edkey.action.del_char_loop
+        jne   edkey.action.del_char.loop
         ;-------------------------------------------------------
         ; Special treatment if line 80 characters long
         ;-------------------------------------------------------

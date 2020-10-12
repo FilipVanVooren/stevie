@@ -29,7 +29,7 @@ edkey.action.ins_char:
         ;-------------------------------------------------------
         ; Sanity check 3 - Overwrite if at column 80 
         ;-------------------------------------------------------
-        mov   @fb.column,tmp1
+        mov   @fb.column,tmp1    
         ci    tmp1,colrow - 1       ; Overwrite if last column in row
         jlt   !
         b     @edkey.action.char.overwrite
@@ -38,18 +38,19 @@ edkey.action.ins_char:
         ;-------------------------------------------------------
 !       mov   @fb.row.length,tmp1
         ci    tmp1,colrow
-        jeq   edkey.action.ins_char.exit        
+        jlt   edkey.action.ins_char.prep
+        jmp   edkey.action.ins_char.exit        
         ;-------------------------------------------------------
         ; Prepare for insert operation
         ;-------------------------------------------------------
-edkey.action.skipsanity:
-        mov   tmp2,tmp3             ; tmp3=line length
+edkey.action.ins_char.prep:
+        mov   tmp2,tmp3             ; tmp3=line length        
         s     @fb.column,tmp3
+        dec   tmp3                  ; Remove base 1 offset 
         a     tmp3,tmp0             ; tmp0=Pointer to last char in line
         mov   tmp0,tmp1
         inc   tmp1                  ; tmp1=tmp0+1
         s     @fb.column,tmp2       ; tmp2=amount of characters to move
-        inc   tmp2
         ;-------------------------------------------------------
         ; Loop from end of line until current character
         ;-------------------------------------------------------
@@ -60,9 +61,9 @@ edkey.action.ins_char.loop:
         dec   tmp2
         jne   edkey.action.ins_char.loop
         ;-------------------------------------------------------
-        ; Set specified character on current position
+        ; Insert specified character at current position
         ;-------------------------------------------------------
-        movb  @parm1,*tmp1
+        movb  @parm1,*tmp1          ; MSB has character to insert
         ;-------------------------------------------------------
         ; Save variables and exit
         ;-------------------------------------------------------
