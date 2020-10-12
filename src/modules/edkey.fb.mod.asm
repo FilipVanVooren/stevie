@@ -125,7 +125,7 @@ edkey.action.char:
 edkey.action.char.insert:
         b     @edkey.action.ins_char
         ;-------------------------------------------------------
-        ; Overwrite mode
+        ; Overwrite mode - Write character
         ;-------------------------------------------------------
 edkey.action.char.overwrite:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
@@ -138,19 +138,28 @@ edkey.action.char.overwrite:
         ; Last column on screen reached?
         ;-------------------------------------------------------
         mov   @fb.column,tmp1       ; \ Columns are counted from 0 to 79.
-        ci    tmp1,colrow - 2       ; | Last column on screen (X > 78)?
-        jgt   !                     ; / Yes, only overwrite don't increase.
+        ci    tmp1,colrow - 1       ; / Last column on screen?
+        jlt   edkey.action.char.overwrite.incx
+                                    ; No, increase X position
 
+        li    tmp1,colrow           ; \
+        mov   tmp1,@fb.row.length   ; / Yes, Set row length and exit.
+        jmp   edkey.action.char.exit 
+        ;-------------------------------------------------------
+        ; Increase column
+        ;-------------------------------------------------------
+edkey.action.char.overwrite.incx:
         inc   @fb.column            ; Column++ in screen buffer
         inc   @wyx                  ; Column++ VDP cursor
         ;-------------------------------------------------------
         ; Update line length in frame buffer
         ;-------------------------------------------------------
-!       c     @fb.column,@fb.row.length
+        c     @fb.column,@fb.row.length
+                                    ; column < line length ?
         jlt   edkey.action.char.exit
-                                    ; column < length line ? Skip processing
-
+                                    ; Yes, don't update row length
         mov   @fb.column,@fb.row.length
+                                    ; Set row length
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
