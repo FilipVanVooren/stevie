@@ -39,14 +39,24 @@ edkey.action.del_char.sanity3:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system   
         ;-------------------------------------------------------
-        ; Prepare for delete operation
+        ; Calculate number of characters to move
         ;-------------------------------------------------------
-edkey.action.del_char.prep:        
+edkey.action.del_char.prep:
+        mov   tmp2,tmp3             ; tmp3=line length        
+        s     @fb.column,tmp3
+        dec   tmp3                  ; Remove base 1 offset 
+        a     tmp3,tmp0             ; tmp0=Pointer to last char in line
+        mov   tmp0,tmp1
+        inc   tmp1                  ; tmp1=tmp0+1
+        s     @fb.column,tmp2       ; tmp2=amount of characters to move
+        ;-------------------------------------------------------
+        ; Setup pointers
+        ;-------------------------------------------------------
         mov   @fb.current,tmp0      ; Get pointer
         mov   tmp0,tmp1             ; \ tmp0 = Current character
         inc   tmp1                  ; / tmp1 = Next character
         ;-------------------------------------------------------
-        ; Loop until end of line
+        ; Loop from current character until end of line
         ;-------------------------------------------------------
 edkey.action.del_char.loop:
         movb  *tmp1+,*tmp0+         ; Overwrite current char with next char

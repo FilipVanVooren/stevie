@@ -41,7 +41,7 @@ edkey.action.ins_char:
         jlt   edkey.action.ins_char.prep
         jmp   edkey.action.ins_char.exit        
         ;-------------------------------------------------------
-        ; Prepare for insert operation
+        ; Calculate number of characters to move
         ;-------------------------------------------------------
 edkey.action.ins_char.prep:
         mov   tmp2,tmp3             ; tmp3=line length        
