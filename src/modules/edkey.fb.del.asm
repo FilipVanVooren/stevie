@@ -12,10 +12,11 @@ edkey.action.del_char:
         ; Sanity check 1 - Empty line
         ;-------------------------------------------------------
 edkey.action.del_char.sanity1:        
-        mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.del_char.exit
                                     ; Exit if empty line
+
+        mov   @fb.current,tmp0      ; Get pointer                                    
         ;-------------------------------------------------------
         ; Sanity check 2 - Already at EOL
         ;-------------------------------------------------------
@@ -24,8 +25,17 @@ edkey.action.del_char.sanity2:
         dec   tmp3                  ; / tmp3 = line length - 1
         c     @fb.column,tmp3
         jlt   edkey.action.del_char.sanity3
-        jmp   edkey.action.del_char.exit
-                                    ; Exit if at EOL
+
+        ;------------------------------------------------------
+        ; At EOL - clear current character
+        ;------------------------------------------------------        
+        clr   tmp1                  ; \ Overwrite with character >00
+        movb  tmp1,*tmp0            ; /
+        mov   @fb.column,@fb.row.length
+                                    ; Row length - 1 
+        seto  @fb.row.dirty         ; Current row needs to be crunched/packed
+        seto  @fb.dirty             ; Trigger screen refresh
+        jmp  edkey.action.del_char.exit
         ;-------------------------------------------------------
         ; Sanity check 3 - Abort if row length > 80
         ;-------------------------------------------------------
@@ -67,14 +77,15 @@ edkey.action.del_char.loop:
         ;-------------------------------------------------------
         li    tmp2,colrow
         c     @fb.row.length,tmp2
-        jne   !
+        jne   edkey.action.del_char.save
         dec   tmp0                  ; One time adjustment
         clr   tmp1
         movb  tmp1,*tmp0            ; Write >00 character
         ;-------------------------------------------------------
         ; Save variables
         ;-------------------------------------------------------
-!       seto  @fb.row.dirty         ; Current row needs to be crunched/packed
+edkey.action.del_char.save:        
+        seto  @fb.row.dirty         ; Current row needs to be crunched/packed
         seto  @fb.dirty             ; Trigger screen refresh
         dec   @fb.row.length        ; @fb.row.length--
         ;-------------------------------------------------------
