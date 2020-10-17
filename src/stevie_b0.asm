@@ -1,5 +1,5 @@
 ***************************************************************
-*                          Stevie Editor
+*                          Stevie
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -8,14 +8,13 @@
 ***************************************************************
 * File: stevie_b0.asm               ; Version %%build_date%%
 
-        copy  "equates.equ"         ; Equates Stevie configuration
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************
 sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff 
                                     ; and grows downwards
-
 
 ***************************************************************
 * BANK 0 - Setup environment for Stevie
@@ -32,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .else
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .endif         
 
 ***************************************************************
@@ -110,7 +109,7 @@ reloc.sp2:
         ; End of File marker
         ;------------------------------------------------------
         data  >dead,>beef,>dead,>beef
-        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
+        .print "***** PC relocated SP2 library @ >2000- ", $, "(dec)"
 
         .ifgt $, >2f00
               .error '***** Aborted. SP2 library too large!'
@@ -136,6 +135,8 @@ main:
         ;------------------------------------------------------
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
+        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
+
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------

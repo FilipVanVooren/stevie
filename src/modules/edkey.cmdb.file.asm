@@ -62,11 +62,3 @@ edkey.action.cmdb.load.savefile:
         ;-------------------------------------------------------
 edkey.action.cmdb.loadsave.exit:
         b    @edkey.action.top      ; Goto 1st line in editor buffer 
-
-
-
-
-edkey.action.cmdb.fastmode.toggle:
-       bl    @fm.fastmode           ; Toggle fast mode.
-       seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @hook.keyscan.bounce   ; Back to editor main        

@@ -37,7 +37,7 @@ romsat:
 
 cursors:
         data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
-        data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 2 - Insert mode
+        data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
         data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
 
 patterns:

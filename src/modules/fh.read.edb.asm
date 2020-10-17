@@ -18,7 +18,6 @@
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
-* parm6 = 
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -268,7 +267,7 @@ fh.file.read.edb.vdp2cpu:
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy                                        
+                                    ; / i  tmp2 = Bytes to copy                                                                            
         ;------------------------------------------------------
         ; 3c: Align pointer for next line
         ;------------------------------------------------------ 

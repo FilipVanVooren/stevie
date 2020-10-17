@@ -36,5 +36,7 @@ dialog.unsaved:
         li    tmp0,txt.keys.unsaved
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        bl    @pane.cursor.hide     ; Hide cursor 
+
         b     @edkey.action.cmdb.show
                                     ; Show dialog in CMDB pane        

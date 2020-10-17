@@ -92,9 +92,7 @@ fm.loadfile:
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.
-
-        clr   @tv.pane.welcome      ; Do not longer show welcome pane
-
+                                    
         li    tmp0,txt.filetype.DV80                                     
         mov   tmp0,@edb.filetype.ptr
                                     ; Set filetype display string

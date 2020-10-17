@@ -31,12 +31,17 @@ pane.errline.show:
         mov   tmp1,*stack           ; Push tmp1
 
         li    tmp1,>00f6            ; White on dark red
+        mov   tmp1,@parm1
+
         bl    @pane.action.colorscheme.errline
+                                    ; \ Set colors for error line
+                                    ; / i  parm1 = FG/BG color
+                                    
         ;------------------------------------------------------
         ; Show error line content
         ;------------------------------------------------------
         bl    @putat                ; Display error message
-              byte 28,0
+              byte pane.botrow-1,0
               data tv.error.msg        
 
         mov   @fb.scrrows.max,tmp0
@@ -75,15 +80,24 @@ pane.errline.show.exit:
 pane.errline.hide:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Hide command buffer pane
         ;------------------------------------------------------
 !       bl    @errline.init         ; Clear error line
-        mov   @tv.color,tmp1        ; Get foreground/background color
+
+        mov   @tv.color,tmp0        ; Get colors
+        srl   tmp0,8                ; Right aligns
+        mov   tmp0,@parm1           ; set foreground/background color        
+
         bl    @pane.action.colorscheme.errline
+                                    ; \ Set colors for error line
+                                    ; / i  parm1 LSB = FG/BG color
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 pane.errline.hide.exit:        
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

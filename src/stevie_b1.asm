@@ -1,5 +1,5 @@
 ***************************************************************
-*                          Stevie Editor
+*                          Stevie
 *
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 
-        copy  "equates.equ"         ; Equates Stevie configuration
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
 * Spectra2 core configuration
@@ -31,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .else
-              #string 'STEVIE'
+              #string 'STEVIE V0.1B'
         .endif
 
 ***************************************************************
@@ -67,6 +67,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at >2fff
         ;------------------------------------------------------
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
+        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping        
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------        
@@ -82,29 +83,51 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
-
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.asm"           ; Keyboard actions
-        copy  "edkey.fb.mov.asm"    ; fb pane   - Actions for movement keys 
-        copy  "edkey.fb.mod.asm"    ; fb pane   - Actions for modifier keys
-        copy  "edkey.fb.misc.asm"   ; fb pane   - Miscelanneous actions
-        copy  "edkey.fb.file.asm"   ; fb pane   - File related actions
-        copy  "edkey.cmdb.mov.asm"  ; cmdb pane - Actions for movement keys 
-        copy  "edkey.cmdb.mod.asm"  ; cmdb pane - Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm" ; cmdb pane - Miscelanneous actions
-        copy  "edkey.cmdb.file.asm" ; cmdb pane - File related actions
+        copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
-        ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
+        ; Keyboard actions - Framebuffer              
+        ;-----------------------------------------------------------------------
+        copy  "edkey.fb.mov.asm"         ; Actions for movement keys 
+        copy  "edkey.fb.mov.word.asm"    ; Move to previous / next word
+        copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
+        copy  "edkey.fb.mov.topbot.asm"  ; Move to top / bottom of buffer
+        copy  "edkey.fb.del.asm"         ; Delete characters or lines
+        copy  "edkey.fb.ins.asm"         ; Insert characters or lines
+        copy  "edkey.fb.mod.asm"         ; Actions for modifier keys        
+        copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
+        copy  "edkey.fb.file.asm"        ; File related actions
+        ;-----------------------------------------------------------------------
+        ; Keyboard actions - Command Buffer    
+        ;-----------------------------------------------------------------------
+        copy  "edkey.cmdb.mov.asm"    ; Actions for movement keys 
+        copy  "edkey.cmdb.mod.asm"    ; Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm"   ; Miscelanneous actions
+        copy  "edkey.cmdb.file.asm"   ; File related actions
+        copy  "edkey.cmdb.dialog.asm" ; Dialog specific actions
+        ;-----------------------------------------------------------------------
+        ; Logic for Memory, Framebuffer, Editor buffer, Error line
         ;-----------------------------------------------------------------------
         copy  "tv.asm"              ; Main editor configuration        
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
+        ;-----------------------------------------------------------------------
+        ; Logic for Index management
+        ;-----------------------------------------------------------------------
         copy  "idx.asm"             ; Index management
+        copy  "idx.update.asm"      ; Index management - Update entry
+        copy  "idx.pointer.asm"     ; Index management - Get pointer to line
         copy  "idx.delete.asm"      ; Index management - delete slot
         copy  "idx.insert.asm"      ; Index management - insert slot
-        copy  "edb.asm"             ; Editor Buffer
+        ;-----------------------------------------------------------------------
+        ; Logic for Editor Buffer
+        ;-----------------------------------------------------------------------
+        copy  "edb.asm"             ; Editor Buffer initialisation
+        copy  "edb.line.pack.asm"   ; Pack line into editor buffer
+        copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
+        copy  "edb.line.getlen.asm" ; Get line length
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
@@ -143,14 +166,15 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   
-        copy  "dialog.welcome.asm"  ; Dialog "Welcome / About"
+        copy  "dialog.about.asm"    ; Dialog "About"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
+        copy  "data.keymap.actions.asm"
+                                    ; Data segment - Keyboard actions
         .ifgt $, >7fff
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else

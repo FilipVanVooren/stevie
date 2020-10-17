@@ -7,17 +7,41 @@
 
 ***************************************************************
 * Task - VDP draw editor panes (frame buffer, CMDB, status line)
-***************************************************************
+********|*****|*********************|**************************
 task.vdp.panes:
+        mov   @wyx,@fb.yxsave       ; Backup cursor
+        ;------------------------------------------------------
+        ; ALPHA-Lock key down?
+        ;------------------------------------------------------
+task.vdp.panes.alpha_lock:        
+        coc   @wbit10,config
+        jeq   task.vdp.panes.alpha_lock.down
+        ;------------------------------------------------------
+        ; AlPHA-Lock is up
+        ;------------------------------------------------------
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.up 
+        jmp   task.vdp.panes.cmdb.check
+        ;------------------------------------------------------
+        ; AlPHA-Lock is down
+        ;------------------------------------------------------
+task.vdp.panes.alpha_lock.down:
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.down       
         ;------------------------------------------------------ 
         ; Command buffer visible ?
         ;------------------------------------------------------
+task.vdp.panes.cmdb.check
+        mov   @fb.yxsave,@wyx       ; Restore cursor
         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
         jeq   !                     ; No, skip CMDB pane
+        jmp   task.vdp.panes.cmdb.draw
         ;-------------------------------------------------------
         ; Draw command buffer pane if dirty
         ;-------------------------------------------------------
-task.vdp.panes.cmdb.draw:        
+task.vdp.panes.cmdb.draw:
         mov   @cmdb.dirty,tmp0      ; Command buffer dirty?
         jeq   task.vdp.panes.exit   ; No, skip update
 
@@ -105,14 +129,6 @@ task.vdp.panes.clear_screen:
                                     ; / i  tmp2 = Number of bytes to write
 
         mov   @fb.yxsave,@wyx       ; Restore cursor postion                                    
-        ;-------------------------------------------------------
-        ; Show welcome/about dialog
-        ;-------------------------------------------------------
-        mov   @tv.pane.welcome,tmp0 ; Show welcome pane?
-        jeq   task.vdp.panes.botline.draw
-                                    ; No, so skip it
-             
-        bl    @dialog.welcome       ; Show welcome/about dialog
         ;-------------------------------------------------------
         ; Draw status line
         ;-------------------------------------------------------

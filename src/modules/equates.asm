@@ -87,14 +87,23 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
-pane.focus.fb             equ  0       ; Editor pane has focus
-pane.focus.cmdb           equ  1       ; Command buffer pane has focus
-id.dialog.load            equ  1       ; ID for dialog "Load DV 80 file"
-id.dialog.save            equ  2       ; ID for dialog "Save DV 80 file"
-id.dialog.unsaved         equ  3       ; ID for dialog "Unsaved changes"
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+*--------------------------------------------------------------
+* Stevie Dialog / Pane specific equates
+*--------------------------------------------------------------
+pane.botrow               equ  29      ; Bottom row on screen
+pane.focus.fb             equ  0       ; Editor pane has focus
+pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+id.dialog.load            equ  10      ; ID dialog "Load DV 80 file"
+id.dialog.save            equ  11      ; ID dialog "Save DV 80 file"
+;-----------------------------------------------------------------
+;   Dialog ID's > 100 indicate that command prompt should be 
+;   hidden and no characters added to buffer
+;-----------------------------------------------------------------
+id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
+id.dialog.about           equ  102     ; ID dialog "About"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -121,9 +130,11 @@ outparm5          equ  >2f38           ; Function output parameter 5
 outparm6          equ  >2f3a           ; Function output parameter 6
 outparm7          equ  >2f3c           ; Function output parameter 7
 outparm8          equ  >2f3e           ; Function output parameter 8
-timers            equ  >2f40           ; Timer table
-ramsat            equ  >2f50           ; Sprite Attribute Table in RAM
-rambuf            equ  >2f60           ; RAM workbuffer 1
+keycode1          equ  >2f40           ; Current key scanned
+keycode2          equ  >2f42           ; Previous key scanned
+timers            equ  >2f44           ; Timer table
+ramsat            equ  >2f54           ; Sprite Attribute Table in RAM
+rambuf            equ  >2f64           ; RAM workbuffer 1
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
@@ -142,11 +153,10 @@ tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; Foreground/Background color in editor
 tv.pane.focus     equ  tv.top + 26     ; Identify pane that has focus
-tv.pane.welcome   equ  tv.top + 28     ; Welcome pane currently shown 
-tv.task.oneshot   equ  tv.top + 30     ; Pointer to one-shot routine
-tv.error.visible  equ  tv.top + 32     ; Error pane visible
-tv.error.msg      equ  tv.top + 34     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 194    ; End of structure
+tv.task.oneshot   equ  tv.top + 28     ; Pointer to one-shot routine
+tv.error.visible  equ  tv.top + 30     ; Error pane visible
+tv.error.msg      equ  tv.top + 32     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 192    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
@@ -160,7 +170,7 @@ fb.row            equ  fb.struct + 6   ; Current row in frame buffer
 fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
 fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
 fb.column         equ  fb.struct + 12  ; Current column in frame buffer
-fb.colsline       equ  fb.struct + 14  ; Columns per row in frame buffer
+fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.free1          equ  fb.struct + 16  ; **** free ****
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
 fb.yxsave         equ  fb.struct + 20  ; Copy of WYX
@@ -174,7 +184,7 @@ fb.free           equ  fb.struct + 28  ; End of structure
 edb.struct        equ  >a200           ; Begin structure
 edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
 edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer
+edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
 edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
@@ -206,9 +216,10 @@ cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
 cmdb.panhead      equ  cmdb.struct + 28; Pointer to string with pane header
 cmdb.panhint      equ  cmdb.struct + 30; Pointer to string with pane hint
 cmdb.pankeys      equ  cmdb.struct + 32; Pointer to string with pane keys
-cmdb.cmdlen       equ  cmdb.struct + 34; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 35; Current command (80 bytes max.)
-cmdb.free         equ  cmdb.struct +115; End of structure
+cmdb.action.ptr   equ  cmdb.struct + 34; Pointer to function to execute
+cmdb.cmdlen       equ  cmdb.struct + 36; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 37; Current command (80 bytes max.)
+cmdb.free         equ  cmdb.struct +117; End of structure
 *--------------------------------------------------------------
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
@@ -245,7 +256,6 @@ fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
 fh.kilobytes.prev equ  fh.struct + 88  ; Kilobytes processed (previous)
-
 fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
 fh.free           equ  fh.struct +170  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer

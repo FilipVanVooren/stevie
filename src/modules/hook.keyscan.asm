@@ -12,24 +12,27 @@ hook.keyscan:
         coc   @wbit11,config        ; ANYKEY pressed ?
         jne   hook.keyscan.clear_kbbuffer
                                     ; No, clear buffer and exit
+        mov   @waux1,@keycode1      ; Save current key pressed                                    
 *---------------------------------------------------------------
 * Identical key pressed ?
 *---------------------------------------------------------------
         szc   @wbit11,config        ; Reset ANYKEY
-        c     @waux1,@waux2         ; Still pressing previous key?
-        jeq   hook.keyscan.bounce
+        c     @keycode1,@keycode2   ; Still pressing previous key?
+        jeq   hook.keyscan.bounce   ; Do keyboard bounce delay and return
 *--------------------------------------------------------------
 * New key pressed
 *--------------------------------------------------------------
-hook.keyscan.newkey:
-        mov   @waux1,@waux2         ; Save as previous key
+        li    tmp0,2000             ; \
+!       dec   tmp0                  ; | Inline keyboard bounce delay
+        jne   -!                    ; /
+        mov   @keycode1,@keycode2   ; Save as previous key
         b     @edkey.key.process    ; Process key
 *--------------------------------------------------------------
 * Clear keyboard buffer if no key pressed
 *--------------------------------------------------------------
 hook.keyscan.clear_kbbuffer:
-        clr   @waux1
-        clr   @waux2
+        clr   @keycode1
+        clr   @keycode2
 *--------------------------------------------------------------
 * Delay to avoid key bouncing
 *-------------------------------------------------------------- 
@@ -41,7 +44,5 @@ hook.keyscan.bounce:
 hook.keyscan.bounce.loop:
         dec   tmp0
         jne   hook.keyscan.bounce.loop
-*--------------------------------------------------------------
-* Exit
-*--------------------------------------------------------------
         b     @hookok               ; Return
+

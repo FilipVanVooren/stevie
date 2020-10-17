@@ -27,14 +27,21 @@ _edkey.action.fb.fname.doit:
         ; Sanity check        
         ;------------------------------------------------------
         mov   @parm1,tmp0
-        jeq   !                      ; Exit early if "New file"
+        jeq   _edkey.action.fb.fname.doit.exit
+                                    ; Exit early if "New file"
+        ;------------------------------------------------------
+        ; Show dialog "Unsaved changed" if editor buffer dirty
+        ;------------------------------------------------------
+        mov   @edb.dirty,tmp0
+        jeq   !
+        b     @dialog.unsaved       ; Show dialog and exit
         ;------------------------------------------------------
         ; Update suffix and load file
         ;------------------------------------------------------
-        bl    @fm.browse.fname.suffix.incdec
-                                     ; Filename suffix adjust
-                                     ; i  \ parm1 = Pointer to filename
-                                     ; i  / parm2 = >FFFF or >0000
+!       bl    @fm.browse.fname.suffix.incdec
+                                    ; Filename suffix adjust
+                                    ; i  \ parm1 = Pointer to filename
+                                    ; i  / parm2 = >FFFF or >0000
 
         li    tmp0,heap.top         ; 1st line in heap
         bl    @fm.loadfile          ; Load DV80 file
@@ -43,4 +50,5 @@ _edkey.action.fb.fname.doit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-!       b    @edkey.action.top      ; Goto 1st line in editor buffer 
+_edkey.action.fb.fname.doit.exit:        
+        b    @edkey.action.top      ; Goto 1st line in editor buffer 

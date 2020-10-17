@@ -73,7 +73,7 @@ xmem.edb.sams.mappage:
         ; Sanity check
         ;------------------------------------------------------
         c     tmp0,@edb.lines       ; Non-existing line?
-        jlt   mem.edb.sams.mappage.lookup
+        jle   mem.edb.sams.mappage.lookup
                                     ; All checks passed, continue
                                     ;-------------------------- 
                                     ; Sanity check failed

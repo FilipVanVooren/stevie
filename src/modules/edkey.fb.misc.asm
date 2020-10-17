@@ -6,19 +6,18 @@
 * Quit stevie
 *---------------------------------------------------------------
 edkey.action.quit:
-        bl    @f18rst               ; Reset and lock the F18A
+        ;-------------------------------------------------------
+        ; Show dialog "unsaved changes" if editor buffer dirty
+        ;-------------------------------------------------------
+        mov   @edb.dirty,tmp0
+        jeq   !
+        b     @dialog.unsaved       ; Show dialog and exit
+        ;-------------------------------------------------------
+        ; Reset and lock F18a
+        ;-------------------------------------------------------
+!       bl    @f18rst               ; Reset and lock the F18A
         blwp  @0                    ; Exit
 
-
-*---------------------------------------------------------------
-* Show Stevie welcome/about dialog
-*---------------------------------------------------------------
-edkey.action.about:
-        li    tmp0,>4a4a
-        mov   tmp0,@tv.pane.welcome ; Indicate FCTN-7 call
-
-        bl    @dialog.welcome       
-        b     @hook.keyscan.bounce  ; Back to editor main
 
 *---------------------------------------------------------------
 * No action at all

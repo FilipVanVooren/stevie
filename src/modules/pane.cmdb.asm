@@ -7,7 +7,7 @@
 
 ***************************************************************
 * pane.cmdb.draw
-* Draw stevie Command Buffer
+* Draw Stevie Command Buffer in pane
 ***************************************************************
 * bl  @pane.cmdb.draw
 *--------------------------------------------------------------
@@ -15,7 +15,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 pane.cmdb.draw:
         dect  stack
@@ -29,18 +29,38 @@ pane.cmdb.draw:
         ;------------------------------------------------------        
         ; Command buffer header line
         ;------------------------------------------------------
+        bl    @hchar
+              byte pane.botrow-4,15,1,65
+              data eol
+
         mov   @cmdb.yxtop,@wyx      ; \
         mov   @cmdb.panhead,tmp1    ; | Display pane header
         bl    @xutst0               ; / 
 
-        bl    @setx
-              data 14               ; Position cursor
+        ;------------------------------------------------------
+        ; Check dialog id
+        ;------------------------------------------------------
+        clr   @waux1                ; Default is show prompt
 
-        bl    @putstr               ; Display horizontal line
-              data txt.cmdb.hbar
+        mov   @cmdb.dialog,tmp0        
+        ci    tmp0,100              ; \ Hide prompt and no keyboard 
+        jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 100
+        seto  @waux1                ; / 
+        ;------------------------------------------------------
+        ; Show warning message if in "Unsaved changes" dialog
+        ;------------------------------------------------------
+        ci    tmp0,id.dialog.unsaved
+        jne   pane.cmdb.draw.clear  ; Display normal prompt
+
+        bl    @putat                ; \ Show warning message
+              byte pane.botrow-3,0  ; | 
+              data txt.warn.unsaved ; /
+
+        mov   @txt.warn.unsaved,@cmdb.cmdlen
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------
+pane.cmdb.draw.clear:        
         mov   @cmdb.cmdlen,tmp0     ; \
         srl   tmp0,8                ; | Set cursor after command prompt
         a     @cmdb.yxprompt,tmp0   ; |
@@ -64,7 +84,9 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display pane hint in command buffer
         ;------------------------------------------------------
-        li    tmp0,>1c00            ; Y=28, X=0
+pane.cmdb.draw.hint:        
+        li    tmp0,pane.botrow - 1  ; \
+        sla   tmp0,8                ; / Y=bottom row - 1, X=0
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.panhint,@parm2  ; Pane hint to display
 
@@ -74,7 +96,8 @@ pane.cmdb.draw:
         ;------------------------------------------------------
         ; Display keys in status line
         ;------------------------------------------------------
-        li    tmp0,>1d00            ; Y = 29, X=0
+        li    tmp0,pane.botrow      ; \
+        sla   tmp0,8                ; / Y=bottom row, X=0
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.pankeys,@parm2  ; Pane hint to display
 
@@ -82,13 +105,36 @@ pane.cmdb.draw:
                                     ; \ i  parm1 = Pointer to string with hint
                                     ; / i  parm2 = YX position
         ;------------------------------------------------------
+        ; ALPHA-Lock key down?
+        ;------------------------------------------------------
+        coc   @wbit10,config
+        jeq   pane.cmdb.draw.alpha.down
+        ;------------------------------------------------------
+        ; AlPHA-Lock is up
+        ;------------------------------------------------------
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.up 
+
+        jmp   pane.cmdb.draw.promptcmd
+        ;------------------------------------------------------
+        ; AlPHA-Lock is down
+        ;------------------------------------------------------
+pane.cmdb.draw.alpha.down:        
+        bl    @putat      
+              byte   pane.botrow,79
+              data   txt.alpha.down
+        ;------------------------------------------------------
         ; Command buffer content
         ;------------------------------------------------------
+pane.cmdb.draw.promptcmd:        
+        mov   @waux1,tmp0           ; Flag set?
+        jne   pane.cmdb.draw.exit   ; Yes, so exit early
         bl    @cmdb.refresh         ; Refresh command buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.cmdb.exit:
+pane.cmdb.draw.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
@@ -142,12 +188,15 @@ pane.cmdb.show:
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 
-        ;bl    @cmdb.cmd.clear      ; Clear current command        
-
         bl    @pane.errline.hide    ; Hide error pane
 
+        seto  @parm1                ; Do not turn screen off while
+                                    ; reloading color scheme
+
         bl    @pane.action.colorscheme.load
-                                    ; Reload colorscheme
+                                    ; Reload color scheme
+                                    ; i  parm1 = Skip screen off if >FFFF
+
 pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
@@ -193,7 +242,7 @@ pane.cmdb.hide:
         ; Clear error/hint & status line
         ;------------------------------------------------------
 !       bl    @hchar
-              byte 28,0,32,80*2
+              byte pane.botrow-1,0,32,80*2
               data EOL
         ;------------------------------------------------------
         ; Hide command buffer pane (rest)
@@ -210,6 +259,11 @@ pane.cmdb.hide:
 
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
+                                    ; i  parm1 = Skip screen off if >FFFF
+        ;------------------------------------------------------
+        ; Show cursor again
+        ;------------------------------------------------------
+        bl    @pane.cursor.blink
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

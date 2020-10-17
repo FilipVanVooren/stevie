@@ -243,7 +243,7 @@ pane.action.colorscheme.load.exit:
 * bl  @pane.action.colorscheme.errline
 *--------------------------------------------------------------
 * INPUT
-* @tmp1 = Foreground / Background color
+* @parm1 = Foreground / Background color
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -263,6 +263,8 @@ pane.action.colorscheme.errline:
         ;-------------------------------------------------------
         ; Load error line colors
         ;-------------------------------------------------------
+        mov   @parm1,tmp1           ; Get FG/BG color
+
         li    tmp0,>20C0            ; VDP start address (error line)
         li    tmp2,80               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors

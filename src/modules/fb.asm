@@ -32,7 +32,7 @@ fb.init:
         clr   @fb.row               ; Current row=0
         clr   @fb.column            ; Current column=0
 
-        li    tmp0,80 
+        li    tmp0,colrow 
         mov   tmp0,@fb.colsline     ; Columns per row=80
 
         li    tmp0,29
@@ -87,7 +87,7 @@ fb.row2line:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.row2line$$:
+fb.row2line.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
@@ -187,7 +187,7 @@ fb.refresh.unpack_line:
         ; Last row in editor buffer reached ?
         ;------------------------------------------------------
         c     @parm1,@edb.lines     
-        jlt   !                     ; no, do next check
+        jle   !                     ; no, do next check
                                     ; yes, erase until end of frame buffer
         ;------------------------------------------------------
         ; Erase until end of frame buffer

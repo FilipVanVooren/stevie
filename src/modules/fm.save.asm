@@ -42,6 +42,9 @@ fm.savefile:
         li    tmp0,fm.loadsave.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
+        mov   @parm1,@edb.filename.ptr 
+                                    ; Set current filename
+
         bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 

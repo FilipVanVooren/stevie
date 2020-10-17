@@ -8,27 +8,24 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.wp.program     #string 'Stevie v0.1a'
-txt.wp.purpose     #string 'Programming Editor for the TI-99/4a'
-txt.wp.author      #string '2018-2020 by Filip Van Vooren'
-txt.wp.website     #string 'https://stevie.oratronik.de'
-txt.wp.build       #string 'Build: %%build_date%%'
+txt.about.program  #string 'Stevie v0.1b'
+txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
+txt.about.author   #string '2018-2020 by Filip Van Vooren'
+txt.about.website  #string 'https://stevie.oratronik.de'
+txt.about.build    #string 'Build: %%build_date%%'
 
-txt.wp.msg1        #string 'FCTN-7 (F7)   Help, shortcuts, about'
-txt.wp.msg2        #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
-txt.wp.msg3        #string 'FCTN-+        Quit Stevie'
-txt.wp.msg4        #string 'CTRL-L (^L)   Load DV80 file'
-txt.wp.msg5        #string 'CTRL-K (^K)   Save DV80 file'
-txt.wp.msg6        #string 'CTRL-Z (^Z)   Cycle colors'
+txt.about.msg1     #string 'FCTN-7 (F7)   Help, shortcuts, about'
+txt.about.msg2     #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
+txt.about.msg3     #string 'FCTN-+        Quit Stevie'
+txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
+txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
+txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
 
-txt.wp.msg7        byte    56,13
+txt.about.msg7     byte    56,13
                    text    ' ALPHA LOCK up     '
                    byte    12
                    text    ' ALPHA LOCK down   '
                    text    '  * Text changed'
-
-txt.wp.msg8        #string 'Press ENTER to return to editor'
-
 
 
 ;--------------------------------------------------------------
@@ -58,24 +55,32 @@ txt.vertline       data >010e
 ;--------------------------------------------------------------
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
-txt.head.load      #string 'Load DV80 file'
-txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
+txt.head.load      #string 'Load DV80 file '
+txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
 txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    ^A=Home    ^F=End'
 txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
-txt.head.save      #string 'Save DV80 file'
+txt.head.save      #string 'Save DV80 file '
 txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
 txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
-txt.head.unsaved   #string 'Unsaved changes'
-txt.hint.unsaved   #string 'HINT: Unsaved changes in editor buffer.'
-txt.keys.unsaved   #string 'F9=Back    F6=Ignore    ^K=Save file'
+txt.head.unsaved   #string 'Unsaved changes '
+txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
+txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
+txt.warn.unsaved   #string 'You are about to lose changes to the current file!'
+
+;--------------------------------------------------------------
+; Dialog "About"
+;--------------------------------------------------------------
+txt.head.about     #string 'About Stevie '
+txt.hint.about     #string 'HINT: Press F9 or ENTER to return to editor.'
+txt.keys.about     #string 'F9=Back    ENTER=Back'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane
@@ -91,33 +96,11 @@ txt.io.nofile      #string 'I/O error. No filename specified.'
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
 
-txt.cmdb.hbar      byte    66
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-                   byte    1,1,1,1,1,1
-                   even
-
 txt.stevie         byte    12
                    byte    10
                    text    'stevie v1.00'
                    byte    11
                    even
 
-txt.colorscheme    #string 'COLOR SCHEME: '
+txt.colorscheme    #string 'Color scheme: '
 
-
-;--------------------------------------------------------------
-; Strings for filenames
-;--------------------------------------------------------------
-fdname1            #string 'PI.CLOCK'
-fdname2            #string 'TIPI.TIVI.NR80'
-fdname3            #string 'DSK1.XBEADOC'
-fdname4            #string 'TIPI.TIVI.C99MAN1'
-fdname5            #string 'TIPI.TIVI.C99MAN2'
-fdname6            #string 'TIPI.TIVI.C99MAN3'
-fdname7            #string 'TIPI.TIVI.C99SPECS'
-fdname8            #string 'TIPI.TIVI.RANDOM#C'
-fdname9            #string 'DSK1.INVADERS'
-fdname0            #string 'DSK1.NR80'
-fdname.clock       #string 'PI.CLOCK'

@@ -16,7 +16,7 @@ fm.loadsave.cb.indicator1:
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
-              byte 29,0,32,80
+              byte pane.botrow,0,32,80
               data EOL              ; Clear until end of line
         
         mov   @fh.fopmode,tmp0      ; Check file operation mode
@@ -33,7 +33,7 @@ fm.loadsave.cb.indicator1:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.saving:                
         bl    @putat
-              byte 29,0
+              byte pane.botrow,0
               data txt.saving       ; Display "Saving...."
         jmp   fm.loadsave.cb.indicator1.filename
         ;------------------------------------------------------
@@ -41,21 +41,21 @@ fm.loadsave.cb.indicator1.saving:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.loading:        
         bl    @putat
-              byte 29,0
+              byte pane.botrow,0
               data txt.loading      ; Display "Loading...."
         ;------------------------------------------------------
         ; Display device/filename
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.filename:        
         bl    @at
-              byte 29,11            ; Cursor YX position
+              byte pane.botrow,11   ; Cursor YX position
         mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
         ; Display separators
         ;------------------------------------------------------
         bl    @putat
-              byte 29,73
+              byte pane.botrow,71
               data txt.vertline     ; Vertical line
         ;------------------------------------------------------
         ; Display fast mode
@@ -64,7 +64,7 @@ fm.loadsave.cb.indicator1.filename:
         jeq   fm.loadsave.cb.indicator1.exit
 
         bl    @putat
-              byte 29,38
+              byte pane.botrow,38
               data txt.fastmode     ; Display "FastMode"
         ;------------------------------------------------------
         ; Exit
@@ -99,16 +99,16 @@ fm.loadsave.cb.indicator2:
                                     ; Save for compare
 
         bl    @putnum
-              byte 29,75            ; Show lines processed
-              data fh.records,rambuf,>3020
-
-        bl    @putnum
-              byte 29,56            ; Show kilobytes processed
+              byte pane.botrow,52   ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte 29,61
+              byte pane.botrow,57
               data txt.kb           ; Show "kb" string
+
+        bl    @putnum
+              byte pane.botrow,73   ; Show lines processed
+              data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -130,19 +130,19 @@ fm.loadsave.cb.indicator3:
         mov   r11,*stack            ; Save return address
 
         bl    @hchar
-              byte 29,3,32,50       ; Erase loading indicator
-              data EOL
+              byte pane.botrow,3,32,50       
+              data EOL              ; Erase loading indicator
 
         bl    @putnum
-              byte 29,56            ; Show kilobytes processed
+              byte pane.botrow,52   ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte 29,61
+              byte pane.botrow,57
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
-              byte 29,75            ; Show lines processed
+              byte pane.botrow,73   ; Show lines processed
               data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
@@ -168,8 +168,8 @@ fm.loadsave.cb.fioerr:
         ; Build I/O error message
         ;------------------------------------------------------
         bl    @hchar
-              byte 29,0,32,50       ; Erase loading indicator
-              data EOL   
+              byte pane.botrow,0,32,50
+              data EOL              ; Erase loading indicator
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
         ci    tmp0,fh.fopmode.writefile
