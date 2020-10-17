@@ -7,8 +7,6 @@
 
 
 
-
-
 ***************************************************************
 * _idx.entry.insert.reorg
 * Reorganize index slot entries

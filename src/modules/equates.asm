@@ -90,7 +90,6 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-
 *--------------------------------------------------------------
 * Stevie Dialog / Pane specific equates
 *--------------------------------------------------------------
@@ -171,7 +170,7 @@ fb.row            equ  fb.struct + 6   ; Current row in frame buffer
 fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
 fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
 fb.column         equ  fb.struct + 12  ; Current column in frame buffer
-fb.colsline       equ  fb.struct + 14  ; Columns per row in frame buffer
+fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.free1          equ  fb.struct + 16  ; **** free ****
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
 fb.yxsave         equ  fb.struct + 20  ; Copy of WYX

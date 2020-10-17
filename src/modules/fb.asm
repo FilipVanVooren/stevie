@@ -32,7 +32,7 @@ fb.init:
         clr   @fb.row               ; Current row=0
         clr   @fb.column            ; Current column=0
 
-        li    tmp0,80 
+        li    tmp0,colrow 
         mov   tmp0,@fb.colsline     ; Columns per row=80
 
         li    tmp0,29

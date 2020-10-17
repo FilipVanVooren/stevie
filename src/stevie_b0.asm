@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b0.asm               ; Version %%build_date%%
 
-        copy  "equates.equ"         ; Equates Stevie configuration
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
 * Spectra2 core configuration

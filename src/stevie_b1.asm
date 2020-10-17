@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 
-        copy  "equates.equ"         ; Equates Stevie configuration
+        copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
 * Spectra2 core configuration
@@ -108,15 +108,26 @@ main:
         copy  "edkey.cmdb.file.asm"   ; File related actions
         copy  "edkey.cmdb.dialog.asm" ; Dialog specific actions
         ;-----------------------------------------------------------------------
-        ; Logic for Memory, Framebuffer, Index, Editor buffer, Error line
+        ; Logic for Memory, Framebuffer, Editor buffer, Error line
         ;-----------------------------------------------------------------------
         copy  "tv.asm"              ; Main editor configuration        
         copy  "mem.asm"             ; Memory Management
         copy  "fb.asm"              ; Framebuffer
+        ;-----------------------------------------------------------------------
+        ; Logic for Index management
+        ;-----------------------------------------------------------------------
         copy  "idx.asm"             ; Index management
+        copy  "idx.update.asm"      ; Index management - Update entry
+        copy  "idx.pointer.asm"     ; Index management - Get pointer to line
         copy  "idx.delete.asm"      ; Index management - delete slot
         copy  "idx.insert.asm"      ; Index management - insert slot
-        copy  "edb.asm"             ; Editor Buffer
+        ;-----------------------------------------------------------------------
+        ; Logic for Editor Buffer
+        ;-----------------------------------------------------------------------
+        copy  "edb.asm"             ; Editor Buffer initialisation
+        copy  "edb.line.pack.asm"   ; Pack line into editor buffer
+        copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
+        copy  "edb.line.getlen.asm" ; Get line length
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
