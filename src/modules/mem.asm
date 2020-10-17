@@ -9,7 +9,7 @@
 * mem.sams.layout
 * Setup SAMS memory pages for Stevie
 ***************************************************************
-* bl  @mem.setup.sams.layout
+* bl  @mem.sams.layout
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -30,6 +30,7 @@ mem.sams.layout:
               data tv.sams.2000     ; Get SAMS windows
 
         mov   @tv.sams.c000,@edb.sams.page
+        mov   @edb.sams.page,@edb.sams.hipage                  
                                     ; Track editor buffer SAMS page
         ;------------------------------------------------------
         ; Exit

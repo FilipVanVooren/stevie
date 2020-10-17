@@ -194,7 +194,8 @@ edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
 edb.filetype.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
                                        ; with current file type.                                    
 edb.sams.page     equ  edb.struct + 18 ; Current SAMS page
-edb.free          equ  edb.struct + 20 ; End of structure
+edb.sams.hipage   equ  edb.struct + 20 ; Highest SAMS page in use
+edb.free          equ  edb.struct + 22 ; End of structure
 *--------------------------------------------------------------
 * Command buffer structure            @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------

@@ -50,16 +50,63 @@ edb.line.pack:
 edb.line.pack.scan:
         movb  *tmp1+,tmp2           ; Get char
         srl   tmp2,8                ; Right justify
-        jeq   edb.line.pack.prepare ; Stop scan if >00 found
+        jeq   edb.line.pack.check_setpage 
+                                    ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         ;------------------------------------------------------
         ; Not more than 80 characters
         ;------------------------------------------------------
         ci    tmp0,colrow
-        jeq   edb.line.pack.prepare ; Stop scan if 80 characters processed
+        jeq   edb.line.pack.check_setpage
+                                    ; Stop scan if 80 characters processed
         jmp   edb.line.pack.scan    ; Next character
         ;------------------------------------------------------
-        ; Prepare for storing line
+        ; Check failed, crash CPU!
+        ;------------------------------------------------------  
+edb.line.pack.crash:
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system        
+        ;------------------------------------------------------
+        ; 1a: Check if SAMS page needs to be increased
+        ;------------------------------------------------------ 
+edb.line.pack.check_setpage:
+        mov   @edb.sams.hipage,@edb.sams.page
+                                    ; \ Copy on write!
+                                    ; / Start with highest SAMS page in use.
+
+        mov   @edb.next_free.ptr,tmp0
+                                    ;--------------------------
+                                    ; Sanity check
+                                    ;-------------------------- 
+        ci    tmp0,edb.top + edb.size
+                                    ; Insane address ?
+        jgt   edb.line.pack.crash   ; Yes, crash!
+                                    ;--------------------------
+                                    ; Check for page overflow
+                                    ;-------------------------- 
+        andi  tmp0,>0fff            ; Get rid of highest nibble        
+        ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
+        ci    tmp0,>1000 - 16       ; 4K boundary reached?
+        jlt   edb.line.pack.setpage ; Not yet, don't increase SAMS page
+        ;------------------------------------------------------
+        ; 1b: Increase SAMS page
+        ;------------------------------------------------------ 
+        inc   @edb.sams.page        ; Next SAMS page
+        mov   @edb.sams.page,@edb.sams.hipage
+                                    ; Set highest SAMS page
+        mov   @edb.top.ptr,@edb.next_free.ptr
+                                    ; Start at top of SAMS page again
+        ;------------------------------------------------------
+        ; 1c: Switch to SAMS page
+        ;------------------------------------------------------ 
+edb.line.pack.setpage:        
+        mov   @edb.sams.page,tmp0
+        mov   @edb.top.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address
+        ;------------------------------------------------------
+        ; Step 2: Prepare for storing line
         ;------------------------------------------------------
 edb.line.pack.prepare:
         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
@@ -67,41 +114,18 @@ edb.line.pack.prepare:
 
         mov   tmp0,@rambuf+4        ; Save length of line
         ;------------------------------------------------------
-        ; 1. Update index
+        ; 2a Update index
         ;------------------------------------------------------
 edb.line.pack.update_index:
-        mov   @edb.next_free.ptr,tmp0
-        mov   tmp0,@parm2           ; Block where line will reside
-
-        bl    @xsams.page.get       ; Get SAMS page
-                                    ; \ i  tmp0  = Memory address
-                                    ; | o  waux1 = SAMS page number
-                                    ; / o  waux2 = Address of SAMS register
-
-        mov   @waux1,@parm3         ; Setup parm3
+        mov   @edb.next_free.ptr,@parm2
+                                    ; Pointer to new line
+        mov   @edb.sams.page,@parm3 ; Setup parm3
 
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
                                     ; | i  parm2 = pointer to line in 
                                     ; |            editor buffer
                                     ; / i  parm3 = SAMS page
-
-        ;------------------------------------------------------
-        ; 2. Switch to required SAMS page
-        ;------------------------------------------------------
-        c     @edb.sams.page,@parm3 ; Stay on page?
-        jeq   !                     ; Yes, skip setting page
-
-        mov   @parm3,tmp0           ; get SAMS page
-        mov   @edb.next_free.ptr,tmp1
-                                    ; Pointer to line in editor buffer
-        bl    @xsams.page.set       ; Switch to SAMS page
-                                    ; \ i  tmp0 = SAMS page
-                                    ; / i  tmp1 = Memory address
-
-        mov   tmp0,@fh.sams.page    ; Save current SAMS page
-                                    ; TODO - Why is @fh.xxx accessed here?
-
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
@@ -117,7 +141,6 @@ edb.line.pack.update_index:
         movb  tmp2,*tmp1+           ; Set line length as line prefix
         swpb  tmp2
         jeq   edb.line.pack.exit    ; Nothing to copy if empty line
-
         ;------------------------------------------------------
         ; 4. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------

@@ -136,7 +136,7 @@ fh.file.read.edb.pabheader:
         b     @fh.file.read.edb.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
-        ; 1a: Check if SAMS page needs to be set
+        ; 1a: Check if SAMS page needs to be increased
         ;------------------------------------------------------ 
 fh.file.read.edb.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
@@ -149,7 +149,7 @@ fh.file.read.edb.check_setpage:
                                     ;--------------------------
                                     ; Check for page overflow
                                     ;-------------------------- 
-        andi  tmp0,>0fff            ; Get rid off highest nibble        
+        andi  tmp0,>0fff            ; Get rid of highest nibble        
         ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
         ci    tmp0,>1000 - 16       ; 4K boundary reached?
         jlt   fh.file.read.edb.record
@@ -357,6 +357,9 @@ fh.file.read.edb.eof:
 * Exit
 *--------------------------------------------------------------
 fh.file.read.edb.exit:
+        mov   @fh.sams.hipage,@edb.sams.hipage 
+                                    ; Set highest SAMS page in use
+
         clr   @fh.fopmode           ; Set FOP mode to idle operation                                    
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
