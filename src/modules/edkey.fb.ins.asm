@@ -125,4 +125,5 @@ edkey.action.ins_line.insert:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_line.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.action.home    ; Position cursor at home
+
