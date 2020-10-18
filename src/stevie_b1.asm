@@ -108,11 +108,16 @@ main:
         copy  "edkey.cmdb.file.asm"   ; File related actions
         copy  "edkey.cmdb.dialog.asm" ; Dialog specific actions
         ;-----------------------------------------------------------------------
-        ; Logic for Memory, Framebuffer, Editor buffer, Error line
+        ; Logic for Editor configuration and SAMS memory
         ;-----------------------------------------------------------------------
         copy  "tv.asm"              ; Main editor configuration        
-        copy  "mem.asm"             ; Memory Management
-        copy  "fb.asm"              ; Framebuffer
+        copy  "mem.asm"             ; SAMS Memory Management
+        ;-----------------------------------------------------------------------
+        ; Logic for Framebuffer
+        ;-----------------------------------------------------------------------        
+        copy  "fb.asm"              ; Framebuffer 
+        copy  "fb.util.asm"         ; Framebuffer utilities
+        copy  "fb.refresh.asm"      ; Framebuffer refresh
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
