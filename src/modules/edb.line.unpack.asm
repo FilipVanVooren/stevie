@@ -67,9 +67,6 @@ edb.line.unpack:
                                     ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
-
-        mov   @outparm2,@edb.sams.page 
-                                    ; Save current SAMS page                                    
         ;------------------------------------------------------
         ; Handle empty line
         ;------------------------------------------------------        
@@ -80,6 +77,9 @@ edb.line.unpack:
         ;------------------------------------------------------
         ; Get line length
         ;------------------------------------------------------ 
+        mov   @outparm2,@edb.sams.page 
+                                    ; Save current SAMS page                                    
+
 !       mov   *tmp0,tmp1            ; Get line length
         andi  tmp1,>00ff            ; Line can never be more than 80 characters
         mov   tmp1,@rambuf+8        ; Save line length
