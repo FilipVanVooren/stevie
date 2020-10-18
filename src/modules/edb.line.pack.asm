@@ -32,6 +32,12 @@
 edb.line.pack:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack        
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Get values
         ;------------------------------------------------------
@@ -67,13 +73,9 @@ edb.line.pack.crash:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
-        ; 1a: Check if SAMS page needs to be increased
+        ; 1a: Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
 edb.line.pack.check_setpage:
-        mov   @edb.sams.hipage,@edb.sams.page
-                                    ; \ Copy on write!
-                                    ; / Start with highest SAMS page in use.
-
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
                                     ; Sanity check
@@ -89,18 +91,16 @@ edb.line.pack.check_setpage:
         ci    tmp0,>1000 - 16       ; 4K boundary reached?
         jlt   edb.line.pack.setpage ; Not yet, don't increase SAMS page
         ;------------------------------------------------------
-        ; 1b: Increase SAMS page
+        ; 1b: Increase highest SAMS page (copy-on-write!)
         ;------------------------------------------------------ 
-        inc   @edb.sams.page        ; Next SAMS page
-        mov   @edb.sams.page,@edb.sams.hipage
-                                    ; Set highest SAMS page
+        inc   @edb.sams.hipage      ; Set highest SAMS page                                    
         mov   @edb.top.ptr,@edb.next_free.ptr
                                     ; Start at top of SAMS page again
         ;------------------------------------------------------
         ; 1c: Switch to SAMS page
         ;------------------------------------------------------ 
 edb.line.pack.setpage:        
-        mov   @edb.sams.page,tmp0
+        mov   @edb.sams.hipage,tmp0
         mov   @edb.top.ptr,tmp1
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
@@ -119,7 +119,8 @@ edb.line.pack.prepare:
 edb.line.pack.update_index:
         mov   @edb.next_free.ptr,@parm2
                                     ; Pointer to new line
-        mov   @edb.sams.page,@parm3 ; Setup parm3
+        mov   @edb.sams.hipage,@parm3 
+                                    ; SAMS page to use
 
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
@@ -140,7 +141,8 @@ edb.line.pack.update_index:
         swpb  tmp2
         movb  tmp2,*tmp1+           ; Set line length as line prefix
         swpb  tmp2
-        jeq   edb.line.pack.exit    ; Nothing to copy if empty line
+        jeq   edb.line.pack.prepexit
+                                    ; Nothing to copy if empty line
         ;------------------------------------------------------
         ; 4. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------
@@ -173,9 +175,25 @@ edb.line.pack.copyline.block:
         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
         ;------------------------------------------------------
+        ; 6: Restore SAMS page and prepare for exit
+        ;------------------------------------------------------ 
+edb.line.pack.prepexit:
+        mov   @rambuf,@fb.column    ; Retrieve @fb.column
+
+        c     @edb.sams.hipage,@edb.sams.page
+        jeq   edb.line.pack.exit    ; Exit early if SAMS page already mapped
+
+        mov   @edb.sams.page,tmp0
+        mov   @edb.top.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 edb.line.pack.exit:
-        mov   @rambuf,@fb.column    ; Retrieve @fb.column
+        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0          
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
