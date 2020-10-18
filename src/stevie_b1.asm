@@ -90,10 +90,12 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer              
         ;-----------------------------------------------------------------------
-        copy  "edkey.fb.mov.asm"         ; Actions for movement keys 
-        copy  "edkey.fb.mov.word.asm"    ; Move to previous / next word
+        copy  "edkey.fb.mov.leftright.asm" 
+                                         ; Move left / right / home / end
+        copy  "edkey.fb.mov.word.asm"    ; Move previous / next word
+        copy  "edkey.fb.mov.updown.asm"  ; Move line up / down        
         copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
-        copy  "edkey.fb.mov.topbot.asm"  ; Move to top / bottom of buffer
+        copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
         copy  "edkey.fb.del.asm"         ; Delete characters or lines
         copy  "edkey.fb.ins.asm"         ; Insert characters or lines
         copy  "edkey.fb.mod.asm"         ; Actions for modifier keys        

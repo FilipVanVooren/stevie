@@ -76,6 +76,7 @@ edb.line.pack.crash:
         ; 1a: Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
 edb.line.pack.check_setpage:
+        mov   tmp0,@rambuf+4        ; Save length of line
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
                                     ; Sanity check
@@ -111,8 +112,6 @@ edb.line.pack.setpage:
 edb.line.pack.prepare:
         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
         a     @fb.row,@parm1        ; /
-
-        mov   tmp0,@rambuf+4        ; Save length of line
         ;------------------------------------------------------
         ; 2a Update index
         ;------------------------------------------------------
