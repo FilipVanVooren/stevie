@@ -28,8 +28,8 @@ pane.botline.draw:
         ; Show separators
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,44,14,1       ; Vertical line 1
-              byte pane.botrow,60,14,1       ; Vertical line 2
+              byte pane.botrow,42,14,1       ; Vertical line 1
+              byte pane.botrow,50,14,1       ; Vertical line 2
               byte pane.botrow,71,14,1       ; Vertical line 3
               data eol
         ;------------------------------------------------------
@@ -59,7 +59,7 @@ pane.botline.show_mode:
         ;------------------------------------------------------
 pane.botline.show_mode.overwrite:
         bl    @putat
-              byte  pane.botrow,46
+              byte  pane.botrow,44
               data  txt.ovrwrite
         jmp   pane.botline.show_changed
         ;------------------------------------------------------
@@ -67,7 +67,7 @@ pane.botline.show_mode.overwrite:
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
         bl    @putat
-              byte  pane.botrow,46
+              byte  pane.botrow,44
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
@@ -79,7 +79,7 @@ pane.botline.show_changed:
         ; Show "*"
         ;------------------------------------------------------        
         bl    @putat
-              byte pane.botrow,50
+              byte pane.botrow,48
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------
@@ -93,7 +93,7 @@ pane.botline.show_linecol:
         ; Show line
         ;------------------------------------------------------
         bl    @putnum
-              byte  pane.botrow,62  ; YX
+              byte  pane.botrow,59  ; YX
               data  outparm1,rambuf
               byte  48              ; ASCII offset 
               byte  32              ; Padding character
@@ -101,13 +101,13 @@ pane.botline.show_linecol:
         ; Show comma
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,67
+              byte  pane.botrow,64
               data  txt.delim
         ;------------------------------------------------------
-        ; Show column
+        ; Show column 
         ;------------------------------------------------------
         bl    @film
-              data rambuf+6,32,12   ; Clear work buffer with space character
+              data rambuf+5,32,12   ; Clear work buffer with space character
 
         mov   @fb.column,@waux1
         inc   @waux1                ; Offset 1
@@ -118,14 +118,68 @@ pane.botline.show_linecol:
               byte  32              ; Fill character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf,rambuf+6,32
+              data  rambuf,rambuf+5,32
 
-        li    tmp0,>0200
-        movb  tmp0,@rambuf+6        ; "Fix" number length to clear junk chars 
-                                
+        li    tmp0,>0600            ; "Fix" number length to clear junk chars  
+        movb  tmp0,@rambuf+5        ; Set length byte
+
+        ;------------------------------------------------------
+        ; Decide if row length is to be shown
+        ;------------------------------------------------------
+        mov   @fb.column,tmp0       ; \ Base 1 for comparison
+        inc   tmp0                  ; /
+        c     tmp0,@fb.row.length   ; Check if cursor on last column on row
+        jlt   pane.botline.show_linecol.linelen
+        jmp   pane.botline.show_linecol.colstring
+                                    ; Yes, skip showing row length        
+        ;------------------------------------------------------
+        ; Add '/' delimiter and length of line to string
+        ;------------------------------------------------------        
+pane.botline.show_linecol.linelen:
+        mov   @fb.column,tmp0       ; \ 
+        li    tmp1,rambuf+7         ; | Determine column position for '/' char
+        ci    tmp0,10               ; | based on number of digits for cursor
+        jlt   !                     ; | column.
+        inc   tmp1                  ; /
+
+!       li    tmp0,>2d00            ; \ ASCII 2d '-'
+        movb  tmp0,*tmp1+           ; / Add delimiter to string
+
+        mov   tmp1,@waux1           ; Backup position in ram buffer
+
+        bl    @mknum
+              data  fb.row.length,rambuf
+              byte  48              ; ASCII offset 
+              byte  32              ; Padding character
+
+        mov   @waux1,tmp1           ; Restore position in ram buffer
+
+        mov   @fb.row.length,tmp0   ; \ Get length of line
+        ci    tmp0,10               ; / 
+        jlt   pane.botline.show_line.1digit
+        ;------------------------------------------------------
+        ; Show length of line (2 digits)
+        ;------------------------------------------------------   
+pane.botline.show_line.2digits:
+        li    tmp0,rambuf+3
+        movb  *tmp0+,*tmp1+         ; 1st digit row length
+        jmp   pane.botline.show_line.rest
+        ;------------------------------------------------------
+        ; Show length of line (1 digits)
+        ;------------------------------------------------------   
+pane.botline.show_line.1digit:
+        li    tmp0,rambuf+4
+pane.botline.show_line.rest:
+        movb  *tmp0+,*tmp1+         ; 1st/Next digit row length
+        movb  @rambuf+0,*tmp1+      ; Append a whitespace character
+        movb  @rambuf+0,*tmp1+      ; Append a whitespace character
+        ;------------------------------------------------------
+        ; Show column string
+        ;------------------------------------------------------
+pane.botline.show_linecol.colstring:
         bl    @putat
-              byte pane.botrow,68
-              data rambuf+6         ; Show column
+              byte pane.botrow,65
+              data rambuf+5         ; Show string
         ;------------------------------------------------------
         ; Show lines in buffer unless on last line in file
         ;------------------------------------------------------

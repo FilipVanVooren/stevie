@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 201018-223970
+0009               * File: stevie_b0.asm               ; Version 201025-279997
 0010               
 0011                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
@@ -20,7 +20,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.equ                 ; Version 201018-223970
+0009               * File: equates.equ                 ; Version 201025-279997
 0010               *--------------------------------------------------------------
 0011               * Stevie memory map
 0012               *
@@ -306,7 +306,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0292               * Heap                                @>e000-efff  (4096 bytes)
 0293               *--------------------------------------------------------------
 0294      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -1159,7 +1159,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6254 1742             byte  23
-0260 6255 ....             text  'Build-ID  201018-223970'
+0260 6255 ....             text  'Build-ID  201025-279997'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -3427,67 +3427,68 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0080               *  The new string starts at index 5 in buffer, overwriting
 0081               *  anything that is located there !
 0082               *
-0083               *  Before...:   XXXXX
-0084               *  After....:   XXXXX|zY       where length byte z=1
-0085               *               XXXXX|zYY      where length byte z=2
-0086               *                 ..
-0087               *               XXXXX|zYYYYY   where length byte z=5
-0088               *--------------------------------------------------------------
-0089               *  Destroys registers tmp0-tmp3
-0090               ********|*****|*********************|**************************
-0091               trimnum:
-0092 6A74 C13B  30         mov   *r11+,tmp0            ; Get pointer to input string
-0093 6A76 C17B  30         mov   *r11+,tmp1            ; Get pointer to output string
-0094 6A78 C1BB  30         mov   *r11+,tmp2            ; Get padding character
-0095 6A7A 06C6  14         swpb  tmp2                  ; LO <-> HI
-0096 6A7C 0207  20         li    tmp3,5                ; Set counter
+0083               *               01234|56789A
+0084               *  Before...:   XXXXX
+0085               *  After....:   XXXXX|zY       where length byte z=1
+0086               *               XXXXX|zYY      where length byte z=2
+0087               *                 ..
+0088               *               XXXXX|zYYYYY   where length byte z=5
+0089               *--------------------------------------------------------------
+0090               *  Destroys registers tmp0-tmp3
+0091               ********|*****|*********************|**************************
+0092               trimnum:
+0093 6A74 C13B  30         mov   *r11+,tmp0            ; Get pointer to input string
+0094 6A76 C17B  30         mov   *r11+,tmp1            ; Get pointer to output string
+0095 6A78 C1BB  30         mov   *r11+,tmp2            ; Get padding character
+0096 6A7A 06C6  14         swpb  tmp2                  ; LO <-> HI
+0097 6A7C 0207  20         li    tmp3,5                ; Set counter
      6A7E 0005 
-0097                       ;------------------------------------------------------
-0098                       ; Scan for padding character from left to right
-0099                       ;------------------------------------------------------:
-0100               trimnum_scan:
-0101 6A80 9194  26         cb    *tmp0,tmp2            ; Matches padding character ?
-0102 6A82 1604  14         jne   trimnum_setlen        ; No, exit loop
-0103 6A84 0584  14         inc   tmp0                  ; Next character
-0104 6A86 0607  14         dec   tmp3                  ; Last digit reached ?
-0105 6A88 1301  14         jeq   trimnum_setlen        ; yes, exit loop
-0106 6A8A 10FA  14         jmp   trimnum_scan
-0107                       ;------------------------------------------------------
-0108                       ; Scan completed, set length byte new string
-0109                       ;------------------------------------------------------
-0110               trimnum_setlen:
-0111 6A8C 06C7  14         swpb  tmp3                  ; LO <-> HI
-0112 6A8E DD47  32         movb  tmp3,*tmp1+           ; Update string-length in work buffer
-0113 6A90 06C7  14         swpb  tmp3                  ; LO <-> HI
-0114                       ;------------------------------------------------------
-0115                       ; Start filling new string
-0116                       ;------------------------------------------------------
-0117               trimnum_fill
-0118 6A92 DD74  42         movb  *tmp0+,*tmp1+         ; Copy character
-0119 6A94 0607  14         dec   tmp3                  ; Last character ?
-0120 6A96 16FD  14         jne   trimnum_fill          ; Not yet, repeat
-0121 6A98 045B  20         b     *r11                  ; Return
-0122               
+0098                       ;------------------------------------------------------
+0099                       ; Scan for padding character from left to right
+0100                       ;------------------------------------------------------:
+0101               trimnum_scan:
+0102 6A80 9194  26         cb    *tmp0,tmp2            ; Matches padding character ?
+0103 6A82 1604  14         jne   trimnum_setlen        ; No, exit loop
+0104 6A84 0584  14         inc   tmp0                  ; Next character
+0105 6A86 0607  14         dec   tmp3                  ; Last digit reached ?
+0106 6A88 1301  14         jeq   trimnum_setlen        ; yes, exit loop
+0107 6A8A 10FA  14         jmp   trimnum_scan
+0108                       ;------------------------------------------------------
+0109                       ; Scan completed, set length byte new string
+0110                       ;------------------------------------------------------
+0111               trimnum_setlen:
+0112 6A8C 06C7  14         swpb  tmp3                  ; LO <-> HI
+0113 6A8E DD47  32         movb  tmp3,*tmp1+           ; Update string-length in work buffer
+0114 6A90 06C7  14         swpb  tmp3                  ; LO <-> HI
+0115                       ;------------------------------------------------------
+0116                       ; Start filling new string
+0117                       ;------------------------------------------------------
+0118               trimnum_fill
+0119 6A92 DD74  42         movb  *tmp0+,*tmp1+         ; Copy character
+0120 6A94 0607  14         dec   tmp3                  ; Last character ?
+0121 6A96 16FD  14         jne   trimnum_fill          ; Not yet, repeat
+0122 6A98 045B  20         b     *r11                  ; Return
 0123               
 0124               
 0125               
-0126               ***************************************************************
-0127               * PUTNUM - Put unsigned number on screen
-0128               ***************************************************************
-0129               *  BL   @PUTNUM
-0130               *  DATA P0,P1,P2,P3
-0131               *--------------------------------------------------------------
-0132               *  P0   = YX position
-0133               *  P1   = Pointer to 16 bit unsigned number
-0134               *  P2   = Pointer to 5 byte string buffer
-0135               *  P3HB = Offset for ASCII digit
-0136               *  P3LB = Character for replacing leading 0's
-0137               ********|*****|*********************|**************************
-0138 6A9A C83B  50 putnum  mov   *r11+,@wyx            ; Set cursor
+0126               
+0127               ***************************************************************
+0128               * PUTNUM - Put unsigned number on screen
+0129               ***************************************************************
+0130               *  BL   @PUTNUM
+0131               *  DATA P0,P1,P2,P3
+0132               *--------------------------------------------------------------
+0133               *  P0   = YX position
+0134               *  P1   = Pointer to 16 bit unsigned number
+0135               *  P2   = Pointer to 5 byte string buffer
+0136               *  P3HB = Offset for ASCII digit
+0137               *  P3LB = Character for replacing leading 0's
+0138               ********|*****|*********************|**************************
+0139 6A9A C83B  50 putnum  mov   *r11+,@wyx            ; Set cursor
      6A9C 832A 
-0139 6A9E 0262  22         ori   config,>8000          ; CONFIG register bit 0=1
+0140 6A9E 0262  22         ori   config,>8000          ; CONFIG register bit 0=1
      6AA0 8000 
-0140 6AA2 10BC  14         jmp   mknum                 ; Convert number and display
+0141 6AA2 10BC  14         jmp   mknum                 ; Convert number and display
 **** **** ****     > runlib.asm
 0187               
 0191               
@@ -5042,7 +5043,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F36 0040 
 0367 6F38 0460  28         b     @main                 ; Give control to main program
      6F3A 3000 
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0115                                                   ; Spectra 2
 0116                       ;------------------------------------------------------
 0117                       ; End of File marker
@@ -5267,7 +5268,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119 7150 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7152 F20F 
 0120               
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0145                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5302,7 +5303,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 71C0 1442             byte  20
-0033 71C1 ....             text  'Build: 201018-223970'
+0033 71C1 ....             text  'Build: 201025-279997'
 0034                       even
 0035               
 0036               
@@ -5560,7 +5561,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0288                       even
 0289               
 0290               
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0146                       copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6069,7 +6070,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0504 7913 ....             text  'enter'
 0505                       even
 0506               
-**** **** ****     > stevie_b0.asm.223970
+**** **** ****     > stevie_b0.asm.279997
 0147               
 0148                       ;------------------------------------------------------
 0149                       ; End of File marker

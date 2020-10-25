@@ -99,11 +99,11 @@ fm.loadsave.cb.indicator2:
                                     ; Save for compare
 
         bl    @putnum
-              byte pane.botrow,52   ; Show kilobytes processed
+              byte pane.botrow,50   ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte pane.botrow,57
+              byte pane.botrow,55
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
@@ -134,11 +134,11 @@ fm.loadsave.cb.indicator3:
               data EOL              ; Erase loading indicator
 
         bl    @putnum
-              byte pane.botrow,52   ; Show kilobytes processed
+              byte pane.botrow,50   ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte pane.botrow,57
+              byte pane.botrow,55
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
