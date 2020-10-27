@@ -52,7 +52,8 @@ task.vdp.panes.cmdb.draw:
         ; Check if frame buffer dirty
         ;-------------------------------------------------------
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
-        jeq   task.vdp.panes.exit   ; No, skip update
+        jeq   task.vdp.panes.botline.draw
+                                    ; No, skip update
         mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 

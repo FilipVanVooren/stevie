@@ -137,8 +137,8 @@ pane.botline.show_linecol:
         ;------------------------------------------------------        
 pane.botline.show_linecol.linelen:
         mov   @fb.column,tmp0       ; \ 
-        li    tmp1,rambuf+7         ; | Determine column position for '/' char
-        ci    tmp0,10               ; | based on number of digits for cursor
+        li    tmp1,rambuf+7         ; | Determine column position for '-' char
+        ci    tmp0,9                ; | based on number of digits in cursor X
         jlt   !                     ; | column.
         inc   tmp1                  ; /
 
