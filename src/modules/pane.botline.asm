@@ -158,6 +158,16 @@ pane.botline.show_linecol.linelen:
         ci    tmp0,10               ; / 
         jlt   pane.botline.show_line.1digit
         ;------------------------------------------------------
+        ; Sanity check
+        ;------------------------------------------------------           
+        ci    tmp0,80
+        jle   pane.botline.show_line.2digits
+        ;------------------------------------------------------
+        ; Sanity checks failed
+        ;------------------------------------------------------
+!       mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system       
+        ;------------------------------------------------------
         ; Show length of line (2 digits)
         ;------------------------------------------------------   
 pane.botline.show_line.2digits:

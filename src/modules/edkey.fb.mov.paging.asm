@@ -7,8 +7,16 @@
 *---------------------------------------------------------------
 edkey.action.ppage:
         ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.ppage.sanity
+        bl    @edb.line.pack        ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
         ; Sanity check
         ;-------------------------------------------------------
+edkey.action.ppage.sanity:        
         mov   @fb.topline,tmp0      ; Exit if already on line 1 
         jeq   edkey.action.ppage.exit
         ;-------------------------------------------------------
@@ -17,20 +25,12 @@ edkey.action.ppage:
         c     tmp0,@fb.scrrows      ; topline > rows on screen?
         jgt   edkey.action.ppage.topline 
         clr   @fb.topline           ; topline = 0
-        jmp   edkey.action.ppage.crunch
+        jmp   edkey.action.ppage.refresh
         ;-------------------------------------------------------
         ; Adjust topline
         ;-------------------------------------------------------
 edkey.action.ppage.topline:
         s     @fb.scrrows,@fb.topline         
-        ;-------------------------------------------------------
-        ; Crunch current row if dirty 
-        ;-------------------------------------------------------
-edkey.action.ppage.crunch:
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.ppage.refresh
-        bl    @edb.line.pack        ; Copy line to editor buffer
-        clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------
@@ -53,8 +53,16 @@ edkey.action.ppage.exit:
 *---------------------------------------------------------------
 edkey.action.npage:
         ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.npage.sanity
+        bl    @edb.line.pack        ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
         ; Sanity check
         ;-------------------------------------------------------
+edkey.action.npage.sanity:        
         mov   @fb.topline,tmp0
         a     @fb.scrrows,tmp0
         c     tmp0,@edb.lines       ; Exit if on last page
@@ -64,14 +72,6 @@ edkey.action.npage:
         ;-------------------------------------------------------
 edkey.action.npage.topline:
         a     @fb.scrrows,@fb.topline         
-        ;-------------------------------------------------------
-        ; Crunch current row if dirty 
-        ;-------------------------------------------------------
-edkey.action.npage.crunch:
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.npage.refresh
-        bl    @edb.line.pack        ; Copy line to editor buffer
-        clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------

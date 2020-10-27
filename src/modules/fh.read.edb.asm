@@ -360,7 +360,7 @@ fh.file.read.edb.exit:
         mov   @fh.sams.hipage,@edb.sams.hipage 
                                     ; Set highest SAMS page in use
 
-        clr   @fh.fopmode           ; Set FOP mode to idle operation                                    
+        clr   @fh.fopmode           ; Set FOP mode to idle operation
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

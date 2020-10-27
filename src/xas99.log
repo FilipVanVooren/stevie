@@ -1,124 +1,132 @@
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/basic_cpu_vdp.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cmdb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cmdb.cmd.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/copy_cpu_cpu.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/copy_cpu_vram.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/copy_grom_cpu.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/copy_grom_vram.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/copy_vram_cpu.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_constants.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_crash.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_crc16.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_hexsupport.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_numsupport.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_rle_compress.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_rle_decompress.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_sams_support.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_scrpad_backrest.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_scrpad_paging.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/cpu_strings.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/data.constants.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/data.keymap.actions.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/data.keymap.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/data.strings.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/dialog.about.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/dialog.load.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/dialog.save.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/dialog.unsaved.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edb.line.getlen.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edb.line.pack.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edb.line.unpack.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.cmdb.dialog.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.cmdb.file.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.cmdb.misc.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.cmdb.mod.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.cmdb.mov.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.del.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.file.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.ins.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.misc.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mod.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mov.leftright.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mov.paging.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mov.topbot.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mov.updown.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.fb.mov.word.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/edkey.key.process.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/equates.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/errline.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fb.refresh.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fb.util.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fh.read.edb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fh.write.edb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fio_dsrlnk.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fio_level3.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fm.browse.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fm.callbacks.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fm.load.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/fm.save.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/header.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/hook.keyscan.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/idx.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/idx.delete.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/idx.insert.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/idx.pointer.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/idx.update.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/keyb_real.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/keyb_virtual.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/main.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/mem.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/pane.botline.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/pane.cmdb.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/pane.errline.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/pane.utils.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/pane.utils.colorscheme.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/rnd_support.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/rom_bankswitch.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/runlib.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/snd_player.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/speech_detect.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/speech_player.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/stevie_b0.asm.1638588
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/task.oneshot.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/task.vdp.cursor.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/task.vdp.panes.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/task.vdp.sat.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/template.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/timers_alloc.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/timers_hooks.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/timers_kthread.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/timers_tmgr.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/tv.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_bitmap.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_boxes.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_cursor.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_f18a.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_hchar.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_intscr.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_px2yx_calc.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_rle_decompress.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_sprites.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_tables.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_vchar.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_viewport.asm
-Preprocessing source file.... .stevie_b0/stevie_b0.1638588/vdp_yx2px_calc.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/basic_cpu_vdp.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cmdb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cmdb.cmd.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/copy_cpu_cpu.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/copy_cpu_vram.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/copy_grom_cpu.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/copy_grom_vram.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/copy_vram_cpu.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_constants.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_crash.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_crc16.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_hexsupport.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_numsupport.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_rle_compress.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_rle_decompress.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_sams_support.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_scrpad_backrest.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_scrpad_paging.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/cpu_strings.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/data.constants.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/data.keymap.actions.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/data.keymap.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/data.strings.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/dialog.about.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/dialog.load.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/dialog.save.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/dialog.unsaved.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edb.line.getlen.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edb.line.pack.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edb.line.unpack.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.cmdb.dialog.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.cmdb.file.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.cmdb.misc.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.cmdb.mod.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.cmdb.mov.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.del.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.file.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.ins.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.misc.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mod.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mov.leftright.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mov.paging.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mov.topbot.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mov.updown.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.fb.mov.word.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/edkey.key.process.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/equates.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/errline.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fb.refresh.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fb.util.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fh.read.edb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fh.write.edb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fio_dsrlnk.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fio_level3.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fm.browse.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fm.callbacks.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fm.load.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/fm.save.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/header.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/hook.keyscan.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/idx.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/idx.delete.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/idx.insert.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/idx.pointer.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/idx.update.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/keyb_real.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/keyb_virtual.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/main.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/mem.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/pane.botline.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/pane.cmdb.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/pane.errline.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/pane.utils.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/pane.utils.colorscheme.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/rnd_support.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/rom_bankswitch.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/runlib.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/snd_player.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/speech_detect.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/speech_player.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/stevie_b1.asm.1692065
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/task.oneshot.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/task.vdp.cursor.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/task.vdp.panes.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/task.vdp.sat.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/template.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/timers_alloc.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/timers_hooks.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/timers_kthread.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/timers_tmgr.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/tv.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_bitmap.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_boxes.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_cursor.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_f18a.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_hchar.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_intscr.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_px2yx_calc.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_rle_decompress.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_sprites.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_tables.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_vchar.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_viewport.asm
+Preprocessing source file.... .stevie_b1/stevie_b1.1692065/vdp_yx2px_calc.asm
 ************************************************
-Assembly started ........ 20-10-27 19:45:29
-Source file ............. stevie_b0.asm
-Assembly run ............ .stevie_b0/stevie_b0.1638588/xas99run.out
-Preprocessed source ..... .stevie_b0/stevie_b0.1638588/stevie_b0.asm.1638588
-ROM cart binary ......... stevie_b0.bin
-List file ............... stevie_b0.lst.asm
-Run suffix .............. 201027-1638588
+Assembly started ........ 20-10-27 21:21:32
+Source file ............. stevie_b1.asm
+Assembly run ............ .stevie_b1/stevie_b1.1692065/xas99run.out
+Preprocessed source ..... .stevie_b1/stevie_b1.1692065/stevie_b1.asm.1692065
+ROM cart binary ......... stevie_b1.bin
+List file ............... stevie_b1.lst.asm
+Run suffix .............. 201027-1692065
 ************************************************
 Highest ROM address...... 
 > basic_cpu_vdp.asm <2> 0493 - Warning: Possible branch/jump optimization
 > basic_cpu_vdp.asm <2> 0515 - Warning: Possible branch/jump optimization
 > timers_tmgr.asm <2> 0051 - Warning: Possible branch/jump optimization
 > timers_kthread.asm <2> 0045 - Warning: Possible branch/jump optimization
-Warning: Unreferenced constants: ALPHALOCK CURSORS DSRLNK.$0008 MEM.SAMS.LAYOUT.DATA PATTERNS PATTERNS.BOX PREFIX ROMSAT SPCODE TX4024 TX8024 TX8030 TXT.ABOUT.MSG7 TXT.ALPHA.DOWN TXT.ALPHA.UP TXT.STEVIE TXT.VERTLINE VERTLINE
-***** PC relocated SP2 library @ >2000-  11980 (dec)
+> stevie_b1.asm.1692065 <2> 0089 - Warning: Possible branch/jump optimization
+> edkey.fb.del.asm <2> 0148 - Warning: Possible branch/jump optimization
+> edkey.fb.ins.asm <2> 0080 - Warning: Possible branch/jump optimization
+> edkey.cmdb.mod.asm <2> 0032 - Warning: Possible branch/jump optimization
+> edkey.cmdb.mod.asm <2> 0108 - Warning: Possible branch/jump optimization
+> fh.read.edb.asm <2> 0231 - Warning: Possible branch/jump optimization
+> fh.write.edb.asm <2> 0190 - Warning: Possible branch/jump optimization
+> dialog.load.asm <2> 0032 - Warning: Possible branch/jump optimization
+Warning: Unreferenced constants: ALPHALOCK DSRLNK.$0008 PATTERNS.BOX PREFIX SPCODE TX4024 TX8024 TX8030 TXT.STEVIE VERTLINE
+***** PC relocated SP2 library @ >2000 -  11980 (dec)
 ***** PC resident stevie modules @ >3000 -  14510 (dec)
 ***** Assembly process returned with RC=0
