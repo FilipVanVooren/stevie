@@ -71,16 +71,16 @@ edb.line.unpack:
         ; Handle empty line
         ;------------------------------------------------------        
         mov   @outparm1,tmp0        ; Get pointer to line
-        jne   !                     ; Check if pointer is set
+        jne   edb.line.unpack.getlen
+                                    ; Continue if pointer is set
+
         clr   @rambuf+8             ; Set length=0
         jmp   edb.line.unpack.clear
         ;------------------------------------------------------
         ; Get line length
         ;------------------------------------------------------ 
-        mov   @outparm2,@edb.sams.page 
-                                    ; Save current SAMS page                                    
-
-!       mov   *tmp0,tmp1            ; Get line length
+edb.line.unpack.getlen:                                        
+        mov   *tmp0,tmp1            ; Get line length
         andi  tmp1,>00ff            ; Line can never be more than 80 characters
         mov   tmp1,@rambuf+8        ; Save line length
 

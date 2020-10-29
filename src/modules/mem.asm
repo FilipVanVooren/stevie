@@ -110,6 +110,9 @@ mem.edb.sams.mappage.lookup:
 
         mov   @outparm2,@tv.sams.c000
                                     ; Set page in shadow registers
+
+        mov   @outparm2,@edb.sams.page 
+                                    ; Set current SAMS page                                    
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
