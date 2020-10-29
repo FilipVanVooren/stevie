@@ -70,8 +70,8 @@ edb.line.getlength:
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
-        ci    tmp0,81               ; Line length <= 80 ?
-        jlt   edb.line.getlength.exit
+        ci    tmp0,80               ; Line length <= 80 ?
+        jle   edb.line.getlength.exit
                                     ; Yes, exit
         ;------------------------------------------------------
         ; Crash the system
