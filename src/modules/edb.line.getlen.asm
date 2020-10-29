@@ -6,9 +6,6 @@
 *//////////////////////////////////////////////////////////////
 
 
-
-
-
 ***************************************************************
 * edb.line.getlength
 * Get length of specified line
@@ -24,9 +21,6 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1
-*--------------------------------------------------------------
-* Remarks
-* Expects that the affected SAMS page is already paged-in!
 ********|*****|*********************|**************************
 edb.line.getlength:
         dect  stack
@@ -52,9 +46,38 @@ edb.line.getlength:
         jeq   edb.line.getlength.exit
                                     ; Exit early if NULL pointer
         ;------------------------------------------------------
+        ; Map SAMS page if required
+        ;------------------------------------------------------
+        c     @outparm2,@edb.sams.page
+        jeq   !                     ; Page mapped, continue
+        ;------------------------------------------------------
+        ; Map SAMS page
+        ;------------------------------------------------------
+        mov   @parm1,tmp0           ; Get line
+
+        bl    @xmem.edb.sams.mappage
+                                    ; Activate editor buffer SAMS page for line
+                                    ; \ i  tmp0     = Line number
+                                    ; | o  outparm1 = Pointer to line 
+                                    ; / o  outparm2 = SAMS page
+
+        mov   @outparm1,tmp0        ; Store pointer in tmp0
+        ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
-        mov   *tmp0,@outparm1       ; Save length
+!       mov   *tmp0,tmp0            ; Get length into tmp0
+        mov   tmp0,@outparm1        ; Save length                
+        ;------------------------------------------------------
+        ; Sanity check
+        ;------------------------------------------------------
+        ci    tmp0,81               ; Line length <= 80 ?
+        jlt   edb.line.getlength.exit
+                                    ; Yes, exit
+        ;------------------------------------------------------
+        ; Crash the system
+        ;------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -84,6 +107,8 @@ edb.line.getlength.exit:
 edb.line.getlength2:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Calculate line in editor buffer
         ;------------------------------------------------------
@@ -100,5 +125,6 @@ edb.line.getlength2:
         ; Exit
         ;------------------------------------------------------
 edb.line.getlength2.exit:
+        mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
