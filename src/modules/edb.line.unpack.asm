@@ -80,18 +80,17 @@ edb.line.unpack:
         ; Get line length
         ;------------------------------------------------------ 
 edb.line.unpack.getlen:                                        
-        mov   *tmp0,tmp1            ; Get line length
-        andi  tmp1,>00ff            ; Line can never be more than 80 characters
-        mov   tmp1,@rambuf+8        ; Save line length
-
-        inct  @outparm1             ; Skip line prefix        
-        mov   @outparm1,@rambuf+4   ; Source memory address for block copy
+        mov   *tmp0+,tmp1           ; Get line length
+        mov   tmp0,@rambuf+4        ; Source memory address for block copy
+        mov   tmp1,@rambuf+8        ; Save line length        
         ;------------------------------------------------------
         ; Sanity check on line length
         ;------------------------------------------------------        
         ci    tmp1,80               ; \ Continue if length <= 80
         jle   edb.line.unpack.clear ; / 
-
+        ;------------------------------------------------------
+        ; Crash the system
+        ;------------------------------------------------------
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
@@ -119,11 +118,14 @@ edb.line.unpack.prepare:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
-        ; Check before copy
+        ; Sanity check on line length
         ;------------------------------------------------------
 edb.line.unpack.copy:     
         ci    tmp2,80               ; Check line length
         jle   !
+        ;------------------------------------------------------
+        ; Crash the system
+        ;------------------------------------------------------        
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system       
         ;------------------------------------------------------
