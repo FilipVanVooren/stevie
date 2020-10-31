@@ -35,22 +35,6 @@ edb.line.getlength:
         clr   @outparm1             ; Reset length
         clr   @outparm2             ; Reset SAMS bank
         ;------------------------------------------------------
-        ; Get length
-        ;------------------------------------------------------
-        bl    @idx.pointer.get      ; Get pointer to line
-                                    ; \ i  parm1    = Line number
-                                    ; | o  outparm1 = Pointer to line
-                                    ; / o  outparm2 = SAMS page
-
-        mov   @outparm1,tmp0        ; Is pointer set?
-        jeq   edb.line.getlength.exit
-                                    ; Exit early if NULL pointer
-        ;------------------------------------------------------
-        ; Map SAMS page if required
-        ;------------------------------------------------------
-        c     @outparm2,@edb.sams.page
-        jeq   !                     ; Page mapped, continue
-        ;------------------------------------------------------
         ; Map SAMS page
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get line
@@ -62,15 +46,17 @@ edb.line.getlength:
                                     ; / o  outparm2 = SAMS page
 
         mov   @outparm1,tmp0        ; Store pointer in tmp0
+        jeq   edb.line.getlength.null
+                                    ; Set length to 0 if null-pointer
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
-!       mov   *tmp0,tmp0            ; Get length into tmp0
-        mov   tmp0,@outparm1        ; Save length                
+        mov   *tmp0,tmp1            ; Get length into tmp0
+        mov   tmp1,@outparm1        ; Save length                
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
-        ci    tmp0,80               ; Line length <= 80 ?
+        ci    tmp1,80               ; Line length <= 80 ?
         jle   edb.line.getlength.exit
                                     ; Yes, exit
         ;------------------------------------------------------
@@ -79,11 +65,16 @@ edb.line.getlength:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
-        ; Exit
+        ; Set length to 0 if null-pointer
         ;------------------------------------------------------
+edb.line.getlength.null:
+        clr   @outparm1             ; Set length to 0, was a null-pointer
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------        
 edb.line.getlength.exit:
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,tmp1          ; Pop tmp1                
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 

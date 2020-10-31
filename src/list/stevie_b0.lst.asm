@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 201029-3076993
+0009               * File: stevie_b0.asm               ; Version 201031-152620
 0010               
 0011                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
@@ -20,7 +20,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.equ                 ; Version 201029-3076993
+0009               * File: equates.equ                 ; Version 201031-152620
 0010               *--------------------------------------------------------------
 0011               * Stevie memory map
 0012               *
@@ -306,7 +306,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0292               * Heap                                @>e000-efff  (4096 bytes)
 0293               *--------------------------------------------------------------
 0294      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -991,19 +991,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0112 614A 06A0  32         bl    @putat
      614C 244E 
 0113 614E 0300                   byte 3,0
-0114 6150 21B2                   data cpu.crash.msg.wp
+0114 6150 21B4                   data cpu.crash.msg.wp
 0115 6152 06A0  32         bl    @putat
      6154 244E 
 0116 6156 0400                   byte 4,0
-0117 6158 21B8                   data cpu.crash.msg.st
+0117 6158 21BA                   data cpu.crash.msg.st
 0118 615A 06A0  32         bl    @putat
      615C 244E 
 0119 615E 1600                   byte 22,0
-0120 6160 21BE                   data cpu.crash.msg.source
+0120 6160 21C0                   data cpu.crash.msg.source
 0121 6162 06A0  32         bl    @putat
      6164 244E 
 0122 6166 1700                   byte 23,0
-0123 6168 21DA                   data cpu.crash.msg.id
+0123 6168 21DC                   data cpu.crash.msg.id
 0124                       ;------------------------------------------------------
 0125                       ; Show crash registers WP, ST, R0 - R15
 0126                       ;------------------------------------------------------
@@ -1087,10 +1087,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0192               
 0193 61CE 06A0  32         bl    @setx                 ; Set cursor X position
      61D0 26B4 
-0194 61D2 0006                   data 6                ; \ i  p0 =  Cursor Y position
+0194 61D2 0004                   data 4                ; \ i  p0 =  Cursor Y position
 0195                                                   ; /
 0196               
-0197 61D4 06A0  32         bl    @putstr
+0197 61D4 06A0  32         bl    @putstr               ; Put '  >'
      61D6 242A 
 0198 61D8 21B0                   data cpu.crash.msg.marker
 0199               
@@ -1138,28 +1138,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0236                       even
 0237               
 0238               cpu.crash.msg.marker
-0239 622A 013E             byte  1
-0240 622B ....             text  '>'
+0239 622A 0320             byte  3
+0240 622B ....             text  '  >'
 0241                       even
 0242               
 0243               cpu.crash.msg.wp
-0244 622C 042A             byte  4
-0245 622D ....             text  '**WP'
+0244 622E 042A             byte  4
+0245 622F ....             text  '**WP'
 0246                       even
 0247               
 0248               cpu.crash.msg.st
-0249 6232 042A             byte  4
-0250 6233 ....             text  '**ST'
+0249 6234 042A             byte  4
+0250 6235 ....             text  '**ST'
 0251                       even
 0252               
 0253               cpu.crash.msg.source
-0254 6238 1B53             byte  27
-0255 6239 ....             text  'Source    stevie_b0.lst.asm'
+0254 623A 1B53             byte  27
+0255 623B ....             text  'Source    stevie_b0.lst.asm'
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 6254 1842             byte  24
-0260 6255 ....             text  'Build-ID  201029-3076993'
+0259 6256 1742             byte  23
+0260 6257 ....             text  'Build-ID  201031-152620'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5043,7 +5043,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F38 0040 
 0367 6F3A 0460  28         b     @main                 ; Give control to main program
      6F3C 3000 
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0115                                                   ; Spectra 2
 0116                       ;------------------------------------------------------
 0117                       ; End of File marker
@@ -5268,7 +5268,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119 7152 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7154 F20F 
 0120               
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0145                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5302,8 +5302,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0029                       even
 0030               
 0031               txt.about.build
-0032 71C2 1542             byte  21
-0033 71C3 ....             text  'Build: 201029-3076993'
+0032 71C2 1442             byte  20
+0033 71C3 ....             text  'Build: 201031-152620'
 0034                       even
 0035               
 0036               
@@ -5561,7 +5561,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0288                       even
 0289               
 0290               
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0146                       copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6070,7 +6070,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0504 7915 ....             text  'enter'
 0505                       even
 0506               
-**** **** ****     > stevie_b0.asm.3076993
+**** **** ****     > stevie_b0.asm.152620
 0147               
 0148                       ;------------------------------------------------------
 0149                       ; End of File marker
