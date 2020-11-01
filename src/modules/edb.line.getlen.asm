@@ -51,7 +51,7 @@ edb.line.getlength:
         ;------------------------------------------------------
         ; Process line prefix
         ;------------------------------------------------------
-        mov   *tmp0,tmp1            ; Get length into tmp0
+        mov   *tmp0,tmp1            ; Get length into tmp1
         mov   tmp1,@outparm1        ; Save length                
         ;------------------------------------------------------
         ; Sanity check

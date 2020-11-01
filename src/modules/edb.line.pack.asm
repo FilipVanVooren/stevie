@@ -129,17 +129,14 @@ edb.line.pack.update_index:
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
-!       mov   @rambuf+2,tmp0        ; Source for memory copy
+        mov   @rambuf+2,tmp0        ; Source for memory copy
         mov   @edb.next_free.ptr,tmp1 
                                     ; Address of line in editor buffer
 
         inct  @edb.next_free.ptr    ; Adjust pointer
 
         mov   @rambuf+4,tmp2        ; Get line length
-        inc   tmp1                  ; Skip MSB for now (compressed length)
-        swpb  tmp2
-        movb  tmp2,*tmp1+           ; Set line length as line prefix
-        swpb  tmp2
+        mov   tmp2,*tmp1+           ; Set line length as line prefix
         jeq   edb.line.pack.prepexit
                                     ; Nothing to copy if empty line
         ;------------------------------------------------------
@@ -150,13 +147,13 @@ edb.line.pack.copyline:
         jne   edb.line.pack.copyline.checkbyte
         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
         movb  *tmp0+,*tmp1+         ; / uneven address
-        jmp   !
+        jmp   edb.line.pack.copyline.align16
 
 edb.line.pack.copyline.checkbyte:
         ci    tmp2,1
         jne   edb.line.pack.copyline.block
         movb  *tmp0,*tmp1           ; Copy single byte
-        jmp   !
+        jmp   edb.line.pack.copyline.align16
 
 edb.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
@@ -166,7 +163,8 @@ edb.line.pack.copyline.block:
         ;------------------------------------------------------
         ; 5: Align pointer to multiple of 16 memory address
         ;------------------------------------------------------ 
-!       a     @rambuf+4,@edb.next_free.ptr
+edb.line.pack.copyline.align16:        
+        a     @rambuf+4,@edb.next_free.ptr
                                        ; Add length of line
 
         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.

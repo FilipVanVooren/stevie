@@ -65,7 +65,7 @@ fh.file.read.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         ;------------------------------------------------------
-        ; Sanity check
+        ; Sanity checks
         ;------------------------------------------------------
         mov   @fh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?
@@ -170,6 +170,11 @@ fh.file.read.edb.check_setpage:
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
+        ;------------------------------------------------------
+        ; 1d: Clear SAMS page
+        ;------------------------------------------------------ 
+        bl    @film
+              data >c000,>99,4092
         ;------------------------------------------------------
         ; Step 2: Read file record
         ;------------------------------------------------------
@@ -353,14 +358,18 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         bl    *tmp0                 ; Run callback function                                    
+
+        mov   @edb.lines,tmp0       ; Get number of lines
+        jeq   fh.file.read.edb.exit ; Exit if lines = 0 
+        dec   @edb.lines            ; One-time adjustment
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fh.file.read.edb.exit:
         mov   @fh.sams.hipage,@edb.sams.hipage 
                                     ; Set highest SAMS page in use
-
         clr   @fh.fopmode           ; Set FOP mode to idle operation
+
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
