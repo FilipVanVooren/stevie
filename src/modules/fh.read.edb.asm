@@ -171,10 +171,10 @@ fh.file.read.edb.check_setpage:
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
         ;------------------------------------------------------
-        ; 1d: Clear SAMS page
+        ; 1d: Fill new SAMS page with garbage (debug only)
         ;------------------------------------------------------ 
-        bl    @film
-              data >c000,>99,4092
+        ; bl  @film
+        ;     data >c000,>99,4092
         ;------------------------------------------------------
         ; Step 2: Read file record
         ;------------------------------------------------------
