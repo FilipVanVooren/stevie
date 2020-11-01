@@ -48,7 +48,7 @@ _idx.entry.delete.reorg.loop:
 * @parm2    = Line number of last line to check for reorg
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp2
+* tmp0,tmp1,tmp2,tmp3
 ********|*****|*********************|**************************
 idx.entry.delete:
         dect  stack
@@ -76,8 +76,14 @@ idx.entry.delete:
         ;------------------------------------------------------
         mov   @parm2,tmp2           ; Get last line to check
         s     @parm1,tmp2           ; Calculate loop         
-        jeq   idx.entry.delete.lastline
-                                    ; Special treatment if last line
+        jgt   idx.entry.delete.reorg
+                                    ; Reorganize if loop counter > 0
+        ;------------------------------------------------------
+        ; Special treatment for last line
+        ;------------------------------------------------------
+        ai    tmp0,idx.top          ; Add index base to offset        
+        clr   *tmp0                 ; Clear index entry        
+        jmp   idx.entry.delete.exit ; Exit early
         ;------------------------------------------------------
         ; Reorganize index entries 
         ;------------------------------------------------------
@@ -96,6 +102,8 @@ idx.entry.delete.reorg.complex:
 
         bl    @_idx.entry.delete.reorg
                                     ; Reorganize index
+                                    ; \ i  tmp0 = Index offset
+                                    ; / i  tmp2 = Loop count
 
 
         bl    @_idx.sams.mapcolumn.off 
@@ -109,9 +117,9 @@ idx.entry.delete.reorg.simple:
         bl    @_idx.entry.delete.reorg
         ;------------------------------------------------------
         ; Last line 
-        ;------------------------------------------------------      
-idx.entry.delete.lastline:
-        clr   *tmp0
+        ;------------------------------------------------------              
+idx.entry.delete.lastline:        
+        clr   *tmp0                 ; Clear index entry
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

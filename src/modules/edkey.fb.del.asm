@@ -139,7 +139,7 @@ edkey.action.del_eol.exit:
 edkey.action.del_line:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;-------------------------------------------------------
-        ; Special treatment if only 1 line in file
+        ; Special treatment if only 1 line in editor buffer
         ;-------------------------------------------------------
         mov   @edb.lines,tmp0
         jne   !
@@ -150,15 +150,26 @@ edkey.action.del_line:
         ; Delete entry in index
         ;-------------------------------------------------------
 !       bl    @fb.calc_pointer      ; Calculate position in frame buffer
+
         clr   @fb.row.dirty         ; Discard current line        
+
         mov   @fb.topline,@parm1    
         a     @fb.row,@parm1        ; Line number to remove
         mov   @edb.lines,@parm2     ; Last line to reorganize 
-        bl    @idx.entry.delete     ; Reorganize index
-        dec   @edb.lines            ; One line less in editor buffer
+
+        bl    @idx.entry.delete     ; Delete entry in index
+                                    ; \ i  @parm1 = Line in editor buffer
+                                    ; / i  @parm2 = Last line for index reorg
+        ;-------------------------------------------------------
+        ; Get length of current row in framebuffer
+        ;-------------------------------------------------------
+        bl   @edb.line.getlength2   ; Get length of current row
+                                    ; \ i  @fb.row        = Current row
+                                    ; / o  @fb.row.length = Length of row
         ;-------------------------------------------------------
         ; Refresh frame buffer and physical screen
         ;-------------------------------------------------------
+        dec   @edb.lines            ; One line less in editor buffer        
         mov   @fb.topline,@parm1
         bl    @fb.refresh           ; Refresh frame buffer
         seto  @fb.dirty             ; Trigger screen refresh
