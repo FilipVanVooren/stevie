@@ -141,11 +141,26 @@ edkey.action.del_line:
         ;-------------------------------------------------------
         ; Special treatment if only 1 line in editor buffer
         ;-------------------------------------------------------
-        mov   @edb.lines,tmp0
-        jne   !
+        mov   @edb.lines,tmp0       ; Only a single line?
+        jne   !                     ; No, more than single line, go reorg index
+        ;-------------------------------------------------------
+        ; Delete line 1 and exit early
+        ;-------------------------------------------------------
         clr   @fb.column            ; Column 0
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        b     @edkey.action.del_eol ; Delete until end of line
+
+        clr   @fb.row.dirty         ; Discard current line           
+        clr   @parm1
+        clr   @parm2
+
+        bl    @idx.entry.delete     ; Delete entry in index
+                                    ; \ i  @parm1 = Line in editor buffer
+                                    ; / i  @parm2 = Last line for index reorg
+
+        bl    @fb.refresh           ; Refresh frame buffer
+        seto  @fb.dirty             ; Trigger screen refresh
+
+        jmp   edkey.action.del_line.exit
         ;-------------------------------------------------------
         ; Delete entry in index
         ;-------------------------------------------------------
