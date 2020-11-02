@@ -141,8 +141,8 @@ edkey.action.del_line:
         ;-------------------------------------------------------
         ; Special treatment if only 1 line in editor buffer
         ;-------------------------------------------------------
-         mov   @edb.lines,tmp0       ; \
-         ci    tmp0,1                ; /  Only a single line?
+         mov   @edb.lines,tmp0      ; \
+         ci    tmp0,1               ; /  Only a single line?
          jeq   edkey.action.del_line.1stline
                                     ; Yes, handle single line and exit
         ;-------------------------------------------------------
