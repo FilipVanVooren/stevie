@@ -54,6 +54,7 @@ task.vdp.panes.cmdb.draw:
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task.vdp.panes.botline.draw
                                     ; No, skip update
+
         mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
@@ -79,6 +80,10 @@ task.vdp.panes.copy.framebuffer:
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
+        ci    tmp2,0                ; Something to copy?
+        jeq   task.vdp.panes.copy.eof
+                                    ; No, skip copy
+
         bl    @xpym2v               ; Copy to VDP
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = RAM source address
@@ -87,9 +92,11 @@ task.vdp.panes.copy.framebuffer:
         ;-------------------------------------------------------
         ; Draw EOF marker at end-of-file
         ;-------------------------------------------------------
+task.vdp.panes.copy.eof:        
+        clr   @fb.dirty             ; Reset frame buffer dirty flag        
         mov   @edb.lines,tmp0
         s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
-        inc   tmp0                  ; Y = Y + 1
+
         c     @fb.scrrows,tmp0      ; Hide if last line on screen
         jle   task.vdp.panes.botline.draw
                                     ; Skip drawing EOF maker

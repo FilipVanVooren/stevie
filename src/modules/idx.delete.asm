@@ -75,12 +75,16 @@ idx.entry.delete:
         ; Prepare for index reorg
         ;------------------------------------------------------
         mov   @parm2,tmp2           ; Get last line to check
+        jeq   idx.entry.delete.lastline
+                                    ; Exit early if last line = 0
+
         s     @parm1,tmp2           ; Calculate loop         
         jgt   idx.entry.delete.reorg
                                     ; Reorganize if loop counter > 0
         ;------------------------------------------------------
         ; Special treatment for last line
         ;------------------------------------------------------
+idx.entry.delete.lastline:        
         ai    tmp0,idx.top          ; Add index base to offset        
         clr   *tmp0                 ; Clear index entry        
         jmp   idx.entry.delete.exit ; Exit early
@@ -109,17 +113,16 @@ idx.entry.delete.reorg.complex:
         bl    @_idx.sams.mapcolumn.off 
                                     ; Restore memory window layout
 
-        jmp   idx.entry.delete.lastline
+        jmp   !
         ;------------------------------------------------------
         ; Simple index reorganization
         ;------------------------------------------------------
 idx.entry.delete.reorg.simple:
         bl    @_idx.entry.delete.reorg
         ;------------------------------------------------------
-        ; Last line 
+        ; Clear index entry (base + offset already set)
         ;------------------------------------------------------              
-idx.entry.delete.lastline:        
-        clr   *tmp0                 ; Clear index entry
+!       clr   *tmp0                 ; Clear index entry
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

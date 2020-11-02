@@ -285,7 +285,9 @@ fh.file.read.edb.preppointer:
         ; Step 4: Update index
         ;------------------------------------------------------
 fh.file.read.edb.prepindex:
-        mov   @edb.lines,@parm1     ; parm1 = Line number
+        mov   @edb.lines,@parm1     ; \ parm1 = Line number - 1
+        dec   @parm1                ; /
+        
                                     ; parm2 = Must allready be set!
         mov   @fh.sams.page,@parm3  ; parm3 = SAMS page number
                                     

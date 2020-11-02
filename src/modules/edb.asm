@@ -36,7 +36,9 @@ edb.init:
                                     ; Set pointer to next free line
 
         seto  @edb.insmode          ; Turn on insert mode for this editor buffer
-        clr   @edb.lines            ; Lines=0
+
+        li    tmp0,1
+        mov   tmp0,@edb.lines       ; Lines=1
         clr   @edb.rle              ; RLE compression off
 
         li    tmp0,txt.newfile      ; "New file"

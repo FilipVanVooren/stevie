@@ -20,8 +20,9 @@ edkey.action.enter:
 edkey.action.enter.upd_counter:
         mov   @fb.topline,tmp0
         a     @fb.row,tmp0
+        inc   tmp0
         c     tmp0,@edb.lines       ; Last line in editor buffer?
-        jne   edkey.action.newline  ; No, continue newline
+        jlt   edkey.action.newline  ; No, continue newline
         inc   @edb.lines            ; Total lines++
         ;-------------------------------------------------------
         ; Process newline 

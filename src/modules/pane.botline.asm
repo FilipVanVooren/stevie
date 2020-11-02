@@ -208,7 +208,6 @@ pane.botline.show_linecol.colstring:
         ;------------------------------------------------------
 pane.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
-        inc   @waux1                ; Offset 1
 
         bl    @putnum
               byte pane.botrow,73   ; YX
