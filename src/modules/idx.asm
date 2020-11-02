@@ -79,8 +79,9 @@ idx.init.exit:
 
 ***************************************************************
 * _idx.sams.mapcolumn.on
-* Flatten SAMS index pages into continious memory region.
-* Gives 20 KB of index space (2048 * 5 = 10240 lines per file) 
+* Flatten SAMS index pages into continuous memory region.
+* Gives 20 KB of index space (2048 * 5 = 10240 lines for each
+* editor buffer).
 *
 * >b000  1st index page
 * >c000  2nd index page
@@ -173,7 +174,7 @@ _idx.sams.mapcolumn.off:
         li    tmp2,5                ; Always 5 pages
         li    tmp3,tv.sams.b000     ; Pointer to fist SAMS page
         ;-------------------------------------------------------
-        ; Loop over banks
+        ; Loop over table in memory (@tv.sams.b000:@tv.sams.f000)
         ;------------------------------------------------------- 
 !       mov   *tmp3+,tmp0           ; Get SAMS page
 

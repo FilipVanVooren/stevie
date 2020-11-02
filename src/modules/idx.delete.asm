@@ -92,7 +92,7 @@ idx.entry.delete.lastline:
         ; Reorganize index entries 
         ;------------------------------------------------------
 idx.entry.delete.reorg:
-        mov   @parm2,tmp3
+        mov   @parm2,tmp3           ; Get last line to reorganize
         ci    tmp3,2048
         jle   idx.entry.delete.reorg.simple
                                     ; Do simple reorg only if single
@@ -102,13 +102,18 @@ idx.entry.delete.reorg:
         ;------------------------------------------------------
 idx.entry.delete.reorg.complex:        
         bl    @_idx.sams.mapcolumn.on
-                                    ; Index in continious memory region                
+                                    ; Index in continuous memory region                
+
+        ;-------------------------------------------------------
+        ; Recalculate index offset in continuous memory region
+        ;-------------------------------------------------------        
+        mov   @parm1,tmp0           ; Restore line number
+        sla   tmp0,1                ; Calculate offset
 
         bl    @_idx.entry.delete.reorg
                                     ; Reorganize index
                                     ; \ i  tmp0 = Index offset
                                     ; / i  tmp2 = Loop count
-
 
         bl    @_idx.sams.mapcolumn.off 
                                     ; Restore memory window layout
