@@ -87,8 +87,12 @@ pane.botline.show_changed:
         ;------------------------------------------------------        
 pane.botline.show_linecol:
         mov   @fb.row,@parm1 
-        bl    @fb.row2line 
-        inc   @outparm1
+        bl    @fb.row2line          ; Row to edtior line
+                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; | i @parm1      = Row in frame buffer
+                                    ; / o @outparm1   = Matching line in EB
+
+        inc   @outparm1             ; Add base 1
         ;------------------------------------------------------
         ; Show line
         ;------------------------------------------------------

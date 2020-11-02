@@ -65,6 +65,7 @@ edkey.action.npage:
 edkey.action.npage.sanity:        
         mov   @fb.topline,tmp0
         a     @fb.scrrows,tmp0
+        inc   tmp0                  ; Base 1 offset !
         c     tmp0,@edb.lines       ; Exit if on last page
         jgt   edkey.action.npage.exit
         ;-------------------------------------------------------
