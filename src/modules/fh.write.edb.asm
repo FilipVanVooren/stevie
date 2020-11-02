@@ -128,7 +128,7 @@ fh.file.write.edb.pabheader:
         ;------------------------------------------------------
 fh.file.write.edb.record:        
         c     @fh.records,@edb.lines
-        jgt   fh.file.write.edb.done 
+        jeq   fh.file.write.edb.done 
                                     ; Exit when all records processed
         ;------------------------------------------------------
         ; 1a: Unpack current line to framebuffer
