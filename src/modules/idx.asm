@@ -198,10 +198,10 @@ _idx.sams.mapcolumn.off.exit:
 
 
 ***************************************************************
-* idx._samspage.get
+* _idx.samspage.get
 * Get SAMS page for index
 ***************************************************************
-* bl @idx._samspage.get
+* bl @_idx.samspage.get
 *--------------------------------------------------------------
 * INPUT
 * tmp0 = Line number
