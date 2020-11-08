@@ -57,12 +57,13 @@ patterns.box:
 
 
 patterns.cr:
-        data  >ffff,>ffff,>ffff,>ffff ; 12. Inversed block
-        data  >0000,>0058,>9498,>9454 ; 13. Carriage return
+        data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+        data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+
         
 alphalock:
-        data  >0000,>00e0,>e0e0,>e0e0 ; 14. down
-        data  >00e0,>e0e0,>e0e0,>0000 ; 15. up
+        data  >0000,>00e0,>e0e0,>e0e0 ; 14. alpha lock down
+        data  >00e0,>e0e0,>e0e0,>0000 ; 15. alpha lock up
 
 
 vertline:
