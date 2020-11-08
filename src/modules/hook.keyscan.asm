@@ -22,7 +22,7 @@ hook.keyscan:
 *--------------------------------------------------------------
 * New key pressed
 *--------------------------------------------------------------
-        li    tmp0,2000             ; \
+        li    tmp0,500              ; \
 !       dec   tmp0                  ; | Inline keyboard bounce delay
         jne   -!                    ; /
         mov   @keycode1,@keycode2   ; Save as previous key

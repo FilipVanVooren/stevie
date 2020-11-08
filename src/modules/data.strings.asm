@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie v0.1b'
+txt.about.program  #string 'Stevie v0.1D'
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
 txt.about.author   #string '2018-2020 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'

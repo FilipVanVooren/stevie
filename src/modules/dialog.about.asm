@@ -93,7 +93,7 @@ dialog.about.content:
               byte   9,26
               data   txt.about.website
         bl    @putat      
-              byte   10,30
+              byte   11,29
               data   txt.about.build
 
         bl    @putat      
