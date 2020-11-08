@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 201108-1624345
+0009               * File: stevie_b0.asm               ; Version 201108-1674046
 0010               
 0011                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
@@ -20,7 +20,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.equ                 ; Version 201108-1624345
+0009               * File: equates.equ                 ; Version 201108-1674046
 0010               *--------------------------------------------------------------
 0011               * Stevie memory map
 0012               *
@@ -306,7 +306,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0292               * Heap                                @>e000-efff  (4096 bytes)
 0293               *--------------------------------------------------------------
 0294      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -335,10 +335,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0032               
 0034               
 0035 6014 0C53             byte  12
-0036 6015 ....             text  'STEVIE V0.1D'
+0036 6015 ....             text  'STEVIE V0.1E'
 0037                       even
 0038               
-0046               ;data  >0024,>64fc,>6020,>0000 ; 13. Carriage return (arrow)
+0046               
 0047               ***************************************************************
 0048               * Step 1: Switch to bank 0 (uniform code accross all banks)
 0049               ********|*****|*********************|**************************
@@ -1159,7 +1159,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6256 1842             byte  24
-0260 6257 ....             text  'Build-ID  201108-1624345'
+0260 6257 ....             text  'Build-ID  201108-1674046'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4615,7 +4615,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008               *--------------------------------------------------------------
 0009               *  REMARKS
 0010               *  Timer/Thread scheduler. Normally called from MAIN.
-0011               *  This is basically the kernel keeping everything togehter.
+0011               *  This is basically the kernel keeping everything together.
 0012               *  Do not forget to set BTIHI to highest slot in use.
 0013               *
 0014               *  Register usage in TMGR8 - TMGR11
@@ -5043,7 +5043,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F3A 0040 
 0367 6F3C 0460  28         b     @main                 ; Give control to main program
      6F3E 3000 
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0115                                                   ; Spectra 2
 0116                       ;------------------------------------------------------
 0117                       ; End of File marker
@@ -5280,7 +5280,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0125 7164 21F0      data  >21f0,>f20f       ; 9  Medium green/black | White/transparent  | inverse
      7166 F20F 
 0126               
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0145                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5295,7 +5295,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.program
 0012 7168 0C53             byte  12
-0013 7169 ....             text  'Stevie v0.1b'
+0013 7169 ....             text  'Stevie v0.1E'
 0014                       even
 0015               
 0016               txt.about.purpose
@@ -5315,7 +5315,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 71D4 1542             byte  21
-0033 71D5 ....             text  'Build: 201108-1624345'
+0033 71D5 ....             text  'Build: 201108-1674046'
 0034                       even
 0035               
 0036               
@@ -5573,7 +5573,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0288                       even
 0289               
 0290               
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0146                       copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6082,7 +6082,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0504 7927 ....             text  'enter'
 0505                       even
 0506               
-**** **** ****     > stevie_b0.asm.1624345
+**** **** ****     > stevie_b0.asm.1674046
 0147               
 0148                       ;------------------------------------------------------
 0149                       ; End of File marker

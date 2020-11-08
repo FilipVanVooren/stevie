@@ -85,14 +85,60 @@ fm.loadsave.cb.indicator1.exit:
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator2:
         ;------------------------------------------------------
+        ; Check if first page processed (speedup impression)
+        ;------------------------------------------------------
+        c     @fh.records,@fb.scrrows.max
+        jne   fm.loadsave.cb.indicator2.kb
+                                    ; Skip framebuffer refresh
+        ;------------------------------------------------------
+        ; Refresh framebuffer if first page processed
+        ;------------------------------------------------------
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2        
+
+        clr   @parm1                ;
+        bl    @fb.refresh           ; Refresh frame buffer
+                                    ; \ i  @parm1 = Line to start with
+                                    ; /
+
+        ;------------------------------------------------------
+        ; Refresh VDP content with framebuffer
+        ;------------------------------------------------------        
+        mov   @fb.scrrows.max,tmp1
+        mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
+                                    ; 16 bit part is in tmp2!
+        clr   tmp0                  ; VDP target address (1nd line on screen!)
+        mov   @fb.top.ptr,tmp1      ; RAM Source address
+
+        bl    @xpym2v               ; Copy to VDP
+                                    ; \ i  tmp0 = VDP target address
+                                    ; | i  tmp1 = RAM source address
+                                    ; / i  tmp2 = Bytes to copy
+
+        clr   @fb.dirty             ; Reset frame buffer dirty flag
+
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+        
+        ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------
+fm.loadsave.cb.indicator2.kb:
         c     @fh.kilobytes,@fh.kilobytes.prev
-        jeq   !
+        jne   !
+        b     *r11                  ; Exit early!
         ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
-        dect  stack
+!       dect  stack
         mov   r11,*stack            ; Save return address
 
         mov   @fh.kilobytes,@fh.kilobytes.prev
@@ -114,7 +160,7 @@ fm.loadsave.cb.indicator2:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator2.exit:
         mov   *stack+,r11           ; Pop R11
-!       b     *r11                  ; Return to caller
+        b     *r11                  ; Return to caller
 
 
 

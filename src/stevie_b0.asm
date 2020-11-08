@@ -31,11 +31,11 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1D'
+              #string 'STEVIE V0.1E'
         .else
-              #string 'STEVIE V0.1D'
+              #string 'STEVIE V0.1E'
         .endif         
-;data  >0024,>64fc,>6020,>0000 ; 13. Carriage return (arrow)
+
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
