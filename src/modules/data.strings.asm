@@ -21,9 +21,9 @@ txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
 txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
 txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
 
-txt.about.msg7     byte    56,13
+txt.about.msg7     byte    56,14
                    text    ' ALPHA LOCK up     '
-                   byte    12
+                   byte    15
                    text    ' ALPHA LOCK down   '
                    text    '  * Text changed'
 
@@ -47,9 +47,9 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
 
-txt.alpha.up       data >010d
-txt.alpha.down     data >010c
-txt.vertline       data >010e
+txt.alpha.up       data >010f
+txt.alpha.down     data >010e
+txt.vertline       data >0110
 
 
 ;--------------------------------------------------------------

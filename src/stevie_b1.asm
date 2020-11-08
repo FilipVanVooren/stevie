@@ -31,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1C'
+              #string 'STEVIE V0.1D'
         .else
-              #string 'STEVIE V0.1C'
+              #string 'STEVIE V0.1D'
         .endif
 
 ***************************************************************
@@ -86,7 +86,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.process.asm"    ; Process keyboard actions
+        copy  "edkey.key.process.asm"    
+                                    ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer              
         ;-----------------------------------------------------------------------
@@ -104,11 +105,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
-        copy  "edkey.cmdb.mov.asm"    ; Actions for movement keys 
-        copy  "edkey.cmdb.mod.asm"    ; Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm"   ; Miscelanneous actions
-        copy  "edkey.cmdb.file.asm"   ; File related actions
-        copy  "edkey.cmdb.dialog.asm" ; Dialog specific actions
+        copy  "edkey.cmdb.mov.asm"       ; Actions for movement keys 
+        copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
+        copy  "edkey.cmdb.file.asm"      ; File related actions
+        copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Editor configuration and SAMS memory
         ;-----------------------------------------------------------------------

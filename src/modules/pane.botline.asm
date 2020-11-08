@@ -28,9 +28,9 @@ pane.botline.draw:
         ; Show separators
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,42,14,1       ; Vertical line 1
-              byte pane.botrow,50,14,1       ; Vertical line 2
-              byte pane.botrow,71,14,1       ; Vertical line 3
+              byte pane.botrow,42,16,1       ; Vertical line 1
+              byte pane.botrow,50,16,1       ; Vertical line 2
+              byte pane.botrow,71,16,1       ; Vertical line 3
               data eol
         ;------------------------------------------------------
         ; Show buffer number

@@ -55,13 +55,18 @@ patterns.box:
         data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner        
         data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
 
+
+patterns.cr:
+        data  >ffff,>ffff,>ffff,>ffff ; 12. Inversed block
+        data  >0000,>0058,>9498,>9454 ; 13. Carriage return
+        
 alphalock:
-        data  >0000,>00e0,>e0e0,>e0e0 ; 12. down
-        data  >00e0,>e0e0,>e0e0,>0000 ; 13. up
+        data  >0000,>00e0,>e0e0,>e0e0 ; 14. down
+        data  >00e0,>e0e0,>e0e0,>0000 ; 15. up
 
 
 vertline:
-        data  >1010,>1010,>1010,>1010 ; 14. Vertical line
+        data  >1010,>1010,>1010,>1010 ; 16. Vertical line
 
 
 ***************************************************************

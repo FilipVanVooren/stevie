@@ -31,9 +31,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1C'
+              #string 'STEVIE V0.1D'
         .else
-              #string 'STEVIE V0.1C'
+              #string 'STEVIE V0.1D'
         .endif         
 
 ***************************************************************
