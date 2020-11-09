@@ -24,10 +24,10 @@ pane.action.colorscheme.cycle:
         mov   tmp0,*stack           ; Push tmp0
 
         mov   @tv.colorscheme,tmp0  ; Load color scheme index
-        ci    tmp0,tv.colorscheme.entries - 1
+        ci    tmp0,tv.colorscheme.entries
                                     ; Last entry reached?
         jlt   !
-        clr   tmp0
+        li    tmp0,1                ; Reset color scheme index
         jmp   pane.action.colorscheme.switch
 !       inc   tmp0
         ;-------------------------------------------------------
@@ -51,7 +51,6 @@ pane.action.colorscheme.switch:
         bl    @putat
               byte 0,64
               data txt.colorscheme  ; Show color scheme message
-
 
         mov   @waux1,@wyx           ; Restore cursor YX position
         ;-------------------------------------------------------
@@ -141,6 +140,8 @@ pane.action.colorscheme.load:
         ; Get framebuffer foreground/background color
         ;-------------------------------------------------------
 !       mov   @tv.colorscheme,tmp0  ; Get color scheme index 
+        dec   tmp0                  ; Internally work with base 0
+
         sla   tmp0,3                ; Offset into color scheme data table
         ai    tmp0,tv.colorscheme.table
                                     ; Add base for color scheme data table

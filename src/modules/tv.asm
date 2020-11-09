@@ -31,7 +31,9 @@ tv.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
-        clr   @tv.colorscheme       ; Set default color scheme 
+        li    tmp0,1                ; \ Set default color scheme 
+        mov   tmp0,@tv.colorscheme  ; /
+        
         clr   @tv.task.oneshot      ; Reset pointer to oneshot task
         soc   @wbit10,config        ; Assume ALPHA LOCK is down
         ;-------------------------------------------------------
