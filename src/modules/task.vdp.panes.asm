@@ -111,7 +111,7 @@ task.vdp.panes.draw_marker:
               data txt.marker       ; Display *EOF*
 
         bl    @setx   
-              data  5               ; Cursor after *EOF* string
+              data 5                ; Cursor after *EOF* string
         ;-------------------------------------------------------
         ; Clear rest of screen
         ;-------------------------------------------------------

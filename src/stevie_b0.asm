@@ -102,7 +102,7 @@ kickstart.copy:
 * Code data: Relocated code SP2 >2000 - >2eff (3840 bytes max)
 ********|*****|*********************|**************************
 reloc.sp2:
-        xorg >2000                  ; Relocate SP2 code to >2000
+        xorg  >2000                 ; Relocate SP2 code to >2000
         copy  "%%spectra2%%/runlib.asm"
                                     ; Spectra 2                                    
         ;------------------------------------------------------
@@ -133,10 +133,11 @@ main:
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
+        copy  "fb.asm"              ; Framebuffer 
+
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
-        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping
-
+        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------

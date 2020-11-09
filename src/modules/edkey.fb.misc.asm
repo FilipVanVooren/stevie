@@ -17,10 +17,3 @@ edkey.action.quit:
         ;-------------------------------------------------------
 !       bl    @f18rst               ; Reset and lock the F18A
         blwp  @0                    ; Exit
-
-
-*---------------------------------------------------------------
-* No action at all
-*---------------------------------------------------------------
-edkey.action.noop:
-        b     @hook.keyscan.bounce  ; Back to editor main

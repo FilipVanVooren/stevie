@@ -65,9 +65,10 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
+        copy  "fb.asm"              ; Framebuffer         
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
-        copy  "data.keymap.asm"     ; Data segment - Keaboard mapping        
+        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping        
         ;------------------------------------------------------
         ; End of File marker
         ;------------------------------------------------------        
@@ -118,7 +119,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------        
-        copy  "fb.asm"              ; Framebuffer 
         copy  "fb.util.asm"         ; Framebuffer utilities
         copy  "fb.refresh.asm"      ; Framebuffer refresh
         ;-----------------------------------------------------------------------

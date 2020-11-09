@@ -19,6 +19,10 @@ fm.loadsave.cb.indicator1:
               byte pane.botrow,0,32,80
               data EOL              ; Clear until end of line
         
+
+        mov   @tv.busycolor,@parm1
+        bl    @pane.action.colorcombo.botline
+
         mov   @fh.fopmode,tmp0      ; Check file operation mode
 
         ci    tmp0,fh.fopmode.writefile
@@ -127,7 +131,7 @@ fm.loadsave.cb.indicator2:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        
+
         ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------
@@ -178,6 +182,9 @@ fm.loadsave.cb.indicator3:
         bl    @hchar
               byte pane.botrow,3,32,50       
               data EOL              ; Erase loading indicator
+
+        mov   @tv.color,@parm1
+        bl    @pane.action.colorcombo.botline
 
         bl    @putnum
               byte pane.botrow,50   ; Show kilobytes processed

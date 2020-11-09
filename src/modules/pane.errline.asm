@@ -33,7 +33,7 @@ pane.errline.show:
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1
 
-        bl    @pane.action.colorscheme.errline
+        bl    @pane.action.colorcombo.errline
                                     ; \ Set colors for error line
                                     ; / i  parm1 = FG/BG color
                                     
@@ -91,7 +91,7 @@ pane.errline.hide:
         srl   tmp0,8                ; Right aligns
         mov   tmp0,@parm1           ; set foreground/background color        
 
-        bl    @pane.action.colorscheme.errline
+        bl    @pane.action.colorcombo.errline
                                     ; \ Set colors for error line
                                     ; / i  parm1 LSB = FG/BG color
         ;------------------------------------------------------

@@ -87,7 +87,7 @@ pane.botline.show_changed:
         ;------------------------------------------------------        
 pane.botline.show_linecol:
         mov   @fb.row,@parm1 
-        bl    @fb.row2line          ; Row to edtior line
+        bl    @fb.row2line          ; Row to editor line
                                     ; \ i @fb.topline = Top line in frame buffer 
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
