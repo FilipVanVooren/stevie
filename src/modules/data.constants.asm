@@ -128,7 +128,7 @@ tv.colorscheme.table:
 ;       ABCD  EFGH  IJKL  MNOP ; ---------------|-------------|-------|---------
  data  >f41f,>f001,>1b00,>0000 ; 1  whit/dblue  | black/whit  | whit  | black
  data  >f41c,>f00f,>1b00,>0000 ; 2  whit/dblue  | black/dgreen| whit  | whit
- data  >a11a,>f00f,>1b00,>0000 ; 3  yel/black   | black/dyel  | whit  | whit
+ data  >a11a,>f00f,>1f00,>0000 ; 3  yel/black   | black/dyel  | whit  | whit
  data  >2112,>f00f,>1b00,>0000 ; 4  mgreen/black| black/mgreen| white | whit
  data  >e11e,>f00f,>1b00,>0000 ; 5  grey/black  | black/grey  | white | whit
  data  >1771,>1006,>1b00,>0000 ; 6  black/cyan  | cyan/black  | black | ?
