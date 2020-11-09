@@ -12,16 +12,22 @@ fm.loadsave.cb.indicator1:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack        
+        mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
               byte pane.botrow,0,32,80
               data EOL              ; Clear until end of line
-        
 
         mov   @tv.busycolor,@parm1
         bl    @pane.action.colorcombo.botline
+                                    ; Load color combinaton for bottom line
+                                    ; \ i  @parm1 = Color combination
+                                    ; /
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
 
@@ -53,7 +59,8 @@ fm.loadsave.cb.indicator1.loading:
 fm.loadsave.cb.indicator1.filename:        
         bl    @at
               byte pane.botrow,11   ; Cursor YX position
-        mov   @parm1,tmp1           ; Get pointer to file descriptor
+        mov   @edb.filename.ptr,tmp1  
+                                    ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
         ; Display separators
@@ -74,7 +81,9 @@ fm.loadsave.cb.indicator1.filename:
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
@@ -178,13 +187,18 @@ fm.loadsave.cb.indicator2.exit:
 fm.loadsave.cb.indicator3:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack        
+        mov   @parm1,*stack         ; Push @parm1            
 
         bl    @hchar
-              byte pane.botrow,3,32,50       
+              byte pane.botrow,0,32,50       
               data EOL              ; Erase loading indicator
 
         mov   @tv.color,@parm1
         bl    @pane.action.colorcombo.botline
+                                    ; Load color combinaton for bottom line
+                                    ; \ i  @parm1 = Color combination
+                                    ; /
 
         bl    @putnum
               byte pane.botrow,50   ; Show kilobytes processed
@@ -201,6 +215,7 @@ fm.loadsave.cb.indicator3:
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator3.exit:
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
@@ -216,7 +231,9 @@ fm.loadsave.cb.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
-        mov   tmp0,*stack           ; Push tmp0     
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack        
+        mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
         ; Build I/O error message
         ;------------------------------------------------------
@@ -276,10 +293,17 @@ fm.loadsave.cb.fioerr.mgs3:
         ; Display I/O error message
         ;------------------------------------------------------
 !       bl    @pane.errline.show    ; Show error line
+
+        mov   @tv.color,@parm1      ; Restore "normal" color
+        bl    @pane.action.colorcombo.botline
+                                    ; Load color combinaton for bottom line
+                                    ; \ i  @parm1 = Color combination
+                                    ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.exit:
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

@@ -134,7 +134,7 @@ main:
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
         copy  "fb.asm"              ; Framebuffer 
-
+        copy  "edb.asm"             ; Editor Buffer        
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping

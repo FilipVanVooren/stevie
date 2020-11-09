@@ -66,6 +66,10 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
         copy  "fb.asm"              ; Framebuffer         
+        copy  "edb.asm"             ; Editor Buffer    
+        ;------------------------------------------------------
+        ; Resident Stevie modules >3000 - >3fff
+        ;------------------------------------------------------
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping        
@@ -132,7 +136,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.asm"             ; Editor Buffer initialisation
         copy  "edb.line.pack.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm" ; Get line length
@@ -184,7 +187,7 @@ main:
         copy  "data.keymap.actions.asm"
                                     ; Data segment - Keyboard actions
         .ifgt $, >7fff
-              .error 'Aborted. Bank 1 cartridge program too large!'
+              ;.error 'Aborted. Bank 1 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif

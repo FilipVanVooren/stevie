@@ -144,22 +144,25 @@ pane.action.colorscheme.load:
         sla   tmp0,3                ; Offset into color scheme data table
         ai    tmp0,tv.colorscheme.table
                                     ; Add base for color scheme data table
-        mov   *tmp0+,tmp3           ; Get colors  (framebuffer + bottom line)
-        mov   tmp3,@tv.color        ; Save colors
+        mov   *tmp0+,tmp3           ; Get colors ABCD
+        mov   tmp3,@tv.color        ; Save colors ABCD
         ;-------------------------------------------------------
         ; Get and save cursor color
         ;-------------------------------------------------------
-        mov   *tmp0,tmp4            ; Get cursor color
-        andi  tmp4,>00ff            ; Only keep LSB
+        mov   *tmp0,tmp4            ; Get colors EFGH
+        andi  tmp4,>00ff            ; Only keep LSB (GH)
         mov   tmp4,@tv.curcolor     ; Save cursor color
         ;-------------------------------------------------------
         ; Get CMDB pane foreground/background color
         ;-------------------------------------------------------
-        mov   *tmp0+,tmp4           ; Get CMDB pane FG/BG-color
-        mov   *tmp0+,@tv.busycolor  ; Save FG/BG-color bottom line (when busy)
-
-        andi  tmp4,>ff00            ; Only keep MSB
+        mov   *tmp0+,tmp4           ; Get colors EFGH again
+        andi  tmp4,>ff00            ; Only keep MSB (EF)
         srl   tmp4,8                ; MSB to LSB
+
+        mov   *tmp0+,tmp0           ; Get colors IJKL
+        andi  tmp0,>ff00            ; Only keep MSB (IJ)
+        srl   tmp0,8                ; MSB to LSB
+        mov   tmp0,@tv.busycolor    ; Save colors IJ
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -195,7 +198,7 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
-        ; Dump colors for error line pane (TAT)
+        ; Dump fixed colors for error line pane (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.errpane:        
         mov   @tv.error.visible,tmp0
