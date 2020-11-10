@@ -65,11 +65,12 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
-        copy  "fb.asm"              ; Framebuffer         
-        copy  "edb.asm"             ; Editor Buffer    
-        ;------------------------------------------------------
-        ; Resident Stevie modules >3000 - >3fff
-        ;------------------------------------------------------
+        copy  "fb.asm"              ; Framebuffer      
+        copy  "idx.asm"             ; Index management           
+        copy  "edb.asm"             ; Editor Buffer        
+        copy  "cmdb.asm"            ; Command buffer            
+        copy  "errline.asm"         ; Error line
+        copy  "tv.asm"              ; Main editor configuration        
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping        
@@ -116,9 +117,8 @@ main:
         copy  "edkey.cmdb.file.asm"      ; File related actions
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
-        ; Logic for Editor configuration and SAMS memory
+        ; Logic for SAMS memory
         ;-----------------------------------------------------------------------
-        copy  "tv.asm"              ; Main editor configuration        
         copy  "mem.asm"             ; SAMS Memory Management
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
@@ -128,7 +128,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
-        copy  "idx.asm"             ; Index management
         copy  "idx.update.asm"      ; Index management - Update entry
         copy  "idx.pointer.asm"     ; Index management - Get pointer to line
         copy  "idx.delete.asm"      ; Index management - delete slot
@@ -142,9 +141,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
-        copy  "cmdb.asm"            ; Command buffer shared code
         copy  "cmdb.cmd.asm"        ; Command line handling
-        copy  "errline.asm"         ; Error line
         ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
