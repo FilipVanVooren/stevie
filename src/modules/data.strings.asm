@@ -21,9 +21,9 @@ txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
 txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
 txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
 
-txt.about.msg7     byte    56,14
+txt.about.msg7     byte    56,15
                    text    ' ALPHA LOCK up     '
-                   byte    15
+                   byte    14
                    text    ' ALPHA LOCK down   '
                    text    '  * Text changed'
 

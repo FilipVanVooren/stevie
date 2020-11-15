@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 201115-44705
+0009               * File: stevie_b1.asm               ; Version 201115-47730
 0010               
 0011                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
@@ -20,7 +20,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: equates.equ                 ; Version 201115-44705
+0009               * File: equates.equ                 ; Version 201115-47730
 0010               *--------------------------------------------------------------
 0011               * Stevie memory map
 0012               *
@@ -311,7 +311,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0297               * Heap                                @>e000-efff  (4096 bytes)
 0298               *--------------------------------------------------------------
 0299      E000     heap.top          equ  >e000           ; Top of heap
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0012               
 0013               ***************************************************************
 0014               * Spectra2 core configuration
@@ -1094,7 +1094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21DC 1642             byte  22
-0260 21DD ....             text  'Build-ID  201115-44705'
+0260 21DD ....             text  'Build-ID  201115-47730'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4978,7 +4978,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EBE 0040 
 0367 2EC0 0460  28         b     @main                 ; Give control to main program
      2EC2 6036 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0057                                                   ; Relocated spectra2 in low MEMEXP, was
 0058                                                   ; copied to >2000 from ROM in bank 0
 0059                       ;------------------------------------------------------
@@ -5070,7 +5070,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0049 3046 C2F9  30         mov   *stack+,r11           ; Pop r11
 0050 3048 045B  20         b     *r11                  ; Return to caller
 0051               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0077                       copy  "idx.asm"             ; Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
@@ -5377,7 +5377,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0269 3146 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0270 3148 C2F9  30         mov   *stack+,r11           ; Pop r11
 0271 314A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0078                       copy  "edb.asm"             ; Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
@@ -5452,7 +5452,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057               
 0058               
 0059               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0079                       copy  "cmdb.asm"            ; Command buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
@@ -5519,7 +5519,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 31C4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 31C6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0052 31C8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0080                       copy  "errline.asm"         ; Error line
 **** **** ****     > errline.asm
 0001               * FILE......: errline.asm
@@ -5571,7 +5571,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0041 31EA C2F9  30         mov   *stack+,r11           ; Pop R11
 0042 31EC 045B  20         b     *r11                  ; Return to caller
 0043               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0081                       copy  "tv.asm"              ; Main editor configuration
 **** **** ****     > tv.asm
 0001               * FILE......: tv.asm
@@ -5660,7 +5660,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0075               tv.reset.exit:
 0076 3224 C2F9  30         mov   *stack+,r11           ; Pop R11
 0077 3226 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0082                       copy  "data.constants.asm"  ; Data Constants
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -5898,7 +5898,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3332 1B00 
      3334 0000 
 0138               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0083                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -5933,7 +5933,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 33A2 1342             byte  19
-0033 33A3 ....             text  'Build: 201115-44705'
+0033 33A3 ....             text  'Build: 201115-47730'
 0034                       even
 0035               
 0036               
@@ -5968,9 +5968,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0065                       even
 0066               
 0067               
-0068 3472 380E     txt.about.msg7     byte    56,14
+0068 3472 380F     txt.about.msg7     byte    56,15
 0069 3474 ....                        text    ' ALPHA LOCK up     '
-0070                                  byte    15
+0070                                  byte    14
 0071 3488 ....                        text    ' ALPHA LOCK down   '
 0072 349B ....                        text    '  * Text changed'
 0073               
@@ -6218,7 +6218,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0315                       even
 0316               
 0317               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0084                       copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6727,7 +6727,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0504 3BC7 ....             text  'enter'
 0505                       even
 0506               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0085                       ;------------------------------------------------------
 0086                       ; End of File marker
 0087                       ;------------------------------------------------------
@@ -6901,7 +6901,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0111               
 0112 60E0 0460  28         b     @tmgr                 ; Start timers and kthread
      60E2 2D14 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0100                       ;-----------------------------------------------------------------------
 0101                       ; Keyboard actions
 0102                       ;-----------------------------------------------------------------------
@@ -7049,7 +7049,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0116               edkey.key.process.exit:
 0117 616E 0460  28        b     @hook.keyscan.bounce   ; Back to editor main
      6170 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0104                                                   ; Process keyboard actions
 0105                       ;-----------------------------------------------------------------------
 0106                       ; Keyboard actions - Framebuffer
@@ -7145,7 +7145,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      61D0 68EA 
 0065 61D2 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      61D4 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0109                                                        ; Move left / right / home / end
 0110                       copy  "edkey.fb.mov.word.asm"    ; Move previous / next word
 **** **** ****     > edkey.fb.mov.word.asm
@@ -7328,7 +7328,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6286 7522 
 0152               
 0153               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0111                       copy  "edkey.fb.mov.updown.asm"  ; Move line up / down
 **** **** ****     > edkey.fb.mov.updown.asm
 0001               * FILE......: edkey.fb.mov.updown.asm
@@ -7506,7 +7506,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6340 68EA 
 0130 6342 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
      6344 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0112                       copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
 **** **** ****     > edkey.fb.mov.paging.asm
 0001               * FILE......: edkey.fb.mov.paging.asm
@@ -7620,7 +7620,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0086               edkey.action.npage.exit:
 0087 63A8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      63AA 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0113                       copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
 **** **** ****     > edkey.fb.mov.topbot.asm
 0001               * FILE......: edkey.fb.mov.topbot.asm
@@ -7739,7 +7739,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0093               edkey.action.bot.exit:
 0094 6404 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      6406 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0114                       copy  "edkey.fb.del.asm"         ; Delete characters or lines
 **** **** ****     > edkey.fb.del.asm
 0001               * FILE......: edkey.fb.del.asm
@@ -8008,7 +8008,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0202               edkey.action.del_line.exit:
 0203 652E 0460  28         b     @edkey.action.home    ; Move cursor to home and return
      6530 61A0 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0115                       copy  "edkey.fb.ins.asm"         ; Insert characters or lines
 **** **** ****     > edkey.fb.ins.asm
 0001               * FILE......: edkey.fb.ins.asm
@@ -8181,7 +8181,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0127 65EC 0460  28         b     @edkey.action.home    ; Position cursor at home
      65EE 61A0 
 0128               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0116                       copy  "edkey.fb.mod.asm"         ; Actions for modifier keys
 **** **** ****     > edkey.fb.mod.asm
 0001               * FILE......: edkey.fb.mod.asm
@@ -8396,7 +8396,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0160               edkey.action.char.exit:
 0161 66D0 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      66D2 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0117                       copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
 **** **** ****     > edkey.fb.misc.asm
 0001               * FILE......: edkey.fb.misc.asm
@@ -8421,7 +8421,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      66E0 2766 
 0018 66E2 0420  54         blwp  @0                    ; Exit
      66E4 0000 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0118                       copy  "edkey.fb.file.asm"        ; File related actions
 **** **** ****     > edkey.fb.file.asm
 0001               * FILE......: edkey.fb.fíle.asm
@@ -8491,7 +8491,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0053               _edkey.action.fb.fname.doit.exit:
 0054 6718 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      671A 63C8 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0119                       ;-----------------------------------------------------------------------
 0120                       ; Keyboard actions - Command Buffer
 0121                       ;-----------------------------------------------------------------------
@@ -8581,7 +8581,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0064                       ;-------------------------------------------------------
 0065 676E 0460  28         b     @hook.keyscan.bounce   ; Back to editor main
      6770 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0123                       copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
 **** **** ****     > edkey.cmdb.mod.asm
 0001               * FILE......: edkey.cmdb.mod.asm
@@ -8712,7 +8712,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0111               edkey.action.cmdb.enter.exit:
 0112 67BA 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      67BC 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0124                       copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
 **** **** ****     > edkey.cmdb.misc.asm
 0001               * FILE......: edkey.cmdb.misc.asm
@@ -8749,7 +8749,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0028               
 0029               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0125                       copy  "edkey.cmdb.file.asm"      ; File related actions
 **** **** ****     > edkey.cmdb.file.asm
 0001               * FILE......: edkey.cmdb.fíle.asm
@@ -8832,7 +8832,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0062               edkey.action.cmdb.loadsave.exit:
 0063 6824 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      6826 63C8 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0126                       copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
 **** **** ****     > edkey.cmdb.dialog.asm
 0001               * FILE......: edkey.cmdb.dialog.asm
@@ -8945,7 +8945,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0093               edkey.action.cmdb.close.dialog.exit:
 0094 686A 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
      686C 7522 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0127                       ;-----------------------------------------------------------------------
 0128                       ; Logic for SAMS memory
 0129                       ;-----------------------------------------------------------------------
@@ -9091,7 +9091,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0120               
 0121               
 0122               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0131                       ;-----------------------------------------------------------------------
 0132                       ; Logic for Framebuffer
 0133                       ;-----------------------------------------------------------------------
@@ -9266,7 +9266,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0148               fb.get.firstnonblank.exit:
 0149 6956 C2F9  30         mov   *stack+,r11           ; Pop r11
 0150 6958 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0135                       copy  "fb.refresh.asm"      ; Framebuffer refresh
 **** **** ****     > fb.refresh.asm
 0001               * FILE......: fb.refresh.asm
@@ -9381,7 +9381,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0091 69C4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0092 69C6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0093 69C8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0136                       ;-----------------------------------------------------------------------
 0137                       ; Logic for Index management
 0138                       ;-----------------------------------------------------------------------
@@ -9478,7 +9478,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0075 6A16 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0076 6A18 C2F9  30         mov   *stack+,r11           ; Pop r11
 0077 6A1A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0140                       copy  "idx.pointer.asm"     ; Index management - Get pointer to line
 **** **** ****     > idx.pointer.asm
 0001               * FILE......: idx.pointer.asm
@@ -9566,7 +9566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0073 6A62 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0074 6A64 C2F9  30         mov   *stack+,r11           ; Pop r11
 0075 6A66 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0141                       copy  "idx.delete.asm"      ; Index management - delete slot
 **** **** ****     > idx.delete.asm
 0001               * FILE......: idx_delete.asm
@@ -9715,7 +9715,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0130 6AD6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0131 6AD8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0132 6ADA 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0142                       copy  "idx.insert.asm"      ; Index management - insert slot
 **** **** ****     > idx.insert.asm
 0001               * FILE......: idx.insert.asm
@@ -9885,7 +9885,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0148 6B64 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0149 6B66 C2F9  30         mov   *stack+,r11           ; Pop r11
 0150 6B68 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0143                       ;-----------------------------------------------------------------------
 0144                       ; Logic for Editor Buffer
 0145                       ;-----------------------------------------------------------------------
@@ -10130,7 +10130,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0188 6C58 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0189 6C5A C2F9  30         mov   *stack+,r11           ; Pop R11
 0190 6C5C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0147                       copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
 **** **** ****     > edb.line.unpack.asm
 0001               * FILE......: edb.line.unpack.asm
@@ -10310,7 +10310,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0141 6D08 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0142 6D0A C2F9  30         mov   *stack+,r11           ; Pop r11
 0143 6D0C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0148                       copy  "edb.line.getlen.asm" ; Get line length
 **** **** ****     > edb.line.getlen.asm
 0001               * FILE......: edb.line.getlen.asm
@@ -10445,7 +10445,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0114 6D6E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0115 6D70 C2F9  30         mov   *stack+,r11           ; Pop R11
 0116 6D72 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0149                       ;-----------------------------------------------------------------------
 0150                       ; Command buffer handling
 0151                       ;-----------------------------------------------------------------------
@@ -10534,7 +10534,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0065 6DC0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0066 6DC2 C2F9  30         mov   *stack+,r11           ; Pop r11
 0067 6DC4 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0153                       copy  "cmdb.cmd.asm"        ; Command line handling
 **** **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -10690,7 +10690,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139 6E20 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 6E22 C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 6E24 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0154                       ;-----------------------------------------------------------------------
 0155                       ; File handling
 0156                       ;-----------------------------------------------------------------------
@@ -11207,7 +11207,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0391                       ; byte  12                  ;  9    - File descriptor length
 0392                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0393                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0158                       copy  "fh.write.edb.asm"    ; Write editor buffer to file
 **** **** ****     > fh.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
@@ -11515,7 +11515,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0233 71A8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0234 71AA C2F9  30         mov   *stack+,r11           ; Pop R11
 0235 71AC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0159                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm.load.asm
@@ -11704,7 +11704,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0149 7260 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0150 7262 C2F9  30         mov   *stack+,r11           ; Pop R11
 0151 7264 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0160                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
 **** **** ****     > fm.save.asm
 0001               * FILE......: fm.save.asm
@@ -11800,7 +11800,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0073 72B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0074 72BA C2F9  30         mov   *stack+,r11           ; Pop R11
 0075 72BC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0161                       copy  "fm.callbacks.asm"    ; Callbacks for file operations
 **** **** ****     > fm.callbacks.asm
 0001               * FILE......: fm.callbacks.asm
@@ -12185,7 +12185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0307 7468 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0308 746A C2F9  30         mov   *stack+,r11           ; Pop R11
 0309 746C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0162                       copy  "fm.browse.asm"       ; File manager browse support routines
 **** **** ****     > fm.browse.asm
 0001               * FILE......: fm.browse.asm
@@ -12314,7 +12314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0110 74EA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0111 74EC C2F9  30         mov   *stack+,r11           ; Pop R11
 0112 74EE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0163                       ;-----------------------------------------------------------------------
 0164                       ; User hook, background tasks
 0165                       ;-----------------------------------------------------------------------
@@ -12378,7 +12378,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0043 752A 0460  28         b     @hookok               ; Return
      752C 2D18 
 0044               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0167                       copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
 **** **** ****     > task.vdp.panes.asm
 0001               * FILE......: task.vdp.panes.asm
@@ -12566,7 +12566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0144               task.vdp.panes.exit:
 0145 75F0 0460  28         b     @slotok
      75F2 2D94 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0168                       copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
 **** **** ****     > task.vdp.sat.asm
 0001               * FILE......: task.vdp.sat.asm
@@ -12623,7 +12623,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0040               task.vdp.copy.sat.exit:
 0041 7624 0460  28         b     @slotok               ; Exit task
      7626 2D94 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0169                       copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
 **** **** ****     > task.vdp.cursor.asm
 0001               * FILE......: task.vdp.cursor.asm
@@ -12708,7 +12708,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0065               task.vdp.cursor.exit:
 0066 7672 0460  28         b     @slotok                ; Exit task
      7674 2D94 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0170                       copy  "task.oneshot.asm"    ; Task - One shot
 **** **** ****     > task.oneshot.asm
 0001               task.oneshot:
@@ -12723,7 +12723,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009               task.oneshot.exit:
 0010 767E 0460  28         b     @slotok                ; Exit task
      7680 2D94 
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0171                       ;-----------------------------------------------------------------------
 0172                       ; Screen pane utilities
 0173                       ;-----------------------------------------------------------------------
@@ -12942,7 +12942,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0186               pane.cursor.blink.exit:
 0187 7726 C2F9  30         mov   *stack+,r11           ; Pop R11
 0188 7728 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0175                       copy  "pane.utils.colorscheme.asm"
 **** **** ****     > pane.utils.colorscheme.asm
 0001               * FILE......: pane.utils.colorscheme.asm
@@ -13363,7 +13363,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0343 78E8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0344 78EA C2F9  30         mov   *stack+,r11           ; Pop R11
 0345 78EC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0176                                                   ; Colorscheme handling in panes
 0177                       ;-----------------------------------------------------------------------
 0178                       ; Screen panes
@@ -13372,7 +13372,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > pane.cmdb.asm
 0001               * FILE......: pane.cmdb.asm
 0002               * Purpose...: Stevie Editor - Command Buffer pane
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0181                       copy  "pane.cmdb.show.asm"  ; Show command buffer pane
 **** **** ****     > pane.cmdb.show.asm
 0001               * FILE......: pane.cmdb.show.asm
@@ -13456,7 +13456,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0063 7938 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 793A C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 793C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0182                       copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
 **** **** ****     > pane.cmdb.hide.asm
 0001               * FILE......: pane.cmdb.hide.asm
@@ -13540,7 +13540,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0064               pane.cmdb.hide.exit:
 0065 797C C2F9  30         mov   *stack+,r11           ; Pop r11
 0066 797E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0183                       copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
 **** **** ****     > pane.cmdb.draw.asm
 0001               * FILE......: pane.cmdb.draw.asm
@@ -13765,7 +13765,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0169 7A86 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0170 7A88 C2F9  30         mov   *stack+,r11           ; Pop r11
 0171 7A8A 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0184               
 0185                       copy  "pane.errline.asm"    ; Error line
 **** **** ****     > pane.errline.asm
@@ -13879,7 +13879,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0097 7ADC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0098 7ADE C2F9  30         mov   *stack+,r11           ; Pop r11
 0099 7AE0 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0186                       copy  "pane.botline.asm"    ; Status line
 **** **** ****     > pane.botline.asm
 0001               * FILE......: pane.botline.asm
@@ -14173,7 +14173,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0222 7C32 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0223 7C34 C2F9  30         mov   *stack+,r11           ; Pop r11
 0224 7C36 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0187                       ;-----------------------------------------------------------------------
 0188                       ; Dialogs
 0189                       ;-----------------------------------------------------------------------
@@ -14340,7 +14340,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0125 7D06 C2F9  30         mov   *stack+,r11           ; Pop r11
 0126 7D08 045B  20         b     *r11                  ; Return
 0127               
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0191                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -14418,7 +14418,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0060 7D44 0460  28         b     @edkey.action.cmdb.show
      7D46 67C4 
 0061                                                   ; Show dialog in CMDB pane
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0192                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -14488,7 +14488,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 7D84 0460  28         b     @edkey.action.cmdb.show
      7D86 67C4 
 0051                                                   ; Show dialog in CMDB pane
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0193                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -14543,7 +14543,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0039 7DB4 0460  28         b     @edkey.action.cmdb.show
      7DB6 67C4 
 0040                                                   ; Show dialog in CMDB pane
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0194                       copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
 **** **** ****     > dialog.block.asm
 0001               * FILE......: dialog.block.asm
@@ -14598,7 +14598,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0039 7DE4 0460  28         b     @edkey.action.cmdb.show
      7DE6 67C4 
 0040                                                   ; Show dialog in CMDB pane
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0195                       ;-----------------------------------------------------------------------
 0196                       ; Program data
 0197                       ;-----------------------------------------------------------------------
@@ -14795,7 +14795,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0101                       ; End of list
 0102                       ;-------------------------------------------------------
 0103 7EF2 FFFF             data  EOL                           ; EOL
-**** **** ****     > stevie_b1.asm.44705
+**** **** ****     > stevie_b1.asm.47730
 0199                                                   ; Data segment - Keyboard actions
 0203 7EF4 7EF4                   data $                ; Bank 1 ROM size OK.
 0205               
