@@ -1,11 +1,11 @@
-* FILE......: edb.block.asm
-* Purpose...: Stevie Editor - Block operations
+* FILE......: edb.line.mark.asm
+* Purpose...: Stevie Editor - Mark line for block operation
 
 ***************************************************************
-* edb.line.getlength
-* Get length of specified line
+* edb.line.mark.m1
+* Mark line for block operation
 ***************************************************************
-*  bl   @edb.line.getlength
+*  bl   @edb.line.mark
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = Line number
@@ -17,7 +17,7 @@
 * Register usage
 * tmp0,tmp1
 ********|*****|*********************|**************************
-edb.line.getlength:
+edb.line.mark.m1:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack
@@ -27,5 +27,13 @@ edb.line.getlength:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        clr   @outparm1             ; Reset length
+        mov   @parm1,@edb.block.m1  ; Set block marker M1
         clr   @outparm2             ; Reset SAMS bank
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------        
+edb.line.mark.m1.exit:
+        mov   *stack+,tmp1          ; Pop tmp1                
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller

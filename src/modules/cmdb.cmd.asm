@@ -1,4 +1,4 @@
-* FILE......: cmdb_cmd.asm
+* FILE......: cmdb.cmd.asm
 * Purpose...: Stevie Editor - Command line
 
 ***************************************************************

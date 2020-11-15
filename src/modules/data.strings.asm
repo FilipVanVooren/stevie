@@ -78,12 +78,12 @@ txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 
 
 ;--------------------------------------------------------------
-; Dialog "Unsaved changes"
+; Dialog "Block move/copy/delete/save"
 ;--------------------------------------------------------------
-txt.head.block     #string 'Block move/copy/delete '
-txt.info.block     #string 'Mark text block and press a control key for action.'
-txt.hint.block     #string 'HINT: Mark block begin/end with FCTN-SPACE.'
-txt.keys.block     #string 'F9=Back  ^M=Move block  ^C=Copy block  ^D=Delete block'
+txt.head.block     #string 'Block move/copy/delete/save '
+txt.info.block     #string 'M1=..... (start line)   M2=..... (end line)   M3=..... (target)'
+txt.hint.block     #string 'HINT: Mark block begin/end with SPACE character'
+txt.keys.block     #string 'F9=Back   ^M=Move   ^C=Copy   ^D=Delete   ^S=Save   ^R=Reset M1/M2/M3'
 
 
 ;--------------------------------------------------------------

@@ -141,6 +141,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
+        copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
         copy  "cmdb.cmd.asm"        ; Command line handling
         ;-----------------------------------------------------------------------
         ; File handling
@@ -168,7 +169,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
-        copy  "pane.cmdb.asm"       ; Command buffer        
+        copy  "pane.cmdb.asm"       ; Command buffer 
+        copy  "pane.cmdb.show.asm"  ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
+
         copy  "pane.errline.asm"    ; Error line
         copy  "pane.botline.asm"    ; Status line
         ;-----------------------------------------------------------------------
