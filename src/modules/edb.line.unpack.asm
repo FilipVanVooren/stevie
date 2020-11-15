@@ -1,11 +1,6 @@
 * FILE......: edb.line.unpack.asm
 * Purpose...: Stevie Editor - Editor Buffer unpack line
 
-*//////////////////////////////////////////////////////////////
-*          Stevie Editor - Editor Buffer unpack line
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * edb.line.unpack
 * Unpack specified line to framebuffer

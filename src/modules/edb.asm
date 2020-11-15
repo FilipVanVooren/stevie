@@ -1,10 +1,6 @@
 * FILE......: edb.asm
 * Purpose...: Stevie Editor - Editor Buffer module
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Editor Buffer implementation
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * edb.init
 * Initialize Editor buffer
@@ -39,7 +35,9 @@ edb.init:
 
         li    tmp0,1
         mov   tmp0,@edb.lines       ; Lines=1
-        clr   @edb.rle              ; RLE compression off
+
+        seto  @edb.block.m1         ; Reset block start line marker
+        seto  @edb.block.m2         ; Reset block end line marker
 
         li    tmp0,txt.newfile      ; "New file"
         mov   tmp0,@edb.filename.ptr

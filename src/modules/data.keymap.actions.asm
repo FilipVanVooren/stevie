@@ -27,7 +27,6 @@ keymap_actions.editor:
         data  key.fctn.1, pane.focus.fb, edkey.action.del_char
         data  key.fctn.3, pane.focus.fb, edkey.action.del_line        
         data  key.fctn.4, pane.focus.fb, edkey.action.del_eol
-
         ;-------------------------------------------------------
         ; Modifier keys - Insert
         ;-------------------------------------------------------
@@ -47,6 +46,7 @@ keymap_actions.editor:
         data  key.fctn.7, pane.focus.fb, edkey.action.about
         data  key.ctrl.k, pane.focus.fb, dialog.save                
         data  key.ctrl.l, pane.focus.fb, dialog.load
+        data  key.ctrl.m, pane.focus.fb, dialog.block
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -68,6 +68,13 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         data  key.enter, id.dialog.unsaved, dialog.save
+        ;-------------------------------------------------------
+        ; Dialog specific: Block move/copy/delete
+        ;-------------------------------------------------------
+        data  key.ctrl.e, id.dialog.block, edkey.action.ppage
+        data  key.ctrl.x, id.dialog.block, edkey.action.npage
+        data  key.ctrl.t, id.dialog.block, edkey.action.top
+        data  key.ctrl.b, id.dialog.block, edkey.action.bot
         ;-------------------------------------------------------
         ; Dialog specific: About
         ;-------------------------------------------------------

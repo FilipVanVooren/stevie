@@ -1,7 +1,6 @@
 * FILE......: edkey.cmdb.mov.asm
 * Purpose...: Actions for movement keys in command buffer pane.
 
-
 *---------------------------------------------------------------
 * Cursor left
 *---------------------------------------------------------------

@@ -71,9 +71,20 @@ txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
 txt.head.unsaved   #string 'Unsaved changes '
+txt.info.unsaved   #string 'You are about to lose changes to the current file!'
 txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
-txt.warn.unsaved   #string 'You are about to lose changes to the current file!'
+
+
+
+;--------------------------------------------------------------
+; Dialog "Unsaved changes"
+;--------------------------------------------------------------
+txt.head.block     #string 'Block move/copy/delete '
+txt.info.block     #string 'Mark text block and press a control key for action.'
+txt.hint.block     #string 'HINT: Mark block begin/end with FCTN-SPACE.'
+txt.keys.block     #string 'F9=Back  ^M=Move block  ^C=Copy block  ^D=Delete block'
+
 
 ;--------------------------------------------------------------
 ; Dialog "About"

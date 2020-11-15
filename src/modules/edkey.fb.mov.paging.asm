@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.mov.paging.asm
 * Purpose...: Move page up / down in editor buffer
 
-
 *---------------------------------------------------------------
 * Previous page
 *---------------------------------------------------------------

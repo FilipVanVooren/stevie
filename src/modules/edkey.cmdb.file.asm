@@ -1,7 +1,6 @@
 * FILE......: edkey.cmdb.fíle.asm
 * Purpose...: File related actions in command buffer pane.
 
-
 *---------------------------------------------------------------
 * Load or save DV 80 file
 *---------------------------------------------------------------

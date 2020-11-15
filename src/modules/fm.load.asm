@@ -1,7 +1,6 @@
 * FILE......: fm.load.asm
 * Purpose...: File Manager - Load file into editor buffer
 
-
 ***************************************************************
 * fm.loadfile
 * Load file into editor buffer

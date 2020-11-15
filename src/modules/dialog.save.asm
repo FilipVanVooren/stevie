@@ -1,10 +1,5 @@
 * FILE......: dialog.save.asm
-* Purpose...: Dialog "Save file"
-
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Save DV80 file
-*//////////////////////////////////////////////////////////////
-
+* Purpose...: Dialog "Save DV80 file"
 
 ***************************************************************
 * dialog.save
@@ -39,6 +34,8 @@ dialog.save:
 
         li    tmp0,txt.head.save
         mov   tmp0,@cmdb.panhead    ; Header for dialog
+
+        clr   @cmdb.paninfo         ; No info message, do input prompt
 
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog

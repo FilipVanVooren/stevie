@@ -1,11 +1,6 @@
 * FILE......: fb.refresh.asm
 * Purpose...: Stevie Editor - Framebuffer utilities
 
-*//////////////////////////////////////////////////////////////
-*          RAM Framebuffer for handling screen output
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * fb.row2line
 * Calculate line in editor buffer

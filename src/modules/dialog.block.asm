@@ -1,11 +1,11 @@
-* FILE......: dialog.unsaved.asm
-* Purpose...: Dialog "Unsaved changes"
+* FILE......: dialog.block.asm
+* Purpose...: Dialog "Block move/copy/delete"
 
 ***************************************************************
-* dialog.unsaved
-* Open Dialog "Unsaved changes"
+* dialog.block
+* Open Dialog for block delete/move/copy
 ***************************************************************
-* b @dialog.unsaved
+* b @dialog.save
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,20 +18,20 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.unsaved:
-        li    tmp0,id.dialog.unsaved
+dialog.block:
+        li    tmp0,id.dialog.block
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.unsaved
+        li    tmp0,txt.head.block
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.info.unsaved
+        li    tmp0,txt.info.block
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
-        li    tmp0,txt.hint.unsaved
+        li    tmp0,txt.hint.block
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
-        li    tmp0,txt.keys.unsaved
+        li    tmp0,txt.keys.block
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.hide     ; Hide cursor 

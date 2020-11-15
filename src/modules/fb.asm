@@ -1,10 +1,6 @@
 * FILE......: fb.asm
 * Purpose...: Stevie Editor - Framebuffer module
 
-*//////////////////////////////////////////////////////////////
-*          RAM Framebuffer for handling screen output
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * fb.init 
 * Initialize framebuffer

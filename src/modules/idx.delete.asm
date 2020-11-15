@@ -1,14 +1,6 @@
 * FILE......: idx_delete.asm
 * Purpose...: Stevie Editor - Delete index slot
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Index Management
-*//////////////////////////////////////////////////////////////
-
-
-
-
-
 ***************************************************************
 * _idx.entry.delete.reorg
 * Reorganize index slot entries

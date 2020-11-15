@@ -1,7 +1,6 @@
 * FILE......: fm.browse.asm
 * Purpose...: File Manager - File browse support routines
 
-
 *---------------------------------------------------------------
 * Increase/Decrease last-character of current filename
 *---------------------------------------------------------------

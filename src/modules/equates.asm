@@ -96,14 +96,15 @@ fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 pane.botrow               equ  29      ; Bottom row on screen
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+;-----------------------------------------------------------------
+;   Dialog ID's >= 100 indicate that command prompt should be 
+;   hidden and no characters added to CMDB keyboard buffer
+;-----------------------------------------------------------------
 id.dialog.load            equ  10      ; ID dialog "Load DV 80 file"
 id.dialog.save            equ  11      ; ID dialog "Save DV 80 file"
-;-----------------------------------------------------------------
-;   Dialog ID's > 100 indicate that command prompt should be 
-;   hidden and no characters added to buffer
-;-----------------------------------------------------------------
 id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
-id.dialog.about           equ  102     ; ID dialog "About"
+id.dialog.block           equ  102     ; ID dialog "Block move/copy/delete"
+id.dialog.about           equ  103     ; ID dialog "About"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -189,14 +190,15 @@ edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
 edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-edb.rle           equ  edb.struct + 12 ; RLE compression activated
-edb.filename.ptr  equ  edb.struct + 14 ; Pointer to length-prefixed string
+edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = null)
+edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = null)
+edb.filename.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
                                        ; with current filename.
-edb.filetype.ptr  equ  edb.struct + 16 ; Pointer to length-prefixed string
+edb.filetype.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
                                        ; with current file type.                                    
-edb.sams.page     equ  edb.struct + 18 ; Current SAMS page
-edb.sams.hipage   equ  edb.struct + 20 ; Highest SAMS page in use
-edb.free          equ  edb.struct + 22 ; End of structure
+edb.sams.page     equ  edb.struct + 20 ; Current SAMS page
+edb.sams.hipage   equ  edb.struct + 22 ; Highest SAMS page in use
+edb.free          equ  edb.struct + 24 ; End of structure
 *--------------------------------------------------------------
 * Command buffer structure            @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
@@ -215,13 +217,14 @@ cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
 cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
 cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-cmdb.panhead      equ  cmdb.struct + 28; Pointer to string with pane header
-cmdb.panhint      equ  cmdb.struct + 30; Pointer to string with pane hint
-cmdb.pankeys      equ  cmdb.struct + 32; Pointer to string with pane keys
-cmdb.action.ptr   equ  cmdb.struct + 34; Pointer to function to execute
-cmdb.cmdlen       equ  cmdb.struct + 36; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 37; Current command (80 bytes max.)
-cmdb.free         equ  cmdb.struct +117; End of structure
+cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
+cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
+cmdb.pankeys      equ  cmdb.struct + 34; Pointer to string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct + 36; Pointer to function to execute
+cmdb.cmdlen       equ  cmdb.struct + 38; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 39; Current command (80 bytes max.)
+cmdb.free         equ  cmdb.struct +120; End of structure
 *--------------------------------------------------------------
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------

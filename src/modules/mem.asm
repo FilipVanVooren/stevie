@@ -1,10 +1,6 @@
 * FILE......: mem.asm
 * Purpose...: Stevie Editor - Memory management (SAMS)
 
-*//////////////////////////////////////////////////////////////
-*                  Stevie Editor - Memory Management
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * mem.sams.layout
 * Setup SAMS memory pages for Stevie

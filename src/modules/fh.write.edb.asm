@@ -1,11 +1,6 @@
 * FILE......: fh.write.edb.asm
 * Purpose...: File write module
 
-*//////////////////////////////////////////////////////////////
-*               Write editor buffer to file
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * fh.file.write.edb
 * Write editor buffer to file

@@ -1,12 +1,6 @@
 * FILE......: idx.insert.asm
 * Purpose...: Stevie Editor - Insert index slot
 
-*//////////////////////////////////////////////////////////////
-*                  Stevie Editor - Index Management
-*//////////////////////////////////////////////////////////////
-
-
-
 ***************************************************************
 * _idx.entry.insert.reorg
 * Reorganize index slot entries

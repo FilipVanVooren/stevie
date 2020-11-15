@@ -1,10 +1,6 @@
 * FILE......: idx.asm
 * Purpose...: Stevie Editor - Index module
 
-*//////////////////////////////////////////////////////////////
-*                  Stevie Editor - Index Management
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 *  Size of index page is 4K and allows indexing of 2048 lines
 *  per page.

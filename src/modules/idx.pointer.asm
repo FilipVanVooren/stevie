@@ -1,12 +1,6 @@
 * FILE......: idx.pointer.asm
 * Purpose...: Stevie Editor - Get pointer to line in editor buffer
 
-*//////////////////////////////////////////////////////////////
-*                  Stevie Editor - Index Management
-*//////////////////////////////////////////////////////////////
-
-
-
 ***************************************************************
 * idx.pointer.get
 * Get pointer to editor buffer line content

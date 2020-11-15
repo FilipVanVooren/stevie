@@ -1,10 +1,6 @@
 * FILE......: errline.asm
 * Purpose...: Stevie Editor - Error line utilities
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Error line utilities
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * errline.init
 * Initialize error line

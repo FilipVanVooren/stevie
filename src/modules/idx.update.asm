@@ -1,11 +1,6 @@
 * FILE......: idx.update.asm
 * Purpose...: Stevie Editor - Update index entry
 
-*//////////////////////////////////////////////////////////////
-*             Stevie Editor - Index Management
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * idx.entry.update
 * Update index entry - Each entry corresponds to a line

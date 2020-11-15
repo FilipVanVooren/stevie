@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.del.asm
 * Purpose...: Delete related actions in frame buffer pane.
 
-
 *---------------------------------------------------------------
 * Delete character
 *---------------------------------------------------------------

@@ -1,7 +1,6 @@
 * FILE......: edkey.cmdb.misc.asm
 * Purpose...: Actions for miscelanneous keys in command buffer pane.
 
-
 *---------------------------------------------------------------
 * Show/Hide command buffer pane
 ********|*****|*********************|**************************

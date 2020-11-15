@@ -1,10 +1,5 @@
 * FILE......: dialog.load.asm
-* Purpose...: Dialog "Load file"
-
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Open DV80 file
-*//////////////////////////////////////////////////////////////
-
+* Purpose...: Dialog "Load DV80 file"
 
 ***************************************************************
 * dialog.load
@@ -39,6 +34,8 @@ dialog.load.setup:
 
         li    tmp0,txt.head.load
         mov   tmp0,@cmdb.panhead    ; Header for dialog
+
+        clr   @cmdb.paninfo         ; No info message, do input prompt
 
         li    tmp0,txt.hint.load
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog

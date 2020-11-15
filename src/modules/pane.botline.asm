@@ -1,10 +1,6 @@
 * FILE......: pane.botline.asm
 * Purpose...: Stevie Editor - Pane status bottom line
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Pane status bottom line
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * pane.botline.draw
 * Draw Stevie status bottom line

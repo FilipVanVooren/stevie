@@ -1,10 +1,6 @@
 * FILE......: pane.cmdb.asm
 * Purpose...: Stevie Editor - Command Buffer pane
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Command Buffer pane
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * pane.cmdb.draw
 * Draw Stevie Command Buffer in pane
@@ -43,20 +39,23 @@ pane.cmdb.draw:
         clr   @waux1                ; Default is show prompt
 
         mov   @cmdb.dialog,tmp0        
-        ci    tmp0,100              ; \ Hide prompt and no keyboard 
-        jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 100
+        ci    tmp0,99               ; \ Hide prompt and no keyboard 
+        jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 99
         seto  @waux1                ; / 
         ;------------------------------------------------------
-        ; Show warning message if in "Unsaved changes" dialog
+        ; Show info message instead of prompt
         ;------------------------------------------------------
-        ci    tmp0,id.dialog.unsaved
-        jne   pane.cmdb.draw.clear  ; Display normal prompt
+        mov   @cmdb.paninfo,tmp1    ; Null pointer?
+        jeq   pane.cmdb.draw.clear  ; Yes, display normal prompt
 
-        bl    @putat                ; \ Show warning message
-              byte pane.botrow-3,0  ; | 
-              data txt.warn.unsaved ; /
+        bl    @at 
+              byte pane.botrow-3,0  ; Position cursor
 
-        mov   @txt.warn.unsaved,@cmdb.cmdlen
+        movb  *tmp1,@cmdb.cmdlen    ; \  Deref & set length of message
+        movb  *tmp1,tmp2            ; |
+        srl   tmp2,8                ; |  
+        bl    @xutst0               ; /  Display info message
+
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------

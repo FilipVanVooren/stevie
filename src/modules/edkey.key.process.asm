@@ -1,7 +1,6 @@
 * FILE......: edkey.key.process.asm
 * Purpose...: Process keyboard key press. Shared code for all panes
 
-
 ****************************************************************
 * Editor - Process action keys
 ****************************************************************

@@ -1,10 +1,6 @@
 * FILE......: cmdb_cmd.asm
 * Purpose...: Stevie Editor - Command line
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Command line handling
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * cmdb.cmd.clear
 * Clear current command

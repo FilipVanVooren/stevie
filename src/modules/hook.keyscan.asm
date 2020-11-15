@@ -1,10 +1,6 @@
 * FILE......: hook.keyscan.asm
 * Purpose...: Stevie Editor - Keyboard handling (spectra2 user hook)
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Keyboard handling (spectra2 user hook)
-*//////////////////////////////////////////////////////////////
-
 ****************************************************************
 * Editor - spectra2 user hook
 ****************************************************************

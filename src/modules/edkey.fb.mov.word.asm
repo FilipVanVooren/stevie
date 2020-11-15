@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.mov.asm
 * Purpose...: Actions for moving to words in frame buffer pane.
 
-
 *---------------------------------------------------------------
 * Cursor beginning of word or previous word
 *---------------------------------------------------------------

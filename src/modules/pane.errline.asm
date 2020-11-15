@@ -1,10 +1,6 @@
 * FILE......: pane.errline.asm
 * Purpose...: Stevie Editor - Error line pane
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Error line pane
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * pane.errline.show
 * Show command buffer pane

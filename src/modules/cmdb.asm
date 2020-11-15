@@ -1,11 +1,6 @@
 * FILE......: cmdb.asm
 * Purpose...: Stevie Editor - Command Buffer module
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Command Buffer implementation
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * cmdb.init
 * Initialize Command Buffer

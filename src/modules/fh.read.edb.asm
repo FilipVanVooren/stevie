@@ -1,11 +1,6 @@
 * FILE......: fh.read.edb.asm
 * Purpose...: File reader module
 
-*//////////////////////////////////////////////////////////////
-*                  Read file into editor buffer
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * fh.file.read.edb
 * Read file into editor buffer

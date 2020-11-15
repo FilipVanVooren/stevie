@@ -1,7 +1,6 @@
 * FILE......: edkey.cmdb.mod.asm
 * Purpose...: Actions for modifier keys in command buffer pane.
 
-
 ***************************************************************
 * edkey.action.cmdb.clear
 * Clear current command

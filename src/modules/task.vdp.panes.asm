@@ -1,10 +1,6 @@
 * FILE......: task.vdp.panes.asm
 * Purpose...: Stevie Editor - VDP draw editor panes
 
-*//////////////////////////////////////////////////////////////
-*        Stevie Editor - Tasks implementation
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * Task - VDP draw editor panes (frame buffer, CMDB, status line)
 ********|*****|*********************|**************************

@@ -1,12 +1,6 @@
 * FILE......: edb.line.pack.asm
 * Purpose...: Stevie Editor - Editor Buffer pack line
 
-*//////////////////////////////////////////////////////////////
-*          Stevie Editor - Editor Buffer pack line
-*//////////////////////////////////////////////////////////////
-
-
-
 ***************************************************************
 * edb.line.pack
 * Pack current line in framebuffer

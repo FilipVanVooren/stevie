@@ -1,10 +1,6 @@
 * FILE......: pane.utils.colorscheme.asm
 * Purpose...: Stevie Editor - Color scheme for panes
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Colorscheme for panes
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * pane.action.colorschene.cycle
 * Cycle through available color scheme

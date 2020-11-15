@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.mov.updown.asm
 * Purpose...: Actions for movement keys in frame buffer pane.
 
-
 *---------------------------------------------------------------
 * Cursor up
 *---------------------------------------------------------------

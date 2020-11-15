@@ -1,7 +1,6 @@
 * FILE......: fm.save.asm
 * Purpose...: File Manager - Save file from editor buffer
 
-
 ***************************************************************
 * fm.savefile
 * Save file from editor buffer

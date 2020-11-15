@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.misc.asm
 * Purpose...: Actions for miscelanneous keys in frame buffer pane.
 
-
 *---------------------------------------------------------------
 * Quit stevie
 *---------------------------------------------------------------

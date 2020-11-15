@@ -1,11 +1,6 @@
 * FILE......: pane.utils.asm
 * Purpose...: Some utility functions. Shared code for all panes
 
-
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Pane utility functions
-*//////////////////////////////////////////////////////////////
-
 ***************************************************************
 * pane.show_hintx
 * Show hint message

@@ -1,11 +1,6 @@
 * FILE......: fb.refresh.asm
 * Purpose...: Stevie Editor - Framebuffer refresh
 
-*//////////////////////////////////////////////////////////////
-*          RAM Framebuffer for handling screen output
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * fb.refresh
 * Refresh frame buffer with editor buffer content

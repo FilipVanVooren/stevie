@@ -178,6 +178,7 @@ main:
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
+        copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 

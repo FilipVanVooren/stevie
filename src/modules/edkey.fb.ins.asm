@@ -1,7 +1,6 @@
 * FILE......: edkey.fb.ins.asm
 * Purpose...: Insert related actions in frame buffer pane.
 
-
 *---------------------------------------------------------------
 * Insert character
 *

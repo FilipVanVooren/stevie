@@ -1,11 +1,6 @@
 * FILE......: tv.asm
 * Purpose...: Stevie Editor - Main editor configuration
 
-*//////////////////////////////////////////////////////////////
-*              Stevie Editor - Main editor configuration
-*//////////////////////////////////////////////////////////////
-
-
 ***************************************************************
 * tv.init
 * Initialize editor settings
