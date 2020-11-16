@@ -105,9 +105,10 @@ main:
         copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
         copy  "edkey.fb.del.asm"         ; Delete characters or lines
         copy  "edkey.fb.ins.asm"         ; Insert characters or lines
-        copy  "edkey.fb.mod.asm"         ; Actions for modifier keys        
+        copy  "edkey.fb.mod.asm"         ; Actions for modifier keys                
         copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
         copy  "edkey.fb.file.asm"        ; File related actions
+        copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
@@ -138,6 +139,7 @@ main:
         copy  "edb.line.pack.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm" ; Get line length
+        copy  "edb.block.asm"       ; Block move/copy/delete/save
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
