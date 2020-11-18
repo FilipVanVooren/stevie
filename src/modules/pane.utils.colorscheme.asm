@@ -133,7 +133,7 @@ pane.action.colorscheme.load:
         jeq   !                     ; Yes, so skip screen off
         bl    @scroff               ; Turn screen off        
         ;-------------------------------------------------------
-        ; Get framebuffer foreground/background color
+        ; Get FG/BG colors framebuffer text
         ;-------------------------------------------------------
 !       mov   @tv.colorscheme,tmp0  ; Get color scheme index 
         dec   tmp0                  ; Internally work with base 0
@@ -150,16 +150,22 @@ pane.action.colorscheme.load:
         andi  tmp4,>00ff            ; Only keep LSB (GH)
         mov   tmp4,@tv.curcolor     ; Save cursor color
         ;-------------------------------------------------------
-        ; Get CMDB pane foreground/background color
+        ; Get FG/BG colors framebuffer marked text & CMDB pane
         ;-------------------------------------------------------
         mov   *tmp0+,tmp4           ; Get colors EFGH again
         andi  tmp4,>ff00            ; Only keep MSB (EF)
         srl   tmp4,8                ; MSB to LSB
 
         mov   *tmp0+,tmp0           ; Get colors IJKL
-        andi  tmp0,>ff00            ; Only keep MSB (IJ)
-        srl   tmp0,8                ; MSB to LSB
-        mov   tmp0,@tv.busycolor    ; Save colors IJ
+
+        mov   tmp0,tmp1             ; \ Right align IJ and
+        srl   tmp1,8                ; | save to @tv.busycolor
+        mov   tmp1,@tv.busycolor    ; / 
+
+        mov   tmp0,tmp1             ; \ Right align KL and
+        andi  tmp1,>00ff            ; | save to @tv.markcolor
+        mov   tmp1,@tv.markcolor    ; /
+                                 
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -172,7 +178,7 @@ pane.action.colorscheme.load:
         ; Dump colors for frame buffer pane (TAT)
         ;-------------------------------------------------------
         li    tmp0,>1800            ; VDP start address (frame buffer area)
-        mov   tmp3,tmp1             ; Get work copy of colors
+        mov   tmp3,tmp1             ; Get work copy of colors ABCD
         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
         li    tmp2,29*80            ; Number of bytes to fill
         bl    @xfilv                ; Fill colors

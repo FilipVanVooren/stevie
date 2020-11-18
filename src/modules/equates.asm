@@ -153,12 +153,13 @@ tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; FG/BG-color framebufffer + bottom line
-tv.busycolor      equ  tv.top + 26     ; FG/BG-color bottom line when busy
-tv.pane.focus     equ  tv.top + 28     ; Identify pane that has focus
-tv.task.oneshot   equ  tv.top + 30     ; Pointer to one-shot routine
-tv.error.visible  equ  tv.top + 32     ; Error pane visible
-tv.error.msg      equ  tv.top + 34     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 194    ; End of structure
+tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
+tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
+tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus
+tv.task.oneshot   equ  tv.top + 32     ; Pointer to one-shot routine
+tv.error.visible  equ  tv.top + 34     ; Error pane visible
+tv.error.msg      equ  tv.top + 36     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 196    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

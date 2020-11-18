@@ -98,8 +98,8 @@ mem.sams.layout.data:
 * Stevie color schemes table   
 *--------------------------------------------------------------
 * Word 1
-* A  MSB  high-nibble    Foreground color frame buffer
-* B  MSB  low-nibble     Background color frame buffer
+* A  MSB  high-nibble    Foreground color text line in frame buffer
+* B  MSB  low-nibble     Background color text line in frame buffer
 * C  LSB  high-nibble    Foreground color bottom line 
 * D  LSB  low-nibble     Background color bottom line
 *
@@ -112,8 +112,8 @@ mem.sams.layout.data:
 * Word 3
 * I  MSB  high-nibble    Foreground color busy bottom line
 * J  MSB  low-nibble     Background color busy bottom line
-* K  LSB  high-nibble    0
-* L  LSB  low-nibble     0
+* K  LSB  high-nibble    Foreground color marked line in frame buffer 
+* L  LSB  low-nibble     Background color marked line in frame buffer
 *
 * Word 4
 * M  MSB  high-nibble    0
@@ -126,13 +126,13 @@ tv.colorscheme.entries   equ 9      ; Entries in table
 tv.colorscheme.table:                  
 ;                              ; #  AB          | CD          | EF    | GH
 ;       ABCD  EFGH  IJKL  MNOP ; ---------------|-------------|-------|---------
- data  >f41f,>f001,>1b00,>0000 ; 1  whit/dblue  | black/whit  | whit  | black
- data  >f41c,>f00f,>1b00,>0000 ; 2  whit/dblue  | black/dgreen| whit  | whit
- data  >a11a,>f00f,>1f00,>0000 ; 3  yel/black   | black/dyel  | whit  | whit
- data  >2112,>f00f,>1b00,>0000 ; 4  mgreen/black| black/mgreen| white | whit
- data  >e11e,>f00f,>1b00,>0000 ; 5  grey/black  | black/grey  | white | whit
- data  >1771,>1006,>1b00,>0000 ; 6  black/cyan  | cyan/black  | black | ?
- data  >1ff1,>1001,>1b00,>0000 ; 7  black/whit  | whit/black  | black | black
- data  >a1f0,>1a0f,>1b00,>0000 ; 8  dyel/black  | whit/trnsp  | inver | whit
- data  >21f0,>f20f,>1b00,>0000 ; 9  mgreen/black| whit/trnsp  | inver | whit
+ data  >f41f,>f001,>1b4f,>0000 ; 1  whit/dblue  | black/whit  | whit  | black
+ data  >f41c,>f00f,>1b4f,>0000 ; 2  whit/dblue  | black/dgreen| whit  | whit
+ data  >a11a,>f00f,>1f1a,>0000 ; 3  yel/black   | black/dyel  | whit  | whit
+ data  >2112,>f00f,>1b12,>0000 ; 4  mgreen/black| black/mgreen| white | whit
+ data  >e11e,>f00f,>1b1e,>0000 ; 5  grey/black  | black/grey  | white | whit
+ data  >1771,>1006,>1b71,>0000 ; 6  black/cyan  | cyan/black  | black | ?
+ data  >1ff1,>1001,>1bf1,>0000 ; 7  black/whit  | whit/black  | black | black
+ data  >a1f0,>1a0f,>1b1a,>0000 ; 8  dyel/black  | whit/trnsp  | inver | whit
+ data  >21f0,>f20f,>1b12,>0000 ; 9  mgreen/black| whit/trnsp  | inver | whit
  
