@@ -98,56 +98,7 @@ task.vdp.panes.copy.framebuffer:
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
-        li    tmp0,>1800            ; VDP start address        
-        mov   @fb.scrrows.max,tmp3  ; Set loop counter
-        mov   @fb.topline,tmp4      ; Position in editor buffer
-        inc   tmp4                  ; M1/M2 use base 1 offset
-        ;------------------------------------------------------
-        ; 1. Set color for each line in framebuffer
-        ;------------------------------------------------------        
-task.vdp.panes.colorlines.loop:        
-        mov   @edb.block.m1,tmp2    ; M1 unset?
-        jeq   task.vdp.panes.colorlines.normal
-                                    ; Yes, skip marking color
-                
-        c     tmp2,tmp4             ; M1 > current line
-        jgt   task.vdp.panes.colorlines.normal
-                                    ; Yes, skip marking color
-
-        mov   @edb.block.m2,tmp2    ; M2 unset?
-        jeq   task.vdp.panes.colorlines.normal
-                                    ; Yes, skip marking color
-
-        c     tmp2,tmp4             ; M2 < current line
-        jlt   task.vdp.panes.colorlines.normal
-                                    ; Yes, skip marking color
-        ;------------------------------------------------------
-        ; 1a. Set marking color
-        ;------------------------------------------------------ 
-        mov   @tv.markcolor,tmp1
-        jmp   task.vdp.panes.colorlines.fill
-        ;------------------------------------------------------
-        ; 1b. Set normal text color
-        ;------------------------------------------------------ 
-task.vdp.panes.colorlines.normal:
-        mov   @tv.color,tmp1
-        srl   tmp1,8
-        ;------------------------------------------------------
-        ; 2. Fill line with selected color 
-        ;------------------------------------------------------ 
-task.vdp.panes.colorlines.fill:
-        li    tmp2,80               ; 80 characters to fill
-
-        bl    @xfilv                ; Fill VDP VRAM
-                                    ; \ i  tmp0 = VDP start address
-                                    ; | i  tmp1 = Byte to fill
-                                    ; / i  tmp2 = count
-        
-        ai    tmp0,80               ; Next line
-        inc   tmp4               
-        dec   tmp3                  ; Update loop counter
-        jgt   task.vdp.panes.colorlines.loop
-
+        bl    @fb.colorlines        ; Colorize lines M1/M2
         clr   @fb.dirty             ; Reset frame buffer dirty flag
         ;-------------------------------------------------------
         ; Draw EOF marker at end-of-file

@@ -30,6 +30,16 @@ fb.colorlines:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
+        ; Check if anything to do
+        ;------------------------------------------------------
+        mov   @fb.colorize,tmp0     ; Check if colorization necessary
+        jeq   fb.colorlines.exit    ; Exit if nothing to do. 
+
+        mov   @edb.block.m1,tmp0    ; M1 unset?
+        jeq   fb.colorlines.exit    ; Yes, skip marking color
+        mov   @edb.block.m2,tmp0    ; M2 unset?
+        jeq   fb.colorlines.exit    ; Yes, skip marking color
+        ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
         li    tmp0,>1800            ; VDP start address        
@@ -39,16 +49,12 @@ fb.colorlines:
         ;------------------------------------------------------
         ; 1. Set color for each line in framebuffer
         ;------------------------------------------------------        
-fb.colorlines.loop:
-        mov   @edb.block.m1,tmp2    ; M1 unset?
-        jeq   fb.colorlines.normal  ; Yes, skip marking color
-                
+fb.colorlines.loop:                
+        mov   @edb.block.m1,tmp2
         c     tmp2,tmp4             ; M1 > current line
         jgt   fb.colorlines.normal  ; Yes, skip marking color
 
-        mov   @edb.block.m2,tmp2    ; M2 unset?
-        jeq   fb.colorlines.normal  ; Yes, skip marking color
-
+        mov   @edb.block.m2,tmp2
         c     tmp2,tmp4             ; M2 < current line
         jlt   fb.colorlines.normal  ; Yes, skip marking color
         ;------------------------------------------------------
@@ -63,7 +69,7 @@ fb.colorlines.normal:
         mov   @tv.color,tmp1
         srl   tmp1,8
         ;------------------------------------------------------
-        ; 2. Fill line with selected color 
+        ; 1c. Fill line with selected color 
         ;------------------------------------------------------ 
 fb.colorlines.fill:
         li    tmp2,80               ; 80 characters to fill
@@ -76,11 +82,12 @@ fb.colorlines.fill:
         ai    tmp0,80               ; Next line
         inc   tmp4               
         dec   tmp3                  ; Update loop counter
-        jgt   fb.colorlines.loop
+        jgt   fb.colorlines.loop    ; Back to (1)
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.colorlines.exit
+        clr   @fb.colorize          ; Reset colorize flag
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

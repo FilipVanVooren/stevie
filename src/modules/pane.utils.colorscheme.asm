@@ -27,26 +27,25 @@ pane.action.colorscheme.cycle:
         jmp   pane.action.colorscheme.switch
 !       inc   tmp0
         ;-------------------------------------------------------
-        ; switch to new color scheme
+        ; Switch to new color scheme
         ;-------------------------------------------------------
 pane.action.colorscheme.switch:
         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
+
         bl    @pane.action.colorscheme.load
+                                    ; Load current color scheme
         ;-------------------------------------------------------
-        ; Show current color scheme message
+        ; Show current color palette message
         ;-------------------------------------------------------  
         mov   @wyx,@waux1           ; Save cursor YX position
 
-        bl    @filv
-              data >1840,>1F,16     ; VDP start address (frame buffer area)
-
         bl    @putnum
-              byte 0,75
+              byte pane.botrow,36
               data tv.colorscheme,rambuf,>3020
 
         bl    @putat
-              byte 0,64
-              data txt.colorscheme  ; Show color scheme message
+              byte pane.botrow,31
+              data txt.colorscheme  ; Show color palette message
 
         mov   @waux1,@wyx           ; Restore cursor YX position
         ;-------------------------------------------------------
@@ -58,7 +57,7 @@ pane.action.colorscheme.switch:
         ;-------------------------------------------------------
         ; Setup one shot task for removing message
         ;-------------------------------------------------------  
-        li    tmp0,pane.action.colorscheme.task.callback
+        li    tmp0,pane.clearmsg.task.callback
         mov   tmp0,@tv.task.oneshot 
 
         bl    @rsslot               ; \ Reset loop counter slot 3
@@ -70,27 +69,6 @@ pane.action.colorscheme.cycle.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-        ;-------------------------------------------------------
-        ; Remove colorscheme message (triggered by oneshot task)
-        ;-------------------------------------------------------
-pane.action.colorscheme.task.callback:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-       
-        bl    @filv 
-              data >003C,>00,20     ; Remove message
-
-        seto  @parm1
-        bl    @pane.action.colorscheme.load
-                                    ; Reload current colorscheme
-                                    ; \ i  parm1 = Do not turn screen off
-                                    ; /
-
-        seto  @fb.dirty             ; Trigger frame buffer refresh
-        clr   @tv.task.oneshot      ; Reset oneshot task        
-        
-        mov   *stack+,r11           ; Pop R11        
-        b     *r11                  ; Return to task
 
 
 
@@ -185,6 +163,9 @@ pane.action.colorscheme.load:
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
+
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
+        bl    @fb.colorlines
         ;-------------------------------------------------------
         ; Dump colors for CMDB pane (TAT)
         ;-------------------------------------------------------

@@ -32,6 +32,24 @@ edb.line.mark.m1:
 
         mov   @outparm1,@edb.block.m1  
                                     ; Set block marker M1
+        seto  @fb.colorize          ; Set colorize flag                
+        seto  @fb.dirty             ; Trigger refresh
+
+        mov   @wyx,@fb.yxsave       ; Save cursor
+
+        bl    @putat
+              byte pane.botrow,31
+              data txt.m1.set       ; Show M1 marker message
+
+        mov   @fb.yxsave,@wyx       ; Restore cursor
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing message
+        ;-------------------------------------------------------  
+        li    tmp0,pane.clearmsg.task.callback
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        
@@ -71,6 +89,26 @@ edb.line.mark.m2:
 
         mov   @outparm1,@edb.block.m2
                                     ; Set block marker M2
+
+        seto  @fb.colorize          ; Set colorize flag                
+        seto  @fb.dirty             ; Trigger refresh
+
+        mov   @wyx,@fb.yxsave       ; Save cursor
+
+        bl    @putat
+              byte pane.botrow,31
+              data txt.m2.set       ; Show M2 marker message
+
+        mov   @fb.yxsave,@wyx       ; Restore cursor
+
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing message
+        ;-------------------------------------------------------  
+        li    tmp0,pane.clearmsg.task.callback
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        

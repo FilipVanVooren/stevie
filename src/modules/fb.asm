@@ -36,6 +36,7 @@ fb.init:
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
 
         clr   @tv.pane.focus        ; Frame buffer has focus!
+        clr   @fb.colorize          ; Don't colorize M1/M2 lines
         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
         ;------------------------------------------------------
         ; Clear frame buffer

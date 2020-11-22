@@ -174,7 +174,7 @@ fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
 fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
 fb.column         equ  fb.struct + 12  ; Current column in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
-fb.free1          equ  fb.struct + 16  ; **** free ****
+fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
 fb.yxsave         equ  fb.struct + 20  ; Copy of WYX
 fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag

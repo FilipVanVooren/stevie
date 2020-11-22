@@ -19,7 +19,7 @@ txt.about.msg2     #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
 txt.about.msg3     #string 'FCTN-+        Quit Stevie'
 txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
 txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
-txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
+txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle color palette'
 
 txt.about.msg7     byte    56,15
                    text    ' ALPHA LOCK up     '
@@ -46,6 +46,10 @@ txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
+txt.clear12        #string '            '
+txt.m1.set         #string 'M1 set'
+txt.m2.set         #string 'M2 set'
+
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
@@ -109,9 +113,9 @@ txt.cmdb.prompt    #string '>'
 
 txt.stevie         byte    12
                    byte    10
-                   text    'stevie v1.00'
+                   text    'stevie v0.1F'
                    byte    11
                    even
 
-txt.colorscheme    #string 'Color scheme: '
+txt.colorscheme    #string 'Palette: '
 
