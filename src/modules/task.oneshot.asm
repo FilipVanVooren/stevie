@@ -1,3 +1,10 @@
+* FILE......: task.oneshot.asm
+* Purpose...: Trigger one-shot task
+
+***************************************************************
+* Task - One-shot
+***************************************************************
+
 task.oneshot:
         mov   @tv.task.oneshot,tmp0  ; Get pointer to one-shot task
         jeq   task.oneshot.exit
