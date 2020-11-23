@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie v0.1E'
+txt.about.program  #string 'Stevie v0.1F'
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
 txt.about.author   #string '2018-2020 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
@@ -19,7 +19,7 @@ txt.about.msg2     #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
 txt.about.msg3     #string 'FCTN-+        Quit Stevie'
 txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
 txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
-txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle color palette'
+txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
 
 txt.about.msg7     byte    56,15
                    text    ' ALPHA LOCK up     '
@@ -46,9 +46,9 @@ txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
-txt.clear12        #string '            '
-txt.m1.set         #string 'M1 set'
-txt.m2.set         #string 'M2 set'
+txt.clear          #string '        '
+txt.m1.set         #string 'M1'
+txt.m2.set         #string 'M2'
 
 
 txt.alpha.up       data >010f
@@ -117,5 +117,5 @@ txt.stevie         byte    12
                    byte    11
                    even
 
-txt.colorscheme    #string 'Palette: '
+txt.colorscheme    #string 'Color:'
 

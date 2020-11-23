@@ -38,7 +38,7 @@ edb.line.mark.m1:
         mov   @wyx,@fb.yxsave       ; Save cursor
 
         bl    @putat
-              byte pane.botrow,31
+              byte pane.botrow,52
               data txt.m1.set       ; Show M1 marker message
 
         mov   @fb.yxsave,@wyx       ; Restore cursor
@@ -96,7 +96,7 @@ edb.line.mark.m2:
         mov   @wyx,@fb.yxsave       ; Save cursor
 
         bl    @putat
-              byte pane.botrow,31
+              byte pane.botrow,52
               data txt.m2.set       ; Show M2 marker message
 
         mov   @fb.yxsave,@wyx       ; Restore cursor

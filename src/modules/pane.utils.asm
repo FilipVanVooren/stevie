@@ -212,8 +212,8 @@ pane.clearmsg.task.callback:
         mov   @wyx,@fb.yxsave       ; Save cursor
 
         bl    @putat        
-              byte pane.botrow,30
-              data txt.clear12      ; Clear temporary message
+              byte pane.botrow,51
+              data txt.clear        ; Clear temporary message
 
         mov   @fb.yxsave,@wyx       ; Restore cursor
 

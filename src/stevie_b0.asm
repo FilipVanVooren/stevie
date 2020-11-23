@@ -109,7 +109,7 @@ reloc.sp2:
         ; End of File marker
         ;------------------------------------------------------
         data  >dead,>beef,>dead,>beef
-        .print "***** PC relocated SP2 library @ >2000- ", $, "(dec)"
+        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
 
         .ifgt $, >2f00
               .error '***** Aborted. SP2 library too large!'
@@ -138,7 +138,7 @@ main:
         copy  "edb.asm"             ; Editor Buffer
         copy  "cmdb.asm"            ; Command buffer
         copy  "errline.asm"         ; Error line
-        copy  "tv.asm"              ; Main editor configuration        
+        copy  "tv.asm"              ; Main editor configuration
         copy  "data.constants.asm"  ; Data Constants
         copy  "data.strings.asm"    ; Data segment - Strings
         copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
@@ -148,7 +148,7 @@ main:
         data  >dead,>beef,>dead,>beef
         .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
 
-        .ifgt $, >7fff
+        .ifgt $, >3fff
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.

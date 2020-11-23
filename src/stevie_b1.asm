@@ -182,7 +182,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   
-        copy  "dialog.about.asm"    ; Dialog "About"
+        ;copy  "dialog.about.asm"    ; Dialog "About"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
@@ -193,7 +193,7 @@ main:
         copy  "data.keymap.actions.asm"
                                     ; Data segment - Keyboard actions
         .ifgt $, >7fff
-              ;.error 'Aborted. Bank 1 cartridge program too large!'
+              .error 'Aborted. Bank 1 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
