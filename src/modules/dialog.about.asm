@@ -5,6 +5,7 @@
 * Show Stevie welcome/about dialog
 *---------------------------------------------------------------
 edkey.action.about:
+        mov   r11,@tv.bank.return   ; Save return address
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -21,9 +22,14 @@ edkey.action.about:
 
         li    tmp0,txt.keys.about
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane                
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+edkey.action.about.exit:
+        li    tmp0,bank1            ; \
+        mov   @tv.bank.return,tmp1  ; | Return to bank 1
+        bl    @swbnkx               ; / 
+               
 
 
 
@@ -55,8 +61,6 @@ dialog.about.content:
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
-        bl    @pane.cursor.hide     ; Hide cursor
-
         mov   @fb.scrrows,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!

@@ -7,7 +7,12 @@
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
-
+*
+* Bank 1 "James"
+*
+***************************************************************
+        copy  "bank.noninverted.asm"    
+                                    ; Bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -17,7 +22,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
                                     ; and grows downwards
 
 ***************************************************************
-* BANK 1 - Stevie main editor modules
+* BANK 1
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 1
@@ -40,7 +45,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6030
-        clr   @>6000                ; Switch to bank 0
+        clr   @bank0                ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
 ********|*****|*********************|**************************
@@ -58,9 +63,9 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 ********|*****|*********************|**************************
         aorg  >3000
         ;------------------------------------------------------
-        ; Activate bank 1
+        ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
-        clr   @>6002                ; Activate bank 1 (2nd bank!)
+        clr   @bank1                ; Activate bank 1 "James"
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
@@ -182,21 +187,47 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   
-        ;copy  "dialog.about.asm"    ; Dialog "About"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
         copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
         ;-----------------------------------------------------------------------
+        ; Stubs & trampolines
+        ;-----------------------------------------------------------------------        
+        copy  "stubs.bank1.asm"     ; Stubs for functions in other banks
+        ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
         copy  "data.keymap.actions.asm"
                                     ; Data segment - Keyboard actions
-        .ifgt $, >7fff
+
+        ;-----------------------------------------------------------------------
+        ; Bank specific vector table
+        ;----------------------------------------------------------------------- 
+        .ifgt $, >7fce
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
+
+        aorg  >7fe0
+
+vector.0   data  $
+vector.1   data  $
+vector.2   data  $
+vector.3   data  $
+vector.4   data  $
+vector.5   data  $
+vector.6   data  $
+vector.7   data  $
+vector.8   data  $
+vector.9   data  $
+vector.a   data  $
+vector.b   data  $
+vector.c   data  $
+vector.d   data  $
+vector.e   data  $
+vector.f   data  $
 
 *--------------------------------------------------------------
 * Video mode configuration

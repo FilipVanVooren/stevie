@@ -7,7 +7,12 @@
 *              (c)2018-2020 // Filip van Vooren
 ***************************************************************
 * File: stevie_b0.asm               ; Version %%build_date%%
-
+*
+* Bank 0 "Jill"
+*
+***************************************************************
+        copy  "bank.noninverted.asm"    
+                                    ; Bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -17,7 +22,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
                                     ; and grows downwards
 
 ***************************************************************
-* BANK 0 - Setup environment for Stevie
+* BANK 0
 ********|*****|*********************|**************************
         aorg  >6000
         save  >6000,>7fff           ; Save bank 0 (1st bank)
@@ -41,7 +46,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6030
 kickstart.step1:        
-        clr   @>6000                ; Switch to bank 0
+        clr   @bank0                ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Copy SP2 library from ROM to >2000 - >2fff
 ********|*****|*********************|**************************
@@ -128,7 +133,7 @@ reloc.stevie:
         ; Activate bank 1 and branch to >6036
         ;------------------------------------------------------
 main:        
-        clr   @>6002                ; Activate bank 1 (2nd bank!)
+        clr   @bank1                ; Activate bank 1 "James"
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff

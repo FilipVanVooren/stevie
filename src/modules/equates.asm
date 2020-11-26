@@ -157,9 +157,10 @@ tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
 tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus
 tv.task.oneshot   equ  tv.top + 32     ; Pointer to one-shot routine
-tv.error.visible  equ  tv.top + 34     ; Error pane visible
-tv.error.msg      equ  tv.top + 36     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 196    ; End of structure
+tv.bank.return    equ  tv.top + 34     ; Return address for bank-switch
+tv.error.visible  equ  tv.top + 36     ; Error pane visible
+tv.error.msg      equ  tv.top + 38     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 198    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

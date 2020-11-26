@@ -10,10 +10,14 @@ directories:
 source:
   - stevie_b0.asm
   - stevie_b1.asm
+  - stevie_b2.asm
+  - stevie_b3.asm
 
 banks:
   - stevie_b0.bin
   - stevie_b1.bin
+  - stevie_b2.bin
+  - stevie_b3.bin
 
 binaries:
   output:      stevie.bin
