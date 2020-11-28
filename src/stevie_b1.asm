@@ -11,8 +11,7 @@
 * Bank 1 "James"
 *
 ***************************************************************
-        copy  "bank.noninverted.asm"    
-                                    ; Bank order "non-inverted"
+        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -24,6 +23,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 ***************************************************************
 * BANK 1
 ********|*****|*********************|**************************
+bankid  equ   bank1                 ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank 1
 *--------------------------------------------------------------
@@ -70,6 +70,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
+        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline 
         copy  "fb.asm"              ; Framebuffer      
         copy  "idx.asm"             ; Index management           
         copy  "edb.asm"             ; Editor Buffer        
@@ -204,30 +205,18 @@ main:
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fce
+        .ifgt $, >7f9b
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
+        ;-------------------------------------------------------
+        ; Vector table bank 1: >7f9c - >7fff
+        ;-------------------------------------------------------
+        copy  "rb.vectors.bank1.asm"
 
-        aorg  >7fe0
 
-vector.0   data  $
-vector.1   data  $
-vector.2   data  $
-vector.3   data  $
-vector.4   data  $
-vector.5   data  $
-vector.6   data  $
-vector.7   data  $
-vector.8   data  $
-vector.9   data  $
-vector.a   data  $
-vector.b   data  $
-vector.c   data  $
-vector.d   data  $
-vector.e   data  $
-vector.f   data  $
+
 
 *--------------------------------------------------------------
 * Video mode configuration

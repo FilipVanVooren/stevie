@@ -11,9 +11,7 @@
 * Bank 3 "John"
 *
 ***************************************************************
-        copy  "bank.noninverted.asm"    
-                                    ; Bank order "non-inverted"
-
+        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -25,6 +23,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 ***************************************************************
 * BANK 3
 ********|*****|*********************|**************************
+bankid  equ   bank3                 ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank 3
 *--------------------------------------------------------------
@@ -71,6 +70,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff
         ;------------------------------------------------------
+        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline         
         copy  "fb.asm"              ; Framebuffer      
         copy  "idx.asm"             ; Index management           
         copy  "edb.asm"             ; Editor Buffer        
@@ -89,37 +89,24 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
 main:   
-        jmp   $
-
+        aorg  kickstart.code2       ; >6036
+        bl    @cpu.crash            ; Should never get here
+        ;-----------------------------------------------------------------------
+        ; Include files
+        ;-----------------------------------------------------------------------
 
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fce
+        .ifgt $, >7f9b
               .error 'Aborted. Bank 1 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
-
-        aorg  >7fe0
-        
-vector.0   data  $
-vector.1   data  $ 
-vector.2   data  $
-vector.3   data  $
-vector.4   data  $
-vector.5   data  $
-vector.6   data  $
-vector.7   data  $
-vector.8   data  $
-vector.9   data  $
-vector.a   data  $
-vector.b   data  $
-vector.c   data  $
-vector.d   data  $
-vector.e   data  $
-vector.f   data  $
-
+        ;-------------------------------------------------------
+        ; Vector table bank 3: >7f9c - >7fff
+        ;-------------------------------------------------------
+        copy  "rb.vectors.bank3.asm"
 
 *--------------------------------------------------------------
 * Video mode configuration

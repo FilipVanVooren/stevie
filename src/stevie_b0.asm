@@ -11,8 +11,7 @@
 * Bank 0 "Jill"
 *
 ***************************************************************
-        copy  "bank.noninverted.asm"    
-                                    ; Bank order "non-inverted"
+        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -24,6 +23,7 @@ sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff
 ***************************************************************
 * BANK 0
 ********|*****|*********************|**************************
+bankid  equ   bank0                 ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank 0 (1st bank)
 *--------------------------------------------------------------
@@ -136,8 +136,9 @@ main:
         clr   @bank1                ; Activate bank 1 "James"
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
-        ; Resident Stevie modules >3000 - >3fff
+        ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
+        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline 
         copy  "fb.asm"              ; Framebuffer 
         copy  "idx.asm"             ; Index management        
         copy  "edb.asm"             ; Editor Buffer
@@ -158,6 +159,20 @@ main:
         .else
               data $                ; Bank 0 ROM size OK.
         .endif
+
+        ;-----------------------------------------------------------------------
+        ; Bank specific vector table
+        ;----------------------------------------------------------------------- 
+        .ifgt $, >7f9b
+              .error 'Aborted. Bank 0 cartridge program too large!'
+        .else
+              data $                ; Bank 0 ROM size OK.
+        .endif
+        ;-------------------------------------------------------
+        ; Vector table bank 0: >7f9c - >7fff
+        ;-------------------------------------------------------
+        copy  "rb.vectors.bank0.asm"
+
 
 *--------------------------------------------------------------
 * Video mode configuration for SP2

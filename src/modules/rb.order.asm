@@ -1,3 +1,6 @@
+* FILE......: rb.order.asm
+* Purpose...: Equates with CPU write addresses for switching banks
+
 *--------------------------------------------------------------
 * Bank order (non-inverted)
 *--------------------------------------------------------------

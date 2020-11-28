@@ -1,5 +1,5 @@
 * FILE......: fb.colorlines.asm
-* Purpose...: Stevie Editor - Framebuffer refresh
+* Purpose...: Colorize frame buffer content
 
 ***************************************************************
 * fb.colorlines

@@ -1,72 +1,87 @@
-***************************************************************
-*                          Stevie Editor
-*
-*       A 21th century Programming Editor for the 1981
-*         Texas Instruments TI-99/4a Home Computer.
-*
-*              (c)2018-2020 // Filip van Vooren
-***************************************************************
-* File: equates.equ                 ; Version %%build_date%%
-*--------------------------------------------------------------
-* Stevie memory map
-*
+* FILE......: equates.asm
+* Purpose...: The main equates file for Stevie editor
+
+
+*===============================================================================
+* Memory map
+* ==========
 *
 * LOW MEMORY EXPANSION (2000-2fff)
 * 
-* Mem range   Bytes    SAMS   Purpose
-* =========   =====    ====   ==================================
-* 2000-2eff    3840           SP2 library
-* 2f00-2fff     256           SP2 work memory
-*
+*     Mem range   Bytes    SAMS   Purpose
+*     =========   =====    ====   ==================================
+*     2000-2eff    3840           SP2 library
+*     2f00-2f1f      32           **RESERVED**
+*     2f20-2f3f      32           Function input/output parameters
+*     2f40-2f43       4           Keyboard
+*     2f44-2f63      32           Timer tasks table
+*     2f64-2f9f      60           RAM buffer
+*     2fa0-2fff      96           Value/Return stack
+*     
+*    
 * LOW MEMORY EXPANSION (3000-3fff)
-*
-* Mem range   Bytes    SAMS   Purpose
-* =========   =====    ====   ==================================
-* 3000-3fff    4096           Resident Stevie Modules
+*    
+*     Mem range   Bytes    SAMS   Purpose
+*     =========   =====    ====   ==================================
+*     3000-3fff    4096           Resident Stevie Modules
+*    
+*    
+* HIGH MEMORY EXPANSION (a000-ffff)
+*    
+*     Mem range   Bytes    SAMS   Purpose
+*     =========   =====    ====   ==================================
+*     a000-a0ff     256           Stevie Editor shared structure
+*     a100-a1ff     256           Framebuffer structure
+*     a200-a2ff     256           Editor buffer structure
+*     a300-a3ff     256           Command buffer structure   
+*     a400-a4ff     256           File handle structure
+*     a500-a5ff     256           Index structure
+*     a600-af5f    2400           Frame buffer
+*     af60-afff     ???           *FREE*
+*    
+*     b000-bfff    4096           Index buffer page
+*     c000-cfff    4096           Editor buffer page
+*     d000-dfff    4096           Command history buffer
+*     e000-ebff    3072           Heap
+*     ec00-efff    1024           Farjump return stack (trampolines)
+*     f000-ffff    4096           *FREE*
 *
 *
 * CARTRIDGE SPACE (6000-7fff)
 *
-* Mem range   Bytes    BANK   Purpose
-* =========   =====    ====   ==================================
-* 6000-7fff    8192       0   SP2 ROM CODE, copy to RAM code, resident modules
-* 6000-7fff    8192       1   Stevie program code
-*
-*
-* HIGH MEMORY EXPANSION (a000-ffff)
-*
-* Mem range   Bytes    SAMS   Purpose
-* =========   =====    ====   ==================================
-* a000-a0ff     256           Stevie Editor shared structure
-* a100-a1ff     256           Framebuffer structure
-* a200-a2ff     256           Editor buffer structure
-* a300-a3ff     256           Command buffer structure   
-* a400-a4ff     256           File handle structure
-* a500-a5ff     256           Index structure
-* a600-af5f    2400           Frame buffer
-* af60-afff     ???           *FREE*
-*
-* b000-bfff    4096           Index buffer page
-* c000-cfff    4096           Editor buffer page
-* d000-dfff    4096           Command history buffer
-* e000-efff    4096           Heap
-* f000-ffff    4096           *FREE*
+*     Mem range   Bytes    BANK   Purpose
+*     =========   =====    ====   ==================================
+*     6000-7f9b    8128       0   SP2 ROM code, copy to RAM code, res. modules
+*     7f9c-7fff      64       0   Vector table (up to 32 entries)
+*     ..............................................................
+*     6000-7f9b    8128       1   Stevie program code
+*     7f9c-7fff      64       1   Vector table (up to 32 entries)
+*     ..............................................................
+*     6000-7f9b    8128       2   Stevie program code
+*     7f9c-7fff      64       2   Vector table (up to 32 entries)
+*     ..............................................................
+*     6000-7f9b    8128       3   Stevie program code
+*     7f9c-7fff      64       3   Vector table (up to 32 entries)
 *
 *
 * VDP RAM
 *
-* Mem range   Bytes    Hex    Purpose
-* =========   =====   =====   =================================
-* 0000-095f    2400   >0960   PNT - Pattern Name Table
-* 0960-09af      80   >0050   File record buffer (DIS/VAR 80)
-* 0fc0                        PCT - Pattern Color Table
-* 1000-17ff    2048   >0800   PDT - Pattern Descriptor Table
-* 1800-215f    2400   >0960   TAT - Tile Attribute Table (pos. based colors)
-* 2180                        SAT - Sprite Attribute List
-* 2800                        SPT - Sprite Pattern Table. Must be on 2K boundary
+*     Mem range   Bytes    Hex    Purpose
+*     =========   =====   =====   =================================
+*     0000-095f    2400   >0960   PNT - Pattern Name Table
+*     0960-09af      80   >0050   File record buffer (DIS/VAR 80)
+*     0fc0                        PCT - Pattern Color Table
+*     1000-17ff    2048   >0800   PDT - Pattern Descriptor Table
+*     1800-215f    2400   >0960   TAT - Tile Attribute Table (pos. based colors)
+*     2180                        SAT - Sprite Attribute List
+*     2800                        SPT - Sprite Pattern Table. On 2K boundary
+*
+*===============================================================================
+
 *--------------------------------------------------------------
 * Skip unused spectra2 code modules for reduced code size
 *--------------------------------------------------------------
+skip_rom_bankswitch       equ  1       ; Skip support for ROM bankswitching
 skip_grom_cpu_copy        equ  1       ; Skip GROM to CPU copy functions
 skip_grom_vram_copy       equ  1       ; Skip GROM to VDP vram copy functions
 skip_vdp_vchar            equ  1       ; Skip vchar, xvchar
@@ -157,7 +172,7 @@ tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
 tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus
 tv.task.oneshot   equ  tv.top + 32     ; Pointer to one-shot routine
-tv.bank.return    equ  tv.top + 34     ; Return address for bank-switch
+tv.fj.stackpnt    equ  tv.top + 34     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 36     ; Error pane visible
 tv.error.msg      equ  tv.top + 38     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 198    ; End of structure
@@ -296,6 +311,10 @@ edb.size          equ  4096            ; Editor buffer size
 cmdb.top          equ  >d000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
-* Heap                                @>e000-efff  (4096 bytes)
+* Heap                                @>e000-ebff  (3072 bytes)
 *--------------------------------------------------------------
 heap.top          equ  >e000           ; Top of heap
+*--------------------------------------------------------------
+* Farjump return stack                @>ec00-efff  (1024 bytes)
+*--------------------------------------------------------------
+fj.bottom         equ  >f000           ; Stack grows downwards

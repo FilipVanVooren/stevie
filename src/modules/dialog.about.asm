@@ -5,7 +5,8 @@
 * Show Stevie welcome/about dialog
 *---------------------------------------------------------------
 edkey.action.about:
-        mov   r11,@tv.bank.return   ; Save return address
+        dect  stack
+        mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -26,9 +27,8 @@ edkey.action.about:
         ; Exit
         ;------------------------------------------------------
 edkey.action.about.exit:
-        li    tmp0,bank1            ; \
-        mov   @tv.bank.return,tmp1  ; | Return to bank 1
-        bl    @swbnkx               ; / 
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return
                
 
 
@@ -121,7 +121,7 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-_dialog.about.content.exit:
+dialog.about.content.exit:
         mov   @fb.yxsave,@wyx
         mov   *stack+,tmp2          ; Pop tmp2                
         mov   *stack+,tmp1          ; Pop tmp1        

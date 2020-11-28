@@ -10,9 +10,10 @@ edkey.action.about:
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
-        bl    @swbnk                ; \ Trampoline jump to bank
-              data bank2,vector.1   ; | i  p0 = bank address
-                                    ; / i  p1 = Target address in bank
+        bl    @rb.farjump           ; \ Trampoline jump to bank
+              data bank2            ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
