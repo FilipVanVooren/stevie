@@ -44,18 +44,20 @@ edkey.action.cmdb.loadsave:
         ;-------------------------------------------------------
 edkey.action.cmdb.load.loadfile:
         li    tmp0,heap.top         ; 1st line in heap
+        mov   tmp0,@parm1
         bl    @fm.loadfile          ; Load DV80 file
-                                    ; \ i  tmp0 = Pointer to length-prefixed
-                                    ; /           device/filename string
+                                    ; \ i  parm1 = Pointer to length-prefixed
+                                    ; /            device/filename string
         jmp   edkey.action.cmdb.loadsave.exit
         ;-------------------------------------------------------
         ; Save specified file
         ;-------------------------------------------------------
 edkey.action.cmdb.load.savefile:
         li    tmp0,heap.top         ; 1st line in heap
+        mov   tmp0,@parm1        
         bl    @fm.savefile          ; Save DV80 file
-                                    ; \ i  tmp0 = Pointer to length-prefixed
-                                    ; /           device/filename string
+                                    ; \ i  parm1 = Pointer to length-prefixed
+                                    ; /            device/filename string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

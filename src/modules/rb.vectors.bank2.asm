@@ -6,8 +6,8 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  edkey.action.about    ;   
-vec.2   data  cpu.crash             ;
+vec.1   data  fm.loadfile           ;   
+vec.2   data  fm.savefile           ;
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 
 vec.5   data  cpu.crash             ; 

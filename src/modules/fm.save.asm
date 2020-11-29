@@ -8,8 +8,8 @@
 * bl  @fm.savefile
 *--------------------------------------------------------------
 * INPUT
-* tmp0  = Pointer to length-prefixed string containing both 
-*         device and filename
+* parm1  = Pointer to length-prefixed string containing both 
+*          device and filename
 *--------------------------------------------------------------- 
 * OUTPUT
 * none

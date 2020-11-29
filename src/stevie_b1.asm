@@ -36,9 +36,9 @@ bankid  equ   bank1                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .else
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .endif
 
 ***************************************************************
@@ -68,23 +68,9 @@ bankid  equ   bank1                 ; Set bank identifier to current bank
         clr   @bank1                ; Activate bank 1 "James"
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
-        ; Resident Stevie modules >3000 - >3fff
+        ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline 
-        copy  "fb.asm"              ; Framebuffer      
-        copy  "idx.asm"             ; Index management           
-        copy  "edb.asm"             ; Editor Buffer        
-        copy  "cmdb.asm"            ; Command buffer            
-        copy  "errline.asm"         ; Error line
-        copy  "tv.asm"              ; Main editor configuration        
-        copy  "data.constants.asm"  ; Data Constants
-        copy  "data.strings.asm"    ; Data segment - Strings
-        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping        
-        ;------------------------------------------------------
-        ; End of File marker
-        ;------------------------------------------------------        
-        data  >dead,>beef,>dead,>beef
-        .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
+        copy  "mem.resident.3000.asm"    
 ***************************************************************
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
@@ -155,12 +141,8 @@ main:
         ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
-        copy  "fh.read.edb.asm"     ; Read file to editor buffer
-        copy  "fh.write.edb.asm"    ; Write editor buffer to file
-        copy  "fm.load.asm"         ; Load DV80 file into editor buffer
-        copy  "fm.save.asm"         ; Save DV80 file from editor buffer
-        copy  "fm.callbacks.asm"    ; Callbacks for file operations
         copy  "fm.browse.asm"       ; File manager browse support routines
+        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
@@ -193,7 +175,7 @@ main:
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
         copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
         ;-----------------------------------------------------------------------
-        ; Stubs & trampolines
+        ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
         copy  "stubs.bank1.asm"     ; Stubs for functions in other banks
         ;-----------------------------------------------------------------------

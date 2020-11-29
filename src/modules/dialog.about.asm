@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Show Stevie welcome/about dialog
 *---------------------------------------------------------------
-edkey.action.about:
+dialog.about:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
@@ -26,7 +26,7 @@ edkey.action.about:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-edkey.action.about.exit:
+dialog.about.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
                

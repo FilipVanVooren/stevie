@@ -36,9 +36,9 @@ bankid  equ   bank0                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .else
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .endif         
 
 ***************************************************************
@@ -138,28 +138,13 @@ main:
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline 
-        copy  "fb.asm"              ; Framebuffer 
-        copy  "idx.asm"             ; Index management        
-        copy  "edb.asm"             ; Editor Buffer
-        copy  "cmdb.asm"            ; Command buffer
-        copy  "errline.asm"         ; Error line
-        copy  "tv.asm"              ; Main editor configuration
-        copy  "data.constants.asm"  ; Data Constants
-        copy  "data.strings.asm"    ; Data segment - Strings
-        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
-        ;------------------------------------------------------
-        ; End of File marker
-        ;------------------------------------------------------
-        data  >dead,>beef,>dead,>beef
-        .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
+        copy  "mem.resident.3000.asm"
 
         .ifgt $, >3fff
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
         .endif
-
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 

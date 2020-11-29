@@ -36,9 +36,9 @@ bankid  equ   bank2                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .else
-              #string 'STEVIE V0.1F'
+              #string 'STEVIE V0.1G'
         .endif
 
 ***************************************************************
@@ -68,23 +68,9 @@ bankid  equ   bank2                 ; Set bank identifier to current bank
         clr   @bank1                ; Activate bank 1 "James"
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
-        ; Resident Stevie modules >3000 - >3fff
+        ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "rb.farjump.asm"      ; ROM bankswitch trampoline         
-        copy  "fb.asm"              ; Framebuffer      
-        copy  "idx.asm"             ; Index management           
-        copy  "edb.asm"             ; Editor Buffer        
-        copy  "cmdb.asm"            ; Command buffer            
-        copy  "errline.asm"         ; Error line
-        copy  "tv.asm"              ; Main editor configuration        
-        copy  "data.constants.asm"  ; Data Constants
-        copy  "data.strings.asm"    ; Data segment - Strings
-        copy  "data.keymap.asm"     ; Data segment - Keyboard mapping        
-        ;------------------------------------------------------
-        ; End of File marker
-        ;------------------------------------------------------        
-        data  >dead,>beef,>dead,>beef
-        .print "***** PC resident stevie modules @ >3000 - ", $, "(dec)"
+        copy  "mem.resident.3000.asm"        
 ***************************************************************
 * Step 4: Include modules
 ********|*****|*********************|**************************
@@ -92,9 +78,21 @@ main:
         aorg  kickstart.code2       ; >6036
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
+        ; Include files - Utility functions
+        ;-----------------------------------------------------------------------         
+        copy  "mem.asm"             ; SAMS Memory Management
+        ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------         
-        copy  "dialog.about.asm"    ; Dialog "About"
+        copy  "fh.read.edb.asm"     ; Read file to editor buffer
+        copy  "fh.write.edb.asm"    ; Write editor buffer to file
+        copy  "fm.load.asm"         ; Load DV80 file into editor buffer
+        copy  "fm.save.asm"         ; Save DV80 file from editor buffer
+        copy  "fm.callbacks.asm"    ; Callbacks for file operations
+        ;-----------------------------------------------------------------------
+        ; Stubs using trampoline
+        ;-----------------------------------------------------------------------        
+        copy  "stubs.bank2.asm"     ; Stubs for functions in other banks        
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
@@ -104,7 +102,7 @@ main:
               data $                ; Bank 1 ROM size OK.
         .endif
         ;-------------------------------------------------------
-        ; Vector table bank 3: >7f9c - >7fff
+        ; Vector table bank 2: >7f9c - >7fff
         ;-------------------------------------------------------
         copy  "rb.vectors.bank2.asm"
 

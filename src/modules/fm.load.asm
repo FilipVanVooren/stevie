@@ -8,11 +8,11 @@
 * bl  @fm.loadfile
 *--------------------------------------------------------------
 * INPUT
-* tmp0  = Pointer to length-prefixed string containing both 
-*         device and filename
+* parm1  = Pointer to length-prefixed string containing both 
+*          device and filename
 *--------------------------------------------------------------- 
 * OUTPUT
-* none
+* outparm1 = >FFFF if editor bufer dirty (does not load file)
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1
@@ -25,19 +25,17 @@ fm.loadfile:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Show dialog "Unsaved changes" and exit if buffer dirty
+        ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
-        mov   @edb.dirty,tmp1
-        jeq   !
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0      
-        mov   *stack+,r11           ; Pop R11
-        b     @dialog.unsaved       ; Show dialog and exit
+        mov   @edb.dirty,tmp1       ; Get dirty flag
+        jeq   !                     ; Load file if not dirty
+
+        seto  @outparm1             ; \ 
+        jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
         ;-------------------------------------------------------
         ; Reset editor
         ;-------------------------------------------------------
-!       mov   tmp0,@parm1           ; Setup file to load
-        bl    @tv.reset             ; Reset editor
+!       bl    @tv.reset             ; Reset editor
         mov   @parm1,@edb.filename.ptr
                                     ; Set filename
         ;-------------------------------------------------------
@@ -60,7 +58,7 @@ fm.loadfile:
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Bytes to copy
 
-        bl    @pane.action.colorscheme.Load
+        bl    @pane.action.colorscheme.load
                                     ; Load color scheme and turn on screen
         ;-------------------------------------------------------
         ; Read DV80 file and display
@@ -95,57 +93,13 @@ fm.loadfile:
         li    tmp0,txt.filetype.DV80                                     
         mov   tmp0,@edb.filetype.ptr
                                     ; Set filetype display string
+
+        clr   @outparm1             ; Reset                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0      
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
-
-***************************************************************
-* fm.fastmode
-* Turn on fast mode for supported devices
-***************************************************************
-* bl  @fm.fastmode
-*--------------------------------------------------------------
-* INPUT
-* none
-*--------------------------------------------------------------- 
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* tmp0, tmp1
-********|*****|*********************|**************************
-fm.fastmode:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-
-        mov   @fh.offsetopcode,tmp0
-        jeq   !
-        ;------------------------------------------------------
-        ; Turn fast mode off
-        ;------------------------------------------------------        
-        clr   @fh.offsetopcode      ; Data buffer in VDP RAM
-        li    tmp0,txt.keys.load
-        mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-        jmp   fm.fastmode.exit
-        ;------------------------------------------------------
-        ; Turn fast mode on
-        ;------------------------------------------------------        
-!       li    tmp0,>40              ; Data buffer in CPU RAM
-        mov   tmp0,@fh.offsetopcode
-        li    tmp0,txt.keys.load2
-        mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-*--------------------------------------------------------------
-* Exit
-*--------------------------------------------------------------
-fm.fastmode.exit:
         mov   *stack+,tmp0          ; Pop tmp0      
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
