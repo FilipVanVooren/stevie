@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2020 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 201129-12546
+0009               * File: stevie_b1.asm               ; Version 201129-15232
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -348,7 +348,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0318               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0319               *--------------------------------------------------------------
 0320      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1100,7 +1100,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1642             byte  22
-0260 21D3 ....             text  'Build-ID  201129-12546'
+0260 21D3 ....             text  'Build-ID  201129-15232'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4984,7 +4984,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0062                                                   ; Relocated spectra2 in low MEMEXP, was
 0063                                                   ; copied to >2000 from ROM in bank 0
 0064                       ;------------------------------------------------------
@@ -6078,7 +6078,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 3420 1342             byte  19
-0033 3421 ....             text  'Build: 201129-12546'
+0033 3421 ....             text  'Build: 201129-15232'
 0034                       even
 0035               
 0036               
@@ -6896,7 +6896,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3C68 BEEF 
      3C6A DEAD 
      3C6C BEEF 
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0082               ***************************************************************
 0083               * Step 4: Include main editor modules
 0084               ********|*****|*********************|**************************
@@ -7076,7 +7076,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0129 6108 C2F9  30         mov   *stack+,r11           ; Pop r11
 0130 610A 045B  20         b     *r11                  ; Return
 0131               
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0096               
 0097                       ;-----------------------------------------------------------------------
 0098                       ; Bank specific vector table
@@ -7127,7 +7127,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.12546
+**** **** ****     > stevie_b3.asm.15232
 0109               
 0110               *--------------------------------------------------------------
 0111               * Video mode configuration

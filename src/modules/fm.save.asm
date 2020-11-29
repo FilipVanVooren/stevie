@@ -27,8 +27,6 @@ fm.savefile:
         ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------
-        mov   tmp0,@parm1           ; Set device and filename
-
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
