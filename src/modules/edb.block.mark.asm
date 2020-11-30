@@ -1,11 +1,11 @@
-* FILE......: edb.line.mark.asm
-* Purpose...: Stevie Editor - Mark line for block operation
+* FILE......: edb.block.mark.asm
+* Purpose...: Mark line for block operation
 
 ***************************************************************
-* edb.line.mark.m1
+* edb.block.mark.m1
 * Mark M1 line for block operation
 ***************************************************************
-*  bl   @edb.line.mark.m1
+*  bl   @edb.block.mark.m1
 *--------------------------------------------------------------
 * INPUT
 * NONE
@@ -16,7 +16,7 @@
 * Register usage
 * tmp0,tmp1
 ********|*****|*********************|**************************
-edb.line.mark.m1:
+edb.block.mark.m1:
         dect  stack
         mov   r11,*stack            ; Push return address
         ;------------------------------------------------------
@@ -53,16 +53,16 @@ edb.line.mark.m1:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        
-edb.line.mark.m1.exit:
+edb.block.mark.m1.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
 
 ***************************************************************
-* edb.line.mark.m2
+* edb.block.mark.m2
 * Mark M2 line for block operation
 ***************************************************************
-*  bl   @edb.line.mark.m2
+*  bl   @edb.block.mark.m2
 *--------------------------------------------------------------
 * INPUT
 * NONE
@@ -73,7 +73,7 @@ edb.line.mark.m1.exit:
 * Register usage
 * tmp0,tmp1
 ********|*****|*********************|**************************
-edb.line.mark.m2:
+edb.block.mark.m2:
         dect  stack
         mov   r11,*stack            ; Push return address
         ;------------------------------------------------------
@@ -112,6 +112,6 @@ edb.line.mark.m2:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        
-edb.line.mark.m2.exit:
+edb.block.mark.m2.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

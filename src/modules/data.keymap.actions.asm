@@ -40,6 +40,7 @@ keymap_actions.editor:
         data  key.ctrl.z, pane.focus.fb, pane.action.colorscheme.cycle
         data  key.ctrl.1, pane.focus.fb, edkey.action.block.mark.m1
         data  key.ctrl.2, pane.focus.fb, edkey.action.block.mark.m2
+        data  key.ctrl.v, pane.focus.fb, edkey.action.block.delete
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
