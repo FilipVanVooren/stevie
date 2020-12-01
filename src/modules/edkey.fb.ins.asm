@@ -115,8 +115,33 @@ edkey.action.ins_line.insert:
 
         inc   @edb.lines            ; One line added to editor buffer
         ;-------------------------------------------------------
+        ; Check/Adjust marker M1
+        ;-------------------------------------------------------
+edkey.action.ins_line.m1:        
+        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
+        jeq   edkey.action.ins_line.m2
+                                    ; Yes, skip to M2 check
+
+        c     @parm1,@edb.block.m1
+        jgt   edkey.action.ins_line.m2
+        inc   @edb.block.m1         ; M1++
+        seto  @fb.colorize          ; Set colorize flag                
+        ;-------------------------------------------------------
+        ; Check/Adjust marker M2
+        ;-------------------------------------------------------
+edkey.action.ins_line.m2:                
+        c     @edb.block.m2,@w$ffff ; Marker M1 unset?
+        jeq   edkey.action.ins_line.refresh
+                                    ; Yes, skip to refresh frame buffer
+
+        c     @parm1,@edb.block.m2
+        jgt   edkey.action.ins_line.refresh
+        inc   @edb.block.m2         ; M2++
+        seto  @fb.colorize          ; Set colorize flag                
+        ;-------------------------------------------------------
         ; Refresh frame buffer and physical screen
         ;-------------------------------------------------------
+edkey.action.ins_line.refresh:        
         mov   @fb.topline,@parm1
         bl    @fb.refresh           ; Refresh frame buffer
         seto  @fb.dirty             ; Trigger screen refresh

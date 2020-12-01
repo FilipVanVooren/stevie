@@ -30,15 +30,10 @@ fb.colorlines:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
-        ; Check if anything to do
+        ; Sanity checks
         ;------------------------------------------------------
         mov   @fb.colorize,tmp0     ; Check if colorization necessary
         jeq   fb.colorlines.exit    ; Exit if nothing to do. 
-
-        mov   @edb.block.m1,tmp0    ; M1 unset?
-        jeq   fb.colorlines.exit    ; Yes, skip marking color
-        mov   @edb.block.m2,tmp0    ; M2 unset?
-        jeq   fb.colorlines.exit    ; Yes, skip marking color
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        

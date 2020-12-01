@@ -105,6 +105,7 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+tv.colorize.reset         equ  >9900   ; Colorization off
 *--------------------------------------------------------------
 * Stevie Dialog / Pane specific equates
 *--------------------------------------------------------------
