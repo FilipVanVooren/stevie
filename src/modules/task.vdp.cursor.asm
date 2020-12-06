@@ -58,7 +58,7 @@ task.vdp.cursor.copy.sat:
         ;-------------------------------------------------------  
         mov   @cmdb.visible,tmp0     ; Check if CMDB pane is visible
         jne   task.vdp.cursor.exit   ; Exit, if visible
-        bl    @pane.botline.draw     ; Draw status bottom line
+        bl    @pane.botline          ; Draw status bottom line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

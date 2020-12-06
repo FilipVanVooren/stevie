@@ -1,11 +1,11 @@
 * FILE......: pane.botline.asm
-* Purpose...: Stevie Editor - Pane status bottom line
+* Purpose...: Pane status bottom line
 
 ***************************************************************
-* pane.botline.draw
-* Draw Stevie status bottom line
+* pane.botline
+* Draw Stevie bottom line
 ***************************************************************
-* bl  @pane.botline.draw
+* bl  @pane.botline
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -13,13 +13,13 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-pane.botline.draw:
+pane.botline:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
 
-        mov   @wyx,@fb.yxsave
+        mov   @wyx,@fb.yxsave       ; Backup cursor
         ;------------------------------------------------------
         ; Show separators
         ;------------------------------------------------------
@@ -29,31 +29,13 @@ pane.botline.draw:
               byte pane.botrow,71,16,1       ; Vertical line 3
               data eol
         ;------------------------------------------------------
-        ; Show buffer number
-        ;------------------------------------------------------
-pane.botline.bufnum:
-        bl    @putat 
-              byte  pane.botrow,0
-              data  txt.bufnum
-        ;------------------------------------------------------
-        ; Show current file
-        ;------------------------------------------------------
-pane.botline.show_file:        
-        bl    @at
-              byte  pane.botrow,3   ; Position cursor
-        mov   @edb.filename.ptr,tmp1
-                                    ; Get string to display
-        bl    @xutst0               ; Display string
-        ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
-pane.botline.show_mode:
         mov   @edb.insmode,tmp0
         jne   pane.botline.show_mode.insert
         ;------------------------------------------------------
         ; Overwrite mode
         ;------------------------------------------------------
-pane.botline.show_mode.overwrite:
         bl    @putat
               byte  pane.botrow,44
               data  txt.ovrwrite

@@ -24,6 +24,8 @@ fm.loadfile:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;-------------------------------------------------------
         ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
@@ -44,13 +46,13 @@ fm.loadfile:
         bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
-        mov   @fb.scrrows,tmp1
+        mov   @fb.scrrows.max,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
  
         bl    @scroff               ; Turn off screen
         
-        clr   tmp0                  ; VDP target address (1nd row on screen!)
+        li    tmp0,>0050            ; VDP target address (2nd row on screen!)
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory
@@ -99,6 +101,7 @@ fm.loadfile:
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0      
         mov   *stack+,r11           ; Pop R11

@@ -26,7 +26,7 @@ vec.17  data  cpu.crash             ;
 vec.18  data  cpu.crash             ; 
 vec.19  data  cpu.crash             ; 
 vec.20  data  fb.refresh            ; 
-vec.21  data  cpu.crash             ; 
+vec.21  data  fb.vdpdump            ; 
 vec.22  data  cpu.crash             ; 
 vec.23  data  cpu.crash             ; 
 vec.24  data  cpu.crash             ; 
@@ -37,4 +37,4 @@ vec.28  data  cpu.crash             ;
 vec.29  data  cpu.crash             ; 
 vec.30  data  pane.errline.show     ;
 vec.31  data  pane.action.colorscheme.load
-vec.32  data  pane.action.colorcombo.botline
+vec.32  data  pane.action.colorscheme.statlines

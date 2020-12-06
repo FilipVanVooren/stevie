@@ -88,6 +88,29 @@ fb.refresh:
 
 
 ***************************************************************
+* Stub for "fb.vdpdump"
+* bank1 vec.21
+********|*****|*********************|**************************
+fb.vdpdump:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 1
+        ;------------------------------------------------------        
+        bl    @rb.farjump           ; \ Trampoline jump to bank
+              data bank1            ; | i  p0 = bank address
+              data vec.21           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller                              
+
+
+
+
+***************************************************************
 * Stub for "pane.errline.show"
 * bank1 vec.30
 ********|*****|*********************|**************************
@@ -130,10 +153,10 @@ pane.action.colorscheme.load
 
 
 ***************************************************************
-* Stub for "pane.action.colorcombo.botline"
+* Stub for "pane.action.colorscheme.statuslines"
 * bank1 vec.32
 ********|*****|*********************|**************************
-pane.action.colorcombo.botline:
+pane.action.colorscheme.statlines
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -147,4 +170,4 @@ pane.action.colorcombo.botline:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        b     *r11                  ; Return to caller                   

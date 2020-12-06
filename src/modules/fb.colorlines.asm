@@ -37,8 +37,9 @@ fb.colorlines:
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
-        li    tmp0,>1800            ; VDP start address        
-        mov   @fb.scrrows.max,tmp3  ; Set loop counter
+        li    tmp0,vdp.fb.toprow.tat
+                                    ; VDP start address        
+        mov   @fb.scrrows,tmp3      ; Set loop counter
         mov   @fb.topline,tmp4      ; Position in editor buffer
         inc   tmp4                  ; M1/M2 use base 1 offset
         ;------------------------------------------------------

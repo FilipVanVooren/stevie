@@ -29,9 +29,12 @@ pane.errline.show:
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1
 
-        bl    @pane.action.colorcombo.errline
-                                    ; \ Set colors for error line
-                                    ; / i  parm1 = FG/BG color
+        li    tmp1,pane.botrow-1    ; 
+        mov   tmp1,@parm2           ; Error line on screen
+
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
                                     
         ;------------------------------------------------------
         ; Show error line content
@@ -87,9 +90,13 @@ pane.errline.hide:
         srl   tmp0,8                ; Right aligns
         mov   tmp0,@parm1           ; set foreground/background color        
 
-        bl    @pane.action.colorcombo.errline
-                                    ; \ Set colors for error line
-                                    ; / i  parm1 LSB = FG/BG color
+
+        li    tmp1,pane.botrow-1    ; 
+        mov   tmp1,@parm2           ; Error line on screen
+
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

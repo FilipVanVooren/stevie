@@ -29,7 +29,7 @@ pane.cmdb.show:
         mov   @wyx,@cmdb.fb.yxsave
                                     ; Save YX position in frame buffer
 
-        mov   @fb.scrrows.max,tmp0
+        li    tmp0,pane.botrow
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
         

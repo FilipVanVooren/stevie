@@ -20,14 +20,15 @@ fm.loadsave.cb.indicator1:
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,80
-              data EOL              ; Clear until end of line
+              byte 0,0,32,50
+              byte pane.botrow,0,32,50
+              data EOL              ; Clear filename
 
-        mov   @tv.busycolor,@parm1
-        bl    @pane.action.colorcombo.botline
-                                    ; Load color combinaton for bottom line
+        mov   @tv.busycolor,@parm1  ; Get busy color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
-                                    ; /
+                                    ; / 
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
 
@@ -44,7 +45,7 @@ fm.loadsave.cb.indicator1:
 fm.loadsave.cb.indicator1.saving:                
         bl    @putat
               byte pane.botrow,0
-              data txt.saving       ; Display "Saving...."
+              data txt.saving       ; Display "Saving file...."
         jmp   fm.loadsave.cb.indicator1.filename
         ;------------------------------------------------------
         ; Display Loading....
@@ -52,7 +53,7 @@ fm.loadsave.cb.indicator1.saving:
 fm.loadsave.cb.indicator1.loading:        
         bl    @putat
               byte pane.botrow,0
-              data txt.loading      ; Display "Loading...."
+              data txt.loading      ; Display "Loading file...."
         ;------------------------------------------------------
         ; Display device/filename
         ;------------------------------------------------------
@@ -97,6 +98,8 @@ fm.loadsave.cb.indicator1.exit:
 * Registered as pointer in @fh.callback2
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator2:
+        dect  stack
+        mov   r11,*stack            ; Push return address
         ;------------------------------------------------------
         ; Check if first page processed (speedup impression)
         ;------------------------------------------------------
@@ -106,63 +109,34 @@ fm.loadsave.cb.indicator2:
         ;------------------------------------------------------
         ; Refresh framebuffer if first page processed
         ;------------------------------------------------------
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2        
-
-        clr   @parm1                ;
+        clr   @parm1
         bl    @fb.refresh           ; Refresh frame buffer
                                     ; \ i  @parm1 = Line to start with
                                     ; /
 
-        ;------------------------------------------------------
-        ; Refresh VDP content with framebuffer
-        ;------------------------------------------------------        
-        mov   @fb.scrrows.max,tmp1
-        mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
-                                    ; 16 bit part is in tmp2!
-        clr   tmp0                  ; VDP target address (1nd line on screen!)
-        mov   @fb.top.ptr,tmp1      ; RAM Source address
-
-        bl    @xpym2v               ; Copy to VDP
-                                    ; \ i  tmp0 = VDP target address
-                                    ; | i  tmp1 = RAM source address
-                                    ; / i  tmp2 = Bytes to copy
-
-        clr   @fb.dirty             ; Reset frame buffer dirty flag
-
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
+        mov   @fb.scrrows.max,@parm1
+        bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
+                                    ; \ i  @parm1 = number of lines to dump
+                                    ; /
 
         ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------
 fm.loadsave.cb.indicator2.kb:
         c     @fh.kilobytes,@fh.kilobytes.prev
-        jne   !
-        b     *r11                  ; Exit early!
+        jeq   fm.loadsave.cb.indicator2.exit
         ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
-!       dect  stack
-        mov   r11,*stack            ; Save return address
-
         mov   @fh.kilobytes,@fh.kilobytes.prev
                                     ; Save for compare
 
         bl    @putnum
-              byte pane.botrow,50   ; Show kilobytes processed
+              byte 0,71             ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte pane.botrow,55
+              byte 0,76
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
@@ -194,18 +168,18 @@ fm.loadsave.cb.indicator3:
               byte pane.botrow,0,32,50       
               data EOL              ; Erase loading indicator
 
-        mov   @tv.color,@parm1
-        bl    @pane.action.colorcombo.botline
-                                    ; Load color combinaton for bottom line
+        mov   @tv.color,@parm1      ; Set normal color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
-                                    ; /
+                                    ; / 
 
         bl    @putnum
-              byte pane.botrow,50   ; Show kilobytes processed
+              byte 0,71             ; Show kilobytes processed
               data fh.kilobytes,rambuf,>3020
 
         bl    @putat
-              byte pane.botrow,55
+              byte 0,76
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
@@ -294,11 +268,11 @@ fm.loadsave.cb.fioerr.mgs3:
         ;------------------------------------------------------
 !       bl    @pane.errline.show    ; Show error line
 
-        mov   @tv.color,@parm1      ; Restore "normal" color
-        bl    @pane.action.colorcombo.botline
-                                    ; Load color combinaton for bottom line
+        mov   @tv.color,@parm1      ; Set normal color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
-                                    ; /
+                                    ; / 
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -307,3 +281,53 @@ fm.loadsave.cb.fioerr.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
+
+
+
+
+
+***************************************************************
+* _fm.statlines.set
+* Set foreground/background color for status lines
+***************************************************************
+* bl @_idx.samspage.get
+*--------------------------------------------------------------
+* INPUT
+* tmp0 = Line number
+*--------------------------------------------------------------
+* OUTPUT
+* @outparm1 = Offset for index entry in index SAMS page
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2
+*--------------------------------------------------------------
+*  Remarks
+*  Private, only to be called from inside idx module.
+*  Activates SAMS page containing required index slot entry.
+********|*****|*********************|**************************
+_fm.statlines.set:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack        
+        ;------------------------------------------------------
+        ; Top line
+        ;------------------------------------------------------        
+        clr   @parm2                ; First row on screen
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+        ;------------------------------------------------------
+        ; Bottom line
+        ;------------------------------------------------------        
+        li    tmp0,pane.botrow
+        mov   tmp0,@parm2           ; Last row on screen        
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------                                    
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller                          

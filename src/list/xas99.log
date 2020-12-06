@@ -74,7 +74,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <1> 0008 - 0006               *
 ***** Invalid mnemonic: *
-> stevie_b0.lst.asm.26898 <1> 0009 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <1> 0009 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <1> 0010 - 0008               ***************************************************************
 ***** Invalid mnemonic: ***************************************************************
@@ -94,7 +94,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0005
 > stevie_b0.lst.asm.26898 <1> 0020 - 0006               *
 ***** Multiple symbols: 0006
-> stevie_b0.lst.asm.26898 <1> 0021 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <1> 0021 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Multiple symbols: 0007
 > stevie_b0.lst.asm.26898 <1> 0022 - 0008               ***************************************************************
 ***** Multiple symbols: 0008
@@ -10802,7 +10802,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0005
 > stevie_b0.lst.asm.26898 <1> 0020 - 0006               *
 ***** Multiple symbols: 0006
-> stevie_b0.lst.asm.26898 <1> 0021 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <1> 0021 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Multiple symbols: 0007
 > stevie_b0.lst.asm.26898 <1> 0022 - 0008               ***************************************************************
 ***** Multiple symbols: 0008
@@ -21558,7 +21558,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0008 - 0006               *
 ***** Invalid mnemonic: *
-> stevie_b0.lst.asm.26898 <2> 0009 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <2> 0009 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0010 - 0008               ***************************************************************
 ***** Invalid mnemonic: ***************************************************************
@@ -21578,7 +21578,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0020 - 0006               *
 ***** Invalid mnemonic: *
-> stevie_b0.lst.asm.26898 <2> 0021 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <2> 0021 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0022 - 0008               ***************************************************************
 ***** Invalid mnemonic: ***************************************************************
@@ -30488,7 +30488,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0020 - 0006               *
 ***** Invalid mnemonic: *
-> stevie_b0.lst.asm.26898 <2> 0021 - 0007               *              (c)2018-2020 // Filip van Vooren
+> stevie_b0.lst.asm.26898 <2> 0021 - 0007               *              (c)2018-2021 // Filip van Vooren
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 0022 - 0008               ***************************************************************
 ***** Invalid mnemonic: ***************************************************************

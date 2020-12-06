@@ -51,17 +51,17 @@
 *
 *     Mem range   Bytes    BANK   Purpose
 *     =========   =====    ====   ==================================
-*     6000-7f9b    8128       0   SP2 ROM code, copy to RAM code, res. modules
-*     7f9c-7fff      64       0   Vector table (up to 32 entries)
+*     6000-7f9b    8128       0   SP2 library, code to RAM, resident modules
+*     7f9c-7fff      64       0   Vector table (32 vectors)
 *     ..............................................................
 *     6000-7f9b    8128       1   Stevie program code
-*     7f9c-7fff      64       1   Vector table (up to 32 entries)
+*     7f9c-7fff      64       1   Vector table (32 vectors)
 *     ..............................................................
 *     6000-7f9b    8128       2   Stevie program code
-*     7f9c-7fff      64       2   Vector table (up to 32 entries)
+*     7f9c-7fff      64       2   Vector table (32 vectors)
 *     ..............................................................
 *     6000-7f9b    8128       3   Stevie program code
-*     7f9c-7fff      64       3   Vector table (up to 32 entries)
+*     7f9c-7fff      64       3   Vector table (32 vectors)
 *
 *
 * VDP RAM
@@ -105,6 +105,10 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
+vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
+vdp.cmdb.toprow.tat       equ  >1fd0   ; VDP TAT address of 1st CMDB row
+vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
 *--------------------------------------------------------------
 * Stevie Dialog / Pane specific equates

@@ -155,10 +155,12 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         ; Dump colors for frame buffer pane (TAT)
         ;-------------------------------------------------------
-        li    tmp0,>1800            ; VDP start address (frame buffer area)
+        li    tmp0,vdp.fb.toprow.tat
+                                    ; VDP start address (frame buffer area)
         mov   tmp3,tmp1             ; Get work copy of colors ABCD
         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
-        li    tmp2,29*80            ; Number of bytes to fill
+        li    tmp2,(pane.botrow-3)*80
+                                    ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
@@ -174,7 +176,8 @@ pane.action.colorscheme.cmdbpane:
         jeq   pane.action.colorscheme.errpane
                                     ; Skip if CMDB pane is hidden
 
-        li    tmp0,>1fd0            ; VDP start address (bottom status line)
+        li    tmp0,vdp.cmdb.toprow.tat
+                                    ; VDP start address (CMDB top line)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
         li    tmp2,5*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
@@ -182,30 +185,41 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
-        ; Dump fixed colors for error line pane (TAT)
+        ; Dump colors for error line (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.errpane:        
         mov   @tv.error.visible,tmp0
-        jeq   pane.action.colorscheme.statusline
+        jeq   pane.action.colorscheme.statline
                                     ; Skip if error line pane is hidden
                                     
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1           ; Pass color combination
 
-        bl    @pane.action.colorcombo.errline
-                                    ; Load color combination for error line
-                                    ; \ i  @parm1 = Color combination
-                                    ; /
-        ;-------------------------------------------------------
-        ; Dump colors for bottom status line pane (TAT)
-        ;-------------------------------------------------------
-pane.action.colorscheme.statusline:        
-        mov   @tv.color,@parm1      ; Pass color combination
+        li    tmp1,pane.botrow-1    ; 
+        mov   tmp1,@parm2           ; Error line on screen
 
-        bl    @pane.action.colorcombo.botline
-                                    ; Load color combination for status line
+        bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
-                                    ; /
+                                    ; / i  @parm2 = Row on physical screen
+        ;-------------------------------------------------------
+        ; Dump colors for top line and bottom line (TAT)
+        ;-------------------------------------------------------
+pane.action.colorscheme.statline:                
+        mov   @tv.color,tmp1
+        andi  tmp1,>00ff            ; Only keep LSB (status line colors)
+        mov   tmp1,@parm1           ; Set color combination
+
+
+        clr   @parm2                ; Top row on screen
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+
+        li    tmp1,pane.botrow
+        mov   tmp1,@parm2           ; Bottom row on screen
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------        
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------
@@ -231,102 +245,44 @@ pane.action.colorscheme.load.exit:
 
 
 ***************************************************************
-* pane.action.colorcombo.errline
-* Load color scheme for error line
+* pane.action.colorscheme.statuslines
+* Set color combination for top/bottom status lines
 ***************************************************************
-* bl  @pane.action.colorcombo.errline
+* bl @pane.action.colorscheme.statuslines
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Foreground / Background color
+* @parm1 = Color combination to set
 *--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
-pane.action.colorcombo.errline:
+pane.action.colorscheme.statlines:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   @parm1,*stack         ; Push parm1        
-        ;-------------------------------------------------------
-        ; Load error line colors
-        ;-------------------------------------------------------
-        mov   @parm1,tmp1           ; Get FG/BG color
-
-        li    tmp0,>20C0            ; VDP start address (error line)
-        li    tmp2,80               ; Number of bytes to fill
-        bl    @xfilv                ; Fill colors
-                                    ; i \  tmp0 = start address
-                                    ; i |  tmp1 = byte to fill
-                                    ; i /  tmp2 = number of bytes to fill
-        ;-------------------------------------------------------
+        ;------------------------------------------------------
+        ; Top line
+        ;------------------------------------------------------        
+        clr   @parm2                ; First row on screen
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+        ;------------------------------------------------------
+        ; Bottom line
+        ;------------------------------------------------------        
+        li    tmp0,pane.botrow
+        mov   tmp0,@parm2           ; Last row on screen        
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+        ;------------------------------------------------------
         ; Exit
-        ;-------------------------------------------------------
-pane.action.colorcombo.errline.exit:
-        mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        ;------------------------------------------------------                                    
+pane.action.colorscheme.statlines.exit:        
+        mov   *stack+,tmp0          ; Pop tmp0              
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
-
-
-
-
-
-***************************************************************
-* pane.action.colorcombo.botline
-* Load color combination for error line
-***************************************************************
-* bl  @pane.action.colorcombo.botline
-*--------------------------------------------------------------
-* INPUT
-* @parm1 = Foreground / Background color
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* tmp0,tmp1,tmp2
-********|*****|*********************|**************************
-pane.action.colorcombo.botline:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   @parm1,*stack         ; Push parm1              
-        ;-------------------------------------------------------
-        ; Dump colors for bottom status line pane (TAT)
-        ;-------------------------------------------------------
-        li    tmp0,>2110            ; VDP start address (bottom status line)
-        mov   @parm1,tmp1           ; Get color
-        andi  tmp1,>00ff            ; Only keep LSB (status line colors)
-        li    tmp2,80               ; Number of bytes to fill
-        bl    @xfilv                ; Fill colors
-                                    ; i \  tmp0 = start address
-                                    ; i |  tmp1 = byte to fill
-                                    ; i /  tmp2 = number of bytes to fill
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-pane.action.colorcombo.botline.exit:
-        mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller                                    
+        b     *r11                  ; Return to caller          

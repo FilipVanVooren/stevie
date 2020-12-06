@@ -13,8 +13,6 @@ task.vdp.panes:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
 
         mov   @wyx,@fb.yxsave       ; Backup cursor
         ;------------------------------------------------------
@@ -44,7 +42,6 @@ task.vdp.panes.cmdb.check
         mov   @fb.yxsave,@wyx       ; Restore cursor
         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
         jeq   !                     ; No, skip CMDB pane
-        jmp   task.vdp.panes.cmdb.draw
         ;-------------------------------------------------------
         ; Draw command buffer pane if dirty
         ;-------------------------------------------------------
@@ -59,7 +56,7 @@ task.vdp.panes.cmdb.draw:
         ; Check if frame buffer dirty
         ;-------------------------------------------------------
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
-        jeq   task.vdp.panes.botline.draw
+        jeq   task.vdp.panes.botline
                                     ; No, skip update
 
         mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
@@ -69,7 +66,7 @@ task.vdp.panes.cmdb.draw:
         c     @edb.lines,@fb.scrrows
         jlt   task.vdp.panes.setrows.small
         mov   @fb.scrrows,tmp1      ; Lines to copy        
-        jmp   task.vdp.panes.copy.framebuffer
+        jmp   task.vdp.panes.copy.fb
         ;------------------------------------------------------
         ; Less lines in editor buffer as rows in frame buffer 
         ;------------------------------------------------------
@@ -79,38 +76,25 @@ task.vdp.panes.setrows.small:
         ;------------------------------------------------------
         ; Determine area to copy
         ;------------------------------------------------------
-task.vdp.panes.copy.framebuffer:
-        mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
-                                    ; 16 bit part is in tmp2!
-        clr   tmp0                  ; VDP target address (1nd line on screen!)
-        mov   @fb.top.ptr,tmp1      ; RAM Source address
-        ;------------------------------------------------------
-        ; Copy memory block (SIT)
-        ;------------------------------------------------------
-        ci    tmp2,0                ; Something to copy?
-        jeq   task.vdp.panes.copy.eof
-                                    ; No, skip copy
-
-        bl    @xpym2v               ; Copy to VDP
-                                    ; \ i  tmp0 = VDP target address
-                                    ; | i  tmp1 = RAM source address
-                                    ; / i  tmp2 = Bytes to copy
+task.vdp.panes.copy.fb:
+        mov   tmp1,@parm1
+        bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
+                                    ; \ i  @parm1 = number of lines to dump
+                                    ; /        
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
         bl    @fb.colorlines        ; Colorize lines M1/M2
-        clr   @fb.dirty             ; Reset frame buffer dirty flag
         ;-------------------------------------------------------
         ; Draw EOF marker at end-of-file
         ;-------------------------------------------------------
-task.vdp.panes.copy.eof:        
-        clr   @fb.dirty             ; Reset frame buffer dirty flag        
+task.vdp.panes.copy.eof:
+        c     @edb.lines,@fb.scrrows
+                                    ; On last screen page?
+        jgt   task.vdp.panes.botline
+                                    ; Skip drawing EOF maker 
         mov   @edb.lines,tmp0
-        s     @fb.topline,tmp0      ; Y = @edb.lines - @fb.topline
-
-        c     @fb.scrrows,tmp0      ; Hide if last line on screen
-        jle   task.vdp.panes.botline.draw
-                                    ; Skip drawing EOF maker
+        inc   tmp0
         ;-------------------------------------------------------
         ; Do actual drawing of EOF marker 
         ;-------------------------------------------------------
@@ -135,7 +119,7 @@ task.vdp.panes.clear_screen:
         a     @fb.scrrows,tmp1      ; tmp1 = -Y position + fb.scrrows
 
         mpy   tmp0,tmp1             ; tmp2 = tmp0 * tmp1
-        ai    tmp2, -5              ; Adjust offset (becaise of *EOF* string)
+        ai    tmp2, -5              ; Adjust offset (because of *EOF* string)
 
         bl    @yx2pnt               ; Set VDP address in tmp0
                                     ; \ i  @wyx = Cursor position
@@ -149,15 +133,15 @@ task.vdp.panes.clear_screen:
 
         mov   @fb.yxsave,@wyx       ; Restore cursor postion                                    
         ;-------------------------------------------------------
-        ; Draw status line
+        ; Refresh top and bottom line
         ;-------------------------------------------------------
-task.vdp.panes.botline.draw:
-        bl    @pane.botline.draw    ; Draw status bottom line
+task.vdp.panes.botline:
+        bl    @pane.topline         ; Draw top line
+        bl    @pane.botline         ; Draw bottom line
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

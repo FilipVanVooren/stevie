@@ -4,7 +4,7 @@
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
 *
-*              (c)2018-2020 // Filip van Vooren
+*              (c)2018-2021 // Filip van Vooren
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 *
@@ -36,9 +36,9 @@ bankid  equ   bank3                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1G'
+              #string 'STEVIE V01.H'
         .else
-              #string 'STEVIE V0.1G'
+              #string 'STEVIE V01.H'
         .endif
 
 ***************************************************************

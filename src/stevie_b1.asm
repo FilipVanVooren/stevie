@@ -4,7 +4,7 @@
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
 *
-*              (c)2018-2020 // Filip van Vooren
+*              (c)2018-2021 // Filip van Vooren
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 *
@@ -36,9 +36,9 @@ bankid  equ   bank1                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1G'
+              #string 'STEVIE V01.H'
         .else
-              #string 'STEVIE V0.1G'
+              #string 'STEVIE V01.H'
         .endif
 
 ***************************************************************
@@ -117,8 +117,9 @@ main:
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------        
         copy  "fb.util.asm"         ; Framebuffer utilities
-        copy  "fb.refresh.asm"      ; Framebuffer refresh
-        copy  "fb.colorlines.asm"   ; Framebuffer colorize lines
+        copy  "fb.refresh.asm"      ; Refresh framebuffer
+        copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
+        copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
@@ -162,13 +163,15 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
+        copy  "colors.line.set.asm" ; Set color combination for line
         copy  "pane.cmdb.asm"       ; Command buffer 
         copy  "pane.cmdb.show.asm"  ; Show command buffer pane
         copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
         copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
 
+        copy  "pane.topline.asm"    ; Top line
         copy  "pane.errline.asm"    ; Error line
-        copy  "pane.botline.asm"    ; Status line
+        copy  "pane.botline.asm"    ; Bottom line
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------   

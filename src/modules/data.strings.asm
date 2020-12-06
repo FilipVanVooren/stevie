@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie V0.1G'
+txt.about.program  #string 'Stevie V01.H'
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
 txt.about.author   #string '2018-2020 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
@@ -38,7 +38,7 @@ txt.ovrwrite       #string 'OVR'
 txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
-txt.saving         #string 'Saving...'
+txt.saving         #string 'Saving....'
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
@@ -113,7 +113,7 @@ txt.cmdb.prompt    #string '>'
 
 txt.stevie         byte    12
                    byte    10
-                   text    'stevie V0.1G'
+                   text    'stevie V01.H'
                    byte    11
                    even
 
