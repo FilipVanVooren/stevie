@@ -24,20 +24,54 @@ pane.botline:
         ; Show separators
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,42,16,1       ; Vertical line 1
-              byte pane.botrow,50,16,1       ; Vertical line 2
-              byte pane.botrow,71,16,1       ; Vertical line 3
+              byte pane.botrow,50,16,1       ; Vertical line 1
+              byte pane.botrow,71,16,1       ; Vertical line 2
               data eol
+        ;------------------------------------------------------
+        ; Show M1 marker
+        ;------------------------------------------------------
+        mov   @edb.block.m1,tmp0    ; M1 set?
+        jeq   pane.botline.show_mode
+
+        bl    @putat
+              byte pane.botrow,30
+              data txt.m1           ; Show M1 marker message
+
+        mov   @edb.block.m1,@parm1
+        bl    @tv.unpack.int        ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1        = 16bit unsigned integer
+                                    ; / o @unpacked.num = Output string
+        bl    @putat
+              byte pane.botrow,33
+              data unpacked.num     ; Show M1 value
+        ;------------------------------------------------------
+        ; Show M2 marker
+        ;------------------------------------------------------
+        mov   @edb.block.m2,tmp0    ; M2 set?
+        jeq   pane.botline.show_mode
+
+        bl    @putat
+              byte pane.botrow,40
+              data txt.m2           ; Show M1 marker message
+
+        mov   @edb.block.m2,@parm1
+        bl    @tv.unpack.int        ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1        = 16bit unsigned integer
+                                    ; / o @unpacked.num = Output string
+        bl    @putat
+              byte pane.botrow,43
+              data unpacked.num     ; Show M2 value
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
+pane.botline.show_mode:
         mov   @edb.insmode,tmp0
         jne   pane.botline.show_mode.insert
         ;------------------------------------------------------
         ; Overwrite mode
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,44
+              byte  pane.botrow,52
               data  txt.ovrwrite
         jmp   pane.botline.show_changed
         ;------------------------------------------------------
@@ -45,7 +79,7 @@ pane.botline:
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
         bl    @putat
-              byte  pane.botrow,44
+              byte  pane.botrow,52
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
@@ -57,7 +91,7 @@ pane.botline.show_changed:
         ; Show "*"
         ;------------------------------------------------------        
         bl    @putat
-              byte pane.botrow,48
+              byte pane.botrow,56
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------

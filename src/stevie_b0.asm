@@ -11,7 +11,7 @@
 * Bank 0 "Jill"
 *
 ***************************************************************
-        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -156,7 +156,7 @@ main:
         ;-------------------------------------------------------
         ; Vector table bank 0: >7f9c - >7fff
         ;-------------------------------------------------------
-        copy  "rb.vectors.bank0.asm"
+        copy  "rom.vectors.bank0.asm"
 
 
 *--------------------------------------------------------------

@@ -1,4 +1,4 @@
-* FILE......: rb.order.asm
+* FILE......: rom.order.asm
 * Purpose...: Equates with CPU write addresses for switching banks
 
 *--------------------------------------------------------------

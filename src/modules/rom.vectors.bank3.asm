@@ -1,4 +1,4 @@
-* FILE......: rb.vectors.bank3.asm
+* FILE......: rom.vectors.bank3.asm
 * Purpose...: Bank 3 vectors for trampoline function
         
         aorg  >7f9c
@@ -6,11 +6,11 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  dialog.about          ;  Dialog "About"
-vec.2   data  cpu.crash             ;
-vec.3   data  cpu.crash             ; 
-vec.4   data  cpu.crash             ; 
-vec.5   data  cpu.crash             ; 
+vec.1   data  dialog.about          ; Dialog "About"
+vec.2   data  dialog.load           ; Dialog "Load DV80 file"
+vec.3   data  dialog.save           ; Dialog "Save DV80 file"
+vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
+vec.5   data  dialog.block          ; Dialog "Move/Copy/Delete block"
 vec.6   data  cpu.crash             ; 
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 

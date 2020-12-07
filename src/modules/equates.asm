@@ -153,9 +153,10 @@ outparm7          equ  >2f3c           ; Function output parameter 7
 outparm8          equ  >2f3e           ; Function output parameter 8
 keycode1          equ  >2f40           ; Current key scanned
 keycode2          equ  >2f42           ; Previous key scanned
-timers            equ  >2f44           ; Timer table
-ramsat            equ  >2f54           ; Sprite Attribute Table in RAM
-rambuf            equ  >2f64           ; RAM workbuffer 1
+unpacked.num      equ  >2f44           ; 6 char string with unpacked integer
+timers            equ  >2f4a           ; Timer table
+ramsat            equ  >2f5a           ; Sprite Attribute Table in RAM
+rambuf            equ  >2f6a           ; RAM workbuffer 1
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------

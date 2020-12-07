@@ -1,5 +1,5 @@
-* FILE......: task.vdp.cursor.asm
-* Purpose...: Stevie Editor - VDP sprite cursor
+* FILE......: task.vdp.cursor.blink.asm
+* Purpose...: VDP sprite cursor shape
 
 ***************************************************************
 * Task - Update cursor shape (blink)

@@ -40,11 +40,11 @@ pane.action.colorscheme.switch:
         mov   @wyx,@waux1           ; Save cursor YX position
 
         bl    @putnum
-              byte pane.botrow,54
+              byte 0,61
               data tv.colorscheme,rambuf,>3020
 
         bl    @putat
-              byte pane.botrow,52
+              byte 0,52
               data txt.colorscheme  ; Show color palette message
 
         mov   @waux1,@wyx           ; Restore cursor YX position

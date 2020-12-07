@@ -11,7 +11,7 @@
 * Bank 1 "James"
 *
 ***************************************************************
-        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -70,7 +70,7 @@ bankid  equ   bank1                 ; Set bank identifier to current bank
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "mem.resident.3000.asm"    
+        copy  "mem.resident.3000.asm"            
 ***************************************************************
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
@@ -84,8 +84,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.process.asm"    
-                                    ; Process keyboard actions
+        copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer              
         ;-----------------------------------------------------------------------
@@ -149,17 +148,18 @@ main:
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
-        copy  "hook.keyscan.asm"    ; spectra2 user hook: keyboard scanning        
-        copy  "task.vdp.panes.asm"  ; Task - VDP draw editor panes
-        copy  "task.vdp.sat.asm"    ; Task - VDP copy SAT
-        copy  "task.vdp.cursor.asm" ; Task - VDP set cursor shape
-        copy  "task.oneshot.asm"    ; Task - One shot
+        copy  "hook.keyscan.asm"           ; spectra2 user hook: keyboard scan
+        copy  "task.vdp.panes.asm"         ; Draw editor panes in VDP
+        copy  "task.vdp.cursor.sat.asm"    ; Copy cursor SAT to VDP
+        copy  "task.vdp.cursor.blink.asm"  ; Set cursor shape in VDP (blink)
+        copy  "task.oneshot.asm"           ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.asm"      ; Pane utility functions
-        copy  "pane.utils.colorscheme.asm"
-                                    ; Colorscheme handling in panes 
+        copy  "pane.utils.asm"             ; Pane utility functions
+        copy  "pane.utils.hint.asm"        ; Show hint in pane
+        copy  "pane.utils.cursor.asm"      ; Cursor utility functions
+        copy  "pane.utils.colorscheme.asm" ; Colorscheme handling in panes 
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
@@ -173,22 +173,13 @@ main:
         copy  "pane.errline.asm"    ; Error line
         copy  "pane.botline.asm"    ; Bottom line
         ;-----------------------------------------------------------------------
-        ; Dialogs
-        ;-----------------------------------------------------------------------   
-        copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
-        copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
-        copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"                                    
-        copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
-        ;-----------------------------------------------------------------------
         ; Stubs using trampoline
-        ;-----------------------------------------------------------------------        
-        copy  "stubs.bank1.asm"     ; Stubs for functions in other banks
+        ;-----------------------------------------------------------------------
+        copy  "rom.stubs.bank1.asm"        ; Stubs for functions in other banks
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.keymap.actions.asm"
-                                    ; Data segment - Keyboard actions
-
+        copy  "data.keymap.actions.asm"    ; Data segment - Keyboard actions
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
@@ -200,7 +191,7 @@ main:
         ;-------------------------------------------------------
         ; Vector table bank 1: >7f9c - >7fff
         ;-------------------------------------------------------
-        copy  "rb.vectors.bank1.asm"
+        copy  "rom.vectors.bank1.asm"
 
 
 

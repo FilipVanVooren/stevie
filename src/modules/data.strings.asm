@@ -46,10 +46,8 @@ txt.bufnum         #string '#1 '
 txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.filetype.none  #string '    '
-txt.clear          #string '        '
-txt.m1.set         #string 'M1'
-txt.m2.set         #string 'M2'
-
+txt.m1             #string 'M1='
+txt.m2             #string 'M2='
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
@@ -117,5 +115,5 @@ txt.stevie         byte    12
                    byte    11
                    even
 
-txt.colorscheme    #string 'Color:'
+txt.colorscheme    #string 'Colorscheme:'
 

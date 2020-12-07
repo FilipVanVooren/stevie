@@ -19,12 +19,18 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.load:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Show dialog "unsaved changes" if editor buffer dirty
+        ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
-        mov   @edb.dirty,tmp0
-        jeq   dialog.load.setup
-        b     @dialog.unsaved       ; Show dialog and exit
+        mov   @edb.dirty,tmp0       ; Editor dirty?
+        jeq   dialog.load.setup     ; No, skip "Unsaved changes"
+
+        bl    @dialog.unsaved       ; Show dialog
+        jmp   dialog.load.exit      ; Exit early
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -56,6 +62,18 @@ dialog.load.setup:
         ;-------------------------------------------------------
 dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane        
+        ;-------------------------------------------------------
+        ; Set cursor shape
+        ;-------------------------------------------------------
+        bl    @pane.cursor.blink    ; Show cursor
+        li    tmp0,>0100            ; Cursor CMDB insert mode
+        movb  tmp0,@tv.curshape     ; Save cursor shape  
+        mov   @tv.curshape,@ramsat+2 
+                                    ; Get cursor shape and color
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+dialog.load.exit:
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller                                         

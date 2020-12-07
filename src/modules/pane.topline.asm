@@ -24,7 +24,8 @@ pane.topline:
         ; Show separators
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,70,16,1        ; Vertical line 1
+              byte 0,50,16,1        ; Vertical line 1
+              byte 0,70,16,1        ; Vertical line 2
               data eol        
         ;------------------------------------------------------
         ; Show buffer number

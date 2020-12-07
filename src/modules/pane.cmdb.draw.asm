@@ -69,7 +69,7 @@ pane.cmdb.draw:
 pane.cmdb.draw.m1:
         bl    @putnum               ; Show M1 value
               byte pane.botrow-3,4
-              data edb.block.m1,rambuf,>3020
+              data edb.block.m1,rambuf,>3030
 
 pane.cmdb.draw.m2:
         mov   @edb.block.m2,tmp0
@@ -77,7 +77,7 @@ pane.cmdb.draw.m2:
 
         bl    @putnum               ; Show M2 value
               byte pane.botrow-3,25
-              data edb.block.m2,rambuf,>3020
+              data edb.block.m2,rambuf,>3030
 
 pane.cmdb.draw.m3:
         mov   @edb.block.m2,tmp0
@@ -85,7 +85,7 @@ pane.cmdb.draw.m3:
 
         bl    @putnum               ; Show M3 value
               byte pane.botrow-3,44
-              data edb.block.m1,rambuf,>3020
+              data edb.block.m1,rambuf,>3030
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------

@@ -1,4 +1,4 @@
-* FILE......: rb.vectors.bank2.asm
+* FILE......: rom.vectors.bank2.asm
 * Purpose...: Bank 2 vectors for trampoline function
         
         aorg  >7f9c

@@ -19,6 +19,10 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.save:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -44,8 +48,18 @@ dialog.save:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
-
+        ;-------------------------------------------------------
+        ; Set cursor shape
+        ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor
-
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane        
+        li    tmp0,>0100            ; Cursor CMDB insert mode
+        movb  tmp0,@tv.curshape     ; Save cursor shape  
+        mov   @tv.curshape,@ramsat+2 
+                                    ; Get cursor shape and color        
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+dialog.save.exit:
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller

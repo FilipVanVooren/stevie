@@ -1,5 +1,5 @@
-* FILE......: task.vdp.sat.asm
-* Purpose...: Stevie Editor - VDP copy SAT
+* FILE......: task.vdp.cursor.sat.asm
+* Purpose...: Copy cursor SAT to VDP
 
 ***************************************************************
 * Task - Copy Sprite Attribute Table (SAT) to VDP

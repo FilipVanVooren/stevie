@@ -64,11 +64,12 @@ fm.loadsave.cb.indicator1.filename:
                                     ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
-        ; Display separators
+        ; Show separators
         ;------------------------------------------------------
-        bl    @putat
-              byte pane.botrow,71
-              data txt.vertline     ; Vertical line
+        bl    @hchar
+              byte pane.botrow,50,16,1       ; Vertical line 1
+              byte pane.botrow,71,16,1       ; Vertical line 2
+              data eol
         ;------------------------------------------------------
         ; Display fast mode
         ;------------------------------------------------------

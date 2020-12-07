@@ -11,7 +11,7 @@
 * Bank 2 "Jacky"
 *
 ***************************************************************
-        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -93,19 +93,19 @@ main:
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
-        copy  "stubs.bank2.asm"     ; Stubs for functions in other banks        
+        copy  "rom.stubs.bank2.asm" ; Stubs for functions in other banks        
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
         .ifgt $, >7f9b
-              .error 'Aborted. Bank 1 cartridge program too large!'
+              .error 'Aborted. Bank 2 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
         ;-------------------------------------------------------
         ; Vector table bank 2: >7f9c - >7fff
         ;-------------------------------------------------------
-        copy  "rb.vectors.bank2.asm"
+        copy  "rom.vectors.bank2.asm"
 
 *--------------------------------------------------------------
 * Video mode configuration

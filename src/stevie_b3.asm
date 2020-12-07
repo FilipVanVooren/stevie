@@ -11,7 +11,7 @@
 * Bank 3 "John"
 *
 ***************************************************************
-        copy  "rb.order.asm"        ; ROM bank order "non-inverted"
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -85,19 +85,26 @@ main:
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------         
         copy  "dialog.about.asm"    ; Dialog "About"
-
+        copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
+        copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
+        copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
+        copy  "dialog.block.asm"    ; Dialog "Move/Copy/Delete block"
+        ;-----------------------------------------------------------------------
+        ; Stubs using trampoline
+        ;-----------------------------------------------------------------------        
+        copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
         .ifgt $, >7f9b
-              .error 'Aborted. Bank 1 cartridge program too large!'
+              .error 'Aborted. Bank 3 cartridge program too large!'
         .else
               data $                ; Bank 1 ROM size OK.
         .endif
         ;-------------------------------------------------------
         ; Vector table bank 3: >7f9c - >7fff
         ;-------------------------------------------------------
-        copy  "rb.vectors.bank3.asm"
+        copy  "rom.vectors.bank3.asm"
 
 *--------------------------------------------------------------
 * Video mode configuration

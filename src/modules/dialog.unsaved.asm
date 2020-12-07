@@ -19,6 +19,13 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.unsaved:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Setup dialog
+        ;-------------------------------------------------------
         li    tmp0,id.dialog.unsaved
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
@@ -34,7 +41,11 @@ dialog.unsaved:
         li    tmp0,txt.keys.unsaved
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
-        bl    @pane.cursor.hide     ; Hide cursor 
-
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane        
+        bl    @pane.cursor.hide     ; Hide cursor
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+dialog.unsaved.exit:
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller     
