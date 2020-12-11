@@ -18,8 +18,8 @@ pane.botline:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-
-        mov   @wyx,@fb.yxsave       ; Backup cursor
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Show separators
         ;------------------------------------------------------
@@ -38,12 +38,16 @@ pane.botline:
               data txt.m1           ; Show M1 marker message
 
         mov   @edb.block.m1,@parm1
-        bl    @tv.unpack.int        ; Unpack 16 bit unsigned integer to string
-                                    ; \ i @parm1        = 16bit unsigned integer
-                                    ; / o @unpacked.num = Output string
+        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1           = uint16
+                                    ; / o @unpacked.string = Output string
+
+        li    tmp0,>0500
+        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+
         bl    @putat
               byte pane.botrow,33
-              data unpacked.num     ; Show M1 value
+              data unpacked.string  ; Show M1 value
         ;------------------------------------------------------
         ; Show M2 marker
         ;------------------------------------------------------
@@ -55,12 +59,17 @@ pane.botline:
               data txt.m2           ; Show M1 marker message
 
         mov   @edb.block.m2,@parm1
-        bl    @tv.unpack.int        ; Unpack 16 bit unsigned integer to string
-                                    ; \ i @parm1        = 16bit unsigned integer
-                                    ; / o @unpacked.num = Output string
+        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1           = uint16
+                                    ; / o @unpacked.string = Output string
+
+
+        li    tmp0,>0500
+        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+
         bl    @putat
               byte pane.botrow,43
-              data unpacked.num     ; Show M2 value
+              data unpacked.string  ; Show M2 value
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -234,7 +243,7 @@ pane.botline.show_lines_in_buffer:
         ; Exit
         ;------------------------------------------------------
 pane.botline.exit:
-        mov   @fb.yxsave,@wyx
+        mov   *stack+,@wyx          ; Pop cursor position        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

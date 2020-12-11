@@ -86,7 +86,6 @@ fb.refresh.erase_eob:
         ;------------------------------------------------------
 fb.refresh.exit:
         seto  @fb.dirty             ; Refresh screen
-        seto  @fb.colorize          ; Colorize M1/M2 block (if present)
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0                

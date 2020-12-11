@@ -5,6 +5,7 @@
 * Cursor beginning of word or previous word
 *---------------------------------------------------------------
 edkey.action.pword:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         mov   @fb.column,tmp0
         jeq   !                     ; column=0 ? Skip further processing
         ;-------------------------------------------------------
@@ -73,6 +74,7 @@ edkey.action.pword.exit:
 * Cursor next word
 *---------------------------------------------------------------
 edkey.action.nword:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         clr   tmp4                  ; Reset multiple spaces mode
         mov   @fb.column,tmp0
         c     tmp0,@fb.row.length

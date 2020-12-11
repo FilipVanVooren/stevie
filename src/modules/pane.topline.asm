@@ -18,8 +18,8 @@ pane.topline:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-
-        mov   @wyx,@fb.yxsave       ; Backup cursor
+        dect  stack        
+        mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Show separators
         ;------------------------------------------------------
@@ -46,7 +46,7 @@ pane.topline:
         ; Exit
         ;------------------------------------------------------
 pane.topline.exit:
-        mov   @fb.yxsave,@wyx
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

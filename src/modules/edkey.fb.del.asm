@@ -195,7 +195,12 @@ edkey.action.del_line.m2:
 edkey.action.del_line.refresh:        
         dec   @edb.lines            ; One line less in editor buffer        
         mov   @fb.topline,@parm1
-        bl    @fb.refresh           ; Refresh frame buffer
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)        
+
+        
         seto  @fb.dirty             ; Trigger screen refresh
         ;-------------------------------------------------------
         ; Special treatment if current line was last line

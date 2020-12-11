@@ -34,13 +34,16 @@ keymap_actions.editor:
         data  key.fctn.dot, pane.focus.fb, edkey.action.ins_onoff
         data  key.fctn.5, pane.focus.fb, edkey.action.ins_line
         ;-------------------------------------------------------
+        ; Block marking/modifier
+        ;-------------------------------------------------------
+        data  key.ctrl.1, pane.focus.fb, edkey.action.block.mark.m1
+        data  key.ctrl.2, pane.focus.fb, edkey.action.block.mark.m2
+        data  key.ctrl.3, pane.focus.fb, edkey.action.block.delete
+        ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, pane.focus.fb, edkey.action.quit
         data  key.ctrl.z, pane.focus.fb, pane.action.colorscheme.cycle
-        data  key.ctrl.1, pane.focus.fb, edkey.action.block.mark.m1
-        data  key.ctrl.2, pane.focus.fb, edkey.action.block.mark.m2
-        data  key.ctrl.v, pane.focus.fb, edkey.action.block.delete
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

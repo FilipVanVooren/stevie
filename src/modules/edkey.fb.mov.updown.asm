@@ -5,6 +5,7 @@
 * Cursor up
 *---------------------------------------------------------------
 edkey.action.up: 
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current line if dirty 
         ;-------------------------------------------------------
@@ -26,8 +27,13 @@ edkey.action.up.cursor:
         ; Scroll 1 line
         ;-------------------------------------------------------
         dec   tmp0                  ; fb.topline--
-        mov   tmp0,@parm1
-        bl    @fb.refresh           ; Scroll one line up
+        mov   tmp0,@parm1           ; Scroll one line up       
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)
+
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
         jmp   edkey.action.up.set_cursorx
         ;-------------------------------------------------------
         ; Move cursor up
@@ -66,6 +72,7 @@ edkey.action.up.exit:
 edkey.action.down:
         c     @fb.row,@edb.lines    ; Last line in editor buffer ? 
         jeq   !                     ; Yes, skip further processing
+        seto  @fb.status.dirty      ; Trigger refresh of status lines                
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -97,7 +104,12 @@ edkey.action.down.move:
         ;-------------------------------------------------------
         mov   @fb.topline,@parm1
         inc   @parm1
-        bl    @fb.refresh
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)
+
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
         jmp   edkey.action.down.set_cursorx
         ;-------------------------------------------------------
         ; Move cursor down a row, there are still rows left

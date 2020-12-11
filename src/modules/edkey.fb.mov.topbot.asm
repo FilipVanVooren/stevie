@@ -23,6 +23,8 @@
 *  Private, only to be called from inside edkey submodules
 ********|*****|*********************|**************************
 _edkey.goto.fb.toprow:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
+
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
@@ -56,6 +58,7 @@ edkey.action.top:
         ;-------------------------------------------------------
 edkey.action.top.refresh:        
         clr   @parm1                ; Set to 1st line in editor buffer
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
         jmp   _edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
@@ -84,6 +87,7 @@ edkey.action.bot.refresh:
         mov   @edb.lines,tmp0
         s     @fb.scrrows,tmp0
         mov   tmp0,@parm1           ; Set to last page in editor buffer
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
         jmp   _edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer

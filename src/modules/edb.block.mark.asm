@@ -33,7 +33,8 @@ edb.block.mark.m1:
         mov   @outparm1,@edb.block.m1  
                                     ; Set block marker M1
         seto  @fb.colorize          ; Set colorize flag                
-        seto  @fb.dirty             ; Trigger refresh
+        seto  @fb.dirty             ; Trigger frame buffer refresh
+        seto  @fb.status.dirty      ; Trigger status lines update
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        
@@ -76,6 +77,7 @@ edb.block.mark.m2:
 
         seto  @fb.colorize          ; Set colorize flag                
         seto  @fb.dirty             ; Trigger refresh
+        seto  @fb.status.dirty      ; Trigger status lines update
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        

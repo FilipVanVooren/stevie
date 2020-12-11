@@ -53,12 +53,6 @@ task.vdp.cursor.copy.sat:
               data sprsat,ramsat,4   ; \ i  p0 = VDP destination
                                      ; | i  p1 = ROM/RAM source
                                      ; / i  p2 = Number of bytes to write
-        ;-------------------------------------------------------
-        ; Show status bottom line
-        ;-------------------------------------------------------  
-        mov   @cmdb.visible,tmp0     ; Check if CMDB pane is visible
-        jne   task.vdp.cursor.exit   ; Exit, if visible
-        bl    @pane.botline          ; Draw status bottom line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

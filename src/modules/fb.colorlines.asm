@@ -8,7 +8,7 @@
 * bl @fb.colorlines
 *--------------------------------------------------------------
 * INPUT
-* none
+* @parm1 = Force refresh if >ffff
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -30,14 +30,27 @@ fb.colorlines:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
-        ; Sanity checks
+        ; Force refresh flag set
+        ;------------------------------------------------------
+        mov   @parm1,tmp0           ; \ Force refresh flag set?
+        ci    tmp0,>ffff            ; /
+        jeq   !                     ; Yes, so skip sanity checks
+        ;------------------------------------------------------
+        ; Sanity check
         ;------------------------------------------------------
         mov   @fb.colorize,tmp0     ; Check if colorization necessary
         jeq   fb.colorlines.exit    ; Exit if nothing to do. 
         ;------------------------------------------------------
+        ; Speedup screen refresh dramatically
+        ;------------------------------------------------------
+        mov   @edb.block.m1,tmp0
+        jeq   fb.colorlines.exit    ; Exit if marker M1 unset
+        mov   @edb.block.m2,tmp0
+        jeq   fb.colorlines.exit    ; Exit if marker M2 unset
+        ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
-        li    tmp0,vdp.fb.toprow.tat
+!       li    tmp0,vdp.fb.toprow.tat
                                     ; VDP start address        
         mov   @fb.scrrows,tmp3      ; Set loop counter
         mov   @fb.topline,tmp4      ; Position in editor buffer

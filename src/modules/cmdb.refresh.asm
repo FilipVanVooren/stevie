@@ -27,10 +27,11 @@ cmdb.refresh:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack        
+        mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Dump Command buffer content
         ;------------------------------------------------------
-        mov   @wyx,@cmdb.yxsave     ; Save YX position
         mov   @cmdb.yxprompt,@wyx   ; Screen position of command line prompt
 
         inc   @wyx                  ; X +1 for prompt
@@ -52,14 +53,11 @@ cmdb.refresh:
         mov   @cmdb.yxprompt,@wyx
         bl    @putstr
               data txt.cmdb.prompt
-
-        mov   @cmdb.yxsave,@fb.yxsave 
-        mov   @cmdb.yxsave,@wyx        
-                                    ; Restore YX position
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-cmdb.refresh.exit:        
+cmdb.refresh.exit:
+        mov   *stack+,@wyx          ; Pop cursor position        
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

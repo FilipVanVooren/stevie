@@ -153,7 +153,7 @@ outparm7          equ  >2f3c           ; Function output parameter 7
 outparm8          equ  >2f3e           ; Function output parameter 8
 keycode1          equ  >2f40           ; Current key scanned
 keycode2          equ  >2f42           ; Previous key scanned
-unpacked.num      equ  >2f44           ; 6 char string with unpacked integer
+unpacked.string   equ  >2f44           ; 6 char string with unpacked uin16
 timers            equ  >2f4a           ; Timer table
 ramsat            equ  >2f5a           ; Sprite Attribute Table in RAM
 rambuf            equ  >2f6a           ; RAM workbuffer 1
@@ -198,11 +198,12 @@ fb.column         equ  fb.struct + 12  ; Current column in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
-fb.yxsave         equ  fb.struct + 20  ; Copy of WYX
+fb.free0          equ  fb.struct + 20  ; **free**
 fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
-fb.scrrows        equ  fb.struct + 24  ; Rows on physical screen for framebuffer
-fb.scrrows.max    equ  fb.struct + 26  ; Max # of rows on physical screen for fb
-fb.free           equ  fb.struct + 28  ; End of structure
+fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
+fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
+fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
+fb.free           equ  fb.struct + 30  ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure             @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------

@@ -5,6 +5,7 @@
 * Enter
 *---------------------------------------------------------------
 edkey.action.enter:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
@@ -41,6 +42,7 @@ edkey.action.newline:
         mov   @fb.topline,@parm1
         inc   @parm1
         bl    @fb.refresh
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
         jmp   edkey.action.newline.rest
         ;-------------------------------------------------------
         ; Move cursor down a row, there are still rows left
@@ -72,6 +74,7 @@ edkey.action.newline.exit:
 * Toggle insert/overwrite mode
 *---------------------------------------------------------------
 edkey.action.ins_onoff:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         inv   @edb.insmode          ; Toggle insert/overwrite mode
         ;-------------------------------------------------------
         ; Delay
@@ -93,6 +96,7 @@ edkey.action.ins_onoff.exit:
 * Add character (frame buffer)
 *---------------------------------------------------------------
 edkey.action.char:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Sanity checks
         ;-------------------------------------------------------

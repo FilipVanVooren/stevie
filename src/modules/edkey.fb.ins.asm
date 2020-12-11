@@ -143,7 +143,11 @@ edkey.action.ins_line.m2:
         ;-------------------------------------------------------
 edkey.action.ins_line.refresh:        
         mov   @fb.topline,@parm1
-        bl    @fb.refresh           ; Refresh frame buffer
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)        
+
         seto  @fb.dirty             ; Trigger screen refresh
         ;-------------------------------------------------------
         ; Exit

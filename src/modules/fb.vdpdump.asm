@@ -46,7 +46,6 @@ fb.vdpdump:
                                     ; / i  tmp2 = Bytes to copy
 
         clr   @fb.dirty             ; Reset frame buffer dirty flag
-        seto  @fb.colorize          ; Colorize M1/M2 block (if present)        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

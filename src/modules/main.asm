@@ -101,8 +101,8 @@ main.continue:
 
         bl    @mkslot
               data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
-              data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
-              data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
+              data >0102,task.vdp.copy.sat ; Task 1 - Update VDP cursor position
+              data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
               data >0330,task.oneshot      ; Task 3 - One shot task
               data eol
 

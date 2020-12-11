@@ -62,12 +62,22 @@ edb.block.delete.loop:
         ; Clear markers and refresh framebuffer
         ;------------------------------------------------------
         clr   @edb.block.m1         ; \ Remove markers M1 and M2
-        clr   @edb.block.m2         ; / 
-        
-        seto  @fb.colorize
+        clr   @edb.block.m2         ; /         
+
+        mov   @fb.topline,@parm1
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)
+
+        seto  @parm1                ; Force refresh of VDP TAT 
+        bl    @fb.colorlines        ; Colorize lines M1/M2
+                                    ; \ i  @parm1 = Force refresh
+                                    ; /
+
         seto  @edb.dirty
-        seto  @fb.dirty
-        bl    @fb.refresh           ; Refresh frame buffer
+        seto  @fb.dirty             ; Trigger VDP screen refresh
+        seto  @fb.status.dirty      ; Trigger status lines update
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

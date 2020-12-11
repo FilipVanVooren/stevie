@@ -59,7 +59,6 @@ edkey.action.cmdb.proceed.exit:
 * Register usage
 * none
 ********|*****|*********************|**************************
-
 edkey.action.cmdb.fastmode.toggle:
        bl    @fm.fastmode           ; Toggle fast mode.
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
@@ -87,6 +86,7 @@ edkey.action.cmdb.close.dialog:
         clr   @cmdb.dialog          ; Reset dialog ID
         bl    @pane.cursor.blink    ; Show cursor
         bl    @pane.cmdb.hide       ; Hide command buffer pane
+        seto  @fb.status.dirty      ; Trigger status lines update        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

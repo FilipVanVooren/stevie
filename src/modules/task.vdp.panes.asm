@@ -13,8 +13,8 @@ task.vdp.panes:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-
-        mov   @wyx,@fb.yxsave       ; Backup cursor
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
@@ -39,7 +39,6 @@ task.vdp.panes.alpha_lock.down:
         ; Command buffer visible ?
         ;------------------------------------------------------
 task.vdp.panes.cmdb.check
-        mov   @fb.yxsave,@wyx       ; Restore cursor
         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
         jeq   !                     ; No, skip CMDB pane
         ;-------------------------------------------------------
@@ -58,8 +57,6 @@ task.vdp.panes.cmdb.draw:
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task.vdp.panes.botline
                                     ; No, skip update
-
-        mov   @wyx,@fb.yxsave       ; Backup VDP cursor position
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
         ;------------------------------------------------------
@@ -84,6 +81,10 @@ task.vdp.panes.copy.fb:
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
+        mov   @fb.colorize,tmp0     ; Check if colorization necessary
+        jeq   task.vdp.panes.copy.eof
+                                    ; Skip if flag reset
+
         bl    @fb.colorlines        ; Colorize lines M1/M2
         ;-------------------------------------------------------
         ; Draw EOF marker at end-of-file
@@ -130,18 +131,26 @@ task.vdp.panes.clear_screen:
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = byte to write
                                     ; / i  tmp2 = Number of bytes to write
-
-        mov   @fb.yxsave,@wyx       ; Restore cursor postion                                    
+        ;-------------------------------------------------------
+        ; Finished with frame buffer
+        ;-------------------------------------------------------
+        clr   @fb.dirty             ; Reset framebuffer dirty flag
+        seto  @fb.status.dirty      ; Do trigger status lines update
         ;-------------------------------------------------------
         ; Refresh top and bottom line
         ;-------------------------------------------------------
 task.vdp.panes.botline:
+        mov   @fb.status.dirty,tmp0 ; Are status lines dirty?
+        jeq   task.vdp.panes.exit   ; No, skip update
+
         bl    @pane.topline         ; Draw top line
         bl    @pane.botline         ; Draw bottom line
+        clr   @fb.status.dirty      ; Reset status lines dirty flag
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

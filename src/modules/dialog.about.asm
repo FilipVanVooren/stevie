@@ -56,8 +56,8 @@ dialog.about.content:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-
-        mov   @wyx,@fb.yxsave       ; Save cursor
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor position
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
@@ -122,7 +122,7 @@ dialog.about.content:
         ; Exit
         ;------------------------------------------------------
 dialog.about.content.exit:
-        mov   @fb.yxsave,@wyx
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2                
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0

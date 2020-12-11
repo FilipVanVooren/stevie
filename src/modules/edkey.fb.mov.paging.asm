@@ -5,6 +5,7 @@
 * Previous page
 *---------------------------------------------------------------
 edkey.action.ppage:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -35,6 +36,7 @@ edkey.action.ppage.topline:
         ;-------------------------------------------------------
 edkey.action.ppage.refresh:
         mov   @fb.topline,@parm1
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
         jmp   _edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
@@ -51,6 +53,7 @@ edkey.action.ppage.exit:
 * Next page
 *---------------------------------------------------------------
 edkey.action.npage:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
@@ -77,6 +80,7 @@ edkey.action.npage.topline:
         ;-------------------------------------------------------
 edkey.action.npage.refresh:        
         mov   @fb.topline,@parm1
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
         jmp   _edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
