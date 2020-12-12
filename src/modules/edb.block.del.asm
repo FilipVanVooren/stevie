@@ -30,21 +30,40 @@ edb.block.delete:
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp0    ; M1 unset?
         jeq   edb.block.delete.exit ; Yes, exit early
-        dec   tmp0                  ; Base 0 offset        
 
         mov   @edb.block.m2,tmp1    ; M2 unset?
         jeq   edb.block.delete.exit ; Yes, exit early
-        dec   tmp1                  ; Base 0 offset        
 
         c     tmp0,tmp1             ; M1 > M2 
         jgt   edb.block.delete.exit ; Yes, exit early
+        ;------------------------------------------------------
+        ; Display "Deleting...."
+        ;------------------------------------------------------
+        mov   @tv.busycolor,@parm1  ; Get busy color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
+                                    ; \ i  @parm1 = Color combination
+                                    ; / 
+
+        bl    @putat
+              byte pane.botrow,0
+              data txt.deleting     ; Display "Deleting...."     
+        ;------------------------------------------------------
+        ; Prepare for delete
+        ;------------------------------------------------------
+        mov   @edb.block.m1,tmp0    ; Get M1
+        dec   tmp0                  ; Base 0 offset        
+
+        mov   @edb.block.m2,tmp1    ; Get M2
+        dec   tmp1                  ; Base 0 offset        
 
         mov   tmp0,@parm1           ; Delete line on M1
         mov   @edb.lines,@parm2     ; Last line to reorganize         
         dec   @parm2                ; Base 0 offset
 
         mov   tmp1,tmp2             ; \ Setup loop counter
-        s     tmp0,tmp2             ; /      
+        s     tmp0,tmp2             ; /
+        inc   tmp2                  ; Base 1         
         ;------------------------------------------------------
         ; Delete block
         ;------------------------------------------------------
@@ -59,13 +78,24 @@ edb.block.delete.loop:
         dec   tmp2
         jgt   edb.block.delete.loop ; Next line
         ;------------------------------------------------------
-        ; Clear markers and refresh framebuffer
+        ; Clear markers
         ;------------------------------------------------------
         clr   @edb.block.m1         ; \ Remove markers M1 and M2
         clr   @edb.block.m2         ; /         
+        ;------------------------------------------------------
+        ; Set topline for framebuffer refresh
+        ;------------------------------------------------------
+        c     @fb.topline,@edb.lines
+                                    ; Beyond editor buffer?
+        jgt   !                     ; Yes, goto line 1
 
-        mov   @fb.topline,@parm1
-
+        mov   @fb.topline,@parm1    ; Set line to start with
+        jmp   edb.block.delete.fb.refresh
+!       clr   @parm1                ; Set line to start with
+        ;------------------------------------------------------
+        ; Refresh framebuffer
+        ;------------------------------------------------------
+edb.block.delete.fb.refresh:        
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
@@ -78,6 +108,18 @@ edb.block.delete.loop:
         seto  @edb.dirty
         seto  @fb.dirty             ; Trigger VDP screen refresh
         seto  @fb.status.dirty      ; Trigger status lines update
+        ;------------------------------------------------------
+        ; Remove message
+        ;------------------------------------------------------
+        mov   @tv.color,@parm1      ; Set normal color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
+                                    ; \ i  @parm1 = Color combination
+                                    ; /         
+
+        bl    @hchar
+              byte pane.botrow,0,32,50
+              data eol              ; Remove message and markers
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

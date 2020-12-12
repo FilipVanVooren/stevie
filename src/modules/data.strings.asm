@@ -39,6 +39,7 @@ txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
 txt.saving         #string 'Saving....'
+txt.deleting       #string 'Deleting block....'
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
@@ -85,9 +86,9 @@ txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 ; Dialog "Block move/copy/delete/save"
 ;--------------------------------------------------------------
 txt.head.block     #string 'Block move/copy/delete/save '
-txt.info.block     #string 'M1=[     ] start     M2=[     ] end     M3=[     ] target'
-txt.hint.block     #string 'HINT: Mark M1 (start) with ^1, M2 (end) with ^2 and M3 (target) with ^3'
-txt.keys.block     #string 'F9=Back   ^M=Move   ^C=Copy   ^D=Delete   ^S=Save   ^R=Reset M1/M2/M3'
+txt.info.block     #string 'M1=[     ] start     M2=[     ] end'
+txt.hint.block     #string 'HINT: Mark M1 (start) with ^1 and M2 (end) with ^2'
+txt.keys.block     #string 'F9=Back   ^M=Move   ^C=Copy   ^D/^3=Delete   ^S=Save   ^R=Reset M1/M2'
 
 
 ;--------------------------------------------------------------

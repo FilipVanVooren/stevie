@@ -78,7 +78,7 @@ mem.sams.layout.data:
         data  >3000,>0003           ; >3000-3fff, SAMS page >03
         data  >a000,>000a           ; >a000-afff, SAMS page >0a
 
-        data  >b000,>0010           ; >b000-bfff, SAMS page >10                                    
+        data  >b000,>0010           ; >b000-bfff, SAMS page >10                 
                                     ; \ The index can allocate
                                     ; / pages >10 to >2f.
                                     
@@ -121,7 +121,7 @@ mem.sams.layout.data:
 * O  LSB  high-nibble    0
 * P  LSB  low-nibble     0
 *--------------------------------------------------------------
-tv.colorscheme.entries   equ 9      ; Entries in table
+tv.colorscheme.entries   equ 9 ; Entries in table
 
 tv.colorscheme.table:                  
 ;                              ; #  AB          | CD          | EF    | GH

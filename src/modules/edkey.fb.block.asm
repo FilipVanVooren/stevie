@@ -50,4 +50,8 @@ edkey.action.block.delete:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.delete.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        mov   @fb.topline,@parm1
+
+        b     @_edkey.goto.fb.toprow ; Position on top row in frame buffer
+                                     ; \ i  @parm1 = Line to display as top row
+                                     ; /
