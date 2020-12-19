@@ -159,7 +159,7 @@ pane.action.colorscheme.load:
                                     ; VDP start address (frame buffer area)
         mov   tmp3,tmp1             ; Get work copy of colors ABCD
         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
-        li    tmp2,(pane.botrow-3)*80
+        li    tmp2,(pane.botrow-1)*80
                                     ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
