@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 201220-490443
+0009               * File: stevie_b0.asm               ; Version 201220-495255
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -355,7 +355,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0325               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0326               *--------------------------------------------------------------
 0327      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -385,7 +385,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               
 0039               
 0040 6014 0C53             byte  12
-0041 6015 ....             text  'STEVIE V0.1H'
+0041 6015 ....             text  'STEVIE V0.1I'
 0042                       even
 0043               
 0051               
@@ -1177,7 +1177,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  201220-490443'
+0260 624D ....             text  'Build-ID  201220-495255'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5061,7 +5061,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0120                                                   ; Spectra 2
 0121                       ;------------------------------------------------------
 0122                       ; End of File marker
@@ -6215,7 +6215,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.program
 0012 744E 0C53             byte  12
-0013 744F ....             text  'Stevie V0.1H'
+0013 744F ....             text  'Stevie V0.1I'
 0014                       even
 0015               
 0016               txt.about.purpose
@@ -6235,7 +6235,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 74BA 1442             byte  20
-0033 74BB ....             text  'Build: 201220-490443'
+0033 74BB ....             text  'Build: 201220-495255'
 0034                       even
 0035               
 0036               
@@ -6503,7 +6503,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0298               
 0299 794C 0C0A     txt.stevie         byte    12
 0300                                  byte    10
-0301 794E ....                        text    'stevie V0.1H'
+0301 794E ....                        text    'stevie V0.1I'
 0302 795A 0B00                        byte    11
 0303                                  even
 0304               
@@ -7029,7 +7029,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7C74 BEEF 
      7C76 DEAD 
      7C78 BEEF 
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0150               
 0154 7C7A 3C10                   data $                ; Bank 0 ROM size OK.
 0156                       ;-----------------------------------------------------------------------
@@ -7081,7 +7081,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.490443
+**** **** ****     > stevie_b0.asm.495255
 0168               
 0169               
 0170               *--------------------------------------------------------------

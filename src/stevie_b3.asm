@@ -36,9 +36,9 @@ bankid  equ   bank3                 ; Set bank identifier to current bank
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE V0.1H'
+              #string 'STEVIE V0.1I'
         .else
-              #string 'STEVIE V0.1H'
+              #string 'STEVIE V0.1I'
         .endif
 
 ***************************************************************
