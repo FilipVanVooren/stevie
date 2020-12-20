@@ -43,6 +43,53 @@ pane.topline:
                                     ; Get string to display
         bl    @xutst0               ; Display string
         ;------------------------------------------------------
+        ; Show M1 marker
+        ;------------------------------------------------------
+        mov   @edb.block.m1,tmp0    ; M1 set?
+        jeq   pane.topline.exit
+
+        bl    @putat
+              byte 0,52
+              data txt.m1           ; Show M1 marker message
+
+        mov   @edb.block.m1,@parm1
+        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1           = uint16
+                                    ; / o @unpacked.string = Output string
+
+        li    tmp0,>0500
+        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+
+        bl    @putat
+              byte 0,55
+              data unpacked.string  ; Show M1 value
+        ;------------------------------------------------------
+        ; Show M2 marker
+        ;------------------------------------------------------
+        mov   @edb.block.m2,tmp0    ; M2 set?
+        jeq   pane.topline.exit
+
+        bl    @putat
+              byte 0,62
+              data txt.m2           ; Show M2 marker message
+
+        mov   @edb.block.m2,@parm1
+        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+                                    ; \ i @parm1           = uint16
+                                    ; / o @unpacked.string = Output string
+
+
+        li    tmp0,>0500
+        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+
+        bl    @putat
+              byte 0,65
+              data unpacked.string  ; Show M2 value
+
+        bl    @putat
+              byte pane.botrow,0
+              data txt.keys.block   ; Show block shortcuts
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 pane.topline.exit:

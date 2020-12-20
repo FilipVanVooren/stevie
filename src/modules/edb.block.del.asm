@@ -45,6 +45,10 @@ edb.block.delete:
                                     ; \ i  @parm1 = Color combination
                                     ; / 
 
+        bl    @hchar
+              byte pane.botrow,0,32,50
+              data eol              ; Remove markers and block shortcuts
+
         bl    @putat
               byte pane.botrow,0
               data txt.deleting     ; Display "Deleting...."     
@@ -77,6 +81,8 @@ edb.block.delete.loop:
 
         dec   tmp2
         jgt   edb.block.delete.loop ; Next line    
+
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;------------------------------------------------------
         ; Set topline for framebuffer refresh
         ;------------------------------------------------------

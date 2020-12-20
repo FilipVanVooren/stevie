@@ -49,6 +49,9 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 
+txt.keys.block     byte    43
+                   text    '^C=Copy  ^D=Del  ^M=Move  ^R=Reset  ^S=Save'                   
+
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
 txt.vertline       data >0110
@@ -108,4 +111,3 @@ txt.stevie         byte    12
                    even
 
 txt.colorscheme    #string 'Colorscheme:'
-
