@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------
-key.fctn.0    equ >0000             ; fctn + 0
+key.fctn.0    equ >bc00             ; fctn + 0
 key.fctn.1    equ >0300             ; fctn + 1
 key.fctn.2    equ >0400             ; fctn + 2
 key.fctn.3    equ >0700             ; fctn + 3
@@ -15,30 +15,30 @@ key.fctn.7    equ >0100             ; fctn + 7
 key.fctn.8    equ >0600             ; fctn + 8
 key.fctn.9    equ >0f00             ; fctn + 9
 key.fctn.a    equ >0000             ; fctn + a
-key.fctn.b    equ >0000             ; fctn + b
+key.fctn.b    equ >be00             ; fctn + b
 key.fctn.c    equ >0000             ; fctn + c
 key.fctn.d    equ >0900             ; fctn + d
 key.fctn.e    equ >0b00             ; fctn + e
 key.fctn.f    equ >0000             ; fctn + f
 key.fctn.g    equ >0000             ; fctn + g
-key.fctn.h    equ >0000             ; fctn + h
+key.fctn.h    equ >bf00             ; fctn + h
 key.fctn.i    equ >0000             ; fctn + i
-key.fctn.j    equ >0000             ; fctn + j
-key.fctn.k    equ >0000             ; fctn + k
-key.fctn.l    equ >0000             ; fctn + l
-key.fctn.m    equ >0000             ; fctn + m
-key.fctn.n    equ >0000             ; fctn + n
+key.fctn.j    equ >c000             ; fctn + j
+key.fctn.k    equ >c100             ; fctn + k
+key.fctn.l    equ >c200             ; fctn + l
+key.fctn.m    equ >c300             ; fctn + m
+key.fctn.n    equ >c400             ; fctn + n
 key.fctn.o    equ >0000             ; fctn + o
 key.fctn.p    equ >0000             ; fctn + p
-key.fctn.q    equ >0000             ; fctn + q
+key.fctn.q    equ >c500             ; fctn + q
 key.fctn.r    equ >0000             ; fctn + r
 key.fctn.s    equ >0800             ; fctn + s
 key.fctn.t    equ >0000             ; fctn + t
 key.fctn.u    equ >0000             ; fctn + u
-key.fctn.v    equ >0000             ; fctn + v
-key.fctn.w    equ >0000             ; fctn + w
+key.fctn.v    equ >7f00             ; fctn + v
+key.fctn.w    equ >7e00             ; fctn + w
 key.fctn.x    equ >0a00             ; fctn + x
-key.fctn.y    equ >0000             ; fctn + y
+key.fctn.y    equ >c600             ; fctn + y
 key.fctn.z    equ >0000             ; fctn + z
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys extra

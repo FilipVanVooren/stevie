@@ -106,8 +106,8 @@ mem.sams.layout.data:
 * Word 2
 * E  MSB  high-nibble    Foreground color cmdb pane
 * F  MSB  low-nibble     Background color cmdb pane
-* G  LSB  high-nibble    0
-* H  LSB  low-nibble     Cursor foreground color
+* G  LSB  high-nibble    Cursor foreground color cmdb pane
+* H  LSB  low-nibble     Cursor foreground color frame buffer
 *
 * Word 3
 * I  MSB  high-nibble    Foreground color busy top/bottom line
@@ -144,13 +144,13 @@ tv.colorscheme.entries   equ 9 ; Entries in table
 tv.colorscheme.table:                  
 ;                              ; #  
 ;       ABCD  EFGH  IJKL  MNOP ; -
- data  >f417,>7001,>174f,>0000 ; 1
- data  >f41f,>f001,>1a17,>0000 ; 2 
- data  >a11a,>f00f,>1f1a,>0000 ; 3
- data  >2112,>f00f,>1b12,>0000 ; 4
- data  >e11e,>f00f,>1b1e,>0000 ; 5
- data  >1771,>1006,>1b71,>0000 ; 6
- data  >1ff1,>1001,>1bf1,>0000 ; 7
- data  >a1f0,>1a0f,>1b1a,>0000 ; 8
- data  >21f0,>f20f,>1b12,>0000 ; 9
+ data  >f417,>f171,>1b1f,>0000 ; 1  White on blue with inversed cyan border
+ data  >f41f,>f011,>1a17,>0000 ; 2  White on blue with inversed white border
+ data  >a11a,>f0ff,>1f1a,>0000 ; 3  Dark yellow on black with inversed border
+ data  >2112,>f0ff,>1b12,>0000 ; 4  Dark green on black with inversed border
+ data  >e11e,>f00f,>1b1e,>0000 ; 5  Grey on black with inversed grey border
+ data  >1771,>1006,>1b71,>0000 ; 6  Black on cyan with inversed black border
+ data  >1ff1,>1001,>1bf1,>0000 ; 7  Black on white with inversed black border
+ data  >a1f0,>1a0f,>1b1a,>0000 ; 8  Dark yellow on black with white border
+ data  >21f0,>f20f,>1b12,>0000 ; 9  Dark green on black with white border
  

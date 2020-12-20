@@ -10,7 +10,7 @@ vec.1   data  dialog.about          ; Dialog "About"
 vec.2   data  dialog.load           ; Dialog "Load DV80 file"
 vec.3   data  dialog.save           ; Dialog "Save DV80 file"
 vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
-vec.5   data  dialog.block          ; Dialog "Move/Copy/Delete block"
+vec.5   data  cpu.crash             ; 
 vec.6   data  cpu.crash             ; 
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 

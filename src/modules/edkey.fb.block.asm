@@ -9,7 +9,6 @@ edkey.action.block.mark.m1:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.mark.m1.exit:
         b     @hook.keyscan.bounce  ; Back to editor main
         
 
@@ -22,11 +21,18 @@ edkey.action.block.mark.m2:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.mark.m2.exit:
         b     @hook.keyscan.bounce  ; Back to editor main
 
 
-
+*---------------------------------------------------------------
+* Reset block markers M1/M2
+********|*****|*********************|**************************
+edkey.action.block.reset:
+        bl    @edb.block.reset      ; Reset block markers M1/M2
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -37,7 +43,6 @@ edkey.action.block.copy:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.copy.exit:
         b     @hook.keyscan.bounce  ; Back to editor main
 
 
@@ -49,7 +54,6 @@ edkey.action.block.delete:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.delete.exit:
         mov   @fb.topline,@parm1
 
         b     @_edkey.goto.fb.toprow ; Position on top row in frame buffer

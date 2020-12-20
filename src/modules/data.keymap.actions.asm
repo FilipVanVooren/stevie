@@ -13,10 +13,10 @@ keymap_actions.editor:
         data  key.fctn.d, pane.focus.fb, edkey.action.right
         data  key.fctn.e, pane.focus.fb, edkey.action.up
         data  key.fctn.x, pane.focus.fb, edkey.action.down
-        data  key.ctrl.a, pane.focus.fb, edkey.action.home
-        data  key.ctrl.f, pane.focus.fb, edkey.action.end   
-        data  key.ctrl.s, pane.focus.fb, edkey.action.pword
-        data  key.ctrl.d, pane.focus.fb, edkey.action.nword
+        data  key.fctn.h, pane.focus.fb, edkey.action.home
+        data  key.fctn.j, pane.focus.fb, edkey.action.pword
+        data  key.fctn.k, pane.focus.fb, edkey.action.nword
+        data  key.fctn.l, pane.focus.fb, edkey.action.end           
         data  key.ctrl.e, pane.focus.fb, edkey.action.ppage
         data  key.ctrl.x, pane.focus.fb, edkey.action.npage
         data  key.ctrl.t, pane.focus.fb, edkey.action.top
@@ -27,6 +27,7 @@ keymap_actions.editor:
         data  key.fctn.1, pane.focus.fb, edkey.action.del_char
         data  key.fctn.3, pane.focus.fb, edkey.action.del_line        
         data  key.fctn.4, pane.focus.fb, edkey.action.del_eol
+        data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete        
         ;-------------------------------------------------------
         ; Modifier keys - Insert
         ;-------------------------------------------------------
@@ -38,7 +39,7 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.ctrl.1, pane.focus.fb, edkey.action.block.mark.m1
         data  key.ctrl.2, pane.focus.fb, edkey.action.block.mark.m2
-        data  key.ctrl.3, pane.focus.fb, edkey.action.block.delete
+        data  key.ctrl.r, pane.focus.fb, edkey.action.block.reset
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
@@ -50,9 +51,8 @@ keymap_actions.editor:
         data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
         data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
         data  key.fctn.7, pane.focus.fb, edkey.action.about
-        data  key.ctrl.k, pane.focus.fb, dialog.save                
-        data  key.ctrl.l, pane.focus.fb, dialog.load
-        data  key.ctrl.m, pane.focus.fb, dialog.block
+        data  key.ctrl.s, pane.focus.fb, dialog.save                
+        data  key.ctrl.o, pane.focus.fb, dialog.load
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -75,13 +75,6 @@ keymap_actions.cmdb:
         data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         data  key.enter, id.dialog.unsaved, dialog.save
         ;-------------------------------------------------------
-        ; Dialog specific: Block move/copy/delete
-        ;-------------------------------------------------------
-        data  key.ctrl.e, id.dialog.block, edkey.action.ppage
-        data  key.ctrl.x, id.dialog.block, edkey.action.npage
-        data  key.ctrl.t, id.dialog.block, edkey.action.top
-        data  key.ctrl.b, id.dialog.block, edkey.action.bot
-        ;-------------------------------------------------------
         ; Dialog specific: About
         ;-------------------------------------------------------
         data  key.enter, id.dialog.about, edkey.action.cmdb.close.dialog
@@ -90,8 +83,8 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------        
         data  key.fctn.s, pane.focus.cmdb, edkey.action.cmdb.left
         data  key.fctn.d, pane.focus.cmdb, edkey.action.cmdb.right
-        data  key.ctrl.a, pane.focus.cmdb, edkey.action.cmdb.home
-        data  key.ctrl.f, pane.focus.cmdb, edkey.action.cmdb.end
+        data  key.fctn.h, pane.focus.cmdb, edkey.action.cmdb.home
+        data  key.fctn.l, pane.focus.cmdb, edkey.action.cmdb.end
         ;-------------------------------------------------------
         ; Modifier keys
         ;-------------------------------------------------------

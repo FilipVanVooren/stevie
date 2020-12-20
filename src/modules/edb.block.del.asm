@@ -76,12 +76,7 @@ edb.block.delete.loop:
         dec   @parm2                ; /
 
         dec   tmp2
-        jgt   edb.block.delete.loop ; Next line
-        ;------------------------------------------------------
-        ; Clear markers
-        ;------------------------------------------------------
-        clr   @edb.block.m1         ; \ Remove markers M1 and M2
-        clr   @edb.block.m2         ; /         
+        jgt   edb.block.delete.loop ; Next line    
         ;------------------------------------------------------
         ; Set topline for framebuffer refresh
         ;------------------------------------------------------
@@ -93,33 +88,14 @@ edb.block.delete.loop:
         jmp   edb.block.delete.fb.refresh
 !       clr   @parm1                ; Set line to start with
         ;------------------------------------------------------
-        ; Refresh framebuffer
+        ; Refresh framebuffer and reset block markers
         ;------------------------------------------------------
 edb.block.delete.fb.refresh:        
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
 
-        seto  @parm1                ; Force refresh of VDP TAT 
-        bl    @fb.colorlines        ; Colorize lines M1/M2
-                                    ; \ i  @parm1 = Force refresh
-                                    ; /
-
-        seto  @edb.dirty
-        seto  @fb.dirty             ; Trigger VDP screen refresh
-        seto  @fb.status.dirty      ; Trigger status lines update
-        ;------------------------------------------------------
-        ; Remove message
-        ;------------------------------------------------------
-        mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
-                                    ; Set color combination for status lines
-                                    ; \ i  @parm1 = Color combination
-                                    ; /         
-
-        bl    @hchar
-              byte pane.botrow,0,32,50
-              data eol              ; Remove message and markers
+        bl    @edb.block.reset      ; Reset block markers M1/M2
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -223,10 +223,24 @@ pane.action.colorscheme.statline:
         ;-------------------------------------------------------        
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------
-pane.action.colorscheme.cursorcolor:
-        mov   @tv.curcolor,tmp4     ; Get cursor color        
+pane.action.colorscheme.cursorcolor:        
+        mov   @tv.curcolor,tmp4     ; Get cursor color
+
+        mov   @tv.pane.focus,tmp0   ; Get pane with focus
+        ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
+        jeq   pane.action.colorscheme.cursorcolor.fb
+                                    ; Yes, set cursor color 
+
+pane.action.colorscheme.cursorcolor.cmdb:
+        andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
+        sla   tmp4,4                ; Move to MSB
+        jmp   !
+        
+pane.action.colorscheme.cursorcolor.fb:
+        andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
         sla   tmp4,8                ; Move to MSB
-        movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
+
+!       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
         movb  tmp4,@tv.curshape+1   ; Save cursor color                                    
         ;-------------------------------------------------------
         ; Exit

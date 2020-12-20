@@ -14,11 +14,11 @@ txt.about.author   #string '2018-2020 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
 txt.about.build    #string 'Build: %%build_date%%'
 
-txt.about.msg1     #string 'FCTN-7 (F7)   Help, shortcuts, about'
-txt.about.msg2     #string 'FCTN-9 (F9)   Toggle edit/cmd mode'
-txt.about.msg3     #string 'FCTN-+        Quit Stevie'
-txt.about.msg4     #string 'CTRL-L (^L)   Load DV80 file'
-txt.about.msg5     #string 'CTRL-K (^K)   Save DV80 file'
+txt.about.msg1     #string 'fctn-7 (F7)   Help, shortcuts, about'
+txt.about.msg2     #string 'fctn-9 (F9)   Toggle edit/cmd mode'
+txt.about.msg3     #string 'fctn-+        Quit Stevie'
+txt.about.msg4     #string 'CTRL-O (^O)   Open DV80 file'
+txt.about.msg5     #string 'CTRL-S (^S)   Save DV80 file'
 txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
 
 txt.about.msg7     byte    56,15
@@ -60,17 +60,17 @@ txt.filetype.none  equ txt.clear
 ;--------------------------------------------------------------
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
-txt.head.load      #string 'Load DV80 file '
+txt.head.load      #string 'Open DV80 file '
 txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
-txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    ^A=Home    ^F=End'
-txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    ^A=Home    ^F=End'
+txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    fctn-H=Home    fctn-L=End'
+txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    fctn-H=Home    fctn-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
 txt.head.save      #string 'Save DV80 file '
 txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
-txt.keys.save      #string 'F9=Back    F3=Clear    ^A=Home    ^F=End'
+txt.keys.save      #string 'F9=Back    F3=Clear    fctn-H=Home    fctn-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -79,17 +79,6 @@ txt.head.unsaved   #string 'Unsaved changes '
 txt.info.unsaved   #string 'You are about to lose changes to the current file!'
 txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
-
-
-
-;--------------------------------------------------------------
-; Dialog "Block move/copy/delete/save"
-;--------------------------------------------------------------
-txt.head.block     #string 'Block move/copy/delete/save '
-txt.info.block     #string 'M1=[     ] start     M2=[     ] end'
-txt.hint.block     #string 'HINT: Mark M1 (start) with ^1 and M2 (end) with ^2'
-txt.keys.block     #string 'F9=Back   ^M=Move   ^C=Copy   ^D/^3=Delete   ^S=Save   ^R=Reset M1/M2'
-
 
 ;--------------------------------------------------------------
 ; Dialog "About"

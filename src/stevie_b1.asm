@@ -133,6 +133,7 @@ main:
         copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm" ; Get line length
         copy  "edb.block.mark.asm"  ; Mark code block
+        copy  "edb.block.reset.asm" ; Reset markers
         copy  "edb.block.copy.asm"  ; Copy code block
         copy  "edb.block.del.asm"   ; Delete code block
         ;-----------------------------------------------------------------------
