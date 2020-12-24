@@ -24,7 +24,7 @@ edb.block.copy:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
-        ; Prepare for copy
+        ; Prepare for copy  *** COPY LOGIC IS WRONG FIX IT ****
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp1
         mov   @edb.block.m2,tmp2
@@ -32,10 +32,20 @@ edb.block.copy:
         ci    tmp2,0
         jgt   edb.block.copy.loop
         ;------------------------------------------------------
+        ; Get current line position in editor buffer
+        ;------------------------------------------------------
+        mov   @fb.row,@parm1 
+        bl    @fb.row2line          ; Row to editor line
+                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; | i @parm1      = Row in frame buffer
+                                    ; / o @outparm1   = Matching line in EB
+
+        mov   @outparm1,tmp1        ; Current line position in editor buffer
+        ;------------------------------------------------------
         ; Copy code block
         ;------------------------------------------------------
 edb.block.copy.loop:        
-        mov   @edb.block.m3,@parm1  ; Line for insert
+        ;mov   @edb.block.m3,@parm1  ; Line for insert
         mov   @edb.lines,@parm2     ; Last line to reorganize 
         
         bl    @idx.entry.insert     ; Reorganize index

@@ -44,9 +44,9 @@ edb.block.reset:
                                     ; /         
 
         bl    @hchar
-              byte 0,52,32,18
-              byte pane.botrow,0,32,50
-              data eol              ; Remove markers and block shortcuts
+              byte 0,52,32,18           ; Remove markers
+              byte pane.botrow,0,32,50  ; Remove block shortcuts
+              data eol              
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------        

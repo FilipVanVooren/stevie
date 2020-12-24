@@ -81,13 +81,13 @@ fm.loadfile:
                                     ; \ i  parm1 = Pointer to length prefixed 
                                     ; |            file descriptor
                                     ; | i  parm2 = Pointer to callback
-                                    ; |            "loading indicator 1"
+                                    ; |            "Before Open file"
                                     ; | i  parm3 = Pointer to callback
-                                    ; |            "loading indicator 2"
+                                    ; |            "Read line from file"
                                     ; | i  parm4 = Pointer to callback
-                                    ; |            "loading indicator 3"
+                                    ; |            "Close file"
                                     ; | i  parm5 = Pointer to callback 
-                                    ; /            "File I/O error handler"
+                                    ; /            "File I/O error"
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.

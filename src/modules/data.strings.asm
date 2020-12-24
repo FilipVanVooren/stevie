@@ -49,8 +49,8 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 
-txt.keys.block     byte    43
-                   text    '^C=Copy  ^D=Del  ^M=Move  ^R=Reset  ^S=Save'                   
+txt.keys.block     byte    47
+                   text    '^D=Del  ^V=Paste  ^G=Goto M1  ^R=Reset  ^S=Save'                   
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
@@ -65,15 +65,16 @@ txt.filetype.none  equ txt.clear
 ;--------------------------------------------------------------
 txt.head.load      #string 'Open DV80 file '
 txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
-txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    fctn-H=Home    fctn-L=End'
-txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    fctn-H=Home    fctn-L=End'
+txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
+txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
 txt.head.save      #string 'Save DV80 file '
+txt.head.save2     #string 'Save code block to DV80 file '
 txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
-txt.keys.save      #string 'F9=Back    F3=Clear    fctn-H=Home    fctn-L=End'
+txt.keys.save      #string 'F9=Back    F3=Clear    F-H=Home    F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"

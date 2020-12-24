@@ -72,6 +72,13 @@ tv.reset:
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
         bl    @errline.init         ; Initialize error line
+        ;------------------------------------------------------        
+        ; Remove markers and shortcuts
+        ;------------------------------------------------------        
+        bl    @hchar
+              byte 0,52,32,18           ; Remove markers
+              byte pane.botrow,0,32,50  ; Remove block shortcuts
+              data eol              
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

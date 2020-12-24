@@ -13,6 +13,8 @@
 * parm3 = Pointer to callback function "Write line to file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
+* parm6 = First line to save (base 0)
+* parm7 = Last line to save  (base 0)
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -31,7 +33,6 @@ fh.file.write.edb:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------   
-        clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.kilobytes         ; \ Clear kilobytes processed
         clr   @fh.kilobytes.prev    ; /
@@ -49,6 +50,7 @@ fh.file.write.edb:
         mov   @parm3,@fh.callback2  ; Callback function "Write line to file"
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
+        mov   @parm6,@fh.records    ; Set records counter
         ;------------------------------------------------------
         ; Sanity check
         ;------------------------------------------------------
@@ -72,7 +74,13 @@ fh.file.write.edb:
 
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.write.crash   ; Yes, crash!
-         
+
+        c     @parm6,@edb.lines     ; First line to save beyond last line in EB?
+        jgt   fh.file.write.crash   ; Yes, crash!
+
+        c     @parm7,@edb.lines     ; Last line to save beyond last line in EB?
+        jgt   fh.file.write.crash   ; Yes, crash!
+
         jmp   fh.file.write.edb.save1
                                     ; All checks passed, continue.
         ;------------------------------------------------------
@@ -122,7 +130,7 @@ fh.file.write.edb.pabheader:
         ; Step 1: Write file record
         ;------------------------------------------------------
 fh.file.write.edb.record:        
-        c     @fh.records,@edb.lines
+        c     @fh.records,@parm7
         jeq   fh.file.write.edb.done 
                                     ; Exit when all records processed
         ;------------------------------------------------------

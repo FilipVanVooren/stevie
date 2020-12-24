@@ -36,7 +36,20 @@ dialog.save:
 !       li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.save
+        mov   @edb.block.m2,tmp0    ; Marker M2 set?
+        jeq   dialog.save.title     ; No, so show default title
+        ;-------------------------------------------------------
+        ; Setup dialog title
+        ;-------------------------------------------------------
+        li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"        
+        jmp   dialog.save.header
+
+dialog.save.title:
+        li    tmp0,txt.head.save    ; Title "Save DV80 file"
+        ;-------------------------------------------------------
+        ; Setup header
+        ;-------------------------------------------------------
+dialog.save.header:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt

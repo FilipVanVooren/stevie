@@ -10,6 +10,8 @@
 * INPUT
 * parm1  = Pointer to length-prefixed string containing both 
 *          device and filename
+* parm2  = First line to save (base 0)
+* parm3  = Last line to save  (base 0)
 *--------------------------------------------------------------- 
 * OUTPUT
 * none
@@ -25,8 +27,21 @@ fm.savefile:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
+        ; Check if filename must be changed in editor buffer
+        ;-------------------------------------------------------
+        mov   @parm2,tmp0           ; Saving all lines in editor buffer?
+        jne   !                     ; Yes, so change current filename
+        ;-------------------------------------------------------
+        ; Change filename
+        ;-------------------------------------------------------
+        mov   @parm1,@edb.filename.ptr 
+                                    ; Set current filename
+        ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------
+!       mov   @parm2,@parm6         ; First line to save
+        mov   @parm3,@parm7         ; Last line to save
+
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
@@ -39,9 +54,6 @@ fm.savefile:
         li    tmp0,fm.loadsave.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
-        mov   @parm1,@edb.filename.ptr 
-                                    ; Set current filename
-
         bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
@@ -49,13 +61,16 @@ fm.savefile:
                                     ; \ i  parm1 = Pointer to length prefixed 
                                     ; |            file descriptor
                                     ; | i  parm2 = Pointer to callback
-                                    ; |            "loading indicator 1"
+                                    ; |            "Before Open file"
                                     ; | i  parm3 = Pointer to callback
-                                    ; |            "loading indicator 2"
+                                    ; |            "Write line to file"
                                     ; | i  parm4 = Pointer to callback
-                                    ; |            "loading indicator 3"
+                                    ; |            "Close file"
                                     ; | i  parm5 = Pointer to callback 
-                                    ; /            "File I/O error handler"
+                                    ; |            "File I/O error"
+                                    ; | i  parm6 = First line to save (base 0)
+                                    ; | i  parm7 = Last line to save  (base 0)
+                                    ; /
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.

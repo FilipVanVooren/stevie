@@ -216,7 +216,7 @@ edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
 edb.block.m1      equ  edb.struct + 12 ; Block start line marker
 edb.block.m2      equ  edb.struct + 14 ; Block end line marker
-edb.block.m3      equ  edb.struct + 16 ; Block operation target line
+edb.free0         equ  edb.struct + 16 ; **free**
 edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
                                        ; with current filename.
 edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string

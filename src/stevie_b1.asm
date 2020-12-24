@@ -94,6 +94,7 @@ main:
         copy  "edkey.fb.mov.updown.asm"  ; Move line up / down        
         copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
         copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
+        copy  "edkey.fb.mov.goto.asm"    ; Goto line in editor buffer
         copy  "edkey.fb.del.asm"         ; Delete characters or lines
         copy  "edkey.fb.ins.asm"         ; Insert characters or lines
         copy  "edkey.fb.mod.asm"         ; Actions for modifier keys                
@@ -106,7 +107,8 @@ main:
         copy  "edkey.cmdb.mov.asm"       ; Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
         copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
-        copy  "edkey.cmdb.file.asm"      ; File related actions
+        copy  "edkey.cmdb.file.load.asm" ; Read DV80 file
+        copy  "edkey.cmdb.file.save.asm" ; Save DV80 file
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for SAMS memory

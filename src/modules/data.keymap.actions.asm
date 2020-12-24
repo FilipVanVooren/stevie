@@ -27,7 +27,6 @@ keymap_actions.editor:
         data  key.fctn.1, pane.focus.fb, edkey.action.del_char
         data  key.fctn.3, pane.focus.fb, edkey.action.del_line        
         data  key.fctn.4, pane.focus.fb, edkey.action.del_eol
-        data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete        
         ;-------------------------------------------------------
         ; Modifier keys - Insert
         ;-------------------------------------------------------
@@ -37,9 +36,10 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Block marking/modifier
         ;-------------------------------------------------------
-        data  key.ctrl.1, pane.focus.fb, edkey.action.block.mark.m1
-        data  key.ctrl.2, pane.focus.fb, edkey.action.block.mark.m2
+        data  key.ctrl.m, pane.focus.fb, edkey.action.block.mark
         data  key.ctrl.r, pane.focus.fb, edkey.action.block.reset
+        data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete          
+        data  key.ctrl.g, pane.focus.fb, edkey.action.block.goto.m1
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
@@ -66,14 +66,19 @@ keymap_actions.editor:
 *---------------------------------------------------------------
 keymap_actions.cmdb:
         ;-------------------------------------------------------
-        ; Dialog specific: File load / save
+        ; Dialog specific: File load
         ;-------------------------------------------------------
         data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
+        data  key.enter, id.dialog.load, edkey.action.cmdb.load
         ;-------------------------------------------------------
         ; Dialog specific: Unsaved changes
         ;-------------------------------------------------------
         data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         data  key.enter, id.dialog.unsaved, dialog.save
+        ;-------------------------------------------------------
+        ; Dialog specific: File load
+        ;-------------------------------------------------------
+        data  key.enter, id.dialog.save, edkey.action.cmdb.save
         ;-------------------------------------------------------
         ; Dialog specific: About
         ;-------------------------------------------------------
@@ -89,7 +94,6 @@ keymap_actions.cmdb:
         ; Modifier keys
         ;-------------------------------------------------------
         data  key.fctn.3, pane.focus.cmdb, edkey.action.cmdb.clear
-        data  key.enter, pane.focus.cmdb, edkey.action.cmdb.enter
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------

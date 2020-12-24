@@ -25,6 +25,17 @@ edkey.action.block.mark.m2:
 
 
 *---------------------------------------------------------------
+* Mark line M1 or M2
+********|*****|*********************|**************************
+edkey.action.block.mark:
+        bl    @edb.block.mark       ; Set M1/M2 marker
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        b     @hook.keyscan.bounce  ; Back to editor main
+
+
+*---------------------------------------------------------------
 * Reset block markers M1/M2
 ********|*****|*********************|**************************
 edkey.action.block.reset:
@@ -56,6 +67,23 @@ edkey.action.block.delete:
         ;-------------------------------------------------------
         mov   @fb.topline,@parm1
 
-        b     @_edkey.goto.fb.toprow ; Position on top row in frame buffer
-                                     ; \ i  @parm1 = Line to display as top row
-                                     ; /
+        b     @_edkey.goto.fb.toprow
+                                    ; Position on top row in frame buffer
+                                    ; \ i  @parm1 = Line to display as top row
+                                    ; /
+
+
+
+*---------------------------------------------------------------
+* Goto marker M1
+********|*****|*********************|**************************
+edkey.action.block.goto.m1:
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        mov   @edb.block.m1,@parm1  ; Goto marker M1 
+        dec   @parm1                ; Base 0 offset
+
+        b     @edkey.action.goto    ; Goto specified line in editor bufer
+                                    ; \ i @parm1 = Target line in EB
+                                    ; /

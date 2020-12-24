@@ -92,21 +92,3 @@ edkey.action.cmdb.char:
         ;-------------------------------------------------------
 edkey.action.cmdb.char.exit:
         b     @hook.keyscan.bounce  ; Back to editor main
-
-
-
-
-*---------------------------------------------------------------
-* Enter
-*---------------------------------------------------------------
-edkey.action.cmdb.enter:
-        ;-------------------------------------------------------
-        ; Show Load or Save dialog depending on current mode
-        ;-------------------------------------------------------        
-edkey.action.cmdb.enter.loadsave:
-        b     @edkey.action.cmdb.loadsave
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-edkey.action.cmdb.enter.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main

@@ -20,9 +20,8 @@ fm.loadsave.cb.indicator1:
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,0,32,50
               byte pane.botrow,0,32,50
-              data EOL              ; Clear filename
+              data EOL              ; Clear hint on bottom row
 
         mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
@@ -51,6 +50,10 @@ fm.loadsave.cb.indicator1.saving:
         ; Display Loading....
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.loading:        
+        bl    @hchar
+              byte 0,0,32,50
+              data EOL              ; Clear filename
+
         bl    @putat
               byte pane.botrow,0
               data txt.loading      ; Display "Loading file...."

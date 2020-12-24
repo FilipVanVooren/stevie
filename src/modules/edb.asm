@@ -38,7 +38,6 @@ edb.init:
 
         clr   @edb.block.m1         ; Reset block start line
         clr   @edb.block.m2         ; Reset block end line
-        clr   @edb.block.m3         ; Reset block target line
 
         li    tmp0,txt.newfile      ; "New file"
         mov   tmp0,@edb.filename.ptr
