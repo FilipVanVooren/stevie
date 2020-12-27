@@ -76,9 +76,10 @@ keymap_actions.cmdb:
         data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         data  key.enter, id.dialog.unsaved, dialog.save
         ;-------------------------------------------------------
-        ; Dialog specific: File load
+        ; Dialog specific: File save
         ;-------------------------------------------------------
         data  key.enter, id.dialog.save, edkey.action.cmdb.save
+        data  key.enter, id.dialog.saveblock, edkey.action.cmdb.save
         ;-------------------------------------------------------
         ; Dialog specific: About
         ;-------------------------------------------------------

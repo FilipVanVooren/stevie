@@ -39,7 +39,8 @@ txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
 txt.saving         #string 'Saving....'
-txt.deleting       #string 'Deleting block....'
+txt.block.del      #string 'Deleting block....'
+txt.block.save     #string 'Saving block to DV80 file....'
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
@@ -49,8 +50,8 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 
-txt.keys.block     byte    47
-                   text    '^D=Del  ^V=Paste  ^G=Goto M1  ^R=Reset  ^S=Save'                   
+txt.keys.block     byte    45
+                   text    '^Del  ^Copy  ^N=Move  ^Goto M1  ^Reset  ^Save'
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
@@ -74,7 +75,7 @@ txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-
 txt.head.save      #string 'Save DV80 file '
 txt.head.save2     #string 'Save code block to DV80 file '
 txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
-txt.keys.save      #string 'F9=Back    F3=Clear    F-H=Home    F-L=End'
+txt.keys.save      #string 'F9=Back    F3=Clear    Fctn-H=Home    Fctn-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -111,4 +112,4 @@ txt.stevie         byte    12
                    byte    11
                    even
 
-txt.colorscheme    #string 'Colorscheme:'
+txt.colorscheme    #string 'Color scheme:'

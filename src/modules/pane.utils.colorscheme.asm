@@ -40,7 +40,7 @@ pane.action.colorscheme.switch:
         mov   @wyx,@waux1           ; Save cursor YX position
 
         bl    @putnum
-              byte 0,61
+              byte 0,62
               data tv.colorscheme,rambuf,>3020
 
         bl    @putat
@@ -259,10 +259,10 @@ pane.action.colorscheme.load.exit:
 
 
 ***************************************************************
-* pane.action.colorscheme.statuslines
-* Set color combination for top/bottom status lines
+* pane.action.colorscheme.statline
+* Set color combination for bottom status line
 ***************************************************************
-* bl @pane.action.colorscheme.statuslines
+* bl @pane.action.colorscheme.statlines
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = Color combination to set
@@ -278,13 +278,6 @@ pane.action.colorscheme.statlines:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        ;------------------------------------------------------
-        ; Top line
-        ;------------------------------------------------------        
-        clr   @parm2                ; First row on screen
-        bl    @colors.line.set      ; Load color combination for line
-                                    ; \ i  @parm1 = Color combination
-                                    ; / i  @parm2 = Row on physical screen
         ;------------------------------------------------------
         ; Bottom line
         ;------------------------------------------------------        

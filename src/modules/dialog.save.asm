@@ -33,18 +33,24 @@ dialog.save:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-!       li    tmp0,id.dialog.save
-        mov   tmp0,@cmdb.dialog     ; Set dialog ID
-
-        mov   @edb.block.m2,tmp0    ; Marker M2 set?
-        jeq   dialog.save.title     ; No, so show default title
+!       mov   @edb.block.m2,tmp0    ; Marker M2 set?
+        jeq   dialog.save.default   ; No, so show default dialog
         ;-------------------------------------------------------
         ; Setup dialog title
         ;-------------------------------------------------------
-        li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"        
-        jmp   dialog.save.header
+        bl    @cmdb.cmd.clear       ; Clear current CMDB command
 
-dialog.save.title:
+        li    tmp0,id.dialog.saveblock
+        mov   tmp0,@cmdb.dialog     ; Set dialog ID
+        li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"                
+
+        jmp   dialog.save.header
+        ;-------------------------------------------------------
+        ; Default dialog
+        ;-------------------------------------------------------
+dialog.save.default:        
+        li    tmp0,id.dialog.save
+        mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.save    ; Title "Save DV80 file"
         ;-------------------------------------------------------
         ; Setup header

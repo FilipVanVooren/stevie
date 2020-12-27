@@ -38,8 +38,18 @@ fm.loadfile:
         ; Reset editor
         ;-------------------------------------------------------
 !       bl    @tv.reset             ; Reset editor
-        mov   @parm1,@edb.filename.ptr
+        ;-------------------------------------------------------
+        ; Change filename
+        ;-------------------------------------------------------
+        mov   @parm1,tmp0           ; Source address
+        li    tmp1,edb.filename     ; Target address
+        li    tmp2,80               ; Number of bytes to copy
+        mov   tmp1,@edb.filename.ptr
                                     ; Set filename
+
+        bl    @xpym2m               ; tmp0 = Memory source address
+                                    ; tmp1 = Memory target address
+                                    ; tmp2 = Number of bytes to copy
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------

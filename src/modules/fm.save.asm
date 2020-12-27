@@ -29,13 +29,22 @@ fm.savefile:
         ;-------------------------------------------------------
         ; Check if filename must be changed in editor buffer
         ;-------------------------------------------------------
-        mov   @parm2,tmp0           ; Saving all lines in editor buffer?
-        jne   !                     ; Yes, so change current filename
+        li    tmp0,id.dialog.saveblock
+        c     @cmdb.dialog,tmp0     ; Saving code block M1-M2 ?
+        jeq   !                     ; Yes, skip changing current filename
         ;-------------------------------------------------------
         ; Change filename
         ;-------------------------------------------------------
-        mov   @parm1,@edb.filename.ptr 
-                                    ; Set current filename
+        mov   @parm1,tmp0           ; Source address
+        li    tmp1,edb.filename     ; Target address
+        li    tmp2,80               ; Number of bytes to copy
+        mov   tmp1,@edb.filename.ptr
+                                    ; Set filename
+
+        bl    @xpym2m               ; tmp0 = Memory source address
+                                    ; tmp1 = Memory target address
+                                    ; tmp2 = Number of bytes to copy
+
         ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------

@@ -120,8 +120,9 @@ pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 ;   Dialog ID's >= 100 indicate that command prompt should be 
 ;   hidden and no characters added to CMDB keyboard buffer
 ;-----------------------------------------------------------------
-id.dialog.load            equ  10      ; ID dialog "Load DV 80 file"
-id.dialog.save            equ  11      ; ID dialog "Save DV 80 file"
+id.dialog.load            equ  10      ; ID dialog "Load DV80 file"
+id.dialog.save            equ  11      ; ID dialog "Save DV80 file"
+id.dialog.saveblock       equ  12      ; ID dialog "Save codeblock to DV80 file"
 id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
 id.dialog.block           equ  102     ; ID dialog "Block move/copy/delete"
 id.dialog.about           equ  103     ; ID dialog "About"
@@ -223,7 +224,9 @@ edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
                                        ; with current file type.                                    
 edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-edb.free          equ  edb.struct + 26 ; End of structure
+edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
+                                       ; for filename, but not always used.
+edb.free          equ  edb.struct + 105; End of structure
 *--------------------------------------------------------------
 * Command buffer structure            @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------

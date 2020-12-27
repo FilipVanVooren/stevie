@@ -24,7 +24,7 @@ vec.15  data  edkey.action.cmdb.show
 vec.16  data  cpu.crash             ; 
 vec.17  data  cpu.crash             ; 
 vec.18  data  cpu.crash             ; 
-vec.19  data  cpu.crash             ; 
+vec.19  data  cmdb.cmd.clear        ; 
 vec.20  data  fb.refresh            ; 
 vec.21  data  fb.vdpdump            ; 
 vec.22  data  cpu.crash             ; 

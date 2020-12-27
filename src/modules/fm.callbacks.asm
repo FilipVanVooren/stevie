@@ -25,7 +25,7 @@ fm.loadsave.cb.indicator1:
 
         mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
-                                    ; Set color combination for status lines
+                                    ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
 
@@ -41,11 +41,24 @@ fm.loadsave.cb.indicator1:
         ;------------------------------------------------------
         ; Display Saving....
         ;------------------------------------------------------
-fm.loadsave.cb.indicator1.saving:                
+fm.loadsave.cb.indicator1.saving: 
+        li    tmp0,id.dialog.saveblock
+        c     @cmdb.dialog,tmp0     ; Saving code block M1-M2 ?
+        jeq   fm.loadsave.cb.indicator1.saveblock
+        
         bl    @putat
               byte pane.botrow,0
-              data txt.saving       ; Display "Saving file...."
+              data txt.saving       ; Display "Saving...."              
         jmp   fm.loadsave.cb.indicator1.filename
+        ;------------------------------------------------------
+        ; Display Saving block to DV80 file....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.saveblock:        
+        bl    @putat
+              byte pane.botrow,0
+              data txt.block.save   ; Display "Saving block...."              
+
+        jmp   fm.loadsave.cb.indicator1.separators
         ;------------------------------------------------------
         ; Display Loading....
         ;------------------------------------------------------
@@ -69,6 +82,7 @@ fm.loadsave.cb.indicator1.filename:
         ;------------------------------------------------------
         ; Show separators
         ;------------------------------------------------------
+fm.loadsave.cb.indicator1.separators:
         bl    @hchar
               byte pane.botrow,50,16,1       ; Vertical line 1
               byte pane.botrow,71,16,1       ; Vertical line 2

@@ -55,29 +55,6 @@ pane.cmdb.draw:
         movb  *tmp1,tmp2            ; |
         srl   tmp2,8                ; |  
         bl    @xutst0               ; /  Display info message
-
-        ;------------------------------------------------------
-        ; Show M1, M2, M3 markers 
-        ;------------------------------------------------------
-        mov   @cmdb.dialog,tmp0     ; Get dialog ID
-        ci    tmp0,id.dialog.block  ; Showing Block operations dialog?
-        jne   pane.cmdb.draw.clear  ; No, skip markers
-
-        mov   @edb.block.m1,tmp0
-        jeq   pane.cmdb.draw.m2
-
-pane.cmdb.draw.m1:
-        bl    @putnum               ; Show M1 value
-              byte pane.botrow-3,4
-              data edb.block.m1,rambuf,>3030
-
-pane.cmdb.draw.m2:
-        mov   @edb.block.m2,tmp0
-        jeq   pane.cmdb.draw.clear
-
-        bl    @putnum               ; Show M2 value
-              byte pane.botrow-3,25
-              data edb.block.m2,rambuf,>3030
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------

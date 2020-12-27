@@ -51,7 +51,7 @@ edb.block.delete:
 
         bl    @putat
               byte pane.botrow,0
-              data txt.deleting     ; Display "Deleting...."     
+              data txt.block.del    ; Display "Deleting block...."     
         ;------------------------------------------------------
         ; Prepare for delete
         ;------------------------------------------------------
