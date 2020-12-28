@@ -1,5 +1,5 @@
 * FILE......: edb.line.pack.asm
-* Purpose...: Stevie Editor - Editor Buffer pack line
+* Purpose...: Pack current line from framebuffer to editor buffer
 
 ***************************************************************
 * edb.line.pack
@@ -67,39 +67,14 @@ edb.line.pack.crash:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
-        ; 1a: Check if highest SAMS page needs to be increased
+        ; Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
-edb.line.pack.check_setpage:
+edb.line.pack.check_setpage:        
         mov   tmp0,@rambuf+4        ; Save length of line
-        mov   @edb.next_free.ptr,tmp0
-                                    ;--------------------------
-                                    ; Sanity check
-                                    ;-------------------------- 
-        ci    tmp0,edb.top + edb.size
-                                    ; Insane address ?
-        jgt   edb.line.pack.crash   ; Yes, crash!
-                                    ;--------------------------
-                                    ; Check for page overflow
-                                    ;-------------------------- 
-        andi  tmp0,>0fff            ; Get rid of highest nibble        
-        ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
-        ci    tmp0,>1000 - 16       ; 4K boundary reached?
-        jlt   edb.line.pack.setpage ; Not yet, don't increase SAMS page
-        ;------------------------------------------------------
-        ; 1b: Increase highest SAMS page (copy-on-write!)
-        ;------------------------------------------------------ 
-        inc   @edb.sams.hipage      ; Set highest SAMS page                                    
-        mov   @edb.top.ptr,@edb.next_free.ptr
-                                    ; Start at top of SAMS page again
-        ;------------------------------------------------------
-        ; 1c: Switch to SAMS page
-        ;------------------------------------------------------ 
-edb.line.pack.setpage:        
-        mov   @edb.sams.hipage,tmp0
-        mov   @edb.top.ptr,tmp1
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address
+
+        bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
+                                    ; \ i  @edb.next_free.ptr = Pointer to next
+                                    ; /                         free line
         ;------------------------------------------------------
         ; Step 2: Prepare for storing line
         ;------------------------------------------------------
@@ -107,7 +82,7 @@ edb.line.pack.prepare:
         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
         a     @fb.row,@parm1        ; /
         ;------------------------------------------------------
-        ; 2a Update index
+        ; 2a. Update index
         ;------------------------------------------------------
 edb.line.pack.update_index:
         mov   @edb.next_free.ptr,@parm2

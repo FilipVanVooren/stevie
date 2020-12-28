@@ -78,12 +78,20 @@ edkey.action.block.delete:
 * Goto marker M1
 ********|*****|*********************|**************************
 edkey.action.block.goto.m1:
+        c     @edb.block.m1,@w$0000 ; Marker M1 unset?
+        jeq   edkey.action.block.goto.m1.exit
+                                    ; Yes, exit early
         ;-------------------------------------------------------
-        ; Exit
+        ; Goto marker M1
         ;-------------------------------------------------------
-        mov   @edb.block.m1,@parm1  ; Goto marker M1 
-        dec   @parm1                ; Base 0 offset
+        mov   @edb.block.m1,@parm1   
+        dec   @parm1                ; Base 0 offset 
 
         b     @edkey.action.goto    ; Goto specified line in editor bufer
                                     ; \ i @parm1 = Target line in EB
                                     ; /
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.block.goto.m1.exit:  
+        b     @hook.keyscan.bounce  ; Back to editor main

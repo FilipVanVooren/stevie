@@ -1,4 +1,4 @@
-* FILE......: fb.refresh.asm
+* FILE......: fb.utils.asm
 * Purpose...: Stevie Editor - Framebuffer utilities
 
 ***************************************************************

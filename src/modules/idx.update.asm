@@ -1,5 +1,5 @@
 * FILE......: idx.update.asm
-* Purpose...: Stevie Editor - Update index entry
+* Purpose...: Update index entry
 
 ***************************************************************
 * idx.entry.update

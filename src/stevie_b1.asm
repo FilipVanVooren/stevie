@@ -117,7 +117,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------        
-        copy  "fb.util.asm"         ; Framebuffer utilities
+        copy  "fb.utils.asm"        ; Framebuffer utilities
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
@@ -131,9 +131,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
+        copy  "edb.utils.asm"       ; Editor buffer utilities
         copy  "edb.line.pack.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm" ; Get line length
+        copy  "edb.line.copy.asm"   ; Copy line
         copy  "edb.block.mark.asm"  ; Mark code block
         copy  "edb.block.reset.asm" ; Reset markers
         copy  "edb.block.copy.asm"  ; Copy code block

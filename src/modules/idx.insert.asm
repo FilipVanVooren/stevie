@@ -1,5 +1,5 @@
 * FILE......: idx.insert.asm
-* Purpose...: Stevie Editor - Insert index slot
+* Purpose...: Insert index entry
 
 ***************************************************************
 * _idx.entry.insert.reorg

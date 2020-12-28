@@ -1,5 +1,5 @@
 * FILE......: edb.line.getlen.asm
-* Purpose...: Stevie Editor - Editor Buffer get line length
+* Purpose...: Get length of specified line in editor buffer
 
 ***************************************************************
 * edb.line.getlength

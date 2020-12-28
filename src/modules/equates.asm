@@ -14,9 +14,10 @@
 *     2f00-2f1f      32           **RESERVED**
 *     2f20-2f3f      32           Function input/output parameters
 *     2f40-2f43       4           Keyboard
-*     2f44-2f63      32           Timer tasks table
-*     2f64-2f9f      60           RAM buffer
-*     2fa0-2fff      96           Value/Return stack
+*     2f4a-2f59      16           Timer tasks table
+*     2f5a-2f69      16           Sprite attribute table in RAM
+*     2f6a-2f9f      54           RAM buffer
+*     2fa0-2fff      96           Value/Return stack (grows downwards from 2fff)
 *     
 *    
 * LOW MEMORY EXPANSION (3000-3fff)

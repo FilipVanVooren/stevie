@@ -25,14 +25,25 @@ pane.cmdb.draw:
         ;------------------------------------------------------        
         ; Command buffer header line
         ;------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow-4,15,1,65
-              data eol
+        mov   @cmdb.panhead,@parm1  ; Get string to display
+        li    tmp0,80
+        mov   tmp0,@parm2           ; Set requested length
+        li    tmp0,1
+        mov   tmp0,@parm3           ; Set character to fill
+        li    tmp0,rambuf
+        mov   tmp0,@parm4           ; Set pointer to buffer for output string
+
+
+        bl    @tv.pad.string        ; Pad string to specified length
+                                    ; \ i  @parm1 = Pointer to string
+                                    ; | i  @parm2 = Requested length
+                                    ; | i  @parm3 = Fill characgter
+                                    ; | i  @parm4 = Pointer to buffer with
+                                    ; /             output string                                    
 
         mov   @cmdb.yxtop,@wyx      ; \
-        mov   @cmdb.panhead,tmp1    ; | Display pane header
+        mov   @outparm1,tmp1        ; | Display pane header
         bl    @xutst0               ; / 
-
         ;------------------------------------------------------
         ; Check dialog id
         ;------------------------------------------------------

@@ -36,12 +36,28 @@ pane.topline:
         ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------ 
+        mov   @edb.filename.ptr,@parm1  
+                                    ; Get string to display
+        li    tmp0,47
+        mov   tmp0,@parm2           ; Set requested length
+        li    tmp0,32
+        mov   tmp0,@parm3           ; Set character to fill
+        li    tmp0,rambuf
+        mov   tmp0,@parm4           ; Set pointer to buffer for output string
+
+
+        bl    @tv.pad.string        ; Pad string to specified length
+                                    ; \ i  @parm1 = Pointer to string
+                                    ; | i  @parm2 = Requested length
+                                    ; | i  @parm3 = Fill characgter
+                                    ; | i  @parm4 = Pointer to buffer with
+                                    ; /             output string        
+
         bl    @setx
               data 3                ; Position cursor
-
-        mov   @edb.filename.ptr,tmp1
-                                    ; Get string to display
-        bl    @xutst0               ; Display string
+      
+        mov   @outparm1,tmp1        ; \ Display padded filename
+        bl    @xutst0               ; / 
         ;------------------------------------------------------
         ; Show M1 marker
         ;------------------------------------------------------

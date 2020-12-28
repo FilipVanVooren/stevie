@@ -73,8 +73,8 @@ edb.block.delete:
         ;------------------------------------------------------
 edb.block.delete.loop:          
         bl    @idx.entry.delete     ; Reorganize index
-                                    ; \ i  parm1 = Line in editor buffer
-                                    ; / i  parm2 = Last line for index reorg
+                                    ; \ i  @parm1 = Line in editor buffer
+                                    ; / i  @parm2 = Last line for index reorg
 
         dec   @edb.lines            ; \ One line removed from editor buffer
         dec   @parm2                ; /

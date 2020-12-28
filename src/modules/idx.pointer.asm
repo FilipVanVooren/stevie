@@ -1,5 +1,5 @@
 * FILE......: idx.pointer.asm
-* Purpose...: Stevie Editor - Get pointer to line in editor buffer
+* Purpose...: Get pointer to line in editor buffer
 
 ***************************************************************
 * idx.pointer.get

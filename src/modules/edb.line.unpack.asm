@@ -1,5 +1,5 @@
 * FILE......: edb.line.unpack.asm
-* Purpose...: Stevie Editor - Editor Buffer unpack line
+* Purpose...: Unpack line from editor buffer
 
 ***************************************************************
 * edb.line.unpack

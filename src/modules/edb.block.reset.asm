@@ -33,7 +33,8 @@ edb.block.reset:
         seto  @parm1
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
-                                    ; i  parm1 = Skip screen off if >FFFF        
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; /
         ;------------------------------------------------------
         ; Remove markers
         ;------------------------------------------------------

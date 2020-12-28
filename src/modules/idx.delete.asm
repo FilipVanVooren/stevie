@@ -1,5 +1,5 @@
 * FILE......: idx_delete.asm
-* Purpose...: Stevie Editor - Delete index slot
+* Purpose...: Delete index entry
 
 ***************************************************************
 * _idx.entry.delete.reorg
@@ -127,6 +127,6 @@ idx.entry.delete.exit:
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0                
+        mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

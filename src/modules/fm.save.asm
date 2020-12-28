@@ -67,18 +67,18 @@ fm.savefile:
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
         bl    @fh.file.write.edb    ; Save file from editor buffer
-                                    ; \ i  parm1 = Pointer to length prefixed 
-                                    ; |            file descriptor
-                                    ; | i  parm2 = Pointer to callback
-                                    ; |            "Before Open file"
-                                    ; | i  parm3 = Pointer to callback
-                                    ; |            "Write line to file"
-                                    ; | i  parm4 = Pointer to callback
-                                    ; |            "Close file"
-                                    ; | i  parm5 = Pointer to callback 
-                                    ; |            "File I/O error"
-                                    ; | i  parm6 = First line to save (base 0)
-                                    ; | i  parm7 = Last line to save  (base 0)
+                                    ; \ i  @parm1 = Pointer to length prefixed 
+                                    ; |             file descriptor
+                                    ; | i  @parm2 = Pointer to callback
+                                    ; |             "Before Open file"
+                                    ; | i  @parm3 = Pointer to callback
+                                    ; |             "Write line to file"
+                                    ; | i  @parm4 = Pointer to callback
+                                    ; |             "Close file"
+                                    ; | i  @parm5 = Pointer to callback 
+                                    ; |             "File I/O error"
+                                    ; | i  @parm6 = First line to save (base 0)
+                                    ; | i  @parm7 = Last line to save  (base 0)
                                     ; /
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
