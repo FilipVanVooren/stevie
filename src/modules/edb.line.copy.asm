@@ -1,2 +1,2 @@
-* FILE......: edb.line.unpack.asm
+* FILE......: edb.line.copy.asm
 * Purpose...: Copy line in editor buffer
