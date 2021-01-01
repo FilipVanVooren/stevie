@@ -25,6 +25,8 @@ edb.block.copy:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------        
         ; Sanity checks
         ;------------------------------------------------------
@@ -37,9 +39,31 @@ edb.block.copy:
         c     tmp0,tmp1             ; M1 > M2 
         jgt   edb.block.copy.exit   ; Yes, exit early
         ;------------------------------------------------------
+        ; Get current line position in editor buffer
+        ;------------------------------------------------------
+        mov   @fb.row,@parm1 
+        bl    @fb.row2line          ; Row to editor line
+                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; | i @parm1      = Row in frame buffer
+                                    ; / o @outparm1   = Matching line in EB
+        ;------------------------------------------------------
+        ; Abort if M1 < current line < M2
+        ;------------------------------------------------------
+        c     @outparm1,tmp0        ; Current line < M1 ?
+        jlt   !                     ; Yes, skip check
+        c     @outparm1,tmp1        ; Current line > M2 ?
+        jgt   !                     ; Yes, skip check
+
+        bl    @cpym2m
+              data txt.block.inside,tv.error.msg,53
+
+        bl    @pane.errline.show    ; Show error line
+
+        jmp   edb.block.copy.exit   ; Exit early
+        ;------------------------------------------------------
         ; Display "Copying...."
         ;------------------------------------------------------
-        mov   @tv.busycolor,@parm1  ; Get busy color
+!       mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
@@ -59,21 +83,13 @@ edb.block.copy:
         mov   @edb.block.m2,tmp2
         s     tmp1,tmp2
         inc   tmp2                  ; One time adjustment
-        ;------------------------------------------------------
-        ; Get current line position in editor buffer
-        ;------------------------------------------------------
-        mov   @fb.row,@parm1 
-        bl    @fb.row2line          ; Row to editor line
-                                    ; \ i @fb.topline = Top line in frame buffer 
-                                    ; | i @parm1      = Row in frame buffer
-                                    ; / o @outparm1   = Matching line in EB
 
-        mov   @edb.block.m1,tmp0    ; Source line for copy (start with M1)
+        mov   @outparm1,tmp3        ; Current line in editor
         ;------------------------------------------------------
         ; Copy code block
         ;------------------------------------------------------
 edb.block.copy.loop:
-        mov   @outparm1,@parm1      ; Target line for insert (current line)
+        mov   tmp3,@parm1           ; Target line for insert (current line)
         mov   @edb.lines,@parm2     ; Last line to reorganize         
 
         bl    @idx.entry.insert     ; Reorganize index, insert new line
@@ -89,7 +105,7 @@ edb.block.copy.loop:
 
         inc   @edb.lines            ; One line added to editor buffer
         inc   tmp0                  ; M1++
-        dec   tmp2                  ; Update ooop counter
+        dec   tmp2                  ; Update ĺoop counter
         jgt   edb.block.copy.loop   ; Next line
         ;------------------------------------------------------
         ; Copy loop completed
@@ -100,7 +116,9 @@ edb.block.copy.loop:
         ; Exit
         ;------------------------------------------------------
 edb.block.copy.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11        
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return        

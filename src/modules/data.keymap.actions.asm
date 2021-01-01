@@ -38,7 +38,8 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.ctrl.m, pane.focus.fb, edkey.action.block.mark
         data  key.ctrl.r, pane.focus.fb, edkey.action.block.reset
-        data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete          
+        data  key.ctrl.c, pane.focus.fb, edkey.action.block.copy
+        data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete
         data  key.ctrl.g, pane.focus.fb, edkey.action.block.goto.m1
         ;-------------------------------------------------------
         ; Other action keys

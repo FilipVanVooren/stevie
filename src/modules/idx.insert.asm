@@ -8,7 +8,7 @@
 * bl @_idx.entry.insert.reorg
 *--------------------------------------------------------------
 *  Remarks
-*  Private, only to be called from idx_entry_delete
+*  Private, only to be called from idx_entry_insert
 ********|*****|*********************|**************************
 _idx.entry.insert.reorg:
         ;------------------------------------------------------

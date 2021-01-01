@@ -15,7 +15,7 @@
 * @outparm1 = Matching line in editor buffer
 *--------------------------------------------------------------
 * Register usage
-* tmp2,tmp3
+* tmp0
 *--------------------------------------------------------------
 * Formula
 * outparm1 = @fb.topline + @parm1
@@ -23,6 +23,8 @@
 fb.row2line:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0        
         ;------------------------------------------------------
         ; Calculate line in editor buffer
         ;------------------------------------------------------
@@ -33,6 +35,7 @@ fb.row2line:
         ; Exit
         ;------------------------------------------------------
 fb.row2line.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 

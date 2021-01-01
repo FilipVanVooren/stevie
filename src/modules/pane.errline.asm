@@ -37,12 +37,35 @@ pane.errline.show:
                                     ; / i  @parm2 = Row on physical screen
                                     
         ;------------------------------------------------------
-        ; Show error line content
+        ; Pad error message to 80 characters
         ;------------------------------------------------------
-        bl    @putat                ; Display error message
-              byte pane.botrow-1,0
-              data tv.error.msg        
+        li    tmp0,tv.error.msg
+        mov   tmp0,@parm1           ; Get pointer to string
+                                    
+        li    tmp0,80
+        mov   tmp0,@parm2           ; Set requested length
+        
+        li    tmp0,32
+        mov   tmp0,@parm3           ; Set character to fill
+        
+        li    tmp0,rambuf
+        mov   tmp0,@parm4           ; Set pointer to buffer for output string
 
+        bl    @tv.pad.string        ; Pad string to specified length
+                                    ; \ i  @parm1 = Pointer to string
+                                    ; | i  @parm2 = Requested length
+                                    ; | i  @parm3 = Fill characgter
+                                    ; | i  @parm4 = Pointer to buffer with
+                                    ; /             output string        
+        ;------------------------------------------------------
+        ; Show error message
+        ;------------------------------------------------------
+        bl    @at
+              byte pane.botrow-1,0  ; Set cursor
+
+        mov   @outparm1,tmp1        ; \ Display error message
+        bl    @xutst0               ; /
+        
         mov   @fb.scrrows.max,tmp0
         dec   tmp0
         mov   tmp0,@fb.scrrows      ; Decrease size of frame buffer
@@ -84,7 +107,7 @@ pane.errline.hide:
         ;------------------------------------------------------
         ; Hide command buffer pane
         ;------------------------------------------------------
-!       bl    @errline.init         ; Clear error line
+        bl    @errline.init         ; Clear error line
 
         mov   @tv.color,tmp0        ; Get colors
         srl   tmp0,8                ; Right aligns
@@ -97,6 +120,10 @@ pane.errline.hide:
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
+
+        clr   @tv.error.visible     ; Error line no longer visible
+        mov   @fb.scrrows.max,@fb.scrrows
+                                    ; Set frame buffer to full size again
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

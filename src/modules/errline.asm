@@ -30,9 +30,6 @@ errline.init:
 
         bl    @film
               data tv.error.msg,0,160
-
-        li    tmp0,>A000            ; Length of error message (160 bytes)
-        movb  tmp0,@tv.error.msg    ; Set length byte        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

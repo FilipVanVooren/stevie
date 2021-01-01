@@ -39,6 +39,7 @@ edkey.action.block.mark:
 * Reset block markers M1/M2
 ********|*****|*********************|**************************
 edkey.action.block.reset:
+        bl    @pane.errline.hide    ; Hide error line if visible
         bl    @edb.block.reset      ; Reset block markers M1/M2
         ;-------------------------------------------------------
         ; Exit
@@ -50,23 +51,27 @@ edkey.action.block.reset:
 * Copy code block
 ********|*****|*********************|**************************
 edkey.action.block.copy:
+        bl    @pane.errline.hide    ; Hide error line if visible
         bl    @edb.block.copy       ; Copy code block
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @hook.keyscan.bounce  ; Back to editor main
-
+        mov   @fb.topline,@parm1
+        b     @_edkey.goto.fb.toprow
+                                    ; Position on top row in frame buffer
+                                    ; \ i  @parm1 = Line to display as top row
+                                    ; /
 
 *---------------------------------------------------------------
 * Delete code block
 ********|*****|*********************|**************************
 edkey.action.block.delete:
+        bl    @pane.errline.hide    ; Hide error message if visible
         bl    @edb.block.delete     ; Delete code block
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
         mov   @fb.topline,@parm1
-
         b     @_edkey.goto.fb.toprow
                                     ; Position on top row in frame buffer
                                     ; \ i  @parm1 = Line to display as top row

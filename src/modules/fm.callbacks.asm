@@ -223,8 +223,14 @@ fm.loadsave.cb.fioerr:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        mov   tmp0,*stack           ; Push tmp0        
         dect  stack        
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack  
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack  
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack                          
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
         ; Build I/O error message
@@ -260,6 +266,12 @@ fm.loadsave.cb.fioerr.mgs3:
         mov   @edb.filename.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
+
+        mov   tmp2,tmp3             ; \
+        ai    tmp3,33               ; |  Calculate length byte of error message
+        sla   tmp3,8                ; |  and write to string prefix  
+        movb  tmp3,@tv.error.msg    ; / 
+
         inc   tmp0                  ; Skip length byte
         li    tmp1,tv.error.msg+33  ; RAM destination address
 
@@ -267,6 +279,8 @@ fm.loadsave.cb.fioerr.mgs3:
                                     ; | i  tmp0 = ROM/RAM source
                                     ; | i  tmp1 = RAM destination
                                     ; / i  tmp2 = Bytes to copy
+
+        
         ;------------------------------------------------------
         ; Reset filename to "new file" 
         ;------------------------------------------------------
@@ -296,6 +310,9 @@ fm.loadsave.cb.fioerr.mgs3:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp3          ; Pop tmp3        
+        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

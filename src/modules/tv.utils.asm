@@ -61,7 +61,7 @@ tv.unpack.uint16.exit:
 * @parm1 = Pointer to length-prefixed string
 * @parm2 = Requested length
 * @parm3 = Fill character
-* @parm4 = Pointer to buffer with string
+* @parm4 = Pointer to string buffer
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Pointer to padded string
