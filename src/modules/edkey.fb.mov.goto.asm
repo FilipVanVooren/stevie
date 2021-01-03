@@ -54,7 +54,7 @@ edkey.action.goto:
 
         dect  stack
         mov   @parm1,*stack         ; Push parm1
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         mov   *stack+,@parm1        ; Pop parm1
 
         clr   @fb.row.dirty         ; Current row no longer dirty

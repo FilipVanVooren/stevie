@@ -10,7 +10,7 @@ edkey.action.top:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.top.refresh
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page
@@ -34,7 +34,7 @@ edkey.action.bot:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.bot.refresh
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page

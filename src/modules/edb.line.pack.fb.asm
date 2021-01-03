@@ -1,11 +1,11 @@
-* FILE......: edb.line.pack.asm
-* Purpose...: Pack current line from framebuffer to editor buffer
+* FILE......: edb.line.pack.fb.asm
+* Purpose...: Pack current line in framebuffer to editor buffer
 
 ***************************************************************
-* edb.line.pack
+* edb.line.pack.fb
 * Pack current line in framebuffer
 ***************************************************************
-*  bl   @edb.line.pack
+*  bl   @edb.line.pack.fb
 *--------------------------------------------------------------
 * INPUT
 * @fb.top       = Address of top row in frame buffer
@@ -23,7 +23,7 @@
 * rambuf+2 = Saved beginning of row
 * rambuf+4 = Saved length of row
 ********|*****|*********************|**************************
-edb.line.pack:
+edb.line.pack.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack        
@@ -47,29 +47,29 @@ edb.line.pack:
         ;------------------------------------------------------
         ; Scan line for >00 byte termination
         ;------------------------------------------------------
-edb.line.pack.scan:
+edb.line.pack.fb.scan:
         movb  *tmp1+,tmp2           ; Get char
         srl   tmp2,8                ; Right justify
-        jeq   edb.line.pack.check_setpage 
+        jeq   edb.line.pack.fb.check_setpage 
                                     ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         ;------------------------------------------------------
         ; Not more than 80 characters
         ;------------------------------------------------------
         ci    tmp0,colrow
-        jeq   edb.line.pack.check_setpage
+        jeq   edb.line.pack.fb.check_setpage
                                     ; Stop scan if 80 characters processed
-        jmp   edb.line.pack.scan    ; Next character
+        jmp   edb.line.pack.fb.scan ; Next character
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
-edb.line.pack.crash:
+edb.line.pack.fb.crash:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
-edb.line.pack.check_setpage:        
+edb.line.pack.fb.check_setpage:        
         mov   tmp0,@rambuf+4        ; Save length of line
 
         bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
@@ -78,13 +78,13 @@ edb.line.pack.check_setpage:
         ;------------------------------------------------------
         ; Step 2: Prepare for storing line
         ;------------------------------------------------------
-edb.line.pack.prepare:
+edb.line.pack.fb.prepare:
         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
         a     @fb.row,@parm1        ; /
         ;------------------------------------------------------
         ; 2a. Update index
         ;------------------------------------------------------
-edb.line.pack.update_index:
+edb.line.pack.fb.update_index:
         mov   @edb.next_free.ptr,@parm2
                                     ; Pointer to new line
         mov   @edb.sams.hipage,@parm3 
@@ -106,25 +106,25 @@ edb.line.pack.update_index:
 
         mov   @rambuf+4,tmp2        ; Get line length
         mov   tmp2,*tmp1+           ; Set line length as line prefix
-        jeq   edb.line.pack.prepexit
+        jeq   edb.line.pack.fb.prepexit
                                     ; Nothing to copy if empty line
         ;------------------------------------------------------
         ; 4. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------
-edb.line.pack.copyline:        
+edb.line.pack.fb.copyline:        
         ci    tmp2,2
-        jne   edb.line.pack.copyline.checkbyte
+        jne   edb.line.pack.fb.copyline.checkbyte
         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
         movb  *tmp0+,*tmp1+         ; / uneven address
-        jmp   edb.line.pack.copyline.align16
+        jmp   edb.line.pack.fb.copyline.align16
 
-edb.line.pack.copyline.checkbyte:
+edb.line.pack.fb.copyline.checkbyte:
         ci    tmp2,1
-        jne   edb.line.pack.copyline.block
+        jne   edb.line.pack.fb.copyline.block
         movb  *tmp0,*tmp1           ; Copy single byte
-        jmp   edb.line.pack.copyline.align16
+        jmp   edb.line.pack.fb.copyline.align16
 
-edb.line.pack.copyline.block:
+edb.line.pack.fb.copyline.block:
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
@@ -132,7 +132,7 @@ edb.line.pack.copyline.block:
         ;------------------------------------------------------
         ; 5: Align pointer to multiple of 16 memory address
         ;------------------------------------------------------ 
-edb.line.pack.copyline.align16:        
+edb.line.pack.fb.copyline.align16:        
         a     @rambuf+4,@edb.next_free.ptr
                                        ; Add length of line
 
@@ -143,11 +143,11 @@ edb.line.pack.copyline.align16:
         ;------------------------------------------------------
         ; 6: Restore SAMS page and prepare for exit
         ;------------------------------------------------------ 
-edb.line.pack.prepexit:
+edb.line.pack.fb.prepexit:
         mov   @rambuf,@fb.column    ; Retrieve @fb.column
 
         c     @edb.sams.hipage,@edb.sams.page
-        jeq   edb.line.pack.exit    ; Exit early if SAMS page already mapped
+        jeq   edb.line.pack.fb.exit ; Exit early if SAMS page already mapped
 
         mov   @edb.sams.page,tmp0
         mov   @edb.top.ptr,tmp1
@@ -157,7 +157,7 @@ edb.line.pack.prepexit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-edb.line.pack.exit:
+edb.line.pack.fb.exit:
         mov   *stack+,tmp2          ; Pop tmp2        
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0          

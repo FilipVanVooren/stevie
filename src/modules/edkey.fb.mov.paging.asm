@@ -11,7 +11,7 @@ edkey.action.ppage:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.ppage.sanity
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Sanity check
@@ -59,7 +59,7 @@ edkey.action.npage:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.npage.sanity
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Sanity check

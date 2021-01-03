@@ -12,7 +12,7 @@ edkey.action.enter:
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.enter.upd_counter
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Update line counter

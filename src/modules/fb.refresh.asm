@@ -1,5 +1,5 @@
 * FILE......: fb.refresh.asm
-* Purpose...: Stevie Editor - Framebuffer refresh
+* Purpose...: Refresh frame buffer with editor buffer content
 
 ***************************************************************
 * fb.refresh
@@ -39,7 +39,7 @@ fb.refresh:
         ; Unpack line to frame buffer
         ;------------------------------------------------------
 fb.refresh.unpack_line:
-        bl    @edb.line.unpack      ; Unpack line
+        bl    @edb.line.unpack.fb   ; Unpack line from editor buffer
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
                                     ; / o  outparm1 = Length of line

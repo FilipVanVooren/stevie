@@ -31,8 +31,7 @@ pane.cursor.hide:
               data 1                ; Terminate task.vdp.copy.sat
 
         bl    @clslot
-              data 2                ; Terminate task.vdp.copy.sat
-
+              data 2                ; Terminate task.vdp.cursor
         ;-------------------------------------------------------        
         ; Exit
         ;-------------------------------------------------------

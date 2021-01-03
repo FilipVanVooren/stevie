@@ -1,11 +1,11 @@
-* FILE......: edb.line.unpack.asm
-* Purpose...: Unpack line from editor buffer
+* FILE......: edb.line.unpack.fb.asm
+* Purpose...: Unpack line from editor buffer to frame buffer
 
 ***************************************************************
-* edb.line.unpack
+* edb.line.unpack.fb
 * Unpack specified line to framebuffer
 ***************************************************************
-*  bl   @edb.line.unpack
+*  bl   @edb.line.unpack.fb
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = Line to unpack in editor buffer
@@ -18,13 +18,13 @@
 * tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Memory usage
-* rambuf    = Saved @parm1 of edb.line.unpack
-* rambuf+2  = Saved @parm2 of edb.line.unpack
+* rambuf    = Saved @parm1 of edb.line.unpack.fb
+* rambuf+2  = Saved @parm2 of edb.line.unpack.fb
 * rambuf+4  = Source memory address in editor buffer
 * rambuf+6  = Destination memory address in frame buffer
 * rambuf+8  = Length of line
 ********|*****|*********************|**************************
-edb.line.unpack:
+edb.line.unpack.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -66,15 +66,15 @@ edb.line.unpack:
         ; Handle empty line
         ;------------------------------------------------------        
         mov   @outparm1,tmp0        ; Get pointer to line
-        jne   edb.line.unpack.getlen
+        jne   edb.line.unpack.fb.getlen
                                     ; Continue if pointer is set
 
         clr   @rambuf+8             ; Set length=0
-        jmp   edb.line.unpack.clear
+        jmp   edb.line.unpack.fb.clear
         ;------------------------------------------------------
         ; Get line length
         ;------------------------------------------------------ 
-edb.line.unpack.getlen:                                        
+edb.line.unpack.fb.getlen:                                        
         mov   *tmp0+,tmp1           ; Get line length
         mov   tmp0,@rambuf+4        ; Source memory address for block copy
         mov   tmp1,@rambuf+8        ; Save line length        
@@ -82,7 +82,8 @@ edb.line.unpack.getlen:
         ; Sanity check on line length
         ;------------------------------------------------------        
         ci    tmp1,80               ; \ Continue if length <= 80
-        jle   edb.line.unpack.clear ; / 
+                                    ; / 
+        jle   edb.line.unpack.fb.clear 
         ;------------------------------------------------------
         ; Crash the system
         ;------------------------------------------------------
@@ -91,7 +92,7 @@ edb.line.unpack.getlen:
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
         ;------------------------------------------------------
-edb.line.unpack.clear: 
+edb.line.unpack.fb.clear: 
         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
 
@@ -107,15 +108,16 @@ edb.line.unpack.clear:
         ;------------------------------------------------------
         ; Prepare for unpacking data
         ;------------------------------------------------------
-edb.line.unpack.prepare: 
+edb.line.unpack.fb.prepare: 
         mov   @rambuf+8,tmp2        ; Line length
-        jeq   edb.line.unpack.exit  ; Exit if length = 0
+        jeq   edb.line.unpack.fb.exit  
+                                    ; Exit if length = 0
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
         ; Sanity check on line length
         ;------------------------------------------------------
-edb.line.unpack.copy:     
+edb.line.unpack.fb.copy:     
         ci    tmp2,80               ; Check line length
         jle   !
         ;------------------------------------------------------
@@ -135,7 +137,7 @@ edb.line.unpack.copy:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-edb.line.unpack.exit:
+edb.line.unpack.fb.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0                

@@ -98,7 +98,7 @@ edkey.action.ins_line:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.ins_line.insert
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Insert entry in index

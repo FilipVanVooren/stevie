@@ -17,9 +17,8 @@
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************
-sp2.stktop    equ >3000             ; Top of SP2 stack starts at 2ffe-2fff 
-                                    ; and grows downwards
-
+sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
+                                    ; grows downwards to >2000
 ***************************************************************
 * BANK 1
 ********|*****|*********************|**************************
@@ -121,6 +120,7 @@ main:
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
+        copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
@@ -131,15 +131,15 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.utils.asm"       ; Editor buffer utilities
-        copy  "edb.line.pack.asm"   ; Pack line into editor buffer
-        copy  "edb.line.unpack.asm" ; Unpack line from editor buffer
-        copy  "edb.line.getlen.asm" ; Get line length
-        copy  "edb.line.copy.asm"   ; Copy line
-        copy  "edb.block.mark.asm"  ; Mark code block
-        copy  "edb.block.reset.asm" ; Reset markers
-        copy  "edb.block.copy.asm"  ; Copy code block
-        copy  "edb.block.del.asm"   ; Delete code block
+        copy  "edb.utils.asm"          ; Editor buffer utilities
+        copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
+        copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
+        copy  "edb.line.getlen.asm"    ; Get line length
+        copy  "edb.line.copy.asm"      ; Copy line
+        copy  "edb.block.mark.asm"     ; Mark code block
+        copy  "edb.block.reset.asm"    ; Reset markers
+        copy  "edb.block.copy.asm"     ; Copy code block
+        copy  "edb.block.del.asm"      ; Delete code block
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------

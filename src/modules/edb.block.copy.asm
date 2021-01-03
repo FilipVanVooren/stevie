@@ -11,7 +11,7 @@
 * NONE
 *--------------------------------------------------------------
 * OUTPUT
-* NONE
+* @outparm1 = success (>ffff), no action (>0000)
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1
@@ -27,9 +27,11 @@ edb.block.copy:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+
+        clr   @outparm1
         ;------------------------------------------------------        
         ; Sanity checks
-        ;------------------------------------------------------
+        ;------------------------------------------------------        
         mov   @edb.block.m1,tmp0    ; M1 unset?
         jeq   edb.block.copy.exit   ; Yes, exit early
 
@@ -38,6 +40,9 @@ edb.block.copy:
 
         c     tmp0,tmp1             ; M1 > M2 
         jgt   edb.block.copy.exit   ; Yes, exit early
+
+        dec   tmp0                  ; Use base 0 for M1
+        dec   tmp1                  ; Use base 0 for M2
         ;------------------------------------------------------
         ; Get current line position in editor buffer
         ;------------------------------------------------------
@@ -47,7 +52,7 @@ edb.block.copy:
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
         ;------------------------------------------------------
-        ; Abort if M1 < current line < M2
+        ; Exit if M1 < current line < M2
         ;------------------------------------------------------
         c     @outparm1,tmp0        ; Current line < M1 ?
         jlt   !                     ; Yes, skip check
@@ -80,7 +85,10 @@ edb.block.copy:
         ; Prepare for copy 
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp1
+        dec   tmp1                  ; Use base 0 for M1
+
         mov   @edb.block.m2,tmp2
+        dec   tmp2                  ; Use base 0 for M2        
         s     tmp1,tmp2
         inc   tmp2                  ; One time adjustment
 
@@ -97,21 +105,37 @@ edb.block.copy.loop:
                                     ; / i  parm2 = Last line to reorg
 
         mov   @parm1,@parm2         ; Target line for copy (current line)
+        ;------------------------------------------------------
+        ; Increase M1 and M2 if target before code block
+        ;------------------------------------------------------
+        c     @edb.block.m1,tmp0
+        jgt   edb.block.copy.loop.docopy
+        inc   @edb.block.m1
+        inc   @edb.block.m2
+        ;------------------------------------------------------
+        ; Copy line
+        ;------------------------------------------------------
+edb.block.copy.loop.docopy:
         mov   tmp0,@parm1           ; Source line for copy (started from M1)
+        mov   tmp3,@parm2           ; Target line for copy
 
-    ;    bl    @edb.line.copy        ; Copy line 
+        bl    @edb.line.copy        ; Copy line 
                                     ; \ i  @parm1 = Source line in editor buffer
                                     ; / i  @parm2 = Target line in editor buffer
-
+        ;------------------------------------------------------
+        ; Housekeeping for next copy
+        ;------------------------------------------------------
         inc   @edb.lines            ; One line added to editor buffer
-        inc   tmp0                  ; M1++
+        inc   tmp0                  ; Next source line for copy
+        inc   tmp3                  ; Next target line for copy
         dec   tmp2                  ; Update ĺoop counter
         jgt   edb.block.copy.loop   ; Next line
         ;------------------------------------------------------
         ; Copy loop completed
         ;------------------------------------------------------
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-        seto  @fb.dirty        
+        seto  @fb.dirty             ; Frame buffer dirty
+        seto  @outparm1             ; Copy completed
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

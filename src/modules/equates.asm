@@ -42,7 +42,7 @@
 *    
 *     b000-bfff    4096           Index buffer page
 *     c000-cfff    4096           Editor buffer page
-*     d000-dfff    4096           Command history buffer
+*     d000-dfff    4096           CMDB history / Editor buffer page (temporary)
 *     e000-ebff    3072           Heap
 *     ec00-efff    1024           Farjump return stack (trampolines)
 *     f000-ffff    4096           *FREE*
@@ -200,7 +200,7 @@ fb.column         equ  fb.struct + 12  ; Current column in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
-fb.free0          equ  fb.struct + 20  ; **free**
+fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
 fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
 fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
 fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer

@@ -51,22 +51,38 @@ edkey.action.block.reset:
 * Copy code block
 ********|*****|*********************|**************************
 edkey.action.block.copy:
+        mov   @wyx,tmp0             ; Get cursor position
+        andi  tmp0,>ff00            ; Move cursor home (X=00)
+        mov   tmp0,@fb.yxsave       ; Backup cursor position
+        ;-------------------------------------------------------
+        ; Copy 
+        ;-------------------------------------------------------
         bl    @pane.errline.hide    ; Hide error line if visible
+
         bl    @edb.block.copy       ; Copy code block
+
+        c     @outparm1,@w$0000     ; Copy skipped?        
+        jeq   edkey.action.block.copy.exit
+
+        mov   @fb.yxsave,@parm1
+        bl    @fb.restore           ; Restore frame buffer layout
+                                    ; \ i  @parm1 = cursor YX position
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        mov   @fb.topline,@parm1
-        b     @_edkey.goto.fb.toprow
-                                    ; Position on top row in frame buffer
-                                    ; \ i  @parm1 = Line to display as top row
-                                    ; /
+edkey.action.block.copy.exit:
+        b     @hook.keyscan.bounce  ; Back to editor main                                    
+
 
 *---------------------------------------------------------------
 * Delete code block
 ********|*****|*********************|**************************
 edkey.action.block.delete:
+        ;-------------------------------------------------------
+        ; Delete
+        ;-------------------------------------------------------
         bl    @pane.errline.hide    ; Hide error message if visible
+
         bl    @edb.block.delete     ; Delete code block
         ;-------------------------------------------------------
         ; Exit

@@ -11,7 +11,7 @@ edkey.action.up:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.up.cursor
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Move cursor
@@ -78,7 +78,7 @@ edkey.action.down:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.down.move
-        bl    @edb.line.pack        ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Move cursor
