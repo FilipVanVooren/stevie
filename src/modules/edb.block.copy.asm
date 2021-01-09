@@ -14,7 +14,12 @@
 * @outparm1 = success (>ffff), no action (>0000)
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+* Remarks
+* For simplicity reasons we're assuming base 1 during copy
+* (first line starts at 1 instead of 0). 
+* Makes it easier when comparing values.
 ********|*****|*********************|**************************
 edb.block.copy:
         dect  stack
@@ -25,10 +30,8 @@ edb.block.copy:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
 
-        clr   @outparm1
+        clr   @outparm1             ; No action (>0000)
         ;------------------------------------------------------        
         ; Sanity checks
         ;------------------------------------------------------        
@@ -40,9 +43,6 @@ edb.block.copy:
 
         c     tmp0,tmp1             ; M1 > M2 
         jgt   edb.block.copy.exit   ; Yes, exit early
-
-        dec   tmp0                  ; Use base 0 for M1
-        dec   tmp1                  ; Use base 0 for M2
         ;------------------------------------------------------
         ; Get current line position in editor buffer
         ;------------------------------------------------------
@@ -51,11 +51,16 @@ edb.block.copy:
                                     ; \ i @fb.topline = Top line in frame buffer 
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
+
+        mov   @outparm1,tmp0        ; \ 
+        inc   tmp0                  ; | Base 1 for current line in editor buffer
+        mov   tmp0,@edb.block.var   ; / and store for later use
         ;------------------------------------------------------
-        ; Exit if M1 < current line < M2
+        ; Show error and exit if M1 < current line < M2
         ;------------------------------------------------------
         c     @outparm1,tmp0        ; Current line < M1 ?
         jlt   !                     ; Yes, skip check
+
         c     @outparm1,tmp1        ; Current line > M2 ?
         jgt   !                     ; Yes, skip check
 
@@ -64,6 +69,7 @@ edb.block.copy:
 
         bl    @pane.errline.show    ; Show error line
 
+        clr   @outparm1             ; No action (>0000)
         jmp   edb.block.copy.exit   ; Exit early
         ;------------------------------------------------------
         ; Display "Copying...."
@@ -84,40 +90,38 @@ edb.block.copy:
         ;------------------------------------------------------
         ; Prepare for copy 
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp1
-        dec   tmp1                  ; Use base 0 for M1
+        mov   @edb.block.m1,tmp0    ; M1
+        mov   @edb.block.m2,tmp2    ; \
+        s     tmp0,tmp2             ; / Loop counter = M2-M1
 
-        mov   @edb.block.m2,tmp2
-        dec   tmp2                  ; Use base 0 for M2        
-        s     tmp1,tmp2
-        inc   tmp2                  ; One time adjustment
-
-        mov   @outparm1,tmp3        ; Current line in editor
+        mov   @edb.block.var,tmp1   ; Current line in editor buffer
         ;------------------------------------------------------
         ; Copy code block
         ;------------------------------------------------------
 edb.block.copy.loop:
-        mov   tmp3,@parm1           ; Target line for insert (current line)
+        mov   tmp1,@parm1           ; Target line for insert (current line)
+        dec   @parm1                ; Base 0 offset for index required
         mov   @edb.lines,@parm2     ; Last line to reorganize         
 
         bl    @idx.entry.insert     ; Reorganize index, insert new line
-                                    ; \ i  parm1 = Line for insert
-                                    ; / i  parm2 = Last line to reorg
-
-        mov   @parm1,@parm2         ; Target line for copy (current line)
+                                    ; \ i  @parm1 = Line for insert
+                                    ; / i  @parm2 = Last line to reorg
         ;------------------------------------------------------
-        ; Increase M1 and M2 if target before code block
+        ; Increase M1-M2 block if target line before M1
         ;------------------------------------------------------
-        c     @edb.block.m1,tmp0
+        c     tmp1,@edb.block.m1
         jgt   edb.block.copy.loop.docopy
-        inc   @edb.block.m1
-        inc   @edb.block.m2
+        jeq   edb.block.copy.loop.docopy
+
+        inc   @edb.block.m1         ; M1++
+        inc   @edb.block.m2         ; M2++    
+        inc   tmp0                  ; Increase source line number too!    
         ;------------------------------------------------------
         ; Copy line
         ;------------------------------------------------------
 edb.block.copy.loop.docopy:
-        mov   tmp0,@parm1           ; Source line for copy (started from M1)
-        mov   tmp3,@parm2           ; Target line for copy
+        mov   tmp0,@parm1           ; Source line for copy
+        mov   tmp1,@parm2           ; Target line for copy
 
         bl    @edb.line.copy        ; Copy line 
                                     ; \ i  @parm1 = Source line in editor buffer
@@ -126,8 +130,8 @@ edb.block.copy.loop.docopy:
         ; Housekeeping for next copy
         ;------------------------------------------------------
         inc   @edb.lines            ; One line added to editor buffer
-        inc   tmp0                  ; Next source line for copy
-        inc   tmp3                  ; Next target line for copy
+        inc   tmp0                  ; Next source line
+        inc   tmp1                  ; Next target line
         dec   tmp2                  ; Update ĺoop counter
         jgt   edb.block.copy.loop   ; Next line
         ;------------------------------------------------------
@@ -140,9 +144,8 @@ edb.block.copy.loop.docopy:
         ; Exit
         ;------------------------------------------------------
 edb.block.copy.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return        
+        b     *r11                  ; Return to caller       

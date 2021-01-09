@@ -8,8 +8,8 @@
 *  bl   @edb.line.copy
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Source line in editor buffer
-* @parm2 = Target line in editor buffer
+* @parm1 = Source line number in editor buffer
+* @parm2 = Target line number in editor buffer
 *--------------------------------------------------------------
 * OUTPUT
 * NONE
@@ -22,6 +22,10 @@
 * rambuf+2  = line number of target line
 * rambuf+4  = Pointer to source line in editor buffer
 * rambuf+6  = Pointer to target line in editor buffer
+*--------------------------------------------------------------
+* Remarks
+* @parm1 and @parm2 must be provided in base 1, but internally
+* we work with base 0!
 ********|*****|*********************|**************************
 edb.line.copy:
         dect  stack
@@ -42,14 +46,18 @@ edb.line.copy:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
-!       clr   @rambuf               ; Set source line length=0        
-        mov   @parm2,@rambuf+2      ; Save target line number
+!       mov   @parm2,tmp0           ; Get target line number
+        dec   tmp0                  ; Base 0
+        mov   tmp0,@rambuf+2        ; Save target line number        
+        clr   @rambuf               ; Set source line length=0                
         clr   @rambuf+4             ; Nill-pointer source line
         clr   @rambuf+6             ; Nill-pointer target line
         ;------------------------------------------------------
         ; Get pointer to source line & page-in editor buffer SAMS page
         ;------------------------------------------------------
-        mov   @parm1,tmp0
+        mov   @parm1,tmp0           ; Get source line number
+        dec   tmp0                  ; Base 0
+
         bl    @xmem.edb.sams.mappage
                                     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number
@@ -65,15 +73,14 @@ edb.line.copy:
         ; Get source line length
         ;------------------------------------------------------ 
 edb.line.copy.getlen:                                        
-        mov   *tmp0+,tmp1           ; Get line length
+        mov   *tmp0,tmp1            ; Get line length
         mov   tmp1,@rambuf          ; Save length of line        
         mov   tmp0,@rambuf+4        ; Source memory address for block copy
         ;------------------------------------------------------
         ; Sanity check on line length
         ;------------------------------------------------------        
         ci    tmp1,80               ; \ Continue if length <= 80
-                                    ; / 
-        jle   edb.line.copy.prepare
+        jle   edb.line.copy.prepare ; /         
         ;------------------------------------------------------
         ; Crash the system
         ;------------------------------------------------------
@@ -105,7 +112,7 @@ edb.line.copy.prepare:
                                     ; Pointer to space for new target line
                                 
         mov   @rambuf,tmp2          ; \ Set number of bytes to copy
-        inc   tmp2                  ; / (including line prefix)
+        inct  tmp2                  ; / (include line prefix word)
         ;------------------------------------------------------
         ; 4: Copy line
         ;------------------------------------------------------ 

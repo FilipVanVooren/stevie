@@ -29,13 +29,6 @@ edb.adjust.hipage:
 edb.adjust.hipage.check_setpage:
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
-                                    ; Sanity check
-                                    ;-------------------------- 
-        ci    tmp0,edb.top + edb.size
-                                    ; Insane address ?
-        jgt   edb.adjust.hipage.crash
-                                    ; Yes, crash!
-                                    ;--------------------------
                                     ; Check for page overflow
                                     ;-------------------------- 
         andi  tmp0,>0fff            ; Get rid of highest nibble        
