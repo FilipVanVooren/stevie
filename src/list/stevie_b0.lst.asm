@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210109-314651
+0009               * File: stevie_b0.asm               ; Version 210110-368939
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -359,7 +359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0330               *--------------------------------------------------------------
 0331      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1180,7 +1180,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210109-314651'
+0260 624D ....             text  'Build-ID  210110-368939'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5064,7 +5064,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0119                                                   ; Spectra 2
 0120                       ;------------------------------------------------------
 0121                       ; End of File marker
@@ -5094,10 +5094,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0145                       ;------------------------------------------------------
 0146                       ; Resident Stevie modules: >3000 - >3fff
 0147                       ;------------------------------------------------------
-0148                       copy  "mem.resident.3000.asm"
-**** **** ****     > mem.resident.3000.asm
-0001               * FILE......: mem.resident.3000.asm
-0002               * Purpose...: Resident Stevie modules. Needs to be include in all banks.
+0148                       copy  "ram.resident.3000.asm"
+**** **** ****     > ram.resident.3000.asm
+0001               * FILE......: ram.resident.3000.asm
+0002               * Purpose...: Resident modules at RAM >3000 callable from all ROM banks.
 0003               
 0004                       ;------------------------------------------------------
 0005                       ; Resident Stevie modules >3000 - >3fff
@@ -5225,7 +5225,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0108 70DE C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0109 70E0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0110 70E2 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0008                       copy  "fb.asm"              ; Framebuffer
 **** **** ****     > fb.asm
 0001               * FILE......: fb.asm
@@ -5298,7 +5298,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0051 712A C2F9  30         mov   *stack+,r11           ; Pop r11
 0052 712C 045B  20         b     *r11                  ; Return to caller
 0053               
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0009                       copy  "idx.asm"             ; Index management
 **** **** ****     > idx.asm
 0001               * FILE......: idx.asm
@@ -5605,7 +5605,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0269 722A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0270 722C C2F9  30         mov   *stack+,r11           ; Pop r11
 0271 722E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0010                       copy  "edb.asm"             ; Editor Buffer
 **** **** ****     > edb.asm
 0001               * FILE......: edb.asm
@@ -5678,7 +5678,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0056               
 0057               
 0058               
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0011                       copy  "cmdb.asm"            ; Command buffer
 **** **** ****     > cmdb.asm
 0001               * FILE......: cmdb.asm
@@ -5745,7 +5745,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 72A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 72A6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0052 72A8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0012                       copy  "errline.asm"         ; Error line
 **** **** ****     > errline.asm
 0001               * FILE......: errline.asm
@@ -5792,7 +5792,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 72C2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0039 72C4 045B  20         b     *r11                  ; Return to caller
 0040               
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0013                       copy  "tv.asm"              ; Main editor configuration
 **** **** ****     > tv.asm
 0001               * FILE......: tv.asm
@@ -5896,7 +5896,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0085               tv.reset.exit:
 0086 7312 C2F9  30         mov   *stack+,r11           ; Pop R11
 0087 7314 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0014                       copy  "tv.utils.asm"        ; General purpose utility functions
 **** **** ****     > tv.utils.asm
 0001               * FILE......: tv.utils.asm
@@ -6067,7 +6067,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0150 73B4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0151 73B6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0152 73B8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0015                       copy  "data.constants.asm"  ; Data Constants
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -6323,7 +6323,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      74C4 1B12 
      74C6 0000 
 0156               
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0016                       copy  "data.strings.asm"    ; Data segment - Strings
 **** **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
@@ -6358,7 +6358,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 7534 1442             byte  20
-0033 7535 ....             text  'Build: 210109-314651'
+0033 7535 ....             text  'Build: 210110-368939'
 0034                       even
 0035               
 0036               
@@ -6660,7 +6660,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0332 7A63 ....             text  'Color scheme:'
 0333                       even
 0334               
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.keymap.asm"     ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.asm
 0001               * FILE......: data.keymap.asm
@@ -6760,7 +6760,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0095               * Special keys
 0096               *---------------------------------------------------------------
 0097      0D00     key.enter     equ >0d00             ; enter
-**** **** ****     > mem.resident.3000.asm
+**** **** ****     > ram.resident.3000.asm
 0018                       ;------------------------------------------------------
 0019                       ; End of File marker
 0020                       ;------------------------------------------------------
@@ -6768,7 +6768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A72 BEEF 
      7A74 DEAD 
      7A76 BEEF 
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0149               
 0153 7A78 3A0E                   data $                ; Bank 0 ROM size OK.
 0155                       ;-----------------------------------------------------------------------
@@ -6820,7 +6820,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.314651
+**** **** ****     > stevie_b0.asm.368939
 0167               
 0168               
 0169               *--------------------------------------------------------------

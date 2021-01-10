@@ -57,8 +57,7 @@ edb.line.unpack.fb:
         ; Get pointer to line & page-in editor buffer page
         ;------------------------------------------------------
         mov   @parm1,tmp0
-        bl    @xmem.edb.sams.mappage
-                                    ; Activate editor buffer SAMS page for line
+        bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page

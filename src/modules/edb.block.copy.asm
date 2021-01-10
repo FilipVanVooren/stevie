@@ -92,7 +92,8 @@ edb.block.copy:
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp0    ; M1
         mov   @edb.block.m2,tmp2    ; \
-        s     tmp0,tmp2             ; / Loop counter = M2-M1
+        s     tmp0,tmp2             ; | Loop counter = M2-M1
+        inc   tmp2                  ; /
 
         mov   @edb.block.var,tmp1   ; Current line in editor buffer
         ;------------------------------------------------------

@@ -1,5 +1,5 @@
-* FILE......: mem.resident.3000.asm
-* Purpose...: Resident Stevie modules. Needs to be include in all banks.
+* FILE......: ram.resident.3000.asm
+* Purpose...: Resident modules at RAM >3000 callable from all ROM banks.
  
         ;------------------------------------------------------
         ; Resident Stevie modules >3000 - >3fff

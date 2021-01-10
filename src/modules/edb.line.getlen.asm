@@ -34,8 +34,7 @@ edb.line.getlength:
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get line
 
-        bl    @xmem.edb.sams.mappage
-                                    ; Activate editor buffer SAMS page for line
+        bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line 
                                     ; / o  outparm2 = SAMS page

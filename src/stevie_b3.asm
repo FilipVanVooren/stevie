@@ -69,7 +69,7 @@ bankid  equ   bank3                 ; Set bank identifier to current bank
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "mem.resident.3000.asm"        
+        copy  "ram.resident.3000.asm"        
 ***************************************************************
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************

@@ -69,7 +69,7 @@ bankid  equ   bank1                 ; Set bank identifier to current bank
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "mem.resident.3000.asm"            
+        copy  "ram.resident.3000.asm"            
 ***************************************************************
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
@@ -132,6 +132,7 @@ main:
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
         copy  "edb.utils.asm"          ; Editor buffer utilities
+        copy  "edb.line.mappage.asm"   ; Activate SAMS page for line
         copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm"    ; Get line length

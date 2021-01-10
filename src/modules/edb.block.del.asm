@@ -14,7 +14,12 @@
 * NONE
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0,tmp1,tmp2
+*--------------------------------------------------------------
+* Remarks
+* For simplicity reasons we're assuming base 1 during copy
+* (first line starts at 1 instead of 0). 
+* Makes it easier when comparing values.
 ********|*****|*********************|**************************
 edb.block.delete:
         dect  stack
@@ -56,18 +61,18 @@ edb.block.delete:
         ; Prepare for delete
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp0    ; Get M1
-        dec   tmp0                  ; Base 0 offset        
+        dec   tmp0                  ; Base 0
 
         mov   @edb.block.m2,tmp1    ; Get M2
-        dec   tmp1                  ; Base 0 offset        
+        dec   tmp1                  ; Base 0
 
         mov   tmp0,@parm1           ; Delete line on M1
         mov   @edb.lines,@parm2     ; Last line to reorganize         
-        dec   @parm2                ; Base 0 offset
+        dec   @parm2                ; Base 0
 
-        mov   tmp1,tmp2             ; \ Setup loop counter
-        s     tmp0,tmp2             ; /
-        inc   tmp2                  ; Base 1         
+        mov   tmp1,tmp2             ; \ 
+        s     tmp0,tmp2             ; | Setup loop counter
+        inc   tmp2                  ; /
         ;------------------------------------------------------
         ; Delete block
         ;------------------------------------------------------

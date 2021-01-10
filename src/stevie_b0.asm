@@ -137,7 +137,7 @@ main:
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
-        copy  "mem.resident.3000.asm"
+        copy  "ram.resident.3000.asm"
 
         .ifgt $, >3fff
               .error '***** Aborted. Bank 0 cartridge program too large!'

@@ -58,8 +58,7 @@ edb.line.copy:
         mov   @parm1,tmp0           ; Get source line number
         dec   tmp0                  ; Base 0
 
-        bl    @xmem.edb.sams.mappage
-                                    ; Activate editor buffer SAMS page for line
+        bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line
                                     ; / o  outparm2 = SAMS page
