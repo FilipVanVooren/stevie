@@ -136,97 +136,45 @@ edkey.action.del_eol.exit:
 * Delete current line
 *---------------------------------------------------------------
 edkey.action.del_line:
-        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;-------------------------------------------------------
-        ; Special treatment if only 1 line in editor buffer
-        ;-------------------------------------------------------
-         mov   @edb.lines,tmp0      ; \
-         ci    tmp0,1               ; /  Only a single line?
-         jeq   edkey.action.del_line.1stline
-                                    ; Yes, handle single line and exit
-        ;-------------------------------------------------------
-        ; Delete entry in index
+        ; Get current line in editor buffer
         ;-------------------------------------------------------
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        clr   @fb.row.dirty         ; Discard current line
 
-        clr   @fb.row.dirty         ; Discard current line        
+        mov   @fb.topline,@parm1    ; \
+        a     @fb.row,@parm1        ; | Line number to delete (base 1)
+        inc   @parm1                ; / 
 
-        mov   @fb.topline,@parm1    
-        a     @fb.row,@parm1        ; Line number to remove
-        mov   @edb.lines,@parm2     ; Last line to reorganize 
-
-        bl    @idx.entry.delete     ; Delete entry in index
-                                    ; \ i  @parm1 = Line in editor buffer
-                                    ; / i  @parm2 = Last line for index reorg
+        bl    @edb.line.del         ; Delete line in editor buffer
+                                    ; \ i  @parm1 = Line number to delete
+                                    ; /
         ;-------------------------------------------------------
-        ; Get length of current row in framebuffer
+        ; Get length of current row in frame buffer
         ;-------------------------------------------------------
         bl   @edb.line.getlength2   ; Get length of current row
                                     ; \ i  @fb.row        = Current row
                                     ; / o  @fb.row.length = Length of row
         ;-------------------------------------------------------
-        ; Check/Adjust marker M1
+        ; Refresh frame buffer
         ;-------------------------------------------------------
-edkey.action.del_line.m1:        
-        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-        jeq   edkey.action.del_line.m2
-                                    ; Yes, skip to M2 check
+        mov   @fb.topline,@parm1    ; Line to start with (becomes @fb.topline)
 
-        c     @parm1,@edb.block.m1
-        jeq   edkey.action.del_line.m2
-        jgt   edkey.action.del_line.m2
-        dec   @edb.block.m1         ; M1--
-        seto  @fb.colorize          ; Set colorize flag                
-        ;-------------------------------------------------------
-        ; Check/Adjust marker M2
-        ;-------------------------------------------------------
-edkey.action.del_line.m2:                
-        c     @edb.block.m2,@w$ffff ; Marker M1 unset?
-        jeq   edkey.action.del_line.refresh
-                                    ; Yes, skip to refresh frame buffer
+        bl    @fb.refresh           ; Refresh frame buffer with EB content
+                                    ; \ i  @parm1 = Line to start with
+                                    ; /
 
-        c     @parm1,@edb.block.m2
-        jgt   edkey.action.del_line.refresh
-        dec   @edb.block.m2         ; M2--
-        seto  @fb.colorize          ; Set colorize flag                
-        ;-------------------------------------------------------
-        ; Refresh frame buffer and physical screen
-        ;-------------------------------------------------------
-edkey.action.del_line.refresh:        
-        dec   @edb.lines            ; One line less in editor buffer        
-        mov   @fb.topline,@parm1
-
-        bl    @fb.refresh           ; \ Refresh frame buffer
-                                    ; | i  @parm1 = Line to start with
-                                    ; /             (becomes @fb.topline)        
-
-        
-        seto  @fb.dirty             ; Trigger screen refresh
+        seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;-------------------------------------------------------
         ; Special treatment if current line was last line
         ;-------------------------------------------------------
         mov   @fb.topline,tmp0
         a     @fb.row,tmp0
+
         c     tmp0,@edb.lines       ; Was last line?
         jlt   edkey.action.del_line.exit
-        b     @edkey.action.up      ; One line up
-        ;-------------------------------------------------------
-        ; Special treatment if only 1 line in editor buffer
-        ;-------------------------------------------------------        
-edkey.action.del_line.1stline:
-        clr   @fb.column            ; Column 0
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
 
-        clr   @fb.row.dirty         ; Discard current line           
-        clr   @parm1
-        clr   @parm2
-
-        bl    @idx.entry.delete     ; Delete entry in index
-                                    ; \ i  @parm1 = Line in editor buffer
-                                    ; / i  @parm2 = Last line for index reorg
-
-        bl    @fb.refresh           ; Refresh frame buffer
-        seto  @fb.dirty             ; Trigger screen refresh
+        b     @edkey.action.up      ; Move cursor one line up        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

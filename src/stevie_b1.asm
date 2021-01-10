@@ -137,6 +137,7 @@ main:
         copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm"    ; Get line length
         copy  "edb.line.copy.asm"      ; Copy line
+        copy  "edb.line.del.asm"       ; Delete line        
         copy  "edb.block.mark.asm"     ; Mark code block
         copy  "edb.block.reset.asm"    ; Reset markers
         copy  "edb.block.copy.asm"     ; Copy code block

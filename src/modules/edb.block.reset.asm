@@ -21,8 +21,8 @@ edb.block.reset:
         ;------------------------------------------------------
         ; Clear markers
         ;------------------------------------------------------
-        clr   @edb.block.m1         ; \ Remove markers M1 and M2
-        clr   @edb.block.m2         ; /       
+        seto  @edb.block.m1         ; \ Remove markers M1 and M2
+        seto  @edb.block.m2         ; /       
 
         seto  @fb.colorize          ; Set colorize flag                
         seto  @fb.dirty             ; Trigger refresh

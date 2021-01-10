@@ -38,7 +38,7 @@ tv.unpack.uint16:
         bl    @trimnum              ; Trim unsigned number string
               data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
               data unpacked.string  ; | i p1  = Pointer to output buffer
-              data 32               ; | i p2  = Padding char to match against
+              data 32               ; / i p2  = Padding char to match against
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

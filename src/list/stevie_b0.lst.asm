@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210110-368939
+0009               * File: stevie_b0.asm               ; Version 210110-383693
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -246,9 +246,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0216      A206     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 0217      A208     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 0218      A20A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker
-0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker
-0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block copy
+0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
+0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
 0222      A212     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
 0223                                                      ; with current filename.
 0224      A214     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
@@ -359,7 +359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0330               *--------------------------------------------------------------
 0331      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1180,7 +1180,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210110-368939'
+0260 624D ....             text  'Build-ID  210110-383693'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5064,7 +5064,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0119                                                   ; Spectra 2
 0120                       ;------------------------------------------------------
 0121                       ; End of File marker
@@ -5652,9 +5652,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037 724C C804  38         mov   tmp0,@edb.lines       ; Lines=1
      724E A204 
 0038               
-0039 7250 04E0  34         clr   @edb.block.m1         ; Reset block start line
+0039 7250 0720  34         seto  @edb.block.m1         ; Reset block start line
      7252 A20C 
-0040 7254 04E0  34         clr   @edb.block.m2         ; Reset block end line
+0040 7254 0720  34         seto  @edb.block.m2         ; Reset block end line
      7256 A20E 
 0041               
 0042 7258 0204  20         li    tmp0,txt.newfile      ; "New file"
@@ -6358,7 +6358,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 7534 1442             byte  20
-0033 7535 ....             text  'Build: 210110-368939'
+0033 7535 ....             text  'Build: 210110-383693'
 0034                       even
 0035               
 0036               
@@ -6768,7 +6768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A72 BEEF 
      7A74 DEAD 
      7A76 BEEF 
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0149               
 0153 7A78 3A0E                   data $                ; Bank 0 ROM size OK.
 0155                       ;-----------------------------------------------------------------------
@@ -6820,7 +6820,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.368939
+**** **** ****     > stevie_b0.asm.383693
 0167               
 0168               
 0169               *--------------------------------------------------------------

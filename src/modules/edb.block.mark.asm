@@ -91,7 +91,7 @@ edb.block.mark.m2.exit:
 * edb.block.mark
 * Mark either M1 or M2 line for block operation
 ***************************************************************
-*  bl   @edb.block.mark.m2
+*  bl   @edb.block.mark
 *--------------------------------------------------------------
 * INPUT
 * NONE
@@ -121,15 +121,15 @@ edb.block.mark:
         mov   @outparm1,tmp1        ; Current line position in editor buffer
         inc   tmp1                  ; Add base 1
         ;------------------------------------------------------
-        ; Check if M1 is null
+        ; Check if M1 is set
         ;------------------------------------------------------
-edb.block.mark.is_m1_null:
         mov   @edb.block.m1,tmp0
+        inc   tmp0
         jne   edb.block.mark.is_line_m1
         ;------------------------------------------------------
         ; Set M1 and exit
         ;------------------------------------------------------
-_edb.block.mark.set_m1:
+_edb.block.mark.m1.set:
         bl    @edb.block.mark.m1    ; Set marker M1
         jmp   edb.block.mark.exit   ; Exit now
         ;------------------------------------------------------
@@ -137,7 +137,7 @@ _edb.block.mark.set_m1:
         ;------------------------------------------------------
 edb.block.mark.is_line_m1:
         c     tmp0,tmp1             ; M1 > current line ?
-        jgt   _edb.block.mark.set_m1
+        jgt   _edb.block.mark.m1.set
                                     ; Set M1 to current line and exit
         ;------------------------------------------------------
         ; Set marker M2

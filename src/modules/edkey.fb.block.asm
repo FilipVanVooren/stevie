@@ -51,6 +51,15 @@ edkey.action.block.reset:
 * Copy code block
 ********|*****|*********************|**************************
 edkey.action.block.copy:
+        ;-------------------------------------------------------
+        ; Exit early if nothing to do
+        ;-------------------------------------------------------
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+        jeq   edkey.action.block.copy.exit
+                                    ; Yes, exit early
+        ;-------------------------------------------------------
+        ; Init
+        ;-------------------------------------------------------
         mov   @wyx,tmp0             ; Get cursor position
         andi  tmp0,>ff00            ; Move cursor home (X=00)
         mov   tmp0,@fb.yxsave       ; Backup cursor position
@@ -74,10 +83,18 @@ edkey.action.block.copy.exit:
         b     @hook.keyscan.bounce  ; Back to editor main                                    
 
 
+
+
 *---------------------------------------------------------------
 * Delete code block
 ********|*****|*********************|**************************
 edkey.action.block.delete:
+        ;-------------------------------------------------------
+        ; Exit early if nothing to do
+        ;-------------------------------------------------------
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+        jeq   edkey.action.block.delete.exit
+                                    ; Yes, exit early
         ;-------------------------------------------------------
         ; Delete
         ;-------------------------------------------------------
@@ -87,6 +104,7 @@ edkey.action.block.delete:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
+edkey.action.block.delete.exit:
         mov   @fb.topline,@parm1
         b     @_edkey.goto.fb.toprow
                                     ; Position on top row in frame buffer
@@ -94,12 +112,11 @@ edkey.action.block.delete:
                                     ; /
 
 
-
 *---------------------------------------------------------------
 * Goto marker M1
 ********|*****|*********************|**************************
 edkey.action.block.goto.m1:
-        c     @edb.block.m1,@w$0000 ; Marker M1 unset?
+        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
         jeq   edkey.action.block.goto.m1.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------

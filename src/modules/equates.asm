@@ -216,9 +216,9 @@ edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
 edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-edb.block.m1      equ  edb.struct + 12 ; Block start line marker
-edb.block.m2      equ  edb.struct + 14 ; Block end line marker
-edb.block.var     equ  edb.struct + 16 ; Local var used in block copy
+edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset) 
+edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
 edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
                                        ; with current filename.
 edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string

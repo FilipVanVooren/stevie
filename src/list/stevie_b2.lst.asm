@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 210110-369602
+0009               * File: stevie_b1.asm               ; Version 210110-384029
 0010               *
 0011               * Bank 2 "Jacky"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -246,9 +246,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0216      A206     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 0217      A208     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 0218      A20A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker
-0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker
-0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block copy
+0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
+0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
 0222      A212     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
 0223                                                      ; with current filename.
 0224      A214     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
@@ -359,7 +359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0330               *--------------------------------------------------------------
 0331      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1110,7 +1110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210110-369602'
+0260 21D3 ....             text  'Build-ID  210110-384029'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4994,7 +4994,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0061                                                   ; Relocated spectra2 in low MEMEXP, was
 0062                                                   ; copied to >2000 from ROM in bank 0
 0063                       ;------------------------------------------------------
@@ -5576,9 +5576,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037 31E2 C804  38         mov   tmp0,@edb.lines       ; Lines=1
      31E4 A204 
 0038               
-0039 31E6 04E0  34         clr   @edb.block.m1         ; Reset block start line
+0039 31E6 0720  34         seto  @edb.block.m1         ; Reset block start line
      31E8 A20C 
-0040 31EA 04E0  34         clr   @edb.block.m2         ; Reset block end line
+0040 31EA 0720  34         seto  @edb.block.m2         ; Reset block end line
      31EC A20E 
 0041               
 0042 31EE 0204  20         li    tmp0,txt.newfile      ; "New file"
@@ -6282,7 +6282,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 34CA 1442             byte  20
-0033 34CB ....             text  'Build: 210110-369602'
+0033 34CB ....             text  'Build: 210110-384029'
 0034                       even
 0035               
 0036               
@@ -6692,7 +6692,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3A08 BEEF 
      3A0A DEAD 
      3A0C BEEF 
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0081               ***************************************************************
 0082               * Step 4: Include modules
 0083               ********|*****|*********************|**************************
@@ -6747,7 +6747,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0034               mem.sams.layout.exit:
 0035 6056 C2F9  30         mov   *stack+,r11           ; Pop r11
 0036 6058 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0091                       copy  "colors.line.set.asm" ; Set color combination for line
 **** **** ****     > colors.line.set.asm
 0001               * FILE......: colors.line.set
@@ -6819,7 +6819,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057 609E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0058 60A0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0059 60A2 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0092                       ;-----------------------------------------------------------------------
 0093                       ; Include files
 0094                       ;-----------------------------------------------------------------------
@@ -7336,7 +7336,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0391                       ; byte  12                  ;  9    - File descriptor length
 0392                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0393                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0096                       copy  "fh.write.edb.asm"    ; Write editor buffer to file
 **** **** ****     > fh.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
@@ -7657,7 +7657,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0241 6438 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0242 643A C2F9  30         mov   *stack+,r11           ; Pop R11
 0243 643C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0097                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm.load.asm
@@ -7809,7 +7809,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0116 64D0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0117 64D2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0118 64D4 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0098                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
 **** **** ****     > fm.save.asm
 0001               * FILE......: fm.save.asm
@@ -7935,7 +7935,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0095 6548 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0096 654A C2F9  30         mov   *stack+,r11           ; Pop R11
 0097 654C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0099                       copy  "fm.callbacks.asm"    ; Callbacks for file operations
 **** **** ****     > fm.callbacks.asm
 0001               * FILE......: fm.callbacks.asm
@@ -8336,7 +8336,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0316 6714 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0317 6716 C2F9  30         mov   *stack+,r11           ; Pop R11
 0318 6718 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0100                       ;-----------------------------------------------------------------------
 0101                       ; Stubs using trampoline
 0102                       ;-----------------------------------------------------------------------
@@ -8523,7 +8523,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0171                       ;------------------------------------------------------
 0172 67A6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0173 67A8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0104                       ;-----------------------------------------------------------------------
 0105                       ; Bank specific vector table
 0106                       ;-----------------------------------------------------------------------
@@ -8573,7 +8573,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b2.asm.369602
+**** **** ****     > stevie_b2.asm.384029
 0116               
 0117               *--------------------------------------------------------------
 0118               * Video mode configuration

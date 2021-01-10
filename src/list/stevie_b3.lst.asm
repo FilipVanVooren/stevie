@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 210110-369953
+0009               * File: stevie_b1.asm               ; Version 210110-384364
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -246,9 +246,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0216      A206     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 0217      A208     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 0218      A20A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker
-0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker
-0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block copy
+0219      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+0220      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
+0221      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
 0222      A212     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
 0223                                                      ; with current filename.
 0224      A214     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
@@ -359,7 +359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0330               *--------------------------------------------------------------
 0331      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1110,7 +1110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210110-369953'
+0260 21D3 ....             text  'Build-ID  210110-384364'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -4994,7 +4994,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0061                                                   ; Relocated spectra2 in low MEMEXP, was
 0062                                                   ; copied to >2000 from ROM in bank 0
 0063                       ;------------------------------------------------------
@@ -5576,9 +5576,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037 31E2 C804  38         mov   tmp0,@edb.lines       ; Lines=1
      31E4 A204 
 0038               
-0039 31E6 04E0  34         clr   @edb.block.m1         ; Reset block start line
+0039 31E6 0720  34         seto  @edb.block.m1         ; Reset block start line
      31E8 A20C 
-0040 31EA 04E0  34         clr   @edb.block.m2         ; Reset block end line
+0040 31EA 0720  34         seto  @edb.block.m2         ; Reset block end line
      31EC A20E 
 0041               
 0042 31EE 0204  20         li    tmp0,txt.newfile      ; "New file"
@@ -6282,7 +6282,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 34CA 1442             byte  20
-0033 34CB ....             text  'Build: 210110-369953'
+0033 34CB ....             text  'Build: 210110-384364'
 0034                       even
 0035               
 0036               
@@ -6692,7 +6692,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3A08 BEEF 
      3A0A DEAD 
      3A0C BEEF 
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0081               ***************************************************************
 0082               * Step 4: Include main editor modules
 0083               ********|*****|*********************|**************************
@@ -6870,7 +6870,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0129 6106 C2F9  30         mov   *stack+,r11           ; Pop r11
 0130 6108 045B  20         b     *r11                  ; Return
 0131               
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0095                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -6970,7 +6970,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0077 6160 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0078 6162 C2F9  30         mov   *stack+,r11           ; Pop R11
 0079 6164 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0096                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7081,7 +7081,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0082 61D0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0083 61D2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0084 61D4 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0097                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7146,7 +7146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0049 620A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0050 620C C2F9  30         mov   *stack+,r11           ; Pop R11
 0051 620E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0098                       ;-----------------------------------------------------------------------
 0099                       ; Stubs using trampoline
 0100                       ;-----------------------------------------------------------------------
@@ -7262,7 +7262,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103                       ;------------------------------------------------------
 0104 6266 C2F9  30         mov   *stack+,r11           ; Pop r11
 0105 6268 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0102                       ;-----------------------------------------------------------------------
 0103                       ; Bank specific vector table
 0104                       ;-----------------------------------------------------------------------
@@ -7312,7 +7312,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.369953
+**** **** ****     > stevie_b3.asm.384364
 0114               
 0115               *--------------------------------------------------------------
 0116               * Video mode configuration

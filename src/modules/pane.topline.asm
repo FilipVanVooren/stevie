@@ -61,8 +61,9 @@ pane.topline:
         ;------------------------------------------------------
         ; Show M1 marker
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0    ; M1 set?
-        jeq   pane.topline.exit
+        mov   @edb.block.m1,tmp0    ; \  
+        inc   tmp0                  ; | Exit early if M1 unset (>ffff)
+        jeq   pane.topline.exit     ; /
 
         bl    @putat
               byte 0,52
@@ -82,8 +83,9 @@ pane.topline:
         ;------------------------------------------------------
         ; Show M2 marker
         ;------------------------------------------------------
-        mov   @edb.block.m2,tmp0    ; M2 set?
-        jeq   pane.topline.exit
+        mov   @edb.block.m2,tmp0    ; \  
+        inc   tmp0                  ; | Exit early if M2 unset (>ffff)
+        jeq   pane.topline.exit     ; /
 
         bl    @putat
               byte 0,62
@@ -101,10 +103,6 @@ pane.topline:
         bl    @putat
               byte 0,65
               data unpacked.string  ; Show M2 value
-
-        bl    @putat
-              byte pane.botrow,0
-              data txt.keys.block   ; Show block shortcuts
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

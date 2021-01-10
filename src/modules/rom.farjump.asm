@@ -6,17 +6,17 @@
 * rom.farjump - Jump to routine in specified bank
 ***************************************************************
 *  bl   @rom.farjump
-*       DATA P0,P1
+*       data p0,p1
 *--------------------------------------------------------------
-*  P0 = Write address of target ROM bank
-*  P1 = Vector address with target address to jump to
-*  P2 = Write address of source ROM bank
+*  p0 = Write address of target ROM bank
+*  p1 = Vector address with target address to jump to
+*  p2 = Write address of source ROM bank
 *--------------------------------------------------------------
 *  bl @xrom.farjump
 *
-*  TMP0 = Write address of target ROM bank
-*  TMP1 = Vector address with target address to jump to
-*  TMP2 = Write address of source ROM bank
+*  tmp0 = Write address of target ROM bank
+*  tmp1 = Vector address with target address to jump to
+*  tmp2 = Write address of source ROM bank
 ********|*****|*********************|**************************
 rom.farjump:
         mov   *r11+,tmp0            ; P0

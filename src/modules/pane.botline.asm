@@ -30,11 +30,10 @@ pane.botline:
         ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0    ; M1 set?
-        jeq   pane.botline.show_mode
-
-        mov   @edb.block.m2,tmp0    ; M2 set?
-        jeq   pane.botline.show_mode
+        mov   @edb.block.m2,tmp0    ; \  
+        inc   tmp0                  ; | Skip if M2 unset (>ffff)
+                                    ; /
+        jeq   pane.botline.show_mode  
 
         bl    @putat
               byte pane.botrow,0

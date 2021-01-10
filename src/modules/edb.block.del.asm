@@ -33,18 +33,18 @@ edb.block.delete:
         ;------------------------------------------------------        
         ; Sanity checks
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0    ; M1 unset?
-        jeq   edb.block.delete.exit ; Yes, exit early
+        mov   @edb.block.m1,tmp0    ; \ 
+        inc   tmp0                  ; | M1 unset?
+        jeq   edb.block.delete.exit ; / Yes, exit early
 
-        mov   @edb.block.m2,tmp1    ; M2 unset?
-        jeq   edb.block.delete.exit ; Yes, exit early
-
-        c     tmp0,tmp1             ; M1 > M2 
-        jgt   edb.block.delete.exit ; Yes, exit early
+        mov   @edb.block.m2,tmp1    ; \ 
+        inc   tmp0                  ; | M2 unset?
+        jeq   edb.block.delete.exit ; / Yes, exit early
         ;------------------------------------------------------
         ; Display "Deleting...."
         ;------------------------------------------------------
         mov   @tv.busycolor,@parm1  ; Get busy color
+
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
@@ -86,7 +86,6 @@ edb.block.delete.loop:
 
         dec   tmp2
         jgt   edb.block.delete.loop ; Next line    
-
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         ;------------------------------------------------------
         ; Set topline for framebuffer refresh
@@ -114,4 +113,4 @@ edb.block.delete.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11  
+        mov   *stack+,r11           ; Pop R11 
