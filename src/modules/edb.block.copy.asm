@@ -8,13 +8,15 @@
 *  bl   @edb.block.copy
 *--------------------------------------------------------------
 * INPUT
-* NONE
+* @parm1 = Message flag
+*          (>0000 = Display message "Copying block...")
+*          (>ffff = Display message "Moving block....")
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = success (>ffff), no action (>0000)
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Remarks
 * For simplicity reasons we're assuming base 1 during copy
@@ -30,7 +32,8 @@ edb.block.copy:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-
+        dect  stack
+        mov   @parm1,*stack         ; Push parm1
         clr   @outparm1             ; No action (>0000)
         ;------------------------------------------------------        
         ; Sanity checks
@@ -72,7 +75,7 @@ edb.block.copy:
         clr   @outparm1             ; No action (>0000)
         jmp   edb.block.copy.exit   ; Exit early
         ;------------------------------------------------------
-        ; Display "Copying...."
+        ; Display message Copy/Move
         ;------------------------------------------------------
 !       mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
@@ -83,13 +86,26 @@ edb.block.copy:
         bl    @hchar
               byte pane.botrow,0,32,50
               data eol              ; Remove markers and block shortcuts
+        ;------------------------------------------------------
+        ; Check message to display
+        ;------------------------------------------------------
+        mov   *stack,tmp0           ; \ Fetch @parm1 from stack, but don't pop!
+                                    ; / @parm1 = >0000 ?
+        jne   edb.block.copy.msg2   ; Yes, display "Moving" message
 
         bl    @putat
               byte pane.botrow,0
               data txt.block.copy   ; Display "Copying block...."     
+        jmp   edb.block.copy.prep
+
+edb.block.copy.msg2:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.block.move   ; Display "Moving block...."     
         ;------------------------------------------------------
         ; Prepare for copy 
         ;------------------------------------------------------
+edb.block.copy.prep:        
         mov   @edb.block.m1,tmp0    ; M1
         mov   @edb.block.m2,tmp2    ; \
         s     tmp0,tmp2             ; | Loop counter = M2-M1
@@ -145,6 +161,7 @@ edb.block.copy.loop.docopy:
         ; Exit
         ;------------------------------------------------------
 edb.block.copy.exit:
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0

@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie V0.1I'
+txt.about.program  #string 'Stevie V0.1K'
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
 txt.about.author   #string '2018-2020 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
@@ -53,7 +53,7 @@ txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 
 txt.keys.block     byte    45
-                   text    '^Del  ^Copy  ^N=Move  ^Goto M1  ^Reset  ^Save'
+                   text    '^Del  ^Copy  ^K=Move  ^Goto M1  ^Reset  ^Save'
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e

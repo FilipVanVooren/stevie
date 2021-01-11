@@ -1,5 +1,5 @@
 * FILE......: data.keymap.actions.asm
-* Purpose...: Stevie Editor - data segment (keyboard actions)
+* Purpose...: Keyboard actions
 
 *---------------------------------------------------------------
 * Action keys mapping table: Editor 
@@ -40,6 +40,7 @@ keymap_actions.editor:
         data  key.ctrl.r, pane.focus.fb, edkey.action.block.reset
         data  key.ctrl.c, pane.focus.fb, edkey.action.block.copy
         data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete
+        data  key.ctrl.k, pane.focus.fb, edkey.action.block.move
         data  key.ctrl.g, pane.focus.fb, edkey.action.block.goto.m1
         ;-------------------------------------------------------
         ; Other action keys

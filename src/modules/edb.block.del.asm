@@ -8,10 +8,12 @@
 *  bl   @edb.block.delete
 *--------------------------------------------------------------
 * INPUT
-* NONE
+* @parm1 = Message flag
+*          (>0000 = Display message "Deleting block")
+*          (>ffff = Skip message display)
 *--------------------------------------------------------------
 * OUTPUT
-* NONE
+* @outparm1 = success (>ffff), no action (>0000)
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
@@ -30,6 +32,8 @@ edb.block.delete:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+
+        clr   @outparm1             ; No action (>0000)        
         ;------------------------------------------------------        
         ; Sanity checks
         ;------------------------------------------------------
@@ -41,6 +45,11 @@ edb.block.delete:
         inc   tmp0                  ; | M2 unset?
         jeq   edb.block.delete.exit ; / Yes, exit early
         ;------------------------------------------------------
+        ; Check message to display
+        ;------------------------------------------------------
+        mov   @parm1,tmp0           ; Message flag cleared?
+        jne   edb.block.delete.prep ; No, skip message display
+        ;------------------------------------------------------
         ; Display "Deleting...."
         ;------------------------------------------------------
         mov   @tv.busycolor,@parm1  ; Get busy color
@@ -48,7 +57,7 @@ edb.block.delete:
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
-                                    ; / 
+                                    ; /         
 
         bl    @hchar
               byte pane.botrow,0,32,50
@@ -60,6 +69,7 @@ edb.block.delete:
         ;------------------------------------------------------
         ; Prepare for delete
         ;------------------------------------------------------
+edb.block.delete.prep:        
         mov   @edb.block.m1,tmp0    ; Get M1
         dec   tmp0                  ; Base 0
 
@@ -106,6 +116,8 @@ edb.block.delete.fb.refresh:
                                     ; /             (becomes @fb.topline)
 
         bl    @edb.block.reset      ; Reset block markers M1/M2
+
+        seto  @outparm1             ; Delete completed
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

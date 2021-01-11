@@ -123,9 +123,10 @@ edb.block.mark:
         ;------------------------------------------------------
         ; Check if M1 is set
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0
-        inc   tmp0
+        mov   @edb.block.m1,tmp0    ; \ Is M1 unset?
+        inc   tmp0                  ; /
         jne   edb.block.mark.is_line_m1
+                                    ; No, skip to update M1
         ;------------------------------------------------------
         ; Set M1 and exit
         ;------------------------------------------------------
@@ -136,11 +137,11 @@ _edb.block.mark.m1.set:
         ; Update M1 if current line < M1
         ;------------------------------------------------------
 edb.block.mark.is_line_m1:
-        c     tmp0,tmp1             ; M1 > current line ?
+        c     @edb.block.m1,tmp1    ; M1 > current line ?
         jgt   _edb.block.mark.m1.set
                                     ; Set M1 to current line and exit
         ;------------------------------------------------------
-        ; Set marker M2
+        ; Set M2 and exit
         ;------------------------------------------------------
         bl    @edb.block.mark.m2    ; Set marker M2
         ;------------------------------------------------------
