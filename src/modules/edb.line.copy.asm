@@ -50,8 +50,8 @@ edb.line.copy:
         dec   tmp0                  ; Base 0
         mov   tmp0,@rambuf+2        ; Save target line number        
         clr   @rambuf               ; Set source line length=0                
-        clr   @rambuf+4             ; Nill-pointer source line
-        clr   @rambuf+6             ; Nill-pointer target line
+        clr   @rambuf+4             ; Null-pointer source line
+        clr   @rambuf+6             ; Null-pointer target line
         ;------------------------------------------------------
         ; Get pointer to source line & page-in editor buffer SAMS page
         ;------------------------------------------------------
@@ -73,7 +73,8 @@ edb.line.copy:
         ;------------------------------------------------------ 
 edb.line.copy.getlen:                                        
         mov   *tmp0,tmp1            ; Get line length
-        mov   tmp1,@rambuf          ; Save length of line        
+        mov   tmp1,@rambuf          ; \ Save length of line        
+        inct  @rambuf               ; / Consider length of line prefix too
         mov   tmp0,@rambuf+4        ; Source memory address for block copy
         ;------------------------------------------------------
         ; Sanity check on line length
@@ -110,8 +111,7 @@ edb.line.copy.prepare:
         mov   @edb.next_free.ptr,tmp1
                                     ; Pointer to space for new target line
                                 
-        mov   @rambuf,tmp2          ; \ Set number of bytes to copy
-        inct  tmp2                  ; / (include line prefix word)
+        mov   @rambuf,tmp2          ; Set number of bytes to copy
         ;------------------------------------------------------
         ; 4: Copy line
         ;------------------------------------------------------ 
