@@ -40,9 +40,9 @@ edkey.action.cmdb.save:
         ;-------------------------------------------------------
         ; Save all lines in editor buffer?
         ;-------------------------------------------------------
-        mov   @edb.block.m2,tmp0    ; Marker M2 set?
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?        
         jeq   edkey.action.cmdb.save.all
-                                    ; No, so save all lines in editor buffer
+                                    ; Yes, so save all lines in editor buffer
         ;-------------------------------------------------------
         ; Only save code block M1-M2
         ;-------------------------------------------------------

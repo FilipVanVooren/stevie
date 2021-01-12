@@ -44,7 +44,8 @@ edb.block.copy:
         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
         jeq   edb.block.copy.exit   ; Yes, exit early
 
-        c     tmp0,tmp1             ; M1 > M2 
+        c     @edb.block.m1,@edb.block.m2
+                                    ; M1 > M2 ?
         jgt   edb.block.copy.exit   ; Yes, exit early
         ;------------------------------------------------------
         ; Get current line position in editor buffer
