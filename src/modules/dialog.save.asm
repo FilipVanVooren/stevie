@@ -33,8 +33,8 @@ dialog.save:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-!       mov   @edb.block.m2,tmp0    ; Marker M2 set?
-        jeq   dialog.save.default   ; No, so show default dialog
+!       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+        jeq   dialog.save.default   ; Yes, so show default dialog
         ;-------------------------------------------------------
         ; Setup dialog title
         ;-------------------------------------------------------

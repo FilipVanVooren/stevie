@@ -10,7 +10,7 @@
 ;--------------------------------------------------------------
 txt.about.program  #string 'Stevie V0.1K'
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
-txt.about.author   #string '2018-2020 by Filip Van Vooren'
+txt.about.author   #string '2018-2021 by Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
 txt.about.build    #string 'Build: %%build_date%%'
 

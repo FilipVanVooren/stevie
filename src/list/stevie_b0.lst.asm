@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210112-13139
+0009               * File: stevie_b0.asm               ; Version 210112-18628
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -359,7 +359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0330               *--------------------------------------------------------------
 0331      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -1180,7 +1180,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1642             byte  22
-0260 624D ....             text  'Build-ID  210112-13139'
+0260 624D ....             text  'Build-ID  210112-18628'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5064,7 +5064,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0119                                                   ; Spectra 2
 0120                       ;------------------------------------------------------
 0121                       ; End of File marker
@@ -6348,7 +6348,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0020               
 0021               txt.about.author
 0022 74FA 1D32             byte  29
-0023 74FB ....             text  '2018-2020 by Filip Van Vooren'
+0023 74FB ....             text  '2018-2021 by Filip Van Vooren'
 0024                       even
 0025               
 0026               txt.about.website
@@ -6358,7 +6358,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               
 0031               txt.about.build
 0032 7534 1342             byte  19
-0033 7535 ....             text  'Build: 210112-13139'
+0033 7535 ....             text  'Build: 210112-18628'
 0034                       even
 0035               
 0036               
@@ -6768,7 +6768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A70 BEEF 
      7A72 DEAD 
      7A74 BEEF 
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0149               
 0153 7A76 3A0C                   data $                ; Bank 0 ROM size OK.
 0155                       ;-----------------------------------------------------------------------
@@ -6820,7 +6820,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.13139
+**** **** ****     > stevie_b0.asm.18628
 0167               
 0168               
 0169               *--------------------------------------------------------------

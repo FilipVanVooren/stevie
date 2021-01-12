@@ -38,10 +38,10 @@ edb.block.copy:
         ;------------------------------------------------------        
         ; Sanity checks
         ;------------------------------------------------------        
-        mov   @edb.block.m1,tmp0    ; M1 unset?
+        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
         jeq   edb.block.copy.exit   ; Yes, exit early
 
-        mov   @edb.block.m2,tmp1    ; M2 unset?
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?
         jeq   edb.block.copy.exit   ; Yes, exit early
 
         c     tmp0,tmp1             ; M1 > M2 
