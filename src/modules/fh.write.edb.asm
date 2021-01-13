@@ -52,7 +52,7 @@ fh.file.write.edb:
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.records    ; Set records counter
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         mov   @fh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?

@@ -112,7 +112,7 @@ _idx.sams.mapcolumn.on:
         inc   tmp2                  ; +1 loop adjustment
         s     @idx.sams.lopage,tmp2 ; Set loop counter
         ;-------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;-------------------------------------------------------      
         ci    tmp2,5                ; Crash if too many index pages
         jlt   !

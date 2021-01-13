@@ -55,7 +55,7 @@ task.vdp.panes.cmdb.draw:
         ; Check if frame buffer dirty
         ;-------------------------------------------------------
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
-        jeq   task.vdp.panes.botline
+        jeq   task.vdp.panes.statlines
                                     ; No, skip update
         ;------------------------------------------------------ 
         ; Determine how many rows to copy 
@@ -90,16 +90,17 @@ task.vdp.panes.copy.fb:
         ; Draw EOF marker at end-of-file
         ;-------------------------------------------------------
 task.vdp.panes.copy.eof:
-        c     @edb.lines,@fb.scrrows
-                                    ; On last screen page?
-        jgt   task.vdp.panes.botline
-                                    ; Skip drawing EOF maker 
+        mov   @fb.topline,tmp0      ; \
+        a     @fb.scrrows,tmp0      ; | Last page in editor buffer?
+        c     @edb.lines,tmp0       ; |
+                                    ; / 
+        jgt   task.vdp.panes.statlines
+                                    ; No, so skip drawing EOF maker 
         mov   @edb.lines,tmp0
         inc   tmp0
         ;-------------------------------------------------------
-        ; Do actual drawing of EOF marker 
+        ; Draw marker 
         ;-------------------------------------------------------
-task.vdp.panes.draw_marker:
         sla   tmp0,8                ; Move LSB to MSB (Y), X=0
         mov   tmp0,@wyx             ; Set VDP cursor
 
@@ -125,7 +126,22 @@ task.vdp.panes.clear_screen:
         bl    @yx2pnt               ; Set VDP address in tmp0
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
-                                    
+        ;-------------------------------------------------------
+        ; Assert
+        ;-------------------------------------------------------
+        ci    tmp2,vdp.sit.size.80x30
+                                    ; Number of bytes to clear is reasonable?
+        jle   task.vdp.panes.vdpfill
+                                    ; Yes, clear the screen
+        ;-------------------------------------------------------
+        ; CPU crash
+        ;-------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system   
+        ;-------------------------------------------------------
+        ; Clear screen in VDP memory
+        ;-------------------------------------------------------
+task.vdp.panes.vdpfill:
         clr   tmp1                  ; Character to write (null!)
         bl    @xfilv                ; Fill VDP memory
                                     ; \ i  tmp0 = VDP destination
@@ -139,7 +155,7 @@ task.vdp.panes.clear_screen:
         ;-------------------------------------------------------
         ; Refresh top and bottom line
         ;-------------------------------------------------------
-task.vdp.panes.botline:
+task.vdp.panes.statlines:
         mov   @fb.status.dirty,tmp0 ; Are status lines dirty?
         jeq   task.vdp.panes.exit   ; No, skip update
 

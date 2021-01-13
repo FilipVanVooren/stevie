@@ -71,7 +71,8 @@ edkey.action.up.exit:
 *---------------------------------------------------------------
 edkey.action.down:
         c     @fb.row,@edb.lines    ; Last line in editor buffer ? 
-        jeq   !                     ; Yes, skip further processing
+        jeq   edkey.action.down.exit
+                                    ; Yes, skip further processing
         seto  @fb.status.dirty      ; Trigger refresh of status lines                
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
@@ -139,4 +140,4 @@ edkey.action.down.set_cursorx:
         ;-------------------------------------------------------
 edkey.action.down.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @hook.keyscan.bounce  ; Back to editor main
+        b     @hook.keyscan.bounce  ; Back to editor main

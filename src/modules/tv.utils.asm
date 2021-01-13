@@ -81,7 +81,7 @@ tv.pad.string:
         dect  stack
         mov   tmp3,*stack           ; Push tmp3        
         ;------------------------------------------------------
-        ; Sanity checks
+        ; Asserts
         ;------------------------------------------------------ 
         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
         movb  *tmp0,tmp2            ; /

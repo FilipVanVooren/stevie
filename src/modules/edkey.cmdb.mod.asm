@@ -55,7 +55,7 @@ edkey.action.cmdb.clear.exit:
 ********|*****|*********************|**************************
 edkey.action.cmdb.char:
         ;-------------------------------------------------------
-        ; Sanity checks
+        ; Asserts
         ;-------------------------------------------------------
         movb  tmp1,tmp0             ; Get keycode
         srl   tmp0,8                ; MSB to LSB

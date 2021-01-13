@@ -60,7 +60,7 @@ fh.file.read.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         ;------------------------------------------------------
-        ; Sanity checks
+        ; Asserts
         ;------------------------------------------------------
         mov   @fh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?
@@ -136,7 +136,7 @@ fh.file.read.edb.pabheader:
 fh.file.read.edb.check_setpage:        
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
-                                    ; Sanity check
+                                    ; Assert
                                     ;-------------------------- 
         ci    tmp0,edb.top + edb.size
                                     ; Insane address ?

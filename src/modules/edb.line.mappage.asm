@@ -25,13 +25,13 @@ edb.line.mappage:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         c     tmp0,@edb.lines       ; Non-existing line?
         jle   edb.line.mappage.lookup
                                     ; All checks passed, continue
                                     ;-------------------------- 
-                                    ; Sanity check failed
+                                    ; Assert failed
                                     ;--------------------------
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        

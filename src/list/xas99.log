@@ -4318,7 +4318,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0148
 > stevie_b0.lst.asm.26898 <1> 2185 - 0149               *--------------------------------------------------------------
 ***** Multiple symbols: 0149
-> stevie_b0.lst.asm.26898 <1> 2186 - 0150               * Sanity check on SAMS page number
+> stevie_b0.lst.asm.26898 <1> 2186 - 0150               * Assert on SAMS page number
 ***** Multiple symbols: 0150
 > stevie_b0.lst.asm.26898 <1> 2187 - 0151               *--------------------------------------------------------------
 ***** Multiple symbols: 0151
@@ -4330,7 +4330,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0153
 > stevie_b0.lst.asm.26898 <1> 2191 - 0154               *--------------------------------------------------------------
 ***** Multiple symbols: 0154
-> stevie_b0.lst.asm.26898 <1> 2192 - 0155               * Sanity check on SAMS register
+> stevie_b0.lst.asm.26898 <1> 2192 - 0155               * Assert on SAMS register
 ***** Multiple symbols: 0155
 > stevie_b0.lst.asm.26898 <1> 2193 - 0156               *--------------------------------------------------------------
 ***** Multiple symbols: 0156
@@ -7096,7 +7096,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0162
 > stevie_b0.lst.asm.26898 <1> 3594 - 0163                       ;-----------------------------------------------------------------------
 ***** Multiple symbols: 0163
-> stevie_b0.lst.asm.26898 <1> 3595 - 0164                       ; Sanity check on string length
+> stevie_b0.lst.asm.26898 <1> 3595 - 0164                       ; Assert on string length
 ***** Multiple symbols: 0164
 > stevie_b0.lst.asm.26898 <1> 3596 - 0165                       ;-----------------------------------------------------------------------
 ***** Multiple symbols: 0165
@@ -15072,7 +15072,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0148
 > stevie_b0.lst.asm.26898 <1> 2185 - 0149               *--------------------------------------------------------------
 ***** Multiple symbols: 0149
-> stevie_b0.lst.asm.26898 <1> 2186 - 0150               * Sanity check on SAMS page number
+> stevie_b0.lst.asm.26898 <1> 2186 - 0150               * Assert on SAMS page number
 ***** Multiple symbols: 0150
 > stevie_b0.lst.asm.26898 <1> 2187 - 0151               *--------------------------------------------------------------
 ***** Multiple symbols: 0151
@@ -15084,7 +15084,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0153
 > stevie_b0.lst.asm.26898 <1> 2191 - 0154               *--------------------------------------------------------------
 ***** Multiple symbols: 0154
-> stevie_b0.lst.asm.26898 <1> 2192 - 0155               * Sanity check on SAMS register
+> stevie_b0.lst.asm.26898 <1> 2192 - 0155               * Assert on SAMS register
 ***** Multiple symbols: 0155
 > stevie_b0.lst.asm.26898 <1> 2193 - 0156               *--------------------------------------------------------------
 ***** Multiple symbols: 0156
@@ -17850,7 +17850,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0162
 > stevie_b0.lst.asm.26898 <1> 3594 - 0163                       ;-----------------------------------------------------------------------
 ***** Multiple symbols: 0163
-> stevie_b0.lst.asm.26898 <1> 3595 - 0164                       ; Sanity check on string length
+> stevie_b0.lst.asm.26898 <1> 3595 - 0164                       ; Assert on string length
 ***** Multiple symbols: 0164
 > stevie_b0.lst.asm.26898 <1> 3596 - 0165                       ;-----------------------------------------------------------------------
 ***** Multiple symbols: 0165
@@ -25438,7 +25438,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: 65B2
 > stevie_b0.lst.asm.26898 <2> 2185 - 0149               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
-> stevie_b0.lst.asm.26898 <2> 2186 - 0150               * Sanity check on SAMS page number
+> stevie_b0.lst.asm.26898 <2> 2186 - 0150               * Assert on SAMS page number
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 2187 - 0151               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
@@ -25450,7 +25450,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: 65B8
 > stevie_b0.lst.asm.26898 <2> 2191 - 0154               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
-> stevie_b0.lst.asm.26898 <2> 2192 - 0155               * Sanity check on SAMS register
+> stevie_b0.lst.asm.26898 <2> 2192 - 0155               * Assert on SAMS register
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 2193 - 0156               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
@@ -34348,7 +34348,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: 65B2
 > stevie_b0.lst.asm.26898 <2> 2185 - 0149               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
-> stevie_b0.lst.asm.26898 <2> 2186 - 0150               * Sanity check on SAMS page number
+> stevie_b0.lst.asm.26898 <2> 2186 - 0150               * Assert on SAMS page number
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 2187 - 0151               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
@@ -34360,7 +34360,7 @@ Run suffix .............. 200803-26898
 ***** Invalid mnemonic: 65B8
 > stevie_b0.lst.asm.26898 <2> 2191 - 0154               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------
-> stevie_b0.lst.asm.26898 <2> 2192 - 0155               * Sanity check on SAMS register
+> stevie_b0.lst.asm.26898 <2> 2192 - 0155               * Assert on SAMS register
 ***** Invalid mnemonic: *
 > stevie_b0.lst.asm.26898 <2> 2193 - 0156               *--------------------------------------------------------------
 ***** Invalid mnemonic: *--------------------------------------------------------------

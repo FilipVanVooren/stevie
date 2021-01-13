@@ -14,7 +14,7 @@ edkey.action.ppage:
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;-------------------------------------------------------
 edkey.action.ppage.sanity:        
         mov   @fb.topline,tmp0      ; Exit if already on line 1 
@@ -62,7 +62,7 @@ edkey.action.npage:
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;-------------------------------------------------------
 edkey.action.npage.sanity:        
         mov   @fb.topline,tmp0

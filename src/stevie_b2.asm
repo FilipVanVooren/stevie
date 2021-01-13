@@ -79,7 +79,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files - Utility functions
         ;-----------------------------------------------------------------------         
-        copy  "mem.asm"             ; SAMS Memory Management
         copy  "colors.line.set.asm" ; Set color combination for line
         ;-----------------------------------------------------------------------
         ; Include files

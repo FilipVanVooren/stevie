@@ -24,7 +24,7 @@ edkey.action.fb.fname.inc.load:
 
 _edkey.action.fb.fname.doit:
         ;------------------------------------------------------
-        ; Sanity check        
+        ; Assert        
         ;------------------------------------------------------
         mov   @parm1,tmp0
         jeq   _edkey.action.fb.fname.doit.exit

@@ -22,7 +22,7 @@ edkey.action.cmdb.proceed:
         bl    @cmdb.cmd.clear       ; Clear current command
         mov   @cmdb.action.ptr,tmp0 ; Get pointer to keyboard action
         ;-------------------------------------------------------
-        ; Sanity checks
+        ; Asserts
         ;-------------------------------------------------------
         ci    tmp0,>2000
         jlt   !                     ; Invalid address, crash
@@ -30,11 +30,11 @@ edkey.action.cmdb.proceed:
         ci    tmp0,>7fff
         jgt   !                     ; Invalid address, crash
         ;------------------------------------------------------
-        ; All sanity checks passed
+        ; All Asserts passed
         ;------------------------------------------------------
         b     *tmp0                 ; Execute action
         ;------------------------------------------------------
-        ; Sanity checks failed
+        ; Asserts failed
         ;------------------------------------------------------
 !       mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system       

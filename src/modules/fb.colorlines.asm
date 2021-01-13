@@ -34,9 +34,9 @@ fb.colorlines:
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; \ Force refresh flag set?
         ci    tmp0,>ffff            ; /
-        jeq   !                     ; Yes, so skip sanity checks
+        jeq   !                     ; Yes, so skip Asserts
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         mov   @fb.colorize,tmp0     ; Check if colorization necessary
         jeq   fb.colorlines.exit    ; Exit if nothing to do. 

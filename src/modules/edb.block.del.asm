@@ -35,7 +35,7 @@ edb.block.delete:
 
         clr   @outparm1             ; No action (>0000)        
         ;------------------------------------------------------        
-        ; Sanity checks
+        ; Asserts
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp0    ; \ 
         inc   tmp0                  ; | M1 unset?

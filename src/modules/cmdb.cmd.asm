@@ -121,7 +121,7 @@ cmdb.cmd.history.add:
                                     ; \ i  @cmdb.cmd
                                     ; / o  @outparm1
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         mov   @outparm1,tmp0        ; Check length
         jeq   cmdb.cmd.history.add.exit

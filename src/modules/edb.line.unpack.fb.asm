@@ -34,7 +34,7 @@ edb.line.unpack.fb:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         c     @parm1,@edb.lines     ; Beyond editor buffer ?
         jle   !
@@ -78,7 +78,7 @@ edb.line.unpack.fb.getlen:
         mov   tmp0,@rambuf+4        ; Source memory address for block copy
         mov   tmp1,@rambuf+8        ; Save line length        
         ;------------------------------------------------------
-        ; Sanity check on line length
+        ; Assert on line length
         ;------------------------------------------------------        
         ci    tmp1,80               ; \ Continue if length <= 80
                                     ; / 
@@ -114,7 +114,7 @@ edb.line.unpack.fb.prepare:
         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
         ;------------------------------------------------------
-        ; Sanity check on line length
+        ; Assert on line length
         ;------------------------------------------------------
 edb.line.unpack.fb.copy:     
         ci    tmp2,80               ; Check line length

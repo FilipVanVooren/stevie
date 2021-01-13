@@ -12,7 +12,7 @@
 ********|*****|*********************|**************************
 _idx.entry.insert.reorg:
         ;------------------------------------------------------
-        ; sanity check 1
+        ; Assert 1
         ;------------------------------------------------------ 
         ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
                                     ; (max 5 SAMS pages with 2048 index entries)
@@ -32,7 +32,7 @@ _idx.entry.insert.reorg.crash:
         inct  tmp1                  ; b = current slot + 2
         inc   tmp2                  ; One time adjustment for current line
         ;------------------------------------------------------
-        ; Sanity check 2
+        ; Assert 2
         ;------------------------------------------------------
         mov   tmp2,tmp3             ; Number of slots to reorganize
         sla   tmp3,1                ; adjust to slot size

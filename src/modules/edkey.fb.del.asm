@@ -8,7 +8,7 @@ edkey.action.del_char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         ;-------------------------------------------------------
-        ; Sanity check 1 - Empty line
+        ; Assert 1 - Empty line
         ;-------------------------------------------------------
 edkey.action.del_char.sanity1:        
         mov   @fb.row.length,tmp2   ; Get line length
@@ -17,7 +17,7 @@ edkey.action.del_char.sanity1:
 
         mov   @fb.current,tmp0      ; Get pointer                                    
         ;-------------------------------------------------------
-        ; Sanity check 2 - Already at EOL
+        ; Assert 2 - Already at EOL
         ;-------------------------------------------------------
 edkey.action.del_char.sanity2:        
         mov   tmp2,tmp3             ; \
@@ -36,7 +36,7 @@ edkey.action.del_char.sanity2:
         seto  @fb.dirty             ; Trigger screen refresh
         jmp  edkey.action.del_char.exit
         ;-------------------------------------------------------
-        ; Sanity check 3 - Abort if row length > 80
+        ; Assert 3 - Abort if row length > 80
         ;-------------------------------------------------------
 edkey.action.del_char.sanity3:        
         ci    tmp2,colrow

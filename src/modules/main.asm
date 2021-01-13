@@ -48,7 +48,8 @@ main.continue:
         ; Clear screen (VDP SIT)
         ;------------------------------------------------------
         bl    @filv
-              data >0000,32,30*80   ; Clear screen
+              data >0000,32,vdp.sit.size.80x30
+                                    ; Clear screen
         ;------------------------------------------------------
         ; Initialize high memory expansion
         ;------------------------------------------------------

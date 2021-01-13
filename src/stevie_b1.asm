@@ -110,10 +110,6 @@ main:
         copy  "edkey.cmdb.file.save.asm" ; Save DV80 file
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
-        ; Logic for SAMS memory
-        ;-----------------------------------------------------------------------
-        copy  "mem.asm"             ; SAMS Memory Management
-        ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------        
         copy  "fb.utils.asm"        ; Framebuffer utilities

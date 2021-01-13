@@ -36,7 +36,7 @@ edb.block.copy:
         mov   @parm1,*stack         ; Push parm1
         clr   @outparm1             ; No action (>0000)
         ;------------------------------------------------------        
-        ; Sanity checks
+        ; Asserts
         ;------------------------------------------------------        
         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
         jeq   edb.block.copy.exit   ; Yes, exit early

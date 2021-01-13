@@ -21,7 +21,7 @@ fm.browse.fname.suffix.incdec:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get pointer to filename
         jeq   fm.browse.fname.suffix.exit

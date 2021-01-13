@@ -37,7 +37,7 @@ edb.line.copy:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         c     @parm1,@edb.lines     ; Source line beyond editor buffer ?
         jle   !
@@ -77,7 +77,7 @@ edb.line.copy.getlen:
         inct  @rambuf               ; / Consider length of line prefix too
         mov   tmp0,@rambuf+4        ; Source memory address for block copy
         ;------------------------------------------------------
-        ; Sanity check on line length
+        ; Assert on line length
         ;------------------------------------------------------        
         ci    tmp1,80               ; \ Continue if length <= 80
         jle   edb.line.copy.prepare ; /         

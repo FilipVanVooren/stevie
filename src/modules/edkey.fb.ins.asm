@@ -13,27 +13,27 @@ edkey.action.ins_char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         ;-------------------------------------------------------
-        ; Sanity check 1 - Empty line
+        ; Assert 1 - Empty line
         ;-------------------------------------------------------
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
-        ; Sanity check 2 - EOL
+        ; Assert 2 - EOL
         ;-------------------------------------------------------
         c     @fb.column,@fb.row.length
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
-        ; Sanity check 3 - Overwrite if at column 80 
+        ; Assert 3 - Overwrite if at column 80 
         ;-------------------------------------------------------
         mov   @fb.column,tmp1    
         ci    tmp1,colrow - 1       ; Overwrite if last column in row
         jlt   !
         b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
-        ; Sanity check 4 - 80 characters maximum
+        ; Assert 4 - 80 characters maximum
         ;-------------------------------------------------------
 !       mov   @fb.row.length,tmp1
         ci    tmp1,colrow

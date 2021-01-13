@@ -26,7 +26,7 @@ edb.line.del:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Sanity check
+        ; Assert
         ;------------------------------------------------------
         c     @parm1,@edb.lines     ; Line beyond editor buffer ?
         jle   !

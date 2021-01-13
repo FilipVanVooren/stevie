@@ -9,7 +9,7 @@
 * bl @fb.vdpdump
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Number of lines to copy
+* @parm1 = Number of lines to dump
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -27,12 +27,22 @@ fb.vdpdump:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
+        ; Assert
+        ;------------------------------------------------------ 
+        mov   @parm1,tmp1
+        ci    tmp1,80*30
+        jle   ! 
+        ;------------------------------------------------------
+        ; Crash the system
+        ;------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system
+        ;------------------------------------------------------
         ; Refresh VDP content with framebuffer
         ;------------------------------------------------------        
-        li    tmp0,vdp.fb.toprow.sit 
+!       li    tmp0,vdp.fb.toprow.sit 
                                     ; VDP target address (2nd line on screen!)
 
-        mov   @parm1,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * number of rows in parm1
                                     ; 16 bit part is in tmp2!
         mov   @fb.top.ptr,tmp1      ; RAM Source address

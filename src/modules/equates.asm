@@ -65,18 +65,20 @@
 *     7f9c-7fff      64       3   Vector table (32 vectors)
 *
 *
-* VDP RAM
+* VDP RAM F18a (0000-47ff)
 *
 *     Mem range   Bytes    Hex    Purpose
 *     =========   =====   =====   =================================
-*     0000-095f    2400   >0960   PNT - Pattern Name Table
-*     0960-09af      80   >0050   File record buffer (DIS/VAR 80)
-*     0fc0                        PCT - Pattern Color Table
-*     1000-17ff    2048   >0800   PDT - Pattern Descriptor Table
-*     1800-215f    2400   >0960   TAT - Tile Attribute Table (pos. based colors)
-*     2180                        SAT - Sprite Attribute List
-*     2800                        SPT - Sprite Pattern Table. On 2K boundary
-*
+*     0000-095f    2400   >0960   PNT: Pattern Name Table
+*     0960-09af      80   >0050   FIO: File record buffer (DIS/VAR 80)
+*     0fc0-0fff                   PCT: Color Table (not used in 80 cols mode)
+*     1000-17ff    2048   >0800   PDT: Pattern Descriptor Table
+*     1800-215f    2400   >0960   TAT: Tile Attribute Table
+*                                      (Position based colors F18a, 80 colums)
+*     2180                        SAT: Sprite Attribute Table
+*                                      (Cursor in F18a, 80 cols mode)
+*     2800                        SPT: Sprite Pattern Table
+*                                      (Cursor in F18a, 80 columns, 2K boundary)
 *===============================================================================
 
 *--------------------------------------------------------------
@@ -106,6 +108,8 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+vdp.sit.size.80x30        equ  80*30   ; VDP SIT size when 80 columns, 30 rows
+vdp.sit.size.80x24        equ  80*30   ; VDP SIT size when 80 columns, 24 rows
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1fd0   ; VDP TAT address of 1st CMDB row

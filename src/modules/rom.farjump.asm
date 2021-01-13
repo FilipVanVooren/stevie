@@ -58,7 +58,7 @@ rom.farjump.bankswitch:
         jmp   rom.farjump.bankswitch.call
                                     ; Call function in target bank
         ;------------------------------------------------------
-        ; Sanity check 1 failed before bank-switch
+        ; Assert 1 failed before bank-switch
         ;------------------------------------------------------
 rom.farjump.bankswitch.failed1:        
         mov   r11,@>ffce            ; \ Save caller address
@@ -94,7 +94,7 @@ rom.farjump.return:
         clr   *tmp1                 ; Switch to bank of caller  
         jmp   rom.farjump.exit
         ;------------------------------------------------------
-        ; Sanity check 2 failed after bank-switch
+        ; Assert 2 failed after bank-switch
         ;------------------------------------------------------
 rom.farjump.bankswitch.failed2:        
         mov   r11,@>ffce            ; \ Save caller address

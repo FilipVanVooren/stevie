@@ -98,7 +98,7 @@ edkey.action.ins_onoff.exit:
 edkey.action.char:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
-        ; Sanity checks
+        ; Asserts
         ;-------------------------------------------------------
         movb  tmp1,tmp0             ; Get keycode
         srl   tmp0,8                ; MSB to LSB
