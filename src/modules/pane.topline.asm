@@ -1,5 +1,5 @@
 * FILE......: pane.topline.asm
-* Purpose...: Pane top line of screen
+* Purpose...: Pane "status top line"
 
 ***************************************************************
 * pane.topline.draw

@@ -58,22 +58,22 @@ task.vdp.panes.cmdb.draw:
         jeq   task.vdp.panes.statlines
                                     ; No, skip update
         ;------------------------------------------------------ 
-        ; Determine how many rows to copy 
+        ; Determine how many rows to dump
         ;------------------------------------------------------
         c     @edb.lines,@fb.scrrows
         jlt   task.vdp.panes.setrows.small
-        mov   @fb.scrrows,tmp1      ; Lines to copy        
-        jmp   task.vdp.panes.copy.fb
+        mov   @fb.scrrows,tmp1      ; Number of lines to dump
+        jmp   task.vdp.panes.dump.fb
         ;------------------------------------------------------
         ; Less lines in editor buffer as rows in frame buffer 
         ;------------------------------------------------------
 task.vdp.panes.setrows.small:
-        mov   @edb.lines,tmp1       ; Lines to copy
-        inc   tmp1
+        mov   @edb.lines,tmp1       ; \ Number of lines to dump
+        inc   tmp1                  ; /
         ;------------------------------------------------------
-        ; Determine area to copy
+        ; Determine frame buffer area to dump
         ;------------------------------------------------------
-task.vdp.panes.copy.fb:
+task.vdp.panes.dump.fb:
         mov   tmp1,@parm1
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
@@ -82,22 +82,25 @@ task.vdp.panes.copy.fb:
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
         mov   @fb.colorize,tmp0     ; Check if colorization necessary
-        jeq   task.vdp.panes.copy.eof
-                                    ; Skip if flag reset
+        jeq   task.vdp.panes.eof    ; Skip if flag reset
 
         bl    @fb.colorlines        ; Colorize lines M1/M2
         ;-------------------------------------------------------
-        ; Draw EOF marker at end-of-file
+        ; Draw EOF marker
         ;-------------------------------------------------------
-task.vdp.panes.copy.eof:
+task.vdp.panes.eof:
         mov   @fb.topline,tmp0      ; \
         a     @fb.scrrows,tmp0      ; | Last page in editor buffer?
         c     @edb.lines,tmp0       ; |
                                     ; / 
         jgt   task.vdp.panes.statlines
                                     ; No, so skip drawing EOF maker 
-        mov   @edb.lines,tmp0
+
+
+*****WRONG THIS CAN NEVER WORK if edb.lines > scrrows **********
+        mov   @edb.lines,tmp0   
         inc   tmp0
+****************************************************************        
         ;-------------------------------------------------------
         ; Draw marker 
         ;-------------------------------------------------------
@@ -110,25 +113,39 @@ task.vdp.panes.copy.eof:
         bl    @setx   
               data 5                ; Cursor after *EOF* string
         ;-------------------------------------------------------
-        ; Clear rest of screen
+        ; Clear after EOF marker until bottom status line
         ;-------------------------------------------------------
-task.vdp.panes.clear_screen:
+task.vdp.panes.eof.clear:
         mov   @fb.colsline,tmp0     ; tmp0 = Columns per line
 
-        mov   @wyx,tmp1             ; 
+        mov   @wyx,tmp1             ; Get cursor YX
         srl   tmp1,8                ; tmp1 = cursor Y position
         neg   tmp1                  ; tmp1 = -Y position 
         a     @fb.scrrows,tmp1      ; tmp1 = -Y position + fb.scrrows
 
-        mpy   tmp0,tmp1             ; tmp2 = tmp0 * tmp1
-        ai    tmp2, -5              ; Adjust offset (because of *EOF* string)
+        mpy   tmp0,tmp1             ; tmp2 = Columns * rows 
+        ai    tmp2,-5               ; Adjust offset (because of *EOF* string)
 
+        ci    tmp2,1
+        jlt   task.vdp.panes.vdpfill.edge
+                                    ; \ Handle edge case where tmp2<.
+                                    ; / This can happen when on last row in FB.
+
+        jmp   task.vdp.panes.vdpfill.start
+
+task.vdp.panes.vdpfill.edge:
+        li    tmp2,75               ; Assume 75 bytes to fill
+        ;-------------------------------------------------------
+        ; Get VDP start address for fill
+        ;-------------------------------------------------------        
+task.vdp.panes.vdpfill.start:
         bl    @yx2pnt               ; Set VDP address in tmp0
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
         ;-------------------------------------------------------
         ; Assert
         ;-------------------------------------------------------
+task.vdp.panes.vdpfill.assert:        
         ci    tmp2,vdp.sit.size.80x30
                                     ; Number of bytes to clear is reasonable?
         jle   task.vdp.panes.vdpfill

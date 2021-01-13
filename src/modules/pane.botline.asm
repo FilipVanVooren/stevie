@@ -1,5 +1,5 @@
 * FILE......: pane.botline.asm
-* Purpose...: Pane status bottom line
+* Purpose...: Pane "status bottom line"
 
 ***************************************************************
 * pane.botline
