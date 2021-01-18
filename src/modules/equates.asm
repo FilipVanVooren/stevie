@@ -179,7 +179,7 @@ tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
-tv.color          equ  tv.top + 24     ; FG/BG-color framebufffer + bottom line
+tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
 tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
 tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus

@@ -50,8 +50,12 @@ fb.refresh.unpack_line:
         ; Last row in editor buffer reached ?
         ;------------------------------------------------------
         c     @parm1,@edb.lines     
-        jle   !                     ; no, do next check
-                                    ; yes, erase until end of frame buffer
+        jgt   fb.refresh.erase_eob  ; yes, erase until end of frame buffer
+
+        c     @parm2,@fb.scrrows 
+        jlt   fb.refresh.unpack_line
+                                    ; No, unpack next line
+        jmp   fb.refresh.exit       ; Yes, exit without erasing
         ;------------------------------------------------------
         ; Erase until end of frame buffer
         ;------------------------------------------------------
@@ -74,13 +78,6 @@ fb.refresh.erase_eob:
                                     ; | i  tmp0 = Memory start address
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Number of bytes to fill
-        jmp   fb.refresh.exit
-        ;------------------------------------------------------
-        ; Bottom row in frame buffer reached ?
-        ;------------------------------------------------------
-!       c     @parm2,@fb.scrrows 
-        jlt   fb.refresh.unpack_line
-                                    ; No, unpack next line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

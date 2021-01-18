@@ -1,5 +1,5 @@
 * FILE......: pane.cmdb.show.asm
-* Purpose...: Stevie Editor - Command Buffer pane
+* Purpose...: Show command buffer pane
 
 ***************************************************************
 * pane.cmdb.show

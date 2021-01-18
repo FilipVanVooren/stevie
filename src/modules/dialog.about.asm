@@ -75,9 +75,9 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Show About dialog
         ;------------------------------------------------------
-!       bl    @hchar
-              byte 2,20,3,40
-              byte 12,20,3,40          
+        bl    @hchar
+              byte 2,20,1,40
+              byte 12,20,1,40          
               data EOL
 
         bl    @putat      
