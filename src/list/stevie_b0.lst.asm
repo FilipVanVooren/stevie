@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.556668
+**** **** ****     > stevie_b0.asm.562574
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210118-556668
+0009               * File: stevie_b0.asm               ; Version 210118-562574
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.556668
+**** **** ****     > stevie_b0.asm.562574
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -363,7 +363,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0333               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0334               *--------------------------------------------------------------
 0335      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.556668
+**** **** ****     > stevie_b0.asm.562574
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -391,8 +391,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035 6012 6030             data  kickstart.code1
 0036               
 0038               
-0039 6014 0C53             byte  12
-0040 6015 ....             text  'STEVIE V0.1K'
+0039 6014 1353             byte  19
+0040 6015 ....             text  'STEVIE 1.0 (BETA 1)'
 0041                       even
 0042               
 0050               
@@ -1184,7 +1184,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210118-556668'
+0260 624D ....             text  'Build-ID  210118-562574'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5068,7 +5068,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.556668
+**** **** ****     > stevie_b0.asm.562574
 0119                                                   ; Spectra 2
 0120                       ;------------------------------------------------------
 0121                       ; End of File marker
@@ -5662,12 +5662,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7256 A20E 
 0041               
 0042 7258 0204  20         li    tmp0,txt.newfile      ; "New file"
-     725A 3694 
+     725A 369C 
 0043 725C C804  38         mov   tmp0,@edb.filename.ptr
      725E A212 
 0044               
 0045 7260 0204  20         li    tmp0,txt.filetype.none
-     7262 36E0 
+     7262 36E8 
 0046 7264 C804  38         mov   tmp0,@edb.filetype.ptr
      7266 A214 
 0047               
@@ -6386,324 +6386,325 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009               ; Strings for welcome pane
 0010               ;--------------------------------------------------------------
 0011               txt.about.program
-0012 74E8 0C53             byte  12
-0013 74E9 ....             text  'Stevie V0.1K'
+0012 74E8 1453             byte  20
+0013 74E9 ....             text  'Stevie v1.0 (beta 1)'
 0014                       even
 0015               
-0016               txt.about.purpose
-0017 74F6 2350             byte  35
-0018 74F7 ....             text  'Programming Editor for the TI-99/4a'
-0019                       even
-0020               
-0021               txt.about.author
-0022 751A 1D32             byte  29
-0023 751B ....             text  '2018-2021 by Filip Van Vooren'
-0024                       even
-0025               
-0026               txt.about.website
-0027 7538 1B68             byte  27
-0028 7539 ....             text  'https://stevie.oratronik.de'
-0029                       even
-0030               
-0031               txt.about.build
-0032 7554 1442             byte  20
-0033 7555 ....             text  'Build: 210118-556668'
-0034                       even
-0035               
+0016                                  even
+0017               txt.about.purpose
+0018 74FE 2350             byte  35
+0019 74FF ....             text  'Programming Editor for the TI-99/4a'
+0020                       even
+0021               
+0022               txt.about.author
+0023 7522 1D32             byte  29
+0024 7523 ....             text  '2018-2021 by Filip Van Vooren'
+0025                       even
+0026               
+0027               txt.about.website
+0028 7540 1B68             byte  27
+0029 7541 ....             text  'https://stevie.oratronik.de'
+0030                       even
+0031               
+0032               txt.about.build
+0033 755C 1442             byte  20
+0034 755D ....             text  'Build: 210118-562574'
+0035                       even
 0036               
-0037               txt.about.msg1
-0038 756A 2466             byte  36
-0039 756B ....             text  'fctn-7 (F7)   Help, shortcuts, about'
-0040                       even
-0041               
-0042               txt.about.msg2
-0043 7590 2266             byte  34
-0044 7591 ....             text  'fctn-9 (F9)   Toggle edit/cmd mode'
-0045                       even
-0046               
-0047               txt.about.msg3
-0048 75B4 1966             byte  25
-0049 75B5 ....             text  'fctn-+        Quit Stevie'
-0050                       even
-0051               
-0052               txt.about.msg4
-0053 75CE 1C43             byte  28
-0054 75CF ....             text  'CTRL-O (^O)   Open DV80 file'
-0055                       even
-0056               
-0057               txt.about.msg5
-0058 75EC 1C43             byte  28
-0059 75ED ....             text  'CTRL-S (^S)   Save DV80 file'
-0060                       even
-0061               
-0062               txt.about.msg6
-0063 760A 1A43             byte  26
-0064 760B ....             text  'CTRL-Z (^Z)   Cycle colors'
-0065                       even
-0066               
+0037               
+0038               txt.about.msg1
+0039 7572 2466             byte  36
+0040 7573 ....             text  'fctn-7 (F7)   Help, shortcuts, about'
+0041                       even
+0042               
+0043               txt.about.msg2
+0044 7598 2266             byte  34
+0045 7599 ....             text  'fctn-9 (F9)   Toggle edit/cmd mode'
+0046                       even
+0047               
+0048               txt.about.msg3
+0049 75BC 1966             byte  25
+0050 75BD ....             text  'fctn-+        Quit Stevie'
+0051                       even
+0052               
+0053               txt.about.msg4
+0054 75D6 1C43             byte  28
+0055 75D7 ....             text  'CTRL-O (^O)   Open DV80 file'
+0056                       even
+0057               
+0058               txt.about.msg5
+0059 75F4 1C43             byte  28
+0060 75F5 ....             text  'CTRL-S (^S)   Save DV80 file'
+0061                       even
+0062               
+0063               txt.about.msg6
+0064 7612 1A43             byte  26
+0065 7613 ....             text  'CTRL-Z (^Z)   Cycle colors'
+0066                       even
 0067               
-0068 7626 380F     txt.about.msg7     byte    56,15
-0069 7628 ....                        text    ' ALPHA LOCK up     '
-0070                                  byte    14
-0071 763C ....                        text    ' ALPHA LOCK down   '
-0072 764F ....                        text    '  * Text changed'
-0073               
+0068               
+0069 762E 380F     txt.about.msg7     byte    56,15
+0070 7630 ....                        text    ' ALPHA LOCK up     '
+0071                                  byte    14
+0072 7644 ....                        text    ' ALPHA LOCK down   '
+0073 7657 ....                        text    '  * Text changed'
 0074               
-0075               ;--------------------------------------------------------------
-0076               ; Strings for status line pane
-0077               ;--------------------------------------------------------------
-0078               txt.delim
-0079                       byte  1
-0080 7660 ....             text  ','
-0081                       even
-0082               
-0083               txt.marker
-0084 7662 052A             byte  5
-0085 7663 ....             text  '*EOF*'
-0086                       even
-0087               
-0088               txt.bottom
-0089 7668 0520             byte  5
-0090 7669 ....             text  '  BOT'
-0091                       even
-0092               
-0093               txt.ovrwrite
-0094 766E 034F             byte  3
-0095 766F ....             text  'OVR'
-0096                       even
-0097               
-0098               txt.insert
-0099 7672 0349             byte  3
-0100 7673 ....             text  'INS'
-0101                       even
-0102               
-0103               txt.star
-0104 7676 012A             byte  1
-0105 7677 ....             text  '*'
-0106                       even
-0107               
-0108               txt.loading
-0109 7678 0A4C             byte  10
-0110 7679 ....             text  'Loading...'
-0111                       even
-0112               
-0113               txt.saving
-0114 7684 0A53             byte  10
-0115 7685 ....             text  'Saving....'
-0116                       even
-0117               
-0118               txt.block.del
-0119 7690 1244             byte  18
-0120 7691 ....             text  'Deleting block....'
-0121                       even
-0122               
-0123               txt.block.copy
-0124 76A4 1143             byte  17
-0125 76A5 ....             text  'Copying block....'
-0126                       even
-0127               
-0128               txt.block.move
-0129 76B6 104D             byte  16
-0130 76B7 ....             text  'Moving block....'
-0131                       even
-0132               
-0133               txt.block.save
-0134 76C8 1D53             byte  29
-0135 76C9 ....             text  'Saving block to DV80 file....'
-0136                       even
-0137               
-0138               txt.fastmode
-0139 76E6 0846             byte  8
-0140 76E7 ....             text  'Fastmode'
-0141                       even
-0142               
-0143               txt.kb
-0144 76F0 026B             byte  2
-0145 76F1 ....             text  'kb'
-0146                       even
-0147               
-0148               txt.lines
-0149 76F4 054C             byte  5
-0150 76F5 ....             text  'Lines'
-0151                       even
-0152               
-0153               txt.bufnum
-0154 76FA 0323             byte  3
-0155 76FB ....             text  '#1 '
-0156                       even
-0157               
-0158               txt.newfile
-0159 76FE 0A5B             byte  10
-0160 76FF ....             text  '[New file]'
-0161                       even
-0162               
-0163               txt.filetype.dv80
-0164 770A 0444             byte  4
-0165 770B ....             text  'DV80'
-0166                       even
-0167               
-0168               txt.m1
-0169 7710 034D             byte  3
-0170 7711 ....             text  'M1='
-0171                       even
-0172               
-0173               txt.m2
-0174 7714 034D             byte  3
-0175 7715 ....             text  'M2='
-0176                       even
-0177               
+0075               
+0076               ;--------------------------------------------------------------
+0077               ; Strings for status line pane
+0078               ;--------------------------------------------------------------
+0079               txt.delim
+0080                       byte  1
+0081 7668 ....             text  ','
+0082                       even
+0083               
+0084               txt.marker
+0085 766A 052A             byte  5
+0086 766B ....             text  '*EOF*'
+0087                       even
+0088               
+0089               txt.bottom
+0090 7670 0520             byte  5
+0091 7671 ....             text  '  BOT'
+0092                       even
+0093               
+0094               txt.ovrwrite
+0095 7676 034F             byte  3
+0096 7677 ....             text  'OVR'
+0097                       even
+0098               
+0099               txt.insert
+0100 767A 0349             byte  3
+0101 767B ....             text  'INS'
+0102                       even
+0103               
+0104               txt.star
+0105 767E 012A             byte  1
+0106 767F ....             text  '*'
+0107                       even
+0108               
+0109               txt.loading
+0110 7680 0A4C             byte  10
+0111 7681 ....             text  'Loading...'
+0112                       even
+0113               
+0114               txt.saving
+0115 768C 0A53             byte  10
+0116 768D ....             text  'Saving....'
+0117                       even
+0118               
+0119               txt.block.del
+0120 7698 1244             byte  18
+0121 7699 ....             text  'Deleting block....'
+0122                       even
+0123               
+0124               txt.block.copy
+0125 76AC 1143             byte  17
+0126 76AD ....             text  'Copying block....'
+0127                       even
+0128               
+0129               txt.block.move
+0130 76BE 104D             byte  16
+0131 76BF ....             text  'Moving block....'
+0132                       even
+0133               
+0134               txt.block.save
+0135 76D0 1D53             byte  29
+0136 76D1 ....             text  'Saving block to DV80 file....'
+0137                       even
+0138               
+0139               txt.fastmode
+0140 76EE 0846             byte  8
+0141 76EF ....             text  'Fastmode'
+0142                       even
+0143               
+0144               txt.kb
+0145 76F8 026B             byte  2
+0146 76F9 ....             text  'kb'
+0147                       even
+0148               
+0149               txt.lines
+0150 76FC 054C             byte  5
+0151 76FD ....             text  'Lines'
+0152                       even
+0153               
+0154               txt.bufnum
+0155 7702 0323             byte  3
+0156 7703 ....             text  '#1 '
+0157                       even
+0158               
+0159               txt.newfile
+0160 7706 0A5B             byte  10
+0161 7707 ....             text  '[New file]'
+0162                       even
+0163               
+0164               txt.filetype.dv80
+0165 7712 0444             byte  4
+0166 7713 ....             text  'DV80'
+0167                       even
+0168               
+0169               txt.m1
+0170 7718 034D             byte  3
+0171 7719 ....             text  'M1='
+0172                       even
+0173               
+0174               txt.m2
+0175 771C 034D             byte  3
+0176 771D ....             text  'M2='
+0177                       even
 0178               
-0179 7718 2B5E     txt.keys.block     byte    43
-0180 7719 ....                        text    '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
-0181               
-0182 7744 010F     txt.alpha.up       data >010f
-0183 7746 010E     txt.alpha.down     data >010e
-0184 7748 0110     txt.vertline       data >0110
-0185               
-0186               txt.clear
-0187 774A 0420             byte  4
-0188 774B ....             text  '    '
-0189                       even
-0190               
-0191      36E0     txt.filetype.none  equ txt.clear
-0192               
+0179               
+0180 7720 2B5E     txt.keys.block     byte    43
+0181 7721 ....                        text    '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+0182               
+0183 774C 010F     txt.alpha.up       data >010f
+0184 774E 010E     txt.alpha.down     data >010e
+0185 7750 0110     txt.vertline       data >0110
+0186               
+0187               txt.clear
+0188 7752 0420             byte  4
+0189 7753 ....             text  '    '
+0190                       even
+0191               
+0192      36E8     txt.filetype.none  equ txt.clear
 0193               
-0194               ;--------------------------------------------------------------
-0195               ; Dialog Load DV 80 file
-0196               ;--------------------------------------------------------------
-0197 7750 1301     txt.head.load      byte 19,1,3,32
-     7752 0320 
-0198 7754 ....                        text 'Open DV80 file '
-0199                                  byte 2
-0200               txt.hint.load
-0201 7764 4D48             byte  77
-0202 7765 ....             text  'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
-0203                       even
-0204               
-0205               txt.keys.load
-0206 77B2 3946             byte  57
-0207 77B3 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
-0208                       even
-0209               
-0210               txt.keys.load2
-0211 77EC 3946             byte  57
-0212 77ED ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
-0213                       even
-0214               
+0194               
+0195               ;--------------------------------------------------------------
+0196               ; Dialog Load DV 80 file
+0197               ;--------------------------------------------------------------
+0198 7758 1301     txt.head.load      byte 19,1,3,32
+     775A 0320 
+0199 775C ....                        text 'Open DV80 file '
+0200                                  byte 2
+0201               txt.hint.load
+0202 776C 4D48             byte  77
+0203 776D ....             text  'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+0204                       even
+0205               
+0206               txt.keys.load
+0207 77BA 3946             byte  57
+0208 77BB ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
+0209                       even
+0210               
+0211               txt.keys.load2
+0212 77F4 3946             byte  57
+0213 77F5 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
+0214                       even
 0215               
-0216               ;--------------------------------------------------------------
-0217               ; Dialog Save DV 80 file
-0218               ;--------------------------------------------------------------
-0219 7826 1301     txt.head.save      byte 19,1,3,32
-     7828 0320 
-0220 782A ....                        text 'Save DV80 file '
-0221                                  byte 2
-0222 783A 2301     txt.head.save2     byte 35,1,3,32
-     783C 0320 
-0223 783E ....                        text 'Save marked block to DV80 file '
-0224                                  byte 2
-0225               txt.hint.save
-0226 785E 3F48             byte  63
-0227 785F ....             text  'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
-0228                       even
-0229               
-0230               txt.keys.save
-0231 789E 2A46             byte  42
-0232 789F ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
-0233                       even
-0234               
+0216               
+0217               ;--------------------------------------------------------------
+0218               ; Dialog Save DV 80 file
+0219               ;--------------------------------------------------------------
+0220 782E 1301     txt.head.save      byte 19,1,3,32
+     7830 0320 
+0221 7832 ....                        text 'Save DV80 file '
+0222                                  byte 2
+0223 7842 2301     txt.head.save2     byte 35,1,3,32
+     7844 0320 
+0224 7846 ....                        text 'Save marked block to DV80 file '
+0225                                  byte 2
+0226               txt.hint.save
+0227 7866 3F48             byte  63
+0228 7867 ....             text  'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
+0229                       even
+0230               
+0231               txt.keys.save
+0232 78A6 2A46             byte  42
+0233 78A7 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
+0234                       even
 0235               
-0236               ;--------------------------------------------------------------
-0237               ; Dialog "Unsaved changes"
-0238               ;--------------------------------------------------------------
-0239 78CA 1401     txt.head.unsaved   byte 20,1,3,32
-     78CC 0320 
-0240 78CE ....                        text 'Unsaved changes '
-0241 78DE 0232                        byte 2
-0242               txt.info.unsaved
-0243                       byte  50
-0244 78E0 ....             text  'You are about to lose changes to the current file!'
-0245                       even
-0246               
-0247               txt.hint.unsaved
-0248 7912 3F48             byte  63
-0249 7913 ....             text  'HINT: Press F6 to proceed without saving or ENTER to save file.'
-0250                       even
-0251               
-0252               txt.keys.unsaved
-0253 7952 2846             byte  40
-0254 7953 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
-0255                       even
-0256               
+0236               
+0237               ;--------------------------------------------------------------
+0238               ; Dialog "Unsaved changes"
+0239               ;--------------------------------------------------------------
+0240 78D2 1401     txt.head.unsaved   byte 20,1,3,32
+     78D4 0320 
+0241 78D6 ....                        text 'Unsaved changes '
+0242 78E6 0232                        byte 2
+0243               txt.info.unsaved
+0244                       byte  50
+0245 78E8 ....             text  'You are about to lose changes to the current file!'
+0246                       even
+0247               
+0248               txt.hint.unsaved
+0249 791A 3F48             byte  63
+0250 791B ....             text  'HINT: Press F6 to proceed without saving or ENTER to save file.'
+0251                       even
+0252               
+0253               txt.keys.unsaved
+0254 795A 2846             byte  40
+0255 795B ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
+0256                       even
 0257               
-0258               ;--------------------------------------------------------------
-0259               ; Dialog "About"
-0260               ;--------------------------------------------------------------
-0261 797C 0A01     txt.head.about     byte 10,1,3,32
-     797E 0320 
-0262 7980 ....                        text 'About '
-0263 7986 022C                        byte 2
-0264               txt.hint.about
-0265                       byte  44
-0266 7988 ....             text  'HINT: Press F9 or ENTER to return to editor.'
-0267                       even
-0268               
-0269               txt.keys.about
-0270 79B4 1546             byte  21
-0271 79B5 ....             text  'F9=Back    ENTER=Back'
-0272                       even
-0273               
+0258               
+0259               ;--------------------------------------------------------------
+0260               ; Dialog "About"
+0261               ;--------------------------------------------------------------
+0262 7984 0A01     txt.head.about     byte 10,1,3,32
+     7986 0320 
+0263 7988 ....                        text 'About '
+0264 798E 022C                        byte 2
+0265               txt.hint.about
+0266                       byte  44
+0267 7990 ....             text  'HINT: Press F9 or ENTER to return to editor.'
+0268                       even
+0269               
+0270               txt.keys.about
+0271 79BC 1546             byte  21
+0272 79BD ....             text  'F9=Back    ENTER=Back'
+0273                       even
 0274               
-0275               ;--------------------------------------------------------------
-0276               ; Strings for error line pane
-0277               ;--------------------------------------------------------------
-0278               txt.ioerr.load
-0279 79CA 2049             byte  32
-0280 79CB ....             text  'I/O error. Failed loading file: '
-0281                       even
-0282               
-0283               txt.ioerr.save
-0284 79EC 1F49             byte  31
-0285 79ED ....             text  'I/O error. Failed saving file: '
-0286                       even
-0287               
-0288               txt.io.nofile
-0289 7A0C 2149             byte  33
-0290 7A0D ....             text  'I/O error. No filename specified.'
-0291                       even
-0292               
-0293               txt.block.inside
-0294 7A2E 3445             byte  52
-0295 7A2F ....             text  'Error. Copy/Move target must be outside block M1-M2.'
-0296                       even
-0297               
+0275               
+0276               ;--------------------------------------------------------------
+0277               ; Strings for error line pane
+0278               ;--------------------------------------------------------------
+0279               txt.ioerr.load
+0280 79D2 2049             byte  32
+0281 79D3 ....             text  'I/O error. Failed loading file: '
+0282                       even
+0283               
+0284               txt.ioerr.save
+0285 79F4 1F49             byte  31
+0286 79F5 ....             text  'I/O error. Failed saving file: '
+0287                       even
+0288               
+0289               txt.io.nofile
+0290 7A14 2149             byte  33
+0291 7A15 ....             text  'I/O error. No filename specified.'
+0292                       even
+0293               
+0294               txt.block.inside
+0295 7A36 3445             byte  52
+0296 7A37 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0297                       even
 0298               
 0299               
-0300               ;--------------------------------------------------------------
-0301               ; Strings for command buffer
-0302               ;--------------------------------------------------------------
-0303               txt.cmdb.title
-0304 7A64 0E43             byte  14
-0305 7A65 ....             text  'Command buffer'
-0306                       even
-0307               
-0308               txt.cmdb.prompt
-0309 7A74 013E             byte  1
-0310 7A75 ....             text  '>'
-0311                       even
-0312               
+0300               
+0301               ;--------------------------------------------------------------
+0302               ; Strings for command buffer
+0303               ;--------------------------------------------------------------
+0304               txt.cmdb.title
+0305 7A6C 0E43             byte  14
+0306 7A6D ....             text  'Command buffer'
+0307                       even
+0308               
+0309               txt.cmdb.prompt
+0310 7A7C 013E             byte  1
+0311 7A7D ....             text  '>'
+0312                       even
 0313               
-0314 7A76 0C0A     txt.stevie         byte    12
-0315                                  byte    10
-0316 7A78 ....                        text    'stevie V0.1I'
-0317 7A84 0B00                        byte    11
-0318                                  even
-0319               
-0320               txt.colorscheme
-0321 7A86 0D43             byte  13
-0322 7A87 ....             text  'Color scheme:'
-0323                       even
-0324               
+0314               
+0315 7A7E 0C0A     txt.stevie         byte    12
+0316                                  byte    10
+0317 7A80 ....                        text    'Stevie v1.0 (beta 1)'
+0318 7A94 0B00                        byte    11
+0319                                  even
+0320               
+0321               txt.colorscheme
+0322 7A96 0D43             byte  13
+0323 7A97 ....             text  'Color scheme:'
+0324                       even
+0325               
 **** **** ****     > ram.resident.3000.asm
 0018                       copy  "data.keymap.keys.asm"   ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.keys.asm
@@ -6808,17 +6809,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 7A94 DEAD             data  >dead,>beef,>dead,>beef
-     7A96 BEEF 
-     7A98 DEAD 
-     7A9A BEEF 
-**** **** ****     > stevie_b0.asm.556668
+0022 7AA4 DEAD             data  >dead,>beef,>dead,>beef
+     7AA6 BEEF 
+     7AA8 DEAD 
+     7AAA BEEF 
+**** **** ****     > stevie_b0.asm.562574
 0149               
-0153 7A9C 3A32                   data $                ; Bank 0 ROM size OK.
+0153 7AAC 3A42                   data $                ; Bank 0 ROM size OK.
 0155                       ;-----------------------------------------------------------------------
 0156                       ; Bank specific vector table
 0157                       ;-----------------------------------------------------------------------
-0161 7A9E 3A34                   data $                ; Bank 0 ROM size OK.
+0161 7AAE 3A44                   data $                ; Bank 0 ROM size OK.
 0163                       ;-------------------------------------------------------
 0164                       ; Vector table bank 0: >7f9c - >7fff
 0165                       ;-------------------------------------------------------
@@ -6864,7 +6865,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.556668
+**** **** ****     > stevie_b0.asm.562574
 0167               
 0168               
 0169               *--------------------------------------------------------------

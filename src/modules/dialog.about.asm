@@ -77,23 +77,24 @@ dialog.about.content:
         ;------------------------------------------------------
         bl    @hchar
               byte 2,20,1,40
-              byte 12,20,1,40          
+              byte 9,20,1,40          
               data EOL
 
         bl    @putat      
-              byte   4,33
+              byte   0,1
               data   txt.about.program
+              
         bl    @putat      
-              byte   6,22
+              byte   3,22
               data   txt.about.purpose
         bl    @putat      
-              byte   7,25
+              byte   4,25
               data   txt.about.author
         bl    @putat      
-              byte   9,26
+              byte   6,26
               data   txt.about.website
         bl    @putat      
-              byte   11,29
+              byte   8,29
               data   txt.about.build
 
         bl    @putat      

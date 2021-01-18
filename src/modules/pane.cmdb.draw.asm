@@ -37,7 +37,7 @@ pane.cmdb.draw:
         bl    @tv.pad.string        ; Pad string to specified length
                                     ; \ i  @parm1 = Pointer to string
                                     ; | i  @parm2 = Requested length
-                                    ; | i  @parm3 = Fill characgter
+                                    ; | i  @parm3 = Fill character
                                     ; | i  @parm4 = Pointer to buffer with
                                     ; /             output string                                    
 
