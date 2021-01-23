@@ -37,7 +37,10 @@ edb.line.unpack.fb:
         ; Assert
         ;------------------------------------------------------
         c     @parm1,@edb.lines     ; Beyond editor buffer ?
-        jle   !
+        jlt   !                     ; No, so continue
+        ;------------------------------------------------------
+        ; CPU crash
+        ;------------------------------------------------------        
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------
@@ -118,7 +121,7 @@ edb.line.unpack.fb.prepare:
         ;------------------------------------------------------
 edb.line.unpack.fb.copy:     
         ci    tmp2,80               ; Check line length
-        jle   !
+        jle   edb.line.unpack.fb.copy.doit
         ;------------------------------------------------------
         ; Crash the system
         ;------------------------------------------------------        
@@ -127,7 +130,8 @@ edb.line.unpack.fb.copy:
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
-!       mov   tmp2,@outparm1        ; Length of unpacked line
+edb.line.unpack.fb.copy.doit:        
+        mov   tmp2,@outparm1        ; Length of unpacked line
 
         bl    @xpym2m               ; Copy line to frame buffer
                                     ; \ i  tmp0 = Source address
