@@ -146,6 +146,22 @@ edkey.action.del_line:
         a     @fb.row,@parm1        ; | Line number to delete (base 1)
         inc   @parm1                ; / 
 
+        ;-------------------------------------------------------
+        ; Special handling if at BOT (no real line)
+        ;-------------------------------------------------------
+        c     @parm1,@edb.lines     ; At BOT in editor buffer?
+        jle   edkey.action.del_line.doit 
+                                    ; No, is real line. Continue with delete.
+
+        mov   @fb.topline,@parm1    ; Line to start with (becomes @fb.topline)
+        bl    @fb.refresh           ; Refresh frame buffer with EB content
+                                    ; \ i  @parm1 = Line to start with
+                                    ; /
+        b     @edkey.action.up      ; Move cursor one line up
+        ;-------------------------------------------------------
+        ; Delete line in editor buffer
+        ;-------------------------------------------------------
+edkey.action.del_line.doit:
         bl    @edb.line.del         ; Delete line in editor buffer
                                     ; \ i  @parm1 = Line number to delete
                                     ; /

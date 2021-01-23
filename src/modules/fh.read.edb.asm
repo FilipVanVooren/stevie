@@ -30,7 +30,7 @@ fh.file.read.edb:
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Initialisation
-        ;------------------------------------------------------   
+        ;------------------------------------------------------  
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.kilobytes         ; \ Clear kilobytes processed
@@ -306,9 +306,7 @@ fh.file.read.edb.updindex:
                                     ; |               buffer 
                                     ; | i  parm3    = SAMS page
                                     ; | o  outparm1 = Pointer to updated index
-                                    ; /               entry
-
-        inc   @edb.lines            ; lines=lines+1                
+                                    ; /               entry     
         ;------------------------------------------------------
         ; Step 5: Callback "Read line from file"
         ;------------------------------------------------------
@@ -318,7 +316,8 @@ fh.file.read.edb.display:
         ;------------------------------------------------------
         ; 5a: Next record
         ;------------------------------------------------------
-fh.file.read.edb.next:        
+fh.file.read.edb.next:
+        inc   @edb.lines            ; lines=lines+1                   
         b     @fh.file.read.edb.check_setpage
                                     ; Next record
         ;------------------------------------------------------
@@ -353,12 +352,9 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
+        dec   @edb.lines
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         bl    *tmp0                 ; Run callback function                                    
-
-        mov   @edb.lines,tmp0       ; Get number of lines
-        jeq   fh.file.read.edb.exit ; Exit if lines = 0 
-        dec   @edb.lines            ; One-time adjustment
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

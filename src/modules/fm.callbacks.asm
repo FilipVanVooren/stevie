@@ -159,7 +159,7 @@ fm.loadsave.cb.indicator2.kb:
 
         bl    @putnum
               byte pane.botrow,73   ; Show lines processed
-              data fh.records,rambuf,>3020
+              data edb.lines,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -202,7 +202,7 @@ fm.loadsave.cb.indicator3:
 
         bl    @putnum
               byte pane.botrow,73   ; Show lines processed
-              data fh.records,rambuf,>3020
+              data edb.lines,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
