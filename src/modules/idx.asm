@@ -59,7 +59,7 @@ idx.init:
         ;------------------------------------------------------
         ; Clear all index pages
         ;------------------------------------------------------
-        ai    tmp0,5                ; \ Let's clear all index pages
+        ai    tmp0,4                ; \ Let's clear all index pages
         mov   tmp0,@idx.sams.hipage ; / 
 
         bl    @_idx.sams.mapcolumn.on
@@ -83,18 +83,6 @@ idx.init.exit:
         b     *r11                  ; Return to caller
 
 
-
-***************************************************************
-* _idx.sams.mapcolumn.on
-* Flatten SAMS index pages into continuous memory region.
-* Gives 20 KB of index space (2048 * 5 = 10240 lines for each
-* editor buffer).
-*
-* >b000  1st index page
-* >c000  2nd index page
-* >d000  3rd index page
-* >e000  4th index page
-* >f000  5th index page
 ***************************************************************
 * bl @_idx.sams.mapcolumn.on
 *--------------------------------------------------------------
@@ -111,29 +99,40 @@ _idx.sams.mapcolumn.on:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
 *--------------------------------------------------------------
 * Map index pages into memory window  (b000-ffff)
 *--------------------------------------------------------------
         mov   @idx.sams.lopage,tmp0 ; Get lowest index page
         li    tmp1,idx.top          
+
+        mov   @idx.sams.hipage,tmp2 ; Get highest index page
+        inc   tmp2                  ; +1 loop adjustment
+        s     @idx.sams.lopage,tmp2 ; Set loop counter
         ;-------------------------------------------------------
-        ; Loop over SAMS banks
+        ; Assert
+        ;-------------------------------------------------------      
+        ci    tmp2,5                ; Crash if too many index pages (+1)
+        jle   !
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system     
+        ;-------------------------------------------------------
+        ; Loop over banks
         ;------------------------------------------------------- 
-_idx.sams.mapcolumn.on.loop:
-        bl    @xsams.page.set       ; Set SAMS page
+!       bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0  = SAMS page number
                                     ; / i  tmp1  = Memory address
 
         inc   tmp0                  ; Next SAMS index page
         ai    tmp1,>1000            ; Next memory region
-
-        c     tmp0,@idx.sams.hipage
-        jlt   _idx.sams.mapcolumn.on.loop
-                                    ; Next iteration
+        dec   tmp2                  ; Update loop counter
+        jgt   -!                    ; Next iteration
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 _idx.sams.mapcolumn.on.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop return address
@@ -164,7 +163,7 @@ _idx.sams.mapcolumn.off:
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
 *--------------------------------------------------------------
-* Map index pages into memory window  (b000-?????)
+* Map index pages into memory window  (b000-????)
 *--------------------------------------------------------------
         li    tmp1,idx.top
         li    tmp2,5                ; Always 5 pages
@@ -172,8 +171,7 @@ _idx.sams.mapcolumn.off:
         ;-------------------------------------------------------
         ; Loop over table in memory (@tv.sams.b000:@tv.sams.f000)
         ;------------------------------------------------------- 
-_idx.sams.mapcolumn.off.loop:
-        mov   *tmp3+,tmp0           ; Get SAMS page
+!       mov   *tmp3+,tmp0           ; Get SAMS page
 
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0  = SAMS page number
@@ -181,8 +179,7 @@ _idx.sams.mapcolumn.off.loop:
 
         ai    tmp1,>1000            ; Next memory region
         dec   tmp2                  ; Update loop counter
-        jgt   _idx.sams.mapcolumn.off.loop
-                                    ; Next iteration
+        jgt   -!                    ; Next iteration
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
