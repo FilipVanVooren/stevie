@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie v1.0 (beta 1)'
+txt.about.program  #string 'Stevie v1.0 (beta 2)'
                    even
 txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
 txt.about.author   #string '2018-2021 by Filip Van Vooren'
@@ -70,7 +70,7 @@ txt.filetype.none  equ txt.clear
 txt.head.load      byte 19,1,3,32
                    text 'Open DV80 file '
                    byte 2
-txt.hint.load      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+txt.hint.load      #string 'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
 txt.keys.load      #string 'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
 txt.keys.load2     #string 'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
 
@@ -83,7 +83,7 @@ txt.head.save      byte 19,1,3,32
 txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
                    byte 2
-txt.hint.save      #string 'HINT: Fastmode uses CPU RAM instead of VDP RAM for file buffer.'
+txt.hint.save      #string ' '
 txt.keys.save      #string 'F9=Back    F3=Clear    F-H=Home    F-L=End'
 
 ;--------------------------------------------------------------
@@ -93,7 +93,7 @@ txt.head.unsaved   byte 20,1,3,32
                    text 'Unsaved changes '
                    byte 2
 txt.info.unsaved   #string 'You are about to lose changes to the current file!'
-txt.hint.unsaved   #string 'HINT: Press F6 to proceed without saving or ENTER to save file.'
+txt.hint.unsaved   #string 'Press F6 to proceed without saving or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 
 ;--------------------------------------------------------------
@@ -102,7 +102,7 @@ txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 txt.head.about     byte 10,1,3,32
                    text 'About '
                    byte 2
-txt.hint.about     #string 'HINT: Press F9 or ENTER to return to editor.'
+txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
 txt.keys.about     #string 'F9=Back    ENTER=Back'
 
 ;--------------------------------------------------------------
@@ -122,7 +122,7 @@ txt.cmdb.prompt    #string '>'
 
 txt.stevie         byte    12
                    byte    10
-                   text    'Stevie v1.0 (beta 1)'
+                   text    'Stevie v1.0 (beta 2)'
                    byte    11
                    even            
 
