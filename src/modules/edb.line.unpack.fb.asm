@@ -8,7 +8,7 @@
 *  bl   @edb.line.unpack.fb
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Line to unpack in editor buffer
+* @parm1 = Line to unpack in editor buffer (base 0)
 * @parm2 = Target row in frame buffer
 *--------------------------------------------------------------
 * OUTPUT
@@ -34,19 +34,9 @@ edb.line.unpack.fb:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Assert
-        ;------------------------------------------------------
-        c     @parm1,@edb.lines     ; Beyond editor buffer ?
-        jlt   !                     ; No, so continue
-        ;------------------------------------------------------
-        ; CPU crash
-        ;------------------------------------------------------        
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system     
-        ;------------------------------------------------------
         ; Save parameters
         ;------------------------------------------------------
-!       mov   @parm1,@rambuf       
+        mov   @parm1,@rambuf       
         mov   @parm2,@rambuf+2  
         ;------------------------------------------------------
         ; Calculate offset in frame buffer
@@ -57,9 +47,17 @@ edb.line.unpack.fb:
         a     tmp2,tmp1             ; Add base to offset
         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
         ;------------------------------------------------------
+        ; Return empty row if requested line beyond editor buffer
+        ;------------------------------------------------------
+        c     @parm1,@edb.lines     ; Requested line at BOT?
+        jlt   !                     ; No, continue processing
+        
+        clr   @rambuf+8             ; Set length=0
+        jmp   edb.line.unpack.fb.clear
+        ;------------------------------------------------------
         ; Get pointer to line & page-in editor buffer page
         ;------------------------------------------------------
-        mov   @parm1,tmp0
+!       mov   @parm1,tmp0
         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number
                                     ; | o  outparm1 = Pointer to line
