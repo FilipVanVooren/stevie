@@ -330,8 +330,8 @@ fh.file.read.edb.next:
         inc   @edb.lines            ; lines=lines+1                   
 
         mov   @edb.lines,tmp0
-        ci    tmp0,2048 * 5         ; Maximum line in index reached?
-        jlt   fh.file.read.edb.next.do_it
+        ci    tmp0,10200            ; Maximum line in index reached?
+        jle   fh.file.read.edb.next.do_it
                                     ; Not yet, next record
         ;------------------------------------------------------
         ; 5b: Index memory full. Close file and exit
