@@ -110,6 +110,7 @@ txt.keys.about     #string 'F9=Back    ENTER=Back'
 ;--------------------------------------------------------------
 txt.ioerr.load     #string 'I/O error. Failed loading file: '
 txt.ioerr.save     #string 'I/O error. Failed saving file: '
+txt.memfull.load   #string 'Index memory full. Could not fully load file into editor buffer.'
 txt.io.nofile      #string 'I/O error. No filename specified.'
 txt.block.inside   #string 'Error. Copy/Move target must be outside block M1-M2.'
 

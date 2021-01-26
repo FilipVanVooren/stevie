@@ -87,6 +87,9 @@ fm.loadfile:
         li    tmp0,fm.loadsave.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
+        li    tmp0,fm.load.cb.memfull
+        mov   tmp0,@parm6           ; Register callback 5
+
         bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
@@ -97,7 +100,9 @@ fm.loadfile:
                                     ; | i  @parm4 = Pointer to callback
                                     ; |             "Close file"
                                     ; | i  @parm5 = Pointer to callback 
-                                    ; /             "File I/O error"
+                                    ; |             "File I/O error"
+                                    ; | i  @parm6 = Pointer to callback
+                                    ; /             "Memory full error"
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.

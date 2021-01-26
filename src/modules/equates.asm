@@ -293,9 +293,10 @@ fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 88  ; Kilobytes processed (previous)
-fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +170  ; End of structure
+fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
+fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
+fh.membuffer      equ  fh.struct + 92  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +172  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------

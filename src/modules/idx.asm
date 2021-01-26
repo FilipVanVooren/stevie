@@ -106,17 +106,7 @@ _idx.sams.mapcolumn.on:
 *--------------------------------------------------------------
         mov   @idx.sams.lopage,tmp0 ; Get lowest index page
         li    tmp1,idx.top          
-
-        mov   @idx.sams.hipage,tmp2 ; Get highest index page
-        inc   tmp2                  ; +1 loop adjustment
-        s     @idx.sams.lopage,tmp2 ; Set loop counter
-        ;-------------------------------------------------------
-        ; Assert
-        ;-------------------------------------------------------      
-        ci    tmp2,5                ; Crash if too many index pages (+1)
-        jle   !
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system     
+        li    tmp2,5                ; Set loop counter. all pages of index
         ;-------------------------------------------------------
         ; Loop over banks
         ;------------------------------------------------------- 
