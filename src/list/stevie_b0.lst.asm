@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210127-464568
+0009               * File: stevie_b0.asm               ; Version 210127-466390
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -364,7 +364,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0334               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0335               *--------------------------------------------------------------
 0336      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -401,7 +401,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.0 (BETA 2)'
 0017                       even
 0018               
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0029               
 0030               
 0031               ***************************************************************
@@ -1192,7 +1192,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210127-464568'
+0260 624D ....             text  'Build-ID  210127-466390'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5076,7 +5076,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0099                                                   ; Spectra 2
 0100                       ;------------------------------------------------------
 0101                       ; End of File marker
@@ -6406,7 +6406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0031               
 0032               txt.about.build
 0033 755A 1442             byte  20
-0034 755B ....             text  'Build: 210127-464568'
+0034 755B ....             text  'Build: 210127-466390'
 0035                       even
 0036               
 0037               
@@ -6816,7 +6816,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A96 BEEF 
      7A98 DEAD 
      7A9A BEEF 
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0129               
 0133 7A9C 3A32                   data $                ; Bank 0 ROM size OK.
 0135                       ;-----------------------------------------------------------------------
@@ -6868,7 +6868,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.464568
+**** **** ****     > stevie_b0.asm.466390
 0147               
 0148               
 0149               *--------------------------------------------------------------
