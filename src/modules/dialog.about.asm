@@ -18,6 +18,9 @@ dialog.about:
         li    tmp0,txt.head.about
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
+        li    tmp0,txt.info.about
+        mov   tmp0,@cmdb.paninfo    ; Info line
+
         li    tmp0,txt.hint.about
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
@@ -76,49 +79,21 @@ dialog.about.content:
         ; Show About dialog
         ;------------------------------------------------------
         bl    @hchar
-              byte 2,20,1,40
-              byte 9,20,1,40          
+              byte 0,22,16,1
+              byte 0,57,16,1
               data EOL
 
         bl    @putat      
               byte   0,1
               data   txt.about.program
-              
+
         bl    @putat      
-              byte   3,22
-              data   txt.about.purpose
-        bl    @putat      
-              byte   4,25
+              byte   0,26
               data   txt.about.author
+
         bl    @putat      
-              byte   6,26
-              data   txt.about.website
-        bl    @putat      
-              byte   8,29
+              byte   0,59
               data   txt.about.build
-
-        bl    @putat      
-              byte   14,3
-              data   txt.about.msg1
-        bl    @putat      
-              byte   15,3
-              data   txt.about.msg2
-        bl    @putat      
-              byte   16,3
-              data   txt.about.msg3
-        bl    @putat      
-              byte   14,50
-              data   txt.about.msg4
-        bl    @putat      
-              byte   15,50
-              data   txt.about.msg5
-        bl    @putat      
-              byte   16,50
-              data   txt.about.msg6
-
-        bl    @putat      
-              byte   18,10
-              data   txt.about.msg7
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -10,24 +10,9 @@
 ;--------------------------------------------------------------
 txt.about.program  #string 'Stevie v1.0 (beta 2)'
                    even
-txt.about.purpose  #string 'Programming Editor for the TI-99/4a'
-txt.about.author   #string '2018-2021 by Filip Van Vooren'
+txt.about.author   #string '2018-2021  Filip Van Vooren'
 txt.about.website  #string 'https://stevie.oratronik.de'
 txt.about.build    #string 'Build: %%build_date%%'
-
-txt.about.msg1     #string 'fctn-7 (F7)   Help, shortcuts, about'
-txt.about.msg2     #string 'fctn-9 (F9)   Toggle edit/cmd mode'
-txt.about.msg3     #string 'fctn-+        Quit Stevie'
-txt.about.msg4     #string 'CTRL-O (^O)   Open DV80 file'
-txt.about.msg5     #string 'CTRL-S (^S)   Save DV80 file'
-txt.about.msg6     #string 'CTRL-Z (^Z)   Cycle colors'
-
-txt.about.msg7     byte    56,15
-                   text    ' ALPHA LOCK up     '
-                   byte    14
-                   text    ' ALPHA LOCK down   '
-                   text    '  * Text changed'
-
 
 ;--------------------------------------------------------------
 ; Strings for status line pane
@@ -102,8 +87,14 @@ txt.keys.unsaved   #string 'F9=Back    F6=Proceed    ENTER=Save file'
 txt.head.about     byte 10,1,3,32
                    text 'About '
                    byte 2
+
+txt.info.about     #string 'A programming editor for the expanded Texas Instruments TI-99/4a Home Computer.'
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     #string 'F9=Back    ENTER=Back'
+txt.keys.about     byte 51
+                   text 'F9=Back    ENTER=Back   ALPHA UP= '
+                   byte 15
+                   text '   ALPHA DOWN= '
+                   byte 14
 
 ;--------------------------------------------------------------
 ; Strings for error line pane
