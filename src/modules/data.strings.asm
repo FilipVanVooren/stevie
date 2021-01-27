@@ -90,10 +90,10 @@ txt.head.about     byte 10,1,3,32
 
 txt.info.about     #string 'A programming editor for the expanded Texas Instruments TI-99/4a Home Computer.'
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     byte 51
-                   text 'F9=Back    ENTER=Back   ALPHA UP= '
+txt.keys.about     byte 61
+                   text 'F9=Back    ENTER=Back   ALPHA LOCK up= '
                    byte 15
-                   text '   ALPHA DOWN= '
+                   text '   ALPHA LOCK down= '
                    byte 14
 
 ;--------------------------------------------------------------

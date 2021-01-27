@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210127-495896
+0009               * File: stevie_b0.asm               ; Version 210127-498203
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -364,7 +364,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0334               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0335               *--------------------------------------------------------------
 0336      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -401,7 +401,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.0 (BETA 2)'
 0017                       even
 0018               
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0029               
 0030               
 0031               ***************************************************************
@@ -1192,7 +1192,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210127-495896'
+0260 624D ....             text  'Build-ID  210127-498203'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5076,7 +5076,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0099                                                   ; Spectra 2
 0100                       ;------------------------------------------------------
 0101                       ; End of File marker
@@ -6401,7 +6401,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026               
 0027               txt.about.build
 0028 7534 1442             byte  20
-0029 7535 ....             text  'Build: 210127-495896'
+0029 7535 ....             text  'Build: 210127-498203'
 0030                       even
 0031               
 0032               
@@ -6610,38 +6610,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0230 7879 ....             text  'Press F9 or ENTER to return to editor.'
 0231                       even
 0232               
-0233 78A0 3346     txt.keys.about     byte 51
-0234 78A1 ....                        text 'F9=Back    ENTER=Back   ALPHA UP= '
-0235                                  byte 15
-0236 78C4 ....                        text '   ALPHA DOWN= '
+0233 78A0 3D46     txt.keys.about     byte 61
+0234 78A1 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK up= '
+0235 78C8 0F20                        byte 15
+0236 78C9 ....                        text '   ALPHA LOCK down= '
 0237                                  byte 14
 0238               
 0239               ;--------------------------------------------------------------
 0240               ; Strings for error line pane
 0241               ;--------------------------------------------------------------
 0242               txt.ioerr.load
-0243 78D4 2049             byte  32
-0244 78D5 ....             text  'I/O error. Failed loading file: '
+0243 78DE 2049             byte  32
+0244 78DF ....             text  'I/O error. Failed loading file: '
 0245                       even
 0246               
 0247               txt.ioerr.save
-0248 78F6 1F49             byte  31
-0249 78F7 ....             text  'I/O error. Failed saving file: '
+0248 7900 1F49             byte  31
+0249 7901 ....             text  'I/O error. Failed saving file: '
 0250                       even
 0251               
 0252               txt.memfull.load
-0253 7916 4049             byte  64
-0254 7917 ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0253 7920 4049             byte  64
+0254 7921 ....             text  'Index memory full. Could not fully load file into editor buffer.'
 0255                       even
 0256               
 0257               txt.io.nofile
-0258 7958 2149             byte  33
-0259 7959 ....             text  'I/O error. No filename specified.'
+0258 7962 2149             byte  33
+0259 7963 ....             text  'I/O error. No filename specified.'
 0260                       even
 0261               
 0262               txt.block.inside
-0263 797A 3445             byte  52
-0264 797B ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0263 7984 3445             byte  52
+0264 7985 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
 0265                       even
 0266               
 0267               
@@ -6650,25 +6650,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0270               ; Strings for command buffer
 0271               ;--------------------------------------------------------------
 0272               txt.cmdb.title
-0273 79B0 0E43             byte  14
-0274 79B1 ....             text  'Command buffer'
+0273 79BA 0E43             byte  14
+0274 79BB ....             text  'Command buffer'
 0275                       even
 0276               
 0277               txt.cmdb.prompt
-0278 79C0 013E             byte  1
-0279 79C1 ....             text  '>'
+0278 79CA 013E             byte  1
+0279 79CB ....             text  '>'
 0280                       even
 0281               
 0282               
-0283 79C2 0C0A     txt.stevie         byte    12
+0283 79CC 0C0A     txt.stevie         byte    12
 0284                                  byte    10
-0285 79C4 ....                        text    'Stevie v1.0 (beta 2)'
-0286 79D8 0B00                        byte    11
+0285 79CE ....                        text    'Stevie v1.0 (beta 2)'
+0286 79E2 0B00                        byte    11
 0287                                  even
 0288               
 0289               txt.colorscheme
-0290 79DA 0D43             byte  13
-0291 79DB ....             text  'Color scheme:'
+0290 79E4 0D43             byte  13
+0291 79E5 ....             text  'Color scheme:'
 0292                       even
 0293               
 **** **** ****     > ram.resident.3000.asm
@@ -6775,17 +6775,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 79E8 DEAD             data  >dead,>beef,>dead,>beef
-     79EA BEEF 
-     79EC DEAD 
-     79EE BEEF 
-**** **** ****     > stevie_b0.asm.495896
+0022 79F2 DEAD             data  >dead,>beef,>dead,>beef
+     79F4 BEEF 
+     79F6 DEAD 
+     79F8 BEEF 
+**** **** ****     > stevie_b0.asm.498203
 0129               
-0133 79F0 3986                   data $                ; Bank 0 ROM size OK.
+0133 79FA 3990                   data $                ; Bank 0 ROM size OK.
 0135                       ;-----------------------------------------------------------------------
 0136                       ; Bank specific vector table
 0137                       ;-----------------------------------------------------------------------
-0141 79F2 3988                   data $                ; Bank 0 ROM size OK.
+0141 79FC 3992                   data $                ; Bank 0 ROM size OK.
 0143                       ;-------------------------------------------------------
 0144                       ; Vector table bank 0: >7f9c - >7fff
 0145                       ;-------------------------------------------------------
@@ -6831,7 +6831,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.495896
+**** **** ****     > stevie_b0.asm.498203
 0147               
 0148               
 0149               *--------------------------------------------------------------
