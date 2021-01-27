@@ -34,26 +34,11 @@ fm.loadfile:
 
         seto  @outparm1             ; \ 
         jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
-        ;-------------------------------------------------------
-        ; Reset editor
-        ;-------------------------------------------------------
-!       bl    @tv.reset             ; Reset editor
-        ;-------------------------------------------------------
-        ; Change filename
-        ;-------------------------------------------------------
-        mov   @parm1,tmp0           ; Source address
-        li    tmp1,edb.filename     ; Target address
-        li    tmp2,80               ; Number of bytes to copy
-        mov   tmp1,@edb.filename.ptr
-                                    ; Set filename
 
-        bl    @xpym2m               ; tmp0 = Memory source address
-                                    ; tmp1 = Memory target address
-                                    ; tmp2 = Number of bytes to copy
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
-        bl    @filv
+!       bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
         mov   @fb.scrrows.max,tmp1
@@ -72,6 +57,23 @@ fm.loadfile:
 
         bl    @pane.action.colorscheme.load
                                     ; Load color scheme and turn on screen
+
+        ;-------------------------------------------------------
+        ; Reset editor
+        ;-------------------------------------------------------
+        bl    @tv.reset             ; Reset editor
+        ;-------------------------------------------------------
+        ; Change filename
+        ;-------------------------------------------------------
+        mov   @parm1,tmp0           ; Source address
+        li    tmp1,edb.filename     ; Target address
+        li    tmp2,80               ; Number of bytes to copy
+        mov   tmp1,@edb.filename.ptr
+                                    ; Set filename
+
+        bl    @xpym2m               ; tmp0 = Memory source address
+                                    ; tmp1 = Memory target address
+                                    ; tmp2 = Number of bytes to copy        
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
