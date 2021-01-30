@@ -55,9 +55,18 @@ fm.loadfile:
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Bytes to copy
 
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+
+
+        seto  @parm2                ; Skip marked lines colorization
         bl    @pane.action.colorscheme.load
                                     ; Load color scheme and turn on screen
 
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
         ;-------------------------------------------------------
         ; Reset editor
         ;-------------------------------------------------------

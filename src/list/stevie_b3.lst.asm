@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 210130-53473
+0009               * File: stevie_b1.asm               ; Version 210130-70307
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -365,7 +365,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -402,7 +402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.0 (BETA 2)'
 0017                       even
 0018               
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1122,7 +1122,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1642             byte  22
-0260 21D3 ....             text  'Build-ID  210130-53473'
+0260 21D3 ....             text  'Build-ID  210130-70307'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5006,7 +5006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6257,46 +6257,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0144               tv.colorscheme.table:
 0145               ;                              ; #
 0146               ;       ABCD  EFGH  IJKL  MNOP ; -
-0147 3434 F417      data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with inversed cyan status lines
+0147 3434 F417      data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
      3436 F171 
      3438 1B1F 
      343A 7100 
-0148 343C A11A      data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black with inversed status lines
+0148 343C A11A      data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
      343E F0FF 
      3440 1F1A 
      3442 F100 
-0149 3444 2112      data  >2112,>f0ff,>1b12,>f100 ; 3  Dark green on black with inversed status lines
+0149 3444 2112      data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
      3446 F0FF 
-     3448 1B12 
+     3448 1F12 
      344A F100 
-0150 344C F41F      data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue with inversed white status lines
+0150 344C F41F      data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
      344E 1E11 
      3450 1A17 
      3452 1E00 
-0151 3454 E11E      data  >e11e,>e10f,>1b1e,>e100 ; 5  Grey on black with inversed status lines
-     3456 E10F 
-     3458 1B1E 
+0151 3454 E11E      data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
+     3456 E1FF 
+     3458 1F1E 
      345A E100 
-0152 345C 1771      data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan with inversed status lines
+0152 345C 1771      data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
      345E 1016 
      3460 1B71 
      3462 1700 
-0153 3464 1FF1      data  >1ff1,>1001,>1bf1,>1f00 ; 7  Black on white with inversed status lines
-     3466 1001 
-     3468 1BF1 
+0153 3464 1FF1      data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
+     3466 1011 
+     3468 F1F1 
      346A 1F00 
-0154 346C 1AF1      data  >1af1,>a1ff,>1b1a,>f100 ; 8  Black on dark cellow with
+0154 346C 1AF1      data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow
      346E A1FF 
-     3470 1B1A 
+     3470 1F1F 
      3472 F100 
-0155 3474 21F0      data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black with white status lines
+0155 3474 21F0      data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
      3476 12FF 
      3478 1B12 
      347A 1200 
-0156 347C F1F0      data  >f1f0,>12ff,>1b12,>1200 ; 10 Dark green on black with white status lines
-     347E 12FF 
-     3480 1B12 
-     3482 1200 
+0156 347C F5F1      data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
+     347E E1FF 
+     3480 1B1F 
+     3482 F100 
 0157               
 **** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.strings.asm"       ; Data segment - Strings
@@ -6319,7 +6319,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016                                  even
 0017               txt.about.build
 0018 34B8 4E42             byte  78
-0019 34B9 ....             text  'Build: 210130-53473 / 2018-2021 Filip Van Vooren / https://stevie.oratronik.de'
+0019 34B9 ....             text  'Build: 210130-70307 / 2018-2021 Filip Van Vooren / https://stevie.oratronik.de'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
@@ -6693,7 +6693,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      394C BEEF 
      394E DEAD 
      3950 BEEF 
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6826,7 +6826,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0097 6722 ....             text '   Ctrl z (^z)    Cycle color schemes    |                                      '
 0098 6772 ....             text '   Ctrl , (^,)    Load previous file     |                                      '
 0099 67C2 ....             text '   Ctrl . (^.)    Load next file         |                                      '
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0074                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -6926,7 +6926,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0077 6868 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0078 686A C2F9  30         mov   *stack+,r11           ; Pop R11
 0079 686C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0075                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7038,7 +7038,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0082 68DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0083 68DC C2F9  30         mov   *stack+,r11           ; Pop R11
 0084 68DE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0076                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7103,7 +7103,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0049 6914 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0050 6916 C2F9  30         mov   *stack+,r11           ; Pop R11
 0051 6918 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0077                       ;-----------------------------------------------------------------------
 0078                       ; Stubs using trampoline
 0079                       ;-----------------------------------------------------------------------
@@ -7219,7 +7219,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103                       ;------------------------------------------------------
 0104 6970 C2F9  30         mov   *stack+,r11           ; Pop r11
 0105 6972 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0081                       ;-----------------------------------------------------------------------
 0082                       ; Bank specific vector table
 0083                       ;-----------------------------------------------------------------------
@@ -7269,7 +7269,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.53473
+**** **** ****     > stevie_b3.asm.70307
 0093               
 0094               *--------------------------------------------------------------
 0095               * Video mode configuration

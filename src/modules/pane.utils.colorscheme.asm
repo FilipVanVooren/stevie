@@ -81,6 +81,7 @@ pane.action.colorscheme.cycle.exit:
 * INPUT
 * @tv.colorscheme = Index into color scheme table
 * @parm1          = Skip screen off if >FFFF
+* @parm2          = Skip colorizing marked lines if >FFFF
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -166,6 +167,12 @@ pane.action.colorscheme.load:
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
+        ;-------------------------------------------------------
+        ; Colorize marked lines
+        ;-------------------------------------------------------
+        mov   @parm2,tmp0
+        ci    tmp0,>ffff            ; Skip colorize flag is on?
+        jeq   pane.action.colorscheme.cmdbpane
 
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
         bl    @fb.colorlines
