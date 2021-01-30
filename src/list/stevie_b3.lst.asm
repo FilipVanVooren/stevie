@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 210130-76757
+0009               * File: stevie_b1.asm               ; Version 210130-80763
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -365,7 +365,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -402,7 +402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.0 (BETA 2)'
 0017                       even
 0018               
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1122,7 +1122,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1642             byte  22
-0260 21D3 ....             text  'Build-ID  210130-76757'
+0260 21D3 ....             text  'Build-ID  210130-80763'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5006,7 +5006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6319,7 +6319,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016                                  even
 0017               txt.about.build
 0018 34B8 3042             byte  48
-0019 34B9 ....             text  'Build: 210130-76757 / 2018-2021 Filip Van Vooren'
+0019 34B9 ....             text  'Build: 210130-80763 / 2018-2021 Filip Van Vooren'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
@@ -6545,23 +6545,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0237                       even
 0238               
 0239               txt.ioerr.save
-0240 3852 1F49             byte  31
-0241 3853 ....             text  'I/O error. Failed saving file: '
+0240 3852 2049             byte  32
+0241 3853 ....             text  'I/O error. Failed saving file:  '
 0242                       even
 0243               
 0244               txt.memfull.load
-0245 3872 4049             byte  64
-0246 3873 ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0245 3874 4049             byte  64
+0246 3875 ....             text  'Index memory full. Could not fully load file into editor buffer.'
 0247                       even
 0248               
 0249               txt.io.nofile
-0250 38B4 2149             byte  33
-0251 38B5 ....             text  'I/O error. No filename specified.'
+0250 38B6 2149             byte  33
+0251 38B7 ....             text  'I/O error. No filename specified.'
 0252                       even
 0253               
 0254               txt.block.inside
-0255 38D6 3445             byte  52
-0256 38D7 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0255 38D8 3445             byte  52
+0256 38D9 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
 0257                       even
 0258               
 0259               
@@ -6570,19 +6570,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0262               ; Strings for command buffer
 0263               ;--------------------------------------------------------------
 0264               txt.cmdb.title
-0265 390C 0E43             byte  14
-0266 390D ....             text  'Command buffer'
+0265 390E 0E43             byte  14
+0266 390F ....             text  'Command buffer'
 0267                       even
 0268               
 0269               txt.cmdb.prompt
-0270 391C 013E             byte  1
-0271 391D ....             text  '>'
+0270 391E 013E             byte  1
+0271 391F ....             text  '>'
 0272                       even
 0273               
 0274               
 0275               txt.colorscheme
-0276 391E 0D43             byte  13
-0277 391F ....             text  'Color scheme:'
+0276 3920 0D43             byte  13
+0277 3921 ....             text  'Color scheme:'
 0278                       even
 0279               
 **** **** ****     > ram.resident.3000.asm
@@ -6689,11 +6689,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 392C DEAD             data  >dead,>beef,>dead,>beef
-     392E BEEF 
-     3930 DEAD 
-     3932 BEEF 
-**** **** ****     > stevie_b3.asm.76757
+0022 392E DEAD             data  >dead,>beef,>dead,>beef
+     3930 BEEF 
+     3932 DEAD 
+     3934 BEEF 
+**** **** ****     > stevie_b3.asm.80763
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6821,12 +6821,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0092 6592 ....             text '   Fctn +         Quit editor            |      Ctrl c (^c)   Copy block        '
 0093 65E2 ....             text '   Ctrl o (^o)    Open file              |      Ctrl g (^g)   Goto marker M1    '
 0094 6632 ....             text '   Ctrl s (^s)    Save file              |      Ctrl m (^m)   Move block        '
-0095 6682 ....             text '   Ctrl m (^m)    Set M1/M2 marker       |      Ctrl s (^s)   Save block to file'
+0095 6682 ....             text '   Ctrl v (^v)    Set M1/M2 marker       |      Ctrl s (^s)   Save block to file'
 0096 66D2 ....             text '   Ctrl r (^r)    Reset M1/M2 markers    |                                      '
 0097 6722 ....             text '   Ctrl z (^z)    Cycle color schemes    |                                      '
 0098 6772 ....             text '   Ctrl , (^,)    Load previous file     |                                      '
 0099 67C2 ....             text '   Ctrl . (^.)    Load next file         |                                      '
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0074                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -6926,7 +6926,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0077 6868 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0078 686A C2F9  30         mov   *stack+,r11           ; Pop R11
 0079 686C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0075                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7038,7 +7038,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0082 68DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0083 68DC C2F9  30         mov   *stack+,r11           ; Pop R11
 0084 68DE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0076                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7103,7 +7103,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0049 6914 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0050 6916 C2F9  30         mov   *stack+,r11           ; Pop R11
 0051 6918 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0077                       ;-----------------------------------------------------------------------
 0078                       ; Stubs using trampoline
 0079                       ;-----------------------------------------------------------------------
@@ -7219,7 +7219,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103                       ;------------------------------------------------------
 0104 6970 C2F9  30         mov   *stack+,r11           ; Pop r11
 0105 6972 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0081                       ;-----------------------------------------------------------------------
 0082                       ; Bank specific vector table
 0083                       ;-----------------------------------------------------------------------
@@ -7269,7 +7269,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.76757
+**** **** ****     > stevie_b3.asm.80763
 0093               
 0094               *--------------------------------------------------------------
 0095               * Video mode configuration

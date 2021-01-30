@@ -237,7 +237,7 @@ fm.loadsave.cb.fioerr:
         ;------------------------------------------------------
         bl    @hchar
               byte pane.botrow,0,32,50
-              data EOL              ; Erase loading indicator
+              data EOL              ; Erase loading/saving indicator
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
         ci    tmp0,fh.fopmode.writefile
@@ -263,7 +263,7 @@ fm.loadsave.cb.fioerr.mgs2:
         ; Add filename to error message
         ;------------------------------------------------------        
 fm.loadsave.cb.fioerr.mgs3:
-        mov   @edb.filename.ptr,tmp0
+        mov   @fh.fname.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
 
