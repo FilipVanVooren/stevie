@@ -24,21 +24,8 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 ********|*****|*********************|**************************
 bankid  equ   bank0                 ; Set bank identifier to current bank
         aorg  >6000
-        save  >6000,>7fff           ; Save bank 0 (1st bank)
-*--------------------------------------------------------------
-* Cartridge header
-********|*****|*********************|**************************
-        byte  >aa,1,1,0,0,0
-        data  $+10
-        byte  0,0,0,0,0,0,0,0
-        data  0                     ; No more items following
-        data  kickstart.code1
-
-        .ifdef debug
-              #string 'STEVIE 1.0 (BETA 1)'
-        .else
-              #string 'STEVIE 1.0 (BETA 1)'
-        .endif   
+        save  >6000,>7fff           ; Save bank
+        copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)

@@ -34,26 +34,11 @@ fm.loadfile:
 
         seto  @outparm1             ; \ 
         jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
-        ;-------------------------------------------------------
-        ; Reset editor
-        ;-------------------------------------------------------
-!       bl    @tv.reset             ; Reset editor
-        ;-------------------------------------------------------
-        ; Change filename
-        ;-------------------------------------------------------
-        mov   @parm1,tmp0           ; Source address
-        li    tmp1,edb.filename     ; Target address
-        li    tmp2,80               ; Number of bytes to copy
-        mov   tmp1,@edb.filename.ptr
-                                    ; Set filename
 
-        bl    @xpym2m               ; tmp0 = Memory source address
-                                    ; tmp1 = Memory target address
-                                    ; tmp2 = Number of bytes to copy
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
-        bl    @filv
+!       bl    @filv
               data sprsat,>0000,4   ; Turn off sprites (cursor)
 
         mov   @fb.scrrows.max,tmp1
@@ -69,9 +54,37 @@ fm.loadfile:
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Bytes to copy
+        ;-------------------------------------------------------
+        ; Reload colorscheme
+        ;-------------------------------------------------------
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
 
+
+        seto  @parm2                ; Skip marked lines colorization
         bl    @pane.action.colorscheme.load
                                     ; Load color scheme and turn on screen
+
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
+        ;-------------------------------------------------------
+        ; Reset editor
+        ;-------------------------------------------------------
+        bl    @tv.reset             ; Reset editor
+        ;-------------------------------------------------------
+        ; Change filename
+        ;-------------------------------------------------------
+        mov   @parm1,tmp0           ; Source address
+        li    tmp1,edb.filename     ; Target address
+        li    tmp2,80               ; Number of bytes to copy
+        mov   tmp1,@edb.filename.ptr
+                                    ; Set filename
+
+        bl    @xpym2m               ; tmp0 = Memory source address
+                                    ; tmp1 = Memory target address
+                                    ; tmp2 = Number of bytes to copy        
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
@@ -87,6 +100,9 @@ fm.loadfile:
         li    tmp0,fm.loadsave.cb.fioerr
         mov   tmp0,@parm5           ; Register callback 4
 
+        li    tmp0,fm.load.cb.memfull
+        mov   tmp0,@parm6           ; Register callback 5
+
         bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
@@ -97,7 +113,9 @@ fm.loadfile:
                                     ; | i  @parm4 = Pointer to callback
                                     ; |             "Close file"
                                     ; | i  @parm5 = Pointer to callback 
-                                    ; /             "File I/O error"
+                                    ; |             "File I/O error"
+                                    ; | i  @parm6 = Pointer to callback
+                                    ; /             "Memory full error"
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.

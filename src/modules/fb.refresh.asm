@@ -49,8 +49,8 @@ fb.refresh.unpack_line:
         ;------------------------------------------------------
         ; Last row in editor buffer reached ?
         ;------------------------------------------------------
-        c     @parm1,@edb.lines     
-        jgt   fb.refresh.erase_eob  ; yes, erase until end of frame buffer
+        c     @parm1,@edb.lines     ; BOT reached?
+        jeq   fb.refresh.erase_eob  ; yes, erase until end of frame buffer
 
         c     @parm2,@fb.scrrows 
         jlt   fb.refresh.unpack_line

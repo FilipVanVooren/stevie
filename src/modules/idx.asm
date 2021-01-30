@@ -56,13 +56,24 @@ idx.init:
         mov   @tv.sams.b000,tmp0    
         mov   tmp0,@idx.sams.page   ; Set current SAMS page
         mov   tmp0,@idx.sams.lopage ; Set 1st SAMS page
-        mov   tmp0,@idx.sams.hipage ; Set last SAMS page
         ;------------------------------------------------------
-        ; Clear index page
+        ; Clear all index pages
         ;------------------------------------------------------
+        ai    tmp0,4                ; \ Let's clear all index pages
+        mov   tmp0,@idx.sams.hipage ; / 
+
+        bl    @_idx.sams.mapcolumn.on
+                                    ; Index in continuous memory region                
+
         bl    @film
-              data idx.top,>00,idx.size  
+              data idx.top,>00,idx.size * 5
                                     ; Clear index
+
+        bl    @_idx.sams.mapcolumn.off 
+                                    ; Restore memory window layout
+
+        mov   @idx.sams.lopage,@idx.sams.hipage 
+                                    ; Reset last SAMS page                                    
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -72,18 +83,6 @@ idx.init.exit:
         b     *r11                  ; Return to caller
 
 
-
-***************************************************************
-* _idx.sams.mapcolumn.on
-* Flatten SAMS index pages into continuous memory region.
-* Gives 20 KB of index space (2048 * 5 = 10240 lines for each
-* editor buffer).
-*
-* >b000  1st index page
-* >c000  2nd index page
-* >d000  3rd index page
-* >e000  4th index page
-* >f000  5th index page
 ***************************************************************
 * bl @_idx.sams.mapcolumn.on
 *--------------------------------------------------------------
@@ -107,17 +106,7 @@ _idx.sams.mapcolumn.on:
 *--------------------------------------------------------------
         mov   @idx.sams.lopage,tmp0 ; Get lowest index page
         li    tmp1,idx.top          
-
-        mov   @idx.sams.hipage,tmp2 ; Get highest index page
-        inc   tmp2                  ; +1 loop adjustment
-        s     @idx.sams.lopage,tmp2 ; Set loop counter
-        ;-------------------------------------------------------
-        ; Assert
-        ;-------------------------------------------------------      
-        ci    tmp2,5                ; Crash if too many index pages
-        jlt   !
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system     
+        li    tmp2,5                ; Set loop counter. all pages of index
         ;-------------------------------------------------------
         ; Loop over banks
         ;------------------------------------------------------- 
@@ -164,7 +153,7 @@ _idx.sams.mapcolumn.off:
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
 *--------------------------------------------------------------
-* Map index pages into memory window  (b000-?????)
+* Map index pages into memory window  (b000-????)
 *--------------------------------------------------------------
         li    tmp1,idx.top
         li    tmp2,5                ; Always 5 pages

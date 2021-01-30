@@ -202,7 +202,7 @@ fm.loadsave.cb.indicator3:
 
         bl    @putnum
               byte pane.botrow,73   ; Show lines processed
-              data fh.records,rambuf,>3020
+              data edb.lines,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -237,7 +237,7 @@ fm.loadsave.cb.fioerr:
         ;------------------------------------------------------
         bl    @hchar
               byte pane.botrow,0,32,50
-              data EOL              ; Erase loading indicator
+              data EOL              ; Erase loading/saving indicator
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
         ci    tmp0,fh.fopmode.writefile
@@ -263,7 +263,7 @@ fm.loadsave.cb.fioerr.mgs2:
         ; Add filename to error message
         ;------------------------------------------------------        
 fm.loadsave.cb.fioerr.mgs3:
-        mov   @edb.filename.ptr,tmp0
+        mov   @fh.fname.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte
         srl   tmp2,8                ; Right align
 
@@ -278,9 +278,7 @@ fm.loadsave.cb.fioerr.mgs3:
         bl    @xpym2m               ; \ Copy CPU memory to CPU memory
                                     ; | i  tmp0 = ROM/RAM source
                                     ; | i  tmp1 = RAM destination
-                                    ; / i  tmp2 = Bytes to copy
-
-        
+                                    ; / i  tmp2 = Bytes to copy        
         ;------------------------------------------------------
         ; Reset filename to "new file" 
         ;------------------------------------------------------
@@ -316,3 +314,48 @@ fm.loadsave.cb.fioerr.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
+
+
+
+
+*---------------------------------------------------------------
+* Callback function "Memory full" error handler
+* Memory full error
+*---------------------------------------------------------------
+* Registered as pointer in @fh.callback5
+*---------------------------------------------------------------
+fm.load.cb.memfull:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack                          
+        mov   @parm1,*stack         ; Push @parm1
+        ;------------------------------------------------------
+        ; Prepare for error message
+        ;------------------------------------------------------
+        bl    @hchar
+              byte pane.botrow,0,32,50
+              data EOL              ; Erase loading indicator
+        ;------------------------------------------------------
+        ; Failed loading file
+        ;------------------------------------------------------
+        bl    @cpym2m               
+              data txt.memfull.load
+              data tv.error.msg
+              data 66               ; Error message
+        ;------------------------------------------------------
+        ; Display memory full error message
+        ;------------------------------------------------------
+        bl    @pane.errline.show    ; Show error line
+
+        mov   @tv.color,@parm1      ; Set normal color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status lines
+                                    ; \ i  @parm1 = Color combination
+                                    ; / 
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+fm.load.cb.memfull.exit:
+        mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller        

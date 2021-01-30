@@ -8,7 +8,7 @@
 *  bl   @edb.line.getlength
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Line number
+* @parm1 = Line number (base 0)
 *--------------------------------------------------------------
 * OUTPUT
 * @outparm1 = Length of line
@@ -30,9 +30,19 @@ edb.line.getlength:
         clr   @outparm1             ; Reset length
         clr   @outparm2             ; Reset SAMS bank
         ;------------------------------------------------------
+        ; Exit if requested line beyond editor buffer
+        ;------------------------------------------------------
+        mov   @parm1,tmp0           ; \ 
+        inc   tmp0                  ; /  base 1
+
+        c     tmp0,@edb.lines       ; Requested line at BOT?
+        jlt   !                     ; No, continue processing
+        jmp   edb.line.getlength.null
+                                    ; Set length 0 and exit early
+        ;------------------------------------------------------
         ; Map SAMS page
         ;------------------------------------------------------
-        mov   @parm1,tmp0           ; Get line
+!       mov   @parm1,tmp0           ; Get line
 
         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
                                     ; \ i  tmp0     = Line number

@@ -18,6 +18,9 @@ dialog.about:
         li    tmp0,txt.head.about
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
+        li    tmp0,txt.about.build
+        mov   tmp0,@cmdb.paninfo    ; Info line
+
         li    tmp0,txt.hint.about
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
@@ -30,9 +33,6 @@ dialog.about.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
                
-
-
-
 
 
 ***************************************************************
@@ -51,82 +51,49 @@ dialog.about.content:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
         mov   @wyx,*stack           ; Push cursor position
-        ;-------------------------------------------------------
-        ; Clear VDP screen buffer
-        ;-------------------------------------------------------
-        mov   @fb.scrrows,tmp1
-        mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
-                                    ; 16 bit part is in tmp2!
-         
-        clr   tmp0                  ; VDP target address (1nd row on screen!)
-        li    tmp1,32               ; Character to fill
-
-        bl    @xfilv                ; Fill VDP memory
-                                    ; \ i  tmp0 = VDP target address
-                                    ; | i  tmp1 = Byte to fill
-                                    ; / i  tmp2 = Bytes to copy
         ;------------------------------------------------------
         ; Show About dialog
         ;------------------------------------------------------
-        bl    @hchar
-              byte 2,20,1,40
-              byte 9,20,1,40          
-              data EOL
-
         bl    @putat      
-              byte   0,1
+              byte   0,0
               data   txt.about.program
-              
-        bl    @putat      
-              byte   3,22
-              data   txt.about.purpose
-        bl    @putat      
-              byte   4,25
-              data   txt.about.author
-        bl    @putat      
-              byte   6,26
-              data   txt.about.website
-        bl    @putat      
-              byte   8,29
-              data   txt.about.build
 
-        bl    @putat      
-              byte   14,3
-              data   txt.about.msg1
-        bl    @putat      
-              byte   15,3
-              data   txt.about.msg2
-        bl    @putat      
-              byte   16,3
-              data   txt.about.msg3
-        bl    @putat      
-              byte   14,50
-              data   txt.about.msg4
-        bl    @putat      
-              byte   15,50
-              data   txt.about.msg5
-        bl    @putat      
-              byte   16,50
-              data   txt.about.msg6
-
-        bl    @putat      
-              byte   18,10
-              data   txt.about.msg7
+        bl    @cpym2v
+              data  80,dialog.about.help,24*80 
+                                    ; Dump key shortcuts to VDP
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 dialog.about.content.exit:
         mov   *stack+,@wyx          ; Pop cursor position
-        mov   *stack+,tmp2          ; Pop tmp2                
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
 
+
+
+dialog.about.help:
+        text 'Movement keys:                           |   Modifier keys:                     '
+        text '   Fctn S        Cursor left             |      Fctn 1        Delete character  '
+        text '   Fctn D        Cursor right            |      Fctn 2        Insert character  '
+        text '   Fctn E        Cursor up               |      Fctn 3        Delete line       '
+        text '   Fctn X        Cursor down             |      Fctn 4        Delete end of line'
+        text '   Fctn H        Cursor home             |      Fctn 5        Insert line       '
+        text '   Fctn J        Cursor to prev. word    |      Fctn .        Insert/Overwrite  '
+        text '   Fctn K        Cursor to next word     |                                      '
+        text '   Fctn L        Cursor to end           |                                      '
+        text '   Ctrl E  (^e)  Page up                 |                                      '
+        text '   Ctrl X  (^x)  Page down               |                                      '
+        text '   Ctrl B  (^b)  End of file             |                                      '
+        text '   Ctrl T  (^t)  Top of file             |                                      '
+        text '                                         |                                      '
+        text 'Action keys:                             |   Block operations:                  '
+        text '   Fctn 7         Help                   |      Ctrl d (^d)   Delete block      '
+        text '   Fctn +         Quit editor            |      Ctrl c (^c)   Copy block        '
+        text '   Ctrl o (^o)    Open file              |      Ctrl g (^g)   Goto marker M1    '
+        text '   Ctrl s (^s)    Save file              |      Ctrl m (^m)   Move block        '
+        text '   Ctrl v (^v)    Set M1/M2 marker       |      Ctrl s (^s)   Save block to file'
+        text '   Ctrl r (^r)    Reset M1/M2 markers    |                                      '
+        text '   Ctrl z (^z)    Cycle color schemes    |                                      '
+        text '   Ctrl , (^,)    Load previous file     |                                      '
+        text '   Ctrl . (^.)    Load next file         |                                      '

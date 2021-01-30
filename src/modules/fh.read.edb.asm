@@ -13,6 +13,7 @@
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
+* parm6 = Pointer to callback function "Memory full"
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -30,7 +31,7 @@ fh.file.read.edb:
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Initialisation
-        ;------------------------------------------------------   
+        ;------------------------------------------------------  
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.kilobytes         ; \ Clear kilobytes processed
@@ -59,30 +60,40 @@ fh.file.read.edb:
         mov   @parm3,@fh.callback2  ; Callback function "Read line from file"
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
+        mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
         mov   @fh.callback1,tmp0
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
-
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
 
         mov   @fh.callback2,tmp0
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
-
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
 
         mov   @fh.callback3,tmp0
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
-
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
          
+        mov   @fh.callback4,tmp0
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   fh.file.read.crash    ; Yes, crash!
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   fh.file.read.crash    ; Yes, crash!
+
+        mov   @fh.callback5,tmp0
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   fh.file.read.crash    ; Yes, crash!
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   fh.file.read.crash    ; Yes, crash!
+
         jmp   fh.file.read.edb.load1
                                     ; All checks passed, continue
         ;------------------------------------------------------
@@ -302,13 +313,10 @@ fh.file.read.edb.prepindex.emptyline:
 fh.file.read.edb.updindex:                
         bl    @idx.entry.update     ; Update index 
                                     ; \ i  parm1    = Line num in editor buffer
-                                    ; | i  parm2    = Pointer to line in editor 
-                                    ; |               buffer 
+                                    ; | i  parm2    = Pointer to line in EB
                                     ; | i  parm3    = SAMS page
                                     ; | o  outparm1 = Pointer to updated index
-                                    ; /               entry
-
-        inc   @edb.lines            ; lines=lines+1                
+                                    ; /               entry     
         ;------------------------------------------------------
         ; Step 5: Callback "Read line from file"
         ;------------------------------------------------------
@@ -316,9 +324,33 @@ fh.file.read.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
-        ; 5a: Next record
+        ; 5a: Prepare for next record
         ;------------------------------------------------------
-fh.file.read.edb.next:        
+fh.file.read.edb.next:
+        inc   @edb.lines            ; lines=lines+1                   
+
+        mov   @edb.lines,tmp0
+        ci    tmp0,10200            ; Maximum line in index reached?
+        jle   fh.file.read.edb.next.do_it
+                                    ; Not yet, next record
+        ;------------------------------------------------------
+        ; 5b: Index memory full. Close file and exit
+        ;------------------------------------------------------
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+                                    ; /
+
+        bl    @mem.sams.layout      ; Restore SAMS windows    
+        ;------------------------------------------------------
+        ; Callback "Memory full error"
+        ;------------------------------------------------------
+        mov   @fh.callback5,tmp0    ; Get pointer to Callback "File I/O error"
+        bl    *tmp0                 ; Run callback function  
+        jmp   fh.file.read.edb.exit
+        ;------------------------------------------------------
+        ; 5c: Next record
+        ;------------------------------------------------------
+fh.file.read.edb.next.do_it:
         b     @fh.file.read.edb.check_setpage
                                     ; Next record
         ;------------------------------------------------------
@@ -334,6 +366,7 @@ fh.file.read.edb.error:
         ;------------------------------------------------------ 
         bl    @file.close           ; Close file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+                                    ; /
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
@@ -345,20 +378,18 @@ fh.file.read.edb.error:
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
-fh.file.read.edb.eof:        
+fh.file.read.edb.eof:
         bl    @file.close           ; Close file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+                                    ; /
 
         bl    @mem.sams.layout      ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
+        dec   @edb.lines
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         bl    *tmp0                 ; Run callback function                                    
-
-        mov   @edb.lines,tmp0       ; Get number of lines
-        jeq   fh.file.read.edb.exit ; Exit if lines = 0 
-        dec   @edb.lines            ; One-time adjustment
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

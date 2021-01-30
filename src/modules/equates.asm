@@ -182,12 +182,13 @@ tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
 tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
-tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus
-tv.task.oneshot   equ  tv.top + 32     ; Pointer to one-shot routine
-tv.fj.stackpnt    equ  tv.top + 34     ; Pointer to farjump return stack
-tv.error.visible  equ  tv.top + 36     ; Error pane visible
-tv.error.msg      equ  tv.top + 38     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 198    ; End of structure
+tv.cmdb.hcolor    equ  tv.top + 30     ; FG/BG-color command buffer header line
+tv.pane.focus     equ  tv.top + 32     ; Identify pane that has focus
+tv.task.oneshot   equ  tv.top + 34     ; Pointer to one-shot routine
+tv.fj.stackpnt    equ  tv.top + 36     ; Pointer to farjump return stack
+tv.error.visible  equ  tv.top + 38     ; Error pane visible
+tv.error.msg      equ  tv.top + 40     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 200    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
@@ -293,9 +294,10 @@ fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
 fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
-fh.kilobytes.prev equ  fh.struct + 88  ; Kilobytes processed (previous)
-fh.membuffer      equ  fh.struct + 90  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +170  ; End of structure
+fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
+fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
+fh.membuffer      equ  fh.struct + 92  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +172  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------

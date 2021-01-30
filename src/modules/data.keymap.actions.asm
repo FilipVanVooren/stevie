@@ -85,7 +85,8 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog specific: About
         ;-------------------------------------------------------
-        data  key.enter, id.dialog.about, edkey.action.cmdb.close.dialog
+        data  key.fctn.9, id.dialog.about, edkey.action.cmdb.close.about
+        data  key.enter, id.dialog.about, edkey.action.cmdb.close.about
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------        
