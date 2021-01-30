@@ -139,18 +139,19 @@ mem.sams.layout.data:
 * E  Grey
 * F  White
 *--------------------------------------------------------------
-tv.colorscheme.entries   equ 9 ; Entries in table
+tv.colorscheme.entries   equ 10 ; Entries in table
 
 tv.colorscheme.table:                  
 ;                              ; #  
 ;       ABCD  EFGH  IJKL  MNOP ; -
- data  >f417,>f171,>1b1f,>0000 ; 1  White on blue with inversed cyan border
- data  >f41f,>f011,>1a17,>0000 ; 2  White on blue with inversed white border
- data  >a11a,>f0ff,>1f1a,>0000 ; 3  Dark yellow on black with inversed border
- data  >2112,>f0ff,>1b12,>0000 ; 4  Dark green on black with inversed border
- data  >e11e,>f00f,>1b1e,>0000 ; 5  Grey on black with inversed grey border
- data  >1771,>1006,>1b71,>0000 ; 6  Black on cyan with inversed black border
- data  >1ff1,>1001,>1bf1,>0000 ; 7  Black on white with inversed black border
- data  >a1f0,>1a0f,>1b1a,>0000 ; 8  Dark yellow on black with white border
- data  >21f0,>f20f,>1b12,>0000 ; 9  Dark green on black with white border
+ data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
+ data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
+ data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
+ data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
+ data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
+ data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
+ data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
+ data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow 
+ data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
+ data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
  

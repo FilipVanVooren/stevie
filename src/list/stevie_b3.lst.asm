@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.499673
+**** **** ****     > stevie_b3.asm.53473
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 210127-499673
+0009               * File: stevie_b1.asm               ; Version 210130-53473
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -25,7 +25,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      6002     bank1                     equ  >6002   ; James
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
-**** **** ****     > stevie_b3.asm.499673
+**** **** ****     > stevie_b3.asm.53473
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -212,166 +212,167 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0182      A018     tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
 0183      A01A     tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 0184      A01C     tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
-0185      A01E     tv.pane.focus     equ  tv.top + 30     ; Identify pane that has focus
-0186      A020     tv.task.oneshot   equ  tv.top + 32     ; Pointer to one-shot routine
-0187      A022     tv.fj.stackpnt    equ  tv.top + 34     ; Pointer to farjump return stack
-0188      A024     tv.error.visible  equ  tv.top + 36     ; Error pane visible
-0189      A026     tv.error.msg      equ  tv.top + 38     ; Error message (max. 160 characters)
-0190      A0C6     tv.free           equ  tv.top + 198    ; End of structure
-0191               *--------------------------------------------------------------
-0192               * Frame buffer structure              @>a100-a1ff   (256 bytes)
-0193               *--------------------------------------------------------------
-0194      A100     fb.struct         equ  >a100           ; Structure begin
-0195      A100     fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
-0196      A102     fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
-0197      A104     fb.topline        equ  fb.struct + 4   ; Top line in frame buffer (matching
-0198                                                      ; line X in editor buffer).
-0199      A106     fb.row            equ  fb.struct + 6   ; Current row in frame buffer
-0200                                                      ; (offset 0 .. @fb.scrrows)
-0201      A108     fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
-0202      A10A     fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
-0203      A10C     fb.column         equ  fb.struct + 12  ; Current column in frame buffer
-0204      A10E     fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
-0205      A110     fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
-0206      A112     fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
-0207      A114     fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
-0208      A116     fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
-0209      A118     fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
-0210      A11A     fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
-0211      A11C     fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
-0212      A11E     fb.free           equ  fb.struct + 30  ; End of structure
-0213               *--------------------------------------------------------------
-0214               * Editor buffer structure             @>a200-a2ff   (256 bytes)
-0215               *--------------------------------------------------------------
-0216      A200     edb.struct        equ  >a200           ; Begin structure
-0217      A200     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
-0218      A202     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-0219      A204     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
-0220      A206     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
-0221      A208     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
-0222      A20A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0223      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
-0224      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
-0225      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
-0226      A212     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
-0227                                                      ; with current filename.
-0228      A214     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
-0229                                                      ; with current file type.
-0230      A216     edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
-0231      A218     edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-0232      A21A     edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
-0233                                                      ; for filename, but not always used.
-0234      A269     edb.free          equ  edb.struct + 105; End of structure
-0235               *--------------------------------------------------------------
-0236               * Command buffer structure            @>a300-a3ff   (256 bytes)
-0237               *--------------------------------------------------------------
-0238      A300     cmdb.struct       equ  >a300           ; Command Buffer structure
-0239      A300     cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
-0240      A302     cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-0241      A304     cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
-0242      A306     cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
-0243      A308     cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
-0244      A30A     cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
-0245      A30C     cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-0246      A30E     cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
-0247      A310     cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
-0248      A312     cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
-0249      A314     cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
-0250      A316     cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
-0251      A318     cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-0252      A31A     cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-0253      A31C     cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
-0254      A31E     cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
-0255      A320     cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
-0256      A322     cmdb.pankeys      equ  cmdb.struct + 34; Pointer to string pane keys (stat line)
-0257      A324     cmdb.action.ptr   equ  cmdb.struct + 36; Pointer to function to execute
-0258      A326     cmdb.cmdlen       equ  cmdb.struct + 38; Length of current command (MSB byte!)
-0259      A327     cmdb.cmd          equ  cmdb.struct + 39; Current command (80 bytes max.)
-0260      A378     cmdb.free         equ  cmdb.struct +120; End of structure
-0261               *--------------------------------------------------------------
-0262               * File handle structure               @>a400-a4ff   (256 bytes)
-0263               *--------------------------------------------------------------
-0264      A400     fh.struct         equ  >a400           ; stevie file handling structures
-0265               ;***********************************************************************
-0266               ; ATTENTION
-0267               ; The dsrlnk variables must form a continuous memory block and keep
-0268               ; their order!
-0269               ;***********************************************************************
-0270      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
-0271      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
-0272      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
-0273      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
-0274      A42C     dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
-0275      A42E     dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
-0276      A430     dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
-0277      A432     dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
-0278      A434     dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
-0279      A436     fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
-0280      A438     fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
-0281      A43A     fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
-0282      A43C     fh.records        equ  fh.struct + 60  ; File records counter
-0283      A43E     fh.reclen         equ  fh.struct + 62  ; Current record length
-0284      A440     fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
-0285      A442     fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations
-0286      A444     fh.fname.ptr      equ  fh.struct + 68  ; Pointer to device and filename
-0287      A446     fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
-0288      A448     fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
-0289      A44A     fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
-0290      A44C     fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
-0291      A44E     fh.offsetopcode   equ  fh.struct + 78  ; Set to >40 for skipping VDP buffer
-0292      A450     fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
-0293      A452     fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
-0294      A454     fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
-0295      A456     fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
-0296      A458     fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
-0297      A45A     fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
-0298      A45C     fh.membuffer      equ  fh.struct + 92  ; 80 bytes file memory buffer
-0299      A4AC     fh.free           equ  fh.struct +172  ; End of structure
-0300      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
-0301      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
-0302               *--------------------------------------------------------------
-0303               * Index structure                     @>a500-a5ff   (256 bytes)
-0304               *--------------------------------------------------------------
-0305      A500     idx.struct        equ  >a500           ; stevie index structure
-0306      A500     idx.sams.page     equ  idx.struct      ; Current SAMS page
-0307      A502     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
-0308      A504     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
-0309               *--------------------------------------------------------------
-0310               * Frame buffer                        @>a600-afff  (2560 bytes)
-0311               *--------------------------------------------------------------
-0312      A600     fb.top            equ  >a600           ; Frame buffer (80x30)
-0313      0960     fb.size           equ  80*30           ; Frame buffer size
-0314               *--------------------------------------------------------------
-0315               * Index                               @>b000-bfff  (4096 bytes)
-0316               *--------------------------------------------------------------
-0317      B000     idx.top           equ  >b000           ; Top of index
-0318      1000     idx.size          equ  4096            ; Index size
-0319               *--------------------------------------------------------------
-0320               * Editor buffer                       @>c000-cfff  (4096 bytes)
-0321               *--------------------------------------------------------------
-0322      C000     edb.top           equ  >c000           ; Editor buffer high memory
-0323      1000     edb.size          equ  4096            ; Editor buffer size
-0324               *--------------------------------------------------------------
-0325               * Command history buffer              @>d000-dfff  (4096 bytes)
-0326               *--------------------------------------------------------------
-0327      D000     cmdb.top          equ  >d000           ; Top of command history buffer
-0328      1000     cmdb.size         equ  4096            ; Command buffer size
-0329               *--------------------------------------------------------------
-0330               * Heap                                @>e000-ebff  (3072 bytes)
-0331               *--------------------------------------------------------------
-0332      E000     heap.top          equ  >e000           ; Top of heap
-0333               *--------------------------------------------------------------
-0334               * Farjump return stack                @>ec00-efff  (1024 bytes)
-0335               *--------------------------------------------------------------
-0336      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.499673
+0185      A01E     tv.cmdb.hcolor    equ  tv.top + 30     ; FG/BG-color command buffer header line
+0186      A020     tv.pane.focus     equ  tv.top + 32     ; Identify pane that has focus
+0187      A022     tv.task.oneshot   equ  tv.top + 34     ; Pointer to one-shot routine
+0188      A024     tv.fj.stackpnt    equ  tv.top + 36     ; Pointer to farjump return stack
+0189      A026     tv.error.visible  equ  tv.top + 38     ; Error pane visible
+0190      A028     tv.error.msg      equ  tv.top + 40     ; Error message (max. 160 characters)
+0191      A0C8     tv.free           equ  tv.top + 200    ; End of structure
+0192               *--------------------------------------------------------------
+0193               * Frame buffer structure              @>a100-a1ff   (256 bytes)
+0194               *--------------------------------------------------------------
+0195      A100     fb.struct         equ  >a100           ; Structure begin
+0196      A100     fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
+0197      A102     fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
+0198      A104     fb.topline        equ  fb.struct + 4   ; Top line in frame buffer (matching
+0199                                                      ; line X in editor buffer).
+0200      A106     fb.row            equ  fb.struct + 6   ; Current row in frame buffer
+0201                                                      ; (offset 0 .. @fb.scrrows)
+0202      A108     fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
+0203      A10A     fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
+0204      A10C     fb.column         equ  fb.struct + 12  ; Current column in frame buffer
+0205      A10E     fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
+0206      A110     fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
+0207      A112     fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
+0208      A114     fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
+0209      A116     fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
+0210      A118     fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
+0211      A11A     fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
+0212      A11C     fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
+0213      A11E     fb.free           equ  fb.struct + 30  ; End of structure
+0214               *--------------------------------------------------------------
+0215               * Editor buffer structure             @>a200-a2ff   (256 bytes)
+0216               *--------------------------------------------------------------
+0217      A200     edb.struct        equ  >a200           ; Begin structure
+0218      A200     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
+0219      A202     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
+0220      A204     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
+0221      A206     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
+0222      A208     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
+0223      A20A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
+0224      A20C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+0225      A20E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
+0226      A210     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
+0227      A212     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
+0228                                                      ; with current filename.
+0229      A214     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
+0230                                                      ; with current file type.
+0231      A216     edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
+0232      A218     edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
+0233      A21A     edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
+0234                                                      ; for filename, but not always used.
+0235      A269     edb.free          equ  edb.struct + 105; End of structure
+0236               *--------------------------------------------------------------
+0237               * Command buffer structure            @>a300-a3ff   (256 bytes)
+0238               *--------------------------------------------------------------
+0239      A300     cmdb.struct       equ  >a300           ; Command Buffer structure
+0240      A300     cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
+0241      A302     cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
+0242      A304     cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
+0243      A306     cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
+0244      A308     cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
+0245      A30A     cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
+0246      A30C     cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
+0247      A30E     cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
+0248      A310     cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
+0249      A312     cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
+0250      A314     cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
+0251      A316     cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
+0252      A318     cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
+0253      A31A     cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
+0254      A31C     cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
+0255      A31E     cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
+0256      A320     cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
+0257      A322     cmdb.pankeys      equ  cmdb.struct + 34; Pointer to string pane keys (stat line)
+0258      A324     cmdb.action.ptr   equ  cmdb.struct + 36; Pointer to function to execute
+0259      A326     cmdb.cmdlen       equ  cmdb.struct + 38; Length of current command (MSB byte!)
+0260      A327     cmdb.cmd          equ  cmdb.struct + 39; Current command (80 bytes max.)
+0261      A378     cmdb.free         equ  cmdb.struct +120; End of structure
+0262               *--------------------------------------------------------------
+0263               * File handle structure               @>a400-a4ff   (256 bytes)
+0264               *--------------------------------------------------------------
+0265      A400     fh.struct         equ  >a400           ; stevie file handling structures
+0266               ;***********************************************************************
+0267               ; ATTENTION
+0268               ; The dsrlnk variables must form a continuous memory block and keep
+0269               ; their order!
+0270               ;***********************************************************************
+0271      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+0272      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
+0273      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
+0274      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
+0275      A42C     dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
+0276      A42E     dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
+0277      A430     dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
+0278      A432     dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
+0279      A434     dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
+0280      A436     fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
+0281      A438     fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
+0282      A43A     fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
+0283      A43C     fh.records        equ  fh.struct + 60  ; File records counter
+0284      A43E     fh.reclen         equ  fh.struct + 62  ; Current record length
+0285      A440     fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
+0286      A442     fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations
+0287      A444     fh.fname.ptr      equ  fh.struct + 68  ; Pointer to device and filename
+0288      A446     fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
+0289      A448     fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
+0290      A44A     fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
+0291      A44C     fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
+0292      A44E     fh.offsetopcode   equ  fh.struct + 78  ; Set to >40 for skipping VDP buffer
+0293      A450     fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
+0294      A452     fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
+0295      A454     fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
+0296      A456     fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
+0297      A458     fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
+0298      A45A     fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
+0299      A45C     fh.membuffer      equ  fh.struct + 92  ; 80 bytes file memory buffer
+0300      A4AC     fh.free           equ  fh.struct +172  ; End of structure
+0301      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
+0302      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
+0303               *--------------------------------------------------------------
+0304               * Index structure                     @>a500-a5ff   (256 bytes)
+0305               *--------------------------------------------------------------
+0306      A500     idx.struct        equ  >a500           ; stevie index structure
+0307      A500     idx.sams.page     equ  idx.struct      ; Current SAMS page
+0308      A502     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
+0309      A504     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
+0310               *--------------------------------------------------------------
+0311               * Frame buffer                        @>a600-afff  (2560 bytes)
+0312               *--------------------------------------------------------------
+0313      A600     fb.top            equ  >a600           ; Frame buffer (80x30)
+0314      0960     fb.size           equ  80*30           ; Frame buffer size
+0315               *--------------------------------------------------------------
+0316               * Index                               @>b000-bfff  (4096 bytes)
+0317               *--------------------------------------------------------------
+0318      B000     idx.top           equ  >b000           ; Top of index
+0319      1000     idx.size          equ  4096            ; Index size
+0320               *--------------------------------------------------------------
+0321               * Editor buffer                       @>c000-cfff  (4096 bytes)
+0322               *--------------------------------------------------------------
+0323      C000     edb.top           equ  >c000           ; Editor buffer high memory
+0324      1000     edb.size          equ  4096            ; Editor buffer size
+0325               *--------------------------------------------------------------
+0326               * Command history buffer              @>d000-dfff  (4096 bytes)
+0327               *--------------------------------------------------------------
+0328      D000     cmdb.top          equ  >d000           ; Top of command history buffer
+0329      1000     cmdb.size         equ  4096            ; Command buffer size
+0330               *--------------------------------------------------------------
+0331               * Heap                                @>e000-ebff  (3072 bytes)
+0332               *--------------------------------------------------------------
+0333      E000     heap.top          equ  >e000           ; Top of heap
+0334               *--------------------------------------------------------------
+0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
+0336               *--------------------------------------------------------------
+0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
+**** **** ****     > stevie_b3.asm.53473
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
 0019               ********|*****|*********************|**************************
 0020      3000     sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 0021                                                   ; grows downwards to >2000
-0022               ***********************************2****************************
+0022               ***************************************************************
 0023               * BANK 3
 0024               ********|*****|*********************|**************************
 0025      6006     bankid  equ   bank3                 ; Set bank identifier to current bank
@@ -401,7 +402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.0 (BETA 2)'
 0017                       even
 0018               
-**** **** ****     > stevie_b3.asm.499673
+**** **** ****     > stevie_b3.asm.53473
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1120,8 +1121,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210127-499673'
+0259 21D2 1642             byte  22
+0260 21D3 ....             text  'Build-ID  210130-53473'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5005,7 +5006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b3.asm.499673
+**** **** ****     > stevie_b3.asm.53473
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -5084,13 +5085,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0042                                                   ; Crash if null value in bank write address
 0043               
 0044 3024 C1E0  34         mov   @tv.fj.stackpnt,tmp3  ; Get farjump stack pointer
-     3026 A022 
+     3026 A024 
 0045 3028 0647  14         dect  tmp3
 0046 302A C5CB  30         mov   r11,*tmp3             ; Push return address to farjump stack
 0047 302C 0647  14         dect  tmp3
 0048 302E C5C6  30         mov   tmp2,*tmp3            ; Push source ROM bank to farjump stack
 0049 3030 C807  38         mov   tmp3,@tv.fj.stackpnt  ; Set farjump stack pointer
-     3032 A022 
+     3032 A024 
 0050                       ;------------------------------------------------------
 0051                       ; Bankswitch to target bank
 0052                       ;------------------------------------------------------
@@ -5119,7 +5120,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0073                       ;------------------------------------------------------
 0074               rom.farjump.return:
 0075 3046 C120  34         mov   @tv.fj.stackpnt,tmp0  ; Get farjump stack pointer
-     3048 A022 
+     3048 A024 
 0076 304A C154  26         mov   *tmp0,tmp1            ; Get bank write address of caller
 0077 304C 130D  14         jeq   rom.farjump.bankswitch.failed2
 0078                                                   ; Crash if null-pointer in address
@@ -5140,7 +5141,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0091 305E 1504  14         jgt   rom.farjump.bankswitch.failed2
 0092               
 0093 3060 C804  38         mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
-     3062 A022 
+     3062 A024 
 0094 3064 04D5  26         clr   *tmp1                 ; Switch to bank of caller
 0095 3066 1004  14         jmp   rom.farjump.exit
 0096                       ;------------------------------------------------------
@@ -5211,7 +5212,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      30A4 A11C 
 0037               
 0038 30A6 04E0  34         clr   @tv.pane.focus        ; Frame buffer has focus!
-     30A8 A01E 
+     30A8 A020 
 0039 30AA 04E0  34         clr   @fb.colorize          ; Don't colorize M1/M2 lines
      30AC A110 
 0040 30AE 0720  34         seto  @fb.dirty             ; Set dirty flag (trigger screen update)
@@ -5583,12 +5584,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      31EA A20E 
 0041               
 0042 31EC 0204  20         li    tmp0,txt.newfile      ; "New file"
-     31EE 357E 
+     31EE 35A0 
 0043 31F0 C804  38         mov   tmp0,@edb.filename.ptr
      31F2 A212 
 0044               
 0045 31F4 0204  20         li    tmp0,txt.filetype.none
-     31F6 35CA 
+     31F6 35F4 
 0046 31F8 C804  38         mov   tmp0,@edb.filetype.ptr
      31FA A214 
 0047               
@@ -5702,11 +5703,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027                       ; Initialize
 0028                       ;------------------------------------------------------
 0029 3246 04E0  34         clr   @tv.error.visible     ; Set to hidden
-     3248 A024 
+     3248 A026 
 0030               
 0031 324A 06A0  32         bl    @film
      324C 2238 
-0032 324E A026                   data tv.error.msg,0,160
+0032 324E A028                   data tv.error.msg,0,160
      3250 0000 
      3252 00A0 
 0033                       ;-------------------------------------------------------
@@ -5754,14 +5755,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3268 A012 
 0031               
 0032 326A 04E0  34         clr   @tv.task.oneshot      ; Reset pointer to oneshot task
-     326C A020 
+     326C A022 
 0033 326E E0A0  34         soc   @wbit10,config        ; Assume ALPHA LOCK is down
      3270 200C 
 0034               
 0035 3272 0204  20         li    tmp0,fj.bottom
      3274 F000 
 0036 3276 C804  38         mov   tmp0,@tv.fj.stackpnt  ; Set pointer to farjump return stack
-     3278 A022 
+     3278 A024 
 0037                       ;-------------------------------------------------------
 0038                       ; Exit
 0039                       ;-------------------------------------------------------
@@ -6251,48 +6252,52 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139               * E  Grey
 0140               * F  White
 0141               *--------------------------------------------------------------
-0142      0009     tv.colorscheme.entries   equ 9 ; Entries in table
+0142      000A     tv.colorscheme.entries   equ 10 ; Entries in table
 0143               
 0144               tv.colorscheme.table:
 0145               ;                              ; #
 0146               ;       ABCD  EFGH  IJKL  MNOP ; -
-0147 3434 F417      data  >f417,>f171,>1b1f,>0000 ; 1  White on blue with inversed cyan border
+0147 3434 F417      data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with inversed cyan status lines
      3436 F171 
      3438 1B1F 
-     343A 0000 
-0148 343C F41F      data  >f41f,>f011,>1a17,>0000 ; 2  White on blue with inversed white border
-     343E F011 
-     3440 1A17 
-     3442 0000 
-0149 3444 A11A      data  >a11a,>f0ff,>1f1a,>0000 ; 3  Dark yellow on black with inversed border
+     343A 7100 
+0148 343C A11A      data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black with inversed status lines
+     343E F0FF 
+     3440 1F1A 
+     3442 F100 
+0149 3444 2112      data  >2112,>f0ff,>1b12,>f100 ; 3  Dark green on black with inversed status lines
      3446 F0FF 
-     3448 1F1A 
-     344A 0000 
-0150 344C 2112      data  >2112,>f0ff,>1b12,>0000 ; 4  Dark green on black with inversed border
-     344E F0FF 
-     3450 1B12 
-     3452 0000 
-0151 3454 E11E      data  >e11e,>f00f,>1b1e,>0000 ; 5  Grey on black with inversed grey border
-     3456 F00F 
+     3448 1B12 
+     344A F100 
+0150 344C F41F      data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue with inversed white status lines
+     344E 1E11 
+     3450 1A17 
+     3452 1E00 
+0151 3454 E11E      data  >e11e,>e10f,>1b1e,>e100 ; 5  Grey on black with inversed status lines
+     3456 E10F 
      3458 1B1E 
-     345A 0000 
-0152 345C 1771      data  >1771,>1006,>1b71,>0000 ; 6  Black on cyan with inversed black border
-     345E 1006 
+     345A E100 
+0152 345C 1771      data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan with inversed status lines
+     345E 1016 
      3460 1B71 
-     3462 0000 
-0153 3464 1FF1      data  >1ff1,>1001,>1bf1,>0000 ; 7  Black on white with inversed black border
+     3462 1700 
+0153 3464 1FF1      data  >1ff1,>1001,>1bf1,>1f00 ; 7  Black on white with inversed status lines
      3466 1001 
      3468 1BF1 
-     346A 0000 
-0154 346C A1F0      data  >a1f0,>1a0f,>1b1a,>0000 ; 8  Dark yellow on black with white border
-     346E 1A0F 
+     346A 1F00 
+0154 346C 1AF1      data  >1af1,>a1ff,>1b1a,>f100 ; 8  Black on dark cellow with
+     346E A1FF 
      3470 1B1A 
-     3472 0000 
-0155 3474 21F0      data  >21f0,>f20f,>1b12,>0000 ; 9  Dark green on black with white border
-     3476 F20F 
+     3472 F100 
+0155 3474 21F0      data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black with white status lines
+     3476 12FF 
      3478 1B12 
-     347A 0000 
-0156               
+     347A 1200 
+0156 347C F1F0      data  >f1f0,>12ff,>1b12,>1200 ; 10 Dark green on black with white status lines
+     347E 12FF 
+     3480 1B12 
+     3482 1200 
+0157               
 **** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.strings.asm"       ; Data segment - Strings
 **** **** ****     > data.strings.asm
@@ -6307,293 +6312,279 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009               ; Strings for welcome pane
 0010               ;--------------------------------------------------------------
 0011               txt.about.program
-0012 347C 1453             byte  20
-0013 347D ....             text  'Stevie v1.0 (beta 2)'
+0012 3484 3253             byte  50
+0013 3485 ....             text  'Stevie v1.0 (beta 2)                              '
 0014                       even
 0015               
 0016                                  even
-0017               txt.about.author
-0018 3492 1B32             byte  27
-0019 3493 ....             text  '2018-2021  Filip Van Vooren'
+0017               txt.about.build
+0018 34B8 4E42             byte  78
+0019 34B9 ....             text  'Build: 210130-53473 / 2018-2021 Filip Van Vooren / https://stevie.oratronik.de'
 0020                       even
 0021               
-0022               txt.about.website
-0023 34AE 1B68             byte  27
-0024 34AF ....             text  'https://stevie.oratronik.de'
-0025                       even
-0026               
-0027               txt.about.build
-0028 34CA 1442             byte  20
-0029 34CB ....             text  'Build: 210127-499673'
-0030                       even
-0031               
-0032               
-0033               ;--------------------------------------------------------------
-0034               ; Strings for status line pane
-0035               ;--------------------------------------------------------------
-0036               txt.delim
-0037 34E0 012C             byte  1
-0038 34E1 ....             text  ','
-0039                       even
-0040               
-0041               txt.marker
-0042 34E2 052A             byte  5
-0043 34E3 ....             text  '*EOF*'
-0044                       even
-0045               
-0046               txt.bottom
-0047 34E8 0520             byte  5
-0048 34E9 ....             text  '  BOT'
-0049                       even
-0050               
-0051               txt.ovrwrite
-0052 34EE 034F             byte  3
-0053 34EF ....             text  'OVR'
-0054                       even
-0055               
-0056               txt.insert
-0057 34F2 0349             byte  3
-0058 34F3 ....             text  'INS'
-0059                       even
-0060               
-0061               txt.star
-0062 34F6 012A             byte  1
-0063 34F7 ....             text  '*'
-0064                       even
-0065               
-0066               txt.loading
-0067 34F8 0A4C             byte  10
-0068 34F9 ....             text  'Loading...'
-0069                       even
-0070               
-0071               txt.saving
-0072 3504 0A53             byte  10
-0073 3505 ....             text  'Saving....'
-0074                       even
-0075               
-0076               txt.block.del
-0077 3510 1244             byte  18
-0078 3511 ....             text  'Deleting block....'
-0079                       even
-0080               
-0081               txt.block.copy
-0082 3524 1143             byte  17
-0083 3525 ....             text  'Copying block....'
-0084                       even
-0085               
-0086               txt.block.move
-0087 3536 104D             byte  16
-0088 3537 ....             text  'Moving block....'
-0089                       even
-0090               
-0091               txt.block.save
-0092 3548 1D53             byte  29
-0093 3549 ....             text  'Saving block to DV80 file....'
-0094                       even
-0095               
-0096               txt.fastmode
-0097 3566 0846             byte  8
-0098 3567 ....             text  'Fastmode'
-0099                       even
-0100               
-0101               txt.kb
-0102 3570 026B             byte  2
-0103 3571 ....             text  'kb'
-0104                       even
-0105               
-0106               txt.lines
-0107 3574 054C             byte  5
-0108 3575 ....             text  'Lines'
-0109                       even
-0110               
-0111               txt.bufnum
-0112 357A 0323             byte  3
-0113 357B ....             text  '#1 '
-0114                       even
-0115               
-0116               txt.newfile
-0117 357E 0A5B             byte  10
-0118 357F ....             text  '[New file]'
-0119                       even
-0120               
-0121               txt.filetype.dv80
-0122 358A 0444             byte  4
-0123 358B ....             text  'DV80'
-0124                       even
-0125               
-0126               txt.m1
-0127 3590 034D             byte  3
-0128 3591 ....             text  'M1='
-0129                       even
-0130               
-0131               txt.m2
-0132 3594 034D             byte  3
-0133 3595 ....             text  'M2='
-0134                       even
+0022               ;--------------------------------------------------------------
+0023               ; Strings for status line pane
+0024               ;--------------------------------------------------------------
+0025               txt.delim
+0026 3508 012C             byte  1
+0027 3509 ....             text  ','
+0028                       even
+0029               
+0030               txt.bottom
+0031 350A 0520             byte  5
+0032 350B ....             text  '  BOT'
+0033                       even
+0034               
+0035               txt.ovrwrite
+0036 3510 034F             byte  3
+0037 3511 ....             text  'OVR'
+0038                       even
+0039               
+0040               txt.insert
+0041 3514 0349             byte  3
+0042 3515 ....             text  'INS'
+0043                       even
+0044               
+0045               txt.star
+0046 3518 012A             byte  1
+0047 3519 ....             text  '*'
+0048                       even
+0049               
+0050               txt.loading
+0051 351A 0A4C             byte  10
+0052 351B ....             text  'Loading...'
+0053                       even
+0054               
+0055               txt.saving
+0056 3526 0A53             byte  10
+0057 3527 ....             text  'Saving....'
+0058                       even
+0059               
+0060               txt.block.del
+0061 3532 1244             byte  18
+0062 3533 ....             text  'Deleting block....'
+0063                       even
+0064               
+0065               txt.block.copy
+0066 3546 1143             byte  17
+0067 3547 ....             text  'Copying block....'
+0068                       even
+0069               
+0070               txt.block.move
+0071 3558 104D             byte  16
+0072 3559 ....             text  'Moving block....'
+0073                       even
+0074               
+0075               txt.block.save
+0076 356A 1D53             byte  29
+0077 356B ....             text  'Saving block to DV80 file....'
+0078                       even
+0079               
+0080               txt.fastmode
+0081 3588 0846             byte  8
+0082 3589 ....             text  'Fastmode'
+0083                       even
+0084               
+0085               txt.kb
+0086 3592 026B             byte  2
+0087 3593 ....             text  'kb'
+0088                       even
+0089               
+0090               txt.lines
+0091 3596 054C             byte  5
+0092 3597 ....             text  'Lines'
+0093                       even
+0094               
+0095               txt.bufnum
+0096 359C 0323             byte  3
+0097 359D ....             text  '#1 '
+0098                       even
+0099               
+0100               txt.newfile
+0101 35A0 0A5B             byte  10
+0102 35A1 ....             text  '[New file]'
+0103                       even
+0104               
+0105               txt.filetype.dv80
+0106 35AC 0444             byte  4
+0107 35AD ....             text  'DV80'
+0108                       even
+0109               
+0110               txt.m1
+0111 35B2 034D             byte  3
+0112 35B3 ....             text  'M1='
+0113                       even
+0114               
+0115               txt.m2
+0116 35B6 034D             byte  3
+0117 35B7 ....             text  'M2='
+0118                       even
+0119               
+0120               txt.keys.help
+0121 35BA 0746             byte  7
+0122 35BB ....             text  'F7=Help'
+0123                       even
+0124               
+0125               txt.keys.block
+0126 35C2 2B5E             byte  43
+0127 35C3 ....             text  '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+0128                       even
+0129               
+0130                                  even
+0131               
+0132 35EE 010F     txt.alpha.up       data >010f
+0133 35F0 010E     txt.alpha.down     data >010e
+0134 35F2 0110     txt.vertline       data >0110
 0135               
-0136               
-0137 3598 2B5E     txt.keys.block     byte    43
-0138 3599 ....                        text    '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
-0139               
-0140 35C4 010F     txt.alpha.up       data >010f
-0141 35C6 010E     txt.alpha.down     data >010e
-0142 35C8 0110     txt.vertline       data >0110
+0136               txt.clear
+0137 35F4 0420             byte  4
+0138 35F5 ....             text  '    '
+0139                       even
+0140               
+0141      35F4     txt.filetype.none  equ txt.clear
+0142               
 0143               
-0144               txt.clear
-0145 35CA 0420             byte  4
-0146 35CB ....             text  '    '
-0147                       even
-0148               
-0149      35CA     txt.filetype.none  equ txt.clear
-0150               
-0151               
-0152               ;--------------------------------------------------------------
-0153               ; Dialog Load DV 80 file
-0154               ;--------------------------------------------------------------
-0155 35D0 1301     txt.head.load      byte 19,1,3,32
-     35D2 0320 
-0156 35D4 ....                        text 'Open DV80 file '
-0157                                  byte 2
-0158               txt.hint.load
-0159 35E4 4746             byte  71
-0160 35E5 ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
-0161                       even
-0162               
-0163               txt.keys.load
-0164 362C 3946             byte  57
-0165 362D ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
-0166                       even
-0167               
-0168               txt.keys.load2
-0169 3666 3946             byte  57
-0170 3667 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
-0171                       even
-0172               
-0173               
-0174               ;--------------------------------------------------------------
-0175               ; Dialog Save DV 80 file
-0176               ;--------------------------------------------------------------
-0177 36A0 1301     txt.head.save      byte 19,1,3,32
-     36A2 0320 
-0178 36A4 ....                        text 'Save DV80 file '
-0179                                  byte 2
-0180 36B4 2301     txt.head.save2     byte 35,1,3,32
-     36B6 0320 
-0181 36B8 ....                        text 'Save marked block to DV80 file '
-0182                                  byte 2
-0183               txt.hint.save
-0184 36D8 0120             byte  1
-0185 36D9 ....             text  ' '
-0186                       even
-0187               
-0188               txt.keys.save
-0189 36DA 2A46             byte  42
-0190 36DB ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
-0191                       even
-0192               
-0193               
-0194               ;--------------------------------------------------------------
-0195               ; Dialog "Unsaved changes"
-0196               ;--------------------------------------------------------------
-0197 3706 1401     txt.head.unsaved   byte 20,1,3,32
-     3708 0320 
-0198 370A ....                        text 'Unsaved changes '
-0199 371A 0232                        byte 2
-0200               txt.info.unsaved
-0201                       byte  50
-0202 371C ....             text  'You are about to lose changes to the current file!'
-0203                       even
-0204               
-0205               txt.hint.unsaved
-0206 374E 3950             byte  57
-0207 374F ....             text  'Press F6 to proceed without saving or ENTER to save file.'
-0208                       even
-0209               
-0210               txt.keys.unsaved
-0211 3788 2846             byte  40
-0212 3789 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
-0213                       even
+0144               ;--------------------------------------------------------------
+0145               ; Dialog Load DV 80 file
+0146               ;--------------------------------------------------------------
+0147 35FA 1301     txt.head.load      byte 19,1,3,32
+     35FC 0320 
+0148 35FE ....                        text 'Open DV80 file '
+0149                                  byte 2
+0150               txt.hint.load
+0151 360E 4746             byte  71
+0152 360F ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+0153                       even
+0154               
+0155               txt.keys.load
+0156 3656 3946             byte  57
+0157 3657 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
+0158                       even
+0159               
+0160               txt.keys.load2
+0161 3690 3946             byte  57
+0162 3691 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
+0163                       even
+0164               
+0165               
+0166               ;--------------------------------------------------------------
+0167               ; Dialog Save DV 80 file
+0168               ;--------------------------------------------------------------
+0169 36CA 1301     txt.head.save      byte 19,1,3,32
+     36CC 0320 
+0170 36CE ....                        text 'Save DV80 file '
+0171                                  byte 2
+0172 36DE 2301     txt.head.save2     byte 35,1,3,32
+     36E0 0320 
+0173 36E2 ....                        text 'Save marked block to DV80 file '
+0174                                  byte 2
+0175               txt.hint.save
+0176 3702 0120             byte  1
+0177 3703 ....             text  ' '
+0178                       even
+0179               
+0180               txt.keys.save
+0181 3704 2A46             byte  42
+0182 3705 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
+0183                       even
+0184               
+0185               
+0186               ;--------------------------------------------------------------
+0187               ; Dialog "Unsaved changes"
+0188               ;--------------------------------------------------------------
+0189 3730 1401     txt.head.unsaved   byte 20,1,3,32
+     3732 0320 
+0190 3734 ....                        text 'Unsaved changes '
+0191 3744 0232                        byte 2
+0192               txt.info.unsaved
+0193                       byte  50
+0194 3746 ....             text  'You are about to lose changes to the current file!'
+0195                       even
+0196               
+0197               txt.hint.unsaved
+0198 3778 3950             byte  57
+0199 3779 ....             text  'Press F6 to proceed without saving or ENTER to save file.'
+0200                       even
+0201               
+0202               txt.keys.unsaved
+0203 37B2 2846             byte  40
+0204 37B3 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
+0205                       even
+0206               
+0207               
+0208               ;--------------------------------------------------------------
+0209               ; Dialog "About"
+0210               ;--------------------------------------------------------------
+0211 37DC 0A01     txt.head.about     byte 10,1,3,32
+     37DE 0320 
+0212 37E0 ....                        text 'About '
+0213 37E6 0200                        byte 2
 0214               
-0215               
-0216               ;--------------------------------------------------------------
-0217               ; Dialog "About"
-0218               ;--------------------------------------------------------------
-0219 37B2 0A01     txt.head.about     byte 10,1,3,32
-     37B4 0320 
-0220 37B6 ....                        text 'About '
-0221 37BC 024F                        byte 2
-0222               
-0223               txt.info.about
-0224                       byte  79
-0225 37BE ....             text  'A programming editor for the expanded Texas Instruments TI-99/4a Home Computer.'
-0226                       even
-0227               
-0228               txt.hint.about
-0229 380E 2650             byte  38
-0230 380F ....             text  'Press F9 or ENTER to return to editor.'
-0231                       even
-0232               
-0233 3836 3D46     txt.keys.about     byte 61
-0234 3837 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK up= '
-0235 385E 0F20                        byte 15
-0236 385F ....                        text '   ALPHA LOCK down= '
-0237                                  byte 14
+0215               txt.info.about
+0216                       byte  0
+0217 37E8 ....             text
+0218                       even
+0219               
+0220               txt.hint.about
+0221 37E8 2650             byte  38
+0222 37E9 ....             text  'Press F9 or ENTER to return to editor.'
+0223                       even
+0224               
+0225 3810 3D46     txt.keys.about     byte 61
+0226 3811 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
+0227 3838 0F20                        byte 15
+0228 3839 ....                        text '   ALPHA LOCK Down= '
+0229                                  byte 14
+0230               
+0231               ;--------------------------------------------------------------
+0232               ; Strings for error line pane
+0233               ;--------------------------------------------------------------
+0234               txt.ioerr.load
+0235 384E 2049             byte  32
+0236 384F ....             text  'I/O error. Failed loading file: '
+0237                       even
 0238               
-0239               ;--------------------------------------------------------------
-0240               ; Strings for error line pane
-0241               ;--------------------------------------------------------------
-0242               txt.ioerr.load
-0243 3874 2049             byte  32
-0244 3875 ....             text  'I/O error. Failed loading file: '
-0245                       even
-0246               
-0247               txt.ioerr.save
-0248 3896 1F49             byte  31
-0249 3897 ....             text  'I/O error. Failed saving file: '
-0250                       even
-0251               
-0252               txt.memfull.load
-0253 38B6 4049             byte  64
-0254 38B7 ....             text  'Index memory full. Could not fully load file into editor buffer.'
-0255                       even
-0256               
-0257               txt.io.nofile
-0258 38F8 2149             byte  33
-0259 38F9 ....             text  'I/O error. No filename specified.'
-0260                       even
-0261               
-0262               txt.block.inside
-0263 391A 3445             byte  52
-0264 391B ....             text  'Error. Copy/Move target must be outside block M1-M2.'
-0265                       even
-0266               
-0267               
+0239               txt.ioerr.save
+0240 3870 1F49             byte  31
+0241 3871 ....             text  'I/O error. Failed saving file: '
+0242                       even
+0243               
+0244               txt.memfull.load
+0245 3890 4049             byte  64
+0246 3891 ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0247                       even
+0248               
+0249               txt.io.nofile
+0250 38D2 2149             byte  33
+0251 38D3 ....             text  'I/O error. No filename specified.'
+0252                       even
+0253               
+0254               txt.block.inside
+0255 38F4 3445             byte  52
+0256 38F5 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0257                       even
+0258               
+0259               
+0260               
+0261               ;--------------------------------------------------------------
+0262               ; Strings for command buffer
+0263               ;--------------------------------------------------------------
+0264               txt.cmdb.title
+0265 392A 0E43             byte  14
+0266 392B ....             text  'Command buffer'
+0267                       even
 0268               
-0269               ;--------------------------------------------------------------
-0270               ; Strings for command buffer
-0271               ;--------------------------------------------------------------
-0272               txt.cmdb.title
-0273 3950 0E43             byte  14
-0274 3951 ....             text  'Command buffer'
-0275                       even
-0276               
-0277               txt.cmdb.prompt
-0278 3960 013E             byte  1
-0279 3961 ....             text  '>'
-0280                       even
-0281               
-0282               
-0283 3962 0C0A     txt.stevie         byte    12
-0284                                  byte    10
-0285 3964 ....                        text    'Stevie v1.0 (beta 2)'
-0286 3978 0B00                        byte    11
-0287                                  even
-0288               
-0289               txt.colorscheme
-0290 397A 0D43             byte  13
-0291 397B ....             text  'Color scheme:'
-0292                       even
-0293               
+0269               txt.cmdb.prompt
+0270 393A 013E             byte  1
+0271 393B ....             text  '>'
+0272                       even
+0273               
+0274               
+0275               txt.colorscheme
+0276 393C 0D43             byte  13
+0277 393D ....             text  'Color scheme:'
+0278                       even
+0279               
 **** **** ****     > ram.resident.3000.asm
 0018                       copy  "data.keymap.keys.asm"   ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.keys.asm
@@ -6698,11 +6689,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 3988 DEAD             data  >dead,>beef,>dead,>beef
-     398A BEEF 
-     398C DEAD 
-     398E BEEF 
-**** **** ****     > stevie_b3.asm.499673
+0022 394A DEAD             data  >dead,>beef,>dead,>beef
+     394C BEEF 
+     394E DEAD 
+     3950 BEEF 
+**** **** ****     > stevie_b3.asm.53473
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6740,22 +6731,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6048 606E 
 0017               
 0018 604A 0204  20         li    tmp0,txt.head.about
-     604C 37B2 
+     604C 37DC 
 0019 604E C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6050 A31C 
 0020               
-0021 6052 0204  20         li    tmp0,txt.info.about
-     6054 37BD 
+0021 6052 0204  20         li    tmp0,txt.about.build
+     6054 34B8 
 0022 6056 C804  38         mov   tmp0,@cmdb.paninfo    ; Info line
      6058 A31E 
 0023               
 0024 605A 0204  20         li    tmp0,txt.hint.about
-     605C 380E 
+     605C 37E8 
 0025 605E C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      6060 A320 
 0026               
 0027 6062 0204  20         li    tmp0,txt.keys.about
-     6064 3836 
+     6064 3810 
 0028 6066 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      6068 A322 
 0029                       ;------------------------------------------------------
@@ -6767,89 +6758,75 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035               
 0036               
 0037               
-0038               
-0039               
-0040               
+0038               ***************************************************************
+0039               * dialog.about.content
+0040               * Show content in modal dialog
 0041               ***************************************************************
-0042               * dialog.about.content
-0043               * Show content in modal dialog
-0044               ***************************************************************
-0045               * bl  @dialog.about.content
+0042               * bl  @dialog.about.content
+0043               *--------------------------------------------------------------
+0044               * OUTPUT
+0045               * none
 0046               *--------------------------------------------------------------
-0047               * OUTPUT
-0048               * none
-0049               *--------------------------------------------------------------
-0050               * Register usage
-0051               * tmp0
-0052               ********|*****|*********************|**************************
-0053               dialog.about.content:
-0054 606E 0649  14         dect  stack
-0055 6070 C64B  30         mov   r11,*stack            ; Save return address
-0056 6072 0649  14         dect  stack
-0057 6074 C644  30         mov   tmp0,*stack           ; Push tmp0
-0058 6076 0649  14         dect  stack
-0059 6078 C645  30         mov   tmp1,*stack           ; Push tmp1
-0060 607A 0649  14         dect  stack
-0061 607C C646  30         mov   tmp2,*stack           ; Push tmp2
-0062 607E 0649  14         dect  stack
-0063 6080 C660  46         mov   @wyx,*stack           ; Push cursor position
-     6082 832A 
-0064                       ;-------------------------------------------------------
-0065                       ; Clear VDP screen buffer
-0066                       ;-------------------------------------------------------
-0067 6084 C160  34         mov   @fb.scrrows,tmp1
-     6086 A11A 
-0068 6088 3960  72         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
-     608A A10E 
-0069                                                   ; 16 bit part is in tmp2!
-0070               
-0071 608C 04C4  14         clr   tmp0                  ; VDP target address (1nd row on screen!)
-0072 608E 0205  20         li    tmp1,32               ; Character to fill
-     6090 0020 
+0047               * Register usage
+0048               * tmp0
+0049               ********|*****|*********************|**************************
+0050               dialog.about.content:
+0051 606E 0649  14         dect  stack
+0052 6070 C64B  30         mov   r11,*stack            ; Save return address
+0053 6072 0649  14         dect  stack
+0054 6074 C660  46         mov   @wyx,*stack           ; Push cursor position
+     6076 832A 
+0055                       ;------------------------------------------------------
+0056                       ; Show About dialog
+0057                       ;------------------------------------------------------
+0058 6078 06A0  32         bl    @putat
+     607A 2444 
+0059 607C 0000                   byte   0,0
+0060 607E 3484                   data   txt.about.program
+0061               
+0062 6080 06A0  32         bl    @cpym2v
+     6082 244C 
+0063 6084 0050                   data  80,dialog.about.help,24*80
+     6086 6092 
+     6088 0780 
+0064                                                   ; Dump key shortcuts to VDP
+0065                       ;------------------------------------------------------
+0066                       ; Exit
+0067                       ;------------------------------------------------------
+0068               dialog.about.content.exit:
+0069 608A C839  50         mov   *stack+,@wyx          ; Pop cursor position
+     608C 832A 
+0070 608E C2F9  30         mov   *stack+,r11           ; Pop r11
+0071 6090 045B  20         b     *r11                  ; Return
+0072               
 0073               
-0074 6092 06A0  32         bl    @xfilv                ; Fill VDP memory
-     6094 2296 
-0075                                                   ; \ i  tmp0 = VDP target address
-0076                                                   ; | i  tmp1 = Byte to fill
-0077                                                   ; / i  tmp2 = Bytes to copy
-0078                       ;------------------------------------------------------
-0079                       ; Show About dialog
-0080                       ;------------------------------------------------------
-0081 6096 06A0  32         bl    @hchar
-     6098 2788 
-0082 609A 0016                   byte 0,22,16,1
-     609C 1001 
-0083 609E 0039                   byte 0,57,16,1
-     60A0 1001 
-0084 60A2 FFFF                   data EOL
-0085               
-0086 60A4 06A0  32         bl    @putat
-     60A6 2444 
-0087 60A8 0001                   byte   0,1
-0088 60AA 347C                   data   txt.about.program
-0089               
-0090 60AC 06A0  32         bl    @putat
-     60AE 2444 
-0091 60B0 001A                   byte   0,26
-0092 60B2 3492                   data   txt.about.author
-0093               
-0094 60B4 06A0  32         bl    @putat
-     60B6 2444 
-0095 60B8 003B                   byte   0,59
-0096 60BA 34CA                   data   txt.about.build
-0097                       ;------------------------------------------------------
-0098                       ; Exit
-0099                       ;------------------------------------------------------
-0100               dialog.about.content.exit:
-0101 60BC C839  50         mov   *stack+,@wyx          ; Pop cursor position
-     60BE 832A 
-0102 60C0 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0103 60C2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0104 60C4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0105 60C6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0106 60C8 045B  20         b     *r11                  ; Return
-0107               
-**** **** ****     > stevie_b3.asm.499673
+0074               
+0075               dialog.about.help:
+0076 6092 ....             text 'Movement keys:                           |   Modifier keys:                     '
+0077 60E2 ....             text '   Fctn S        Cursor left             |      Fctn 1        Delete character  '
+0078 6132 ....             text '   Fctn D        Cursor right            |      Fctn 2        Insert character  '
+0079 6182 ....             text '   Fctn E        Cursor up               |      Fctn 3        Delete line       '
+0080 61D2 ....             text '   Fctn X        Cursor down             |      Fctn 4        Delete end of line'
+0081 6222 ....             text '   Fctn H        Cursor home             |      Fctn 5        Insert line       '
+0082 6272 ....             text '   Fctn J        Cursor to prev. word    |      Fctn .        Insert/Overwrite  '
+0083 62C2 ....             text '   Fctn K        Cursor to next word     |                                      '
+0084 6312 ....             text '   Fctn L        Cursor to end           |                                      '
+0085 6362 ....             text '   Ctrl E  (^e)  Page up                 |                                      '
+0086 63B2 ....             text '   Ctrl X  (^x)  Page down               |                                      '
+0087 6402 ....             text '   Ctrl B  (^b)  End of file             |                                      '
+0088 6452 ....             text '   Ctrl T  (^t)  Top of file             |                                      '
+0089 64A2 ....             text '                                         |                                      '
+0090 64F2 ....             text 'Action keys:                             |   Block operations:                  '
+0091 6542 ....             text '   Fctn 7         Help                   |      Ctrl d (^d)   Delete block      '
+0092 6592 ....             text '   Fctn +         Quit editor            |      Ctrl c (^c)   Copy block        '
+0093 65E2 ....             text '   Ctrl o (^o)    Open file              |      Ctrl g (^g)   Goto marker M1    '
+0094 6632 ....             text '   Ctrl s (^s)    Save file              |      Ctrl m (^m)   Move block        '
+0095 6682 ....             text '   Ctrl v (^v)    Set M1/M2 marker       |      Ctrl s (^s)   Save block to file'
+0096 66D2 ....             text '   Ctrl r (^r)    Reset M1/M2 markers    |                                      '
+0097 6722 ....             text '   Ctrl z (^z)    Cycle color schemes    |                                      '
+0098 6772 ....             text '   Ctrl , (^,)    Load previous file     |                                      '
+0099 67C2 ....             text '   Ctrl . (^.)    Load next file         |                                      '
+**** **** ****     > stevie_b3.asm.53473
 0074                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -6873,83 +6850,83 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.load:
-0022 60CA 0649  14         dect  stack
-0023 60CC C64B  30         mov   r11,*stack            ; Save return address
-0024 60CE 0649  14         dect  stack
-0025 60D0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0022 6812 0649  14         dect  stack
+0023 6814 C64B  30         mov   r11,*stack            ; Save return address
+0024 6816 0649  14         dect  stack
+0025 6818 C644  30         mov   tmp0,*stack           ; Push tmp0
 0026                       ;-------------------------------------------------------
 0027                       ; Show dialog "Unsaved changes" if editor buffer dirty
 0028                       ;-------------------------------------------------------
-0029 60D2 C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
-     60D4 A206 
-0030 60D6 1303  14         jeq   dialog.load.setup     ; No, skip "Unsaved changes"
+0029 681A C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
+     681C A206 
+0030 681E 1303  14         jeq   dialog.load.setup     ; No, skip "Unsaved changes"
 0031               
-0032 60D8 06A0  32         bl    @dialog.unsaved       ; Show dialog
-     60DA 6198 
-0033 60DC 1021  14         jmp   dialog.load.exit      ; Exit early
+0032 6820 06A0  32         bl    @dialog.unsaved       ; Show dialog
+     6822 68E0 
+0033 6824 1021  14         jmp   dialog.load.exit      ; Exit early
 0034                       ;-------------------------------------------------------
 0035                       ; Setup dialog
 0036                       ;-------------------------------------------------------
 0037               dialog.load.setup:
-0038 60DE 0204  20         li    tmp0,id.dialog.load
-     60E0 000A 
-0039 60E2 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     60E4 A31A 
+0038 6826 0204  20         li    tmp0,id.dialog.load
+     6828 000A 
+0039 682A C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     682C A31A 
 0040               
-0041 60E6 0204  20         li    tmp0,txt.head.load
-     60E8 35D0 
-0042 60EA C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     60EC A31C 
+0041 682E 0204  20         li    tmp0,txt.head.load
+     6830 35FA 
+0042 6832 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     6834 A31C 
 0043               
-0044 60EE 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     60F0 A31E 
+0044 6836 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     6838 A31E 
 0045               
-0046 60F2 0204  20         li    tmp0,txt.hint.load
-     60F4 35E4 
-0047 60F6 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     60F8 A320 
+0046 683A 0204  20         li    tmp0,txt.hint.load
+     683C 360E 
+0047 683E C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     6840 A320 
 0048               
-0049 60FA 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
-     60FC A44E 
-0050 60FE 1303  14         jeq   !
+0049 6842 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
+     6844 A44E 
+0050 6846 1303  14         jeq   !
 0051                       ;-------------------------------------------------------
 0052                       ; Show that FastMode is on
 0053                       ;-------------------------------------------------------
-0054 6100 0204  20         li    tmp0,txt.keys.load2   ; Highlight FastMode
-     6102 3666 
-0055 6104 1002  14         jmp   dialog.load.keylist
+0054 6848 0204  20         li    tmp0,txt.keys.load2   ; Highlight FastMode
+     684A 3690 
+0055 684C 1002  14         jmp   dialog.load.keylist
 0056                       ;-------------------------------------------------------
 0057                       ; Show that FastMode is off
 0058                       ;-------------------------------------------------------
-0059 6106 0204  20 !       li    tmp0,txt.keys.load
-     6108 362C 
+0059 684E 0204  20 !       li    tmp0,txt.keys.load
+     6850 3656 
 0060                       ;-------------------------------------------------------
 0061                       ; Show dialog
 0062                       ;-------------------------------------------------------
 0063               dialog.load.keylist:
-0064 610A C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     610C A322 
+0064 6852 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     6854 A322 
 0065                       ;-------------------------------------------------------
 0066                       ; Set cursor shape
 0067                       ;-------------------------------------------------------
-0068 610E 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6110 6208 
-0069 6112 0204  20         li    tmp0,>0100            ; Cursor CMDB insert mode
-     6114 0100 
-0070 6116 D804  38         movb  tmp0,@tv.curshape     ; Save cursor shape
-     6118 A014 
-0071 611A C820  54         mov   @tv.curshape,@ramsat+2
-     611C A014 
-     611E 2F5C 
+0068 6856 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     6858 6950 
+0069 685A 0204  20         li    tmp0,>0100            ; Cursor CMDB insert mode
+     685C 0100 
+0070 685E D804  38         movb  tmp0,@tv.curshape     ; Save cursor shape
+     6860 A014 
+0071 6862 C820  54         mov   @tv.curshape,@ramsat+2
+     6864 A014 
+     6866 2F5C 
 0072                                                   ; Get cursor shape and color
 0073                       ;-------------------------------------------------------
 0074                       ; Exit
 0075                       ;-------------------------------------------------------
 0076               dialog.load.exit:
-0077 6120 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0078 6122 C2F9  30         mov   *stack+,r11           ; Pop R11
-0079 6124 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.499673
+0077 6868 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0078 686A C2F9  30         mov   *stack+,r11           ; Pop R11
+0079 686C 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b3.asm.53473
 0075                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -6973,95 +6950,95 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.save:
-0022 6126 0649  14         dect  stack
-0023 6128 C64B  30         mov   r11,*stack            ; Save return address
-0024 612A 0649  14         dect  stack
-0025 612C C644  30         mov   tmp0,*stack           ; Push tmp0
+0022 686E 0649  14         dect  stack
+0023 6870 C64B  30         mov   r11,*stack            ; Save return address
+0024 6872 0649  14         dect  stack
+0025 6874 C644  30         mov   tmp0,*stack           ; Push tmp0
 0026                       ;-------------------------------------------------------
 0027                       ; Crunch current row if dirty
 0028                       ;-------------------------------------------------------
-0029 612E 8820  54         c     @fb.row.dirty,@w$ffff
-     6130 A10A 
-     6132 2022 
-0030 6134 1604  14         jne   !                     ; Skip crunching if clean
-0031 6136 06A0  32         bl    @edb.line.pack        ; Copy line to editor buffer
-     6138 61D2 
-0032 613A 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
-     613C A10A 
+0029 6876 8820  54         c     @fb.row.dirty,@w$ffff
+     6878 A10A 
+     687A 2022 
+0030 687C 1604  14         jne   !                     ; Skip crunching if clean
+0031 687E 06A0  32         bl    @edb.line.pack        ; Copy line to editor buffer
+     6880 691A 
+0032 6882 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
+     6884 A10A 
 0033                       ;-------------------------------------------------------
 0034                       ; Setup dialog
 0035                       ;-------------------------------------------------------
-0036 613E 8820  54 !       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-     6140 A20E 
-     6142 2022 
-0037 6144 1309  14         jeq   dialog.save.default   ; Yes, so show default dialog
+0036 6886 8820  54 !       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+     6888 A20E 
+     688A 2022 
+0037 688C 1309  14         jeq   dialog.save.default   ; Yes, so show default dialog
 0038                       ;-------------------------------------------------------
 0039                       ; Setup dialog title
 0040                       ;-------------------------------------------------------
-0041 6146 06A0  32         bl    @cmdb.cmd.clear       ; Clear current CMDB command
-     6148 61F6 
+0041 688E 06A0  32         bl    @cmdb.cmd.clear       ; Clear current CMDB command
+     6890 693E 
 0042               
-0043 614A 0204  20         li    tmp0,id.dialog.saveblock
-     614C 000C 
-0044 614E C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     6150 A31A 
-0045 6152 0204  20         li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"
-     6154 36B4 
+0043 6892 0204  20         li    tmp0,id.dialog.saveblock
+     6894 000C 
+0044 6896 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     6898 A31A 
+0045 689A 0204  20         li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"
+     689C 36DE 
 0046               
-0047 6156 1006  14         jmp   dialog.save.header
+0047 689E 1006  14         jmp   dialog.save.header
 0048                       ;-------------------------------------------------------
 0049                       ; Default dialog
 0050                       ;-------------------------------------------------------
 0051               dialog.save.default:
-0052 6158 0204  20         li    tmp0,id.dialog.save
-     615A 000B 
-0053 615C C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     615E A31A 
-0054 6160 0204  20         li    tmp0,txt.head.save    ; Title "Save DV80 file"
-     6162 36A0 
+0052 68A0 0204  20         li    tmp0,id.dialog.save
+     68A2 000B 
+0053 68A4 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     68A6 A31A 
+0054 68A8 0204  20         li    tmp0,txt.head.save    ; Title "Save DV80 file"
+     68AA 36CA 
 0055                       ;-------------------------------------------------------
 0056                       ; Setup header
 0057                       ;-------------------------------------------------------
 0058               dialog.save.header:
-0059 6164 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     6166 A31C 
+0059 68AC C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     68AE A31C 
 0060               
-0061 6168 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     616A A31E 
+0061 68B0 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     68B2 A31E 
 0062               
-0063 616C 0204  20         li    tmp0,txt.hint.save
-     616E 36D8 
-0064 6170 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     6172 A320 
+0063 68B4 0204  20         li    tmp0,txt.hint.save
+     68B6 3702 
+0064 68B8 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     68BA A320 
 0065               
-0066 6174 0204  20         li    tmp0,txt.keys.save
-     6176 36DA 
-0067 6178 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     617A A322 
+0066 68BC 0204  20         li    tmp0,txt.keys.save
+     68BE 3704 
+0067 68C0 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     68C2 A322 
 0068               
-0069 617C 04E0  34         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
-     617E A44E 
+0069 68C4 04E0  34         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
+     68C6 A44E 
 0070                       ;-------------------------------------------------------
 0071                       ; Set cursor shape
 0072                       ;-------------------------------------------------------
-0073 6180 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6182 6208 
-0074 6184 0204  20         li    tmp0,>0100            ; Cursor CMDB insert mode
-     6186 0100 
-0075 6188 D804  38         movb  tmp0,@tv.curshape     ; Save cursor shape
-     618A A014 
-0076 618C C820  54         mov   @tv.curshape,@ramsat+2
-     618E A014 
-     6190 2F5C 
+0073 68C8 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     68CA 6950 
+0074 68CC 0204  20         li    tmp0,>0100            ; Cursor CMDB insert mode
+     68CE 0100 
+0075 68D0 D804  38         movb  tmp0,@tv.curshape     ; Save cursor shape
+     68D2 A014 
+0076 68D4 C820  54         mov   @tv.curshape,@ramsat+2
+     68D6 A014 
+     68D8 2F5C 
 0077                                                   ; Get cursor shape and color
 0078                       ;-------------------------------------------------------
 0079                       ; Exit
 0080                       ;-------------------------------------------------------
 0081               dialog.save.exit:
-0082 6192 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0083 6194 C2F9  30         mov   *stack+,r11           ; Pop R11
-0084 6196 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.499673
+0082 68DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0083 68DC C2F9  30         mov   *stack+,r11           ; Pop R11
+0084 68DE 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b3.asm.53473
 0076                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7085,48 +7062,48 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.unsaved:
-0022 6198 0649  14         dect  stack
-0023 619A C64B  30         mov   r11,*stack            ; Save return address
-0024 619C 0649  14         dect  stack
-0025 619E C644  30         mov   tmp0,*stack           ; Push tmp0
+0022 68E0 0649  14         dect  stack
+0023 68E2 C64B  30         mov   r11,*stack            ; Save return address
+0024 68E4 0649  14         dect  stack
+0025 68E6 C644  30         mov   tmp0,*stack           ; Push tmp0
 0026                       ;-------------------------------------------------------
 0027                       ; Setup dialog
 0028                       ;-------------------------------------------------------
-0029 61A0 0204  20         li    tmp0,id.dialog.unsaved
-     61A2 0065 
-0030 61A4 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     61A6 A31A 
+0029 68E8 0204  20         li    tmp0,id.dialog.unsaved
+     68EA 0065 
+0030 68EC C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     68EE A31A 
 0031               
-0032 61A8 0204  20         li    tmp0,txt.head.unsaved
-     61AA 3706 
-0033 61AC C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     61AE A31C 
+0032 68F0 0204  20         li    tmp0,txt.head.unsaved
+     68F2 3730 
+0033 68F4 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     68F6 A31C 
 0034               
-0035 61B0 0204  20         li    tmp0,txt.info.unsaved
-     61B2 371B 
-0036 61B4 C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
-     61B6 A31E 
+0035 68F8 0204  20         li    tmp0,txt.info.unsaved
+     68FA 3745 
+0036 68FC C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
+     68FE A31E 
 0037               
-0038 61B8 0204  20         li    tmp0,txt.hint.unsaved
-     61BA 374E 
-0039 61BC C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-     61BE A320 
+0038 6900 0204  20         li    tmp0,txt.hint.unsaved
+     6902 3778 
+0039 6904 C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+     6906 A320 
 0040               
-0041 61C0 0204  20         li    tmp0,txt.keys.unsaved
-     61C2 3788 
-0042 61C4 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     61C6 A322 
+0041 6908 0204  20         li    tmp0,txt.keys.unsaved
+     690A 37B2 
+0042 690C C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     690E A322 
 0043               
-0044 61C8 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
-     61CA 621A 
+0044 6910 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
+     6912 6962 
 0045                       ;-------------------------------------------------------
 0046                       ; Exit
 0047                       ;-------------------------------------------------------
 0048               dialog.unsaved.exit:
-0049 61CC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0050 61CE C2F9  30         mov   *stack+,r11           ; Pop R11
-0051 61D0 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.499673
+0049 6914 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0050 6916 C2F9  30         mov   *stack+,r11           ; Pop R11
+0051 6918 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b3.asm.53473
 0077                       ;-----------------------------------------------------------------------
 0078                       ; Stubs using trampoline
 0079                       ;-----------------------------------------------------------------------
@@ -7140,21 +7117,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               * bank1 vec.10
 0007               ********|*****|*********************|**************************
 0008               edb.line.pack:
-0009 61D2 0649  14         dect  stack
-0010 61D4 C64B  30         mov   r11,*stack            ; Save return address
+0009 691A 0649  14         dect  stack
+0010 691C C64B  30         mov   r11,*stack            ; Save return address
 0011                       ;------------------------------------------------------
 0012                       ; Call function in bank 1
 0013                       ;------------------------------------------------------
-0014 61D6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     61D8 3008 
-0015 61DA 6002                   data bank1            ; | i  p0 = bank address
-0016 61DC 7FAE                   data vec.10           ; | i  p1 = Vector with target address
-0017 61DE 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0014 691E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6920 3008 
+0015 6922 6002                   data bank1            ; | i  p0 = bank address
+0016 6924 7FAE                   data vec.10           ; | i  p1 = Vector with target address
+0017 6926 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0018                       ;------------------------------------------------------
 0019                       ; Exit
 0020                       ;------------------------------------------------------
-0021 61E0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0022 61E2 045B  20         b     *r11                  ; Return to caller
+0021 6928 C2F9  30         mov   *stack+,r11           ; Pop r11
+0022 692A 045B  20         b     *r11                  ; Return to caller
 0023               
 0024               
 0025               ***************************************************************
@@ -7162,21 +7139,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               * bank1 vec.15
 0028               ********|*****|*********************|**************************
 0029               edkey.action.cmdb.show:
-0030 61E4 0649  14         dect  stack
-0031 61E6 C64B  30         mov   r11,*stack            ; Save return address
+0030 692C 0649  14         dect  stack
+0031 692E C64B  30         mov   r11,*stack            ; Save return address
 0032                       ;------------------------------------------------------
 0033                       ; Call function in bank 1
 0034                       ;------------------------------------------------------
-0035 61E8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     61EA 3008 
-0036 61EC 6002                   data bank1            ; | i  p0 = bank address
-0037 61EE 7FB8                   data vec.15           ; | i  p1 = Vector with target address
-0038 61F0 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0035 6930 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6932 3008 
+0036 6934 6002                   data bank1            ; | i  p0 = bank address
+0037 6936 7FB8                   data vec.15           ; | i  p1 = Vector with target address
+0038 6938 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0039                       ;------------------------------------------------------
 0040                       ; Exit
 0041                       ;------------------------------------------------------
-0042 61F2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0043 61F4 045B  20         b     *r11                  ; Return to caller
+0042 693A C2F9  30         mov   *stack+,r11           ; Pop r11
+0043 693C 045B  20         b     *r11                  ; Return to caller
 0044               
 0045               
 0046               ***************************************************************
@@ -7184,21 +7161,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0048               * bank1 vec.19
 0049               ********|*****|*********************|**************************
 0050               cmdb.cmd.clear:
-0051 61F6 0649  14         dect  stack
-0052 61F8 C64B  30         mov   r11,*stack            ; Save return address
+0051 693E 0649  14         dect  stack
+0052 6940 C64B  30         mov   r11,*stack            ; Save return address
 0053                       ;------------------------------------------------------
 0054                       ; Call function in bank 1
 0055                       ;------------------------------------------------------
-0056 61FA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     61FC 3008 
-0057 61FE 6002                   data bank1            ; | i  p0 = bank address
-0058 6200 7FC0                   data vec.19           ; | i  p1 = Vector with target address
-0059 6202 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0056 6942 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6944 3008 
+0057 6946 6002                   data bank1            ; | i  p0 = bank address
+0058 6948 7FC0                   data vec.19           ; | i  p1 = Vector with target address
+0059 694A 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0060                       ;------------------------------------------------------
 0061                       ; Exit
 0062                       ;------------------------------------------------------
-0063 6204 C2F9  30         mov   *stack+,r11           ; Pop r11
-0064 6206 045B  20         b     *r11                  ; Return to caller
+0063 694C C2F9  30         mov   *stack+,r11           ; Pop r11
+0064 694E 045B  20         b     *r11                  ; Return to caller
 0065               
 0066               
 0067               ***************************************************************
@@ -7206,47 +7183,47 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0069               * bank1 vec.28
 0070               ********|*****|*********************|**************************
 0071               pane.cursor.blink:
-0072 6208 0649  14         dect  stack
-0073 620A C64B  30         mov   r11,*stack            ; Save return address
+0072 6950 0649  14         dect  stack
+0073 6952 C64B  30         mov   r11,*stack            ; Save return address
 0074                       ;------------------------------------------------------
 0075                       ; Call function in bank 1
 0076                       ;------------------------------------------------------
-0077 620C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     620E 3008 
-0078 6210 6002                   data bank1            ; | i  p0 = bank address
-0079 6212 7FD2                   data vec.28           ; | i  p1 = Vector with target address
-0080 6214 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0077 6954 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6956 3008 
+0078 6958 6002                   data bank1            ; | i  p0 = bank address
+0079 695A 7FD2                   data vec.28           ; | i  p1 = Vector with target address
+0080 695C 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0081                       ;------------------------------------------------------
 0082                       ; Exit
 0083                       ;------------------------------------------------------
-0084 6216 C2F9  30         mov   *stack+,r11           ; Pop r11
-0085 6218 045B  20         b     *r11                  ; Return to caller
+0084 695E C2F9  30         mov   *stack+,r11           ; Pop r11
+0085 6960 045B  20         b     *r11                  ; Return to caller
 0086               
 0087               ***************************************************************
 0088               * Stub for "pane.cursor.hide"
 0089               * bank1 vec.29
 0090               ********|*****|*********************|**************************
 0091               pane.cursor.hide:
-0092 621A 0649  14         dect  stack
-0093 621C C64B  30         mov   r11,*stack            ; Save return address
+0092 6962 0649  14         dect  stack
+0093 6964 C64B  30         mov   r11,*stack            ; Save return address
 0094                       ;------------------------------------------------------
 0095                       ; Call function in bank 1
 0096                       ;------------------------------------------------------
-0097 621E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6220 3008 
-0098 6222 6002                   data bank1            ; | i  p0 = bank address
-0099 6224 7FD4                   data vec.29           ; | i  p1 = Vector with target address
-0100 6226 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0097 6966 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6968 3008 
+0098 696A 6002                   data bank1            ; | i  p0 = bank address
+0099 696C 7FD4                   data vec.29           ; | i  p1 = Vector with target address
+0100 696E 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0101                       ;------------------------------------------------------
 0102                       ; Exit
 0103                       ;------------------------------------------------------
-0104 6228 C2F9  30         mov   *stack+,r11           ; Pop r11
-0105 622A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.499673
+0104 6970 C2F9  30         mov   *stack+,r11           ; Pop r11
+0105 6972 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b3.asm.53473
 0081                       ;-----------------------------------------------------------------------
 0082                       ; Bank specific vector table
 0083                       ;-----------------------------------------------------------------------
-0087 622C 622C                   data $                ; Bank 1 ROM size OK.
+0087 6974 6974                   data $                ; Bank 1 ROM size OK.
 0089                       ;-------------------------------------------------------
 0090                       ; Vector table bank 3: >7f9c - >7fff
 0091                       ;-------------------------------------------------------
@@ -7261,9 +7238,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0007               * Vector table for trampoline functions
 0008               *--------------------------------------------------------------
 0009 7F9C 603A     vec.1   data  dialog.about          ; Dialog "About"
-0010 7F9E 60CA     vec.2   data  dialog.load           ; Dialog "Load DV80 file"
-0011 7FA0 6126     vec.3   data  dialog.save           ; Dialog "Save DV80 file"
-0012 7FA2 6198     vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
+0010 7F9E 6812     vec.2   data  dialog.load           ; Dialog "Load DV80 file"
+0011 7FA0 686E     vec.3   data  dialog.save           ; Dialog "Save DV80 file"
+0012 7FA2 68E0     vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
 0013 7FA4 2026     vec.5   data  cpu.crash             ;
 0014 7FA6 2026     vec.6   data  cpu.crash             ;
 0015 7FA8 2026     vec.7   data  cpu.crash             ;
@@ -7292,7 +7269,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.499673
+**** **** ****     > stevie_b3.asm.53473
 0093               
 0094               *--------------------------------------------------------------
 0095               * Video mode configuration

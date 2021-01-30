@@ -134,16 +134,17 @@ pane.action.colorscheme.load:
         andi  tmp4,>ff00            ; Only keep MSB (EF)
         srl   tmp4,8                ; MSB to LSB
 
-        mov   *tmp0+,tmp0           ; Get colors IJKL
+        mov   *tmp0+,tmp1           ; Get colors IJKL
+        mov   tmp1,tmp2             ; \ Right align IJ and
+        srl   tmp2,8                ; | save to @tv.busycolor
+        mov   tmp2,@tv.busycolor    ; / 
 
-        mov   tmp0,tmp1             ; \ Right align IJ and
-        srl   tmp1,8                ; | save to @tv.busycolor
-        mov   tmp1,@tv.busycolor    ; / 
-
-        mov   tmp0,tmp1             ; \ Right align KL and
-        andi  tmp1,>00ff            ; | save to @tv.markcolor
+        andi  tmp1,>00ff            ; | save KL to @tv.markcolor
         mov   tmp1,@tv.markcolor    ; /
                                  
+        mov   *tmp0,tmp1            ; Get colors MNOP
+        srl   tmp1,8                ; \ Right align MN and
+        mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -179,23 +180,19 @@ pane.action.colorscheme.cmdbpane:
         li    tmp0,vdp.cmdb.toprow.tat
                                     ; VDP start address (CMDB top line)
 
-        mov   @tv.color,tmp1        ; set color for header line
-        andi  tmp1,>00ff         
-        mov   tmp1,tmp2
-        sla   tmp1,4
-        srl   tmp2,4
-        soc   tmp2,tmp1             ; OR
-
-        li    tmp2,4*80             ; Number of bytes to fill
+        mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
+        li    tmp2,1*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
-
+        ;-------------------------------------------------------
+        ; Dump colors for CMDB pane content (TAT)
+        ;-------------------------------------------------------
         li    tmp0,vdp.cmdb.toprow.tat + 80
                                     ; VDP start address (CMDB top line + 1)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
-        li    tmp2,4*80             ; Number of bytes to fill
+        li    tmp2,3*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill

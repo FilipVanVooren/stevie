@@ -33,11 +33,21 @@ pane.botline:
         mov   @edb.block.m2,tmp0    ; \  
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /
-        jeq   pane.botline.show_mode  
+        jeq   pane.botline.show_keys
 
         bl    @putat
               byte pane.botrow,0
               data txt.keys.block   ; Show block shortcuts
+
+        jmp   pane.botline.show_mode  
+        ;------------------------------------------------------
+        ; Show keys
+        ;------------------------------------------------------
+pane.botline.show_keys:        
+        bl    @putat
+              byte pane.botrow,0
+              data txt.keys.help    ; Show help keys
+ 
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------

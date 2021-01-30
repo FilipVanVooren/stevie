@@ -8,17 +8,13 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie v1.0 (beta 2)'
+txt.about.program  #string 'Stevie v1.0 (beta 2)                              '
                    even
-txt.about.author   #string '2018-2021  Filip Van Vooren'
-txt.about.website  #string 'https://stevie.oratronik.de'
-txt.about.build    #string 'Build: %%build_date%%'
-
+txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / https://stevie.oratronik.de'
 ;--------------------------------------------------------------
 ; Strings for status line pane
 ;--------------------------------------------------------------
 txt.delim          #string ','
-txt.marker         #string '*EOF*'
 txt.bottom         #string '  BOT'
 txt.ovrwrite       #string 'OVR'
 txt.insert         #string 'INS'
@@ -37,9 +33,9 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-
-txt.keys.block     byte    43
-                   text    '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+txt.keys.help      #string  'F7=Help'
+txt.keys.block     #string '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+                   even
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e
@@ -88,12 +84,12 @@ txt.head.about     byte 10,1,3,32
                    text 'About '
                    byte 2
 
-txt.info.about     #string 'A programming editor for the expanded Texas Instruments TI-99/4a Home Computer.'
+txt.info.about     #string 
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
 txt.keys.about     byte 61
-                   text 'F9=Back    ENTER=Back   ALPHA LOCK up= '
+                   text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
                    byte 15
-                   text '   ALPHA LOCK down= '
+                   text '   ALPHA LOCK Down= '
                    byte 14
 
 ;--------------------------------------------------------------
@@ -111,11 +107,5 @@ txt.block.inside   #string 'Error. Copy/Move target must be outside block M1-M2.
 ;--------------------------------------------------------------
 txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-
-txt.stevie         byte    12
-                   byte    10
-                   text    'Stevie v1.0 (beta 2)'
-                   byte    11
-                   even            
 
 txt.colorscheme    #string 'Color scheme:'
