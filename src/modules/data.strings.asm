@@ -10,7 +10,7 @@
 ;--------------------------------------------------------------
 txt.about.program  #string 'Stevie v1.0 (beta 2)                              '
                    even
-txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / https://stevie.oratronik.de'
+txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren'
 ;--------------------------------------------------------------
 ; Strings for status line pane
 ;--------------------------------------------------------------

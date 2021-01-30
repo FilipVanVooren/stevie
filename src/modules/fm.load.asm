@@ -54,7 +54,9 @@ fm.loadfile:
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Bytes to copy
-
+        ;-------------------------------------------------------
+        ; Reload colorscheme
+        ;-------------------------------------------------------
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack

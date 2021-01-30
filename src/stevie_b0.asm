@@ -27,7 +27,6 @@ bankid  equ   bank0                 ; Set bank identifier to current bank
         save  >6000,>7fff           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
 
-
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
