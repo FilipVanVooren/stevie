@@ -8,9 +8,9 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie v1.0 (beta 2)                              '
+txt.about.program  #string 'Stevie 1.0                                        '
                    even
-txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren'
+txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 ;--------------------------------------------------------------
 ; Strings for status line pane
 ;--------------------------------------------------------------
@@ -105,7 +105,5 @@ txt.block.inside   #string 'Error. Copy/Move target must be outside block M1-M2.
 ;--------------------------------------------------------------
 ; Strings for command buffer
 ;--------------------------------------------------------------
-txt.cmdb.title     #string 'Command buffer'
 txt.cmdb.prompt    #string '>'
-
 txt.colorscheme    #string 'Color scheme:'

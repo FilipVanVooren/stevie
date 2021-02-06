@@ -11,7 +11,7 @@
         data  kickstart.code1
 
         .ifdef debug
-              #string 'STEVIE 1.0 (BETA 2)'
+              #string 'STEVIE 1.0'
         .else
-              #string 'STEVIE 1.0 (BETA 2)'
+              #string 'STEVIE 1.0'
         .endif
