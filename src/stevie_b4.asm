@@ -8,20 +8,21 @@
 ***************************************************************
 * File: stevie_b1.asm               ; Version %%build_date%%
 *
-* Bank 3 "John"
+* Bank 4 "Janine"
 *
 ***************************************************************
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
+
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************
 sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
                                     ; grows downwards to >2000
 ***************************************************************
-* BANK 3
+* BANK 4
 ********|*****|*********************|**************************
-bankid  equ   bank3                 ; Set bank identifier to current bank
+bankid  equ   bank4                 ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
@@ -63,20 +64,17 @@ main:
         aorg  kickstart.code2       ; >6036
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Include files - Shared code
-        ;-----------------------------------------------------------------------         
-
+        ; Keyboard actions - Framebuffer (2)
+        ;-----------------------------------------------------------------------        
+        copy  "edkey.fb.tabs.asm"   ; Cursor tab handling
         ;-----------------------------------------------------------------------
-        ; Include files - Dialogs
-        ;-----------------------------------------------------------------------         
-        copy  "dialog.about.asm"    ; Dialog "About"
-        copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
-        copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
-        copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
+        ; Logic for Framebuffer (2)
+        ;-----------------------------------------------------------------------    
+        copy  "fb.tabs.asm"         ; Move cursor to tab position
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks      
+        copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
@@ -86,9 +84,9 @@ main:
               data $                ; Bank 1 ROM size OK.
         .endif
         ;-------------------------------------------------------
-        ; Vector table bank 3: >7f9c - >7fff
+        ; Vector table bank 4: >7f9c - >7fff
         ;-------------------------------------------------------
-        copy  "rom.vectors.bank3.asm"
+        copy  "rom.vectors.bank4.asm"
 
 *--------------------------------------------------------------
 * Video mode configuration

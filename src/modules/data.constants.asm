@@ -144,14 +144,21 @@ tv.colorscheme.entries   equ 10 ; Entries in table
 tv.colorscheme.table:                  
 ;                              ; #  
 ;       ABCD  EFGH  IJKL  MNOP ; -
- data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
- data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
- data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
- data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
- data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
- data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
- data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
- data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow 
- data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
- data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
+        data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
+        data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
+        data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
+        data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
+        data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
+        data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
+        data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
+        data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow 
+        data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
+        data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
  
+
+tv.tabs.table:
+        byte  0,7,12,22               ; \ 
+        byte  0,0,0,0                 ; |   Default tab positions.
+        byte  0,0,0,0                 ; |   Up to 20 positions supported.
+        byte  0,0,0,0                 ; |
+        byte  0,0,0,0                 ; /

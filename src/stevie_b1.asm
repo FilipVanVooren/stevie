@@ -72,7 +72,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
-        ; Keyboard actions - Framebuffer              
+        ; Keyboard actions - Framebuffer (1)             
         ;-----------------------------------------------------------------------
         copy  "edkey.fb.mov.leftright.asm" 
                                          ; Move left / right / home / end
@@ -97,7 +97,7 @@ main:
         copy  "edkey.cmdb.file.save.asm" ; Save DV80 file
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
-        ; Logic for Framebuffer
+        ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------        
         copy  "fb.utils.asm"        ; Framebuffer utilities
         copy  "fb.refresh.asm"      ; Refresh framebuffer
