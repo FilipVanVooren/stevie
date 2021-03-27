@@ -6,7 +6,7 @@
 *
 *              (c)2018-2021 // Filip van Vooren
 ***************************************************************
-* File: stevie_b1.asm               ; Version %%build_date%%
+* File: stevie_b2.asm               ; Version %%build_date%%
 *
 * Bank 2 "Jacky"
 *
