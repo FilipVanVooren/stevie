@@ -157,8 +157,8 @@ tv.colorscheme.table:
  
 
 tv.tabs.table:
-        byte  0,7,12,22               ; \ 
-        byte  0,0,0,0                 ; |   Default tab positions.
-        byte  0,0,0,0                 ; |   Up to 20 positions supported.
-        byte  0,0,0,0                 ; |
-        byte  0,0,0,0                 ; /
+;       byte  0,7,12,22               ; \ 
+ ;      byte  0,0,0,0                 ; |   Default tab positions.
+  ;     byte  0,0,0,0                 ; |   Up to 20 positions supported.
+   ;    byte  0,0,0,0                 ; |
+    ;   byte  0,0,0,0                 ; /
