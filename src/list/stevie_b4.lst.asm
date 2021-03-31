@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.58155
+**** **** ****     > stevie_b4.asm.270763
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210327-58155
+0009               * File: stevie_b4.asm               ; Version 210331-270763
 0010               *
 0011               * Bank 4 "Janine"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b4.asm.58155
+**** **** ****     > stevie_b4.asm.270763
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b4.asm.58155
+**** **** ****     > stevie_b4.asm.270763
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -403,7 +403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1'
 0017                       even
 0018               
-**** **** ****     > stevie_b4.asm.58155
+**** **** ****     > stevie_b4.asm.270763
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1122,8 +1122,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 21D2 1642             byte  22
-0260 21D3 ....             text  'Build-ID  210327-58155'
+0259 21D2 1742             byte  23
+0260 21D3 ....             text  'Build-ID  210331-270763'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5007,7 +5007,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b4.asm.58155
+**** **** ****     > stevie_b4.asm.270763
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -5585,12 +5585,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      31EA A20E 
 0041               
 0042 31EC 0204  20         li    tmp0,txt.newfile      ; "New file"
-     31EE 359C 
+     31EE 35B0 
 0043 31F0 C804  38         mov   tmp0,@edb.filename.ptr
      31F2 A212 
 0044               
 0045 31F4 0204  20         li    tmp0,txt.filetype.none
-     31F6 35F0 
+     31F6 3604 
 0046 31F8 C804  38         mov   tmp0,@edb.filetype.ptr
      31FA A214 
 0047               
@@ -6256,8 +6256,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0142      000A     tv.colorscheme.entries   equ 10 ; Entries in table
 0143               
 0144               tv.colorscheme.table:
-0145               ;                              ; #
-0146               ;       ABCD  EFGH  IJKL  MNOP ; -
+0145                       ;                             ; #
+0146                       ;      ABCD  EFGH  IJKL  MNOP ; -
 0147 3434 F417             data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
      3436 F171 
      3438 1B1F 
@@ -6298,14 +6298,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      347E E1FF 
      3480 1B1F 
      3482 F100 
-0157               
+0157                       even
 0158               
-0159               ;tv.tabs.table:
-0160                ;       byte  0,7,12,22               ; \
-0161                 ;      byte  0,0,0,0                 ; |   Default tab positions.
-0162                  ;     byte  0,0,0,0                 ; |   Up to 20 positions supported.
-0163                   ;    byte  0,0,0,0                 ; |
-0164                    ;   byte  0,0,0,0                 ; /
+0159               tv.tabs.table:
+0160 3484 070C             byte  7,12,22,30              ; \
+     3486 161E 
+0161 3488 0000             byte  0,0,0,0                 ; |   Default tab positions.
+     348A 0000 
+0162 348C 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+     348E 0000 
+0163 3490 0000             byte  0,0,0,0                 ; |
+     3492 0000 
+0164 3494 0000             byte  0,0,0,0                 ; /
+     3496 0000 
+0165                       even
 **** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.strings.asm"       ; Data segment - Strings
 **** **** ****     > data.strings.asm
@@ -6320,256 +6326,256 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009               ; Strings for welcome pane
 0010               ;--------------------------------------------------------------
 0011               txt.about.program
-0012 3484 3253             byte  50
-0013 3485 ....             text  'Stevie 1.0                                        '
+0012 3498 3253             byte  50
+0013 3499 ....             text  'Stevie 1.1                                        '
 0014                       even
 0015               
 0016                                  even
 0017               txt.about.build
-0018 34B8 4A42             byte  74
-0019 34B9 ....             text  'Build: 210327-58155 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 34CC 4B42             byte  75
+0019 34CD ....             text  'Build: 210331-270763 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
 0023               ; Strings for status line pane
 0024               ;--------------------------------------------------------------
 0025               txt.delim
-0026 3504 012C             byte  1
-0027 3505 ....             text  ','
+0026 3518 012C             byte  1
+0027 3519 ....             text  ','
 0028                       even
 0029               
 0030               txt.bottom
-0031 3506 0520             byte  5
-0032 3507 ....             text  '  BOT'
+0031 351A 0520             byte  5
+0032 351B ....             text  '  BOT'
 0033                       even
 0034               
 0035               txt.ovrwrite
-0036 350C 034F             byte  3
-0037 350D ....             text  'OVR'
+0036 3520 034F             byte  3
+0037 3521 ....             text  'OVR'
 0038                       even
 0039               
 0040               txt.insert
-0041 3510 0349             byte  3
-0042 3511 ....             text  'INS'
+0041 3524 0349             byte  3
+0042 3525 ....             text  'INS'
 0043                       even
 0044               
 0045               txt.star
-0046 3514 012A             byte  1
-0047 3515 ....             text  '*'
+0046 3528 012A             byte  1
+0047 3529 ....             text  '*'
 0048                       even
 0049               
 0050               txt.loading
-0051 3516 0A4C             byte  10
-0052 3517 ....             text  'Loading...'
+0051 352A 0A4C             byte  10
+0052 352B ....             text  'Loading...'
 0053                       even
 0054               
 0055               txt.saving
-0056 3522 0A53             byte  10
-0057 3523 ....             text  'Saving....'
+0056 3536 0A53             byte  10
+0057 3537 ....             text  'Saving....'
 0058                       even
 0059               
 0060               txt.block.del
-0061 352E 1244             byte  18
-0062 352F ....             text  'Deleting block....'
+0061 3542 1244             byte  18
+0062 3543 ....             text  'Deleting block....'
 0063                       even
 0064               
 0065               txt.block.copy
-0066 3542 1143             byte  17
-0067 3543 ....             text  'Copying block....'
+0066 3556 1143             byte  17
+0067 3557 ....             text  'Copying block....'
 0068                       even
 0069               
 0070               txt.block.move
-0071 3554 104D             byte  16
-0072 3555 ....             text  'Moving block....'
+0071 3568 104D             byte  16
+0072 3569 ....             text  'Moving block....'
 0073                       even
 0074               
 0075               txt.block.save
-0076 3566 1D53             byte  29
-0077 3567 ....             text  'Saving block to DV80 file....'
+0076 357A 1D53             byte  29
+0077 357B ....             text  'Saving block to DV80 file....'
 0078                       even
 0079               
 0080               txt.fastmode
-0081 3584 0846             byte  8
-0082 3585 ....             text  'Fastmode'
+0081 3598 0846             byte  8
+0082 3599 ....             text  'Fastmode'
 0083                       even
 0084               
 0085               txt.kb
-0086 358E 026B             byte  2
-0087 358F ....             text  'kb'
+0086 35A2 026B             byte  2
+0087 35A3 ....             text  'kb'
 0088                       even
 0089               
 0090               txt.lines
-0091 3592 054C             byte  5
-0092 3593 ....             text  'Lines'
+0091 35A6 054C             byte  5
+0092 35A7 ....             text  'Lines'
 0093                       even
 0094               
 0095               txt.bufnum
-0096 3598 0323             byte  3
-0097 3599 ....             text  '#1 '
+0096 35AC 0323             byte  3
+0097 35AD ....             text  '#1 '
 0098                       even
 0099               
 0100               txt.newfile
-0101 359C 0A5B             byte  10
-0102 359D ....             text  '[New file]'
+0101 35B0 0A5B             byte  10
+0102 35B1 ....             text  '[New file]'
 0103                       even
 0104               
 0105               txt.filetype.dv80
-0106 35A8 0444             byte  4
-0107 35A9 ....             text  'DV80'
+0106 35BC 0444             byte  4
+0107 35BD ....             text  'DV80'
 0108                       even
 0109               
 0110               txt.m1
-0111 35AE 034D             byte  3
-0112 35AF ....             text  'M1='
+0111 35C2 034D             byte  3
+0112 35C3 ....             text  'M1='
 0113                       even
 0114               
 0115               txt.m2
-0116 35B2 034D             byte  3
-0117 35B3 ....             text  'M2='
+0116 35C6 034D             byte  3
+0117 35C7 ....             text  'M2='
 0118                       even
 0119               
 0120               txt.keys.help
-0121 35B6 0746             byte  7
-0122 35B7 ....             text  'F7=Help'
+0121 35CA 0746             byte  7
+0122 35CB ....             text  'F7=Help'
 0123                       even
 0124               
 0125               txt.keys.block
-0126 35BE 2B5E             byte  43
-0127 35BF ....             text  '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+0126 35D2 2B5E             byte  43
+0127 35D3 ....             text  '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
 0128                       even
 0129               
 0130                                  even
 0131               
-0132 35EA 010F     txt.alpha.up       data >010f
-0133 35EC 010E     txt.alpha.down     data >010e
-0134 35EE 0110     txt.vertline       data >0110
+0132 35FE 010F     txt.alpha.up       data >010f
+0133 3600 010E     txt.alpha.down     data >010e
+0134 3602 0110     txt.vertline       data >0110
 0135               
 0136               txt.clear
-0137 35F0 0420             byte  4
-0138 35F1 ....             text  '    '
+0137 3604 0420             byte  4
+0138 3605 ....             text  '    '
 0139                       even
 0140               
-0141      35F0     txt.filetype.none  equ txt.clear
+0141      3604     txt.filetype.none  equ txt.clear
 0142               
 0143               
 0144               ;--------------------------------------------------------------
 0145               ; Dialog Load DV 80 file
 0146               ;--------------------------------------------------------------
-0147 35F6 1301     txt.head.load      byte 19,1,3,32
-     35F8 0320 
-0148 35FA ....                        text 'Open DV80 file '
+0147 360A 1301     txt.head.load      byte 19,1,3,32
+     360C 0320 
+0148 360E ....                        text 'Open DV80 file '
 0149                                  byte 2
 0150               txt.hint.load
-0151 360A 4746             byte  71
-0152 360B ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+0151 361E 4746             byte  71
+0152 361F ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
 0153                       even
 0154               
 0155               txt.keys.load
-0156 3652 3946             byte  57
-0157 3653 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
+0156 3666 3946             byte  57
+0157 3667 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
 0158                       even
 0159               
 0160               txt.keys.load2
-0161 368C 3946             byte  57
-0162 368D ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
+0161 36A0 3946             byte  57
+0162 36A1 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
 0163                       even
 0164               
 0165               
 0166               ;--------------------------------------------------------------
 0167               ; Dialog Save DV 80 file
 0168               ;--------------------------------------------------------------
-0169 36C6 1301     txt.head.save      byte 19,1,3,32
-     36C8 0320 
-0170 36CA ....                        text 'Save DV80 file '
-0171                                  byte 2
-0172 36DA 2301     txt.head.save2     byte 35,1,3,32
+0169 36DA 1301     txt.head.save      byte 19,1,3,32
      36DC 0320 
-0173 36DE ....                        text 'Save marked block to DV80 file '
+0170 36DE ....                        text 'Save DV80 file '
+0171                                  byte 2
+0172 36EE 2301     txt.head.save2     byte 35,1,3,32
+     36F0 0320 
+0173 36F2 ....                        text 'Save marked block to DV80 file '
 0174                                  byte 2
 0175               txt.hint.save
-0176 36FE 0120             byte  1
-0177 36FF ....             text  ' '
+0176 3712 0120             byte  1
+0177 3713 ....             text  ' '
 0178                       even
 0179               
 0180               txt.keys.save
-0181 3700 2A46             byte  42
-0182 3701 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
+0181 3714 2A46             byte  42
+0182 3715 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
 0183                       even
 0184               
 0185               
 0186               ;--------------------------------------------------------------
 0187               ; Dialog "Unsaved changes"
 0188               ;--------------------------------------------------------------
-0189 372C 1401     txt.head.unsaved   byte 20,1,3,32
-     372E 0320 
-0190 3730 ....                        text 'Unsaved changes '
-0191 3740 0232                        byte 2
+0189 3740 1401     txt.head.unsaved   byte 20,1,3,32
+     3742 0320 
+0190 3744 ....                        text 'Unsaved changes '
+0191 3754 0232                        byte 2
 0192               txt.info.unsaved
 0193                       byte  50
-0194 3742 ....             text  'You are about to lose changes to the current file!'
+0194 3756 ....             text  'You are about to lose changes to the current file!'
 0195                       even
 0196               
 0197               txt.hint.unsaved
-0198 3774 3950             byte  57
-0199 3775 ....             text  'Press F6 to proceed without saving or ENTER to save file.'
+0198 3788 3950             byte  57
+0199 3789 ....             text  'Press F6 to proceed without saving or ENTER to save file.'
 0200                       even
 0201               
 0202               txt.keys.unsaved
-0203 37AE 2846             byte  40
-0204 37AF ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
+0203 37C2 2846             byte  40
+0204 37C3 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
 0205                       even
 0206               
 0207               
 0208               ;--------------------------------------------------------------
 0209               ; Dialog "About"
 0210               ;--------------------------------------------------------------
-0211 37D8 0A01     txt.head.about     byte 10,1,3,32
-     37DA 0320 
-0212 37DC ....                        text 'About '
-0213 37E2 0200                        byte 2
+0211 37EC 0A01     txt.head.about     byte 10,1,3,32
+     37EE 0320 
+0212 37F0 ....                        text 'About '
+0213 37F6 0200                        byte 2
 0214               
 0215               txt.info.about
 0216                       byte  0
-0217 37E4 ....             text
+0217 37F8 ....             text
 0218                       even
 0219               
 0220               txt.hint.about
-0221 37E4 2650             byte  38
-0222 37E5 ....             text  'Press F9 or ENTER to return to editor.'
+0221 37F8 2650             byte  38
+0222 37F9 ....             text  'Press F9 or ENTER to return to editor.'
 0223                       even
 0224               
-0225 380C 3D46     txt.keys.about     byte 61
-0226 380D ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
-0227 3834 0F20                        byte 15
-0228 3835 ....                        text '   ALPHA LOCK Down= '
+0225 3820 3D46     txt.keys.about     byte 61
+0226 3821 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
+0227 3848 0F20                        byte 15
+0228 3849 ....                        text '   ALPHA LOCK Down= '
 0229                                  byte 14
 0230               
 0231               ;--------------------------------------------------------------
 0232               ; Strings for error line pane
 0233               ;--------------------------------------------------------------
 0234               txt.ioerr.load
-0235 384A 2049             byte  32
-0236 384B ....             text  'I/O error. Failed loading file: '
+0235 385E 2049             byte  32
+0236 385F ....             text  'I/O error. Failed loading file: '
 0237                       even
 0238               
 0239               txt.ioerr.save
-0240 386C 2049             byte  32
-0241 386D ....             text  'I/O error. Failed saving file:  '
+0240 3880 2049             byte  32
+0241 3881 ....             text  'I/O error. Failed saving file:  '
 0242                       even
 0243               
 0244               txt.memfull.load
-0245 388E 4049             byte  64
-0246 388F ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0245 38A2 4049             byte  64
+0246 38A3 ....             text  'Index memory full. Could not fully load file into editor buffer.'
 0247                       even
 0248               
 0249               txt.io.nofile
-0250 38D0 2149             byte  33
-0251 38D1 ....             text  'I/O error. No filename specified.'
+0250 38E4 2149             byte  33
+0251 38E5 ....             text  'I/O error. No filename specified.'
 0252                       even
 0253               
 0254               txt.block.inside
-0255 38F2 3445             byte  52
-0256 38F3 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0255 3906 3445             byte  52
+0256 3907 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
 0257                       even
 0258               
 0259               
@@ -6578,13 +6584,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0262               ; Strings for command buffer
 0263               ;--------------------------------------------------------------
 0264               txt.cmdb.prompt
-0265 3928 013E             byte  1
-0266 3929 ....             text  '>'
+0265 393C 013E             byte  1
+0266 393D ....             text  '>'
 0267                       even
 0268               
 0269               txt.colorscheme
-0270 392A 0D43             byte  13
-0271 392B ....             text  'Color scheme:'
+0270 393E 0D43             byte  13
+0271 393F ....             text  'Color scheme:'
 0272                       even
 0273               
 **** **** ****     > ram.resident.3000.asm
@@ -6691,11 +6697,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 3938 DEAD             data  >dead,>beef,>dead,>beef
-     393A BEEF 
-     393C DEAD 
-     393E BEEF 
-**** **** ****     > stevie_b4.asm.58155
+0022 394C DEAD             data  >dead,>beef,>dead,>beef
+     394E BEEF 
+     3950 DEAD 
+     3952 BEEF 
+**** **** ****     > stevie_b4.asm.270763
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6704,114 +6710,352 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0065 6036 06A0  32         bl    @cpu.crash            ; Should never get here
      6038 2026 
 0066                       ;-----------------------------------------------------------------------
-0067                       ; Keyboard actions - Framebuffer (2)
+0067                       ; Logic for Framebuffer (2)
 0068                       ;-----------------------------------------------------------------------
-0069                       copy  "edkey.fb.tabs.asm"   ; Cursor tab handling
-**** **** ****     > edkey.fb.tabs.asm
-0001               * FILE......: edkey.fb.tabs.asm
-0002               * Purpose...: Actions for moving to tab positions in frame buffer pane.
+0069                       copy  "fb.utils.asm"        ; Framebuffer utilities
+**** **** ****     > fb.utils.asm
+0001               * FILE......: fb.utils.asm
+0002               * Purpose...: Stevie Editor - Framebuffer utilities
 0003               
-0004               *---------------------------------------------------------------
-0005               * Cursor on next tab
-0006               *---------------------------------------------------------------
-0007               edkey.action.fb.tab.next:
-0008 603A 06A0  32          bl  @fb.tab.next           ; Jump to next tab position on line
-     603C 6040 
-0009                       ;------------------------------------------------------
-0010                       ; Exit
-0011                       ;------------------------------------------------------
-0012               edkey.action.fb.tab.next.exit:
-0013 603E 10FF  14         jmp  $
-**** **** ****     > stevie_b4.asm.58155
-0070                       ;-----------------------------------------------------------------------
-0071                       ; Logic for Framebuffer (2)
-0072                       ;-----------------------------------------------------------------------
-0073                       copy  "fb.tabs.asm"         ; Move cursor to tab position
+0004               ***************************************************************
+0005               * fb.row2line
+0006               * Calculate line in editor buffer
+0007               ***************************************************************
+0008               * bl @fb.row2line
+0009               *--------------------------------------------------------------
+0010               * INPUT
+0011               * @fb.topline = Top line in frame buffer
+0012               * @parm1      = Row in frame buffer (offset 0..@fb.scrrows)
+0013               *--------------------------------------------------------------
+0014               * OUTPUT
+0015               * @outparm1 = Matching line in editor buffer
+0016               *--------------------------------------------------------------
+0017               * Register usage
+0018               * tmp0
+0019               *--------------------------------------------------------------
+0020               * Formula
+0021               * outparm1 = @fb.topline + @parm1
+0022               ********|*****|*********************|**************************
+0023               fb.row2line:
+0024 603A 0649  14         dect  stack
+0025 603C C64B  30         mov   r11,*stack            ; Save return address
+0026 603E 0649  14         dect  stack
+0027 6040 C644  30         mov   tmp0,*stack           ; Push tmp0
+0028                       ;------------------------------------------------------
+0029                       ; Calculate line in editor buffer
+0030                       ;------------------------------------------------------
+0031 6042 C120  34         mov   @parm1,tmp0
+     6044 2F20 
+0032 6046 A120  34         a     @fb.topline,tmp0
+     6048 A104 
+0033 604A C804  38         mov   tmp0,@outparm1
+     604C 2F30 
+0034                       ;------------------------------------------------------
+0035                       ; Exit
+0036                       ;------------------------------------------------------
+0037               fb.row2line.exit:
+0038 604E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0039 6050 C2F9  30         mov   *stack+,r11           ; Pop r11
+0040 6052 045B  20         b     *r11                  ; Return to caller
+0041               
+0042               
+0043               
+0044               
+0045               ***************************************************************
+0046               * fb.calc_pointer
+0047               * Calculate pointer address in frame buffer
+0048               ***************************************************************
+0049               * bl @fb.calc_pointer
+0050               *--------------------------------------------------------------
+0051               * INPUT
+0052               * @fb.top       = Address of top row in frame buffer
+0053               * @fb.topline   = Top line in frame buffer
+0054               * @fb.row       = Current row in frame buffer (offset 0..@fb.scrrows)
+0055               * @fb.column    = Current column in frame buffer
+0056               * @fb.colsline  = Columns per line in frame buffer
+0057               *--------------------------------------------------------------
+0058               * OUTPUT
+0059               * @fb.current   = Updated pointer
+0060               *--------------------------------------------------------------
+0061               * Register usage
+0062               * tmp0,tmp1
+0063               *--------------------------------------------------------------
+0064               * Formula
+0065               * pointer = row * colsline + column + deref(@fb.top.ptr)
+0066               ********|*****|*********************|**************************
+0067               fb.calc_pointer:
+0068 6054 0649  14         dect  stack
+0069 6056 C64B  30         mov   r11,*stack            ; Save return address
+0070 6058 0649  14         dect  stack
+0071 605A C644  30         mov   tmp0,*stack           ; Push tmp0
+0072 605C 0649  14         dect  stack
+0073 605E C645  30         mov   tmp1,*stack           ; Push tmp1
+0074                       ;------------------------------------------------------
+0075                       ; Calculate pointer
+0076                       ;------------------------------------------------------
+0077 6060 C120  34         mov   @fb.row,tmp0
+     6062 A106 
+0078 6064 3920  72         mpy   @fb.colsline,tmp0     ; tmp1 = row  * colsline
+     6066 A10E 
+0079 6068 A160  34         a     @fb.column,tmp1       ; tmp1 = tmp1 + column
+     606A A10C 
+0080 606C A160  34         a     @fb.top.ptr,tmp1      ; tmp1 = tmp1 + base
+     606E A100 
+0081 6070 C805  38         mov   tmp1,@fb.current
+     6072 A102 
+0082                       ;------------------------------------------------------
+0083                       ; Exit
+0084                       ;------------------------------------------------------
+0085               fb.calc_pointer.exit:
+0086 6074 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0087 6076 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0088 6078 C2F9  30         mov   *stack+,r11           ; Pop r11
+0089 607A 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b4.asm.270763
+0070                       copy  "fb.tabs.asm"         ; Move cursor to tab position
 **** **** ****     > fb.tabs.asm
 0001               * FILE......: fb.tabs.asm
 0002               * Purpose...: Tabbing functionality in frame buffer
 0003               
-0004               ***************************************************************
-0005               * fb.tab.next
-0006               * Move cursor to next tab position
-0007               ***************************************************************
-0008               *  bl   @fb.tab.next
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * none
-0012               *--------------------------------------------------------------
-0013               * OUTPUT
-0014               * none
-0015               *--------------------------------------------------------------
-0016               * Register usage
-0017               * tmp0,tmp1,tmp2
-0018               *--------------------------------------------------------------
-0019               * Remarks
-0020               * For simplicity reasons we're assuming base 1 during copy
-0021               * (first line starts at 1 instead of 0).
-0022               * Makes it easier when comparing values.
+0004               
+0005               
+0006               ***************************************************************
+0007               * _fb.null2space
+0008               * Replace all null characters with white space
+0009               ***************************************************************
+0010               *  bl   @_fb.null2space
+0011               *--------------------------------------------------------------
+0012               * INPUT
+0013               * tmp2 = Length of row
+0014               *--------------------------------------------------------------
+0015               * OUTPUT
+0016               * none
+0017               *--------------------------------------------------------------
+0018               * Register usage
+0019               * tmp0,tmp1,tmp2
+0020               *--------------------------------------------------------------
+0021               * Remarks
+0022               * Internal method. Only to be called from fb.tab.asm
 0023               ********|*****|*********************|**************************
-0024               fb.tab.next:
-0025 6040 0649  14         dect  stack
-0026 6042 C64B  30         mov   r11,*stack            ; Save return address
-0027 6044 0649  14         dect  stack
-0028 6046 C644  30         mov   tmp0,*stack           ; Push tmp0
-0029 6048 0649  14         dect  stack
-0030 604A C645  30         mov   tmp1,*stack           ; Push tmp1
-0031 604C 0649  14         dect  stack
-0032 604E C646  30         mov   tmp2,*stack           ; Push tmp2
+0024               _fb.null2space:
+0025 607C 0649  14         dect  stack
+0026 607E C64B  30         mov   r11,*stack            ; Save return address
+0027 6080 0649  14         dect  stack
+0028 6082 C644  30         mov   tmp0,*stack           ; Push tmp0
+0029 6084 0649  14         dect  stack
+0030 6086 C645  30         mov   tmp1,*stack           ; Push tmp1
+0031 6088 0649  14         dect  stack
+0032 608A C646  30         mov   tmp2,*stack           ; Push tmp2
 0033                       ;-------------------------------------------------------
-0034                       ; Initialize
+0034                       ; Sanity checks
 0035                       ;-------------------------------------------------------
-0036                       li   tmp0,tv.tabs.table     ; Get pointer to tabs table
-0037 6050 0206  20         li   tmp2,20                ; Up to 20 tabs supported
-     6052 0014 
-0038                       ;-------------------------------------------------------
-0039                       ; Find next tab position
-0040                       ;-------------------------------------------------------
-0041               fb.tab.next.loop:
-0042 6054 D174  28         movb *tmp0+,tmp1            ; \ Get tab position
-0043 6056 0985  56         srl  tmp1,8                 ; / Right align
-0044                       ;-------------------------------------------------------
-0045                       ; Compare position
+0036 608C C186  18         mov   tmp2,tmp2             ; Minimum 1 character
+0037 608E 1303  14         jeq   _fb.null2space.crash
+0038 6090 0286  22         ci    tmp2,80               ; Maximum 80 characters
+     6092 0050 
+0039 6094 1204  14         jle   _fb.null2space.init
+0040                       ;------------------------------------------------------
+0041                       ; Asserts failed
+0042                       ;------------------------------------------------------
+0043               _fb.null2space.crash:
+0044 6096 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     6098 FFCE 
+0045 609A 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     609C 2026 
 0046                       ;-------------------------------------------------------
-0047 6058 8160  34         c    @fb.column,tmp1        ; Cursor > tab position?
-     605A A10C 
-0048 605C 1505  14         jgt  !                      ; Yes, next loop iteration
-0049               
-0050 605E C805  38         mov  tmp1,@fb.column        ; Set cursor on tab position
-     6060 A10C 
-0051 6062 1004  14         jmp  fb.tab.next.exit       ; Exit
-0052               
-0053 6064 0606  14 !       dec  tmp2
-0054 6066 16F8  14         jne  fb.tab.next.loop
-0055                       ;------------------------------------------------------
-0056                       ; Exit
-0057                       ;------------------------------------------------------
-0058               fb.tab.next.exit:
-0059 6068 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0060 606A C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0061 606C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0062 606E C2F9  30         mov   *stack+,r11           ; Pop R11
-**** **** ****     > stevie_b4.asm.58155
-0074                       ;-----------------------------------------------------------------------
-0075                       ; Stubs using trampoline
-0076                       ;-----------------------------------------------------------------------
-0077                       copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks
+0047                       ; Initialize
+0048                       ;-------------------------------------------------------
+0049               _fb.null2space.init:
+0050 609E 04E0  34         clr   @fb.column
+     60A0 A10C 
+0051 60A2 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
+     60A4 6054 
+0052 60A6 C120  34         mov   @fb.current,tmp0      ; Get position
+     60A8 A102 
+0053                       ;-------------------------------------------------------
+0054                       ; Loop over characters in line
+0055                       ;-------------------------------------------------------
+0056               _fb.null2space.loop:
+0057 60AA 04C5  14         clr   tmp1
+0058 60AC D154  26         movb  *tmp0,tmp1            ; Get character
+0059 60AE 1603  14         jne   !                     ; Not a null character, skip it
+0060 60B0 0205  20         li    tmp1,>2a00            ; ASCII 32 in MSB
+     60B2 2A00 
+0061 60B4 D505  30         movb  tmp1,*tmp0            ; Replace null character
+0062                       ;-------------------------------------------------------
+0063                       ; Prepare for next iteration
+0064                       ;-------------------------------------------------------
+0065 60B6 0584  14 !       inc   tmp0                  ; Move to next character
+0066 60B8 0606  14         dec   tmp2
+0067 60BA 15F7  14         jgt   _fb.null2space.loop   ; Repeat until done
+0068                       ;------------------------------------------------------
+0069                       ; Exit
+0070                       ;------------------------------------------------------
+0071               _fb.null2space.exit:
+0072 60BC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0073 60BE C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0074 60C0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0075 60C2 C2F9  30         mov   *stack+,r11           ; Pop R11
+0076 60C4 045B  20         b     *r11                  ; Return to caller
+0077               
+0078               
+0079               
+0080               ***************************************************************
+0081               * fb.tab.next
+0082               * Move cursor to next tab position
+0083               ***************************************************************
+0084               *  bl   @fb.tab.next
+0085               *--------------------------------------------------------------
+0086               * INPUT
+0087               * none
+0088               *--------------------------------------------------------------
+0089               * OUTPUT
+0090               * none
+0091               *--------------------------------------------------------------
+0092               * Register usage
+0093               * tmp0,tmp1,tmp2
+0094               *--------------------------------------------------------------
+0095               * Remarks
+0096               * For simplicity reasons we're assuming base 1 during copy
+0097               * (first line starts at 1 instead of 0).
+0098               * Makes it easier when comparing values.
+0099               ********|*****|*********************|**************************
+0100               fb.tab.next:
+0101 60C6 0649  14         dect  stack
+0102 60C8 C64B  30         mov   r11,*stack            ; Save return address
+0103 60CA 0649  14         dect  stack
+0104 60CC C644  30         mov   tmp0,*stack           ; Push tmp0
+0105 60CE 0649  14         dect  stack
+0106 60D0 C645  30         mov   tmp1,*stack           ; Push tmp1
+0107 60D2 0649  14         dect  stack
+0108 60D4 C646  30         mov   tmp2,*stack           ; Push tmp2
+0109                       ;-------------------------------------------------------
+0110                       ; Initialize
+0111                       ;-------------------------------------------------------
+0112 60D6 0204  20         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
+     60D8 3484 
+0113 60DA 0206  20         li    tmp2,20               ; Up to 20 tabs supported
+     60DC 0014 
+0114                       ;-------------------------------------------------------
+0115                       ; Find next tab position
+0116                       ;-------------------------------------------------------
+0117               fb.tab.next.loop:
+0118 60DE D174  28         movb  *tmp0+,tmp1           ; \ Get tab position
+0119 60E0 0985  56         srl   tmp1,8                ; / Right align
+0120                       ;-------------------------------------------------------
+0121                       ; Compare position
+0122                       ;-------------------------------------------------------
+0123 60E2 8160  34         c     @fb.column,tmp1       ; Cursor > tab position?
+     60E4 A10C 
+0124 60E6 1411  14         jhe   !                     ; Yes, next loop iteration
+0125                       ;-------------------------------------------------------
+0126                       ; Set cursor
+0127                       ;-------------------------------------------------------
+0128 60E8 C185  18         mov   tmp1,tmp2             ; \
+0129 60EA 06A0  32         bl    @_fb.null2space       ; | Replace any null characters with space
+     60EC 607C 
+0130                                                   ; / i  tmp2 = Length of row
+0131               
+0132 60EE C805  38         mov   tmp1,@fb.column       ; Set cursor on tab position
+     60F0 A10C 
+0133               
+0134 60F2 C105  18         mov   tmp1,tmp0             ; \ Set VDP cursor column position
+0135 60F4 06A0  32         bl    @xsetx                ; / i  tmp0 = new X value
+     60F6 26AC 
+0136               
+0137 60F8 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+     60FA 6054 
+0138               
+0139 60FC 0720  34         seto  @fb.row.dirty         ; Current row dirty in frame buffer
+     60FE A10A 
+0140 6100 0720  34         seto  @fb.status.dirty      ; Refresh status line
+     6102 A118 
+0141 6104 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed)
+     6106 A206 
+0142 6108 1002  14         jmp   fb.tab.next.exit      ; Exit
+0143                       ;-------------------------------------------------------
+0144                       ; Prepare for next iteration
+0145                       ;-------------------------------------------------------
+0146 610A 0606  14 !       dec   tmp2
+0147 610C 16E8  14         jne   fb.tab.next.loop
+0148                       ;------------------------------------------------------
+0149                       ; Exit
+0150                       ;------------------------------------------------------
+0151               fb.tab.next.exit:
+0152 610E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0153 6110 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0154 6112 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0155 6114 C2F9  30         mov   *stack+,r11           ; Pop R11
+0156 6116 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b4.asm.270763
+0071                       ;-----------------------------------------------------------------------
+0072                       ; Stubs using trampoline
+0073                       ;-----------------------------------------------------------------------
+0074                       copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks
 **** **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.58155
-0078                       ;-----------------------------------------------------------------------
-0079                       ; Bank specific vector table
-0080                       ;-----------------------------------------------------------------------
-0084 6070 6070                   data $                ; Bank 1 ROM size OK.
-0086                       ;-------------------------------------------------------
-0087                       ; Vector table bank 4: >7f9c - >7fff
-0088                       ;-------------------------------------------------------
-0089                       copy  "rom.vectors.bank4.asm"
+**** **** ****     > stevie_b4.asm.270763
+0075                       ;-----------------------------------------------------------------------
+0076                       ; Bank specific vector table
+0077                       ;-----------------------------------------------------------------------
+0081 6118 6118                   data $                ; Bank 1 ROM size OK.
+0083                       ;-------------------------------------------------------
+0084                       ; Vector table bank 4: >7f9c - >7fff
+0085                       ;-------------------------------------------------------
+0086                       copy  "rom.vectors.bank4.asm"
 **** **** ****     > rom.vectors.bank4.asm
 0001               * FILE......: rom.vectors.bank4.asm
 0002               * Purpose...: Bank 4 vectors for trampoline function
 0003               
 0004                       aorg  >7f9c
+0005               
+0006               *--------------------------------------------------------------
+0007               * Vector table for trampoline functions
+0008               *--------------------------------------------------------------
+0009 7F9C 60C6     vec.1   data  fb.tab.next           ; Move cursor to next tab position
+0010 7F9E 2026     vec.2   data  cpu.crash             ;
+0011 7FA0 2026     vec.3   data  cpu.crash             ;
+0012 7FA2 2026     vec.4   data  cpu.crash             ;
+0013 7FA4 2026     vec.5   data  cpu.crash             ;
+0014 7FA6 2026     vec.6   data  cpu.crash             ;
+0015 7FA8 2026     vec.7   data  cpu.crash             ;
+0016 7FAA 2026     vec.8   data  cpu.crash             ;
+0017 7FAC 2026     vec.9   data  cpu.crash             ;
+0018 7FAE 2026     vec.10  data  cpu.crash             ;
+0019 7FB0 2026     vec.11  data  cpu.crash             ;
+0020 7FB2 2026     vec.12  data  cpu.crash             ;
+0021 7FB4 2026     vec.13  data  cpu.crash             ;
+0022 7FB6 2026     vec.14  data  cpu.crash             ;
+0023 7FB8 2026     vec.15  data  cpu.crash             ;
+0024 7FBA 2026     vec.16  data  cpu.crash             ;
+0025 7FBC 2026     vec.17  data  cpu.crash             ;
+0026 7FBE 2026     vec.18  data  cpu.crash             ;
+0027 7FC0 2026     vec.19  data  cpu.crash             ;
+0028 7FC2 2026     vec.20  data  cpu.crash             ;
+0029 7FC4 2026     vec.21  data  cpu.crash             ;
+0030 7FC6 2026     vec.22  data  cpu.crash             ;
+0031 7FC8 2026     vec.23  data  cpu.crash             ;
+0032 7FCA 2026     vec.24  data  cpu.crash             ;
+0033 7FCC 2026     vec.25  data  cpu.crash             ;
+0034 7FCE 2026     vec.26  data  cpu.crash             ;
+0035 7FD0 2026     vec.27  data  cpu.crash             ;
+0036 7FD2 2026     vec.28  data  cpu.crash             ;
+0037 7FD4 2026     vec.29  data  cpu.crash             ;
+0038 7FD6 2026     vec.30  data  cpu.crash             ;
+0039 7FD8 2026     vec.31  data  cpu.crash             ;
+0040 7FDA 2026     vec.32  data  cpu.crash             ;
+**** **** ****     > stevie_b4.asm.270763
+0087               
+0088               *--------------------------------------------------------------
+0089               * Video mode configuration
+0090               *--------------------------------------------------------------
+0091      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0092      0004     spfbck  equ   >04                   ; Screen background color.
+0093      336E     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0094      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0095      0050     colrow  equ   80                    ; Columns per row
+0096      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0097      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0098      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0099      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

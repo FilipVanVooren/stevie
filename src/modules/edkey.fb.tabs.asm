@@ -5,9 +5,10 @@
 * Cursor on next tab
 *---------------------------------------------------------------
 edkey.action.fb.tab.next:
-         bl  @fb.tab.next           ; Jump to next tab position on line
+        bl  @fb.tab.next            ; Jump to next tab position on line
+        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 edkey.action.fb.tab.next.exit:
-        jmp  $
+        b     @hook.keyscan.bounce  ; Back to editor main

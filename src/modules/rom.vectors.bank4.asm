@@ -6,7 +6,7 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  cpu.crash             ; 
+vec.1   data  fb.tab.next           ; Move cursor to next tab position
 vec.2   data  cpu.crash             ; 
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 

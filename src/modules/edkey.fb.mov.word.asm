@@ -58,7 +58,6 @@ edkey.action.pword_scan_char
         ; Save position and position hardware cursor
         ;-------------------------------------------------------
 edkey.action.pword_done:
-        mov   tmp1,@fb.current 
         mov   tmp0,@fb.column       ; tmp0 also input for @xsetx
         bl    @xsetx                ; Set VDP cursor X
         ;-------------------------------------------------------
@@ -142,7 +141,6 @@ edkey.action.nword_scan_char_other:
         ; Save position and position hardware cursor
         ;-------------------------------------------------------
 edkey.action.nword_done:
-        mov   tmp1,@fb.current 
         mov   tmp0,@fb.column       ; tmp0 also input for @xsetx
         bl    @xsetx                ; Set VDP cursor X
         ;-------------------------------------------------------

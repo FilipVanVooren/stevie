@@ -64,12 +64,9 @@ main:
         aorg  kickstart.code2       ; >6036
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Keyboard actions - Framebuffer (2)
-        ;-----------------------------------------------------------------------        
-        copy  "edkey.fb.tabs.asm"   ; Cursor tab handling
-        ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (2)
         ;-----------------------------------------------------------------------    
+        copy  "fb.utils.asm"        ; Framebuffer utilities
         copy  "fb.tabs.asm"         ; Move cursor to tab position
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline

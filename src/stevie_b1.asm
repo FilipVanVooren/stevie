@@ -87,6 +87,7 @@ main:
         copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
         copy  "edkey.fb.file.asm"        ; File related actions
         copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
+        copy  "edkey.fb.tabs.asm"        ; tab-key related actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
@@ -100,6 +101,8 @@ main:
         ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------        
         copy  "fb.utils.asm"        ; Framebuffer utilities
+        copy  "fb.get.firstnonblank.asm"
+                                    ; Get column of first non-blank character
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
