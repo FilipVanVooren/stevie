@@ -157,9 +157,9 @@ tv.colorscheme.table:
         even
 
 tv.tabs.table:
-        byte  7,12,22,30              ; \ 
-        byte  0,0,0,0                 ; |   Default tab positions.
+        byte  0,7,12,25               ; \   Default tab positions as used
+        byte  30,45,59,79             ; |   in Editor/Assembler module.
+        byte  >ff,0,0,0               ; |   
         byte  0,0,0,0                 ; |   Up to 20 positions supported.
-        byte  0,0,0,0                 ; |
-        byte  0,0,0,0                 ; /
+        byte  0,0,0,0                 ; /   >ff means end-of-list.
         even

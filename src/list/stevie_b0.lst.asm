@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210331-269320
+0009               * File: stevie_b0.asm               ; Version 210401-439331
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -403,7 +403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1'
 0017                       even
 0018               
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1193,7 +1193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210331-269320'
+0260 624D ....             text  'Build-ID  210401-439331'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5077,7 +5077,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -6377,15 +6377,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0157                       even
 0158               
 0159               tv.tabs.table:
-0160 74EE 070C             byte  7,12,22,30              ; \
-     74F0 161E 
-0161 74F2 0000             byte  0,0,0,0                 ; |   Default tab positions.
-     74F4 0000 
-0162 74F6 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+0160 74EE 0007             byte  0,7,12,25               ; \   Default tab positions as used
+     74F0 0C19 
+0161 74F2 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+     74F4 3B4F 
+0162 74F6 FF00             byte  >ff,0,0,0               ; |
      74F8 0000 
-0163 74FA 0000             byte  0,0,0,0                 ; |
+0163 74FA 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
      74FC 0000 
-0164 74FE 0000             byte  0,0,0,0                 ; /
+0164 74FE 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      7500 0000 
 0165                       even
 **** **** ****     > ram.resident.3000.asm
@@ -6409,7 +6409,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016                                  even
 0017               txt.about.build
 0018 7536 4B42             byte  75
-0019 7537 ....             text  'Build: 210331-269320 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0019 7537 ....             text  'Build: 210401-439331 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
@@ -6777,7 +6777,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      79B8 BEEF 
      79BA DEAD 
      79BC BEEF 
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0128               
 0132 79BE 3954                   data $                ; Bank 0 ROM size OK.
 0134                       ;-----------------------------------------------------------------------
@@ -6829,7 +6829,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.269320
+**** **** ****     > stevie_b0.asm.439331
 0146               
 0147               
 0148               *--------------------------------------------------------------
