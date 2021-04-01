@@ -88,7 +88,7 @@ dialog.about.help:
         text '   Ctrl T  (^t)  Top of file             |                                      '
         text '                                         |                                      '
         text 'Action keys:                             |   Block operations:                  '
-        text '   Fctn 7         Help                   |      Ctrl d (^d)   Delete block      '
+        text '   Fctn 0         Help                   |      Ctrl d (^d)   Delete block      '
         text '   Fctn +         Quit editor            |      Ctrl c (^c)   Copy block        '
         text '   Ctrl o (^o)    Open file              |      Ctrl g (^g)   Goto marker M1    '
         text '   Ctrl s (^s)    Save file              |      Ctrl m (^m)   Move block        '

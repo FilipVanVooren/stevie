@@ -33,6 +33,7 @@ keymap_actions.editor:
         data  key.fctn.2, pane.focus.fb, edkey.action.ins_char.ws
         data  key.fctn.dot, pane.focus.fb, edkey.action.ins_onoff
         data  key.fctn.5, pane.focus.fb, edkey.action.ins_line
+        data  key.fctn.7, pane.focus.fb, edkey.action.fb.tab.next
         ;-------------------------------------------------------
         ; Block marking/modifier
         ;-------------------------------------------------------
@@ -52,9 +53,9 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
         data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
-        data  key.fctn.7, pane.focus.fb, edkey.action.fb.tab.next
+        data  key.fctn.0, pane.focus.fb, edkey.action.about        
         data  key.ctrl.s, pane.focus.fb, dialog.save                
-        data  key.ctrl.o, pane.focus.fb, dialog.load
+        data  key.ctrl.o, pane.focus.fb, dialog.load        
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

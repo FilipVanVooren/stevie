@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b2.asm               ; Version 210401-440040
+0009               * File: stevie_b2.asm               ; Version 210401-460485
 0010               *
 0011               * Bank 2 "Jacky"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0016               
 0017               **************************************************************s*
 0018               * Spectra2 core configuration
@@ -399,11 +399,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0011 6012 6030             data  kickstart.code1
 0012               
 0014               
-0015 6014 0A53             byte  10
-0016 6015 ....             text  'STEVIE 1.1'
+0015 6014 0C53             byte  12
+0016 6015 ....             text  'STEVIE 1.1.A'
 0017                       even
 0018               
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1123,7 +1123,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210401-440040'
+0260 21D3 ....             text  'Build-ID  210401-460485'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5007,7 +5007,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6333,7 +6333,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016                                  even
 0017               txt.about.build
 0018 34CC 4B42             byte  75
-0019 34CD ....             text  'Build: 210401-440040 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0019 34CD ....             text  'Build: 210401-460485 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
@@ -6436,7 +6436,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0119               
 0120               txt.keys.help
 0121 35CA 0746             byte  7
-0122 35CB ....             text  'F7=Help'
+0122 35CB ....             text  'F0=Help'
 0123                       even
 0124               
 0125               txt.keys.block
@@ -6701,7 +6701,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      394E BEEF 
      3950 DEAD 
      3952 BEEF 
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0060               ***************************************************************
 0061               * Step 4: Include modules
 0062               ********|*****|*********************|**************************
@@ -6783,7 +6783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057 607E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0058 6080 C2F9  30         mov   *stack+,r11           ; Pop R11
 0059 6082 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0070                       ;-----------------------------------------------------------------------
 0071                       ; Include files
 0072                       ;-----------------------------------------------------------------------
@@ -7343,7 +7343,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0422                       ; byte  12                  ;  9    - File descriptor length
 0423                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0424                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0074                       copy  "fh.write.edb.asm"    ; Write editor buffer to file
 **** **** ****     > fh.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
@@ -7664,7 +7664,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0241 6454 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0242 6456 C2F9  30         mov   *stack+,r11           ; Pop R11
 0243 6458 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0075                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm.load.asm
@@ -7841,7 +7841,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0134 650C C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0135 650E C2F9  30         mov   *stack+,r11           ; Pop R11
 0136 6510 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0076                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
 **** **** ****     > fm.save.asm
 0001               * FILE......: fm.save.asm
@@ -7967,7 +7967,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0095 6584 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0096 6586 C2F9  30         mov   *stack+,r11           ; Pop R11
 0097 6588 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0077                       copy  "fm.callbacks.asm"    ; Callbacks for file operations
 **** **** ****     > fm.callbacks.asm
 0001               * FILE......: fm.callbacks.asm
@@ -8420,7 +8420,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6784 2F20 
 0360 6786 C2F9  30         mov   *stack+,r11           ; Pop R11
 0361 6788 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0078                       ;-----------------------------------------------------------------------
 0079                       ; Stubs using trampoline
 0080                       ;-----------------------------------------------------------------------
@@ -8607,7 +8607,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0171                       ;------------------------------------------------------
 0172 6816 C2F9  30         mov   *stack+,r11           ; Pop r11
 0173 6818 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Bank specific vector table
 0084                       ;-----------------------------------------------------------------------
@@ -8657,7 +8657,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b2.asm.440040
+**** **** ****     > stevie_b2.asm.460485
 0094               
 0095               *--------------------------------------------------------------
 0096               * Video mode configuration
