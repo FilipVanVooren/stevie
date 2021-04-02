@@ -73,6 +73,7 @@ fb.tab.next.loop:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 
         seto  @fb.row.dirty         ; Current row dirty in frame buffer
+        seto  @fb.dirty             ; Frame buffer dirty
         seto  @fb.status.dirty      ; Refresh status line        
         seto  @edb.dirty            ; Editor buffer dirty (text changed)
         ;-------------------------------------------------------
@@ -85,7 +86,7 @@ fb.tab.next.loop:
         mov   tmp0,@fb.row.length   : Set new length
         jmp   fb.tab.next.exit      ; Exit
         ;-------------------------------------------------------
-        ; End-of-list reached, special treatment
+        ; End-of-list reached, special treatment home cursor
         ;------------------------------------------------------- 
 fb.tab.next.eol:        
         clr   @fb.column            ; Home cursor         
@@ -95,6 +96,14 @@ fb.tab.next.eol:
                                     ; / i  tmp0 = new X value
 
         seto  @fb.status.dirty      ; Refresh status line
+
+        clr   @edb.insmode          ; Turn on overwrite mode
+                                    ; This is a hack really. Because of the
+                                    ; whitespace that is dragged by tabbing, we
+                                    ; have a full 80 characters line so insert
+                                    ; does not work.
+
+
         jmp   fb.tab.next.exit      ; Exit
         ;-------------------------------------------------------
         ; Prepare for next iteration

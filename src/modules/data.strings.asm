@@ -8,8 +8,6 @@
 ;--------------------------------------------------------------
 ; Strings for welcome pane
 ;--------------------------------------------------------------
-txt.about.program  #string 'Stevie 1.1                                        '
-                   even
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 ;--------------------------------------------------------------
 ; Strings for status line pane
@@ -33,7 +31,8 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.help      #string  'F0=Help'
+txt.stevie         #string  'STEVIE 1.1b  '
+txt.keys.default   #string 'F0=Help  ^Open  ^Save'
 txt.keys.block     #string '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
                    even
 

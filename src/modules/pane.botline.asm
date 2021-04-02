@@ -41,13 +41,20 @@ pane.botline:
 
         jmp   pane.botline.show_mode  
         ;------------------------------------------------------
-        ; Show keys
+        ; Show default message
         ;------------------------------------------------------
 pane.botline.show_keys:        
         bl    @putat
               byte pane.botrow,0
-              data txt.keys.help    ; Show help keys
- 
+              data txt.stevie       ; Show stevie version
+
+        bl    @hchar
+              byte pane.botrow,14,16,1       
+              data eol              ; Vertical line 3
+
+        bl    @putat
+              byte pane.botrow,16
+              data txt.keys.default ; Show default shortcuts
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------

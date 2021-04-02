@@ -55,9 +55,13 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Show About dialog
         ;------------------------------------------------------
+        bl    @hchar
+              byte 0,0,32,50      
+              data eol              ; Clear filename
+
         bl    @putat      
               byte   0,0
-              data   txt.about.program
+              data   txt.stevie
 
         bl    @cpym2v
               data  80,dialog.about.help,24*80 
