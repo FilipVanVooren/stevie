@@ -67,7 +67,8 @@ main:
         ; Logic for Framebuffer (2)
         ;-----------------------------------------------------------------------    
         copy  "fb.utils.asm"        ; Framebuffer utilities
-        copy  "fb.tabs.asm"         ; Move cursor to tab position
+        copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
+        copy  "fb.tab.next.asm"     ; Move cursor to next tab position
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        

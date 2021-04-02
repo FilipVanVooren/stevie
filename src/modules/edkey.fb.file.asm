@@ -38,7 +38,7 @@ _edkey.action.fb.fname.doit:
         ;------------------------------------------------------
         ; Update suffix and load file
         ;------------------------------------------------------
-!       bl    @fm.browse.fname.suffix.incdec
+!       bl    @fm.browse.fname.suffix
                                     ; Filename suffix adjust
                                     ; i  \ parm1 = Pointer to filename
                                     ; i  / parm2 = >FFFF or >0000

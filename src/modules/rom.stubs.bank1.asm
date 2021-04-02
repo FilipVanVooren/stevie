@@ -11,7 +11,7 @@ fm.loadfile:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2            ; | i  p0 = bank address
@@ -43,7 +43,7 @@ fm.savefile:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2            ; | i  p0 = bank address
@@ -54,6 +54,51 @@ fm.savefile:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+**************************************************************
+* Stub for "fm.browse.fname.suffix"
+* bank2 vec.3
+********|*****|*********************|**************************
+fm.browse.fname.suffix:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------        
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2            ; | i  p0 = bank address
+              data vec.3            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+**************************************************************
+* Stub for "fm.fastmode"
+* bank2 vec.4
+********|*****|*********************|**************************
+fm.fastmode:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------        
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2            ; | i  p0 = bank address
+              data vec.4            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
 
 
 ***************************************************************

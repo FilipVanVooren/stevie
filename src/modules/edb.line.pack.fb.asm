@@ -30,8 +30,10 @@ edb.line.pack.fb:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack
+        dect  stack        
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3        
         ;------------------------------------------------------
         ; Get values
         ;------------------------------------------------------
@@ -41,7 +43,8 @@ edb.line.pack.fb:
         ;------------------------------------------------------
         ; Prepare scan
         ;------------------------------------------------------
-        clr   tmp0                  ; Counter 
+        clr   tmp0                  ; Counter
+        clr   tmp3                  ; Counter for whitespace 
         mov   @fb.current,tmp1      ; Get position
         mov   tmp1,@rambuf+2        ; Save beginning of row
         ;------------------------------------------------------
@@ -54,8 +57,15 @@ edb.line.pack.fb.scan:
                                     ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         ;------------------------------------------------------
+        ; Check for trailing whitespace
+        ;------------------------------------------------------
+        ci    tmp2,32               ; Was it a space character?
+        jeq   edb.line.pack.fb.check80
+        mov   tmp0,tmp3
+        ;------------------------------------------------------
         ; Not more than 80 characters
         ;------------------------------------------------------
+edb.line.pack.fb.check80:        
         ci    tmp0,colrow
         jeq   edb.line.pack.fb.check_setpage
                                     ; Stop scan if 80 characters processed
@@ -69,10 +79,15 @@ edb.line.pack.fb.crash:
         ;------------------------------------------------------
         ; Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
-edb.line.pack.fb.check_setpage:        
-        mov   tmp0,@rambuf+4        ; Save length of line
+edb.line.pack.fb.check_setpage:
+        c     tmp3,tmp0             ; Trailing whitespace in line?
+        jlt   edb.line.pack.fb.check_setpage.trimmed
+        mov   tmp0,@rambuf+4        ; Save full length of line
+        jmp   !
+edb.line.pack.fb.check_setpage.trimmed:
+        mov   tmp3,@rambuf+4        ; Save line length without trailing blanks
 
-        bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
+!       bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
                                     ; /                         free line
         ;------------------------------------------------------
@@ -158,7 +173,8 @@ edb.line.pack.fb.prepexit:
         ; Exit
         ;------------------------------------------------------
 edb.line.pack.fb.exit:
-        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp2          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0          
         mov   *stack+,r11           ; Pop R11

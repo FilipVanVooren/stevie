@@ -134,11 +134,6 @@ main:
         copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
         copy  "cmdb.cmd.asm"        ; Command line handling
         ;-----------------------------------------------------------------------
-        ; File handling
-        ;-----------------------------------------------------------------------
-        copy  "fm.browse.asm"       ; File manager browse support routines
-        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation
-        ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
         copy  "hook.keyscan.asm"           ; spectra2 user hook: keyboard scan

@@ -68,13 +68,15 @@ main:
         ;-----------------------------------------------------------------------         
         copy  "colors.line.set.asm" ; Set color combination for line
         ;-----------------------------------------------------------------------
-        ; Include files
+        ; File handling
         ;-----------------------------------------------------------------------         
         copy  "fh.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.write.edb.asm"    ; Write editor buffer to file
         copy  "fm.load.asm"         ; Load DV80 file into editor buffer
         copy  "fm.save.asm"         ; Save DV80 file from editor buffer
         copy  "fm.callbacks.asm"    ; Callbacks for file operations
+        copy  "fm.browse.asm"       ; File manager browse support routines
+        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation        
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        

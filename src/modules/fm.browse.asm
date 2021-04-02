@@ -13,7 +13,7 @@
 * Register usage
 * tmp0, tmp1
 ********|*****|*********************|**************************
-fm.browse.fname.suffix.incdec:
+fm.browse.fname.suffix:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack

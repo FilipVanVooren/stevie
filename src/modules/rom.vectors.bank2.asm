@@ -8,8 +8,8 @@
 *--------------------------------------------------------------
 vec.1   data  fm.loadfile           ;   
 vec.2   data  fm.savefile           ;
-vec.3   data  cpu.crash             ; 
-vec.4   data  cpu.crash             ; 
+vec.3   data  fm.browse.fname.suffix
+vec.4   data  fm.fastmode           ; 
 vec.5   data  cpu.crash             ; 
 vec.6   data  cpu.crash             ; 
 vec.7   data  cpu.crash             ; 

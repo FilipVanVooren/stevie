@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210401-461209
+0009               * File: stevie_b4.asm               ; Version 210402-612225
 0010               *
 0011               * Bank 4 "Janine"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -400,10 +400,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0012               
 0014               
 0015 6014 0C53             byte  12
-0016 6015 ....             text  'STEVIE 1.1.A'
+0016 6015 ....             text  'STEVIE 1.1.B'
 0017                       even
 0018               
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1123,7 +1123,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210401-461209'
+0260 21D3 ....             text  'Build-ID  210402-612225'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5007,7 +5007,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB4 0040 
 0367 2EB6 0460  28         b     @main                 ; Give control to main program
      2EB8 6036 
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6333,7 +6333,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016                                  even
 0017               txt.about.build
 0018 34CC 4B42             byte  75
-0019 34CD ....             text  'Build: 210401-461209 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0019 34CD ....             text  'Build: 210402-612225 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0020                       even
 0021               
 0022               ;--------------------------------------------------------------
@@ -6701,7 +6701,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      394E BEEF 
      3950 DEAD 
      3952 BEEF 
-**** **** ****     > stevie_b4.asm.461209
+**** **** ****     > stevie_b4.asm.612225
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6811,17 +6811,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087 6076 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0088 6078 C2F9  30         mov   *stack+,r11           ; Pop r11
 0089 607A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.461209
-0070                       copy  "fb.tabs.asm"         ; Move cursor to tab position
-**** **** ****     > fb.tabs.asm
-0001               * FILE......: fb.tabs.asm
-0002               * Purpose...: Tabbing functionality in frame buffer
+**** **** ****     > stevie_b4.asm.612225
+0070                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
+**** **** ****     > fb.null2char.asm
+0001               * FILE......: fb.null2char.asm
+0002               * Purpose...: Replace all null characters with specified character
 0003               
 0004               ***************************************************************
-0005               * _fb.null2char
-0006               * Replace all null characters with character
+0005               * fb.null2char
+0006               * Replace all null characters with specified character
 0007               ***************************************************************
-0008               *  bl   @_fb.null2char
+0008               *  bl   @fb.null2char
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * tmp1 = Replacement character
@@ -6832,223 +6832,224 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016               *--------------------------------------------------------------
 0017               * Register usage
 0018               * tmp0,tmp1,tmp2,tmp3
+0019               ********|*****|*********************|**************************
+0020               fb.null2char:
+0021 607C 0649  14         dect  stack
+0022 607E C64B  30         mov   r11,*stack            ; Save return address
+0023 6080 0649  14         dect  stack
+0024 6082 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 6084 0649  14         dect  stack
+0026 6086 C645  30         mov   tmp1,*stack           ; Push tmp1
+0027 6088 0649  14         dect  stack
+0028 608A C646  30         mov   tmp2,*stack           ; Push tmp2
+0029 608C 0649  14         dect  stack
+0030 608E C647  30         mov   tmp3,*stack           ; Push tmp3
+0031                       ;-------------------------------------------------------
+0032                       ; Sanity checks
+0033                       ;-------------------------------------------------------
+0034 6090 C186  18         mov   tmp2,tmp2             ; Minimum 1 character
+0035 6092 1303  14         jeq   fb.null2char.crash
+0036 6094 0286  22         ci    tmp2,80               ; Maximum 80 characters
+     6096 0050 
+0037 6098 1204  14         jle   fb.null2char.init
+0038                       ;------------------------------------------------------
+0039                       ; Asserts failed
+0040                       ;------------------------------------------------------
+0041               fb.null2char.crash:
+0042 609A C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     609C FFCE 
+0043 609E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     60A0 2026 
+0044                       ;-------------------------------------------------------
+0045                       ; Initialize
+0046                       ;-------------------------------------------------------
+0047               fb.null2char.init:
+0048 60A2 C1C5  18         mov   tmp1,tmp3             ; Get character to write
+0049 60A4 0A87  56         sla   tmp3,8                ; LSB to MSB
+0050               
+0051 60A6 04E0  34         clr   @fb.column
+     60A8 A10C 
+0052 60AA 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
+     60AC 6054 
+0053 60AE C120  34         mov   @fb.current,tmp0      ; Get position
+     60B0 A102 
+0054                       ;-------------------------------------------------------
+0055                       ; Loop over characters in line
+0056                       ;-------------------------------------------------------
+0057               fb.null2char.loop:
+0058 60B2 04C5  14         clr   tmp1
+0059 60B4 D154  26         movb  *tmp0,tmp1            ; Get character
+0060 60B6 1603  14         jne   !                     ; Not a null character, skip it
+0061 60B8 0205  20         li    tmp1,>2a00            ; ASCII 32 in MSB
+     60BA 2A00 
+0062 60BC D507  30         movb  tmp3,*tmp0            ; Replace null character
+0063                       ;-------------------------------------------------------
+0064                       ; Prepare for next iteration
+0065                       ;-------------------------------------------------------
+0066 60BE 0584  14 !       inc   tmp0                  ; Move to next character
+0067 60C0 0606  14         dec   tmp2
+0068 60C2 15F7  14         jgt   fb.null2char.loop     ; Repeat until done
+0069                       ;------------------------------------------------------
+0070                       ; Exit
+0071                       ;------------------------------------------------------
+0072               fb.null2char.exit:
+0073 60C4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0074 60C6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0075 60C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0076 60CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0077 60CC C2F9  30         mov   *stack+,r11           ; Pop R11
+0078 60CE 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b4.asm.612225
+0071                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
+**** **** ****     > fb.tab.next.asm
+0001               * FILE......: fb.tab.next.asm
+0002               * Purpose...: Tabbing functionality in frame buffer
+0003               
+0004               
+0005               ***************************************************************
+0006               * fb.tab.next
+0007               * Move cursor to next tab position
+0008               ***************************************************************
+0009               *  bl   @fb.tab.next
+0010               *--------------------------------------------------------------
+0011               * INPUT
+0012               * none
+0013               *--------------------------------------------------------------
+0014               * OUTPUT
+0015               * none
+0016               *--------------------------------------------------------------
+0017               * Register usage
+0018               * tmp0,tmp1,tmp2
 0019               *--------------------------------------------------------------
 0020               * Remarks
-0021               * Internal method. Only to be called from fb.tab.asm
-0022               ********|*****|*********************|**************************
-0023               _fb.null2char:
-0024 607C 0649  14         dect  stack
-0025 607E C64B  30         mov   r11,*stack            ; Save return address
-0026 6080 0649  14         dect  stack
-0027 6082 C644  30         mov   tmp0,*stack           ; Push tmp0
-0028 6084 0649  14         dect  stack
-0029 6086 C645  30         mov   tmp1,*stack           ; Push tmp1
-0030 6088 0649  14         dect  stack
-0031 608A C646  30         mov   tmp2,*stack           ; Push tmp2
-0032 608C 0649  14         dect  stack
-0033 608E C647  30         mov   tmp3,*stack           ; Push tmp3
+0021               * For simplicity reasons we're assuming base 1 during copy
+0022               * (first line starts at 1 instead of 0).
+0023               * Makes it easier when comparing values.
+0024               ********|*****|*********************|**************************
+0025               fb.tab.next:
+0026 60D0 0649  14         dect  stack
+0027 60D2 C64B  30         mov   r11,*stack            ; Save return address
+0028 60D4 0649  14         dect  stack
+0029 60D6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0030 60D8 0649  14         dect  stack
+0031 60DA C645  30         mov   tmp1,*stack           ; Push tmp1
+0032 60DC 0649  14         dect  stack
+0033 60DE C646  30         mov   tmp2,*stack           ; Push tmp2
 0034                       ;-------------------------------------------------------
-0035                       ; Sanity checks
+0035                       ; Initialize
 0036                       ;-------------------------------------------------------
-0037 6090 C186  18         mov   tmp2,tmp2             ; Minimum 1 character
-0038 6092 1303  14         jeq   _fb.null2char.crash
-0039 6094 0286  22         ci    tmp2,80               ; Maximum 80 characters
-     6096 0050 
-0040 6098 1204  14         jle   _fb.null2char.init
-0041                       ;------------------------------------------------------
-0042                       ; Asserts failed
-0043                       ;------------------------------------------------------
-0044               _fb.null2char.crash:
-0045 609A C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     609C FFCE 
-0046 609E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     60A0 2026 
-0047                       ;-------------------------------------------------------
-0048                       ; Initialize
-0049                       ;-------------------------------------------------------
-0050               _fb.null2char.init:
-0051 60A2 C1C5  18         mov   tmp1,tmp3             ; Get character to write
-0052 60A4 0A87  56         sla   tmp3,8                ; LSB to MSB
-0053               
-0054 60A6 04E0  34         clr   @fb.column
-     60A8 A10C 
-0055 60AA 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
-     60AC 6054 
-0056 60AE C120  34         mov   @fb.current,tmp0      ; Get position
-     60B0 A102 
-0057                       ;-------------------------------------------------------
-0058                       ; Loop over characters in line
-0059                       ;-------------------------------------------------------
-0060               _fb.null2char.loop:
-0061 60B2 04C5  14         clr   tmp1
-0062 60B4 D154  26         movb  *tmp0,tmp1            ; Get character
-0063 60B6 1603  14         jne   !                     ; Not a null character, skip it
-0064 60B8 0205  20         li    tmp1,>2a00            ; ASCII 32 in MSB
-     60BA 2A00 
-0065 60BC D507  30         movb  tmp3,*tmp0            ; Replace null character
-0066                       ;-------------------------------------------------------
-0067                       ; Prepare for next iteration
-0068                       ;-------------------------------------------------------
-0069 60BE 0584  14 !       inc   tmp0                  ; Move to next character
-0070 60C0 0606  14         dec   tmp2
-0071 60C2 15F7  14         jgt   _fb.null2char.loop   ; Repeat until done
-0072                       ;------------------------------------------------------
-0073                       ; Exit
-0074                       ;------------------------------------------------------
-0075               _fb.null2char.exit:
-0076 60C4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0077 60C6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0078 60C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0079 60CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0080 60CC C2F9  30         mov   *stack+,r11           ; Pop R11
-0081 60CE 045B  20         b     *r11                  ; Return to caller
-0082               
-0083               
-0084               
-0085               ***************************************************************
-0086               * fb.tab.next
-0087               * Move cursor to next tab position
-0088               ***************************************************************
-0089               *  bl   @fb.tab.next
-0090               *--------------------------------------------------------------
-0091               * INPUT
-0092               * none
-0093               *--------------------------------------------------------------
-0094               * OUTPUT
-0095               * none
-0096               *--------------------------------------------------------------
-0097               * Register usage
-0098               * tmp0,tmp1,tmp2
-0099               *--------------------------------------------------------------
-0100               * Remarks
-0101               * For simplicity reasons we're assuming base 1 during copy
-0102               * (first line starts at 1 instead of 0).
-0103               * Makes it easier when comparing values.
-0104               ********|*****|*********************|**************************
-0105               fb.tab.next:
-0106 60D0 0649  14         dect  stack
-0107 60D2 C64B  30         mov   r11,*stack            ; Save return address
-0108 60D4 0649  14         dect  stack
-0109 60D6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0110 60D8 0649  14         dect  stack
-0111 60DA C645  30         mov   tmp1,*stack           ; Push tmp1
-0112 60DC 0649  14         dect  stack
-0113 60DE C646  30         mov   tmp2,*stack           ; Push tmp2
-0114                       ;-------------------------------------------------------
-0115                       ; Initialize
-0116                       ;-------------------------------------------------------
-0117 60E0 0204  20         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
+0037 60E0 0204  20         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
      60E2 3484 
-0118 60E4 0206  20         li    tmp2,20               ; Up to 20 tabs supported
+0038 60E4 0206  20         li    tmp2,20               ; Up to 20 tabs supported
      60E6 0014 
-0119                       ;-------------------------------------------------------
-0120                       ; Find next tab position
-0121                       ;-------------------------------------------------------
-0122               fb.tab.next.loop:
-0123 60E8 D174  28         movb  *tmp0+,tmp1           ; \ Get tab position
-0124 60EA 0985  56         srl   tmp1,8                ; / Right align
-0125               
-0126 60EC 0285  22         ci    tmp1,>00ff            ; End-of-list reached?
+0039                       ;-------------------------------------------------------
+0040                       ; Find next tab position
+0041                       ;-------------------------------------------------------
+0042               fb.tab.next.loop:
+0043 60E8 D174  28         movb  *tmp0+,tmp1           ; \ Get tab position
+0044 60EA 0985  56         srl   tmp1,8                ; / Right align
+0045               
+0046 60EC 0285  22         ci    tmp1,>00ff            ; End-of-list reached?
      60EE 00FF 
-0127 60F0 1323  14         jeq   fb.tab.next.eol       ; Yes, home cursor and exit
-0128                       ;-------------------------------------------------------
-0129                       ; Compare position
-0130                       ;-------------------------------------------------------
-0131 60F2 8160  34         c     @fb.column,tmp1       ; Cursor > tab position?
+0047 60F0 1323  14         jeq   fb.tab.next.eol       ; Yes, home cursor and exit
+0048                       ;-------------------------------------------------------
+0049                       ; Compare position
+0050                       ;-------------------------------------------------------
+0051 60F2 8160  34         c     @fb.column,tmp1       ; Cursor > tab position?
      60F4 A10C 
-0132 60F6 1428  14         jhe   !                     ; Yes, next loop iteration
-0133                       ;-------------------------------------------------------
-0134                       ; Set cursor
-0135                       ;-------------------------------------------------------
-0136 60F8 C185  18         mov   tmp1,tmp2             ; Set length of row
-0137 60FA 0205  20         li    tmp1,32               ; Replacement character = ASCII 32
+0052 60F6 1428  14         jhe   !                     ; Yes, next loop iteration
+0053                       ;-------------------------------------------------------
+0054                       ; Set cursor
+0055                       ;-------------------------------------------------------
+0056 60F8 C185  18         mov   tmp1,tmp2             ; Set length of row
+0057 60FA 0205  20         li    tmp1,32               ; Replacement character = ASCII 32
      60FC 0020 
-0138 60FE 06A0  32         bl    @_fb.null2char        ; \ Replace any null characters with space
+0058 60FE 06A0  32         bl    @fb.null2char         ; \ Replace any null characters with space
      6100 607C 
-0139                                                   ; | i  tmp1 = Replacement character
-0140                                                   ; / i  tmp2 = Length of row
-0141               
-0142 6102 C146  18         mov   tmp2,tmp1             ; Restore tmp1
-0143 6104 C805  38         mov   tmp1,@fb.column       ; Set cursor on tab position
+0059                                                   ; | i  tmp1 = Replacement character
+0060                                                   ; / i  tmp2 = Length of row
+0061               
+0062 6102 C146  18         mov   tmp2,tmp1             ; Restore tmp1
+0063 6104 C805  38         mov   tmp1,@fb.column       ; Set cursor on tab position
      6106 A10C 
-0144               
-0145 6108 0649  14         dect  stack
-0146 610A C644  30         mov   tmp0,*stack           ; Push tmp0
-0147               
-0148 610C C105  18         mov   tmp1,tmp0             ; \ Set VDP cursor column position
-0149 610E 06A0  32         bl    @xsetx                ; / i  tmp0 = new X value
+0064               
+0065 6108 0649  14         dect  stack
+0066 610A C644  30         mov   tmp0,*stack           ; Push tmp0
+0067               
+0068 610C C105  18         mov   tmp1,tmp0             ; \ Set VDP cursor column position
+0069 610E 06A0  32         bl    @xsetx                ; / i  tmp0 = new X value
      6110 26AC 
-0150               
-0151 6112 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0152               
-0153 6114 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0070               
+0071 6112 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0072               
+0073 6114 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
      6116 6054 
-0154               
-0155 6118 0720  34         seto  @fb.row.dirty         ; Current row dirty in frame buffer
+0074               
+0075 6118 0720  34         seto  @fb.row.dirty         ; Current row dirty in frame buffer
      611A A10A 
-0156 611C 0720  34         seto  @fb.status.dirty      ; Refresh status line
+0076 611C 0720  34         seto  @fb.status.dirty      ; Refresh status line
      611E A118 
-0157 6120 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed)
+0077 6120 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed)
      6122 A206 
-0158                       ;-------------------------------------------------------
-0159                       ; Set row length
-0160                       ;-------------------------------------------------------
-0161 6124 C120  34         mov   @fb.column,tmp0
+0078                       ;-------------------------------------------------------
+0079                       ; Set row length
+0080                       ;-------------------------------------------------------
+0081 6124 C120  34         mov   @fb.column,tmp0
      6126 A10C 
-0162 6128 0584  14         inc   tmp0                  ; Base 1
-0163 612A 8820  54         c     @fb.column,@fb.row.length
+0082 6128 0584  14         inc   tmp0                  ; Base 1
+0083 612A 8820  54         c     @fb.column,@fb.row.length
      612C A10C 
      612E A108 
-0164 6130 110D  14         jlt   fb.tab.next.exit      ; No need to set row length, exit
-0165 6132 C804  38         mov   tmp0,@fb.row.length   : Set new length
+0084 6130 110D  14         jlt   fb.tab.next.exit      ; No need to set row length, exit
+0085 6132 C804  38         mov   tmp0,@fb.row.length   : Set new length
      6134 A108 
-0166 6136 100A  14         jmp   fb.tab.next.exit      ; Exit
-0167                       ;-------------------------------------------------------
-0168                       ; End-of-list reached, special treatment
-0169                       ;-------------------------------------------------------
-0170               fb.tab.next.eol:
-0171 6138 04E0  34         clr   @fb.column            ; Home cursor
+0086 6136 100A  14         jmp   fb.tab.next.exit      ; Exit
+0087                       ;-------------------------------------------------------
+0088                       ; End-of-list reached, special treatment
+0089                       ;-------------------------------------------------------
+0090               fb.tab.next.eol:
+0091 6138 04E0  34         clr   @fb.column            ; Home cursor
      613A A10C 
-0172 613C 04C4  14         clr   tmp0                  ; Home cursor
-0173               
-0174 613E 06A0  32         bl    @xsetx                ; \ Set VDP cursor column position
+0092 613C 04C4  14         clr   tmp0                  ; Home cursor
+0093               
+0094 613E 06A0  32         bl    @xsetx                ; \ Set VDP cursor column position
      6140 26AC 
-0175                                                   ; / i  tmp0 = new X value
-0176               
-0177 6142 0720  34         seto  @fb.status.dirty      ; Refresh status line
+0095                                                   ; / i  tmp0 = new X value
+0096               
+0097 6142 0720  34         seto  @fb.status.dirty      ; Refresh status line
      6144 A118 
-0178 6146 1002  14         jmp   fb.tab.next.exit      ; Exit
-0179                       ;-------------------------------------------------------
-0180                       ; Prepare for next iteration
-0181                       ;-------------------------------------------------------
-0182 6148 0606  14 !       dec   tmp2
-0183 614A 15CE  14         jgt   fb.tab.next.loop
-0184                       ;------------------------------------------------------
-0185                       ; Exit
-0186                       ;------------------------------------------------------
-0187               fb.tab.next.exit:
-0188 614C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0189 614E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0190 6150 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0191 6152 C2F9  30         mov   *stack+,r11           ; Pop R11
-0192 6154 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.461209
-0071                       ;-----------------------------------------------------------------------
-0072                       ; Stubs using trampoline
-0073                       ;-----------------------------------------------------------------------
-0074                       copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks
+0098 6146 1002  14         jmp   fb.tab.next.exit      ; Exit
+0099                       ;-------------------------------------------------------
+0100                       ; Prepare for next iteration
+0101                       ;-------------------------------------------------------
+0102 6148 0606  14 !       dec   tmp2
+0103 614A 15CE  14         jgt   fb.tab.next.loop
+0104                       ;------------------------------------------------------
+0105                       ; Exit
+0106                       ;------------------------------------------------------
+0107               fb.tab.next.exit:
+0108 614C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0109 614E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0110 6150 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0111 6152 C2F9  30         mov   *stack+,r11           ; Pop R11
+0112 6154 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b4.asm.612225
+0072                       ;-----------------------------------------------------------------------
+0073                       ; Stubs using trampoline
+0074                       ;-----------------------------------------------------------------------
+0075                       copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks
 **** **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.461209
-0075                       ;-----------------------------------------------------------------------
-0076                       ; Bank specific vector table
-0077                       ;-----------------------------------------------------------------------
-0081 6156 6156                   data $                ; Bank 1 ROM size OK.
-0083                       ;-------------------------------------------------------
-0084                       ; Vector table bank 4: >7f9c - >7fff
-0085                       ;-------------------------------------------------------
-0086                       copy  "rom.vectors.bank4.asm"
+**** **** ****     > stevie_b4.asm.612225
+0076                       ;-----------------------------------------------------------------------
+0077                       ; Bank specific vector table
+0078                       ;-----------------------------------------------------------------------
+0082 6156 6156                   data $                ; Bank 1 ROM size OK.
+0084                       ;-------------------------------------------------------
+0085                       ; Vector table bank 4: >7f9c - >7fff
+0086                       ;-------------------------------------------------------
+0087                       copy  "rom.vectors.bank4.asm"
 **** **** ****     > rom.vectors.bank4.asm
 0001               * FILE......: rom.vectors.bank4.asm
 0002               * Purpose...: Bank 4 vectors for trampoline function
@@ -7090,17 +7091,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b4.asm.461209
-0087               
-0088               *--------------------------------------------------------------
-0089               * Video mode configuration
-0090               *--------------------------------------------------------------
-0091      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0092      0004     spfbck  equ   >04                   ; Screen background color.
-0093      336E     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-0094      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0095      0050     colrow  equ   80                    ; Columns per row
-0096      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0097      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0098      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0099      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+**** **** ****     > stevie_b4.asm.612225
+0088               
+0089               *--------------------------------------------------------------
+0090               * Video mode configuration
+0091               *--------------------------------------------------------------
+0092      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0093      0004     spfbck  equ   >04                   ; Screen background color.
+0094      336E     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0095      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0096      0050     colrow  equ   80                    ; Columns per row
+0097      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0098      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0099      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0100      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
