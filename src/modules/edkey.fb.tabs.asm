@@ -5,10 +5,12 @@
 * Cursor on next tab
 *---------------------------------------------------------------
 edkey.action.fb.tab.next:
+        dect  stack
+        mov   r11,*stack            ; Save return address
         bl  @fb.tab.next            ; Jump to next tab position on line
-        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 edkey.action.fb.tab.next.exit:
+        mov   *stack+,r11           ; Pop r11
         b     @hook.keyscan.bounce  ; Back to editor main

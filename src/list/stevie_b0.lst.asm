@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210402-690915
+0009               * File: stevie_b0.asm               ; Version 210403-867397
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -403,7 +403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1B'
 0017                       even
 0018               
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1193,7 +1193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210402-690915'
+0260 624D ....             text  'Build-ID  210403-867397'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5077,7 +5077,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -6403,7 +6403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 7502 4B42             byte  75
-0013 7503 ....             text  'Build: 210402-690915 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 7503 ....             text  'Build: 210403-867397 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6776,7 +6776,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      79A0 BEEF 
      79A2 DEAD 
      79A4 BEEF 
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0128               
 0132 79A6 393C                   data $                ; Bank 0 ROM size OK.
 0134                       ;-----------------------------------------------------------------------
@@ -6828,7 +6828,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.690915
+**** **** ****     > stevie_b0.asm.867397
 0146               
 0147               
 0148               *--------------------------------------------------------------

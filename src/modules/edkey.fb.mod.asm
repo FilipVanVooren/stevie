@@ -74,21 +74,17 @@ edkey.action.newline.exit:
 * Toggle insert/overwrite mode
 *---------------------------------------------------------------
 edkey.action.ins_onoff:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         inv   @edb.insmode          ; Toggle insert/overwrite mode
-        ;-------------------------------------------------------
-        ; Delay
-        ;-------------------------------------------------------
-        li    tmp0,2000
-edkey.action.ins_onoff.loop:
-        dec   tmp0
-        jne   edkey.action.ins_onoff.loop
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_onoff.exit: 
-        b     @task.vdp.cursor      ; Update cursor shape  
-
+        mov   *stack+,r11           ; Pop r11
+        b     @hook.keyscan.bounce  ; Back to editor main
 
 
 
