@@ -66,13 +66,13 @@ main.continue:
         bl    @s8x8                 ; Small sprite
 
         bl    @cpym2m
-              data romsat,ramsat,4  ; Load sprite SAT
+              data romsat,ramsat,10 ; Load sprite SAT
 
         mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
 
         bl    @cpym2v
-              data sprpdt,cursors,3*8
+              data sprpdt,cursors,4*8
                                     ; Load sprite cursor patterns
                                     
         bl    @cpym2v

@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210403-869926
+0009               * File: stevie_b0.asm               ; Version 210403-915896
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -366,7 +366,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0335               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0336               *--------------------------------------------------------------
 0337      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -400,10 +400,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0012               
 0014               
 0015 6014 0B53             byte  11
-0016 6015 ....             text  'STEVIE 1.1C'
+0016 6015 ....             text  'STEVIE 1.1D'
 0017                       even
 0018               
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1193,7 +1193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210403-869926'
+0260 624D ....             text  'Build-ID  210403-915896'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5077,7 +5077,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F2E 0040 
 0367 6F30 0460  28         b     @main                 ; Give control to main program
      6F32 3000 
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -5661,12 +5661,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7254 A20E 
 0041               
 0042 7256 0204  20         li    tmp0,txt.newfile      ; "New file"
-     7258 357C 
+     7258 358A 
 0043 725A C804  38         mov   tmp0,@edb.filename.ptr
      725C A212 
 0044               
 0045 725E 0204  20         li    tmp0,txt.filetype.none
-     7260 35EC 
+     7260 35FA 
 0046 7262 C804  38         mov   tmp0,@edb.filetype.ptr
      7264 A214 
 0047               
@@ -6096,7 +6096,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0021                       ;------------------------------------------------------
 0022 73BC 06A0  32         bl    @sams.layout
      73BE 25A8 
-0023 73C0 3414                   data mem.sams.layout.data
+0023 73C0 3422                   data mem.sams.layout.data
 0024               
 0025 73C2 06A0  32         bl    @sams.layout.copy
      73C4 260C 
@@ -6157,237 +6157,244 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      73E0 0050 
 0034               
 0035               romsat:
-0036 73E2 0303             data  >0303,>0001             ; Cursor YX, initial shape and colour
+0036 73E2 0000             data  >0000,>0001             ; Cursor YX, initial shape and colour
      73E4 0001 
-0037               
-0038               cursors:
-0039 73E6 0000             data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
-     73E8 0000 
-     73EA 0000 
-     73EC 001C 
-0040 73EE 1010             data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
-     73F0 1010 
-     73F2 1010 
-     73F4 1000 
-0041 73F6 1C1C             data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
-     73F8 1C1C 
-     73FA 1C1C 
-     73FC 1C00 
-0042               
-0043               patterns:
-0044 73FE 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
-     7400 0000 
-     7402 FF00 
-     7404 0000 
-0045 7406 8080             data  >8080,>8080,>ff80,>8080 ; 02. Connector |-
-     7408 8080 
-     740A FF80 
-     740C 8080 
-0046 740E 0404             data  >0404,>0404,>ff04,>0404 ; 03. Connector -|
-     7410 0404 
-     7412 FF04 
-     7414 0404 
-0047               
-0048               patterns.box:
-0049 7416 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
-     7418 0000 
-     741A FF80 
-     741C BFA0 
-0050 741E 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
-     7420 0000 
-     7422 FC04 
-     7424 F414 
-0051 7426 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
-     7428 A0A0 
-     742A A0A0 
-     742C A0A0 
-0052 742E 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
-     7430 1414 
-     7432 1414 
-     7434 1414 
-0053 7436 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
+0037 73E6 0000             data  >0000,>0301             ; Current line indicator
+     73E8 0301 
+0038 73EA D000             data  >d000                   ; End-of-Sprites list
+0039               
+0040               cursors:
+0041 73EC 0000             byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
+     73EE 0000 
+     73F0 0000 
+     73F2 001C 
+0042 73F4 1010             byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
+     73F6 1010 
+     73F8 1010 
+     73FA 1000 
+0043 73FC 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
+     73FE 1C1C 
+     7400 1C1C 
+     7402 1C00 
+0044 7404 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator
+     7406 0307 
+     7408 0703 
+     740A 0100 
+0045               
+0046               patterns:
+0047 740C 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
+     740E 0000 
+     7410 FF00 
+     7412 0000 
+0048 7414 8080             data  >8080,>8080,>ff80,>8080 ; 02. Connector |-
+     7416 8080 
+     7418 FF80 
+     741A 8080 
+0049 741C 0404             data  >0404,>0404,>ff04,>0404 ; 03. Connector -|
+     741E 0404 
+     7420 FF04 
+     7422 0404 
+0050               
+0051               patterns.box:
+0052 7424 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
+     7426 0000 
+     7428 FF80 
+     742A BFA0 
+0053 742C 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
+     742E 0000 
+     7430 FC04 
+     7432 F414 
+0054 7434 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
+     7436 A0A0 
      7438 A0A0 
-     743A BF80 
-     743C FF00 
-0054 743E 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
+     743A A0A0 
+0055 743C 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
+     743E 1414 
      7440 1414 
-     7442 F404 
-     7444 FC00 
-0055 7446 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
-     7448 C0C0 
-     744A C0C0 
-     744C 0080 
-0056 744E 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
-     7450 0F0F 
-     7452 0F0F 
-     7454 0000 
-0057               
-0058               
-0059               patterns.cr:
-0060 7456 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
-     7458 6C48 
-     745A 4800 
-     745C 7C00 
-0061 745E 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
-     7460 64FC 
-     7462 6020 
-     7464 0000 
-0062               
-0063               
-0064               alphalock:
-0065 7466 0000             data  >0000,>00e0,>e0e0,>e0e0 ; 14. alpha lock down
-     7468 00E0 
-     746A E0E0 
-     746C E0E0 
-0066 746E 00E0             data  >00e0,>e0e0,>e0e0,>0000 ; 15. alpha lock up
-     7470 E0E0 
-     7472 E0E0 
-     7474 0000 
-0067               
-0068               
-0069               vertline:
-0070 7476 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
-     7478 1010 
-     747A 1010 
-     747C 1010 
+     7442 1414 
+0056 7444 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
+     7446 A0A0 
+     7448 BF80 
+     744A FF00 
+0057 744C 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
+     744E 1414 
+     7450 F404 
+     7452 FC00 
+0058 7454 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
+     7456 C0C0 
+     7458 C0C0 
+     745A 0080 
+0059 745C 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+     745E 0F0F 
+     7460 0F0F 
+     7462 0000 
+0060               
+0061               
+0062               patterns.cr:
+0063 7464 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+     7466 6C48 
+     7468 4800 
+     746A 7C00 
+0064 746C 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+     746E 64FC 
+     7470 6020 
+     7472 0000 
+0065               
+0066               
+0067               alphalock:
+0068 7474 0000             data  >0000,>00e0,>e0e0,>e0e0 ; 14. alpha lock down
+     7476 00E0 
+     7478 E0E0 
+     747A E0E0 
+0069 747C 00E0             data  >00e0,>e0e0,>e0e0,>0000 ; 15. alpha lock up
+     747E E0E0 
+     7480 E0E0 
+     7482 0000 
+0070               
 0071               
-0072               
-0073               ***************************************************************
-0074               * SAMS page layout table for Stevie (16 words)
-0075               *--------------------------------------------------------------
-0076               mem.sams.layout.data:
-0077 747E 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     7480 0002 
-0078 7482 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     7484 0003 
-0079 7486 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     7488 000A 
-0080               
-0081 748A B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
-     748C 0010 
-0082                                                   ; \ The index can allocate
-0083                                                   ; / pages >10 to >2f.
-0084               
-0085 748E C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
-     7490 0030 
-0086                                                   ; \ Editor buffer can allocate
-0087                                                   ; / pages >30 to >ff.
-0088               
-0089 7492 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-     7494 000D 
-0090 7496 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
-     7498 000E 
-0091 749A F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-     749C 000F 
-0092               
-0093               
-0094               
+0072               vertline:
+0073 7484 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
+     7486 1010 
+     7488 1010 
+     748A 1010 
+0074               
+0075               
+0076               ***************************************************************
+0077               * SAMS page layout table for Stevie (16 words)
+0078               *--------------------------------------------------------------
+0079               mem.sams.layout.data:
+0080 748C 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     748E 0002 
+0081 7490 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     7492 0003 
+0082 7494 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     7496 000A 
+0083               
+0084 7498 B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
+     749A 0010 
+0085                                                   ; \ The index can allocate
+0086                                                   ; / pages >10 to >2f.
+0087               
+0088 749C C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
+     749E 0030 
+0089                                                   ; \ Editor buffer can allocate
+0090                                                   ; / pages >30 to >ff.
+0091               
+0092 74A0 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+     74A2 000D 
+0093 74A4 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+     74A6 000E 
+0094 74A8 F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+     74AA 000F 
 0095               
 0096               
-0097               ***************************************************************
-0098               * Stevie color schemes table
-0099               *--------------------------------------------------------------
-0100               * Word 1
-0101               * A  MSB  high-nibble    Foreground color text line in frame buffer
-0102               * B  MSB  low-nibble     Background color text line in frame buffer
-0103               * C  LSB  high-nibble    Foreground color top/bottom line
-0104               * D  LSB  low-nibble     Background color top/bottom line
-0105               *
-0106               * Word 2
-0107               * E  MSB  high-nibble    Foreground color cmdb pane
-0108               * F  MSB  low-nibble     Background color cmdb pane
-0109               * G  LSB  high-nibble    Cursor foreground color cmdb pane
-0110               * H  LSB  low-nibble     Cursor foreground color frame buffer
-0111               *
-0112               * Word 3
-0113               * I  MSB  high-nibble    Foreground color busy top/bottom line
-0114               * J  MSB  low-nibble     Background color busy top/bottom line
-0115               * K  LSB  high-nibble    Foreground color marked line in frame buffer
-0116               * L  LSB  low-nibble     Background color marked line in frame buffer
-0117               *
-0118               * Word 4
-0119               * M  MSB  high-nibble    0
-0120               * N  MSB  low-nibble     0
-0121               * O  LSB  high-nibble    0
-0122               * P  LSB  low-nibble     0
-0123               *
-0124               * Colors
-0125               * 0  Transparant
-0126               * 1  black
-0127               * 2  Green
-0128               * 3  Light Green
-0129               * 4  Blue
-0130               * 5  Light Blue
-0131               * 6  Dark Red
-0132               * 7  Cyan
-0133               * 8  Red
-0134               * 9  Light Red
-0135               * A  Yellow
-0136               * B  Light Yellow
-0137               * C  Dark Green
-0138               * D  Magenta
-0139               * E  Grey
-0140               * F  White
-0141               *--------------------------------------------------------------
-0142      000A     tv.colorscheme.entries   equ 10 ; Entries in table
-0143               
-0144               tv.colorscheme.table:
-0145                       ;                             ; #
-0146                       ;      ABCD  EFGH  IJKL  MNOP ; -
-0147 749E F417             data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
-     74A0 F171 
-     74A2 1B1F 
-     74A4 7100 
-0148 74A6 A11A             data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
-     74A8 F0FF 
-     74AA 1F1A 
-     74AC F100 
-0149 74AE 2112             data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
-     74B0 F0FF 
-     74B2 1F12 
-     74B4 F100 
-0150 74B6 F41F             data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
-     74B8 1E11 
-     74BA 1A17 
-     74BC 1E00 
-0151 74BE E11E             data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
-     74C0 E1FF 
-     74C2 1F1E 
-     74C4 E100 
-0152 74C6 1771             data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
-     74C8 1016 
-     74CA 1B71 
-     74CC 1700 
-0153 74CE 1FF1             data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
-     74D0 1011 
-     74D2 F1F1 
-     74D4 1F00 
-0154 74D6 1AF1             data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow
-     74D8 A1FF 
-     74DA 1F1F 
-     74DC F100 
-0155 74DE 21F0             data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
-     74E0 12FF 
-     74E2 1B12 
-     74E4 1200 
-0156 74E6 F5F1             data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
-     74E8 E1FF 
-     74EA 1B1F 
-     74EC F100 
-0157                       even
-0158               
-0159               tv.tabs.table:
-0160 74EE 0007             byte  0,7,12,25               ; \   Default tab positions as used
-     74F0 0C19 
-0161 74F2 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
-     74F4 3B4F 
-0162 74F6 FF00             byte  >ff,0,0,0               ; |
-     74F8 0000 
-0163 74FA 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
-     74FC 0000 
-0164 74FE 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
-     7500 0000 
-0165                       even
+0097               
+0098               
+0099               
+0100               ***************************************************************
+0101               * Stevie color schemes table
+0102               *--------------------------------------------------------------
+0103               * Word 1
+0104               * A  MSB  high-nibble    Foreground color text line in frame buffer
+0105               * B  MSB  low-nibble     Background color text line in frame buffer
+0106               * C  LSB  high-nibble    Foreground color top/bottom line
+0107               * D  LSB  low-nibble     Background color top/bottom line
+0108               *
+0109               * Word 2
+0110               * E  MSB  high-nibble    Foreground color cmdb pane
+0111               * F  MSB  low-nibble     Background color cmdb pane
+0112               * G  LSB  high-nibble    Cursor foreground color cmdb pane
+0113               * H  LSB  low-nibble     Cursor foreground color frame buffer
+0114               *
+0115               * Word 3
+0116               * I  MSB  high-nibble    Foreground color busy top/bottom line
+0117               * J  MSB  low-nibble     Background color busy top/bottom line
+0118               * K  LSB  high-nibble    Foreground color marked line in frame buffer
+0119               * L  LSB  low-nibble     Background color marked line in frame buffer
+0120               *
+0121               * Word 4
+0122               * M  MSB  high-nibble    0
+0123               * N  MSB  low-nibble     0
+0124               * O  LSB  high-nibble    0
+0125               * P  LSB  low-nibble     0
+0126               *
+0127               * Colors
+0128               * 0  Transparant
+0129               * 1  black
+0130               * 2  Green
+0131               * 3  Light Green
+0132               * 4  Blue
+0133               * 5  Light Blue
+0134               * 6  Dark Red
+0135               * 7  Cyan
+0136               * 8  Red
+0137               * 9  Light Red
+0138               * A  Yellow
+0139               * B  Light Yellow
+0140               * C  Dark Green
+0141               * D  Magenta
+0142               * E  Grey
+0143               * F  White
+0144               *--------------------------------------------------------------
+0145      000A     tv.colorscheme.entries   equ 10 ; Entries in table
+0146               
+0147               tv.colorscheme.table:
+0148                       ;                             ; #
+0149                       ;      ABCD  EFGH  IJKL  MNOP ; -
+0150 74AC F417             data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
+     74AE F171 
+     74B0 1B1F 
+     74B2 7100 
+0151 74B4 A11A             data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
+     74B6 F0FF 
+     74B8 1F1A 
+     74BA F100 
+0152 74BC 2112             data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
+     74BE F0FF 
+     74C0 1F12 
+     74C2 F100 
+0153 74C4 F41F             data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
+     74C6 1E11 
+     74C8 1A17 
+     74CA 1E00 
+0154 74CC E11E             data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
+     74CE E1FF 
+     74D0 1F1E 
+     74D2 E100 
+0155 74D4 1771             data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
+     74D6 1016 
+     74D8 1B71 
+     74DA 1700 
+0156 74DC 1FF1             data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
+     74DE 1011 
+     74E0 F1F1 
+     74E2 1F00 
+0157 74E4 1AF1             data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow
+     74E6 A1FF 
+     74E8 1F1F 
+     74EA F100 
+0158 74EC 21F0             data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
+     74EE 12FF 
+     74F0 1B12 
+     74F2 1200 
+0159 74F4 F5F1             data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue
+     74F6 E1FF 
+     74F8 1B1F 
+     74FA F100 
+0160                       even
+0161               
+0162               tv.tabs.table:
+0163 74FC 0007             byte  0,7,12,25               ; \   Default tab positions as used
+     74FE 0C19 
+0164 7500 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+     7502 3B4F 
+0165 7504 FF00             byte  >ff,0,0,0               ; |
+     7506 0000 
+0166 7508 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+     750A 0000 
+0167 750C 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+     750E 0000 
+0168                       even
 **** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.strings.asm"       ; Data segment - Strings
 **** **** ****     > data.strings.asm
@@ -6402,255 +6409,255 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009               ; Strings for welcome pane
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
-0012 7502 4B42             byte  75
-0013 7503 ....             text  'Build: 210403-869926 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0012 7510 4B42             byte  75
+0013 7511 ....             text  'Build: 210403-915896 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
 0017               ; Strings for status line pane
 0018               ;--------------------------------------------------------------
 0019               txt.delim
-0020 754E 012C             byte  1
-0021 754F ....             text  ','
+0020 755C 012C             byte  1
+0021 755D ....             text  ','
 0022                       even
 0023               
 0024               txt.bottom
-0025 7550 0520             byte  5
-0026 7551 ....             text  '  BOT'
+0025 755E 0520             byte  5
+0026 755F ....             text  '  BOT'
 0027                       even
 0028               
 0029               txt.ovrwrite
-0030 7556 034F             byte  3
-0031 7557 ....             text  'OVR'
+0030 7564 034F             byte  3
+0031 7565 ....             text  'OVR'
 0032                       even
 0033               
 0034               txt.insert
-0035 755A 0349             byte  3
-0036 755B ....             text  'INS'
+0035 7568 0349             byte  3
+0036 7569 ....             text  'INS'
 0037                       even
 0038               
 0039               txt.star
-0040 755E 012A             byte  1
-0041 755F ....             text  '*'
+0040 756C 012A             byte  1
+0041 756D ....             text  '*'
 0042                       even
 0043               
 0044               txt.loading
-0045 7560 0A4C             byte  10
-0046 7561 ....             text  'Loading...'
+0045 756E 0A4C             byte  10
+0046 756F ....             text  'Loading...'
 0047                       even
 0048               
 0049               txt.saving
-0050 756C 0A53             byte  10
-0051 756D ....             text  'Saving....'
+0050 757A 0A53             byte  10
+0051 757B ....             text  'Saving....'
 0052                       even
 0053               
 0054               txt.block.del
-0055 7578 1244             byte  18
-0056 7579 ....             text  'Deleting block....'
+0055 7586 1244             byte  18
+0056 7587 ....             text  'Deleting block....'
 0057                       even
 0058               
 0059               txt.block.copy
-0060 758C 1143             byte  17
-0061 758D ....             text  'Copying block....'
+0060 759A 1143             byte  17
+0061 759B ....             text  'Copying block....'
 0062                       even
 0063               
 0064               txt.block.move
-0065 759E 104D             byte  16
-0066 759F ....             text  'Moving block....'
+0065 75AC 104D             byte  16
+0066 75AD ....             text  'Moving block....'
 0067                       even
 0068               
 0069               txt.block.save
-0070 75B0 1D53             byte  29
-0071 75B1 ....             text  'Saving block to DV80 file....'
+0070 75BE 1D53             byte  29
+0071 75BF ....             text  'Saving block to DV80 file....'
 0072                       even
 0073               
 0074               txt.fastmode
-0075 75CE 0846             byte  8
-0076 75CF ....             text  'Fastmode'
+0075 75DC 0846             byte  8
+0076 75DD ....             text  'Fastmode'
 0077                       even
 0078               
 0079               txt.kb
-0080 75D8 026B             byte  2
-0081 75D9 ....             text  'kb'
+0080 75E6 026B             byte  2
+0081 75E7 ....             text  'kb'
 0082                       even
 0083               
 0084               txt.lines
-0085 75DC 054C             byte  5
-0086 75DD ....             text  'Lines'
+0085 75EA 054C             byte  5
+0086 75EB ....             text  'Lines'
 0087                       even
 0088               
 0089               txt.bufnum
-0090 75E2 0323             byte  3
-0091 75E3 ....             text  '#1 '
+0090 75F0 0323             byte  3
+0091 75F1 ....             text  '#1 '
 0092                       even
 0093               
 0094               txt.newfile
-0095 75E6 0A5B             byte  10
-0096 75E7 ....             text  '[New file]'
+0095 75F4 0A5B             byte  10
+0096 75F5 ....             text  '[New file]'
 0097                       even
 0098               
 0099               txt.filetype.dv80
-0100 75F2 0444             byte  4
-0101 75F3 ....             text  'DV80'
+0100 7600 0444             byte  4
+0101 7601 ....             text  'DV80'
 0102                       even
 0103               
 0104               txt.m1
-0105 75F8 034D             byte  3
-0106 75F9 ....             text  'M1='
+0105 7606 034D             byte  3
+0106 7607 ....             text  'M1='
 0107                       even
 0108               
 0109               txt.m2
-0110 75FC 034D             byte  3
-0111 75FD ....             text  'M2='
+0110 760A 034D             byte  3
+0111 760B ....             text  'M2='
 0112                       even
 0113               
 0114               txt.stevie
-0115 7600 0D53             byte  13
-0116 7601 ....             text  'STEVIE 1.1c  '
+0115 760E 0D53             byte  13
+0116 760F ....             text  'STEVIE 1.1d  '
 0117                       even
 0118               
 0119               txt.keys.default
-0120 760E 1546             byte  21
-0121 760F ....             text  'F0=Help  ^Open  ^Save'
+0120 761C 1546             byte  21
+0121 761D ....             text  'F0=Help  ^Open  ^Save'
 0122                       even
 0123               
 0124               txt.keys.block
-0125 7624 2B5E             byte  43
-0126 7625 ....             text  '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+0125 7632 2B5E             byte  43
+0126 7633 ....             text  '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
 0127                       even
 0128               
 0129                                  even
 0130               
-0131 7650 010F     txt.alpha.up       data >010f
-0132 7652 010E     txt.alpha.down     data >010e
-0133 7654 0110     txt.vertline       data >0110
+0131 765E 010F     txt.alpha.up       data >010f
+0132 7660 010E     txt.alpha.down     data >010e
+0133 7662 0110     txt.vertline       data >0110
 0134               
 0135               txt.clear
-0136 7656 0420             byte  4
-0137 7657 ....             text  '    '
+0136 7664 0420             byte  4
+0137 7665 ....             text  '    '
 0138                       even
 0139               
-0140      35EC     txt.filetype.none  equ txt.clear
+0140      35FA     txt.filetype.none  equ txt.clear
 0141               
 0142               
 0143               ;--------------------------------------------------------------
 0144               ; Dialog Load DV 80 file
 0145               ;--------------------------------------------------------------
-0146 765C 1301     txt.head.load      byte 19,1,3,32
-     765E 0320 
-0147 7660 ....                        text 'Open DV80 file '
+0146 766A 1301     txt.head.load      byte 19,1,3,32
+     766C 0320 
+0147 766E ....                        text 'Open DV80 file '
 0148                                  byte 2
 0149               txt.hint.load
-0150 7670 4746             byte  71
-0151 7671 ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+0150 767E 4746             byte  71
+0151 767F ....             text  'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
 0152                       even
 0153               
 0154               txt.keys.load
-0155 76B8 3946             byte  57
-0156 76B9 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
+0155 76C6 3946             byte  57
+0156 76C7 ....             text  'F9=Back    F3=Clear    F5=Fastmode    F-H=Home    F-L=End'
 0157                       even
 0158               
 0159               txt.keys.load2
-0160 76F2 3946             byte  57
-0161 76F3 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
+0160 7700 3946             byte  57
+0161 7701 ....             text  'F9=Back    F3=Clear   *F5=Fastmode    F-H=Home    F-L=End'
 0162                       even
 0163               
 0164               
 0165               ;--------------------------------------------------------------
 0166               ; Dialog Save DV 80 file
 0167               ;--------------------------------------------------------------
-0168 772C 1301     txt.head.save      byte 19,1,3,32
-     772E 0320 
-0169 7730 ....                        text 'Save DV80 file '
+0168 773A 1301     txt.head.save      byte 19,1,3,32
+     773C 0320 
+0169 773E ....                        text 'Save DV80 file '
 0170                                  byte 2
-0171 7740 2301     txt.head.save2     byte 35,1,3,32
-     7742 0320 
-0172 7744 ....                        text 'Save marked block to DV80 file '
+0171 774E 2301     txt.head.save2     byte 35,1,3,32
+     7750 0320 
+0172 7752 ....                        text 'Save marked block to DV80 file '
 0173                                  byte 2
 0174               txt.hint.save
-0175 7764 0120             byte  1
-0176 7765 ....             text  ' '
+0175 7772 0120             byte  1
+0176 7773 ....             text  ' '
 0177                       even
 0178               
 0179               txt.keys.save
-0180 7766 2A46             byte  42
-0181 7767 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
+0180 7774 2A46             byte  42
+0181 7775 ....             text  'F9=Back    F3=Clear    F-H=Home    F-L=End'
 0182                       even
 0183               
 0184               
 0185               ;--------------------------------------------------------------
 0186               ; Dialog "Unsaved changes"
 0187               ;--------------------------------------------------------------
-0188 7792 1401     txt.head.unsaved   byte 20,1,3,32
-     7794 0320 
-0189 7796 ....                        text 'Unsaved changes '
-0190 77A6 0232                        byte 2
+0188 77A0 1401     txt.head.unsaved   byte 20,1,3,32
+     77A2 0320 
+0189 77A4 ....                        text 'Unsaved changes '
+0190 77B4 0232                        byte 2
 0191               txt.info.unsaved
 0192                       byte  50
-0193 77A8 ....             text  'You are about to lose changes to the current file!'
+0193 77B6 ....             text  'You are about to lose changes to the current file!'
 0194                       even
 0195               
 0196               txt.hint.unsaved
-0197 77DA 3950             byte  57
-0198 77DB ....             text  'Press F6 to proceed without saving or ENTER to save file.'
+0197 77E8 3950             byte  57
+0198 77E9 ....             text  'Press F6 to proceed without saving or ENTER to save file.'
 0199                       even
 0200               
 0201               txt.keys.unsaved
-0202 7814 2846             byte  40
-0203 7815 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
+0202 7822 2846             byte  40
+0203 7823 ....             text  'F9=Back    F6=Proceed    ENTER=Save file'
 0204                       even
 0205               
 0206               
 0207               ;--------------------------------------------------------------
 0208               ; Dialog "About"
 0209               ;--------------------------------------------------------------
-0210 783E 0A01     txt.head.about     byte 10,1,3,32
-     7840 0320 
-0211 7842 ....                        text 'About '
-0212 7848 0200                        byte 2
+0210 784C 0A01     txt.head.about     byte 10,1,3,32
+     784E 0320 
+0211 7850 ....                        text 'About '
+0212 7856 0200                        byte 2
 0213               
 0214               txt.info.about
 0215                       byte  0
-0216 784A ....             text
+0216 7858 ....             text
 0217                       even
 0218               
 0219               txt.hint.about
-0220 784A 2650             byte  38
-0221 784B ....             text  'Press F9 or ENTER to return to editor.'
+0220 7858 2650             byte  38
+0221 7859 ....             text  'Press F9 or ENTER to return to editor.'
 0222                       even
 0223               
-0224 7872 3D46     txt.keys.about     byte 61
-0225 7873 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
-0226 789A 0F20                        byte 15
-0227 789B ....                        text '   ALPHA LOCK Down= '
+0224 7880 3D46     txt.keys.about     byte 61
+0225 7881 ....                        text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
+0226 78A8 0F20                        byte 15
+0227 78A9 ....                        text '   ALPHA LOCK Down= '
 0228                                  byte 14
 0229               
 0230               ;--------------------------------------------------------------
 0231               ; Strings for error line pane
 0232               ;--------------------------------------------------------------
 0233               txt.ioerr.load
-0234 78B0 2049             byte  32
-0235 78B1 ....             text  'I/O error. Failed loading file: '
+0234 78BE 2049             byte  32
+0235 78BF ....             text  'I/O error. Failed loading file: '
 0236                       even
 0237               
 0238               txt.ioerr.save
-0239 78D2 2049             byte  32
-0240 78D3 ....             text  'I/O error. Failed saving file:  '
+0239 78E0 2049             byte  32
+0240 78E1 ....             text  'I/O error. Failed saving file:  '
 0241                       even
 0242               
 0243               txt.memfull.load
-0244 78F4 4049             byte  64
-0245 78F5 ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0244 7902 4049             byte  64
+0245 7903 ....             text  'Index memory full. Could not fully load file into editor buffer.'
 0246                       even
 0247               
 0248               txt.io.nofile
-0249 7936 2149             byte  33
-0250 7937 ....             text  'I/O error. No filename specified.'
+0249 7944 2149             byte  33
+0250 7945 ....             text  'I/O error. No filename specified.'
 0251                       even
 0252               
 0253               txt.block.inside
-0254 7958 3445             byte  52
-0255 7959 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0254 7966 3445             byte  52
+0255 7967 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
 0256                       even
 0257               
 0258               
@@ -6659,13 +6666,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0261               ; Strings for command buffer
 0262               ;--------------------------------------------------------------
 0263               txt.cmdb.prompt
-0264 798E 013E             byte  1
-0265 798F ....             text  '>'
+0264 799C 013E             byte  1
+0265 799D ....             text  '>'
 0266                       even
 0267               
 0268               txt.colorscheme
-0269 7990 0D43             byte  13
-0270 7991 ....             text  'Color scheme:'
+0269 799E 0D43             byte  13
+0270 799F ....             text  'Color scheme:'
 0271                       even
 0272               
 **** **** ****     > ram.resident.3000.asm
@@ -6772,17 +6779,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 799E DEAD             data  >dead,>beef,>dead,>beef
-     79A0 BEEF 
-     79A2 DEAD 
-     79A4 BEEF 
-**** **** ****     > stevie_b0.asm.869926
+0022 79AC DEAD             data  >dead,>beef,>dead,>beef
+     79AE BEEF 
+     79B0 DEAD 
+     79B2 BEEF 
+**** **** ****     > stevie_b0.asm.915896
 0128               
-0132 79A6 393C                   data $                ; Bank 0 ROM size OK.
+0132 79B4 394A                   data $                ; Bank 0 ROM size OK.
 0134                       ;-----------------------------------------------------------------------
 0135                       ; Bank specific vector table
 0136                       ;-----------------------------------------------------------------------
-0140 79A8 393E                   data $                ; Bank 0 ROM size OK.
+0140 79B6 394C                   data $                ; Bank 0 ROM size OK.
 0142                       ;-------------------------------------------------------
 0143                       ; Vector table bank 0: >7f9c - >7fff
 0144                       ;-------------------------------------------------------
@@ -6828,7 +6835,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.869926
+**** **** ****     > stevie_b0.asm.915896
 0146               
 0147               
 0148               *--------------------------------------------------------------

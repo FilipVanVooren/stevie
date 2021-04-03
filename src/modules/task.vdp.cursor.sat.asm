@@ -55,9 +55,12 @@ task.vdp.copy.sat.fb:
         ;------------------------------------------------------
 task.vdp.copy.sat.write:
         mov   tmp0,@ramsat          ; Set cursor YX
+        andi  tmp0,>ff00            ; Clear X position
+        ori   tmp0,240
+        mov   tmp0,@ramsat+4        ; Set line indicator YX
         
         bl    @cpym2v               ; Copy sprite SAT to VDP
-              data sprsat,ramsat,4  ; \ i  tmp0 = VDP destination
+              data sprsat,ramsat,10 ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = ROM/RAM source
                                     ; / i  tmp2 = Number of bytes to write
         ;------------------------------------------------------

@@ -31,7 +31,7 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.stevie         #string  'STEVIE 1.1c  '
+txt.stevie         #string  'STEVIE 1.1d  '
 txt.keys.default   #string 'F0=Help  ^Open  ^Save'
 txt.keys.block     #string '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
                    even

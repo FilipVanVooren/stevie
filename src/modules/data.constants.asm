@@ -33,12 +33,15 @@ stevie.tx8030:
         byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
 
 romsat:
-        data  >0303,>0001             ; Cursor YX, initial shape and colour
+        data  >0000,>0001             ; Cursor YX, initial shape and colour
+        data  >0000,>0301             ; Current line indicator
+        data  >d000                   ; End-of-Sprites list
 
 cursors:
-        data  >0000,>0000,>0000,>001c ; Cursor 1 - Insert mode
-        data  >1010,>1010,>1010,>1000 ; Cursor 2 - Insert mode
-        data  >1c1c,>1c1c,>1c1c,>1c00 ; Cursor 3 - Overwrite mode
+        byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
+        byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
+        byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
+        byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator
 
 patterns:
         data  >0000,>0000,>ff00,>0000 ; 01. Single line
