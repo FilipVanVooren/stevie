@@ -146,6 +146,14 @@ pane.action.colorscheme.load:
         mov   *tmp0,tmp1            ; Get colors MNOP
         srl   tmp1,8                ; \ Right align MN and
         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
+
+        ;-------------------------------------------------------
+        ; Write sprite color of line indicator to SAT
+        ;-------------------------------------------------------
+        mov   *tmp0,tmp1            ; Get colors MNOP
+        andi  tmp1,>00f0            ; Only keep O
+        sla   tmp1,4                ; Move O to MSB
+        movb  tmp1,@ramsat+7        ; Write sprite color to SAT
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------

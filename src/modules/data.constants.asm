@@ -41,7 +41,7 @@ cursors:
         byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
         byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
         byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
-        byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator
+        byte  >10,>30,>7f,>ff,>7f,>30,>10,>00 ; Current line indicator
 
 patterns:
         data  >0000,>0000,>ff00,>0000 ; 01. Single line
@@ -119,9 +119,9 @@ mem.sams.layout.data:
 * L  LSB  low-nibble     Background color marked line in frame buffer
 *
 * Word 4
-* M  MSB  high-nibble    0
-* N  MSB  low-nibble     0
-* O  LSB  high-nibble    0
+* M  MSB  high-nibble    Foreground color command buffer header line
+* N  MSB  low-nibble     Background color command buffer header line
+* O  LSB  high-nibble    Foreground color line indicator frame buffer
 * P  LSB  low-nibble     0
 *
 * Colors
@@ -147,16 +147,16 @@ tv.colorscheme.entries   equ 10 ; Entries in table
 tv.colorscheme.table:                  
         ;                             ; #  
         ;      ABCD  EFGH  IJKL  MNOP ; -
-        data  >f417,>f171,>1b1f,>7100 ; 1  White on blue with cyan touch
-        data  >a11a,>f0ff,>1f1a,>f100 ; 2  Dark yellow on black
-        data  >2112,>f0ff,>1f12,>f100 ; 3  Dark green on black
-        data  >f41f,>1e11,>1a17,>1e00 ; 4  White on blue
-        data  >e11e,>e1ff,>1f1e,>e100 ; 5  Grey on black
-        data  >1771,>1016,>1b71,>1700 ; 6  Black on cyan
-        data  >1ff1,>1011,>f1f1,>1f00 ; 7  Black on white
-        data  >1af1,>a1ff,>1f1f,>f100 ; 8  Black on dark yellow 
-        data  >21f0,>12ff,>1b12,>1200 ; 9  Dark green on black
-        data  >f5f1,>e1ff,>1b1f,>f100 ; 10 White on light blue 
+        data  >f417,>f171,>1b1f,>7110 ; 1  White on blue with cyan touch
+        data  >a11a,>f0ff,>1f1a,>f1f0 ; 2  Dark yellow on black
+        data  >2112,>f0ff,>1f12,>f1f0 ; 3  Dark green on black
+        data  >f41f,>1e11,>1a17,>1e10 ; 4  White on blue
+        data  >e11e,>e1ff,>1f1e,>e1f0 ; 5  Grey on black
+        data  >1771,>1016,>1b71,>1710 ; 6  Black on cyan
+        data  >1ff1,>1011,>f1f1,>1f10 ; 7  Black on white
+        data  >1af1,>a1ff,>1f1f,>f110 ; 8  Black on dark yellow 
+        data  >21f0,>12ff,>1b12,>12f0 ; 9  Dark green on black
+        data  >f5f1,>e1ff,>1b1f,>f1f0 ; 10 White on light blue 
         even
 
 tv.tabs.table:
