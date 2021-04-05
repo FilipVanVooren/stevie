@@ -96,13 +96,18 @@ pane.topline:
                                     ; \ i @parm1           = uint16
                                     ; / o @unpacked.string = Output string
 
-
         li    tmp0,>0500
         movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
 
         bl    @putat
               byte 0,65
               data unpacked.string  ; Show M2 value
+        ;------------------------------------------------------
+        ; Show ruler
+        ;------------------------------------------------------
+        bl    @putat
+              byte 1,0
+              data txt.ruler        ; Show ruler
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

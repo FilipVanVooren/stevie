@@ -34,7 +34,10 @@ txt.m2             #string 'M2='
 txt.stevie         #string  'STEVIE 1.1d  '
 txt.keys.default   #string 'F0=Help  ^Open  ^Save'
 txt.keys.block     #string '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
+txt.ruler          #string '.......T...T.............T.....T..........T..........'
                    even
+
+
 
 txt.alpha.up       data >010f
 txt.alpha.down     data >010e

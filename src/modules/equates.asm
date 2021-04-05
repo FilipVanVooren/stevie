@@ -110,8 +110,8 @@ fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 vdp.sit.size.80x30        equ  80*30   ; VDP SIT size when 80 columns, 30 rows
 vdp.sit.size.80x24        equ  80*30   ; VDP SIT size when 80 columns, 24 rows
-vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
-vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
+vdp.fb.toprow.sit         equ  >00a0   ; VDP SIT address of 1st Framebuffer row
+vdp.fb.toprow.tat         equ  >18a0   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1fd0   ; VDP TAT address of 1st CMDB row
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
