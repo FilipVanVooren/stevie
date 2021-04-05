@@ -122,7 +122,7 @@ mem.sams.layout.data:
 * M  MSB  high-nibble    Foreground color command buffer header line
 * N  MSB  low-nibble     Background color command buffer header line
 * O  LSB  high-nibble    Foreground color line indicator frame buffer
-* P  LSB  low-nibble     0
+* P  LSB  low-nibble     Foreground color ruler frame buffer
 *
 * Colors
 * 0  Transparant
@@ -147,16 +147,16 @@ tv.colorscheme.entries   equ 10 ; Entries in table
 tv.colorscheme.table:                  
         ;                             ; #  
         ;      ABCD  EFGH  IJKL  MNOP ; -
-        data  >f417,>f171,>1b1f,>7110 ; 1  White on blue with cyan touch
-        data  >a11a,>f0ff,>1f1a,>f1f0 ; 2  Dark yellow on black
-        data  >2112,>f0ff,>1f12,>f1f0 ; 3  Dark green on black
-        data  >f41f,>1e11,>1a17,>1e10 ; 4  White on blue
-        data  >e11e,>e1ff,>1f1e,>e1f0 ; 5  Grey on black
-        data  >1771,>1016,>1b71,>1710 ; 6  Black on cyan
-        data  >1ff1,>1011,>f1f1,>1f10 ; 7  Black on white
-        data  >1af1,>a1ff,>1f1f,>f110 ; 8  Black on dark yellow 
-        data  >21f0,>12ff,>1b12,>12f0 ; 9  Dark green on black
-        data  >f5f1,>e1ff,>1b1f,>f1f0 ; 10 White on light blue 
+        data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch
+        data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
+        data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+        data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
+        data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
+        data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
+        data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
+        data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow 
+        data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
+        data  >f5f1,>e1ff,>1b1f,>f1f1 ; 10 White on light blue 
         even
 
 tv.tabs.table:

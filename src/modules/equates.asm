@@ -182,13 +182,14 @@ tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
 tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
 tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
-tv.cmdb.hcolor    equ  tv.top + 30     ; FG/BG-color command buffer header line
-tv.pane.focus     equ  tv.top + 32     ; Identify pane that has focus
-tv.task.oneshot   equ  tv.top + 34     ; Pointer to one-shot routine
-tv.fj.stackpnt    equ  tv.top + 36     ; Pointer to farjump return stack
-tv.error.visible  equ  tv.top + 38     ; Error pane visible
-tv.error.msg      equ  tv.top + 40     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 200    ; End of structure
+tv.rulercolor     equ  tv.top + 30     ; FG/BG-color ruler line
+tv.cmdb.hcolor    equ  tv.top + 32     ; FG/BG-color command buffer header line
+tv.pane.focus     equ  tv.top + 34     ; Identify pane that has focus
+tv.task.oneshot   equ  tv.top + 36     ; Pointer to one-shot routine
+tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
+tv.error.visible  equ  tv.top + 40     ; Error pane visible
+tv.error.msg      equ  tv.top + 42     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 202    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

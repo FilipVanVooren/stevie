@@ -23,7 +23,7 @@ pane.cursor.hide:
         ; Hide cursor
         ;-------------------------------------------------------
         bl    @filv                 ; Clear sprite SAT in VDP RAM
-              data sprsat,>00,4     ; \ i  p0 = VDP destination
+              data sprsat,>00,8     ; \ i  p0 = VDP destination
                                     ; | i  p1 = Byte to write
                                     ; / i  p2 = Number of bytes to write
    

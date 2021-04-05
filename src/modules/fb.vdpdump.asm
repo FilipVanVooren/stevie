@@ -41,7 +41,7 @@ fb.vdpdump:
         ; Refresh VDP content with framebuffer
         ;------------------------------------------------------        
 !       li    tmp0,vdp.fb.toprow.sit 
-                                    ; VDP target address (2nd line on screen!)
+                                    ; VDP target address (Xth line on screen!)
 
         mpy   @fb.colsline,tmp1     ; columns per line * number of rows in parm1
                                     ; 16 bit part is in tmp2!

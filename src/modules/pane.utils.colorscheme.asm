@@ -146,7 +146,13 @@ pane.action.colorscheme.load:
         mov   *tmp0,tmp1            ; Get colors MNOP
         srl   tmp1,8                ; \ Right align MN and
         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
-
+        ;-------------------------------------------------------
+        ; Get FG color for ruler
+        ;-------------------------------------------------------
+        mov   *tmp0,tmp1            ; Get colors MNOP
+        andi  tmp1,>000f            ; Only keep P
+        sla   tmp1,4                ; Make it a FG/BG combination
+        mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
         ;-------------------------------------------------------
         ; Write sprite color of line indicator to SAT
         ;-------------------------------------------------------
@@ -230,7 +236,7 @@ pane.action.colorscheme.errpane:
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------
-        ; Dump colors for top line and bottom line (TAT)
+        ; Dump colors for top line, ruler and bottom line (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.statline:                
         mov   @tv.color,tmp1
@@ -245,6 +251,14 @@ pane.action.colorscheme.statline:
 
         li    tmp1,pane.botrow
         mov   tmp1,@parm2           ; Bottom row on screen
+        bl    @colors.line.set      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+
+
+        mov   @tv.rulercolor,@parm1
+        li    tmp1,1
+        mov   tmp1,@parm2
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
