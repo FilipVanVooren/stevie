@@ -105,7 +105,6 @@ main:
                                     ; Get column of first non-blank character
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
-        copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
         copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
         ;-----------------------------------------------------------------------
         ; Logic for Index management
@@ -151,15 +150,15 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
-        copy  "colors.line.set.asm" ; Set color combination for line
-        copy  "pane.cmdb.asm"       ; Command buffer 
-        copy  "pane.cmdb.show.asm"  ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
-        copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
+        copy  "colors.line.set.asm"        ; Set color combination for line
+        copy  "pane.cmdb.asm"              ; Command buffer 
+        copy  "pane.cmdb.show.asm"         ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"         ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"         ; Draw command buffer pane contents
 
-        copy  "pane.topline.asm"    ; Top line
-        copy  "pane.errline.asm"    ; Error line
-        copy  "pane.botline.asm"    ; Bottom line
+        copy  "pane.topline.asm"           ; Top line
+        copy  "pane.errline.asm"           ; Error line
+        copy  "pane.botline.asm"           ; Bottom line
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------

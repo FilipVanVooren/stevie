@@ -82,6 +82,16 @@ task.vdp.panes.statlines:
         bl    @pane.botline         ; Draw bottom line
         clr   @fb.status.dirty      ; Reset status lines dirty flag
         ;------------------------------------------------------
+        ; Show ruler with tab positions
+        ;------------------------------------------------------
+        mov   @tv.ruler.visible,tmp0 
+                                    ; Should ruler be visible?
+        jeq   task.vdp.panes.exit   ; No, so exit
+
+        bl    @putat
+              byte 1,0
+              data fb.ruler         ; Show ruler
+        ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------
 task.vdp.panes.exit:

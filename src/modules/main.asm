@@ -76,13 +76,14 @@ main.continue:
                                     ; Load sprite cursor patterns
                                     
         bl    @cpym2v
-              data >1008,patterns,16*8  
+              data >1008,patterns,17*8  
                                     ; Load character patterns
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
         bl    @tv.init              ; Initialize editor configuration
         bl    @tv.reset             ; Reset editor
+        bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
         ;------------------------------------------------------
         ; Load colorscheme amd turn on screen
         ;------------------------------------------------------

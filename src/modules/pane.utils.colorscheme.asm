@@ -236,7 +236,7 @@ pane.action.colorscheme.errpane:
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------
-        ; Dump colors for top line, ruler and bottom line (TAT)
+        ; Dump colors for top line and bottom line (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.statline:                
         mov   @tv.color,tmp1
@@ -254,11 +254,15 @@ pane.action.colorscheme.statline:
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
-
+        ;-------------------------------------------------------
+        ; Dump colors for ruler if visible (TAT)
+        ;-------------------------------------------------------
+        mov   @tv.ruler.visible,tmp1
+        jeq   pane.action.colorscheme.cursorcolor
 
         mov   @tv.rulercolor,@parm1
         li    tmp1,1
-        mov   tmp1,@parm2
+        mov   tmp1,@parm2           ; Ruler line on screen
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen

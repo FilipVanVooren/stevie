@@ -35,7 +35,6 @@ fb.tab.next:
         ; Initialize
         ;-------------------------------------------------------
         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
-        li    tmp2,20               ; Up to 20 tabs supported
         ;-------------------------------------------------------
         ; Find next tab position
         ;-------------------------------------------------------

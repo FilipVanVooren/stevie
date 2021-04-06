@@ -72,6 +72,11 @@ alphalock:
 vertline:
         data  >1010,>1010,>1010,>1010 ; 16. Vertical line
 
+tabindicator:        
+        data  >0000,>0000,>3030,>3030 ; 17. Tab indicator
+
+
+
 
 ***************************************************************
 * SAMS page layout table for Stevie (16 words)

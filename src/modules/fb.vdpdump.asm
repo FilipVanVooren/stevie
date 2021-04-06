@@ -38,11 +38,18 @@ fb.vdpdump:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
-        ; Refresh VDP content with framebuffer
+        ; Setup start position in VDP memory
         ;------------------------------------------------------        
 !       li    tmp0,vdp.fb.toprow.sit 
                                     ; VDP target address (Xth line on screen!)
-
+        mov   @tv.ruler.visible,tmp2
+                                    ; Is ruler visible on screen?
+        jeq   fb.vdpdump.calc       ; No, continue with calculation
+        a     @fb.colsline,tmp0     ; Yes, add 2nd line offset
+        ;------------------------------------------------------
+        ; Refresh VDP content with framebuffer
+        ;------------------------------------------------------   
+fb.vdpdump.calc:
         mpy   @fb.colsline,tmp1     ; columns per line * number of rows in parm1
                                     ; 16 bit part is in tmp2!
         mov   @fb.top.ptr,tmp1      ; RAM Source address

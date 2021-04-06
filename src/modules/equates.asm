@@ -109,9 +109,9 @@ fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 vdp.sit.size.80x30        equ  80*30   ; VDP SIT size when 80 columns, 30 rows
-vdp.sit.size.80x24        equ  80*30   ; VDP SIT size when 80 columns, 24 rows
-vdp.fb.toprow.sit         equ  >00a0   ; VDP SIT address of 1st Framebuffer row
-vdp.fb.toprow.tat         equ  >18a0   ; VDP TAT address of 1st Framebuffer row
+vdp.sit.size.80x24        equ  80*24   ; VDP SIT size when 80 columns, 24 rows
+vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
+vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1fd0   ; VDP TAT address of 1st CMDB row
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
@@ -175,7 +175,7 @@ tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
 tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
 tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
 tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
-tv.act_buffer     equ  tv.top + 16     ; Active editor buffer (0-9)
+tv.ruler.visible  equ  tv.top + 16     ; Show rule with tab positions
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
@@ -211,7 +211,8 @@ fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
 fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
 fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
-fb.free           equ  fb.struct + 30  ; End of structure
+fb.ruler          equ  fb.struct + 30  ; length byte + 80 character ruler string
+fb.free           equ  fb.struct + 110 ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure             @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------

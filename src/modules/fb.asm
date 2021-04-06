@@ -19,6 +19,10 @@
 fb.init:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack        
+        mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
@@ -30,9 +34,19 @@ fb.init:
 
         li    tmp0,colrow 
         mov   tmp0,@fb.colsline     ; Columns per row=80
-
-        li    tmp0,27
-        mov   tmp0,@fb.scrrows      ; Physical rows on screen = 28
+        ;------------------------------------------------------
+        ; Determine size of rows on screen
+        ;------------------------------------------------------
+        mov   @tv.ruler.visible,tmp1
+        jeq   !                     ; Skip if ruler is hidden
+        li    tmp0,pane.botrow-2         
+        jmp   fb.init.cont
+!       li    tmp0,pane.botrow-1
+        ;------------------------------------------------------
+        ; Continue initialisation
+        ;------------------------------------------------------
+fb.init.cont:
+        mov   tmp0,@fb.scrrows      ; Physical rows on screen for fb
         mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
 
         clr   @tv.pane.focus        ; Frame buffer has focus!
@@ -48,6 +62,8 @@ fb.init:
         ; Exit
         ;------------------------------------------------------
 fb.init.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 

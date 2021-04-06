@@ -49,7 +49,8 @@ task.vdp.copy.sat.fb:
                                     ; | i  @WYX = Cursor YX
                                     ; / o  tmp0 = Pixel YX
 
-        ai    tmp0,>0800            ; Adjust VDP cursor because of topline bar
+        ;ai    tmp0,>0800           ; Adjust VDP cursor because of topline
+        ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler
         ;------------------------------------------------------
         ; Dump sprite attribute table
         ;------------------------------------------------------

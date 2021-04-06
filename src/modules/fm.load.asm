@@ -47,7 +47,7 @@ fm.loadfile:
  
         bl    @scroff               ; Turn off screen
         
-        li    tmp0,>0050            ; VDP target address (2nd row on screen!)
+        li    tmp0,>00a0            ; VDP target address (2nd row on screen!)
         li    tmp1,32               ; Character to fill
 
         bl    @xfilv                ; Fill VDP memory
