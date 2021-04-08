@@ -14,7 +14,7 @@
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
 
-**************************************************************s*
+***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************
 sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and

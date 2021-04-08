@@ -83,7 +83,6 @@ main.continue:
 *--------------------------------------------------------------
         bl    @tv.init              ; Initialize editor configuration
         bl    @tv.reset             ; Reset editor
-        bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
         ;------------------------------------------------------
         ; Load colorscheme amd turn on screen
         ;------------------------------------------------------

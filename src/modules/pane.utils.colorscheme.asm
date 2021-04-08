@@ -260,12 +260,11 @@ pane.action.colorscheme.statline:
         mov   @tv.ruler.visible,tmp1
         jeq   pane.action.colorscheme.cursorcolor
 
-        mov   @tv.rulercolor,@parm1
-        li    tmp1,1
-        mov   tmp1,@parm2           ; Ruler line on screen
-        bl    @colors.line.set      ; Load color combination for line
-                                    ; \ i  @parm1 = Color combination
-                                    ; / i  @parm2 = Row on physical screen
+        bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory        
+        bl    @cpym2v              
+              data vdp.fb.toprow.tat
+              data fb.ruler.tat
+              data 80               ; Show ruler colors
         ;-------------------------------------------------------        
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------

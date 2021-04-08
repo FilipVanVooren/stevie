@@ -175,7 +175,7 @@ tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
 tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
 tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
 tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
-tv.ruler.visible  equ  tv.top + 16     ; Show rule with tab positions
+tv.ruler.visible  equ  tv.top + 16     ; Show ruler with tab positions
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
@@ -211,8 +211,9 @@ fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
 fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
 fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
-fb.ruler          equ  fb.struct + 30  ; length byte + 80 character ruler string
-fb.free           equ  fb.struct + 110 ; End of structure
+fb.ruler.sit      equ  fb.struct + 30  ; 80 char ruler  (no length-prefix!)
+fb.ruler.tat      equ  fb.struct + 110 ; 80 char colors (no length-prefix!)
+fb.free           equ  fb.struct + 190 ; End of structure
 *--------------------------------------------------------------
 * Editor buffer structure             @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------

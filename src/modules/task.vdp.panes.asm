@@ -88,9 +88,10 @@ task.vdp.panes.statlines:
                                     ; Should ruler be visible?
         jeq   task.vdp.panes.exit   ; No, so exit
 
-        bl    @putat
-              byte 1,0
-              data fb.ruler         ; Show ruler
+        bl    @cpym2v              
+              data vdp.fb.toprow.sit
+              data fb.ruler.sit 
+              data 80               ; Show ruler
         ;------------------------------------------------------
         ; Exit task
         ;------------------------------------------------------

@@ -73,7 +73,7 @@ vertline:
         data  >1010,>1010,>1010,>1010 ; 16. Vertical line
 
 tabindicator:        
-        data  >0000,>0000,>3030,>3030 ; 17. Tab indicator
+        data  >0000,>0000,>0030,>3030 ; 17. Tab indicator
 
 
 

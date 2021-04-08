@@ -26,11 +26,19 @@ fb.ruler.init:
         ; Initialize
         ;-------------------------------------------------------
         bl    @cpym2m
-              data txt.ruler,fb.ruler,81
-                                    ; Copy ruler from ROM to RAM    
+              data txt.ruler,fb.ruler.sit,80
+                                    ; Copy ruler from ROM to RAM
 
+        li    tmp0,fb.ruler.tat
+        mov   @tv.rulercolor,tmp1         
+        li    tmp2,80
+
+        bl    @xfilm                ; Setup FG/BG color for ruler in RAM
+                                    ; \ i  tmp0 = Target address in RAM
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Number of bytes to fill
+                                                     
         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
-        li    tmp2,>1100            ; Tab indicator
         ;------------------------------------------------------
         ; Setup ruler with current tab positions
         ;------------------------------------------------------
@@ -41,11 +49,17 @@ fb.ruler.init.loop:
         ci    tmp1,>00ff            ; End-of-list reached?
         jeq   fb.ruler.init.exit
         ;------------------------------------------------------
-        ; Add tab-marker to ruler
+        ; Add tab-marker to ruler SIT in RAM
         ;------------------------------------------------------
-        ai    tmp1,fb.ruler         ; Add base address
-        inc   tmp1                  ; Honour length-byte prefix
+        ai    tmp1,fb.ruler.sit     ; Add base address
+        li    tmp2,>1100            ; Tab indicator (ASCII 16)
         movb  tmp2,*tmp1            ; Add tab-marker
+        ;------------------------------------------------------
+        ; Add tab-marker color to ruler TAT in RAM
+        ;------------------------------------------------------
+        ai    tmp1,80
+        mov   @tv.color,tmp2        ; AB is in MSB (see color scheme table)
+        movb  tmp2,*tmp1            ; Tab indicator FG/BG color
         jmp   fb.ruler.init.loop    ; Next iteration
         ;------------------------------------------------------
         ; Exit
