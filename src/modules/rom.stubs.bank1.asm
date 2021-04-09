@@ -1,6 +1,28 @@
 * FILE......: rom.stubs.bank1.asm
 * Purpose...: Bank 1 stubs for functions in other banks
 
+
+***************************************************************
+* Stub for "vdp.patterns.dump"
+* bank0 vec.1
+********|*****|*********************|**************************
+vdp.patterns.dump:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank0            ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
 ***************************************************************
 * Stub for "fm.loadfile"
 * bank2 vec.1

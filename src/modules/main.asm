@@ -71,13 +71,7 @@ main.continue:
         mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
 
-        bl    @cpym2v
-              data sprpdt,cursors,4*8
-                                    ; Load sprite cursor patterns
-                                    
-        bl    @cpym2v
-              data >1008,patterns,17*8  
-                                    ; Load character patterns
+        bl    @vdp.patterns.dump    ; Load sprite and character patterns                                    
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------

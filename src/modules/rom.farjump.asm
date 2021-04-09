@@ -37,7 +37,7 @@ xrom.farjump:
         ;------------------------------------------------------
         ; Push to farjump return stack
         ;------------------------------------------------------
-        ci    tmp0,>6002            ; Invalid bank write address?
+        ci    tmp0,>6000            ; Invalid bank write address?
         jlt   rom.farjump.bankswitch.failed1
                                     ; Crash if null value in bank write address
 
