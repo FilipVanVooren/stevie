@@ -49,10 +49,17 @@ fb.colorlines:
         jeq   fb.colorlines.exit    ; Exit if marker M2 unset
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
 !       li    tmp0,vdp.fb.toprow.tat
                                     ; VDP start address        
         mov   @fb.scrrows,tmp3      ; Set loop counter
+
+        mov   @tv.ruler.visible,tmp4
+        jeq   fb.colorlines.noruler ; Skip row adjustment if no ruler visible
+
+        ai    tmp0,80               ; Skip ruler line
+        dec   tmp3                  ; Skip ruler line
+fb.colorlines.noruler:
         mov   @fb.topline,tmp4      ; Position in editor buffer
         inc   tmp4                  ; M1/M2 use base 1 offset
         ;------------------------------------------------------

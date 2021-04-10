@@ -171,12 +171,22 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         ; Dump colors for frame buffer pane (TAT)
         ;-------------------------------------------------------
+        mov   @tv.ruler.visible,tmp0
+        jeq   pane.action.colorscheme.fbdump.noruler
+        li    tmp0,vdp.fb.toprow.tat+80
+                                    ; VDP start address (frame buffer area)
+        li    tmp2,(pane.botrow-2)*80
+                                    ; Number of bytes to fill
+        jmp   pane.action.colorscheme.fbdump
+pane.action.colorscheme.fbdump.noruler:        
         li    tmp0,vdp.fb.toprow.tat
                                     ; VDP start address (frame buffer area)
-        mov   tmp3,tmp1             ; Get work copy of colors ABCD
-        srl   tmp1,8                ; MSB to LSB (frame buffer colors)
         li    tmp2,(pane.botrow-1)*80
                                     ; Number of bytes to fill
+pane.action.colorscheme.fbdump:
+        mov   tmp3,tmp1             ; Get work copy of colors ABCD
+        srl   tmp1,8                ; MSB to LSB (frame buffer colors)
+
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill

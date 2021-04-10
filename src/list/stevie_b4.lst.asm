@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210409-2129830
+0009               * File: stevie_b4.asm               ; Version 210410-2289665
 0010               *
 0011               * Bank 4 "Janine"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -369,7 +369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -406,7 +406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1E'
 0017                       even
 0018               
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1126,7 +1126,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210409-2129830'
+0260 21D3 ....             text  'Build-ID  210410-2289665'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5010,7 +5010,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EB6 0040 
 0367 2EB8 0460  28         b     @main                 ; Give control to main program
      2EBA 6036 
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6263,7 +6263,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 3422 4C42             byte  76
-0013 3423 ....             text  'Build: 210409-2129830 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 3423 ....             text  'Build: 210410-2289665 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6653,7 +6653,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3912 BEEF 
      3914 DEAD 
      3916 BEEF 
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6763,7 +6763,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087 6076 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0088 6078 C2F9  30         mov   *stack+,r11           ; Pop r11
 0089 607A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0070                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
 **** **** ****     > fb.null2char.asm
 0001               * FILE......: fb.null2char.asm
@@ -6851,7 +6851,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 60CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 60CC C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 60CE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0071                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
 **** **** ****     > fb.tab.next.asm
 0001               * FILE......: fb.tab.next.asm
@@ -6994,7 +6994,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118 6154 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0119 6156 C2F9  30         mov   *stack+,r11           ; Pop R11
 0120 6158 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0072                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
 **** **** ****     > fb.ruler.asm
 0001               * FILE......: fb.ruler.asm
@@ -7082,7 +7082,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0070 61AC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0071 61AE C2F9  30         mov   *stack+,r11           ; Pop r11
 0072 61B0 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0073                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
 **** **** ****     > fb.colorlines.asm
 0001               * FILE......: fb.colorlines.asm
@@ -7129,16 +7129,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0040                       ;------------------------------------------------------
 0041 61D4 C120  34         mov   @fb.colorize,tmp0     ; Check if colorization necessary
      61D6 A110 
-0042 61D8 1324  14         jeq   fb.colorlines.exit    ; Exit if nothing to do.
+0042 61D8 132A  14         jeq   fb.colorlines.exit    ; Exit if nothing to do.
 0043                       ;------------------------------------------------------
 0044                       ; Speedup screen refresh dramatically
 0045                       ;------------------------------------------------------
 0046 61DA C120  34         mov   @edb.block.m1,tmp0
      61DC A20C 
-0047 61DE 1321  14         jeq   fb.colorlines.exit    ; Exit if marker M1 unset
+0047 61DE 1327  14         jeq   fb.colorlines.exit    ; Exit if marker M1 unset
 0048 61E0 C120  34         mov   @edb.block.m2,tmp0
      61E2 A20E 
-0049 61E4 131E  14         jeq   fb.colorlines.exit    ; Exit if marker M2 unset
+0049 61E4 1324  14         jeq   fb.colorlines.exit    ; Exit if marker M2 unset
 0050                       ;------------------------------------------------------
 0051                       ; Color the lines in the framebuffer (TAT)
 0052                       ;------------------------------------------------------
@@ -7147,67 +7147,76 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0054                                                   ; VDP start address
 0055 61EA C1E0  34         mov   @fb.scrrows,tmp3      ; Set loop counter
      61EC A11A 
-0056 61EE C220  34         mov   @fb.topline,tmp4      ; Position in editor buffer
-     61F0 A104 
-0057 61F2 0588  14         inc   tmp4                  ; M1/M2 use base 1 offset
-0058                       ;------------------------------------------------------
-0059                       ; 1. Set color for each line in framebuffer
-0060                       ;------------------------------------------------------
-0061               fb.colorlines.loop:
-0062 61F4 C1A0  34         mov   @edb.block.m1,tmp2
-     61F6 A20C 
-0063 61F8 8206  18         c     tmp2,tmp4             ; M1 > current line
-0064 61FA 1507  14         jgt   fb.colorlines.normal  ; Yes, skip marking color
-0065               
-0066 61FC C1A0  34         mov   @edb.block.m2,tmp2
-     61FE A20E 
-0067 6200 8206  18         c     tmp2,tmp4             ; M2 < current line
-0068 6202 1103  14         jlt   fb.colorlines.normal  ; Yes, skip marking color
-0069                       ;------------------------------------------------------
-0070                       ; 1a. Set marking color
-0071                       ;------------------------------------------------------
-0072 6204 C160  34         mov   @tv.markcolor,tmp1
-     6206 A01A 
-0073 6208 1003  14         jmp   fb.colorlines.fill
-0074                       ;------------------------------------------------------
-0075                       ; 1b. Set normal text color
+0056               
+0057 61EE C220  34         mov   @tv.ruler.visible,tmp4
+     61F0 A010 
+0058 61F2 1303  14         jeq   fb.colorlines.noruler ; Skip row adjustment if no ruler visible
+0059               
+0060 61F4 0224  22         ai    tmp0,80               ; Skip ruler line
+     61F6 0050 
+0061 61F8 0607  14         dec   tmp3                  ; Skip ruler line
+0062               fb.colorlines.noruler:
+0063 61FA C220  34         mov   @fb.topline,tmp4      ; Position in editor buffer
+     61FC A104 
+0064 61FE 0588  14         inc   tmp4                  ; M1/M2 use base 1 offset
+0065                       ;------------------------------------------------------
+0066                       ; 1. Set color for each line in framebuffer
+0067                       ;------------------------------------------------------
+0068               fb.colorlines.loop:
+0069 6200 C1A0  34         mov   @edb.block.m1,tmp2
+     6202 A20C 
+0070 6204 8206  18         c     tmp2,tmp4             ; M1 > current line
+0071 6206 1507  14         jgt   fb.colorlines.normal  ; Yes, skip marking color
+0072               
+0073 6208 C1A0  34         mov   @edb.block.m2,tmp2
+     620A A20E 
+0074 620C 8206  18         c     tmp2,tmp4             ; M2 < current line
+0075 620E 1103  14         jlt   fb.colorlines.normal  ; Yes, skip marking color
 0076                       ;------------------------------------------------------
-0077               fb.colorlines.normal:
-0078 620A C160  34         mov   @tv.color,tmp1
-     620C A018 
-0079 620E 0985  56         srl   tmp1,8
-0080                       ;------------------------------------------------------
-0081                       ; 1c. Fill line with selected color
-0082                       ;------------------------------------------------------
-0083               fb.colorlines.fill:
-0084 6210 0206  20         li    tmp2,80               ; 80 characters to fill
-     6212 0050 
-0085               
-0086 6214 06A0  32         bl    @xfilv                ; Fill VDP VRAM
-     6216 2298 
-0087                                                   ; \ i  tmp0 = VDP start address
-0088                                                   ; | i  tmp1 = Byte to fill
-0089                                                   ; / i  tmp2 = count
-0090               
-0091 6218 0224  22         ai    tmp0,80               ; Next line
-     621A 0050 
-0092 621C 0588  14         inc   tmp4
-0093 621E 0607  14         dec   tmp3                  ; Update loop counter
-0094 6220 15E9  14         jgt   fb.colorlines.loop    ; Back to (1)
-0095                       ;------------------------------------------------------
-0096                       ; Exit
-0097                       ;------------------------------------------------------
-0098               fb.colorlines.exit
-0099 6222 04E0  34         clr   @fb.colorize          ; Reset colorize flag
-     6224 A110 
-0100 6226 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0101 6228 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0102 622A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0103 622C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0104 622E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0105 6230 C2F9  30         mov   *stack+,r11           ; Pop r11
-0106 6232 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.2129830
+0077                       ; 1a. Set marking color
+0078                       ;------------------------------------------------------
+0079 6210 C160  34         mov   @tv.markcolor,tmp1
+     6212 A01A 
+0080 6214 1003  14         jmp   fb.colorlines.fill
+0081                       ;------------------------------------------------------
+0082                       ; 1b. Set normal text color
+0083                       ;------------------------------------------------------
+0084               fb.colorlines.normal:
+0085 6216 C160  34         mov   @tv.color,tmp1
+     6218 A018 
+0086 621A 0985  56         srl   tmp1,8
+0087                       ;------------------------------------------------------
+0088                       ; 1c. Fill line with selected color
+0089                       ;------------------------------------------------------
+0090               fb.colorlines.fill:
+0091 621C 0206  20         li    tmp2,80               ; 80 characters to fill
+     621E 0050 
+0092               
+0093 6220 06A0  32         bl    @xfilv                ; Fill VDP VRAM
+     6222 2298 
+0094                                                   ; \ i  tmp0 = VDP start address
+0095                                                   ; | i  tmp1 = Byte to fill
+0096                                                   ; / i  tmp2 = count
+0097               
+0098 6224 0224  22         ai    tmp0,80               ; Next line
+     6226 0050 
+0099 6228 0588  14         inc   tmp4
+0100 622A 0607  14         dec   tmp3                  ; Update loop counter
+0101 622C 15E9  14         jgt   fb.colorlines.loop    ; Back to (1)
+0102                       ;------------------------------------------------------
+0103                       ; Exit
+0104                       ;------------------------------------------------------
+0105               fb.colorlines.exit
+0106 622E 04E0  34         clr   @fb.colorize          ; Reset colorize flag
+     6230 A110 
+0107 6232 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0108 6234 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0109 6236 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0110 6238 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0111 623A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0112 623C C2F9  30         mov   *stack+,r11           ; Pop r11
+0113 623E 045B  20         b     *r11                  ; Return
+**** **** ****     > stevie_b4.asm.2289665
 0074                       ;-----------------------------------------------------------------------
 0075                       ; Stubs using trampoline
 0076                       ;-----------------------------------------------------------------------
@@ -7215,11 +7224,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0078                       ;-----------------------------------------------------------------------
 0079                       ; Bank specific vector table
 0080                       ;-----------------------------------------------------------------------
-0084 6234 6234                   data $                ; Bank 1 ROM size OK.
+0084 6240 6240                   data $                ; Bank 1 ROM size OK.
 0086                       ;-------------------------------------------------------
 0087                       ; Vector table bank 4: >7f9c - >7fff
 0088                       ;-------------------------------------------------------
@@ -7265,7 +7274,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b4.asm.2129830
+**** **** ****     > stevie_b4.asm.2289665
 0090               
 0091               *--------------------------------------------------------------
 0092               * Video mode configuration
