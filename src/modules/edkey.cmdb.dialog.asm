@@ -51,7 +51,7 @@ edkey.action.cmdb.proceed.exit:
 * edkey.action.cmdb.fastmode.toggle
 * Toggle fastmode on/off
 ***************************************************************
-* b   @edkey.action.cmdb.proceed
+* b   @edkey.action.cmdb.fastmode.toggle
 *--------------------------------------------------------------
 * INPUT
 * none
