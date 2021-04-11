@@ -71,6 +71,7 @@ main:
         copy  "fb.tab.next.asm"     ; Move cursor to next tab position
         copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory                
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer        
+        copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT        
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        

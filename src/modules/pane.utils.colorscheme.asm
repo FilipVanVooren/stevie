@@ -154,12 +154,13 @@ pane.action.colorscheme.load:
         sla   tmp1,4                ; Make it a FG/BG combination
         mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
         ;-------------------------------------------------------
-        ; Write sprite color of line indicator to SAT
+        ; Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
         mov   *tmp0,tmp1            ; Get colors MNOP
         andi  tmp1,>00f0            ; Only keep O
         sla   tmp1,4                ; Move O to MSB
-        movb  tmp1,@ramsat+7        ; Write sprite color to SAT
+        movb  tmp1,@ramsat+7        ; Line indicator FG color to SAT
+        movb  tmp1,@ramsat+11       ; Column indicator FG color to SAT
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------

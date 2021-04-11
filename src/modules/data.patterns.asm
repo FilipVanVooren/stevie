@@ -8,7 +8,10 @@ cursors:
         byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
         byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
         byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
-        byte  >10,>30,>7f,>ff,>7f,>30,>10,>00 ; Current line indicator
+        byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
+        byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
+
+
 
 
 
@@ -42,7 +45,7 @@ alphalock:
 
 vertline:
         data  >1010,>1010,>1010,>1010 ; 16. Vertical line
-        data  >0000,>0000,>0030,>3030 ; 17. Tab indicator
+        data  >0000,>0000,>3030,>3030 ; 17. Tab indicator
 
 
 low.digits:

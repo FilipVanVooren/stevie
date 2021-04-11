@@ -47,9 +47,14 @@ fm.loadfile:
  
         bl    @scroff               ; Turn off screen
         
-        li    tmp0,>00a0            ; VDP target address (2nd row on screen!)
-        li    tmp1,32               ; Character to fill
+        li    tmp0,vdp.fb.toprow.sit
+                                    ; VDP target address (2nd row on screen!)
+        mov   @tv.ruler.visible,tmp1
+        jeq   fm.loadfile.clear     ; Skip if ruler is currently not shown
+        ai    tmp0,80               ; Skip ruler line 
 
+fm.loadfile.clear:
+        li    tmp1,32               ; Character to fill
         bl    @xfilv                ; Fill VDP memory
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill

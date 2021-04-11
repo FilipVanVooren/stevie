@@ -39,8 +39,15 @@ pane.cmdb.hide:
               byte pane.botrow-1,0,32,80*2
               data EOL
         ;------------------------------------------------------
+        ; Adjust frame buffer size if ruler visible
+        ;------------------------------------------------------
+        mov   @tv.ruler.visible,@tv.ruler.visible
+        jeq   pane.cmdb.hide.rest
+        dec   @fb.scrrows
+        ;------------------------------------------------------
         ; Hide command buffer pane (rest)
         ;------------------------------------------------------
+pane.cmdb.hide.rest:        
         mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer

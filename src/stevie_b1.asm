@@ -104,7 +104,6 @@ main:
         copy  "fb.get.firstnonblank.asm"
                                     ; Get column of first non-blank character
         copy  "fb.refresh.asm"      ; Refresh framebuffer
-        copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
         ;-----------------------------------------------------------------------
         ; Logic for Index management

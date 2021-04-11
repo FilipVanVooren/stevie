@@ -49,19 +49,47 @@ task.vdp.copy.sat.fb:
                                     ; | i  @WYX = Cursor YX
                                     ; / o  tmp0 = Pixel YX
 
-        ;ai    tmp0,>0800           ; Adjust VDP cursor because of topline
+        mov   @tv.ruler.visible,@tv.ruler.visible
+        jeq   task.vdp.copy.sat.fb.noruler
         ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler
+        jmp   task.vdp.copy.sat.write
+task.vdp.copy.sat.fb.noruler:
+        ai    tmp0,>0800            ; Adjust VDP cursor because of topline
         ;------------------------------------------------------
         ; Dump sprite attribute table
         ;------------------------------------------------------
 task.vdp.copy.sat.write:
         mov   tmp0,@ramsat          ; Set cursor YX
-        andi  tmp0,>ff00            ; Clear X position
-        ori   tmp0,240
-        mov   tmp0,@ramsat+4        ; Set line indicator YX
-        
+        ;------------------------------------------------------
+        ; Handle column and row indicators
+        ;------------------------------------------------------
+        mov   @tv.ruler.visible,@tv.ruler.visible
+                                    ; Is ruler visible?
+        jeq   task.vdp.copy.sat.hide.indicators
+
+        andi  tmp0,>ff00            ; \ Clear X position
+        ori   tmp0,240              ; | Line indicator on pixel X 240
+        mov   tmp0,@ramsat+4        ; / Set line indicator    <
+
+        mov   @ramsat,tmp0
+        andi  tmp0,>00ff            ; \ Clear Y position
+        ori   tmp0,>0800            ; | Column indicator on pixel Y 8
+        mov   tmp0,@ramsat+8        ; / Set column indicator  v
+
+        jmp   task.vdp.copy.sat.write2
+        ;------------------------------------------------------
+        ; Do not show column and row indicators
+        ;------------------------------------------------------
+task.vdp.copy.sat.hide.indicators:        
+        clr   tmp1
+        movb  tmp1,@ramsat+7        ; Hide line indicator    <
+        movb  tmp1,@ramsat+11       ; Hide column indicator  v
+        ;------------------------------------------------------
+        ; Dump to VDP
+        ;------------------------------------------------------
+task.vdp.copy.sat.write2:
         bl    @cpym2v               ; Copy sprite SAT to VDP
-              data sprsat,ramsat,10 ; \ i  tmp0 = VDP destination
+              data sprsat,ramsat,14 ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = ROM/RAM source
                                     ; / i  tmp2 = Number of bytes to write
         ;------------------------------------------------------

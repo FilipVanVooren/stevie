@@ -34,8 +34,6 @@ tv.init:
 
         li    tmp0,fj.bottom
         mov   tmp0,@tv.fj.stackpnt  ; Set pointer to farjump return stack
-
-        seto  @tv.ruler.visible
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

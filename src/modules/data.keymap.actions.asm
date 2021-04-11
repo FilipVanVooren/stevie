@@ -47,6 +47,7 @@ keymap_actions.editor:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, pane.focus.fb, edkey.action.quit
+        data  key.ctrl.u, pane.focus.fb, edkey.action.toggle.ruler        
         data  key.ctrl.z, pane.focus.fb, pane.action.colorscheme.cycle
         ;-------------------------------------------------------
         ; Dialog keys

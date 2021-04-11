@@ -35,6 +35,7 @@ stevie.tx8030:
 romsat:
         data  >0000,>0001             ; Cursor YX, initial shape and colour
         data  >0000,>0301             ; Current line indicator
+        data  >0820,>0401             ; Current line indicator
         data  >d000                   ; End-of-Sprites list
 
 
@@ -86,7 +87,7 @@ mem.sams.layout.data:
 * Word 4
 * M  MSB  high-nibble    Foreground color command buffer header line
 * N  MSB  low-nibble     Background color command buffer header line
-* O  LSB  high-nibble    Foreground color line indicator frame buffer
+* O  LSB  high-nibble    Foreground color line+column indicator frame buffer
 * P  LSB  low-nibble     Foreground color ruler frame buffer
 *
 * Colors
@@ -112,7 +113,7 @@ tv.colorscheme.entries   equ 10 ; Entries in table
 tv.colorscheme.table:                  
         ;                             ; #  
         ;      ABCD  EFGH  IJKL  MNOP ; -
-        data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch
+        data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
         data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
         data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
         data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
@@ -121,7 +122,7 @@ tv.colorscheme.table:
         data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
         data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow 
         data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
-        data  >f5f1,>e1ff,>1b1f,>f1f1 ; 10 White on light blue 
+        data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue 
         even
 
 tv.tabs.table:

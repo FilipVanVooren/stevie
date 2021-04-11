@@ -53,8 +53,9 @@ task.vdp.panes.cmdb.draw:
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   task.vdp.panes.statlines
                                     ; No, skip update
-
         mov   @fb.scrrows,@parm1    ; Number of lines to dump
+                                    
+task.vdp.panes.dump:
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
                                     ; /        
