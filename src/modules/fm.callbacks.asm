@@ -132,7 +132,7 @@ fm.loadsave.cb.indicator2:
                                     ; \ i  @parm1 = Line to start with
                                     ; /
 
-        mov   @fb.scrrows.max,@parm1
+        mov   @fb.scrrows,@parm1
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
                                     ; /
