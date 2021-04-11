@@ -55,6 +55,12 @@ dialog.about.content:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Show About dialog
@@ -70,8 +76,10 @@ dialog.about.content:
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size.80x30 - 160
                                     ; Clear screen
-
         
+        bl    @filv
+              data sprsat,0,32      ; Turn off sprites
+
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 1)
         ;------------------------------------------------------
@@ -106,6 +114,9 @@ dialog.about.content:
         ;------------------------------------------------------
 dialog.about.content.exit:
         mov   *stack+,@wyx          ; Pop cursor position
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0               
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
 

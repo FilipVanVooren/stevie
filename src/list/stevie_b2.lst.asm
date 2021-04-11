@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b2.asm               ; Version 210411-2556126
+0009               * File: stevie_b2.asm               ; Version 210411-2571934
 0010               *
 0011               * Bank 2 "Jacky"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -369,7 +369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -406,7 +406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1E'
 0017                       even
 0018               
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1126,7 +1126,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210411-2556126'
+0260 21D3 ....             text  'Build-ID  210411-2571934'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5078,7 +5078,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF2 0040 
 0367 2EF4 0460  28         b     @main                 ; Give control to main program
      2EF6 6036 
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6176,145 +6176,146 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3396 0301 
 0038 3398 0820             data  >0820,>0401             ; Current line indicator
      339A 0401 
-0039 339C D000             data  >d000                   ; End-of-Sprites list
-0040               
+0039               nosprite:
+0040 339C D000             data  >d000                   ; End-of-Sprites list
 0041               
-0042               ***************************************************************
-0043               * SAMS page layout table for Stevie (16 words)
-0044               *--------------------------------------------------------------
-0045               mem.sams.layout.data:
-0046 339E 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+0042               
+0043               ***************************************************************
+0044               * SAMS page layout table for Stevie (16 words)
+0045               *--------------------------------------------------------------
+0046               mem.sams.layout.data:
+0047 339E 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
      33A0 0002 
-0047 33A2 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+0048 33A2 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
      33A4 0003 
-0048 33A6 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+0049 33A6 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
      33A8 000A 
-0049               
-0050 33AA B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
+0050               
+0051 33AA B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
      33AC 0010 
-0051                                                   ; \ The index can allocate
-0052                                                   ; / pages >10 to >2f.
-0053               
-0054 33AE C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
+0052                                                   ; \ The index can allocate
+0053                                                   ; / pages >10 to >2f.
+0054               
+0055 33AE C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
      33B0 0030 
-0055                                                   ; \ Editor buffer can allocate
-0056                                                   ; / pages >30 to >ff.
-0057               
-0058 33B2 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+0056                                                   ; \ Editor buffer can allocate
+0057                                                   ; / pages >30 to >ff.
+0058               
+0059 33B2 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
      33B4 000D 
-0059 33B6 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+0060 33B6 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
      33B8 000E 
-0060 33BA F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+0061 33BA F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
      33BC 000F 
-0061               
 0062               
 0063               
 0064               
 0065               
-0066               ***************************************************************
-0067               * Stevie color schemes table
-0068               *--------------------------------------------------------------
-0069               * Word 1
-0070               * A  MSB  high-nibble    Foreground color text line in frame buffer
-0071               * B  MSB  low-nibble     Background color text line in frame buffer
-0072               * C  LSB  high-nibble    Foreground color top/bottom line
-0073               * D  LSB  low-nibble     Background color top/bottom line
-0074               *
-0075               * Word 2
-0076               * E  MSB  high-nibble    Foreground color cmdb pane
-0077               * F  MSB  low-nibble     Background color cmdb pane
-0078               * G  LSB  high-nibble    Cursor foreground color cmdb pane
-0079               * H  LSB  low-nibble     Cursor foreground color frame buffer
-0080               *
-0081               * Word 3
-0082               * I  MSB  high-nibble    Foreground color busy top/bottom line
-0083               * J  MSB  low-nibble     Background color busy top/bottom line
-0084               * K  LSB  high-nibble    Foreground color marked line in frame buffer
-0085               * L  LSB  low-nibble     Background color marked line in frame buffer
-0086               *
-0087               * Word 4
-0088               * M  MSB  high-nibble    Foreground color command buffer header line
-0089               * N  MSB  low-nibble     Background color command buffer header line
-0090               * O  LSB  high-nibble    Foreground color line+column indicator frame buffer
-0091               * P  LSB  low-nibble     Foreground color ruler frame buffer
-0092               *
-0093               * Colors
-0094               * 0  Transparant
-0095               * 1  black
-0096               * 2  Green
-0097               * 3  Light Green
-0098               * 4  Blue
-0099               * 5  Light Blue
-0100               * 6  Dark Red
-0101               * 7  Cyan
-0102               * 8  Red
-0103               * 9  Light Red
-0104               * A  Yellow
-0105               * B  Light Yellow
-0106               * C  Dark Green
-0107               * D  Magenta
-0108               * E  Grey
-0109               * F  White
-0110               *--------------------------------------------------------------
-0111      000A     tv.colorscheme.entries   equ 10 ; Entries in table
-0112               
-0113               tv.colorscheme.table:
-0114                       ;                             ; #
-0115                       ;      ABCD  EFGH  IJKL  MNOP ; -
-0116 33BE F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
+0066               
+0067               ***************************************************************
+0068               * Stevie color schemes table
+0069               *--------------------------------------------------------------
+0070               * Word 1
+0071               * A  MSB  high-nibble    Foreground color text line in frame buffer
+0072               * B  MSB  low-nibble     Background color text line in frame buffer
+0073               * C  LSB  high-nibble    Foreground color top/bottom line
+0074               * D  LSB  low-nibble     Background color top/bottom line
+0075               *
+0076               * Word 2
+0077               * E  MSB  high-nibble    Foreground color cmdb pane
+0078               * F  MSB  low-nibble     Background color cmdb pane
+0079               * G  LSB  high-nibble    Cursor foreground color cmdb pane
+0080               * H  LSB  low-nibble     Cursor foreground color frame buffer
+0081               *
+0082               * Word 3
+0083               * I  MSB  high-nibble    Foreground color busy top/bottom line
+0084               * J  MSB  low-nibble     Background color busy top/bottom line
+0085               * K  LSB  high-nibble    Foreground color marked line in frame buffer
+0086               * L  LSB  low-nibble     Background color marked line in frame buffer
+0087               *
+0088               * Word 4
+0089               * M  MSB  high-nibble    Foreground color command buffer header line
+0090               * N  MSB  low-nibble     Background color command buffer header line
+0091               * O  LSB  high-nibble    Foreground color line+column indicator frame buffer
+0092               * P  LSB  low-nibble     Foreground color ruler frame buffer
+0093               *
+0094               * Colors
+0095               * 0  Transparant
+0096               * 1  black
+0097               * 2  Green
+0098               * 3  Light Green
+0099               * 4  Blue
+0100               * 5  Light Blue
+0101               * 6  Dark Red
+0102               * 7  Cyan
+0103               * 8  Red
+0104               * 9  Light Red
+0105               * A  Yellow
+0106               * B  Light Yellow
+0107               * C  Dark Green
+0108               * D  Magenta
+0109               * E  Grey
+0110               * F  White
+0111               *--------------------------------------------------------------
+0112      000A     tv.colorscheme.entries   equ 10 ; Entries in table
+0113               
+0114               tv.colorscheme.table:
+0115                       ;                             ; #
+0116                       ;      ABCD  EFGH  IJKL  MNOP ; -
+0117 33BE F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
      33C0 F171 
      33C2 1B1F 
      33C4 71B1 
-0117 33C6 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
+0118 33C6 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
      33C8 F0FF 
      33CA 1F1A 
      33CC F1FF 
-0118 33CE 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+0119 33CE 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
      33D0 F0FF 
      33D2 1F12 
      33D4 F1F6 
-0119 33D6 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
+0120 33D6 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
      33D8 1E11 
      33DA 1A17 
      33DC 1E11 
-0120 33DE E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
+0121 33DE E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
      33E0 E1FF 
      33E2 1F1E 
      33E4 E1FF 
-0121 33E6 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
+0122 33E6 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
      33E8 1016 
      33EA 1B71 
      33EC 1711 
-0122 33EE 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
+0123 33EE 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
      33F0 1011 
      33F2 F1F1 
      33F4 1F11 
-0123 33F6 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
+0124 33F6 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
      33F8 A1FF 
      33FA 1F1F 
      33FC F11F 
-0124 33FE 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
+0125 33FE 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
      3400 12FF 
      3402 1B12 
      3404 12FF 
-0125 3406 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
+0126 3406 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
      3408 E1FF 
      340A 1B1F 
      340C F131 
-0126                       even
-0127               
-0128               tv.tabs.table:
-0129 340E 0007             byte  0,7,12,25               ; \   Default tab positions as used
+0127                       even
+0128               
+0129               tv.tabs.table:
+0130 340E 0007             byte  0,7,12,25               ; \   Default tab positions as used
      3410 0C19 
-0130 3412 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+0131 3412 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
      3414 3B4F 
-0131 3416 FF00             byte  >ff,0,0,0               ; |
+0132 3416 FF00             byte  >ff,0,0,0               ; |
      3418 0000 
-0132 341A 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+0133 341A 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
      341C 0000 
-0133 341E 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+0134 341E 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      3420 0000 
-0134                       even
+0135                       even
 **** **** ****     > ram.resident.3000.asm
 0017                       copy  "data.strings.asm"       ; Data segment - Strings
 **** **** ****     > data.strings.asm
@@ -6330,7 +6331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 3422 4C42             byte  76
-0013 3423 ....             text  'Build: 210411-2556126 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 3423 ....             text  'Build: 210411-2571934 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6720,7 +6721,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3912 BEEF 
      3914 DEAD 
      3916 BEEF 
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0060               ***************************************************************
 0061               * Step 4: Include modules
 0062               ********|*****|*********************|**************************
@@ -6802,7 +6803,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057 607E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0058 6080 C2F9  30         mov   *stack+,r11           ; Pop R11
 0059 6082 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0070                       ;-----------------------------------------------------------------------
 0071                       ; File handling
 0072                       ;-----------------------------------------------------------------------
@@ -7362,7 +7363,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0422                       ; byte  12                  ;  9    - File descriptor length
 0423                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0424                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0074                       copy  "fh.write.edb.asm"    ; Write editor buffer to file
 **** **** ****     > fh.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
@@ -7683,7 +7684,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0241 6454 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0242 6456 C2F9  30         mov   *stack+,r11           ; Pop R11
 0243 6458 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0075                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm.load.asm
@@ -7867,7 +7868,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139 6516 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 6518 C2F9  30         mov   *stack+,r11           ; Pop R11
 0141 651A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0076                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
 **** **** ****     > fm.save.asm
 0001               * FILE......: fm.save.asm
@@ -7993,7 +7994,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0095 658E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0096 6590 C2F9  30         mov   *stack+,r11           ; Pop R11
 0097 6592 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0077                       copy  "fm.callbacks.asm"    ; Callbacks for file operations
 **** **** ****     > fm.callbacks.asm
 0001               * FILE......: fm.callbacks.asm
@@ -8446,7 +8447,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      678E 2F20 
 0360 6790 C2F9  30         mov   *stack+,r11           ; Pop R11
 0361 6792 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0078                       copy  "fm.browse.asm"       ; File manager browse support routines
 **** **** ****     > fm.browse.asm
 0001               * FILE......: fm.browse.asm
@@ -8575,7 +8576,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0110 6810 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0111 6812 C2F9  30         mov   *stack+,r11           ; Pop R11
 0112 6814 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0079                       copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation
 **** **** ****     > fm.fastmode.asm
 0001               * FILE......: fm.fastmode.asm
@@ -8633,7 +8634,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045 6842 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0046 6844 C2F9  30         mov   *stack+,r11           ; Pop R11
 0047 6846 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0080                       ;-----------------------------------------------------------------------
 0081                       ; Stubs using trampoline
 0082                       ;-----------------------------------------------------------------------
@@ -8820,7 +8821,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0171                       ;------------------------------------------------------
 0172 68D4 C2F9  30         mov   *stack+,r11           ; Pop r11
 0173 68D6 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0084                       ;-----------------------------------------------------------------------
 0085                       ; Bank specific vector table
 0086                       ;-----------------------------------------------------------------------
@@ -8870,7 +8871,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b2.asm.2556126
+**** **** ****     > stevie_b2.asm.2571934
 0096               
 0097               *--------------------------------------------------------------
 0098               * Video mode configuration

@@ -36,6 +36,7 @@ romsat:
         data  >0000,>0001             ; Cursor YX, initial shape and colour
         data  >0000,>0301             ; Current line indicator
         data  >0820,>0401             ; Current line indicator
+nosprite:        
         data  >d000                   ; End-of-Sprites list
 
 
