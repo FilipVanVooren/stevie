@@ -121,9 +121,9 @@ pane.cmdb.draw.hint:
         ;------------------------------------------------------
         ; AlPHA-Lock is up
         ;------------------------------------------------------
-        bl    @putat      
-              byte   pane.botrow,79
-              data   txt.alpha.up 
+        bl    @hchar      
+              byte pane.botrow,78,32,2
+              data eol
 
         jmp   pane.cmdb.draw.promptcmd
         ;------------------------------------------------------
@@ -131,7 +131,7 @@ pane.cmdb.draw.hint:
         ;------------------------------------------------------
 pane.cmdb.draw.alpha.down:        
         bl    @putat      
-              byte   pane.botrow,79
+              byte   pane.botrow,78
               data   txt.alpha.down
         ;------------------------------------------------------
         ; Command buffer content

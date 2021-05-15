@@ -31,7 +31,7 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.stevie         #string  'STEVIE 1.1F  '
+txt.stevie         #string  'STEVIE 1.1G  '
 txt.keys.default   #string 'F0=Help  ^Open  ^Save'
 txt.keys.block     #string '^Del  ^Copy  ^Move  ^Goto M1  ^Reset  ^Save'
 txt.ruler          text    '.........'
@@ -52,9 +52,7 @@ txt.ruler          text    '.........'
                    byte    25
                    even
 
-
-txt.alpha.up       data >010f
-txt.alpha.down     data >010e
+txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
 
 txt.clear          #string '    '
@@ -102,11 +100,10 @@ txt.head.about     byte 10,1,3,32
 
 txt.info.about     #string 
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     byte 61
-                   text 'F9=Back    ENTER=Back   ALPHA LOCK Up= '
-                   byte 15
-                   text '   ALPHA LOCK Down= '
-                   byte 14
+txt.keys.about     byte 42
+                   text 'F9=Back    ENTER=Back   '
+                   byte 14,15
+                   text '=Alpha Lock down'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane

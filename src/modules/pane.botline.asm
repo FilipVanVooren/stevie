@@ -143,7 +143,7 @@ pane.botline.show_linecol:
         jmp   pane.botline.show_linecol.colstring
                                     ; Yes, skip showing row length        
         ;------------------------------------------------------
-        ; Add '/' delimiter and length of line to string
+        ; Add ',' delimiter and length of line to string
         ;------------------------------------------------------        
 pane.botline.show_linecol.linelen:
         mov   @fb.column,tmp0       ; \ 
@@ -209,7 +209,7 @@ pane.botline.show_linecol.colstring:
         jne   pane.botline.show_lines_in_buffer
 
         bl    @putat
-              byte pane.botrow,73
+              byte pane.botrow,72
               data txt.bottom
 
         jmp   pane.botline.exit
@@ -220,7 +220,7 @@ pane.botline.show_lines_in_buffer:
         mov   @edb.lines,@waux1
 
         bl    @putnum
-              byte pane.botrow,73   ; YX
+              byte pane.botrow,72   ; YX
               data waux1,rambuf
               byte 48
               byte 32

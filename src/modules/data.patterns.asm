@@ -40,8 +40,9 @@ patterns.cr:
 
         
 alphalock:
-        data  >0000,>00e0,>e0e0,>e0e0 ; 14. alpha lock down
-        data  >00e0,>e0e0,>e0e0,>0000 ; 15. alpha lock up
+        data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
+        data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
+
 
 vertline:
         data  >1010,>1010,>1010,>1010 ; 16. Vertical line

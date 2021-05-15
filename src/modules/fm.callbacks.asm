@@ -158,7 +158,7 @@ fm.loadsave.cb.indicator2.kb:
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
-              byte pane.botrow,73   ; Show lines processed
+              byte pane.botrow,72   ; Show lines processed
               data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
@@ -201,7 +201,7 @@ fm.loadsave.cb.indicator3:
               data txt.kb           ; Show "kb" string
 
         bl    @putnum
-              byte pane.botrow,73   ; Show lines processed
+              byte pane.botrow,72   ; Show lines processed
               data edb.lines,rambuf,>3020
         ;------------------------------------------------------
         ; Exit
