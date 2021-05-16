@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210516-1686565
+0009               * File: stevie_b4.asm               ; Version 210516-1688770
 0010               *
 0011               * Bank 4 "Janine"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -369,7 +369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -406,7 +406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0016 6015 ....             text  'STEVIE 1.1G'
 0017                       even
 0018               
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1126,7 +1126,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210516-1686565'
+0260 21D3 ....             text  'Build-ID  210516-1688770'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5078,7 +5078,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF2 0040 
 0367 2EF4 0460  28         b     @main                 ; Give control to main program
      2EF6 6036 
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0040                                                   ; Relocated spectra2 in low MEMEXP, was
 0041                                                   ; copied to >2000 from ROM in bank 0
 0042                       ;------------------------------------------------------
@@ -6331,7 +6331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 3422 4C42             byte  76
-0013 3423 ....             text  'Build: 210516-1686565 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 3423 ....             text  'Build: 210516-1688770 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6719,7 +6719,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      38FE BEEF 
      3900 DEAD 
      3902 BEEF 
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0060               ***************************************************************
 0061               * Step 4: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -6829,7 +6829,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087 6076 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0088 6078 C2F9  30         mov   *stack+,r11           ; Pop r11
 0089 607A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0070                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
 **** **** ****     > fb.null2char.asm
 0001               * FILE......: fb.null2char.asm
@@ -6917,7 +6917,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 60CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 60CC C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 60CE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0071                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
 **** **** ****     > fb.tab.next.asm
 0001               * FILE......: fb.tab.next.asm
@@ -7060,7 +7060,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118 6154 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0119 6156 C2F9  30         mov   *stack+,r11           ; Pop R11
 0120 6158 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0072                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
 **** **** ****     > fb.ruler.asm
 0001               * FILE......: fb.ruler.asm
@@ -7148,7 +7148,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0070 61AC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0071 61AE C2F9  30         mov   *stack+,r11           ; Pop r11
 0072 61B0 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0073                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
 **** **** ****     > fb.colorlines.asm
 0001               * FILE......: fb.colorlines.asm
@@ -7282,7 +7282,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0111 623A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0112 623C C2F9  30         mov   *stack+,r11           ; Pop r11
 0113 623E 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0074                       copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
 **** **** ****     > fb.vdpdump.asm
 0001               * FILE......: fb.vdpdump.asm
@@ -7371,7 +7371,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0072 628A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0073 628C C2F9  30         mov   *stack+,r11           ; Pop r11
 0074 628E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0075                       ;-----------------------------------------------------------------------
 0076                       ; Stubs using trampoline
 0077                       ;-----------------------------------------------------------------------
@@ -7379,7 +7379,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0079                       ;-----------------------------------------------------------------------
 0080                       ; Bank specific vector table
 0081                       ;-----------------------------------------------------------------------
@@ -7429,7 +7429,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b4.asm.1686565
+**** **** ****     > stevie_b4.asm.1688770
 0091               
 0092               *--------------------------------------------------------------
 0093               * Video mode configuration

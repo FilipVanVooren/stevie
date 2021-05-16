@@ -64,7 +64,7 @@ fm.savefile:
         mov   tmp0,@parm5           ; Register callback 4
 
         bl    @filv
-              data sprsat,>0000,4   ; Turn off sprites (cursor)
+              data sprsat,>0000,16  ; Turn off sprites
 
         bl    @fh.file.write.edb    ; Save file from editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
