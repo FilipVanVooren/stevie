@@ -22,6 +22,10 @@ edkey.action.quit:
 * Toggle ruler on/off
 ********|*****|*********************|**************************
 edkey.action.toggle.ruler:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor YX
         ;-------------------------------------------------------
         ; Toggle ruler visibility
         ;-------------------------------------------------------
@@ -34,6 +38,8 @@ edkey.action.toggle.ruler:
         ;-------------------------------------------------------
 edkey.action.toggle.ruler.fb:
         bl    @pane.cmdb.hide       ; Actions are the same as when hiding CMDB
+        mov   *stack+,@wyx          ; Pop cursor YX
+        mov   *stack+,tmp0          ; Pop tmp0
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

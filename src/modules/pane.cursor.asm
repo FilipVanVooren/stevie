@@ -1,4 +1,4 @@
-* FILE......: pane.utils.cursor.asm
+* FILE......: pane.cursor.asm
 * Purpose...: Cursor utility functions for panes
 
 ***************************************************************
