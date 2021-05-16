@@ -39,7 +39,7 @@ fm.loadfile:
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
 !       bl    @filv
-              data sprsat,>0000,8   ; Turn off sprites (cursor)
+              data sprsat,>0000,16  ; Turn off sprites (cursor)
 
         mov   @fb.scrrows.max,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen

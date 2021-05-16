@@ -83,11 +83,11 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 1)
         ;------------------------------------------------------
-        li    tmp0,>0100            ; Y=1, X=0
+        li    tmp0,>0200            ; Y=2, X=0
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.about.help.part1
                                     ; Pointer to string
-        li    tmp2,24               ; Set loop counter
+        li    tmp2,21               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -97,11 +97,11 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 2)
         ;------------------------------------------------------
-        li    tmp0,>012d            ; Y=1, X=45
+        li    tmp0,>032c            ; Y=3, X=44
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.about.help.part2
                                     ; Pointer to string
-        li    tmp2,18               ; Set loop counter
+        li    tmp2,19               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -145,14 +145,13 @@ dialog.about.help.part1:
         #string '   Ctrl v (^v)    Set M1/M2 marker'
         #string '   Ctrl r (^r)    Reset M1/M2 markers'
         #string '   Ctrl z (^z)    Cycle color schemes'
+        
+dialog.about.help.part2:
         #string '   Ctrl , (^,)    Load previous file'
         #string '   Ctrl . (^.)    Load next file'
-
-dialog.about.help.part2:
-        #string 'Action keys (rest): '
-        #string '   ctrl u (^u)   Toggle ruler'
+        #string '   ctrl u (^u)    Toggle ruler'
         #string ' '
-        #string ' Modifier keys:'
+        #string 'Modifier keys:'
         #string '   Fctn 1        Delete character'
         #string '   Fctn 2        Insert character'
         #string '   Fctn 3        Delete line'
