@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210517-1884442
+0009               * File: stevie_b0.asm               ; Version 210517-1890038
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -369,7 +369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -393,7 +393,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0007 6000 AA01             byte  >aa                   ; 0  Standard header                   >6000
 0008                       byte  >01                   ; 1  Version number
 0009 6002 0100             byte  >01                   ; 2  Number of programs (optional)     >6002
-0010                       byte  >00                   ; 3  Reserved (Advanced mode FG99)
+0010 6003 ....             text  >00                   ; 3  Reserved (advanced mode FG99)
 0011               
 0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
 0013                                                   ; 5  /
@@ -422,7 +422,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037 6011 ....             text  'STEVIE 1.1G'
 0038                       even
 0039               
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1244,7 +1244,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6268 1842             byte  24
-0260 6269 ....             text  'Build-ID  210517-1884442'
+0260 6269 ....             text  'Build-ID  210517-1890038'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5196,7 +5196,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F88 0040 
 0367 6F8A 0460  28         b     @main                 ; Give control to main program
      6F8C 3000 
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0124                                                   ; Spectra 2
 0125                       ;------------------------------------------------------
 0126                       ; End of File marker
@@ -6455,7 +6455,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 74E6 4C42             byte  76
-0013 74E7 ....             text  'Build: 210517-1884442 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 74E7 ....             text  'Build: 210517-1890038 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6843,7 +6843,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      79C2 BEEF 
      79C4 DEAD 
      79C6 BEEF 
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0154               
 0158 79C8 3904                   data $                ; Bank 0 ROM size OK.
 0160               
@@ -7004,7 +7004,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7AB4 0038 
      7AB6 2838 
      7AB8 2838 
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0165                       ;------------------------------------------------------
 0166                       ; Bank specific vector table
 0167                       ;------------------------------------------------------
@@ -7054,7 +7054,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.1884442
+**** **** ****     > stevie_b0.asm.1890038
 0177               
 0178               
 0179               
