@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210516-1687322
+0009               * File: stevie_b0.asm               ; Version 210517-1884442
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009      6004     bank2                     equ  >6004   ; Jacky
 0010      6006     bank3                     equ  >6006   ; John
 0011      6008     bank4                     equ  >6008   ; Janine
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0015                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -369,7 +369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0016               
 0017               ***************************************************************
 0018               * Spectra2 core configuration
@@ -390,23 +390,39 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0004               *--------------------------------------------------------------
 0005               * Cartridge header
 0006               ********|*****|*********************|**************************
-0007 6000 AA01             byte  >aa,1,1,0,0,0
-     6002 0100 
-     6004 0000 
-0008 6006 6010             data  $+10
-0009 6008 0000             byte  0,0,0,0,0,0,0,0
-     600A 0000 
-     600C 0000 
-     600E 0000 
-0010 6010 0000             data  0                     ; No more items following
-0011 6012 6030             data  kickstart.code1
-0012               
+0007 6000 AA01             byte  >aa                   ; 0  Standard header                   >6000
+0008                       byte  >01                   ; 1  Version number
+0009 6002 0100             byte  >01                   ; 2  Number of programs (optional)     >6002
+0010                       byte  >00                   ; 3  Reserved (Advanced mode FG99)
+0011               
+0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
+0013                                                   ; 5  /
 0014               
-0015 6014 0B53             byte  11
-0016 6015 ....             text  'STEVIE 1.1G'
-0017                       even
-0018               
-**** **** ****     > stevie_b0.asm.1687322
+0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
+0016                                                   ; 7  /
+0017               
+0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
+0019                                                   ; 9  /
+0020               
+0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
+0022                                                   ; 11 /
+0023               
+0024                       ;-----------------------------------------------------------------------
+0025                       ; Program list entry
+0026                       ;-----------------------------------------------------------------------
+0027               rom.program1:
+0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
+0029                                                   ; 13 / (no more items following)
+0030               
+0031 600E 6030             data  kickstart.code1       ; 14 \ Program address                 >600e
+0032                                                   ; 15 /
+0033               
+0035               
+0036 6010 0B53             byte  11
+0037 6011 ....             text  'STEVIE 1.1G'
+0038                       even
+0039               
+**** **** ****     > stevie_b0.asm.1884442
 0029               
 0030               ***************************************************************
 0031               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1228,7 +1244,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6268 1842             byte  24
-0260 6269 ....             text  'Build-ID  210516-1687322'
+0260 6269 ....             text  'Build-ID  210517-1884442'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5180,7 +5196,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F88 0040 
 0367 6F8A 0460  28         b     @main                 ; Give control to main program
      6F8C 3000 
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0124                                                   ; Spectra 2
 0125                       ;------------------------------------------------------
 0126                       ; End of File marker
@@ -6439,7 +6455,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.about.build
 0012 74E6 4C42             byte  76
-0013 74E7 ....             text  'Build: 210516-1687322 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0013 74E7 ....             text  'Build: 210517-1884442 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0014                       even
 0015               
 0016               ;--------------------------------------------------------------
@@ -6827,7 +6843,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      79C2 BEEF 
      79C4 DEAD 
      79C6 BEEF 
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0154               
 0158 79C8 3904                   data $                ; Bank 0 ROM size OK.
 0160               
@@ -6988,7 +7004,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7AB4 0038 
      7AB6 2838 
      7AB8 2838 
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0165                       ;------------------------------------------------------
 0166                       ; Bank specific vector table
 0167                       ;------------------------------------------------------
@@ -7038,7 +7054,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.1687322
+**** **** ****     > stevie_b0.asm.1884442
 0177               
 0178               
 0179               
