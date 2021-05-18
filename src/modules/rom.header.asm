@@ -7,7 +7,7 @@
         byte  >aa                   ; 0  Standard header                   >6000
         byte  >01                   ; 1  Version number
         byte  >01                   ; 2  Number of programs (optional)     >6002
-        text  >00                   ; 3  Reserved (advanced mode FG99)
+        byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
 
         data  >0000                 ; 4  \ Pointer to power-up list        >6004
                                     ; 5  / 
@@ -32,7 +32,7 @@ rom.program1:
                                     ; 15 /
 
         .ifdef debug
-              #string 'STEVIE 1.1G'
+              #string 'STEVIE 1.1G (FG99)'
         .else
-              #string 'STEVIE 1.1G'
+              #string 'STEVIE 1.1G (FG99)'
         .endif

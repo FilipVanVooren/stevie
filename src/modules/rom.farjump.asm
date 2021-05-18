@@ -1,7 +1,6 @@
 * FILE......: rom.farjump.asm
 * Purpose...: Trampoline to routine in other ROM bank
 
-
 ***************************************************************
 * rom.farjump - Jump to routine in specified bank
 ***************************************************************
@@ -39,7 +38,7 @@ xrom.farjump:
         ;------------------------------------------------------
         ci    tmp0,>6000            ; Invalid bank write address?
         jlt   rom.farjump.bankswitch.failed1
-                                    ; Crash if null value in bank write address
+                                    ; Crash if bogus value in bank write address
 
         mov   @tv.fj.stackpnt,tmp3  ; Get farjump stack pointer
         dect  tmp3
@@ -47,11 +46,26 @@ xrom.farjump:
         dect  tmp3
         mov   tmp2,*tmp3            ; Push source ROM bank to farjump stack
         mov   tmp3,@tv.fj.stackpnt  ; Set farjump stack pointer
+
+        ;jmp   rom.farjump.bankswitch.tgt.advfg99
+
         ;------------------------------------------------------
-        ; Bankswitch to target bank
+        ; Bankswitch to target 8K ROM bank 
         ;------------------------------------------------------
-rom.farjump.bankswitch:
-        clr   *tmp0                 ; Switch to target ROM bank        
+rom.farjump.bankswitch.target.rom8k:
+        clr   *tmp0                 ; Switch to target ROM bank 8K >6000
+        jmp   rom.farjump.bankswitch.tgt.done
+        ;------------------------------------------------------
+        ; Bankswitch to target 4K ROM / 4K RAM banks (FG99 advanced mode)
+        ;------------------------------------------------------
+rom.farjump.bankswitch.tgt.advfg99:
+        clr   *tmp0                 ; Switch to target ROM bank 4K >6000
+        ai    tmp0,>0800
+        clr   *tmp0                 ; Switch to target RAM bank 4K >7000
+        ;------------------------------------------------------
+        ; Bankswitch to target bank(s) completed
+        ;------------------------------------------------------
+rom.farjump.bankswitch.tgt.done:
         mov   *tmp1,tmp0            ; Deref value in vector address
         jeq   rom.farjump.bankswitch.failed1
                                     ; Crash if null-pointer in vector
@@ -91,7 +105,22 @@ rom.farjump.return:
         jgt   rom.farjump.bankswitch.failed2
         
         mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
-        clr   *tmp1                 ; Switch to bank of caller  
+
+        ;jmp   rom.farjump.bankswitch.src.advfg99
+
+        ;------------------------------------------------------
+        ; Bankswitch to source 8K ROM bank 
+        ;------------------------------------------------------
+rom.farjump.bankswitch.src.rom8k:
+        clr   *tmp1                 ; Switch to source ROM bank 8K >6000
+        jmp   rom.farjump.exit
+        ;------------------------------------------------------
+        ; Bankswitch to source 4K ROM / 4K RAM banks (FG99 advanced mode)
+        ;------------------------------------------------------
+rom.farjump.bankswitch.src.advfg99:
+        clr   *tmp1                 ; Switch to source ROM bank 4K >6000
+        ai    tmp1,>0800
+        clr   *tmp1                 ; Switch to source RAM bank 4K >7000
         jmp   rom.farjump.exit
         ;------------------------------------------------------
         ; Assert 2 failed after bank-switch
