@@ -94,6 +94,7 @@ dialog.about.content:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; / i  tmp2 = Number of strings to display
+
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 2)
         ;------------------------------------------------------
@@ -151,18 +152,19 @@ dialog.about.help.part2:
         #string '   Ctrl . (^.)    Load next file'
         #string '   ctrl u (^u)    Toggle ruler'
         #string ' '
-        #string 'Modifier keys:'
-        #string '   Fctn 1        Delete character'
-        #string '   Fctn 2        Insert character'
-        #string '   Fctn 3        Delete line'
-        #string '   Fctn 4        Delete end of line'
-        #string '   Fctn 5        Insert line'
-        #string '   Fctn 7        Move to next tab'
-        #string '   Fctn .        Insert/Overwrite'
-        #string ' '
         #string 'Block operations:'
         #string '   Ctrl d (^d)   Delete block'
         #string '   Ctrl c (^c)   Copy block'
         #string '   Ctrl g (^g)   Goto marker M1'
         #string '   Ctrl m (^m)   Move block'
         #string '   Ctrl s (^s)   Save block to file'
+        #string ' '
+        #string 'Modifier keys:'
+        #string '   Fctn 1   Delete character'
+        #string '   Fctn 2   Insert character'
+        #string '   Fctn 3   Delete line'
+        #string '   Fctn 4   Delete end of line'
+        #string '   Fctn 5   Insert line'
+        #string '   Fctn 7   Move to next tab'
+        #string '   Fctn .   Toggle Insert/Overwrite'
+

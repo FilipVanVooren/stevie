@@ -31,8 +31,4 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        .ifdef debug
-              #string 'STEVIE 1.1G (FG99)'
-        .else
-              #string 'STEVIE 1.1G (FG99)'
-        .endif
+        #string 'STEVIE 1.1H'

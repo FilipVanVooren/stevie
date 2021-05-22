@@ -6,12 +6,11 @@
 ***************************************************************
 
 ;--------------------------------------------------------------
-; Strings for welcome pane
+; Strings for about pane
 ;--------------------------------------------------------------
+txt.stevie         #string 'STEVIE 1.1H'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
-;--------------------------------------------------------------
-; Strings for status line pane
-;--------------------------------------------------------------
+
 txt.delim          #string ','
 txt.bottom         #string '  BOT'
 txt.ovrwrite       #string 'OVR'
@@ -31,7 +30,6 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.stevie         #string  'STEVIE 1.1G'
 txt.keys.default   #string '^Help, ^Open, ^Save'
 txt.keys.block     #string '^Del, ^Copy, ^Move, ^Goto M1, ^Reset, ^Save'
 txt.ruler          text    '.........'
@@ -91,8 +89,8 @@ txt.keys.save      #string 'F9=Back, F3=Clear, F-H=Home, F-L=End'
 txt.head.unsaved   byte 20,1,3,32
                    text 'Unsaved changes '
                    byte 2
-txt.info.unsaved   #string 'You are about to lose changes to the current file!'
-txt.hint.unsaved   #string 'Press F6 to proceed without saving or ENTER to save file.'
+txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
+txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
 txt.keys.unsaved   #string 'F9=Back, F6=Proceed, ENTER=Save file'
 
 ;--------------------------------------------------------------
