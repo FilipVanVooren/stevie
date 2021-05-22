@@ -54,7 +54,7 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
         data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
-        data  key.fctn.0, pane.focus.fb, edkey.action.about        
+        data  key.ctrl.h, pane.focus.fb, edkey.action.about        
         data  key.ctrl.s, pane.focus.fb, dialog.save                
         data  key.ctrl.o, pane.focus.fb, dialog.load        
         ;-------------------------------------------------------

@@ -145,7 +145,8 @@ reloc.stevie:
         ; Activate bank 1 and branch to >6036
         ;------------------------------------------------------
 main:        
-        clr   @bank1                ; Activate bank 1 "James"
+        clr   @bank1                ; Activate bank 1 "James" ROM
+        clr   @bank1.ram            ; Activate bank 1 "James" RAM
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff

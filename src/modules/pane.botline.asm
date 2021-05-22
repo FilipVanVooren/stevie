@@ -20,13 +20,7 @@ pane.botline:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
-        ;------------------------------------------------------
-        ; Show separators
-        ;------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow,50,16,1       ; Vertical line 1
-              byte pane.botrow,71,16,1       ; Vertical line 2
-              data eol
+
         ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
@@ -46,14 +40,6 @@ pane.botline:
 pane.botline.show_keys:        
         bl    @putat
               byte pane.botrow,0
-              data txt.stevie       ; Show stevie version
-
-        bl    @hchar
-              byte pane.botrow,14,16,1       
-              data eol              ; Vertical line 3
-
-        bl    @putat
-              byte pane.botrow,16
               data txt.keys.default ; Show default shortcuts
         ;------------------------------------------------------
         ; Show text editing mode
@@ -69,7 +55,7 @@ pane.botline.show_mode:
               data  txt.ovrwrite
         jmp   pane.botline.show_changed
         ;------------------------------------------------------
-        ; Insert  mode
+        ; Insert mode
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
         bl    @putat

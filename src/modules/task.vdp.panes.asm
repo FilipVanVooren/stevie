@@ -20,17 +20,17 @@ task.vdp.panes.alpha_lock:
         ;------------------------------------------------------
         ; AlPHA-Lock is up
         ;------------------------------------------------------
-        bl    @hchar      
-              byte pane.botrow,78,32,2
-              data eol
+        bl    @putat
+              byte pane.botrow,78
+              data txt.ws4
         jmp   task.vdp.panes.cmdb.check
         ;------------------------------------------------------
         ; AlPHA-Lock is down
         ;------------------------------------------------------
 task.vdp.panes.alpha_lock.down:
         bl    @putat      
-              byte   pane.botrow,78
-              data   txt.alpha.down       
+              byte pane.botrow,78
+              data txt.alpha.down       
         ;------------------------------------------------------ 
         ; Command buffer visible ?
         ;------------------------------------------------------

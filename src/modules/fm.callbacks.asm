@@ -58,7 +58,7 @@ fm.loadsave.cb.indicator1.saveblock:
               byte pane.botrow,0
               data txt.block.save   ; Display "Saving block...."              
 
-        jmp   fm.loadsave.cb.indicator1.separators
+        jmp   fm.loadsave.cb.indicator1.filename
         ;------------------------------------------------------
         ; Display Loading....
         ;------------------------------------------------------
@@ -79,14 +79,6 @@ fm.loadsave.cb.indicator1.filename:
         mov   @edb.filename.ptr,tmp1  
                                     ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
-        ;------------------------------------------------------
-        ; Show separators
-        ;------------------------------------------------------
-fm.loadsave.cb.indicator1.separators:
-        bl    @hchar
-              byte pane.botrow,50,16,1       ; Vertical line 1
-              byte pane.botrow,71,16,1       ; Vertical line 2
-              data eol
         ;------------------------------------------------------
         ; Display fast mode
         ;------------------------------------------------------
