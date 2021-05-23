@@ -11,7 +11,8 @@
 * Bank 0 "Jill"
 *
 ***************************************************************
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+        copy  "rom.build.asm"       ; Cartridge build options
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -22,7 +23,7 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 ***************************************************************
 * BANK 0
 ********|*****|*********************|**************************
-bankid  equ   bank0                 ; Set bank identifier to current bank
+bankid  equ   bank0.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
@@ -32,7 +33,7 @@ bankid  equ   bank0                 ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6030
 kickstart.step1:        
-        clr   @bank0                ; Switch to bank 0 "Jill"
+        clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Copy SP2 library from ROM to >2000 - >2fff
 ********|*****|*********************|**************************
@@ -145,7 +146,7 @@ reloc.stevie:
         ; Activate bank 1 and branch to >6036
         ;------------------------------------------------------
 main:        
-        clr   @bank1                ; Activate bank 1 "James" ROM
+        clr   @bank1.rom            ; Activate bank 1 "James" ROM
         clr   @bank1.ram            ; Activate bank 1 "James" RAM
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------

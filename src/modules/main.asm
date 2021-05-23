@@ -36,8 +36,13 @@ main.continue:
         bl    @scroff               ; Turn screen off
 
         bl    @f18unl               ; Unlock the F18a
+
+        .ifeq f18a.mode.30x80,1
+
         bl    @putvr                ; Turn on 30 rows mode.
               data >3140            ; F18a VR49 (>31), bit 40
+
+        .endif
 
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
@@ -48,7 +53,7 @@ main.continue:
         ; Clear screen (VDP SIT)
         ;------------------------------------------------------
         bl    @filv
-              data >0000,32,vdp.sit.size.80x30
+              data >0000,32,vdp.sit.size
                                     ; Clear screen
         ;------------------------------------------------------
         ; Initialize high memory expansion

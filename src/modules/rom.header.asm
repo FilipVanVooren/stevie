@@ -31,4 +31,8 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        #string 'STEVIE 1.1H'
+        .ifeq f18a.mode.30x80,1
+              #string 'STEVIE 1.1H (30X80)'
+        .else
+              #string 'STEVIE 1.1H (24X80)'
+        .endif

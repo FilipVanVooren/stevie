@@ -13,7 +13,7 @@ vdp.patterns.dump:
         ; Dump VDP patterns
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank0            ; | i  p0 = bank address
+              data bank0.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -36,7 +36,7 @@ fm.loadfile:
         ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2            ; | i  p0 = bank address
+              data bank2.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -68,7 +68,7 @@ fm.savefile:
         ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2            ; | i  p0 = bank address
+              data bank2.rom        ; | i  p0 = bank address
               data vec.2            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -89,7 +89,7 @@ fm.browse.fname.suffix:
         ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2            ; | i  p0 = bank address
+              data bank2.rom        ; | i  p0 = bank address
               data vec.3            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -110,7 +110,7 @@ fm.fastmode:
         ; Call function in bank 2
         ;------------------------------------------------------        
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2            ; | i  p0 = bank address
+              data bank2.rom        ; | i  p0 = bank address
               data vec.4            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -133,7 +133,7 @@ edkey.action.about:
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3            ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -153,7 +153,7 @@ dialog.load:
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3            ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.2            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -173,7 +173,7 @@ dialog.save:
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3            ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.3            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -193,7 +193,7 @@ dialog.unsaved:
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3            ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.4            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -215,7 +215,7 @@ dialog.block:
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3            ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.5            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -236,7 +236,7 @@ fb.tab.next:
         ; Put cursor on next tab position
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4            ; | i  p0 = bank address
+              data bank4.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -257,7 +257,7 @@ fb.ruler.init:
         ; Setup ruler in memory
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4            ; | i  p0 = bank address
+              data bank4.rom        ; | i  p0 = bank address
               data vec.2            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -278,7 +278,7 @@ fb.colorlines:
         ; Colorize frame buffer content
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4            ; | i  p0 = bank address
+              data bank4.rom        ; | i  p0 = bank address
               data vec.3            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -299,7 +299,7 @@ fb.vdpdump:
         ; Colorize frame buffer content
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4            ; | i  p0 = bank address
+              data bank4.rom        ; | i  p0 = bank address
               data vec.4            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------

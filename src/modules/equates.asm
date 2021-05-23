@@ -82,45 +82,36 @@
 *===============================================================================
 
 *--------------------------------------------------------------
-* Skip unused spectra2 code modules for reduced code size
+* Graphics mode selection
 *--------------------------------------------------------------
-skip_rom_bankswitch       equ  1       ; Skip support for ROM bankswitching
-skip_grom_cpu_copy        equ  1       ; Skip GROM to CPU copy functions
-skip_grom_vram_copy       equ  1       ; Skip GROM to VDP vram copy functions
-skip_vdp_vchar            equ  1       ; Skip vchar, xvchar
-skip_vdp_boxes            equ  1       ; Skip filbox, putbox
-skip_vdp_bitmap           equ  1       ; Skip bitmap functions
-skip_vdp_viewport         equ  1       ; Skip viewport functions
-skip_cpu_rle_compress     equ  1       ; Skip CPU RLE compression
-skip_cpu_rle_decompress   equ  1       ; Skip CPU RLE decompression
-skip_vdp_rle_decompress   equ  1       ; Skip VDP RLE decompression
-skip_vdp_px2yx_calc       equ  1       ; Skip pixel to YX calculation
-skip_sound_player         equ  1       ; Skip inclusion of sound player code
-skip_speech_detection     equ  1       ; Skip speech synthesizer detection
-skip_speech_player        equ  1       ; Skip inclusion of speech player code
-skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
-skip_random_generator     equ  1       ; Skip random functions
-skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
-skip_mem_paging           equ  1       ; Skip support for memory paging 
+  .ifeq f18a.mode.30x80,1
+
+pane.botrow               equ  29      ; Bottom row on screen
+
+  .else
+
+pane.botrow               equ  23      ; Bottom row on screen
+
+  .endif
+*--------------------------------------------------------------
+* Stevie Dialog / Pane specific equates
+*--------------------------------------------------------------
+pane.focus.fb             equ  0       ; Editor pane has focus
+pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-vdp.sit.size.80x30        equ  80*30   ; VDP SIT size when 80 columns, 30 rows
-vdp.sit.size.80x24        equ  80*24   ; VDP SIT size when 80 columns, 24 rows
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-vdp.cmdb.toprow.tat       equ  >1fd0   ; VDP TAT address of 1st CMDB row
+vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
+                                       ; VDP TAT address of 1st CMDB row 
+vdp.sit.size              equ  (pane.botrow + 1) * 80
+                                       ; VDP SIT size 80 columns, 24/30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
-*--------------------------------------------------------------
-* Stevie Dialog / Pane specific equates
-*--------------------------------------------------------------
-pane.botrow               equ  29      ; Bottom row on screen
-pane.focus.fb             equ  0       ; Editor pane has focus
-pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be 
 ;   hidden and no characters added to CMDB keyboard buffer

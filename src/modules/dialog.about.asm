@@ -74,7 +74,7 @@ dialog.about.content:
               data   txt.stevie     ; Show Stevie version
 
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size.80x30 - 160
+              data vdp.fb.toprow.sit,32,vdp.sit.size - 160
                                     ; Clear screen
         
         bl    @filv

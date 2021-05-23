@@ -11,7 +11,8 @@
 * Bank 4 "Janine"
 *
 ***************************************************************
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+        copy  "rom.build.asm"       ; Cartridge build options        
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -22,7 +23,7 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 ***************************************************************
 * BANK 4
 ********|*****|*********************|**************************
-bankid  equ   bank4                 ; Set bank identifier to current bank
+bankid  equ   bank4.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
@@ -31,7 +32,7 @@ bankid  equ   bank4                 ; Set bank identifier to current bank
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6030
-        clr   @bank0                ; Switch to bank 0 "Jill"
+        clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
 ********|*****|*********************|**************************
@@ -51,7 +52,7 @@ bankid  equ   bank4                 ; Set bank identifier to current bank
         ;------------------------------------------------------
         ; Activate bank 1 and branch to >6036
         ;------------------------------------------------------
-        clr   @bank1                ; Activate bank 1 "James" ROM
+        clr   @bank1.rom            ; Activate bank 1 "James" ROM
         clr   @bank1.ram            ; Activate bank 1 "James" RAM        
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
