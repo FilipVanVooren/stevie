@@ -25,4 +25,5 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 *--------------------------------------------------------------
 * Assembly (compile) options for Stevie
 *--------------------------------------------------------------
-f18a.mode.30x80           equ  1       ; F18a 30 rows mode on
+device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
+device.fg99.mode.adv      equ  0       ; FG99 advanced mode on

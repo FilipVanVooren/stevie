@@ -84,7 +84,7 @@
 *--------------------------------------------------------------
 * Graphics mode selection
 *--------------------------------------------------------------
-  .ifeq f18a.mode.30x80,1
+  .ifeq device.f18a.mode.30x80,1
 
 pane.botrow               equ  29      ; Bottom row on screen
 

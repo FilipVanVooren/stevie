@@ -47,7 +47,9 @@ xrom.farjump:
         mov   tmp2,*tmp3            ; Push source ROM bank to farjump stack
         mov   tmp3,@tv.fj.stackpnt  ; Set farjump stack pointer
 
-        ;jmp   rom.farjump.bankswitch.tgt.advfg99
+        .ifeq device.fg99.mode.adv,1
+        jmp   rom.farjump.bankswitch.tgt.advfg99
+        .endif
 
         ;------------------------------------------------------
         ; Bankswitch to target 8K ROM bank 
@@ -106,7 +108,9 @@ rom.farjump.return:
         
         mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
 
-        ;jmp   rom.farjump.bankswitch.src.advfg99
+        .ifeq device.fg99.mode.adv,1
+        jmp   rom.farjump.bankswitch.src.advfg99
+        .endif
 
         ;------------------------------------------------------
         ; Bankswitch to source 8K ROM bank 

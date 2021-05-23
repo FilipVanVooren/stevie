@@ -53,7 +53,11 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-        clr   @bank1.ram            ; Activate bank 1 "James" RAM        
+
+        .ifeq device.fg99.mode.adv,1
+        clr   @bank1.ram            ; Activate bank 1 "James" RAM
+        .endif
+
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff

@@ -37,7 +37,7 @@ main.continue:
 
         bl    @f18unl               ; Unlock the F18a
 
-        .ifeq f18a.mode.30x80,1
+        .ifeq device.f18a.mode.30x80,1
 
         bl    @putvr                ; Turn on 30 rows mode.
               data >3140            ; F18a VR49 (>31), bit 40

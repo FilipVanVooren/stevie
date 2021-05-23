@@ -147,7 +147,11 @@ reloc.stevie:
         ;------------------------------------------------------
 main:        
         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+
+        .ifeq device.fg99.mode.adv,1
         clr   @bank1.ram            ; Activate bank 1 "James" RAM
+        .endif
+
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Resident Stevie modules: >3000 - >3fff
