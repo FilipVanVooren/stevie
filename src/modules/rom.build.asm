@@ -22,8 +22,16 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 skip_mem_paging           equ  1       ; Skip support for memory paging 
+
 *--------------------------------------------------------------
-* Assembly (compile) options for Stevie
+* Classic99 F18a 24x80, no FG99 advanced mode
 *--------------------------------------------------------------
-device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
-device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
+;device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
+;device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
+
+
+*--------------------------------------------------------------
+* JS99er F18a 30x80, FG99 advanced mode
+*--------------------------------------------------------------
+device.f18a.mode.30x80    equ  1       ; F18a 30 rows mode on
+device.fg99.mode.adv      equ  1       ; FG99 advanced mode on
