@@ -10,8 +10,7 @@
 * 
 *     Mem range   Bytes    SAMS   Purpose
 *     =========   =====    ====   ==================================
-*     2000-2eff    3840           SP2 library
-*     2f00-2f1f      32           **RESERVED**
+*     2000-2f1f    3872           SP2 library
 *     2f20-2f3f      32           Function input/output parameters
 *     2f40-2f43       4           Keyboard
 *     2f4a-2f59      16           Timer tasks table

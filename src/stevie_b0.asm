@@ -129,7 +129,7 @@ reloc.sp2:
         data  >dead,>beef,>dead,>beef
         .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
 
-        .ifgt $, >2f00
+        .ifgt $, >2f1f
               .error '***** Aborted. SP2 library too large!'
         .else
               data $                ; Bank 0 ROM size OK.
