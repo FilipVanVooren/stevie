@@ -142,8 +142,18 @@ main:
         ;-----------------------------------------------------------------------
         copy  "hook.keyscan.asm"           ; spectra2 user hook: keyboard scan
         copy  "task.vdp.panes.asm"         ; Draw editor panes in VDP
+
+    .ifeq device.f18a.mode.30x80,1
+
         copy  "task.vdp.cursor.sat.asm"    ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.blink.asm"  ; Set cursor shape in VDP (blink)
+        copy  "task.vdp.cursor.f18a.asm"   ; Set cursor shape in VDP (blink)
+
+    .else 
+
+        copy  "task.vdp.cursor.9938.asm"   ; Set cursor shape in VDP (blink)    
+  
+    .endif
+
         copy  "task.oneshot.asm"           ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities

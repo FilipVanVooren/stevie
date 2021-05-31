@@ -26,12 +26,12 @@ skip_mem_paging           equ  1       ; Skip support for memory paging
 *--------------------------------------------------------------
 * Classic99 F18a 24x80, no FG99 advanced mode
 *--------------------------------------------------------------
-;device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
-;device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
+device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
+device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
 
 
 *--------------------------------------------------------------
 * JS99er F18a 30x80, FG99 advanced mode
 *--------------------------------------------------------------
-device.f18a.mode.30x80    equ  1       ; F18a 30 rows mode on
-device.fg99.mode.adv      equ  1       ; FG99 advanced mode on
+;device.f18a.mode.30x80    equ  1       ; F18a 30 rows mode on
+;device.fg99.mode.adv      equ  1       ; FG99 advanced mode on

@@ -99,12 +99,25 @@ main.continue:
         li    tmp0,timers
         mov   tmp0,@wtitab        
 
+      .ifeq device.f18a.mode.30x80,1
+
         bl    @mkslot
               data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
               data >0102,task.vdp.copy.sat ; Task 1 - Update VDP cursor position
               data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
               data >0330,task.oneshot      ; Task 3 - One shot task
               data eol
+
+      .else 
+
+        bl    @mkslot
+              data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
+              data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape              
+              data >0330,task.oneshot      ; Task 3 - One shot task
+              data eol
+
+      .endif
+
 
         bl    @mkhook
               data hook.keyscan     ; Setup user hook
