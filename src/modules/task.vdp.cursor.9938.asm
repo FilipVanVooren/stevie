@@ -25,22 +25,8 @@ task.vdp.cursor:
         ;------------------------------------------------------
         ; Hide cursor (show character behind cursor)
         ;------------------------------------------------------
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer        
-                                    ; \ i  @fb.top      = Address top row in fb
-                                    ; | i  @fb.topline  = Top line in fb
-                                    ; | i  @fb.row      = Current row in fb
-                                    ; | i  @fb.column   = Current column in fb
-                                    ; | i  @fb.colsline = Columns per line in fb
-                                    ; / o  @fb.current  = Updated pointer
-
-        mov   @fb.current,tmp1      ; \ 
-        movb  *tmp1,tmp1            ; | Get character in Frame Buffer
-        srl   tmp1,8                ; / 
-
-        seto  @fb.dirty
+        seto  @fb.dirty             ; Refresh frame buffer
         jmp   task.vdp.cursor.exit
-        
-        jmp   task.vdp.cursor.dump  ; Dump to vdp
         ;------------------------------------------------------
         ; Show cursor
         ;------------------------------------------------------
