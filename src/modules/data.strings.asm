@@ -30,7 +30,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 txt.keys.default   #string 'Edit: ^Help, ^Open, ^Save'
-txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
+txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Go M1, ^Save'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -66,7 +66,7 @@ txt.filetype.none  equ txt.ws4
 txt.head.load      byte 19,1,3,32
                    text 'Open DV80 file '
                    byte 2
-txt.hint.load      #string 'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
+txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 txt.keys.load      #string 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
 txt.keys.load2     #string 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End'
 
