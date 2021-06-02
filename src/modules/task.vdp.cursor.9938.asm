@@ -23,7 +23,7 @@ task.vdp.cursor:
         inv   @fb.curtoggle         ; Flip cursor shape flag
         jeq   task.vdp.cursor.visible
         ;------------------------------------------------------
-        ; Hide cursor (show character behind cursor)
+        ; Hide cursor
         ;------------------------------------------------------
         seto  @fb.dirty             ; Refresh frame buffer
         jmp   task.vdp.cursor.exit

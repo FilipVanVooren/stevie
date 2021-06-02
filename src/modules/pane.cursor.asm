@@ -67,7 +67,7 @@ pane.cursor.blink:
                                     ; | i  p1 = Byte to write
                                     ; / i  p2 = Number of bytes to write
 
-      .ifeq device.f18a.mode.30x80,1
+      .ifeq device.f18a,1
 
         bl    @mkslot
               data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position

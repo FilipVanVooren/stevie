@@ -33,7 +33,7 @@ stevie.tx8030:
         byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
 
 romsat:
-        data  >0000,>0001             ; Cursor YX, initial shape and colour
+        data  >0000,>0201             ; Cursor YX, initial shape and colour
         data  >0000,>0301             ; Current line indicator
         data  >0820,>0401             ; Current line indicator
 nosprite:        

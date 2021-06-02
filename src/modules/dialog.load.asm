@@ -66,8 +66,6 @@ dialog.load.keylist:
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor
-        li    tmp0,>0100            ; Cursor CMDB insert mode
-        movb  tmp0,@tv.curshape     ; Save cursor shape  
         mov   @tv.curshape,@ramsat+2 
                                     ; Get cursor shape and color
         ;-------------------------------------------------------

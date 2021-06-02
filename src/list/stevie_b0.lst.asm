@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210531-394485
+0009               * File: stevie_b0.asm               ; Version 210602-747549
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -43,16 +43,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026               *--------------------------------------------------------------
 0027               * Classic99 F18a 24x80, no FG99 advanced mode
 0028               *--------------------------------------------------------------
-0029      0000     device.f18a.mode.30x80    equ  0       ; F18a 30 rows mode on
-0030      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
-0031               
+0029      0001     device.f18a               equ  1       ; F18a GPU
+0030      0000     device.9938               equ  0       ; 9938 GPU
+0031      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
 0032               
-0033               *--------------------------------------------------------------
-0034               * JS99er F18a 30x80, FG99 advanced mode
-0035               *--------------------------------------------------------------
-0036               ;device.f18a.mode.30x80    equ  1       ; F18a 30 rows mode on
-0037               ;device.fg99.mode.adv      equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.394485
+0033               
+0034               *--------------------------------------------------------------
+0035               * JS99er F18a 30x80, FG99 advanced mode
+0036               *--------------------------------------------------------------
+0037               ; device.f18a             equ  0       ; F18a GPU
+0038               ; device.9938             equ  1       ; 9938 GPU
+0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
+**** **** ****     > stevie_b0.asm.747549
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -74,7 +76,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0017      6804     bank2.ram                 equ  >6804   ; Jacky
 0018      6806     bank3.ram                 equ  >6806   ; John
 0019      6808     bank4.ram                 equ  >6808   ; Janine
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -162,9 +164,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0083               *--------------------------------------------------------------
 0084               * Graphics mode selection
 0085               *--------------------------------------------------------------
-0091               
-0092      0017     pane.botrow               equ  23      ; Bottom row on screen
-0093               
+0087               
+0088      001D     pane.botrow               equ  29      ; Bottom row on screen
+0089               
 0095               *--------------------------------------------------------------
 0096               * Stevie Dialog / Pane specific equates
 0097               *--------------------------------------------------------------
@@ -178,9 +180,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0105      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 0106      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 0107      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-0108      1DF0     vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
+0108      1FD0     vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
 0109                                                      ; VDP TAT address of 1st CMDB row
-0110      0780     vdp.sit.size              equ  (pane.botrow + 1) * 80
+0110      0960     vdp.sit.size              equ  (pane.botrow + 1) * 80
 0111                                                      ; VDP SIT size 80 columns, 24/30 rows
 0112      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0113      9900     tv.colorize.reset         equ  >9900   ; Colorization off
@@ -401,7 +403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0328               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0329               *--------------------------------------------------------------
 0330      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -449,14 +451,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0031 600E 6030             data  kickstart.code1       ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0051               
-0059               
-0060 6010 1253             byte  18
-0061 6011 ....             text  'STEVIE 1.1H (9938)'
-0062                       even
-0063               
-0065               
-**** **** ****     > stevie_b0.asm.394485
+0035               
+0043               
+0044 6010 1253             byte  18
+0045 6011 ....             text  'STEVIE 1.1H (F18A)'
+0046                       even
+0047               
+0049               
+**** **** ****     > stevie_b0.asm.747549
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1278,7 +1280,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6268 1742             byte  23
-0260 6269 ....             text  'Build-ID  210531-394485'
+0260 6269 ....             text  'Build-ID  210602-747549'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5231,7 +5233,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F88 0040 
 0367 6F8A 0460  28         b     @main                 ; Give control to main program
      6F8C 3000 
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0125                                                   ; Spectra 2
 0126                       ;------------------------------------------------------
 0127                       ; End of File marker
@@ -5476,10 +5478,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      717C A010 
 0041 717E 1303  14         jeq   !                     ; Skip if ruler is hidden
 0042 7180 0204  20         li    tmp0,pane.botrow-2
-     7182 0015 
+     7182 001B 
 0043 7184 1002  14         jmp   fb.init.cont
 0044 7186 0204  20 !       li    tmp0,pane.botrow-1
-     7188 0016 
+     7188 001C 
 0045                       ;------------------------------------------------------
 0046                       ; Continue initialisation
 0047                       ;------------------------------------------------------
@@ -6093,7 +6095,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      738A 27C6 
 0079 738C 0034                   byte 0,52,32,18           ; Remove markers
      738E 2012 
-0080 7390 1700                   byte pane.botrow,0,32,50  ; Remove block shortcuts
+0080 7390 1D00                   byte pane.botrow,0,32,50  ; Remove block shortcuts
      7392 2032 
 0081 7394 FFFF                   data eol
 0082                       ;-------------------------------------------------------
@@ -6360,8 +6362,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7466 0050 
 0034               
 0035               romsat:
-0036 7468 0000             data  >0000,>0001             ; Cursor YX, initial shape and colour
-     746A 0001 
+0036 7468 0000             data  >0000,>0201             ; Cursor YX, initial shape and colour
+     746A 0201 
 0037 746C 0000             data  >0000,>0301             ; Current line indicator
      746E 0301 
 0038 7470 0820             data  >0820,>0401             ; Current line indicator
@@ -6526,7 +6528,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 7506 4B42             byte  75
-0018 7507 ....             text  'Build: 210531-394485 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 7507 ....             text  'Build: 210602-747549 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6926,7 +6928,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      79AA BEEF 
      79AC DEAD 
      79AE BEEF 
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0160               
 0164 79B0 38EC                   data $                ; Bank 0 ROM size OK.
 0166               
@@ -7093,7 +7095,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7AA4 7F7F 
      7AA6 7F7F 
      7AA8 7F7F 
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0171                       ;------------------------------------------------------
 0172                       ; Bank specific vector table
 0173                       ;------------------------------------------------------
@@ -7143,7 +7145,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0038 7FD6 2026     vec.30  data  cpu.crash             ;
 0039 7FD8 2026     vec.31  data  cpu.crash             ;
 0040 7FDA 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b0.asm.394485
+**** **** ****     > stevie_b0.asm.747549
 0183               
 0184               
 0185               

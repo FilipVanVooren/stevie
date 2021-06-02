@@ -31,7 +31,7 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        .ifeq device.f18a.mode.30x80,1
+        .ifeq device.f18a,1
 
            .ifeq device.fg99.mode.adv,1
               #string 'STEVIE 1.1H (F18A+FG99)'
