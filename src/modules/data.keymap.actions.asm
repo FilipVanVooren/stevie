@@ -38,7 +38,7 @@ keymap_actions.editor:
         ; Block marking/modifier
         ;-------------------------------------------------------
         data  key.ctrl.v, pane.focus.fb, edkey.action.block.mark
-        data  key.ctrl.r, pane.focus.fb, edkey.action.block.reset
+        data  key.fctn.9, pane.focus.fb, edkey.action.block.reset
         data  key.ctrl.c, pane.focus.fb, edkey.action.block.copy
         data  key.ctrl.d, pane.focus.fb, edkey.action.block.delete
         data  key.ctrl.m, pane.focus.fb, edkey.action.block.move

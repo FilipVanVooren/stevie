@@ -29,8 +29,8 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string '^Help, ^Open, ^Save'
-txt.keys.block     #string '^Del, ^Copy, ^Move, ^Goto M1, ^Reset, ^Save'
+txt.keys.default   #string 'Edit: ^Help, ^Open, ^Save'
+txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -67,8 +67,8 @@ txt.head.load      byte 19,1,3,32
                    text 'Open DV80 file '
                    byte 2
 txt.hint.load      #string 'Fastmode uses CPU RAM instead of VDP RAM for file buffer (HRD/HDX/IDE).'
-txt.keys.load      #string 'F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
-txt.keys.load2     #string 'F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End'
+txt.keys.load      #string 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
+txt.keys.load2     #string 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
@@ -80,7 +80,7 @@ txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
                    byte 2
 txt.hint.save      #string ' '
-txt.keys.save      #string 'F9=Back, F3=Clear, F-H=Home, F-L=End'
+txt.keys.save      #string 'Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -90,7 +90,7 @@ txt.head.unsaved   byte 20,1,3,32
                    byte 2
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
-txt.keys.unsaved   #string 'F9=Back, F6=Proceed, ENTER=Save file'
+txt.keys.unsaved   #string 'File: F9=Back, F6=Proceed, ENTER=Save file'
 
 ;--------------------------------------------------------------
 ; Dialog "About"
@@ -101,8 +101,8 @@ txt.head.about     byte 10,1,3,32
 
 txt.info.about     #string 
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     byte 39
-                   text 'F9=Back, ENTER=Back, '
+txt.keys.about     byte 45
+                   text 'Help: F9=Back, ENTER=Back, '
                    byte 14,15
                    text '=Alpha Lock down'
 

@@ -144,7 +144,6 @@ dialog.about.help.part1:
         #string '   Ctrl o (^o)    Open file'
         #string '   Ctrl s (^s)    Save file'
         #string '   Ctrl v (^v)    Set M1/M2 marker'
-        #string '   Ctrl r (^r)    Reset M1/M2 markers'
         #string '   Ctrl z (^z)    Cycle color schemes'
         
 dialog.about.help.part2:
