@@ -58,7 +58,7 @@ fm.loadsave.cb.indicator1.saveblock:
               byte pane.botrow,0
               data txt.block.save   ; Display "Saving block...."              
 
-        jmp   fm.loadsave.cb.indicator1.filename
+        jmp   fm.loadsave.cb.indicator1.exit
         ;------------------------------------------------------
         ; Display Loading....
         ;------------------------------------------------------

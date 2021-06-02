@@ -21,14 +21,9 @@ pane.topline:
         dect  stack        
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
-        ; Show buffer number
-        ;------------------------------------------------------
-        bl    @putat 
-              byte  0,0
-              data  txt.bufnum
-        ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------ 
+        clr   @wyx                  ; y=0, x=0
         mov   @edb.filename.ptr,@parm1  
                                     ; Get string to display
         li    tmp0,47
@@ -45,9 +40,6 @@ pane.topline:
                                     ; | i  @parm3 = Fill characgter
                                     ; | i  @parm4 = Pointer to buffer with
                                     ; /             output string        
-
-        bl    @setx
-              data 3                ; Position cursor
       
         mov   @outparm1,tmp1        ; \ Display padded filename
         bl    @xutst0               ; / 
