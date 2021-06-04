@@ -51,29 +51,16 @@ pane.botline.show_mode:
         ; Overwrite mode
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,52
+              byte  pane.botrow,55
               data  txt.ovrwrite
-        jmp   pane.botline.show_changed
+        jmp   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Insert mode
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
         bl    @putat
-              byte  pane.botrow,52
+              byte  pane.botrow,55
               data  txt.insert
-        ;------------------------------------------------------
-        ; Show if text was changed in editor buffer
-        ;------------------------------------------------------        
-pane.botline.show_changed:
-        mov   @edb.dirty,tmp0
-        jeq   pane.botline.show_linecol
-        ;------------------------------------------------------
-        ; Show "*"
-        ;------------------------------------------------------        
-        bl    @putat
-              byte pane.botrow,56
-              data txt.star
-        jmp   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Show "line,column"
         ;------------------------------------------------------        

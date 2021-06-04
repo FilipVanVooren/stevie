@@ -29,8 +29,8 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string 'Edit: ^Help, ^Open, ^Save'
-txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Go M1, ^Save'
+txt.keys.default   #string 'Edit: ^Help, ^New, ^Open, ^Save'
+txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -67,8 +67,8 @@ txt.head.load      byte 19,1,3,32
                    text 'Open DV80 file '
                    byte 2
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
-txt.keys.load      #string 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
-txt.keys.load2     #string 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End'
+txt.keys.load      #string 'File>Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
+txt.keys.load2     #string 'File>Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
@@ -80,7 +80,7 @@ txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
                    byte 2
 txt.hint.save      #string ' '
-txt.keys.save      #string 'Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
+txt.keys.save      #string 'File>Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -90,7 +90,7 @@ txt.head.unsaved   byte 20,1,3,32
                    byte 2
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
-txt.keys.unsaved   #string 'File: F9=Back, F6=Proceed, ENTER=Save file'
+txt.keys.unsaved   #string 'File>Confirm: F9=Back, F6=Proceed, ENTER=Save file'
 
 ;--------------------------------------------------------------
 ; Dialog "About"

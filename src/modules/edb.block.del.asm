@@ -60,7 +60,7 @@ edb.block.delete:
                                     ; /         
 
         bl    @hchar
-              byte pane.botrow,0,32,50
+              byte pane.botrow,0,32,55
               data eol              ; Remove markers and block shortcuts
 
         bl    @putat

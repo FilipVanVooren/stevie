@@ -21,9 +21,31 @@ pane.topline:
         dect  stack        
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
+        ; Show if text was changed in editor buffer
+        ;------------------------------------------------------        
+        mov   @edb.dirty,tmp0 
+        jeq   pane.topline.blank
+        ;------------------------------------------------------
+        ; Show "*" 
+        ;------------------------------------------------------        
+        bl    @putat
+              byte 0,0              ; y=0, x=0
+              data txt.star
+        jmp   pane.topline.file
+        ;------------------------------------------------------
+        ; Show " " 
+        ;------------------------------------------------------        
+pane.topline.blank:        
+        bl    @putat
+              byte 0,0              ; y=0, x=0
+              data txt.ws1          ; Single white space
+        ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------ 
-        clr   @wyx                  ; y=0, x=0
+pane.topline.file:        
+        bl    @at
+              byte 0,2              ; y=0, x=2
+
         mov   @edb.filename.ptr,@parm1  
                                     ; Get string to display
         li    tmp0,47

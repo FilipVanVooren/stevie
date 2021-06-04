@@ -16,8 +16,9 @@ task.vdp.cursor:
         jeq   task.vdp.cursor.visible
         ;------------------------------------------------------
         ; Hide cursor
-        ;------------------------------------------------------        
-        clr   @ramsat+2             ; Hide cursor
+        ;------------------------------------------------------  
+        clr   tmp0      
+        movb  tmp0,@ramsat+3        ; Hide cursor
         jmp   task.vdp.cursor.copy.sat
                                     ; Update VDP SAT and exit task
         ;------------------------------------------------------

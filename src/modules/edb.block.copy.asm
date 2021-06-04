@@ -85,7 +85,7 @@ edb.block.copy:
                                     ; / 
 
         bl    @hchar
-              byte pane.botrow,0,32,50
+              byte pane.botrow,0,32,55
               data eol              ; Remove markers and block shortcuts
         ;------------------------------------------------------
         ; Check message to display
