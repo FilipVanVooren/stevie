@@ -1,6 +1,18 @@
 * FILE......: data.keymap.keys.asm
 * Purpose...: Keyboard mapping
 
+
+*---------------------------------------------------------------
+* Keyboard scancodes - Letter keys
+*-------------|---------------------|---------------------------
+key.uc.n      equ >4e00             ; N
+key.uc.s      equ >5300             ; S
+key.uc.o      equ >4f00             ; O
+key.lc.n      equ >6e00             ; n
+key.lc.s      equ >7300             ; s
+key.lc.o      equ >6f00             ; o
+
+
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------

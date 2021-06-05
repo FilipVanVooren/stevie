@@ -206,10 +206,10 @@ dialog.unsaved:
 
 
 ***************************************************************
-* Stub for Dialog "Move/Copy/Delete block"
+* Stub for Dialog "File dialog"
 * bank3 vec.5
 ********|*****|*********************|**************************
-dialog.block:
+dialog.file:
         bl    @pane.cursor.hide     ; Hide cursor
         ;------------------------------------------------------
         ; Show dialog

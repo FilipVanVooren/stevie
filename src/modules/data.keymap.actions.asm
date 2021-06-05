@@ -47,14 +47,16 @@ keymap_actions.editor:
         ; Other action keys
         ;-------------------------------------------------------
         data  key.fctn.plus, pane.focus.fb, edkey.action.quit
+        data  key.ctrl.q, pane.focus.fb, edkey.action.quit
         data  key.ctrl.u, pane.focus.fb, edkey.action.toggle.ruler        
         data  key.ctrl.z, pane.focus.fb, pane.action.colorscheme.cycle
+        data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
+        data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
-        data  key.ctrl.comma, pane.focus.fb, edkey.action.fb.fname.dec.load
-        data  key.ctrl.dot, pane.focus.fb, edkey.action.fb.fname.inc.load
         data  key.ctrl.h, pane.focus.fb, edkey.action.about        
+        data  key.ctrl.f, pane.focus.fb, dialog.file
         data  key.ctrl.s, pane.focus.fb, dialog.save                
         data  key.ctrl.o, pane.focus.fb, dialog.load        
         ;-------------------------------------------------------
@@ -70,22 +72,32 @@ keymap_actions.editor:
 *---------------------------------------------------------------
 keymap_actions.cmdb:
         ;-------------------------------------------------------
-        ; Dialog specific: File load
+        ; Dialog: File
+        ;-------------------------------------------------------
+        data  key.enter, id.dialog.file, edkey.action.cmdb.close.dialog
+        data  key.uc.n, id.dialog.file, edkey.action.cmdb.file.new
+        data  key.uc.s, id.dialog.file, dialog.save
+        data  key.uc.o, id.dialog.file, dialog.load
+        data  key.lc.n, id.dialog.file, edkey.action.cmdb.file.new
+        data  key.lc.s, id.dialog.file, dialog.save
+        data  key.lc.o, id.dialog.file, dialog.load
+        ;-------------------------------------------------------
+        ; Dialog: Open DV80 file
         ;-------------------------------------------------------
         data  key.fctn.5, id.dialog.load, edkey.action.cmdb.fastmode.toggle
         data  key.enter, id.dialog.load, edkey.action.cmdb.load
         ;-------------------------------------------------------
-        ; Dialog specific: Unsaved changes
+        ; Dialog: Unsaved changes
         ;-------------------------------------------------------
         data  key.fctn.6, id.dialog.unsaved, edkey.action.cmdb.proceed
         data  key.enter, id.dialog.unsaved, dialog.save
         ;-------------------------------------------------------
-        ; Dialog specific: File save
+        ; Dialog: Save DV80 file
         ;-------------------------------------------------------
         data  key.enter, id.dialog.save, edkey.action.cmdb.save
         data  key.enter, id.dialog.saveblock, edkey.action.cmdb.save
         ;-------------------------------------------------------
-        ; Dialog specific: About
+        ; Dialog: About
         ;-------------------------------------------------------
         data  key.fctn.9, id.dialog.about, edkey.action.cmdb.close.about
         data  key.enter, id.dialog.about, edkey.action.cmdb.close.about

@@ -77,6 +77,7 @@ main:
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------         
         copy  "dialog.about.asm"    ; Dialog "About"
+        copy  "dialog.file.asm"     ; Dialog "File"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"

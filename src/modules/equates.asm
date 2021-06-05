@@ -121,6 +121,7 @@ id.dialog.saveblock       equ  12      ; ID dialog "Save codeblock to DV80 file"
 id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
 id.dialog.block           equ  102     ; ID dialog "Block move/copy/delete"
 id.dialog.about           equ  103     ; ID dialog "About"
+id.dialog.file            equ  104     ; ID dialog "File"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
