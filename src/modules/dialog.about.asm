@@ -22,6 +22,7 @@ dialog.about:
 
         li    tmp0,txt.about.build
         mov   tmp0,@cmdb.paninfo    ; Info line
+        clr   @cmdb.panmarkers      ; No key markers        
 
         li    tmp0,txt.hint.about
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line

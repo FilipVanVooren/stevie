@@ -62,4 +62,5 @@ low.digits:
         byte >00,>00,>00,>38,>28,>38,>28,>38
 
 cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
-arrow:  data  >0000,>0010,>08fc,>0810 ; 27. arrow
+arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
+hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker

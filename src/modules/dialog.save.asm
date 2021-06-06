@@ -59,6 +59,7 @@ dialog.save.header:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
+        clr   @cmdb.panmarkers      ; No key markers        
 
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
@@ -70,9 +71,7 @@ dialog.save.header:
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-        bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2 
-                                    ; Get cursor shape and color        
+        bl    @pane.cursor.blink    ; Show cursor 
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

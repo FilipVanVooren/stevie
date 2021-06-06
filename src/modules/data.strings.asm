@@ -48,9 +48,9 @@ txt.ruler          text    '.........'
                    text    '.........'
                    byte    25
                    even
-
 txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
+txt.keymarker      byte 1,28
 
 txt.ws1            #string ' '
 txt.ws2            #string '  '
@@ -112,9 +112,9 @@ txt.head.about     byte 10,1,3,32
                    byte 2
 
 txt.info.about     #string 
-txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     byte 45
-                   text 'Help: F9=Back, ENTER=Back, '
+txt.hint.about     #string 'Press F9 to return to editor.'
+txt.keys.about     byte 33
+                   text 'Help: F9=Back, '
                    byte 14,15
                    text '=Alpha Lock down'
 
@@ -126,9 +126,11 @@ txt.head.file      byte 9,1,3,32
                    text 'File '
                    byte 2
 
-txt.info.file      #string '[N]ew file, [O]pen file, [S]ave file'
-txt.hint.file      #string 'Press N,O,S or ENTER to return to editor.'
-txt.keys.file      #string 'File: F9=Back, ENTER=Back'
+txt.info.file      #string 'New, Open, Save'
+pos.info.file      byte 0,5,11,>ff
+txt.hint.file      #string 'Press N,O,S or F9 to return to editor.'
+txt.keys.file      #string 'File: F9=Back'
+
 
 
 ;--------------------------------------------------------------

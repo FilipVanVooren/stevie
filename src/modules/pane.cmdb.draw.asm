@@ -20,8 +20,6 @@ pane.cmdb.draw:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------        
         ; Command buffer header line
         ;------------------------------------------------------
@@ -32,7 +30,6 @@ pane.cmdb.draw:
         mov   tmp0,@parm3           ; Set character to fill
         li    tmp0,rambuf
         mov   tmp0,@parm4           ; Set pointer to buffer for output string
-
 
         bl    @tv.pad.string        ; Pad string to specified length
                                     ; \ i  @parm1 = Pointer to string
@@ -59,37 +56,65 @@ pane.cmdb.draw:
         mov   @cmdb.paninfo,tmp1    ; Null pointer?
         jeq   pane.cmdb.draw.clear  ; Yes, display normal prompt
 
+        mov   @cmdb.paninfo,@parm1  ; Get string to display
+        li    tmp0,80
+        mov   tmp0,@parm2           ; Set requested length
+        li    tmp0,32
+        mov   tmp0,@parm3           ; Set character to fill
+        li    tmp0,rambuf
+        mov   tmp0,@parm4           ; Set pointer to buffer for output string
+
+        bl    @tv.pad.string        ; Pad string to specified length
+                                    ; \ i  @parm1 = Pointer to string
+                                    ; | i  @parm2 = Requested length
+                                    ; | i  @parm3 = Fill character
+                                    ; | i  @parm4 = Pointer to buffer with
+                                    ; /             output string                                    
+
         bl    @at 
               byte pane.botrow-3,0  ; Position cursor
 
-        movb  *tmp1,@cmdb.cmdlen    ; \  Deref & set length of message
-        movb  *tmp1,tmp2            ; |
-        srl   tmp2,8                ; |  
-        bl    @xutst0               ; /  Display info message
+        mov   @outparm1,tmp1        ; \ Display pane header
+        bl    @xutst0               ; / 
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------
-pane.cmdb.draw.clear:        
-        mov   @cmdb.cmdlen,tmp0     ; \
-        srl   tmp0,8                ; | Set cursor after command prompt
-        a     @cmdb.yxprompt,tmp0   ; |
-        mov   tmp0,@wyx             ; /
+pane.cmdb.draw.clear:
+        bl    @hchar
+              byte pane.botrow-2,0,32,80   
+              data EOL              ; Remove key markers
+        ;------------------------------------------------------
+        ; Show key markers ?
+        ;------------------------------------------------------
+        mov   @cmdb.panmarkers,tmp0 
+        jeq   pane.cmdb.draw.hint   ; no, skip key markers
+        ;------------------------------------------------------
+        ; Loop over key marker list
+        ;------------------------------------------------------
+pane.cmdb.draw.marker.loop:        
+        movb  *tmp0+,tmp1           ; Get X position
+        srl   tmp1,8                ; Right align
+        ci    tmp1,>00ff            ; End of list reached?
+        jeq   pane.cmdb.draw.hint   ; Yes, exit loop
+        
+        ori   tmp1,(pane.botrow - 2) * 256
+                                    ; y=bottom row - 3, x=(key marker position)
+        mov   tmp1,@wyx             ; Set cursor position
 
-        bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
-                                    ; \ i  @wyx = Cursor position
-                                    ; / o  tmp0 = VDP target address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
 
-        li    tmp1,32
+        bl    @putstr
+              data txt.keymarker    ; Show key marker
 
-        mov   @cmdb.cmdlen,tmp2     ; \
-        srl   tmp2,8                ; | Determine number of bytes to fill.
-        neg   tmp2                  ; | Based on command & prompt length
-        ai    tmp2,2*80 - 1         ; /
+        mov   *stack+,tmp0          ; Pop tmp0
+        ;------------------------------------------------------
+        ; Show marker
+        ;------------------------------------------------------
+        jmp   pane.cmdb.draw.marker.loop  
+                                    ; Next iteration
 
-        bl    @xfilv                ; \ Copy CPU memory to VDP memory
-                                    ; | i  tmp0 = VDP target address
-                                    ; | i  tmp1 = Byte to fill
-                                    ; / i  tmp2 = Number of bytes to fill
+
         ;------------------------------------------------------
         ; Display pane hint in command buffer
         ;------------------------------------------------------
@@ -144,7 +169,6 @@ pane.cmdb.draw.promptcmd:
         ; Exit
         ;------------------------------------------------------
 pane.cmdb.draw.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11

@@ -34,6 +34,7 @@ dialog.unsaved:
 
         li    tmp0,txt.info.unsaved
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.unsaved
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line

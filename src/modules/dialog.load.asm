@@ -42,6 +42,7 @@ dialog.load.setup:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
+        clr   @cmdb.panmarkers      ; No key markers        
 
         li    tmp0,txt.hint.load
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog

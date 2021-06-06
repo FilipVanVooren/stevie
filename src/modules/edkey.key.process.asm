@@ -50,6 +50,21 @@ edkey.key.check.next:
         c     tmp1,*tmp2            ; Action key matched?
         jeq   edkey.key.check.scope
                                     ; Yes, check scope
+        ;-------------------------------------------------------
+        ; If key in range 'a..z' then also check 'A..Z'
+        ;-------------------------------------------------------
+        ci    tmp1,>6100            ; ASCII 97 'a'
+        jlt   edkey.key.check.next.entry
+
+        ci    tmp1,>7a00            ; ASCII 122 'z'
+        jgt   edkey.key.check.next.entry        
+
+        ai    tmp1,->2000           ; Make uppercase
+        c     tmp1,*tmp2            ; Action key matched?
+        jeq   edkey.key.check.scope
+                                    ; Yes, check scope
+
+edkey.key.check.next.entry:
         ai    tmp2,6                ; Skip current entry
         jmp   edkey.key.check.next  ; Check next entry
         ;-------------------------------------------------------

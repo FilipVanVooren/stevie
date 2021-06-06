@@ -74,13 +74,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: File
         ;-------------------------------------------------------
-        data  key.enter, id.dialog.file, edkey.action.cmdb.close.dialog
         data  key.uc.n, id.dialog.file, edkey.action.cmdb.file.new
         data  key.uc.s, id.dialog.file, dialog.save
         data  key.uc.o, id.dialog.file, dialog.load
-        data  key.lc.n, id.dialog.file, edkey.action.cmdb.file.new
-        data  key.lc.s, id.dialog.file, dialog.save
-        data  key.lc.o, id.dialog.file, dialog.load
         ;-------------------------------------------------------
         ; Dialog: Open DV80 file
         ;-------------------------------------------------------
@@ -100,7 +96,6 @@ keymap_actions.cmdb:
         ; Dialog: About
         ;-------------------------------------------------------
         data  key.fctn.9, id.dialog.about, edkey.action.cmdb.close.about
-        data  key.enter, id.dialog.about, edkey.action.cmdb.close.about
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------        

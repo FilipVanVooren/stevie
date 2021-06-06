@@ -35,6 +35,9 @@ dialog.file:
         li    tmp0,txt.info.file
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
+        li    tmp0,pos.info.file
+        mov   tmp0,@cmdb.panmarkers ; Show letter markers
+
         li    tmp0,txt.hint.file
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
