@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b5.asm               ; Version 210608-1965651
+0009               * File: stevie_b5.asm               ; Version 210608-1985110
 0010               *
 0011               * Bank 5 "Jumbo"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -407,7 +407,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0330               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0331               *--------------------------------------------------------------
 0332      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -415,7 +415,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0021      3000     sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 0022                                                   ; grows downwards to >2000
 0023               ***************************************************************
-0024               * BANK 4
+0024               * BANK 5
 0025               ********|*****|*********************|**************************
 0026      600A     bankid  equ   bank5.rom             ; Set bank identifier to current bank
 0027                       aorg  >6000
@@ -431,7 +431,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0004               *--------------------------------------------------------------
 0005               * Vector table for trampoline functions
 0006               *--------------------------------------------------------------
-0007 6000 2026     vec.1   data  cpu.crash             ;
+0007 6000 604A     vec.1   data  vdp.patterns.dump     ; Dump sprite/character patterns to VDP
 0008 6002 2026     vec.2   data  cpu.crash             ;
 0009 6004 2026     vec.3   data  cpu.crash             ;
 0010 6006 2026     vec.4   data  cpu.crash             ;
@@ -463,7 +463,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 603A 2026     vec.30  data  cpu.crash             ;
 0037 603C 2026     vec.31  data  cpu.crash             ;
 0038 603E 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0033               
 0034               
 0035               ***************************************************************
@@ -1184,7 +1184,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210608-1965651'
+0260 21D3 ....             text  'Build-ID  210608-1985110'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5137,7 +5137,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF4 0040 
 0367 2EF6 0460  28         b     @main                 ; Give control to main program
      2EF8 6046 
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0045                                                   ; Relocated spectra2 in low MEMEXP, was
 0046                                                   ; copied to >2000 from ROM in bank 0
 0047                       ;------------------------------------------------------
@@ -6426,7 +6426,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 3442 4C42             byte  76
-0018 3443 ....             text  'Build: 210608-1965651 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 3443 ....             text  'Build: 210608-1985110 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6862,7 +6862,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3958 BEEF 
      395A DEAD 
      395C BEEF 
-**** **** ****     > stevie_b5.asm.1965651
+**** **** ****     > stevie_b5.asm.1985110
 0070               ***************************************************************
 0071               * Step 4: Include main editor modules
 0072               ********|*****|*********************|**************************
@@ -6873,29 +6873,229 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076                       ;-----------------------------------------------------------------------
 0077                       ; Patterns
 0078                       ;-----------------------------------------------------------------------
-0079               
-0080                       ;-----------------------------------------------------------------------
-0081                       ; Stubs using trampoline
+0079                       copy  "patterns.vdpdump.asm"
+**** **** ****     > patterns.vdpdump.asm
+0001               * FILE......: patterns.vdpdump.asm
+0002               * Purpose...: Dump sprite/character patterns to VDP
+0003               
+0004               ***************************************************************
+0005               * Dump sprite/character patterns to VDP
+0006               ********|*****|*********************|**************************
+0007               vdp.patterns.dump:
+0008 604A 0649  14         dect  stack
+0009 604C C64B  30         mov   r11,*stack            ; Push return address
+0010                       ;-------------------------------------------------------
+0011                       ; Dump sprite patterns from ROM to VDP SDT
+0012                       ;-------------------------------------------------------
+0013 604E 06A0  32         bl    @cpym2v
+     6050 248A 
+0014 6052 2800                   data sprpdt,cursors,5*8
+     6054 6066 
+     6056 0028 
+0015                       ;-------------------------------------------------------
+0016                       ; Dump character patterns from ROM to VDP PDT
+0017                       ;-------------------------------------------------------
+0018 6058 06A0  32         bl    @cpym2v
+     605A 248A 
+0019 605C 1008                   data >1008,patterns,29*8
+     605E 608E 
+     6060 00E8 
+0020                       ;-------------------------------------------------------
+0021                       ; Exit
+0022                       ;-------------------------------------------------------
+0023               vdp.patterns.dump.exit:
+0024 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
+0025 6064 045B  20         b     *r11                  ; Return to task
+**** **** ****     > stevie_b5.asm.1985110
+0080                                                   ; Dump patterns to VDP
+0081                       copy  "patterns.data.asm"   ; Pattern definitions sprites & chars
+**** **** ****     > patterns.data.asm
+0001               * FILE......: patterns.data.asm
+0002               * Purpose...: Character definitions sprites & characters
+0003               
+0004               ;--------------------------------------------------------------
+0005               ; Sprite patterns
+0006               ;--------------------------------------------------------------
+0007               cursors:
+0008 6066 0000             byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
+     6068 0000 
+     606A 0000 
+     606C 001C 
+0009 606E 1010             byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
+     6070 1010 
+     6072 1010 
+     6074 1000 
+0010 6076 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
+     6078 1C1C 
+     607A 1C1C 
+     607C 1C00 
+0011 607E 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
+     6080 0307 
+     6082 0703 
+     6084 0100 
+0012 6086 1C08             byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
+     6088 0000 
+     608A 0000 
+     608C 0000 
+0013               
+0014               
+0015               
+0016               ;--------------------------------------------------------------
+0017               ; Character patterns
+0018               ;--------------------------------------------------------------
+0019               patterns:
+0020 608E 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
+     6090 0000 
+     6092 FF00 
+     6094 0000 
+0021 6096 8080             data  >8080,>8080,>ff80,>8080 ; 02. Connector |-
+     6098 8080 
+     609A FF80 
+     609C 8080 
+0022 609E 0404             data  >0404,>0404,>ff04,>0404 ; 03. Connector -|
+     60A0 0404 
+     60A2 FF04 
+     60A4 0404 
+0023               
+0024               patterns.box:
+0025 60A6 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
+     60A8 0000 
+     60AA FF80 
+     60AC BFA0 
+0026 60AE 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
+     60B0 0000 
+     60B2 FC04 
+     60B4 F414 
+0027 60B6 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
+     60B8 A0A0 
+     60BA A0A0 
+     60BC A0A0 
+0028 60BE 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
+     60C0 1414 
+     60C2 1414 
+     60C4 1414 
+0029 60C6 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
+     60C8 A0A0 
+     60CA BF80 
+     60CC FF00 
+0030 60CE 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
+     60D0 1414 
+     60D2 F404 
+     60D4 FC00 
+0031 60D6 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
+     60D8 C0C0 
+     60DA C0C0 
+     60DC 0080 
+0032 60DE 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+     60E0 0F0F 
+     60E2 0F0F 
+     60E4 0000 
+0033               
+0034               
+0035               patterns.cr:
+0036 60E6 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+     60E8 6C48 
+     60EA 4800 
+     60EC 7C00 
+0037 60EE 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+     60F0 64FC 
+     60F2 6020 
+     60F4 0000 
+0038               
+0039               
+0040               alphalock:
+0041 60F6 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
+     60F8 8894 
+     60FA 9C94 
+     60FC C0FF 
+0042 60FE FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
+     6100 4444 
+     6102 4474 
+     6104 0CFC 
+0043               
+0044               
+0045               vertline:
+0046 6106 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
+     6108 1010 
+     610A 1010 
+     610C 1010 
+0047 610E 0000             data  >0000,>0000,>3030,>3030 ; 17. Tab indicator
+     6110 0000 
+     6112 3030 
+     6114 3030 
+0048               
+0049               
+0050               low.digits:
+0051                       ; digits 1-4 (18-21)
+0052 6116 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
+     6118 0010 
+     611A 3010 
+     611C 1038 
+0053 611E 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
+     6120 0038 
+     6122 0838 
+     6124 2038 
+0054 6126 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
+     6128 0038 
+     612A 0838 
+     612C 0838 
+0055 612E 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
+     6130 0028 
+     6132 2838 
+     6134 0808 
+0056                       ; digits 5-8 (22-25)
+0057 6136 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
+     6138 0038 
+     613A 2038 
+     613C 0838 
+0058 613E 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
+     6140 0038 
+     6142 2038 
+     6144 2838 
+0059 6146 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
+     6148 0038 
+     614A 0810 
+     614C 2020 
+0060 614E 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
+     6150 0038 
+     6152 2838 
+     6154 2838 
+0061               
+0062 6156 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
+     6158 7F7F 
+     615A 7F7F 
+     615C 7F7F 
+0063 615E 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
+     6160 0010 
+     6162 08FC 
+     6164 0810 
+0064 6166 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
+     6168 0000 
+     616A 0000 
+     616C 0000 
+**** **** ****     > stevie_b5.asm.1985110
 0082                       ;-----------------------------------------------------------------------
-0083                       copy  "rom.stubs.bank5.asm" ; Stubs for functions in other banks
+0083                       ; Stubs using trampoline
+0084                       ;-----------------------------------------------------------------------
+0085                       copy  "rom.stubs.bank5.asm" ; Stubs for functions in other banks
 **** **** ****     > rom.stubs.bank5.asm
 0001               * FILE......: rom.stubs.bank5.asm
 0002               * Purpose...: Bank 5 stubs for functions in other banks
-**** **** ****     > stevie_b5.asm.1965651
-0084                       ;-----------------------------------------------------------------------
-0085                       ; Bank specific vector table
+**** **** ****     > stevie_b5.asm.1985110
 0086                       ;-----------------------------------------------------------------------
-0090 604A 604A                   data $                ; Bank 1 ROM size OK.
-0092               
-0093               *--------------------------------------------------------------
-0094               * Video mode configuration
+0087                       ; Bank specific vector table
+0088                       ;-----------------------------------------------------------------------
+0092 616E 616E                   data $                ; Bank 5 ROM size OK.
+0094               
 0095               *--------------------------------------------------------------
-0096      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0097      0004     spfbck  equ   >04                   ; Screen background color.
-0098      339A     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-0099      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0100      0050     colrow  equ   80                    ; Columns per row
-0101      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0102      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0103      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0104      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0096               * Video mode configuration
+0097               *--------------------------------------------------------------
+0098      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0099      0004     spfbck  equ   >04                   ; Screen background color.
+0100      339A     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0101      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0102      0050     colrow  equ   80                    ; Columns per row
+0103      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0104      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0105      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0106      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

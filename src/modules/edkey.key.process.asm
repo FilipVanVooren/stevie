@@ -63,6 +63,10 @@ edkey.key.check.next:
         c     tmp1,*tmp2            ; Action key matched?
         jeq   edkey.key.check.scope
                                     ; Yes, check scope
+        ;-------------------------------------------------------
+        ; Key is no action key, keep case for later (buffer)
+        ;-------------------------------------------------------
+        ai    tmp1,>2000            ; Make lowercase
 
 edkey.key.check.next.entry:
         ai    tmp2,6                ; Skip current entry

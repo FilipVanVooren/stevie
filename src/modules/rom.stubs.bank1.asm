@@ -13,7 +13,7 @@ vdp.patterns.dump:
         ; Dump VDP patterns
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank0.rom        ; | i  p0 = bank address
+              data bank5.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------

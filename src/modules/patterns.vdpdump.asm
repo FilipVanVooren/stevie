@@ -1,8 +1,8 @@
 * FILE......: patterns.vdpdump.asm
-* Purpose...: Dump sprite & character patterns to VDP
+* Purpose...: Dump sprite/character patterns to VDP
 
 ***************************************************************
-* Dump sprite & character patterns to VDP
+* Dump sprite/character patterns to VDP
 ********|*****|*********************|**************************
 vdp.patterns.dump:
         dect  stack

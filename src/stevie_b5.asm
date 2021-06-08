@@ -87,9 +87,9 @@ main:
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
         .ifgt $, >7fff
-              .error 'Aborted. Bank 3 cartridge program too large!'
+              .error 'Aborted. Bank 5 cartridge program too large!'
         .else
-              data $                ; Bank 1 ROM size OK.
+              data $                ; Bank 5 ROM size OK.
         .endif
 
 *--------------------------------------------------------------
