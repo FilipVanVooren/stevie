@@ -31,7 +31,7 @@ bankid  equ   bank0.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
-        aorg  kickstart.code1       ; >6030
+        aorg  kickstart.code1       ; >6040
 kickstart.step1:        
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
@@ -171,18 +171,11 @@ main:
         ;------------------------------------------------------
         ; Bank specific vector table
         ;------------------------------------------------------
-        .ifgt $, >7f9b
+        .ifgt $, >7fff
               .error 'Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
         .endif
-        ;-------------------------------------------------------
-        ; Vector table bank 0: >7f9c - >7fff
-        ;-------------------------------------------------------
-        copy  "rom.vectors.bank0.asm"
-
-
-
 
 *--------------------------------------------------------------
 * Video mode configuration for SP2

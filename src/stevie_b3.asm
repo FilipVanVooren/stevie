@@ -26,12 +26,16 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 bankid  equ   bank3.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
-        copy  "rom.header.asm"      ; Include cartridge header
+        ;-------------------------------------------------------
+        ; Vector table bank 3: >6000 - >603f
+        ;-------------------------------------------------------
+        copy  "rom.vectors.bank3.asm"
+
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
-        aorg  kickstart.code1       ; >6030
+        aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
@@ -88,15 +92,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7f9b
+        .ifgt $, >7fff
               .error 'Aborted. Bank 3 cartridge program too large!'
         .else
-              data $                ; Bank 1 ROM size OK.
+              data $                ; Bank 3 ROM size OK.
         .endif
-        ;-------------------------------------------------------
-        ; Vector table bank 3: >7f9c - >7fff
-        ;-------------------------------------------------------
-        copy  "rom.vectors.bank3.asm"
 
 *--------------------------------------------------------------
 * Video mode configuration

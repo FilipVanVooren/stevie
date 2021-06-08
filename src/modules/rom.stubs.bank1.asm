@@ -188,6 +188,7 @@ dialog.save:
 * bank3 vec.4
 ********|*****|*********************|**************************
 dialog.unsaved:
+        clr   @cmdb.panmarkers      ; No key markers:
         bl    @pane.cursor.hide     ; Hide cursor
         ;------------------------------------------------------
         ; Show dialog

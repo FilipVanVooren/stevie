@@ -1,8 +1,6 @@
 * FILE......: rom.vectors.bank3.asm
 * Purpose...: Bank 3 vectors for trampoline function
         
-        aorg  >7f9c
-
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------

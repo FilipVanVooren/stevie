@@ -127,8 +127,8 @@ id.dialog.file            equ  104     ; ID dialog "File"
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
-kickstart.code1           equ  >6030   ; Uniform aorg entry addr accross banks
-kickstart.code2           equ  >6036   ; Uniform aorg entry addr accross banks
+kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
+kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 *--------------------------------------------------------------
 * Stevie work area (scratchpad)       @>2f00-2fff   (256 bytes)
 *--------------------------------------------------------------

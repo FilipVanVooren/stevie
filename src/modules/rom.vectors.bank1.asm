@@ -1,7 +1,5 @@
 * FILE......: rom.vectors.bank1.asm
 * Purpose...: Bank 1 vectors for trampoline function
-        
-        aorg  >7f9c
 
 *--------------------------------------------------------------
 * Vector table for trampoline functions

@@ -1,5 +1,5 @@
 * FILE......: edkey.cmdb.fíle.new.asm
-* Purpose...: Load file from command buffer pane.
+* Purpose...: New file from command buffer pane
 
 *---------------------------------------------------------------
 * New DV 80 file
@@ -9,7 +9,7 @@ edkey.action.cmdb.file.new:
         ; New file
         ;-------------------------------------------------------
         bl    @pane.cmdb.hide       ; Hide CMDB pane
-        bl    @tv.reset             ; Reset editor      
+        bl    @tv.reset             ; Reset editor 
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
