@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b2.asm               ; Version 210608-1984012
+0009               * File: stevie_b2.asm               ; Version 210608-2022595
 0010               *
 0011               * Bank 2 "Jacky"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -407,7 +407,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0330               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0331               *--------------------------------------------------------------
 0332      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -463,7 +463,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 603A 2026     vec.30  data  cpu.crash             ;
 0037 603C 2026     vec.31  data  cpu.crash             ;
 0038 603E 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0033               
 0034               
 0035               ***************************************************************
@@ -1184,7 +1184,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210608-1984012'
+0260 21D3 ....             text  'Build-ID  210608-2022595'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5137,7 +5137,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF4 0040 
 0367 2EF6 0460  28         b     @main                 ; Give control to main program
      2EF8 6046 
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0045                                                   ; Relocated spectra2 in low MEMEXP, was
 0046                                                   ; copied to >2000 from ROM in bank 0
 0047                       ;------------------------------------------------------
@@ -6426,7 +6426,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 3442 4C42             byte  76
-0018 3443 ....             text  'Build: 210608-1984012 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 3443 ....             text  'Build: 210608-2022595 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6862,7 +6862,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3958 BEEF 
      395A DEAD 
      395C BEEF 
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0070               ***************************************************************
 0071               * Step 4: Include modules
 0072               ********|*****|*********************|**************************
@@ -6944,7 +6944,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057 608E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0058 6090 C2F9  30         mov   *stack+,r11           ; Pop R11
 0059 6092 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0080                       ;-----------------------------------------------------------------------
 0081                       ; File handling
 0082                       ;-----------------------------------------------------------------------
@@ -7504,7 +7504,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0422                       ; byte  12                  ;  9    - File descriptor length
 0423                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0424                                                   ;         (Device + '.' + File name)
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0084                       copy  "fh.write.edb.asm"    ; Write editor buffer to file
 **** **** ****     > fh.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
@@ -7825,7 +7825,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0241 6464 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0242 6466 C2F9  30         mov   *stack+,r11           ; Pop R11
 0243 6468 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0085                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
 **** **** ****     > fm.load.asm
 0001               * FILE......: fm.load.asm
@@ -7918,98 +7918,101 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0072 64C2 06A0  32         bl    @pane.action.colorscheme.load
      64C4 68B6 
 0073                                                   ; Load color scheme and turn on screen
-0074               
-0075 64C6 C839  50         mov   *stack+,@parm2        ; Pop @parm2
+0074                                                   ; \ i  @tv.colorscheme = Index color scheme
+0075                                                   ; | i  @parm1 = Skip screen off if >FFFF
+0076                                                   ; / i  @parm2 = Skip colorizing marked lines
+0077               
+0078 64C6 C839  50         mov   *stack+,@parm2        ; Pop @parm2
      64C8 2F22 
-0076 64CA C839  50         mov   *stack+,@parm1        ; Pop @parm1
+0079 64CA C839  50         mov   *stack+,@parm1        ; Pop @parm1
      64CC 2F20 
-0077                       ;-------------------------------------------------------
-0078                       ; Reset editor
-0079                       ;-------------------------------------------------------
-0080 64CE 06A0  32         bl    @tv.reset             ; Reset editor
+0080                       ;-------------------------------------------------------
+0081                       ; Reset editor
+0082                       ;-------------------------------------------------------
+0083 64CE 06A0  32         bl    @tv.reset             ; Reset editor
      64D0 32AC 
-0081                       ;-------------------------------------------------------
-0082                       ; Change filename
-0083                       ;-------------------------------------------------------
-0084 64D2 C120  34         mov   @parm1,tmp0           ; Source address
+0084                       ;-------------------------------------------------------
+0085                       ; Change filename
+0086                       ;-------------------------------------------------------
+0087 64D2 C120  34         mov   @parm1,tmp0           ; Source address
      64D4 2F20 
-0085 64D6 0205  20         li    tmp1,edb.filename     ; Target address
+0088 64D6 0205  20         li    tmp1,edb.filename     ; Target address
      64D8 A21A 
-0086 64DA 0206  20         li    tmp2,80               ; Number of bytes to copy
+0089 64DA 0206  20         li    tmp2,80               ; Number of bytes to copy
      64DC 0050 
-0087 64DE C805  38         mov   tmp1,@edb.filename.ptr
+0090 64DE C805  38         mov   tmp1,@edb.filename.ptr
      64E0 A212 
-0088                                                   ; Set filename
-0089               
-0090 64E2 06A0  32         bl    @xpym2m               ; tmp0 = Memory source address
+0091                                                   ; Set filename
+0092               
+0093 64E2 06A0  32         bl    @xpym2m               ; tmp0 = Memory source address
      64E4 24E4 
-0091                                                   ; tmp1 = Memory target address
-0092                                                   ; tmp2 = Number of bytes to copy
-0093                       ;-------------------------------------------------------
-0094                       ; Read DV80 file and display
-0095                       ;-------------------------------------------------------
-0096 64E6 0204  20         li    tmp0,fm.loadsave.cb.indicator1
+0094                                                   ; tmp1 = Memory target address
+0095                                                   ; tmp2 = Number of bytes to copy
+0096                       ;-------------------------------------------------------
+0097                       ; Read DV80 file and display
+0098                       ;-------------------------------------------------------
+0099 64E6 0204  20         li    tmp0,fm.loadsave.cb.indicator1
      64E8 65A4 
-0097 64EA C804  38         mov   tmp0,@parm2           ; Register callback 1
+0100 64EA C804  38         mov   tmp0,@parm2           ; Register callback 1
      64EC 2F22 
-0098               
-0099 64EE 0204  20         li    tmp0,fm.loadsave.cb.indicator2
-     64F0 6632 
-0100 64F2 C804  38         mov   tmp0,@parm3           ; Register callback 2
-     64F4 2F24 
 0101               
-0102 64F6 0204  20         li    tmp0,fm.loadsave.cb.indicator3
-     64F8 6682 
-0103 64FA C804  38         mov   tmp0,@parm4           ; Register callback 3
-     64FC 2F26 
+0102 64EE 0204  20         li    tmp0,fm.loadsave.cb.indicator2
+     64F0 6632 
+0103 64F2 C804  38         mov   tmp0,@parm3           ; Register callback 2
+     64F4 2F24 
 0104               
-0105 64FE 0204  20         li    tmp0,fm.loadsave.cb.fioerr
-     6500 66C8 
-0106 6502 C804  38         mov   tmp0,@parm5           ; Register callback 4
-     6504 2F28 
+0105 64F6 0204  20         li    tmp0,fm.loadsave.cb.indicator3
+     64F8 6682 
+0106 64FA C804  38         mov   tmp0,@parm4           ; Register callback 3
+     64FC 2F26 
 0107               
-0108 6506 0204  20         li    tmp0,fm.load.cb.memfull
-     6508 6762 
-0109 650A C804  38         mov   tmp0,@parm6           ; Register callback 5
-     650C 2F2A 
+0108 64FE 0204  20         li    tmp0,fm.loadsave.cb.fioerr
+     6500 66C8 
+0109 6502 C804  38         mov   tmp0,@parm5           ; Register callback 4
+     6504 2F28 
 0110               
-0111 650E 06A0  32         bl    @fh.file.read.edb     ; Read file into editor buffer
+0111 6506 0204  20         li    tmp0,fm.load.cb.memfull
+     6508 6762 
+0112 650A C804  38         mov   tmp0,@parm6           ; Register callback 5
+     650C 2F2A 
+0113               
+0114 650E 06A0  32         bl    @fh.file.read.edb     ; Read file into editor buffer
      6510 6094 
-0112                                                   ; \ i  @parm1 = Pointer to length prefixed
-0113                                                   ; |             file descriptor
-0114                                                   ; | i  @parm2 = Pointer to callback
-0115                                                   ; |             "Before Open file"
-0116                                                   ; | i  @parm3 = Pointer to callback
-0117                                                   ; |             "Read line from file"
-0118                                                   ; | i  @parm4 = Pointer to callback
-0119                                                   ; |             "Close file"
-0120                                                   ; | i  @parm5 = Pointer to callback
-0121                                                   ; |             "File I/O error"
-0122                                                   ; | i  @parm6 = Pointer to callback
-0123                                                   ; /             "Memory full error"
-0124               
-0125 6512 04E0  34         clr   @edb.dirty            ; Editor buffer content replaced, not
-     6514 A206 
-0126                                                   ; longer dirty.
+0115                                                   ; \ i  @parm1 = Pointer to length prefixed
+0116                                                   ; |             file descriptor
+0117                                                   ; | i  @parm2 = Pointer to callback
+0118                                                   ; |             "Before Open file"
+0119                                                   ; | i  @parm3 = Pointer to callback
+0120                                                   ; |             "Read line from file"
+0121                                                   ; | i  @parm4 = Pointer to callback
+0122                                                   ; |             "Close file"
+0123                                                   ; | i  @parm5 = Pointer to callback
+0124                                                   ; |             "File I/O error"
+0125                                                   ; | i  @parm6 = Pointer to callback
+0126                                                   ; /             "Memory full error"
 0127               
-0128 6516 0204  20         li    tmp0,txt.filetype.DV80
+0128 6512 04E0  34         clr   @edb.dirty            ; Editor buffer content replaced, not
+     6514 A206 
+0129                                                   ; longer dirty.
+0130               
+0131 6516 0204  20         li    tmp0,txt.filetype.DV80
      6518 3530 
-0129 651A C804  38         mov   tmp0,@edb.filetype.ptr
+0132 651A C804  38         mov   tmp0,@edb.filetype.ptr
      651C A214 
-0130                                                   ; Set filetype display string
-0131               
-0132 651E 04E0  34         clr   @outparm1             ; Reset
+0133                                                   ; Set filetype display string
+0134               
+0135 651E 04E0  34         clr   @outparm1             ; Reset
      6520 2F30 
-0133               *--------------------------------------------------------------
-0134               * Exit
-0135               *--------------------------------------------------------------
-0136               fm.loadfile.exit:
-0137 6522 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0138 6524 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0139 6526 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0140 6528 C2F9  30         mov   *stack+,r11           ; Pop R11
-0141 652A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+0136               *--------------------------------------------------------------
+0137               * Exit
+0138               *--------------------------------------------------------------
+0139               fm.loadfile.exit:
+0140 6522 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0141 6524 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0142 6526 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0143 6528 C2F9  30         mov   *stack+,r11           ; Pop R11
+0144 652A 045B  20         b     *r11                  ; Return to caller
+**** **** ****     > stevie_b2.asm.2022595
 0086                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
 **** **** ****     > fm.save.asm
 0001               * FILE......: fm.save.asm
@@ -8135,7 +8138,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0095 659E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0096 65A0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0097 65A2 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0087                       copy  "fm.callbacks.asm"    ; Callbacks for file operations
 **** **** ****     > fm.callbacks.asm
 0001               * FILE......: fm.callbacks.asm
@@ -8577,7 +8580,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6790 2F20 
 0352 6792 C2F9  30         mov   *stack+,r11           ; Pop R11
 0353 6794 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0088                       copy  "fm.browse.asm"       ; File manager browse support routines
 **** **** ****     > fm.browse.asm
 0001               * FILE......: fm.browse.asm
@@ -8706,7 +8709,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0110 6812 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0111 6814 C2F9  30         mov   *stack+,r11           ; Pop R11
 0112 6816 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0089                       copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation
 **** **** ****     > fm.fastmode.asm
 0001               * FILE......: fm.fastmode.asm
@@ -8764,7 +8767,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0045 6844 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0046 6846 C2F9  30         mov   *stack+,r11           ; Pop R11
 0047 6848 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0090                       ;-----------------------------------------------------------------------
 0091                       ; Stubs using trampoline
 0092                       ;-----------------------------------------------------------------------
@@ -8951,7 +8954,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0171                       ;------------------------------------------------------
 0172 68D6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0173 68D8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b2.asm.1984012
+**** **** ****     > stevie_b2.asm.2022595
 0094                       ;-----------------------------------------------------------------------
 0095                       ; Bank specific vector table
 0096                       ;-----------------------------------------------------------------------

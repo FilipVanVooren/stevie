@@ -36,6 +36,7 @@ pane.cmdb.hide:
         ; Clear error/hint & status line
         ;------------------------------------------------------
 !       bl    @hchar
+              byte pane.botrow-4,0,32,80*3
               byte pane.botrow-1,0,32,80*2
               data EOL
         ;------------------------------------------------------

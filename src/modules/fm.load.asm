@@ -71,6 +71,9 @@ fm.loadfile.clear:
         seto  @parm2                ; Skip marked lines colorization
         bl    @pane.action.colorscheme.load
                                     ; Load color scheme and turn on screen
+                                    ; \ i  @tv.colorscheme = Index color scheme
+                                    ; | i  @parm1 = Skip screen off if >FFFF
+                                    ; / i  @parm2 = Skip colorizing marked lines
 
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
