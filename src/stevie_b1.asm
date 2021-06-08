@@ -70,7 +70,7 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
 main:   
-        aorg  kickstart.code2       ; >6036
+        aorg  kickstart.code2       ; >6046
         b     @main.stevie          ; Start editor 
         ;-----------------------------------------------------------------------
         ; Include files

@@ -6864,7 +6864,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0070               * Step 4: Include main editor modules
 0071               ********|*****|*********************|**************************
 0072               main:
-0073                       aorg  kickstart.code2       ; >6036
+0073                       aorg  kickstart.code2       ; >6046
 0074 6046 0460  28         b     @main.stevie          ; Start editor
      6048 604A 
 0075                       ;-----------------------------------------------------------------------

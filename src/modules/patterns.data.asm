@@ -1,5 +1,5 @@
-* FILE......: data.patterns.asm
-* Purpose...: Sprite and character patterns
+* FILE......: patterns.data.asm
+* Purpose...: Character definitions sprites & characters
 
 ;--------------------------------------------------------------
 ; Sprite patterns
@@ -10,8 +10,6 @@ cursors:
         byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
         byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
         byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
-
-
 
 
 

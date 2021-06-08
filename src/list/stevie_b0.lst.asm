@@ -5255,7 +5255,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0143               reloc.stevie:
 0144                       xorg  >3000                 ; Relocate Stevie modules to >3000
 0145                       ;------------------------------------------------------
-0146                       ; Activate bank 1 and branch to >6036
+0146                       ; Activate bank 1 and branch to >6046
 0147                       ;------------------------------------------------------
 0148               main:
 0149 70D6 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM

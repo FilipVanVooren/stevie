@@ -6,12 +6,12 @@
 *
 *              (c)2018-2021 // Filip van Vooren
 ***************************************************************
-* File: stevie_b2.asm               ; Version %%build_date%%
+* File: stevie_b5.asm               ; Version %%build_date%%
 *
-* Bank 2 "Jacky"
+* Bank 5 "Jumbo"
 *
 ***************************************************************
-        copy  "rom.build.asm"       ; Cartridge build options
+        copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
 
@@ -21,15 +21,15 @@
 sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
                                     ; grows downwards to >2000
 ***************************************************************
-* BANK 2
+* BANK 5
 ********|*****|*********************|**************************
-bankid  equ   bank2.rom             ; Set bank identifier to current bank
+bankid  equ   bank5.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
         ;-------------------------------------------------------
-        ; Vector table bank 2: >6000 - >603f
+        ; Vector table bank 5: >6000 - >603f
         ;-------------------------------------------------------
-        copy  "rom.vectors.bank2.asm"
+        copy  "rom.vectors.bank5.asm"
 
 
 ***************************************************************
@@ -60,7 +60,7 @@ bankid  equ   bank2.rom             ; Set bank identifier to current bank
 
         .ifeq device.fg99.mode.adv,1
         clr   @bank1.ram            ; Activate bank 1 "James" RAM
-        .endif        
+        .endif
 
         b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
@@ -68,36 +68,28 @@ bankid  equ   bank2.rom             ; Set bank identifier to current bank
         ;------------------------------------------------------
         copy  "ram.resident.3000.asm"        
 ***************************************************************
-* Step 4: Include modules
+* Step 4: Include main editor modules
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Include files - Utility functions
-        ;-----------------------------------------------------------------------         
-        copy  "colors.line.set.asm" ; Set color combination for line
-        ;-----------------------------------------------------------------------
-        ; File handling
-        ;-----------------------------------------------------------------------         
-        copy  "fh.read.edb.asm"     ; Read file to editor buffer
-        copy  "fh.write.edb.asm"    ; Write editor buffer to file
-        copy  "fm.load.asm"         ; Load DV80 file into editor buffer
-        copy  "fm.save.asm"         ; Save DV80 file from editor buffer
-        copy  "fm.callbacks.asm"    ; Callbacks for file operations
-        copy  "fm.browse.asm"       ; File manager browse support routines
-        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation        
+        ; Patterns
+        ;-----------------------------------------------------------------------    
+        copy  "patterns.vdpdump.asm"
+                                    ; Dump patterns to VDP
+        copy  "patterns.data.asm"   ; Pattern definitions sprites & chars
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank2.asm" ; Stubs for functions in other banks        
+        copy  "rom.stubs.bank5.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------
         ; Bank specific vector table
         ;----------------------------------------------------------------------- 
         .ifgt $, >7fff
-              .error 'Aborted. Bank 2 cartridge program too large!'
+              .error 'Aborted. Bank 3 cartridge program too large!'
         .else
-              data $                ; Bank 2 ROM size OK.
+              data $                ; Bank 1 ROM size OK.
         .endif
 
 *--------------------------------------------------------------

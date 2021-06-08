@@ -54,7 +54,7 @@ bankid  equ   bank4.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >3000
         ;------------------------------------------------------
-        ; Activate bank 1 and branch to >6036
+        ; Activate bank 1 and branch to >6046
         ;------------------------------------------------------
         clr   @bank1.rom            ; Activate bank 1 "James" ROM
 
@@ -71,7 +71,7 @@ bankid  equ   bank4.rom             ; Set bank identifier to current bank
 * Step 4: Include main editor modules
 ********|*****|*********************|**************************
 main:   
-        aorg  kickstart.code2       ; >6036
+        aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (2)

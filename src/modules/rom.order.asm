@@ -9,6 +9,7 @@ bank1.rom                 equ  >6002   ; James
 bank2.rom                 equ  >6004   ; Jacky
 bank3.rom                 equ  >6006   ; John
 bank4.rom                 equ  >6008   ; Janine
+bank5.rom                 equ  >600a   ; Jumbo
 *--------------------------------------------------------------
 * RAM 4K banks (Only valid in advance mode FG99)
 *--------------------------------------------------------------
@@ -17,3 +18,4 @@ bank1.ram                 equ  >6802   ; James
 bank2.ram                 equ  >6804   ; Jacky
 bank3.ram                 equ  >6806   ; John
 bank4.ram                 equ  >6808   ; Janine
+bank5.ram                 equ  >680a   ; Jumbo

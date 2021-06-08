@@ -5150,7 +5150,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0054               ********|*****|*********************|**************************
 0055                       aorg  >3000
 0056                       ;------------------------------------------------------
-0057                       ; Activate bank 1 and branch to >6036
+0057                       ; Activate bank 1 and branch to >6046
 0058                       ;------------------------------------------------------
 0059 3000 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3002 6002 
@@ -6865,7 +6865,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0071               * Step 4: Include main editor modules
 0072               ********|*****|*********************|**************************
 0073               main:
-0074                       aorg  kickstart.code2       ; >6036
+0074                       aorg  kickstart.code2       ; >6046
 0075 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026 
 0076                       ;-----------------------------------------------------------------------

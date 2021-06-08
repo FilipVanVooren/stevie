@@ -9840,7 +9840,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0115
 > stevie_b0.lst.asm.26898 <1> 4986 - 0116                       ;------------------------------------------------------
 ***** Multiple symbols: 0116
-> stevie_b0.lst.asm.26898 <1> 4987 - 0117                       ; Activate bank 1 and branch to >6036
+> stevie_b0.lst.asm.26898 <1> 4987 - 0117                       ; Activate bank 1 and branch to >6046
 ***** Multiple symbols: 0117
 > stevie_b0.lst.asm.26898 <1> 4988 - 0118                       ;------------------------------------------------------
 ***** Multiple symbols: 0118
@@ -20594,7 +20594,7 @@ Run suffix .............. 200803-26898
 ***** Multiple symbols: 0115
 > stevie_b0.lst.asm.26898 <1> 4986 - 0116                       ;------------------------------------------------------
 ***** Multiple symbols: 0116
-> stevie_b0.lst.asm.26898 <1> 4987 - 0117                       ; Activate bank 1 and branch to >6036
+> stevie_b0.lst.asm.26898 <1> 4987 - 0117                       ; Activate bank 1 and branch to >6046
 ***** Multiple symbols: 0117
 > stevie_b0.lst.asm.26898 <1> 4988 - 0118                       ;------------------------------------------------------
 ***** Multiple symbols: 0118

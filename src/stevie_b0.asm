@@ -89,33 +89,6 @@ kickstart.copy:
         b     *r11                  ; Return to caller
 
 
-
-***************************************************************
-* Load character patterns
-********|*****|*********************|**************************
-vdp.patterns.dump:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        ;-------------------------------------------------------
-        ; Dump sprite patterns from ROM to VDP SDT
-        ;-------------------------------------------------------
-        bl    @cpym2v
-              data sprpdt,cursors,5*8
-        ;-------------------------------------------------------
-        ; Dump character patterns from ROM to VDP PDT
-        ;-------------------------------------------------------
-        bl    @cpym2v
-              data >1008,patterns,29*8  
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-vdp.patterns.dump.exit:
-        mov   *stack+,r11           ; Pop R11        
-        b     *r11                  ; Return to task
-
-
-
-
 ***************************************************************
 * Code data: Relocated code SP2 >2000 - >2eff (3840 bytes max)
 ********|*****|*********************|**************************
@@ -143,7 +116,7 @@ reloc.sp2:
 reloc.stevie:
         xorg  >3000                 ; Relocate Stevie modules to >3000
         ;------------------------------------------------------
-        ; Activate bank 1 and branch to >6036
+        ; Activate bank 1 and branch to >6046
         ;------------------------------------------------------
 main:        
         clr   @bank1.rom            ; Activate bank 1 "James" ROM
@@ -162,12 +135,7 @@ main:
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
-        .endif
-
-        ;------------------------------------------------------
-        ; Data patterns
-        ;------------------------------------------------------
-        copy  "data.patterns.asm"        
+        .endif     
         ;------------------------------------------------------
         ; Bank specific vector table
         ;------------------------------------------------------
