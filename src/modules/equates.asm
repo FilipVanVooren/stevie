@@ -52,16 +52,22 @@
 *     Mem range   Bytes    BANK   Purpose
 *     =========   =====    ====   ==================================
 *     6000-7f9b    8128       0   SP2 library, code to RAM, resident modules
-*     7f9c-7fff      64       0   Vector table (32 vectors)
 *     ..............................................................
-*     6000-7f9b    8128       1   Stevie program code
-*     7f9c-7fff      64       1   Vector table (32 vectors)
+*     6000-603f      64       1   Vector table (32 vectors)
+*     6040-7fff    8128       1   Stevie program code
 *     ..............................................................
-*     6000-7f9b    8128       2   Stevie program code
-*     7f9c-7fff      64       2   Vector table (32 vectors)
+*     6000-603f      64       2   Vector table (32 vectors)
+*     6040-7fff    8128       2   Stevie program code
 *     ..............................................................
-*     6000-7f9b    8128       3   Stevie program code
-*     7f9c-7fff      64       3   Vector table (32 vectors)
+*     6000-603f      64       3   Vector table (32 vectors)
+*     6040-7fff    8128       3   Stevie program code
+*     ..............................................................
+*     6000-603f      64       4   Vector table (32 vectors)
+*     6040-7fff    8128       4   Stevie program code
+*     ..............................................................
+*     6000-603f      64       5   Vector table (32 vectors)
+*     6040-7fff    8128       5   Stevie program code
+*     ..............................................................
 *
 *
 * VDP RAM F18a (0000-47ff)
