@@ -14,10 +14,21 @@ hook.keyscan:
 *---------------------------------------------------------------
         szc   @wbit11,config        ; Reset ANYKEY
         c     @keycode1,@keycode2   ; Still pressing previous key?
-        jeq   hook.keyscan.bounce   ; Do keyboard bounce delay and return
+        jne   hook.keyscan.new      ; New key pressed
+*---------------------------------------------------------------
+* Activate auto-repeat ?
+*---------------------------------------------------------------
+        inc   @keyrptcnt
+        mov   @keyrptcnt,tmp0
+        ci    tmp0,30
+        jlt   hook.keyscan.bounce   ; No, do keyboard bounce delay and return
+        jmp   hook.keyscan.autorepeat
 *--------------------------------------------------------------
 * New key pressed
 *--------------------------------------------------------------
+hook.keyscan.new:
+        clr   @keyrptcnt            ; Reset key-repeat counter
+hook.keyscan.autorepeat:        
         li    tmp0,250              ; \
 !       dec   tmp0                  ; | Inline keyboard bounce delay
         jne   -!                    ; /
@@ -29,6 +40,7 @@ hook.keyscan:
 hook.keyscan.clear_kbbuffer:
         clr   @keycode1
         clr   @keycode2
+        clr   @keyrptcnt
 *--------------------------------------------------------------
 * Delay to avoid key bouncing
 *-------------------------------------------------------------- 

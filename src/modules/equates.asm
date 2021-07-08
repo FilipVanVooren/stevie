@@ -153,7 +153,7 @@ outparm4          equ  >2f36           ; Function output parameter 4
 outparm5          equ  >2f38           ; Function output parameter 5
 outparm6          equ  >2f3a           ; Function output parameter 6
 outparm7          equ  >2f3c           ; Function output parameter 7
-outparm8          equ  >2f3e           ; Function output parameter 8
+keyrptcnt         equ  >2f3e           ; Key repeat-count (auto-repeat function)
 keycode1          equ  >2f40           ; Current key scanned
 keycode2          equ  >2f42           ; Previous key scanned
 unpacked.string   equ  >2f44           ; 6 char string with unpacked uin16
