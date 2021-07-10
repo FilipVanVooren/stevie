@@ -126,9 +126,9 @@ txt.head.file      byte 9,1,3,32
                    text 'File '
                    byte 2
 
-txt.info.file      #string 'New, Open, Save'
+txt.info.file      #string 'New, Open, Print, Save'
 pos.info.file      byte 0,5,11,>ff
-txt.hint.file      #string 'Press N,O,S or F9 to return to editor.'
+txt.hint.file      #string 'Press N,O,P,S or F9 to return to editor.'
 txt.keys.file      #string 'File: F9=Back'
 
 
