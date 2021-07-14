@@ -29,7 +29,7 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string 'Editor: ^Help, ^File, ^Quit'
+txt.keys.default   #string 'Editor: ^Help, ^File'
 txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
 txt.ruler          text    '.........'
                    byte    18
@@ -126,9 +126,9 @@ txt.head.file      byte 9,1,3,32
                    text 'File '
                    byte 2
 
-txt.info.file      #string 'New, Open, Print, Save'
-pos.info.file      byte 0,5,11,>ff
-txt.hint.file      #string 'Press N,O,P,S or F9 to return to editor.'
+txt.info.file      #string 'New, Open, Print, Save, Quit'
+pos.info.file      byte 0,5,11,18,24,>ff
+txt.hint.file      #string 'Press N,O,P,S,Q or F9 to return to editor.'
 txt.keys.file      #string 'File: F9=Back'
 
 

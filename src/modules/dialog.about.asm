@@ -141,7 +141,7 @@ dialog.about.help.part1:
         #string '   Ctrl B  (^b)  File bottom'
         #string ' '
         #string 'Action keys:'
-        #string '   Fctn +        Quit'
+        #string '   Fctn +  (^q)  Quit'
         #string '   Ctrl h  (^h)  Help'
         #string '   Ctrl o  (^o)  Open file'
         #string '   Ctrl s  (^s)  Save file'

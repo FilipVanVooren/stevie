@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210714-739570
+0009               * File: stevie_b0.asm               ; Version 210714-761830
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -413,7 +413,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0336               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0337               *--------------------------------------------------------------
 0338      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -468,7 +468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1257,7 +1257,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 625C 1742             byte  23
-0260 625D ....             text  'Build-ID  210714-739570'
+0260 625D ....             text  'Build-ID  210714-761830'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5210,7 +5210,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F7C 0040 
 0367 6F7E 0460  28         b     @main                 ; Give control to main program
      6F80 3000 
-**** **** ****     > stevie_b0.asm.739570
+**** **** ****     > stevie_b0.asm.761830
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -5848,7 +5848,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      72D6 A212 
 0044               
 0045 72D8 0204  20         li    tmp0,txt.filetype.none
-     72DA 35EE 
+     72DA 35E8 
 0046 72DC C804  38         mov   tmp0,@edb.filetype.ptr
      72DE A214 
 0047               
@@ -6505,7 +6505,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 74FA 4B42             byte  75
-0018 74FB ....             text  'Build: 210714-739570 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 74FB ....             text  'Build: 210714-761830 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6600,180 +6600,181 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0110                       even
 0111               
 0112               txt.keys.default
-0113 75F4 1B45             byte  27
-0114 75F5 ....             text  'Editor: ^Help, ^File, ^Quit'
+0113 75F4 1445             byte  20
+0114 75F5 ....             text  'Editor: ^Help, ^File'
 0115                       even
 0116               
 0117               txt.keys.block
-0118 7610 3342             byte  51
-0119 7611 ....             text  'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
+0118 760A 3342             byte  51
+0119 760B ....             text  'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
 0120                       even
 0121               
-0122 7644 ....     txt.ruler          text    '.........'
+0122 763E ....     txt.ruler          text    '.........'
 0123                                  byte    18
-0124 764E ....                        text    '.........'
+0124 7648 ....                        text    '.........'
 0125                                  byte    19
-0126 7658 ....                        text    '.........'
+0126 7652 ....                        text    '.........'
 0127                                  byte    20
-0128 7662 ....                        text    '.........'
+0128 765C ....                        text    '.........'
 0129                                  byte    21
-0130 766C ....                        text    '.........'
+0130 7666 ....                        text    '.........'
 0131                                  byte    22
-0132 7676 ....                        text    '.........'
+0132 7670 ....                        text    '.........'
 0133                                  byte    23
-0134 7680 ....                        text    '.........'
+0134 767A ....                        text    '.........'
 0135                                  byte    24
-0136 768A ....                        text    '.........'
+0136 7684 ....                        text    '.........'
 0137                                  byte    25
 0138                                  even
-0139 7694 020E     txt.alpha.down     data >020e,>0f00
-     7696 0F00 
-0140 7698 0110     txt.vertline       data >0110
-0141 769A 011C     txt.keymarker      byte 1,28
+0139 768E 020E     txt.alpha.down     data >020e,>0f00
+     7690 0F00 
+0140 7692 0110     txt.vertline       data >0110
+0141 7694 011C     txt.keymarker      byte 1,28
 0142               
 0143               txt.ws1
-0144 769C 0120             byte  1
-0145 769D ....             text  ' '
+0144 7696 0120             byte  1
+0145 7697 ....             text  ' '
 0146                       even
 0147               
 0148               txt.ws2
-0149 769E 0220             byte  2
-0150 769F ....             text  '  '
+0149 7698 0220             byte  2
+0150 7699 ....             text  '  '
 0151                       even
 0152               
 0153               txt.ws3
-0154 76A2 0320             byte  3
-0155 76A3 ....             text  '   '
+0154 769C 0320             byte  3
+0155 769D ....             text  '   '
 0156                       even
 0157               
 0158               txt.ws4
-0159 76A6 0420             byte  4
-0160 76A7 ....             text  '    '
+0159 76A0 0420             byte  4
+0160 76A1 ....             text  '    '
 0161                       even
 0162               
 0163               txt.ws5
-0164 76AC 0520             byte  5
-0165 76AD ....             text  '     '
+0164 76A6 0520             byte  5
+0165 76A7 ....             text  '     '
 0166                       even
 0167               
-0168      35EE     txt.filetype.none  equ txt.ws4
+0168      35E8     txt.filetype.none  equ txt.ws4
 0169               
 0170               
 0171               ;--------------------------------------------------------------
 0172               ; Dialog Load DV 80 file
 0173               ;--------------------------------------------------------------
-0174 76B2 1301     txt.head.load      byte 19,1,3,32
-     76B4 0320 
-0175 76B6 ....                        text 'Open DV80 file '
+0174 76AC 1301     txt.head.load      byte 19,1,3,32
+     76AE 0320 
+0175 76B0 ....                        text 'Open DV80 file '
 0176                                  byte 2
 0177               txt.hint.load
-0178 76C6 3D53             byte  61
-0179 76C7 ....             text  'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
+0178 76C0 3D53             byte  61
+0179 76C1 ....             text  'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 0180                       even
 0181               
 0182               
-0183 7704 3C46     txt.keys.load      byte 60
-0184 7705 ....                        text 'File'
+0183 76FE 3C46     txt.keys.load      byte 60
+0184 76FF ....                        text 'File'
 0185                                  byte 27
-0186 770A ....                        text 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
+0186 7704 ....                        text 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
 0187               
-0188 7742 3D46     txt.keys.load2     byte 61
-0189 7743 ....                        text 'File'
+0188 773C 3D46     txt.keys.load2     byte 61
+0189 773D ....                        text 'File'
 0190                                  byte 27
-0191 7748 ....                        text 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End '
+0191 7742 ....                        text 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End '
 0192               
 0193               ;--------------------------------------------------------------
 0194               ; Dialog Save DV 80 file
 0195               ;--------------------------------------------------------------
-0196 7782 0103     txt.head.save      byte 19,1,3,32
-     7784 2053 
-0197 7785 ....                        text 'Save DV80 file '
-0198 7794 0223                        byte 2
-0199 7796 0103     txt.head.save2     byte 35,1,3,32
-     7798 2053 
-0200 7799 ....                        text 'Save marked block to DV80 file '
-0201 77B8 0201                        byte 2
+0196 777C 0103     txt.head.save      byte 19,1,3,32
+     777E 2053 
+0197 777F ....                        text 'Save DV80 file '
+0198 778E 0223                        byte 2
+0199 7790 0103     txt.head.save2     byte 35,1,3,32
+     7792 2053 
+0200 7793 ....                        text 'Save marked block to DV80 file '
+0201 77B2 0201                        byte 2
 0202               txt.hint.save
 0203                       byte  1
-0204 77BA ....             text  ' '
+0204 77B4 ....             text  ' '
 0205                       even
 0206               
 0207               
-0208 77BC 2F46     txt.keys.save      byte 47
-0209 77BD ....                        text 'File'
+0208 77B6 2F46     txt.keys.save      byte 47
+0209 77B7 ....                        text 'File'
 0210                                  byte 27
-0211 77C2 ....                        text 'Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
+0211 77BC ....                        text 'Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
 0212               
 0213               ;--------------------------------------------------------------
 0214               ; Dialog "Unsaved changes"
 0215               ;--------------------------------------------------------------
-0216 77EC 1401     txt.head.unsaved   byte 20,1,3,32
-     77EE 0320 
-0217 77F0 ....                        text 'Unsaved changes '
-0218 7800 0221                        byte 2
+0216 77E6 1401     txt.head.unsaved   byte 20,1,3,32
+     77E8 0320 
+0217 77EA ....                        text 'Unsaved changes '
+0218 77FA 0221                        byte 2
 0219               txt.info.unsaved
 0220                       byte  33
-0221 7802 ....             text  'Warning! Unsaved changes in file.'
+0221 77FC ....             text  'Warning! Unsaved changes in file.'
 0222                       even
 0223               
 0224               txt.hint.unsaved
-0225 7824 2A50             byte  42
-0226 7825 ....             text  'Press F6 to proceed or ENTER to save file.'
+0225 781E 2A50             byte  42
+0226 781F ....             text  'Press F6 to proceed or ENTER to save file.'
 0227                       even
 0228               
 0229               txt.keys.unsaved
-0230 7850 2D43             byte  45
-0231 7851 ....             text  'Confirm: F9=Back, F6=Proceed, ENTER=Save file'
+0230 784A 2D43             byte  45
+0231 784B ....             text  'Confirm: F9=Back, F6=Proceed, ENTER=Save file'
 0232                       even
 0233               
 0234               
 0235               ;--------------------------------------------------------------
 0236               ; Dialog "About"
 0237               ;--------------------------------------------------------------
-0238 787E 0A01     txt.head.about     byte 10,1,3,32
-     7880 0320 
-0239 7882 ....                        text 'About '
-0240 7888 0200                        byte 2
+0238 7878 0A01     txt.head.about     byte 10,1,3,32
+     787A 0320 
+0239 787C ....                        text 'About '
+0240 7882 0200                        byte 2
 0241               
 0242               txt.info.about
 0243                       byte  0
-0244 788A ....             text
+0244 7884 ....             text
 0245                       even
 0246               
 0247               txt.hint.about
-0248 788A 1D50             byte  29
-0249 788B ....             text  'Press F9 to return to editor.'
+0248 7884 1D50             byte  29
+0249 7885 ....             text  'Press F9 to return to editor.'
 0250                       even
 0251               
-0252 78A8 2148     txt.keys.about     byte 33
-0253 78A9 ....                        text 'Help: F9=Back, '
-0254 78B8 0E0F                        byte 14,15
-0255 78BA ....                        text '=Alpha Lock down'
+0252 78A2 2148     txt.keys.about     byte 33
+0253 78A3 ....                        text 'Help: F9=Back, '
+0254 78B2 0E0F                        byte 14,15
+0255 78B4 ....                        text '=Alpha Lock down'
 0256               
 0257               
 0258               ;--------------------------------------------------------------
 0259               ; Dialog "File"
 0260               ;--------------------------------------------------------------
-0261 78CA 0901     txt.head.file      byte 9,1,3,32
-     78CC 0320 
-0262 78CE ....                        text 'File '
+0261 78C4 0901     txt.head.file      byte 9,1,3,32
+     78C6 0320 
+0262 78C8 ....                        text 'File '
 0263                                  byte 2
 0264               
 0265               txt.info.file
-0266 78D4 164E             byte  22
-0267 78D5 ....             text  'New, Open, Print, Save'
+0266 78CE 1C4E             byte  28
+0267 78CF ....             text  'New, Open, Print, Save, Quit'
 0268                       even
 0269               
-0270 78EC 0005     pos.info.file      byte 0,5,11,>ff
-     78EE 0BFF 
+0270 78EC 0005     pos.info.file      byte 0,5,11,18,24,>ff
+     78EE 0B12 
+     78F0 18FF 
 0271               txt.hint.file
-0272 78F0 2850             byte  40
-0273 78F1 ....             text  'Press N,O,P,S or F9 to return to editor.'
+0272 78F2 2A50             byte  42
+0273 78F3 ....             text  'Press N,O,P,S,Q or F9 to return to editor.'
 0274                       even
 0275               
 0276               txt.keys.file
-0277 791A 0D46             byte  13
-0278 791B ....             text  'File: F9=Back'
+0277 791E 0D46             byte  13
+0278 791F ....             text  'File: F9=Back'
 0279                       even
 0280               
 0281               
@@ -6783,28 +6784,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0285               ; Strings for error line pane
 0286               ;--------------------------------------------------------------
 0287               txt.ioerr.load
-0288 7928 2049             byte  32
-0289 7929 ....             text  'I/O error. Failed loading file: '
+0288 792C 2049             byte  32
+0289 792D ....             text  'I/O error. Failed loading file: '
 0290                       even
 0291               
 0292               txt.ioerr.save
-0293 794A 2049             byte  32
-0294 794B ....             text  'I/O error. Failed saving file:  '
+0293 794E 2049             byte  32
+0294 794F ....             text  'I/O error. Failed saving file:  '
 0295                       even
 0296               
 0297               txt.memfull.load
-0298 796C 4049             byte  64
-0299 796D ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0298 7970 4049             byte  64
+0299 7971 ....             text  'Index memory full. Could not fully load file into editor buffer.'
 0300                       even
 0301               
 0302               txt.io.nofile
-0303 79AE 2149             byte  33
-0304 79AF ....             text  'I/O error. No filename specified.'
+0303 79B2 2149             byte  33
+0304 79B3 ....             text  'I/O error. No filename specified.'
 0305                       even
 0306               
 0307               txt.block.inside
-0308 79D0 3445             byte  52
-0309 79D1 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0308 79D4 3445             byte  52
+0309 79D5 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
 0310                       even
 0311               
 0312               
@@ -6812,13 +6813,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0314               ; Strings for command buffer
 0315               ;--------------------------------------------------------------
 0316               txt.cmdb.prompt
-0317 7A06 013E             byte  1
-0318 7A07 ....             text  '>'
+0317 7A0A 013E             byte  1
+0318 7A0B ....             text  '>'
 0319                       even
 0320               
 0321               txt.colorscheme
-0322 7A08 0D43             byte  13
-0323 7A09 ....             text  'Color scheme:'
+0322 7A0C 0D43             byte  13
+0323 7A0D ....             text  'Color scheme:'
 0324                       even
 0325               
 **** **** ****     > ram.resident.3000.asm
@@ -6834,120 +6835,122 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0008      4E00     key.uc.n      equ >4e00             ; N
 0009      5300     key.uc.s      equ >5300             ; S
 0010      4F00     key.uc.o      equ >4f00             ; O
-0011      6E00     key.lc.n      equ >6e00             ; n
-0012      7300     key.lc.s      equ >7300             ; s
-0013      6F00     key.lc.o      equ >6f00             ; o
-0014               
-0015               
-0016               *---------------------------------------------------------------
-0017               * Keyboard scancodes - Function keys
-0018               *-------------|---------------------|---------------------------
-0019      BC00     key.fctn.0    equ >bc00             ; fctn + 0
-0020      0300     key.fctn.1    equ >0300             ; fctn + 1
-0021      0400     key.fctn.2    equ >0400             ; fctn + 2
-0022      0700     key.fctn.3    equ >0700             ; fctn + 3
-0023      0200     key.fctn.4    equ >0200             ; fctn + 4
-0024      0E00     key.fctn.5    equ >0e00             ; fctn + 5
-0025      0C00     key.fctn.6    equ >0c00             ; fctn + 6
-0026      0100     key.fctn.7    equ >0100             ; fctn + 7
-0027      0600     key.fctn.8    equ >0600             ; fctn + 8
-0028      0F00     key.fctn.9    equ >0f00             ; fctn + 9
-0029      0000     key.fctn.a    equ >0000             ; fctn + a
-0030      BE00     key.fctn.b    equ >be00             ; fctn + b
-0031      0000     key.fctn.c    equ >0000             ; fctn + c
-0032      0900     key.fctn.d    equ >0900             ; fctn + d
-0033      0B00     key.fctn.e    equ >0b00             ; fctn + e
-0034      0000     key.fctn.f    equ >0000             ; fctn + f
-0035      0000     key.fctn.g    equ >0000             ; fctn + g
-0036      BF00     key.fctn.h    equ >bf00             ; fctn + h
-0037      0000     key.fctn.i    equ >0000             ; fctn + i
-0038      C000     key.fctn.j    equ >c000             ; fctn + j
-0039      C100     key.fctn.k    equ >c100             ; fctn + k
-0040      C200     key.fctn.l    equ >c200             ; fctn + l
-0041      C300     key.fctn.m    equ >c300             ; fctn + m
-0042      C400     key.fctn.n    equ >c400             ; fctn + n
-0043      0000     key.fctn.o    equ >0000             ; fctn + o
-0044      0000     key.fctn.p    equ >0000             ; fctn + p
-0045      C500     key.fctn.q    equ >c500             ; fctn + q
-0046      0000     key.fctn.r    equ >0000             ; fctn + r
-0047      0800     key.fctn.s    equ >0800             ; fctn + s
-0048      0000     key.fctn.t    equ >0000             ; fctn + t
-0049      0000     key.fctn.u    equ >0000             ; fctn + u
-0050      7F00     key.fctn.v    equ >7f00             ; fctn + v
-0051      7E00     key.fctn.w    equ >7e00             ; fctn + w
-0052      0A00     key.fctn.x    equ >0a00             ; fctn + x
-0053      C600     key.fctn.y    equ >c600             ; fctn + y
-0054      0000     key.fctn.z    equ >0000             ; fctn + z
-0055               *---------------------------------------------------------------
-0056               * Keyboard scancodes - Function keys extra
+0011      5100     key.uc.q      equ >5100             ; Q
+0012      6E00     key.lc.n      equ >6e00             ; n
+0013      7300     key.lc.s      equ >7300             ; s
+0014      6F00     key.lc.o      equ >6f00             ; o
+0015      7100     key.lc.q      equ >7100             ; q
+0016               
+0017               
+0018               *---------------------------------------------------------------
+0019               * Keyboard scancodes - Function keys
+0020               *-------------|---------------------|---------------------------
+0021      BC00     key.fctn.0    equ >bc00             ; fctn + 0
+0022      0300     key.fctn.1    equ >0300             ; fctn + 1
+0023      0400     key.fctn.2    equ >0400             ; fctn + 2
+0024      0700     key.fctn.3    equ >0700             ; fctn + 3
+0025      0200     key.fctn.4    equ >0200             ; fctn + 4
+0026      0E00     key.fctn.5    equ >0e00             ; fctn + 5
+0027      0C00     key.fctn.6    equ >0c00             ; fctn + 6
+0028      0100     key.fctn.7    equ >0100             ; fctn + 7
+0029      0600     key.fctn.8    equ >0600             ; fctn + 8
+0030      0F00     key.fctn.9    equ >0f00             ; fctn + 9
+0031      0000     key.fctn.a    equ >0000             ; fctn + a
+0032      BE00     key.fctn.b    equ >be00             ; fctn + b
+0033      0000     key.fctn.c    equ >0000             ; fctn + c
+0034      0900     key.fctn.d    equ >0900             ; fctn + d
+0035      0B00     key.fctn.e    equ >0b00             ; fctn + e
+0036      0000     key.fctn.f    equ >0000             ; fctn + f
+0037      0000     key.fctn.g    equ >0000             ; fctn + g
+0038      BF00     key.fctn.h    equ >bf00             ; fctn + h
+0039      0000     key.fctn.i    equ >0000             ; fctn + i
+0040      C000     key.fctn.j    equ >c000             ; fctn + j
+0041      C100     key.fctn.k    equ >c100             ; fctn + k
+0042      C200     key.fctn.l    equ >c200             ; fctn + l
+0043      C300     key.fctn.m    equ >c300             ; fctn + m
+0044      C400     key.fctn.n    equ >c400             ; fctn + n
+0045      0000     key.fctn.o    equ >0000             ; fctn + o
+0046      0000     key.fctn.p    equ >0000             ; fctn + p
+0047      C500     key.fctn.q    equ >c500             ; fctn + q
+0048      0000     key.fctn.r    equ >0000             ; fctn + r
+0049      0800     key.fctn.s    equ >0800             ; fctn + s
+0050      0000     key.fctn.t    equ >0000             ; fctn + t
+0051      0000     key.fctn.u    equ >0000             ; fctn + u
+0052      7F00     key.fctn.v    equ >7f00             ; fctn + v
+0053      7E00     key.fctn.w    equ >7e00             ; fctn + w
+0054      0A00     key.fctn.x    equ >0a00             ; fctn + x
+0055      C600     key.fctn.y    equ >c600             ; fctn + y
+0056      0000     key.fctn.z    equ >0000             ; fctn + z
 0057               *---------------------------------------------------------------
-0058      B900     key.fctn.dot    equ >b900           ; fctn + .
-0059      B800     key.fctn.comma  equ >b800           ; fctn + ,
-0060      0500     key.fctn.plus   equ >0500           ; fctn + +
-0061               *---------------------------------------------------------------
-0062               * Keyboard scancodes - control keys
-0063               *-------------|---------------------|---------------------------
-0064      B000     key.ctrl.0    equ >b000             ; ctrl + 0
-0065      B100     key.ctrl.1    equ >b100             ; ctrl + 1
-0066      B200     key.ctrl.2    equ >b200             ; ctrl + 2
-0067      B300     key.ctrl.3    equ >b300             ; ctrl + 3
-0068      B400     key.ctrl.4    equ >b400             ; ctrl + 4
-0069      B500     key.ctrl.5    equ >b500             ; ctrl + 5
-0070      B600     key.ctrl.6    equ >b600             ; ctrl + 6
-0071      B700     key.ctrl.7    equ >b700             ; ctrl + 7
-0072      9E00     key.ctrl.8    equ >9e00             ; ctrl + 8
-0073      9F00     key.ctrl.9    equ >9f00             ; ctrl + 9
-0074      8100     key.ctrl.a    equ >8100             ; ctrl + a
-0075      8200     key.ctrl.b    equ >8200             ; ctrl + b
-0076      8300     key.ctrl.c    equ >8300             ; ctrl + c
-0077      8400     key.ctrl.d    equ >8400             ; ctrl + d
-0078      8500     key.ctrl.e    equ >8500             ; ctrl + e
-0079      8600     key.ctrl.f    equ >8600             ; ctrl + f
-0080      8700     key.ctrl.g    equ >8700             ; ctrl + g
-0081      8800     key.ctrl.h    equ >8800             ; ctrl + h
-0082      8900     key.ctrl.i    equ >8900             ; ctrl + i
-0083      8A00     key.ctrl.j    equ >8a00             ; ctrl + j
-0084      8B00     key.ctrl.k    equ >8b00             ; ctrl + k
-0085      8C00     key.ctrl.l    equ >8c00             ; ctrl + l
-0086      8D00     key.ctrl.m    equ >8d00             ; ctrl + m
-0087      8E00     key.ctrl.n    equ >8e00             ; ctrl + n
-0088      8F00     key.ctrl.o    equ >8f00             ; ctrl + o
-0089      9000     key.ctrl.p    equ >9000             ; ctrl + p
-0090      9100     key.ctrl.q    equ >9100             ; ctrl + q
-0091      9200     key.ctrl.r    equ >9200             ; ctrl + r
-0092      9300     key.ctrl.s    equ >9300             ; ctrl + s
-0093      9400     key.ctrl.t    equ >9400             ; ctrl + t
-0094      9500     key.ctrl.u    equ >9500             ; ctrl + u
-0095      9600     key.ctrl.v    equ >9600             ; ctrl + v
-0096      9700     key.ctrl.w    equ >9700             ; ctrl + w
-0097      9800     key.ctrl.x    equ >9800             ; ctrl + x
-0098      9900     key.ctrl.y    equ >9900             ; ctrl + y
-0099      9A00     key.ctrl.z    equ >9a00             ; ctrl + z
-0100               *---------------------------------------------------------------
-0101               * Keyboard scancodes - control keys extra
+0058               * Keyboard scancodes - Function keys extra
+0059               *---------------------------------------------------------------
+0060      B900     key.fctn.dot    equ >b900           ; fctn + .
+0061      B800     key.fctn.comma  equ >b800           ; fctn + ,
+0062      0500     key.fctn.plus   equ >0500           ; fctn + +
+0063               *---------------------------------------------------------------
+0064               * Keyboard scancodes - control keys
+0065               *-------------|---------------------|---------------------------
+0066      B000     key.ctrl.0    equ >b000             ; ctrl + 0
+0067      B100     key.ctrl.1    equ >b100             ; ctrl + 1
+0068      B200     key.ctrl.2    equ >b200             ; ctrl + 2
+0069      B300     key.ctrl.3    equ >b300             ; ctrl + 3
+0070      B400     key.ctrl.4    equ >b400             ; ctrl + 4
+0071      B500     key.ctrl.5    equ >b500             ; ctrl + 5
+0072      B600     key.ctrl.6    equ >b600             ; ctrl + 6
+0073      B700     key.ctrl.7    equ >b700             ; ctrl + 7
+0074      9E00     key.ctrl.8    equ >9e00             ; ctrl + 8
+0075      9F00     key.ctrl.9    equ >9f00             ; ctrl + 9
+0076      8100     key.ctrl.a    equ >8100             ; ctrl + a
+0077      8200     key.ctrl.b    equ >8200             ; ctrl + b
+0078      8300     key.ctrl.c    equ >8300             ; ctrl + c
+0079      8400     key.ctrl.d    equ >8400             ; ctrl + d
+0080      8500     key.ctrl.e    equ >8500             ; ctrl + e
+0081      8600     key.ctrl.f    equ >8600             ; ctrl + f
+0082      8700     key.ctrl.g    equ >8700             ; ctrl + g
+0083      8800     key.ctrl.h    equ >8800             ; ctrl + h
+0084      8900     key.ctrl.i    equ >8900             ; ctrl + i
+0085      8A00     key.ctrl.j    equ >8a00             ; ctrl + j
+0086      8B00     key.ctrl.k    equ >8b00             ; ctrl + k
+0087      8C00     key.ctrl.l    equ >8c00             ; ctrl + l
+0088      8D00     key.ctrl.m    equ >8d00             ; ctrl + m
+0089      8E00     key.ctrl.n    equ >8e00             ; ctrl + n
+0090      8F00     key.ctrl.o    equ >8f00             ; ctrl + o
+0091      9000     key.ctrl.p    equ >9000             ; ctrl + p
+0092      9100     key.ctrl.q    equ >9100             ; ctrl + q
+0093      9200     key.ctrl.r    equ >9200             ; ctrl + r
+0094      9300     key.ctrl.s    equ >9300             ; ctrl + s
+0095      9400     key.ctrl.t    equ >9400             ; ctrl + t
+0096      9500     key.ctrl.u    equ >9500             ; ctrl + u
+0097      9600     key.ctrl.v    equ >9600             ; ctrl + v
+0098      9700     key.ctrl.w    equ >9700             ; ctrl + w
+0099      9800     key.ctrl.x    equ >9800             ; ctrl + x
+0100      9900     key.ctrl.y    equ >9900             ; ctrl + y
+0101      9A00     key.ctrl.z    equ >9a00             ; ctrl + z
 0102               *---------------------------------------------------------------
-0103      9B00     key.ctrl.dot    equ >9b00           ; ctrl + .
-0104      8000     key.ctrl.comma  equ >8000           ; ctrl + ,
-0105      9D00     key.ctrl.plus   equ >9d00           ; ctrl + +
-0106               *---------------------------------------------------------------
-0107               * Special keys
+0103               * Keyboard scancodes - control keys extra
+0104               *---------------------------------------------------------------
+0105      9B00     key.ctrl.dot    equ >9b00           ; ctrl + .
+0106      8000     key.ctrl.comma  equ >8000           ; ctrl + ,
+0107      9D00     key.ctrl.plus   equ >9d00           ; ctrl + +
 0108               *---------------------------------------------------------------
-0109      0D00     key.enter     equ >0d00             ; enter
+0109               * Special keys
+0110               *---------------------------------------------------------------
+0111      0D00     key.enter     equ >0d00             ; enter
 **** **** ****     > ram.resident.3000.asm
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 7A16 DEAD             data  >dead,>beef,>dead,>beef
-     7A18 BEEF 
-     7A1A DEAD 
+0022 7A1A DEAD             data  >dead,>beef,>dead,>beef
      7A1C BEEF 
-**** **** ****     > stevie_b0.asm.739570
+     7A1E DEAD 
+     7A20 BEEF 
+**** **** ****     > stevie_b0.asm.761830
 0133               
-0137 7A1E 3966                   data $                ; Bank 0 ROM size OK.
+0137 7A22 396A                   data $                ; Bank 0 ROM size OK.
 0139                       ;------------------------------------------------------
 0140                       ; Bank specific vector table
 0141                       ;------------------------------------------------------
-0145 7A20 3968                   data $                ; Bank 0 ROM size OK.
+0145 7A24 396C                   data $                ; Bank 0 ROM size OK.
 0147               
 0148               *--------------------------------------------------------------
 0149               * Video mode configuration for SP2

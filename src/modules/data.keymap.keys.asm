@@ -8,9 +8,11 @@
 key.uc.n      equ >4e00             ; N
 key.uc.s      equ >5300             ; S
 key.uc.o      equ >4f00             ; O
+key.uc.q      equ >5100             ; Q
 key.lc.n      equ >6e00             ; n
 key.lc.s      equ >7300             ; s
 key.lc.o      equ >6f00             ; o
+key.lc.q      equ >7100             ; q
 
 
 *---------------------------------------------------------------

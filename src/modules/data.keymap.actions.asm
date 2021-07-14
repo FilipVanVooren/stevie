@@ -60,7 +60,7 @@ keymap_actions.editor:
         data  key.ctrl.h, pane.focus.fb, edkey.action.about        
         data  key.ctrl.f, pane.focus.fb, dialog.file
         data  key.ctrl.s, pane.focus.fb, dialog.save                
-        data  key.ctrl.o, pane.focus.fb, dialog.load        
+        data  key.ctrl.o, pane.focus.fb, dialog.load
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -79,6 +79,7 @@ keymap_actions.cmdb:
         data  key.uc.n, id.dialog.file, edkey.action.cmdb.file.new
         data  key.uc.s, id.dialog.file, dialog.save
         data  key.uc.o, id.dialog.file, dialog.load
+        data  key.uc.q, id.dialog.file, edkey.action.quit
         ;-------------------------------------------------------
         ; Dialog: Open DV80 file
         ;-------------------------------------------------------
