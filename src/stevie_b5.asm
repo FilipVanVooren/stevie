@@ -78,7 +78,7 @@ main:
         ;-----------------------------------------------------------------------    
         copy  "patterns.vdpdump.asm"
                                     ; Dump patterns to VDP
-        copy  "patterns.data.asm"   ; Pattern definitions sprites & chars
+        copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        

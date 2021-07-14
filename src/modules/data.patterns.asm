@@ -1,4 +1,4 @@
-* FILE......: patterns.data.asm
+* FILE......: data.patterns.asm
 * Purpose...: Character definitions sprites & characters
 
 ;--------------------------------------------------------------
@@ -44,7 +44,7 @@ alphalock:
 
 vertline:
         data  >1010,>1010,>1010,>1010 ; 16. Vertical line
-        data  >0000,>0000,>3030,>3030 ; 17. Tab indicator
+        data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
 
 
 low.digits:

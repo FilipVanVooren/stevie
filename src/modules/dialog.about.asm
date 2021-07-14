@@ -84,11 +84,11 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 1)
         ;------------------------------------------------------
-        li    tmp0,>0200            ; Y=2, X=0
+        li    tmp0,>0100            ; Y=1, X=0
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.about.help.part1
                                     ; Pointer to string
-        li    tmp2,21               ; Set loop counter
+        li    tmp2,22               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -99,11 +99,11 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 2)
         ;------------------------------------------------------
-        li    tmp0,>032c            ; Y=3, X=44
+        li    tmp0,>022c            ; Y=2, X=44
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.about.help.part2
                                     ; Pointer to string
-        li    tmp2,19               ; Set loop counter
+        li    tmp2,18               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -131,40 +131,39 @@ dialog.about.help.part1:
         #string '   Fctn E        Cursor up'
         #string '   Fctn X        Cursor down'
         #string '   Fctn H        Cursor home'
+        #string '   Fctn L        Cursor end'
         #string '   Fctn J        Cursor to prev. word'
         #string '   Fctn K        Cursor to next word'
-        #string '   Fctn L        Cursor to end'
+        #string '   Fctn 7        Cursor to next tab'
         #string '   Ctrl E  (^e)  Page up'
         #string '   Ctrl X  (^x)  Page down'
         #string '   Ctrl T  (^t)  File top'
         #string '   Ctrl B  (^b)  File bottom'
         #string ' '
         #string 'Action keys:'
-        #string '   Fctn +         Quit'
-        #string '   Ctrl h (^h)    Help'
-        #string '   Ctrl o (^o)    Open file'
-        #string '   Ctrl s (^s)    Save file'
-        #string '   Ctrl v (^v)    Set M1/M2 marker'
-        #string '   Ctrl z (^z)    Cycle color schemes'
+        #string '   Fctn +        Quit'
+        #string '   Ctrl h  (^h)  Help'
+        #string '   Ctrl o  (^o)  Open file'
+        #string '   Ctrl s  (^s)  Save file'
+        #string '   Ctrl v  (^v)  Set M1/M2 marker'
+        #string '   Ctrl z  (^z)  Cycle color schemes'
         
 dialog.about.help.part2:
-        #string '   Ctrl , (^,)    Load previous file'
-        #string '   Ctrl . (^.)    Load next file'
-        #string '   ctrl u (^u)    Toggle ruler'
+        #string '   Ctrl ,  (^,)  Load previous file'
+        #string '   Ctrl .  (^.)  Load next file'
+        #string '   ctrl u  (^u)  Toggle ruler'
         #string ' '
-        #string 'Block operations:'
-        #string '   Ctrl d (^d)   Delete block'
-        #string '   Ctrl c (^c)   Copy block'
-        #string '   Ctrl g (^g)   Goto marker M1'
-        #string '   Ctrl m (^m)   Move block'
-        #string '   Ctrl s (^s)   Save block to file'
+        #string 'In block mode:'
+        #string '   Ctrl d  (^d)  Delete block'
+        #string '   Ctrl c  (^c)  Copy block'
+        #string '   Ctrl g  (^g)  Goto marker M1'
+        #string '   Ctrl m  (^m)  Move block'
+        #string '   Ctrl s  (^s)  Save block to file'
         #string ' '
         #string 'Modifier keys:'
-        #string '   Fctn 1   Delete character'
-        #string '   Fctn 2   Insert character'
-        #string '   Fctn 3   Delete line'
-        #string '   Fctn 4   Delete end of line'
-        #string '   Fctn 5   Insert line'
-        #string '   Fctn 7   Move to next tab'
-        #string '   Fctn .   Toggle Insert/Overwrite'
-
+        #string '   Fctn 1        Delete character'
+        #string '   Fctn 2        Insert character'
+        #string '   Fctn 3        Delete line'
+        #string '   Fctn 4        Delete end of line'
+        #string '   Fctn 8        Insert line'
+        #string '   Fctn .        Insert/Overwrite'

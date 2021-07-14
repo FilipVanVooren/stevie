@@ -32,8 +32,8 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         data  key.fctn.2, pane.focus.fb, edkey.action.ins_char.ws
         data  key.fctn.dot, pane.focus.fb, edkey.action.ins_onoff
-        data  key.fctn.5, pane.focus.fb, edkey.action.ins_line
         data  key.fctn.7, pane.focus.fb, edkey.action.fb.tab.next
+        data  key.fctn.8, pane.focus.fb, edkey.action.ins_line        
         ;-------------------------------------------------------
         ; Block marking/modifier
         ;-------------------------------------------------------
