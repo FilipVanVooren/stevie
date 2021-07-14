@@ -16,7 +16,9 @@ keymap_actions.editor:
         data  key.fctn.h, pane.focus.fb, edkey.action.home
         data  key.fctn.j, pane.focus.fb, edkey.action.pword
         data  key.fctn.k, pane.focus.fb, edkey.action.nword
-        data  key.fctn.l, pane.focus.fb, edkey.action.end           
+        data  key.fctn.l, pane.focus.fb, edkey.action.end
+        data  key.fctn.6, pane.focus.fb, edkey.action.ppage        
+        data  key.fctn.4, pane.focus.fb, edkey.action.npage        
         data  key.ctrl.e, pane.focus.fb, edkey.action.ppage
         data  key.ctrl.x, pane.focus.fb, edkey.action.npage
         data  key.ctrl.t, pane.focus.fb, edkey.action.top

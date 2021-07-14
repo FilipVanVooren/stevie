@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210714-724475
+0009               * File: stevie_b0.asm               ; Version 210714-739570
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -413,7 +413,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0336               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0337               *--------------------------------------------------------------
 0338      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -468,7 +468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1257,7 +1257,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 625C 1742             byte  23
-0260 625D ....             text  'Build-ID  210714-724475'
+0260 625D ....             text  'Build-ID  210714-739570'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5210,7 +5210,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F7C 0040 
 0367 6F7E 0460  28         b     @main                 ; Give control to main program
      6F80 3000 
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -6505,7 +6505,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 74FA 4B42             byte  75
-0018 74FB ....             text  'Build: 210714-724475 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 74FB ....             text  'Build: 210714-739570 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6941,7 +6941,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A18 BEEF 
      7A1A DEAD 
      7A1C BEEF 
-**** **** ****     > stevie_b0.asm.724475
+**** **** ****     > stevie_b0.asm.739570
 0133               
 0137 7A1E 3966                   data $                ; Bank 0 ROM size OK.
 0139                       ;------------------------------------------------------
