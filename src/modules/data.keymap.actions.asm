@@ -83,9 +83,6 @@ keymap_actions.editor:
         byte  key.ctrl.v, pane.focus.fb
         data  edkey.action.block.mark
 
-        byte  key.fctn.9, pane.focus.fb
-        data  edkey.action.block.reset
-
         byte  key.ctrl.c, pane.focus.fb
         data  edkey.action.block.copy
 
@@ -131,9 +128,13 @@ keymap_actions.editor:
 
         byte  key.ctrl.o, pane.focus.fb
         data  dialog.load
-
+        
+        ; 
+        ; FCTN-9 has multipe purposes, if block mode is on it
+        ; resets the block, otherwise show Stevie menu dialog.
+        ;
         byte  key.fctn.9, pane.focus.fb
-        data  dialog.menu
+        data  dialog.menu 
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

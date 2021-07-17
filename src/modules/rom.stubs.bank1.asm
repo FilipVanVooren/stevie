@@ -228,11 +228,22 @@ dialog.file:
 * bank3 vec.6
 ********|*****|*********************|**************************
 dialog.menu:
-        bl    @pane.cursor.hide     ; Hide cursor
+        ;------------------------------------------------------
+        ; Check if block mode is active
+        ;------------------------------------------------------
+        mov   @edb.block.m2,tmp0    ; \  
+        inc   tmp0                  ; | Skip if M2 unset (>ffff)
+                                    ; /
+        jeq   !                     : Block mode inactive, show dialog
+        ;------------------------------------------------------
+        ; Special treatment for block mode
+        ;------------------------------------------------------
+        b     @edkey.action.block.reset
+                                    ; Reset block mode
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
+!       bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
               data vec.6            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
