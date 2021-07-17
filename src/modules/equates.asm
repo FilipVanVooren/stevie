@@ -103,6 +103,18 @@ pane.botrow               equ  23      ; Bottom row on screen
 *--------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+;-----------------------------------------------------------------
+;   Dialog ID's >= 100 indicate that command prompt should be 
+;   hidden and no characters added to CMDB keyboard buffer
+;-----------------------------------------------------------------
+id.dialog.load            equ  10      ; "Load DV80 file"
+id.dialog.save            equ  11      ; "Save DV80 file"
+id.dialog.saveblock       equ  12      ; "Save codeblock to DV80 file"
+id.dialog.menu            equ  100     ; "Stevie Menu"
+id.dialog.unsaved         equ  101     ; "Unsaved changes"
+id.dialog.block           equ  102     ; "Block move/copy/delete"
+id.dialog.about           equ  103     ; "About"
+id.dialog.file            equ  104     ; "File"
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
@@ -117,17 +129,6 @@ vdp.sit.size              equ  (pane.botrow + 1) * 80
                                        ; VDP SIT size 80 columns, 24/30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
-;-----------------------------------------------------------------
-;   Dialog ID's >= 100 indicate that command prompt should be 
-;   hidden and no characters added to CMDB keyboard buffer
-;-----------------------------------------------------------------
-id.dialog.load            equ  10      ; ID dialog "Load DV80 file"
-id.dialog.save            equ  11      ; ID dialog "Save DV80 file"
-id.dialog.saveblock       equ  12      ; ID dialog "Save codeblock to DV80 file"
-id.dialog.unsaved         equ  101     ; ID dialog "Unsaved changes"
-id.dialog.block           equ  102     ; ID dialog "Block move/copy/delete"
-id.dialog.about           equ  103     ; ID dialog "About"
-id.dialog.file            equ  104     ; ID dialog "File"
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------

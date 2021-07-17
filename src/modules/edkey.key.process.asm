@@ -40,14 +40,14 @@ edkey.key.process.loadmap.cmdb:
         ; Iterate over keyboard map for matching action key
         ;-------------------------------------------------------
 edkey.key.check.next:
-        c     *tmp2,tmp3            ; EOL reached ?
+        cb    *tmp2,tmp3            ; EOL reached ?
         jeq   edkey.key.process.addbuffer
                                     ; Yes, means no action key pressed, so
                                     ; add character to buffer
         ;-------------------------------------------------------
         ; Check for action key match
         ;-------------------------------------------------------
-        c     tmp1,*tmp2            ; Action key matched?
+        cb    tmp1,*tmp2            ; Action key matched?
         jeq   edkey.key.check.scope
                                     ; Yes, check scope
         ;-------------------------------------------------------
@@ -60,7 +60,7 @@ edkey.key.check.next:
         jgt   edkey.key.check.next.entry        
 
         ai    tmp1,->2000           ; Make uppercase
-        c     tmp1,*tmp2            ; Action key matched?
+        cb    tmp1,*tmp2            ; Action key matched?
         jeq   edkey.key.check.scope
                                     ; Yes, check scope
         ;-------------------------------------------------------
@@ -69,28 +69,29 @@ edkey.key.check.next:
         ai    tmp1,>2000            ; Make lowercase
 
 edkey.key.check.next.entry:
-        ai    tmp2,6                ; Skip current entry
+        ai    tmp2,4                ; Skip current entry
         jmp   edkey.key.check.next  ; Check next entry
         ;-------------------------------------------------------
         ; Check scope of key
         ;-------------------------------------------------------
 edkey.key.check.scope:
-        inct  tmp2                  ; Move to scope
-        c     *tmp2,@tv.pane.focus  ; (1) Process key if scope matches pane
+        inc   tmp2                  ; Move to scope
+        cb    *tmp2,@tv.pane.focus+1 
+                                    ; (1) Process key if scope matches pane
         jeq   edkey.key.process.action
 
-        c     *tmp2,@cmdb.dialog    ; (2) Process key if scope matches dialog
+        cb    *tmp2,@cmdb.dialog+1  ; (2) Process key if scope matches dialog
         jeq   edkey.key.process.action
         ;-------------------------------------------------------
         ; Key pressed outside valid scope, ignore action entry
         ;-------------------------------------------------------
-        ai    tmp2,4                ; Skip current entry
+        ai    tmp2,3                ; Skip current entry
         jmp   edkey.key.check.next  ; Process next action entry        
         ;-------------------------------------------------------
         ; Trigger keyboard action
         ;-------------------------------------------------------
 edkey.key.process.action:
-        inct  tmp2                  ; Move to action address
+        inc   tmp2                  ; Move to action address
         mov   *tmp2,tmp2            ; Get action address
 
         li    tmp0,id.dialog.unsaved
@@ -113,10 +114,10 @@ edkey.key.process.addbuffer:
         jne   edkey.key.process.crash
                                     ; No, crash
         ;-------------------------------------------------------
-        ; Don't add character if dialog has ID > 100
+        ; Don't add character if dialog has ID >= 100
         ;-------------------------------------------------------
         mov   @cmdb.dialog,tmp0
-        ci    tmp0,100
+        ci    tmp0,99
         jgt   edkey.key.process.exit
         ;-------------------------------------------------------
         ; Add character to CMDB

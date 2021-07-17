@@ -224,6 +224,26 @@ dialog.file:
 
 
 ***************************************************************
+* Stub for Dialog "Stevie Menu dialog"
+* bank3 vec.6
+********|*****|*********************|**************************
+dialog.menu:
+        bl    @pane.cursor.hide     ; Hide cursor
+        ;------------------------------------------------------
+        ; Show dialog
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data vec.6            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        b     @edkey.action.cmdb.show
+                                    ; Show dialog in CMDB pane
+
+
+***************************************************************
 * Stub for "fb.tab.next"
 * bank4 vec.1
 ********|*****|*********************|**************************

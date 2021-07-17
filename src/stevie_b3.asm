@@ -80,6 +80,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------         
+        copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
         copy  "dialog.about.asm"    ; Dialog "About"
         copy  "dialog.file.asm"     ; Dialog "File"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"

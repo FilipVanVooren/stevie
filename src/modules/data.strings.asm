@@ -29,8 +29,8 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string 'Editor: ^Help, ^File'
-txt.keys.block     #string 'Block: F9=Back, ^Del, ^Copy, ^Move, ^Goto M1, ^Save'
+txt.keys.default   #string 'F9=Menu  ^Help  ^File'
+txt.keys.block     #string 'Block: F9=Back  ^Del  ^Copy  ^Move  ^Goto M1  ^Save'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -71,12 +71,12 @@ txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/
 txt.keys.load      byte 60
                    text 'File'
                    byte 27
-                   text 'Open: F9=Back, F3=Clear, F5=Fastmode, F-H=Home, F-L=End '
+                   text 'Open: F9=Back  F3=Clear  F5=Fastmode  F-H=Home  F-L=End '
 
 txt.keys.load2     byte 61
                    text 'File'
                    byte 27
-                   text 'Open: F9=Back, F3=Clear, *F5=Fastmode, F-H=Home, F-L=End '
+                   text 'Open: F9=Back  F3=Clear  *F5=Fastmode  F-H=Home  F-L=End '
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
@@ -92,7 +92,7 @@ txt.hint.save      #string ' '
 txt.keys.save      byte 47
                    text 'File'
                    byte 27                   
-                   text 'Save: F9=Back, F3=Clear, F-H=Home, F-L=End'
+                   text 'Save: F9=Back  F3=Clear  F-H=Home  F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -102,7 +102,7 @@ txt.head.unsaved   byte 20,1,3,32
                    byte 2
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
-txt.keys.unsaved   #string 'Confirm: F9=Back, F6=Proceed, ENTER=Save file'
+txt.keys.unsaved   #string 'Confirm: F9=Back  F6=Proceed  ENTER=Save'
 
 ;--------------------------------------------------------------
 ; Dialog "About"
@@ -114,9 +114,22 @@ txt.head.about     byte 10,1,3,32
 txt.info.about     #string 
 txt.hint.about     #string 'Press F9 to return to editor.'
 txt.keys.about     byte 33
-                   text 'Help: F9=Back, '
+                   text 'Help: F9=Back  '
                    byte 14,15
                    text '=Alpha Lock down'
+
+
+;--------------------------------------------------------------
+; Dialog "Menu"
+;--------------------------------------------------------------
+txt.head.menu      byte 16,1,3,32
+                   text 'Stevie Menu '
+                   byte 2
+
+txt.info.menu      #string 'File, Help, Quit'
+pos.info.menu      byte 0,6,12,>ff
+txt.hint.menu      #string 'Press F,H,Q or F9 to return to editor.'
+txt.keys.menu      #string 'Menu: F9=Back'
 
 
 ;--------------------------------------------------------------
