@@ -5,10 +5,14 @@
 *---------------------------------------------------------------
 * Keyboard scancodes - Letter keys
 *-------------|---------------------|---------------------------
+key.uc.f      equ >46               ; F
+key.uc.h      equ >48               ; H
 key.uc.n      equ >4e               ; N
 key.uc.s      equ >53               ; S
 key.uc.o      equ >4f               ; O
 key.uc.q      equ >51               ; Q
+key.lc.f      equ >a6               ; f
+key.lc.h      equ >a8               ; h
 key.lc.n      equ >6e               ; n
 key.lc.s      equ >73               ; s
 key.lc.o      equ >6f               ; o

@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for about pane
 ;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1M'
+txt.stevie         #string 'STEVIE 1.1N'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 txt.delim          #string ','
@@ -139,9 +139,9 @@ txt.head.file      byte 9,1,3,32
                    text 'File '
                    byte 2
 
-txt.info.file      #string 'New, Open, Print, Save, Quit'
-pos.info.file      byte 0,5,11,18,24,>ff
-txt.hint.file      #string 'Press N,O,P,S,Q or F9 to return to editor.'
+txt.info.file      #string 'New, Open, Print, Save'
+pos.info.file      byte 0,5,11,18,>ff
+txt.hint.file      #string 'Press N,O,P,S or F9 to return to editor.'
 txt.keys.file      #string 'File: F9=Back'
 
 
