@@ -5,8 +5,9 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
-        mov   @waux1,tmp1           ; Get key value
-        andi  tmp1,>ff00            ; Get rid of LSB
+        mov   @waux1,tmp1           ; \ 
+        andi  tmp1,>ff00            ; | Get key value and clear LSB
+        mov   tmp1,@waux1           ; / 
         seto  tmp3                  ; EOL marker
         ;-------------------------------------------------------
         ; Process key depending on pane with focus
@@ -35,7 +36,6 @@ edkey.key.process.loadmap.editor:
         ;-------------------------------------------------------
 edkey.key.process.loadmap.cmdb:                
         li    tmp2,keymap_actions.cmdb
-        jne   edkey.key.check.next
         ;-------------------------------------------------------
         ; Iterate over keyboard map for matching action key
         ;-------------------------------------------------------
@@ -86,6 +86,7 @@ edkey.key.check.scope:
         ; Key pressed outside valid scope, ignore action entry
         ;-------------------------------------------------------
         ai    tmp2,3                ; Skip current entry
+        mov   @waux1,tmp1           ; Restore original case of key
         jmp   edkey.key.check.next  ; Process next action entry        
         ;-------------------------------------------------------
         ; Trigger keyboard action
