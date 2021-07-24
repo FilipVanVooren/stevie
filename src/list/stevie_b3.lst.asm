@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 210724-1385310
+0009               * File: stevie_b3.asm               ; Version 210724-1395890
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -414,7 +414,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0337               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0338               *--------------------------------------------------------------
 0339      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -470,7 +470,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 603A 2026     vec.30  data  cpu.crash             ;
 0037 603C 2026     vec.31  data  cpu.crash             ;
 0038 603E 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0033               
 0034               
 0035               ***************************************************************
@@ -1191,7 +1191,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210724-1385310'
+0260 21D3 ....             text  'Build-ID  210724-1395890'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5146,7 +5146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF8 0040 
 0367 2EFA 0460  28         b     @main                 ; Give control to main program
      2EFC 6046 
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0045                                                   ; Relocated spectra2 in low MEMEXP, was
 0046                                                   ; copied to >2000 from ROM in bank 0
 0047                       ;------------------------------------------------------
@@ -6465,7 +6465,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 344E 4C42             byte  76
-0018 344F ....             text  'Build: 210724-1385310 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 344F ....             text  'Build: 210724-1395890 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6933,7 +6933,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      39A8 BEEF 
      39AA DEAD 
      39AC BEEF 
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0070               ***************************************************************
 0071               * Step 4: Include main editor modules
 0072               ********|*****|*********************|**************************
@@ -7017,7 +7017,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0084                       copy  "dialog.about.asm"    ; Dialog "About"
 **** **** ****     > dialog.about.asm
 0001               * FILE......: dialog.about.asm
@@ -7384,7 +7384,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0327 655D ....             text  '   Fctn .        Insert/Overwrite'
 0328                       even
 0329               
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0085                       copy  "dialog.file.asm"     ; Dialog "File"
 **** **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -7454,7 +7454,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 65BA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 65BC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 65BE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0086                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -7552,7 +7552,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 6612 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 6614 C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 6616 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0087                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7658,7 +7658,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0079 667A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0080 667C C2F9  30         mov   *stack+,r11           ; Pop R11
 0081 667E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0088                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7725,7 +7725,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 66B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 66BA C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 66BC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0089                       ;-----------------------------------------------------------------------
 0090                       ; Stubs using trampoline
 0091                       ;-----------------------------------------------------------------------
@@ -7841,7 +7841,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0103                       ;------------------------------------------------------
 0104 6714 C2F9  30         mov   *stack+,r11           ; Pop r11
 0105 6716 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1385310
+**** **** ****     > stevie_b3.asm.1395890
 0093                       ;-----------------------------------------------------------------------
 0094                       ; Bank specific vector table
 0095                       ;-----------------------------------------------------------------------

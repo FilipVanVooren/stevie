@@ -20,7 +20,6 @@ pane.botline:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
-
         ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
@@ -33,7 +32,7 @@ pane.botline:
               byte pane.botrow,0
               data txt.keys.block   ; Show block shortcuts
 
-        jmp   pane.botline.show_mode  
+        jmp   pane.botline.show_dirty
         ;------------------------------------------------------
         ; Show default message
         ;------------------------------------------------------
@@ -41,6 +40,26 @@ pane.botline.show_keys:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.default ; Show default shortcuts
+        ;------------------------------------------------------
+        ; Show if text was changed in editor buffer
+        ;------------------------------------------------------        
+pane.botline.show_dirty:
+        mov   @edb.dirty,tmp0 
+        jeq   pane.botline.nochange
+        ;------------------------------------------------------
+        ; Show "*" 
+        ;------------------------------------------------------        
+        bl    @putat
+              byte pane.botrow,53   ; x=53
+              data txt.star
+        jmp   pane.botline.show_mode
+        ;------------------------------------------------------
+        ; Show " " 
+        ;------------------------------------------------------        
+pane.botline.nochange:        
+        bl    @putat
+              byte pane.botrow,53   ; x=53
+              data txt.ws1          ; Single white space
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
