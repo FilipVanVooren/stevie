@@ -12,10 +12,10 @@ edkey.action.quit:
         jeq   !
         b     @dialog.unsaved       ; Show dialog and exit
         ;-------------------------------------------------------
-        ; Reset and lock F18a
+        ; Quit Stevie
         ;-------------------------------------------------------
-!       bl    @f18rst               ; Reset and lock the F18A
-        blwp  @0                    ; Exit
+!       b     @tv.quit
+
 
 
 *---------------------------------------------------------------

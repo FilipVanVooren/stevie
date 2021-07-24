@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for about pane
 ;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1N'
+txt.stevie         #string 'STEVIE 1.1P'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 txt.delim          #string ','
@@ -29,7 +29,7 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string 'F9=Menu  ^Help  ^File'
+txt.keys.default   #string 'F9=Menu'
 txt.keys.block     #string 'Block: F9=Back  ^Del  ^Copy  ^Move  ^Goto M1  ^Save'
 txt.ruler          text    '.........'
                    byte    18
@@ -63,8 +63,8 @@ txt.filetype.none  equ txt.ws4
 ;--------------------------------------------------------------
 ; Dialog Load DV 80 file
 ;--------------------------------------------------------------
-txt.head.load      byte 19,1,3,32
-                   text 'Open DV80 file '
+txt.head.load      byte 19,1,3
+                   text ' Open DV80 file '
                    byte 2
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
@@ -81,8 +81,8 @@ txt.keys.load2     byte 61
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
 ;--------------------------------------------------------------
-txt.head.save      byte 19,1,3,32
-                   text 'Save DV80 file '
+txt.head.save      byte 19,1,3
+                   text ' Save DV80 file '
                    byte 2
 txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
@@ -97,8 +97,8 @@ txt.keys.save      byte 47
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
-txt.head.unsaved   byte 20,1,3,32
-                   text 'Unsaved changes '
+txt.head.unsaved   byte 20,1,3
+                   text ' Unsaved changes '
                    byte 2
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
@@ -107,8 +107,8 @@ txt.keys.unsaved   #string 'Confirm: F9=Back  F6=Proceed  ENTER=Save'
 ;--------------------------------------------------------------
 ; Dialog "About"
 ;--------------------------------------------------------------
-txt.head.about     byte 10,1,3,32
-                   text 'About '
+txt.head.about     byte 10,1,3
+                   text ' About '
                    byte 2
 
 txt.info.about     #string 
@@ -122,11 +122,11 @@ txt.keys.about     byte 33
 ;--------------------------------------------------------------
 ; Dialog "Menu"
 ;--------------------------------------------------------------
-txt.head.menu      byte 16,1,3,32
-                   text 'Stevie Menu '
+txt.head.menu      byte 16,1,3
+                   text ' Stevie 1.1P '
                    byte 2
 
-txt.info.menu      #string 'File, Help, Quit'
+txt.info.menu      #string 'File  Help  Quit'
 pos.info.menu      byte 0,6,12,>ff
 txt.hint.menu      #string 'Press F,H,Q or F9 to return to editor.'
 txt.keys.menu      #string 'Menu: F9=Back'
@@ -135,13 +135,13 @@ txt.keys.menu      #string 'Menu: F9=Back'
 ;--------------------------------------------------------------
 ; Dialog "File"
 ;--------------------------------------------------------------
-txt.head.file      byte 9,1,3,32
-                   text 'File '
+txt.head.file      byte 9,1,3
+                   text ' File '
                    byte 2
 
-txt.info.file      #string 'New, Open, Print, Save'
-pos.info.file      byte 0,5,11,18,>ff
-txt.hint.file      #string 'Press N,O,P,S or F9 to return to editor.'
+txt.info.file      #string 'New  Open  Save'
+pos.info.file      byte 0,5,11,>ff
+txt.hint.file      #string 'Press N,O,S or F9 to return to editor.'
 txt.keys.file      #string 'File: F9=Back'
 
 

@@ -27,7 +27,7 @@
 main.stevie:
         coc   @wbit1,config         ; F18a detected?
         jeq   main.continue
-        blwp  @0                    ; Exit for now if no F18a detected
+        b     @tv.quit              ; Exit for now if no F18a detected
 
 main.continue:
         ;------------------------------------------------------
