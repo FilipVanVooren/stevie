@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b5.asm               ; Version 210724-1415879
+0009               * File: stevie_b5.asm               ; Version 210726-2265348
 0010               *
 0011               * Bank 5 "Jumbo"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -414,7 +414,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0337               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0338               *--------------------------------------------------------------
 0339      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -470,7 +470,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 603A 2026     vec.30  data  cpu.crash             ;
 0037 603C 2026     vec.31  data  cpu.crash             ;
 0038 603E 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0033               
 0034               
 0035               ***************************************************************
@@ -1191,7 +1191,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210724-1415879'
+0260 21D3 ....             text  'Build-ID  210726-2265348'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -2916,9 +2916,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026               *  bl   @f18lck
 0027               ********|*****|*********************|**************************
 0028 274C C20B  18 f18lck  mov   r11,tmp4              ; Save R11
-0029 274E 06A0  32         bl    @putvr                ; VR1/57, value 00011100
+0029 274E 06A0  32         bl    @putvr                ; VR1/57, value 00000000
      2750 2336 
-0030 2752 391C             data  >391c
+0030 2752 3900             data  >3900
 0031 2754 0458  20         b     *tmp4                 ; Exit
 0032               
 0033               
@@ -5146,7 +5146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF8 0040 
 0367 2EFA 0460  28         b     @main                 ; Give control to main program
      2EFC 6046 
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0045                                                   ; Relocated spectra2 in low MEMEXP, was
 0046                                                   ; copied to >2000 from ROM in bank 0
 0047                       ;------------------------------------------------------
@@ -6465,7 +6465,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 344E 4C42             byte  76
-0018 344F ....             text  'Build: 210724-1415879 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 344F ....             text  'Build: 210726-2265348 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6933,7 +6933,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      39A8 BEEF 
      39AA DEAD 
      39AC BEEF 
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0070               ***************************************************************
 0071               * Step 4: Include main editor modules
 0072               ********|*****|*********************|**************************
@@ -6977,7 +6977,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023               vdp.patterns.dump.exit:
 0024 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
 0025 6064 045B  20         b     *r11                  ; Return to task
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0080                                                   ; Dump patterns to VDP
 0081                       copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
 **** **** ****     > data.patterns.asm
@@ -7144,7 +7144,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6168 0000 
      616A 0000 
      616C 0000 
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Stubs using trampoline
 0084                       ;-----------------------------------------------------------------------
@@ -7152,7 +7152,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank5.asm
 0001               * FILE......: rom.stubs.bank5.asm
 0002               * Purpose...: Bank 5 stubs for functions in other banks
-**** **** ****     > stevie_b5.asm.1415879
+**** **** ****     > stevie_b5.asm.2265348
 0086                       ;-----------------------------------------------------------------------
 0087                       ; Bank specific vector table
 0088                       ;-----------------------------------------------------------------------
