@@ -12,7 +12,7 @@
 *
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
+        copy  "rom.order.asm"       ; ROM ban k order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************

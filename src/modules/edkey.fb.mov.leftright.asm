@@ -43,13 +43,7 @@ edkey.action.right:
 * Cursor beginning of line
 *---------------------------------------------------------------
 edkey.action.home:
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
-        mov   @wyx,tmp0
-        andi  tmp0,>ff00            ; Reset cursor X position to 0
-        mov   tmp0,@wyx             ; VDP cursor column=0
-        clr   @fb.column
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
+        bl    @fb.cursor.home       ; Move cursor to beginning of line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
