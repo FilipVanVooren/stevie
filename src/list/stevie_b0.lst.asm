@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210726-2263405
+0009               * File: stevie_b0.asm               ; Version 210807-3765452
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -414,7 +414,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0337               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0338               *--------------------------------------------------------------
 0339      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -469,7 +469,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1258,7 +1258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 625C 1842             byte  24
-0260 625D ....             text  'Build-ID  210726-2263405'
+0260 625D ....             text  'Build-ID  210807-3765452'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -2995,121 +2995,124 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               *  bl   @f18chk
 0038               *--------------------------------------------------------------
 0039               *  REMARKS
-0040               *  VDP memory >3f00->3f05 still has part of GPU code upon exit.
-0041               ********|*****|*********************|**************************
-0042 67E0 C20B  18 f18chk  mov   r11,tmp4              ; Save R11
-0043 67E2 06A0  32         bl    @cpym2v
+0040               *  Expects that the f18a is unlocked when calling this function.
+0041               *  Runs GPU code at VDP >3f00
+0042               ********|*****|*********************|**************************
+0043 67E0 C20B  18 f18chk  mov   r11,tmp4              ; Save R11
+0044 67E2 06A0  32         bl    @cpym2v
      67E4 248A 
-0044 67E6 3F00             data  >3f00,f18chk_gpu,6    ; Copy F18A GPU code to VRAM
+0045 67E6 3F00             data  >3f00,f18chk_gpu,6    ; Copy F18A GPU code to VRAM
      67E8 279A 
      67EA 0006 
-0045 67EC 06A0  32         bl    @putvr
+0046 67EC 06A0  32         bl    @putvr
      67EE 2336 
-0046 67F0 363F             data  >363f                 ; Load MSB of GPU PC (>3f) into VR54 (>36)
-0047 67F2 06A0  32         bl    @putvr
+0047 67F0 363F             data  >363f                 ; Load MSB of GPU PC (>3f) into VR54 (>36)
+0048 67F2 06A0  32         bl    @putvr
      67F4 2336 
-0048 67F6 3700             data  >3700                 ; Load LSB of GPU PC (>00) into VR55 (>37)
-0049                                                   ; GPU code should run now
-0050               ***************************************************************
-0051               * VDP @>3f00 == 0 ? F18A present : F18a not present
-0052               ***************************************************************
-0053 67F8 0204  20         li    tmp0,>3f00
+0049 67F6 3700             data  >3700                 ; Load LSB of GPU PC (>00) into VR55 (>37)
+0050                                                   ; GPU code should run now
+0051               ***************************************************************
+0052               * VDP @>3f00 == 0 ? F18A present : F18a not present
+0053               ***************************************************************
+0054 67F8 0204  20         li    tmp0,>3f00
      67FA 3F00 
-0054 67FC 06A0  32         bl    @vdra                 ; Set VDP read address to >3f00
+0055 67FC 06A0  32         bl    @vdra                 ; Set VDP read address to >3f00
      67FE 22BE 
-0055 6800 D120  34         movb  @vdpr,tmp0            ; Read MSB byte
+0056 6800 D120  34         movb  @vdpr,tmp0            ; Read MSB byte
      6802 8800 
-0056 6804 0984  56         srl   tmp0,8
-0057 6806 D120  34         movb  @vdpr,tmp0            ; Read LSB byte
+0057 6804 0984  56         srl   tmp0,8
+0058 6806 D120  34         movb  @vdpr,tmp0            ; Read LSB byte
      6808 8800 
-0058 680A C104  18         mov   tmp0,tmp0             ; For comparing with 0
-0059 680C 1303  14         jeq   f18chk_yes
-0060               f18chk_no:
-0061 680E 0242  22         andi  config,>bfff          ; CONFIG Register bit 1=0
+0059 680A C104  18         mov   tmp0,tmp0             ; For comparing with 0
+0060 680C 1303  14         jeq   f18chk_yes
+0061               f18chk_no:
+0062 680E 0242  22         andi  config,>bfff          ; CONFIG Register bit 1=0
      6810 BFFF 
-0062 6812 1002  14         jmp   f18chk_exit
-0063               f18chk_yes:
-0064 6814 0262  22         ori   config,>4000          ; CONFIG Register bit 1=1
+0063 6812 1002  14         jmp   f18chk_exit
+0064               f18chk_yes:
+0065 6814 0262  22         ori   config,>4000          ; CONFIG Register bit 1=1
      6816 4000 
-0065               f18chk_exit:
-0066 6818 06A0  32         bl    @filv                 ; Clear VDP mem >3f00->3f07
+0066               f18chk_exit:
+0067 6818 06A0  32         bl    @filv                 ; Clear VDP mem >3f00->3f05
      681A 2292 
-0067 681C 3F00             data  >3f00,>00,6
+0068 681C 3F00             data  >3f00,>00,6
      681E 0000 
      6820 0006 
-0068 6822 0458  20         b     *tmp4                 ; Exit
-0069               ***************************************************************
-0070               * GPU code
-0071               ********|*****|*********************|**************************
-0072               f18chk_gpu
-0073 6824 04E0             data  >04e0                 ; 3f00 \ 04e0  clr @>3f00
-0074 6826 3F00             data  >3f00                 ; 3f02 / 3f00
-0075 6828 0340             data  >0340                 ; 3f04   0340  idle
-0076               
+0069 6822 0458  20         b     *tmp4                 ; Exit
+0070               ***************************************************************
+0071               * GPU code
+0072               ********|*****|*********************|**************************
+0073               f18chk_gpu
+0074 6824 04E0             data  >04e0                 ; 3f00 \ 04e0  clr @>3f00
+0075 6826 3F00             data  >3f00                 ; 3f02 / 3f00
+0076 6828 0340             data  >0340                 ; 3f04   0340  idle
 0077               
-0078               ***************************************************************
-0079               * f18rst - Reset f18a into standard settings
-0080               ***************************************************************
-0081               *  bl   @f18rst
-0082               *--------------------------------------------------------------
-0083               *  REMARKS
-0084               *  This is used to leave the F18A mode and revert all settings
-0085               *  that could lead to corruption when doing BLWP @0
-0086               *
-0087               *  There are some F18a settings that stay on when doing blwp @0
-0088               *  and the TI title screen cannot recover from that.
+0078               
+0079               ***************************************************************
+0080               * f18rst - Reset f18a into standard settings
+0081               ***************************************************************
+0082               *  bl   @f18rst
+0083               *--------------------------------------------------------------
+0084               *  REMARKS
+0085               *  This is used to leave the F18A mode and revert all settings
+0086               *  that could lead to corruption when doing BLWP @0
+0087               *
+0088               *  Is expected to run while the f18a is unlocked.
 0089               *
-0090               *  It is your responsibility to set video mode tables should
-0091               *  you want to continue instead of doing blwp @0 after your
-0092               *  program cleanup
-0093               ********|*****|*********************|**************************
-0094 682A C20B  18 f18rst  mov   r11,tmp4              ; Save R11
-0095                       ;------------------------------------------------------
-0096                       ; Reset all F18a VDP registers to power-on defaults
-0097                       ;------------------------------------------------------
-0098 682C 06A0  32         bl    @putvr
+0090               *  There are some F18a settings that stay on when doing blwp @0
+0091               *  and the TI title screen cannot recover from that.
+0092               *
+0093               *  It is your responsibility to set video mode tables should
+0094               *  you want to continue instead of doing blwp @0 after your
+0095               *  program cleanup
+0096               ********|*****|*********************|**************************
+0097 682A C20B  18 f18rst  mov   r11,tmp4              ; Save R11
+0098                       ;------------------------------------------------------
+0099                       ; Reset all F18a VDP registers to power-on defaults
+0100                       ;------------------------------------------------------
+0101 682C 06A0  32         bl    @putvr
      682E 2336 
-0099 6830 3280             data  >3280                 ; F18a VR50 (>32), MSB 8=1
-0100               
-0101 6832 06A0  32         bl    @putvr                ; VR1/57, value 00011100
+0102 6830 3280             data  >3280                 ; F18a VR50 (>32), MSB 8=1
+0103               
+0104 6832 06A0  32         bl    @putvr                ; VR1/57, value 00000000
      6834 2336 
-0102 6836 391C             data  >391c                 ; Lock the F18a
-0103 6838 0458  20         b     *tmp4                 ; Exit
-0104               
-0105               
-0106               
-0107               ***************************************************************
-0108               * f18fwv - Get F18A Firmware Version
-0109               ***************************************************************
-0110               *  bl   @f18fwv
-0111               *--------------------------------------------------------------
-0112               *  REMARKS
-0113               *  Successfully tested with F18A v1.8, note that this does not
-0114               *  work with F18 v1.3 but you shouldn't be using such old F18A
-0115               *  firmware to begin with.
-0116               *--------------------------------------------------------------
-0117               *  TMP0 High nibble = major version
-0118               *  TMP0 Low nibble  = minor version
-0119               *
-0120               *  Example: >0018     F18a Firmware v1.8
-0121               ********|*****|*********************|**************************
-0122 683A C20B  18 f18fwv  mov   r11,tmp4              ; Save R11
-0123 683C 20A0  38         coc   @wbit1,config         ; CONFIG bit 1 set ?
+0105 6836 3900             data  >3900                 ; Lock the F18a
+0106 6838 0458  20         b     *tmp4                 ; Exit
+0107               
+0108               
+0109               
+0110               ***************************************************************
+0111               * f18fwv - Get F18A Firmware Version
+0112               ***************************************************************
+0113               *  bl   @f18fwv
+0114               *--------------------------------------------------------------
+0115               *  REMARKS
+0116               *  Successfully tested with F18A v1.8, note that this does not
+0117               *  work with F18 v1.3 but you shouldn't be using such old F18A
+0118               *  firmware to begin with.
+0119               *--------------------------------------------------------------
+0120               *  TMP0 High nibble = major version
+0121               *  TMP0 Low nibble  = minor version
+0122               *
+0123               *  Example: >0018     F18a Firmware v1.8
+0124               ********|*****|*********************|**************************
+0125 683A C20B  18 f18fwv  mov   r11,tmp4              ; Save R11
+0126 683C 20A0  38         coc   @wbit1,config         ; CONFIG bit 1 set ?
      683E 201E 
-0124 6840 1609  14         jne   f18fw1
-0125               ***************************************************************
-0126               * Read F18A major/minor version
-0127               ***************************************************************
-0128 6842 C120  34         mov   @vdps,tmp0            ; Clear VDP status register
+0127 6840 1609  14         jne   f18fw1
+0128               ***************************************************************
+0129               * Read F18A major/minor version
+0130               ***************************************************************
+0131 6842 C120  34         mov   @vdps,tmp0            ; Clear VDP status register
      6844 8802 
-0129 6846 06A0  32         bl    @putvr                ; Write to VR#15 for setting F18A status
+0132 6846 06A0  32         bl    @putvr                ; Write to VR#15 for setting F18A status
      6848 2336 
-0130 684A 0F0E             data  >0f0e                 ; register to read (0e=VR#14)
-0131 684C 04C4  14         clr   tmp0
-0132 684E D120  34         movb  @vdps,tmp0
+0133 684A 0F0E             data  >0f0e                 ; register to read (0e=VR#14)
+0134 684C 04C4  14         clr   tmp0
+0135 684E D120  34         movb  @vdps,tmp0
      6850 8802 
-0133 6852 0984  56         srl   tmp0,8
-0134 6854 0458  20 f18fw1  b     *tmp4                 ; Exit
+0136 6852 0984  56         srl   tmp0,8
+0137 6854 0458  20 f18fw1  b     *tmp4                 ; Exit
 **** **** ****     > runlib.asm
 0143               
 0145                       copy  "vdp_hchar.asm"            ; VDP hchar functions
@@ -5213,7 +5216,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F82 0040 
 0367 6F84 0460  28         b     @main                 ; Give control to main program
      6F86 3000 
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0098                                                   ; Spectra 2
 0099                       ;------------------------------------------------------
 0100                       ; End of File marker
@@ -6538,7 +6541,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 750C 4C42             byte  76
-0018 750D ....             text  'Build: 210726-2263405 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 750D ....             text  'Build: 210807-3765452 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -7006,7 +7009,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7A66 BEEF 
      7A68 DEAD 
      7A6A BEEF 
-**** **** ****     > stevie_b0.asm.2263405
+**** **** ****     > stevie_b0.asm.3765452
 0133               
 0137 7A6C 39AE                   data $                ; Bank 0 ROM size OK.
 0139                       ;------------------------------------------------------

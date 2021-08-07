@@ -31,7 +31,14 @@ edkey.action.ins_char:
         mov   @fb.column,tmp1    
         ci    tmp1,colrow - 1       ; Overwrite if last column in row
         jlt   !
-        b     @edkey.action.char.overwrite
+
+        b     @edkey.action.ins_line
+        b     @edkey.action.down
+        ;bl    @edb.line.pack        ; Copy line to editor buffer
+        ;clr   @fb.row.dirty         ; Current row no longer dirty
+
+
+        ;b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Assert 4 - 80 characters maximum
         ;-------------------------------------------------------
