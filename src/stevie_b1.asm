@@ -111,6 +111,7 @@ main:
         ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------        
         copy  "fb.utils.asm"        ; Framebuffer utilities
+        copy  "fb.cursor.up.asm"    ; Cursor up logic
         copy  "fb.cursor.down.asm"  ; Cursor down logic
         copy  "fb.get.firstnonblank.asm"
                                     ; Get column of first non-blank character

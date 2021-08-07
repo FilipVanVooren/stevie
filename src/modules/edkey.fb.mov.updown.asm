@@ -5,63 +5,11 @@
 * Cursor up
 *---------------------------------------------------------------
 edkey.action.up: 
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
-        ;-------------------------------------------------------
-        ; Crunch current line if dirty 
-        ;-------------------------------------------------------
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.up.cursor
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-        clr   @fb.row.dirty         ; Current row no longer dirty
-        ;-------------------------------------------------------
-        ; Move cursor
-        ;-------------------------------------------------------
-edkey.action.up.cursor:
-        mov   @fb.row,tmp0
-        jgt   edkey.action.up.cursor_up
-                                    ; Move cursor up if fb.row > 0
-        mov   @fb.topline,tmp0      ; Do we need to scroll?
-        jeq   edkey.action.up.set_cursorx
-                                    ; At top, only position cursor X
-        ;-------------------------------------------------------
-        ; Scroll 1 line
-        ;-------------------------------------------------------
-        dec   tmp0                  ; fb.topline--
-        mov   tmp0,@parm1           ; Scroll one line up       
-
-        bl    @fb.refresh           ; \ Refresh frame buffer
-                                    ; | i  @parm1 = Line to start with
-                                    ; /             (becomes @fb.topline)
-
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-        jmp   edkey.action.up.set_cursorx
-        ;-------------------------------------------------------
-        ; Move cursor up
-        ;-------------------------------------------------------
-edkey.action.up.cursor_up:       
-        dec   @fb.row               ; Row-- in screen buffer
-        bl    @up                   ; Row-- VDP cursor
-        ;-------------------------------------------------------
-        ; Check line length and position cursor
-        ;-------------------------------------------------------
-edkey.action.up.set_cursorx:
-        bl    @edb.line.getlength2  ; \ Get length current line
-                                    ; | i  @fb.row        = Row in frame buffer
-                                    ; / o  @fb.row.length = Length of row
-
-        c     @fb.column,@fb.row.length
-        jle   edkey.action.up.exit
-        ;-------------------------------------------------------
-        ; Adjust cursor column position
-        ;-------------------------------------------------------
-        mov   @fb.row.length,@fb.column 
-        mov   @fb.column,tmp0
-        bl    @xsetx                ; Set VDP cursor X
+        bl    @fb.cursor.up         ; Move cursor up
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.up.exit:
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
         b     @hook.keyscan.bounce  ; Back to editor main
 
 

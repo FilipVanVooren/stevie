@@ -7,7 +7,7 @@
 edkey.action.fb.tab.next:
         dect  stack
         mov   r11,*stack            ; Save return address
-        bl  @fb.tab.next            ; Jump to next tab position on line
+        bl    @fb.tab.next          ; Jump to next tab position on line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

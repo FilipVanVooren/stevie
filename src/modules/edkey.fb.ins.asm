@@ -32,11 +32,10 @@ edkey.action.ins_char:
         ci    tmp1,colrow - 1       ; Overwrite if last column in row
         jlt   !
 
+        
+        bl    @fb.cursor.down       ; Move cursor down 1 line
         b     @edkey.action.ins_line
-        b     @edkey.action.down
-        ;bl    @edb.line.pack        ; Copy line to editor buffer
-        ;clr   @fb.row.dirty         ; Current row no longer dirty
-
+                                    ; Now insert a line
 
         ;b     @edkey.action.char.overwrite
         ;-------------------------------------------------------
