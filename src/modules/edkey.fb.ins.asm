@@ -13,34 +13,42 @@ edkey.action.ins_char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         ;-------------------------------------------------------
-        ; Assert 1 - Empty line
+        ; Check 1 - Empty line
         ;-------------------------------------------------------
+edkey.actions.ins.char.empty_line:        
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
-        ; Assert 2 - EOL
+        ; Check 2 - line-wrap if at character 80
         ;-------------------------------------------------------
-        c     @fb.column,@fb.row.length
+        mov   @fb.column,tmp1    
+        ci    tmp1,colrow-1         ; At 80th character?
+        jlt   !
+        mov   @fb.row.length,tmp1
+        ci    tmp1,colrow
+        jne   ! 
+        ;-------------------------------------------------------
+        ; Wrap to new line
+        ;-------------------------------------------------------
+        dect  Stack
+        mov   @parm1,*stack         ; Save character to add
+        bl    @fb.cursor.down       ; Move cursor down 1 line
+        bl    @fb.insert.line       ; Insert empty line
+        mov   *stack+,@parm1        ; Restore character to add
+        clr   tmp2                  ; Clear line length
+        jmp   edkey.action.ins_char.append
+        ;-------------------------------------------------------
+        ; Check 3 - EOL
+        ;-------------------------------------------------------
+!       c     @fb.column,@fb.row.length
         jeq   edkey.action.ins_char.append
                                     ; Add character in append mode
         ;-------------------------------------------------------
-        ; Wrap to new line if at character 80
+        ; Check 4 - Insert only until line length reaches 80th column
         ;-------------------------------------------------------
-        mov   @fb.column,tmp1    
-        ci    tmp1,colrow - 1       ; Overwrite if last column in row
-        jlt   !
-        
-        bl    @fb.cursor.down       ; Move cursor down 1 line
-        bl    @fb.insert.line       ; Insert new line
-        b     @edkey.action.ins_line
-                                    ; Now insert a line
-        jmp   edkey.action.ins_char.prep
-        ;-------------------------------------------------------
-        ; Assert 4 - 80 characters maximum
-        ;-------------------------------------------------------
-!       mov   @fb.row.length,tmp1
+        mov   @fb.row.length,tmp1
         ci    tmp1,colrow
         jlt   edkey.action.ins_char.prep
         jmp   edkey.action.ins_char.exit        

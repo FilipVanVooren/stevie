@@ -200,7 +200,7 @@ fb.row            equ  fb.struct + 6   ; Current row in frame buffer
                                        ; (offset 0 .. @fb.scrrows)
 fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
 fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
-fb.column         equ  fb.struct + 12  ; Current column in frame buffer
+fb.column         equ  fb.struct + 12  ; Current column (0-79) in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
