@@ -115,6 +115,7 @@ id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete"
 id.dialog.about           equ  103     ; "About"
 id.dialog.file            equ  104     ; "File"
+id.dialog.basic           equ  105     ; "Basic"
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------

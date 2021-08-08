@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for about pane
 ;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1P'
+txt.stevie         #string 'STEVIE 1.1Q'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 txt.delim          #string ','
@@ -123,12 +123,12 @@ txt.keys.about     byte 33
 ; Dialog "Menu"
 ;--------------------------------------------------------------
 txt.head.menu      byte 16,1,3
-                   text ' Stevie 1.1P '
+                   text ' Stevie 1.1Q '
                    byte 2
 
-txt.info.menu      #string 'File  Help  Quit'
-pos.info.menu      byte 0,6,12,>ff
-txt.hint.menu      #string 'Press F,H,Q or F9 to return to editor.'
+txt.info.menu      #string 'File  Basic  Help  Quit'
+pos.info.menu      byte 0,6,13,19,>ff
+txt.hint.menu      #string 'Press F,B,H,Q or F9 to return to editor.'
 txt.keys.menu      #string 'Menu: F9=Back'
 
 
@@ -144,6 +144,17 @@ pos.info.file      byte 0,5,11,>ff
 txt.hint.file      #string 'Press N,O,S or F9 to return to editor.'
 txt.keys.file      #string 'File: F9=Back'
 
+;--------------------------------------------------------------
+; Dialog "Basic"
+;--------------------------------------------------------------
+txt.head.basic     byte 14,1,3
+                   text ' Run basic '
+                   byte 2
+
+txt.info.basic     #string 'TI Basic / TI Extended Basic'
+pos.info.basic     byte 3,14,>ff
+txt.hint.basic     #string 'Press B,E for running basic dialect or F9 to return to editor.'
+txt.keys.basic     #string 'Run Basic: F9=Back'
 
 
 ;--------------------------------------------------------------

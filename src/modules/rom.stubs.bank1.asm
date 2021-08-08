@@ -121,26 +121,15 @@ fm.fastmode:
 
 
 
-
-
 ***************************************************************
 * Stub for "About dialog"
 * bank3 vec.1
 ********|*****|*********************|**************************
 edkey.action.about:
-        bl    @pane.cursor.hide     ; Hide cursor
-        ;------------------------------------------------------
-        ; Show dialog
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
+        mov   @edkey.action.about.vector,@parm1
+        jmp   _dialog               ; Show dialog        
+edkey.action.about.vector:        
+        data  vec.1
 
 
 ***************************************************************
@@ -148,19 +137,10 @@ edkey.action.about:
 * bank3 vec.2
 ********|*****|*********************|**************************
 dialog.load:
-        bl    @pane.cursor.hide     ; Hide cursor
-        ;------------------------------------------------------
-        ; Show dialog
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.2            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
+        mov   @dialog.load.vector,@parm1
+        jmp   _dialog               ; Show dialog
+dialog.load.vector:
+        data  vec.2
 
 
 ***************************************************************
@@ -168,19 +148,10 @@ dialog.load:
 * bank3 vec.3
 ********|*****|*********************|**************************
 dialog.save:
-        bl    @pane.cursor.hide     ; Hide cursor
-        ;------------------------------------------------------
-        ; Show dialog
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.3            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
+        mov   @dialog.save.vector,@parm1
+        jmp   _dialog               ; Show dialog
+dialog.save.vector:        
+        data  vec.3
 
 
 ***************************************************************
@@ -189,32 +160,45 @@ dialog.save:
 ********|*****|*********************|**************************
 dialog.unsaved:
         clr   @cmdb.panmarkers      ; No key markers
-        bl    @pane.cursor.hide     ; Hide cursor
-        ;------------------------------------------------------
-        ; Show dialog
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.4            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
+        mov   @dialog.unsaved.vector,@parm1
+        jmp   _dialog               ; Show dialog
+dialog.unsaved.vector:        
+        data  vec.4
+
 
 ***************************************************************
 * Stub for Dialog "File dialog"
 * bank3 vec.5
 ********|*****|*********************|**************************
 dialog.file:
+        mov   @dialog.file.vector,@parm1
+        jmp   _dialog               ; Show dialog
+dialog.file.vector:        
+        data  vec.5
+
+***************************************************************
+* Stub for Dialog "Basic dialog"
+* bank3 vec.7
+********|*****|*********************|**************************
+dialog.basic:
+        mov   @dialog.basic.vector,@parm1
+        jmp   _dialog               ; Show dialog
+dialog.basic.vector:        
+        data  vec.7
+
+
+***************************************************************
+* Call dialog
+********|*****|*********************|**************************
+_dialog:
         bl    @pane.cursor.hide     ; Hide cursor
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
-              data vec.5            ; | i  p1 = Vector with target address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @parm1)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -252,6 +236,7 @@ dialog.menu:
         ;------------------------------------------------------
         b     @edkey.action.cmdb.show
                                     ; Show dialog in CMDB pane
+
 
 
 ***************************************************************

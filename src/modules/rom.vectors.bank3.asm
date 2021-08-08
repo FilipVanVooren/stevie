@@ -10,7 +10,7 @@ vec.3   data  dialog.save           ; Dialog "Save DV80 file"
 vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
 vec.5   data  dialog.file           ; Dialog "File"
 vec.6   data  dialog.menu           ; Dialog "Stevie Menu"
-vec.7   data  cpu.crash             ; 
+vec.7   data  dialog.basic          ; Dialog "Basic"
 vec.8   data  cpu.crash             ; 
 vec.9   data  cpu.crash             ; 
 vec.10  data  cpu.crash             ; 

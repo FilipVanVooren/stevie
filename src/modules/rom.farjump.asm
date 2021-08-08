@@ -68,9 +68,20 @@ rom.farjump.bankswitch.tgt.advfg99:
         ; Bankswitch to target bank(s) completed
         ;------------------------------------------------------
 rom.farjump.bankswitch.tgt.done:
-        mov   *tmp1,tmp0            ; Deref value in vector address
+        ;------------------------------------------------------
+        ; Deref vector from @parm1 if >ffff
+        ;------------------------------------------------------
+        ci    tmp1,>ffff
+        jne   !
+        mov   @parm1,tmp1
+        ;------------------------------------------------------
+        ; Deref value in vector
+        ;------------------------------------------------------
+!       mov   *tmp1,tmp0            ; Deref value in vector address
         jeq   rom.farjump.bankswitch.failed1
                                     ; Crash if null-pointer in vector
+
+
         jmp   rom.farjump.bankswitch.call
                                     ; Call function in target bank
         ;------------------------------------------------------

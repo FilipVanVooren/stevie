@@ -152,6 +152,9 @@ keymap_actions.cmdb:
         byte  key.uc.f, id.dialog.menu
         data  dialog.file
 
+        byte  key.uc.b, id.dialog.menu
+        data  dialog.basic
+
         byte  key.uc.h, id.dialog.menu
         data  edkey.action.about
 
@@ -192,6 +195,12 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.saveblock
         data  edkey.action.cmdb.save
+        ;-------------------------------------------------------
+        ; Dialog: Basic
+        ;-------------------------------------------------------
+        byte  key.uc.b, id.dialog.basic
+        data  >216f
+
         ;-------------------------------------------------------
         ; Dialog: About
         ;-------------------------------------------------------
