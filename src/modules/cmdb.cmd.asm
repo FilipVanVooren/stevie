@@ -94,7 +94,7 @@ cmdb.cmd.getlength.exit:
 
 
 ***************************************************************
-* cmdb.cmd.addhist
+* cmdb.cmd.history.add
 * Add command to history
 ***************************************************************
 * bl @cmdb.cmd.addhist

@@ -143,8 +143,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
-        copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
-        copy  "cmdb.cmd.asm"        ; Command line handling
+        ;copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
+        ;copy  "cmdb.cmd.asm"        ; Command line handling
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------

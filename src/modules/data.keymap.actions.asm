@@ -199,7 +199,7 @@ keymap_actions.cmdb:
         ; Dialog: Basic
         ;-------------------------------------------------------
         byte  key.uc.b, id.dialog.basic
-        data  >216f
+        data  run.tibasic
 
         ;-------------------------------------------------------
         ; Dialog: About

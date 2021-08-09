@@ -86,7 +86,16 @@ main:
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
-        copy  "dialog.basic.asm"    ; Dialgog "Basic"
+        copy  "dialog.basic.asm"    ; Dialog "Basic"
+        ;-----------------------------------------------------------------------
+        ; Basic interpreter handling
+        ;-----------------------------------------------------------------------         
+        copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter        
+        ;-----------------------------------------------------------------------
+        ; Command buffer handling
+        ;-----------------------------------------------------------------------
+        copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
+        copy  "cmdb.cmd.asm"        ; Command line handling        
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
