@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for about pane
 ;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1Q'
+txt.stevie         #string 'STEVIE 1.1R'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 txt.delim          #string ','
@@ -123,7 +123,7 @@ txt.keys.about     byte 33
 ; Dialog "Menu"
 ;--------------------------------------------------------------
 txt.head.menu      byte 16,1,3
-                   text ' Stevie 1.1Q '
+                   text ' Stevie 1.1R '
                    byte 2
 
 txt.info.menu      #string 'File  Basic  Help  Quit'

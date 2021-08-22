@@ -35,7 +35,7 @@ bankid  equ   bank0.rom             ; Set bank identifier to current bank
 kickstart.step1:        
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
-* Step 2: Copy SP2 library from ROM to >2000 - >2fff
+* Step 2: Copy spectra2 core library from ROM to >2000 - >2fff
 ********|*****|*********************|**************************
 kickstart.step2:
         li    r0,reloc.sp2          ; Start of code to relocate
@@ -43,7 +43,7 @@ kickstart.step2:
         li    r2,256                ; Copy 4K (256 * 16 bytes)
         bl    @kickstart.copy       ; Copy memory
 ***************************************************************
-* Step 3: Copy Stevie resident modules from ROM to >3000 - >3fff
+* Step 4: Copy Stevie resident modules from ROM to >3000 - >3fff
 ********|*****|*********************|**************************
 kickstart.step3:
         li    r0,reloc.stevie       ; Start of code to relocate
@@ -51,9 +51,9 @@ kickstart.step3:
         li    r2,256                ; Copy 4K (256 * 16 bytes)
         bl    @kickstart.copy       ; Copy memory
 ***************************************************************
-* Step 4: Start SP2 kernel (runs in low MEMEXP)
+* Step 5: Start SP2 kernel (runs in low MEMEXP)
 ********|*****|*********************|**************************
-kickstart.step4:
+kickstart.step5:
         b     @runlib               ; Start spectra2 library        
         ;------------------------------------------------------
         ; Assert. Should not get here! Crash and burn!
@@ -90,25 +90,33 @@ kickstart.copy:
 
 
 ***************************************************************
-* Code data: Relocated code SP2 >2000 - >2eff (3840 bytes max)
+* Code data: Relocated code SP2 >2000 - >2f1f (3840 bytes max)
 ********|*****|*********************|**************************
 reloc.sp2:
-        xorg  >2000                 ; Relocate SP2 code to >2000
+        ;------------------------------------------------------
+        ; spectra2 core library
+        ;------------------------------------------------------
+        xorg  >2000                 ; Relocate to >2000
         copy  "%%spectra2%%/runlib.asm"
-                                    ; Spectra 2                                    
+                                    ; Spectra 2                                 
         ;------------------------------------------------------
-        ; End of File marker
+        ; Memory full check
         ;------------------------------------------------------
-        data  >dead,>beef,>dead,>beef
         .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"
 
         .ifgt $, >2f1f
               .error '***** Aborted. SP2 library too large!'
-        .else
-              data $                ; Bank 0 ROM size OK.
         .endif
+        ;------------------------------------------------------
+        ; spectra2 extended library (handle yourself)
+        ;------------------------------------------------------        
+reloc.sp2ext:                
+        aorg  >7000                 ; >7000 in cartridge space        
+        xorg  >f000                 ; Relocate to >f000
 
-        bss  300                    ; Fill remaining space with >00
+        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+                                    ; Spectra 2       
+
 
 ***************************************************************
 * Code data: Relocated Stevie modules >3000 - >3fff (4K max)
@@ -137,7 +145,7 @@ main:
               data $                ; Bank 0 ROM size OK.
         .endif     
         ;------------------------------------------------------
-        ; Bank specific vector table
+        ; Bank full check
         ;------------------------------------------------------
         .ifgt $, >7fff
               .error 'Aborted. Bank 0 cartridge program too large!'
@@ -157,3 +165,5 @@ pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table        
 sprpdt  equ   >2800                 ; VDP sprite pattern table
+
+cpu.scrpad.tgt equ >fa00

@@ -26,10 +26,7 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 bankid  equ   bank5.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
-        ;-------------------------------------------------------
-        ; Vector table bank 5: >6000 - >603f
-        ;-------------------------------------------------------
-        copy  "rom.vectors.bank5.asm"
+        copy  "rom.header.asm"      ; Include cartridge header        
 
 
 ***************************************************************
@@ -84,13 +81,17 @@ main:
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank5.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------
-        ; Bank specific vector table
+        ; Bank full check
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fff
+        .ifgt $, >7fbf
               .error 'Aborted. Bank 5 cartridge program too large!'
-        .else
-              data $                ; Bank 5 ROM size OK.
         .endif
+        ;-----------------------------------------------------------------------
+        ; Vector table
+        ;----------------------------------------------------------------------- 
+        aorg  >7fc0
+        copy  "rom.vectors.bank5.asm"
+                                    ; Vector table bank 5
 
 *--------------------------------------------------------------
 * Video mode configuration

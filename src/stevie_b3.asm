@@ -26,11 +26,7 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 bankid  equ   bank3.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
-        ;-------------------------------------------------------
-        ; Vector table bank 3: >6000 - >603f
-        ;-------------------------------------------------------
-        copy  "rom.vectors.bank3.asm"
-
+        copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -101,13 +97,18 @@ main:
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------
-        ; Bank specific vector table
+        ; Bank full check
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fff
+        .ifgt $, >7fbf
               .error 'Aborted. Bank 3 cartridge program too large!'
-        .else
-              data $                ; Bank 3 ROM size OK.
         .endif
+        ;-----------------------------------------------------------------------
+        ; Vector table
+        ;----------------------------------------------------------------------- 
+        aorg  >7fc0
+        copy  "rom.vectors.bank3.asm"
+                                    ; Vector table bank 3
+
 
 *--------------------------------------------------------------
 * Video mode configuration

@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.621210
+**** **** ****     > stevie_b3.asm.39116
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 210809-621210
+0009               * File: stevie_b3.asm               ; Version 210822-39116
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b3.asm.621210
+**** **** ****     > stevie_b3.asm.39116
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b3.asm.621210
+**** **** ****     > stevie_b3.asm.39116
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -415,7 +415,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0338               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0339               *--------------------------------------------------------------
 0340      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.621210
+**** **** ****     > stevie_b3.asm.39116
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -428,63 +428,61 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0026      6006     bankid  equ   bank3.rom             ; Set bank identifier to current bank
 0027                       aorg  >6000
 0028                       save  >6000,>7fff           ; Save bank
-0029                       ;-------------------------------------------------------
-0030                       ; Vector table bank 3: >6000 - >603f
-0031                       ;-------------------------------------------------------
-0032                       copy  "rom.vectors.bank3.asm"
-**** **** ****     > rom.vectors.bank3.asm
-0001               * FILE......: rom.vectors.bank3.asm
-0002               * Purpose...: Bank 3 vectors for trampoline function
+0029                       copy  "rom.header.asm"      ; Include cartridge header
+**** **** ****     > rom.header.asm
+0001               * FILE......: rom.header.asm
+0002               * Purpose...: Cartridge header
 0003               
 0004               *--------------------------------------------------------------
-0005               * Vector table for trampoline functions
-0006               *--------------------------------------------------------------
-0007 6000 608C     vec.1   data  dialog.about          ; Dialog "About"
-0008 6002 65C0     vec.2   data  dialog.load           ; Dialog "Load DV80 file"
-0009 6004 6618     vec.3   data  dialog.save           ; Dialog "Save DV80 file"
-0010 6006 6680     vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
-0011 6008 657E     vec.5   data  dialog.file           ; Dialog "File"
-0012 600A 604A     vec.6   data  dialog.menu           ; Dialog "Stevie Menu"
-0013 600C 66BE     vec.7   data  dialog.basic          ; Dialog "Basic"
-0014 600E 2026     vec.8   data  cpu.crash             ;
-0015 6010 2026     vec.9   data  cpu.crash             ;
-0016 6012 2026     vec.10  data  cpu.crash             ;
-0017 6014 2026     vec.11  data  cpu.crash             ;
-0018 6016 2026     vec.12  data  cpu.crash             ;
-0019 6018 2026     vec.13  data  cpu.crash             ;
-0020 601A 2026     vec.14  data  cpu.crash             ;
-0021 601C 2026     vec.15  data  cpu.crash             ;
-0022 601E 2026     vec.16  data  cpu.crash             ;
-0023 6020 2026     vec.17  data  cpu.crash             ;
-0024 6022 2026     vec.18  data  cpu.crash             ;
-0025 6024 2026     vec.19  data  cpu.crash             ;
-0026 6026 6700     vec.20  data  run.tibasic           ; Run TI Basic interpreter
-0027 6028 2026     vec.21  data  cpu.crash             ;
-0028 602A 2026     vec.22  data  cpu.crash             ;
-0029 602C 2026     vec.23  data  cpu.crash             ;
-0030 602E 6734     vec.24  data  cmdb.refresh          ;
-0031 6030 677E     vec.25  data  cmdb.cmd.clear        ;
-0032 6032 67B0     vec.26  data  cmdb.cmd.getlength    ;
-0033 6034 67C6     vec.27  data  cmdb.cmd.history.add  ;
-0034 6036 2026     vec.28  data  cpu.crash             ;
-0035 6038 2026     vec.29  data  cpu.crash             ;
-0036 603A 2026     vec.30  data  cpu.crash             ;
-0037 603C 2026     vec.31  data  cpu.crash             ;
-0038 603E 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.621210
+0005               * Cartridge header
+0006               ********|*****|*********************|**************************
+0007 6000 AA01             byte  >aa                   ; 0  Standard header                   >6000
+0008                       byte  >01                   ; 1  Version number
+0009 6002 0100             byte  >01                   ; 2  Number of programs (optional)     >6002
+0010                       byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
+0011               
+0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
+0013                                                   ; 5  /
+0014               
+0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
+0016                                                   ; 7  /
+0017               
+0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
+0019                                                   ; 9  /
+0020               
+0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
+0022                                                   ; 11 /
+0023               
+0024                       ;-----------------------------------------------------------------------
+0025                       ; Program list entry
+0026                       ;-----------------------------------------------------------------------
+0027               rom.program1:
+0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
+0029                                                   ; 13 / (no more items following)
+0030               
+0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
+0032                                                   ; 15 /
 0033               
-0034               
-0035               ***************************************************************
-0036               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0037               ********|*****|*********************|**************************
-0038                       aorg  kickstart.code1       ; >6040
-0039 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0035               
+0043               
+0044 6010 0B53             byte  11
+0045 6011 ....             text  'STEVIE 1.1R'
+0046                       even
+0047               
+0049               
+**** **** ****     > stevie_b3.asm.39116
+0030               
+0031               ***************************************************************
+0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0033               ********|*****|*********************|**************************
+0034                       aorg  kickstart.code1       ; >6040
+0035 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000 
-0040               ***************************************************************
-0041               * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
-0042               ********|*****|*********************|**************************
-0043                       aorg  >2000
-0044                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
+0036               ***************************************************************
+0037               * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
+0038               ********|*****|*********************|**************************
+0039                       aorg  >2000
+0040                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
 **** **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -1191,8 +1189,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0256                       even
 0257               
 0258               cpu.crash.msg.id
-0259 21D2 1742             byte  23
-0260 21D3 ....             text  'Build-ID  210809-621210'
+0259 21D2 1642             byte  22
+0260 21D3 ....             text  'Build-ID  210822-39116'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5150,33 +5148,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2EF6 0040 
 0367 2EF8 0460  28         b     @main                 ; Give control to main program
      2EFA 6046 
-**** **** ****     > stevie_b3.asm.621210
-0045                                                   ; Relocated spectra2 in low MEMEXP, was
-0046                                                   ; copied to >2000 from ROM in bank 0
-0047                       ;------------------------------------------------------
-0048                       ; End of File marker
-0049                       ;------------------------------------------------------
-0050 2EFC DEAD             data >dead,>beef,>dead,>beef
+**** **** ****     > stevie_b3.asm.39116
+0041                                                   ; Relocated spectra2 in low MEMEXP, was
+0042                                                   ; copied to >2000 from ROM in bank 0
+0043                       ;------------------------------------------------------
+0044                       ; End of File marker
+0045                       ;------------------------------------------------------
+0046 2EFC DEAD             data >dead,>beef,>dead,>beef
      2EFE BEEF 
      2F00 DEAD 
      2F02 BEEF 
-0052               ***************************************************************
-0053               * Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
-0054               ********|*****|*********************|**************************
-0055                       aorg  >3000
-0056                       ;------------------------------------------------------
-0057                       ; Activate bank 1 and branch to >6046
-0058                       ;------------------------------------------------------
-0059 3000 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0048               ***************************************************************
+0049               * Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
+0050               ********|*****|*********************|**************************
+0051                       aorg  >3000
+0052                       ;------------------------------------------------------
+0053                       ; Activate bank 1 and branch to >6046
+0054                       ;------------------------------------------------------
+0055 3000 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3002 6002 
+0056               
 0060               
-0064               
-0065 3004 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0061 3004 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3006 6046 
-0066                       ;------------------------------------------------------
-0067                       ; Resident Stevie modules: >3000 - >3fff
-0068                       ;------------------------------------------------------
-0069                       copy  "ram.resident.3000.asm"
+0062                       ;------------------------------------------------------
+0063                       ; Resident Stevie modules: >3000 - >3fff
+0064                       ;------------------------------------------------------
+0065                       copy  "ram.resident.3000.asm"
 **** **** ****     > ram.resident.3000.asm
 0001               * FILE......: ram.resident.3000.asm
 0002               * Purpose...: Resident modules at RAM >3000 callable from all ROM banks.
@@ -6477,12 +6475,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.stevie
 0012 344C 0B53             byte  11
-0013 344D ....             text  'STEVIE 1.1Q'
+0013 344D ....             text  'STEVIE 1.1R'
 0014                       even
 0015               
 0016               txt.about.build
-0017 3458 4B42             byte  75
-0018 3459 ....             text  'Build: 210809-621210 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0017 3458 4A42             byte  74
+0018 3459 ....             text  'Build: 210822-39116 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6732,7 +6730,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0260               ;--------------------------------------------------------------
 0261 3810 1001     txt.head.menu      byte 16,1,3
      3812 0320 
-0262 3813 ....                        text ' Stevie 1.1Q '
+0262 3813 ....                        text ' Stevie 1.1R '
 0263 3820 0217                        byte 2
 0264               
 0265               txt.info.menu
@@ -6980,22 +6978,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3A3C BEEF 
      3A3E DEAD 
      3A40 BEEF 
-**** **** ****     > stevie_b3.asm.621210
-0070               ***************************************************************
-0071               * Step 4: Include main editor modules
-0072               ********|*****|*********************|**************************
-0073               main:
-0074                       aorg  kickstart.code2       ; >6046
-0075 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+**** **** ****     > stevie_b3.asm.39116
+0066               ***************************************************************
+0067               * Step 4: Include main editor modules
+0068               ********|*****|*********************|**************************
+0069               main:
+0070                       aorg  kickstart.code2       ; >6046
+0071 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026 
+0072                       ;-----------------------------------------------------------------------
+0073                       ; Include files - Shared code
+0074                       ;-----------------------------------------------------------------------
+0075               
 0076                       ;-----------------------------------------------------------------------
-0077                       ; Include files - Shared code
+0077                       ; Include files - Dialogs
 0078                       ;-----------------------------------------------------------------------
-0079               
-0080                       ;-----------------------------------------------------------------------
-0081                       ; Include files - Dialogs
-0082                       ;-----------------------------------------------------------------------
-0083                       copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
+0079                       copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
 **** **** ****     > dialog.menu.asm
 0001               * FILE......: dialog.menu.asm
 0002               * Purpose...: Dialog "Stevie Menu"
@@ -7064,8 +7062,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0084                       copy  "dialog.about.asm"    ; Dialog "About"
+**** **** ****     > stevie_b3.asm.39116
+0080                       copy  "dialog.about.asm"    ; Dialog "About"
 **** **** ****     > dialog.about.asm
 0001               * FILE......: dialog.about.asm
 0002               * Purpose...: Stevie Editor - About dialog
@@ -7431,8 +7429,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0327 655D ....             text  '   Fctn .        Insert/Overwrite'
 0328                       even
 0329               
-**** **** ****     > stevie_b3.asm.621210
-0085                       copy  "dialog.file.asm"     ; Dialog "File"
+**** **** ****     > stevie_b3.asm.39116
+0081                       copy  "dialog.file.asm"     ; Dialog "File"
 **** **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
 0002               * Purpose...: Dialog "File"
@@ -7501,8 +7499,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 65BA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 65BC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 65BE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0086                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
+**** **** ****     > stevie_b3.asm.39116
+0082                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
 0002               * Purpose...: Dialog "Load DV80 file"
@@ -7599,8 +7597,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 6612 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 6614 C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 6616 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0087                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
+**** **** ****     > stevie_b3.asm.39116
+0083                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
 0002               * Purpose...: Dialog "Save DV80 file"
@@ -7705,8 +7703,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0079 667A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0080 667C C2F9  30         mov   *stack+,r11           ; Pop R11
 0081 667E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0088                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
+**** **** ****     > stevie_b3.asm.39116
+0084                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
 0002               * Purpose...: Dialog "Unsaved changes"
@@ -7772,8 +7770,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 66B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 66BA C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 66BC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0089                       copy  "dialog.basic.asm"    ; Dialog "Basic"
+**** **** ****     > stevie_b3.asm.39116
+0085                       copy  "dialog.basic.asm"    ; Dialog "Basic"
 **** **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
 0002               * Purpose...: Dialog "Basic"
@@ -7842,11 +7840,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 66FA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 66FC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 66FE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0090                       ;-----------------------------------------------------------------------
-0091                       ; Basic interpreter handling
-0092                       ;-----------------------------------------------------------------------
-0093                       copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter
+**** **** ****     > stevie_b3.asm.39116
+0086                       ;-----------------------------------------------------------------------
+0087                       ; Basic interpreter handling
+0088                       ;-----------------------------------------------------------------------
+0089                       copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter
 **** **** ****     > run.tibasic.asm
 0001               * FILE......: run.tibasic.asm
 0002               * Purpose...: Run console TI Basic
@@ -7912,11 +7910,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 6730 0001             data  >0001
 0051               run.tibasic.83fe:
 0052 6732 8C02             data  >8c02
-**** **** ****     > stevie_b3.asm.621210
-0094                       ;-----------------------------------------------------------------------
-0095                       ; Command buffer handling
-0096                       ;-----------------------------------------------------------------------
-0097                       copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
+**** **** ****     > stevie_b3.asm.39116
+0090                       ;-----------------------------------------------------------------------
+0091                       ; Command buffer handling
+0092                       ;-----------------------------------------------------------------------
+0093                       copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
 **** **** ****     > cmdb.refresh.asm
 0001               * FILE......: cmdb.refresh.asm
 0002               * Purpose...: Stevie Editor - Command buffer
@@ -7995,8 +7993,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0063 6778 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 677A C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 677C 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0098                       copy  "cmdb.cmd.asm"        ; Command line handling
+**** **** ****     > stevie_b3.asm.39116
+0094                       copy  "cmdb.cmd.asm"        ; Command line handling
 **** **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
 0002               * Purpose...: Stevie Editor - Command line
@@ -8151,11 +8149,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139 67D8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 67DA C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 67DC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0099                       ;-----------------------------------------------------------------------
-0100                       ; Stubs using trampoline
-0101                       ;-----------------------------------------------------------------------
-0102                       copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks
+**** **** ****     > stevie_b3.asm.39116
+0095                       ;-----------------------------------------------------------------------
+0096                       ; Stubs using trampoline
+0097                       ;-----------------------------------------------------------------------
+0098                       copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks
 **** **** ****     > rom.stubs.bank3.asm
 0001               * FILE......: rom.stubs.bank3.asm
 0002               * Purpose...: Bank 3 stubs for functions in other banks
@@ -8173,7 +8171,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0014 67E2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      67E4 3008 
 0015 67E6 6002                   data bank1.rom        ; | i  p0 = bank address
-0016 67E8 6012                   data vec.10           ; | i  p1 = Vector with target address
+0016 67E8 7FD2                   data vec.10           ; | i  p1 = Vector with target address
 0017 67EA 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0018                       ;------------------------------------------------------
 0019                       ; Exit
@@ -8195,7 +8193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035 67F4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      67F6 3008 
 0036 67F8 6002                   data bank1.rom        ; | i  p0 = bank address
-0037 67FA 601C                   data vec.15           ; | i  p1 = Vector with target address
+0037 67FA 7FDC                   data vec.15           ; | i  p1 = Vector with target address
 0038 67FC 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0039                       ;------------------------------------------------------
 0040                       ; Exit
@@ -8218,7 +8216,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0057 6806 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6808 3008 
 0058 680A 6002                   data bank1.rom        ; | i  p0 = bank address
-0059 680C 6036                   data vec.28           ; | i  p1 = Vector with target address
+0059 680C 7FF6                   data vec.28           ; | i  p1 = Vector with target address
 0060 680E 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0061                       ;------------------------------------------------------
 0062                       ; Exit
@@ -8239,28 +8237,74 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0077 6818 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      681A 3008 
 0078 681C 6002                   data bank1.rom        ; | i  p0 = bank address
-0079 681E 6038                   data vec.29           ; | i  p1 = Vector with target address
+0079 681E 7FF8                   data vec.29           ; | i  p1 = Vector with target address
 0080 6820 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0081                       ;------------------------------------------------------
 0082                       ; Exit
 0083                       ;------------------------------------------------------
 0084 6822 C2F9  30         mov   *stack+,r11           ; Pop r11
 0085 6824 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.621210
-0103                       ;-----------------------------------------------------------------------
-0104                       ; Bank specific vector table
+**** **** ****     > stevie_b3.asm.39116
+0099                       ;-----------------------------------------------------------------------
+0100                       ; Bank full check
+0101                       ;-----------------------------------------------------------------------
 0105                       ;-----------------------------------------------------------------------
-0109 6826 6826                   data $                ; Bank 3 ROM size OK.
+0106                       ; Vector table
+0107                       ;-----------------------------------------------------------------------
+0108                       aorg  >7fc0
+0109                       copy  "rom.vectors.bank3.asm"
+**** **** ****     > rom.vectors.bank3.asm
+0001               * FILE......: rom.vectors.bank3.asm
+0002               * Purpose...: Bank 3 vectors for trampoline function
+0003               
+0004               *--------------------------------------------------------------
+0005               * Vector table for trampoline functions
+0006               *--------------------------------------------------------------
+0007 7FC0 608C     vec.1   data  dialog.about          ; Dialog "About"
+0008 7FC2 65C0     vec.2   data  dialog.load           ; Dialog "Load DV80 file"
+0009 7FC4 6618     vec.3   data  dialog.save           ; Dialog "Save DV80 file"
+0010 7FC6 6680     vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
+0011 7FC8 657E     vec.5   data  dialog.file           ; Dialog "File"
+0012 7FCA 604A     vec.6   data  dialog.menu           ; Dialog "Stevie Menu"
+0013 7FCC 66BE     vec.7   data  dialog.basic          ; Dialog "Basic"
+0014 7FCE 2026     vec.8   data  cpu.crash             ;
+0015 7FD0 2026     vec.9   data  cpu.crash             ;
+0016 7FD2 2026     vec.10  data  cpu.crash             ;
+0017 7FD4 2026     vec.11  data  cpu.crash             ;
+0018 7FD6 2026     vec.12  data  cpu.crash             ;
+0019 7FD8 2026     vec.13  data  cpu.crash             ;
+0020 7FDA 2026     vec.14  data  cpu.crash             ;
+0021 7FDC 2026     vec.15  data  cpu.crash             ;
+0022 7FDE 2026     vec.16  data  cpu.crash             ;
+0023 7FE0 2026     vec.17  data  cpu.crash             ;
+0024 7FE2 2026     vec.18  data  cpu.crash             ;
+0025 7FE4 2026     vec.19  data  cpu.crash             ;
+0026 7FE6 6700     vec.20  data  run.tibasic           ; Run TI Basic interpreter
+0027 7FE8 2026     vec.21  data  cpu.crash             ;
+0028 7FEA 2026     vec.22  data  cpu.crash             ;
+0029 7FEC 2026     vec.23  data  cpu.crash             ;
+0030 7FEE 6734     vec.24  data  cmdb.refresh          ;
+0031 7FF0 677E     vec.25  data  cmdb.cmd.clear        ;
+0032 7FF2 67B0     vec.26  data  cmdb.cmd.getlength    ;
+0033 7FF4 67C6     vec.27  data  cmdb.cmd.history.add  ;
+0034 7FF6 2026     vec.28  data  cpu.crash             ;
+0035 7FF8 2026     vec.29  data  cpu.crash             ;
+0036 7FFA 2026     vec.30  data  cpu.crash             ;
+0037 7FFC 2026     vec.31  data  cpu.crash             ;
+0038 7FFE 2026     vec.32  data  cpu.crash             ;
+**** **** ****     > stevie_b3.asm.39116
+0110                                                   ; Vector table bank 3
 0111               
-0112               *--------------------------------------------------------------
-0113               * Video mode configuration
-0114               *--------------------------------------------------------------
-0115      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0116      0004     spfbck  equ   >04                   ; Screen background color.
-0117      33B0     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-0118      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0119      0050     colrow  equ   80                    ; Columns per row
-0120      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0121      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0122      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0123      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0112               
+0113               *--------------------------------------------------------------
+0114               * Video mode configuration
+0115               *--------------------------------------------------------------
+0116      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0117      0004     spfbck  equ   >04                   ; Screen background color.
+0118      33B0     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0119      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0120      0050     colrow  equ   80                    ; Columns per row
+0121      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0122      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0123      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0124      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

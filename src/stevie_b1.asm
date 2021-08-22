@@ -26,10 +26,7 @@ sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 bankid  equ   bank1.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
-        ;-------------------------------------------------------
-        ; Vector table bank 1: >6000 - >603f
-        ;-------------------------------------------------------
-        copy  "rom.vectors.bank1.asm"        
+        copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -79,7 +76,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.process.asm"    ; Process keyboard actions
+        copy  "edkey.key.process.asm"
+                                    ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer (1)             
         ;-----------------------------------------------------------------------
@@ -141,64 +139,64 @@ main:
         copy  "edb.block.copy.asm"     ; Copy code block
         copy  "edb.block.del.asm"      ; Delete code block
         ;-----------------------------------------------------------------------
-        ; Command buffer handling
-        ;-----------------------------------------------------------------------
-        ;copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
-        ;copy  "cmdb.cmd.asm"        ; Command line handling
-        ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
-        copy  "hook.keyscan.asm"           ; spectra2 user hook: keyboard scan
-        copy  "task.vdp.panes.asm"         ; Draw editor panes in VDP
+        copy  "hook.keyscan.asm"       ; spectra2 user hook: keyboard scan
+        copy  "task.vdp.panes.asm"     ; Draw editor panes in VDP
 
     .ifeq device.f18a,1
 
-        copy  "task.vdp.cursor.sat.asm"    ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.f18a.asm"   ; Set cursor shape in VDP (blink)
-
+        copy  "task.vdp.cursor.sat.asm"
+                                       ; Copy cursor SAT to VDP
+        copy  "task.vdp.cursor.f18a.asm"  
+                                       ; Set cursor shape in VDP (blink)
     .else 
 
-        copy  "task.vdp.cursor.9938.asm"   ; Set cursor shape in VDP (blink)    
+        copy  "task.vdp.cursor.9938.asm"   
+                                       ; Set cursor shape in VDP (blink)    
   
     .endif
 
-        copy  "task.oneshot.asm"           ; Run "one shot" task
+        copy  "task.oneshot.asm"       ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.asm"             ; Pane utility functions
-        copy  "pane.utils.hint.asm"        ; Show hint in pane
-        copy  "pane.utils.colorscheme.asm" ; Colorscheme handling in panes 
-        copy  "pane.cursor.asm"            ; Cursor utility functions        
+        copy  "pane.utils.asm"         ; Pane utility functions
+        copy  "pane.utils.hint.asm"    ; Show hint in pane
+        copy  "pane.utils.colorscheme.asm" 
+                                       ; Colorscheme handling in panes 
+        copy  "pane.cursor.asm"        ; Cursor utility functions        
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
-        copy  "colors.line.set.asm"        ; Set color combination for line
-        copy  "pane.cmdb.asm"              ; Command buffer 
-        copy  "pane.cmdb.show.asm"         ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"         ; Hide command buffer pane
-        copy  "pane.cmdb.draw.asm"         ; Draw command buffer pane contents
-
-        copy  "pane.topline.asm"           ; Top line
-        copy  "pane.errline.asm"           ; Error line
-        copy  "pane.botline.asm"           ; Bottom line
+        copy  "colors.line.set.asm"    ; Set color combination for line
+        copy  "pane.cmdb.asm"          ; Command buffer 
+        copy  "pane.cmdb.show.asm"     ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"     ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"     ; Draw command buffer pane contents
+        copy  "pane.topline.asm"       ; Top line
+        copy  "pane.errline.asm"       ; Error line
+        copy  "pane.botline.asm"       ; Bottom line
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank1.asm"        ; Stubs for functions in other banks
+        copy  "rom.stubs.bank1.asm"    ; Stubs for functions in other banks
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.keymap.actions.asm"    ; Data segment - Keyboard actions
+        copy  "data.keymap.actions.asm"; Data segment - Keyboard actions
         ;-----------------------------------------------------------------------
-        ; Bank specific vector table
+        ; Bank full check
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fff
+        .ifgt $, >7fbf
               .error 'Aborted. Bank 1 cartridge program too large!'
-        .else
-              data $                ; Bank 1 ROM size OK.
         .endif
-
+        ;-----------------------------------------------------------------------
+        ; Vector table
+        ;----------------------------------------------------------------------- 
+        aorg  >7fc0
+        copy  "rom.vectors.bank1.asm"      
+                                    ; Vector table bank 1
 *--------------------------------------------------------------
 * Video mode configuration
 *--------------------------------------------------------------

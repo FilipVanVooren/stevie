@@ -10,7 +10,7 @@
 * 
 *     Mem range   Bytes    SAMS   Purpose
 *     =========   =====    ====   ==================================
-*     2000-2f1f    3872           SP2 library
+*     2000-2f1f    3872           spectra2 core library
 *     2f20-2f3f      32           Function input/output parameters
 *     2f40-2f43       4           Keyboard
 *     2f4a-2f59      16           Timer tasks table
@@ -43,8 +43,9 @@
 *     c000-cfff    4096           Editor buffer page
 *     d000-dfff    4096           CMDB history / Editor buffer page (temporary)
 *     e000-ebff    3072           Heap
-*     ec00-efff    1024           Farjump return stack (trampolines)
-*     f000-ffff    4096           *FREE*
+*     eef0-efef     256           Backup scratchpad memory
+*     eff0-efff      16           Farjump return stack (trampolines)
+*     f000-ffff    4096           spectra2 extended library
 *
 *
 * CARTRIDGE SPACE (6000-7fff)
@@ -137,6 +138,7 @@ debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram upon startup
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+cpu.scrpad.tgt            equ  >eff0   ; Scratchpad backup destination
 *--------------------------------------------------------------
 * Stevie work area (scratchpad)       @>2f00-2fff   (256 bytes)
 *--------------------------------------------------------------
