@@ -64,7 +64,13 @@ bankid  equ   bank2.rom             ; Set bank identifier to current bank
         ;------------------------------------------------------
         copy  "ram.resident.3000.asm"        
 ***************************************************************
-* Step 4: Include modules
+* Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
+********|*****|*********************|**************************
+        aorg  >f000
+        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+                                    ; Spectra 2 extended            
+***************************************************************
+* Step 5: Include modules
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6046

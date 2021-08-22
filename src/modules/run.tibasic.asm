@@ -19,16 +19,19 @@ run.tibasic:
         ;-------------------------------------------------------        
         bl    @f18rst               ; Reset and lock the F18A
 
-        ;bl    @vidtab               ; Load video mode table into VDP
-        ;      data graph1           ; Equate selected video mode table
+        bl    @vidtab               ; Load video mode table into VDP
+              data graph1           ; Equate selected video mode table
 
-        ;bl    @ldfnt
-        ;      data >0900,fnopt3     ; Load font (upper & lower case)
+        bl    @ldfnt
+              data >0900,fnopt3     ; Load font (upper & lower case)
       
-        ;bl    @filv
-        ;      data >0380,>f0,32*24  ; Load color table
+        bl    @filv
+              data >0380,>f0,32*24  ; Load color table
 
         ;clr  @bank0.rom            ; Activate bank 0
+
+        bl    @cpu.scrpad.restore     
+
 
         mov   @run.tibasic.83fa,@>83fa
         mov   @run.tibasic.83fc,@>83fc

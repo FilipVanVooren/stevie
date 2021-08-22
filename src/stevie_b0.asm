@@ -32,20 +32,24 @@ bankid  equ   bank0.rom             ; Set bank identifier to current bank
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6040
-kickstart.step1:        
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Copy spectra2 core library from ROM to >2000 - >2fff
 ********|*****|*********************|**************************
-kickstart.step2:
         li    r0,reloc.sp2          ; Start of code to relocate
         li    r1,>2000
         li    r2,256                ; Copy 4K (256 * 16 bytes)
         bl    @kickstart.copy       ; Copy memory
 ***************************************************************
+* Step 3: Copy spectra2 extended library from ROM to >f000 - >ffff
+********|*****|*********************|**************************
+        li    r0,reloc.sp2ext       ; Start of code to relocate
+        li    r1,>f000
+        li    r2,16                 ; Copy 128 bytes (16 * 16 bytes)
+        bl    @kickstart.copy       ; Copy memory        
+***************************************************************
 * Step 4: Copy Stevie resident modules from ROM to >3000 - >3fff
 ********|*****|*********************|**************************
-kickstart.step3:
         li    r0,reloc.stevie       ; Start of code to relocate
         li    r1,>3000
         li    r2,256                ; Copy 4K (256 * 16 bytes)
@@ -53,7 +57,6 @@ kickstart.step3:
 ***************************************************************
 * Step 5: Start SP2 kernel (runs in low MEMEXP)
 ********|*****|*********************|**************************
-kickstart.step5:
         b     @runlib               ; Start spectra2 library        
         ;------------------------------------------------------
         ; Assert. Should not get here! Crash and burn!
@@ -115,7 +118,7 @@ reloc.sp2ext:
         xorg  >f000                 ; Relocate to >f000
 
         copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
-                                    ; Spectra 2       
+                                    ; Spectra 2 extended    
 
 
 ***************************************************************
@@ -166,4 +169,3 @@ fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table        
 sprpdt  equ   >2800                 ; VDP sprite pattern table
 
-cpu.scrpad.tgt equ >fa00

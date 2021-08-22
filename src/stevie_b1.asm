@@ -63,8 +63,16 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
         ; Resident Stevie modules: >3000 - >3fff
         ;------------------------------------------------------
         copy  "ram.resident.3000.asm"            
+
 ***************************************************************
-* Step 4: Include main editor modules
+* Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
+********|*****|*********************|**************************
+        aorg  >f000
+        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+                                    ; Spectra 2 extended    
+
+***************************************************************
+* Step 5: Include main editor modules
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6046
@@ -209,3 +217,7 @@ pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table
 sprpdt  equ   >2800                 ; VDP sprite pattern table
+
+
+; TODO properly backup scratchpad memory upon editor start.
+; TODO scratchpad >8370->83ff is cleared upon sp2 runlib start. Keep memory! 
