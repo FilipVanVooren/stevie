@@ -89,10 +89,6 @@ main:
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"    ; Dialog "Basic"
         ;-----------------------------------------------------------------------
-        ; Basic interpreter handling
-        ;-----------------------------------------------------------------------         
-        copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter        
-        ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
         copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
@@ -100,13 +96,22 @@ main:
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks      
+        copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks 
+        ;-----------------------------------------------------------------------
+        ; Basic interpreter handling
+        ;-----------------------------------------------------------------------         
+        copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter        
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fbf
+        .ifgt $, >7e00
               .error 'Aborted. Bank 3 cartridge program too large!'
         .endif
+        ;-----------------------------------------------------------------------
+        ; Scratchpad memory dump
+        ;----------------------------------------------------------------------- 
+        aorg >7e00
+        copy  "data.scrpad.asm"     ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 

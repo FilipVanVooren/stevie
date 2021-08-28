@@ -219,5 +219,4 @@ sprsat  equ   >2180                 ; VDP sprite attribute table
 sprpdt  equ   >2800                 ; VDP sprite pattern table
 
 
-; TODO properly backup scratchpad memory upon editor start.
 ; TODO scratchpad >8370->83ff is cleared upon sp2 runlib start. Keep memory! 

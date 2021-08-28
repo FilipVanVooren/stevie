@@ -136,10 +136,9 @@ tv.colorize.reset         equ  >9900   ; Colorization off
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
-startup_backup_scrpad     equ  1       ; Backup scratchpad @>8300->83ff on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-cpu.scrpad.tgt            equ  >eef0   ; Scratchpad backup destination
+cpu.scrpad.tgt            equ  >7e00   ; Scratchpad dump of OS Monitor in bank3
 *--------------------------------------------------------------
 * Stevie work area (scratchpad)       @>2f00-2fff   (256 bytes)
 *--------------------------------------------------------------
