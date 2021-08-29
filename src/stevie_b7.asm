@@ -12,7 +12,7 @@
 *
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
-        copy  "rom.order.asm"       ; ROM ban k order "non-inverted"        
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
 
 ***************************************************************
@@ -28,53 +28,20 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
         save  >6000,>7fff           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header        
 
-
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
-* Step 2: Satisfy assembler, must know SP2 in low MEMEXP
-********|*****|*********************|**************************
-        copy  "%%spectra2%%/runlib.asm"
-                                    ; Relocated spectra2 in low MEMEXP, was
-                                    ; copied to >2000 from ROM in bank 0
-        ;------------------------------------------------------
-        ; End of File marker
-        ;------------------------------------------------------
-        data >dead,>beef,>dead,>beef     
-        .print "***** PC relocated SP2 library @ >2000 - ", $, "(dec)"                                    
-***************************************************************
-* Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
-********|*****|*********************|**************************
-        aorg  >3000
-        ;------------------------------------------------------
-        ; Activate bank 1 and branch to >6046
-        ;------------------------------------------------------
-        clr   @bank1.rom            ; Activate bank 1 "James" ROM
-
-        .ifeq device.fg99.mode.adv,1
-        clr   @bank1.ram            ; Activate bank 1 "James" RAM
-        .endif
-
-        b     @kickstart.code2      ; Jump to entry routine
-        ;------------------------------------------------------
-        ; Resident Stevie modules: >3000 - >3fff
-        ;------------------------------------------------------
-        copy  "ram.resident.3000.asm"        
-***************************************************************
-* Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
-********|*****|*********************|**************************
-        aorg  >f000
-        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
-                                    ; Spectra 2 extended            
-***************************************************************
-* Step 5: Include main editor modules
+* Step 2: Copy spectra2 library into cartridge space
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
+
+        copy  "%%spectra2%%/runlib.asm"
+        copy  "data.constants.asm"  ; Need some constants for SAMS layout
         ;-----------------------------------------------------------------------
         ; Stubs using trampoline
         ;-----------------------------------------------------------------------        

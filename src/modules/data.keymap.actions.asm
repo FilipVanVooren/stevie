@@ -153,8 +153,8 @@ keymap_actions.cmdb:
         data  dialog.file
 
         byte  key.uc.b, id.dialog.menu
-        data  dialog.basic
-
+        data  run.tibasic
+        
         byte  key.uc.h, id.dialog.menu
         data  edkey.action.about
 

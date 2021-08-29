@@ -8,7 +8,7 @@
 ;--------------------------------------------------------------
 ; Strings for about pane
 ;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1R'
+txt.stevie         #string 'STEVIE 1.1S'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 txt.delim          #string ','
@@ -68,15 +68,11 @@ txt.head.load      byte 19,1,3
                    byte 2
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
-txt.keys.load      byte 60
-                   text 'File'
-                   byte 27
-                   text 'Open: F9=Back  F3=Clear  F5=Fastmode  F-H=Home  F-L=End '
+txt.keys.load      byte 49
+                   text 'F9=Back  F3=Clear  F5=Fastmode  F-H=Home  F-L=End'
 
-txt.keys.load2     byte 61
-                   text 'File'
-                   byte 27
-                   text 'Open: F9=Back  F3=Clear  *F5=Fastmode  F-H=Home  F-L=End '
+txt.keys.load2     byte 50
+                   text 'F9=Back  F3=Clear  *F5=Fastmode  F-H=Home  F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog Save DV 80 file
@@ -89,10 +85,8 @@ txt.head.save2     byte 35,1,3,32
                    byte 2
 txt.hint.save      #string ' '
 
-txt.keys.save      byte 47
-                   text 'File'
-                   byte 27                   
-                   text 'Save: F9=Back  F3=Clear  F-H=Home  F-L=End'
+txt.keys.save      byte 36
+                   text 'F9=Back  F3=Clear  F-H=Home  F-L=End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -126,10 +120,10 @@ txt.head.menu      byte 16,1,3
                    text ' Stevie 1.1R '
                    byte 2
 
-txt.info.menu      #string 'File  Basic  Help  Quit'
-pos.info.menu      byte 0,6,13,19,>ff
+txt.info.menu      #string 'File / Basic / Help / Quit'
+pos.info.menu      byte 0,7,15,22,>ff
 txt.hint.menu      #string 'Press F,B,H,Q or F9 to return to editor.'
-txt.keys.menu      #string 'Menu: F9=Back'
+txt.keys.menu      #string 'F9=Back'
 
 
 ;--------------------------------------------------------------
@@ -139,10 +133,10 @@ txt.head.file      byte 9,1,3
                    text ' File '
                    byte 2
 
-txt.info.file      #string 'New  Open  Save'
-pos.info.file      byte 0,5,11,>ff
+txt.info.file      #string 'New / Open / Save'
+pos.info.file      byte 0,6,13,>ff
 txt.hint.file      #string 'Press N,O,S or F9 to return to editor.'
-txt.keys.file      #string 'File: F9=Back'
+txt.keys.file      #string 'F9=Back'
 
 ;--------------------------------------------------------------
 ; Dialog "Basic"
@@ -154,7 +148,7 @@ txt.head.basic     byte 14,1,3
 txt.info.basic     #string 'TI Basic / TI Extended Basic'
 pos.info.basic     byte 3,14,>ff
 txt.hint.basic     #string 'Press B,E for running basic dialect or F9 to return to editor.'
-txt.keys.basic     #string 'Run Basic: F9=Back'
+txt.keys.basic     #string 'F9=Back'
 
 
 ;--------------------------------------------------------------

@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 210829-1356663
+0009               * File: stevie_b3.asm               ; Version 210829-1383470
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -82,7 +82,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenny
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -421,7 +421,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -472,11 +472,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035               
 0043               
 0044 6010 0B53             byte  11
-0045 6011 ....             text  'STEVIE 1.1R'
+0045 6011 ....             text  'STEVIE 1.1S'
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1197,7 +1197,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210829-1356663'
+0260 21D3 ....             text  'Build-ID  210829-1383470'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5187,7 +5187,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2F02 0040 
 0368 2F04 0460  28         b     @main                 ; Give control to main program
      2F06 6046 
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0041                                                   ; Relocated spectra2 in low MEMEXP, was
 0042                                                   ; copied to >2000 from ROM in bank 0
 0043                       ;------------------------------------------------------
@@ -6514,12 +6514,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010               ;--------------------------------------------------------------
 0011               txt.stevie
 0012 344C 0B53             byte  11
-0013 344D ....             text  'STEVIE 1.1R'
+0013 344D ....             text  'STEVIE 1.1S'
 0014                       even
 0015               
 0016               txt.about.build
 0017 3458 4C42             byte  76
-0018 3459 ....             text  'Build: 210829-1356663 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 3459 ....             text  'Build: 210829-1383470 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -6686,207 +6686,200 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0180                       even
 0181               
 0182               
-0183 3650 3C46     txt.keys.load      byte 60
-0184 3651 ....                        text 'File'
-0185                                  byte 27
-0186 3656 ....                        text 'Open: F9=Back  F3=Clear  F5=Fastmode  F-H=Home  F-L=End '
-0187               
-0188 368E 3D46     txt.keys.load2     byte 61
-0189 368F ....                        text 'File'
-0190                                  byte 27
-0191 3694 ....                        text 'Open: F9=Back  F3=Clear  *F5=Fastmode  F-H=Home  F-L=End '
-0192               
-0193               ;--------------------------------------------------------------
-0194               ; Dialog Save DV 80 file
-0195               ;--------------------------------------------------------------
-0196 36CE 0103     txt.head.save      byte 19,1,3
-0197 36D0 ....                        text ' Save DV80 file '
-0198 36E0 0223                        byte 2
-0199 36E2 0103     txt.head.save2     byte 35,1,3,32
-     36E4 2053 
-0200 36E5 ....                        text 'Save marked block to DV80 file '
-0201 3704 0201                        byte 2
-0202               txt.hint.save
-0203                       byte  1
-0204 3706 ....             text  ' '
-0205                       even
+0183 3650 3146     txt.keys.load      byte 49
+0184 3651 ....                        text 'F9=Back  F3=Clear  F5=Fastmode  F-H=Home  F-L=End'
+0185               
+0186 3682 3246     txt.keys.load2     byte 50
+0187 3683 ....                        text 'F9=Back  F3=Clear  *F5=Fastmode  F-H=Home  F-L=End'
+0188               
+0189               ;--------------------------------------------------------------
+0190               ; Dialog Save DV 80 file
+0191               ;--------------------------------------------------------------
+0192 36B6 0103     txt.head.save      byte 19,1,3
+0193 36B8 ....                        text ' Save DV80 file '
+0194 36C8 0223                        byte 2
+0195 36CA 0103     txt.head.save2     byte 35,1,3,32
+     36CC 2053 
+0196 36CD ....                        text 'Save marked block to DV80 file '
+0197 36EC 0201                        byte 2
+0198               txt.hint.save
+0199                       byte  1
+0200 36EE ....             text  ' '
+0201                       even
+0202               
+0203               
+0204 36F0 2446     txt.keys.save      byte 36
+0205 36F1 ....                        text 'F9=Back  F3=Clear  F-H=Home  F-L=End'
 0206               
-0207               
-0208 3708 2F46     txt.keys.save      byte 47
-0209 3709 ....                        text 'File'
-0210                                  byte 27
-0211 370E ....                        text 'Save: F9=Back  F3=Clear  F-H=Home  F-L=End'
-0212               
-0213               ;--------------------------------------------------------------
-0214               ; Dialog "Unsaved changes"
-0215               ;--------------------------------------------------------------
-0216 3738 1401     txt.head.unsaved   byte 20,1,3
-     373A 0320 
-0217 373B ....                        text ' Unsaved changes '
-0218 374C 0221                        byte 2
-0219               txt.info.unsaved
-0220                       byte  33
-0221 374E ....             text  'Warning! Unsaved changes in file.'
-0222                       even
-0223               
-0224               txt.hint.unsaved
-0225 3770 2A50             byte  42
-0226 3771 ....             text  'Press F6 to proceed or ENTER to save file.'
-0227                       even
+0207               ;--------------------------------------------------------------
+0208               ; Dialog "Unsaved changes"
+0209               ;--------------------------------------------------------------
+0210 3716 0103     txt.head.unsaved   byte 20,1,3
+0211 3718 ....                        text ' Unsaved changes '
+0212                                  byte 2
+0213               txt.info.unsaved
+0214 372A 2157             byte  33
+0215 372B ....             text  'Warning! Unsaved changes in file.'
+0216                       even
+0217               
+0218               txt.hint.unsaved
+0219 374C 2A50             byte  42
+0220 374D ....             text  'Press F6 to proceed or ENTER to save file.'
+0221                       even
+0222               
+0223               txt.keys.unsaved
+0224 3778 2843             byte  40
+0225 3779 ....             text  'Confirm: F9=Back  F6=Proceed  ENTER=Save'
+0226                       even
+0227               
 0228               
-0229               txt.keys.unsaved
-0230 379C 2843             byte  40
-0231 379D ....             text  'Confirm: F9=Back  F6=Proceed  ENTER=Save'
-0232                       even
-0233               
-0234               
-0235               ;--------------------------------------------------------------
-0236               ; Dialog "About"
-0237               ;--------------------------------------------------------------
-0238 37C6 0A01     txt.head.about     byte 10,1,3
-     37C8 0320 
-0239 37C9 ....                        text ' About '
-0240 37D0 0200                        byte 2
-0241               
-0242               txt.info.about
-0243                       byte  0
-0244 37D2 ....             text
-0245                       even
-0246               
-0247               txt.hint.about
-0248 37D2 1D50             byte  29
-0249 37D3 ....             text  'Press F9 to return to editor.'
-0250                       even
+0229               ;--------------------------------------------------------------
+0230               ; Dialog "About"
+0231               ;--------------------------------------------------------------
+0232 37A2 0A01     txt.head.about     byte 10,1,3
+     37A4 0320 
+0233 37A5 ....                        text ' About '
+0234 37AC 0200                        byte 2
+0235               
+0236               txt.info.about
+0237                       byte  0
+0238 37AE ....             text
+0239                       even
+0240               
+0241               txt.hint.about
+0242 37AE 1D50             byte  29
+0243 37AF ....             text  'Press F9 to return to editor.'
+0244                       even
+0245               
+0246 37CC 2148     txt.keys.about     byte 33
+0247 37CD ....                        text 'Help: F9=Back  '
+0248 37DC 0E0F                        byte 14,15
+0249 37DE ....                        text '=Alpha Lock down'
+0250               
 0251               
-0252 37F0 2148     txt.keys.about     byte 33
-0253 37F1 ....                        text 'Help: F9=Back  '
-0254 3800 0E0F                        byte 14,15
-0255 3802 ....                        text '=Alpha Lock down'
-0256               
-0257               
-0258               ;--------------------------------------------------------------
-0259               ; Dialog "Menu"
-0260               ;--------------------------------------------------------------
-0261 3812 1001     txt.head.menu      byte 16,1,3
-     3814 0320 
-0262 3815 ....                        text ' Stevie 1.1R '
-0263 3822 0217                        byte 2
-0264               
-0265               txt.info.menu
-0266                       byte  23
-0267 3824 ....             text  'File  Basic  Help  Quit'
+0252               ;--------------------------------------------------------------
+0253               ; Dialog "Menu"
+0254               ;--------------------------------------------------------------
+0255 37EE 1001     txt.head.menu      byte 16,1,3
+     37F0 0320 
+0256 37F1 ....                        text ' Stevie 1.1R '
+0257 37FE 021A                        byte 2
+0258               
+0259               txt.info.menu
+0260                       byte  26
+0261 3800 ....             text  'File / Basic / Help / Quit'
+0262                       even
+0263               
+0264 381A 0007     pos.info.menu      byte 0,7,15,22,>ff
+     381C 0F16 
+     381E FF28 
+0265               txt.hint.menu
+0266                       byte  40
+0267 3820 ....             text  'Press F,B,H,Q or F9 to return to editor.'
 0268                       even
 0269               
-0270 383C 0006     pos.info.menu      byte 0,6,13,19,>ff
-     383E 0D13 
-     3840 FF28 
-0271               txt.hint.menu
-0272                       byte  40
-0273 3842 ....             text  'Press F,B,H,Q or F9 to return to editor.'
-0274                       even
+0270               txt.keys.menu
+0271 3848 0746             byte  7
+0272 3849 ....             text  'F9=Back'
+0273                       even
+0274               
 0275               
-0276               txt.keys.menu
-0277 386A 0D4D             byte  13
-0278 386B ....             text  'Menu: F9=Back'
-0279                       even
-0280               
-0281               
-0282               
-0283               ;--------------------------------------------------------------
-0284               ; Dialog "File"
-0285               ;--------------------------------------------------------------
-0286 3878 0901     txt.head.file      byte 9,1,3
-     387A 0320 
-0287 387B ....                        text ' File '
-0288                                  byte 2
-0289               
-0290               txt.info.file
-0291 3882 0F4E             byte  15
-0292 3883 ....             text  'New  Open  Save'
+0276               
+0277               ;--------------------------------------------------------------
+0278               ; Dialog "File"
+0279               ;--------------------------------------------------------------
+0280 3850 0901     txt.head.file      byte 9,1,3
+     3852 0320 
+0281 3853 ....                        text ' File '
+0282                                  byte 2
+0283               
+0284               txt.info.file
+0285 385A 114E             byte  17
+0286 385B ....             text  'New / Open / Save'
+0287                       even
+0288               
+0289 386C 0006     pos.info.file      byte 0,6,13,>ff
+     386E 0DFF 
+0290               txt.hint.file
+0291 3870 2650             byte  38
+0292 3871 ....             text  'Press N,O,S or F9 to return to editor.'
 0293                       even
 0294               
-0295 3892 0005     pos.info.file      byte 0,5,11,>ff
-     3894 0BFF 
-0296               txt.hint.file
-0297 3896 2650             byte  38
-0298 3897 ....             text  'Press N,O,S or F9 to return to editor.'
-0299                       even
+0295               txt.keys.file
+0296 3898 0746             byte  7
+0297 3899 ....             text  'F9=Back'
+0298                       even
+0299               
 0300               
-0301               txt.keys.file
-0302 38BE 0D46             byte  13
-0303 38BF ....             text  'File: F9=Back'
-0304                       even
-0305               
-0306               
-0307               ;--------------------------------------------------------------
-0308               ; Dialog "Basic"
-0309               ;--------------------------------------------------------------
-0310 38CC 0E01     txt.head.basic     byte 14,1,3
-     38CE 0320 
-0311 38CF ....                        text ' Run basic '
-0312 38DA 021C                        byte 2
-0313               
-0314               txt.info.basic
-0315                       byte  28
-0316 38DC ....             text  'TI Basic / TI Extended Basic'
+0301               ;--------------------------------------------------------------
+0302               ; Dialog "Basic"
+0303               ;--------------------------------------------------------------
+0304 38A0 0E01     txt.head.basic     byte 14,1,3
+     38A2 0320 
+0305 38A3 ....                        text ' Run basic '
+0306 38AE 021C                        byte 2
+0307               
+0308               txt.info.basic
+0309                       byte  28
+0310 38B0 ....             text  'TI Basic / TI Extended Basic'
+0311                       even
+0312               
+0313 38CC 030E     pos.info.basic     byte 3,14,>ff
+     38CE FF3E 
+0314               txt.hint.basic
+0315                       byte  62
+0316 38D0 ....             text  'Press B,E for running basic dialect or F9 to return to editor.'
 0317                       even
 0318               
-0319 38F8 030E     pos.info.basic     byte 3,14,>ff
-     38FA FF3E 
-0320               txt.hint.basic
-0321                       byte  62
-0322 38FC ....             text  'Press B,E for running basic dialect or F9 to return to editor.'
-0323                       even
+0319               txt.keys.basic
+0320 390E 0746             byte  7
+0321 390F ....             text  'F9=Back'
+0322                       even
+0323               
 0324               
-0325               txt.keys.basic
-0326 393A 1252             byte  18
-0327 393B ....             text  'Run Basic: F9=Back'
-0328                       even
-0329               
-0330               
-0331               
-0332               ;--------------------------------------------------------------
-0333               ; Strings for error line pane
-0334               ;--------------------------------------------------------------
-0335               txt.ioerr.load
-0336 394E 2049             byte  32
-0337 394F ....             text  'I/O error. Failed loading file: '
-0338                       even
-0339               
-0340               txt.ioerr.save
-0341 3970 2049             byte  32
-0342 3971 ....             text  'I/O error. Failed saving file:  '
-0343                       even
-0344               
-0345               txt.memfull.load
-0346 3992 4049             byte  64
-0347 3993 ....             text  'Index memory full. Could not fully load file into editor buffer.'
-0348                       even
-0349               
-0350               txt.io.nofile
-0351 39D4 2149             byte  33
-0352 39D5 ....             text  'I/O error. No filename specified.'
-0353                       even
+0325               
+0326               ;--------------------------------------------------------------
+0327               ; Strings for error line pane
+0328               ;--------------------------------------------------------------
+0329               txt.ioerr.load
+0330 3916 2049             byte  32
+0331 3917 ....             text  'I/O error. Failed loading file: '
+0332                       even
+0333               
+0334               txt.ioerr.save
+0335 3938 2049             byte  32
+0336 3939 ....             text  'I/O error. Failed saving file:  '
+0337                       even
+0338               
+0339               txt.memfull.load
+0340 395A 4049             byte  64
+0341 395B ....             text  'Index memory full. Could not fully load file into editor buffer.'
+0342                       even
+0343               
+0344               txt.io.nofile
+0345 399C 2149             byte  33
+0346 399D ....             text  'I/O error. No filename specified.'
+0347                       even
+0348               
+0349               txt.block.inside
+0350 39BE 3445             byte  52
+0351 39BF ....             text  'Error. Copy/Move target must be outside block M1-M2.'
+0352                       even
+0353               
 0354               
-0355               txt.block.inside
-0356 39F6 3445             byte  52
-0357 39F7 ....             text  'Error. Copy/Move target must be outside block M1-M2.'
-0358                       even
-0359               
-0360               
-0361               ;--------------------------------------------------------------
-0362               ; Strings for command buffer
-0363               ;--------------------------------------------------------------
-0364               txt.cmdb.prompt
-0365 3A2C 013E             byte  1
-0366 3A2D ....             text  '>'
-0367                       even
-0368               
-0369               txt.colorscheme
-0370 3A2E 0D43             byte  13
-0371 3A2F ....             text  'Color scheme:'
-0372                       even
-0373               
+0355               ;--------------------------------------------------------------
+0356               ; Strings for command buffer
+0357               ;--------------------------------------------------------------
+0358               txt.cmdb.prompt
+0359 39F4 013E             byte  1
+0360 39F5 ....             text  '>'
+0361                       even
+0362               
+0363               txt.colorscheme
+0364 39F6 0D43             byte  13
+0365 39F7 ....             text  'Color scheme:'
+0366                       even
+0367               
 **** **** ****     > ram.resident.3000.asm
 0018                       copy  "data.keymap.keys.asm"   ; Data segment - Keyboard mapping
 **** **** ****     > data.keymap.keys.asm
@@ -7013,11 +7006,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019                       ;------------------------------------------------------
 0020                       ; End of File marker
 0021                       ;------------------------------------------------------
-0022 3A3C DEAD             data  >dead,>beef,>dead,>beef
-     3A3E BEEF 
-     3A40 DEAD 
-     3A42 BEEF 
-**** **** ****     > stevie_b3.asm.1356663
+0022 3A04 DEAD             data  >dead,>beef,>dead,>beef
+     3A06 BEEF 
+     3A08 DEAD 
+     3A0A BEEF 
+**** **** ****     > stevie_b3.asm.1383470
 0066               ***************************************************************
 0067               * Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
 0068               ********|*****|*********************|**************************
@@ -7145,7 +7138,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0096 F064 C2E0  34         mov   @rambuf,r11           ; Restore return address
      F066 2F6A 
 0097 F068 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0071               ***************************************************************
 0072               * Step 5: Include main editor modules
 0073               ********|*****|*********************|**************************
@@ -7196,27 +7189,27 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6058 A31A 
 0031               
 0032 605A 0204  20         li    tmp0,txt.head.menu
-     605C 3812 
+     605C 37EE 
 0033 605E C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6060 A31C 
 0034               
 0035 6062 0204  20         li    tmp0,txt.info.menu
-     6064 3823 
+     6064 37FF 
 0036 6066 C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      6068 A31E 
 0037               
 0038 606A 0204  20         li    tmp0,pos.info.menu
-     606C 383C 
+     606C 381A 
 0039 606E C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      6070 A322 
 0040               
 0041 6072 0204  20         li    tmp0,txt.hint.menu
-     6074 3841 
+     6074 381F 
 0042 6076 C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      6078 A320 
 0043               
 0044 607A 0204  20         li    tmp0,txt.keys.menu
-     607C 386A 
+     607C 3848 
 0045 607E C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      6080 A324 
 0046               
@@ -7229,7 +7222,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0085                       copy  "dialog.about.asm"    ; Dialog "About"
 **** **** ****     > dialog.about.asm
 0001               * FILE......: dialog.about.asm
@@ -7256,7 +7249,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      609E 60CC 
 0019               
 0020 60A0 0204  20         li    tmp0,txt.head.about
-     60A2 37C6 
+     60A2 37A2 
 0021 60A4 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      60A6 A31C 
 0022               
@@ -7268,12 +7261,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      60B2 A322 
 0026               
 0027 60B4 0204  20         li    tmp0,txt.hint.about
-     60B6 37D2 
+     60B6 37AE 
 0028 60B8 C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      60BA A320 
 0029               
 0030 60BC 0204  20         li    tmp0,txt.keys.about
-     60BE 37F0 
+     60BE 37CC 
 0031 60C0 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      60C2 A324 
 0032               
@@ -7596,7 +7589,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0327 655D ....             text  '   Fctn .        Insert/Overwrite'
 0328                       even
 0329               
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0086                       copy  "dialog.file.asm"     ; Dialog "File"
 **** **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -7633,27 +7626,27 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      658C A31A 
 0031               
 0032 658E 0204  20         li    tmp0,txt.head.file
-     6590 3878 
+     6590 3850 
 0033 6592 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6594 A31C 
 0034               
 0035 6596 0204  20         li    tmp0,txt.info.file
-     6598 3882 
+     6598 385A 
 0036 659A C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      659C A31E 
 0037               
 0038 659E 0204  20         li    tmp0,pos.info.file
-     65A0 3892 
+     65A0 386C 
 0039 65A2 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      65A4 A322 
 0040               
 0041 65A6 0204  20         li    tmp0,txt.hint.file
-     65A8 3896 
+     65A8 3870 
 0042 65AA C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      65AC A320 
 0043               
 0044 65AE 0204  20         li    tmp0,txt.keys.file
-     65B0 38BE 
+     65B0 3898 
 0045 65B2 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      65B4 A324 
 0046               
@@ -7666,7 +7659,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 65BA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 65BC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 65BE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0087                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -7735,7 +7728,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0053                       ; Show that FastMode is on
 0054                       ;-------------------------------------------------------
 0055 65FA 0204  20         li    tmp0,txt.keys.load2   ; Highlight FastMode
-     65FC 368E 
+     65FC 3682 
 0056 65FE 1002  14         jmp   dialog.load.keylist
 0057                       ;-------------------------------------------------------
 0058                       ; Show that FastMode is off
@@ -7764,7 +7757,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 6612 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 6614 C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 6616 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0088                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7821,7 +7814,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0044 6640 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      6642 A31A 
 0045 6644 0204  20         li    tmp0,txt.head.save2   ; Title "Save code block to DV80 file"
-     6646 36E1 
+     6646 36C9 
 0046               
 0047 6648 1006  14         jmp   dialog.save.header
 0048                       ;-------------------------------------------------------
@@ -7833,7 +7826,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0053 664E C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      6650 A31A 
 0054 6652 0204  20         li    tmp0,txt.head.save    ; Title "Save DV80 file"
-     6654 36CD 
+     6654 36B5 
 0055                       ;-------------------------------------------------------
 0056                       ; Setup header
 0057                       ;-------------------------------------------------------
@@ -7847,12 +7840,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6660 A322 
 0063               
 0064 6662 0204  20         li    tmp0,txt.hint.save
-     6664 3705 
+     6664 36ED 
 0065 6666 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
      6668 A320 
 0066               
 0067 666A 0204  20         li    tmp0,txt.keys.save
-     666C 3708 
+     666C 36F0 
 0068 666E C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      6670 A324 
 0069               
@@ -7870,7 +7863,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0079 667A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0080 667C C2F9  30         mov   *stack+,r11           ; Pop R11
 0081 667E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0089                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7907,24 +7900,24 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      668E A31A 
 0031               
 0032 6690 0204  20         li    tmp0,txt.head.unsaved
-     6692 3738 
+     6692 3715 
 0033 6694 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6696 A31C 
 0034               
 0035 6698 0204  20         li    tmp0,txt.info.unsaved
-     669A 374D 
+     669A 372A 
 0036 669C C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      669E A31E 
 0037 66A0 04E0  34         clr   @cmdb.panmarkers      ; No key markers
      66A2 A322 
 0038               
 0039 66A4 0204  20         li    tmp0,txt.hint.unsaved
-     66A6 3770 
+     66A6 374C 
 0040 66A8 C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      66AA A320 
 0041               
 0042 66AC 0204  20         li    tmp0,txt.keys.unsaved
-     66AE 379C 
+     66AE 3778 
 0043 66B0 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      66B2 A324 
 0044               
@@ -7937,7 +7930,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 66B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 66BA C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 66BC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0090                       copy  "dialog.basic.asm"    ; Dialog "Basic"
 **** **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
@@ -7974,27 +7967,27 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      66CC A31A 
 0031               
 0032 66CE 0204  20         li    tmp0,txt.head.basic
-     66D0 38CC 
+     66D0 38A0 
 0033 66D2 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      66D4 A31C 
 0034               
 0035 66D6 0204  20         li    tmp0,txt.info.basic
-     66D8 38DB 
+     66D8 38AF 
 0036 66DA C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      66DC A31E 
 0037               
 0038 66DE 0204  20         li    tmp0,pos.info.basic
-     66E0 38F8 
+     66E0 38CC 
 0039 66E2 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      66E4 A322 
 0040               
 0041 66E6 0204  20         li    tmp0,txt.hint.basic
-     66E8 38FB 
+     66E8 38CF 
 0042 66EA C804  38         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
      66EC A320 
 0043               
 0044 66EE 0204  20         li    tmp0,txt.keys.basic
-     66F0 393A 
+     66F0 390E 
 0045 66F2 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      66F4 A324 
 0046               
@@ -8007,7 +8000,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 66FA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 66FC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 66FE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0091                       ;-----------------------------------------------------------------------
 0092                       ; Command buffer handling
 0093                       ;-----------------------------------------------------------------------
@@ -8078,7 +8071,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6734 832A 
 0054 6736 06A0  32         bl    @putstr
      6738 242C 
-0055 673A 3A2C                   data txt.cmdb.prompt
+0055 673A 39F4                   data txt.cmdb.prompt
 0056                       ;------------------------------------------------------
 0057                       ; Exit
 0058                       ;------------------------------------------------------
@@ -8090,7 +8083,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0063 6744 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6746 C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 6748 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0095                       copy  "cmdb.cmd.asm"        ; Command line handling
 **** **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -8246,7 +8239,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139 67A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 67A6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 67A8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0096                       ;-----------------------------------------------------------------------
 0097                       ; Stubs using trampoline
 0098                       ;-----------------------------------------------------------------------
@@ -8341,7 +8334,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0083                       ;------------------------------------------------------
 0084 67EE C2F9  30         mov   *stack+,r11           ; Pop r11
 0085 67F0 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0100                       ;-----------------------------------------------------------------------
 0101                       ; Basic interpreter handling
 0102                       ;-----------------------------------------------------------------------
@@ -8366,69 +8359,78 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0017                       ;-------------------------------------------------------
 0018                       ; Put VDP in TI Basic compatible mode
 0019                       ;-------------------------------------------------------
-0020 67F2 06A0  32         bl    @f18rst               ; Reset and lock the F18A
-     67F4 27AA 
+0020 67F2 06A0  32         bl    @scroff               ; Turn off screen
+     67F4 269C 
 0021               
-0022 67F6 06A0  32         bl    @vidtab               ; Load video mode table into VDP
-     67F8 2306 
-0023 67FA 21F6                   data tibasic          ; Equate selected video mode table
-0024               
-0025 67FC 06A0  32         bl    @ldfnt
-     67FE 236E 
-0026 6800 0900                   data >0900,fnopt3     ; Load font (upper & lower case)
-     6802 000C 
-0027               
-0028 6804 06A0  32         bl    @filv
-     6806 229C 
-0029 6808 0380                   data >0380,>17,32     ; Load color table
-     680A 0017 
-     680C 0020 
-0030               
-0031 680E 06A0  32         bl    @cpu.scrpad.restore   ; \ scratchpad memory in TI Basic layout.
-     6810 F034 
-0032                                                   ; | i  @cpu.scrpad.target
-0033                                                   ; /
-0034               
-0035 6812 04CB  14         clr   r11
-0036               
-0037 6814 C820  54         mov   @run.tibasic.83d4,@>83d4
-     6816 6844 
-     6818 83D4 
-0038 681A C820  54         mov   @run.tibasic.83fa,@>83fa
-     681C 6846 
-     681E 83FA 
-0039 6820 C820  54         mov   @run.tibasic.83fc,@>83fc
-     6822 6848 
-     6824 83FC 
-0040 6826 C820  54         mov   @run.tibasic.83fe,@>83fe
-     6828 684A 
-     682A 83FE 
+0022 67F6 06A0  32         bl    @f18rst               ; Reset and lock the F18A
+     67F8 27AA 
+0023               
+0024 67FA 06A0  32         bl    @vidtab               ; Load video mode table into VDP
+     67FC 2306 
+0025 67FE 21F6                   data tibasic          ; Equate selected video mode table
+0026               
+0027 6800 06A0  32         bl    @ldfnt
+     6802 236E 
+0028 6804 0900                   data >0900,fnopt3     ; Load font (upper & lower case)
+     6806 000C 
+0029               
+0030 6808 06A0  32         bl    @filv
+     680A 229C 
+0031 680C 0300                   data >0300,>D0,2      ; No sprites
+     680E 00D0 
+     6810 0002 
+0032               
+0033 6812 06A0  32         bl    @filv
+     6814 229C 
+0034 6816 0380                   data >0380,>17,32     ; Load color table
+     6818 0017 
+     681A 0020 
+0035               
+0036 681C 06A0  32         bl    @cpu.scrpad.restore   ; \ scratchpad memory in TI Basic layout.
+     681E F034 
+0037                                                   ; | i  @cpu.scrpad.target
+0038                                                   ; /
+0039               
+0040 6820 04CB  14         clr   r11
 0041               
-0042                       ;-------------------------------------------------------
-0043                       ; Run TI Basic in GPL Interpreter
-0044                       ;-------------------------------------------------------
-0045 682C 02E0  18         lwpi  >83e0
-     682E 83E0 
-0046 6830 0201  20         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
-     6832 216F 
-0047 6834 D801  38         movb  r1,@grmwa             ; \
-     6836 9C02 
-0048 6838 06C1  14         swpb  r1                    ; | Set GPL address
-0049 683A D801  38         movb  r1,@grmwa             ; /
-     683C 9C02 
-0050 683E 1000  14         nop
-0051 6840 0460  28         b     @>70                  ; Start GPL interpreter
-     6842 0070 
-0052               
-0053               run.tibasic.83d4:
-0054 6844 E0D5             data  >e0d5
-0055               run.tibasic.83fa:
-0056 6846 9800             data  >9800
-0057               run.tibasic.83fc:
-0058 6848 0108             data  >0108
-0059               run.tibasic.83fe:
-0060 684A 8C02             data  >8c02
-**** **** ****     > stevie_b3.asm.1356663
+0042 6822 C820  54         mov   @run.tibasic.83d4,@>83d4
+     6824 6852 
+     6826 83D4 
+0043 6828 C820  54         mov   @run.tibasic.83fa,@>83fa
+     682A 6854 
+     682C 83FA 
+0044 682E C820  54         mov   @run.tibasic.83fc,@>83fc
+     6830 6856 
+     6832 83FC 
+0045 6834 C820  54         mov   @run.tibasic.83fe,@>83fe
+     6836 6858 
+     6838 83FE 
+0046               
+0047                       ;-------------------------------------------------------
+0048                       ; Run TI Basic in GPL Interpreter
+0049                       ;-------------------------------------------------------
+0050 683A 02E0  18         lwpi  >83e0
+     683C 83E0 
+0051 683E 0201  20         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
+     6840 216F 
+0052 6842 D801  38         movb  r1,@grmwa             ; \
+     6844 9C02 
+0053 6846 06C1  14         swpb  r1                    ; | Set GPL address
+0054 6848 D801  38         movb  r1,@grmwa             ; /
+     684A 9C02 
+0055 684C 1000  14         nop
+0056 684E 0460  28         b     @>70                  ; Start GPL interpreter
+     6850 0070 
+0057               
+0058               run.tibasic.83d4:
+0059 6852 E0D5             data  >e0d5
+0060               run.tibasic.83fa:
+0061 6854 9800             data  >9800
+0062               run.tibasic.83fc:
+0063 6856 0108             data  >0108
+0064               run.tibasic.83fe:
+0065 6858 8C02             data  >8c02
+**** **** ****     > stevie_b3.asm.1383470
 0104                       ;-----------------------------------------------------------------------
 0105                       ; Bank full check
 0106                       ;-----------------------------------------------------------------------
@@ -8577,7 +8579,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7EFA 9800 
      7EFC 0108 
      7EFE 8C02 
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0115                       ;-----------------------------------------------------------------------
 0116                       ; Vector table
 0117                       ;-----------------------------------------------------------------------
@@ -8622,7 +8624,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.1356663
+**** **** ****     > stevie_b3.asm.1383470
 0120                                                   ; Vector table bank 3
 0121               
 0122               

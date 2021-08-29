@@ -17,6 +17,8 @@ run.tibasic:
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode
         ;-------------------------------------------------------        
+        bl    @scroff               ; Turn off screen
+
         bl    @f18rst               ; Reset and lock the F18A
 
         bl    @vidtab               ; Load video mode table into VDP
@@ -24,7 +26,10 @@ run.tibasic:
 
         bl    @ldfnt
               data >0900,fnopt3     ; Load font (upper & lower case)
-      
+
+        bl    @filv
+              data >0300,>D0,2      ; No sprites
+
         bl    @filv
               data >0380,>17,32     ; Load color table
 

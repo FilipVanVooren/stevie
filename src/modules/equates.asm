@@ -52,23 +52,38 @@
 *
 *     Mem range   Bytes    BANK   Purpose
 *     =========   =====    ====   ==================================
-*     6000-7f9b    8128       0   SP2 library, code to RAM, resident modules
+*     6000-633f               0   Cartridge header
+*     6040-7fff               0   SP2 library + Stevie library
+*                                 relocated to RAM space
 *     ..............................................................
-*     6000-603f      64       1   Vector table (32 vectors)
-*     6040-7fff    8128       1   Stevie program code
+*     6000-633f               1   Cartridge header
+*     6040-7fbf               1   Stevie program code
+*     7fc0-7fff      64       1   Vector table (32 vectors)
 *     ..............................................................
-*     6000-603f      64       2   Vector table (32 vectors)
-*     6040-7fff    8128       2   Stevie program code
+*     6000-633f               2   Cartridge header
+*     6040-7fbf               2   Stevie program code
+*     7fc0-7fff      64       2   Vector table (32 vectors)
 *     ..............................................................
-*     6000-603f      64       3   Vector table (32 vectors)
-*     6040-7fff    8128       3   Stevie program code
+*     6000-633f               3   Cartridge header
+*     6040-7fbf               3   Stevie program code
+*     7fc0-7fff      64       3   Vector table (32 vectors)
 *     ..............................................................
-*     6000-603f      64       4   Vector table (32 vectors)
-*     6040-7fff    8128       4   Stevie program code
+*     6000-633f               4   Cartridge header
+*     6040-7fbf               4   Stevie program code
+*     7fc0-7fff      64       4   Vector table (32 vectors)
 *     ..............................................................
-*     6000-603f      64       5   Vector table (32 vectors)
-*     6040-7fff    8128       5   Stevie program code
+*     6000-633f               5   Cartridge header
+*     6040-7fbf               5   Stevie program code
+*     7fc0-7fff      64       5   Vector table (32 vectors)
 *     ..............................................................
+*     6000-633f               6   Cartridge header
+*     6040-7fbf               6   Stevie program code
+*     7fc0-7fff      64       6   Vector table (32 vectors)
+*     ..............................................................
+*     6000-633f               7   Cartridge header
+*     6040-7fbf               7   SP2 library in cartridge space
+*     7fc0-7fff      64       7   Vector table (32 vectors)
+*
 *
 *
 * VDP RAM F18a (0000-47ff)
