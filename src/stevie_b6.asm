@@ -8,7 +8,7 @@
 ***************************************************************
 * File: stevie_b5.asm               ; Version %%build_date%%
 *
-* Bank 6 "Jenny"
+* Bank 6 "Jenifer"
 *
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
