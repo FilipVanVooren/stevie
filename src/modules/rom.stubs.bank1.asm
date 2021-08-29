@@ -246,7 +246,7 @@ cmdb.refresh.vector:
 * bank3 vec.25
 ********|*****|*********************|**************************
 cmdb.cmd.clear:
-        mov   @cmdb.refresh.vector,@parm1
+        mov   @cmdb.cmd.clear.vector,@parm1
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.clear.vector:
         data  vec.25

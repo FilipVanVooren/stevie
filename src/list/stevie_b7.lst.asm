@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 210829-1395386
+0009               * File: stevie_b7.asm               ; Version 210829-1403094
 0010               *
 0011               * Bank 7 "Jonas"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -69,10 +69,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0010      6006     bank3.rom                 equ  >6006   ; John
 0011      6008     bank4.rom                 equ  >6008   ; Janine
 0012      600A     bank5.rom                 equ  >600a   ; Jumbo
-0013      600C     bank6.rom                 equ  >600c   ; Jenny
+0013      600C     bank6.rom                 equ  >600c   ; Jenifer
 0014      600E     bank7.rom                 equ  >600e   ; Jonas
 0015               *--------------------------------------------------------------
-0016               * RAM 4K banks (Only valid in advance mode FG99)
+0016               * RAM 4K banks (Only valid in advanced mode FG99)
 0017               *--------------------------------------------------------------
 0018      6800     bank0.ram                 equ  >6800   ; Jill
 0019      6802     bank1.ram                 equ  >6802   ; James
@@ -80,9 +80,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0021      6806     bank3.ram                 equ  >6806   ; John
 0022      6808     bank4.ram                 equ  >6808   ; Janine
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
-0024      680C     bank6.ram                 equ  >680c   ; Jenny
+0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -436,7 +436,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0355               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0356               *--------------------------------------------------------------
 0357      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -491,7 +491,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1216,7 +1216,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 621C 1842             byte  24
-0260 621D ....             text  'Build-ID  210829-1395386'
+0260 621D ....             text  'Build-ID  210829-1403094'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5206,7 +5206,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      6F4C 0040 
 0368 6F4E 0460  28         b     @main                 ; Give control to main program
      6F50 6046 
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0044                       copy  "data.constants.asm"  ; Need some constants for SAMS layout
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -5394,7 +5394,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0134 6FEA 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      6FEC 0000 
 0135                       even
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0045                       ;-----------------------------------------------------------------------
 0046                       ; Stubs using trampoline
 0047                       ;-----------------------------------------------------------------------
@@ -5402,7 +5402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0049                       ;-----------------------------------------------------------------------
 0050                       ; Bank full check
 0051                       ;-----------------------------------------------------------------------
@@ -5450,7 +5450,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b7.asm.1395386
+**** **** ****     > stevie_b7.asm.1403094
 0060                                                   ; Vector table bank 7
 0061               
 0062               *--------------------------------------------------------------
