@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 210828-1160824
+0009               * File: stevie_b3.asm               ; Version 210829-1343519
 0010               *
 0011               * Bank 3 "John"
 0012               *
@@ -54,7 +54,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -78,7 +78,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0019      6806     bank3.ram                 equ  >6806   ; John
 0020      6808     bank4.ram                 equ  >6808   ; Janine
 0021      680A     bank5.ram                 equ  >680a   ; Jumbo
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -417,7 +417,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -472,7 +472,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0030               
 0031               ***************************************************************
 0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1193,7 +1193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210828-1160824'
+0260 21D3 ....             text  'Build-ID  210829-1343519'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5183,7 +5183,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2F02 0040 
 0368 2F04 0460  28         b     @main                 ; Give control to main program
      2F06 6046 
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0041                                                   ; Relocated spectra2 in low MEMEXP, was
 0042                                                   ; copied to >2000 from ROM in bank 0
 0043                       ;------------------------------------------------------
@@ -6515,7 +6515,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 3458 4C42             byte  76
-0018 3459 ....             text  'Build: 210828-1160824 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 3459 ....             text  'Build: 210829-1343519 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -7013,7 +7013,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3A3E BEEF 
      3A40 DEAD 
      3A42 BEEF 
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0066               ***************************************************************
 0067               * Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
 0068               ********|*****|*********************|**************************
@@ -7141,7 +7141,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0096 F064 C2E0  34         mov   @rambuf,r11           ; Restore return address
      F066 2F6A 
 0097 F068 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0071               ***************************************************************
 0072               * Step 5: Include main editor modules
 0073               ********|*****|*********************|**************************
@@ -7225,7 +7225,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0085                       copy  "dialog.about.asm"    ; Dialog "About"
 **** **** ****     > dialog.about.asm
 0001               * FILE......: dialog.about.asm
@@ -7592,7 +7592,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0327 655D ....             text  '   Fctn .        Insert/Overwrite'
 0328                       even
 0329               
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0086                       copy  "dialog.file.asm"     ; Dialog "File"
 **** **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -7662,7 +7662,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 65BA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 65BC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 65BE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0087                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
 **** **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -7760,7 +7760,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 6612 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 6614 C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 6616 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0088                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
 **** **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -7866,7 +7866,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0079 667A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0080 667C C2F9  30         mov   *stack+,r11           ; Pop R11
 0081 667E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0089                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
 **** **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -7933,7 +7933,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0050 66B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 66BA C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 66BC 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0090                       copy  "dialog.basic.asm"    ; Dialog "Basic"
 **** **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
@@ -8003,7 +8003,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0052 66FA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 66FC C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 66FE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0091                       ;-----------------------------------------------------------------------
 0092                       ; Command buffer handling
 0093                       ;-----------------------------------------------------------------------
@@ -8086,7 +8086,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0063 6744 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6746 C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 6748 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0095                       copy  "cmdb.cmd.asm"        ; Command line handling
 **** **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -8242,7 +8242,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0139 67A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 67A6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 67A8 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0096                       ;-----------------------------------------------------------------------
 0097                       ; Stubs using trampoline
 0098                       ;-----------------------------------------------------------------------
@@ -8337,7 +8337,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0083                       ;------------------------------------------------------
 0084 67EE C2F9  30         mov   *stack+,r11           ; Pop r11
 0085 67F0 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0100                       ;-----------------------------------------------------------------------
 0101                       ; Basic interpreter handling
 0102                       ;-----------------------------------------------------------------------
@@ -8360,7 +8360,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               ********|*****|*********************|**************************
 0016               run.tibasic:
 0017                       ;-------------------------------------------------------
-0018                       ; Reset SAMS to default pages
+0018                       ; Put VDP in TI Basic compatible mode
 0019                       ;-------------------------------------------------------
 0020 67F2 06A0  32         bl    @f18rst               ; Reset and lock the F18A
      67F4 27AA 
@@ -8376,48 +8376,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0027               
 0028 6804 06A0  32         bl    @filv
      6806 229C 
-0029 6808 0380                   data >0380,>f0,32*24  ; Load color table
-     680A 00F0 
-     680C 0300 
+0029 6808 0380                   data >0380,>17,32     ; Load color table
+     680A 0017 
+     680C 0020 
 0030               
 0031 680E 06A0  32         bl    @cpu.scrpad.restore
      6810 F034 
 0032               
 0033 6812 04CB  14         clr   r11
 0034               
-0035 6814 C820  54         mov   @run.tibasic.83fa,@>83fa
-     6816 683E 
-     6818 83FA 
-0036 681A C820  54         mov   @run.tibasic.83fc,@>83fc
-     681C 6840 
-     681E 83FC 
-0037 6820 C820  54         mov   @run.tibasic.83fe,@>83fe
-     6822 6842 
-     6824 83FE 
-0038               
-0039                       ;-------------------------------------------------------
-0040                       ; Run TI Basic in GPL Interpreter
-0041                       ;-------------------------------------------------------
-0042 6826 02E0  18         lwpi  >83e0
-     6828 83E0 
-0043 682A 0201  20         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
-     682C 216F 
-0044 682E D801  38         movb  r1,@grmwa             ; \
-     6830 9C02 
-0045 6832 06C1  14         swpb  r1                    ; | Set GPL address
-0046 6834 D801  38         movb  r1,@grmwa             ; /
+0035 6814 C820  54         mov   @run.tibasic.83d4,@>83d4
+     6816 6844 
+     6818 83D4 
+0036 681A C820  54         mov   @run.tibasic.83fa,@>83fa
+     681C 6846 
+     681E 83FA 
+0037 6820 C820  54         mov   @run.tibasic.83fc,@>83fc
+     6822 6848 
+     6824 83FC 
+0038 6826 C820  54         mov   @run.tibasic.83fe,@>83fe
+     6828 684A 
+     682A 83FE 
+0039               
+0040                       ;-------------------------------------------------------
+0041                       ; Run TI Basic in GPL Interpreter
+0042                       ;-------------------------------------------------------
+0043 682C 02E0  18         lwpi  >83e0
+     682E 83E0 
+0044 6830 0201  20         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
+     6832 216F 
+0045 6834 D801  38         movb  r1,@grmwa             ; \
      6836 9C02 
-0047 6838 1000  14         nop
-0048 683A 0460  28         b     @>70                  ; Start GPL interpreter
-     683C 0070 
-0049               
-0050               run.tibasic.83fa:
-0051 683E 9800             data  >9800
-0052               run.tibasic.83fc:
-0053 6840 0108             data  >0108
-0054               run.tibasic.83fe:
-0055 6842 8C02             data  >8c02
-**** **** ****     > stevie_b3.asm.1160824
+0046 6838 06C1  14         swpb  r1                    ; | Set GPL address
+0047 683A D801  38         movb  r1,@grmwa             ; /
+     683C 9C02 
+0048 683E 1000  14         nop
+0049 6840 0460  28         b     @>70                  ; Start GPL interpreter
+     6842 0070 
+0050               
+0051               run.tibasic.83d4:
+0052 6844 E0D5             data  >e0d5
+0053               run.tibasic.83fa:
+0054 6846 9800             data  >9800
+0055               run.tibasic.83fc:
+0056 6848 0108             data  >0108
+0057               run.tibasic.83fe:
+0058 684A 8C02             data  >8c02
+**** **** ****     > stevie_b3.asm.1343519
 0104                       ;-----------------------------------------------------------------------
 0105                       ; Bank full check
 0106                       ;-----------------------------------------------------------------------
@@ -8438,135 +8443,135 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0009                       ;-------------------------------------------------------
 0010                       ; Scratchpad TI monitor on cartridge selection screen
 0011                       ;-------------------------------------------------------
-0012 7E00 0000             byte  >00,>00,>21,>4D,>00,>00,>00,>00
+0012 7E00 0000             byte  >00,>00,>21,>4D,>00,>00,>00,>00    ; >8300 - >8307
      7E02 214D 
      7E04 0000 
      7E06 0000 
-0013 7E08 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0013 7E08 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8308 - >830f
      7E0A 0000 
      7E0C 0000 
      7E0E 0000 
-0014 7E10 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0014 7E10 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8310 - >8317
      7E12 0000 
      7E14 0000 
      7E16 0000 
-0015 7E18 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0015 7E18 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8318 - >831f
      7E1A 0000 
      7E1C 0000 
      7E1E 0000 
-0016 7E20 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0016 7E20 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8320 - >8327
      7E22 0000 
      7E24 0000 
      7E26 0000 
-0017 7E28 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0017 7E28 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8328 - >832f
      7E2A 0000 
      7E2C 0000 
      7E2E 0000 
-0018 7E30 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0018 7E30 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8330 - >8337
      7E32 0000 
      7E34 0000 
      7E36 0000 
-0019 7E38 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0019 7E38 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8338 - >833f
      7E3A 0000 
      7E3C 0000 
      7E3E 0000 
-0020 7E40 0000             byte  >00,>00,>60,>13,>00,>00,>00,>00
+0020 7E40 0000             byte  >00,>00,>60,>13,>00,>00,>00,>00    ; >8340 - >8347
      7E42 6013 
      7E44 0000 
      7E46 0000 
-0021 7E48 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0021 7E48 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8348 - >834f
      7E4A 0000 
      7E4C 0000 
      7E4E 0000 
-0022 7E50 0000             byte  >00,>00,>01,>24,>00,>00,>00,>00
+0022 7E50 0000             byte  >00,>00,>01,>24,>00,>00,>00,>00    ; >8350 - >8357
      7E52 0124 
      7E54 0000 
      7E56 0000 
-0023 7E58 311E             byte  >31,>1E,>00,>00,>00,>00,>00,>08
+0023 7E58 311E             byte  >31,>1E,>00,>00,>00,>00,>00,>08    ; >8358 - >835f
      7E5A 0000 
      7E5C 0000 
      7E5E 0008 
-0024 7E60 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0024 7E60 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8360 - >8367
      7E62 0000 
      7E64 0000 
      7E66 0000 
-0025 7E68 0000             byte  >00,>00,>21,>52,>01,>06,>00,>00
+0025 7E68 0000             byte  >00,>00,>21,>52,>01,>06,>00,>00    ; >8368 - >836f
      7E6A 2152 
      7E6C 0106 
      7E6E 0000 
-0026 7E70 37D7             byte  >37,>D7,>FE,>7E,>00,>FF,>00,>00
+0026 7E70 37D7             byte  >37,>D7,>FE,>7E,>00,>FF,>00,>00    ; >8370 - >8377
      7E72 FE7E 
      7E74 00FF 
      7E76 0000 
-0027 7E78 52D2             byte  >52,>D2,>00,>E4,>00,>00,>05,>09
+0027 7E78 52D2             byte  >52,>D2,>00,>E4,>00,>00,>05,>09    ; >8378 - >837f
      7E7A 00E4 
      7E7C 0000 
      7E7E 0509 
-0028 7E80 02FA             byte  >02,>FA,>03,>85,>00,>00,>00,>00
+0028 7E80 02FA             byte  >02,>FA,>03,>85,>00,>00,>00,>00    ; >8380 - >8387
      7E82 0385 
      7E84 0000 
      7E86 0000 
-0029 7E88 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0029 7E88 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8388 - >838f
      7E8A 0000 
      7E8C 0000 
      7E8E 0000 
-0030 7E90 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0030 7E90 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8390 - >8397
      7E92 0000 
      7E94 0000 
      7E96 0000 
-0031 7E98 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0031 7E98 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >8398 - >839f
      7E9A 0000 
      7E9C 0000 
      7E9E 0000 
-0032 7EA0 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0032 7EA0 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >83A0 - >83a7
      7EA2 0000 
      7EA4 0000 
      7EA6 0000 
-0033 7EA8 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0033 7EA8 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >83A8 - >83af
      7EAA 0000 
      7EAC 0000 
      7EAE 0000 
-0034 7EB0 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0034 7EB0 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >83B0 - >83b7
      7EB2 0000 
      7EB4 0000 
      7EB6 0000 
-0035 7EB8 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00
+0035 7EB8 0000             byte  >00,>00,>00,>00,>00,>00,>00,>00    ; >83B8 - >83bf
      7EBA 0000 
      7EBC 0000 
      7EBE 0000 
-0036 7EC0 5209             byte  >52,>09,>00,>00,>00,>00,>00,>00
+0036 7EC0 5209             byte  >52,>09,>00,>00,>00,>00,>00,>00    ; >83C0 - >83c7
      7EC2 0000 
      7EC4 0000 
      7EC6 0000 
-0037 7EC8 FFFF             byte  >FF,>FF,>FF,>00,>04,>84,>00,>00
+0037 7EC8 FFFF             byte  >FF,>FF,>FF,>00,>04,>84,>00,>00    ; >83C8 - >83cf
      7ECA FF00 
      7ECC 0484 
      7ECE 0000 
-0038 7ED0 9804             byte  >98,>04,>E0,>00,>E0,>00,>0A,>A6
+0038 7ED0 9804             byte  >98,>04,>E0,>00,>E0,>d5,>0A,>A6    ; >83D0 - >83d7
      7ED2 E000 
-     7ED4 E000 
+     7ED4 E0D5 
      7ED6 0AA6 
-0039 7ED8 0070             byte  >00,>70,>83,>E0,>00,>74,>D0,>02
+0039 7ED8 0070             byte  >00,>70,>83,>E0,>00,>74,>D0,>02    ; >83D8 - >83df
      7EDA 83E0 
      7EDC 0074 
      7EDE D002 
-0040 7EE0 FFFF             byte  >FF,>FF,>FF,>FF,>00,>00,>04,>84
+0040 7EE0 FFFF             byte  >FF,>FF,>FF,>FF,>00,>00,>04,>84    ; >83E0 - >83e7
      7EE2 FFFF 
      7EE4 0000 
      7EE6 0484 
-0041 7EE8 0080             byte  >00,>80,>00,>00,>00,>00,>00,>00
+0041 7EE8 0080             byte  >00,>80,>00,>00,>00,>00,>00,>00    ; >83E8 - >83ef
      7EEA 0000 
      7EEC 0000 
      7EEE 0000 
-0042 7EF0 0000             byte  >00,>00,>00,>06,>05,>20,>04,>80
+0042 7EF0 0000             byte  >00,>00,>00,>06,>05,>20,>04,>80    ; >83F0 - >83f7
      7EF2 0006 
      7EF4 0520 
      7EF6 0480 
-0043 7EF8 0006             byte  >00,>06,>98,>00,>01,>08,>8C,>02
+0043 7EF8 0006             byte  >00,>06,>98,>00,>01,>08,>8C,>02    ; >83F8 - >83ff
      7EFA 9800 
      7EFC 0108 
      7EFE 8C02 
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0115                       ;-----------------------------------------------------------------------
 0116                       ; Vector table
 0117                       ;-----------------------------------------------------------------------
@@ -8611,7 +8616,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b3.asm.1160824
+**** **** ****     > stevie_b3.asm.1343519
 0120                                                   ; Vector table bank 3
 0121               
 0122               
