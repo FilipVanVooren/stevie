@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.1356252
+**** **** ****     > stevie_b6.asm.1355029
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,9 +8,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210829-1356252
+0009               * File: stevie_b5.asm               ; Version 210829-1355029
 0010               *
-0011               * Bank 4 "Janine"
+0011               * Bank 6 "Jenny"
 0012               *
 0013               ***************************************************************
 0014                       copy  "rom.build.asm"       ; Cartridge build options
@@ -54,8 +54,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               ; device.f18a             equ  0       ; F18a GPU
 0038               ; device.9938             equ  1       ; 9938 GPU
 0039               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b4.asm.1356252
-0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+**** **** ****     > stevie_b6.asm.1355029
+0015                       copy  "rom.order.asm"       ; ROM ban k order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
 0002               * Purpose...: Equates with CPU write addresses for switching banks
@@ -82,7 +82,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenny
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b4.asm.1356252
+**** **** ****     > stevie_b6.asm.1355029
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -421,7 +421,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Farjump return stack                @>ec00-efff  (1024 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     fj.bottom         equ  >f000           ; Stack grows downwards
-**** **** ****     > stevie_b4.asm.1356252
+**** **** ****     > stevie_b6.asm.1355029
 0017               
 0018               ***************************************************************
 0019               * Spectra2 core configuration
@@ -429,9 +429,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0021      3000     sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
 0022                                                   ; grows downwards to >2000
 0023               ***************************************************************
-0024               * BANK 4
+0024               * BANK 6
 0025               ********|*****|*********************|**************************
-0026      6008     bankid  equ   bank4.rom             ; Set bank identifier to current bank
+0026      600C     bankid  equ   bank6.rom             ; Set bank identifier to current bank
 0027                       aorg  >6000
 0028                       save  >6000,>7fff           ; Save bank
 0029                       copy  "rom.header.asm"      ; Include cartridge header
@@ -476,19 +476,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b4.asm.1356252
+**** **** ****     > stevie_b6.asm.1355029
 0030               
-0031               ***************************************************************
-0032               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0033               ********|*****|*********************|**************************
-0034                       aorg  kickstart.code1       ; >6040
-0035 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0031               
+0032               ***************************************************************
+0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0034               ********|*****|*********************|**************************
+0035                       aorg  kickstart.code1       ; >6040
+0036 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000 
-0036               ***************************************************************
-0037               * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
-0038               ********|*****|*********************|**************************
-0039                       aorg  >2000
-0040                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
+0037               ***************************************************************
+0038               * Step 2: Satisfy assembler, must know SP2 in low MEMEXP
+0039               ********|*****|*********************|**************************
+0040                       aorg  >2000
+0041                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/runlib.asm"
 **** **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -1192,12 +1193,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0252               
 0253               cpu.crash.msg.source
 0254 21B6 1B53             byte  27
-0255 21B7 ....             text  'Source    stevie_b4.lst.asm'
+0255 21B7 ....             text  'Source    stevie_b6.lst.asm'
 0256                       even
 0257               
 0258               cpu.crash.msg.id
 0259 21D2 1842             byte  24
-0260 21D3 ....             text  'Build-ID  210829-1356252'
+0260 21D3 ....             text  'Build-ID  210829-1355029'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5187,33 +5188,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      2F02 0040 
 0368 2F04 0460  28         b     @main                 ; Give control to main program
      2F06 6046 
-**** **** ****     > stevie_b4.asm.1356252
-0041                                                   ; Relocated spectra2 in low MEMEXP, was
-0042                                                   ; copied to >2000 from ROM in bank 0
-0043                       ;------------------------------------------------------
-0044                       ; End of File marker
-0045                       ;------------------------------------------------------
-0046 2F08 DEAD             data >dead,>beef,>dead,>beef
+**** **** ****     > stevie_b6.asm.1355029
+0042                                                   ; Relocated spectra2 in low MEMEXP, was
+0043                                                   ; copied to >2000 from ROM in bank 0
+0044                       ;------------------------------------------------------
+0045                       ; End of File marker
+0046                       ;------------------------------------------------------
+0047 2F08 DEAD             data >dead,>beef,>dead,>beef
      2F0A BEEF 
      2F0C DEAD 
      2F0E BEEF 
-0048               ***************************************************************
-0049               * Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
-0050               ********|*****|*********************|**************************
-0051                       aorg  >3000
-0052                       ;------------------------------------------------------
-0053                       ; Activate bank 1 and branch to >6046
-0054                       ;------------------------------------------------------
-0055 3000 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0049               ***************************************************************
+0050               * Step 3: Satisfy assembler, must know Stevie resident modules in low MEMEXP
+0051               ********|*****|*********************|**************************
+0052                       aorg  >3000
+0053                       ;------------------------------------------------------
+0054                       ; Activate bank 1 and branch to >6046
+0055                       ;------------------------------------------------------
+0056 3000 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3002 6002 
-0056               
-0060               
-0061 3004 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0057               
+0061               
+0062 3004 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3006 6046 
-0062                       ;------------------------------------------------------
-0063                       ; Resident Stevie modules: >3000 - >3fff
-0064                       ;------------------------------------------------------
-0065                       copy  "ram.resident.3000.asm"
+0063                       ;------------------------------------------------------
+0064                       ; Resident Stevie modules: >3000 - >3fff
+0065                       ;------------------------------------------------------
+0066                       copy  "ram.resident.3000.asm"
 **** **** ****     > ram.resident.3000.asm
 0001               * FILE......: ram.resident.3000.asm
 0002               * Purpose...: Resident modules at RAM >3000 callable from all ROM banks.
@@ -6519,7 +6520,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 3458 4C42             byte  76
-0018 3459 ....             text  'Build: 210829-1356252 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 3459 ....             text  'Build: 210829-1355029 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -7017,12 +7018,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      3A3E BEEF 
      3A40 DEAD 
      3A42 BEEF 
-**** **** ****     > stevie_b4.asm.1356252
-0066               ***************************************************************
-0067               * Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
-0068               ********|*****|*********************|**************************
-0069                       aorg  >f000
-0070                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/modules/cpu_scrpad_backrest.asm"
+**** **** ****     > stevie_b6.asm.1355029
+0067               ***************************************************************
+0068               * Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
+0069               ********|*****|*********************|**************************
+0070                       aorg  >f000
+0071                       copy  "/2TBHDD/bitbucket/projects/ti994a/spectra2/src/modules/cpu_scrpad_backrest.asm"
 **** **** ****     > cpu_scrpad_backrest.asm
 0001               * FILE......: cpu_scrpad_backrest.asm
 0002               * Purpose...: Scratchpad memory backup/restore functions
@@ -7145,687 +7146,42 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0096 F064 C2E0  34         mov   @rambuf,r11           ; Restore return address
      F066 2F6A 
 0097 F068 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1356252
-0071                                                   ; Spectra 2 extended
-0072               ***************************************************************
-0073               * Step 5: Include main editor modules
-0074               ********|*****|*********************|**************************
-0075               main:
-0076                       aorg  kickstart.code2       ; >6046
-0077 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+**** **** ****     > stevie_b6.asm.1355029
+0072                                                   ; Spectra 2 extended
+0073               ***************************************************************
+0074               * Step 5: Include main editor modules
+0075               ********|*****|*********************|**************************
+0076               main:
+0077                       aorg  kickstart.code2       ; >6046
+0078 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026 
-0078                       ;-----------------------------------------------------------------------
-0079                       ; Logic for Framebuffer (2)
-0080                       ;-----------------------------------------------------------------------
-0081                       copy  "fb.utils.asm"        ; Framebuffer utilities
-**** **** ****     > fb.utils.asm
-0001               * FILE......: fb.utils.asm
-0002               * Purpose...: Stevie Editor - Framebuffer utilities
-0003               
-0004               ***************************************************************
-0005               * fb.row2line
-0006               * Calculate line in editor buffer
-0007               ***************************************************************
-0008               * bl @fb.row2line
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * @fb.topline = Top line in frame buffer
-0012               * @parm1      = Row in frame buffer (offset 0..@fb.scrrows)
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * @outparm1 = Matching line in editor buffer
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0
-0019               *--------------------------------------------------------------
-0020               * Formula
-0021               * outparm1 = @fb.topline + @parm1
-0022               ********|*****|*********************|**************************
-0023               fb.row2line:
-0024 604A 0649  14         dect  stack
-0025 604C C64B  30         mov   r11,*stack            ; Save return address
-0026 604E 0649  14         dect  stack
-0027 6050 C644  30         mov   tmp0,*stack           ; Push tmp0
-0028                       ;------------------------------------------------------
-0029                       ; Calculate line in editor buffer
-0030                       ;------------------------------------------------------
-0031 6052 C120  34         mov   @parm1,tmp0
-     6054 2F20 
-0032 6056 A120  34         a     @fb.topline,tmp0
-     6058 A104 
-0033 605A C804  38         mov   tmp0,@outparm1
-     605C 2F30 
-0034                       ;------------------------------------------------------
-0035                       ; Exit
-0036                       ;------------------------------------------------------
-0037               fb.row2line.exit:
-0038 605E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0039 6060 C2F9  30         mov   *stack+,r11           ; Pop r11
-0040 6062 045B  20         b     *r11                  ; Return to caller
-0041               
-0042               
-0043               
-0044               
-0045               ***************************************************************
-0046               * fb.calc_pointer
-0047               * Calculate pointer address in frame buffer
-0048               ***************************************************************
-0049               * bl @fb.calc_pointer
-0050               *--------------------------------------------------------------
-0051               * INPUT
-0052               * @fb.top       = Address of top row in frame buffer
-0053               * @fb.topline   = Top line in frame buffer
-0054               * @fb.row       = Current row in frame buffer (offset 0..@fb.scrrows)
-0055               * @fb.column    = Current column in frame buffer
-0056               * @fb.colsline  = Columns per line in frame buffer
-0057               *--------------------------------------------------------------
-0058               * OUTPUT
-0059               * @fb.current   = Updated pointer
-0060               *--------------------------------------------------------------
-0061               * Register usage
-0062               * tmp0,tmp1
-0063               *--------------------------------------------------------------
-0064               * Formula
-0065               * pointer = row * colsline + column + deref(@fb.top.ptr)
-0066               ********|*****|*********************|**************************
-0067               fb.calc_pointer:
-0068 6064 0649  14         dect  stack
-0069 6066 C64B  30         mov   r11,*stack            ; Save return address
-0070 6068 0649  14         dect  stack
-0071 606A C644  30         mov   tmp0,*stack           ; Push tmp0
-0072 606C 0649  14         dect  stack
-0073 606E C645  30         mov   tmp1,*stack           ; Push tmp1
-0074                       ;------------------------------------------------------
-0075                       ; Calculate pointer
-0076                       ;------------------------------------------------------
-0077 6070 C120  34         mov   @fb.row,tmp0
-     6072 A106 
-0078 6074 3920  72         mpy   @fb.colsline,tmp0     ; tmp1 = row  * colsline
-     6076 A10E 
-0079 6078 A160  34         a     @fb.column,tmp1       ; tmp1 = tmp1 + column
-     607A A10C 
-0080 607C A160  34         a     @fb.top.ptr,tmp1      ; tmp1 = tmp1 + base
-     607E A100 
-0081 6080 C805  38         mov   tmp1,@fb.current
-     6082 A102 
-0082                       ;------------------------------------------------------
-0083                       ; Exit
-0084                       ;------------------------------------------------------
-0085               fb.calc_pointer.exit:
-0086 6084 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0087 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0088 6088 C2F9  30         mov   *stack+,r11           ; Pop r11
-0089 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1356252
-0082                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
-**** **** ****     > fb.null2char.asm
-0001               * FILE......: fb.null2char.asm
-0002               * Purpose...: Replace all null characters with specified character
-0003               
-0004               ***************************************************************
-0005               * fb.null2char
-0006               * Replace all null characters with specified character
-0007               ***************************************************************
-0008               *  bl   @fb.null2char
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * tmp1 = Replacement character
-0012               * tmp2 = Length of row
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * none
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0,tmp1,tmp2,tmp3
-0019               ********|*****|*********************|**************************
-0020               fb.null2char:
-0021 608C 0649  14         dect  stack
-0022 608E C64B  30         mov   r11,*stack            ; Save return address
-0023 6090 0649  14         dect  stack
-0024 6092 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 6094 0649  14         dect  stack
-0026 6096 C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 6098 0649  14         dect  stack
-0028 609A C646  30         mov   tmp2,*stack           ; Push tmp2
-0029 609C 0649  14         dect  stack
-0030 609E C647  30         mov   tmp3,*stack           ; Push tmp3
-0031                       ;-------------------------------------------------------
-0032                       ; Sanity checks
-0033                       ;-------------------------------------------------------
-0034 60A0 C186  18         mov   tmp2,tmp2             ; Minimum 1 character
-0035 60A2 1303  14         jeq   fb.null2char.crash
-0036 60A4 0286  22         ci    tmp2,80               ; Maximum 80 characters
-     60A6 0050 
-0037 60A8 1204  14         jle   fb.null2char.init
-0038                       ;------------------------------------------------------
-0039                       ; Asserts failed
-0040                       ;------------------------------------------------------
-0041               fb.null2char.crash:
-0042 60AA C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     60AC FFCE 
-0043 60AE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     60B0 2026 
-0044                       ;-------------------------------------------------------
-0045                       ; Initialize
-0046                       ;-------------------------------------------------------
-0047               fb.null2char.init:
-0048 60B2 C1C5  18         mov   tmp1,tmp3             ; Get character to write
-0049 60B4 0A87  56         sla   tmp3,8                ; LSB to MSB
-0050               
-0051 60B6 04E0  34         clr   @fb.column
-     60B8 A10C 
-0052 60BA 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
-     60BC 6064 
-0053 60BE C120  34         mov   @fb.current,tmp0      ; Get position
-     60C0 A102 
-0054                       ;-------------------------------------------------------
-0055                       ; Loop over characters in line
-0056                       ;-------------------------------------------------------
-0057               fb.null2char.loop:
-0058 60C2 04C5  14         clr   tmp1
-0059 60C4 D154  26         movb  *tmp0,tmp1            ; Get character
-0060 60C6 1603  14         jne   !                     ; Not a null character, skip it
-0061 60C8 0205  20         li    tmp1,>2a00            ; ASCII 32 in MSB
-     60CA 2A00 
-0062 60CC D507  30         movb  tmp3,*tmp0            ; Replace null character
-0063                       ;-------------------------------------------------------
-0064                       ; Prepare for next iteration
-0065                       ;-------------------------------------------------------
-0066 60CE 0584  14 !       inc   tmp0                  ; Move to next character
-0067 60D0 0606  14         dec   tmp2
-0068 60D2 15F7  14         jgt   fb.null2char.loop     ; Repeat until done
-0069                       ;------------------------------------------------------
-0070                       ; Exit
-0071                       ;------------------------------------------------------
-0072               fb.null2char.exit:
-0073 60D4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0074 60D6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0075 60D8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0076 60DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0077 60DC C2F9  30         mov   *stack+,r11           ; Pop R11
-0078 60DE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1356252
-0083                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
-**** **** ****     > fb.tab.next.asm
-0001               * FILE......: fb.tab.next.asm
-0002               * Purpose...: Tabbing functionality in frame buffer
-0003               
-0004               
-0005               ***************************************************************
-0006               * fb.tab.next
-0007               * Move cursor to next tab position
-0008               ***************************************************************
-0009               *  bl   @fb.tab.next
-0010               *--------------------------------------------------------------
-0011               * INPUT
-0012               * none
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * none
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0,tmp1,tmp2
-0019               *--------------------------------------------------------------
-0020               * Remarks
-0021               * For simplicity reasons we're assuming base 1 during copy
-0022               * (first line starts at 1 instead of 0).
-0023               * Makes it easier when comparing values.
-0024               ********|*****|*********************|**************************
-0025               fb.tab.next:
-0026 60E0 0649  14         dect  stack
-0027 60E2 C64B  30         mov   r11,*stack            ; Save return address
-0028 60E4 0649  14         dect  stack
-0029 60E6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0030 60E8 0649  14         dect  stack
-0031 60EA C645  30         mov   tmp1,*stack           ; Push tmp1
-0032 60EC 0649  14         dect  stack
-0033 60EE C646  30         mov   tmp2,*stack           ; Push tmp2
-0034                       ;-------------------------------------------------------
-0035                       ; Initialize
-0036                       ;-------------------------------------------------------
-0037 60F0 0204  20         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
-     60F2 3438 
-0038                       ;-------------------------------------------------------
-0039                       ; Find next tab position
-0040                       ;-------------------------------------------------------
-0041               fb.tab.next.loop:
-0042 60F4 D174  28         movb  *tmp0+,tmp1           ; \ Get tab position
-0043 60F6 0985  56         srl   tmp1,8                ; / Right align
-0044               
-0045 60F8 0285  22         ci    tmp1,>00ff            ; End-of-list reached?
-     60FA 00FF 
-0046 60FC 1325  14         jeq   fb.tab.next.eol       ; Yes, home cursor and exit
-0047                       ;-------------------------------------------------------
-0048                       ; Compare position
-0049                       ;-------------------------------------------------------
-0050 60FE 8160  34         c     @fb.column,tmp1       ; Cursor > tab position?
-     6100 A10C 
-0051 6102 142C  14         jhe   !                     ; Yes, next loop iteration
-0052                       ;-------------------------------------------------------
-0053                       ; Set cursor
-0054                       ;-------------------------------------------------------
-0055 6104 C185  18         mov   tmp1,tmp2             ; Set length of row
-0056 6106 0205  20         li    tmp1,32               ; Replacement character = ASCII 32
-     6108 0020 
-0057 610A 06A0  32         bl    @fb.null2char         ; \ Replace any null characters with space
-     610C 608C 
-0058                                                   ; | i  tmp1 = Replacement character
-0059                                                   ; / i  tmp2 = Length of row
-0060               
-0061 610E C146  18         mov   tmp2,tmp1             ; Restore tmp1
-0062 6110 C805  38         mov   tmp1,@fb.column       ; Set cursor on tab position
-     6112 A10C 
-0063               
-0064 6114 0649  14         dect  stack
-0065 6116 C644  30         mov   tmp0,*stack           ; Push tmp0
-0066               
-0067 6118 C105  18         mov   tmp1,tmp0             ; \ Set VDP cursor column position
-0068 611A 06A0  32         bl    @xsetx                ; / i  tmp0 = new X value
-     611C 26F4 
-0069               
-0070 611E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0071               
-0072 6120 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6122 6064 
-0073               
-0074 6124 0720  34         seto  @fb.row.dirty         ; Current row dirty in frame buffer
-     6126 A10A 
-0075 6128 0720  34         seto  @fb.dirty             ; Frame buffer dirty
-     612A A116 
-0076 612C 0720  34         seto  @fb.status.dirty      ; Refresh status line
-     612E A118 
-0077 6130 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed)
-     6132 A206 
-0078                       ;-------------------------------------------------------
-0079                       ; Set row length
-0080                       ;-------------------------------------------------------
-0081 6134 C120  34         mov   @fb.column,tmp0
-     6136 A10C 
-0082 6138 0584  14         inc   tmp0                  ; Base 1
-0083 613A 8820  54         c     @fb.column,@fb.row.length
-     613C A10C 
-     613E A108 
-0084 6140 110F  14         jlt   fb.tab.next.exit      ; No need to set row length, exit
-0085 6142 C804  38         mov   tmp0,@fb.row.length   : Set new length
-     6144 A108 
-0086 6146 100C  14         jmp   fb.tab.next.exit      ; Exit
-0087                       ;-------------------------------------------------------
-0088                       ; End-of-list reached, special treatment home cursor
-0089                       ;-------------------------------------------------------
-0090               fb.tab.next.eol:
-0091 6148 04E0  34         clr   @fb.column            ; Home cursor
-     614A A10C 
-0092 614C 04C4  14         clr   tmp0                  ; Home cursor
-0093               
-0094 614E 06A0  32         bl    @xsetx                ; \ Set VDP cursor column position
-     6150 26F4 
-0095                                                   ; / i  tmp0 = new X value
-0096               
-0097 6152 0720  34         seto  @fb.status.dirty      ; Refresh status line
-     6154 A118 
-0098               
-0099 6156 04E0  34         clr   @edb.insmode          ; Turn on overwrite mode
-     6158 A20A 
-0100                                                   ; This is a hack really. Because of the
-0101                                                   ; whitespace that is dragged by tabbing, we
-0102                                                   ; have a full 80 characters line so insert
-0103                                                   ; does not work.
-0104               
-0105               
-0106 615A 1002  14         jmp   fb.tab.next.exit      ; Exit
-0107                       ;-------------------------------------------------------
-0108                       ; Prepare for next iteration
-0109                       ;-------------------------------------------------------
-0110 615C 0606  14 !       dec   tmp2
-0111 615E 15CA  14         jgt   fb.tab.next.loop
-0112                       ;------------------------------------------------------
-0113                       ; Exit
-0114                       ;------------------------------------------------------
-0115               fb.tab.next.exit:
-0116 6160 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0117 6162 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0118 6164 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0119 6166 C2F9  30         mov   *stack+,r11           ; Pop R11
-0120 6168 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1356252
-0084                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
-**** **** ****     > fb.ruler.asm
-0001               * FILE......: fb.ruler.asm
-0002               * Purpose...: Setup ruler with tab-positions
-0003               
-0004               ***************************************************************
-0005               * fb.ruler.init
-0006               * Setup ruler line
-0007               ***************************************************************
-0008               * bl  @ruler.init
-0009               *--------------------------------------------------------------
-0010               * OUTPUT
-0011               * none
-0012               *--------------------------------------------------------------
-0013               * Register usage
-0014               * tmp0,tmp1,tmp2
-0015               ********|*****|*********************|**************************
-0016               fb.ruler.init:
-0017 616A 0649  14         dect  stack
-0018 616C C64B  30         mov   r11,*stack            ; Save return address
-0019 616E 0649  14         dect  stack
-0020 6170 C644  30         mov   tmp0,*stack           ; Push tmp0
-0021 6172 0649  14         dect  stack
-0022 6174 C645  30         mov   tmp1,*stack           ; Push tmp1
-0023 6176 0649  14         dect  stack
-0024 6178 C646  30         mov   tmp2,*stack           ; Push tmp2
-0025                       ;-------------------------------------------------------
-0026                       ; Initialize
-0027                       ;-------------------------------------------------------
-0028 617A 06A0  32         bl    @cpym2m
-     617C 24E8 
-0029 617E 3590                   data txt.ruler,fb.ruler.sit,80
-     6180 A11E 
-     6182 0050 
-0030                                                   ; Copy ruler from ROM to RAM
-0031               
-0032 6184 0204  20         li    tmp0,fb.ruler.tat
-     6186 A16E 
-0033 6188 C160  34         mov   @tv.rulercolor,tmp1
-     618A A01E 
-0034 618C 0206  20         li    tmp2,80
-     618E 0050 
-0035               
-0036 6190 06A0  32         bl    @xfilm                ; Setup FG/BG color for ruler in RAM
-     6192 224A 
-0037                                                   ; \ i  tmp0 = Target address in RAM
-0038                                                   ; | i  tmp1 = Byte to fill
-0039                                                   ; / i  tmp2 = Number of bytes to fill
-0040               
-0041 6194 0204  20         li    tmp0,tv.tabs.table    ; Get pointer to tabs table
-     6196 3438 
-0042                       ;------------------------------------------------------
-0043                       ; Setup ruler with current tab positions
-0044                       ;------------------------------------------------------
-0045               fb.ruler.init.loop:
-0046 6198 D174  28         movb  *tmp0+,tmp1           ; \ Get tab position
-0047 619A 0985  56         srl   tmp1,8                ; / Right align
-0048               
-0049 619C 0285  22         ci    tmp1,>00ff            ; End-of-list reached?
-     619E 00FF 
-0050 61A0 130B  14         jeq   fb.ruler.init.exit
-0051                       ;------------------------------------------------------
-0052                       ; Add tab-marker to ruler SIT in RAM
-0053                       ;------------------------------------------------------
-0054 61A2 0225  22         ai    tmp1,fb.ruler.sit     ; Add base address
-     61A4 A11E 
-0055 61A6 0206  20         li    tmp2,>1100            ; Tab indicator (ASCII 16)
-     61A8 1100 
-0056 61AA D546  30         movb  tmp2,*tmp1            ; Add tab-marker
-0057                       ;------------------------------------------------------
-0058                       ; Add tab-marker color to ruler TAT in RAM
-0059                       ;------------------------------------------------------
-0060 61AC 0225  22         ai    tmp1,80
-     61AE 0050 
-0061 61B0 C1A0  34         mov   @tv.color,tmp2        ; AB is in MSB (see color scheme table)
-     61B2 A018 
-0062 61B4 D546  30         movb  tmp2,*tmp1            ; Tab indicator FG/BG color
-0063 61B6 10F0  14         jmp   fb.ruler.init.loop    ; Next iteration
-0064                       ;------------------------------------------------------
-0065                       ; Exit
-0066                       ;------------------------------------------------------
-0067               fb.ruler.init.exit:
-0068 61B8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0069 61BA C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0070 61BC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0071 61BE C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 61C0 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1356252
-0085                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
-**** **** ****     > fb.colorlines.asm
-0001               * FILE......: fb.colorlines.asm
-0002               * Purpose...: Colorize frame buffer content
-0003               
-0004               ***************************************************************
-0005               * fb.colorlines
-0006               * Colorize frame buffer content
-0007               ***************************************************************
-0008               * bl @fb.colorlines
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * @parm1 = Force refresh if >ffff
-0012               *--------------------------------------------------------------
-0013               * OUTPUT
-0014               * none
-0015               *--------------------------------------------------------------
-0016               * Register usage
-0017               * tmp0,tmp1,tmp2,tmp3,tmp4
-0018               ********|*****|*********************|**************************
-0019               fb.colorlines:
-0020 61C2 0649  14         dect  stack
-0021 61C4 C64B  30         mov   r11,*stack            ; Save return address
-0022 61C6 0649  14         dect  stack
-0023 61C8 C644  30         mov   tmp0,*stack           ; Push tmp0
-0024 61CA 0649  14         dect  stack
-0025 61CC C645  30         mov   tmp1,*stack           ; Push tmp1
-0026 61CE 0649  14         dect  stack
-0027 61D0 C646  30         mov   tmp2,*stack           ; Push tmp2
-0028 61D2 0649  14         dect  stack
-0029 61D4 C647  30         mov   tmp3,*stack           ; Push tmp3
-0030 61D6 0649  14         dect  stack
-0031 61D8 C648  30         mov   tmp4,*stack           ; Push tmp4
-0032                       ;------------------------------------------------------
-0033                       ; Force refresh flag set
-0034                       ;------------------------------------------------------
-0035 61DA C120  34         mov   @parm1,tmp0           ; \ Force refresh flag set?
-     61DC 2F20 
-0036 61DE 0284  22         ci    tmp0,>ffff            ; /
-     61E0 FFFF 
-0037 61E2 1309  14         jeq   !                     ; Yes, so skip Asserts
-0038                       ;------------------------------------------------------
-0039                       ; Assert
-0040                       ;------------------------------------------------------
-0041 61E4 C120  34         mov   @fb.colorize,tmp0     ; Check if colorization necessary
-     61E6 A110 
-0042 61E8 132A  14         jeq   fb.colorlines.exit    ; Exit if nothing to do.
-0043                       ;------------------------------------------------------
-0044                       ; Speedup screen refresh dramatically
-0045                       ;------------------------------------------------------
-0046 61EA C120  34         mov   @edb.block.m1,tmp0
-     61EC A20C 
-0047 61EE 1327  14         jeq   fb.colorlines.exit    ; Exit if marker M1 unset
-0048 61F0 C120  34         mov   @edb.block.m2,tmp0
-     61F2 A20E 
-0049 61F4 1324  14         jeq   fb.colorlines.exit    ; Exit if marker M2 unset
-0050                       ;------------------------------------------------------
-0051                       ; Color the lines in the framebuffer (TAT)
-0052                       ;------------------------------------------------------
-0053 61F6 0204  20 !       li    tmp0,vdp.fb.toprow.tat
-     61F8 1850 
-0054                                                   ; VDP start address
-0055 61FA C1E0  34         mov   @fb.scrrows,tmp3      ; Set loop counter
-     61FC A11A 
-0056               
-0057 61FE C220  34         mov   @tv.ruler.visible,tmp4
-     6200 A010 
-0058 6202 1303  14         jeq   fb.colorlines.noruler ; Skip row adjustment if no ruler visible
-0059               
-0060 6204 0224  22         ai    tmp0,80               ; Skip ruler line
-     6206 0050 
-0061 6208 0607  14         dec   tmp3                  ; Skip ruler line
-0062               fb.colorlines.noruler:
-0063 620A C220  34         mov   @fb.topline,tmp4      ; Position in editor buffer
-     620C A104 
-0064 620E 0588  14         inc   tmp4                  ; M1/M2 use base 1 offset
-0065                       ;------------------------------------------------------
-0066                       ; 1. Set color for each line in framebuffer
-0067                       ;------------------------------------------------------
-0068               fb.colorlines.loop:
-0069 6210 C1A0  34         mov   @edb.block.m1,tmp2
-     6212 A20C 
-0070 6214 8206  18         c     tmp2,tmp4             ; M1 > current line
-0071 6216 1507  14         jgt   fb.colorlines.normal  ; Yes, skip marking color
-0072               
-0073 6218 C1A0  34         mov   @edb.block.m2,tmp2
-     621A A20E 
-0074 621C 8206  18         c     tmp2,tmp4             ; M2 < current line
-0075 621E 1103  14         jlt   fb.colorlines.normal  ; Yes, skip marking color
-0076                       ;------------------------------------------------------
-0077                       ; 1a. Set marking color
-0078                       ;------------------------------------------------------
-0079 6220 C160  34         mov   @tv.markcolor,tmp1
-     6222 A01A 
-0080 6224 1003  14         jmp   fb.colorlines.fill
-0081                       ;------------------------------------------------------
-0082                       ; 1b. Set normal text color
-0083                       ;------------------------------------------------------
-0084               fb.colorlines.normal:
-0085 6226 C160  34         mov   @tv.color,tmp1
-     6228 A018 
-0086 622A 0985  56         srl   tmp1,8
-0087                       ;------------------------------------------------------
-0088                       ; 1c. Fill line with selected color
-0089                       ;------------------------------------------------------
-0090               fb.colorlines.fill:
-0091 622C 0206  20         li    tmp2,80               ; 80 characters to fill
-     622E 0050 
-0092               
-0093 6230 06A0  32         bl    @xfilv                ; Fill VDP VRAM
-     6232 22A2 
-0094                                                   ; \ i  tmp0 = VDP start address
-0095                                                   ; | i  tmp1 = Byte to fill
-0096                                                   ; / i  tmp2 = count
-0097               
-0098 6234 0224  22         ai    tmp0,80               ; Next line
-     6236 0050 
-0099 6238 0588  14         inc   tmp4
-0100 623A 0607  14         dec   tmp3                  ; Update loop counter
-0101 623C 15E9  14         jgt   fb.colorlines.loop    ; Back to (1)
-0102                       ;------------------------------------------------------
-0103                       ; Exit
-0104                       ;------------------------------------------------------
-0105               fb.colorlines.exit
-0106 623E 04E0  34         clr   @fb.colorize          ; Reset colorize flag
-     6240 A110 
-0107 6242 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0108 6244 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0109 6246 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0110 6248 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0111 624A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0112 624C C2F9  30         mov   *stack+,r11           ; Pop r11
-0113 624E 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1356252
-0086                       copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
-**** **** ****     > fb.vdpdump.asm
-0001               * FILE......: fb.vdpdump.asm
-0002               * Purpose...: Dump framebuffer to VDP
-0003               
-0004               
-0005               ***************************************************************
-0006               * fb.vdpdump
-0007               * Dump framebuffer to VDP SIT
-0008               ***************************************************************
-0009               * bl @fb.vdpdump
-0010               *--------------------------------------------------------------
-0011               * INPUT
-0012               * @parm1 = Number of lines to dump
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * none
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0, tmp1, tmp2
-0019               ********|*****|*********************|**************************
-0020               fb.vdpdump:
-0021 6250 0649  14         dect  stack
-0022 6252 C64B  30         mov   r11,*stack            ; Save return address
-0023 6254 0649  14         dect  stack
-0024 6256 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 6258 0649  14         dect  stack
-0026 625A C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 625C 0649  14         dect  stack
-0028 625E C646  30         mov   tmp2,*stack           ; Push tmp2
-0029                       ;------------------------------------------------------
-0030                       ; Assert
-0031                       ;------------------------------------------------------
-0032 6260 C160  34         mov   @parm1,tmp1
-     6262 2F20 
-0033 6264 0285  22         ci    tmp1,80*30
-     6266 0960 
-0034 6268 1204  14         jle   !
-0035                       ;------------------------------------------------------
-0036                       ; Crash the system
-0037                       ;------------------------------------------------------
-0038 626A C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     626C FFCE 
-0039 626E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6270 2026 
-0040                       ;------------------------------------------------------
-0041                       ; Setup start position in VDP memory
-0042                       ;------------------------------------------------------
-0043 6272 0204  20 !       li    tmp0,vdp.fb.toprow.sit
-     6274 0050 
-0044                                                   ; VDP target address (Xth line on screen!)
-0045 6276 C1A0  34         mov   @tv.ruler.visible,tmp2
-     6278 A010 
-0046                                                   ; Is ruler visible on screen?
-0047 627A 1302  14         jeq   fb.vdpdump.calc       ; No, continue with calculation
-0048 627C A120  34         a     @fb.colsline,tmp0     ; Yes, add 2nd line offset
-     627E A10E 
-0049                       ;------------------------------------------------------
-0050                       ; Refresh VDP content with framebuffer
-0051                       ;------------------------------------------------------
-0052               fb.vdpdump.calc:
-0053 6280 3960  72         mpy   @fb.colsline,tmp1     ; columns per line * number of rows in parm1
-     6282 A10E 
-0054                                                   ; 16 bit part is in tmp2!
-0055 6284 C160  34         mov   @fb.top.ptr,tmp1      ; RAM Source address
-     6286 A100 
-0056               
-0057 6288 0286  22         ci    tmp2,0                ; \ Exit early if nothing to copy
-     628A 0000 
-0058 628C 1304  14         jeq   fb.vdpdump.exit       ; /
-0059               
-0060 628E 06A0  32         bl    @xpym2v               ; Copy to VDP
-     6290 249A 
-0061                                                   ; \ i  tmp0 = VDP target address
-0062                                                   ; | i  tmp1 = RAM source address
-0063                                                   ; / i  tmp2 = Bytes to copy
-0064               
-0065 6292 04E0  34         clr   @fb.dirty             ; Reset frame buffer dirty flag
-     6294 A116 
-0066                       ;------------------------------------------------------
-0067                       ; Exit
-0068                       ;------------------------------------------------------
-0069               fb.vdpdump.exit:
-0070 6296 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0071 6298 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0072 629A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0073 629C C2F9  30         mov   *stack+,r11           ; Pop r11
-0074 629E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1356252
-0087                       ;-----------------------------------------------------------------------
-0088                       ; Stubs using trampoline
+0079                       ;-----------------------------------------------------------------------
+0080                       ; Stubs using trampoline
+0081                       ;-----------------------------------------------------------------------
+0082                       copy  "rom.stubs.bank6.asm" ; Stubs for functions in other banks
+**** **** ****     > rom.stubs.bank6.asm
+0001               * FILE......: rom.stubs.bank6.asm
+0002               * Purpose...: Bank 6 stubs for functions in other banks
+**** **** ****     > stevie_b6.asm.1355029
+0083                       ;-----------------------------------------------------------------------
+0084                       ; Bank full check
+0085                       ;-----------------------------------------------------------------------
 0089                       ;-----------------------------------------------------------------------
-0090                       copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks
-**** **** ****     > rom.stubs.bank4.asm
-0001               * FILE......: rom.stubs.bank4.asm
-0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.1356252
+0090                       ; Vector table
 0091                       ;-----------------------------------------------------------------------
-0092                       ; Bank full check
-0093                       ;-----------------------------------------------------------------------
-0097                       ;-----------------------------------------------------------------------
-0098                       ; Vector table
-0099                       ;-----------------------------------------------------------------------
-0100                       aorg  >7fc0
-0101                       copy  "rom.vectors.bank4.asm"
-**** **** ****     > rom.vectors.bank4.asm
-0001               * FILE......: rom.vectors.bank4.asm
-0002               * Purpose...: Bank 4 vectors for trampoline function
+0092                       aorg  >7fc0
+0093                       copy  "rom.vectors.bank6.asm"
+**** **** ****     > rom.vectors.bank6.asm
+0001               * FILE......: rom.vectors.bank6.asm
+0002               * Purpose...: Bank 6 vectors for trampoline function
 0003               
 0004               *--------------------------------------------------------------
 0005               * Vector table for trampoline functions
 0006               *--------------------------------------------------------------
-0007 7FC0 60E0     vec.1   data  fb.tab.next           ; Move cursor to next tab position
-0008 7FC2 616A     vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
-0009 7FC4 61C2     vec.3   data  fb.colorlines         ; Colorize frame buffer content
-0010 7FC6 6250     vec.4   data  fb.vdpdump            ; Dump framebuffer to VDP SIT
+0007 7FC0 2026     vec.1   data  cpu.crash             ;
+0008 7FC2 2026     vec.2   data  cpu.crash             ;
+0009 7FC4 2026     vec.3   data  cpu.crash             ;
+0010 7FC6 2026     vec.4   data  cpu.crash             ;
 0011 7FC8 2026     vec.5   data  cpu.crash             ;
 0012 7FCA 2026     vec.6   data  cpu.crash             ;
 0013 7FCC 2026     vec.7   data  cpu.crash             ;
@@ -7854,18 +7210,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b4.asm.1356252
-0102                                                   ; Vector table bank 4
-0103               
-0104               *--------------------------------------------------------------
-0105               * Video mode configuration
-0106               *--------------------------------------------------------------
-0107      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0108      0004     spfbck  equ   >04                   ; Screen background color.
-0109      33B0     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
-0110      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0111      0050     colrow  equ   80                    ; Columns per row
-0112      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0113      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0114      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0115      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+**** **** ****     > stevie_b6.asm.1355029
+0094                                                   ; Vector table bank 6
+0095               
+0096               *--------------------------------------------------------------
+0097               * Video mode configuration
+0098               *--------------------------------------------------------------
+0099      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0100      0004     spfbck  equ   >04                   ; Screen background color.
+0101      33B0     spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+0102      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0103      0050     colrow  equ   80                    ; Columns per row
+0104      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0105      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0106      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0107      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

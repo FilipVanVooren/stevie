@@ -28,7 +28,9 @@ run.tibasic:
         bl    @filv
               data >0380,>17,32     ; Load color table
 
-        bl    @cpu.scrpad.restore     
+        bl    @cpu.scrpad.restore   ; \ scratchpad memory in TI Basic layout.
+                                    ; | i  @cpu.scrpad.target
+                                    ; /
         
         clr   r11
 
