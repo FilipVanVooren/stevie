@@ -44,6 +44,11 @@ run.tibasic:
         mov   @run.tibasic.83fc,@>83fc
         mov   @run.tibasic.83fe,@>83fe
 
+
+        li    r1,isr.start          ; \ Setup ISR hook in scratchpad memory
+        mov   r1,@>83c4             ; | >83c4 = Pointer to start address of 
+                                    ; /         User Interrupt Routine
+
         ;-------------------------------------------------------
         ; Run TI Basic in GPL Interpreter
         ;-------------------------------------------------------
@@ -63,3 +68,12 @@ run.tibasic.83fc:
         data  >0108
 run.tibasic.83fe:
         data  >8c02        
+
+
+isr.start:
+        c     @>83ce,@>6004         ; Compare sound byte with value >0000
+        jeq   isr.exit
+        b     @kickstart.code1
+
+isr.exit:
+        b     *r11                  ; Return from ISR       

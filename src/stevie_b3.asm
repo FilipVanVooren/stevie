@@ -67,7 +67,9 @@ bankid  equ   bank3.rom             ; Set bank identifier to current bank
 * Step 4: Satisfy assembler, must know SP2 EXT in high MeMEXP
 ********|*****|*********************|**************************
         aorg  >f000
-        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"                                    ; Spectra 2 extended            
+        copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+        copy  "%%spectra2%%/modules/snd_player.asm"
+                                    ; Spectra 2 extended            
 ***************************************************************
 * Step 5: Include main editor modules
 ********|*****|*********************|**************************

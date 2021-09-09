@@ -69,6 +69,7 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >f000
         copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+        copy  "%%spectra2%%/modules/snd_player.asm"        
                                     ; Spectra 2 extended    
 
 ***************************************************************

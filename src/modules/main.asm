@@ -33,6 +33,7 @@ main.continue:
         ;------------------------------------------------------
         ; Setup F18A VDP
         ;------------------------------------------------------
+        bl    @mute                 ; Turn sound generators off
         bl    @scroff               ; Turn screen off
 
         bl    @f18unl               ; Unlock the F18a

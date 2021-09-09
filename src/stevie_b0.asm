@@ -118,6 +118,7 @@ reloc.sp2ext:
         xorg  >f000                 ; Relocate to >f000
 
         copy  "%%spectra2%%/modules/cpu_scrpad_backrest.asm"
+        copy  "%%spectra2%%/modules/snd_player.asm"
                                     ; Spectra 2 extended    
 
 
