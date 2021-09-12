@@ -117,7 +117,7 @@ txt.keys.about     byte 33
 ; Dialog "Menu"
 ;--------------------------------------------------------------
 txt.head.menu      byte 16,1,3
-                   text ' Stevie 1.1S '
+                   text ' Stevie 1.1T '
                    byte 2
 
 txt.info.menu      #string 'File / Basic / Help / Quit'

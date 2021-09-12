@@ -6,48 +6,6 @@
 * Memory map
 * ==========
 *
-* LOW MEMORY EXPANSION (2000-2fff)
-* 
-*     Mem range   Bytes    SAMS   Purpose
-*     =========   =====    ====   ==================================
-*     2000-2f1f    3872           spectra2 core library
-*     2f20-2f3f      32           Function input/output parameters
-*     2f40-2f43       4           Keyboard
-*     2f4a-2f59      16           Timer tasks table
-*     2f5a-2f69      16           Sprite attribute table in RAM
-*     2f6a-2f9f      54           RAM buffer
-*     2fa0-2fff      96           Value/Return stack (grows downwards from 2fff)
-*     
-*    
-* LOW MEMORY EXPANSION (3000-3fff)
-*    
-*     Mem range   Bytes    SAMS   Purpose
-*     =========   =====    ====   ==================================
-*     3000-3fff    4096           Resident Stevie Modules
-*    
-*    
-* HIGH MEMORY EXPANSION (a000-ffff)
-*    
-*     Mem range   Bytes    SAMS   Purpose
-*     =========   =====    ====   ==================================
-*     a000-a0ff     256           Stevie Editor shared structure
-*     a100-a1ff     256           Framebuffer structure
-*     a200-a2ff     256           Editor buffer structure
-*     a300-a3ff     256           Command buffer structure   
-*     a400-a4ff     256           File handle structure
-*     a500-a5ff     256           Index structure
-*     a600-af5f    2400           Frame buffer
-*     af60-afff     ???           *FREE*
-*    
-*     b000-bfff    4096           Index buffer page
-*     c000-cfff    4096           Editor buffer page
-*     d000-dfff    4096           CMDB history / Editor buffer page (temporary)
-*     e000-ebff    3072           Heap
-*     eef0-efef     256           Backup scratchpad memory
-*     eff0-efff      16           Farjump return stack (trampolines)
-*     f000-ffff    4096           spectra2 extended library
-*
-*
 * CARTRIDGE SPACE (6000-7fff)
 *
 *     Mem range   Bytes    BANK   Purpose
@@ -153,36 +111,46 @@ debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-cpu.scrpad.tgt            equ  >7e00   ; Scratchpad dump of OS Monitor in bank3
+cpu.scrpad.tgt            equ  >7e00   ; \ Dump of OS monitor scratchpad 
+                                       ; | memory stored in cartridge ROM
+                                       ; / bank3.asm
 *--------------------------------------------------------------
-* Stevie work area (scratchpad)       @>2f00-2fff   (256 bytes)
+* Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
-parm1             equ  >2f20           ; Function parameter 1
-parm2             equ  >2f22           ; Function parameter 2
-parm3             equ  >2f24           ; Function parameter 3
-parm4             equ  >2f26           ; Function parameter 4
-parm5             equ  >2f28           ; Function parameter 5
-parm6             equ  >2f2a           ; Function parameter 6
-parm7             equ  >2f2c           ; Function parameter 7
-parm8             equ  >2f2e           ; Function parameter 8
-outparm1          equ  >2f30           ; Function output parameter 1
-outparm2          equ  >2f32           ; Function output parameter 2
-outparm3          equ  >2f34           ; Function output parameter 3
-outparm4          equ  >2f36           ; Function output parameter 4
-outparm5          equ  >2f38           ; Function output parameter 5
-outparm6          equ  >2f3a           ; Function output parameter 6
-outparm7          equ  >2f3c           ; Function output parameter 7
-keyrptcnt         equ  >2f3e           ; Key repeat-count (auto-repeat function)
-keycode1          equ  >2f40           ; Current key scanned
-keycode2          equ  >2f42           ; Previous key scanned
-unpacked.string   equ  >2f44           ; 6 char string with unpacked uin16
-timers            equ  >2f4a           ; Timer table
-ramsat            equ  >2f5a           ; Sprite Attribute Table in RAM
-rambuf            equ  >2f6a           ; RAM workbuffer 1
+core1.top         equ  >a000           ; Structure begin
+parm1             equ  core1.top + 0   ; Function parameter 1
+parm2             equ  core1.top + 2   ; Function parameter 2
+parm3             equ  core1.top + 4   ; Function parameter 3
+parm4             equ  core1.top + 6   ; Function parameter 4
+parm5             equ  core1.top + 8   ; Function parameter 5
+parm6             equ  core1.top + 10  ; Function parameter 6
+parm7             equ  core1.top + 12  ; Function parameter 7
+parm8             equ  core1.top + 14  ; Function parameter 8
+outparm1          equ  core1.top + 16  ; Function output parameter 1
+outparm2          equ  core1.top + 18  ; Function output parameter 2
+outparm3          equ  core1.top + 20  ; Function output parameter 3
+outparm4          equ  core1.top + 22  ; Function output parameter 4
+outparm5          equ  core1.top + 24  ; Function output parameter 5
+outparm6          equ  core1.top + 26  ; Function output parameter 6
+outparm7          equ  core1.top + 28  ; Function output parameter 7
+outparm8          equ  core1.top + 30  ; Function output parameter 8
+keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
+keycode1          equ  core1.top + 34  ; Current key scanned
+keycode2          equ  core1.top + 36  ; Previous key scanned
+unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
+core1.free        equ  core1.top + 44  ; End of structure
 *--------------------------------------------------------------
-* Stevie Editor shared structures     @>a000-a0ff   (256 bytes)
+* Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
-tv.top            equ  >a000           ; Structure begin
+core2.top         equ  >a100           ; Structure begin
+timers            equ  core2.top       ; Timer table
+rambuf            equ  core2.top + 64  ; RAM workbuffer
+ramsat            equ  core2.top + 128 ; Sprite Attribute Table in RAM
+core2.free        equ  core2.top + 160 ; End of structure
+*--------------------------------------------------------------
+* Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
+*--------------------------------------------------------------
+tv.top            equ  >a200           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
 tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
 tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
@@ -207,9 +175,9 @@ tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.msg      equ  tv.top + 42     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 202    ; End of structure
 *--------------------------------------------------------------
-* Frame buffer structure              @>a100-a1ff   (256 bytes)
+* Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
-fb.struct         equ  >a100           ; Structure begin
+fb.struct         equ  >a300           ; Structure begin
 fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
 fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
 fb.topline        equ  fb.struct + 4   ; Top line in frame buffer (matching
@@ -230,55 +198,6 @@ fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
 fb.ruler.sit      equ  fb.struct + 30  ; 80 char ruler  (no length-prefix!)
 fb.ruler.tat      equ  fb.struct + 110 ; 80 char colors (no length-prefix!)
 fb.free           equ  fb.struct + 190 ; End of structure
-*--------------------------------------------------------------
-* Editor buffer structure             @>a200-a2ff   (256 bytes)
-*--------------------------------------------------------------
-edb.struct        equ  >a200           ; Begin structure
-edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
-edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
-edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
-edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
-edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
-edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset) 
-edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
-edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
-                                       ; with current filename.
-edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
-                                       ; with current file type.                                    
-edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
-edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
-                                       ; for filename, but not always used.
-edb.free          equ  edb.struct + 105; End of structure
-*--------------------------------------------------------------
-* Command buffer structure            @>a300-a3ff   (256 bytes)
-*--------------------------------------------------------------
-cmdb.struct       equ  >a300           ; Command Buffer structure
-cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
-cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
-cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
-cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
-cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
-cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
-cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
-cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
-cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
-cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
-cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
-cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
-cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
-cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
-cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
-cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
-cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
-cmdb.free         equ  cmdb.struct +121; End of structure
 *--------------------------------------------------------------
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
@@ -321,17 +240,67 @@ fh.free           equ  fh.struct +172  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
-* Index structure                     @>a500-a5ff   (256 bytes)
+* Editor buffer structure             @>a500-a5ff   (256 bytes)
 *--------------------------------------------------------------
-idx.struct        equ  >a500           ; stevie index structure
+edb.struct        equ  >a500           ; Begin structure
+edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
+edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
+edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
+edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
+edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
+edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
+edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset) 
+edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
+edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
+                                       ; with current filename.
+edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
+                                       ; with current file type.                                    
+edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
+edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
+edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
+                                       ; for filename, but not always used.
+edb.free          equ  edb.struct + 105; End of structure
+*--------------------------------------------------------------
+* Index structure                     @>a600-a6ff   (256 bytes)
+*--------------------------------------------------------------
+idx.struct        equ  >a600           ; stevie index structure
 idx.sams.page     equ  idx.struct      ; Current SAMS page
 idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
 idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
+idx.free          equ  idx.struct + 6  ; End of structure
 *--------------------------------------------------------------
-* Frame buffer                        @>a600-afff  (2560 bytes)
+* Command buffer structure            @>a700-a7ff   (256 bytes)
 *--------------------------------------------------------------
-fb.top            equ  >a600           ; Frame buffer (80x30)
-fb.size           equ  80*30           ; Frame buffer size                                     
+cmdb.struct       equ  >a700           ; Command Buffer structure
+cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
+cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
+cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
+cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
+cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
+cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
+cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
+cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
+cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
+cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
+cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
+cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
+cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
+cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
+cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
+cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
+cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
+cmdb.free         equ  cmdb.struct +121; End of structure
+*--------------------------------------------------------------
+* Farjump return stack                @>af00-afff   (256 bytes)
+*--------------------------------------------------------------
+fj.bottom         equ  >b000           ; Return stack for trampoline function
+                                       ; Grows downwards from high to low.
 *--------------------------------------------------------------
 * Index                               @>b000-bfff  (4096 bytes)
 *--------------------------------------------------------------
@@ -343,15 +312,16 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* Command history buffer              @>d000-dfff  (4096 bytes)
+* Frame buffer                        @>d000-dfff  (4096 bytes)
 *--------------------------------------------------------------
-cmdb.top          equ  >d000           ; Top of command history buffer
+fb.top            equ  >d000           ; Frame buffer (80x30)
+fb.size           equ  80*30           ; Frame buffer size                                     
+*--------------------------------------------------------------
+* Command buffer history              @>e000-efff  (4096 bytes)
+*--------------------------------------------------------------
+cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
-* Heap                                @>e000-ebff  (3072 bytes)
+* Heap                                @>f000-ffff  (4096 bytes)
 *--------------------------------------------------------------
-heap.top          equ  >e000           ; Top of heap
-*--------------------------------------------------------------
-* Farjump return stack                @>ec00-efff  (1024 bytes)
-*--------------------------------------------------------------
-fj.bottom         equ  >f000           ; Stack grows downwards
+heap.top          equ  >f000           ; Top of heap

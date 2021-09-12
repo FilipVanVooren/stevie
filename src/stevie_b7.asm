@@ -18,10 +18,10 @@
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************
-sp2.stktop    equ >3000             ; SP2 stack starts at 2ffe-2fff and
-                                    ; grows downwards to >2000
+sp2.stktop    equ >af00             ; SP2 stack >ae00 - >aeff
+                                    ; grows from high to low.
 ***************************************************************
-* BANK 5
+* BANK 7
 ********|*****|*********************|**************************
 bankid  equ   bank7.rom             ; Set bank identifier to current bank
         aorg  >6000

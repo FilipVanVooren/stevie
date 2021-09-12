@@ -15,14 +15,11 @@ skip_cpu_rle_compress     equ  1       ; Skip CPU RLE compression
 skip_cpu_rle_decompress   equ  1       ; Skip CPU RLE decompression
 skip_vdp_rle_decompress   equ  1       ; Skip VDP RLE decompression
 skip_vdp_px2yx_calc       equ  1       ; Skip pixel to YX calculation
-skip_sound_player         equ  1       ; Skip inclusion of sound player code
 skip_speech_detection     equ  1       ; Skip speech synthesizer detection
 skip_speech_player        equ  1       ; Skip inclusion of speech player code
 skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
-skip_mem_paging           equ  1       ; Skip support for memory paging 
-
 *--------------------------------------------------------------
 * Classic99 F18a 24x80, no FG99 advanced mode
 *--------------------------------------------------------------
