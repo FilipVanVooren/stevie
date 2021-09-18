@@ -178,15 +178,10 @@ dialog.menu:
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
-!       bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.6            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
+!       mov   @dialog.menu.vector,@parm1        
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.menu.vector:        
+        data  vec.6
 
 
 ***************************************************************

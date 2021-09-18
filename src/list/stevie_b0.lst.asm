@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210918-3050429
+0009               * File: stevie_b0.asm               ; Version 210918-3059593
 0010               *
 0011               * Bank 0 "Jill"
 0012               *
@@ -51,7 +51,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0034               ; device.f18a             equ  0       ; F18a GPU
 0035               ; device.9938             equ  1       ; 9938 GPU
 0036               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -79,7 +79,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -403,7 +403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0325               * Heap                                @>f000-ffff  (4096 bytes)
 0326               *--------------------------------------------------------------
 0327      F000     heap.top          equ  >f000           ; Top of heap
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 **** **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -525,7 +525,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0117               * Special keys
 0118               *---------------------------------------------------------------
 0119      000D     key.enter     equ >0d               ; enter
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -580,7 +580,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1354,7 +1354,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1842             byte  24
-0260 624D ....             text  'Build-ID  210918-3050429'
+0260 624D ....             text  'Build-ID  210918-3059593'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5767,7 +5767,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7104 0040 
 0368 7106 0460  28         b     @main                 ; Give control to main program
      7108 3774 
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0087                       copy  "ram.resident.asm"
 **** **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7074,7 +7074,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0015               
 0016               txt.about.build
 0017 755A 4C42             byte  76
-0018 755B ....             text  'Build: 210918-3050429 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0018 755B ....             text  'Build: 210918-3059593 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 0019                       even
 0020               
 0021               
@@ -7270,7 +7270,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0210 77E1 ....             text  'Color scheme:'
 0211                       even
 0212               
-**** **** ****     > stevie_b0.asm.3050429
+**** **** ****     > stevie_b0.asm.3059593
 0088                       ;------------------------------------------------------
 0089                       ; Activate bank 1 and branch to >6046
 0090                       ;------------------------------------------------------
