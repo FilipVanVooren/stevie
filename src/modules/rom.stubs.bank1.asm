@@ -99,25 +99,7 @@ fm.browse.fname.suffix:
         b     *r11                  ; Return to caller
 
 
-**************************************************************
-* Stub for "fm.fastmode"
-* bank2 vec.4
-********|*****|*********************|**************************
-fm.fastmode:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 2
-        ;------------------------------------------------------        
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2.rom        ; | i  p0 = bank address
-              data vec.4            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+
 
 
 ***************************************************************
@@ -221,13 +203,57 @@ dialog.basic.vector:
 
 ***************************************************************
 * Stub for "run.tibasic"
-* bank3 vec.24
+* bank3 vec.10
 ********|*****|*********************|**************************
 run.tibasic:
         mov   @run.tibasic.vector,@parm1
         jmp   _trampoline.bank3.ret ; Longjump
 run.tibasic.vector:
+        data  vec.10
+
+
+***************************************************************
+* Stub for "pane.show_hint"
+* bank3 vec.18
+********|*****|*********************|**************************
+pane.show_hint:
+        mov   @pane.show_hint,@parm1
+        jmp   _trampoline.bank3.ret ; Longjump
+pane.show_hint.vector:
+        data  vec.18
+
+
+***************************************************************
+* Stub for "pane.cmdb.show"
+* bank3 vec.20
+********|*****|*********************|**************************
+pane.cmdb.show:
+        mov   @pane.cmdb.show.vector,@parm1
+        jmp   _trampoline.bank3.ret ; Longjump
+pane.cmdb.show.vector:
         data  vec.20
+
+
+***************************************************************
+* Stub for "pane.cmdb.hide"
+* bank3 vec.21
+********|*****|*********************|**************************
+pane.cmdb.hide:
+        mov   @pane.cmdb.hide.vector,@parm1
+        jmp   _trampoline.bank3.ret ; Longjump
+pane.cmdb.hide.vector:
+        data  vec.21
+
+
+***************************************************************
+* Stub for "pane.cmdb.draw"
+* bank3 vec.22
+********|*****|*********************|**************************
+pane.cmdb.draw:
+        mov   @pane.cmdb.draw.vector,@parm1
+        jmp   _trampoline.bank3.ret ; Longjump
+pane.cmdb.draw.vector:
+        data  vec.22
 
 
 ***************************************************************
@@ -272,6 +298,17 @@ cmdb.cmd.addhist:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.addhist.vector:
         data  vec.27
+
+
+**************************************************************
+* Stub for "fm.fastmode"
+* bank3 vec.32
+********|*****|*********************|**************************
+fm.fastmode:
+        mov   @fm.fastmode.vector,@parm1
+        jmp   _trampoline.bank3.ret ; Longjump
+fm.fastmode.vector:
+        data  vec.32
 
 
 ***************************************************************

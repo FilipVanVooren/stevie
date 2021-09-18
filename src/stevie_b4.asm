@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -65,7 +66,7 @@ main:
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer        
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT        
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank4.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------

@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -43,7 +44,7 @@ main:
         copy  "%%spectra2%%/runlib.asm"
         copy  "data.constants.asm"  ; Need some constants for SAMS layout
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank7.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------

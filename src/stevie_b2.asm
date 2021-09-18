@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -68,9 +69,8 @@ main:
         copy  "fm.save.asm"         ; Save DV80 file from editor buffer
         copy  "fm.callbacks.asm"    ; Callbacks for file operations
         copy  "fm.browse.asm"       ; File manager browse support routines
-        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation        
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank2.asm" ; Stubs for functions in other banks  
         ;-----------------------------------------------------------------------

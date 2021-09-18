@@ -9,11 +9,12 @@
 * File: stevie_b3.asm               ; Version %%build_date%%
 *
 * Bank 3 "John"
-*
+* Dialogs & Command Buffer logic
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -71,17 +72,29 @@ main:
         copy  "dialog.basic.asm"    ; Dialog "Basic"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
-        ;-----------------------------------------------------------------------
+        ;-----------------------------------------------------------------------        
+        copy  "pane.utils.hint.asm" ; Show hint in pane        
+        copy  "pane.cmdb.show.asm"  ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
         copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
-        copy  "cmdb.cmd.asm"        ; Command line handling        
+        copy  "cmdb.cmd.asm"        ; Command line handling 
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Toggle fastmode in Load/Save DV80 dialogs
+        ;-----------------------------------------------------------------------        
+        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation 
+        ;-----------------------------------------------------------------------
+        ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks 
         ;-----------------------------------------------------------------------
         ; Basic interpreter handling
         ;-----------------------------------------------------------------------         
         copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter        
+        ;-----------------------------------------------------------------------
+        ; Data
+        ;-----------------------------------------------------------------------         
+        copy  "data.strings.bank3.asm" ; Strings used in bank 3
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 

@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -148,7 +149,6 @@ main:
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
         copy  "pane.utils.asm"         ; Pane utility functions
-        copy  "pane.utils.hint.asm"    ; Show hint in pane
         copy  "pane.utils.colorscheme.asm" 
                                        ; Colorscheme handling in panes 
         copy  "pane.cursor.asm"        ; Cursor utility functions        
@@ -156,15 +156,11 @@ main:
         ; Screen panes
         ;-----------------------------------------------------------------------   
         copy  "colors.line.set.asm"    ; Set color combination for line
-        copy  "pane.cmdb.asm"          ; Command buffer 
-        copy  "pane.cmdb.show.asm"     ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"     ; Hide command buffer pane
-        copy  "pane.cmdb.draw.asm"     ; Draw command buffer pane contents
         copy  "pane.topline.asm"       ; Top line
         copy  "pane.errline.asm"       ; Error line
         copy  "pane.botline.asm"       ; Bottom line
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank1.asm"    ; Stubs for functions in other banks
         ;-----------------------------------------------------------------------

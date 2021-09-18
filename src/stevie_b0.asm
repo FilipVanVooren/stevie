@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************
 * Spectra2 core configuration

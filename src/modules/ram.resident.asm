@@ -15,4 +15,3 @@
         copy  "mem.asm"                ; Memory Management (SAMS)
         copy  "data.constants.asm"     ; Data Constants
         copy  "data.strings.asm"       ; Data segment - Strings
-        copy  "data.keymap.keys.asm"   ; Data segment - Keyboard mapping    

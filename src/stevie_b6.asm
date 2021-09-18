@@ -14,6 +14,7 @@
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
 * Spectra2 core configuration
@@ -56,7 +57,7 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Stubs using trampoline
+        ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank6.asm" ; Stubs for functions in other banks      
         ;-----------------------------------------------------------------------

@@ -30,7 +30,7 @@ vec.23  data  cpu.crash             ;
 vec.24  data  cpu.crash             ; 
 vec.25  data  cpu.crash             ; 
 vec.26  data  cpu.crash             ; 
-vec.27  data  cpu.crash             ; 
+vec.27  data  pane.errline.hide     ; 
 vec.28  data  pane.cursor.blink     ; 
 vec.29  data  pane.cursor.hide      ; 
 vec.30  data  pane.errline.show     ;
