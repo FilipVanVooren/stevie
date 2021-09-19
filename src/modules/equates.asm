@@ -297,6 +297,10 @@ cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
 cmdb.free         equ  cmdb.struct +121; End of structure
 *--------------------------------------------------------------
+* Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
+*--------------------------------------------------------------
+scrpad.copy       equ  >ad00           ; Copy of Stevie scratchpad memory
+*--------------------------------------------------------------
 * Farjump return stack                @>af00-afff   (256 bytes)
 *--------------------------------------------------------------
 fj.bottom         equ  >b000           ; Return stack for trampoline function

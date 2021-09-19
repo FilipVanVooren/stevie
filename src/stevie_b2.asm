@@ -9,7 +9,7 @@
 * File: stevie_b2.asm               ; Version %%build_date%%
 *
 * Bank 2 "Jacky"
-*
+* File load/save operations
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        

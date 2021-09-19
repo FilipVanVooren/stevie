@@ -9,7 +9,7 @@
 * File: stevie_b1.asm               ; Version %%build_date%%
 *
 * Bank 1 "James"
-*
+* Editor core
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        

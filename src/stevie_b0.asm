@@ -9,7 +9,7 @@
 * File: stevie_b0.asm               ; Version %%build_date%%
 *
 * Bank 0 "Jill"
-*
+* Setup resident SP2/Stevie modules and start SP2 kernel
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        

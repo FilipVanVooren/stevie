@@ -103,29 +103,29 @@ fm.browse.fname.suffix:
 
 
 ***************************************************************
-* Stub for "About dialog"
+* Stub for dialog "About"
 * bank3 vec.1
 ********|*****|*********************|**************************
 edkey.action.about:
         mov   @edkey.action.about.vector,@parm1
-        jmp   _trampoline.bank3     ; Show dialog        
+        b     @_trampoline.bank3    ; Show dialog        
 edkey.action.about.vector:        
         data  vec.1
 
 
 ***************************************************************
-* Stub for "Load DV80 file"
+* Stub for dialog "Load DV80 file"
 * bank3 vec.2
 ********|*****|*********************|**************************
 dialog.load:
         mov   @dialog.load.vector,@parm1
-        jmp   _trampoline.bank3     ; Show dialog
+        b     @_trampoline.bank3    ; Show dialog
 dialog.load.vector:
         data  vec.2
 
 
 ***************************************************************
-* Stub for "Save DV80 file"
+* Stub for dialog "Save DV80 file"
 * bank3 vec.3
 ********|*****|*********************|**************************
 dialog.save:
@@ -136,7 +136,7 @@ dialog.save.vector:
 
 
 ***************************************************************
-* Stub for "Unsaved Changes"
+* Stub for dialog "Unsaved Changes"
 * bank3 vec.4
 ********|*****|*********************|**************************
 dialog.unsaved:
@@ -148,7 +148,7 @@ dialog.unsaved.vector:
 
 
 ***************************************************************
-* Stub for Dialog "File dialog"
+* Stub for dialog "File"
 * bank3 vec.5
 ********|*****|*********************|**************************
 dialog.file:
@@ -159,7 +159,7 @@ dialog.file.vector:
 
 
 ***************************************************************
-* Stub for Dialog "Stevie Menu dialog"
+* Stub for dialog "Stevie Menu"
 * bank3 vec.6
 ********|*****|*********************|**************************
 dialog.menu:
@@ -185,7 +185,7 @@ dialog.menu.vector:
 
 
 ***************************************************************
-* Stub for Dialog "Basic dialog"
+* Stub for dialog "Basic"
 * bank3 vec.7
 ********|*****|*********************|**************************
 dialog.basic:
@@ -201,10 +201,24 @@ dialog.basic.vector:
 * bank3 vec.10
 ********|*****|*********************|**************************
 run.tibasic:
-        mov   @run.tibasic.vector,@parm1
-        jmp   _trampoline.bank3.ret ; Longjump
-run.tibasic.vector:
-        data  vec.10
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 3
+        ;------------------------------------------------------             
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data vec.10           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+
+        seto  @fb.dirty             ; Set dirty flag (trigger screen update)
+        seto  @fb.status.dirty      ; Trigger refresh of status lines        
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
 
 
 ***************************************************************
@@ -396,7 +410,7 @@ fb.vdpdump:
 _trampoline.bank3:
         bl    @pane.cursor.hide     ; Hide cursor
         ;------------------------------------------------------
-        ; Show dialog
+        ; Call routine in specified bank
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
@@ -417,7 +431,7 @@ _trampoline.bank3.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Show dialog
+        ; Call routine in specified bank
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address

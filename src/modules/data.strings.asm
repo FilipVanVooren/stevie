@@ -5,12 +5,6 @@
 *                       Strings
 ***************************************************************
 
-;--------------------------------------------------------------
-; Strings for about pane
-;--------------------------------------------------------------
-txt.stevie         #string 'STEVIE 1.1S'
-txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
-
 txt.delim          #string ','
 txt.bottom         #string '  BOT'
 txt.ovrwrite       #string 'OVR'

@@ -9,7 +9,7 @@
 * File: stevie_b4.asm               ; Version %%build_date%%
 *
 * Bank 4 "Janine"
-*
+* Framebuffer handling
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        

@@ -9,7 +9,7 @@
 * File: stevie_b6.asm               ; Version %%build_date%%
 *
 * Bank 6 "Jenifer"
-*
+* Empty
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        

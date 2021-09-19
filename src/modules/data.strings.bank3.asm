@@ -58,12 +58,15 @@ txt.keys.about     byte 33
                    byte 14,15
                    text '=Alpha Lock down'
 
+txt.stevie         #string 'STEVIE 1.1U'
+txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+
 
 ;--------------------------------------------------------------
 ; Dialog "Menu"
 ;--------------------------------------------------------------
 txt.head.menu      byte 16,1,3
-                   text ' Stevie 1.1T '
+                   text ' Stevie 1.1U '
                    byte 2
 
 txt.info.menu      #string 'File / Basic / Help / Quit'

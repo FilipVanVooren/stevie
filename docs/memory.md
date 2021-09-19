@@ -35,7 +35,7 @@ First free address has equate <struct>.free
 | >aa00         |  256  |      |                | **free**                                        |
 | >ab00         |  256  |      |                | **free**                                        |
 | >ac00         |  256  |      |                | **free**                                        |
-| >ad00         |  256  |      |                | **free**                                        |
+| >ad00         |  256  |      | pgout          | Paged-out scratchpad memory >8300-83ff          |
 | >ae00         |  256  |      | stack          | Value/Return stack, downwards from >af00        |
 | >af00         |  256  |      | fj.bottom      | Farjump return stack, downwards from >b000      |
 

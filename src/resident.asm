@@ -6,15 +6,16 @@
 *
 *              (c)2018-2021 // Filip van Vooren
 ***************************************************************
-* File: stevie_b7.asm               ; Version %%build_date%%
+* File: reident.asm                 ; Version %%build_date%%
 *
-* Bank 7 "Jonas"
-* Empty
+* Only for debugging
+* Generate list file with contents of resident modules in
+* LOW MEMEXP >2000 - >3fff
 ***************************************************************
-        copy  "rom.build.asm"       ; Cartridge build options        
+        copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
-        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************
 * Spectra2 core configuration
@@ -22,46 +23,46 @@
 sp2.stktop    equ >af00             ; SP2 stack >ae00 - >aeff
                                     ; grows from high to low.
 ***************************************************************
-* BANK 7
+* BANK 0
 ********|*****|*********************|**************************
-bankid  equ   bank7.rom             ; Set bank identifier to current bank
+bankid  equ   bank0.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>7fff           ; Save bank
-        copy  "rom.header.asm"      ; Include cartridge header        
+        copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
-* Step 1: Switch to bank 0 (uniform code accross all banks)
+* Code data: Relocated code
 ********|*****|*********************|**************************
-        aorg  kickstart.code1       ; >6040
-        clr   @bank0.rom            ; Switch to bank 0 "Jill"
-***************************************************************
-* Step 2: Copy spectra2 library into cartridge space
-********|*****|*********************|**************************
-main:   
-        aorg  kickstart.code2       ; >6046
-        bl    @cpu.crash            ; Should never get here
-
+reloc.resident:
+        ;------------------------------------------------------
+        ; Resident libraries
+        ;------------------------------------------------------
+        aorg  >2000                 ; Relocate to >2000
         copy  "%%spectra2%%/runlib.asm"
-        copy  "data.constants.asm"  ; Need some constants for SAMS layout
-        ;-----------------------------------------------------------------------
-        ; Stubs
-        ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank7.asm" ; Stubs for functions in other banks      
-        ;-----------------------------------------------------------------------
-        ; Bank full check
-        ;----------------------------------------------------------------------- 
-        .ifgt $, >7fbf
-              .error 'Aborted. Bank 7 cartridge program too large!'
-        .endif
-        ;-----------------------------------------------------------------------
-        ; Vector table
-        ;----------------------------------------------------------------------- 
-        aorg  >7fc0
-        copy  "rom.vectors.bank7.asm"
-                                    ; Vector table bank 7
+        copy  "ram.resident.asm"        
+        ;------------------------------------------------------
+        ; Activate bank 1 and branch to >6046
+        ;------------------------------------------------------
+main:        
+        clr   @bank1.rom            ; Activate bank 1 "James" ROM
 
+        .ifeq device.fg99.mode.adv,1
+        clr   @bank1.ram            ; Activate bank 1 "James" RAM
+        .endif
+
+        b     @kickstart.code2      ; Jump to entry routine
+        ;------------------------------------------------------
+        ; Memory full check
+        ;------------------------------------------------------
+        .print "***** Relocated libraries @ >2000 - ", $, "(dec)"
+
+        .ifgt $, >3fff
+              .error '***** Aborted. Bank 0 cartridge program too large!'
+        .else
+              data $                ; Bank 0 ROM size OK.
+        .endif     
 *--------------------------------------------------------------
-* Video mode configuration
+* Video mode configuration for SP2
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
@@ -70,5 +71,6 @@ spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table
+sprsat  equ   >2180                 ; VDP sprite attribute table        
 sprpdt  equ   >2800                 ; VDP sprite pattern table
+

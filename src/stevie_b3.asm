@@ -9,7 +9,7 @@
 * File: stevie_b3.asm               ; Version %%build_date%%
 *
 * Bank 3 "John"
-* Dialogs & Command Buffer logic
+* Dialogs & Command Buffer pane
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
