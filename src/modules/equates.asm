@@ -100,6 +100,7 @@ vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
                                        ; VDP TAT address of 1st CMDB row 
+vdp.sit.base              equ  >0000   ; VDP SIT base address                                       
 vdp.sit.size              equ  (pane.botrow + 1) * 80
                                        ; VDP SIT size 80 columns, 24/30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
@@ -325,6 +326,11 @@ fb.size           equ  80*30           ; Frame buffer size
 *--------------------------------------------------------------
 cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
+*--------------------------------------------------------------
+* Auxiliary buffer (overlay cmdb!)    @>e000-efff  (4096 bytes)
+*--------------------------------------------------------------
+auxbuf.top        equ  >e000           ; Top of auxiliary buffer
+auxbuf.size       equ  4096            ; Size of auxiliary buffer
 *--------------------------------------------------------------
 * Heap                                @>f000-ffff  (4096 bytes)
 *--------------------------------------------------------------

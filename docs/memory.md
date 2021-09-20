@@ -62,11 +62,12 @@ First free address has equate <struct>.free
 | >d960 - >dfff | 1696  |      |                | **free**                                        |
 
 
-## >e000  Command buffer history
+## >e000  Command buffer / Auxilary buffer
 
 | Address       | Bytes | Size | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
 | >e000 - >efff | 4096  |      | cmdb.top       | Command buffer history                          |
+| >e000 - >efff | 4096  |      | auxbuf.top     | Auxilary buffer                                 |
 
 
 ## >f000  Heap

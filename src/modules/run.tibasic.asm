@@ -21,6 +21,10 @@ run.tibasic:
         ;-------------------------------------------------------
         bl    @scroff               ; Turn off screen
 
+        bl    @cpyv2m
+              data vdp.sit.base,auxbuf.top,vdp.sit.size
+                                    ; Dump SIT to auxiliary buffer in RAM
+
         bl    @f18rst               ; Reset and lock the F18A
 
         bl    @vidtab               ; Load video mode table into VDP
@@ -67,10 +71,18 @@ run.tibasic:
 run.tibasic.return:    
         lwpi  >ad00                 ; Activate Stevie workspace        
 
-        bl    @cpu.scrpad.pgin
-              data scrpad.copy
+        bl    @cpu.scrpad.pgin      ; Page in copy of scratch pad memory and
+              data scrpad.copy      ; activate workspace at >8300
+
+        bl    @film
+              data rambuf,>00,20    ; Clear crunch buffer              
 
         bl    @scroff               ; Turn screen off
+
+        bl    @cpym2v
+              data vdp.sit.base,auxbuf.top,vdp.sit.size
+                                    ; Restore SIT from VDP dump
+
         bl    @f18unl               ; Unlock the F18a        
         .ifeq device.f18a,1
 

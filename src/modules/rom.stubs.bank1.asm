@@ -130,7 +130,7 @@ dialog.load.vector:
 ********|*****|*********************|**************************
 dialog.save:
         mov   @dialog.save.vector,@parm1
-        jmp   _trampoline.bank3     ; Show dialog
+        b     @_trampoline.bank3    ; Show dialog
 dialog.save.vector:        
         data  vec.3
 
@@ -210,9 +210,6 @@ run.tibasic:
               data bank3.rom        ; | i  p0 = bank address
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
-
-        seto  @fb.dirty             ; Set dirty flag (trigger screen update)
-        seto  @fb.status.dirty      ; Trigger refresh of status lines        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
