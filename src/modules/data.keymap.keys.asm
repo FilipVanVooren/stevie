@@ -113,6 +113,7 @@ key.ctrl.z    equ >9a               ; ctrl + z
 key.ctrl.dot    equ >9b             ; ctrl + .
 key.ctrl.comma  equ >80             ; ctrl + ,
 key.ctrl.plus   equ >9d             ; ctrl + +
+key.ctrl.slash  equ >bb             ; ctrl + /
 *---------------------------------------------------------------
 * Special keys
 *---------------------------------------------------------------

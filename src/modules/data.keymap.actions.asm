@@ -114,6 +114,9 @@ keymap_actions.editor:
 
         byte  key.ctrl.dot, pane.focus.fb
         data  edkey.action.fb.fname.inc.load
+
+        byte  key.ctrl.slash, pane.focus.fb
+        data  run.tibasic
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

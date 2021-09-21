@@ -88,7 +88,7 @@ dialog.about.content:
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.about.help.part1
                                     ; Pointer to string
-        li    tmp2,22               ; Set loop counter
+        li    tmp2,23               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -147,6 +147,7 @@ dialog.about.help.part1:
         #string '   Ctrl s  (^s)  Save file'
         #string '   Ctrl v  (^v)  Set M1/M2 marker'
         #string '   Ctrl z  (^z)  Cycle color schemes'
+        #string '   ctrl /  (^/)  TI Basic (type EXIT to return)'
         
 dialog.about.help.part2:
         #string '   Ctrl ,  (^,)  Load previous file'

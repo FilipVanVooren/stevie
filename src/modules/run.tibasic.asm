@@ -122,6 +122,9 @@ run.tibasic.83fe:
 
 
 
+
+; TODO slow down hotkey check, messes up basic keyboard scan.
+
 ***************************************************************
 * isr
 * Interrupt Service Routine for returning to Stevie
@@ -136,6 +139,7 @@ run.tibasic.83fe:
 ********|*****|*********************|**************************
 isr:
         mov   r7,@rambuf+20         ; Backup R7
+        mov   r12,@rambuf+22        ; Backup R12
         ;-------------------------------------------------------
         ; Read TI Basic crunch buffer VDP >320
         ;-------------------------------------------------------
@@ -145,8 +149,31 @@ isr:
         swpb  r7                    ; | inlined @vdra call
         movb  r7,@vdpa              ; /         
         ;-------------------------------------------------------
+        ; Scan the keyboard for hot key - part 1 "CTRL" key
+        ;-------------------------------------------------------      
+        clr   r7                    ; Test column 0:  = space enter ..
+        li    r12,>0024             ; Address for column selection
+        ldcr  r7,3                  ; Select column 0
+        li    r12,>0006             ; Address for row selection
+        tb    9                     ; Copy bit on cru to status register EQ bit
+                                    ; \ Bit off = Key pressed (!)
+                                    ; / Bit on  = Key depressed
+        jeq   isr.crunchbuf         ; ctrl key depressed,skip to crunbchuf check
+        ;-------------------------------------------------------
+        ; Scan the keyboard for hot key - part 2 "/" key
+        ;-------------------------------------------------------
+        li    r7,8                  ; Test column 5:  / ; P 0 1 A Q Z
+        li    r12,>0024             ; Address for column selection
+        ldcr  r7,3                  ; Select column 0
+        li    r12,>0006             ; Address for for row selection
+        tb    3                     ; Copy bit on cru to status register EQ bit
+                                    ; \ Bit off = Key pressed (!)
+                                    ; / Bit on  = Key depressed
+        jne   run.tibasic.return    ; '/' key pressed, return to Stevie
+        ;-------------------------------------------------------
         ; Copy TI Basic crunch buffer to Stevie ram buffer
         ;-------------------------------------------------------
+isr.crunchbuf:        
         li    r7,rambuf
         movb  @vdpr,*r7+            ; Read byte 1
         movb  @vdpr,*r7+            ; Read byte 2
@@ -167,6 +194,7 @@ isr:
         ; Return from ISR
         ;-------------------------------------------------------
 isr.exit:
+        mov   @rambuf+22,r12        ; Restore R12
         mov   @rambuf+20,r7         ; Restore R7
         b     *r11                  ; Return from ISR
 data.isr.exit:
