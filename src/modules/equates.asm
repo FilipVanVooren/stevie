@@ -327,11 +327,6 @@ fb.size           equ  80*30           ; Frame buffer size
 cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 *--------------------------------------------------------------
-* Auxiliary buffer (overlay cmdb!)    @>e000-efff  (4096 bytes)
-*--------------------------------------------------------------
-auxbuf.top        equ  >e000           ; Top of auxiliary buffer
-auxbuf.size       equ  4096            ; Size of auxiliary buffer
-*--------------------------------------------------------------
 * Heap                                @>f000-ffff  (4096 bytes)
 *--------------------------------------------------------------
 heap.top          equ  >f000           ; Top of heap

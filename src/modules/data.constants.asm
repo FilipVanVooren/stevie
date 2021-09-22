@@ -60,6 +60,19 @@ mem.sams.layout.data:
         data  >e000,>000e           ; >e000-efff, SAMS page >0e
         data  >f000,>000f           ; >f000-ffff, SAMS page >0f        
 
+***************************************************************
+* SAMS page layout table for TI Basic (16 words)
+*--------------------------------------------------------------
+mem.sams.tibasic:
+        data  >2000,>0002           ; >2000-2fff, SAMS page >02
+        data  >3000,>0003           ; >3000-3fff, SAMS page >03
+        data  >a000,>000a           ; >a000-afff, SAMS page >04
+        data  >b000,>0004           ; >b000-bfff, SAMS page >05                 
+        data  >c000,>0005           ; >c000-cfff, SAMS page >06                                
+        data  >d000,>0006           ; >d000-dfff, SAMS page >07
+        data  >e000,>0007           ; >e000-efff, SAMS page >08
+        data  >f000,>0008           ; >f000-ffff, SAMS page >09
+
 
 
 

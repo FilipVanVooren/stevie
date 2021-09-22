@@ -17,13 +17,23 @@ run.tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
+        ; Setup SAMS for TI Basic
+        ;-------------------------------------------------------
+        bl    @sams.layout.copy     ; Backup Stevie SAMS page layout
+              data tv.sams.2000     ; \ @i = target address of 8 words table
+                                    ; /      that contains SAMS layout
+
+        bl    @sams.layout          
+              data mem.sams.tibasic ; Load SAMS page layout for TI Basic
+
+        bl    @cpyv2m
+              data vdp.sit.base,>f000,vdp.sit.size
+                                    ; Dump Stevie SIT 80x30 to RAM buffer
+                                    ; >f000 (SAMS page #08)
+        ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x30)
         ;-------------------------------------------------------
         bl    @scroff               ; Turn off screen
-
-        bl    @cpyv2m
-              data vdp.sit.base,auxbuf.top,vdp.sit.size
-                                    ; Dump SIT to auxiliary buffer in RAM
 
         bl    @f18rst               ; Reset and lock the F18A
 
@@ -69,20 +79,52 @@ run.tibasic:
         ; Return from TI Basic (got here from the ISR)
         ;-------------------------------------------------------
 run.tibasic.return:    
-        lwpi  >ad00                 ; Activate Stevie workspace        
+        lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
 
         bl    @cpu.scrpad.pgin      ; Page in copy of scratch pad memory and
               data scrpad.copy      ; activate workspace at >8300
 
-        bl    @film
-              data rambuf,>00,20    ; Clear crunch buffer              
-
         bl    @scroff               ; Turn screen off
+        ;-------------------------------------------------------
+        ; Cleanup after return from TI Basic
+        ;-------------------------------------------------------
+        bl    @cpyv2m
+              data >0000,>b000,16384
+                                    ; Dump TI Basic 16K VDP memory to
+                                    ; RAM buffer >b000->ffff (SAMS pages #04-07)
+
+        bl    @film
+              data rambuf,>00,20    ; Clear crunch buffer copy in RAM
 
         bl    @cpym2v
-              data vdp.sit.base,auxbuf.top,vdp.sit.size
-                                    ; Restore SIT from VDP dump
+              data vdp.sit.base,>f000,vdp.sit.size
+                                    ; Dump SIT to VDP from RAM buffer
+                                    ; >f000 (SAMS page #08)                                    
+        ;-------------------------------------------------------
+        ; Restore SAMS memory layout for Stevie
+        ;-------------------------------------------------------
+        mov   @tv.sams.b000,tmp0
+        li    tmp1,>b000
+        bl    @xsams.page.set       ; Set sams page for address >b000
 
+        mov   @tv.sams.c000,tmp0
+        li    tmp1,>c000
+        bl    @xsams.page.set       ; Set sams page for address >c000
+
+        mov   @tv.sams.d000,tmp0
+        li    tmp1,>d000
+        bl    @xsams.page.set       ; Set sams page for address >d000
+
+        mov   @tv.sams.e000,tmp0
+        li    tmp1,>e000
+        bl    @xsams.page.set       ; Set sams page for address >e000 
+
+        mov   @tv.sams.f000,tmp0
+        li    tmp1,>f000
+        bl    @xsams.page.set       ; Set sams page for address >f000
+        ;-------------------------------------------------------
+        ; Setup F18a 80x30 mode again
+        ;-------------------------------------------------------
         bl    @f18unl               ; Unlock the F18a        
         .ifeq device.f18a,1
 
@@ -105,8 +147,6 @@ run.tibasic.return:
 run.tibasic.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
-
-
 
         ;-------------------------------------------------------
         ; Required values for scratchpad
@@ -141,6 +181,13 @@ isr:
         mov   r7,@rambuf+20         ; Backup R7
         mov   r12,@rambuf+22        ; Backup R12
         ;-------------------------------------------------------
+        ; Hotkey pressed?
+        ;-------------------------------------------------------
+        mov   @>8374,r7             ; Get keyboard scancode
+        andi  r7,>00ff              ; LSB only
+        ci    r7,>bb                ; Hotkey ctrl + '/' pressed?
+        jeq   run.tibasic.return    ; Yes, return to Stevie
+        ;-------------------------------------------------------
         ; Read TI Basic crunch buffer VDP >320
         ;-------------------------------------------------------
         li    r7,>0320
@@ -148,28 +195,6 @@ isr:
         movb  r7,@vdpa              ; | Set VDP read address
         swpb  r7                    ; | inlined @vdra call
         movb  r7,@vdpa              ; /         
-        ;-------------------------------------------------------
-        ; Scan the keyboard for hot key - part 1 "CTRL" key
-        ;-------------------------------------------------------      
-        clr   r7                    ; Test column 0:  = space enter ..
-        li    r12,>0024             ; Address for column selection
-        ldcr  r7,3                  ; Select column 0
-        li    r12,>0006             ; Address for row selection
-        tb    9                     ; Copy bit on cru to status register EQ bit
-                                    ; \ Bit off = Key pressed (!)
-                                    ; / Bit on  = Key depressed
-        jeq   isr.crunchbuf         ; ctrl key depressed,skip to crunbchuf check
-        ;-------------------------------------------------------
-        ; Scan the keyboard for hot key - part 2 "/" key
-        ;-------------------------------------------------------
-        li    r7,8                  ; Test column 5:  / ; P 0 1 A Q Z
-        li    r12,>0024             ; Address for column selection
-        ldcr  r7,3                  ; Select column 0
-        li    r12,>0006             ; Address for for row selection
-        tb    3                     ; Copy bit on cru to status register EQ bit
-                                    ; \ Bit off = Key pressed (!)
-                                    ; / Bit on  = Key depressed
-        jne   run.tibasic.return    ; '/' key pressed, return to Stevie
         ;-------------------------------------------------------
         ; Copy TI Basic crunch buffer to Stevie ram buffer
         ;-------------------------------------------------------
@@ -186,10 +211,7 @@ isr.crunchbuf:
         jne   isr.exit              ; Skip unless 'EX'
         c     @rambuf+2,@data.isr.exit+2
         jne   isr.exit              ; Skip unless 'IT'
-        ;-------------------------------------------------------
-        ; Return to Stevie
-        ;-------------------------------------------------------
-        jmp   run.tibasic.return
+        jmp   run.tibasic.return    ; Return to Stevie
         ;-------------------------------------------------------
         ; Return from ISR
         ;-------------------------------------------------------

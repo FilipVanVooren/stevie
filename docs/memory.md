@@ -1,23 +1,31 @@
 # Low memory expansion
 
-## >2000-3FFF / Resident modules
+## SAMS page #02: >2000-2FFF / Resident modules
 
-| Address       | Bytes | Size | Equates        | Purpose                                         | 
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >2000 - >3fff | 8192  |      |                | Resident spectra2 and Stevie modules            |
+| >2000 - >2fff | 4096  | #02  |                | Resident spectra2 and Stevie modules            |
+
+
+## SAMS page #03: >3000-3FFF / Resident modules
+
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
+|---------------|-------|------|----------------|-------------------------------------------------|
+| >3000 - >3fff | 4096  | #03  |                | Resident spectra2 and Stevie modules            |
+
 
 
 ## High memory expansion
 
-## >a000  Stevie core RAM area
+## SAMS page #0a: >a000  Stevie core RAM area
 
-Basically for each of the 256 bytes ranges, there are structures defined in equates.asm
-Check there for free memory ranges, because most structures do not use full 256 bytes range.
+Basically for each of the 256 bytes ranges, there are structures defined in equates.asm  
+Check there for free memory ranges, because most structures do not use full 256 bytes range.  
 First free address has equate <struct>.free
 
 | Address       | Bytes | Size | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >a000         |  256  |      |                | Stevie core 1 RAM                               |
+| >a000         |  256  |  #0a |                | Stevie core 1 RAM                               |
 |               |       |   32 | parm1          |   Input/Output parameters for Stevie functions  |
 |               |       |   16 |                |   Variables for keyboard scan, unpack, ..       | 
 | >a100         |  256  |      |                | RAM core area 2 RAM                             |
@@ -40,38 +48,51 @@ First free address has equate <struct>.free
 | >af00         |  256  |      | fj.bottom      | Farjump return stack, downwards from >b000      |
 
 
-## >b000  Index page
+## SAMS page #10-1f: >b000  Index page
 
-| Address       | Bytes | Size | Equates        | Purpose                                         | 
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >b000 - >bfff | 4096  |      | idx.top        | Single index page, bankswitched in SAMS         |
+| >b000 - >bfff | 4096  |  #1x | idx.top        | Single index page, bankswitched in SAMS         |
 
 
-## >c000  Editor buffer page
+## SAMS page #30-xx: >c000  Editor buffer page
 
-| Address       | Bytes | Size | Equates        | Purpose                                         | 
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >c000 - >cfff | 4096  |      | edb.top        | Single editor buffer page, bankswitched in SAMS |
+| >c000 - >cfff | 4096  |  #xx | edb.top        | Single editor buffer page, bankswitched in SAMS |
 
 
-## >d000  Frame buffer for VDP
+## SAMS page #0d: >d000  Frame buffer for VDP
 
-| Address       | Bytes | Size | Equates        | Purpose                                         | 
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >d000 - >d95f | 2400  |      | fb.top         | Frame buffer page for 80x30 rows                |
+| >d000 - >d95f | 2400  |  #0d | fb.top         | Frame buffer page for 80x30 rows                |
 | >d960 - >dfff | 1696  |      |                | **free**                                        |
 
 
-## >e000  Command buffer / Auxilary buffer
+## SAMS page #0e: >e000  Command buffer
 
 | Address       | Bytes | Size | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
-| >e000 - >efff | 4096  |      | cmdb.top       | Command buffer history                          |
-| >e000 - >efff | 4096  |      | auxbuf.top     | Auxilary buffer                                 |
+| >e000 - >efff | 4096  |  #0e | cmdb.top       | Command buffer history                          |
 
 
-## >f000  Heap
+## SAMS page #0f: >f000  Heap
 
 | Address       | Bytes | Size | Equates        | Purpose                                         | 
 |---------------|-------|------|----------------|-------------------------------------------------|
 | >f000 - >ffff | 4096  |      |                | Heap                                            |
+
+
+
+# Memory layout when activating TI Basic
+
+| Address       | Bytes | SAMS | Equates        | Purpose                                         | 
+|---------------|-------|------|----------------|-------------------------------------------------|
+| >b000 - >bfff | 4096  |  #04 |                | TI Basic VDP buffer                             |
+| >c000 - >cfff | 4096  |  #05 |                | TI Basic VDP buffer                             |
+| >d000 - >dfff | 4096  |  #06 |                | TI Basic VDP buffer                             |
+| >e000 - >efff | 4096  |  #07 |                | TI Basic VDP Buffer                             |
+| >f000 - >ffff | 4096  |  #08 |                | Stevie VDP screen buffer copy 80x30             |
+
+Other memory ranges same as for Stevie.
