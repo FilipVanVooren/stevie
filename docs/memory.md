@@ -93,6 +93,7 @@ First free address has equate <struct>.free
 | >c000 - >cfff | 4096  |  #05 |                | TI Basic VDP buffer                             |
 | >d000 - >dfff | 4096  |  #06 |                | TI Basic VDP buffer                             |
 | >e000 - >efff | 4096  |  #07 |                | TI Basic VDP Buffer                             |
-| >f000 - >ffff | 4096  |  #08 |                | Stevie VDP screen buffer copy 80x30             |
+| >f000 - >f95f | 2400  |  #08 |                | Stevie VDP screen buffer copy 80x30             |
+| >f960 - >f97f |  256  |  #08 |                | TI Basic scratchpad memory                      |
 
 Other memory ranges same as for Stevie.

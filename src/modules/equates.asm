@@ -112,9 +112,16 @@ debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-cpu.scrpad.tgt            equ  >7e00   ; \ Dump of OS monitor scratchpad 
-                                       ; | memory stored in cartridge ROM
+
+cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad 
+                                       ; | stored in cartridge ROM
                                        ; / bank3.asm
+
+cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
+                                       ; | scratchpad RAM (SAMS bank #08)
+                                       ; / 
+
+
 *--------------------------------------------------------------
 * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
@@ -139,7 +146,10 @@ keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
 keycode1          equ  core1.top + 34  ; Current key scanned
 keycode2          equ  core1.top + 36  ; Previous key scanned
 unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
-core1.free        equ  core1.top + 44  ; End of structure
+tibasic.status    equ  core1.top + 44  ; TI Basic status flags
+                                       ; 0000 = Initialize TI-Basic
+                                       ; 0001 = TI-Basic reentry
+core1.free        equ  core1.top + 46  ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

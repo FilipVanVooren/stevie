@@ -11,11 +11,15 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* r1 in GPL WS
+* r1 in GPL WS, tmp0, tmp1
 ********|*****|*********************|**************************
 run.tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
         ; Setup SAMS for TI Basic
         ;-------------------------------------------------------
@@ -29,29 +33,50 @@ run.tibasic:
         bl    @cpyv2m
               data vdp.sit.base,>f000,vdp.sit.size
                                     ; Dump Stevie SIT 80x30 to RAM buffer
-                                    ; >f000 (SAMS page #08)
+                                    ; >f000-f95f (SAMS page #08)
         ;-------------------------------------------------------
-        ; Put VDP in TI Basic compatible mode (32x30)
+        ; Put VDP in TI Basic compatible mode (32x24)
         ;-------------------------------------------------------
         bl    @scroff               ; Turn off screen
 
         bl    @f18rst               ; Reset and lock the F18A
 
         bl    @vidtab               ; Load video mode table into VDP
-              data tibasic          ; Equate selected video mode table
+              data tibasic.32x24    ; Equate selected video mode table
+
+        mov   @tibasic.status,@tibasic.status 
+                                    ; Initialize TI-Basic?                           
+        jgt   run.tibasic.init2     ; No, skip to VDP memory restore
         ;-------------------------------------------------------
-        ; Setup VDP memory for TI Basic in 32x24 mode
+        ; Initialize CPU/VDP memory for TI Basic
         ;------------------------------------------------------- 
+run.tibasic.init:        
+        bl    @cpym2m
+              data cpu.scrpad.src,cpu.scrpad.tgt,256
+                                    ; Initialize TI Basic scrpad memory in
+                                    ; @cpu.scrpad.tgt (SAMS bank #08) with dump 
+                                    ; of OS Monitor scrpad stored at 
+                                    ; @cpu.scrpad.src (bank 3).
+
         bl    @ldfnt
               data >0900,fnopt3     ; Load font (upper & lower case)
 
         bl    @filv
               data >0300,>D0,2      ; No sprites
+        jmp   !
+        ;-------------------------------------------------------
+        ; Restore VDP memory for TI Basic from previous run
+        ;------------------------------------------------------- 
+run.tibasic.init2:        
+        bl    @cpym2v
+              data >0000,>b000,16384
+                                    ; Restore TI Basic 16K VDP memory from
+                                    ; RAM buffer >b000->efff (SAMS pages #04-07)
         ;-------------------------------------------------------
         ; Setup scratchpad memory for TI Basic
         ;------------------------------------------------------- 
-        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes of scratchpad memory to 
-              data scrpad.copy      ; | >ad00 and then load TI Basic layout from
+!       bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
+              data scrpad.copy      ; | >ad00 and then load TI Basic scrpad from
                                     ; / predefined address @cpu.scrpad.target
         
         clr   r11
@@ -69,21 +94,38 @@ run.tibasic:
         ; Run TI Basic in GPL Interpreter
         ;-------------------------------------------------------
         lwpi  >83e0
+        mov   @tibasic.status,@tibasic.status 
+                                    ; Initialize TI Basic?                           
+        jgt   run.tibasic.resume    ; No, resume
+
         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
         movb  r1,@grmwa             ; \
         swpb  r1                    ; | Set GPL address
         movb  r1,@grmwa             ; / 
         nop
         b     @>70                  ; Start GPL interpreter
+
+run.tibasic.resume:        
+        b     @>70
+        ;b     @>0ab8                ; Return from interrupt routine.
+                                    ; See TI Intern page 32 (german)
         ;-------------------------------------------------------
-        ; Return from TI Basic (got here from the ISR)
+        ; Return to Stevie (got here from the ISR)
         ;-------------------------------------------------------
 run.tibasic.return:    
         lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
 
-        bl    @cpu.scrpad.pgin      ; Page in copy of scratch pad memory and
-              data scrpad.copy      ; activate workspace at >8300
+        
+        movb  @w$ffff,@>8375        ; Reset keycode
 
+        bl    @cpym2m
+              data >8300,cpu.scrpad.tgt,256
+                                    ; Backup TI Basic scratchpad to
+                                    ; @cpu.scrpad.tgt (SAMS bank #08)
+
+        bl    @cpu.scrpad.pgin      ; Page in copy of Stevie scratch pad memory 
+              data scrpad.copy      ; and activate workspace at >8300
+              
         bl    @scroff               ; Turn screen off
         ;-------------------------------------------------------
         ; Cleanup after return from TI Basic
@@ -91,7 +133,11 @@ run.tibasic.return:
         bl    @cpyv2m
               data >0000,>b000,16384
                                     ; Dump TI Basic 16K VDP memory to
-                                    ; RAM buffer >b000->ffff (SAMS pages #04-07)
+                                    ; RAM buffer >b000->rfff (SAMS pages #04-07)
+
+        mov   @tibasic.status,tmp1  ; \                                  
+        ori   tmp1,1                ; | Set TI Basic reentry flag
+        mov   tmp1,@tibasic.status  ; /
 
         bl    @film
               data rambuf,>00,20    ; Clear crunch buffer copy in RAM
@@ -134,7 +180,7 @@ run.tibasic.return:
         .endif
 
         bl    @vidtab               ; Load video mode table into VDP
-              data stevie.tx8030    ; Equate selected video mode table
+              data stevie.80x30     ; Equate selected video mode table
 
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
@@ -145,9 +191,10 @@ run.tibasic.return:
         ; Exit
         ;------------------------------------------------------
 run.tibasic.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
-
         ;-------------------------------------------------------
         ; Required values for scratchpad
         ;-------------------------------------------------------
@@ -162,9 +209,6 @@ run.tibasic.83fe:
 
 
 
-
-; TODO slow down hotkey check, messes up basic keyboard scan.
-
 ***************************************************************
 * isr
 * Interrupt Service Routine for returning to Stevie
@@ -177,7 +221,10 @@ run.tibasic.83fe:
 * Register usage
 * r7
 ********|*****|*********************|**************************
-isr:
+isr:    
+        limi  0                     ; \ Turn off interrupts
+                                    ; / Prevent ISR reentry 
+
         mov   r7,@rambuf+20         ; Backup R7
         mov   r12,@rambuf+22        ; Backup R12
         ;-------------------------------------------------------
@@ -210,7 +257,7 @@ isr.crunchbuf:
         c     @rambuf,@data.isr.exit
         jne   isr.exit              ; Skip unless 'EX'
         c     @rambuf+2,@data.isr.exit+2
-        jne   isr.exit              ; Skip unless 'IT'
+        jne   isr.exit              ; Skip unless 'IT'       
         jmp   run.tibasic.return    ; Return to Stevie
         ;-------------------------------------------------------
         ; Return from ISR

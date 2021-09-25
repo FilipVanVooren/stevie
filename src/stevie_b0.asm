@@ -111,7 +111,7 @@ main:
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   stevie.tx8030         ; Video mode.   See VIDTAB for details.
+spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
 spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
