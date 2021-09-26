@@ -116,7 +116,7 @@ keymap_actions.editor:
         data  edkey.action.fb.fname.inc.load
 
         byte  key.ctrl.slash, pane.focus.fb
-        data  run.tibasic
+        data  tibasic
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
@@ -156,7 +156,7 @@ keymap_actions.cmdb:
         data  dialog.file
 
         byte  key.uc.b, id.dialog.menu
-        data  run.tibasic
+        data  tibasic
         
         byte  key.uc.h, id.dialog.menu
         data  edkey.action.about
@@ -202,7 +202,7 @@ keymap_actions.cmdb:
         ; Dialog: Basic
         ;-------------------------------------------------------
         byte  key.uc.b, id.dialog.basic
-        data  run.tibasic
+        data  tibasic
 
         ;-------------------------------------------------------
         ; Dialog: About

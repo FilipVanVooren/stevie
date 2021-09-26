@@ -2,18 +2,21 @@
 * Purpose...: Run console TI Basic 
 
 ***************************************************************
-* run.tibasic.asm
-* Run console TI Basic
+* tibasic
+* Run TI Basic session
 ***************************************************************
-* bl   @run.tibasic
+* bl   @tibasic
 *--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
 * Register usage
 * r1 in GPL WS, tmp0, tmp1
+*--------------------------------------------------------------
+* Remarks
+* tibasic >> b @0070 (GPL interpreter/TI Basic) >> isr >> tibasic.return
 ********|*****|*********************|**************************
-run.tibasic:
+tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -43,14 +46,16 @@ run.tibasic:
 
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
-
-        mov   @tibasic.status,@tibasic.status 
-                                    ; Initialize TI-Basic?                           
-        jgt   run.tibasic.init2     ; No, skip to VDP memory restore
         ;-------------------------------------------------------
-        ; Initialize CPU/VDP memory for TI Basic
+        ; Resume existing TI Basic session?
+        ;-------------------------------------------------------
+        mov   @tibasic.status,@tibasic.status 
+                                    ; New TI-Basic session?
+        jgt   tibasic.resume        ; No, resume existing session
+        ;-------------------------------------------------------
+        ; New TI Basic session
         ;------------------------------------------------------- 
-run.tibasic.init:        
+tibasic.init:
         bl    @cpym2m
               data cpu.scrpad.src,cpu.scrpad.tgt,256
                                     ; Initialize TI Basic scrpad memory in
@@ -63,56 +68,142 @@ run.tibasic.init:
 
         bl    @filv
               data >0300,>D0,2      ; No sprites
-        jmp   !
-        ;-------------------------------------------------------
-        ; Restore VDP memory for TI Basic from previous run
-        ;------------------------------------------------------- 
-run.tibasic.init2:        
-        bl    @cpym2v
-              data >0000,>b000,16384
-                                    ; Restore TI Basic 16K VDP memory from
-                                    ; RAM buffer >b000->efff (SAMS pages #04-07)
-        ;-------------------------------------------------------
-        ; Setup scratchpad memory for TI Basic
-        ;------------------------------------------------------- 
-!       bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
+
+        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
               data scrpad.copy      ; | >ad00 and then load TI Basic scrpad from
                                     ; / predefined address @cpu.scrpad.target
-        
+
         clr   r11
-        mov   @run.tibasic.83d4,@>83d4
-        mov   @run.tibasic.83fa,@>83fa
-        mov   @run.tibasic.83fc,@>83fc
-        mov   @run.tibasic.83fe,@>83fe
+        mov   @tibasic.scrpad.83d4,@>83d4
+        mov   @tibasic.scrpad.83fa,@>83fa
+        mov   @tibasic.scrpad.83fc,@>83fc
+        mov   @tibasic.scrpad.83fe,@>83fe
         ;-------------------------------------------------------
-        ; Register our ISR hook
+        ; Register ISR hook
         ;------------------------------------------------------- 
         li    r1,isr                ; \
-        mov   r1,@>83c4             ; | >83c4 = Pointer to start address of 
-                                    ; /         User Interrupt Routine
+        mov   r1,@>83c4             ; | >83c4 = Pointer to start address of ISR
+                                    ; /
         ;-------------------------------------------------------
-        ; Run TI Basic in GPL Interpreter
+        ; Run TI Basic session in GPL Interpreter
         ;-------------------------------------------------------
         lwpi  >83e0
-        mov   @tibasic.status,@tibasic.status 
-                                    ; Initialize TI Basic?                           
-        jgt   run.tibasic.resume    ; No, resume
-
         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
         movb  r1,@grmwa             ; \
         swpb  r1                    ; | Set GPL address
         movb  r1,@grmwa             ; / 
         nop
         b     @>70                  ; Start GPL interpreter
+        ;-------------------------------------------------------
+        ; Resume existing TI-Basic session
+        ;------------------------------------------------------- 
+tibasic.resume:        
+        bl    @cpym2v
+              data >0000,>b000,16384
+                                    ; Restore TI Basic 16K VDP memory from
+                                    ; RAM buffer >b000->efff (SAMS pages #04-07)
 
-run.tibasic.resume:        
-        b     @>70
-        ;b     @>0ab8                ; Return from interrupt routine.
+        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
+              data scrpad.copy      ; | >ad00 and then load TI Basic scrpad from
+                                    ; / predefined address @cpu.scrpad.target        
+
+        b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
         ;-------------------------------------------------------
-        ; Return to Stevie (got here from the ISR)
+        ; Required values for scratchpad
         ;-------------------------------------------------------
-run.tibasic.return:    
+tibasic.scrpad.83d4:
+        data  >e0d5
+tibasic.scrpad.83fa:
+        data  >9800
+tibasic.scrpad.83fc:        
+        data  >0108
+tibasic.scrpad.83fe:
+        data  >8c02        
+
+
+
+***************************************************************
+* isr
+* Interrupt Service Routine in TI Basic
+***************************************************************
+* Called from console rom at >0ab6
+* See TI Intern page 32 (german) for details
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* r7, 12
+********|*****|*********************|**************************
+isr:    
+        limi  0                     ; \ Turn off interrupts
+                                    ; / Prevent ISR reentry 
+
+        mov   r7,@rambuf+20         ; Backup R7
+        mov   r12,@rambuf+22        ; Backup R12
+        ;-------------------------------------------------------
+        ; Hotkey pressed?
+        ;-------------------------------------------------------
+        mov   @>8374,r7             ; Get keyboard scancode
+        andi  r7,>00ff              ; LSB only
+        ci    r7,>0f                ; Hotkey fctn + '9' pressed?
+        jeq   tibasic.return        ; Yes, return to Stevie
+        ;-------------------------------------------------------
+        ; Read TI Basic crunch buffer VDP >320
+        ;-------------------------------------------------------
+        li    r7,>0320
+        swpb  r7                    ; \
+        movb  r7,@vdpa              ; | Set VDP read address
+        swpb  r7                    ; | inlined @vdra call
+        movb  r7,@vdpa              ; /         
+        ;-------------------------------------------------------
+        ; Copy TI Basic crunch buffer to Stevie ram buffer
+        ;-------------------------------------------------------
+isr.crunchbuf:        
+        li    r7,rambuf
+        movb  @vdpr,*r7+            ; Read byte 1
+        movb  @vdpr,*r7+            ; Read byte 2
+        movb  @vdpr,*r7+            ; Read byte 3
+        movb  @vdpr,*r7+            ; Read byte 4
+        ;-------------------------------------------------------
+        ; Check if 'EXIT' in Stevie ram buffer
+        ;-------------------------------------------------------
+        c     @rambuf,@isr.data.exit
+        jne   isr.exit              ; Skip unless 'EX'
+        c     @rambuf+2,@isr.data.exit+2
+        jne   isr.exit              ; Skip unless 'IT'       
+        jmp   tibasic.return        ; Return to Stevie
+        ;-------------------------------------------------------
+        ; Return from ISR
+        ;-------------------------------------------------------
+isr.exit:
+        mov   @rambuf+22,r12        ; Restore R12
+        mov   @rambuf+20,r7         ; Restore R7
+        b     *r11                  ; Return from ISR
+
+isr.data.exit:
+        text  'EXIT'
+
+
+
+
+***************************************************************
+* tibasic.return
+* Return from TI Basic to Stevie
+***************************************************************
+* bl   @tibasic.return
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* r1 in GPL WS, tmp0, tmp1
+*--------------------------------------------------------------
+* REMARKS
+* Called from ISR code
+********|*****|*********************|**************************
+tibasic.return:
         lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
 
         
@@ -190,81 +281,8 @@ run.tibasic.return:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-run.tibasic.exit:
+tibasic.return.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
-        ;-------------------------------------------------------
-        ; Required values for scratchpad
-        ;-------------------------------------------------------
-run.tibasic.83d4:
-        data  >e0d5
-run.tibasic.83fa:
-        data  >9800
-run.tibasic.83fc:        
-        data  >0108
-run.tibasic.83fe:
-        data  >8c02        
-
-
-
-***************************************************************
-* isr
-* Interrupt Service Routine for returning to Stevie
-***************************************************************
-* Called from monitor user interrupt
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* r7
-********|*****|*********************|**************************
-isr:    
-        limi  0                     ; \ Turn off interrupts
-                                    ; / Prevent ISR reentry 
-
-        mov   r7,@rambuf+20         ; Backup R7
-        mov   r12,@rambuf+22        ; Backup R12
-        ;-------------------------------------------------------
-        ; Hotkey pressed?
-        ;-------------------------------------------------------
-        mov   @>8374,r7             ; Get keyboard scancode
-        andi  r7,>00ff              ; LSB only
-        ci    r7,>bb                ; Hotkey ctrl + '/' pressed?
-        jeq   run.tibasic.return    ; Yes, return to Stevie
-        ;-------------------------------------------------------
-        ; Read TI Basic crunch buffer VDP >320
-        ;-------------------------------------------------------
-        li    r7,>0320
-        swpb  r7                    ; \
-        movb  r7,@vdpa              ; | Set VDP read address
-        swpb  r7                    ; | inlined @vdra call
-        movb  r7,@vdpa              ; /         
-        ;-------------------------------------------------------
-        ; Copy TI Basic crunch buffer to Stevie ram buffer
-        ;-------------------------------------------------------
-isr.crunchbuf:        
-        li    r7,rambuf
-        movb  @vdpr,*r7+            ; Read byte 1
-        movb  @vdpr,*r7+            ; Read byte 2
-        movb  @vdpr,*r7+            ; Read byte 3
-        movb  @vdpr,*r7+            ; Read byte 4
-        ;-------------------------------------------------------
-        ; Check if 'EXIT' in Stevie ram buffer
-        ;-------------------------------------------------------
-        c     @rambuf,@data.isr.exit
-        jne   isr.exit              ; Skip unless 'EX'
-        c     @rambuf+2,@data.isr.exit+2
-        jne   isr.exit              ; Skip unless 'IT'       
-        jmp   run.tibasic.return    ; Return to Stevie
-        ;-------------------------------------------------------
-        ; Return from ISR
-        ;-------------------------------------------------------
-isr.exit:
-        mov   @rambuf+22,r12        ; Restore R12
-        mov   @rambuf+20,r7         ; Restore R7
-        b     *r11                  ; Return from ISR
-data.isr.exit:
-        text  'EXIT'

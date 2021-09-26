@@ -13,7 +13,7 @@ vec.6   data  dialog.menu           ; Dialog "Stevie Menu"
 vec.7   data  dialog.basic          ; Dialog "Basic"
 vec.8   data  cpu.crash             ; 
 vec.9   data  cpu.crash             ; 
-vec.10  data  run.tibasic           ; Run TI Basic interpreter
+vec.10  data  tibasic               ; Run TI Basic interpreter
 vec.11  data  cpu.crash             ; 
 vec.12  data  cpu.crash             ; 
 vec.13  data  cpu.crash             ; 

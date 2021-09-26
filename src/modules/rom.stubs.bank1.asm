@@ -197,10 +197,10 @@ dialog.basic.vector:
 
 
 ***************************************************************
-* Stub for "run.tibasic"
+* Stub for "tibasic"
 * bank3 vec.10
 ********|*****|*********************|**************************
-run.tibasic:
+tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
