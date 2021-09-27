@@ -244,8 +244,13 @@ tibasic.return:
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
 
-        BL    @putvr                ; Set VDP TAT base address for position
-              data >0360            ; based attributes (>40 * >60 = >1800)        
+        bl    @putvr                ; Set VDP TAT base address for position
+              data >0360            ; based attributes (>40 * >60 = >1800)
+
+        clr   @parm1                ; Screen off while reloading color scheme
+        bl    @pane.action.colorscheme.load
+                                    ; Reload color scheme
+                                    ; i  parm1 = Skip screen off if >FFFF                      
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
