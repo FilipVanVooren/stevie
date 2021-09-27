@@ -1,4 +1,4 @@
-* FILE......: run.tibasic.asm
+* FILE......: tibasic.asm
 * Purpose...: Run console TI Basic 
 
 ***************************************************************
@@ -140,8 +140,8 @@ isr:
         limi  0                     ; \ Turn off interrupts
                                     ; / Prevent ISR reentry 
 
-        mov   r7,@rambuf+20         ; Backup R7
-        mov   r12,@rambuf+22        ; Backup R12
+        mov   r7,@rambuf            ; Backup R7
+        mov   r12,@rambuf+2         ; Backup R12
         ;-------------------------------------------------------
         ; Hotkey pressed?
         ;-------------------------------------------------------
@@ -150,41 +150,12 @@ isr:
         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
         jeq   tibasic.return        ; Yes, return to Stevie
         ;-------------------------------------------------------
-        ; Read TI Basic crunch buffer VDP >320
-        ;-------------------------------------------------------
-        li    r7,>0320
-        swpb  r7                    ; \
-        movb  r7,@vdpa              ; | Set VDP read address
-        swpb  r7                    ; | inlined @vdra call
-        movb  r7,@vdpa              ; /         
-        ;-------------------------------------------------------
-        ; Copy TI Basic crunch buffer to Stevie ram buffer
-        ;-------------------------------------------------------
-isr.crunchbuf:        
-        li    r7,rambuf
-        movb  @vdpr,*r7+            ; Read byte 1
-        movb  @vdpr,*r7+            ; Read byte 2
-        movb  @vdpr,*r7+            ; Read byte 3
-        movb  @vdpr,*r7+            ; Read byte 4
-        ;-------------------------------------------------------
-        ; Check if 'EXIT' in Stevie ram buffer
-        ;-------------------------------------------------------
-        c     @rambuf,@isr.data.exit
-        jne   isr.exit              ; Skip unless 'EX'
-        c     @rambuf+2,@isr.data.exit+2
-        jne   isr.exit              ; Skip unless 'IT'       
-        jmp   tibasic.return        ; Return to Stevie
-        ;-------------------------------------------------------
         ; Return from ISR
         ;-------------------------------------------------------
 isr.exit:
-        mov   @rambuf+22,r12        ; Restore R12
-        mov   @rambuf+20,r7         ; Restore R7
+        mov   @rambuf+2,r12         ; Restore R12
+        mov   @rambuf,r7            ; Restore R7
         b     *r11                  ; Return from ISR
-
-isr.data.exit:
-        text  'EXIT'
-
 
 
 
@@ -229,9 +200,6 @@ tibasic.return:
         mov   @tibasic.status,tmp1  ; \                                  
         ori   tmp1,1                ; | Set TI Basic reentry flag
         mov   tmp1,@tibasic.status  ; /
-
-        bl    @film
-              data rambuf,>00,20    ; Clear crunch buffer copy in RAM
 
         bl    @cpym2v
               data vdp.sit.base,>f000,vdp.sit.size

@@ -166,7 +166,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087      0064     id.dialog.menu            equ  100     ; "Stevie Menu"
 0088      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
 0089      0066     id.dialog.block           equ  102     ; "Block move/copy/delete"
-0090      0067     id.dialog.about           equ  103     ; "About"
+0090      0067     id.dialog.help           equ  103     ; "About"
 0091      0068     id.dialog.file            equ  104     ; "File"
 0092      0069     id.dialog.basic           equ  105     ; "Basic"
 0093               *--------------------------------------------------------------

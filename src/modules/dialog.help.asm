@@ -1,10 +1,10 @@
-* FILE......: dialog.about.asm
+* FILE......: dialog.help.asm
 * Purpose...: Stevie Editor - About dialog
 
 *---------------------------------------------------------------
 * Show Stevie welcome/about dialog
 *---------------------------------------------------------------
-dialog.about:
+dialog.help:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
@@ -12,10 +12,10 @@ dialog.about:
         ;-------------------------------------------------------
         bl    @scroff               ; turn screen off
 
-        li    tmp0,id.dialog.about
+        li    tmp0,id.dialog.help
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        bl    @dialog.about.content ; display content in modal dialog
+        bl    @dialog.help.content  ; display content in modal dialog
 
         li    tmp0,txt.head.about
         mov   tmp0,@cmdb.panhead    ; Header for dialog
@@ -34,17 +34,17 @@ dialog.about:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-dialog.about.exit:
+dialog.help.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
                
 
 
 ***************************************************************
-* dialog.about.content
+* dialog.help.content
 * Show content in modal dialog
 ***************************************************************
-* bl  @dialog.about.content
+* bl  @dialog.help.content
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -52,7 +52,7 @@ dialog.about.exit:
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-dialog.about.content:
+dialog.help.content:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -86,7 +86,7 @@ dialog.about.content:
         ;------------------------------------------------------
         li    tmp0,>0100            ; Y=1, X=0
         mov   tmp0,@wyx             ; Set cursor position
-        li    tmp1,dialog.about.help.part1
+        li    tmp1,dialog.help.help.part1
                                     ; Pointer to string
         li    tmp2,23               ; Set loop counter
 
@@ -101,7 +101,7 @@ dialog.about.content:
         ;------------------------------------------------------
         li    tmp0,>022c            ; Y=2, X=44
         mov   tmp0,@wyx             ; Set cursor position
-        li    tmp1,dialog.about.help.part2
+        li    tmp1,dialog.help.help.part2
                                     ; Pointer to string
         li    tmp2,18               ; Set loop counter
 
@@ -114,7 +114,7 @@ dialog.about.content:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-dialog.about.content.exit:
+dialog.help.content.exit:
         mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
@@ -124,7 +124,7 @@ dialog.about.content.exit:
 
 
 
-dialog.about.help.part1:
+dialog.help.help.part1:
         #string 'Movement keys:'
         #string '   Fctn S        Cursor left'
         #string '   Fctn D        Cursor right'
@@ -147,9 +147,9 @@ dialog.about.help.part1:
         #string '   Ctrl s  (^s)  Save file'
         #string '   Ctrl v  (^v)  Set M1/M2 marker'
         #string '   Ctrl z  (^z)  Cycle color schemes'
-        #string '   ctrl /  (^/)  TI Basic (type EXIT to return)'
+        #string '   ctrl /  (^/)  TI Basic (F9 to exit)'
         
-dialog.about.help.part2:
+dialog.help.help.part2:
         #string '   Ctrl ,  (^,)  Load previous file'
         #string '   Ctrl .  (^.)  Load next file'
         #string '   ctrl u  (^u)  Toggle ruler'

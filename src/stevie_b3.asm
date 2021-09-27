@@ -64,7 +64,7 @@ main:
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------         
         copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
-        copy  "dialog.about.asm"    ; Dialog "About"
+        copy  "dialog.help.asm"     ; Dialog "Help"
         copy  "dialog.file.asm"     ; Dialog "File"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
@@ -88,9 +88,9 @@ main:
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank3.asm" ; Stubs for functions in other banks 
         ;-----------------------------------------------------------------------
-        ; Basic interpreter handling
+        ; Basic interpreter
         ;-----------------------------------------------------------------------         
-        copy  "run.tibasic.asm"     ; Run TI Basic in GPL Interpreter        
+        copy  "tibasic.asm"         ; Run TI Basic session
         ;-----------------------------------------------------------------------
         ; Data
         ;-----------------------------------------------------------------------         

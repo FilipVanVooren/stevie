@@ -37,7 +37,7 @@ stevie.80x30:
 * TI Basic mode (32 columns/24 rows)
 *--------------------------------------------------------------
 tibasic.32x24:
-        byte  >00,>e2,>00,>0c,>00,>06,>00,SPFBCK,0,32
+        byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
 *
 * ; VDP#0 Control bits
 * ;      bit 6=0: M3 | Graphics 1 mode
@@ -64,7 +64,7 @@ tibasic.32x24:
 * TI Basic mode (32 columns/30 rows) - F18A
 *--------------------------------------------------------------
 tibasic.32x30:
-        byte  >00,>e2,>00,>0c,>00,>06,>00,SPFBCK,0,32
+        byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
 *
 * ; VDP#0 Control bits
 * ;      bit 6=0: M3 | Graphics 1 mode

@@ -207,7 +207,7 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: About
         ;-------------------------------------------------------
-        byte  key.fctn.9, id.dialog.about
+        byte  key.fctn.9, id.dialog.help
         data  edkey.action.cmdb.close.about
         ;-------------------------------------------------------
         ; Movement keys

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  dialog.about          ; Dialog "About"
+vec.1   data  dialog.help          ; Dialog "About"
 vec.2   data  dialog.load           ; Dialog "Load DV80 file"
 vec.3   data  dialog.save           ; Dialog "Save DV80 file"
 vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"

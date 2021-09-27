@@ -23,7 +23,7 @@ txt.newfile        #string '[New file]'
 txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
-txt.keys.default   #string 'F9=Menu'
+txt.keys.default   #string 'F9-Menu'
 txt.keys.block     #string 'Block: F9=Back  ^Del  ^Copy  ^Move  ^Goto M1  ^Save'
 txt.ruler          text    '.........'
                    byte    18

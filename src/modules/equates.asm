@@ -87,7 +87,7 @@ id.dialog.saveblock       equ  12      ; "Save codeblock to DV80 file"
 id.dialog.menu            equ  100     ; "Stevie Menu"
 id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete"
-id.dialog.about           equ  103     ; "About"
+id.dialog.help           equ  103     ; "About"
 id.dialog.file            equ  104     ; "File"
 id.dialog.basic           equ  105     ; "Basic"
 *--------------------------------------------------------------

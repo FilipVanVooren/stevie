@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 210926-262678
+0009               * File: stevie_b0.asm               ; Version 210927-461503
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -51,7 +51,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0034               ; device.f18a             equ  0       ; F18a GPU
 0035               ; device.9938             equ  1       ; 9938 GPU
 0036               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -79,7 +79,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -165,7 +165,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087      0064     id.dialog.menu            equ  100     ; "Stevie Menu"
 0088      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
 0089      0066     id.dialog.block           equ  102     ; "Block move/copy/delete"
-0090      0067     id.dialog.about           equ  103     ; "About"
+0090      0067     id.dialog.help           equ  103     ; "About"
 0091      0068     id.dialog.file            equ  104     ; "File"
 0092      0069     id.dialog.basic           equ  105     ; "Basic"
 0093               *--------------------------------------------------------------
@@ -418,7 +418,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Heap                                @>f000-ffff  (4096 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     heap.top          equ  >f000           ; Top of heap
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 **** **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -541,7 +541,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118               * Special keys
 0119               *---------------------------------------------------------------
 0120      000D     key.enter     equ >0d               ; enter
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -596,7 +596,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1370,7 +1370,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 624C 1742             byte  23
-0260 624D ....             text  'Build-ID  210926-262678'
+0260 624D ....             text  'Build-ID  210927-461503'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5729,7 +5729,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      70F4 0040 
 0368 70F6 0460  28         b     @main                 ; Give control to main program
      70F8 373E 
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0087                       copy  "ram.resident.asm"
 **** **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6874,10 +6874,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0037               * TI Basic mode (32 columns/24 rows)
 0038               *--------------------------------------------------------------
 0039               tibasic.32x24:
-0040 74AC 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,SPFBCK,0,32
+0040 74AC 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
      74AE 000C 
      74B0 0006 
-     74B2 0004 
+     74B2 0007 
      74B4 0020 
 0041               *
 0042               * ; VDP#0 Control bits
@@ -6905,10 +6905,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0064               * TI Basic mode (32 columns/30 rows) - F18A
 0065               *--------------------------------------------------------------
 0066               tibasic.32x30:
-0067 74B6 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,SPFBCK,0,32
+0067 74B6 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
      74B8 000C 
      74BA 0006 
-     74BC 0004 
+     74BC 0007 
      74BE 0020 
 0068               *
 0069               * ; VDP#0 Control bits
@@ -7203,7 +7203,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0097               
 0098               txt.keys.default
 0099 7620 0746             byte  7
-0100 7621 ....             text  'F9=Menu'
+0100 7621 ....             text  'F9-Menu'
 0101                       even
 0102               
 0103               txt.keys.block
@@ -7303,7 +7303,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0196 77AB ....             text  'Color scheme:'
 0197                       even
 0198               
-**** **** ****     > stevie_b0.asm.262678
+**** **** ****     > stevie_b0.asm.461503
 0088                       ;------------------------------------------------------
 0089                       ; Activate bank 1 and branch to >6046
 0090                       ;------------------------------------------------------
