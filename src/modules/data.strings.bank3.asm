@@ -40,7 +40,7 @@ txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
 txt.keys.unsaved   #string 'F9-Back  F6-Proceed'
 
 ;--------------------------------------------------------------
-; Dialog "About"
+; Dialog "Help"
 ;--------------------------------------------------------------
 txt.head.about     byte 9,1,3
                    text ' Help '
@@ -53,7 +53,7 @@ txt.keys.about     byte 27
                    byte 14,15
                    text '-Alpha Lock down'
 
-txt.stevie         #string 'STEVIE 1.1U'
+txt.stevie         #string 'STEVIE 1.1V'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
 
 
