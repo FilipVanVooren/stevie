@@ -121,18 +121,24 @@ edb.block.mark:
         mov   @outparm1,tmp1        ; Current line position in editor buffer
         inc   tmp1                  ; Add base 1
         ;------------------------------------------------------
-        ; Check if M1 is set
+        ; Check if M1 and M2 must be set
         ;------------------------------------------------------
         mov   @edb.block.m1,tmp0    ; \ Is M1 unset?
         inc   tmp0                  ; /
         jne   edb.block.mark.is_line_m1
                                     ; No, skip to update M1
         ;------------------------------------------------------
+        ; Set M1 and M2 and exit
+        ;------------------------------------------------------
+        bl    @edb.block.mark.m1    ; Set marker M1
+        bl    @edb.block.mark.m2    ; Set marker M2
+        jmp   edb.block.mark.exit
+        ;------------------------------------------------------
         ; Set M1 and exit
         ;------------------------------------------------------
 _edb.block.mark.m1.set:
         bl    @edb.block.mark.m1    ; Set marker M1
-        jmp   edb.block.mark.exit   ; Exit now
+        jmp   edb.block.mark.exit
         ;------------------------------------------------------
         ; Update M1 if current line < M1
         ;------------------------------------------------------
