@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 210928-649018
+0009               * File: stevie_b7.asm               ; Version 210928-697708
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * Empty
@@ -51,7 +51,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0034               ; device.f18a             equ  0       ; F18a GPU
 0035               ; device.9938             equ  1       ; 9938 GPU
 0036               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -79,7 +79,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -418,7 +418,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Heap                                @>f000-ffff  (4096 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     heap.top          equ  >f000           ; Top of heap
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 **** **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -541,7 +541,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118               * Special keys
 0119               *---------------------------------------------------------------
 0120      000D     key.enter     equ >0d               ; enter
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -596,7 +596,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1321,7 +1321,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 621C 1742             byte  23
-0260 621D ....             text  'Build-ID  210928-649018'
+0260 621D ....             text  'Build-ID  210928-697708'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5639,48 +5639,52 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0329               *--------------------------------------------------------------
 0333 7090 06A0  32         bl    @f18unl               ; Unlock the F18A
      7092 6774 
-0334 7094 06A0  32         bl    @f18chk               ; Check if F18A is there
+0334 7094 06A0  32         bl    @f18chk               ; Check if F18A is there \
      7096 6794 
-0335 7098 06A0  32         bl    @f18lck               ; Lock the F18A again
-     709A 678A 
-0336               
-0337 709C 06A0  32         bl    @putvr                ; Reset all F18a extended registers
-     709E 6374 
-0338 70A0 3201                   data >3201            ; F18a VR50 (>32), bit 1
-0340               *--------------------------------------------------------------
-0341               * Check if there is a speech synthesizer attached
+0335 7098 06A0  32         bl    @f18chk               ; Check if F18A is there | js99er bug?
+     709A 6794 
+0336 709C 06A0  32         bl    @f18chk               ; Check if F18A is there /
+     709E 6794 
+0337 70A0 06A0  32         bl    @f18lck               ; Lock the F18A again
+     70A2 678A 
+0338               
+0339 70A4 06A0  32         bl    @putvr                ; Reset all F18a extended registers
+     70A6 6374 
+0340 70A8 3201                   data >3201            ; F18a VR50 (>32), bit 1
 0342               *--------------------------------------------------------------
-0344               *       <<skipped>>
-0348               *--------------------------------------------------------------
-0349               * Load video mode table & font
+0343               * Check if there is a speech synthesizer attached
+0344               *--------------------------------------------------------------
+0346               *       <<skipped>>
 0350               *--------------------------------------------------------------
-0351 70A2 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
-     70A4 633A 
-0352 70A6 70CA             data  spvmod                ; Equate selected video mode table
-0353 70A8 0204  20         li    tmp0,spfont           ; Get font option
-     70AA 000C 
-0354 70AC 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
-0355 70AE 1304  14         jeq   runlid                ; Yes, skip it
-0356 70B0 06A0  32         bl    @ldfnt
-     70B2 63A2 
-0357 70B4 1100             data  fntadr,spfont         ; Load specified font
-     70B6 000C 
-0358               *--------------------------------------------------------------
-0359               * Did a system crash occur before runlib was called?
+0351               * Load video mode table & font
+0352               *--------------------------------------------------------------
+0353 70AA 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
+     70AC 633A 
+0354 70AE 70D2             data  spvmod                ; Equate selected video mode table
+0355 70B0 0204  20         li    tmp0,spfont           ; Get font option
+     70B2 000C 
+0356 70B4 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
+0357 70B6 1304  14         jeq   runlid                ; Yes, skip it
+0358 70B8 06A0  32         bl    @ldfnt
+     70BA 63A2 
+0359 70BC 1100             data  fntadr,spfont         ; Load specified font
+     70BE 000C 
 0360               *--------------------------------------------------------------
-0361 70B8 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
-     70BA 4A4A 
-0362 70BC 1602  14         jne   runlie                ; No, continue
-0363 70BE 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
-     70C0 60D0 
-0364               *--------------------------------------------------------------
-0365               * Branch to main program
+0361               * Did a system crash occur before runlib was called?
+0362               *--------------------------------------------------------------
+0363 70C0 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
+     70C2 4A4A 
+0364 70C4 1602  14         jne   runlie                ; No, continue
+0365 70C6 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
+     70C8 60D0 
 0366               *--------------------------------------------------------------
-0367 70C2 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
-     70C4 0040 
-0368 70C6 0460  28         b     @main                 ; Give control to main program
-     70C8 6046 
-**** **** ****     > stevie_b7.asm.649018
+0367               * Branch to main program
+0368               *--------------------------------------------------------------
+0369 70CA 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
+     70CC 0040 
+0370 70CE 0460  28         b     @main                 ; Give control to main program
+     70D0 6046 
+**** **** ****     > stevie_b7.asm.697708
 0045                       copy  "data.constants.asm"  ; Need some constants for SAMS layout
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -5715,22 +5719,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0030               * ; VDP#7 Set foreground/background color
 0031               ***************************************************************
 0032               stevie.80x30:
-0033 70CA 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
-     70CC 003F 
-     70CE 0243 
-     70D0 05F4 
-     70D2 0050 
+0033 70D2 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
+     70D4 003F 
+     70D6 0243 
+     70D8 05F4 
+     70DA 0050 
 0034               
 0035               
 0036               ***************************************************************
 0037               * TI Basic mode (32 columns/24 rows)
 0038               *--------------------------------------------------------------
 0039               tibasic.32x24:
-0040 70D4 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     70D6 000C 
-     70D8 0006 
-     70DA 0007 
-     70DC 0020 
+0040 70DC 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     70DE 000C 
+     70E0 0006 
+     70E2 0007 
+     70E4 0020 
 0041               *
 0042               * ; VDP#0 Control bits
 0043               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -5757,11 +5761,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0064               * TI Basic mode (32 columns/30 rows) - F18A
 0065               *--------------------------------------------------------------
 0066               tibasic.32x30:
-0067 70DE 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     70E0 000C 
-     70E2 0006 
-     70E4 0007 
-     70E6 0020 
+0067 70E6 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     70E8 000C 
+     70EA 0006 
+     70EC 0007 
+     70EE 0020 
 0068               *
 0069               * ; VDP#0 Control bits
 0070               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -5786,64 +5790,64 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0089               
 0090               
 0091               romsat:
-0092 70E8 0000             data  >0000,>0201             ; Cursor YX, initial shape and colour
-     70EA 0201 
-0093 70EC 0000             data  >0000,>0301             ; Current line indicator
-     70EE 0301 
-0094 70F0 0820             data  >0820,>0401             ; Current line indicator
-     70F2 0401 
+0092 70F0 0000             data  >0000,>0201             ; Cursor YX, initial shape and colour
+     70F2 0201 
+0093 70F4 0000             data  >0000,>0301             ; Current line indicator
+     70F6 0301 
+0094 70F8 0820             data  >0820,>0401             ; Current line indicator
+     70FA 0401 
 0095               nosprite:
-0096 70F4 D000             data  >d000                   ; End-of-Sprites list
+0096 70FC D000             data  >d000                   ; End-of-Sprites list
 0097               
 0098               
 0099               ***************************************************************
 0100               * SAMS page layout table for Stevie (16 words)
 0101               *--------------------------------------------------------------
 0102               mem.sams.layout.data:
-0103 70F6 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     70F8 0002 
-0104 70FA 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     70FC 0003 
-0105 70FE A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     7100 000A 
+0103 70FE 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     7100 0002 
+0104 7102 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     7104 0003 
+0105 7106 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     7108 000A 
 0106               
-0107 7102 B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
-     7104 0010 
+0107 710A B000             data  >b000,>0010           ; >b000-bfff, SAMS page >10
+     710C 0010 
 0108                                                   ; \ The index can allocate
 0109                                                   ; / pages >10 to >2f.
 0110               
-0111 7106 C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
-     7108 0030 
+0111 710E C000             data  >c000,>0030           ; >c000-cfff, SAMS page >30
+     7110 0030 
 0112                                                   ; \ Editor buffer can allocate
 0113                                                   ; / pages >30 to >ff.
 0114               
-0115 710A D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-     710C 000D 
-0116 710E E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
-     7110 000E 
-0117 7112 F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-     7114 000F 
+0115 7112 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+     7114 000D 
+0116 7116 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+     7118 000E 
+0117 711A F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+     711C 000F 
 0118               
 0119               ***************************************************************
 0120               * SAMS page layout table for TI Basic (16 words)
 0121               *--------------------------------------------------------------
 0122               mem.sams.tibasic:
-0123 7116 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     7118 0002 
-0124 711A 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     711C 0003 
-0125 711E A000             data  >a000,>000a           ; >a000-afff, SAMS page >04
-     7120 000A 
-0126 7122 B000             data  >b000,>0004           ; >b000-bfff, SAMS page >05
-     7124 0004 
-0127 7126 C000             data  >c000,>0005           ; >c000-cfff, SAMS page >06
-     7128 0005 
-0128 712A D000             data  >d000,>0006           ; >d000-dfff, SAMS page >07
-     712C 0006 
-0129 712E E000             data  >e000,>0007           ; >e000-efff, SAMS page >08
-     7130 0007 
-0130 7132 F000             data  >f000,>0008           ; >f000-ffff, SAMS page >09
-     7134 0008 
+0123 711E 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     7120 0002 
+0124 7122 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     7124 0003 
+0125 7126 A000             data  >a000,>000a           ; >a000-afff, SAMS page >04
+     7128 000A 
+0126 712A B000             data  >b000,>0004           ; >b000-bfff, SAMS page >05
+     712C 0004 
+0127 712E C000             data  >c000,>0005           ; >c000-cfff, SAMS page >06
+     7130 0005 
+0128 7132 D000             data  >d000,>0006           ; >d000-dfff, SAMS page >07
+     7134 0006 
+0129 7136 E000             data  >e000,>0007           ; >e000-efff, SAMS page >08
+     7138 0007 
+0130 713A F000             data  >f000,>0008           ; >f000-ffff, SAMS page >09
+     713C 0008 
 0131               
 0132               
 0133               
@@ -5899,61 +5903,61 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0183               tv.colorscheme.table:
 0184                       ;                             ; #
 0185                       ;      ABCD  EFGH  IJKL  MNOP ; -
-0186 7136 F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
-     7138 F171 
-     713A 1B1F 
-     713C 71B1 
-0187 713E A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
-     7140 F0FF 
-     7142 1F1A 
-     7144 F1FF 
-0188 7146 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+0186 713E F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
+     7140 F171 
+     7142 1B1F 
+     7144 71B1 
+0187 7146 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
      7148 F0FF 
-     714A 1F12 
-     714C F1F6 
-0189 714E F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
-     7150 1E11 
-     7152 1A17 
-     7154 1E11 
-0190 7156 E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
-     7158 E1FF 
-     715A 1F1E 
-     715C E1FF 
-0191 715E 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
-     7160 1016 
-     7162 1B71 
-     7164 1711 
-0192 7166 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
-     7168 1011 
-     716A F1F1 
-     716C 1F11 
-0193 716E 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
-     7170 A1FF 
-     7172 1F1F 
-     7174 F11F 
-0194 7176 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
-     7178 12FF 
-     717A 1B12 
-     717C 12FF 
-0195 717E F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
-     7180 E1FF 
-     7182 1B1F 
-     7184 F131 
+     714A 1F1A 
+     714C F1FF 
+0188 714E 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+     7150 F0FF 
+     7152 1F12 
+     7154 F1F6 
+0189 7156 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
+     7158 1E11 
+     715A 1A17 
+     715C 1E11 
+0190 715E E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
+     7160 E1FF 
+     7162 1F1E 
+     7164 E1FF 
+0191 7166 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
+     7168 1016 
+     716A 1B71 
+     716C 1711 
+0192 716E 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
+     7170 1011 
+     7172 F1F1 
+     7174 1F11 
+0193 7176 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
+     7178 A1FF 
+     717A 1F1F 
+     717C F11F 
+0194 717E 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
+     7180 12FF 
+     7182 1B12 
+     7184 12FF 
+0195 7186 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
+     7188 E1FF 
+     718A 1B1F 
+     718C F131 
 0196                       even
 0197               
 0198               tv.tabs.table:
-0199 7186 0007             byte  0,7,12,25               ; \   Default tab positions as used
-     7188 0C19 
-0200 718A 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
-     718C 3B4F 
-0201 718E FF00             byte  >ff,0,0,0               ; |
-     7190 0000 
-0202 7192 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
-     7194 0000 
-0203 7196 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+0199 718E 0007             byte  0,7,12,25               ; \   Default tab positions as used
+     7190 0C19 
+0200 7192 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+     7194 3B4F 
+0201 7196 FF00             byte  >ff,0,0,0               ; |
      7198 0000 
+0202 719A 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+     719C 0000 
+0203 719E 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+     71A0 0000 
 0204                       even
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0046                       ;-----------------------------------------------------------------------
 0047                       ; Stubs
 0048                       ;-----------------------------------------------------------------------
@@ -5961,7 +5965,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0050                       ;-----------------------------------------------------------------------
 0051                       ; Bank full check
 0052                       ;-----------------------------------------------------------------------
@@ -6009,7 +6013,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b7.asm.649018
+**** **** ****     > stevie_b7.asm.697708
 0061                                                   ; Vector table bank 7
 0062               
 0063               *--------------------------------------------------------------
@@ -6017,7 +6021,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0065               *--------------------------------------------------------------
 0066      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
 0067      0004     spfbck  equ   >04                   ; Screen background color.
-0068      70CA     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0068      70D2     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
 0069      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 0070      0050     colrow  equ   80                    ; Columns per row
 0071      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
