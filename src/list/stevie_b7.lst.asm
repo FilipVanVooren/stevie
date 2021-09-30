@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 210930-1069628
+0009               * File: stevie_b7.asm               ; Version 210930-1097815
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * Empty
@@ -51,7 +51,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0034               ; device.f18a             equ  0       ; F18a GPU
 0035               ; device.9938             equ  1       ; 9938 GPU
 0036               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -79,7 +79,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -418,7 +418,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Heap                                @>f000-ffff  (4096 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     heap.top          equ  >f000           ; Top of heap
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 **** **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -541,7 +541,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118               * Special keys
 0119               *---------------------------------------------------------------
 0120      000D     key.enter     equ >0d               ; enter
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -592,11 +592,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035               
 0043               
 0044 6010 0B53             byte  11
-0045 6011 ....             text  'STEVIE 1.1V'
+0045 6011 ....             text  'STEVIE 1.1W'
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1321,7 +1321,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 621C 1842             byte  24
-0260 621D ....             text  'Build-ID  210930-1069628'
+0260 621D ....             text  'Build-ID  210930-1097815'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5684,7 +5684,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      70CE 0040 
 0370 70D0 0460  28         b     @main                 ; Give control to main program
      70D2 6046 
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0045                       copy  "data.constants.asm"  ; Need some constants for SAMS layout
 **** **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -5810,154 +5810,172 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      7106 0003 
 0105 7108 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
      710A 000A 
-0106               
-0107 710C B000             data  >b000,>0020           ; >b000-bfff, SAMS page >20
+0106 710C B000             data  >b000,>0020           ; >b000-bfff, SAMS page >20
      710E 0020 
-0108                                                   ; \ The index can allocate
-0109                                                   ; / pages >20 to >3f.
-0110               
-0111 7110 C000             data  >c000,>0040           ; >c000-cfff, SAMS page >40
+0107                                                   ;   Index can allocate
+0108                                                   ;   pages >20 to >3f.
+0109 7110 C000             data  >c000,>0040           ; >c000-cfff, SAMS page >40
      7112 0040 
-0112                                                   ; \ Editor buffer can allocate
-0113                                                   ; / pages >40 to >ff.
-0114               
-0115 7114 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+0110                                                   ;   Editor buffer can allocate
+0111                                                   ;   pages >40 to >ff.
+0112 7114 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
      7116 000D 
-0116 7118 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+0113 7118 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
      711A 000E 
-0117 711C F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+0114 711C F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
      711E 000F 
-0118               
-0119               ***************************************************************
-0120               * SAMS page layout table for TI Basic (16 words)
-0121               *--------------------------------------------------------------
-0122               mem.sams.tibasic:
-0123 7120 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+0115               
+0116               
+0117               ***************************************************************
+0118               * SAMS page layout table for calling external progam (16 words)
+0119               *--------------------------------------------------------------
+0120               mem.sams.external:
+0121 7120 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
      7122 0002 
-0124 7124 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+0122 7124 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
      7126 0003 
-0125 7128 A000             data  >a000,>000a           ; >a000-afff, SAMS page >04
+0123 7128 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
      712A 000A 
-0126 712C B000             data  >b000,>0004           ; >b000-bfff, SAMS page >05
-     712E 0004 
-0127 7130 C000             data  >c000,>0005           ; >c000-cfff, SAMS page >06
-     7132 0005 
-0128 7134 D000             data  >d000,>0006           ; >d000-dfff, SAMS page >07
-     7136 0006 
-0129 7138 E000             data  >e000,>0007           ; >e000-efff, SAMS page >08
-     713A 0007 
-0130 713C F000             data  >f000,>0008           ; >f000-ffff, SAMS page >09
-     713E 0008 
-0131               
-0132               
-0133               
-0134               
-0135               
-0136               ***************************************************************
-0137               * Stevie color schemes table
-0138               *--------------------------------------------------------------
-0139               * Word 1
-0140               * A  MSB  high-nibble    Foreground color text line in frame buffer
-0141               * B  MSB  low-nibble     Background color text line in frame buffer
-0142               * C  LSB  high-nibble    Foreground color top/bottom line
-0143               * D  LSB  low-nibble     Background color top/bottom line
-0144               *
-0145               * Word 2
-0146               * E  MSB  high-nibble    Foreground color cmdb pane
-0147               * F  MSB  low-nibble     Background color cmdb pane
-0148               * G  LSB  high-nibble    Cursor foreground color cmdb pane
-0149               * H  LSB  low-nibble     Cursor foreground color frame buffer
-0150               *
-0151               * Word 3
-0152               * I  MSB  high-nibble    Foreground color busy top/bottom line
-0153               * J  MSB  low-nibble     Background color busy top/bottom line
-0154               * K  LSB  high-nibble    Foreground color marked line in frame buffer
-0155               * L  LSB  low-nibble     Background color marked line in frame buffer
-0156               *
-0157               * Word 4
-0158               * M  MSB  high-nibble    Foreground color command buffer header line
-0159               * N  MSB  low-nibble     Background color command buffer header line
-0160               * O  LSB  high-nibble    Foreground color line+column indicator frame buffer
-0161               * P  LSB  low-nibble     Foreground color ruler frame buffer
-0162               *
-0163               * Colors
-0164               * 0  Transparant
-0165               * 1  black
-0166               * 2  Green
-0167               * 3  Light Green
-0168               * 4  Blue
-0169               * 5  Light Blue
-0170               * 6  Dark Red
-0171               * 7  Cyan
-0172               * 8  Red
-0173               * 9  Light Red
-0174               * A  Yellow
-0175               * B  Light Yellow
-0176               * C  Dark Green
-0177               * D  Magenta
-0178               * E  Grey
-0179               * F  White
-0180               *--------------------------------------------------------------
-0181      000A     tv.colorscheme.entries   equ 10 ; Entries in table
-0182               
-0183               tv.colorscheme.table:
-0184                       ;                             ; #
-0185                       ;      ABCD  EFGH  IJKL  MNOP ; -
-0186 7140 F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
-     7142 F171 
-     7144 1B1F 
-     7146 71B1 
-0187 7148 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
-     714A F0FF 
-     714C 1F1A 
-     714E F1FF 
-0188 7150 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
-     7152 F0FF 
-     7154 1F12 
-     7156 F1F6 
-0189 7158 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
-     715A 1E11 
-     715C 1A17 
-     715E 1E11 
-0190 7160 E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
-     7162 E1FF 
-     7164 1F1E 
-     7166 E1FF 
-0191 7168 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
-     716A 1016 
-     716C 1B71 
-     716E 1711 
-0192 7170 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
-     7172 1011 
-     7174 F1F1 
-     7176 1F11 
-0193 7178 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
-     717A A1FF 
-     717C 1F1F 
-     717E F11F 
-0194 7180 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
-     7182 12FF 
-     7184 1B12 
-     7186 12FF 
-0195 7188 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
-     718A E1FF 
-     718C 1B1F 
-     718E F131 
-0196                       even
-0197               
-0198               tv.tabs.table:
-0199 7190 0007             byte  0,7,12,25               ; \   Default tab positions as used
-     7192 0C19 
-0200 7194 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
-     7196 3B4F 
-0201 7198 FF00             byte  >ff,0,0,0               ; |
-     719A 0000 
-0202 719C 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
-     719E 0000 
-0203 71A0 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
-     71A2 0000 
-0204                       even
-**** **** ****     > stevie_b7.asm.1069628
+0124 712C B000             data  >b000,>0030           ; >b000-bfff, SAMS page >30
+     712E 0030 
+0125 7130 C000             data  >c000,>0031           ; >c000-cfff, SAMS page >31
+     7132 0031 
+0126 7134 D000             data  >d000,>0032           ; >d000-dfff, SAMS page >32
+     7136 0032 
+0127 7138 E000             data  >e000,>0033           ; >e000-efff, SAMS page >33
+     713A 0033 
+0128 713C F000             data  >f000,>0034           ; >f000-ffff, SAMS page >34
+     713E 0034 
+0129               
+0130               
+0131               ***************************************************************
+0132               * SAMS page layout table for TI Basic (16 words)
+0133               *--------------------------------------------------------------
+0134               mem.sams.tibasic:
+0135 7140 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     7142 0002 
+0136 7144 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     7146 0003 
+0137 7148 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     714A 000A 
+0138 714C B000             data  >b000,>0004           ; >b000-bfff, SAMS page >04
+     714E 0004 
+0139 7150 C000             data  >c000,>0005           ; >c000-cfff, SAMS page >05
+     7152 0005 
+0140 7154 D000             data  >d000,>0006           ; >d000-dfff, SAMS page >06
+     7156 0006 
+0141 7158 E000             data  >e000,>0007           ; >e000-efff, SAMS page >07
+     715A 0007 
+0142 715C F000             data  >f000,>0008           ; >f000-ffff, SAMS page >08
+     715E 0008 
+0143               
+0144               
+0145               
+0146               ***************************************************************
+0147               * Stevie color schemes table
+0148               *--------------------------------------------------------------
+0149               * Word 1
+0150               * A  MSB  high-nibble    Foreground color text line in frame buffer
+0151               * B  MSB  low-nibble     Background color text line in frame buffer
+0152               * C  LSB  high-nibble    Foreground color top/bottom line
+0153               * D  LSB  low-nibble     Background color top/bottom line
+0154               *
+0155               * Word 2
+0156               * E  MSB  high-nibble    Foreground color cmdb pane
+0157               * F  MSB  low-nibble     Background color cmdb pane
+0158               * G  LSB  high-nibble    Cursor foreground color cmdb pane
+0159               * H  LSB  low-nibble     Cursor foreground color frame buffer
+0160               *
+0161               * Word 3
+0162               * I  MSB  high-nibble    Foreground color busy top/bottom line
+0163               * J  MSB  low-nibble     Background color busy top/bottom line
+0164               * K  LSB  high-nibble    Foreground color marked line in frame buffer
+0165               * L  LSB  low-nibble     Background color marked line in frame buffer
+0166               *
+0167               * Word 4
+0168               * M  MSB  high-nibble    Foreground color command buffer header line
+0169               * N  MSB  low-nibble     Background color command buffer header line
+0170               * O  LSB  high-nibble    Foreground color line+column indicator frame buffer
+0171               * P  LSB  low-nibble     Foreground color ruler frame buffer
+0172               *
+0173               * Colors
+0174               * 0  Transparant
+0175               * 1  black
+0176               * 2  Green
+0177               * 3  Light Green
+0178               * 4  Blue
+0179               * 5  Light Blue
+0180               * 6  Dark Red
+0181               * 7  Cyan
+0182               * 8  Red
+0183               * 9  Light Red
+0184               * A  Yellow
+0185               * B  Light Yellow
+0186               * C  Dark Green
+0187               * D  Magenta
+0188               * E  Grey
+0189               * F  White
+0190               *--------------------------------------------------------------
+0191      000A     tv.colorscheme.entries   equ 10 ; Entries in table
+0192               
+0193               tv.colorscheme.table:
+0194                       ;                             ; #
+0195                       ;      ABCD  EFGH  IJKL  MNOP ; -
+0196 7160 F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
+     7162 F171 
+     7164 1B1F 
+     7166 71B1 
+0197 7168 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
+     716A F0FF 
+     716C 1F1A 
+     716E F1FF 
+0198 7170 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+     7172 F0FF 
+     7174 1F12 
+     7176 F1F6 
+0199 7178 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
+     717A 1E11 
+     717C 1A17 
+     717E 1E11 
+0200 7180 E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
+     7182 E1FF 
+     7184 1F1E 
+     7186 E1FF 
+0201 7188 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
+     718A 1016 
+     718C 1B71 
+     718E 1711 
+0202 7190 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
+     7192 1011 
+     7194 F1F1 
+     7196 1F11 
+0203 7198 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
+     719A A1FF 
+     719C 1F1F 
+     719E F11F 
+0204 71A0 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
+     71A2 12FF 
+     71A4 1B12 
+     71A6 12FF 
+0205 71A8 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
+     71AA E1FF 
+     71AC 1B1F 
+     71AE F131 
+0206                       even
+0207               
+0208               tv.tabs.table:
+0209 71B0 0007             byte  0,7,12,25               ; \   Default tab positions as used
+     71B2 0C19 
+0210 71B4 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+     71B6 3B4F 
+0211 71B8 FF00             byte  >ff,0,0,0               ; |
+     71BA 0000 
+0212 71BC 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+     71BE 0000 
+0213 71C0 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+     71C2 0000 
+0214                       even
+**** **** ****     > stevie_b7.asm.1097815
 0046                       ;-----------------------------------------------------------------------
 0047                       ; Stubs
 0048                       ;-----------------------------------------------------------------------
@@ -5965,7 +5983,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0050                       ;-----------------------------------------------------------------------
 0051                       ; Bank full check
 0052                       ;-----------------------------------------------------------------------
@@ -6013,7 +6031,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b7.asm.1069628
+**** **** ****     > stevie_b7.asm.1097815
 0061                                                   ; Vector table bank 7
 0062               
 0063               *--------------------------------------------------------------

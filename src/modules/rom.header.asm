@@ -34,17 +34,17 @@ rom.program1:
         .ifeq device.f18a,1
 
            .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.1V (FG99ADV)'
+              #string 'STEVIE 1.1W (FG99ADV)'
            .else
-              #string 'STEVIE 1.1V'
+              #string 'STEVIE 1.1W'
            .endif
 
         .else
 
            .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.1V (9938+FG99ADV)'
+              #string 'STEVIE 1.1W (9938+FG99ADV)'
            .else
-              #string 'STEVIE 1.1V (9938)'
+              #string 'STEVIE 1.1W (9938)'
            .endif
 
         .endif

@@ -103,18 +103,30 @@ mem.sams.layout.data:
         data  >2000,>0002           ; >2000-2fff, SAMS page >02
         data  >3000,>0003           ; >3000-3fff, SAMS page >03
         data  >a000,>000a           ; >a000-afff, SAMS page >0a
-
         data  >b000,>0020           ; >b000-bfff, SAMS page >20
-                                    ; \ The index can allocate
-                                    ; / pages >20 to >3f.
-                                    
+                                    ;   Index can allocate
+                                    ;   pages >20 to >3f.                                    
         data  >c000,>0040           ; >c000-cfff, SAMS page >40
-                                    ; \ Editor buffer can allocate
-                                    ; / pages >40 to >ff.
-                                
+                                    ;   Editor buffer can allocate
+                                    ;   pages >40 to >ff.                                
         data  >d000,>000d           ; >d000-dfff, SAMS page >0d
         data  >e000,>000e           ; >e000-efff, SAMS page >0e
         data  >f000,>000f           ; >f000-ffff, SAMS page >0f        
+
+
+***************************************************************
+* SAMS page layout table for calling external progam (16 words)
+*--------------------------------------------------------------
+mem.sams.external:
+        data  >2000,>0002           ; >2000-2fff, SAMS page >02
+        data  >3000,>0003           ; >3000-3fff, SAMS page >03
+        data  >a000,>000a           ; >a000-afff, SAMS page >0a
+        data  >b000,>0030           ; >b000-bfff, SAMS page >30
+        data  >c000,>0031           ; >c000-cfff, SAMS page >31
+        data  >d000,>0032           ; >d000-dfff, SAMS page >32
+        data  >e000,>0033           ; >e000-efff, SAMS page >33
+        data  >f000,>0034           ; >f000-ffff, SAMS page >34
+
 
 ***************************************************************
 * SAMS page layout table for TI Basic (16 words)
@@ -122,14 +134,12 @@ mem.sams.layout.data:
 mem.sams.tibasic:
         data  >2000,>0002           ; >2000-2fff, SAMS page >02
         data  >3000,>0003           ; >3000-3fff, SAMS page >03
-        data  >a000,>000a           ; >a000-afff, SAMS page >04
-        data  >b000,>0004           ; >b000-bfff, SAMS page >05                 
-        data  >c000,>0005           ; >c000-cfff, SAMS page >06                                
-        data  >d000,>0006           ; >d000-dfff, SAMS page >07
-        data  >e000,>0007           ; >e000-efff, SAMS page >08
-        data  >f000,>0008           ; >f000-ffff, SAMS page >09
-
-
+        data  >a000,>000a           ; >a000-afff, SAMS page >0a
+        data  >b000,>0004           ; >b000-bfff, SAMS page >04
+        data  >c000,>0005           ; >c000-cfff, SAMS page >05
+        data  >d000,>0006           ; >d000-dfff, SAMS page >06
+        data  >e000,>0007           ; >e000-efff, SAMS page >07
+        data  >f000,>0008           ; >f000-ffff, SAMS page >08
 
 
 

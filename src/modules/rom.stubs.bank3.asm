@@ -3,27 +3,6 @@
 
 
 ***************************************************************
-* Stub for "vdp.patterns.dump"
-* bank5 vec.1
-********|*****|*********************|**************************
-vdp.patterns.dump:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Dump VDP patterns
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank5.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-***************************************************************
 * Stub for "edb.line.pack"
 * bank1 vec.10
 ********|*****|*********************|**************************

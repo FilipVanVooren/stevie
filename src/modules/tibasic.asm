@@ -24,24 +24,30 @@ tibasic:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Setup SAMS for TI Basic
+        ; Setup SAMS memory
         ;-------------------------------------------------------
         bl    @sams.layout.copy     ; Backup Stevie SAMS page layout
               data tv.sams.2000     ; \ @i = target address of 8 words table
                                     ; /      that contains SAMS layout
 
+
+        bl    @scroff               ; Turn off screen
+
         bl    @sams.layout          
-              data mem.sams.tibasic ; Load SAMS page layout for TI Basic
+              data mem.sams.external 
+                                    ; Load SAMS page layout for calling an
+                                    ; external program.
 
         bl    @cpyv2m
-              data vdp.sit.base,>f000,vdp.sit.size
-                                    ; Dump Stevie SIT 80x30 to RAM buffer
-                                    ; >f000-f95f (SAMS page #08)
+              data >0000,>b000,16384
+                                    ; Copy 16K of Stevie VDP memory to
+                                    ; RAM buffer >b000->efff (SAMS pages #30-33) 
+
+        bl    @sams.layout          
+              data mem.sams.tibasic ; Load SAMS page layout for TI Basic
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x24)
         ;-------------------------------------------------------
-        bl    @scroff               ; Turn off screen
-
         bl    @f18rst               ; Reset and lock the F18A
 
         bl    @vidtab               ; Load video mode table into VDP
@@ -187,12 +193,12 @@ tibasic.return:
 
         bl    @cpu.scrpad.pgin      ; Page in copy of Stevie scratch pad memory 
               data scrpad.copy      ; and activate workspace at >8300
-              
-        bl    @scroff               ; Turn screen off
-        bl    @mute                 ; Mute sound generators
+
+        bl    @mute                 ; Mute sound generators              
         ;-------------------------------------------------------
         ; Cleanup after return from TI Basic
         ;-------------------------------------------------------
+        bl    @scroff               ; Turn screen off
         bl    @cpyv2m
               data >0000,>b000,16384
                                     ; Dump TI Basic 16K VDP memory to
@@ -202,12 +208,16 @@ tibasic.return:
         ori   tmp1,1                ; | Set TI Basic reentry flag
         mov   tmp1,@tibasic.status  ; /
 
-        bl    @cpym2v
-              data vdp.sit.base,>f000,vdp.sit.size
-                                    ; Dump SIT to VDP from RAM buffer
-                                    ; >f000 (SAMS page #08)     
 
-        bl    @vdp.patterns.dump    ; Load sprite and character patterns                                   
+        bl    @sams.layout          
+              data mem.sams.external 
+                                    ; Load SAMS page layout for returning from
+                                    ; external program.
+
+        bl    @cpym2v
+              data >0000,>b000,16384
+                                    ; Restore Stevie 16K to VDP from RAM buffer
+                                    ; >f000 (SAMS page #08)     
         ;-------------------------------------------------------
         ; Restore SAMS memory layout for Stevie
         ;-------------------------------------------------------

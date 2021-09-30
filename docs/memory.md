@@ -1,3 +1,36 @@
+# SAMS memory layout
+
+Layout of SAMS memory banks during different phases in Stevie execution lifecycle.
+
+* Phase "Stevie"  
+  This is where main memory is allocated while the editor is running.
+
+* Phase "External"  
+  - Save Stevie VDP and memory before executing external code.
+  - Restore Stevie VDP and memory after executing external code.  
+  - ....    
+
+* Phase "TI Basic"
+  The TI Basic interpreter is running.
+
+
+Example: when executing TI Basic from Stevie following sequence is triggered:   
+Stevie -> External -> TI Basic -> External -> Stevie
+
+
+## SAMS banks 
+
+
+| Phase       | >2000-2fff | >3000-3fff | >a000-afff | >b000-bfff | >c000-cfff | >d000-dfff | >e000-efff | >f000-ffff |  
+|-------------|------------|------------|------------|------------|------------|------------|------------|------------|  
+| Stevie      |      2     |      3     |      a     |   20-2f    |    40-ff   |      d     |      e     |      f     |  
+| External    |      2     |      3     |      a     |     30     |     31     |     32     |     33     |     34     |  
+| TI Basic    |      2     |      3     |      a     |     4      |      5     |      6     |      7     |      8     |  
+
+
+     
+
+
 # Low memory expansion
 
 ## SAMS page #02: >2000-2FFF / Resident modules
