@@ -104,13 +104,13 @@ mem.sams.layout.data:
         data  >3000,>0003           ; >3000-3fff, SAMS page >03
         data  >a000,>000a           ; >a000-afff, SAMS page >0a
 
-        data  >b000,>0010           ; >b000-bfff, SAMS page >10                 
+        data  >b000,>0020           ; >b000-bfff, SAMS page >20
                                     ; \ The index can allocate
-                                    ; / pages >10 to >2f.
+                                    ; / pages >20 to >3f.
                                     
-        data  >c000,>0030           ; >c000-cfff, SAMS page >30
+        data  >c000,>0040           ; >c000-cfff, SAMS page >40
                                     ; \ Editor buffer can allocate
-                                    ; / pages >30 to >ff.
+                                    ; / pages >40 to >ff.
                                 
         data  >d000,>000d           ; >d000-dfff, SAMS page >0d
         data  >e000,>000e           ; >e000-efff, SAMS page >0e

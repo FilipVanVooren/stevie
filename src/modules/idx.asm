@@ -10,7 +10,7 @@
 *    | MSB | LSB |   
 *    +-----|-----+   LSB = Pointer offset 00-ff.
 *                      
-*  MSB = SAMS Page 00-ff
+*  MSB = SAMS Page 40-ff
 *        Allows addressing of up to 256 4K SAMS pages (1024 KB)
 *    
 *  LSB = Pointer offset in range 00-ff
@@ -24,6 +24,11 @@
 *        All support routines must assure that length-prefixed string in
 *        Editor buffer always start on a 16 byte boundary for being
 *        accessible via index.
+*
+*
+* The index starts at SAMS page >20 and can allocate up to page >3f 
+* for a total of 32 pages (128 K). With that up to 65536 lines of text 
+* can be addressed.
 ***************************************************************
 
 

@@ -178,7 +178,7 @@ tibasic.return:
         lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
 
         
-        movb  @w$ffff,@>8375        ; Reset keycode
+        movb  @w$ffff,@>8375        ; Reset keycode     
 
         bl    @cpym2m
               data >8300,cpu.scrpad.tgt,256
@@ -189,6 +189,7 @@ tibasic.return:
               data scrpad.copy      ; and activate workspace at >8300
               
         bl    @scroff               ; Turn screen off
+        bl    @mute                 ; Mute sound generators
         ;-------------------------------------------------------
         ; Cleanup after return from TI Basic
         ;-------------------------------------------------------
@@ -204,7 +205,9 @@ tibasic.return:
         bl    @cpym2v
               data vdp.sit.base,>f000,vdp.sit.size
                                     ; Dump SIT to VDP from RAM buffer
-                                    ; >f000 (SAMS page #08)                                    
+                                    ; >f000 (SAMS page #08)     
+
+        bl    @vdp.patterns.dump    ; Load sprite and character patterns                                   
         ;-------------------------------------------------------
         ; Restore SAMS memory layout for Stevie
         ;-------------------------------------------------------
