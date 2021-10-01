@@ -110,7 +110,7 @@ idx.entry.insert.reorg:
         ;------------------------------------------------------
 idx.entry.insert.reorg.complex:        
         bl    @_idx.sams.mapcolumn.on
-                                    ; Index in continious memory region    
+                                    ; Index in continuous memory region    
                                     ; b000 - ffff (5 SAMS pages)            
 
         mov   @parm2,tmp0           ; Last line number in editor buffer

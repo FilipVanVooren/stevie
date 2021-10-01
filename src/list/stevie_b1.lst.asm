@@ -11084,7 +11084,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0111               idx.entry.insert.reorg.complex:
 0112 6DA0 06A0  32         bl    @_idx.sams.mapcolumn.on
      6DA2 31BE 
-0113                                                   ; Index in continious memory region
+0113                                                   ; Index in continuous memory region
 0114                                                   ; b000 - ffff (5 SAMS pages)
 0115               
 0116 6DA4 C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
