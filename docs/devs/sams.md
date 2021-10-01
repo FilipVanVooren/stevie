@@ -5,12 +5,14 @@
 Stevie requires a 1MB SAMS card to run.  
 
 Depending on the mode currently active, SAMS banks are constantly being paged-in
-and out. This is for the most handled via the subroutines in the spectra2 module 
+and out.  
+This is for the most handled via the subroutines in the spectra2 module 
 ``/modules/cpu_sams_support.asm``
 
-There are some additional higher-level modules in stevie for dealing with SAMS
+There are some additional high-level modules in stevie for dealing with SAMS
 banks.
 
+* ``/modules/mem.asm``
 
 ## Editor mode
 

@@ -40,8 +40,8 @@ tibasic:
 
         bl    @cpyv2m
               data >0000,>b000,16384
-                                    ; Copy 16K of Stevie VDP memory to
-                                    ; RAM buffer >b000->efff (SAMS pages #30-33) 
+                                    ; Copy Stevie 16K VDP memory to RAM buffer
+                                    ; buffer >b000->efff                              
 
         bl    @sams.layout          
               data mem.sams.tibasic ; Load SAMS page layout for TI Basic
@@ -201,8 +201,8 @@ tibasic.return:
         bl    @scroff               ; Turn screen off
         bl    @cpyv2m
               data >0000,>b000,16384
-                                    ; Dump TI Basic 16K VDP memory to
-                                    ; RAM buffer >b000->rfff (SAMS pages #04-07)
+                                    ; Dump TI Basic 16K VDP memory to ram buffer
+                                    ; >b000->efff
 
         mov   @tibasic.status,tmp1  ; \                                  
         ori   tmp1,1                ; | Set TI Basic reentry flag
@@ -217,7 +217,7 @@ tibasic.return:
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore Stevie 16K to VDP from RAM buffer
-                                    ; >f000 (SAMS page #08)     
+                                    ; >b000->efff
         ;-------------------------------------------------------
         ; Restore SAMS memory layout for Stevie
         ;-------------------------------------------------------
