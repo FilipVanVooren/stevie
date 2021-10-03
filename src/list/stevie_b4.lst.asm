@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 210930-1095384
+0009               * File: stevie_b4.asm               ; Version 211003-1622071
 0010               *
 0011               * Bank 4 "Janine"
 0012               * Framebuffer handling
@@ -16,7 +16,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0014                       copy  "rom.build.asm"       ; Cartridge build options
 **** **** ****     > rom.build.asm
 0001               * FILE......: rom.build.asm
-0002               * Purpose...: Equates with cartridge build options
+0002               * Purpose...: Cartridge build options
 0003               
 0004               *--------------------------------------------------------------
 0005               * Skip unused spectra2 code modules for reduced code size
@@ -37,21 +37,35 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0020      0001     skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 0021      0001     skip_random_generator     equ  1       ; Skip random functions
 0022      0001     skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
-0023               *--------------------------------------------------------------
-0024               * Classic99 F18a 24x80, no FG99 advanced mode
-0025               *--------------------------------------------------------------
-0026      0001     device.f18a               equ  1       ; F18a GPU
-0027      0000     device.9938               equ  0       ; 9938 GPU
-0028      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode on
-0029               
-0030               
-0031               *--------------------------------------------------------------
-0032               * JS99er F18a 30x80, FG99 advanced mode
-0033               *--------------------------------------------------------------
-0034               ; device.f18a             equ  0       ; F18a GPU
-0035               ; device.9938             equ  1       ; 9938 GPU
-0036               ; device.fg99.mode.adv    equ  1       ; FG99 advanced mode on
-**** **** ****     > stevie_b4.asm.1095384
+0023               
+0024               *--------------------------------------------------------------
+0025               * classic99 and JS99er emulators are mutually exclusive.
+0026               * At the time of writing JS99er has full F18a compatibility.
+0027               *
+0028               * When targetting the JS99er emulator or a real F18a + TI-99/4a
+0029               * then set the 'full_f18a_support' equate to 1.
+0030               *
+0031               * When targetting the classic99 emulator then set the
+0032               * 'full_f18a_support' equate to 0. This will activate the
+0033               * trimmed down 9938 version, that only works in classic99, but
+0034               * not on the real TI-99/4a yet.
+0035               *--------------------------------------------------------------
+0036      0001     full_f18a_support         equ  1       ; 30 rows mode with sprites
+0037               
+0038               
+0039               *--------------------------------------------------------------
+0040               * JS99er F18a 30x80, no FG99 advanced mode
+0041               *--------------------------------------------------------------
+0043      0001     device.f18a               equ  1       ; F18a GPU
+0044      0000     device.9938               equ  0       ; 9938 GPU
+0045      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
+0047               
+0048               
+0049               
+0050               *--------------------------------------------------------------
+0051               * Classic99 F18a 24x80, no FG99 advanced mode
+0052               *--------------------------------------------------------------
+**** **** ****     > stevie_b4.asm.1622071
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
 **** **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -79,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
 **** **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -418,7 +432,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0340               * Heap                                @>f000-ffff  (4096 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     heap.top          equ  >f000           ; Top of heap
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 **** **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -541,7 +555,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118               * Special keys
 0119               *---------------------------------------------------------------
 0120      000D     key.enter     equ >0d               ; enter
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -592,11 +606,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0035               
 0043               
 0044 6010 0B53             byte  11
-0045 6011 ....             text  'STEVIE 1.1W'
+0045 6011 ....             text  'STEVIE 1.1X'
 0046                       even
 0047               
 0049               
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1317,7 +1331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0257               
 0258               cpu.crash.msg.id
 0259 6216 1842             byte  24
-0260 6217 ....             text  'Build-ID  210930-1095384'
+0260 6217 ....             text  'Build-ID  211003-1622071'
 0261                       even
 0262               
 **** **** ****     > runlib.asm
@@ -5680,7 +5694,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
      70C8 0040 
 0370 70CA 0460  28         b     @main                 ; Give control to main program
      70CC 6046 
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0042                       copy  "ram.resident.asm"
 **** **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7277,7 +7291,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0196 7799 ....             text  'Color scheme:'
 0197                       even
 0198               
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
@@ -7396,7 +7410,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0087 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0088 6088 C2F9  30         mov   *stack+,r11           ; Pop r11
 0089 608A 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0063                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
 **** **** ****     > fb.null2char.asm
 0001               * FILE......: fb.null2char.asm
@@ -7484,7 +7498,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0076 60DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 60DC C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 60DE 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0064                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
 **** **** ****     > fb.tab.next.asm
 0001               * FILE......: fb.tab.next.asm
@@ -7627,7 +7641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0118 6164 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0119 6166 C2F9  30         mov   *stack+,r11           ; Pop R11
 0120 6168 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0065                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
 **** **** ****     > fb.ruler.asm
 0001               * FILE......: fb.ruler.asm
@@ -7715,7 +7729,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0070 61BC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0071 61BE C2F9  30         mov   *stack+,r11           ; Pop r11
 0072 61C0 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0066                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
 **** **** ****     > fb.colorlines.asm
 0001               * FILE......: fb.colorlines.asm
@@ -7849,7 +7863,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0111 624A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0112 624C C2F9  30         mov   *stack+,r11           ; Pop r11
 0113 624E 045B  20         b     *r11                  ; Return
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0067                       copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
 **** **** ****     > fb.vdpdump.asm
 0001               * FILE......: fb.vdpdump.asm
@@ -7938,7 +7952,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0072 629A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0073 629C C2F9  30         mov   *stack+,r11           ; Pop r11
 0074 629E 045B  20         b     *r11                  ; Return to caller
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0068                       ;-----------------------------------------------------------------------
 0069                       ; Stubs
 0070                       ;-----------------------------------------------------------------------
@@ -7946,7 +7960,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 **** **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0072                       ;-----------------------------------------------------------------------
 0073                       ; Bank full check
 0074                       ;-----------------------------------------------------------------------
@@ -7994,7 +8008,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 2.0.1
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-**** **** ****     > stevie_b4.asm.1095384
+**** **** ****     > stevie_b4.asm.1622071
 0083                                                   ; Vector table bank 4
 0084               
 0085               *--------------------------------------------------------------

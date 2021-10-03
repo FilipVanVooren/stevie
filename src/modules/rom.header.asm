@@ -31,20 +31,20 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        .ifeq device.f18a,1
+        .ifeq full_f18a_support,1
 
            .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.1W (FG99ADV)'
+              #string 'STEVIE 1.1X (FG99ADV)'
            .else
-              #string 'STEVIE 1.1W'
+              #string 'STEVIE 1.1X'
            .endif
 
         .else
 
            .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.1W (9938+FG99ADV)'
+              #string 'STEVIE 1.1X (9938+FG99ADV)'
            .else
-              #string 'STEVIE 1.1W (9938)'
+              #string 'STEVIE 1.1X (9938)'
            .endif
 
         .endif
