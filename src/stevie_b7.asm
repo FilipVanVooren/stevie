@@ -41,7 +41,7 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
 
-        copy  "%%spectra2%%/runlib.asm"
+        copy  "runlib.asm"
         copy  "data.constants.asm"  ; Need some constants for SAMS layout
         ;-----------------------------------------------------------------------
         ; Stubs

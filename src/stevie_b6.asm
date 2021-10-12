@@ -38,7 +38,7 @@ bankid  equ   bank6.rom             ; Set bank identifier to current bank
 * Step 2: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
         xorg  >2000                 ; Relocate to >2000
-        copy  "%%spectra2%%/runlib.asm"
+        copy  "runlib.asm"
         copy  "ram.resident.asm"        
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
