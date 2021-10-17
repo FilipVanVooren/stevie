@@ -174,16 +174,35 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         mov   @tv.ruler.visible,tmp0
         jeq   pane.action.colorscheme.fbdump.noruler
+        ;-------------------------------------------------------
+        ; Ruler visible on screen (TAT)
+        ;-------------------------------------------------------
         li    tmp0,vdp.fb.toprow.tat+80
                                     ; VDP start address (frame buffer area)
+
         li    tmp2,(pane.botrow-2)*80
                                     ; Number of bytes to fill
-        jmp   pane.action.colorscheme.fbdump
+        jmp   pane.action.colorscheme.checkcmdb
+
 pane.action.colorscheme.fbdump.noruler:        
+        ;-------------------------------------------------------
+        ; No ruler visible on screen (TAT)
+        ;-------------------------------------------------------
         li    tmp0,vdp.fb.toprow.tat
                                     ; VDP start address (frame buffer area)
         li    tmp2,(pane.botrow-1)*80
                                     ; Number of bytes to fill
+        ;-------------------------------------------------------
+        ; Adjust bottom of frame buffer if CMDB visible
+        ;-------------------------------------------------------
+pane.action.colorscheme.checkcmdb:
+        mov   @cmdb.visible,@cmdb.visible
+        jeq   pane.action.colorscheme.fbdump
+                                    ; Not visible, skip adjustment
+        ai    tmp2,-320             ; CMDB adjustment
+        ;-------------------------------------------------------
+        ; Dump colors to VDP (TAT)
+        ;-------------------------------------------------------
 pane.action.colorscheme.fbdump:
         mov   tmp3,tmp1             ; Get work copy of colors ABCD
         srl   tmp1,8                ; MSB to LSB (frame buffer colors)

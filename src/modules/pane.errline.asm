@@ -105,17 +105,29 @@ pane.errline.hide:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Hide command buffer pane
+        ; Get color combination
         ;------------------------------------------------------
-        bl    @errline.init         ; Clear error line
+        bl    @errline.init         ; Clear error line string in RAM        
 
+        mov   @cmdb.visible,tmp0
+        jeq   pane.errline.hide.fbcolor
+        ;------------------------------------------------------
+        ; CMDB pane color
+        ;------------------------------------------------------
+        mov   @tv.cmdb.hcolor,tmp0  ; Get colors of CMDB header line
+        jmp   !
+        ;------------------------------------------------------
+        ; Frame buffer color
+        ;------------------------------------------------------
+pane.errline.hide.fbcolor:
         mov   @tv.color,tmp0        ; Get colors
-        srl   tmp0,8                ; Right aligns
-        mov   tmp0,@parm1           ; set foreground/background color        
-
-
+        srl   tmp0,8                ; Get rid of status line colors
+        ;------------------------------------------------------
+        ; Dump colors
+        ;------------------------------------------------------      
+!       mov   tmp0,@parm1           ; set foreground/background color        
         li    tmp1,pane.botrow-1    ; 
-        mov   tmp1,@parm2           ; Error line on screen
+        mov   tmp1,@parm2           ; Position of error line on screen
 
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination

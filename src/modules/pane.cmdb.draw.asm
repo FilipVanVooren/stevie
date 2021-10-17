@@ -119,8 +119,6 @@ pane.cmdb.draw.marker.loop:
         ;------------------------------------------------------
         jmp   pane.cmdb.draw.marker.loop  
                                     ; Next iteration
-
-
         ;------------------------------------------------------
         ; Display pane hint in command buffer
         ;------------------------------------------------------

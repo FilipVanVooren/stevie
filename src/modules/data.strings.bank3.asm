@@ -28,7 +28,7 @@ txt.head.save      byte 19,1,1
 txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
                    byte 2
-txt.hint.save      #string ''
+txt.hint.save      #string ' '
 txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL=End'
 
 ;--------------------------------------------------------------
@@ -92,5 +92,5 @@ txt.head.basic     byte 14,1,1
 
 txt.info.basic     #string 'TI Basic   TI Extended Basic'
 pos.info.basic     byte 3,14,>ff
-txt.hint.basic     #string ''
+txt.hint.basic     #string ' '
 txt.keys.basic     #string 'F9-Back'

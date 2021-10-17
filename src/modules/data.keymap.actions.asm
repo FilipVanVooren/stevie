@@ -150,7 +150,7 @@ keymap_actions.editor:
 *---------------------------------------------------------------
 keymap_actions.cmdb:
         ;-------------------------------------------------------
-        ; Dialog: Stevie Menu
+        ; Dialog: Main Menu
         ;-------------------------------------------------------
         byte  key.uc.f, id.dialog.menu
         data  dialog.file
