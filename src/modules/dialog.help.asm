@@ -66,14 +66,6 @@ dialog.help.content:
         ;------------------------------------------------------
         ; Show About dialog
         ;------------------------------------------------------
-        bl    @hchar
-              byte 0,0,32,50      
-              data eol              ; Clear filename
-
-        bl    @putat      
-              byte   0,0
-              data   txt.stevie     ; Show Stevie version
-
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - 160
                                     ; Clear screen

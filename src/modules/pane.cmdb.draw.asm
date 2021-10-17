@@ -24,7 +24,7 @@ pane.cmdb.draw:
         ; Command buffer header line
         ;------------------------------------------------------
         mov   @cmdb.panhead,@parm1  ; Get string to display
-        li    tmp0,80
+        li    tmp0,67
         mov   tmp0,@parm2           ; Set requested length
         li    tmp0,1
         mov   tmp0,@parm3           ; Set character to fill
@@ -39,7 +39,13 @@ pane.cmdb.draw:
                                     ; /             output string                                    
 
         mov   @cmdb.yxtop,@wyx      ; \
-        mov   @outparm1,tmp1        ; | Display pane header
+        mov   @outparm1,tmp1        ; | Display left part of pane header
+        bl    @xutst0               ; / 
+
+        mov   @cmdb.yxtop,tmp0      ; \
+        ai    tmp0,68               ; | 
+        mov   tmp0,@wyx             ; |
+        li    tmp1,txt.stevie       ; | Display right part of pane heart
         bl    @xutst0               ; / 
         ;------------------------------------------------------
         ; Check dialog id
