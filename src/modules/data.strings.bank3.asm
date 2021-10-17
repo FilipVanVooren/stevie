@@ -66,7 +66,7 @@ txt.head.menu      byte 16,1,3
 
 txt.info.menu      #string 'File   Basic   Help   Quit'
 pos.info.menu      byte 0,7,15,22,>ff
-txt.hint.menu      #string ''
+txt.hint.menu      #string ' '
 txt.keys.menu      #string 'F9-Back'
 
 

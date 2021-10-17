@@ -224,7 +224,25 @@ pane.action.colorscheme.cmdbpane:
         li    tmp0,vdp.cmdb.toprow.tat + 80
                                     ; VDP start address (CMDB top line + 1)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
-        li    tmp2,3*80             ; Number of bytes to fill
+        li    tmp2,1*80             ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+
+        li    tmp0,vdp.cmdb.toprow.tat + 160
+                                    ; VDP start address (CMDB top line + 2)
+        mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
+        li    tmp2,1*80             ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+
+        li    tmp0,vdp.cmdb.toprow.tat + 240
+                                    ; VDP start address (CMDB top line + 3)
+        mov   tmp4,tmp1             ; Get work copy fg/bg color
+        li    tmp2,1*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
