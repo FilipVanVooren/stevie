@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b6.asm.7965
+     **** ****     > stevie_b6.asm.33499
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b6.asm               ; Version 211019-1909280
+0009               * File: stevie_b6.asm               ; Version 211019-1947030
 0010               *
 0011               * Bank 6 "Jenifer"
 0012               * Empty
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -432,7 +432,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0340               * Heap                                @>f000-ffff  (4096 bytes)
 0341               *--------------------------------------------------------------
 0342      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -555,7 +555,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0118               * Special keys
 0119               *---------------------------------------------------------------
 0120      000D     key.enter     equ >0d               ; enter
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -615,7 +615,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1374,7 +1374,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0257               
 0258               cpu.crash.msg.id
 0259 6216 18               byte  24
-0260 6217   42             text  'Build-ID  211019-1909280'
+0260 6217   42             text  'Build-ID  211019-1947030'
      6218 7569     
      621A 6C64     
      621C 2D49     
@@ -1384,8 +1384,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6224 3031     
      6226 392D     
      6228 3139     
-     622A 3039     
-     622C 3238     
+     622A 3437     
+     622C 3033     
      622E 30       
 0261                       even
 0262               
@@ -5779,7 +5779,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70C8 0040     
 0370 70CA 0460  28         b     @main                 ; Give control to main program
      70CC 6046     
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0042                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7621,7 +7621,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0197                       even
 0198               
                    < ram.resident.asm
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
@@ -7645,7 +7645,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank6.asm
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0063                       ;-----------------------------------------------------------------------
 0064                       ; Bank full check
 0065                       ;-----------------------------------------------------------------------
@@ -7693,7 +7693,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b6.asm.7965
+                   < stevie_b6.asm.33499
 0074                                                   ; Vector table bank 6
 0075               
 0076               *--------------------------------------------------------------

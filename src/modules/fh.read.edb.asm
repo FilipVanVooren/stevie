@@ -14,6 +14,9 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
+*
+* Callbacks can be skipped by passing >0000 as pointer.
+* Asserts are skipped by passing >0000 in parm1.
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -65,6 +68,8 @@ fh.file.read.edb:
         ; Asserts
         ;------------------------------------------------------
         mov   @fh.callback1,tmp0
+        jeq   fh.file.read.edb.load1
+                                    ; Skip asserts
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
@@ -107,6 +112,8 @@ fh.file.read.crash:
         ;------------------------------------------------------
 fh.file.read.edb.load1:        
         mov   @fh.callback1,tmp0
+        jeq   fh.file.read.edb.pabheader
+                                    ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
@@ -322,6 +329,8 @@ fh.file.read.edb.updindex:
         ;------------------------------------------------------
 fh.file.read.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Loading indicator 2"
+        jeq   fh.file.read.edb.next
+                                    ; Skip callback        
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; 5a: Prepare for next record
@@ -345,6 +354,7 @@ fh.file.read.edb.next:
         ; Callback "Memory full error"
         ;------------------------------------------------------
         mov   @fh.callback5,tmp0    ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.exit ; Skip callback
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.read.edb.exit
         ;------------------------------------------------------
@@ -373,6 +383,7 @@ fh.file.read.edb.error:
         ; Callback "File I/O error"
         ;------------------------------------------------------
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.exit ; Skip callback
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.read.edb.exit
         ;------------------------------------------------------
@@ -389,6 +400,7 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         dec   @edb.lines
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
+        jeq   fh.file.read.edb.exit ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
