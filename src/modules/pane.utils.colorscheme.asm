@@ -221,7 +221,7 @@ pane.action.colorscheme.fbdump:
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
         bl    @fb.colorlines
         ;-------------------------------------------------------
-        ; Dump colors for CMDB pane (TAT)
+        ; Dump colors for CMDB header line (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.cmdbpane:        
         mov   @cmdb.visible,tmp0
@@ -232,7 +232,22 @@ pane.action.colorscheme.cmdbpane:
                                     ; VDP start address (CMDB top line)
 
         mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
-        li    tmp2,1*80             ; Number of bytes to fill
+        li    tmp2,1*67             ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+        ;-------------------------------------------------------
+        ; Dump colors for CMDB Stevie logo (TAT)
+        ;-------------------------------------------------------
+        li    tmp0,vdp.cmdb.toprow.tat+67        
+        mov   @tv.cmdb.hcolor,tmp1  ; 
+        movb  @tv.cmdb.hcolor+1,tmp1
+                                    ; Copy same value into MSB 
+        srl   tmp1,4                ; 
+        andi  tmp1,>00ff            ; Only keep LSB
+
+        li    tmp2,13               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
