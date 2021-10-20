@@ -14,9 +14,10 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
+* parm7 = Line number to insert file at or >FFFF for new file.
 *
 * Callbacks can be skipped by passing >0000 as pointer.
-* Asserts are skipped by passing >0000 in parm1.
+* Asserts are skipped alltogether by passing >0000 in parm1.
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -32,6 +33,8 @@ fh.file.read.edb:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
@@ -65,8 +68,24 @@ fh.file.read.edb:
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
         ;------------------------------------------------------
+        ; Determine if inserting file or loading new file
+        ;------------------------------------------------------
+        mov   @parm7,tmp0
+        ci    tmp0,>ffff            ; New file?
+        jeq   fh.file.read.edb.newfile
+        clr   @fh.temp1             ; Reset flag "new file"
+        mov   tmp0,@fh.line         ; Line to insert file at
+        jmp   fh.file.read.edb.asserts
+        ;------------------------------------------------------
+        ; Loading new file into editor buffer
+        ;------------------------------------------------------
+fh.file.read.edb.newfile:
+        clr   @fh.line              ; New file 
+        seto  @fh.temp1             ; Set flag "new file"
+        ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
+fh.file.read.edb.asserts:        
         mov   @fh.callback1,tmp0
         jeq   fh.file.read.edb.load1
                                     ; Skip asserts
@@ -245,9 +264,25 @@ fh.file.read.edb.check_fioerr:
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
         jne   fh.file.read.edb.process_line
-                                    ; No, goto (3)
+                                    ; No, goto (2e)
         b     @fh.file.read.edb.error  
                                     ; Yes, so handle file error
+        ;------------------------------------------------------
+        ; 2e: Check if we need to insert index entry
+        ;------------------------------------------------------ 
+fh.file.read.edb.insertline:
+        mov   @fh.temp1,tmp0        ; \ Is flag "new file" set?
+        ci    tmp0,>ffff            ; /
+        jeq   fh.file.read.edb.process_line
+                                    ; Flag is set, so just load file
+        ;------------------------------------------------------
+        ; 2f: Insert new index entry
+        ;------------------------------------------------------ 
+        mov   @fh.line,@parm1      
+        mov   @edb.lines,@parm2
+        bl    @idx.entry.insert     ; Reorganize index
+                                    ; \ i  parm1 = Line for insert
+                                    ; / i  parm2 = Last line to reorg
         ;------------------------------------------------------
         ; Step 3: Process line
         ;------------------------------------------------------
@@ -298,9 +333,7 @@ fh.file.read.edb.preppointer:
         ; Step 4: Update index
         ;------------------------------------------------------
 fh.file.read.edb.prepindex:
-        mov   @edb.lines,@parm1     ; \ parm1 = Line number - 1
-        dec   @parm1                ; /
-        
+        mov   @fh.line,@parm1       ; parm1 = Line number
                                     ; parm2 = Must allready be set!
         mov   @fh.sams.page,@parm3  ; parm3 = SAMS page number
                                     
@@ -310,8 +343,7 @@ fh.file.read.edb.prepindex:
         ; 4a: Special handling for empty line
         ;------------------------------------------------------
 fh.file.read.edb.prepindex.emptyline:
-        mov   @fh.records,@parm1    ; parm1 = Line number
-        dec   @parm1                ;         Adjust for base 0 index
+        mov   @fh.line,@parm1       ; parm1 = Line number
         clr   @parm2                ; parm2 = Pointer to >0000
         seto  @parm3                ; parm3 = SAMS not used >FFFF
         ;------------------------------------------------------
@@ -336,7 +368,8 @@ fh.file.read.edb.display:
         ; 5a: Prepare for next record
         ;------------------------------------------------------
 fh.file.read.edb.next:
-        inc   @edb.lines            ; lines=lines+1                   
+        inc   @fh.line              ; lines++
+        inc   @edb.lines            ; total lines++
 
         mov   @edb.lines,tmp0
         ci    tmp0,10200            ; Maximum line in index reached?
@@ -410,6 +443,7 @@ fh.file.read.edb.exit:
                                     ; Set highest SAMS page in use
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
