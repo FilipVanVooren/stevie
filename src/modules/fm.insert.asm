@@ -10,6 +10,7 @@
 * INPUT
 * parm1  = Pointer to length-prefixed string containing both 
 *          device and filename
+* parm2  = Line number to load file at
 *--------------------------------------------------------------- 
 * OUTPUT
 * none
@@ -34,6 +35,8 @@ fm.insertfile:
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
+        mov   @parm2,@parm7         ; Get line number
+
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
@@ -61,7 +64,9 @@ fm.insertfile:
                                     ; | i  @parm5 = Pointer to callback 
                                     ; |             "File I/O error"
                                     ; | i  @parm6 = Pointer to callback
-                                    ; /             "Memory full error"
+                                    ; |             "Memory full error"
+                                    ; | i  @parm7 = Line to insert file at
+                                    ; /             or >ffff for new file                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

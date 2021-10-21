@@ -127,7 +127,7 @@ fm.loadfile.clear:
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
                                     ; | i  @parm7 = Line to insert file at
-                                    ; |             or >ffff for new file
+                                    ; /             or >ffff for new file
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.
