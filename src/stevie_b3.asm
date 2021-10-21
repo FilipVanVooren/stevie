@@ -68,6 +68,7 @@ main:
         copy  "dialog.file.asm"     ; Dialog "File"
         copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
         copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
+        copy  "dialog.insert.asm"   ; Dialog "Insert DV80 file"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"    ; Dialog "Basic"
         ;-----------------------------------------------------------------------

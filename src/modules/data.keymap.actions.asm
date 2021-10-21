@@ -126,6 +126,9 @@ keymap_actions.editor:
         byte  key.ctrl.f, pane.focus.fb
         data  dialog.file
 
+        byte  key.ctrl.i, pane.focus.fb
+        data  dialog.insert
+
         byte  key.ctrl.s, pane.focus.fb
         data  dialog.save
 
@@ -203,9 +206,8 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.uc.b, id.dialog.basic
         data  tibasic
-
         ;-------------------------------------------------------
-        ; Dialog: About
+        ; Dialog: Help
         ;-------------------------------------------------------
         byte  key.fctn.9, id.dialog.help
         data  edkey.action.cmdb.close.about

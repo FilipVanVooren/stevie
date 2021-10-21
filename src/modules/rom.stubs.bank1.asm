@@ -103,7 +103,7 @@ fm.browse.fname.suffix:
 
 
 ***************************************************************
-* Stub for dialog "About"
+* Stub for dialog "Help"
 * bank3 vec.1
 ********|*****|*********************|**************************
 edkey.action.about:
@@ -136,14 +136,13 @@ dialog.save.vector:
 
 
 ***************************************************************
-* Stub for dialog "Unsaved Changes"
+* Stub for dialog "Insert DV80 file"
 * bank3 vec.4
 ********|*****|*********************|**************************
-dialog.unsaved:
-        clr   @cmdb.panmarkers      ; No key markers
-        mov   @dialog.unsaved.vector,@parm1
+dialog.insert:
+        mov   @dialog.insert.vector,@parm1
         jmp   _trampoline.bank3     ; Show dialog
-dialog.unsaved.vector:        
+dialog.insert.vector:        
         data  vec.4
 
 
@@ -159,8 +158,20 @@ dialog.file.vector:
 
 
 ***************************************************************
-* Stub for dialog "Stevie Menu"
+* Stub for dialog "Unsaved Changes"
 * bank3 vec.6
+********|*****|*********************|**************************
+dialog.unsaved:
+        clr   @cmdb.panmarkers      ; No key markers
+        mov   @dialog.unsaved.vector,@parm1
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.unsaved.vector:        
+        data  vec.6
+
+
+***************************************************************
+* Stub for dialog "Main Menu"
+* bank3 vec.30
 ********|*****|*********************|**************************
 dialog.menu:
         ;------------------------------------------------------
@@ -181,19 +192,7 @@ dialog.menu:
 !       mov   @dialog.menu.vector,@parm1        
         jmp   _trampoline.bank3     ; Show dialog
 dialog.menu.vector:        
-        data  vec.6
-
-
-***************************************************************
-* Stub for dialog "Basic"
-* bank3 vec.7
-********|*****|*********************|**************************
-dialog.basic:
-        mov   @dialog.basic.vector,@parm1
-        jmp   _trampoline.bank3     ; Show dialog
-dialog.basic.vector:        
-        data  vec.7
-
+        data  vec.30
 
 
 ***************************************************************
@@ -304,6 +303,9 @@ cmdb.cmd.addhist:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.addhist.vector:
         data  vec.27
+
+
+
 
 
 **************************************************************

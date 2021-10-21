@@ -4,13 +4,13 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  dialog.help          ; Dialog "About"
+vec.1   data  dialog.help           ; Dialog "About"
 vec.2   data  dialog.load           ; Dialog "Load DV80 file"
 vec.3   data  dialog.save           ; Dialog "Save DV80 file"
-vec.4   data  dialog.unsaved        ; Dialog "Unsaved changes"
+vec.4   data  dialog.insert         ; Dialog "Insert DV80 file"
 vec.5   data  dialog.file           ; Dialog "File"
-vec.6   data  dialog.menu           ; Dialog "Stevie Menu"
-vec.7   data  dialog.basic          ; Dialog "Basic"
+vec.6   data  dialog.unsaved        ; Dialog "Unsaved changes"
+vec.7   data  cpu.crash             ;        
 vec.8   data  cpu.crash             ; 
 vec.9   data  cpu.crash             ; 
 vec.10  data  tibasic               ; Run TI Basic interpreter
@@ -33,6 +33,6 @@ vec.26  data  cmdb.cmd.getlength    ;
 vec.27  data  cmdb.cmd.history.add  ;
 vec.28  data  cpu.crash             ; 
 vec.29  data  cpu.crash             ; 
-vec.30  data  cpu.crash 
+vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  cpu.crash             ; 
 vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog

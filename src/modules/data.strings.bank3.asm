@@ -31,6 +31,21 @@ txt.head.save2     byte 35,1,3,32
 txt.hint.save      #string ' '
 txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL=End'
 
+
+;--------------------------------------------------------------
+; Insert DV 80 file
+;--------------------------------------------------------------
+txt.head.insert    byte 29,1,1
+                   text ' Insert DV80 file at line '
+                   byte 1
+txt.hint.insert    #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
+
+txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL=End'
+txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
+
+
+
+
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
