@@ -16,7 +16,7 @@ txt.head.load      byte 19,1,1
                    byte 1
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
-txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL=End'
+txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
 txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
 
 ;--------------------------------------------------------------
@@ -29,7 +29,7 @@ txt.head.save2     byte 35,1,3,32
                    text 'Save marked block to DV80 file '
                    byte 2
 txt.hint.save      #string ' '
-txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL=End'
+txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 
 
 ;--------------------------------------------------------------
@@ -40,10 +40,8 @@ txt.head.insert    byte 29,1,1
                    byte 1
 txt.hint.insert    #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
-txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL=End'
+txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
 txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
-
-
 
 
 ;--------------------------------------------------------------
@@ -93,8 +91,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      #string 'New   Open   Save'
-pos.info.file      byte 0,6,13,>ff
+txt.info.file      #string 'New   Open   Save   Print   Insert'
+pos.info.file      byte 0,6,13,20,28,>ff
 txt.hint.file      #string ' '
 txt.keys.file      #string 'F9-Back'
 

@@ -177,6 +177,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.o, id.dialog.file
         data  dialog.load
+
+        byte  key.uc.i, id.dialog.file
+        data  dialog.insert
         ;-------------------------------------------------------
         ; Dialog: Open DV80 file
         ;-------------------------------------------------------

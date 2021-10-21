@@ -9,6 +9,7 @@ key.uc.b      equ >42               ; B
 key.uc.e      equ >45               ; E
 key.uc.f      equ >46               ; F
 key.uc.h      equ >48               ; H
+key.uc.i      equ >49               ; I
 key.uc.n      equ >4e               ; N
 key.uc.s      equ >53               ; S
 key.uc.o      equ >4f               ; O

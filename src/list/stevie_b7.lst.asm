@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.26941
+     **** ****     > stevie_b7.asm.38748
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 211021-2017020
+0009               * File: stevie_b7.asm               ; Version 211021-2038270
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * Empty
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -437,7 +437,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0345               * Heap                                @>f000-ffff  (4096 bytes)
 0346               *--------------------------------------------------------------
 0347      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -451,116 +451,117 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0009      0045     key.uc.e      equ >45               ; E
 0010      0046     key.uc.f      equ >46               ; F
 0011      0048     key.uc.h      equ >48               ; H
-0012      004E     key.uc.n      equ >4e               ; N
-0013      0053     key.uc.s      equ >53               ; S
-0014      004F     key.uc.o      equ >4f               ; O
-0015      0051     key.uc.q      equ >51               ; Q
-0016      00A2     key.lc.b      equ >a2               ; b
-0017      00A5     key.lc.e      equ >a5               ; e
-0018      00A6     key.lc.f      equ >a6               ; f
-0019      00A8     key.lc.h      equ >a8               ; h
-0020      006E     key.lc.n      equ >6e               ; n
-0021      0073     key.lc.s      equ >73               ; s
-0022      006F     key.lc.o      equ >6f               ; o
-0023      0071     key.lc.q      equ >71               ; q
-0024               
+0012      0049     key.uc.i      equ >49               ; I
+0013      004E     key.uc.n      equ >4e               ; N
+0014      0053     key.uc.s      equ >53               ; S
+0015      004F     key.uc.o      equ >4f               ; O
+0016      0051     key.uc.q      equ >51               ; Q
+0017      00A2     key.lc.b      equ >a2               ; b
+0018      00A5     key.lc.e      equ >a5               ; e
+0019      00A6     key.lc.f      equ >a6               ; f
+0020      00A8     key.lc.h      equ >a8               ; h
+0021      006E     key.lc.n      equ >6e               ; n
+0022      0073     key.lc.s      equ >73               ; s
+0023      006F     key.lc.o      equ >6f               ; o
+0024      0071     key.lc.q      equ >71               ; q
 0025               
-0026               *---------------------------------------------------------------
-0027               * Keyboard scancodes - Function keys
-0028               *-------------|---------------------|---------------------------
-0029      00BC     key.fctn.0    equ >bc               ; fctn + 0
-0030      0003     key.fctn.1    equ >03               ; fctn + 1
-0031      0004     key.fctn.2    equ >04               ; fctn + 2
-0032      0007     key.fctn.3    equ >07               ; fctn + 3
-0033      0002     key.fctn.4    equ >02               ; fctn + 4
-0034      000E     key.fctn.5    equ >0e               ; fctn + 5
-0035      000C     key.fctn.6    equ >0c               ; fctn + 6
-0036      0001     key.fctn.7    equ >01               ; fctn + 7
-0037      0006     key.fctn.8    equ >06               ; fctn + 8
-0038      000F     key.fctn.9    equ >0f               ; fctn + 9
-0039      0000     key.fctn.a    equ >00               ; fctn + a
-0040      00BE     key.fctn.b    equ >be               ; fctn + b
-0041      0000     key.fctn.c    equ >00               ; fctn + c
-0042      0009     key.fctn.d    equ >09               ; fctn + d
-0043      000B     key.fctn.e    equ >0b               ; fctn + e
-0044      0000     key.fctn.f    equ >00               ; fctn + f
-0045      0000     key.fctn.g    equ >00               ; fctn + g
-0046      00BF     key.fctn.h    equ >bf               ; fctn + h
-0047      0000     key.fctn.i    equ >00               ; fctn + i
-0048      00C0     key.fctn.j    equ >c0               ; fctn + j
-0049      00C1     key.fctn.k    equ >c1               ; fctn + k
-0050      00C2     key.fctn.l    equ >c2               ; fctn + l
-0051      00C3     key.fctn.m    equ >c3               ; fctn + m
-0052      00C4     key.fctn.n    equ >c4               ; fctn + n
-0053      0000     key.fctn.o    equ >00               ; fctn + o
-0054      0000     key.fctn.p    equ >00               ; fctn + p
-0055      00C5     key.fctn.q    equ >c5               ; fctn + q
-0056      0000     key.fctn.r    equ >00               ; fctn + r
-0057      0008     key.fctn.s    equ >08               ; fctn + s
-0058      0000     key.fctn.t    equ >00               ; fctn + t
-0059      0000     key.fctn.u    equ >00               ; fctn + u
-0060      007F     key.fctn.v    equ >7f               ; fctn + v
-0061      007E     key.fctn.w    equ >7e               ; fctn + w
-0062      000A     key.fctn.x    equ >0a               ; fctn + x
-0063      00C6     key.fctn.y    equ >c6               ; fctn + y
-0064      0000     key.fctn.z    equ >00               ; fctn + z
-0065               *---------------------------------------------------------------
-0066               * Keyboard scancodes - Function keys extra
-0067               *---------------------------------------------------------------
-0068      00B9     key.fctn.dot    equ >b9             ; fctn + .
-0069      00B8     key.fctn.comma  equ >b8             ; fctn + ,
-0070      0005     key.fctn.plus   equ >05             ; fctn + +
-0071               *---------------------------------------------------------------
-0072               * Keyboard scancodes - control keys
-0073               *-------------|---------------------|---------------------------
-0074      00B0     key.ctrl.0    equ >b0               ; ctrl + 0
-0075      00B1     key.ctrl.1    equ >b1               ; ctrl + 1
-0076      00B2     key.ctrl.2    equ >b2               ; ctrl + 2
-0077      00B3     key.ctrl.3    equ >b3               ; ctrl + 3
-0078      00B4     key.ctrl.4    equ >b4               ; ctrl + 4
-0079      00B5     key.ctrl.5    equ >b5               ; ctrl + 5
-0080      00B6     key.ctrl.6    equ >b6               ; ctrl + 6
-0081      00B7     key.ctrl.7    equ >b7               ; ctrl + 7
-0082      009E     key.ctrl.8    equ >9e               ; ctrl + 8
-0083      009F     key.ctrl.9    equ >9f               ; ctrl + 9
-0084      0081     key.ctrl.a    equ >81               ; ctrl + a
-0085      0082     key.ctrl.b    equ >82               ; ctrl + b
-0086      0083     key.ctrl.c    equ >83               ; ctrl + c
-0087      0084     key.ctrl.d    equ >84               ; ctrl + d
-0088      0085     key.ctrl.e    equ >85               ; ctrl + e
-0089      0086     key.ctrl.f    equ >86               ; ctrl + f
-0090      0087     key.ctrl.g    equ >87               ; ctrl + g
-0091      0088     key.ctrl.h    equ >88               ; ctrl + h
-0092      0089     key.ctrl.i    equ >89               ; ctrl + i
-0093      008A     key.ctrl.j    equ >8a               ; ctrl + j
-0094      008B     key.ctrl.k    equ >8b               ; ctrl + k
-0095      008C     key.ctrl.l    equ >8c               ; ctrl + l
-0096      008D     key.ctrl.m    equ >8d               ; ctrl + m
-0097      008E     key.ctrl.n    equ >8e               ; ctrl + n
-0098      008F     key.ctrl.o    equ >8f               ; ctrl + o
-0099      0090     key.ctrl.p    equ >90               ; ctrl + p
-0100      0091     key.ctrl.q    equ >91               ; ctrl + q
-0101      0092     key.ctrl.r    equ >92               ; ctrl + r
-0102      0093     key.ctrl.s    equ >93               ; ctrl + s
-0103      0094     key.ctrl.t    equ >94               ; ctrl + t
-0104      0095     key.ctrl.u    equ >95               ; ctrl + u
-0105      0096     key.ctrl.v    equ >96               ; ctrl + v
-0106      0097     key.ctrl.w    equ >97               ; ctrl + w
-0107      0098     key.ctrl.x    equ >98               ; ctrl + x
-0108      0099     key.ctrl.y    equ >99               ; ctrl + y
-0109      009A     key.ctrl.z    equ >9a               ; ctrl + z
-0110               *---------------------------------------------------------------
-0111               * Keyboard scancodes - control keys extra
-0112               *---------------------------------------------------------------
-0113      009B     key.ctrl.dot    equ >9b             ; ctrl + .
-0114      0080     key.ctrl.comma  equ >80             ; ctrl + ,
-0115      009D     key.ctrl.plus   equ >9d             ; ctrl + +
-0116      00BB     key.ctrl.slash  equ >bb             ; ctrl + /
-0117               *---------------------------------------------------------------
-0118               * Special keys
-0119               *---------------------------------------------------------------
-0120      000D     key.enter     equ >0d               ; enter
-                   < stevie_b7.asm.26941
+0026               
+0027               *---------------------------------------------------------------
+0028               * Keyboard scancodes - Function keys
+0029               *-------------|---------------------|---------------------------
+0030      00BC     key.fctn.0    equ >bc               ; fctn + 0
+0031      0003     key.fctn.1    equ >03               ; fctn + 1
+0032      0004     key.fctn.2    equ >04               ; fctn + 2
+0033      0007     key.fctn.3    equ >07               ; fctn + 3
+0034      0002     key.fctn.4    equ >02               ; fctn + 4
+0035      000E     key.fctn.5    equ >0e               ; fctn + 5
+0036      000C     key.fctn.6    equ >0c               ; fctn + 6
+0037      0001     key.fctn.7    equ >01               ; fctn + 7
+0038      0006     key.fctn.8    equ >06               ; fctn + 8
+0039      000F     key.fctn.9    equ >0f               ; fctn + 9
+0040      0000     key.fctn.a    equ >00               ; fctn + a
+0041      00BE     key.fctn.b    equ >be               ; fctn + b
+0042      0000     key.fctn.c    equ >00               ; fctn + c
+0043      0009     key.fctn.d    equ >09               ; fctn + d
+0044      000B     key.fctn.e    equ >0b               ; fctn + e
+0045      0000     key.fctn.f    equ >00               ; fctn + f
+0046      0000     key.fctn.g    equ >00               ; fctn + g
+0047      00BF     key.fctn.h    equ >bf               ; fctn + h
+0048      0000     key.fctn.i    equ >00               ; fctn + i
+0049      00C0     key.fctn.j    equ >c0               ; fctn + j
+0050      00C1     key.fctn.k    equ >c1               ; fctn + k
+0051      00C2     key.fctn.l    equ >c2               ; fctn + l
+0052      00C3     key.fctn.m    equ >c3               ; fctn + m
+0053      00C4     key.fctn.n    equ >c4               ; fctn + n
+0054      0000     key.fctn.o    equ >00               ; fctn + o
+0055      0000     key.fctn.p    equ >00               ; fctn + p
+0056      00C5     key.fctn.q    equ >c5               ; fctn + q
+0057      0000     key.fctn.r    equ >00               ; fctn + r
+0058      0008     key.fctn.s    equ >08               ; fctn + s
+0059      0000     key.fctn.t    equ >00               ; fctn + t
+0060      0000     key.fctn.u    equ >00               ; fctn + u
+0061      007F     key.fctn.v    equ >7f               ; fctn + v
+0062      007E     key.fctn.w    equ >7e               ; fctn + w
+0063      000A     key.fctn.x    equ >0a               ; fctn + x
+0064      00C6     key.fctn.y    equ >c6               ; fctn + y
+0065      0000     key.fctn.z    equ >00               ; fctn + z
+0066               *---------------------------------------------------------------
+0067               * Keyboard scancodes - Function keys extra
+0068               *---------------------------------------------------------------
+0069      00B9     key.fctn.dot    equ >b9             ; fctn + .
+0070      00B8     key.fctn.comma  equ >b8             ; fctn + ,
+0071      0005     key.fctn.plus   equ >05             ; fctn + +
+0072               *---------------------------------------------------------------
+0073               * Keyboard scancodes - control keys
+0074               *-------------|---------------------|---------------------------
+0075      00B0     key.ctrl.0    equ >b0               ; ctrl + 0
+0076      00B1     key.ctrl.1    equ >b1               ; ctrl + 1
+0077      00B2     key.ctrl.2    equ >b2               ; ctrl + 2
+0078      00B3     key.ctrl.3    equ >b3               ; ctrl + 3
+0079      00B4     key.ctrl.4    equ >b4               ; ctrl + 4
+0080      00B5     key.ctrl.5    equ >b5               ; ctrl + 5
+0081      00B6     key.ctrl.6    equ >b6               ; ctrl + 6
+0082      00B7     key.ctrl.7    equ >b7               ; ctrl + 7
+0083      009E     key.ctrl.8    equ >9e               ; ctrl + 8
+0084      009F     key.ctrl.9    equ >9f               ; ctrl + 9
+0085      0081     key.ctrl.a    equ >81               ; ctrl + a
+0086      0082     key.ctrl.b    equ >82               ; ctrl + b
+0087      0083     key.ctrl.c    equ >83               ; ctrl + c
+0088      0084     key.ctrl.d    equ >84               ; ctrl + d
+0089      0085     key.ctrl.e    equ >85               ; ctrl + e
+0090      0086     key.ctrl.f    equ >86               ; ctrl + f
+0091      0087     key.ctrl.g    equ >87               ; ctrl + g
+0092      0088     key.ctrl.h    equ >88               ; ctrl + h
+0093      0089     key.ctrl.i    equ >89               ; ctrl + i
+0094      008A     key.ctrl.j    equ >8a               ; ctrl + j
+0095      008B     key.ctrl.k    equ >8b               ; ctrl + k
+0096      008C     key.ctrl.l    equ >8c               ; ctrl + l
+0097      008D     key.ctrl.m    equ >8d               ; ctrl + m
+0098      008E     key.ctrl.n    equ >8e               ; ctrl + n
+0099      008F     key.ctrl.o    equ >8f               ; ctrl + o
+0100      0090     key.ctrl.p    equ >90               ; ctrl + p
+0101      0091     key.ctrl.q    equ >91               ; ctrl + q
+0102      0092     key.ctrl.r    equ >92               ; ctrl + r
+0103      0093     key.ctrl.s    equ >93               ; ctrl + s
+0104      0094     key.ctrl.t    equ >94               ; ctrl + t
+0105      0095     key.ctrl.u    equ >95               ; ctrl + u
+0106      0096     key.ctrl.v    equ >96               ; ctrl + v
+0107      0097     key.ctrl.w    equ >97               ; ctrl + w
+0108      0098     key.ctrl.x    equ >98               ; ctrl + x
+0109      0099     key.ctrl.y    equ >99               ; ctrl + y
+0110      009A     key.ctrl.z    equ >9a               ; ctrl + z
+0111               *---------------------------------------------------------------
+0112               * Keyboard scancodes - control keys extra
+0113               *---------------------------------------------------------------
+0114      009B     key.ctrl.dot    equ >9b             ; ctrl + .
+0115      0080     key.ctrl.comma  equ >80             ; ctrl + ,
+0116      009D     key.ctrl.plus   equ >9d             ; ctrl + +
+0117      00BB     key.ctrl.slash  equ >bb             ; ctrl + /
+0118               *---------------------------------------------------------------
+0119               * Special keys
+0120               *---------------------------------------------------------------
+0121      000D     key.enter     equ >0d               ; enter
+                   < stevie_b7.asm.38748
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -620,7 +621,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1383,7 +1384,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0257               
 0258               cpu.crash.msg.id
 0259 621C 18               byte  24
-0260 621D   42             text  'Build-ID  211021-2017020'
+0260 621D   42             text  'Build-ID  211021-2038270'
      621E 7569     
      6220 6C64     
      6222 2D49     
@@ -1393,8 +1394,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      622A 3032     
      622C 312D     
      622E 3230     
-     6230 3137     
-     6232 3032     
+     6230 3338     
+     6232 3237     
      6234 30       
 0261                       even
 0262               
@@ -5788,7 +5789,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70CE 0040     
 0370 70D0 0460  28         b     @main                 ; Give control to main program
      70D2 6046     
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0045                       copy  "data.constants.asm"  ; Need some constants for SAMS layout
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -6079,7 +6080,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0213 71C0 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      71C2 0000     
 0214                       even
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0046                       ;-----------------------------------------------------------------------
 0047                       ; Stubs
 0048                       ;-----------------------------------------------------------------------
@@ -6087,7 +6088,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0050                       ;-----------------------------------------------------------------------
 0051                       ; Bank full check
 0052                       ;-----------------------------------------------------------------------
@@ -6135,7 +6136,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.26941
+                   < stevie_b7.asm.38748
 0061                                                   ; Vector table bank 7
 0062               
 0063               *--------------------------------------------------------------
