@@ -29,10 +29,40 @@ dialog.insert:
 dialog.insert.setup:        
         li    tmp0,id.dialog.insert
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+        ;------------------------------------------------------
+        ; Include line number in pane header
+        ;------------------------------------------------------
+        bl    @cpym2m
+              data txt.head.insert,cmdb.panhead.buf,30
 
-        li    tmp0,txt.head.insert
+        mov   @fb.row,@parm1 
+        bl    @fb.row2line          ; Row to editor line
+                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; | i @parm1      = Row in frame buffer
+                                    ; / o @outparm1   = Matching line in EB
+
+        inc   @outparm1             ; Add base 1
+
+        bl    @mknum                ; Convert integer to string
+              data  outparm1        ; \ i  p0 = Pointer to 16 bit unsigned int
+              data  rambuf          ; | i  p1 = Pointer to 5 byte string buffer
+              byte  48              ; | i  p2 = MSB offset for ASCII digit
+              byte  48              ; / i  p2 = LSB char for replacing leading 0
+
+        bl    @cpym2m
+              data rambuf,cmdb.panhead.buf + 29,5
+                                    ; 
+                                    ; Add line number to buffer
+
+        li    tmp0,34
+        sla   tmp0,8
+        movb  tmp0,@cmdb.panhead.buf ; Set length byte
+
+        li    tmp0,cmdb.panhead.buf 
         mov   tmp0,@cmdb.panhead    ; Header for dialog
-
+        ;------------------------------------------------------
+        ; Other panel strings
+        ;------------------------------------------------------
         clr   @cmdb.paninfo         ; No info message, do input prompt
         clr   @cmdb.panmarkers      ; No key markers        
 
