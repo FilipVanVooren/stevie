@@ -58,12 +58,14 @@ fm.loadfile.exit:
 
 
 ***************************************************************
-* Stub for "fm.savefile"
+* Stub for "fm.insertfile"
 * bank2 vec.2
 ********|*****|*********************|**************************
-fm.savefile:
+fm.insertfile:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Call function in bank 2
         ;------------------------------------------------------        
@@ -74,6 +76,8 @@ fm.savefile:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+fm.insertfile.exit:        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
@@ -99,6 +103,25 @@ fm.browse.fname.suffix:
         b     *r11                  ; Return to caller
 
 
+***************************************************************
+* Stub for "fm.savefile"
+* bank2 vec.4
+********|*****|*********************|**************************
+fm.savefile:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------        
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2.rom        ; | i  p0 = bank address
+              data vec.4            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 

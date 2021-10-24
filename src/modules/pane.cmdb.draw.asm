@@ -45,7 +45,7 @@ pane.cmdb.draw:
         mov   @cmdb.yxtop,tmp0      ; \
         ai    tmp0,68               ; | 
         mov   tmp0,@wyx             ; |
-        li    tmp1,txt.stevie       ; | Display right part of pane heart
+        li    tmp1,txt.stevie       ; | Display right part of pane header
         bl    @xutst0               ; / 
         ;------------------------------------------------------
         ; Check dialog id

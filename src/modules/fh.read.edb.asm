@@ -3,7 +3,7 @@
 
 ***************************************************************
 * fh.file.read.edb
-* Read file into editor buffer
+* Read or insert file into editor buffer
 ***************************************************************
 *  bl   @fh.file.read.edb
 *--------------------------------------------------------------
@@ -14,15 +14,19 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
-* parm7 = Line number to insert file at or >FFFF for new file.
+* parm7 = Line number to insert file at or >FFFF if new file.
 *
 * Callbacks can be skipped by passing >0000 as pointer.
-* Asserts are skipped alltogether by passing >0000 in parm1.
 *--------------------------------------------------------------
 * OUTPUT
+* none
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2
+*--------------------------------------------------------------
+* Remarks
+* @fh.temp1 =  >ffff if loading new file into editor buffer
+*              >0000 if inserting file at line in editor buffer
 ********|*****|*********************|**************************
 fh.file.read.edb:
         dect  stack
@@ -75,7 +79,7 @@ fh.file.read.edb:
         jeq   fh.file.read.edb.newfile
         clr   @fh.temp1             ; Reset flag "new file"
         mov   tmp0,@fh.line         ; Line to insert file at
-        jmp   fh.file.read.edb.asserts
+        jmp   fh.file.read.edb.assert1
         ;------------------------------------------------------
         ; Loading new file into editor buffer
         ;------------------------------------------------------
@@ -85,34 +89,43 @@ fh.file.read.edb.newfile:
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
-fh.file.read.edb.asserts:        
+fh.file.read.edb.assert1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.read.edb.load1
-                                    ; Skip asserts
+        jeq   fh.file.read.edb.assert2
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
 
+fh.file.read.edb.assert2
         mov   @fh.callback2,tmp0
+        jeq   fh.file.read.edb.assert3
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
 
+fh.file.read.edb.assert3:
         mov   @fh.callback3,tmp0
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
-         
-        mov   @fh.callback4,tmp0
+        jeq   fh.file.read.edb.assert4
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.read.crash    ; Yes, crash!
 
+fh.file.read.edb.assert4:         
+        mov   @fh.callback4,tmp0
+        jeq   fh.file.read.edb.assert5
+
+        ci    tmp0,>6000            ; Insane address ?
+        jlt   fh.file.read.crash    ; Yes, crash!
+        ci    tmp0,>7fff            ; Insane address ?
+        jgt   fh.file.read.crash    ; Yes, crash!
+
+fh.file.read.edb.assert5:
         mov   @fh.callback5,tmp0
+        jeq   fh.file.read.edb.load1
+
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.read.crash    ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
@@ -263,7 +276,7 @@ fh.file.read.edb.record:
 fh.file.read.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.read.edb.process_line
+        jne   fh.file.read.edb.insertline
                                     ; No, goto (2e)
         b     @fh.file.read.edb.error  
                                     ; Yes, so handle file error
@@ -276,7 +289,7 @@ fh.file.read.edb.insertline:
         jeq   fh.file.read.edb.process_line
                                     ; Flag is set, so just load file
         ;------------------------------------------------------
-        ; 2f: Insert new index entry
+        ; 2f: Insert new index entry (index reorg)
         ;------------------------------------------------------ 
         mov   @fh.line,@parm1      
         mov   @edb.lines,@parm2

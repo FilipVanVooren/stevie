@@ -189,6 +189,14 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.load
         data  edkey.action.cmdb.load
         ;-------------------------------------------------------
+        ; Dialog: Insert DV80 file
+        ;-------------------------------------------------------
+        byte  key.fctn.5, id.dialog.insert
+        data  edkey.action.cmdb.fastmode.toggle
+
+        byte  key.enter, id.dialog.insert
+        data  edkey.action.cmdb.ins
+        ;-------------------------------------------------------
         ; Dialog: Unsaved changes
         ;-------------------------------------------------------
         byte  key.fctn.6, id.dialog.unsaved

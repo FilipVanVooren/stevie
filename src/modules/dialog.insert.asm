@@ -69,6 +69,8 @@ dialog.insert.setup:
         li    tmp0,txt.hint.insert
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
+        bl    @cmdb.cmd.clear       ; Clear current command
+
         abs   @fh.offsetopcode      ; FastMode is off ? 
         jeq   ! 
         ;-------------------------------------------------------

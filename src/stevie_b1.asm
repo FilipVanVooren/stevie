@@ -90,6 +90,7 @@ main:
         copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
         copy  "edkey.cmdb.file.new.asm"  ; New DV80 file
         copy  "edkey.cmdb.file.load.asm" ; Read DV80 file
+        copy  "edkey.cmdb.file.ins.asm"  ; Insert DV80 file
         copy  "edkey.cmdb.file.save.asm" ; Save DV80 file
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
