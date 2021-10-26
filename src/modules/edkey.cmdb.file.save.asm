@@ -5,6 +5,10 @@
 * Save DV 80 file
 *---------------------------------------------------------------
 edkey.action.cmdb.save:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
         ; Save file
         ;-------------------------------------------------------
@@ -72,4 +76,7 @@ edkey.action.cmdb.save.file:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.save.exit:
-        b    @edkey.action.top      ; Goto 1st line in editor buffer 
+        mov   *stack+,@parm1        ; Pop top row
+        mov   *stack+,tmp0          ; Pop tmp0
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+                                    ; / i  @parm1 = Line in editor buffer

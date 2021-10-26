@@ -120,8 +120,7 @@ edkey.action.block.delete:
                                     ; If yes, exit early        
 
         mov   @fb.topline,@parm1
-        b     @_edkey.goto.fb.toprow
-                                    ; Position on top row in frame buffer
+        b     @edkey.goto.fb.toprow ; Position on top row in frame buffer
                                     ; \ i  @parm1 = Line to display as top row
                                     ; /
         ;-------------------------------------------------------
@@ -163,8 +162,7 @@ edkey.action.block.move:
                                     ; If yes, exit early        
 
         mov   @fb.topline,@parm1
-        b     @_edkey.goto.fb.toprow
-                                    ; Position on top row in frame buffer
+        b     @edkey.goto.fb.toprow ; Position on top row in frame buffer
                                     ; \ i  @parm1 = Line to display as top row
                                     ; /        
         ;-------------------------------------------------------

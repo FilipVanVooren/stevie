@@ -5,6 +5,10 @@
 * Insert DV 80 file
 *---------------------------------------------------------------
 edkey.action.cmdb.ins:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
         ; Insert file at current line in editor buffer
         ;-------------------------------------------------------
@@ -67,9 +71,6 @@ edkey.action.cmdb.ins.file:
         ;-------------------------------------------------------
         ; Refresh frame buffer
         ;-------------------------------------------------------
-        bl    @pane.cmdb.hide       ; Same actions as when closing CMDB pane
-                                    ; (blink cursor, focus fb, etc)
-
         seto  @fb.dirty             ; Refresh frame buffer
         seto  @edb.dirty            ; Editor buffer dirty
 
@@ -77,8 +78,13 @@ edkey.action.cmdb.ins.file:
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
+
+
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.ins.exit:
-        b     @edkey.action.home    ; Stay on current line
+        mov   *stack+,@parm1        ; Pop top row
+        mov   *stack+,tmp0          ; Pop tmp0
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+                                    ; / i  @parm1 = Line in editor buffer

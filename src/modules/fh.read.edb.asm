@@ -444,7 +444,13 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
-        dec   @edb.lines
+        mov   @fh.temp1,tmp0        ; Insert file or load file?
+        ci    tmp0,>ffff
+        jne   fh.file.read.edb.eof.callback
+                                    ; Insert file, skip to callback
+        dec   @edb.lines            ; Load file, one-time adjustment
+
+fh.file.read.edb.eof.callback:
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         jeq   fh.file.read.edb.exit ; Skip callback
         bl    *tmp0                 ; Run callback function                                    

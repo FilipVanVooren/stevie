@@ -10,19 +10,16 @@
 * Internal method that needs to be called via jmp or branch
 * instruction. 
 ***************************************************************
-* b    _edkey.goto.fb.toprow
-* jmp  _edkey.goto.fb.toprow
+* b    @edkey.goto.fb.toprow
 *--------------------------------------------------------------
 * INPUT
 * @parm1  = Line in editor buffer to display as top row (goto)
+* @parm2  = YX cursor position to 
 *
 * Register usage
 * none
-*--------------------------------------------------------------
-*  Remarks
-*  Private, only to be called from inside edkey submodules
 ********|*****|*********************|**************************
-_edkey.goto.fb.toprow:
+edkey.goto.fb.toprow:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
 
         bl    @fb.refresh           ; \ Refresh frame buffer
@@ -62,8 +59,8 @@ edkey.action.goto:
         ; Refresh page
         ;-------------------------------------------------------
 edkey.action.goto.refresh:        
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
+        seto  @fb.colorize           ; Colorize M1/M2 marked lines (if present)        
 
-        b     @_edkey.goto.fb.toprow ; Position cursor and exit
+        b     @edkey.goto.fb.toprow  ; Position cursor and exit
                                      ; \ i  @parm1 = Line in editor buffer
                                      ; /

@@ -40,7 +40,8 @@ fm.insertfile:
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
 
-        clr    @parm3               ; No callback 2
+        li    tmp0,fm.loadsave.cb.indicator2
+        mov   tmp0,@parm3           ; Register callback 2
 
         li    tmp0,fm.loadsave.cb.indicator3
         mov   tmp0,@parm4           ; Register callback 3

@@ -63,21 +63,25 @@ fm.loadsave.cb.indicator1.saveblock:
         ; Display Loading....
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.loading:        
-        bl    @hchar
-              byte 0,0,32,50
-              data EOL              ; Clear filename
-
         bl    @putat
               byte pane.botrow,0
               data txt.loading      ; Display "Loading file...."
+
+        mov   @fh.temp1,tmp0
+        ci    tmp0,>ffff
+        jne   fm.loadsave.cb.indicator1.filename
+                                    ; Skip if inserting file
+
+        bl    @hchar
+              byte 0,0,32,50
+              data EOL              ; Clear filename
         ;------------------------------------------------------
         ; Display device/filename
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.filename:        
         bl    @at
               byte pane.botrow,11   ; Cursor YX position
-        mov   @edb.filename.ptr,tmp1  
-                                    ; Get pointer to file descriptor
+        li    tmp1,heap.top         ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
         ; Display fast mode
@@ -116,9 +120,19 @@ fm.loadsave.cb.indicator2:
         c     @fh.records,@fb.scrrows.max
         jne   fm.loadsave.cb.indicator2.kb
                                     ; Skip framebuffer refresh
+
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+        ci    tmp0,fh.fopmode.writefile
+        jeq   fm.loadsave.cb.indicator2.kb
+                                    ; Saving file, skip refresh
+
+        mov   @fh.temp1,tmp0        ; Inserting file?
+        ci    tmp0,>ffff
+        jne   fm.loadsave.cb.indicator2.kb
+                                    ; Inserting file, skip refresh
         ;------------------------------------------------------
         ; Refresh framebuffer if first page processed
-        ;------------------------------------------------------
+        ;------------------------------------------------------     
         clr   @parm1
         bl    @fb.refresh           ; Refresh frame buffer
                                     ; \ i  @parm1 = Line to start with
@@ -128,7 +142,6 @@ fm.loadsave.cb.indicator2:
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
                                     ; /
-
         ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------
@@ -138,6 +151,18 @@ fm.loadsave.cb.indicator2.kb:
         ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+
+        ci    tmp0,fh.fopmode.writefile
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+                                    ; Saving file?
+
+        mov   @fh.temp1,tmp0        ; Inserting file?
+        ci    tmp0,>ffff
+        jne   fm.loadsave.cb.indicator2.kb.lines
+                                    ; Skip if inserting file
+
+fm.loadsave.cb.indicator2.kb.processed:
         mov   @fh.kilobytes,@fh.kilobytes.prev
                                     ; Save for compare
 
@@ -149,6 +174,7 @@ fm.loadsave.cb.indicator2.kb:
               byte 0,76
               data txt.kb           ; Show "kb" string
 
+fm.loadsave.cb.indicator2.kb.lines:
         bl    @putnum
               byte pane.botrow,72   ; Show lines processed
               data fh.records,rambuf,>3020

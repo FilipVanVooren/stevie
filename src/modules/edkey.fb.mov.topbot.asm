@@ -19,8 +19,7 @@ edkey.action.top.refresh:
         clr   @parm1                ; Set to 1st line in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        b     @ _edkey.goto.fb.toprow
-                                    ; \ Position cursor and exit
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
 
 
@@ -48,8 +47,7 @@ edkey.action.bot.refresh:
         mov   tmp0,@parm1           ; Set to last page in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        b     @ _edkey.goto.fb.toprow
-                                    ; \ Position cursor and exit
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
         ;-------------------------------------------------------
         ; Exit
