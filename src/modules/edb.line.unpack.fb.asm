@@ -87,6 +87,9 @@ edb.line.unpack.fb.getlen:
         ;------------------------------------------------------
         ; Crash the system
         ;------------------------------------------------------
+        mov   @rambuf,r3            ; Get Line number to unpack (base 0)
+                                    ; No purpose, only makes debugging easier
+
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system     
         ;------------------------------------------------------

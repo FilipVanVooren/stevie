@@ -38,7 +38,7 @@ reloc.resident:
         ; Resident libraries
         ;------------------------------------------------------
         aorg  >2000                 ; Relocate to >2000
-        copy  "%%spectra2%%/runlib.asm"
+        copy  "runlib.asm"
         copy  "ram.resident.asm"        
         ;------------------------------------------------------
         ; Activate bank 1 and branch to >6046
