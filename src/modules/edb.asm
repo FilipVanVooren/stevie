@@ -26,7 +26,8 @@ edb.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------ 
-        bl    @mem.sams.layout      ; Reset SAMS memory pages for Stevie
+        bl    @edb.clear.sams       ; Clear all SAMS memory pages
+        bl    @mem.sams.layout      ; Load standard SAMS pages again
 
         li    tmp0,edb.top          ; \
         mov   tmp0,@edb.top.ptr     ; / Set pointer to top of editor buffer

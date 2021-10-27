@@ -15,7 +15,8 @@ _idx.entry.insert.reorg:
         ; Assert 1
         ;------------------------------------------------------ 
         ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
-                                    ; (max 5 SAMS pages with 2048 index entries)
+                                    ; Max. 5 SAMS pages, each with 2048 index
+                                    ; entries.
 
         jle   !                     ; Continue if ok
         ;------------------------------------------------------
@@ -107,7 +108,7 @@ idx.entry.insert:
 idx.entry.insert.reorg:
         mov   @parm2,tmp3
         ci    tmp3,2048
-        jle   idx.entry.insert.reorg.simple
+        jlt   idx.entry.insert.reorg.simple
                                     ; Do simple reorg only if single
                                     ; SAMS index page, otherwise complex reorg.
         ;------------------------------------------------------

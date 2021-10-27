@@ -7,7 +7,8 @@
         copy  "rom.farjump.asm"        ; ROM bankswitch trampoline 
         copy  "fb.asm"                 ; Framebuffer      
         copy  "idx.asm"                ; Index management           
-        copy  "edb.asm"                ; Editor Buffer        
+        copy  "edb.asm"                ; Editor Buffer   
+        copy  "edb.clear.sams.asm"     ; Clear editor buffer SAMS pages
         copy  "cmdb.asm"               ; Command buffer            
         copy  "errline.asm"            ; Error line
         copy  "tv.asm"                 ; Main editor configuration        
