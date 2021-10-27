@@ -39,8 +39,13 @@ _idx.entry.insert.reorg.crash:
         neg   tmp3                  ; tmp3 = -tmp3
         a     tmp0,tmp3             ; tmp3 = tmp3 + tmp0
         ci    tmp3,idx.top - 2      ; Address before top of index ?
-        jlt   _idx.entry.insert.reorg.crash
-                                    ; If yes, crash
+        jgt   _idx.entry.insert.reorg.loop 
+                                    ; No, jump to loop start
+        ;------------------------------------------------------
+        ; Crash and burn
+        ;------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system                                        
         ;------------------------------------------------------
         ; Loop backwards from end of index up to insert point
         ;------------------------------------------------------        
