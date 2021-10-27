@@ -240,8 +240,8 @@ _idx.samspage.get:
         ;------------------------------------------------------
         mov   tmp1,@idx.sams.page   ; Set current SAMS page
         mov   tmp1,@tv.sams.b000    ; Also keep SAMS window synced in Stevie
-
         mov   tmp1,tmp0             ; Destination SAMS page
+
         li    tmp1,>b000            ; Memory window for index page
 
         bl    @xsams.page.set       ; Switch to SAMS page

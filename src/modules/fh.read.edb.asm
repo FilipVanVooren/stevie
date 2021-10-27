@@ -54,10 +54,10 @@ fh.file.read.edb:
                                     ; \ i  tmp0  = Memory address
                                     ; | o  waux1 = SAMS page number
                                     ; / o  waux2 = Address of SAMS register
-
-        mov   @waux1,@fh.sams.page  ; Set current SAMS page
-        mov   @waux1,@fh.sams.hipage
-                                    ; Set highest SAMS page in use
+                                    
+        mov   @edb.sams.hipage,@fh.sams.page
+        mov   @edb.sams.hipage,@fh.sams.hipage
+                                    ; Set current SAMS page
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------

@@ -25,7 +25,9 @@ edb.init:
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Initialize
-        ;------------------------------------------------------
+        ;------------------------------------------------------ 
+        bl    @mem.sams.layout      ; Reset SAMS memory pages for Stevie
+
         li    tmp0,edb.top          ; \
         mov   tmp0,@edb.top.ptr     ; / Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr
