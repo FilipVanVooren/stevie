@@ -8,7 +8,7 @@ vec.1   data  fm.loadfile           ;
 vec.2   data  fm.insertfile         ;
 vec.3   data  fm.browse.fname.suffix
 vec.4   data  fm.savefile           ;
-vec.5   data  cpu.crash             ; 
+vec.5   data  fm.newfile            ; 
 vec.6   data  cpu.crash             ; 
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 

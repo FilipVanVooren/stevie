@@ -16,6 +16,7 @@ txt.block.del      #string 'Deleting block....'
 txt.block.copy     #string 'Copying block....'
 txt.block.move     #string 'Moving block....'
 txt.block.save     #string 'Saving block to DV80 file....'
+txt.clearmem       #string "Clearing memory...."
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'

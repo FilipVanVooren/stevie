@@ -68,6 +68,7 @@ main:
         copy  "fm.load.asm"         ; Load DV80 file into editor buffer
         copy  "fm.insert.asm"       ; Insert DV80 file into editor buffer
         copy  "fm.save.asm"         ; Save DV80 file from editor buffer
+        copy  "fm.new.asm"          ; New DV80 file in editor buffer
         copy  "fm.callbacks.asm"    ; Callbacks for file operations
         copy  "fm.browse.asm"       ; File manager browse support routines
         ;-----------------------------------------------------------------------

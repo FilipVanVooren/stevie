@@ -24,7 +24,7 @@ edkey.action.cmdb.file.new:
         ; Reset editor
         ;-------------------------------------------------------
 !       bl    @pane.cmdb.hide       ; Hide CMDB pane
-        bl    @tv.reset             ; Reset editor 
+        bl    @fm.newfile           ; New file in editor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -1,9 +1,9 @@
 * FILE......: edb.clear.sams.asm
-* Purpose...: Clear editor buffer SAMS pages
+* Purpose...: Clear SAMS pages of editor buffer
 
 ***************************************************************
 * edb.clear
-* Clear editor buffer SAMS pages
+* Clear SAMS pages of editor buffer
 ***************************************************************
 *  bl   @edb.clear.sams
 *--------------------------------------------------------------
@@ -30,9 +30,9 @@ edb.clear.sams:
         ;------------------------------------------------------        
         ; Initialize
         ;------------------------------------------------------     
-        mov   @edb.sams.hipage,tmp2 ; Highest SAMS page used so far
+        mov   @edb.sams.hipage,tmp2 ; Highest SAMS page used
         ;------------------------------------------------------        
-        ; Clear memory
+        ; Clear SAMS memory
         ;------------------------------------------------------             
 edb.clear.sams.loop:
         mov   tmp2,tmp0             ; SAMS page

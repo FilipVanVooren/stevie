@@ -26,7 +26,6 @@ edb.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------ 
-        bl    @edb.clear.sams       ; Clear all SAMS memory pages
         bl    @mem.sams.layout      ; Load standard SAMS pages again
 
         li    tmp0,edb.top          ; \
