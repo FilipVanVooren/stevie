@@ -39,7 +39,7 @@ _idx.entry.insert.reorg.crash:
         sla   tmp3,1                ; adjust to slot size
         neg   tmp3                  ; tmp3 = -tmp3
         a     tmp0,tmp3             ; tmp3 = tmp3 + tmp0
-        ci    tmp3,idx.top - 2      ; Address before top of index ?
+        ci    tmp3,idx.top - 4      ; Address before top of index ?
         jgt   _idx.entry.insert.reorg.loop 
                                     ; No, jump to loop start
         ;------------------------------------------------------
