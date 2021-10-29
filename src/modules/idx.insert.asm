@@ -144,6 +144,10 @@ idx.entry.insert.reorg.simple:
         mov   @outparm1,tmp0        ; Index offset
 
         bl    @_idx.entry.insert.reorg
+                                    ; Reorganize index
+                                    ; \ i  tmp0 = Last line in index
+                                    ; / i  tmp2 = Num. of index entries to move
+
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

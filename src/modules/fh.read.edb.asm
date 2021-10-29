@@ -55,9 +55,16 @@ fh.file.read.edb:
                                     ; | o  waux1 = SAMS page number
                                     ; / o  waux2 = Address of SAMS register
                                     
-        mov   @edb.sams.hipage,@fh.sams.hipage
-                                    ; Set current SAMS page to highest page 
-                                    ; used by Editor Buffer
+        mov   @edb.sams.hipage,tmp0 ; \
+        mov   tmp0,@fh.sams.hipage  ; | Set current SAMS page to highest page 
+                                    ; / used by Editor Buffer
+
+        mov   tmp0,@tv.sams.c000    ; Sync SAMS window. Important!                                    
+
+        mov   @edb.top.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address                                    
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -213,6 +220,9 @@ fh.file.read.edb.check_setpage:
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
+
+        mov   @fh.sams.hipage,@tv.sams.c000
+                                    ; Sync SAMS window. Important!                                    
         ;------------------------------------------------------
         ; 1d: Fill new SAMS page with garbage (debug only)
         ;------------------------------------------------------ 
