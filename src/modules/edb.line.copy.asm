@@ -101,7 +101,7 @@ edb.line.copy.prepare:
         ;------------------------------------------------------
         ; 2: Check if highest SAMS page needs to be increased
         ;------------------------------------------------------ 
-        bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
+        bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
                                     ; /                         free line
         ;------------------------------------------------------

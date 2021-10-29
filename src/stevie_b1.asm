@@ -115,7 +115,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.utils.asm"          ; Editor buffer utilities
+        copy  "edb.hipage.alloc.asm"   ; Allocate SAMS page for editor buffer
         copy  "edb.line.mappage.asm"   ; Activate SAMS page for line
         copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer

@@ -106,7 +106,7 @@ edb.line.pack.fb.rtrim.loop:
         ;------------------------------------------------------
         ; Check and increase highest SAMS page
         ;------------------------------------------------------ 
-!       bl    @edb.adjust.hipage    ; Check and increase highest SAMS page
+!       bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
                                     ; /                         free line
         ;------------------------------------------------------
