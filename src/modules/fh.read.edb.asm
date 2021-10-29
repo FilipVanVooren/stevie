@@ -55,9 +55,9 @@ fh.file.read.edb:
                                     ; | o  waux1 = SAMS page number
                                     ; / o  waux2 = Address of SAMS register
                                     
-        mov   @edb.sams.hipage,@fh.sams.page
         mov   @edb.sams.hipage,@fh.sams.hipage
-                                    ; Set current SAMS page
+                                    ; Set current SAMS page to highest page 
+                                    ; used by Editor Buffer
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -202,15 +202,13 @@ fh.file.read.edb.check_setpage:
         ;------------------------------------------------------
         ; 1b: Increase SAMS page
         ;------------------------------------------------------ 
-        inc   @fh.sams.page         ; Next SAMS page
-        mov   @fh.sams.page,@fh.sams.hipage
-                                    ; Set highest SAMS page
+        inc   @fh.sams.hipage       ; Set highest SAMS page
         mov   @edb.top.ptr,@edb.next_free.ptr
                                     ; Start at top of SAMS page again
         ;------------------------------------------------------
         ; 1c: Switch to SAMS page
         ;------------------------------------------------------ 
-        mov   @fh.sams.page,tmp0
+        mov   @fh.sams.hipage,tmp0
         mov   @edb.top.ptr,tmp1
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
@@ -348,7 +346,8 @@ fh.file.read.edb.preppointer:
 fh.file.read.edb.prepindex:
         mov   @fh.line,@parm1       ; parm1 = Line number
                                     ; parm2 = Must allready be set!
-        mov   @fh.sams.page,@parm3  ; parm3 = SAMS page number
+        mov   @fh.sams.hipage,@parm3
+                                    ; parm3 = SAMS page number
                                     
         jmp   fh.file.read.edb.updindex
                                     ; Update index
