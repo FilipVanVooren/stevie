@@ -44,8 +44,6 @@ fh.file.read.edb:
         ;------------------------------------------------------  
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
-        clr   @fh.kilobytes         ; \ Clear kilobytes processed
-        clr   @fh.kilobytes.prev    ; /
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents
        

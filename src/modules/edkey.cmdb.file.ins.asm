@@ -55,7 +55,6 @@ edkey.action.cmdb.ins.file:
                                     ; / o @outparm1   = Matching line in EB
 
         mov   @outparm1,@parm2
-        inc   @parm2                ; Insert file starting at next line
         ;-------------------------------------------------------
         ; Get device/filename
         ;-------------------------------------------------------
@@ -78,7 +77,6 @@ edkey.action.cmdb.ins.file:
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
-
 
         ;-------------------------------------------------------
         ; Exit

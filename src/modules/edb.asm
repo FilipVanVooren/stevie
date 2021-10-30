@@ -44,6 +44,9 @@ edb.init:
         li    tmp0,txt.newfile      ; "New file"
         mov   tmp0,@edb.filename.ptr
 
+        clr   @fh.kilobytes         ; \ Clear kilobytes processed
+        clr   @fh.kilobytes.prev    ; /
+
         li    tmp0,txt.filetype.none
         mov   tmp0,@edb.filetype.ptr
 
