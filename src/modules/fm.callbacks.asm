@@ -114,9 +114,20 @@ fm.loadsave.cb.indicator1.exit:
 fm.loadsave.cb.indicator2:
         dect  stack
         mov   r11,*stack            ; Push return address
+
+        mov   @fh.temp1,tmp0        ; Inserting file?
+        ci    tmp0,>ffff
+        jeq   fm.loadsave.cb.indicator2.loadsave
+        ;------------------------------------------------------
+        ; Inserting file (refresh screen immediately, but only once)
+        ;------------------------------------------------------
+        
+        mov   @fb.topline,@parm1    ; Starting line
+        jmp   fm.loadsave.cb.indicator2.refresh
         ;------------------------------------------------------
         ; Check if first page processed (speedup impression)
         ;------------------------------------------------------
+fm.loadsave.cb.indicator2.loadsave:
         c     @fh.records,@fb.scrrows.max
         jne   fm.loadsave.cb.indicator2.kb
                                     ; Skip framebuffer refresh
@@ -126,14 +137,11 @@ fm.loadsave.cb.indicator2:
         jeq   fm.loadsave.cb.indicator2.kb
                                     ; Saving file, skip refresh
 
-        mov   @fh.temp1,tmp0        ; Inserting file?
-        ci    tmp0,>ffff
-        jne   fm.loadsave.cb.indicator2.kb
-                                    ; Inserting file, skip refresh
+        clr   @parm1                ; Line to start with when refreshing
         ;------------------------------------------------------
         ; Refresh framebuffer if first page processed
         ;------------------------------------------------------     
-        clr   @parm1
+fm.loadsave.cb.indicator2.refresh:
         bl    @fb.refresh           ; Refresh frame buffer
                                     ; \ i  @parm1 = Line to start with
                                     ; /
