@@ -161,6 +161,7 @@ main:
         copy  "pane.topline.asm"       ; Top line
         copy  "pane.errline.asm"       ; Error line
         copy  "pane.botline.asm"       ; Bottom line
+        copy  "pane.vdpdump.asm"       ; Dump panes to VDP memory
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

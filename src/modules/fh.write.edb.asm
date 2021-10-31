@@ -51,6 +51,10 @@ fh.file.write.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.records    ; Set records counter
+
+        clr   @fh.temp0             ; Not used
+        clr   @fh.temp1             ; Not used
+        clr   @fh.temp2             ; Not used
         ;------------------------------------------------------
         ; Assert
         ;------------------------------------------------------
