@@ -80,10 +80,11 @@ fh.file.read.edb:
         ; Determine if inserting file or loading new file
         ;------------------------------------------------------
         mov   @parm7,tmp0
-        ci    tmp0,>ffff            ; New file?
+        ci    tmp0,>ffff            ; Load file?
         jeq   fh.file.read.edb.newfile
-        clr   @fh.temp1             ; Set flag "insert"
-        seto  @fh.temp2             ; 
+
+        clr   @fh.temp1             ; Set flag "insert file"
+        clr   @fh.temp3             ; Not used
         clr   @fh.temp3             ; Not used
 
         mov   tmp0,@fh.line         ; Line to insert file at
@@ -93,8 +94,8 @@ fh.file.read.edb:
         ;------------------------------------------------------
 fh.file.read.edb.newfile:
         clr   @fh.line              ; New file 
-        seto  @fh.temp1             ; Set flag "new file"
-        clr   @fh.temp2             ; Refresh screen 
+        seto  @fh.temp1             ; Set flag "load file"
+        clr   @fh.temp2             ; Not used
         clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Asserts

@@ -114,16 +114,6 @@ fm.loadsave.cb.indicator1.exit:
 fm.loadsave.cb.indicator2:
         dect  stack
         mov   r11,*stack            ; Push return address
-
-        mov   @fh.temp1,tmp0        ; Inserting file?
-        ci    tmp0,>ffff
-        jeq   fm.loadsave.cb.indicator2.loadsave
-        ;------------------------------------------------------
-        ; Inserting file (refresh screen immediately, but only once)
-        ;------------------------------------------------------
-        
-        mov   @fb.topline,@parm1    ; Starting line
-        jmp   fm.loadsave.cb.indicator2.refresh
         ;------------------------------------------------------
         ; Check if first page processed (speedup impression)
         ;------------------------------------------------------
@@ -134,10 +124,19 @@ fm.loadsave.cb.indicator2.loadsave:
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
         ci    tmp0,fh.fopmode.writefile
-        jeq   fm.loadsave.cb.indicator2.kb
-                                    ; Saving file, skip refresh
+        jeq   fm.loadsave.cb.indicator2.topline
+                                    ; Saving file
 
-        clr   @parm1                ; Line to start with when refreshing
+        mov   @fh.temp1,tmp0
+        ci    tmp0,>ffff            ; Loading file in clean editor buffer?
+        jne   fm.loadsave.cb.indicator2.topline
+                                    ; No, inserting file
+
+        clr   @parm1                ; Line to start with, "load" operation
+        jmp   fm.loadsave.cb.indicator2.refresh        
+
+fm.loadsave.cb.indicator2.topline:
+        mov   @fb.topline,@parm1    ; Line to start with, other operations       
         ;------------------------------------------------------
         ; Refresh framebuffer if first page processed
         ;------------------------------------------------------     
@@ -159,17 +158,6 @@ fm.loadsave.cb.indicator2.kb:
         ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
-        mov   @fh.fopmode,tmp0      ; Check file operation mode
-
-        ci    tmp0,fh.fopmode.writefile
-        jeq   fm.loadsave.cb.indicator2.kb.processed
-                                    ; Saving file?
-
-        mov   @fh.temp1,tmp0        ; Inserting file?
-        ci    tmp0,>ffff
-        jne   fm.loadsave.cb.indicator2.kb.lines
-                                    ; Skip if inserting file
-
 fm.loadsave.cb.indicator2.kb.processed:
         mov   @fh.kilobytes,@fh.kilobytes.prev
                                     ; Save for compare
