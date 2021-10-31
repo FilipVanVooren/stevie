@@ -49,10 +49,14 @@ task.vdp.copy.sat.fb:
                                     ; | i  @WYX = Cursor YX
                                     ; / o  tmp0 = Pixel YX
 
-        mov   @tv.ruler.visible,@tv.ruler.visible
+        ;------------------------------------------------------
+        ; Cursor Y adjustment (topline, ruler, ...)
+        ;------------------------------------------------------        
+        mov   @tv.ruler.visible,tmp1
         jeq   task.vdp.copy.sat.fb.noruler
-        ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler
+        ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler        
         jmp   task.vdp.copy.sat.write
+
 task.vdp.copy.sat.fb.noruler:
         ai    tmp0,>0800            ; Adjust VDP cursor because of topline
         ;------------------------------------------------------
@@ -63,9 +67,15 @@ task.vdp.copy.sat.write:
         ;------------------------------------------------------
         ; Handle column and row indicators
         ;------------------------------------------------------
-        mov   @tv.ruler.visible,@tv.ruler.visible
-                                    ; Is ruler visible?
+        mov   @tv.ruler.visible,tmp1
+                                    ; Ruler visible?
         jeq   task.vdp.copy.sat.hide.indicators
+                                    ; Not visible, skip
+
+        mov   @cmdb.visible,tmp1
+        ci    tmp1,>ffff            ; CMDB pane visible? 
+        jeq   task.vdp.copy.sat.hide.indicators
+                                    ; Not visible, skip
 
         andi  tmp0,>ff00            ; \ Clear X position
         ori   tmp0,240              ; | Line indicator on pixel X 240
@@ -91,9 +101,9 @@ task.vdp.copy.sat.hide.indicators:
         ;------------------------------------------------------
 task.vdp.copy.sat.write2:
         bl    @cpym2v               ; Copy sprite SAT to VDP
-              data sprsat,ramsat,14 ; \ i  tmp0 = VDP destination
-                                    ; | i  tmp1 = ROM/RAM source
-                                    ; / i  tmp2 = Number of bytes to write
+              data sprsat,ramsat,14 ; \ i  p0 = VDP destination
+                                    ; | i  p1 = ROM/RAM source
+                                    ; / i  p2 = Number of bytes to write
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

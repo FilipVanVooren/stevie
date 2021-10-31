@@ -78,7 +78,8 @@ main:
         copy  "edkey.fb.del.asm"         ; Delete characters or lines
         copy  "edkey.fb.ins.asm"         ; Insert characters or lines
         copy  "edkey.fb.mod.asm"         ; Actions for modifier keys                
-        copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
+        copy  "edkey.fb.ruler.asm"       ; Toggle ruler on/off
+        copy  "edkey.fb.misc.asm"        ; Miscelanneous actions        
         copy  "edkey.fb.file.asm"        ; File related actions
         copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
         copy  "edkey.fb.tabs.asm"        ; tab-key related actions
