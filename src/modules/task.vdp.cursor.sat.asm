@@ -82,8 +82,10 @@ task.vdp.copy.sat.write:
         ;------------------------------------------------------
 task.vdp.copy.sat.hide.indicators:        
         clr   tmp1
-        movb  tmp1,@ramsat+7        ; Hide line indicator    <
-        movb  tmp1,@ramsat+11       ; Hide column indicator  v
+        movb  tmp1,@ramsat+7        ; \ Hide line indicator    <
+                                    ; / by transparant color
+        movb  tmp1,@ramsat+11       ; \ Hide column indicator  v
+                                    ; / by transparant color
         ;------------------------------------------------------
         ; Dump to VDP
         ;------------------------------------------------------

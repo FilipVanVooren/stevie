@@ -85,15 +85,12 @@ tibasic.32x30:
 * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 * ; VDP#7 Set screen background color
 
-
-
-
 romsat:
-        data  >0000,>0201             ; Cursor YX, initial shape and colour
-        data  >0000,>0301             ; Current line indicator
-        data  >0820,>0401             ; Current line indicator
+        data  >0000,>0001           ; Cursor YX, initial shape and color
+        data  >0000,>0101           ; Current line indicator     < 
+        data  >0820,>0201           ; Current column indicator   v
 nosprite:        
-        data  >d000                   ; End-of-Sprites list
+        data  >d000                 ; End-of-Sprites list
 
 
 ***************************************************************

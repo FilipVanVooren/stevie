@@ -5,13 +5,9 @@
 ; Sprite patterns
 ;--------------------------------------------------------------
 cursors:
-        byte  >00,>00,>00,>00,>00,>00,>00,>1c ; Cursor 1 - Insert mode
-        byte  >10,>10,>10,>10,>10,>10,>10,>00 ; Cursor 2 - Insert mode
-        byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor 3 - Overwrite mode
+        byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor
         byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
         byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
-
-
 
 ;--------------------------------------------------------------
 ; Character patterns

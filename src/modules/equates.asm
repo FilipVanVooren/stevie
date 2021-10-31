@@ -156,9 +156,9 @@ core1.free        equ  core1.top + 46  ; End of structure
 *--------------------------------------------------------------
 core2.top         equ  >a100           ; Structure begin
 timers            equ  core2.top       ; Timer table
-rambuf            equ  core2.top + 64  ; RAM workbuffer
-ramsat            equ  core2.top + 128 ; Sprite Attribute Table in RAM
-core2.free        equ  core2.top + 160 ; End of structure
+rambuf            equ  core2.top + 64  ; RAM workbuffer (160 bytes)
+ramsat            equ  core2.top + 224 ; Sprite Attr. Table in RAM (14 bytes)
+core2.free        equ  core2.top + 238 ; End of structure
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------

@@ -11,7 +11,7 @@ vdp.patterns.dump:
         ; Dump sprite patterns from ROM to VDP SDT
         ;-------------------------------------------------------
         bl    @cpym2v
-              data sprpdt,cursors,5*8
+              data sprpdt,cursors,3*8
         ;-------------------------------------------------------
         ; Dump character patterns from ROM to VDP PDT
         ;-------------------------------------------------------
