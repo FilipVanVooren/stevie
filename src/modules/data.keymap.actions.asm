@@ -47,13 +47,13 @@ keymap_actions.editor:
         byte  key.ctrl.x, pane.focus.fb
         data  edkey.action.npage
 
-        byte  key.ctrl.t, pane.focus.fb
-        data  edkey.action.top
+        byte  key.fctn.v, pane.focus.fb
+        data  edkey.action.topscr
 
-        byte  key.ctrl.b, pane.focus.fb
-        data  edkey.action.bot
+        byte  key.fctn.b, pane.focus.fb
+        data  edkey.action.botscr
 
-        byte  key.ctrl.t, pane.focus.fb
+        byte  key.ctrl.v, pane.focus.fb
         data  edkey.action.top
 
         byte  key.ctrl.b, pane.focus.fb
@@ -67,7 +67,7 @@ keymap_actions.editor:
         byte  key.fctn.3, pane.focus.fb
         data  edkey.action.del_line
 
-        byte  key.ctrl.l, pane.focus.fb
+        byte  key.ctrl.4, pane.focus.fb
         data  edkey.action.del_eol
         ;-------------------------------------------------------
         ; Modifier keys - Insert
@@ -78,7 +78,10 @@ keymap_actions.editor:
         byte  key.fctn.dot, pane.focus.fb
         data  edkey.action.ins_onoff
 
-        byte  key.fctn.7, pane.focus.fb
+        byte  key.fctn.7, pane.focus.fb        
+        data  edkey.action.fb.tab.next
+        
+        byte  key.ctrl.t, pane.focus.fb
         data  edkey.action.fb.tab.next
 
         byte  key.fctn.8, pane.focus.fb
@@ -86,7 +89,7 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Block marking/modifier
         ;-------------------------------------------------------
-        byte  key.ctrl.v, pane.focus.fb
+        byte  key.ctrl.a, pane.focus.fb
         data  edkey.action.block.mark
 
         byte  key.ctrl.c, pane.focus.fb
@@ -108,6 +111,9 @@ keymap_actions.editor:
         
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
+
+        byte  key.ctrl.n, pane.focus.fb
+        data  edkey.action.cmdb.file.new
 
         byte  key.ctrl.u, pane.focus.fb
         data  edkey.action.toggle.ruler        

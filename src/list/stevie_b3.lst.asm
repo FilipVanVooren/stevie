@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b3.asm.31544
+     **** ****     > stevie_b3.asm.46412
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 211106-1515510
+0009               * File: stevie_b3.asm               ; Version 211106-1557590
 0010               *
 0011               * Bank 3 "John"
 0012               * Dialogs & Command Buffer pane
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -438,7 +438,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0346               * Heap                                @>f000-ffff  (4096 bytes)
 0347               *--------------------------------------------------------------
 0348      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -562,7 +562,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               * Special keys
 0120               *---------------------------------------------------------------
 0121      000D     key.enter     equ >0d               ; enter
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -613,16 +613,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2B'
+0045 6011   53             text  'STEVIE 1.2C'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 3242     
+     601A 3243     
 0046                       even
 0047               
 0049               
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1398,7 +1398,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6230 18               byte  24
-0270 6231   42             text  'Build-ID  211106-1515510'
+0270 6231   42             text  'Build-ID  211106-1557590'
      6232 7569     
      6234 6C64     
      6236 2D49     
@@ -1408,8 +1408,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      623E 3130     
      6240 362D     
      6242 3135     
-     6244 3135     
-     6246 3531     
+     6244 3537     
+     6246 3539     
      6248 30       
 0271                       even
 0272               
@@ -5803,7 +5803,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70E2 0040     
 0370 70E4 0460  28         b     @main                 ; Give control to main program
      70E6 6046     
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0042                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7665,7 +7665,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0202                       even
 0203               
                    < ram.resident.asm
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
@@ -7758,7 +7758,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0067                       copy  "dialog.help.asm"     ; Dialog "Help"
      **** ****     > dialog.help.asm
 0001               * FILE......: dialog.help.asm
@@ -8052,12 +8052,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0164               
 0165               
 0166 61F8 16               byte  22
-0167 61F9   46             text  'Fctn 7        Next tab'
+0167 61F9   46             text  'Fctn 7   ^t   Next tab'
      61FA 6374     
      61FC 6E20     
      61FE 3720     
      6200 2020     
-     6202 2020     
+     6202 5E74     
      6204 2020     
      6206 204E     
      6208 6578     
@@ -8068,13 +8068,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0169               
 0170               
 0171 6210 15               byte  21
-0172 6211   46             text  'Fctn 6  (^e)  Page up'
+0172 6211   46             text  'Fctn 6   ^e   Page up'
      6212 6374     
      6214 6E20     
      6216 3620     
-     6218 2028     
+     6218 2020     
      621A 5E65     
-     621C 2920     
+     621C 2020     
      621E 2050     
      6220 6167     
      6222 6520     
@@ -8083,13 +8083,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0174               
 0175               
 0176 6226 17               byte  23
-0177 6227   46             text  'Fctn 4  (^x)  Page down'
+0177 6227   46             text  'Fctn 4   ^x   Page down'
      6228 6374     
      622A 6E20     
      622C 3420     
-     622E 2028     
+     622E 2020     
      6230 5E78     
-     6232 2920     
+     6232 2020     
      6234 2050     
      6236 6167     
      6238 6520     
@@ -8098,68 +8098,68 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0178                       even
 0179               
 0180               
-0181 623E 16               byte  22
-0182 623F   43             text  'Ctrl T  (^t)  File top'
-     6240 7472     
-     6242 6C20     
-     6244 5420     
-     6246 2028     
-     6248 5E74     
-     624A 2920     
-     624C 2046     
-     624E 696C     
-     6250 6520     
-     6252 746F     
-     6254 70       
+0181 623E 18               byte  24
+0182 623F   46             text  'Fctn V        Screen top'
+     6240 6374     
+     6242 6E20     
+     6244 5620     
+     6246 2020     
+     6248 2020     
+     624A 2020     
+     624C 2053     
+     624E 6372     
+     6250 6565     
+     6252 6E20     
+     6254 746F     
+     6256 70       
 0183                       even
 0184               
 0185               
-0186 6256 19               byte  25
-0187 6257   43             text  'Ctrl B  (^b)  File bottom'
-     6258 7472     
-     625A 6C20     
-     625C 4220     
-     625E 2028     
-     6260 5E62     
-     6262 2920     
-     6264 2046     
-     6266 696C     
-     6268 6520     
-     626A 626F     
-     626C 7474     
-     626E 6F6D     
+0186 6258 1B               byte  27
+0187 6259   46             text  'Fctn B        Screen bottom'
+     625A 6374     
+     625C 6E20     
+     625E 4220     
+     6260 2020     
+     6262 2020     
+     6264 2020     
+     6266 2053     
+     6268 6372     
+     626A 6565     
+     626C 6E20     
+     626E 626F     
+     6270 7474     
+     6272 6F6D     
 0188                       even
 0189               
 0190               
-0191 6270 18               byte  24
-0192 6271   43             text  'Ctrl T  (^t)  Screen top'
-     6272 7472     
-     6274 6C20     
-     6276 5420     
-     6278 2028     
-     627A 5E74     
-     627C 2920     
-     627E 2053     
-     6280 6372     
-     6282 6565     
-     6284 6E20     
-     6286 746F     
-     6288 70       
+0191 6274 16               byte  22
+0192 6275   43             text  'Ctrl V   ^v   File top'
+     6276 7472     
+     6278 6C20     
+     627A 5620     
+     627C 2020     
+     627E 5E76     
+     6280 2020     
+     6282 2046     
+     6284 696C     
+     6286 6520     
+     6288 746F     
+     628A 70       
 0193                       even
 0194               
 0195               
-0196 628A 1B               byte  27
-0197 628B   43             text  'Ctrl B  (^b)  Screen bottom'
-     628C 7472     
-     628E 6C20     
-     6290 4220     
-     6292 2028     
-     6294 5E62     
-     6296 2920     
-     6298 2053     
-     629A 6372     
-     629C 6565     
-     629E 6E20     
+0196 628C 19               byte  25
+0197 628D   43             text  'Ctrl B   ^b   File bottom'
+     628E 7472     
+     6290 6C20     
+     6292 4220     
+     6294 2020     
+     6296 5E62     
+     6298 2020     
+     629A 2046     
+     629C 696C     
+     629E 6520     
      62A0 626F     
      62A2 7474     
      62A4 6F6D     
@@ -8195,13 +8195,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0210               
 0211               
 0212 62CC 12               byte  18
-0213 62CD   46             text  'Fctn +  (^q)  Quit'
+0213 62CD   46             text  'Fctn +   ^q   Quit'
      62CE 6374     
      62D0 6E20     
      62D2 2B20     
-     62D4 2028     
+     62D4 2020     
      62D6 5E71     
-     62D8 2920     
+     62D8 2020     
      62DA 2051     
      62DC 7569     
      62DE 74       
@@ -8209,13 +8209,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0215               
 0216               
 0217 62E0 12               byte  18
-0218 62E1   43             text  'Ctrl h  (^h)  Help'
+0218 62E1   43             text  'Ctrl h   ^h   Help'
      62E2 7472     
      62E4 6C20     
      62E6 6820     
-     62E8 2028     
+     62E8 2020     
      62EA 5E68     
-     62EC 2920     
+     62EC 2020     
      62EE 2048     
      62F0 656C     
      62F2 70       
@@ -8223,13 +8223,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0220               
 0221               
 0222 62F4 1A               byte  26
-0223 62F5   63             text  'ctrl u  (^u)  Toggle ruler'
+0223 62F5   63             text  'ctrl u   ^u   Toggle ruler'
      62F6 7472     
      62F8 6C20     
      62FA 7520     
-     62FC 2028     
+     62FC 2020     
      62FE 5E75     
-     6300 2920     
+     6300 2020     
      6302 2054     
      6304 6F67     
      6306 676C     
@@ -8241,13 +8241,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0225               
 0226               
 0227 6310 21               byte  33
-0228 6311   43             text  'Ctrl z  (^z)  Cycle color schemes'
+0228 6311   43             text  'Ctrl z   ^z   Cycle color schemes'
      6312 7472     
      6314 6C20     
      6316 7A20     
-     6318 2028     
+     6318 2020     
      631A 5E7A     
-     631C 2920     
+     631C 2020     
      631E 2043     
      6320 7963     
      6322 6C65     
@@ -8262,13 +8262,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0230               
 0231               
 0232 6332 20               byte  32
-0233 6333   63             text  'ctrl /  (^/)  TI Basic (F9=exit)'
+0233 6333   63             text  'ctrl /   ^/   TI Basic (F9=exit)'
      6334 7472     
      6336 6C20     
      6338 2F20     
-     633A 2028     
+     633A 2020     
      633C 5E2F     
-     633E 2920     
+     633E 2020     
      6340 2054     
      6342 4920     
      6344 4261     
@@ -8307,13 +8307,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0242               
 0243               
 0244 6378 16               byte  22
-0245 6379   43             text  'Ctrl n  (^n)  New file'
+0245 6379   43             text  'Ctrl n   ^n   New file'
      637A 7472     
      637C 6C20     
      637E 6E20     
-     6380 2028     
+     6380 2020     
      6382 5E6E     
-     6384 2920     
+     6384 2020     
      6386 204E     
      6388 6577     
      638A 2066     
@@ -8323,13 +8323,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0247               
 0248               
 0249 6390 23               byte  35
-0250 6391   43             text  'Ctrl i  (^i)  Insert file at cursor'
+0250 6391   43             text  'Ctrl i   ^i   Insert file at cursor'
      6392 7472     
      6394 6C20     
      6396 6920     
-     6398 2028     
+     6398 2020     
      639A 5E69     
-     639C 2920     
+     639C 2020     
      639E 2049     
      63A0 6E73     
      63A2 6572     
@@ -8345,13 +8345,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0252               
 0253               
 0254 63B4 17               byte  23
-0255 63B5   43             text  'Ctrl o  (^o)  Open file'
+0255 63B5   43             text  'Ctrl o   ^o   Open file'
      63B6 7472     
      63B8 6C20     
      63BA 6F20     
-     63BC 2028     
+     63BC 2020     
      63BE 5E6F     
-     63C0 2920     
+     63C0 2020     
      63C2 204F     
      63C4 7065     
      63C6 6E20     
@@ -8361,13 +8361,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0257               
 0258               
 0259 63CC 18               byte  24
-0260 63CD   43             text  'Ctrl p  (^p)  Print file'
+0260 63CD   43             text  'Ctrl p   ^p   Print file'
      63CE 7472     
      63D0 6C20     
      63D2 7020     
-     63D4 2028     
+     63D4 2020     
      63D6 5E70     
-     63D8 2920     
+     63D8 2020     
      63DA 2050     
      63DC 7269     
      63DE 6E74     
@@ -8378,13 +8378,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0262               
 0263               
 0264 63E6 17               byte  23
-0265 63E7   43             text  'Ctrl s  (^s)  Save file'
+0265 63E7   43             text  'Ctrl s   ^s   Save file'
      63E8 7472     
      63EA 6C20     
      63EC 7320     
-     63EE 2028     
+     63EE 2020     
      63F0 5E73     
-     63F2 2920     
+     63F2 2020     
      63F4 2053     
      63F6 6176     
      63F8 6520     
@@ -8394,13 +8394,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               
 0269 63FE 20               byte  32
-0270 63FF   43             text  'Ctrl ,  (^,)  Load previous file'
+0270 63FF   43             text  'Ctrl ,   ^,   Load previous file'
      6400 7472     
      6402 6C20     
      6404 2C20     
-     6406 2028     
+     6406 2020     
      6408 5E2C     
-     640A 2920     
+     640A 2020     
      640C 204C     
      640E 6F61     
      6410 6420     
@@ -8415,13 +8415,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0272               
 0273               
 0274 6420 1C               byte  28
-0275 6421   43             text  'Ctrl .  (^.)  Load next file'
+0275 6421   43             text  'Ctrl .   ^.   Load next file'
      6422 7472     
      6424 6C20     
      6426 2E20     
-     6428 2028     
+     6428 2020     
      642A 5E2E     
-     642C 2920     
+     642C 2020     
      642E 204C     
      6430 6F61     
      6432 6420     
@@ -8461,13 +8461,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0287               
 0288               
 0289 6464 1E               byte  30
-0290 6465   43             text  'Ctrl v  (^v)  Set M1/M2 marker'
+0290 6465   43             text  'Ctrl a   ^a   Set M1/M2 marker'
      6466 7472     
      6468 6C20     
-     646A 7620     
-     646C 2028     
-     646E 5E76     
-     6470 2920     
+     646A 6120     
+     646C 2020     
+     646E 5E61     
+     6470 2020     
      6472 2053     
      6474 6574     
      6476 204D     
@@ -8481,13 +8481,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0292               
 0293               
 0294 6484 1A               byte  26
-0295 6485   43             text  'Ctrl d  (^d)  Delete block'
+0295 6485   43             text  'Ctrl d   ^d   Delete block'
      6486 7472     
      6488 6C20     
      648A 6420     
-     648C 2028     
+     648C 2020     
      648E 5E64     
-     6490 2920     
+     6490 2020     
      6492 2044     
      6494 656C     
      6496 6574     
@@ -8499,13 +8499,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0297               
 0298               
 0299 64A0 18               byte  24
-0300 64A1   43             text  'Ctrl c  (^c)  Copy block'
+0300 64A1   43             text  'Ctrl c   ^c   Copy block'
      64A2 7472     
      64A4 6C20     
      64A6 6320     
-     64A8 2028     
+     64A8 2020     
      64AA 5E63     
-     64AC 2920     
+     64AC 2020     
      64AE 2043     
      64B0 6F70     
      64B2 7920     
@@ -8516,13 +8516,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0302               
 0303               
 0304 64BA 1C               byte  28
-0305 64BB   43             text  'Ctrl g  (^g)  Goto marker M1'
+0305 64BB   43             text  'Ctrl g   ^g   Goto marker M1'
      64BC 7472     
      64BE 6C20     
      64C0 6720     
-     64C2 2028     
+     64C2 2020     
      64C4 5E67     
-     64C6 2920     
+     64C6 2020     
      64C8 2047     
      64CA 6F74     
      64CC 6F20     
@@ -8535,13 +8535,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0307               
 0308               
 0309 64D8 18               byte  24
-0310 64D9   43             text  'Ctrl m  (^m)  Move block'
+0310 64D9   43             text  'Ctrl m   ^m   Move block'
      64DA 7472     
      64DC 6C20     
      64DE 6D20     
-     64E0 2028     
+     64E0 2020     
      64E2 5E6D     
-     64E4 2920     
+     64E4 2020     
      64E6 204D     
      64E8 6F76     
      64EA 6520     
@@ -8552,13 +8552,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0312               
 0313               
 0314 64F2 20               byte  32
-0315 64F3   43             text  'Ctrl s  (^s)  Save block to file'
+0315 64F3   43             text  'Ctrl s   ^s   Save block to file'
      64F4 7472     
      64F6 6C20     
      64F8 7320     
-     64FA 2028     
+     64FA 2020     
      64FC 5E73     
-     64FE 2920     
+     64FE 2020     
      6500 2053     
      6502 6176     
      6504 6520     
@@ -8657,13 +8657,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0342               
 0343               
 0344 6594 20               byte  32
-0345 6595   43             text  'Ctrl L  (^l)  Delete end of line'
+0345 6595   43             text  'Ctrl 4   ^4   Delete end of line'
      6596 7472     
      6598 6C20     
-     659A 4C20     
-     659C 2028     
-     659E 5E6C     
-     65A0 2920     
+     659A 3420     
+     659C 2020     
+     659E 5E34     
+     65A0 2020     
      65A2 2044     
      65A4 656C     
      65A6 6574     
@@ -8713,7 +8713,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      65EE 65       
 0356                       even
 0357               
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0068                       copy  "dialog.file.asm"     ; Dialog "File"
      **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -8783,7 +8783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 662C C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 662E C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 6630 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0069                       copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
      **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -8881,7 +8881,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 6684 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 6686 C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 6688 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0070                       copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
      **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -8987,7 +8987,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0079 66EC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0080 66EE C2F9  30         mov   *stack+,r11           ; Pop R11
 0081 66F0 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0071                       copy  "dialog.insert.asm"   ; Dialog "Insert DV80 file"
      **** ****     > dialog.insert.asm
 0001               * FILE......: dialog.insert.asm
@@ -9121,7 +9121,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0100 6772 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0101 6774 C2F9  30         mov   *stack+,r11           ; Pop R11
 0102 6776 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0072                       copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
      **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -9188,7 +9188,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050 67B0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 67B2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 67B4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0073                       copy  "dialog.basic.asm"    ; Dialog "Basic"
      **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
@@ -9258,7 +9258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 67F2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 67F4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 67F6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0074                       ;-----------------------------------------------------------------------
 0075                       ; Command buffer handling
 0076                       ;-----------------------------------------------------------------------
@@ -9386,7 +9386,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0106               pane.show_hint.exit:
 0107 685E C2F9  30         mov   *stack+,r11           ; Pop R11
 0108 6860 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0078                       copy  "pane.cmdb.show.asm"  ; Show command buffer pane
      **** ****     > pane.cmdb.show.asm
 0001               * FILE......: pane.cmdb.show.asm
@@ -9470,7 +9470,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 68AC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 68AE C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 68B0 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0079                       copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
      **** ****     > pane.cmdb.hide.asm
 0001               * FILE......: pane.cmdb.hide.asm
@@ -9566,7 +9566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0072               pane.cmdb.hide.exit:
 0073 6900 C2F9  30         mov   *stack+,r11           ; Pop r11
 0074 6902 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0080                       copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
      **** ****     > pane.cmdb.draw.asm
 0001               * FILE......: pane.cmdb.draw.asm
@@ -9806,7 +9806,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0177 6A1A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0178 6A1C C2F9  30         mov   *stack+,r11           ; Pop r11
 0179 6A1E 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0081                       copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
      **** ****     > cmdb.refresh.asm
 0001               * FILE......: cmdb.refresh.asm
@@ -9886,7 +9886,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 6A64 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6A66 C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 6A68 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0082                       copy  "cmdb.cmd.asm"        ; Command line handling
      **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -10042,7 +10042,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0139 6AC4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0140 6AC6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0141 6AC8 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0083                       ;-----------------------------------------------------------------------
 0084                       ; Toggle fastmode in Load/Save DV80 dialogs
 0085                       ;-----------------------------------------------------------------------
@@ -10103,7 +10103,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0045 6AF6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0046 6AF8 C2F9  30         mov   *stack+,r11           ; Pop R11
 0047 6AFA 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Stubs
 0089                       ;-----------------------------------------------------------------------
@@ -10294,7 +10294,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0175               
 0176               ; TODO Include _trampoline.bank1.ret
 0177               ; TODO Refactor stubs for using _trampoline.bank1.ret
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0091                       ;-----------------------------------------------------------------------
 0092                       ; Basic interpreter
 0093                       ;-----------------------------------------------------------------------
@@ -10661,7 +10661,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0272 6D10 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0273 6D12 C2F9  30         mov   *stack+,r11           ; Pop r11
 0274 6D14 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0095                       ;-----------------------------------------------------------------------
 0096                       ; Data
 0097                       ;-----------------------------------------------------------------------
@@ -10677,12 +10677,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008               
 0009               txt.stevie
 0010 6D16 0B               byte  11
-0011 6D17   53             text  'Stevie 1.2B'
+0011 6D17   53             text  'Stevie 1.2C'
      6D18 7465     
      6D1A 7669     
      6D1C 6520     
      6D1E 312E     
-     6D20 3242     
+     6D20 3243     
 0012                       even
 0013               
 0014               
@@ -11103,7 +11103,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0126               
 0127               txt.about.build
 0128 6FB0 4C               byte  76
-0129 6FB1   42             text  'Build: 211106-1515510 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0129 6FB1   42             text  'Build: 211106-1557590 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
      6FB2 7569     
      6FB4 6C64     
      6FB6 3A20     
@@ -11111,9 +11111,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6FBA 3131     
      6FBC 3036     
      6FBE 2D31     
-     6FC0 3531     
-     6FC2 3535     
-     6FC4 3130     
+     6FC0 3535     
+     6FC2 3735     
+     6FC4 3930     
      6FC6 202F     
      6FC8 2032     
      6FCA 3031     
@@ -11314,7 +11314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70D2 636B     
 0211                       even
 0212               
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0099                       ;-----------------------------------------------------------------------
 0100                       ; Bank full check
 0101                       ;-----------------------------------------------------------------------
@@ -11463,7 +11463,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0110                       ;-----------------------------------------------------------------------
 0111                       ; Vector table
 0112                       ;-----------------------------------------------------------------------
@@ -11508,7 +11508,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 604A     vec.30  data  dialog.menu           ; Dialog "Main Menu"
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 6ACA     vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog
-                   < stevie_b3.asm.31544
+                   < stevie_b3.asm.46412
 0115                                                   ; Vector table bank 3
 0116               
 0117               

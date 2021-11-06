@@ -84,21 +84,34 @@ edkey.action.botscr:
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.bot.refresh
+        jne   edkey.action.botscr.cursor
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
-        ; Refresh page
+        ; Position cursor
         ;-------------------------------------------------------
-edkey.action.botscr.refresh:
+edkey.action.botscr.cursor:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
 
-        mov   @fb.scrrows,@fb.row   ; Frame buffer bottom line
+        c     @fb.scrrows,@edb.lines
+        jgt   edkey.action.botscr.eof
+        mov   @fb.scrrows,tmp0      ; Get bottom row
+        jmp   !
+        ;-------------------------------------------------------
+        ; Cursor at EOF
+        ;-------------------------------------------------------
+edkey.action.botscr.eof:
+        mov   @edb.lines,tmp0       ; Get last line in file
+        ;-------------------------------------------------------
+        ; Position cursor
+        ;-------------------------------------------------------
+!       dec   tmp0                  ; Base 0
+        mov   tmp0,@fb.row          ; Frame buffer bottom line
         clr   @fb.column            ; Frame buffer column 0 
 
-        mov   @fb.row,tmp0
-        sla   tmp0,8
-        mov   @tmp0,@wyx
+        mov   @fb.row,tmp0          ;
+        sla   tmp0,8                ; Position cursor
+        mov   tmp0,@wyx             ;
 
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 
