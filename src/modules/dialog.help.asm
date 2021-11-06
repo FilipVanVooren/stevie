@@ -95,7 +95,7 @@ dialog.help.content:
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.help.help.part2
                                     ; Pointer to string
-        li    tmp2,24               ; Set loop counter
+        li    tmp2,23               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -118,21 +118,21 @@ dialog.help.content.exit:
 
 dialog.help.help.part1:
         #string '------------- Cursor --------------'
-        #string 'Fctn S        Left'
-        #string 'Fctn D        Right'
-        #string 'Fctn E        Up'
-        #string 'Fctn X        Down'
-        #string 'Fctn H        Home'
-        #string 'Fctn L        End'
-        #string 'Fctn J        Previous word'
-        #string 'Fctn K        Next word'
+        #string 'Fctn s        Left'
+        #string 'Fctn d        Right'
+        #string 'Fctn e        Up'
+        #string 'Fctn x        Down'
+        #string 'Fctn h        Home'
+        #string 'Fctn l        End'
+        #string 'Fctn j        Previous word'
+        #string 'Fctn k        Next word'
         #string 'Fctn 7   ^t   Next tab'
         #string 'Fctn 6   ^e   Page up'
         #string 'Fctn 4   ^x   Page down'
-        #string 'Fctn V        Screen top'
-        #string 'Fctn B        Screen bottom'
-        #string 'Ctrl V   ^v   File top'
-        #string 'Ctrl B   ^b   File bottom'
+        #string 'Fctn v        Screen top'
+        #string 'Fctn b        Screen bottom'
+        #string 'Ctrl v   ^v   File top'
+        #string 'Ctrl b   ^b   File bottom'
 
         #string ' '
         #string '------------- Others --------------'
@@ -144,7 +144,6 @@ dialog.help.help.part1:
 
 dialog.help.help.part2:
         #string '------------- File ----------------'
-        #string 'Ctrl n   ^n   New file'
         #string 'Ctrl i   ^i   Insert file at cursor'
         #string 'Ctrl o   ^o   Open file'
         #string 'Ctrl p   ^p   Print file'

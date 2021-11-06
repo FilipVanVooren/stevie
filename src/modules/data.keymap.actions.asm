@@ -112,9 +112,6 @@ keymap_actions.editor:
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
 
-        byte  key.ctrl.n, pane.focus.fb
-        data  edkey.action.cmdb.file.new
-
         byte  key.ctrl.u, pane.focus.fb
         data  edkey.action.toggle.ruler        
 
