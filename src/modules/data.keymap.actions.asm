@@ -52,6 +52,12 @@ keymap_actions.editor:
 
         byte  key.ctrl.b, pane.focus.fb
         data  edkey.action.bot
+
+        byte  key.ctrl.t, pane.focus.fb
+        data  edkey.action.top
+
+        byte  key.ctrl.b, pane.focus.fb
+        data  edkey.action.bot
         ;-------------------------------------------------------
         ; Modifier keys - Delete
         ;-------------------------------------------------------
@@ -61,7 +67,7 @@ keymap_actions.editor:
         byte  key.fctn.3, pane.focus.fb
         data  edkey.action.del_line
 
-        byte  key.fctn.4, pane.focus.fb
+        byte  key.ctrl.l, pane.focus.fb
         data  edkey.action.del_eol
         ;-------------------------------------------------------
         ; Modifier keys - Insert

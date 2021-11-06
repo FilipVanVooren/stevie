@@ -91,11 +91,11 @@ dialog.help.content:
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 2)
         ;------------------------------------------------------
-        li    tmp0,>022c            ; Y=2, X=44
+        li    tmp0,>012a            ; Y=1, X=42
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.help.help.part2
                                     ; Pointer to string
-        li    tmp2,18               ; Set loop counter
+        li    tmp2,24               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -117,46 +117,53 @@ dialog.help.content.exit:
 
 
 dialog.help.help.part1:
-        #string 'Movement keys:'
-        #string '   Fctn S        Cursor left'
-        #string '   Fctn D        Cursor right'
-        #string '   Fctn E        Cursor up'
-        #string '   Fctn X        Cursor down'
-        #string '   Fctn H        Cursor home'
-        #string '   Fctn L        Cursor end'
-        #string '   Fctn J        Cursor to prev. word'
-        #string '   Fctn K        Cursor to next word'
-        #string '   Fctn 7        Cursor to next tab'
-        #string '   Fctn 6  (^e)  Page up'
-        #string '   Fctn 4  (^x)  Page down'
-        #string '   Ctrl T  (^t)  File top'
-        #string '   Ctrl B  (^b)  File bottom'
+        #string '------------- Cursor --------------'
+        #string 'Fctn S        Left'
+        #string 'Fctn D        Right'
+        #string 'Fctn E        Up'
+        #string 'Fctn X        Down'
+        #string 'Fctn H        Home'
+        #string 'Fctn L        End'
+        #string 'Fctn J        Previous word'
+        #string 'Fctn K        Next word'
+        #string 'Fctn 7        Next tab'
+        #string 'Fctn 6  (^e)  Page up'
+        #string 'Fctn 4  (^x)  Page down'
+        #string 'Ctrl T  (^t)  File top'
+        #string 'Ctrl B  (^b)  File bottom'
+        #string 'Ctrl T  (^t)  Screen top'
+        #string 'Ctrl B  (^b)  Screen bottom'
+
         #string ' '
-        #string 'Action keys:'
-        #string '   Fctn +  (^q)  Quit'
-        #string '   Ctrl h  (^h)  Help'
-        #string '   Ctrl o  (^o)  Open file'
-        #string '   Ctrl s  (^s)  Save file'
-        #string '   Ctrl v  (^v)  Set M1/M2 marker'
-        #string '   Ctrl z  (^z)  Cycle color schemes'
-        #string '   ctrl /  (^/)  TI Basic (F9 to exit)'
-        
+        #string '------------- Others --------------'
+        #string 'Fctn +  (^q)  Quit'
+        #string 'Ctrl h  (^h)  Help'
+        #string 'ctrl u  (^u)  Toggle ruler'
+        #string 'Ctrl z  (^z)  Cycle color schemes'
+        #string 'ctrl /  (^/)  TI Basic (F9=exit)'
+
 dialog.help.help.part2:
-        #string '   Ctrl ,  (^,)  Load previous file'
-        #string '   Ctrl .  (^.)  Load next file'
-        #string '   ctrl u  (^u)  Toggle ruler'
+        #string '------------- File ----------------'
+        #string 'Ctrl n  (^n)  New file'
+        #string 'Ctrl i  (^i)  Insert file at cursor'
+        #string 'Ctrl o  (^o)  Open file'
+        #string 'Ctrl p  (^p)  Print file'
+        #string 'Ctrl s  (^s)  Save file'
+        #string 'Ctrl ,  (^,)  Load previous file'
+        #string 'Ctrl .  (^.)  Load next file'
         #string ' '
-        #string 'In block mode:'
-        #string '   Ctrl d  (^d)  Delete block'
-        #string '   Ctrl c  (^c)  Copy block'
-        #string '   Ctrl g  (^g)  Goto marker M1'
-        #string '   Ctrl m  (^m)  Move block'
-        #string '   Ctrl s  (^s)  Save block to file'
+        #string '------------- Block mode ----------'
+        #string 'Ctrl v  (^v)  Set M1/M2 marker'
+        #string 'Ctrl d  (^d)  Delete block'
+        #string 'Ctrl c  (^c)  Copy block'
+        #string 'Ctrl g  (^g)  Goto marker M1'
+        #string 'Ctrl m  (^m)  Move block'
+        #string 'Ctrl s  (^s)  Save block to file'
         #string ' '
-        #string 'Modifier keys:'
-        #string '   Fctn 1        Delete character'
-        #string '   Fctn 2        Insert character'
-        #string '   Fctn 3        Delete line'
-        #string '   Fctn 4        Delete end of line'
-        #string '   Fctn 8        Insert line'
-        #string '   Fctn .        Insert/Overwrite'
+        #string '------------- Modifiers -----------'
+        #string 'Fctn 1        Delete character'
+        #string 'Fctn 2        Insert character'
+        #string 'Fctn 3        Delete line'
+        #string 'Ctrl L  (^l)  Delete end of line'
+        #string 'Fctn 8        Insert line'
+        #string 'Fctn .        Insert/Overwrite'

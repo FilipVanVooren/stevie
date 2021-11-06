@@ -14,7 +14,6 @@
 *--------------------------------------------------------------
 * INPUT
 * @parm1  = Line in editor buffer to display as top row (goto)
-* @parm2  = YX cursor position to 
 *
 * Register usage
 * none
@@ -27,9 +26,8 @@ edkey.goto.fb.toprow:
                                     ; /             (becomes @fb.topline)
 
         clr   @fb.row               ; Frame buffer line 0
-        clr   @fb.column            ; Frame buffer column 0     
-        clr   @wyx                  ; Set VDP cursor on row 0, column 0
-
+        clr   @fb.column            ; Frame buffer column 0 
+        clr   @wyx                  ; Position VDP cursor
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 
         bl    @edb.line.getlength2  ; \ Get length current line

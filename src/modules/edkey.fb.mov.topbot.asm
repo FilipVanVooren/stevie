@@ -23,6 +23,23 @@ edkey.action.top.refresh:
                                     ; / i  @parm1 = Line in editor buffer
 
 
+*---------------------------------------------------------------
+* Goto top of screen
+*---------------------------------------------------------------
+edkey.action.topscr:
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.topscr.refresh
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+edkey.action.topscr.refresh:        
+        mov   @fb.topline,@parm1    ; Set to top line in frame buffer
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+                                    ; / i  @parm1 = Line in editor buffer
+
+
 
 *---------------------------------------------------------------
 * Goto bottom of file
@@ -53,4 +70,44 @@ edkey.action.bot.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.bot.exit:
+        b     @hook.keyscan.bounce  ; Back to editor main
+
+
+
+*---------------------------------------------------------------
+* Goto bottom of screen
+*---------------------------------------------------------------
+edkey.action.botscr:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.bot.refresh
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Refresh page
+        ;-------------------------------------------------------
+edkey.action.botscr.refresh:
+        seto  @fb.status.dirty      ; Trigger refresh of status lines
+
+        mov   @fb.scrrows,@fb.row   ; Frame buffer bottom line
+        clr   @fb.column            ; Frame buffer column 0 
+
+        mov   @fb.row,tmp0
+        sla   tmp0,8
+        mov   @tmp0,@wyx
+
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.botscr.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
         b     @hook.keyscan.bounce  ; Back to editor main
