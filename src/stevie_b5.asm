@@ -9,7 +9,7 @@
 * File: stevie_b5.asm               ; Version %%build_date%%
 *
 * Bank 5 "Jumbo"
-*
+* Editor Buffer methods delegated from bank 1
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
@@ -58,11 +58,9 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Patterns
+        ; Logic for Editor Buffer (2)
         ;-----------------------------------------------------------------------    
-        copy  "patterns.vdpdump.asm"
-                                    ; Dump patterns to VDP
-        copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
+        copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        

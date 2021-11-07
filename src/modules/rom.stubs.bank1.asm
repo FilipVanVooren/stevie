@@ -1,28 +1,6 @@
 * FILE......: rom.stubs.bank1.asm
 * Purpose...: Bank 1 stubs for functions in other banks
 
-
-***************************************************************
-* Stub for "vdp.patterns.dump"
-* bank5 vec.1
-********|*****|*********************|**************************
-vdp.patterns.dump:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Dump VDP patterns
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank5.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
 ***************************************************************
 * Stub for "fm.loadfile"
 * bank2 vec.1
@@ -150,7 +128,7 @@ fm.newfile:
 * bank3 vec.1
 ********|*****|*********************|**************************
 edkey.action.about:
-        mov   @edkey.action.about.vector,@parm1
+        mov   @edkey.action.about.vector,@trmpvector
         b     @_trampoline.bank3    ; Show dialog        
 edkey.action.about.vector:        
         data  vec.1
@@ -161,7 +139,7 @@ edkey.action.about.vector:
 * bank3 vec.2
 ********|*****|*********************|**************************
 dialog.load:
-        mov   @dialog.load.vector,@parm1
+        mov   @dialog.load.vector,@trmpvector
         b     @_trampoline.bank3    ; Show dialog
 dialog.load.vector:
         data  vec.2
@@ -172,7 +150,7 @@ dialog.load.vector:
 * bank3 vec.3
 ********|*****|*********************|**************************
 dialog.save:
-        mov   @dialog.save.vector,@parm1
+        mov   @dialog.save.vector,@trmpvector
         b     @_trampoline.bank3    ; Show dialog
 dialog.save.vector:        
         data  vec.3
@@ -183,7 +161,7 @@ dialog.save.vector:
 * bank3 vec.4
 ********|*****|*********************|**************************
 dialog.insert:
-        mov   @dialog.insert.vector,@parm1
+        mov   @dialog.insert.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.insert.vector:        
         data  vec.4
@@ -194,7 +172,7 @@ dialog.insert.vector:
 * bank3 vec.5
 ********|*****|*********************|**************************
 dialog.file:
-        mov   @dialog.file.vector,@parm1
+        mov   @dialog.file.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.file.vector:        
         data  vec.5
@@ -206,7 +184,7 @@ dialog.file.vector:
 ********|*****|*********************|**************************
 dialog.unsaved:
         clr   @cmdb.panmarkers      ; No key markers
-        mov   @dialog.unsaved.vector,@parm1
+        mov   @dialog.unsaved.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.unsaved.vector:        
         data  vec.6
@@ -232,7 +210,7 @@ dialog.menu:
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
-!       mov   @dialog.menu.vector,@parm1        
+!       mov   @dialog.menu.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.menu.vector:        
         data  vec.30
@@ -265,7 +243,7 @@ tibasic:
 * bank3 vec.18
 ********|*****|*********************|**************************
 pane.show_hint:
-        mov   @pane.show_hint,@parm1
+        mov   @pane.show_hint,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 pane.show_hint.vector:
         data  vec.18
@@ -276,7 +254,7 @@ pane.show_hint.vector:
 * bank3 vec.20
 ********|*****|*********************|**************************
 pane.cmdb.show:
-        mov   @pane.cmdb.show.vector,@parm1
+        mov   @pane.cmdb.show.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 pane.cmdb.show.vector:
         data  vec.20
@@ -287,7 +265,7 @@ pane.cmdb.show.vector:
 * bank3 vec.21
 ********|*****|*********************|**************************
 pane.cmdb.hide:
-        mov   @pane.cmdb.hide.vector,@parm1
+        mov   @pane.cmdb.hide.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 pane.cmdb.hide.vector:
         data  vec.21
@@ -298,7 +276,7 @@ pane.cmdb.hide.vector:
 * bank3 vec.22
 ********|*****|*********************|**************************
 pane.cmdb.draw:
-        mov   @pane.cmdb.draw.vector,@parm1
+        mov   @pane.cmdb.draw.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 pane.cmdb.draw.vector:
         data  vec.22
@@ -309,7 +287,7 @@ pane.cmdb.draw.vector:
 * bank3 vec.24
 ********|*****|*********************|**************************
 cmdb.refresh:
-        mov   @cmdb.refresh.vector,@parm1
+        mov   @cmdb.refresh.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.refresh.vector:
         data  vec.24
@@ -320,7 +298,7 @@ cmdb.refresh.vector:
 * bank3 vec.25
 ********|*****|*********************|**************************
 cmdb.cmd.clear:
-        mov   @cmdb.cmd.clear.vector,@parm1
+        mov   @cmdb.cmd.clear.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.clear.vector:
         data  vec.25
@@ -331,7 +309,7 @@ cmdb.cmd.clear.vector:
 * bank3 vec.26
 ********|*****|*********************|**************************
 cmdb.cmd.getlength:
-        mov   @cmdb.cmd.getlength.vector,@parm1
+        mov   @cmdb.cmd.getlength.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.getlength.vector:
         data  vec.26
@@ -342,13 +320,10 @@ cmdb.cmd.getlength.vector:
 * bank3 vec.27
 ********|*****|*********************|**************************
 cmdb.cmd.addhist:
-        mov   @cmdb.cmd.addhist.vector,@parm1
+        mov   @cmdb.cmd.addhist.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.addhist.vector:
         data  vec.27
-
-
-
 
 
 **************************************************************
@@ -356,7 +331,7 @@ cmdb.cmd.addhist.vector:
 * bank3 vec.32
 ********|*****|*********************|**************************
 fm.fastmode:
-        mov   @fm.fastmode.vector,@parm1
+        mov   @fm.fastmode.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 fm.fastmode.vector:
         data  vec.32
@@ -446,6 +421,7 @@ fb.vdpdump:
         b     *r11                  ; Return to caller               
 
 
+
 ***************************************************************
 * Trampoline 1 (bank 3, dialog)
 ********|*****|*********************|**************************
@@ -457,7 +433,7 @@ _trampoline.bank3:
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
               data >ffff            ; | i  p1 = Vector with target address
-                                    ; |         (deref @parm1)
+                                    ; |         (deref @trmpvector)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -478,7 +454,52 @@ _trampoline.bank3.ret:
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
               data >ffff            ; | i  p1 = Vector with target address
-                                    ; |         (deref @parm1)
+                                    ; |         (deref @trmpvector)
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* Stub for "edb.clear.sams"
+* bank6 vec.1
+********|*****|*********************|**************************
+edb.clear.sams:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+
+***************************************************************
+* Stub for "vdp.patterns.dump"
+* bank6 vec.1
+********|*****|*********************|**************************
+vdp.patterns.dump:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank6.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

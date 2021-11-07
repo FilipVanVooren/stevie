@@ -8,7 +8,7 @@
 * b   @edkey.action.cmdb.proceed
 *--------------------------------------------------------------
 * INPUT
-* @cmdb.action.ptr = Pointer to keyboard action
+* @cmdb.action.ptr = Pointer to keyboard action to perform
 *--------------------------------------------------------------
 * Register usage
 * none

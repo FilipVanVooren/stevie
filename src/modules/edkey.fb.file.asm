@@ -8,47 +8,79 @@
 * b   @edkey.action.fb.fname.dec.load
 *--------------------------------------------------------------- 
 * INPUT
-* none
+* @cmdb.cmdlen
 *--------------------------------------------------------------
 * Register usage
 * none
 ********|*****|*********************|**************************
 edkey.action.fb.fname.dec.load:
-        mov   @fh.fname.ptr,@parm1  ; Set pointer to current filename
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;------------------------------------------------------
+        ; Adjust filename
+        ;------------------------------------------------------
         clr   @parm2                ; Decrease ASCII value of char in suffix
-        jmp   _edkey.action.fb.fname.doit
+
+        li    tmp0,edkey.action.fb.fname.dec.load
+        mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
+                                    ; in "Unsaved changes" dialog
+
+        jmp   edkey.action.fb.fname.doit
+
 
 edkey.action.fb.fname.inc.load:
-        mov   @fh.fname.ptr,@parm1  ; Set pointer to current filename
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;------------------------------------------------------
+        ; Adjust filename
+        ;------------------------------------------------------
         seto  @parm2                ; Increase ASCII value of char in suffix                
 
-_edkey.action.fb.fname.doit:
+        li    tmp0,edkey.action.fb.fname.inc.load
+        mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
+                                    ; in "Unsaved changes" dialog
+
         ;------------------------------------------------------
-        ; Assert        
+        ; Process filename
         ;------------------------------------------------------
-        mov   @parm1,tmp0
-        jeq   _edkey.action.fb.fname.doit.exit
-                                    ; Exit early if "New file"
+edkey.action.fb.fname.doit:
+        mov   @edb.filename.ptr,tmp0 
+        jeq   edkey.action.fb.fname.exit
+                                    ; Exit early if new file.
+
+        ci    tmp0,txt.newfile
+        jeq   edkey.action.fb.fname.exit
+                                    ; Exit early if "[New file]"
+
+        mov   tmp0,@parm1           ; Set filename
         ;------------------------------------------------------
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
         mov   @edb.dirty,tmp0
         jeq   !
+        mov   *stack+,tmp0          ; Pop tmp0         
         b     @dialog.unsaved       ; Show dialog and exit
         ;------------------------------------------------------
-        ; Update suffix and load file
+        ; Update suffix
         ;------------------------------------------------------
 !       bl    @fm.browse.fname.suffix
                                     ; Filename suffix adjust
                                     ; i  \ parm1 = Pointer to filename
                                     ; i  / parm2 = >FFFF or >0000
-
-        li    tmp0,heap.top         ; 1st line in heap
-        bl    @fm.loadfile          ; Load DV80 file
-                                    ; \ i  tmp0 = Pointer to length-prefixed
-                                    ; /           device/filename string
         ;------------------------------------------------------
+        ; Load file
+        ;------------------------------------------------------
+edkey.action.fb.fname.doit.loadfile:        
+        bl    @pane.cmdb.hide       ; Hide CMDB pane
+
+        bl    @fm.loadfile          ; Load DV80 file
+                                    ; \ i  parm1 = Pointer to length-prefixed
+                                    ; /            device/filename string
+
+        
+        ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------
-_edkey.action.fb.fname.doit.exit:        
-        b    @edkey.action.top      ; Goto 1st line in editor buffer 
+edkey.action.fb.fname.exit:
+        mov   *stack+,tmp0          ; Pop tmp0 
+        b    @edkey.action.top      ; Goto 1st line in editor buffer

@@ -25,11 +25,7 @@ fm.browse.fname.suffix:
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get pointer to filename
         jeq   fm.browse.fname.suffix.exit
-                                    ; Exit early if pointer is nill
-
-        ci    tmp0,txt.newfile
-        jeq   fm.browse.fname.suffix.exit
-                                    ; Exit early if "New file"
+                                    ; Exit early if pointer is null
         ;------------------------------------------------------
         ; Get last character in filename
         ;------------------------------------------------------
@@ -97,7 +93,7 @@ fm.browse.fname.suffix.dec:
 fm.browse.fname.suffix.dec.numeric:
         li    tmp1,57               ; Set ASCII 57 (char 9)
         ;------------------------------------------------------
-        ; Store updatec character
+        ; Store updated character
         ;------------------------------------------------------
 fm.browse.fname.suffix.store:
         sla   tmp1,8                ; LSB to MSB

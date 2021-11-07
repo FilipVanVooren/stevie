@@ -150,7 +150,8 @@ unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
 tibasic.status    equ  core1.top + 44  ; TI Basic status flags
                                        ; 0000 = Initialize TI-Basic
                                        ; 0001 = TI-Basic reentry
-core1.free        equ  core1.top + 46  ; End of structure
+trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
+core1.free        equ  core1.top + 48  ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
@@ -309,6 +310,7 @@ cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
 cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
 cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
 cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
+cmdb.cmdall       equ  cmdb.struct + 40; Current command including length-byte
 cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
 cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header

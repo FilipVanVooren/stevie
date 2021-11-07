@@ -5,6 +5,9 @@
 * Callback function "Show loading indicator 1"
 * Open file
 *---------------------------------------------------------------
+* INPUT
+* @parm1 = Pointer to length-prefixed file descriptor
+*---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
 *---------------------------------------------------------------
 fm.loadsave.cb.indicator1:
@@ -23,11 +26,17 @@ fm.loadsave.cb.indicator1:
               byte pane.botrow,0,32,50
               data EOL              ; Clear hint on bottom row
 
+
+        dect  stack        
+        mov   @parm1,*stack         ; Push @parm1
+
         mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
+
+        mov   *stack+,@parm1        ; Pop @parm1                                    
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
 
@@ -81,7 +90,8 @@ fm.loadsave.cb.indicator1.loading:
 fm.loadsave.cb.indicator1.filename:        
         bl    @at
               byte pane.botrow,11   ; Cursor YX position
-        li    tmp1,heap.top         ; Get pointer to file descriptor
+
+        mov   @parm1,tmp1           ; Get pointer to file descriptor
         bl    @xutst0               ; Display device/filename
         ;------------------------------------------------------
         ; Display fast mode

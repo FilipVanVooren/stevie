@@ -9,7 +9,7 @@
 * File: stevie_b6.asm               ; Version %%build_date%%
 *
 * Bank 6 "Jenifer"
-* Empty
+* VDP utility functions
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
@@ -56,6 +56,13 @@ bankid  equ   bank6.rom             ; Set bank identifier to current bank
 main:   
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
+        ;-----------------------------------------------------------------------
+        ; Patterns
+        ;-----------------------------------------------------------------------    
+        copy  "patterns.vdpdump.asm"
+                                    ; Dump patterns to VDP
+        copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
+
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        

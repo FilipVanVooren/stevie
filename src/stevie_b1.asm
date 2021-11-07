@@ -127,7 +127,6 @@ main:
         copy  "edb.block.reset.asm"    ; Reset markers
         copy  "edb.block.copy.asm"     ; Copy code block
         copy  "edb.block.del.asm"      ; Delete code block
-        copy  "edb.clear.sams.asm"     ; Clear SAMS pages of editor buffer
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------

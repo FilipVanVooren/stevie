@@ -145,7 +145,7 @@ keymap_actions.editor:
         data  dialog.load
 
         ; 
-        ; FCTN-9 has multipe purposes, if block mode is on it
+        ; FCTN-9 has multiple purposes, if block mode is on it
         ; resets the block, otherwise show Stevie menu dialog.
         ;
         byte  key.fctn.9, pane.focus.fb

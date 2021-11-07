@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  vdp.patterns.dump     ; Dump sprite/character patterns to VDP
+vec.1   data  edb.clear.sams        ; 
 vec.2   data  cpu.crash             ; 
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 
