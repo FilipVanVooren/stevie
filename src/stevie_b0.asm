@@ -106,6 +106,17 @@ main:
         .else
               data $                ; Bank 0 ROM size OK.
         .endif     
+        ;-----------------------------------------------------------------------
+        ; Show bank in CPU crash screen
+        ;-----------------------------------------------------------------------         
+cpu.crash.showbank:
+        aorg >7fb0
+        bl    @putat
+              byte 3,20
+              data cpu.crash.showbank.bankstr
+        jmp   $
+cpu.crash.showbank.bankstr:
+        #string 'ROM#0'
 *--------------------------------------------------------------
 * Video mode configuration for SP2
 *--------------------------------------------------------------

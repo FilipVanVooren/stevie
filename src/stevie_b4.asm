@@ -72,9 +72,20 @@ main:
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 
-        .ifgt $, >7fbf
-              .error 'Aborted. Bank 4 cartridge program too large!'
+        .ifgt $, >7faf
+              .error 'Aborted. Bank 2 cartridge program too large!'
         .endif
+        ;-----------------------------------------------------------------------
+        ; Show ROM bank in CPU crash screen
+        ;-----------------------------------------------------------------------         
+cpu.crash.showbank:
+        aorg >7fb0
+        bl    @putat
+              byte 3,20
+              data cpu.crash.showbank.bankstr
+        jmp   $
+cpu.crash.showbank.bankstr:
+        #string 'ROM#4'
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 

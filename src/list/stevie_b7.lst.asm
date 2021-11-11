@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.80551
+     **** ****     > stevie_b7.asm.60037
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 211107-1917470
+0009               * File: stevie_b7.asm               ; Version 211111-2049430
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * Empty
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -440,7 +440,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0348               * Heap                                @>f000-ffff  (4096 bytes)
 0349               *--------------------------------------------------------------
 0350      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -564,7 +564,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               * Special keys
 0120               *---------------------------------------------------------------
 0121      000D     key.enter     equ >0d               ; enter
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -615,16 +615,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2D'
+0045 6011   53             text  'STEVIE 1.2E'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 3244     
+     601A 3245     
 0046                       even
 0047               
 0049               
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1325,8 +1325,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0227                       ;------------------------------------------------------
 0228                       ; Kernel takes over
 0229                       ;------------------------------------------------------
-0230 61D8 0460  28         b     @tmgr                 ; Start kernel again for polling keyboard
-     61DA 6F28     
+0230 61D8 0460  28         b     @cpu.crash.showbank   ; Expected to be included in
+     61DA 7FB0     
 0231               
 0232               
 0233               cpu.crash.msg.crashed
@@ -1404,18 +1404,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6236 18               byte  24
-0270 6237   42             text  'Build-ID  211107-1917470'
+0270 6237   42             text  'Build-ID  211111-2049430'
      6238 7569     
      623A 6C64     
      623C 2D49     
      623E 4420     
      6240 2032     
      6242 3131     
-     6244 3130     
-     6246 372D     
-     6248 3139     
-     624A 3137     
-     624C 3437     
+     6244 3131     
+     6246 312D     
+     6248 3230     
+     624A 3439     
+     624C 3433     
      624E 30       
 0271                       even
 0272               
@@ -5809,7 +5809,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70E8 0040     
 0370 70EA 0460  28         b     @main                 ; Give control to main program
      70EC 6046     
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0045                       copy  "data.constants.asm"  ; Need some constants for SAMS layout
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
@@ -6098,7 +6098,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0211 71DA 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      71DC 0000     
 0212                       even
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0046                       ;-----------------------------------------------------------------------
 0047                       ; Stubs
 0048                       ;-----------------------------------------------------------------------
@@ -6106,15 +6106,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-                   < stevie_b7.asm.80551
+                   < stevie_b7.asm.60037
 0050                       ;-----------------------------------------------------------------------
 0051                       ; Bank full check
 0052                       ;-----------------------------------------------------------------------
 0056                       ;-----------------------------------------------------------------------
-0057                       ; Vector table
+0057                       ; Show ROM bank in CPU crash screen
 0058                       ;-----------------------------------------------------------------------
-0059                       aorg  >7fc0
-0060                       copy  "rom.vectors.bank7.asm"
+0059               cpu.crash.showbank:
+0060                       aorg >7fb0
+0061 7FB0 06A0  32         bl    @putat
+     7FB2 64A0     
+0062 7FB4 0314                   byte 3,20
+0063 7FB6 7FBA                   data cpu.crash.showbank.bankstr
+0064 7FB8 10FF  14         jmp   $
+0065               cpu.crash.showbank.bankstr:
+0066               
+0067 7FBA 05               byte  5
+0068 7FBB   52             text  'ROM#7'
+     7FBC 4F4D     
+     7FBE 2337     
+0069                       even
+0070               
+0071                       ;-----------------------------------------------------------------------
+0072                       ; Vector table
+0073                       ;-----------------------------------------------------------------------
+0074                       aorg  >7fc0
+0075                       copy  "rom.vectors.bank7.asm"
      **** ****     > rom.vectors.bank7.asm
 0001               * FILE......: rom.vectors.bank7.asm
 0002               * Purpose...: Bank 7 vectors for trampoline function
@@ -6154,18 +6172,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.80551
-0061                                                   ; Vector table bank 7
-0062               
-0063               *--------------------------------------------------------------
-0064               * Video mode configuration
-0065               *--------------------------------------------------------------
-0066      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0067      0004     spfbck  equ   >04                   ; Screen background color.
-0068      70EE     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0069      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0070      0050     colrow  equ   80                    ; Columns per row
-0071      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0072      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0073      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0074      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+                   < stevie_b7.asm.60037
+0076                                                   ; Vector table bank 7
+0077               
+0078               *--------------------------------------------------------------
+0079               * Video mode configuration
+0080               *--------------------------------------------------------------
+0081      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0082      0004     spfbck  equ   >04                   ; Screen background color.
+0083      70EE     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0084      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0085      0050     colrow  equ   80                    ; Columns per row
+0086      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0087      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0088      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0089      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

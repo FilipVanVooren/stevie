@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.77584
+     **** ****     > stevie_b0.asm.57142
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 211107-1917110
+0009               * File: stevie_b0.asm               ; Version 211111-2049170
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -440,7 +440,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0348               * Heap                                @>f000-ffff  (4096 bytes)
 0349               *--------------------------------------------------------------
 0350      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -564,7 +564,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               * Special keys
 0120               *---------------------------------------------------------------
 0121      000D     key.enter     equ >0d               ; enter
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -615,16 +615,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2D'
+0045 6011   53             text  'STEVIE 1.2E'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 3244     
+     601A 3245     
 0046                       even
 0047               
 0049               
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1374,8 +1374,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0227                       ;------------------------------------------------------
 0228                       ; Kernel takes over
 0229                       ;------------------------------------------------------
-0230 6208 0460  28         b     @tmgr                 ; Start kernel again for polling keyboard
-     620A 2EDE     
+0230 6208 0460  28         b     @cpu.crash.showbank   ; Expected to be included in
+     620A 7FB0     
 0231               
 0232               
 0233               cpu.crash.msg.crashed
@@ -1453,18 +1453,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6266 18               byte  24
-0270 6267   42             text  'Build-ID  211107-1917110'
+0270 6267   42             text  'Build-ID  211111-2049170'
      6268 7569     
      626A 6C64     
      626C 2D49     
      626E 4420     
      6270 2032     
      6272 3131     
-     6274 3130     
-     6276 372D     
-     6278 3139     
-     627A 3137     
-     627C 3131     
+     6274 3131     
+     6276 312D     
+     6278 3230     
+     627A 3439     
+     627C 3137     
      627E 30       
 0271                       even
 0272               
@@ -5858,7 +5858,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7118 0040     
 0370 711A 0460  28         b     @main                 ; Give control to main program
      711C 379C     
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0087                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7719,7 +7719,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0202                       even
 0203               
                    < ram.resident.asm
-                   < stevie_b0.asm.77584
+                   < stevie_b0.asm.57142
 0088                       ;------------------------------------------------------
 0089                       ; Activate bank 1 and branch to >6046
 0090                       ;------------------------------------------------------
@@ -7735,16 +7735,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0101                       ;------------------------------------------------------
 0103               
 0107 781E 37A4                   data $                ; Bank 0 ROM size OK.
-0109               *--------------------------------------------------------------
-0110               * Video mode configuration for SP2
-0111               *--------------------------------------------------------------
-0112      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0113      0004     spfbck  equ   >04                   ; Screen background color.
-0114      3458     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0115      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0116      0050     colrow  equ   80                    ; Columns per row
-0117      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0118      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0119      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0120      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
-0121               
+0109                       ;-----------------------------------------------------------------------
+0110                       ; Show bank in CPU crash screen
+0111                       ;-----------------------------------------------------------------------
+0112               cpu.crash.showbank:
+0113                       aorg >7fb0
+0114 7FB0 06A0  32         bl    @putat
+     7FB2 2456     
+0115 7FB4 0314                   byte 3,20
+0116 7FB6 7FBA                   data cpu.crash.showbank.bankstr
+0117 7FB8 10FF  14         jmp   $
+0118               cpu.crash.showbank.bankstr:
+0119               
+0120 7FBA 05               byte  5
+0121 7FBB   52             text  'ROM#0'
+     7FBC 4F4D     
+     7FBE 2330     
+0122                       even
+0123               
+0124               *--------------------------------------------------------------
+0125               * Video mode configuration for SP2
+0126               *--------------------------------------------------------------
+0127      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0128      0004     spfbck  equ   >04                   ; Screen background color.
+0129      3458     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0130      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0131      0050     colrow  equ   80                    ; Columns per row
+0132      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0133      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0134      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0135      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0136               
