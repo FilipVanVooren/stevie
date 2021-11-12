@@ -5,7 +5,7 @@
 * Vector table for trampoline functions
 *--------------------------------------------------------------
 vec.1   data  edb.clear.sams        ; 
-vec.2   data  cpu.crash             ; 
+vec.2   data  edb.hipage.alloc      ; 
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 
 vec.5   data  cpu.crash             ; 

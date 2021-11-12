@@ -144,6 +144,9 @@ keymap_actions.editor:
         byte  key.ctrl.o, pane.focus.fb
         data  dialog.load
 
+        byte  key.ctrl.p, pane.focus.fb
+        data  dialog.print
+
         ; 
         ; FCTN-9 has multiple purposes, if block mode is on it
         ; resets the block, otherwise show Stevie menu dialog.
@@ -189,6 +192,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
+
+        byte  key.uc.p, id.dialog.print
+        data  dialog.print
         ;-------------------------------------------------------
         ; Dialog: Open DV80 file
         ;-------------------------------------------------------

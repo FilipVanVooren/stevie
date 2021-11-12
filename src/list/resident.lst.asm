@@ -6828,7 +6828,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0140               tv.pad.string.panic:
 0141 3418 C80B  38         mov   r11,@>ffce            ; \ Save caller address
      341A FFCE     
-0142 341C 06A0  32         bl    @cpu.crash            ; / Crash and halt system
      341E 2026     
 0143                       ;------------------------------------------------------
 0144                       ; Exit

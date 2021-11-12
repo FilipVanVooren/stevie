@@ -66,9 +66,10 @@ main:
         copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
         copy  "dialog.help.asm"     ; Dialog "Help"
         copy  "dialog.file.asm"     ; Dialog "File"
-        copy  "dialog.load.asm"     ; Dialog "Load DV80 file"
-        copy  "dialog.save.asm"     ; Dialog "Save DV80 file"
-        copy  "dialog.insert.asm"   ; Dialog "Insert DV80 file"
+        copy  "dialog.load.asm"     ; Dialog "Load file"
+        copy  "dialog.save.asm"     ; Dialog "Save file"
+        copy  "dialog.print.asm"    ; Dialog "Print file"        
+        copy  "dialog.insert.asm"   ; Dialog "Insert file at line"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"    ; Dialog "Basic"
         ;-----------------------------------------------------------------------

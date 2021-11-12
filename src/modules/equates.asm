@@ -81,10 +81,12 @@ pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 ;   Dialog ID's >= 100 indicate that command prompt should be 
 ;   hidden and no characters added to CMDB keyboard buffer
 ;-----------------------------------------------------------------
-id.dialog.load            equ  10      ; "Load DV80 file"
-id.dialog.save            equ  11      ; "Save DV80 file"
-id.dialog.saveblock       equ  12      ; "Save codeblock to DV80 file"
-id.dialog.insert          equ  13      ; "Insert DV80 file"
+id.dialog.load            equ  10      ; "Load file"
+id.dialog.save            equ  11      ; "Save file"
+id.dialog.saveblock       equ  12      ; "Save block to file"
+id.dialog.insert          equ  13      ; "Insert file"
+id.dialog.print           equ  14      ; "Print file"
+id.dialog.printblock      equ  15      ; "Print block"
 id.dialog.menu            equ  100     ; "Stevie Menu"
 id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete"

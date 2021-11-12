@@ -1,11 +1,11 @@
-* FILE......: dialog.save.asm
-* Purpose...: Dialog "Save DV80 file"
+* FILE......: dialog.print.asm
+* Purpose...: Dialog "Print file"
 
 ***************************************************************
-* dialog.save
-* Open Dialog for saving file
+* dialog.print
+* Open Dialog for printing file
 ***************************************************************
-* b @dialog.save
+* b @dialog.print
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.save:
+dialog.print:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -34,28 +34,28 @@ dialog.save:
         ; Setup dialog
         ;-------------------------------------------------------
 !       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-        jeq   dialog.save.default   ; Yes, so show default dialog
+        jeq   dialog.print.default  ; Yes, so show default dialog
         ;-------------------------------------------------------
         ; Setup dialog title
         ;-------------------------------------------------------
         bl    @cmdb.cmd.clear       ; Clear current CMDB command
 
-        li    tmp0,id.dialog.saveblock
+        li    tmp0,id.dialog.printblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-        li    tmp0,txt.head.save2   ; Title "Save block to file"                
+        li    tmp0,txt.head.print2  ; Title "Save block to file"                
 
         jmp   dialog.save.header
         ;-------------------------------------------------------
         ; Default dialog
         ;-------------------------------------------------------
-dialog.save.default:        
-        li    tmp0,id.dialog.save
+dialog.print.default:        
+        li    tmp0,id.dialog.print
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-        li    tmp0,txt.head.save    ; Title "Save file"
+        li    tmp0,txt.head.print   ; Title "Print file"
         ;-------------------------------------------------------
         ; Setup header
         ;-------------------------------------------------------
-dialog.save.header:
+dialog.print.header:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
@@ -75,7 +75,7 @@ dialog.save.header:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.save.exit:
+dialog.print.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

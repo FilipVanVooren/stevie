@@ -9,10 +9,10 @@
 txt.stevie         #string 'Stevie 1.2E'
 
 ;--------------------------------------------------------------
-; Dialog Load DV 80 file
+; Dialog Load file
 ;--------------------------------------------------------------
-txt.head.load      byte 19,1,1
-                   text ' Open DV80 file '
+txt.head.load      byte 14,1,1
+                   text ' Open file '
                    byte 1
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
@@ -20,29 +20,41 @@ txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
 txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
 
 ;--------------------------------------------------------------
-; Dialog Save DV 80 file
+; Dialog Save file
 ;--------------------------------------------------------------
-txt.head.save      byte 19,1,1
-                   text ' Save DV80 file '
+txt.head.save      byte 14,1,1
+                   text ' Save file '
                    byte 1
-txt.head.save2     byte 35,1,3,32
-                   text 'Save marked block to DV80 file '
+txt.head.save2     byte 23,1,3,32
+                   text 'Save block to file '
                    byte 2
 txt.hint.save      #string ' '
 txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 
 
 ;--------------------------------------------------------------
-; Insert DV 80 file
+; Insert file
 ;--------------------------------------------------------------
-txt.head.insert    byte 29,1,1
-                   text ' Insert DV80 file at line '
+txt.head.insert    byte 24,1,1
+                   text ' Insert file at line '
                    byte 1
 txt.hint.insert    #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
 txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
 txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
 
+
+;--------------------------------------------------------------
+; Dialog Print file
+;--------------------------------------------------------------
+txt.head.print     byte 15,1,1
+                   text ' Print file '
+                   byte 1
+txt.head.print2    byte 22,1,3,32
+                   text 'Print marked block '
+                   byte 2
+txt.hint.print     #string ' '
+txt.keys.print     #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
@@ -90,9 +102,6 @@ txt.keys.menu      #string 'F9-Back'
 txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
-
-;txt.info.file      #string 'New   Open   Save   Print   Insert'
-;pos.info.file      byte 0,6,13,20,28,>ff
 
 txt.info.file      #string 'New   Open / Insert   Save   Print'
 pos.info.file      byte 0,6,13,22,29,>ff

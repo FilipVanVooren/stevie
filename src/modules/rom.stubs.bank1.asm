@@ -135,7 +135,7 @@ edkey.action.about.vector:
 
 
 ***************************************************************
-* Stub for dialog "Load DV80 file"
+* Stub for dialog "Load file"
 * bank3 vec.2
 ********|*****|*********************|**************************
 dialog.load:
@@ -146,7 +146,7 @@ dialog.load.vector:
 
 
 ***************************************************************
-* Stub for dialog "Save DV80 file"
+* Stub for dialog "Save file"
 * bank3 vec.3
 ********|*****|*********************|**************************
 dialog.save:
@@ -157,7 +157,7 @@ dialog.save.vector:
 
 
 ***************************************************************
-* Stub for dialog "Insert DV80 file"
+* Stub for dialog "Insert file at line"
 * bank3 vec.4
 ********|*****|*********************|**************************
 dialog.insert:
@@ -168,26 +168,37 @@ dialog.insert.vector:
 
 
 ***************************************************************
-* Stub for dialog "File"
+* Stub for dialog "Print file"
 * bank3 vec.5
+********|*****|*********************|**************************
+dialog.print:
+        mov   @dialog.print.vector,@trmpvector
+        b     @_trampoline.bank3    ; Show dialog
+dialog.print.vector:        
+        data  vec.5
+
+
+***************************************************************
+* Stub for dialog "File"
+* bank3 vec.6
 ********|*****|*********************|**************************
 dialog.file:
         mov   @dialog.file.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.file.vector:        
-        data  vec.5
+        data  vec.6
 
 
 ***************************************************************
 * Stub for dialog "Unsaved Changes"
-* bank3 vec.6
+* bank3 vec.7
 ********|*****|*********************|**************************
 dialog.unsaved:
         clr   @cmdb.panmarkers      ; No key markers
         mov   @dialog.unsaved.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
 dialog.unsaved.vector:        
-        data  vec.6
+        data  vec.7
 
 
 ***************************************************************
@@ -216,26 +227,17 @@ dialog.menu.vector:
         data  vec.30
 
 
+
+
 ***************************************************************
 * Stub for "tibasic"
 * bank3 vec.10
 ********|*****|*********************|**************************
 tibasic:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 3
-        ;------------------------------------------------------             
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.10           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
+        mov   @tibasic.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tibasic.vector:        
+        data  vec.10
 
 
 ***************************************************************
@@ -443,7 +445,7 @@ _trampoline.bank3:
 
 
 ***************************************************************
-* Trampoline 2 (bank 3 with return)
+* Trampoline bank 3 with return
 ********|*****|*********************|**************************
 _trampoline.bank3.ret:
         dect  stack
@@ -464,25 +466,50 @@ _trampoline.bank3.ret:
 
 
 
-***************************************************************
+
+**************************************************************
 * Stub for "edb.clear.sams"
-* bank6 vec.1
+* bank5 vec.1
 ********|*****|*********************|**************************
 edb.clear.sams:
+        mov   @edb.clear.sams.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.clear.sams.vector:
+        data  vec.1
+
+
+**************************************************************
+* Stub for "edb.hipage.alloc"
+* bank5 vec.2
+********|*****|*********************|**************************
+edb.hipage.alloc:
+        mov   @edb.hipage.alloc.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.hipage.alloc.vector:
+        data  vec.2
+
+
+***************************************************************
+* Trampoline bank 5 with return
+********|*****|*********************|**************************
+_trampoline.bank5.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Dump VDP patterns
+        ; Call routine in specified bank
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @trmpvector)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
 
 
 

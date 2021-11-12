@@ -13,6 +13,7 @@ key.uc.i      equ >49               ; I
 key.uc.n      equ >4e               ; N
 key.uc.s      equ >53               ; S
 key.uc.o      equ >4f               ; O
+key.uc.p      equ >50               ; P
 key.uc.q      equ >51               ; Q
 key.lc.b      equ >a2               ; b
 key.lc.e      equ >a5               ; e
@@ -21,6 +22,7 @@ key.lc.h      equ >a8               ; h
 key.lc.n      equ >6e               ; n
 key.lc.s      equ >73               ; s
 key.lc.o      equ >6f               ; o
+key.lc.p      equ >70               ; p
 key.lc.q      equ >71               ; q
 
 

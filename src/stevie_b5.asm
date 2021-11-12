@@ -60,7 +60,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer (2)
         ;-----------------------------------------------------------------------    
-        copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer
+        copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer        
+        copy  "edb.hipage.alloc.asm"; Allocate SAMS page for editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        
