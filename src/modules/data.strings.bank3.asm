@@ -25,9 +25,9 @@ txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
 txt.head.save      byte 14,1,1
                    text ' Save file '
                    byte 1
-txt.head.save2     byte 23,1,3,32
-                   text 'Save block to file '
-                   byte 2
+txt.head.save2     byte 22,1,1
+                   text ' Save block to file '
+                   byte 1
 txt.hint.save      #string ' '
 txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 
@@ -50,10 +50,10 @@ txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
 txt.head.print     byte 15,1,1
                    text ' Print file '
                    byte 1
-txt.head.print2    byte 22,1,3,32
-                   text 'Print marked block '
-                   byte 2
-txt.hint.print     #string ' '
+txt.head.print2    byte 16,1,1
+                   text ' Print block '
+                   byte 1
+txt.hint.print     #string 'Give printer device name (PIO, TIPI.PIO, ...)'
 txt.keys.print     #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 
 ;--------------------------------------------------------------

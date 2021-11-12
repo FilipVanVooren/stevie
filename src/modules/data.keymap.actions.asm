@@ -193,10 +193,10 @@ keymap_actions.cmdb:
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
 
-        byte  key.uc.p, id.dialog.print
+        byte  key.uc.p, id.dialog.file
         data  dialog.print
         ;-------------------------------------------------------
-        ; Dialog: Open DV80 file
+        ; Dialog: Open file
         ;-------------------------------------------------------
         byte  key.fctn.5, id.dialog.load
         data  edkey.action.cmdb.fastmode.toggle
@@ -204,7 +204,7 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.load
         data  edkey.action.cmdb.load
         ;-------------------------------------------------------
-        ; Dialog: Insert DV80 file
+        ; Dialog: Insert file
         ;-------------------------------------------------------
         byte  key.fctn.5, id.dialog.insert
         data  edkey.action.cmdb.fastmode.toggle
@@ -212,21 +212,29 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.ins
         ;-------------------------------------------------------
-        ; Dialog: Unsaved changes
-        ;-------------------------------------------------------
-        byte  key.fctn.6, id.dialog.unsaved
-        data  edkey.action.cmdb.proceed
-
-        byte  key.enter, id.dialog.unsaved
-        data  dialog.save
-        ;-------------------------------------------------------
-        ; Dialog: Save DV80 file
+        ; Dialog: Save file
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.save
         data  edkey.action.cmdb.save
 
         byte  key.enter, id.dialog.saveblock
         data  edkey.action.cmdb.save
+        ;-------------------------------------------------------
+        ; Dialog: Print file
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.print
+        data  edkey.action.cmdb.save
+
+        byte  key.enter, id.dialog.printblock
+        data  edkey.action.cmdb.save
+        ;-------------------------------------------------------
+        ; Dialog: Unsaved changes
+        ;-------------------------------------------------------
+        byte  key.fctn.6, id.dialog.unsaved
+        data  edkey.action.cmdb.proceed
+
+        byte  key.enter, id.dialog.unsaved
+        data  dialog.save        
         ;-------------------------------------------------------
         ; Dialog: Basic
         ;-------------------------------------------------------

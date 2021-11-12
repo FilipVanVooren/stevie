@@ -42,7 +42,7 @@ dialog.print:
 
         li    tmp0,id.dialog.printblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-        li    tmp0,txt.head.print2  ; Title "Save block to file"                
+        li    tmp0,txt.head.print2  ; Title "Print block to file"                
 
         jmp   dialog.save.header
         ;-------------------------------------------------------
@@ -61,7 +61,7 @@ dialog.print.header:
         clr   @cmdb.paninfo         ; No info message, do input prompt
         clr   @cmdb.panmarkers      ; No key markers        
 
-        li    tmp0,txt.hint.save
+        li    tmp0,txt.hint.print
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
         li    tmp0,txt.keys.save

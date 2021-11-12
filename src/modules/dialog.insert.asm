@@ -33,7 +33,7 @@ dialog.insert.setup:
         ; Include line number in pane header
         ;------------------------------------------------------
         bl    @cpym2m
-              data txt.head.insert,cmdb.panhead.buf,30
+              data txt.head.insert,cmdb.panhead.buf,25
 
         mov   @fb.row,@parm1 
         bl    @fb.row2line          ; Row to editor line
@@ -50,11 +50,10 @@ dialog.insert.setup:
               byte  48              ; / i  p2 = LSB char for replacing leading 0
 
         bl    @cpym2m
-              data rambuf,cmdb.panhead.buf + 29,5
-                                    ; 
+              data rambuf,cmdb.panhead.buf + 24,5
                                     ; Add line number to buffer
 
-        li    tmp0,34
+        li    tmp0,29
         sla   tmp0,8
         movb  tmp0,@cmdb.panhead.buf ; Set length byte
 
