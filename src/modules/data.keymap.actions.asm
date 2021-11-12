@@ -248,6 +248,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.fctn.9, id.dialog.help
         data  edkey.action.cmdb.close.about
+
+        byte  key.enter, id.dialog.help
+        data  edkey.action.cmdb.close.about
         ;-------------------------------------------------------
         ; Movement keys
         ;-------------------------------------------------------        
