@@ -121,3 +121,4 @@ key.ctrl.slash  equ >bb             ; ctrl + /
 * Special keys
 *---------------------------------------------------------------
 key.enter     equ >0d               ; enter
+key.space     equ >20               ; space

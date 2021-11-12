@@ -63,8 +63,8 @@ txt.head.unsaved   byte 20,1,1
                    text ' Unsaved changes '
                    byte 1
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
-txt.hint.unsaved   #string 'Press F6 to proceed or ENTER to save file.'
-txt.keys.unsaved   #string 'F9-Back  F6-Proceed'
+txt.hint.unsaved   #string 'Press F6 or SPACE to proceed. Press ENTER to save file.'
+txt.keys.unsaved   #string 'F9-Back  F6-Proceed  SPACE-Proceed  ENTER-Save'
 
 ;--------------------------------------------------------------
 ; Dialog "Help"

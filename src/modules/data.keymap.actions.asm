@@ -233,6 +233,9 @@ keymap_actions.cmdb:
         byte  key.fctn.6, id.dialog.unsaved
         data  edkey.action.cmdb.proceed
 
+        byte  key.space, id.dialog.unsaved
+        data  edkey.action.cmdb.proceed
+
         byte  key.enter, id.dialog.unsaved
         data  dialog.save        
         ;-------------------------------------------------------
