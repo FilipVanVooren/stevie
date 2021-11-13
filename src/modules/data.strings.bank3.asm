@@ -6,7 +6,7 @@
 *                       Strings
 ***************************************************************
 
-txt.stevie         text ' Stevie 1.2E '
+txt.stevie         text ' Stevie 1.2F '
 
 ;--------------------------------------------------------------
 ; Dialog Load file
@@ -64,7 +64,7 @@ txt.head.unsaved   byte 20,1,1
                    byte 1
 txt.info.unsaved   #string 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   #string 'Press F6 or SPACE to proceed. Press ENTER to save file.'
-txt.keys.unsaved   #string 'F9-Back  F6-Proceed  SPACE-Proceed  ENTER-Save'
+txt.keys.unsaved   #string 'F9-Back  F6/SPACE-Proceed  ENTER-Save'
 
 ;--------------------------------------------------------------
 ; Dialog "Help"
@@ -86,8 +86,8 @@ txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
-txt.info.menu      #string 'File   Basic   Help   Quit'
-pos.info.menu      byte 0,7,15,22,>ff
+txt.info.menu      #string 'File   Basic   Help   Options   Quit'
+pos.info.menu      byte 0,7,15,22,32,>ff
 txt.hint.menu      #string ' '
 txt.keys.menu      #string 'F9-Back'
 

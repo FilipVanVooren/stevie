@@ -29,7 +29,6 @@ bankid  equ   bank5.rom             ; Set bank identifier to current bank
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header        
 
-
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
@@ -61,7 +60,9 @@ main:
         ; Logic for Editor Buffer (2)
         ;-----------------------------------------------------------------------    
         copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer        
-        copy  "edb.hipage.alloc.asm"; Allocate SAMS page for editor buffer
+        copy  "edb.hipage.alloc.asm"; Allocate SAMS page for editor buffer         
+        copy  "edb.block.mark.asm"  ; Mark code block
+        copy  "edb.block.clip.asm"  ; Save code block to clipboard
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        

@@ -15,7 +15,7 @@ txt.saving         #string 'Saving....'
 txt.block.del      #string 'Deleting block....'
 txt.block.copy     #string 'Copying block....'
 txt.block.move     #string 'Moving block....'
-txt.block.save     #string 'Saving block to DV80 file....'
+txt.block.save     #string 'Saving block to file....'
 txt.clearmem       #string "Clearing memory...."
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
@@ -25,7 +25,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 txt.keys.default   #string 'F9-Menu'
-txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Goto-M1'
+txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  Clip^0..^9'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -53,7 +53,7 @@ txt.ws3            #string '   '
 txt.ws4            #string '    '
 txt.ws5            #string '     '
 txt.filetype.none  equ txt.ws4
-
+txt.clipboard      #string 'DSK1.CLIP'
 
 ;--------------------------------------------------------------
 ; Strings for error line pane

@@ -6,10 +6,10 @@
 *--------------------------------------------------------------
 vec.1   data  edb.clear.sams        ; 
 vec.2   data  edb.hipage.alloc      ; 
-vec.3   data  cpu.crash             ; 
-vec.4   data  cpu.crash             ; 
-vec.5   data  cpu.crash             ; 
-vec.6   data  cpu.crash             ; 
+vec.3   data  edb.block.mark        ; 
+vec.4   data  edb.block.mark.m1     ; 
+vec.5   data  edb.block.mark.m2     ; 
+vec.6   data  edb.block.clip        ; 
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 
 vec.9   data  cpu.crash             ; 

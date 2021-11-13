@@ -83,6 +83,7 @@ main:
         copy  "edkey.fb.file.asm"        ; File related actions
         copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
         copy  "edkey.fb.tabs.asm"        ; tab-key related actions
+        copy  "edkey.fb.clip.asm"        ; Clipboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
@@ -122,7 +123,6 @@ main:
         copy  "edb.line.getlen.asm"    ; Get line length
         copy  "edb.line.copy.asm"      ; Copy line
         copy  "edb.line.del.asm"       ; Delete line        
-        copy  "edb.block.mark.asm"     ; Mark code block
         copy  "edb.block.reset.asm"    ; Reset markers
         copy  "edb.block.copy.asm"     ; Copy code block
         copy  "edb.block.del.asm"      ; Delete code block
@@ -179,7 +179,7 @@ main:
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------         
 cpu.crash.showbank:
-        aorg >7fb0
+        aorg  >7fb0
         bl    @putat
               byte 3,20
               data cpu.crash.showbank.bankstr

@@ -88,27 +88,6 @@ edb.line.unpack:
 
 
 ***************************************************************
-* Stub for "edb.clear.sams"
-* bank1 vec.12
-********|*****|*********************|**************************
-edb.clear.sams:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 1
-        ;------------------------------------------------------        
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
-              data vec.12           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller   
-
-
-***************************************************************
 * Stub for "fb.refresh"
 * bank1 vec.20
 ********|*****|*********************|**************************
@@ -214,3 +193,24 @@ pane.action.colorscheme.statlines
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller                   
+
+
+***************************************************************
+* Stub for "edb.clear.sams"
+* bank5 vec.1
+********|*****|*********************|**************************
+edb.clear.sams:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 5
+        ;------------------------------------------------------        
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller   

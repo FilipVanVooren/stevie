@@ -8,6 +8,9 @@
 *  bl   @edb.block.copy
 *--------------------------------------------------------------
 * INPUT
+* @edb.block.m1 = Marker M1 line
+* @edb.block.m2 = Marker M2 line
+*
 * @parm1 = Message flag
 *          (>0000 = Display message "Copying block...")
 *          (>ffff = Display message "Moving block....")

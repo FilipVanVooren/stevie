@@ -95,7 +95,7 @@ dialog.help.content:
         mov   tmp0,@wyx             ; Set cursor position
         li    tmp1,dialog.help.help.part2
                                     ; Pointer to string
-        li    tmp2,23               ; Set loop counter
+        li    tmp2,24               ; Set loop counter
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -158,11 +158,12 @@ dialog.help.help.part2:
         #string 'Ctrl g   ^g   Goto marker M1'
         #string 'Ctrl m   ^m   Move block'
         #string 'Ctrl s   ^s   Save block to file'
+        #string 'Ctrl 0..9     Save to clipboard 0-9'
         #string ' '
         #string '------------- Modifiers -----------'
         #string 'Fctn 1        Delete character'
         #string 'Fctn 2        Insert character'
         #string 'Fctn 3        Delete line'
-        #string 'Ctrl 4   ^4   Delete end of line'
+        #string 'Ctrl l   ^l   Delete end of line'
         #string 'Fctn 8        Insert line'
         #string 'Fctn .        Insert/Overwrite'

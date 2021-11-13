@@ -109,6 +109,19 @@ vdp.sit.size              equ  (pane.botrow + 1) * 80
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
 *--------------------------------------------------------------
+* Suffix characters for clipboards
+*--------------------------------------------------------------
+clip0                     equ  >3000   ; '0'
+clip1                     equ  >3100   ; '1'
+clip2                     equ  >3200   ; '2'
+clip3                     equ  >3300   ; '3'
+clip4                     equ  >3400   ; '4'
+clip5                     equ  >3500   ; '5'
+clip6                     equ  >3600   ; '6'
+clip7                     equ  >3700   ; '7'
+clip8                     equ  >3800   ; '8'
+clip9                     equ  >3900   ; '9'
+*--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
 debug                     equ  1       ; Turn on spectra2 debugging
@@ -279,7 +292,8 @@ edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
 edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
                                        ; for filename, but not always used.
-edb.free          equ  edb.struct + 105; End of structure
+edb.clip.filename equ  edb.struct + 106; 80 characters Clipboard device/filename                                       
+edb.free          equ  edb.struct + 186; End of structure
 *--------------------------------------------------------------
 * Index structure                     @>a600-a6ff   (256 bytes)
 *--------------------------------------------------------------

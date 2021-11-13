@@ -8,7 +8,7 @@
 *  bl   @edb.block.mark.m1
 *--------------------------------------------------------------
 * INPUT
-* NONE
+* @edb.block.m1 = Marker M1 line
 *--------------------------------------------------------------
 * OUTPUT
 * NONE
@@ -50,7 +50,7 @@ edb.block.mark.m1.exit:
 *  bl   @edb.block.mark.m2
 *--------------------------------------------------------------
 * INPUT
-* NONE
+* @edb.block.m2 = Marker M2 line
 *--------------------------------------------------------------
 * OUTPUT
 * NONE
@@ -94,7 +94,8 @@ edb.block.mark.m2.exit:
 *  bl   @edb.block.mark
 *--------------------------------------------------------------
 * INPUT
-* NONE
+* @edb.block.m1 = Marker M1 line
+* @edb.block.m2 = Marker M2 line
 *--------------------------------------------------------------
 * OUTPUT
 * NONE

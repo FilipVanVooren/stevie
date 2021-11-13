@@ -67,7 +67,7 @@ keymap_actions.editor:
         byte  key.fctn.3, pane.focus.fb
         data  edkey.action.del_line
 
-        byte  key.ctrl.4, pane.focus.fb
+        byte  key.ctrl.l, pane.focus.fb
         data  edkey.action.del_eol
         ;-------------------------------------------------------
         ; Modifier keys - Insert
@@ -103,6 +103,38 @@ keymap_actions.editor:
 
         byte  key.ctrl.g, pane.focus.fb
         data  edkey.action.block.goto.m1
+        ;-------------------------------------------------------
+        ; Clipboards
+        ;-------------------------------------------------------
+        byte  key.ctrl.0, pane.focus.fb
+        data  edkey.action.fb.clip.save.0
+
+        byte  key.ctrl.1, pane.focus.fb
+        data  edkey.action.fb.clip.save.1
+
+        byte  key.ctrl.2, pane.focus.fb
+        data  edkey.action.fb.clip.save.2
+
+        byte  key.ctrl.3, pane.focus.fb
+        data  edkey.action.fb.clip.save.3
+
+        byte  key.ctrl.4, pane.focus.fb
+        data  edkey.action.fb.clip.save.4
+
+        byte  key.ctrl.5, pane.focus.fb
+        data  edkey.action.fb.clip.save.5
+
+        byte  key.ctrl.6, pane.focus.fb
+        data  edkey.action.fb.clip.save.6
+
+        byte  key.ctrl.7, pane.focus.fb
+        data  edkey.action.fb.clip.save.7
+
+        byte  key.ctrl.8, pane.focus.fb
+        data  edkey.action.fb.clip.save.8
+
+        byte  key.ctrl.9, pane.focus.fb
+        data  edkey.action.fb.clip.save.9
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------

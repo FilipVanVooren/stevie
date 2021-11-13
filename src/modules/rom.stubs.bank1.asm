@@ -140,7 +140,7 @@ edkey.action.about.vector:
 ********|*****|*********************|**************************
 dialog.load:
         mov   @dialog.load.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog
+        jmp   _trampoline.bank3    ; Show dialog
 dialog.load.vector:
         data  vec.2
 
@@ -151,7 +151,7 @@ dialog.load.vector:
 ********|*****|*********************|**************************
 dialog.save:
         mov   @dialog.save.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog
+        jmp   _trampoline.bank3     ; Show dialog
 dialog.save.vector:        
         data  vec.3
 
@@ -173,7 +173,7 @@ dialog.insert.vector:
 ********|*****|*********************|**************************
 dialog.print:
         mov   @dialog.print.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog
+        jmp   _trampoline.bank3    ; Show dialog
 dialog.print.vector:        
         data  vec.5
 
@@ -487,6 +487,50 @@ edb.hipage.alloc:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.hipage.alloc.vector:
         data  vec.2
+
+
+**************************************************************
+* Stub for "edb.block.mark"
+* bank5 vec.3
+********|*****|*********************|**************************
+edb.block.mark:
+        mov   @edb.block.mark.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.mark.vector:
+        data  vec.3
+
+
+**************************************************************
+* Stub for "edb.block.mark.m1"
+* bank5 vec.4
+********|*****|*********************|**************************
+edb.block.mark.m1:
+        mov   @edb.block.mark.m1.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.mark.m1.vector:
+        data  vec.4
+
+
+**************************************************************
+* Stub for "edb.block.mark.m2"
+* bank5 vec.5
+********|*****|*********************|**************************
+edb.block.mark.m2:
+        mov   @edb.block.mark.m2.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.mark.m2.vector:
+        data  vec.5
+
+
+**************************************************************
+* Stub for "edb.block.clip"
+* bank5 vec.6
+********|*****|*********************|**************************
+edb.block.clip:
+        mov   @edb.block.clip.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.clip.vector:
+        data  vec.6
 
 
 ***************************************************************
