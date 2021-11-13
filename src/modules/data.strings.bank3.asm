@@ -16,8 +16,8 @@ txt.head.load      byte 14,1,1
                    byte 1
 txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
 
-txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
-txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
+txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode'
+txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode'
 
 ;--------------------------------------------------------------
 ; Dialog Save file
@@ -29,7 +29,7 @@ txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
 txt.hint.save      #string ' '
-txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL-End'
+txt.keys.save      #string 'F9-Back  F3-Clear'
 
 
 ;--------------------------------------------------------------
@@ -38,10 +38,10 @@ txt.keys.save      #string 'F9-Back  F3-Clear  FH-Home  FL-End'
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
+txt.hint.insert    #string 'Give filename or Press ^0 to ^9 for inserting snippet from clipboard file 0-9.'
 
-txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  FH-Home  FL-End'
-txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  FH-Home  FL-End'
+txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  ^[0-9]-Clipboard'
+txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  ^[0-9]-Clipboard'
 
 
 ;--------------------------------------------------------------
@@ -54,7 +54,7 @@ txt.head.print2    byte 16,1,1
                    text ' Print block '
                    byte 1
 txt.hint.print     #string 'Give printer device name (PIO, TIPI.PIO, ...)'
-txt.keys.print     #string 'F9-Back  F3-Clear  FH-Home  FL-End'
+txt.keys.print     #string 'F9-Back  F3-Clear'
 
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"

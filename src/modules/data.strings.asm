@@ -25,7 +25,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 txt.keys.default   #string 'F9-Menu'
-txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  Clip^0..^9'
+txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^[0-9]Clipboard'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
