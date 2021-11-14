@@ -12,8 +12,11 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
+edkey.action.fb.clip.save.0:
+        li    tmp0,clip0
+        jmp   !
 edkey.action.fb.clip.save.1:
-        clr   tmp0
+        li    tmp0,clip1
         jmp   !
 edkey.action.fb.clip.save.2:
         li    tmp0,clip2
@@ -38,9 +41,6 @@ edkey.action.fb.clip.save.8:
         jmp   !
 edkey.action.fb.clip.save.9:
         li    tmp0,clip9
-        jmp   !
-edkey.action.fb.clip.save.0:
-        li    tmp0,clip0
         ;-------------------------------------------------------
         ; Save block to clipboard
         ;-------------------------------------------------------
@@ -52,4 +52,8 @@ edkey.action.fb.clip.save.0:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.fb.clip.save.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        mov   *stack+,tmp0          ; Pop tmp0
+
+        mov   @fb.topline,@parm1    ; Get topline
+        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+                                    ; / i  @parm1 = Line in editor buffer

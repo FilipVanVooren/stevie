@@ -23,7 +23,7 @@ fm.loadsave.cb.indicator1:
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,50
+              byte pane.botrow,0,32,52
               data EOL              ; Clear hint on bottom row
 
 

@@ -29,9 +29,8 @@ fm.savefile:
         ;-------------------------------------------------------
         ; Check if filename must be changed in editor buffer
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.saveblock
-        c     @cmdb.dialog,tmp0     ; Saving code block M1-M2 ?
-        jeq   !                     ; Yes, skip changing current filename
+        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
+        jne   !                     ; Block mode, skip changing current filename
         ;-------------------------------------------------------
         ; Change filename
         ;-------------------------------------------------------
