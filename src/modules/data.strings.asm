@@ -47,7 +47,7 @@ txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
 txt.keymarker      byte 1,28
 
-txt.clipboard      #string 'DSK6.CLIP'
+txt.clipboard      #string 'DSK8.CLIP'
 txt.ws1            #string ' '
 txt.ws2            #string '  '
 txt.ws3            #string '   '
