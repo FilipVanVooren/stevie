@@ -34,7 +34,7 @@ edkey.action.cmdb.ins:
         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
 
         bl    @cpym2m
-              data cmdb.cmdlen,heap.top,80
+              data cmdb.cmdall,heap.top,80
                                     ; Copy filename from command line to buffer
         ;-------------------------------------------------------
         ; Pass filename as parm1

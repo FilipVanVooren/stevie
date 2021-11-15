@@ -71,6 +71,7 @@ main:
         copy  "dialog.save.asm"     ; Dialog "Save file"
         copy  "dialog.print.asm"    ; Dialog "Print file"        
         copy  "dialog.insert.asm"   ; Dialog "Insert file at line"
+        copy  "dialog.clipboard.asm"; Dialog "Insert snippet from clipboard"
         copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"    ; Dialog "Basic"
         ;-----------------------------------------------------------------------

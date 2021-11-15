@@ -42,7 +42,7 @@ tv.init:
         ; Set defaults
         ;------------------------------------------------------
         bl    @cpym2m
-              data txt.clipboard,edb.clip.filename,20
+              data txt.clipboard,edb.clip.filename,10
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

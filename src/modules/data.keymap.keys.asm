@@ -3,9 +3,23 @@
 
 
 *---------------------------------------------------------------
+* Keyboard scancodes - Numeric keys
+*-------------|---------------------|---------------------------
+key.num.0     equ >30               ; 0
+key.num.1     equ >31               ; 1
+key.num.2     equ >32               ; 2
+key.num.3     equ >33               ; 3
+key.num.4     equ >34               ; 4
+key.num.5     equ >35               ; 5
+key.num.6     equ >36               ; 6
+key.num.7     equ >37               ; 7
+key.num.8     equ >38               ; 8
+key.num.9     equ >39               ; 9
+*---------------------------------------------------------------
 * Keyboard scancodes - Letter keys
 *-------------|---------------------|---------------------------
 key.uc.b      equ >42               ; B
+key.uc.c      equ >43               ; C
 key.uc.e      equ >45               ; E
 key.uc.f      equ >46               ; F
 key.uc.h      equ >48               ; H
@@ -24,8 +38,6 @@ key.lc.s      equ >73               ; s
 key.lc.o      equ >6f               ; o
 key.lc.p      equ >70               ; p
 key.lc.q      equ >71               ; q
-
-
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------

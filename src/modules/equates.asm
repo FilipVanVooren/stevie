@@ -87,12 +87,13 @@ id.dialog.saveblock       equ  12      ; "Save block to file"
 id.dialog.insert          equ  13      ; "Insert file"
 id.dialog.print           equ  14      ; "Print file"
 id.dialog.printblock      equ  15      ; "Print block"
-id.dialog.menu            equ  100     ; "Stevie Menu"
+id.dialog.menu            equ  100     ; "Main Menu"
 id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete"
-id.dialog.help            equ  103     ; "About"
-id.dialog.file            equ  104     ; "File"
-id.dialog.basic           equ  105     ; "Basic"
+id.dialog.clipboard       equ  103     ; "Insert snippet from clipboard"
+id.dialog.help            equ  104     ; "About"
+id.dialog.file            equ  105     ; "File"
+id.dialog.basic           equ  106     ; "Basic"
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------

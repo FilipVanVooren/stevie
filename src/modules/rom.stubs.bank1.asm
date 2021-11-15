@@ -140,7 +140,7 @@ edkey.action.about.vector:
 ********|*****|*********************|**************************
 dialog.load:
         mov   @dialog.load.vector,@trmpvector
-        jmp   _trampoline.bank3    ; Show dialog
+        b     @_trampoline.bank3    ; Show dialog        
 dialog.load.vector:
         data  vec.2
 
@@ -200,6 +200,16 @@ dialog.unsaved:
 dialog.unsaved.vector:        
         data  vec.7
 
+
+***************************************************************
+* Stub for dialog "Insert snippet from clipboard"
+* bank3 vec.8
+********|*****|*********************|**************************
+dialog.clipboard:
+        mov   @dialog.clipboard.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.clipboard.vector:        
+        data  vec.8
 
 ***************************************************************
 * Stub for dialog "Main Menu"
@@ -531,6 +541,28 @@ edb.block.clip:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.block.clip.vector:
         data  vec.6
+
+
+**************************************************************
+* Stub for "edb.block.reset"
+* bank5 vec.7
+********|*****|*********************|**************************
+edb.block.reset:
+        mov   @edb.block.reset.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.reset.vector:
+        data  vec.7
+
+
+**************************************************************
+* Stub for "edb.block.delete"
+* bank5 vec.8
+********|*****|*********************|**************************
+edb.block.delete:
+        mov   @edb.block.delete.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.delete.vector:
+        data  vec.8
 
 
 ***************************************************************

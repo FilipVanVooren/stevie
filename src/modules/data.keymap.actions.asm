@@ -93,7 +93,7 @@ keymap_actions.editor:
         data  edkey.action.block.mark
 
         byte  key.ctrl.c, pane.focus.fb
-        data  edkey.action.block.copy
+        data  edkey.action.copyblock_or_clipboard
 
         byte  key.ctrl.d, pane.focus.fb
         data  edkey.action.block.delete
@@ -225,6 +225,9 @@ keymap_actions.cmdb:
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
 
+        byte  key.uc.c, id.dialog.file
+        data  dialog.clipboard
+
         byte  key.uc.p, id.dialog.file
         data  dialog.print
         ;-------------------------------------------------------
@@ -243,6 +246,42 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.ins
+        ;-------------------------------------------------------
+        ; Dialog: Insert snippet from clipboard
+        ;-------------------------------------------------------
+        byte  key.fctn.5, id.dialog.clipboard
+        data  edkey.action.cmdb.fastmode.toggle
+
+        byte  key.num.0, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.0
+
+        byte  key.num.1, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.1
+
+        byte  key.num.2, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.2
+
+        byte  key.num.3, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.3
+
+        byte  key.num.4, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.4
+
+        byte  key.num.5, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.5
+
+        byte  key.num.6, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.6
+
+        byte  key.num.7, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.7
+
+        byte  key.num.8, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.8
+
+        byte  key.num.9, id.dialog.clipboard
+        data  edkey.action.cmdb.clip.9
+
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

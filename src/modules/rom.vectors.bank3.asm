@@ -11,7 +11,7 @@ vec.4   data  dialog.insert         ; Dialog "Insert file"
 vec.5   data  dialog.print          ; Dialog "Print file"
 vec.6   data  dialog.file           ; Dialog "File"
 vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
-vec.8   data  cpu.crash             ; 
+vec.8   data  dialog.clipboard      ; Dialog "Insert snippet from clipboard"
 vec.9   data  cpu.crash             ; 
 vec.10  data  tibasic               ; Run TI Basic interpreter
 vec.11  data  cpu.crash             ; 

@@ -90,10 +90,11 @@ main:
         copy  "edkey.cmdb.mov.asm"       ; Actions for movement keys 
         copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
         copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
-        copy  "edkey.cmdb.file.new.asm"  ; New DV80 file
-        copy  "edkey.cmdb.file.load.asm" ; Read DV80 file
-        copy  "edkey.cmdb.file.ins.asm"  ; Insert DV80 file
-        copy  "edkey.cmdb.file.save.asm" ; Save DV80 file
+        copy  "edkey.cmdb.file.new.asm"  ; New file
+        copy  "edkey.cmdb.file.load.asm" ; Open file
+        copy  "edkey.cmdb.file.ins.asm"  ; Insert file
+        copy  "edkey.cmdb.file.clip.asm" ; Insert file from clipboard
+        copy  "edkey.cmdb.file.save.asm" ; Save file
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
@@ -123,9 +124,7 @@ main:
         copy  "edb.line.getlen.asm"    ; Get line length
         copy  "edb.line.copy.asm"      ; Copy line
         copy  "edb.line.del.asm"       ; Delete line        
-        copy  "edb.block.reset.asm"    ; Reset markers
         copy  "edb.block.copy.asm"     ; Copy code block
-        copy  "edb.block.del.asm"      ; Delete code block
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------

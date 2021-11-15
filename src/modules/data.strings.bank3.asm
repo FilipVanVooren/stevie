@@ -14,7 +14,7 @@ txt.stevie         text ' Stevie 1.2F '
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      #string 'Select Fastmode for file buffer in CPU RAM (HRD/HDX/IDE only)'
+txt.hint.load      #string 'Give filename of file to open.'
 
 txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode'
 txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode'
@@ -28,7 +28,7 @@ txt.head.save      byte 14,1,1
 txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
-txt.hint.save      #string ' '
+txt.hint.save      #string 'Give filename of file to save.'
 txt.keys.save      #string 'F9-Back  F3-Clear'
 
 
@@ -38,10 +38,23 @@ txt.keys.save      #string 'F9-Back  F3-Clear'
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    #string 'Give filename or Press ^0 to ^9 for inserting snippet from clipboard file 0-9.'
+txt.hint.insert    #string 'Give filename of file to insert.'
 
-txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode  ^[0-9]-Clipboard'
-txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode  ^[0-9]-Clipboard'
+txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode'
+txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode'
+
+
+;--------------------------------------------------------------
+; Insert snippet from clipbaord
+;--------------------------------------------------------------
+txt.head.clipboard byte 42,1,1
+                   text ' Insert snippet from clipboard at line '
+                   byte 1
+txt.info.clipboard #string 'Clipboard?'
+txt.hint.clipboard #string 'Press 0 to 9 for inserting snippet from corresponding clipboard.'
+
+txt.keys.clipboard  #string 'F9-Back  F5-Fastmode  0..9-Clipboard'
+txt.keys.clipboard2 #string 'F9-Back  *F5-Fastmode  0..9-Clipboard'
 
 
 ;--------------------------------------------------------------
@@ -99,8 +112,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      #string 'New   Open / Insert   Save   Print'
-pos.info.file      byte 0,6,13,22,29,>ff
+txt.info.file      #string 'New   Open/Insert/Clipboard   Save   Print'
+pos.info.file      byte 0,6,11,18,30,37,>ff
 txt.hint.file      #string ' '
 txt.keys.file      #string 'F9-Back'
 
