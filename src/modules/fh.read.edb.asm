@@ -15,6 +15,7 @@
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
 * parm7 = Line number to insert file at or >FFFF if new file.
+* parm8 = Work mode
 *
 * Callbacks can be skipped by passing >0000 as pointer.
 *--------------------------------------------------------------

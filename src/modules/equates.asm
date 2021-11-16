@@ -120,11 +120,13 @@ clip5                     equ  >3500   ; '5'
 *--------------------------------------------------------------
 * File work mode
 *--------------------------------------------------------------
-id.file.savefile          equ  1       ; Save file 
-id.file.saveblock         equ  2       ; Save block to file
-id.file.clipblock         equ  3       ; Save block to clipboard
-id.file.printfile         equ  4       ; Print file
-id.file.printblock        equ  5       ; Print block
+id.file.loadfile          equ  1       ; Load file
+id.file.loadblock         equ  2       ; Insert block from file
+id.file.savefile          equ  3       ; Save file 
+id.file.saveblock         equ  4       ; Save block to file
+id.file.clipblock         equ  5       ; Save block to clipboard
+id.file.printfile         equ  6       ; Print file
+id.file.printblock        equ  7       ; Print block
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------

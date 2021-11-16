@@ -12,12 +12,7 @@
 *          device and filename
 * parm2  = First line to save (base 0)
 * parm3  = Last line to save  (base 0)
-* parm4  = Work mode
-*            1 = Save file
-*            2 = Save block to file
-*            3 = Save block to clipboard
-*            4 = Print file
-*            5 = Print block
+* parm4  = Work mode (See id.file.XXXX)
 *--------------------------------------------------------------- 
 * OUTPUT
 * none
