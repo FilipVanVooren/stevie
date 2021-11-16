@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b1.asm.61843
+     **** ****     > stevie_b1.asm.91724
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version 211115-2117400
+0009               * File: stevie_b1.asm               ; Version 211116-2131260
 0010               *
 0011               * Bank 1 "James"
 0012               * Editor core
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -204,260 +204,265 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0112               *--------------------------------------------------------------
 0113               * Suffix characters for clipboards
 0114               *--------------------------------------------------------------
-0115      3000     clip0                     equ  >3000   ; '0'
-0116      3100     clip1                     equ  >3100   ; '1'
-0117      3200     clip2                     equ  >3200   ; '2'
-0118      3300     clip3                     equ  >3300   ; '3'
-0119      3400     clip4                     equ  >3400   ; '4'
-0120      3500     clip5                     equ  >3500   ; '5'
-0121      3600     clip6                     equ  >3600   ; '6'
-0122      3700     clip7                     equ  >3700   ; '7'
-0123      3800     clip8                     equ  >3800   ; '8'
-0124      3900     clip9                     equ  >3900   ; '9'
-0125               *--------------------------------------------------------------
-0126               * SPECTRA2 / Stevie startup options
-0127               *--------------------------------------------------------------
-0128      0001     debug                     equ  1       ; Turn on spectra2 debugging
-0129      0001     startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
-0130      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
-0131      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-0132               
-0133      7E00     cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad
-0134                                                      ; | stored in cartridge ROM
-0135                                                      ; / bank3.asm
-0136               
-0137      F960     cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
-0138                                                      ; | scratchpad RAM (SAMS bank #08)
-0139                                                      ; /
-0140               
-0141               
-0142               *--------------------------------------------------------------
-0143               * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
-0144               *--------------------------------------------------------------
-0145      A000     core1.top         equ  >a000           ; Structure begin
-0146      A000     parm1             equ  core1.top + 0   ; Function parameter 1
-0147      A002     parm2             equ  core1.top + 2   ; Function parameter 2
-0148      A004     parm3             equ  core1.top + 4   ; Function parameter 3
-0149      A006     parm4             equ  core1.top + 6   ; Function parameter 4
-0150      A008     parm5             equ  core1.top + 8   ; Function parameter 5
-0151      A00A     parm6             equ  core1.top + 10  ; Function parameter 6
-0152      A00C     parm7             equ  core1.top + 12  ; Function parameter 7
-0153      A00E     parm8             equ  core1.top + 14  ; Function parameter 8
-0154      A010     outparm1          equ  core1.top + 16  ; Function output parameter 1
-0155      A012     outparm2          equ  core1.top + 18  ; Function output parameter 2
-0156      A014     outparm3          equ  core1.top + 20  ; Function output parameter 3
-0157      A016     outparm4          equ  core1.top + 22  ; Function output parameter 4
-0158      A018     outparm5          equ  core1.top + 24  ; Function output parameter 5
-0159      A01A     outparm6          equ  core1.top + 26  ; Function output parameter 6
-0160      A01C     outparm7          equ  core1.top + 28  ; Function output parameter 7
-0161      A01E     outparm8          equ  core1.top + 30  ; Function output parameter 8
-0162      A020     keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
-0163      A022     keycode1          equ  core1.top + 34  ; Current key scanned
-0164      A024     keycode2          equ  core1.top + 36  ; Previous key scanned
-0165      A026     unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
-0166      A02C     tibasic.status    equ  core1.top + 44  ; TI Basic status flags
-0167                                                      ; 0000 = Initialize TI-Basic
-0168                                                      ; 0001 = TI-Basic reentry
-0169      A02E     trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
-0170      A030     core1.free        equ  core1.top + 48  ; End of structure
-0171               *--------------------------------------------------------------
-0172               * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
-0173               *--------------------------------------------------------------
-0174      A100     core2.top         equ  >a100           ; Structure begin
-0175      A100     timers            equ  core2.top       ; Timer table
-0176      A140     rambuf            equ  core2.top + 64  ; RAM workbuffer (160 bytes)
-0177      A1E0     ramsat            equ  core2.top + 224 ; Sprite Attr. Table in RAM (14 bytes)
-0178      A1EE     core2.free        equ  core2.top + 238 ; End of structure
-0179               *--------------------------------------------------------------
-0180               * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
-0181               *--------------------------------------------------------------
-0182      A200     tv.top            equ  >a200           ; Structure begin
-0183      A200     tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
-0184      A202     tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
-0185      A204     tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
-0186      A206     tv.sams.b000      equ  tv.top + 6      ; SAMS window >b000-bfff
-0187      A208     tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
-0188      A20A     tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
-0189      A20C     tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
-0190      A20E     tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
-0191      A210     tv.ruler.visible  equ  tv.top + 16     ; Show ruler with tab positions
-0192      A212     tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
-0193      A214     tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
-0194      A216     tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
-0195      A218     tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
-0196      A21A     tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
-0197      A21C     tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
-0198      A21E     tv.rulercolor     equ  tv.top + 30     ; FG/BG-color ruler line
-0199      A220     tv.cmdb.hcolor    equ  tv.top + 32     ; FG/BG-color command buffer header line
-0200      A222     tv.pane.focus     equ  tv.top + 34     ; Identify pane that has focus
-0201      A224     tv.task.oneshot   equ  tv.top + 36     ; Pointer to one-shot routine
-0202      A226     tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
-0203      A228     tv.error.visible  equ  tv.top + 40     ; Error pane visible
-0204      A22A     tv.error.msg      equ  tv.top + 42     ; Error message (max. 160 characters)
-0205      A2CA     tv.free           equ  tv.top + 202    ; End of structure
-0206               *--------------------------------------------------------------
-0207               * Frame buffer structure              @>a300-a3ff   (256 bytes)
-0208               *--------------------------------------------------------------
-0209      A300     fb.struct         equ  >a300           ; Structure begin
-0210      A300     fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
-0211      A302     fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
-0212      A304     fb.topline        equ  fb.struct + 4   ; Top line in frame buffer (matching
-0213                                                      ; line X in editor buffer).
-0214      A306     fb.row            equ  fb.struct + 6   ; Current row in frame buffer
-0215                                                      ; (offset 0 .. @fb.scrrows)
-0216      A308     fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
-0217      A30A     fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
-0218      A30C     fb.column         equ  fb.struct + 12  ; Current column (0-79) in frame buffer
-0219      A30E     fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
-0220      A310     fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
-0221      A312     fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
-0222      A314     fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
-0223      A316     fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
-0224      A318     fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
-0225      A31A     fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
-0226      A31C     fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
-0227      A31E     fb.ruler.sit      equ  fb.struct + 30  ; 80 char ruler  (no length-prefix!)
-0228      A36E     fb.ruler.tat      equ  fb.struct + 110 ; 80 char colors (no length-prefix!)
-0229      A3BE     fb.free           equ  fb.struct + 190 ; End of structure
-0230               *--------------------------------------------------------------
-0231               * File handle structure               @>a400-a4ff   (256 bytes)
-0232               *--------------------------------------------------------------
-0233      A400     fh.struct         equ  >a400           ; stevie file handling structures
-0234               ;***********************************************************************
-0235               ; ATTENTION
-0236               ; The dsrlnk variables must form a continuous memory block and keep
-0237               ; their order!
-0238               ;***********************************************************************
-0239      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
-0240      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
-0241      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
-0242      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
-0243      A42C     dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
-0244      A42E     dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
-0245      A430     dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
-0246      A432     dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
-0247      A434     dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
-0248      A436     fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
-0249      A438     fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
-0250      A43A     fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
-0251      A43C     fh.records        equ  fh.struct + 60  ; File records counter
-0252      A43E     fh.reclen         equ  fh.struct + 62  ; Current record length
-0253      A440     fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
-0254      A442     fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations
-0255      A444     fh.fname.ptr      equ  fh.struct + 68  ; Pointer to device and filename
-0256      A446     fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
-0257      A448     fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
-0258      A44A     fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
-0259      A44C     fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
-0260      A44E     fh.offsetopcode   equ  fh.struct + 78  ; Set to >40 for skipping VDP buffer
-0261      A450     fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
-0262      A452     fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
-0263      A454     fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
-0264      A456     fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
-0265      A458     fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
-0266      A45A     fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
-0267      A45C     fh.line           equ  fh.struct + 92  ; Editor buffer line currently processing
-0268      A45E     fh.temp1          equ  fh.struct + 94  ; Temporary variable 1
-0269      A460     fh.temp2          equ  fh.struct + 96  ; Temporary variable 2
-0270      A462     fh.temp3          equ  fh.struct + 98  ; Temporary variable 3
-0271      A464     fh.membuffer      equ  fh.struct +100  ; 80 bytes file memory buffer
-0272      A4B4     fh.free           equ  fh.struct +180  ; End of structure
-0273      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
-0274      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
-0275               *--------------------------------------------------------------
-0276               * Editor buffer structure             @>a500-a5ff   (256 bytes)
-0277               *--------------------------------------------------------------
-0278      A500     edb.struct        equ  >a500           ; Begin structure
-0279      A500     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
-0280      A502     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-0281      A504     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
-0282      A506     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
-0283      A508     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
-0284      A50A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-0285      A50C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
-0286      A50E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
-0287      A510     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
-0288      A512     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
-0289                                                      ; with current filename.
-0290      A514     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
-0291                                                      ; with current file type.
-0292      A516     edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
-0293      A518     edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-0294      A51A     edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
-0295                                                      ; for filename, but not always used.
-0296      A56A     edb.clip.filename equ  edb.struct + 106; 80 characters Clipboard device/filename
-0297      A5BA     edb.free          equ  edb.struct + 186; End of structure
-0298               *--------------------------------------------------------------
-0299               * Index structure                     @>a600-a6ff   (256 bytes)
-0300               *--------------------------------------------------------------
-0301      A600     idx.struct        equ  >a600           ; stevie index structure
-0302      A600     idx.sams.page     equ  idx.struct      ; Current SAMS page
-0303      A602     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
-0304      A604     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
-0305      A606     idx.free          equ  idx.struct + 6  ; End of structure
-0306               *--------------------------------------------------------------
-0307               * Command buffer structure            @>a700-a7ff   (256 bytes)
-0308               *--------------------------------------------------------------
-0309      A700     cmdb.struct       equ  >a700           ; Command Buffer structure
-0310      A700     cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
-0311      A702     cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-0312      A704     cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
-0313      A706     cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
-0314      A708     cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
-0315      A70A     cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
-0316      A70C     cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-0317      A70E     cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
-0318      A710     cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
-0319      A712     cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
-0320      A714     cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
-0321      A716     cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
-0322      A718     cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-0323      A71A     cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-0324      A71C     cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
-0325      A71E     cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
-0326      A720     cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
-0327      A722     cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
-0328      A724     cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
-0329      A726     cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
-0330      A728     cmdb.cmdall       equ  cmdb.struct + 40; Current command including length-byte
-0331      A728     cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
-0332      A729     cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
-0333      A77A     cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
-0334      A7C8     cmdb.free         equ  cmdb.struct +200; End of structure
-0335               *--------------------------------------------------------------
-0336               * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
-0337               *--------------------------------------------------------------
-0338      AD00     scrpad.copy       equ  >ad00           ; Copy of Stevie scratchpad memory
-0339               *--------------------------------------------------------------
-0340               * Farjump return stack                @>af00-afff   (256 bytes)
-0341               *--------------------------------------------------------------
-0342      B000     fj.bottom         equ  >b000           ; Return stack for trampoline function
-0343                                                      ; Grows downwards from high to low.
+0115      3100     clip1                     equ  >3100   ; '1'
+0116      3200     clip2                     equ  >3200   ; '2'
+0117      3300     clip3                     equ  >3300   ; '3'
+0118      3400     clip4                     equ  >3400   ; '4'
+0119      3500     clip5                     equ  >3500   ; '5'
+0120               *--------------------------------------------------------------
+0121               * File work mode
+0122               *--------------------------------------------------------------
+0123      0001     id.file.savefile          equ  1       ; Save file
+0124      0002     id.file.saveblock         equ  2       ; Save block to file
+0125      0003     id.file.clipblock         equ  3       ; Save block to clipboard
+0126      0004     id.file.printfile         equ  4       ; Print file
+0127      0005     id.file.printblock        equ  5       ; Print block
+0128               *--------------------------------------------------------------
+0129               * SPECTRA2 / Stevie startup options
+0130               *--------------------------------------------------------------
+0131      0001     debug                     equ  1       ; Turn on spectra2 debugging
+0132      0001     startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
+0133      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
+0134      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+0135               
+0136      7E00     cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad
+0137                                                      ; | stored in cartridge ROM
+0138                                                      ; / bank3.asm
+0139               
+0140      F960     cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
+0141                                                      ; | scratchpad RAM (SAMS bank #08)
+0142                                                      ; /
+0143               
+0144               
+0145               *--------------------------------------------------------------
+0146               * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
+0147               *--------------------------------------------------------------
+0148      A000     core1.top         equ  >a000           ; Structure begin
+0149      A000     parm1             equ  core1.top + 0   ; Function parameter 1
+0150      A002     parm2             equ  core1.top + 2   ; Function parameter 2
+0151      A004     parm3             equ  core1.top + 4   ; Function parameter 3
+0152      A006     parm4             equ  core1.top + 6   ; Function parameter 4
+0153      A008     parm5             equ  core1.top + 8   ; Function parameter 5
+0154      A00A     parm6             equ  core1.top + 10  ; Function parameter 6
+0155      A00C     parm7             equ  core1.top + 12  ; Function parameter 7
+0156      A00E     parm8             equ  core1.top + 14  ; Function parameter 8
+0157      A010     outparm1          equ  core1.top + 16  ; Function output parameter 1
+0158      A012     outparm2          equ  core1.top + 18  ; Function output parameter 2
+0159      A014     outparm3          equ  core1.top + 20  ; Function output parameter 3
+0160      A016     outparm4          equ  core1.top + 22  ; Function output parameter 4
+0161      A018     outparm5          equ  core1.top + 24  ; Function output parameter 5
+0162      A01A     outparm6          equ  core1.top + 26  ; Function output parameter 6
+0163      A01C     outparm7          equ  core1.top + 28  ; Function output parameter 7
+0164      A01E     outparm8          equ  core1.top + 30  ; Function output parameter 8
+0165      A020     keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
+0166      A022     keycode1          equ  core1.top + 34  ; Current key scanned
+0167      A024     keycode2          equ  core1.top + 36  ; Previous key scanned
+0168      A026     unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
+0169      A02C     tibasic.status    equ  core1.top + 44  ; TI Basic status flags
+0170                                                      ; 0000 = Initialize TI-Basic
+0171                                                      ; 0001 = TI-Basic reentry
+0172      A02E     trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
+0173      A030     core1.free        equ  core1.top + 48  ; End of structure
+0174               *--------------------------------------------------------------
+0175               * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
+0176               *--------------------------------------------------------------
+0177      A100     core2.top         equ  >a100           ; Structure begin
+0178      A100     timers            equ  core2.top       ; Timer table
+0179      A140     rambuf            equ  core2.top + 64  ; RAM workbuffer (160 bytes)
+0180      A1E0     ramsat            equ  core2.top + 224 ; Sprite Attr. Table in RAM (14 bytes)
+0181      A1EE     core2.free        equ  core2.top + 238 ; End of structure
+0182               *--------------------------------------------------------------
+0183               * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
+0184               *--------------------------------------------------------------
+0185      A200     tv.top            equ  >a200           ; Structure begin
+0186      A200     tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
+0187      A202     tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
+0188      A204     tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
+0189      A206     tv.sams.b000      equ  tv.top + 6      ; SAMS window >b000-bfff
+0190      A208     tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
+0191      A20A     tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
+0192      A20C     tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
+0193      A20E     tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
+0194      A210     tv.ruler.visible  equ  tv.top + 16     ; Show ruler with tab positions
+0195      A212     tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
+0196      A214     tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
+0197      A216     tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
+0198      A218     tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
+0199      A21A     tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
+0200      A21C     tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
+0201      A21E     tv.rulercolor     equ  tv.top + 30     ; FG/BG-color ruler line
+0202      A220     tv.cmdb.hcolor    equ  tv.top + 32     ; FG/BG-color command buffer header line
+0203      A222     tv.pane.focus     equ  tv.top + 34     ; Identify pane that has focus
+0204      A224     tv.task.oneshot   equ  tv.top + 36     ; Pointer to one-shot routine
+0205      A226     tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
+0206      A228     tv.error.visible  equ  tv.top + 40     ; Error pane visible
+0207      A22A     tv.error.msg      equ  tv.top + 42     ; Error message (max. 160 characters)
+0208      A2CA     tv.free           equ  tv.top + 202    ; End of structure
+0209               *--------------------------------------------------------------
+0210               * Frame buffer structure              @>a300-a3ff   (256 bytes)
+0211               *--------------------------------------------------------------
+0212      A300     fb.struct         equ  >a300           ; Structure begin
+0213      A300     fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
+0214      A302     fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
+0215      A304     fb.topline        equ  fb.struct + 4   ; Top line in frame buffer (matching
+0216                                                      ; line X in editor buffer).
+0217      A306     fb.row            equ  fb.struct + 6   ; Current row in frame buffer
+0218                                                      ; (offset 0 .. @fb.scrrows)
+0219      A308     fb.row.length     equ  fb.struct + 8   ; Length of current row in frame buffer
+0220      A30A     fb.row.dirty      equ  fb.struct + 10  ; Current row dirty flag in frame buffer
+0221      A30C     fb.column         equ  fb.struct + 12  ; Current column (0-79) in frame buffer
+0222      A30E     fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
+0223      A310     fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
+0224      A312     fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
+0225      A314     fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
+0226      A316     fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
+0227      A318     fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
+0228      A31A     fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
+0229      A31C     fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
+0230      A31E     fb.ruler.sit      equ  fb.struct + 30  ; 80 char ruler  (no length-prefix!)
+0231      A36E     fb.ruler.tat      equ  fb.struct + 110 ; 80 char colors (no length-prefix!)
+0232      A3BE     fb.free           equ  fb.struct + 190 ; End of structure
+0233               *--------------------------------------------------------------
+0234               * File handle structure               @>a400-a4ff   (256 bytes)
+0235               *--------------------------------------------------------------
+0236      A400     fh.struct         equ  >a400           ; stevie file handling structures
+0237               ;***********************************************************************
+0238               ; ATTENTION
+0239               ; The dsrlnk variables must form a continuous memory block and keep
+0240               ; their order!
+0241               ;***********************************************************************
+0242      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+0243      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
+0244      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
+0245      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
+0246      A42C     dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
+0247      A42E     dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
+0248      A430     dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
+0249      A432     dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
+0250      A434     dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
+0251      A436     fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
+0252      A438     fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
+0253      A43A     fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
+0254      A43C     fh.records        equ  fh.struct + 60  ; File records counter
+0255      A43E     fh.reclen         equ  fh.struct + 62  ; Current record length
+0256      A440     fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
+0257      A442     fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations
+0258      A444     fh.fname.ptr      equ  fh.struct + 68  ; Pointer to device and filename
+0259      A446     fh.sams.page      equ  fh.struct + 70  ; Current SAMS page during file operation
+0260      A448     fh.sams.hipage    equ  fh.struct + 72  ; Highest SAMS page in file operation
+0261      A44A     fh.fopmode        equ  fh.struct + 74  ; FOP mode (File Operation Mode)
+0262      A44C     fh.filetype       equ  fh.struct + 76  ; Value for filetype/mode (PAB byte 1)
+0263      A44E     fh.offsetopcode   equ  fh.struct + 78  ; Set to >40 for skipping VDP buffer
+0264      A450     fh.callback1      equ  fh.struct + 80  ; Pointer to callback function 1
+0265      A452     fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
+0266      A454     fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
+0267      A456     fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
+0268      A458     fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
+0269      A45A     fh.workmode       equ  fh.struct + 90  ; Working mode (used in callbacks)
+0270      A45C     fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
+0271      A45E     fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
+0272      A460     fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
+0273      A462     fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
+0274      A464     fh.temp3          equ  fh.struct +100  ; Temporary variable 3
+0275      A466     fh.membuffer      equ  fh.struct +102  ; 80 bytes file memory buffer
+0276      A4B6     fh.free           equ  fh.struct +182  ; End of structure
+0277      0960     fh.vrecbuf        equ  >0960           ; VDP address record buffer
+0278      0A60     fh.vpab           equ  >0a60           ; VDP address PAB
+0279               *--------------------------------------------------------------
+0280               * Editor buffer structure             @>a500-a5ff   (256 bytes)
+0281               *--------------------------------------------------------------
+0282      A500     edb.struct        equ  >a500           ; Begin structure
+0283      A500     edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
+0284      A502     edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
+0285      A504     edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
+0286      A506     edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
+0287      A508     edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
+0288      A50A     edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
+0289      A50C     edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
+0290      A50E     edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
+0291      A510     edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
+0292      A512     edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
+0293                                                      ; with current filename.
+0294      A514     edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
+0295                                                      ; with current file type.
+0296      A516     edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
+0297      A518     edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
+0298      A51A     edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
+0299                                                      ; for filename, but not always used.
+0300      A56A     edb.free          equ  edb.struct + 106; End of structure
+0301               *--------------------------------------------------------------
+0302               * Index structure                     @>a600-a6ff   (256 bytes)
+0303               *--------------------------------------------------------------
+0304      A600     idx.struct        equ  >a600           ; stevie index structure
+0305      A600     idx.sams.page     equ  idx.struct      ; Current SAMS page
+0306      A602     idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
+0307      A604     idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
+0308      A606     idx.free          equ  idx.struct + 6  ; End of structure
+0309               *--------------------------------------------------------------
+0310               * Command buffer structure            @>a700-a7ff   (256 bytes)
+0311               *--------------------------------------------------------------
+0312      A700     cmdb.struct       equ  >a700           ; Command Buffer structure
+0313      A700     cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
+0314      A702     cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
+0315      A704     cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
+0316      A706     cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
+0317      A708     cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
+0318      A70A     cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
+0319      A70C     cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
+0320      A70E     cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
+0321      A710     cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
+0322      A712     cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
+0323      A714     cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
+0324      A716     cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
+0325      A718     cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
+0326      A71A     cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
+0327      A71C     cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
+0328      A71E     cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
+0329      A720     cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
+0330      A722     cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
+0331      A724     cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
+0332      A726     cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
+0333      A728     cmdb.cmdall       equ  cmdb.struct + 40; Current command including length-byte
+0334      A728     cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
+0335      A729     cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
+0336      A77A     cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
+0337      A7C8     cmdb.free         equ  cmdb.struct +200; End of structure
+0338               *--------------------------------------------------------------
+0339               * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
+0340               *--------------------------------------------------------------
+0341      AD00     scrpad.copy       equ  >ad00           ; Copy of Stevie scratchpad memory
+0342               *--------------------------------------------------------------
+0343               * Farjump return stack                @>af00-afff   (256 bytes)
 0344               *--------------------------------------------------------------
-0345               * Index                               @>b000-bfff  (4096 bytes)
-0346               *--------------------------------------------------------------
-0347      B000     idx.top           equ  >b000           ; Top of index
-0348      1000     idx.size          equ  4096            ; Index size
+0345      B000     fj.bottom         equ  >b000           ; Return stack for trampoline function
+0346                                                      ; Grows downwards from high to low.
+0347               *--------------------------------------------------------------
+0348               * Index                               @>b000-bfff  (4096 bytes)
 0349               *--------------------------------------------------------------
-0350               * Editor buffer                       @>c000-cfff  (4096 bytes)
-0351               *--------------------------------------------------------------
-0352      C000     edb.top           equ  >c000           ; Editor buffer high memory
-0353      1000     edb.size          equ  4096            ; Editor buffer size
+0350      B000     idx.top           equ  >b000           ; Top of index
+0351      1000     idx.size          equ  4096            ; Index size
+0352               *--------------------------------------------------------------
+0353               * Editor buffer                       @>c000-cfff  (4096 bytes)
 0354               *--------------------------------------------------------------
-0355               * Frame buffer                        @>d000-dfff  (4096 bytes)
-0356               *--------------------------------------------------------------
-0357      D000     fb.top            equ  >d000           ; Frame buffer (80x30)
-0358      0960     fb.size           equ  80*30           ; Frame buffer size
+0355      C000     edb.top           equ  >c000           ; Editor buffer high memory
+0356      1000     edb.size          equ  4096            ; Editor buffer size
+0357               *--------------------------------------------------------------
+0358               * Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
 0359               *--------------------------------------------------------------
-0360               * Command buffer history              @>e000-efff  (4096 bytes)
-0361               *--------------------------------------------------------------
-0362      E000     cmdb.top          equ  >e000           ; Top of command history buffer
-0363      1000     cmdb.size         equ  4096            ; Command buffer size
+0360      D000     fb.top            equ  >d000           ; Frame buffer (80x30)
+0361      0960     fb.size           equ  80*30           ; Frame buffer size
+0362      D960     tv.printer.fname  equ  >d960           ; Default printer   (80 char)
+0363      D9B0     tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
 0364               *--------------------------------------------------------------
-0365               * Heap                                @>f000-ffff  (4096 bytes)
+0365               * Command buffer history              @>e000-efff  (4096 bytes)
 0366               *--------------------------------------------------------------
-0367      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b1.asm.61843
+0367      E000     cmdb.top          equ  >e000           ; Top of command history buffer
+0368      1000     cmdb.size         equ  4096            ; Command buffer size
+0369               *--------------------------------------------------------------
+0370               * Heap                                @>f000-ffff  (4096 bytes)
+0371               *--------------------------------------------------------------
+0372      F000     heap.top          equ  >f000           ; Top of heap
+                   < stevie_b1.asm.91724
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -596,7 +601,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0134               *---------------------------------------------------------------
 0135      000D     key.enter     equ >0d               ; enter
 0136      0020     key.space     equ >20               ; space
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -656,7 +661,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1432,7 +1437,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6230 18               byte  24
-0270 6231   42             text  'Build-ID  211115-2117400'
+0270 6231   42             text  'Build-ID  211116-2131260'
      6232 7569     
      6234 6C64     
      6236 2D49     
@@ -1440,10 +1445,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      623A 2032     
      623C 3131     
      623E 3131     
-     6240 352D     
+     6240 362D     
      6242 3231     
-     6244 3137     
-     6246 3430     
+     6244 3331     
+     6246 3236     
      6248 30       
 0271                       even
 0272               
@@ -5813,7 +5818,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0352               *--------------------------------------------------------------
 0353 70C0 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
      70C2 230C     
-0354 70C4 346E             data  spvmod                ; Equate selected video mode table
+0354 70C4 3478             data  spvmod                ; Equate selected video mode table
 0355 70C6 0204  20         li    tmp0,spfont           ; Get font option
      70C8 000C     
 0356 70CA 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
@@ -5837,7 +5842,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70E2 0040     
 0370 70E4 0460  28         b     @main                 ; Give control to main program
      70E6 6046     
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0042                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6435,7 +6440,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0027                       ; Initialize
 0028                       ;------------------------------------------------------
 0029 72E2 06A0  32         bl    @mem.sams.layout      ; Load standard SAMS pages again
-     72E4 344E     
+     72E4 3458     
 0030               
 0031 72E6 0204  20         li    tmp0,edb.top          ; \
      72E8 C000     
@@ -6459,17 +6464,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7304 A50E     
 0043               
 0044 7306 0204  20         li    tmp0,txt.newfile      ; "New file"
-     7308 3602     
+     7308 3648     
 0045 730A C804  38         mov   tmp0,@edb.filename.ptr
      730C A512     
 0046               
 0047 730E 04E0  34         clr   @fh.kilobytes         ; \ Clear kilobytes processed
      7310 A440     
 0048 7312 04E0  34         clr   @fh.kilobytes.prev    ; /
-     7314 A45A     
+     7314 A45C     
 0049               
 0050 7316 0204  20         li    tmp0,txt.filetype.none
-     7318 36C4     
+     7318 3704     
 0051 731A C804  38         mov   tmp0,@edb.filetype.ptr
      731C A514     
 0052               
@@ -6652,70 +6657,76 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043                       ;------------------------------------------------------
 0044 73A4 06A0  32         bl    @cpym2m
      73A6 24EE     
-0045 73A8 36B0                   data txt.clipboard,edb.clip.filename,10
-     73AA A56A     
-     73AC 000A     
-0046                       ;-------------------------------------------------------
-0047                       ; Exit
-0048                       ;-------------------------------------------------------
-0049               tv.init.exit:
-0050 73AE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0051 73B0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0052 73B2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0053 73B4 C2F9  30         mov   *stack+,r11           ; Pop R11
-0054 73B6 045B  20         b     *r11                  ; Return to caller
-0055               
-0056               
-0057               
-0058               ***************************************************************
-0059               * tv.reset
-0060               * Reset editor (clear buffer)
+0045 73A8 37D6                   data def.printer.fname,tv.printer.fname,8
+     73AA D960     
+     73AC 0008     
+0046               
+0047 73AE 06A0  32         bl    @cpym2m
+     73B0 24EE     
+0048 73B2 37E0                   data def.clip.fname,tv.clip.fname,9
+     73B4 D9B0     
+     73B6 0009     
+0049                       ;-------------------------------------------------------
+0050                       ; Exit
+0051                       ;-------------------------------------------------------
+0052               tv.init.exit:
+0053 73B8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0054 73BA C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0055 73BC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0056 73BE C2F9  30         mov   *stack+,r11           ; Pop R11
+0057 73C0 045B  20         b     *r11                  ; Return to caller
+0058               
+0059               
+0060               
 0061               ***************************************************************
-0062               * bl @tv.reset
-0063               *--------------------------------------------------------------
-0064               * INPUT
-0065               * none
+0062               * tv.reset
+0063               * Reset editor (clear buffer)
+0064               ***************************************************************
+0065               * bl @tv.reset
 0066               *--------------------------------------------------------------
-0067               * OUTPUT
+0067               * INPUT
 0068               * none
 0069               *--------------------------------------------------------------
-0070               * Register usage
-0071               * r11
+0070               * OUTPUT
+0071               * none
 0072               *--------------------------------------------------------------
-0073               * Notes
-0074               ***************************************************************
-0075               tv.reset:
-0076 73B8 0649  14         dect  stack
-0077 73BA C64B  30         mov   r11,*stack            ; Save return address
-0078                       ;------------------------------------------------------
-0079                       ; Reset editor
-0080                       ;------------------------------------------------------
-0081 73BC 06A0  32         bl    @cmdb.init            ; Initialize command buffer
-     73BE 32E0     
-0082 73C0 06A0  32         bl    @edb.init             ; Initialize editor buffer
-     73C2 3296     
-0083 73C4 06A0  32         bl    @idx.init             ; Initialize index
-     73C6 3196     
-0084 73C8 06A0  32         bl    @fb.init              ; Initialize framebuffer
-     73CA 3134     
-0085 73CC 06A0  32         bl    @errline.init         ; Initialize error line
-     73CE 331C     
-0086                       ;------------------------------------------------------
-0087                       ; Remove markers and shortcuts
-0088                       ;------------------------------------------------------
-0089 73D0 06A0  32         bl    @hchar
-     73D2 27DC     
-0090 73D4 0034                   byte 0,52,32,18           ; Remove markers
-     73D6 2012     
-0091 73D8 1D00                   byte pane.botrow,0,32,51  ; Remove block shortcuts
-     73DA 2033     
-0092 73DC FFFF                   data eol
-0093                       ;-------------------------------------------------------
-0094                       ; Exit
-0095                       ;-------------------------------------------------------
-0096               tv.reset.exit:
-0097 73DE C2F9  30         mov   *stack+,r11           ; Pop R11
-0098 73E0 045B  20         b     *r11                  ; Return to caller
+0073               * Register usage
+0074               * r11
+0075               *--------------------------------------------------------------
+0076               * Notes
+0077               ***************************************************************
+0078               tv.reset:
+0079 73C2 0649  14         dect  stack
+0080 73C4 C64B  30         mov   r11,*stack            ; Save return address
+0081                       ;------------------------------------------------------
+0082                       ; Reset editor
+0083                       ;------------------------------------------------------
+0084 73C6 06A0  32         bl    @cmdb.init            ; Initialize command buffer
+     73C8 32E0     
+0085 73CA 06A0  32         bl    @edb.init             ; Initialize editor buffer
+     73CC 3296     
+0086 73CE 06A0  32         bl    @idx.init             ; Initialize index
+     73D0 3196     
+0087 73D2 06A0  32         bl    @fb.init              ; Initialize framebuffer
+     73D4 3134     
+0088 73D6 06A0  32         bl    @errline.init         ; Initialize error line
+     73D8 331C     
+0089                       ;------------------------------------------------------
+0090                       ; Remove markers and shortcuts
+0091                       ;------------------------------------------------------
+0092 73DA 06A0  32         bl    @hchar
+     73DC 27DC     
+0093 73DE 0034                   byte 0,52,32,18           ; Remove markers
+     73E0 2012     
+0094 73E2 1D00                   byte pane.botrow,0,32,51  ; Remove block shortcuts
+     73E4 2033     
+0095 73E6 FFFF                   data eol
+0096                       ;-------------------------------------------------------
+0097                       ; Exit
+0098                       ;-------------------------------------------------------
+0099               tv.reset.exit:
+0100 73E8 C2F9  30         mov   *stack+,r11           ; Pop R11
+0101 73EA 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
 0014                       copy  "tv.utils.asm"           ; General purpose utility functions
      **** ****     > tv.utils.asm
@@ -6738,38 +6749,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * none
 0018               ***************************************************************
 0019               tv.unpack.uint16:
-0020 73E2 0649  14         dect  stack
-0021 73E4 C64B  30         mov   r11,*stack            ; Save return address
-0022 73E6 0649  14         dect  stack
-0023 73E8 C644  30         mov   tmp0,*stack           ; Push tmp0
+0020 73EC 0649  14         dect  stack
+0021 73EE C64B  30         mov   r11,*stack            ; Save return address
+0022 73F0 0649  14         dect  stack
+0023 73F2 C644  30         mov   tmp0,*stack           ; Push tmp0
 0024                       ;------------------------------------------------------
 0025                       ; Initialize
 0026                       ;------------------------------------------------------
-0027 73EA 06A0  32         bl    @mknum                ; Convert unsigned number to string
-     73EC 2AAA     
-0028 73EE A000                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
-0029 73F0 A140                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
-0030 73F2 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
-0031 73F3   20                   byte 32               ; / i p2L = Char for replacing leading 0's
+0027 73F4 06A0  32         bl    @mknum                ; Convert unsigned number to string
+     73F6 2AAA     
+0028 73F8 A000                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
+0029 73FA A140                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
+0030 73FC 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
+0031 73FD   20                   byte 32               ; / i p2L = Char for replacing leading 0's
 0032               
-0033 73F4 0204  20         li    tmp0,unpacked.string
-     73F6 A026     
-0034 73F8 04F4  30         clr   *tmp0+                ; Clear string 01
-0035 73FA 04F4  30         clr   *tmp0+                ; Clear string 23
-0036 73FC 04F4  30         clr   *tmp0+                ; Clear string 34
+0033 73FE 0204  20         li    tmp0,unpacked.string
+     7400 A026     
+0034 7402 04F4  30         clr   *tmp0+                ; Clear string 01
+0035 7404 04F4  30         clr   *tmp0+                ; Clear string 23
+0036 7406 04F4  30         clr   *tmp0+                ; Clear string 34
 0037               
-0038 73FE 06A0  32         bl    @trimnum              ; Trim unsigned number string
-     7400 2B02     
-0039 7402 A140                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
-0040 7404 A026                   data unpacked.string  ; | i p1  = Pointer to output buffer
-0041 7406 0020                   data 32               ; / i p2  = Padding char to match against
+0038 7408 06A0  32         bl    @trimnum              ; Trim unsigned number string
+     740A 2B02     
+0039 740C A140                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
+0040 740E A026                   data unpacked.string  ; | i p1  = Pointer to output buffer
+0041 7410 0020                   data 32               ; / i p2  = Padding char to match against
 0042                       ;-------------------------------------------------------
 0043                       ; Exit
 0044                       ;-------------------------------------------------------
 0045               tv.unpack.uint16.exit:
-0046 7408 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0047 740A C2F9  30         mov   *stack+,r11           ; Pop r11
-0048 740C 045B  20         b     *r11                  ; Return to caller
+0046 7412 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0047 7414 C2F9  30         mov   *stack+,r11           ; Pop r11
+0048 7416 045B  20         b     *r11                  ; Return to caller
 0049               
 0050               
 0051               
@@ -6794,99 +6805,99 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0070               * none
 0071               ***************************************************************
 0072               tv.pad.string:
-0073 740E 0649  14         dect  stack
-0074 7410 C64B  30         mov   r11,*stack            ; Push return address
-0075 7412 0649  14         dect  stack
-0076 7414 C644  30         mov   tmp0,*stack           ; Push tmp0
-0077 7416 0649  14         dect  stack
-0078 7418 C645  30         mov   tmp1,*stack           ; Push tmp1
-0079 741A 0649  14         dect  stack
-0080 741C C646  30         mov   tmp2,*stack           ; Push tmp2
-0081 741E 0649  14         dect  stack
-0082 7420 C647  30         mov   tmp3,*stack           ; Push tmp3
+0073 7418 0649  14         dect  stack
+0074 741A C64B  30         mov   r11,*stack            ; Push return address
+0075 741C 0649  14         dect  stack
+0076 741E C644  30         mov   tmp0,*stack           ; Push tmp0
+0077 7420 0649  14         dect  stack
+0078 7422 C645  30         mov   tmp1,*stack           ; Push tmp1
+0079 7424 0649  14         dect  stack
+0080 7426 C646  30         mov   tmp2,*stack           ; Push tmp2
+0081 7428 0649  14         dect  stack
+0082 742A C647  30         mov   tmp3,*stack           ; Push tmp3
 0083                       ;------------------------------------------------------
 0084                       ; Asserts
 0085                       ;------------------------------------------------------
-0086 7422 C120  34         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
-     7424 A000     
-0087 7426 D194  26         movb  *tmp0,tmp2            ; /
-0088 7428 0986  56         srl   tmp2,8                ; Right align
-0089 742A C1C6  18         mov   tmp2,tmp3             ; Make copy of length-byte for later use
+0086 742C C120  34         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
+     742E A000     
+0087 7430 D194  26         movb  *tmp0,tmp2            ; /
+0088 7432 0986  56         srl   tmp2,8                ; Right align
+0089 7434 C1C6  18         mov   tmp2,tmp3             ; Make copy of length-byte for later use
 0090               
-0091 742C 8806  38         c     tmp2,@parm2           ; String length > requested length?
-     742E A002     
-0092 7430 1520  14         jgt   tv.pad.string.panic   ; Yes, crash
+0091 7436 8806  38         c     tmp2,@parm2           ; String length > requested length?
+     7438 A002     
+0092 743A 1520  14         jgt   tv.pad.string.panic   ; Yes, crash
 0093                       ;------------------------------------------------------
 0094                       ; Copy string to buffer
 0095                       ;------------------------------------------------------
-0096 7432 C120  34         mov   @parm1,tmp0           ; Get source address
-     7434 A000     
-0097 7436 C160  34         mov   @parm4,tmp1           ; Get destination address
-     7438 A006     
-0098 743A 0586  14         inc   tmp2                  ; Also include length-byte in copy
+0096 743C C120  34         mov   @parm1,tmp0           ; Get source address
+     743E A000     
+0097 7440 C160  34         mov   @parm4,tmp1           ; Get destination address
+     7442 A006     
+0098 7444 0586  14         inc   tmp2                  ; Also include length-byte in copy
 0099               
-0100 743C 0649  14         dect  stack
-0101 743E C647  30         mov   tmp3,*stack           ; Push tmp3 (get overwritten by xpym2m)
+0100 7446 0649  14         dect  stack
+0101 7448 C647  30         mov   tmp3,*stack           ; Push tmp3 (get overwritten by xpym2m)
 0102               
-0103 7440 06A0  32         bl    @xpym2m               ; Copy length-prefix string to buffer
-     7442 24F4     
+0103 744A 06A0  32         bl    @xpym2m               ; Copy length-prefix string to buffer
+     744C 24F4     
 0104                                                   ; \ i  tmp0 = Source CPU memory address
 0105                                                   ; | i  tmp1 = Target CPU memory address
 0106                                                   ; / i  tmp2 = Number of bytes to copy
 0107               
-0108 7444 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0108 744E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
 0109                       ;------------------------------------------------------
 0110                       ; Set length of new string
 0111                       ;------------------------------------------------------
-0112 7446 C120  34         mov   @parm2,tmp0           ; Get requested length
-     7448 A002     
-0113 744A 0A84  56         sla   tmp0,8                ; Left align
-0114 744C C160  34         mov   @parm4,tmp1           ; Get pointer to buffer
-     744E A006     
-0115 7450 D544  30         movb  tmp0,*tmp1            ; Set new length of string
-0116 7452 A147  18         a     tmp3,tmp1             ; \ Skip to end of string
-0117 7454 0585  14         inc   tmp1                  ; /
+0112 7450 C120  34         mov   @parm2,tmp0           ; Get requested length
+     7452 A002     
+0113 7454 0A84  56         sla   tmp0,8                ; Left align
+0114 7456 C160  34         mov   @parm4,tmp1           ; Get pointer to buffer
+     7458 A006     
+0115 745A D544  30         movb  tmp0,*tmp1            ; Set new length of string
+0116 745C A147  18         a     tmp3,tmp1             ; \ Skip to end of string
+0117 745E 0585  14         inc   tmp1                  ; /
 0118                       ;------------------------------------------------------
 0119                       ; Prepare for padding string
 0120                       ;------------------------------------------------------
-0121 7456 C1A0  34         mov   @parm2,tmp2           ; \ Get number of bytes to fill
-     7458 A002     
-0122 745A 6187  18         s     tmp3,tmp2             ; |
-0123 745C 0586  14         inc   tmp2                  ; /
+0121 7460 C1A0  34         mov   @parm2,tmp2           ; \ Get number of bytes to fill
+     7462 A002     
+0122 7464 6187  18         s     tmp3,tmp2             ; |
+0123 7466 0586  14         inc   tmp2                  ; /
 0124               
-0125 745E C120  34         mov   @parm3,tmp0           ; Get byte to padd
-     7460 A004     
-0126 7462 0A84  56         sla   tmp0,8                ; Left align
+0125 7468 C120  34         mov   @parm3,tmp0           ; Get byte to padd
+     746A A004     
+0126 746C 0A84  56         sla   tmp0,8                ; Left align
 0127                       ;------------------------------------------------------
 0128                       ; Right-pad string to destination length
 0129                       ;------------------------------------------------------
 0130               tv.pad.string.loop:
-0131 7464 DD44  32         movb  tmp0,*tmp1+           ; Pad character
-0132 7466 0606  14         dec   tmp2                  ; Update loop counter
-0133 7468 15FD  14         jgt   tv.pad.string.loop    ; Next character
+0131 746E DD44  32         movb  tmp0,*tmp1+           ; Pad character
+0132 7470 0606  14         dec   tmp2                  ; Update loop counter
+0133 7472 15FD  14         jgt   tv.pad.string.loop    ; Next character
 0134               
-0135 746A C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
-     746C A006     
-     746E A010     
-0136 7470 1004  14         jmp   tv.pad.string.exit    ; Exit
+0135 7474 C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
+     7476 A006     
+     7478 A010     
+0136 747A 1004  14         jmp   tv.pad.string.exit    ; Exit
 0137                       ;-----------------------------------------------------------------------
 0138                       ; CPU crash
 0139                       ;-----------------------------------------------------------------------
 0140               tv.pad.string.panic:
-0141 7472 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7474 FFCE     
-0142 7476 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7478 2026     
+0141 747C C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     747E FFCE     
+0142 7480 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     7482 2026     
 0143                       ;------------------------------------------------------
 0144                       ; Exit
 0145                       ;------------------------------------------------------
 0146               tv.pad.string.exit:
-0147 747A C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0148 747C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0149 747E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0150 7480 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0151 7482 C2F9  30         mov   *stack+,r11           ; Pop r11
-0152 7484 045B  20         b     *r11                  ; Return to caller
+0147 7484 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0148 7486 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0149 7488 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0150 748A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0151 748C C2F9  30         mov   *stack+,r11           ; Pop r11
+0152 748E 045B  20         b     *r11                  ; Return to caller
 0153               
 0154               
 0155               ***************************************************************
@@ -6908,15 +6919,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0171                       ;-------------------------------------------------------
 0172                       ; Reset/lock F18a
 0173                       ;-------------------------------------------------------
-0174 7486 06A0  32         bl    @f18rst               ; Reset and lock the F18A
-     7488 27B0     
+0174 7490 06A0  32         bl    @f18rst               ; Reset and lock the F18A
+     7492 27B0     
 0175                       ;-------------------------------------------------------
 0176                       ; Activate bank 0 and exit
 0177                       ;-------------------------------------------------------
-0178 748A 04E0  34         clr   @bank0.rom            ; Activate bank 0
-     748C 6000     
-0179 748E 0420  54         blwp  @0                    ; Reset to monitor
-     7490 0000     
+0178 7494 04E0  34         clr   @bank0.rom            ; Activate bank 0
+     7496 6000     
+0179 7498 0420  54         blwp  @0                    ; Reset to monitor
+     749A 0000     
                    < ram.resident.asm
 0015                       copy  "mem.asm"                ; Memory Management (SAMS)
      **** ****     > mem.asm
@@ -6936,34 +6947,37 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014               * none
 0015               ***************************************************************
 0016               mem.sams.layout:
-0017 7492 0649  14         dect  stack
-0018 7494 C64B  30         mov   r11,*stack            ; Save return address
+0017 749C 0649  14         dect  stack
+0018 749E C64B  30         mov   r11,*stack            ; Save return address
 0019                       ;------------------------------------------------------
 0020                       ; Set SAMS standard layout
 0021                       ;------------------------------------------------------
-0022 7496 06A0  32         bl    @sams.layout
-     7498 25F6     
-0023 749A 349A                   data mem.sams.layout.data
+0022 74A0 06A0  32         bl    @sams.layout
+     74A2 25F6     
+0023 74A4 34A4                   data mem.sams.layout.data
 0024               
-0025 749C 06A0  32         bl    @sams.layout.copy
-     749E 265A     
-0026 74A0 A200                   data tv.sams.2000     ; Get SAMS windows
+0025 74A6 06A0  32         bl    @sams.layout.copy
+     74A8 265A     
+0026 74AA A200                   data tv.sams.2000     ; Get SAMS windows
 0027               
-0028 74A2 C820  54         mov   @tv.sams.c000,@edb.sams.page
-     74A4 A208     
-     74A6 A516     
-0029 74A8 C820  54         mov   @edb.sams.page,@edb.sams.hipage
-     74AA A516     
-     74AC A518     
+0028 74AC C820  54         mov   @tv.sams.c000,@edb.sams.page
+     74AE A208     
+     74B0 A516     
+0029 74B2 C820  54         mov   @edb.sams.page,@edb.sams.hipage
+     74B4 A516     
+     74B6 A518     
 0030                                                   ; Track editor buffer SAMS page
 0031                       ;------------------------------------------------------
 0032                       ; Exit
 0033                       ;------------------------------------------------------
 0034               mem.sams.layout.exit:
-0035 74AE C2F9  30         mov   *stack+,r11           ; Pop r11
-0036 74B0 045B  20         b     *r11                  ; Return to caller
+0035 74B8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0036 74BA 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0016                       copy  "data.constants.asm"     ; Data Constants
+0016                       ;------------------------------------------------------
+0017                       ; Program data
+0018                       ;------------------------------------------------------
+0019                       copy  "data.constants.asm"     ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -6997,22 +7011,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030               * ; VDP#7 Set foreground/background color
 0031               ***************************************************************
 0032               stevie.80x30:
-0033 74B2 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
-     74B4 003F     
-     74B6 0243     
-     74B8 05F4     
-     74BA 0050     
+0033 74BC 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
+     74BE 003F     
+     74C0 0243     
+     74C2 05F4     
+     74C4 0050     
 0034               
 0035               
 0036               ***************************************************************
 0037               * TI Basic mode (32 columns/24 rows)
 0038               *--------------------------------------------------------------
 0039               tibasic.32x24:
-0040 74BC 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     74BE 000C     
-     74C0 0006     
-     74C2 0007     
-     74C4 0020     
+0040 74C6 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     74C8 000C     
+     74CA 0006     
+     74CC 0007     
+     74CE 0020     
 0041               *
 0042               * ; VDP#0 Control bits
 0043               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -7039,11 +7053,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0064               * TI Basic mode (32 columns/30 rows) - F18A
 0065               *--------------------------------------------------------------
 0066               tibasic.32x30:
-0067 74C6 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     74C8 000C     
-     74CA 0006     
-     74CC 0007     
-     74CE 0020     
+0067 74D0 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     74D2 000C     
+     74D4 0006     
+     74D6 0007     
+     74D8 0020     
 0068               *
 0069               * ; VDP#0 Control bits
 0070               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -7066,84 +7080,84 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0087               
 0088               romsat:
 0089                                                   ; YX, initial shape and color
-0090 74D0 0000             data  >0000,>0001           ; Cursor
-     74D2 0001     
-0091 74D4 0000             data  >0000,>0101           ; Current line indicator     <
-     74D6 0101     
-0092 74D8 0820             data  >0820,>0201           ; Current column indicator   v
-     74DA 0201     
+0090 74DA 0000             data  >0000,>0001           ; Cursor
+     74DC 0001     
+0091 74DE 0000             data  >0000,>0101           ; Current line indicator     <
+     74E0 0101     
+0092 74E2 0820             data  >0820,>0201           ; Current column indicator   v
+     74E4 0201     
 0093               nosprite:
-0094 74DC D000             data  >d000                 ; End-of-Sprites list
+0094 74E6 D000             data  >d000                 ; End-of-Sprites list
 0095               
 0096               
 0097               ***************************************************************
 0098               * SAMS page layout table for Stevie (16 words)
 0099               *--------------------------------------------------------------
 0100               mem.sams.layout.data:
-0101 74DE 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     74E0 0002     
-0102 74E2 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     74E4 0003     
-0103 74E6 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     74E8 000A     
-0104 74EA B000             data  >b000,>0020           ; >b000-bfff, SAMS page >20
-     74EC 0020     
+0101 74E8 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     74EA 0002     
+0102 74EC 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     74EE 0003     
+0103 74F0 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     74F2 000A     
+0104 74F4 B000             data  >b000,>0020           ; >b000-bfff, SAMS page >20
+     74F6 0020     
 0105                                                   ;   Index can allocate
 0106                                                   ;   pages >20 to >3f.
-0107 74EE C000             data  >c000,>0040           ; >c000-cfff, SAMS page >40
-     74F0 0040     
+0107 74F8 C000             data  >c000,>0040           ; >c000-cfff, SAMS page >40
+     74FA 0040     
 0108                                                   ;   Editor buffer can allocate
 0109                                                   ;   pages >40 to >ff.
-0110 74F2 D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-     74F4 000D     
-0111 74F6 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
-     74F8 000E     
-0112 74FA F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-     74FC 000F     
+0110 74FC D000             data  >d000,>000d           ; >d000-dfff, SAMS page >0d
+     74FE 000D     
+0111 7500 E000             data  >e000,>000e           ; >e000-efff, SAMS page >0e
+     7502 000E     
+0112 7504 F000             data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+     7506 000F     
 0113               
 0114               
 0115               ***************************************************************
 0116               * SAMS page layout table for calling external progam (16 words)
 0117               *--------------------------------------------------------------
 0118               mem.sams.external:
-0119 74FE 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     7500 0002     
-0120 7502 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     7504 0003     
-0121 7506 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     7508 000A     
-0122 750A B000             data  >b000,>0030           ; >b000-bfff, SAMS page >30
-     750C 0030     
-0123 750E C000             data  >c000,>0031           ; >c000-cfff, SAMS page >31
-     7510 0031     
-0124 7512 D000             data  >d000,>0032           ; >d000-dfff, SAMS page >32
-     7514 0032     
-0125 7516 E000             data  >e000,>0033           ; >e000-efff, SAMS page >33
-     7518 0033     
-0126 751A F000             data  >f000,>0034           ; >f000-ffff, SAMS page >34
-     751C 0034     
+0119 7508 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     750A 0002     
+0120 750C 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     750E 0003     
+0121 7510 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     7512 000A     
+0122 7514 B000             data  >b000,>0030           ; >b000-bfff, SAMS page >30
+     7516 0030     
+0123 7518 C000             data  >c000,>0031           ; >c000-cfff, SAMS page >31
+     751A 0031     
+0124 751C D000             data  >d000,>0032           ; >d000-dfff, SAMS page >32
+     751E 0032     
+0125 7520 E000             data  >e000,>0033           ; >e000-efff, SAMS page >33
+     7522 0033     
+0126 7524 F000             data  >f000,>0034           ; >f000-ffff, SAMS page >34
+     7526 0034     
 0127               
 0128               
 0129               ***************************************************************
 0130               * SAMS page layout table for TI Basic (16 words)
 0131               *--------------------------------------------------------------
 0132               mem.sams.tibasic:
-0133 751E 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
-     7520 0002     
-0134 7522 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
-     7524 0003     
-0135 7526 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
-     7528 000A     
-0136 752A B000             data  >b000,>0004           ; >b000-bfff, SAMS page >04
-     752C 0004     
-0137 752E C000             data  >c000,>0005           ; >c000-cfff, SAMS page >05
-     7530 0005     
-0138 7532 D000             data  >d000,>0006           ; >d000-dfff, SAMS page >06
-     7534 0006     
-0139 7536 E000             data  >e000,>0007           ; >e000-efff, SAMS page >07
-     7538 0007     
-0140 753A F000             data  >f000,>0008           ; >f000-ffff, SAMS page >08
-     753C 0008     
+0133 7528 2000             data  >2000,>0002           ; >2000-2fff, SAMS page >02
+     752A 0002     
+0134 752C 3000             data  >3000,>0003           ; >3000-3fff, SAMS page >03
+     752E 0003     
+0135 7530 A000             data  >a000,>000a           ; >a000-afff, SAMS page >0a
+     7532 000A     
+0136 7534 B000             data  >b000,>0004           ; >b000-bfff, SAMS page >04
+     7536 0004     
+0137 7538 C000             data  >c000,>0005           ; >c000-cfff, SAMS page >05
+     753A 0005     
+0138 753C D000             data  >d000,>0006           ; >d000-dfff, SAMS page >06
+     753E 0006     
+0139 7540 E000             data  >e000,>0007           ; >e000-efff, SAMS page >07
+     7542 0007     
+0140 7544 F000             data  >f000,>0008           ; >f000-ffff, SAMS page >08
+     7546 0008     
 0141               
 0142               
 0143               
@@ -7197,62 +7211,62 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0191               tv.colorscheme.table:
 0192                       ;                             ; #
 0193                       ;      ABCD  EFGH  IJKL  MNOP ; -
-0194 753E F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
-     7540 F171     
-     7542 1B1F     
-     7544 71B1     
-0195 7546 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
-     7548 F0FF     
-     754A 1F1A     
-     754C F1FF     
-0196 754E 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
-     7550 F0FF     
-     7552 1F12     
-     7554 F1F6     
-0197 7556 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
-     7558 1E11     
-     755A 1A17     
-     755C 1E11     
-0198 755E E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
-     7560 E1FF     
-     7562 1F1E     
-     7564 E1FF     
-0199 7566 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
-     7568 1016     
-     756A 1B71     
-     756C 1711     
-0200 756E 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
-     7570 1011     
-     7572 F1F1     
-     7574 1F11     
-0201 7576 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
-     7578 A1FF     
-     757A 1F1F     
-     757C F11F     
-0202 757E 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
-     7580 12FF     
-     7582 1B12     
-     7584 12FF     
-0203 7586 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
-     7588 E1FF     
-     758A 1B1F     
-     758C F131     
+0194 7548 F417             data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
+     754A F171     
+     754C 1B1F     
+     754E 71B1     
+0195 7550 A11A             data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
+     7552 F0FF     
+     7554 1F1A     
+     7556 F1FF     
+0196 7558 2112             data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
+     755A F0FF     
+     755C 1F12     
+     755E F1F6     
+0197 7560 F41F             data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue
+     7562 1E11     
+     7564 1A17     
+     7566 1E11     
+0198 7568 E11E             data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
+     756A E1FF     
+     756C 1F1E     
+     756E E1FF     
+0199 7570 1771             data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
+     7572 1016     
+     7574 1B71     
+     7576 1711     
+0200 7578 1FF1             data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
+     757A 1011     
+     757C F1F1     
+     757E 1F11     
+0201 7580 1AF1             data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
+     7582 A1FF     
+     7584 1F1F     
+     7586 F11F     
+0202 7588 21F0             data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
+     758A 12FF     
+     758C 1B12     
+     758E 12FF     
+0203 7590 F5F1             data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
+     7592 E1FF     
+     7594 1B1F     
+     7596 F131     
 0204                       even
 0205               
 0206               tv.tabs.table:
-0207 758E 0007             byte  0,7,12,25               ; \   Default tab positions as used
-     7590 0C19     
-0208 7592 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
-     7594 3B4F     
-0209 7596 FF00             byte  >ff,0,0,0               ; |
-     7598 0000     
-0210 759A 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
-     759C 0000     
-0211 759E 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
-     75A0 0000     
+0207 7598 0007             byte  0,7,12,25               ; \   Default tab positions as used
+     759A 0C19     
+0208 759C 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+     759E 3B4F     
+0209 75A0 FF00             byte  >ff,0,0,0               ; |
+     75A2 0000     
+0210 75A4 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+     75A6 0000     
+0211 75A8 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+     75AA 0000     
 0212                       even
                    < ram.resident.asm
-0017                       copy  "data.strings.asm"       ; Data segment - Strings
+0020                       copy  "data.strings.asm"       ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -7262,476 +7276,522 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               ***************************************************************
 0007               
 0008               txt.delim
-0009 75A2 01               byte  1
-0010 75A3   2C             text  ','
+0009 75AC 01               byte  1
+0010 75AD   2C             text  ','
 0011                       even
 0012               
 0013               txt.bottom
-0014 75A4 05               byte  5
-0015 75A5   20             text  '  BOT'
-     75A6 2042     
-     75A8 4F54     
+0014 75AE 05               byte  5
+0015 75AF   20             text  '  BOT'
+     75B0 2042     
+     75B2 4F54     
 0016                       even
 0017               
 0018               txt.ovrwrite
-0019 75AA 03               byte  3
-0020 75AB   4F             text  'OVR'
-     75AC 5652     
+0019 75B4 03               byte  3
+0020 75B5   4F             text  'OVR'
+     75B6 5652     
 0021                       even
 0022               
 0023               txt.insert
-0024 75AE 03               byte  3
-0025 75AF   49             text  'INS'
-     75B0 4E53     
+0024 75B8 03               byte  3
+0025 75B9   49             text  'INS'
+     75BA 4E53     
 0026                       even
 0027               
 0028               txt.star
-0029 75B2 01               byte  1
-0030 75B3   2A             text  '*'
+0029 75BC 01               byte  1
+0030 75BD   2A             text  '*'
 0031                       even
 0032               
 0033               txt.loading
-0034 75B4 0A               byte  10
-0035 75B5   4C             text  'Loading...'
-     75B6 6F61     
-     75B8 6469     
-     75BA 6E67     
-     75BC 2E2E     
-     75BE 2E       
+0034 75BE 0A               byte  10
+0035 75BF   4C             text  'Loading...'
+     75C0 6F61     
+     75C2 6469     
+     75C4 6E67     
+     75C6 2E2E     
+     75C8 2E       
 0036                       even
 0037               
 0038               txt.saving
-0039 75C0 0A               byte  10
-0040 75C1   53             text  'Saving....'
-     75C2 6176     
-     75C4 696E     
-     75C6 672E     
-     75C8 2E2E     
-     75CA 2E       
+0039 75CA 0A               byte  10
+0040 75CB   53             text  'Saving....'
+     75CC 6176     
+     75CE 696E     
+     75D0 672E     
+     75D2 2E2E     
+     75D4 2E       
 0041                       even
 0042               
-0043               txt.block.del
-0044 75CC 12               byte  18
-0045 75CD   44             text  'Deleting block....'
-     75CE 656C     
-     75D0 6574     
-     75D2 696E     
-     75D4 6720     
-     75D6 626C     
-     75D8 6F63     
-     75DA 6B2E     
-     75DC 2E2E     
-     75DE 2E       
+0043               txt.printing
+0044 75D6 0D               byte  13
+0045 75D7   50             text  'Printing.....'
+     75D8 7269     
+     75DA 6E74     
+     75DC 696E     
+     75DE 672E     
+     75E0 2E2E     
+     75E2 2E2E     
 0046                       even
 0047               
-0048               txt.block.copy
-0049 75E0 11               byte  17
-0050 75E1   43             text  'Copying block....'
-     75E2 6F70     
-     75E4 7969     
-     75E6 6E67     
-     75E8 2062     
-     75EA 6C6F     
-     75EC 636B     
-     75EE 2E2E     
-     75F0 2E2E     
+0048               txt.block.del
+0049 75E4 12               byte  18
+0050 75E5   44             text  'Deleting block....'
+     75E6 656C     
+     75E8 6574     
+     75EA 696E     
+     75EC 6720     
+     75EE 626C     
+     75F0 6F63     
+     75F2 6B2E     
+     75F4 2E2E     
+     75F6 2E       
 0051                       even
 0052               
-0053               txt.block.move
-0054 75F2 10               byte  16
-0055 75F3   4D             text  'Moving block....'
-     75F4 6F76     
-     75F6 696E     
-     75F8 6720     
-     75FA 626C     
-     75FC 6F63     
-     75FE 6B2E     
-     7600 2E2E     
-     7602 2E       
+0053               txt.block.copy
+0054 75F8 11               byte  17
+0055 75F9   43             text  'Copying block....'
+     75FA 6F70     
+     75FC 7969     
+     75FE 6E67     
+     7600 2062     
+     7602 6C6F     
+     7604 636B     
+     7606 2E2E     
+     7608 2E2E     
 0056                       even
 0057               
-0058               txt.block.save
-0059 7604 18               byte  24
-0060 7605   53             text  'Saving block to file....'
-     7606 6176     
-     7608 696E     
-     760A 6720     
-     760C 626C     
-     760E 6F63     
-     7610 6B20     
-     7612 746F     
-     7614 2066     
-     7616 696C     
-     7618 652E     
-     761A 2E2E     
-     761C 2E       
+0058               txt.block.move
+0059 760A 10               byte  16
+0060 760B   4D             text  'Moving block....'
+     760C 6F76     
+     760E 696E     
+     7610 6720     
+     7612 626C     
+     7614 6F63     
+     7616 6B2E     
+     7618 2E2E     
+     761A 2E       
 0061                       even
 0062               
-0063               txt.clearmem
-0064 761E 13               byte  19
-0065 761F   43             text  "Clearing memory...."
-     7620 6C65     
-     7622 6172     
-     7624 696E     
-     7626 6720     
-     7628 6D65     
-     762A 6D6F     
-     762C 7279     
-     762E 2E2E     
-     7630 2E2E     
+0063               txt.block.save
+0064 761C 18               byte  24
+0065 761D   53             text  'Saving block to file....'
+     761E 6176     
+     7620 696E     
+     7622 6720     
+     7624 626C     
+     7626 6F63     
+     7628 6B20     
+     762A 746F     
+     762C 2066     
+     762E 696C     
+     7630 652E     
+     7632 2E2E     
+     7634 2E       
 0066                       even
 0067               
-0068               txt.fastmode
-0069 7632 08               byte  8
-0070 7633   46             text  'Fastmode'
-     7634 6173     
-     7636 746D     
-     7638 6F64     
-     763A 65       
+0068               txt.block.clip
+0069 7636 18               byte  24
+0070 7637   43             text  'Copying to clipboard....'
+     7638 6F70     
+     763A 7969     
+     763C 6E67     
+     763E 2074     
+     7640 6F20     
+     7642 636C     
+     7644 6970     
+     7646 626F     
+     7648 6172     
+     764A 642E     
+     764C 2E2E     
+     764E 2E       
 0071                       even
 0072               
-0073               txt.kb
-0074 763C 02               byte  2
-0075 763D   6B             text  'kb'
-     763E 62       
+0073               txt.block.print
+0074 7650 12               byte  18
+0075 7651   50             text  'Printing block....'
+     7652 7269     
+     7654 6E74     
+     7656 696E     
+     7658 6720     
+     765A 626C     
+     765C 6F63     
+     765E 6B2E     
+     7660 2E2E     
+     7662 2E       
 0076                       even
 0077               
-0078               txt.lines
-0079 7640 05               byte  5
-0080 7641   4C             text  'Lines'
-     7642 696E     
-     7644 6573     
+0078               txt.clearmem
+0079 7664 13               byte  19
+0080 7665   43             text  'Clearing memory....'
+     7666 6C65     
+     7668 6172     
+     766A 696E     
+     766C 6720     
+     766E 6D65     
+     7670 6D6F     
+     7672 7279     
+     7674 2E2E     
+     7676 2E2E     
 0081                       even
 0082               
-0083               txt.newfile
-0084 7646 0A               byte  10
-0085 7647   5B             text  '[New file]'
-     7648 4E65     
-     764A 7720     
-     764C 6669     
-     764E 6C65     
-     7650 5D       
+0083               txt.fastmode
+0084 7678 08               byte  8
+0085 7679   46             text  'Fastmode'
+     767A 6173     
+     767C 746D     
+     767E 6F64     
+     7680 65       
 0086                       even
 0087               
-0088               txt.filetype.dv80
-0089 7652 04               byte  4
-0090 7653   44             text  'DV80'
-     7654 5638     
-     7656 30       
+0088               txt.kb
+0089 7682 02               byte  2
+0090 7683   6B             text  'kb'
+     7684 62       
 0091                       even
 0092               
-0093               txt.m1
-0094 7658 03               byte  3
-0095 7659   4D             text  'M1='
-     765A 313D     
+0093               txt.lines
+0094 7686 05               byte  5
+0095 7687   4C             text  'Lines'
+     7688 696E     
+     768A 6573     
 0096                       even
 0097               
-0098               txt.m2
-0099 765C 03               byte  3
-0100 765D   4D             text  'M2='
-     765E 323D     
+0098               txt.newfile
+0099 768C 0A               byte  10
+0100 768D   5B             text  '[New file]'
+     768E 4E65     
+     7690 7720     
+     7692 6669     
+     7694 6C65     
+     7696 5D       
 0101                       even
 0102               
-0103               txt.keys.default
-0104 7660 07               byte  7
-0105 7661   46             text  'F9-Menu'
-     7662 392D     
-     7664 4D65     
-     7666 6E75     
+0103               txt.filetype.dv80
+0104 7698 04               byte  4
+0105 7699   44             text  'DV80'
+     769A 5638     
+     769C 30       
 0106                       even
 0107               
-0108               txt.keys.block
-0109 7668 33               byte  51
-0110 7669   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^[0-9]Clipboard'
-     766A 392D     
-     766C 4261     
-     766E 636B     
-     7670 2020     
-     7672 5E43     
-     7674 6F70     
-     7676 7920     
-     7678 205E     
-     767A 4D6F     
-     767C 7665     
-     767E 2020     
-     7680 5E44     
-     7682 656C     
-     7684 2020     
-     7686 5E53     
-     7688 6176     
-     768A 6520     
-     768C 205E     
-     768E 5B30     
-     7690 2D39     
-     7692 5D43     
-     7694 6C69     
-     7696 7062     
-     7698 6F61     
-     769A 7264     
+0108               txt.m1
+0109 769E 03               byte  3
+0110 769F   4D             text  'M1='
+     76A0 313D     
 0111                       even
 0112               
-0113 769C 2E2E     txt.ruler          text    '.........'
-     769E 2E2E     
-     76A0 2E2E     
-     76A2 2E2E     
-     76A4 2E       
-0114 76A5   12                        byte    18
-0115 76A6 2E2E                        text    '.........'
-     76A8 2E2E     
-     76AA 2E2E     
-     76AC 2E2E     
-     76AE 2E       
-0116 76AF   13                        byte    19
-0117 76B0 2E2E                        text    '.........'
-     76B2 2E2E     
-     76B4 2E2E     
-     76B6 2E2E     
-     76B8 2E       
-0118 76B9   14                        byte    20
-0119 76BA 2E2E                        text    '.........'
-     76BC 2E2E     
-     76BE 2E2E     
-     76C0 2E2E     
-     76C2 2E       
-0120 76C3   15                        byte    21
-0121 76C4 2E2E                        text    '.........'
-     76C6 2E2E     
-     76C8 2E2E     
-     76CA 2E2E     
-     76CC 2E       
-0122 76CD   16                        byte    22
-0123 76CE 2E2E                        text    '.........'
-     76D0 2E2E     
-     76D2 2E2E     
-     76D4 2E2E     
-     76D6 2E       
-0124 76D7   17                        byte    23
-0125 76D8 2E2E                        text    '.........'
-     76DA 2E2E     
-     76DC 2E2E     
-     76DE 2E2E     
-     76E0 2E       
-0126 76E1   18                        byte    24
-0127 76E2 2E2E                        text    '.........'
-     76E4 2E2E     
-     76E6 2E2E     
+0113               txt.m2
+0114 76A2 03               byte  3
+0115 76A3   4D             text  'M2='
+     76A4 323D     
+0116                       even
+0117               
+0118               txt.keys.default
+0119 76A6 07               byte  7
+0120 76A7   46             text  'F9-Menu'
+     76A8 392D     
+     76AA 4D65     
+     76AC 6E75     
+0121                       even
+0122               
+0123               txt.keys.block
+0124 76AE 36               byte  54
+0125 76AF   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
+     76B0 392D     
+     76B2 4261     
+     76B4 636B     
+     76B6 2020     
+     76B8 5E43     
+     76BA 6F70     
+     76BC 7920     
+     76BE 205E     
+     76C0 4D6F     
+     76C2 7665     
+     76C4 2020     
+     76C6 5E44     
+     76C8 656C     
+     76CA 2020     
+     76CC 5E53     
+     76CE 6176     
+     76D0 6520     
+     76D2 205E     
+     76D4 5072     
+     76D6 696E     
+     76D8 7420     
+     76DA 205E     
+     76DC 5B31     
+     76DE 2D35     
+     76E0 5D43     
+     76E2 6C69     
+     76E4 70       
+0126                       even
+0127               
+0128 76E6 2E2E     txt.ruler          text    '.........'
      76E8 2E2E     
-     76EA 2E       
-0128 76EB   19                        byte    25
-0129                                  even
-0130 76EC 020E     txt.alpha.down     data >020e,>0f00
-     76EE 0F00     
-0131 76F0 0110     txt.vertline       data >0110
-0132 76F2 011C     txt.keymarker      byte 1,28
-0133               
-0134               txt.clipboard
-0135 76F4 09               byte  9
-0136 76F5   44             text  'DSK8.CLIP'
-     76F6 534B     
-     76F8 382E     
-     76FA 434C     
-     76FC 4950     
-0137                       even
-0138               
-0139               txt.ws1
-0140 76FE 01               byte  1
-0141 76FF   20             text  ' '
-0142                       even
-0143               
-0144               txt.ws2
-0145 7700 02               byte  2
-0146 7701   20             text  '  '
-     7702 20       
-0147                       even
+     76EA 2E2E     
+     76EC 2E2E     
+     76EE 2E       
+0129 76EF   12                        byte    18
+0130 76F0 2E2E                        text    '.........'
+     76F2 2E2E     
+     76F4 2E2E     
+     76F6 2E2E     
+     76F8 2E       
+0131 76F9   13                        byte    19
+0132 76FA 2E2E                        text    '.........'
+     76FC 2E2E     
+     76FE 2E2E     
+     7700 2E2E     
+     7702 2E       
+0133 7703   14                        byte    20
+0134 7704 2E2E                        text    '.........'
+     7706 2E2E     
+     7708 2E2E     
+     770A 2E2E     
+     770C 2E       
+0135 770D   15                        byte    21
+0136 770E 2E2E                        text    '.........'
+     7710 2E2E     
+     7712 2E2E     
+     7714 2E2E     
+     7716 2E       
+0137 7717   16                        byte    22
+0138 7718 2E2E                        text    '.........'
+     771A 2E2E     
+     771C 2E2E     
+     771E 2E2E     
+     7720 2E       
+0139 7721   17                        byte    23
+0140 7722 2E2E                        text    '.........'
+     7724 2E2E     
+     7726 2E2E     
+     7728 2E2E     
+     772A 2E       
+0141 772B   18                        byte    24
+0142 772C 2E2E                        text    '.........'
+     772E 2E2E     
+     7730 2E2E     
+     7732 2E2E     
+     7734 2E       
+0143 7735   19                        byte    25
+0144                                  even
+0145 7736 020E     txt.alpha.down     data >020e,>0f00
+     7738 0F00     
+0146 773A 0110     txt.vertline       data >0110
+0147 773C 011C     txt.keymarker      byte 1,28
 0148               
-0149               txt.ws3
-0150 7704 03               byte  3
-0151 7705   20             text  '   '
-     7706 2020     
+0149               txt.ws1
+0150 773E 01               byte  1
+0151 773F   20             text  ' '
 0152                       even
 0153               
-0154               txt.ws4
-0155 7708 04               byte  4
-0156 7709   20             text  '    '
-     770A 2020     
-     770C 20       
+0154               txt.ws2
+0155 7740 02               byte  2
+0156 7741   20             text  '  '
+     7742 20       
 0157                       even
 0158               
-0159               txt.ws5
-0160 770E 05               byte  5
-0161 770F   20             text  '     '
-     7710 2020     
-     7712 2020     
+0159               txt.ws3
+0160 7744 03               byte  3
+0161 7745   20             text  '   '
+     7746 2020     
 0162                       even
 0163               
-0164      36C4     txt.filetype.none  equ txt.ws4
-0165               
-0166               
-0167               ;--------------------------------------------------------------
-0168               ; Strings for error line pane
-0169               ;--------------------------------------------------------------
-0170               txt.ioerr.load
-0171 7714 20               byte  32
-0172 7715   49             text  'I/O error. Failed loading file: '
-     7716 2F4F     
-     7718 2065     
-     771A 7272     
-     771C 6F72     
-     771E 2E20     
-     7720 4661     
-     7722 696C     
-     7724 6564     
-     7726 206C     
-     7728 6F61     
-     772A 6469     
-     772C 6E67     
-     772E 2066     
-     7730 696C     
-     7732 653A     
-     7734 20       
-0173                       even
-0174               
-0175               txt.ioerr.save
-0176 7736 20               byte  32
-0177 7737   49             text  'I/O error. Failed saving file:  '
-     7738 2F4F     
-     773A 2065     
-     773C 7272     
-     773E 6F72     
-     7740 2E20     
-     7742 4661     
-     7744 696C     
-     7746 6564     
-     7748 2073     
-     774A 6176     
-     774C 696E     
-     774E 6720     
-     7750 6669     
-     7752 6C65     
-     7754 3A20     
-     7756 20       
-0178                       even
-0179               
-0180               txt.memfull.load
-0181 7758 40               byte  64
-0182 7759   49             text  'Index memory full. Could not fully load file into editor buffer.'
-     775A 6E64     
-     775C 6578     
-     775E 206D     
-     7760 656D     
-     7762 6F72     
-     7764 7920     
-     7766 6675     
-     7768 6C6C     
-     776A 2E20     
-     776C 436F     
-     776E 756C     
-     7770 6420     
-     7772 6E6F     
-     7774 7420     
-     7776 6675     
-     7778 6C6C     
-     777A 7920     
-     777C 6C6F     
-     777E 6164     
-     7780 2066     
-     7782 696C     
-     7784 6520     
-     7786 696E     
-     7788 746F     
-     778A 2065     
-     778C 6469     
-     778E 746F     
-     7790 7220     
-     7792 6275     
-     7794 6666     
-     7796 6572     
-     7798 2E       
+0164               txt.ws4
+0165 7748 04               byte  4
+0166 7749   20             text  '    '
+     774A 2020     
+     774C 20       
+0167                       even
+0168               
+0169               txt.ws5
+0170 774E 05               byte  5
+0171 774F   20             text  '     '
+     7750 2020     
+     7752 2020     
+0172                       even
+0173               
+0174      3704     txt.filetype.none  equ txt.ws4
+0175               
+0176               
+0177               ;--------------------------------------------------------------
+0178               ; Strings for error line pane
+0179               ;--------------------------------------------------------------
+0180               txt.ioerr.load
+0181 7754 15               byte  21
+0182 7755   46             text  'Failed loading file: '
+     7756 6169     
+     7758 6C65     
+     775A 6420     
+     775C 6C6F     
+     775E 6164     
+     7760 696E     
+     7762 6720     
+     7764 6669     
+     7766 6C65     
+     7768 3A20     
 0183                       even
 0184               
-0185               txt.io.nofile
-0186 779A 21               byte  33
-0187 779B   49             text  'I/O error. No filename specified.'
-     779C 2F4F     
-     779E 2065     
-     77A0 7272     
-     77A2 6F72     
-     77A4 2E20     
-     77A6 4E6F     
-     77A8 2066     
-     77AA 696C     
-     77AC 656E     
-     77AE 616D     
-     77B0 6520     
-     77B2 7370     
-     77B4 6563     
-     77B6 6966     
-     77B8 6965     
-     77BA 642E     
+0185               txt.ioerr.save
+0186 776A 14               byte  20
+0187 776B   46             text  'Failed saving file: '
+     776C 6169     
+     776E 6C65     
+     7770 6420     
+     7772 7361     
+     7774 7669     
+     7776 6E67     
+     7778 2066     
+     777A 696C     
+     777C 653A     
+     777E 20       
 0188                       even
 0189               
-0190               txt.block.inside
-0191 77BC 34               byte  52
-0192 77BD   45             text  'Error. Copy/Move target must be outside block M1-M2.'
-     77BE 7272     
-     77C0 6F72     
-     77C2 2E20     
-     77C4 436F     
-     77C6 7079     
-     77C8 2F4D     
-     77CA 6F76     
-     77CC 6520     
-     77CE 7461     
-     77D0 7267     
-     77D2 6574     
-     77D4 206D     
-     77D6 7573     
-     77D8 7420     
-     77DA 6265     
-     77DC 206F     
-     77DE 7574     
-     77E0 7369     
-     77E2 6465     
-     77E4 2062     
-     77E6 6C6F     
-     77E8 636B     
-     77EA 204D     
-     77EC 312D     
-     77EE 4D32     
-     77F0 2E       
+0190               txt.ioerr.print
+0191 7780 15               byte  21
+0192 7781   46             text  'Failed printing file:'
+     7782 6169     
+     7784 6C65     
+     7786 6420     
+     7788 7072     
+     778A 696E     
+     778C 7469     
+     778E 6E67     
+     7790 2066     
+     7792 696C     
+     7794 653A     
 0193                       even
 0194               
-0195               
-0196               ;--------------------------------------------------------------
-0197               ; Strings for command buffer
-0198               ;--------------------------------------------------------------
-0199               txt.cmdb.prompt
-0200 77F2 01               byte  1
-0201 77F3   3E             text  '>'
-0202                       even
-0203               
-0204               txt.colorscheme
-0205 77F4 0D               byte  13
-0206 77F5   43             text  'Color scheme:'
-     77F6 6F6C     
-     77F8 6F72     
-     77FA 2073     
-     77FC 6368     
-     77FE 656D     
-     7800 653A     
-0207                       even
-0208               
+0195               txt.io.nofile
+0196 7796 16               byte  22
+0197 7797   4E             text  'No filename specified.'
+     7798 6F20     
+     779A 6669     
+     779C 6C65     
+     779E 6E61     
+     77A0 6D65     
+     77A2 2073     
+     77A4 7065     
+     77A6 6369     
+     77A8 6669     
+     77AA 6564     
+     77AC 2E       
+0198                       even
+0199               
+0200               txt.memfull.load
+0201 77AE 2D               byte  45
+0202 77AF   49             text  'Index full. File too large for editor buffer.'
+     77B0 6E64     
+     77B2 6578     
+     77B4 2066     
+     77B6 756C     
+     77B8 6C2E     
+     77BA 2046     
+     77BC 696C     
+     77BE 6520     
+     77C0 746F     
+     77C2 6F20     
+     77C4 6C61     
+     77C6 7267     
+     77C8 6520     
+     77CA 666F     
+     77CC 7220     
+     77CE 6564     
+     77D0 6974     
+     77D2 6F72     
+     77D4 2062     
+     77D6 7566     
+     77D8 6665     
+     77DA 722E     
+0203                       even
+0204               
+0205               txt.block.inside
+0206 77DC 2D               byte  45
+0207 77DD   43             text  'Copy/Move target must be outside M1-M2 range.'
+     77DE 6F70     
+     77E0 792F     
+     77E2 4D6F     
+     77E4 7665     
+     77E6 2074     
+     77E8 6172     
+     77EA 6765     
+     77EC 7420     
+     77EE 6D75     
+     77F0 7374     
+     77F2 2062     
+     77F4 6520     
+     77F6 6F75     
+     77F8 7473     
+     77FA 6964     
+     77FC 6520     
+     77FE 4D31     
+     7800 2D4D     
+     7802 3220     
+     7804 7261     
+     7806 6E67     
+     7808 652E     
+0208                       even
+0209               
+0210               
+0211               ;--------------------------------------------------------------
+0212               ; Strings for command buffer
+0213               ;--------------------------------------------------------------
+0214               txt.cmdb.prompt
+0215 780A 01               byte  1
+0216 780B   3E             text  '>'
+0217                       even
+0218               
+0219               txt.colorscheme
+0220 780C 0D               byte  13
+0221 780D   43             text  'Color scheme:'
+     780E 6F6C     
+     7810 6F72     
+     7812 2073     
+     7814 6368     
+     7816 656D     
+     7818 653A     
+0222                       even
+0223               
                    < ram.resident.asm
-                   < stevie_b1.asm.61843
+0021                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+     **** ****     > data.defaults.asm
+0001               * FILE......: data.defaults.asm
+0002               * Purpose...: Stevie Editor - data segment (default values)
+0003               
+0004               ***************************************************************
+0005               *                     Default values
+0006               ********|*****|*********************|**************************
+0007               def.printer.fname
+0008 781A 08               byte  8
+0009 781B   54             text  'TIPI.PIO'
+     781C 4950     
+     781E 492E     
+     7820 5049     
+     7822 4F       
+0010                       even
+0011               
+0012               def.clip.fname
+0013 7824 09               byte  9
+0014 7825   44             text  'DSK1.CLIP'
+     7826 534B     
+     7828 312E     
+     782A 434C     
+     782C 4950     
+0015                       even
+0016               
+                   < ram.resident.asm
+                   < stevie_b1.asm.91724
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
-0046 7802 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7804 6002     
+0046 782E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7830 6002     
 0047               
 0051               
-0052 7806 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     7808 6046     
+0052 7832 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     7834 6046     
 0053               ***************************************************************
 0054               * Step 3: Include main editor modules
 0055               ********|*****|*********************|**************************
@@ -7822,7 +7882,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0065                       ; Setup SAMS windows
 0066                       ;------------------------------------------------------
 0067 6084 06A0  32         bl    @mem.sams.layout      ; Initialize SAMS layout
-     6086 344E     
+     6086 3458     
 0068                       ;------------------------------------------------------
 0069                       ; Setup cursor, screen, etc.
 0070                       ;------------------------------------------------------
@@ -7833,29 +7893,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0073               
 0074 6090 06A0  32         bl    @cpym2m
      6092 24EE     
-0075 6094 348C                   data romsat,ramsat,14 ; Load sprite SAT
+0075 6094 3496                   data romsat,ramsat,14 ; Load sprite SAT
      6096 A1E0     
      6098 000E     
 0076               
 0077 609A C820  54         mov   @romsat+2,@tv.curshape
-     609C 348E     
+     609C 3498     
      609E A214     
 0078                                                   ; Save cursor shape & color
 0079               
 0080 60A0 06A0  32         bl    @vdp.patterns.dump    ; Load sprite and character patterns
-     60A2 7DD4     
+     60A2 7DA4     
 0081               *--------------------------------------------------------------
 0082               * Initialize
 0083               *--------------------------------------------------------------
 0084 60A4 06A0  32         bl    @tv.init              ; Initialize editor configuration
      60A6 3338     
 0085 60A8 06A0  32         bl    @tv.reset             ; Reset editor
-     60AA 3374     
+     60AA 337E     
 0086                       ;------------------------------------------------------
 0087                       ; Load colorscheme amd turn on screen
 0088                       ;------------------------------------------------------
 0089 60AC 06A0  32         bl    @pane.action.colorscheme.Load
-     60AE 764E     
+     60AE 761E     
 0090                                                   ; Load color scheme and turn on screen
 0091                       ;-------------------------------------------------------
 0092                       ; Setup editor tasks & hook
@@ -7878,24 +7938,24 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0105 60C6 06A0  32         bl    @mkslot
      60C8 2FA6     
 0106 60CA 0002                   data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
-     60CC 74E6     
+     60CC 74B6     
 0107 60CE 0102                   data >0102,task.vdp.copy.sat ; Task 1 - Update VDP cursor position
-     60D0 74F4     
+     60D0 74C4     
 0108 60D2 020F                   data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
-     60D4 7596     
+     60D4 7566     
 0109 60D6 0330                   data >0330,task.oneshot      ; Task 3 - One shot task
-     60D8 75C4     
+     60D8 7594     
 0110 60DA FFFF                   data eol
 0111               
 0121               
 0122               
 0123 60DC 06A0  32         bl    @mkhook
      60DE 2F92     
-0124 60E0 7490                   data hook.keyscan     ; Setup user hook
+0124 60E0 7460                   data hook.keyscan     ; Setup user hook
 0125               
 0126 60E2 0460  28         b     @tmgr                 ; Start timers and kthread
      60E4 2EDE     
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0063                       ;-----------------------------------------------------------------------
 0064                       ; Keyboard actions
 0065                       ;-----------------------------------------------------------------------
@@ -7941,14 +8001,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       ;-------------------------------------------------------
 0031               edkey.key.process.loadmap.editor:
 0032 610C 0206  20         li    tmp2,keymap_actions.editor
-     610E 7DE6     
+     610E 7DB6     
 0033 6110 1002  14         jmp   edkey.key.check.next
 0034                       ;-------------------------------------------------------
 0035                       ; Load CMDB keyboard map
 0036                       ;-------------------------------------------------------
 0037               edkey.key.process.loadmap.cmdb:
 0038 6112 0206  20         li    tmp2,keymap_actions.cmdb
-     6114 7EC0     
+     6114 7E7C     
 0039                       ;-------------------------------------------------------
 0040                       ; Iterate over keyboard map for matching action key
 0041                       ;-------------------------------------------------------
@@ -8054,7 +8114,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0124                       ; Add character to CMDB
 0125                       ;-------------------------------------------------------
 0126 6182 0460  28         b     @edkey.action.cmdb.char
-     6184 6904     
+     6184 68E6     
 0127                                                   ; Add character to CMDB buffer
 0128                       ;-------------------------------------------------------
 0129                       ; Crash
@@ -8069,8 +8129,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0136                       ;-------------------------------------------------------
 0137               edkey.key.process.exit:
 0138 618E 0460  28        b     @hook.keyscan.bounce   ; Back to editor main
-     6190 74DA     
-                   < stevie_b1.asm.61843
+     6190 74AA     
+                   < stevie_b1.asm.91724
 0067                                                   ; Process keyboard actions
 0068                       ;-----------------------------------------------------------------------
 0069                       ; Keyboard actions - Framebuffer (1)
@@ -8102,7 +8162,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018                       ; Exit
 0019                       ;-------------------------------------------------------
 0020 61A8 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     61AA 74DA     
+     61AA 74AA     
 0021               
 0022               
 0023               *---------------------------------------------------------------
@@ -8128,7 +8188,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0037                       ; Exit
 0038                       ;-------------------------------------------------------
 0039 61C4 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     61C6 74DA     
+     61C6 74AA     
 0040               
 0041               
 0042               *---------------------------------------------------------------
@@ -8136,12 +8196,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0044               *---------------------------------------------------------------
 0045               edkey.action.home:
 0046 61C8 06A0  32         bl    @fb.cursor.home       ; Move cursor to beginning of line
-     61CA 6C7A     
+     61CA 6C4A     
 0047                       ;-------------------------------------------------------
 0048                       ; Exit
 0049                       ;-------------------------------------------------------
 0050 61CC 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     61CE 74DA     
+     61CE 74AA     
 0051               
 0052               
 0053               *---------------------------------------------------------------
@@ -8165,13 +8225,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0066 61E6 06A0  32         bl    @xsetx                ; Set VDP cursor column position
      61E8 26FA     
 0067 61EA 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     61EC 6B7C     
+     61EC 6B4C     
 0068                       ;-------------------------------------------------------
 0069                       ; Exit
 0070                       ;-------------------------------------------------------
 0071 61EE 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     61F0 74DA     
-                   < stevie_b1.asm.61843
+     61F0 74AA     
+                   < stevie_b1.asm.91724
 0072                                                        ; Move left / right / home / end
 0073                       copy  "edkey.fb.mov.word.asm"    ; Move previous / next word
      **** ****     > edkey.fb.mov.word.asm
@@ -8252,9 +8312,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0065                       ;-------------------------------------------------------
 0066               edkey.action.pword.exit:
 0067 623C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     623E 6B7C     
+     623E 6B4C     
 0068 6240 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     6242 74DA     
+     6242 74AA     
 0069               
 0070               
 0071               
@@ -8349,12 +8409,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0148                       ;-------------------------------------------------------
 0149               edkey.action.nword.exit:
 0150 629C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     629E 6B7C     
+     629E 6B4C     
 0151 62A0 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     62A2 74DA     
+     62A2 74AA     
 0152               
 0153               
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0074                       copy  "edkey.fb.mov.updown.asm"  ; Move line up / down
      **** ****     > edkey.fb.mov.updown.asm
 0001               * FILE......: edkey.fb.mov.updown.asm
@@ -8365,13 +8425,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *---------------------------------------------------------------
 0007               edkey.action.up:
 0008 62A4 06A0  32         bl    @fb.cursor.up         ; Move cursor up
-     62A6 6BA4     
+     62A6 6B74     
 0009                       ;-------------------------------------------------------
 0010                       ; Exit
 0011                       ;-------------------------------------------------------
 0012               edkey.action.up.exit:
 0013 62A8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     62AA 74DA     
+     62AA 74AA     
 0014               
 0015               
 0016               
@@ -8380,14 +8440,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0019               *---------------------------------------------------------------
 0020               edkey.action.down:
 0021 62AC 06A0  32         bl    @fb.cursor.down       ; Move cursor down
-     62AE 6C02     
+     62AE 6BD2     
 0022                       ;-------------------------------------------------------
 0023                       ; Exit
 0024                       ;-------------------------------------------------------
 0025               edkey.action.down.exit:
 0026 62B0 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     62B2 74DA     
-                   < stevie_b1.asm.61843
+     62B2 74AA     
+                   < stevie_b1.asm.91724
 0075                       copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
      **** ****     > edkey.fb.mov.paging.asm
 0001               * FILE......: edkey.fb.mov.paging.asm
@@ -8407,7 +8467,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62BC 2022     
 0013 62BE 1604  14         jne   edkey.action.ppage.sanity
 0014 62C0 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     62C2 700A     
+     62C2 6FDA     
 0015 62C4 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      62C6 A30A     
 0016                       ;-------------------------------------------------------
@@ -8450,7 +8510,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0045                       ;-------------------------------------------------------
 0046               edkey.action.ppage.exit:
 0047 62EC 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     62EE 74DA     
+     62EE 74AA     
 0048               
 0049               
 0050               
@@ -8469,7 +8529,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62F8 2022     
 0061 62FA 1604  14         jne   edkey.action.npage.sanity
 0062 62FC 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     62FE 700A     
+     62FE 6FDA     
 0063 6300 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      6302 A30A     
 0064                       ;-------------------------------------------------------
@@ -8508,8 +8568,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0089                       ;-------------------------------------------------------
 0090               edkey.action.npage.exit:
 0091 6326 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6328 74DA     
-                   < stevie_b1.asm.61843
+     6328 74AA     
+                   < stevie_b1.asm.91724
 0076                       copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
      **** ****     > edkey.fb.mov.topbot.asm
 0001               * FILE......: edkey.fb.mov.topbot.asm
@@ -8527,7 +8587,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      632E 2022     
 0012 6330 1604  14         jne   edkey.action.top.refresh
 0013 6332 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6334 700A     
+     6334 6FDA     
 0014 6336 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      6338 A30A     
 0015                       ;-------------------------------------------------------
@@ -8556,7 +8616,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      634A 2022     
 0034 634C 1604  14         jne   edkey.action.topscr.refresh
 0035 634E 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6350 700A     
+     6350 6FDA     
 0036 6352 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      6354 A30A     
 0037               edkey.action.topscr.refresh:
@@ -8581,7 +8641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6364 2022     
 0052 6366 1604  14         jne   edkey.action.bot.refresh
 0053 6368 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     636A 700A     
+     636A 6FDA     
 0054 636C 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      636E A30A     
 0055                       ;-------------------------------------------------------
@@ -8610,7 +8670,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0071                       ;-------------------------------------------------------
 0072               edkey.action.bot.exit:
 0073 638C 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     638E 74DA     
+     638E 74AA     
 0074               
 0075               
 0076               
@@ -8628,7 +8688,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6398 2022     
 0087 639A 1604  14         jne   edkey.action.botscr.cursor
 0088 639C 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     639E 700A     
+     639E 6FDA     
 0089 63A0 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      63A2 A30A     
 0090                       ;-------------------------------------------------------
@@ -8667,10 +8727,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      63CC 832A     
 0115               
 0116 63CE 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     63D0 6B7C     
+     63D0 6B4C     
 0117               
 0118 63D2 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
-     63D4 7204     
+     63D4 71D4     
 0119                                                   ; | i  @fb.row        = Row in frame buffer
 0120                                                   ; / o  @fb.row.length = Length of row
 0121                       ;-------------------------------------------------------
@@ -8679,8 +8739,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0124               edkey.action.botscr.exit:
 0125 63D6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0126 63D8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     63DA 74DA     
-                   < stevie_b1.asm.61843
+     63DA 74AA     
+                   < stevie_b1.asm.91724
 0077                       copy  "edkey.fb.mov.goto.asm"    ; Goto line in editor buffer
      **** ****     > edkey.fb.mov.goto.asm
 0001               * FILE......: edkey.fb.mov.goto.asm
@@ -8708,7 +8768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      63DE A318     
 0023               
 0024 63E0 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     63E2 6D6C     
+     63E2 6D3C     
 0025                                                   ; | i  @parm1 = Line to start with
 0026                                                   ; /             (becomes @fb.topline)
 0027               
@@ -8719,15 +8779,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030 63EC 04E0  34         clr   @wyx                  ; Position VDP cursor
      63EE 832A     
 0031 63F0 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     63F2 6B7C     
+     63F2 6B4C     
 0032               
 0033 63F4 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
-     63F6 7204     
+     63F6 71D4     
 0034                                                   ; | i  @fb.row        = Row in frame buffer
 0035                                                   ; / o  @fb.row.length = Length of row
 0036               
 0037 63F8 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     63FA 74DA     
+     63FA 74AA     
 0038               
 0039               
 0040               *---------------------------------------------------------------
@@ -8746,7 +8806,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0051 6406 C660  46         mov   @parm1,*stack         ; Push parm1
      6408 A000     
 0052 640A 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     640C 700A     
+     640C 6FDA     
 0053 640E C839  50         mov   *stack+,@parm1        ; Pop parm1
      6410 A000     
 0054               
@@ -8763,7 +8823,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      641C 63DC     
 0063                                                    ; \ i  @parm1 = Line in editor buffer
 0064                                                    ; /
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0078                       copy  "edkey.fb.del.asm"         ; Delete characters or lines
      **** ****     > edkey.fb.del.asm
 0001               * FILE......: edkey.fb.del.asm
@@ -8776,7 +8836,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008 641E 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      6420 A506     
 0009 6422 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6424 6B7C     
+     6424 6B4C     
 0010                       ;-------------------------------------------------------
 0011                       ; Assert 1 - Empty line
 0012                       ;-------------------------------------------------------
@@ -8880,7 +8940,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0092                       ;-------------------------------------------------------
 0093               edkey.action.del_char.exit:
 0094 6498 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     649A 74DA     
+     649A 74AA     
 0095               
 0096               
 0097               *---------------------------------------------------------------
@@ -8890,7 +8950,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0101 649C 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      649E A506     
 0102 64A0 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     64A2 6B7C     
+     64A2 6B4C     
 0103 64A4 C1A0  34         mov   @fb.row.length,tmp2   ; Get line length
      64A6 A308     
 0104 64A8 1311  14         jeq   edkey.action.del_eol.exit
@@ -8929,7 +8989,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0130                       ;-------------------------------------------------------
 0131               edkey.action.del_eol.exit:
 0132 64CC 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     64CE 74DA     
+     64CE 74AA     
 0133               
 0134               
 0135               *---------------------------------------------------------------
@@ -8940,7 +9000,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0140                       ; Get current line in editor buffer
 0141                       ;-------------------------------------------------------
 0142 64D0 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     64D2 6B7C     
+     64D2 6B4C     
 0143 64D4 04E0  34         clr   @fb.row.dirty         ; Discard current line
      64D6 A30A     
 0144               
@@ -8966,7 +9026,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      64F2 A304     
      64F4 A000     
 0157 64F6 06A0  32         bl    @fb.refresh           ; Refresh frame buffer with EB content
-     64F8 6D6C     
+     64F8 6D3C     
 0158                                                   ; \ i  @parm1 = Line to start with
 0159                                                   ; /
 0160 64FA 0460  28         b     @edkey.action.up      ; Move cursor one line up
@@ -8976,7 +9036,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0163                       ;-------------------------------------------------------
 0164               edkey.action.del_line.doit:
 0165 64FE 06A0  32         bl    @edb.line.del         ; Delete line in editor buffer
-     6500 730A     
+     6500 72DA     
 0166                                                   ; \ i  @parm1 = Line number to delete
 0167                                                   ; /
 0168               
@@ -8989,7 +9049,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0173                       ; Get length of current row in frame buffer
 0174                       ;-------------------------------------------------------
 0175 650A 06A0  32         bl   @edb.line.getlength2   ; Get length of current row
-     650C 7204     
+     650C 71D4     
 0176                                                   ; \ i  @fb.row        = Current row
 0177                                                   ; / o  @fb.row.length = Length of row
 0178                       ;-------------------------------------------------------
@@ -9001,7 +9061,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6512 A000     
 0183               
 0184 6514 06A0  32         bl    @fb.refresh           ; Refresh frame buffer with EB content
-     6516 6D6C     
+     6516 6D3C     
 0185                                                   ; \ i  @parm1 = Line to start with
 0186                                                   ; /
 0187               
@@ -9027,7 +9087,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0202               edkey.action.del_line.exit:
 0203 652E 0460  28         b     @edkey.action.home    ; Move cursor to home and return
      6530 61C8     
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0079                       copy  "edkey.fb.ins.asm"         ; Insert characters or lines
      **** ****     > edkey.fb.ins.asm
 0001               * FILE......: edkey.fb.ins.asm
@@ -9047,7 +9107,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0013 653A 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      653C A506     
 0014 653E 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6540 6B7C     
+     6540 6B4C     
 0015                       ;-------------------------------------------------------
 0016                       ; Check 1 - Empty line
 0017                       ;-------------------------------------------------------
@@ -9078,9 +9138,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 6562 C660  46         mov   @parm1,*stack         ; Save character to add
      6564 A000     
 0037 6566 06A0  32         bl    @fb.cursor.down       ; Move cursor down 1 line
-     6568 6C02     
+     6568 6BD2     
 0038 656A 06A0  32         bl    @fb.insert.line       ; Insert empty line
-     656C 6CA4     
+     656C 6C74     
 0039 656E C839  50         mov   *stack+,@parm1        ; Restore character to add
      6570 A000     
 0040 6572 04C6  14         clr   tmp2                  ; Clear line length
@@ -9154,7 +9214,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0095                       ;-------------------------------------------------------
 0096               edkey.action.ins_char.exit:
 0097 65C4 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     65C6 74DA     
+     65C6 74AA     
 0098               
 0099               
 0100               
@@ -9166,14 +9226,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0106               *---------------------------------------------------------------
 0107               edkey.action.ins_line:
 0108 65C8 06A0  32         bl    @fb.insert.line       ; Insert new line
-     65CA 6CA4     
+     65CA 6C74     
 0109                       ;-------------------------------------------------------
 0110                       ; Exit
 0111                       ;-------------------------------------------------------
 0112               edkey.action.ins_line.exit:
 0113 65CC 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     65CE 74DA     
-                   < stevie_b1.asm.61843
+     65CE 74AA     
+                   < stevie_b1.asm.91724
 0080                       copy  "edkey.fb.mod.asm"         ; Actions for modifier keys
      **** ****     > edkey.fb.mod.asm
 0001               * FILE......: edkey.fb.mod.asm
@@ -9195,7 +9255,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014 65DC 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      65DE A506     
 0015 65E0 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     65E2 700A     
+     65E2 6FDA     
 0016 65E4 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
      65E6 A30A     
 0017                       ;-------------------------------------------------------
@@ -9236,7 +9296,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043 6612 05A0  34         inc   @parm1
      6614 A000     
 0044 6616 06A0  32         bl    @fb.refresh
-     6618 6D6C     
+     6618 6D3C     
 0045 661A 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
      661C A310     
 0046 661E 1004  14         jmp   edkey.action.newline.rest
@@ -9253,7 +9313,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0055                       ;-------------------------------------------------------
 0056               edkey.action.newline.rest:
 0057 6628 06A0  32         bl    @fb.get.firstnonblank
-     662A 6D24     
+     662A 6CF4     
 0058 662C C120  34         mov   @outparm1,tmp0
      662E A010     
 0059 6630 C804  38         mov   tmp0,@fb.column
@@ -9261,9 +9321,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0060 6634 06A0  32         bl    @xsetx                ; Set Column=tmp0 (VDP cursor)
      6636 26FA     
 0061 6638 06A0  32         bl    @edb.line.getlength2  ; Get length of new row length
-     663A 7204     
+     663A 71D4     
 0062 663C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     663E 6B7C     
+     663E 6B4C     
 0063 6640 0720  34         seto  @fb.dirty             ; Trigger screen refresh
      6642 A316     
 0064                       ;-------------------------------------------------------
@@ -9271,7 +9331,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0066                       ;-------------------------------------------------------
 0067               edkey.action.newline.exit:
 0068 6644 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6646 74DA     
+     6646 74AA     
 0069               
 0070               
 0071               
@@ -9293,7 +9353,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0085               edkey.action.ins_onoff.exit:
 0086 6654 C2F9  30         mov   *stack+,r11           ; Pop r11
 0087 6656 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6658 74DA     
+     6658 74AA     
 0088               
 0089               
 0090               
@@ -9339,7 +9399,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0123                       ;-------------------------------------------------------
 0124               edkey.action.char.overwrite:
 0125 6680 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6682 6B7C     
+     6682 6B4C     
 0126 6684 C120  34         mov   @fb.current,tmp0      ; Get pointer
      6686 A302     
 0127               
@@ -9390,8 +9450,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0159                       ;-------------------------------------------------------
 0160               edkey.action.char.exit:
 0161 66BE 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     66C0 74DA     
-                   < stevie_b1.asm.61843
+     66C0 74AA     
+                   < stevie_b1.asm.91724
 0081                       copy  "edkey.fb.ruler.asm"       ; Toggle ruler on/off
      **** ****     > edkey.fb.ruler.asm
 0001               * FILE......: edkey.fb.ruler.asm
@@ -9441,13 +9501,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0038 66EC 0720  34         seto  @tv.ruler.visible     ; Set ruler visibility
      66EE A210     
 0039 66F0 06A0  32         bl    @fb.ruler.init        ; Setup ruler in RAM
-     66F2 7D18     
+     66F2 7CE8     
 0040                       ;-------------------------------------------------------
 0041                       ; Update framebuffer pane
 0042                       ;-------------------------------------------------------
 0043               edkey.action.toggle.ruler.fb:
 0044 66F4 06A0  32         bl    @pane.cmdb.hide       ; Same actions as when hiding CMDB
-     66F6 7CC0     
+     66F6 7C90     
 0045                       ;-------------------------------------------------------
 0046                       ; Exit
 0047                       ;-------------------------------------------------------
@@ -9456,8 +9516,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      66FA 832A     
 0050 66FC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 66FE 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6700 74DA     
-                   < stevie_b1.asm.61843
+     6700 74AA     
+                   < stevie_b1.asm.91724
 0082                       copy  "edkey.fb.misc.asm"        ; Miscelanneous actions
      **** ****     > edkey.fb.misc.asm
 0001               * FILE......: edkey.fb.misc.asm
@@ -9474,12 +9534,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6704 A506     
 0012 6706 1302  14         jeq   !
 0013 6708 0460  28         b     @dialog.unsaved       ; Show dialog and exit
-     670A 7C74     
+     670A 7C44     
 0014                       ;-------------------------------------------------------
 0015                       ; Quit Stevie
 0016                       ;-------------------------------------------------------
 0017 670C 0460  28 !       b     @tv.quit
-     670E 3442     
+     670E 344C     
 0018               
 0019               
 0020               *---------------------------------------------------------------
@@ -9491,10 +9551,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6714 2022     
 0025 6716 1302  14         jeq   !
 0026 6718 0460  28         b     @edb.block.copy       ; Copy code block
-     671A 739A     
+     671A 736A     
 0027 671C 0460  28 !       b     @dialog.clipboard     ; Open "Insert from clipboard" dialog
-     671E 7C82     
-                   < stevie_b1.asm.61843
+     671E 7C52     
+                   < stevie_b1.asm.91724
 0083                       copy  "edkey.fb.file.asm"        ; File related actions
      **** ****     > edkey.fb.file.asm
 0001               * FILE......: edkey.fb.fíle.asm
@@ -9555,7 +9615,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0049                                                   ; Exit early if new file.
 0050               
 0051 6748 0284  22         ci    tmp0,txt.newfile
-     674A 3602     
+     674A 3648     
 0052 674C 130E  14         jeq   edkey.action.fb.fname.exit
 0053                                                   ; Exit early if "[New file]"
 0054               
@@ -9569,12 +9629,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0060 6756 1303  14         jeq   !
 0061 6758 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0062 675A 0460  28         b     @dialog.unsaved       ; Show dialog and exit
-     675C 7C74     
+     675C 7C44     
 0063                       ;------------------------------------------------------
 0064                       ; Update suffix
 0065                       ;------------------------------------------------------
 0066 675E 06A0  32 !       bl    @fm.browse.fname.suffix
-     6760 7BFE     
+     6760 7BCE     
 0067                                                   ; Filename suffix adjust
 0068                                                   ; i  \ parm1 = Pointer to filename
 0069                                                   ; i  / parm2 = >FFFF or >0000
@@ -9583,10 +9643,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0072                       ;------------------------------------------------------
 0073               edkey.action.fb.fname.doit.loadfile:
 0074 6762 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     6764 7CC0     
+     6764 7C90     
 0075               
 0076 6766 06A0  32         bl    @fm.loadfile          ; Load DV80 file
-     6768 7BC0     
+     6768 7B90     
 0077                                                   ; \ i  parm1 = Pointer to length-prefixed
 0078                                                   ; /            device/filename string
 0079               
@@ -9598,7 +9658,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0085 676A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0086 676C 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      676E 632A     
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0084                       copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
      **** ****     > edkey.fb.block.asm
 0001               * FILE......: edkey.fb.block.asm
@@ -9609,12 +9669,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               ********|*****|*********************|**************************
 0007               edkey.action.block.mark.m1:
 0008 6770 06A0  32         bl    @edb.block.mark.m1    ; Set M1 marker
-     6772 7D90     
+     6772 7D60     
 0009                       ;-------------------------------------------------------
 0010                       ; Exit
 0011                       ;-------------------------------------------------------
 0012 6774 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6776 74DA     
+     6776 74AA     
 0013               
 0014               
 0015               
@@ -9623,12 +9683,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               ********|*****|*********************|**************************
 0019               edkey.action.block.mark.m2:
 0020 6778 06A0  32         bl    @edb.block.mark.m2    ; Set M2 marker
-     677A 7D9A     
+     677A 7D6A     
 0021                       ;-------------------------------------------------------
 0022                       ; Exit
 0023                       ;-------------------------------------------------------
 0024 677C 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     677E 74DA     
+     677E 74AA     
 0025               
 0026               
 0027               *---------------------------------------------------------------
@@ -9636,12 +9696,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0029               ********|*****|*********************|**************************
 0030               edkey.action.block.mark:
 0031 6780 06A0  32         bl    @edb.block.mark       ; Set M1/M2 marker
-     6782 7D86     
+     6782 7D56     
 0032                       ;-------------------------------------------------------
 0033                       ; Exit
 0034                       ;-------------------------------------------------------
 0035 6784 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6786 74DA     
+     6786 74AA     
 0036               
 0037               
 0038               *---------------------------------------------------------------
@@ -9649,14 +9709,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0040               ********|*****|*********************|**************************
 0041               edkey.action.block.reset:
 0042 6788 06A0  32         bl    @pane.errline.hide    ; Hide error line if visible
-     678A 79AA     
+     678A 7992     
 0043 678C 06A0  32         bl    @edb.block.reset      ; Reset block markers M1/M2
-     678E 7DAE     
+     678E 7D7E     
 0044                       ;-------------------------------------------------------
 0045                       ; Exit
 0046                       ;-------------------------------------------------------
 0047 6790 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6792 74DA     
+     6792 74AA     
 0048               
 0049               
 0050               *---------------------------------------------------------------
@@ -9686,12 +9746,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0069                       ; Copy
 0070                       ;-------------------------------------------------------
 0071 67AC 06A0  32         bl    @pane.errline.hide    ; Hide error line if visible
-     67AE 79AA     
+     67AE 7992     
 0072               
 0073 67B0 04E0  34         clr   @parm1                ; Set message to "Copying block..."
      67B2 A000     
 0074 67B4 06A0  32         bl    @edb.block.copy       ; Copy code block
-     67B6 739A     
+     67B6 736A     
 0075                                                   ; \ i  @parm1    = Message flag
 0076                                                   ; / o  @outparm1 = >ffff if success
 0077               
@@ -9705,7 +9765,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      67C2 A314     
      67C4 A000     
 0083 67C6 06A0  32         bl    @fb.restore           ; Restore frame buffer layout
-     67C8 6DDC     
+     67C8 6DAC     
 0084                                                   ; \ i  @parm1 = cursor YX position
 0085                                                   ; /
 0086                       ;-------------------------------------------------------
@@ -9714,7 +9774,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0089               edkey.action.block.copy.exit:
 0090 67CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0091 67CC 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     67CE 74DA     
+     67CE 74AA     
 0092               
 0093               
 0094               
@@ -9735,12 +9795,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0107                       ; Delete
 0108                       ;-------------------------------------------------------
 0109 67D8 06A0  32         bl    @pane.errline.hide    ; Hide error message if visible
-     67DA 79AA     
+     67DA 7992     
 0110               
 0111 67DC 04E0  34         clr   @parm1                ; Display message "Deleting block...."
      67DE A000     
 0112 67E0 06A0  32         bl    @edb.block.delete     ; Delete code block
-     67E2 7DB8     
+     67E2 7D88     
 0113                                                   ; \ i  @parm1    = Display message Yes/No
 0114                                                   ; / o  @outparm1 = >ffff if success
 0115                       ;-------------------------------------------------------
@@ -9764,7 +9824,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0128                       ;-------------------------------------------------------
 0129               edkey.action.block.delete.exit:
 0130 67F6 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     67F8 74DA     
+     67F8 74AA     
 0131               
 0132               
 0133               *---------------------------------------------------------------
@@ -9783,19 +9843,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0144                       ; Delete
 0145                       ;-------------------------------------------------------
 0146 6802 06A0  32         bl    @pane.errline.hide    ; Hide error message if visible
-     6804 79AA     
+     6804 7992     
 0147               
 0148 6806 0720  34         seto  @parm1                ; Set message to "Moving block..."
      6808 A000     
 0149 680A 06A0  32         bl    @edb.block.copy       ; Copy code block
-     680C 739A     
+     680C 736A     
 0150                                                   ; \ i  @parm1    = Message flag
 0151                                                   ; / o  @outparm1 = >ffff if success
 0152               
 0153 680E 0720  34         seto  @parm1                ; Don't display delete message
      6810 A000     
 0154 6812 06A0  32         bl    @edb.block.delete     ; Delete code block
-     6814 7DB8     
+     6814 7D88     
 0155                                                   ; \ i  @parm1    = Display message Yes/No
 0156                                                   ; / o  @outparm1 = >ffff if success
 0157                       ;-------------------------------------------------------
@@ -9819,7 +9879,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0170                       ;-------------------------------------------------------
 0171               edkey.action.block.move.exit:
 0172 6828 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     682A 74DA     
+     682A 74AA     
 0173               
 0174               
 0175               *---------------------------------------------------------------
@@ -9849,8 +9909,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0193                       ;-------------------------------------------------------
 0194               edkey.action.block.goto.m1.exit:
 0195 6842 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6844 74DA     
-                   < stevie_b1.asm.61843
+     6844 74AA     
+                   < stevie_b1.asm.91724
 0085                       copy  "edkey.fb.tabs.asm"        ; tab-key related actions
      **** ****     > edkey.fb.tabs.asm
 0001               * FILE......: edkey.fb.tabs.asm
@@ -9863,15 +9923,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008 6846 0649  14         dect  stack
 0009 6848 C64B  30         mov   r11,*stack            ; Save return address
 0010 684A 06A0  32         bl    @fb.tab.next          ; Jump to next tab position on line
-     684C 7D06     
+     684C 7CD6     
 0011                       ;------------------------------------------------------
 0012                       ; Exit
 0013                       ;------------------------------------------------------
 0014               edkey.action.fb.tab.next.exit:
 0015 684E C2F9  30         mov   *stack+,r11           ; Pop r11
 0016 6850 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6852 74DA     
-                   < stevie_b1.asm.61843
+     6852 74AA     
+                   < stevie_b1.asm.91724
 0086                       copy  "edkey.fb.clip.asm"        ; Clipboard actions
      **** ****     > edkey.fb.clip.asm
 0001               * FILE......: edkey.fb.clip.asm
@@ -9880,7 +9940,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0004               *---------------------------------------------------------------
 0005               * Save clipboards
 0006               *---------------------------------------------------------------
-0007               * b   @edkey.action.fb.clip.save.[0-9]
+0007               * b   @edkey.action.fb.clip.save.[1-5]
 0008               *---------------------------------------------------------------
 0009               * INPUT
 0010               * none
@@ -9888,67 +9948,47 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0012               * Register usage
 0013               * tmp0
 0014               ********|*****|*********************|**************************
-0015               edkey.action.fb.clip.save.0:
-0016 6854 0204  20         li    tmp0,clip0
-     6856 3000     
-0017 6858 101A  14         jmp   !
-0018               edkey.action.fb.clip.save.1:
-0019 685A 0204  20         li    tmp0,clip1
-     685C 3100     
-0020 685E 1017  14         jmp   !
-0021               edkey.action.fb.clip.save.2:
-0022 6860 0204  20         li    tmp0,clip2
-     6862 3200     
-0023 6864 1014  14         jmp   !
-0024               edkey.action.fb.clip.save.3:
-0025 6866 0204  20         li    tmp0,clip3
-     6868 3300     
-0026 686A 1011  14         jmp   !
-0027               edkey.action.fb.clip.save.4:
-0028 686C 0204  20         li    tmp0,clip4
-     686E 3400     
-0029 6870 100E  14         jmp   !
-0030               edkey.action.fb.clip.save.5:
-0031 6872 0204  20         li    tmp0,clip5
-     6874 3500     
-0032 6876 100B  14         jmp   !
-0033               edkey.action.fb.clip.save.6:
-0034 6878 0204  20         li    tmp0,clip6
-     687A 3600     
-0035 687C 1008  14         jmp   !
-0036               edkey.action.fb.clip.save.7:
-0037 687E 0204  20         li    tmp0,clip7
-     6880 3700     
-0038 6882 1005  14         jmp   !
-0039               edkey.action.fb.clip.save.8:
-0040 6884 0204  20         li    tmp0,clip8
-     6886 3800     
-0041 6888 1002  14         jmp   !
-0042               edkey.action.fb.clip.save.9:
-0043 688A 0204  20         li    tmp0,clip9
-     688C 3900     
-0044                       ;-------------------------------------------------------
-0045                       ; Save block to clipboard
-0046                       ;-------------------------------------------------------
-0047 688E C804  38 !       mov   tmp0,@parm1
-     6890 A000     
-0048 6892 06A0  32         bl    @edb.block.clip       ; Save block to clipboard
-     6894 7DA4     
-0049                                                   ; \ i  @parm1 = Suffix clipboard filename
-0050                                                   ; /
-0051                       ;-------------------------------------------------------
-0052                       ; Exit
-0053                       ;-------------------------------------------------------
-0054               edkey.action.fb.clip.save.exit:
-0055 6896 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0056               
-0057 6898 C820  54         mov   @fb.topline,@parm1    ; Get topline
-     689A A304     
-     689C A000     
-0058 689E 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
-     68A0 63DC     
-0059                                                   ; / i  @parm1 = Line in editor buffer
-                   < stevie_b1.asm.61843
+0015               edkey.action.fb.clip.save.1:
+0016 6854 0204  20         li    tmp0,clip1
+     6856 3100     
+0017 6858 100B  14         jmp   !
+0018               edkey.action.fb.clip.save.2:
+0019 685A 0204  20         li    tmp0,clip2
+     685C 3200     
+0020 685E 1008  14         jmp   !
+0021               edkey.action.fb.clip.save.3:
+0022 6860 0204  20         li    tmp0,clip3
+     6862 3300     
+0023 6864 1005  14         jmp   !
+0024               edkey.action.fb.clip.save.4:
+0025 6866 0204  20         li    tmp0,clip4
+     6868 3400     
+0026 686A 1002  14         jmp   !
+0027               edkey.action.fb.clip.save.5:
+0028 686C 0204  20         li    tmp0,clip5
+     686E 3500     
+0029                       ;-------------------------------------------------------
+0030                       ; Save block to clipboard
+0031                       ;-------------------------------------------------------
+0032 6870 C804  38 !       mov   tmp0,@parm1
+     6872 A000     
+0033 6874 06A0  32         bl    @edb.block.clip       ; Save block to clipboard
+     6876 7D74     
+0034                                                   ; \ i  @parm1 = Suffix clipboard filename
+0035                                                   ; /
+0036                       ;-------------------------------------------------------
+0037                       ; Exit
+0038                       ;-------------------------------------------------------
+0039               edkey.action.fb.clip.save.exit:
+0040 6878 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0041               
+0042 687A C820  54         mov   @fb.topline,@parm1    ; Get topline
+     687C A304     
+     687E A000     
+0043 6880 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+     6882 63DC     
+0044                                                   ; / i  @parm1 = Line in editor buffer
+                   < stevie_b1.asm.91724
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Keyboard actions - Command Buffer
 0089                       ;-----------------------------------------------------------------------
@@ -9961,45 +10001,45 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Cursor left
 0006               *---------------------------------------------------------------
 0007               edkey.action.cmdb.left:
-0008 68A2 C120  34         mov   @cmdb.column,tmp0
-     68A4 A712     
-0009 68A6 1304  14         jeq   !                     ; column=0 ? Skip further processing
+0008 6884 C120  34         mov   @cmdb.column,tmp0
+     6886 A712     
+0009 6888 1304  14         jeq   !                     ; column=0 ? Skip further processing
 0010                       ;-------------------------------------------------------
 0011                       ; Update
 0012                       ;-------------------------------------------------------
-0013 68A8 0620  34         dec   @cmdb.column          ; Column-- in command buffer
-     68AA A712     
-0014 68AC 0620  34         dec   @cmdb.cursor          ; Column-- CMDB cursor
-     68AE A70A     
+0013 688A 0620  34         dec   @cmdb.column          ; Column-- in command buffer
+     688C A712     
+0014 688E 0620  34         dec   @cmdb.cursor          ; Column-- CMDB cursor
+     6890 A70A     
 0015                       ;-------------------------------------------------------
 0016                       ; Exit
 0017                       ;-------------------------------------------------------
-0018 68B0 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     68B2 74DA     
+0018 6892 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
+     6894 74AA     
 0019               
 0020               
 0021               *---------------------------------------------------------------
 0022               * Cursor right
 0023               *---------------------------------------------------------------
 0024               edkey.action.cmdb.right:
-0025 68B4 06A0  32         bl    @cmdb.cmd.getlength
-     68B6 7CE8     
-0026 68B8 8820  54         c     @cmdb.column,@outparm1
-     68BA A712     
-     68BC A010     
-0027 68BE 1404  14         jhe   !                     ; column > length line ? Skip processing
+0025 6896 06A0  32         bl    @cmdb.cmd.getlength
+     6898 7CB8     
+0026 689A 8820  54         c     @cmdb.column,@outparm1
+     689C A712     
+     689E A010     
+0027 68A0 1404  14         jhe   !                     ; column > length line ? Skip processing
 0028                       ;-------------------------------------------------------
 0029                       ; Update
 0030                       ;-------------------------------------------------------
-0031 68C0 05A0  34         inc   @cmdb.column          ; Column++ in command buffer
-     68C2 A712     
-0032 68C4 05A0  34         inc   @cmdb.cursor          ; Column++ CMDB cursor
-     68C6 A70A     
+0031 68A2 05A0  34         inc   @cmdb.column          ; Column++ in command buffer
+     68A4 A712     
+0032 68A6 05A0  34         inc   @cmdb.cursor          ; Column++ CMDB cursor
+     68A8 A70A     
 0033                       ;-------------------------------------------------------
 0034                       ; Exit
 0035                       ;-------------------------------------------------------
-0036 68C8 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
-     68CA 74DA     
+0036 68AA 0460  28 !       b     @hook.keyscan.bounce  ; Back to editor main
+     68AC 74AA     
 0037               
 0038               
 0039               
@@ -10007,38 +10047,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0041               * Cursor beginning of line
 0042               *---------------------------------------------------------------
 0043               edkey.action.cmdb.home:
-0044 68CC 04C4  14         clr   tmp0
-0045 68CE C804  38         mov   tmp0,@cmdb.column      ; First column
-     68D0 A712     
-0046 68D2 0584  14         inc   tmp0
-0047 68D4 D120  34         movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
-     68D6 A70A     
-0048 68D8 C804  38         mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
-     68DA A70A     
+0044 68AE 04C4  14         clr   tmp0
+0045 68B0 C804  38         mov   tmp0,@cmdb.column      ; First column
+     68B2 A712     
+0046 68B4 0584  14         inc   tmp0
+0047 68B6 D120  34         movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
+     68B8 A70A     
+0048 68BA C804  38         mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
+     68BC A70A     
 0049               
-0050 68DC 0460  28         b     @hook.keyscan.bounce   ; Back to editor main
-     68DE 74DA     
+0050 68BE 0460  28         b     @hook.keyscan.bounce   ; Back to editor main
+     68C0 74AA     
 0051               
 0052               *---------------------------------------------------------------
 0053               * Cursor end of line
 0054               *---------------------------------------------------------------
 0055               edkey.action.cmdb.end:
-0056 68E0 D120  34         movb  @cmdb.cmdlen,tmp0      ; Get length byte of current command
-     68E2 A728     
-0057 68E4 0984  56         srl   tmp0,8                 ; Right justify
-0058 68E6 C804  38         mov   tmp0,@cmdb.column      ; Save column position
-     68E8 A712     
-0059 68EA 0584  14         inc   tmp0                   ; One time adjustment command prompt
-0060 68EC 0224  22         ai    tmp0,>1a00             ; Y=26
-     68EE 1A00     
-0061 68F0 C804  38         mov   tmp0,@cmdb.cursor      ; Set cursor position
-     68F2 A70A     
+0056 68C2 D120  34         movb  @cmdb.cmdlen,tmp0      ; Get length byte of current command
+     68C4 A728     
+0057 68C6 0984  56         srl   tmp0,8                 ; Right justify
+0058 68C8 C804  38         mov   tmp0,@cmdb.column      ; Save column position
+     68CA A712     
+0059 68CC 0584  14         inc   tmp0                   ; One time adjustment command prompt
+0060 68CE 0224  22         ai    tmp0,>1a00             ; Y=26
+     68D0 1A00     
+0061 68D2 C804  38         mov   tmp0,@cmdb.cursor      ; Set cursor position
+     68D4 A70A     
 0062                       ;-------------------------------------------------------
 0063                       ; Exit
 0064                       ;-------------------------------------------------------
-0065 68F4 0460  28         b     @hook.keyscan.bounce   ; Back to editor main
-     68F6 74DA     
-                   < stevie_b1.asm.61843
+0065 68D6 0460  28         b     @hook.keyscan.bounce   ; Back to editor main
+     68D8 74AA     
+                   < stevie_b1.asm.91724
 0091                       copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
      **** ****     > edkey.cmdb.mod.asm
 0001               * FILE......: edkey.cmdb.mod.asm
@@ -10065,16 +10105,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0022                       ;-------------------------------------------------------
 0023                       ; Clear current command
 0024                       ;-------------------------------------------------------
-0025 68F8 06A0  32         bl    @cmdb.cmd.clear       ; Clear current command
-     68FA 7CDE     
-0026 68FC 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
-     68FE A718     
+0025 68DA 06A0  32         bl    @cmdb.cmd.clear       ; Clear current command
+     68DC 7CAE     
+0026 68DE 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
+     68E0 A718     
 0027                       ;-------------------------------------------------------
 0028                       ; Exit
 0029                       ;-------------------------------------------------------
 0030               edkey.action.cmdb.clear.exit:
-0031 6900 0460  28         b     @edkey.action.cmdb.home
-     6902 68CC     
+0031 68E2 0460  28         b     @edkey.action.cmdb.home
+     68E4 68AE     
 0032                                                   ; Reposition cursor
 0033               
 0034               
@@ -10103,53 +10143,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0057                       ;-------------------------------------------------------
 0058                       ; Asserts
 0059                       ;-------------------------------------------------------
-0060 6904 D105  18         movb  tmp1,tmp0             ; Get keycode
-0061 6906 0984  56         srl   tmp0,8                ; MSB to LSB
+0060 68E6 D105  18         movb  tmp1,tmp0             ; Get keycode
+0061 68E8 0984  56         srl   tmp0,8                ; MSB to LSB
 0062               
-0063 6908 0284  22         ci    tmp0,32               ; Keycode < ASCII 32 ?
-     690A 0020     
-0064 690C 1115  14         jlt   edkey.action.cmdb.char.exit
+0063 68EA 0284  22         ci    tmp0,32               ; Keycode < ASCII 32 ?
+     68EC 0020     
+0064 68EE 1115  14         jlt   edkey.action.cmdb.char.exit
 0065                                                   ; Yes, skip
 0066               
-0067 690E 0284  22         ci    tmp0,126              ; Keycode > ASCII 126 ?
-     6910 007E     
-0068 6912 1512  14         jgt   edkey.action.cmdb.char.exit
+0067 68F0 0284  22         ci    tmp0,126              ; Keycode > ASCII 126 ?
+     68F2 007E     
+0068 68F4 1512  14         jgt   edkey.action.cmdb.char.exit
 0069                                                   ; Yes, skip
 0070                       ;-------------------------------------------------------
 0071                       ; Add character
 0072                       ;-------------------------------------------------------
-0073 6914 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
-     6916 A718     
+0073 68F6 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
+     68F8 A718     
 0074               
-0075 6918 0204  20         li    tmp0,cmdb.cmd         ; Get beginning of command
-     691A A729     
-0076 691C A120  34         a     @cmdb.column,tmp0     ; Add current column to command
-     691E A712     
-0077 6920 D505  30         movb  tmp1,*tmp0            ; Add character
-0078 6922 05A0  34         inc   @cmdb.column          ; Next column
-     6924 A712     
-0079 6926 05A0  34         inc   @cmdb.cursor          ; Next column cursor
-     6928 A70A     
+0075 68FA 0204  20         li    tmp0,cmdb.cmd         ; Get beginning of command
+     68FC A729     
+0076 68FE A120  34         a     @cmdb.column,tmp0     ; Add current column to command
+     6900 A712     
+0077 6902 D505  30         movb  tmp1,*tmp0            ; Add character
+0078 6904 05A0  34         inc   @cmdb.column          ; Next column
+     6906 A712     
+0079 6908 05A0  34         inc   @cmdb.cursor          ; Next column cursor
+     690A A70A     
 0080               
-0081 692A 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
-     692C 7CE8     
+0081 690C 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
+     690E 7CB8     
 0082                                                   ; \ i  @cmdb.cmd = Command string
 0083                                                   ; / o  @outparm1 = Length of command
 0084                       ;-------------------------------------------------------
 0085                       ; Addjust length
 0086                       ;-------------------------------------------------------
-0087 692E C120  34         mov   @outparm1,tmp0
-     6930 A010     
-0088 6932 0A84  56         sla   tmp0,8               ; LSB to MSB
-0089 6934 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
-     6936 A728     
+0087 6910 C120  34         mov   @outparm1,tmp0
+     6912 A010     
+0088 6914 0A84  56         sla   tmp0,8               ; LSB to MSB
+0089 6916 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+     6918 A728     
 0090                       ;-------------------------------------------------------
 0091                       ; Exit
 0092                       ;-------------------------------------------------------
 0093               edkey.action.cmdb.char.exit:
-0094 6938 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     693A 74DA     
-                   < stevie_b1.asm.61843
+0094 691A 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
+     691C 74AA     
+                   < stevie_b1.asm.91724
 0092                       copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
      **** ****     > edkey.cmdb.misc.asm
 0001               * FILE......: edkey.cmdb.misc.asm
@@ -10159,36 +10199,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Show/Hide command buffer pane
 0006               ********|*****|*********************|**************************
 0007               edkey.action.cmdb.toggle:
-0008 693C C120  34         mov   @cmdb.visible,tmp0
-     693E A702     
-0009 6940 1605  14         jne   edkey.action.cmdb.hide
+0008 691E C120  34         mov   @cmdb.visible,tmp0
+     6920 A702     
+0009 6922 1605  14         jne   edkey.action.cmdb.hide
 0010                       ;-------------------------------------------------------
 0011                       ; Show pane
 0012                       ;-------------------------------------------------------
 0013               edkey.action.cmdb.show:
-0014 6942 04E0  34         clr   @cmdb.column          ; Column = 0
-     6944 A712     
-0015 6946 06A0  32         bl    @pane.cmdb.show       ; Show command buffer pane
-     6948 7CB6     
-0016 694A 1002  14         jmp   edkey.action.cmdb.toggle.exit
+0014 6924 04E0  34         clr   @cmdb.column          ; Column = 0
+     6926 A712     
+0015 6928 06A0  32         bl    @pane.cmdb.show       ; Show command buffer pane
+     692A 7C86     
+0016 692C 1002  14         jmp   edkey.action.cmdb.toggle.exit
 0017                       ;-------------------------------------------------------
 0018                       ; Hide pane
 0019                       ;-------------------------------------------------------
 0020               edkey.action.cmdb.hide:
-0021 694C 06A0  32         bl    @pane.cmdb.hide       ; Hide command buffer pane
-     694E 7CC0     
+0021 692E 06A0  32         bl    @pane.cmdb.hide       ; Hide command buffer pane
+     6930 7C90     
 0022                       ;-------------------------------------------------------
 0023                       ; Exit
 0024                       ;-------------------------------------------------------
 0025               edkey.action.cmdb.toggle.exit:
-0026 6950 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6952 74DA     
+0026 6932 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
+     6934 74AA     
 0027               
 0028               
 0029               
 0030               
 0031               
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0093                       copy  "edkey.cmdb.file.new.asm"  ; New file
      **** ****     > edkey.cmdb.file.new.asm
 0001               * FILE......: edkey.cmdb.fíle.new.asm
@@ -10201,36 +10241,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008                       ;-------------------------------------------------------
 0009                       ; New file
 0010                       ;-------------------------------------------------------
-0011 6954 0649  14         dect  stack
-0012 6956 C64B  30         mov   r11,*stack            ; Save return address
-0013 6958 0649  14         dect  stack
-0014 695A C644  30         mov   tmp0,*stack           ; Push tmp0
+0011 6936 0649  14         dect  stack
+0012 6938 C64B  30         mov   r11,*stack            ; Save return address
+0013 693A 0649  14         dect  stack
+0014 693C C644  30         mov   tmp0,*stack           ; Push tmp0
 0015                       ;-------------------------------------------------------
 0016                       ; Show dialog "Unsaved changes" if editor buffer dirty
 0017                       ;-------------------------------------------------------
-0018 695C C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
-     695E A506     
-0019 6960 1303  14         jeq   !                     ; No, skip "Unsaved changes"
+0018 693E C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
+     6940 A506     
+0019 6942 1303  14         jeq   !                     ; No, skip "Unsaved changes"
 0020               
-0021 6962 06A0  32         bl    @dialog.unsaved       ; Show dialog
-     6964 7C74     
-0022 6966 1004  14         jmp   edkey.action.cmdb.file.new.exit
+0021 6944 06A0  32         bl    @dialog.unsaved       ; Show dialog
+     6946 7C44     
+0022 6948 1004  14         jmp   edkey.action.cmdb.file.new.exit
 0023                       ;-------------------------------------------------------
 0024                       ; Reset editor
 0025                       ;-------------------------------------------------------
-0026 6968 06A0  32 !       bl    @pane.cmdb.hide       ; Hide CMDB pane
-     696A 7CC0     
-0027 696C 06A0  32         bl    @fm.newfile           ; New file in editor
-     696E 7C22     
+0026 694A 06A0  32 !       bl    @pane.cmdb.hide       ; Hide CMDB pane
+     694C 7C90     
+0027 694E 06A0  32         bl    @fm.newfile           ; New file in editor
+     6950 7BF2     
 0028                       ;-------------------------------------------------------
 0029                       ; Exit
 0030                       ;-------------------------------------------------------
 0031               edkey.action.cmdb.file.new.exit:
-0032 6970 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0033 6972 C2F9  30         mov   *stack+,r11           ; Pop R11
-0034 6974 0460  28         b     @edkey.action.top     ; Goto 1st line in editor buffer
-     6976 632A     
-                   < stevie_b1.asm.61843
+0032 6952 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0033 6954 C2F9  30         mov   *stack+,r11           ; Pop R11
+0034 6956 0460  28         b     @edkey.action.top     ; Goto 1st line in editor buffer
+     6958 632A     
+                   < stevie_b1.asm.91724
 0094                       copy  "edkey.cmdb.file.load.asm" ; Open file
      **** ****     > edkey.cmdb.file.load.asm
 0001               * FILE......: edkey.cmdb.fíle.load.asm
@@ -10243,66 +10283,66 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008                       ;-------------------------------------------------------
 0009                       ; Load file
 0010                       ;-------------------------------------------------------
-0011 6978 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     697A 7CC0     
+0011 695A 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
+     695C 7C90     
 0012               
-0013 697C 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
-     697E 7CE8     
-0014 6980 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     6982 A010     
-0015 6984 1607  14         jne   !                     ; No, prepare for load
+0013 695E 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
+     6960 7CB8     
+0014 6962 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
+     6964 A010     
+0015 6966 1607  14         jne   !                     ; No, prepare for load
 0016                       ;-------------------------------------------------------
 0017                       ; No filename specified
 0018                       ;-------------------------------------------------------
-0019 6986 06A0  32         bl    @pane.errline.show    ; Show error line
-     6988 7942     
+0019 6968 06A0  32         bl    @pane.errline.show    ; Show error line
+     696A 792A     
 0020               
-0021 698A 06A0  32         bl    @pane.show_hint
-     698C 7CAC     
-0022 698E 1C00                   byte pane.botrow-1,0
-0023 6990 3756                   data txt.io.nofile
+0021 696C 06A0  32         bl    @pane.show_hint
+     696E 7C7C     
+0022 6970 1C00                   byte pane.botrow-1,0
+0023 6972 3752                   data txt.io.nofile
 0024               
-0025 6992 1012  14         jmp   edkey.action.cmdb.load.exit
+0025 6974 1012  14         jmp   edkey.action.cmdb.load.exit
 0026                       ;-------------------------------------------------------
 0027                       ; Get filename
 0028                       ;-------------------------------------------------------
-0029 6994 0A84  56 !       sla   tmp0,8               ; LSB to MSB
-0030 6996 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
-     6998 A728     
+0029 6976 0A84  56 !       sla   tmp0,8               ; LSB to MSB
+0030 6978 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+     697A A728     
 0031               
-0032 699A 06A0  32         bl    @cpym2m
-     699C 24EE     
-0033 699E A728                   data cmdb.cmdlen,heap.top,80
-     69A0 F000     
-     69A2 0050     
+0032 697C 06A0  32         bl    @cpym2m
+     697E 24EE     
+0033 6980 A728                   data cmdb.cmdlen,heap.top,80
+     6982 F000     
+     6984 0050     
 0034                                                   ; Copy filename from command line to buffer
 0035                       ;-------------------------------------------------------
 0036                       ; Pass filename as parm1
 0037                       ;-------------------------------------------------------
-0038 69A4 0204  20         li    tmp0,heap.top         ; 1st line in heap
-     69A6 F000     
-0039 69A8 C804  38         mov   tmp0,@parm1
-     69AA A000     
+0038 6986 0204  20         li    tmp0,heap.top         ; 1st line in heap
+     6988 F000     
+0039 698A C804  38         mov   tmp0,@parm1
+     698C A000     
 0040                       ;-------------------------------------------------------
 0041                       ; Load file
 0042                       ;-------------------------------------------------------
 0043               edkey.action.cmdb.load.file:
-0044 69AC 0204  20         li    tmp0,heap.top         ; 1st line in heap
-     69AE F000     
-0045 69B0 C804  38         mov   tmp0,@parm1
-     69B2 A000     
+0044 698E 0204  20         li    tmp0,heap.top         ; 1st line in heap
+     6990 F000     
+0045 6992 C804  38         mov   tmp0,@parm1
+     6994 A000     
 0046               
-0047 69B4 06A0  32         bl    @fm.loadfile          ; Load DV80 file
-     69B6 7BC0     
+0047 6996 06A0  32         bl    @fm.loadfile          ; Load DV80 file
+     6998 7B90     
 0048                                                   ; \ i  parm1 = Pointer to length-prefixed
 0049                                                   ; /            device/filename string
 0050                       ;-------------------------------------------------------
 0051                       ; Exit
 0052                       ;-------------------------------------------------------
 0053               edkey.action.cmdb.load.exit:
-0054 69B8 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
-     69BA 632A     
-                   < stevie_b1.asm.61843
+0054 699A 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
+     699C 632A     
+                   < stevie_b1.asm.91724
 0095                       copy  "edkey.cmdb.file.ins.asm"  ; Insert file
      **** ****     > edkey.cmdb.file.ins.asm
 0001               * FILE......: edkey.cmdb.fíle.ins.asm
@@ -10312,54 +10352,54 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Insert DV 80 file
 0006               *---------------------------------------------------------------
 0007               edkey.action.cmdb.ins:
-0008 69BC 0649  14         dect  stack
-0009 69BE C644  30         mov   tmp0,*stack           ; Push tmp0
-0010 69C0 0649  14         dect  stack
-0011 69C2 C660  46         mov   @fb.topline,*stack    ; Push line number of fb top row
-     69C4 A304     
+0008 699E 0649  14         dect  stack
+0009 69A0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0010 69A2 0649  14         dect  stack
+0011 69A4 C660  46         mov   @fb.topline,*stack    ; Push line number of fb top row
+     69A6 A304     
 0012                       ;-------------------------------------------------------
 0013                       ; Insert file at current line in editor buffer
 0014                       ;-------------------------------------------------------
-0015 69C6 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     69C8 7CC0     
+0015 69A8 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
+     69AA 7C90     
 0016               
-0017 69CA 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
-     69CC 7CE8     
-0018 69CE C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     69D0 A010     
-0019 69D2 1607  14         jne   !                     ; No, prepare for load
+0017 69AC 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
+     69AE 7CB8     
+0018 69B0 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
+     69B2 A010     
+0019 69B4 1607  14         jne   !                     ; No, prepare for load
 0020                       ;-------------------------------------------------------
 0021                       ; No filename specified
 0022                       ;-------------------------------------------------------
-0023 69D4 06A0  32         bl    @pane.errline.show    ; Show error line
-     69D6 7942     
+0023 69B6 06A0  32         bl    @pane.errline.show    ; Show error line
+     69B8 792A     
 0024               
-0025 69D8 06A0  32         bl    @pane.show_hint
-     69DA 7CAC     
-0026 69DC 1C00                   byte pane.botrow-1,0
-0027 69DE 3756                   data txt.io.nofile
+0025 69BA 06A0  32         bl    @pane.show_hint
+     69BC 7C7C     
+0026 69BE 1C00                   byte pane.botrow-1,0
+0027 69C0 3752                   data txt.io.nofile
 0028               
-0029 69E0 1023  14         jmp   edkey.action.cmdb.ins.exit
+0029 69C2 1023  14         jmp   edkey.action.cmdb.ins.exit
 0030                       ;-------------------------------------------------------
 0031                       ; Get filename
 0032                       ;-------------------------------------------------------
-0033 69E2 0A84  56 !       sla   tmp0,8               ; LSB to MSB
-0034 69E4 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
-     69E6 A728     
+0033 69C4 0A84  56 !       sla   tmp0,8               ; LSB to MSB
+0034 69C6 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+     69C8 A728     
 0035               
-0036 69E8 06A0  32         bl    @cpym2m
-     69EA 24EE     
-0037 69EC A728                   data cmdb.cmdall,heap.top,80
-     69EE F000     
-     69F0 0050     
+0036 69CA 06A0  32         bl    @cpym2m
+     69CC 24EE     
+0037 69CE A728                   data cmdb.cmdall,heap.top,80
+     69D0 F000     
+     69D2 0050     
 0038                                                   ; Copy filename from command line to buffer
 0039                       ;-------------------------------------------------------
 0040                       ; Pass filename as parm1
 0041                       ;-------------------------------------------------------
-0042 69F2 0204  20         li    tmp0,heap.top         ; 1st line in heap
-     69F4 F000     
-0043 69F6 C804  38         mov   tmp0,@parm1
-     69F8 A000     
+0042 69D4 0204  20         li    tmp0,heap.top         ; 1st line in heap
+     69D6 F000     
+0043 69D8 C804  38         mov   tmp0,@parm1
+     69DA A000     
 0044                       ;-------------------------------------------------------
 0045                       ; Insert file at line
 0046                       ;-------------------------------------------------------
@@ -10367,46 +10407,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048                       ;-------------------------------------------------------
 0049                       ; Get line
 0050                       ;-------------------------------------------------------
-0051 69FA C820  54         mov   @fb.row,@parm1
-     69FC A306     
-     69FE A000     
-0052 6A00 06A0  32         bl    @fb.row2line          ; Row to editor line
-     6A02 6B62     
+0051 69DC C820  54         mov   @fb.row,@parm1
+     69DE A306     
+     69E0 A000     
+0052 69E2 06A0  32         bl    @fb.row2line          ; Row to editor line
+     69E4 6B32     
 0053                                                   ; \ i @fb.topline = Top line in frame buffer
 0054                                                   ; | i @parm1      = Row in frame buffer
 0055                                                   ; / o @outparm1   = Matching line in EB
 0056               
-0057 6A04 C820  54         mov   @outparm1,@parm2
-     6A06 A010     
-     6A08 A002     
+0057 69E6 C820  54         mov   @outparm1,@parm2
+     69E8 A010     
+     69EA A002     
 0058                       ;-------------------------------------------------------
 0059                       ; Get device/filename
 0060                       ;-------------------------------------------------------
-0061 6A0A 0204  20         li    tmp0,heap.top         ; 1st line in heap
-     6A0C F000     
-0062 6A0E C804  38         mov   tmp0,@parm1
-     6A10 A000     
+0061 69EC 0204  20         li    tmp0,heap.top         ; 1st line in heap
+     69EE F000     
+0062 69F0 C804  38         mov   tmp0,@parm1
+     69F2 A000     
 0063                       ;-------------------------------------------------------
 0064                       ; Insert file
 0065                       ;-------------------------------------------------------
-0066 6A12 06A0  32         bl    @fm.insertfile        ; Insert DV80 file
-     6A14 7BE6     
+0066 69F4 06A0  32         bl    @fm.insertfile        ; Insert DV80 file
+     69F6 7BB6     
 0067                                                   ; \ i  parm1 = Pointer to length-prefixed
 0068                                                   ; |            device/filename string
 0069                                                   ; | i  parm2 = Line number to load file at
 0070                       ;-------------------------------------------------------
 0071                       ; Refresh frame buffer
 0072                       ;-------------------------------------------------------
-0073 6A16 0720  34         seto  @fb.dirty             ; Refresh frame buffer
-     6A18 A316     
-0074 6A1A 0720  34         seto  @edb.dirty            ; Editor buffer dirty
-     6A1C A506     
+0073 69F8 0720  34         seto  @fb.dirty             ; Refresh frame buffer
+     69FA A316     
+0074 69FC 0720  34         seto  @edb.dirty            ; Editor buffer dirty
+     69FE A506     
 0075               
-0076 6A1E C820  54         mov   @fb.topline,@parm1
-     6A20 A304     
-     6A22 A000     
-0077 6A24 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     6A26 6D6C     
+0076 6A00 C820  54         mov   @fb.topline,@parm1
+     6A02 A304     
+     6A04 A000     
+0077 6A06 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
+     6A08 6D3C     
 0078                                                   ; | i  @parm1 = Line to start with
 0079                                                   ; /             (becomes @fb.topline)
 0080               
@@ -10414,13 +10454,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0082                       ; Exit
 0083                       ;-------------------------------------------------------
 0084               edkey.action.cmdb.ins.exit:
-0085 6A28 C839  50         mov   *stack+,@parm1        ; Pop top row
-     6A2A A000     
-0086 6A2C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0087 6A2E 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
-     6A30 63DC     
+0085 6A0A C839  50         mov   *stack+,@parm1        ; Pop top row
+     6A0C A000     
+0086 6A0E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0087 6A10 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+     6A12 63DC     
 0088                                                   ; / i  @parm1 = Line in editor buffer
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0096                       copy  "edkey.cmdb.file.clip.asm" ; Insert file from clipboard
      **** ****     > edkey.cmdb.file.clip.asm
 0001               * FILE......: edkey.cmdb.fíle.clip.asm
@@ -10429,88 +10469,64 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0004               *---------------------------------------------------------------
 0005               * Insert file from clipboard
 0006               *---------------------------------------------------------------
-0007               edkey.action.cmdb.clip.0
-0008 6A32 0204  20         li    tmp0,clip0
-     6A34 3000     
-0009 6A36 101B  14         jmp   edkey.action.cmdb.clip
+0007               edkey.action.cmdb.clip.1
+0008 6A14 0204  20         li    tmp0,clip1
+     6A16 3100     
+0009 6A18 100C  14         jmp   edkey.action.cmdb.clip
 0010               
-0011               edkey.action.cmdb.clip.1
-0012 6A38 0204  20         li    tmp0,clip1
-     6A3A 3100     
-0013 6A3C 1018  14         jmp   edkey.action.cmdb.clip
+0011               edkey.action.cmdb.clip.2
+0012 6A1A 0204  20         li    tmp0,clip2
+     6A1C 3200     
+0013 6A1E 1009  14         jmp   edkey.action.cmdb.clip
 0014               
-0015               edkey.action.cmdb.clip.2
-0016 6A3E 0204  20         li    tmp0,clip2
-     6A40 3200     
-0017 6A42 1015  14         jmp   edkey.action.cmdb.clip
+0015               edkey.action.cmdb.clip.3
+0016 6A20 0204  20         li    tmp0,clip3
+     6A22 3300     
+0017 6A24 1006  14         jmp   edkey.action.cmdb.clip
 0018               
-0019               edkey.action.cmdb.clip.3
-0020 6A44 0204  20         li    tmp0,clip3
-     6A46 3300     
-0021 6A48 1012  14         jmp   edkey.action.cmdb.clip
+0019               edkey.action.cmdb.clip.4
+0020 6A26 0204  20         li    tmp0,clip4
+     6A28 3400     
+0021 6A2A 1003  14         jmp   edkey.action.cmdb.clip
 0022               
-0023               edkey.action.cmdb.clip.4
-0024 6A4A 0204  20         li    tmp0,clip4
-     6A4C 3400     
-0025 6A4E 100F  14         jmp   edkey.action.cmdb.clip
+0023               edkey.action.cmdb.clip.5
+0024 6A2C 0204  20         li    tmp0,clip5
+     6A2E 3500     
+0025 6A30 1000  14         jmp   edkey.action.cmdb.clip
 0026               
-0027               edkey.action.cmdb.clip.5
-0028 6A50 0204  20         li    tmp0,clip5
-     6A52 3500     
-0029 6A54 100C  14         jmp   edkey.action.cmdb.clip
+0027               
+0028               edkey.action.cmdb.clip:
+0029 6A32 C804  38         mov   tmp0,@parm1           ; Get clipboard suffix 0-9
+     6A34 A000     
 0030               
-0031               edkey.action.cmdb.clip.6
-0032 6A56 0204  20         li    tmp0,clip6
-     6A58 3600     
-0033 6A5A 1009  14         jmp   edkey.action.cmdb.clip
-0034               
-0035               edkey.action.cmdb.clip.7
-0036 6A5C 0204  20         li    tmp0,clip7
-     6A5E 3700     
-0037 6A60 1006  14         jmp   edkey.action.cmdb.clip
-0038               
-0039               edkey.action.cmdb.clip.8
-0040 6A62 0204  20         li    tmp0,clip8
-     6A64 3800     
-0041 6A66 1003  14         jmp   edkey.action.cmdb.clip
-0042               
-0043               edkey.action.cmdb.clip.9
-0044 6A68 0204  20         li    tmp0,clip9
-     6A6A 3900     
-0045 6A6C 1000  14         jmp   edkey.action.cmdb.clip
-0046               
-0047               edkey.action.cmdb.clip:
-0048 6A6E C804  38         mov   tmp0,@parm1           ; Get clipboard suffix 0-9
-     6A70 A000     
-0049               
-0050 6A72 06A0  32         bl    @film
-     6A74 224A     
-0051 6A76 A728                   data cmdb.cmdall,>00,80
-     6A78 0000     
-     6A7A 0050     
-0052               
-0053 6A7C 06A0  32         bl    @cpym2m
-     6A7E 24EE     
-0054 6A80 A56A                   data edb.clip.filename,cmdb.cmdall,80
-     6A82 A728     
-     6A84 0050     
-0055                       ;------------------------------------------------------
-0056                       ; Append suffix character to clipboard device/filename
-0057                       ;------------------------------------------------------
-0058 6A86 C120  34         mov   @edb.clip.filename,tmp0
-     6A88 A56A     
-0059 6A8A C144  18         mov   tmp0,tmp1
-0060 6A8C 0984  56         srl   tmp0,8                ; Get string length
-0061 6A8E 0224  22         ai    tmp0,cmdb.cmdall      ; Add base
-     6A90 A728     
-0062 6A92 0584  14         inc   tmp0                  ; Consider length-prefix byte
-0063 6A94 D520  46         movb  @parm1,*tmp0          ; Append suffix
-     6A96 A000     
-0064               
-0065 6A98 0460  28         b     @edkey.action.cmdb.ins
-     6A9A 69BC     
-0066                                                   ; Insert file
-                   < stevie_b1.asm.61843
+0031 6A36 06A0  32         bl    @film
+     6A38 224A     
+0032 6A3A A728                   data cmdb.cmdall,>00,80
+     6A3C 0000     
+     6A3E 0050     
+0033               
+0034 6A40 06A0  32         bl    @cpym2m
+     6A42 24EE     
+0035 6A44 D9B0                   data tv.clip.fname,cmdb.cmdall,80
+     6A46 A728     
+     6A48 0050     
+0036                       ;------------------------------------------------------
+0037                       ; Append suffix character to clipboard device/filename
+0038                       ;------------------------------------------------------
+0039 6A4A C120  34         mov   @tv.clip.fname,tmp0
+     6A4C D9B0     
+0040 6A4E C144  18         mov   tmp0,tmp1
+0041 6A50 0984  56         srl   tmp0,8                ; Get string length
+0042 6A52 0224  22         ai    tmp0,cmdb.cmdall      ; Add base
+     6A54 A728     
+0043 6A56 0584  14         inc   tmp0                  ; Consider length-prefix byte
+0044 6A58 D520  46         movb  @parm1,*tmp0          ; Append suffix
+     6A5A A000     
+0045               
+0046 6A5C 0460  28         b     @edkey.action.cmdb.ins
+     6A5E 699E     
+0047                                                   ; Insert file
+                   < stevie_b1.asm.91724
 0097                       copy  "edkey.cmdb.file.save.asm" ; Save file
      **** ****     > edkey.cmdb.file.save.asm
 0001               * FILE......: edkey.cmdb.fíle.save.asm
@@ -10520,107 +10536,116 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Save DV 80 file
 0006               *---------------------------------------------------------------
 0007               edkey.action.cmdb.save:
-0008 6A9C 0649  14         dect  stack
-0009 6A9E C644  30         mov   tmp0,*stack           ; Push tmp0
-0010 6AA0 0649  14         dect  stack
-0011 6AA2 C660  46         mov   @fb.topline,*stack    ; Push line number of fb top row
-     6AA4 A304     
+0008 6A60 0649  14         dect  stack
+0009 6A62 C644  30         mov   tmp0,*stack           ; Push tmp0
+0010 6A64 0649  14         dect  stack
+0011 6A66 C660  46         mov   @fb.topline,*stack    ; Push line number of fb top row
+     6A68 A304     
 0012                       ;-------------------------------------------------------
 0013                       ; Save file
 0014                       ;-------------------------------------------------------
-0015 6AA6 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     6AA8 7CC0     
+0015 6A6A 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
+     6A6C 7C90     
 0016               
-0017 6AAA 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
-     6AAC 7CE8     
-0018 6AAE C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     6AB0 A010     
-0019 6AB2 1607  14         jne   !                     ; No, prepare for save
+0017 6A6E 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
+     6A70 7CB8     
+0018 6A72 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
+     6A74 A010     
+0019 6A76 1607  14         jne   !                     ; No, prepare for save
 0020                       ;-------------------------------------------------------
 0021                       ; No filename specified
 0022                       ;-------------------------------------------------------
-0023 6AB4 06A0  32         bl    @pane.errline.show    ; Show error line
-     6AB6 7942     
+0023 6A78 06A0  32         bl    @pane.errline.show    ; Show error line
+     6A7A 792A     
 0024               
-0025 6AB8 06A0  32         bl    @pane.show_hint
-     6ABA 7CAC     
-0026 6ABC 1C00                   byte pane.botrow-1,0
-0027 6ABE 3756                   data txt.io.nofile
+0025 6A7C 06A0  32         bl    @pane.show_hint
+     6A7E 7C7C     
+0026 6A80 1C00                   byte pane.botrow-1,0
+0027 6A82 3752                   data txt.io.nofile
 0028               
-0029 6AC0 1020  14         jmp   edkey.action.cmdb.save.exit
+0029 6A84 1026  14         jmp   edkey.action.cmdb.save.exit
 0030                       ;-------------------------------------------------------
 0031                       ; Get filename
 0032                       ;-------------------------------------------------------
-0033 6AC2 0A84  56 !       sla   tmp0,8               ; LSB to MSB
-0034 6AC4 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
-     6AC6 A728     
+0033 6A86 0A84  56 !       sla   tmp0,8               ; LSB to MSB
+0034 6A88 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+     6A8A A728     
 0035               
-0036 6AC8 06A0  32         bl    @cpym2m
-     6ACA 24EE     
-0037 6ACC A728                   data cmdb.cmdlen,heap.top,80
-     6ACE F000     
-     6AD0 0050     
+0036 6A8C 06A0  32         bl    @cpym2m
+     6A8E 24EE     
+0037 6A90 A728                   data cmdb.cmdlen,heap.top,80
+     6A92 F000     
+     6A94 0050     
 0038                                                   ; Copy filename from command line to buffer
 0039                       ;-------------------------------------------------------
 0040                       ; Pass filename as parm1
 0041                       ;-------------------------------------------------------
-0042 6AD2 0204  20         li    tmp0,heap.top         ; 1st line in heap
-     6AD4 F000     
-0043 6AD6 C804  38         mov   tmp0,@parm1
-     6AD8 A000     
+0042 6A96 0204  20         li    tmp0,heap.top         ; 1st line in heap
+     6A98 F000     
+0043 6A9A C804  38         mov   tmp0,@parm1
+     6A9C A000     
 0044                       ;-------------------------------------------------------
 0045                       ; Save all lines in editor buffer?
 0046                       ;-------------------------------------------------------
-0047 6ADA 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-     6ADC A50E     
-     6ADE 2022     
-0048 6AE0 1309  14         jeq   edkey.action.cmdb.save.all
+0047 6A9E 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+     6AA0 A50E     
+     6AA2 2022     
+0048 6AA4 130B  14         jeq   edkey.action.cmdb.save.all
 0049                                                   ; Yes, so save all lines in editor buffer
 0050                       ;-------------------------------------------------------
 0051                       ; Only save code block M1-M2
 0052                       ;-------------------------------------------------------
-0053 6AE2 C820  54         mov   @edb.block.m1,@parm2  ; \ First line to save (base 0)
-     6AE4 A50C     
-     6AE6 A002     
-0054 6AE8 0620  34         dec   @parm2                ; /
-     6AEA A002     
+0053 6AA6 C820  54         mov   @edb.block.m1,@parm2  ; \ First line to save (base 0)
+     6AA8 A50C     
+     6AAA A002     
+0054 6AAC 0620  34         dec   @parm2                ; /
+     6AAE A002     
 0055               
-0056 6AEC C820  54         mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
-     6AEE A50E     
-     6AF0 A004     
+0056 6AB0 C820  54         mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
+     6AB2 A50E     
+     6AB4 A004     
 0057               
-0058 6AF2 1005  14         jmp   edkey.action.cmdb.save.file
-0059                       ;-------------------------------------------------------
-0060                       ; Save all lines in editor buffer
-0061                       ;-------------------------------------------------------
-0062               edkey.action.cmdb.save.all:
-0063 6AF4 04E0  34         clr   @parm2                ; First line to save
-     6AF6 A002     
-0064 6AF8 C820  54         mov   @edb.lines,@parm3     ; Last line to save
-     6AFA A504     
-     6AFC A004     
-0065                       ;-------------------------------------------------------
-0066                       ; Save file
-0067                       ;-------------------------------------------------------
-0068               edkey.action.cmdb.save.file:
-0069 6AFE 06A0  32         bl    @fm.savefile          ; Save DV80 file
-     6B00 7C10     
-0070                                                   ; \ i  parm1 = Pointer to length-prefixed
-0071                                                   ; |            device/filename string
-0072                                                   ; | i  parm2 = First line to save (base 0)
-0073                                                   ; | i  parm3 = Last line to save  (base 0)
-0074                                                   ; /
-0075                       ;-------------------------------------------------------
-0076                       ; Exit
-0077                       ;-------------------------------------------------------
-0078               edkey.action.cmdb.save.exit:
-0079 6B02 C839  50         mov   *stack+,@parm1        ; Pop top row
-     6B04 A000     
-0080 6B06 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0081 6B08 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
-     6B0A 63DC     
-0082                                                   ; / i  @parm1 = Line in editor buffer
-                   < stevie_b1.asm.61843
+0058 6AB6 0204  20         li    tmp0,id.file.saveblock
+     6AB8 0002     
+0059 6ABA 1007  14         jmp   edkey.action.cmdb.save.file
+0060                       ;-------------------------------------------------------
+0061                       ; Save all lines in editor buffer
+0062                       ;-------------------------------------------------------
+0063               edkey.action.cmdb.save.all:
+0064 6ABC 04E0  34         clr   @parm2                ; First line to save
+     6ABE A002     
+0065 6AC0 C820  54         mov   @edb.lines,@parm3     ; Last line to save
+     6AC2 A504     
+     6AC4 A004     
+0066               
+0067 6AC6 0204  20         li    tmp0,id.file.savefile
+     6AC8 0001     
+0068                       ;-------------------------------------------------------
+0069                       ; Save file
+0070                       ;-------------------------------------------------------
+0071               edkey.action.cmdb.save.file:
+0072 6ACA C804  38         mov   tmp0,@parm4           ; Set work mode
+     6ACC A006     
+0073               
+0074 6ACE 06A0  32         bl    @fm.savefile          ; Save DV80 file
+     6AD0 7BE0     
+0075                                                   ; \ i  parm1 = Pointer to length-prefixed
+0076                                                   ; |            device/filename string
+0077                                                   ; | i  parm2 = First line to save (base 0)
+0078                                                   ; | i  parm3 = Last line to save  (base 0)
+0079                                                   ; | i  parm4 = Work mode
+0080                                                   ; /
+0081                       ;-------------------------------------------------------
+0082                       ; Exit
+0083                       ;-------------------------------------------------------
+0084               edkey.action.cmdb.save.exit:
+0085 6AD2 C839  50         mov   *stack+,@parm1        ; Pop top row
+     6AD4 A000     
+0086 6AD6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0087 6AD8 0460  28         b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+     6ADA 63DC     
+0088                                                   ; / i  @parm1 = Line in editor buffer
+                   < stevie_b1.asm.91724
 0098                       copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
      **** ****     > edkey.cmdb.dialog.asm
 0001               * FILE......: edkey.cmdb.dialog.asm
@@ -10642,41 +10667,41 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017                       ;-------------------------------------------------------
 0018                       ; Intialisation
 0019                       ;-------------------------------------------------------
-0020 6B0C 04E0  34         clr   @edb.dirty            ; Clear editor buffer dirty flag
-     6B0E A506     
-0021 6B10 06A0  32         bl    @pane.cursor.blink    ; Show cursor again
-     6B12 783C     
-0022 6B14 06A0  32         bl    @cmdb.cmd.clear       ; Clear current command
-     6B16 7CDE     
-0023 6B18 C120  34         mov   @cmdb.action.ptr,tmp0 ; Get pointer to keyboard action
-     6B1A A726     
+0020 6ADC 04E0  34         clr   @edb.dirty            ; Clear editor buffer dirty flag
+     6ADE A506     
+0021 6AE0 06A0  32         bl    @pane.cursor.blink    ; Show cursor again
+     6AE2 780C     
+0022 6AE4 06A0  32         bl    @cmdb.cmd.clear       ; Clear current command
+     6AE6 7CAE     
+0023 6AE8 C120  34         mov   @cmdb.action.ptr,tmp0 ; Get pointer to keyboard action
+     6AEA A726     
 0024                       ;-------------------------------------------------------
 0025                       ; Asserts
 0026                       ;-------------------------------------------------------
-0027 6B1C 0284  22         ci    tmp0,>2000
-     6B1E 2000     
-0028 6B20 1104  14         jlt   !                     ; Invalid address, crash
+0027 6AEC 0284  22         ci    tmp0,>2000
+     6AEE 2000     
+0028 6AF0 1104  14         jlt   !                     ; Invalid address, crash
 0029               
-0030 6B22 0284  22         ci    tmp0,>7fff
-     6B24 7FFF     
-0031 6B26 1501  14         jgt   !                     ; Invalid address, crash
+0030 6AF2 0284  22         ci    tmp0,>7fff
+     6AF4 7FFF     
+0031 6AF6 1501  14         jgt   !                     ; Invalid address, crash
 0032                       ;------------------------------------------------------
 0033                       ; All Asserts passed
 0034                       ;------------------------------------------------------
-0035 6B28 0454  20         b     *tmp0                 ; Execute action
+0035 6AF8 0454  20         b     *tmp0                 ; Execute action
 0036                       ;------------------------------------------------------
 0037                       ; Asserts failed
 0038                       ;------------------------------------------------------
-0039 6B2A C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
-     6B2C FFCE     
-0040 6B2E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6B30 2026     
+0039 6AFA C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
+     6AFC FFCE     
+0040 6AFE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     6B00 2026     
 0041                       ;-------------------------------------------------------
 0042                       ; Exit
 0043                       ;-------------------------------------------------------
 0044               edkey.action.cmdb.proceed.exit:
-0045 6B32 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6B34 74DA     
+0045 6B02 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
+     6B04 74AA     
 0046               
 0047               
 0048               
@@ -10694,12 +10719,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0060               * none
 0061               ********|*****|*********************|**************************
 0062               edkey.action.cmdb.fastmode.toggle:
-0063 6B36 06A0  32        bl    @fm.fastmode           ; Toggle fast mode.
-     6B38 7CFC     
-0064 6B3A 0720  34        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-     6B3C A718     
-0065 6B3E 0460  28        b     @hook.keyscan.bounce   ; Back to editor main
-     6B40 74DA     
+0063 6B06 06A0  32        bl    @fm.fastmode           ; Toggle fast mode.
+     6B08 7CCC     
+0064 6B0A 0720  34        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
+     6B0C A718     
+0065 6B0E 0460  28        b     @hook.keyscan.bounce   ; Back to editor main
+     6B10 74AA     
 0066               
 0067               
 0068               
@@ -10720,12 +10745,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0083                       ;------------------------------------------------------
 0084                       ; Erase header line
 0085                       ;------------------------------------------------------
-0086 6B42 06A0  32         bl    @hchar
-     6B44 27DC     
-0087 6B46 0000                   byte 0,0,32,80*2
-     6B48 20A0     
-0088 6B4A FFFF                   data EOL
-0089 6B4C 1000  14         jmp   edkey.action.cmdb.close.dialog
+0086 6B12 06A0  32         bl    @hchar
+     6B14 27DC     
+0087 6B16 0000                   byte 0,0,32,80*2
+     6B18 20A0     
+0088 6B1A FFFF                   data EOL
+0089 6B1C 1000  14         jmp   edkey.action.cmdb.close.dialog
 0090               
 0091               
 0092               ***************************************************************
@@ -10744,21 +10769,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0105                       ;------------------------------------------------------
 0106                       ; Close dialog
 0107                       ;------------------------------------------------------
-0108 6B4E 04E0  34         clr   @cmdb.dialog          ; Reset dialog ID
-     6B50 A71A     
-0109 6B52 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6B54 783C     
-0110 6B56 06A0  32         bl    @pane.cmdb.hide       ; Hide command buffer pane
-     6B58 7CC0     
-0111 6B5A 0720  34         seto  @fb.status.dirty      ; Trigger status lines update
-     6B5C A318     
+0108 6B1E 04E0  34         clr   @cmdb.dialog          ; Reset dialog ID
+     6B20 A71A     
+0109 6B22 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     6B24 780C     
+0110 6B26 06A0  32         bl    @pane.cmdb.hide       ; Hide command buffer pane
+     6B28 7C90     
+0111 6B2A 0720  34         seto  @fb.status.dirty      ; Trigger status lines update
+     6B2C A318     
 0112                       ;-------------------------------------------------------
 0113                       ; Exit
 0114                       ;-------------------------------------------------------
 0115               edkey.action.cmdb.close.dialog.exit:
-0116 6B5E 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
-     6B60 74DA     
-                   < stevie_b1.asm.61843
+0116 6B2E 0460  28         b     @hook.keyscan.bounce  ; Back to editor main
+     6B30 74AA     
+                   < stevie_b1.asm.91724
 0099                       ;-----------------------------------------------------------------------
 0100                       ; Logic for Framebuffer (1)
 0101                       ;-----------------------------------------------------------------------
@@ -10787,26 +10812,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0021               * outparm1 = @fb.topline + @parm1
 0022               ********|*****|*********************|**************************
 0023               fb.row2line:
-0024 6B62 0649  14         dect  stack
-0025 6B64 C64B  30         mov   r11,*stack            ; Save return address
-0026 6B66 0649  14         dect  stack
-0027 6B68 C644  30         mov   tmp0,*stack           ; Push tmp0
+0024 6B32 0649  14         dect  stack
+0025 6B34 C64B  30         mov   r11,*stack            ; Save return address
+0026 6B36 0649  14         dect  stack
+0027 6B38 C644  30         mov   tmp0,*stack           ; Push tmp0
 0028                       ;------------------------------------------------------
 0029                       ; Calculate line in editor buffer
 0030                       ;------------------------------------------------------
-0031 6B6A C120  34         mov   @parm1,tmp0
-     6B6C A000     
-0032 6B6E A120  34         a     @fb.topline,tmp0
-     6B70 A304     
-0033 6B72 C804  38         mov   tmp0,@outparm1
-     6B74 A010     
+0031 6B3A C120  34         mov   @parm1,tmp0
+     6B3C A000     
+0032 6B3E A120  34         a     @fb.topline,tmp0
+     6B40 A304     
+0033 6B42 C804  38         mov   tmp0,@outparm1
+     6B44 A010     
 0034                       ;------------------------------------------------------
 0035                       ; Exit
 0036                       ;------------------------------------------------------
 0037               fb.row2line.exit:
-0038 6B76 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0039 6B78 C2F9  30         mov   *stack+,r11           ; Pop r11
-0040 6B7A 045B  20         b     *r11                  ; Return to caller
+0038 6B46 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0039 6B48 C2F9  30         mov   *stack+,r11           ; Pop r11
+0040 6B4A 045B  20         b     *r11                  ; Return to caller
 0041               
 0042               
 0043               
@@ -10834,34 +10859,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0065               * pointer = row * colsline + column + deref(@fb.top.ptr)
 0066               ********|*****|*********************|**************************
 0067               fb.calc_pointer:
-0068 6B7C 0649  14         dect  stack
-0069 6B7E C64B  30         mov   r11,*stack            ; Save return address
-0070 6B80 0649  14         dect  stack
-0071 6B82 C644  30         mov   tmp0,*stack           ; Push tmp0
-0072 6B84 0649  14         dect  stack
-0073 6B86 C645  30         mov   tmp1,*stack           ; Push tmp1
+0068 6B4C 0649  14         dect  stack
+0069 6B4E C64B  30         mov   r11,*stack            ; Save return address
+0070 6B50 0649  14         dect  stack
+0071 6B52 C644  30         mov   tmp0,*stack           ; Push tmp0
+0072 6B54 0649  14         dect  stack
+0073 6B56 C645  30         mov   tmp1,*stack           ; Push tmp1
 0074                       ;------------------------------------------------------
 0075                       ; Calculate pointer
 0076                       ;------------------------------------------------------
-0077 6B88 C120  34         mov   @fb.row,tmp0
-     6B8A A306     
-0078 6B8C 3920  72         mpy   @fb.colsline,tmp0     ; tmp1 = row  * colsline
-     6B8E A30E     
-0079 6B90 A160  34         a     @fb.column,tmp1       ; tmp1 = tmp1 + column
-     6B92 A30C     
-0080 6B94 A160  34         a     @fb.top.ptr,tmp1      ; tmp1 = tmp1 + base
-     6B96 A300     
-0081 6B98 C805  38         mov   tmp1,@fb.current
-     6B9A A302     
+0077 6B58 C120  34         mov   @fb.row,tmp0
+     6B5A A306     
+0078 6B5C 3920  72         mpy   @fb.colsline,tmp0     ; tmp1 = row  * colsline
+     6B5E A30E     
+0079 6B60 A160  34         a     @fb.column,tmp1       ; tmp1 = tmp1 + column
+     6B62 A30C     
+0080 6B64 A160  34         a     @fb.top.ptr,tmp1      ; tmp1 = tmp1 + base
+     6B66 A300     
+0081 6B68 C805  38         mov   tmp1,@fb.current
+     6B6A A302     
 0082                       ;------------------------------------------------------
 0083                       ; Exit
 0084                       ;------------------------------------------------------
 0085               fb.calc_pointer.exit:
-0086 6B9C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0087 6B9E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0088 6BA0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0089 6BA2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0086 6B6C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0087 6B6E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0088 6B70 C2F9  30         mov   *stack+,r11           ; Pop r11
+0089 6B72 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0103                       copy  "fb.cursor.up.asm"    ; Cursor up
      **** ****     > fb.cursor.up.asm
 0001               * FILE......: fb.cursor.up.asm
@@ -10884,88 +10909,88 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * none
 0019               ********|*****|*********************|**************************
 0020               fb.cursor.up
-0021 6BA4 0649  14         dect  stack
-0022 6BA6 C64B  30         mov   r11,*stack            ; Save return address
+0021 6B74 0649  14         dect  stack
+0022 6B76 C64B  30         mov   r11,*stack            ; Save return address
 0023                       ;-------------------------------------------------------
 0024                       ; Crunch current line if dirty
 0025                       ;-------------------------------------------------------
-0026 6BA8 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
-     6BAA A318     
-0027 6BAC 8820  54         c     @fb.row.dirty,@w$ffff
-     6BAE A30A     
-     6BB0 2022     
-0028 6BB2 1604  14         jne   fb.cursor.up.cursor
-0029 6BB4 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6BB6 700A     
-0030 6BB8 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
-     6BBA A30A     
+0026 6B78 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
+     6B7A A318     
+0027 6B7C 8820  54         c     @fb.row.dirty,@w$ffff
+     6B7E A30A     
+     6B80 2022     
+0028 6B82 1604  14         jne   fb.cursor.up.cursor
+0029 6B84 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+     6B86 6FDA     
+0030 6B88 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
+     6B8A A30A     
 0031                       ;-------------------------------------------------------
 0032                       ; Move cursor
 0033                       ;-------------------------------------------------------
 0034               fb.cursor.up.cursor:
-0035 6BBC C120  34         mov   @fb.row,tmp0
-     6BBE A306     
-0036 6BC0 150B  14         jgt   fb.cursor.up.cursor_up
+0035 6B8C C120  34         mov   @fb.row,tmp0
+     6B8E A306     
+0036 6B90 150B  14         jgt   fb.cursor.up.cursor_up
 0037                                                   ; Move cursor up if fb.row > 0
-0038 6BC2 C120  34         mov   @fb.topline,tmp0      ; Do we need to scroll?
-     6BC4 A304     
-0039 6BC6 130C  14         jeq   fb.cursor.up.set_cursorx
+0038 6B92 C120  34         mov   @fb.topline,tmp0      ; Do we need to scroll?
+     6B94 A304     
+0039 6B96 130C  14         jeq   fb.cursor.up.set_cursorx
 0040                                                   ; At top, only position cursor X
 0041                       ;-------------------------------------------------------
 0042                       ; Scroll 1 line
 0043                       ;-------------------------------------------------------
-0044 6BC8 0604  14         dec   tmp0                  ; fb.topline--
-0045 6BCA C804  38         mov   tmp0,@parm1           ; Scroll one line up
-     6BCC A000     
+0044 6B98 0604  14         dec   tmp0                  ; fb.topline--
+0045 6B9A C804  38         mov   tmp0,@parm1           ; Scroll one line up
+     6B9C A000     
 0046               
-0047 6BCE 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     6BD0 6D6C     
+0047 6B9E 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
+     6BA0 6D3C     
 0048                                                   ; | i  @parm1 = Line to start with
 0049                                                   ; /             (becomes @fb.topline)
 0050               
-0051 6BD2 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-     6BD4 A310     
-0052 6BD6 1004  14         jmp   fb.cursor.up.set_cursorx
+0051 6BA2 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
+     6BA4 A310     
+0052 6BA6 1004  14         jmp   fb.cursor.up.set_cursorx
 0053                       ;-------------------------------------------------------
 0054                       ; Move cursor up
 0055                       ;-------------------------------------------------------
 0056               fb.cursor.up.cursor_up:
-0057 6BD8 0620  34         dec   @fb.row               ; Row-- in screen buffer
-     6BDA A306     
-0058 6BDC 06A0  32         bl    @up                   ; Row-- VDP cursor
-     6BDE 26F0     
+0057 6BA8 0620  34         dec   @fb.row               ; Row-- in screen buffer
+     6BAA A306     
+0058 6BAC 06A0  32         bl    @up                   ; Row-- VDP cursor
+     6BAE 26F0     
 0059                       ;-------------------------------------------------------
 0060                       ; Check line length and position cursor
 0061                       ;-------------------------------------------------------
 0062               fb.cursor.up.set_cursorx:
-0063 6BE0 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
-     6BE2 7204     
+0063 6BB0 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
+     6BB2 71D4     
 0064                                                   ; | i  @fb.row        = Row in frame buffer
 0065                                                   ; / o  @fb.row.length = Length of row
 0066               
-0067 6BE4 8820  54         c     @fb.column,@fb.row.length
-     6BE6 A30C     
-     6BE8 A308     
-0068 6BEA 1207  14         jle   fb.cursor.up.exit
+0067 6BB4 8820  54         c     @fb.column,@fb.row.length
+     6BB6 A30C     
+     6BB8 A308     
+0068 6BBA 1207  14         jle   fb.cursor.up.exit
 0069                       ;-------------------------------------------------------
 0070                       ; Adjust cursor column position
 0071                       ;-------------------------------------------------------
-0072 6BEC C820  54         mov   @fb.row.length,@fb.column
-     6BEE A308     
-     6BF0 A30C     
-0073 6BF2 C120  34         mov   @fb.column,tmp0
-     6BF4 A30C     
-0074 6BF6 06A0  32         bl    @xsetx                ; Set VDP cursor X
-     6BF8 26FA     
+0072 6BBC C820  54         mov   @fb.row.length,@fb.column
+     6BBE A308     
+     6BC0 A30C     
+0073 6BC2 C120  34         mov   @fb.column,tmp0
+     6BC4 A30C     
+0074 6BC6 06A0  32         bl    @xsetx                ; Set VDP cursor X
+     6BC8 26FA     
 0075                       ;-------------------------------------------------------
 0076                       ; Exit
 0077                       ;-------------------------------------------------------
 0078               fb.cursor.up.exit:
-0079 6BFA 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6BFC 6B7C     
-0080 6BFE C2F9  30         mov   *stack+,r11           ; Pop r11
-0081 6C00 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0079 6BCA 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+     6BCC 6B4C     
+0080 6BCE C2F9  30         mov   *stack+,r11           ; Pop r11
+0081 6BD0 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0104                       copy  "fb.cursor.down.asm"  ; Cursor down
      **** ****     > fb.cursor.down.asm
 0001               * FILE......: fb.cursor.down.asm
@@ -10988,29 +11013,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * none
 0019               ********|*****|*********************|**************************
 0020               fb.cursor.down:
-0021 6C02 0649  14         dect  stack
-0022 6C04 C64B  30         mov   r11,*stack            ; Save return address
+0021 6BD2 0649  14         dect  stack
+0022 6BD4 C64B  30         mov   r11,*stack            ; Save return address
 0023                       ;------------------------------------------------------
 0024                       ; Last line?
 0025                       ;------------------------------------------------------
-0026 6C06 8820  54         c     @fb.row,@edb.lines    ; Last line in editor buffer ?
-     6C08 A306     
-     6C0A A504     
-0027 6C0C 1332  14         jeq   fb.cursor.down.exit
+0026 6BD6 8820  54         c     @fb.row,@edb.lines    ; Last line in editor buffer ?
+     6BD8 A306     
+     6BDA A504     
+0027 6BDC 1332  14         jeq   fb.cursor.down.exit
 0028                                                   ; Yes, skip further processing
-0029 6C0E 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
-     6C10 A318     
+0029 6BDE 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
+     6BE0 A318     
 0030                       ;-------------------------------------------------------
 0031                       ; Crunch current row if dirty
 0032                       ;-------------------------------------------------------
-0033 6C12 8820  54         c     @fb.row.dirty,@w$ffff
-     6C14 A30A     
-     6C16 2022     
-0034 6C18 1604  14         jne   fb.cursor.down.move
-0035 6C1A 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6C1C 700A     
-0036 6C1E 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
-     6C20 A30A     
+0033 6BE2 8820  54         c     @fb.row.dirty,@w$ffff
+     6BE4 A30A     
+     6BE6 2022     
+0034 6BE8 1604  14         jne   fb.cursor.down.move
+0035 6BEA 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+     6BEC 6FDA     
+0036 6BEE 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
+     6BF0 A30A     
 0037                       ;-------------------------------------------------------
 0038                       ; Move cursor
 0039                       ;-------------------------------------------------------
@@ -11018,81 +11043,81 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0041                       ;-------------------------------------------------------
 0042                       ; EOF reached?
 0043                       ;-------------------------------------------------------
-0044 6C22 C120  34         mov   @fb.topline,tmp0
-     6C24 A304     
-0045 6C26 A120  34         a     @fb.row,tmp0
-     6C28 A306     
-0046 6C2A 8120  34         c     @edb.lines,tmp0       ; fb.topline + fb.row = edb.lines ?
-     6C2C A504     
-0047 6C2E 1314  14         jeq   fb.cursor.down.set_cursorx
+0044 6BF2 C120  34         mov   @fb.topline,tmp0
+     6BF4 A304     
+0045 6BF6 A120  34         a     @fb.row,tmp0
+     6BF8 A306     
+0046 6BFA 8120  34         c     @edb.lines,tmp0       ; fb.topline + fb.row = edb.lines ?
+     6BFC A504     
+0047 6BFE 1314  14         jeq   fb.cursor.down.set_cursorx
 0048                                                   ; Yes, only position cursor X
 0049                       ;-------------------------------------------------------
 0050                       ; Check if scrolling required
 0051                       ;-------------------------------------------------------
-0052 6C30 C120  34         mov   @fb.scrrows,tmp0
-     6C32 A31A     
-0053 6C34 0604  14         dec   tmp0
-0054 6C36 8120  34         c     @fb.row,tmp0
-     6C38 A306     
-0055 6C3A 110A  14         jlt   fb.cursor.down.cursor
+0052 6C00 C120  34         mov   @fb.scrrows,tmp0
+     6C02 A31A     
+0053 6C04 0604  14         dec   tmp0
+0054 6C06 8120  34         c     @fb.row,tmp0
+     6C08 A306     
+0055 6C0A 110A  14         jlt   fb.cursor.down.cursor
 0056                       ;-------------------------------------------------------
 0057                       ; Scroll 1 line
 0058                       ;-------------------------------------------------------
-0059 6C3C C820  54         mov   @fb.topline,@parm1
-     6C3E A304     
-     6C40 A000     
-0060 6C42 05A0  34         inc   @parm1
-     6C44 A000     
+0059 6C0C C820  54         mov   @fb.topline,@parm1
+     6C0E A304     
+     6C10 A000     
+0060 6C12 05A0  34         inc   @parm1
+     6C14 A000     
 0061               
-0062 6C46 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     6C48 6D6C     
+0062 6C16 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
+     6C18 6D3C     
 0063                                                   ; | i  @parm1 = Line to start with
 0064                                                   ; /             (becomes @fb.topline)
 0065               
-0066 6C4A 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-     6C4C A310     
-0067 6C4E 1004  14         jmp   fb.cursor.down.set_cursorx
+0066 6C1A 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
+     6C1C A310     
+0067 6C1E 1004  14         jmp   fb.cursor.down.set_cursorx
 0068                       ;-------------------------------------------------------
 0069                       ; Move cursor down a row, there are still rows left
 0070                       ;-------------------------------------------------------
 0071               fb.cursor.down.cursor:
-0072 6C50 05A0  34         inc   @fb.row               ; Row++ in screen buffer
-     6C52 A306     
-0073 6C54 06A0  32         bl    @down                 ; Row++ VDP cursor
-     6C56 26E8     
+0072 6C20 05A0  34         inc   @fb.row               ; Row++ in screen buffer
+     6C22 A306     
+0073 6C24 06A0  32         bl    @down                 ; Row++ VDP cursor
+     6C26 26E8     
 0074                       ;-------------------------------------------------------
 0075                       ; Check line length and position cursor
 0076                       ;-------------------------------------------------------
 0077               fb.cursor.down.set_cursorx:
-0078 6C58 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
-     6C5A 7204     
+0078 6C28 06A0  32         bl    @edb.line.getlength2  ; \ Get length current line
+     6C2A 71D4     
 0079                                                   ; | i  @fb.row        = Row in frame buffer
 0080                                                   ; / o  @fb.row.length = Length of row
 0081               
-0082 6C5C 8820  54         c     @fb.column,@fb.row.length
-     6C5E A30C     
-     6C60 A308     
-0083 6C62 1207  14         jle   fb.cursor.down.exit
+0082 6C2C 8820  54         c     @fb.column,@fb.row.length
+     6C2E A30C     
+     6C30 A308     
+0083 6C32 1207  14         jle   fb.cursor.down.exit
 0084                                                   ; Exit
 0085                       ;-------------------------------------------------------
 0086                       ; Adjust cursor column position
 0087                       ;-------------------------------------------------------
-0088 6C64 C820  54         mov   @fb.row.length,@fb.column
-     6C66 A308     
-     6C68 A30C     
-0089 6C6A C120  34         mov   @fb.column,tmp0
-     6C6C A30C     
-0090 6C6E 06A0  32         bl    @xsetx                ; Set VDP cursor X
-     6C70 26FA     
+0088 6C34 C820  54         mov   @fb.row.length,@fb.column
+     6C36 A308     
+     6C38 A30C     
+0089 6C3A C120  34         mov   @fb.column,tmp0
+     6C3C A30C     
+0090 6C3E 06A0  32         bl    @xsetx                ; Set VDP cursor X
+     6C40 26FA     
 0091                       ;-------------------------------------------------------
 0092                       ; Exit
 0093                       ;-------------------------------------------------------
 0094               fb.cursor.down.exit:
-0095 6C72 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6C74 6B7C     
-0096 6C76 C2F9  30         mov   *stack+,r11           ; Pop r11
-0097 6C78 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0095 6C42 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+     6C44 6B4C     
+0096 6C46 C2F9  30         mov   *stack+,r11           ; Pop r11
+0097 6C48 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0105                       copy  "fb.cursor.home.asm"  ; Cursor home
      **** ****     > fb.cursor.home.asm
 0001               * FILE......: fb.cursor.home.asm
@@ -11115,35 +11140,35 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0
 0019               ********|*****|*********************|**************************
 0020               fb.cursor.home:
-0021 6C7A 0649  14         dect  stack
-0022 6C7C C64B  30         mov   r11,*stack            ; Save return address
-0023 6C7E 0649  14         dect  stack
-0024 6C80 C644  30         mov   tmp0,*stack           ; Push tmp0
+0021 6C4A 0649  14         dect  stack
+0022 6C4C C64B  30         mov   r11,*stack            ; Save return address
+0023 6C4E 0649  14         dect  stack
+0024 6C50 C644  30         mov   tmp0,*stack           ; Push tmp0
 0025                       ;------------------------------------------------------
 0026                       ; Cursor home
 0027                       ;------------------------------------------------------
-0028 6C82 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
-     6C84 A318     
-0029 6C86 C120  34         mov   @wyx,tmp0
-     6C88 832A     
-0030 6C8A 0244  22         andi  tmp0,>ff00            ; Reset cursor X position to 0
-     6C8C FF00     
-0031 6C8E C804  38         mov   tmp0,@wyx             ; VDP cursor column=0
-     6C90 832A     
-0032 6C92 04E0  34         clr   @fb.column
-     6C94 A30C     
-0033 6C96 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6C98 6B7C     
-0034 6C9A 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
-     6C9C A318     
+0028 6C52 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
+     6C54 A318     
+0029 6C56 C120  34         mov   @wyx,tmp0
+     6C58 832A     
+0030 6C5A 0244  22         andi  tmp0,>ff00            ; Reset cursor X position to 0
+     6C5C FF00     
+0031 6C5E C804  38         mov   tmp0,@wyx             ; VDP cursor column=0
+     6C60 832A     
+0032 6C62 04E0  34         clr   @fb.column
+     6C64 A30C     
+0033 6C66 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+     6C68 6B4C     
+0034 6C6A 0720  34         seto  @fb.status.dirty      ; Trigger refresh of status lines
+     6C6C A318     
 0035                       ;-------------------------------------------------------
 0036                       ; Exit
 0037                       ;-------------------------------------------------------
 0038               fb.cursor.home.exit:
-0039 6C9E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0040 6CA0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0041 6CA2 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0039 6C6E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0040 6C70 C2F9  30         mov   *stack+,r11           ; Pop r11
+0041 6C72 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0106                       copy  "fb.insert.line.asm"  ; Insert new line
      **** ****     > fb.insert.line.asm
 0001               * FILE......: fb.insert.line.asm
@@ -11165,109 +11190,109 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * none
 0018               ********|*****|*********************|**************************
 0019               fb.insert.line:
-0020 6CA4 0649  14         dect  stack
-0021 6CA6 C64B  30         mov   r11,*stack            ; Save return address
+0020 6C74 0649  14         dect  stack
+0021 6C76 C64B  30         mov   r11,*stack            ; Save return address
 0022                       ;-------------------------------------------------------
 0023                       ; Initialisation
 0024                       ;-------------------------------------------------------
-0025 6CA8 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-     6CAA A506     
+0025 6C78 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+     6C7A A506     
 0026                       ;-------------------------------------------------------
 0027                       ; Crunch current line if dirty
 0028                       ;-------------------------------------------------------
-0029 6CAC 8820  54         c     @fb.row.dirty,@w$ffff
-     6CAE A30A     
-     6CB0 2022     
-0030 6CB2 1604  14         jne   fb.insert.line.insert
-0031 6CB4 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6CB6 700A     
-0032 6CB8 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
-     6CBA A30A     
+0029 6C7C 8820  54         c     @fb.row.dirty,@w$ffff
+     6C7E A30A     
+     6C80 2022     
+0030 6C82 1604  14         jne   fb.insert.line.insert
+0031 6C84 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+     6C86 6FDA     
+0032 6C88 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
+     6C8A A30A     
 0033                       ;-------------------------------------------------------
 0034                       ; Insert entry in index
 0035                       ;-------------------------------------------------------
 0036               fb.insert.line.insert:
-0037 6CBC 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-     6CBE 6B7C     
-0038 6CC0 C820  54         mov   @fb.topline,@parm1
-     6CC2 A304     
-     6CC4 A000     
-0039 6CC6 A820  54         a     @fb.row,@parm1        ; Line number to insert
-     6CC8 A306     
-     6CCA A000     
-0040 6CCC C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
-     6CCE A504     
-     6CD0 A002     
+0037 6C8C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+     6C8E 6B4C     
+0038 6C90 C820  54         mov   @fb.topline,@parm1
+     6C92 A304     
+     6C94 A000     
+0039 6C96 A820  54         a     @fb.row,@parm1        ; Line number to insert
+     6C98 A306     
+     6C9A A000     
+0040 6C9C C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
+     6C9E A504     
+     6CA0 A002     
 0041               
-0042 6CD2 06A0  32         bl    @idx.entry.insert     ; Reorganize index
-     6CD4 6F68     
+0042 6CA2 06A0  32         bl    @idx.entry.insert     ; Reorganize index
+     6CA4 6F38     
 0043                                                   ; \ i  parm1 = Line for insert
 0044                                                   ; / i  parm2 = Last line to reorg
 0045               
-0046 6CD6 05A0  34         inc   @edb.lines            ; One line added to editor buffer
-     6CD8 A504     
-0047 6CDA 04E0  34         clr   @fb.row.length        ; Current row length = 0
-     6CDC A308     
+0046 6CA6 05A0  34         inc   @edb.lines            ; One line added to editor buffer
+     6CA8 A504     
+0047 6CAA 04E0  34         clr   @fb.row.length        ; Current row length = 0
+     6CAC A308     
 0048                       ;-------------------------------------------------------
 0049                       ; Check/Adjust marker M1
 0050                       ;-------------------------------------------------------
 0051               fb.insert.line.m1:
-0052 6CDE 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-     6CE0 A50C     
-     6CE2 2022     
-0053 6CE4 1308  14         jeq   fb.insert.line.m2
+0052 6CAE 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
+     6CB0 A50C     
+     6CB2 2022     
+0053 6CB4 1308  14         jeq   fb.insert.line.m2
 0054                                                   ; Yes, skip to M2 check
 0055               
-0056 6CE6 8820  54         c     @parm1,@edb.block.m1
-     6CE8 A000     
-     6CEA A50C     
-0057 6CEC 1504  14         jgt   fb.insert.line.m2
-0058 6CEE 05A0  34         inc   @edb.block.m1         ; M1++
-     6CF0 A50C     
-0059 6CF2 0720  34         seto  @fb.colorize          ; Set colorize flag
-     6CF4 A310     
+0056 6CB6 8820  54         c     @parm1,@edb.block.m1
+     6CB8 A000     
+     6CBA A50C     
+0057 6CBC 1504  14         jgt   fb.insert.line.m2
+0058 6CBE 05A0  34         inc   @edb.block.m1         ; M1++
+     6CC0 A50C     
+0059 6CC2 0720  34         seto  @fb.colorize          ; Set colorize flag
+     6CC4 A310     
 0060                       ;-------------------------------------------------------
 0061                       ; Check/Adjust marker M2
 0062                       ;-------------------------------------------------------
 0063               fb.insert.line.m2:
-0064 6CF6 8820  54         c     @edb.block.m2,@w$ffff ; Marker M1 unset?
-     6CF8 A50E     
-     6CFA 2022     
-0065 6CFC 1308  14         jeq   fb.insert.line.refresh
+0064 6CC6 8820  54         c     @edb.block.m2,@w$ffff ; Marker M1 unset?
+     6CC8 A50E     
+     6CCA 2022     
+0065 6CCC 1308  14         jeq   fb.insert.line.refresh
 0066                                                   ; Yes, skip to refresh frame buffer
 0067               
-0068 6CFE 8820  54         c     @parm1,@edb.block.m2
-     6D00 A000     
-     6D02 A50E     
-0069 6D04 1504  14         jgt   fb.insert.line.refresh
-0070 6D06 05A0  34         inc   @edb.block.m2         ; M2++
-     6D08 A50E     
-0071 6D0A 0720  34         seto  @fb.colorize          ; Set colorize flag
-     6D0C A310     
+0068 6CCE 8820  54         c     @parm1,@edb.block.m2
+     6CD0 A000     
+     6CD2 A50E     
+0069 6CD4 1504  14         jgt   fb.insert.line.refresh
+0070 6CD6 05A0  34         inc   @edb.block.m2         ; M2++
+     6CD8 A50E     
+0071 6CDA 0720  34         seto  @fb.colorize          ; Set colorize flag
+     6CDC A310     
 0072                       ;-------------------------------------------------------
 0073                       ; Refresh frame buffer and physical screen
 0074                       ;-------------------------------------------------------
 0075               fb.insert.line.refresh:
-0076 6D0E C820  54         mov   @fb.topline,@parm1
-     6D10 A304     
-     6D12 A000     
+0076 6CDE C820  54         mov   @fb.topline,@parm1
+     6CE0 A304     
+     6CE2 A000     
 0077               
-0078 6D14 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     6D16 6D6C     
+0078 6CE4 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
+     6CE6 6D3C     
 0079                                                   ; | i  @parm1 = Line to start with
 0080                                                   ; /             (becomes @fb.topline)
 0081               
-0082 6D18 0720  34         seto  @fb.dirty             ; Trigger screen refresh
-     6D1A A316     
-0083 6D1C 06A0  32         bl    @fb.cursor.home       ; Move cursor home
-     6D1E 6C7A     
+0082 6CE8 0720  34         seto  @fb.dirty             ; Trigger screen refresh
+     6CEA A316     
+0083 6CEC 06A0  32         bl    @fb.cursor.home       ; Move cursor home
+     6CEE 6C4A     
 0084                       ;-------------------------------------------------------
 0085                       ; Exit
 0086                       ;-------------------------------------------------------
 0087               fb.insert.line.exit:
-0088 6D20 C2F9  30         mov   *stack+,r11           ; Pop r11
-0089 6D22 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0088 6CF0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0089 6CF2 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0107                       copy  "fb.get.firstnonblank.asm"
      **** ****     > fb.get.firstnonblank.asm
 0001               * FILE......: fb.get.firstnonblank.asm
@@ -11284,64 +11309,64 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0012               * @outparm2 = Character
 0013               ********|*****|*********************|**************************
 0014               fb.get.firstnonblank:
-0015 6D24 0649  14         dect  stack
-0016 6D26 C64B  30         mov   r11,*stack            ; Save return address
+0015 6CF4 0649  14         dect  stack
+0016 6CF6 C64B  30         mov   r11,*stack            ; Save return address
 0017                       ;------------------------------------------------------
 0018                       ; Prepare for scanning
 0019                       ;------------------------------------------------------
-0020 6D28 04E0  34         clr   @fb.column
-     6D2A A30C     
-0021 6D2C 06A0  32         bl    @fb.calc_pointer
-     6D2E 6B7C     
-0022 6D30 06A0  32         bl    @edb.line.getlength2  ; Get length current line
-     6D32 7204     
-0023 6D34 C1A0  34         mov   @fb.row.length,tmp2   ; Set loop counter
-     6D36 A308     
-0024 6D38 1313  14         jeq   fb.get.firstnonblank.nomatch
+0020 6CF8 04E0  34         clr   @fb.column
+     6CFA A30C     
+0021 6CFC 06A0  32         bl    @fb.calc_pointer
+     6CFE 6B4C     
+0022 6D00 06A0  32         bl    @edb.line.getlength2  ; Get length current line
+     6D02 71D4     
+0023 6D04 C1A0  34         mov   @fb.row.length,tmp2   ; Set loop counter
+     6D06 A308     
+0024 6D08 1313  14         jeq   fb.get.firstnonblank.nomatch
 0025                                                   ; Exit if empty line
-0026 6D3A C120  34         mov   @fb.current,tmp0      ; Pointer to current char
-     6D3C A302     
-0027 6D3E 04C5  14         clr   tmp1
+0026 6D0A C120  34         mov   @fb.current,tmp0      ; Pointer to current char
+     6D0C A302     
+0027 6D0E 04C5  14         clr   tmp1
 0028                       ;------------------------------------------------------
 0029                       ; Scan line for non-blank character
 0030                       ;------------------------------------------------------
 0031               fb.get.firstnonblank.loop:
-0032 6D40 D174  28         movb  *tmp0+,tmp1           ; Get character
-0033 6D42 130E  14         jeq   fb.get.firstnonblank.nomatch
+0032 6D10 D174  28         movb  *tmp0+,tmp1           ; Get character
+0033 6D12 130E  14         jeq   fb.get.firstnonblank.nomatch
 0034                                                   ; Exit if empty line
-0035 6D44 0285  22         ci    tmp1,>2000            ; Whitespace?
-     6D46 2000     
-0036 6D48 1503  14         jgt   fb.get.firstnonblank.match
-0037 6D4A 0606  14         dec   tmp2                  ; Counter--
-0038 6D4C 16F9  14         jne   fb.get.firstnonblank.loop
-0039 6D4E 1008  14         jmp   fb.get.firstnonblank.nomatch
+0035 6D14 0285  22         ci    tmp1,>2000            ; Whitespace?
+     6D16 2000     
+0036 6D18 1503  14         jgt   fb.get.firstnonblank.match
+0037 6D1A 0606  14         dec   tmp2                  ; Counter--
+0038 6D1C 16F9  14         jne   fb.get.firstnonblank.loop
+0039 6D1E 1008  14         jmp   fb.get.firstnonblank.nomatch
 0040                       ;------------------------------------------------------
 0041                       ; Non-blank character found
 0042                       ;------------------------------------------------------
 0043               fb.get.firstnonblank.match:
-0044 6D50 6120  34         s     @fb.current,tmp0      ; Calculate column
-     6D52 A302     
-0045 6D54 0604  14         dec   tmp0
-0046 6D56 C804  38         mov   tmp0,@outparm1        ; Save column
-     6D58 A010     
-0047 6D5A D805  38         movb  tmp1,@outparm2        ; Save character
-     6D5C A012     
-0048 6D5E 1004  14         jmp   fb.get.firstnonblank.exit
+0044 6D20 6120  34         s     @fb.current,tmp0      ; Calculate column
+     6D22 A302     
+0045 6D24 0604  14         dec   tmp0
+0046 6D26 C804  38         mov   tmp0,@outparm1        ; Save column
+     6D28 A010     
+0047 6D2A D805  38         movb  tmp1,@outparm2        ; Save character
+     6D2C A012     
+0048 6D2E 1004  14         jmp   fb.get.firstnonblank.exit
 0049                       ;------------------------------------------------------
 0050                       ; No non-blank character found
 0051                       ;------------------------------------------------------
 0052               fb.get.firstnonblank.nomatch:
-0053 6D60 04E0  34         clr   @outparm1             ; X=0
-     6D62 A010     
-0054 6D64 04E0  34         clr   @outparm2             ; Null
-     6D66 A012     
+0053 6D30 04E0  34         clr   @outparm1             ; X=0
+     6D32 A010     
+0054 6D34 04E0  34         clr   @outparm2             ; Null
+     6D36 A012     
 0055                       ;------------------------------------------------------
 0056                       ; Exit
 0057                       ;------------------------------------------------------
 0058               fb.get.firstnonblank.exit:
-0059 6D68 C2F9  30         mov   *stack+,r11           ; Pop r11
-0060 6D6A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0059 6D38 C2F9  30         mov   *stack+,r11           ; Pop r11
+0060 6D3A 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0108                                                   ; Get column of first non-blank character
 0109                       copy  "fb.refresh.asm"      ; Refresh framebuffer
      **** ****     > fb.refresh.asm
@@ -11364,82 +11389,82 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * tmp0,tmp1,tmp2
 0018               ********|*****|*********************|**************************
 0019               fb.refresh:
-0020 6D6C 0649  14         dect  stack
-0021 6D6E C64B  30         mov   r11,*stack            ; Push return address
-0022 6D70 0649  14         dect  stack
-0023 6D72 C644  30         mov   tmp0,*stack           ; Push tmp0
-0024 6D74 0649  14         dect  stack
-0025 6D76 C645  30         mov   tmp1,*stack           ; Push tmp1
-0026 6D78 0649  14         dect  stack
-0027 6D7A C646  30         mov   tmp2,*stack           ; Push tmp2
+0020 6D3C 0649  14         dect  stack
+0021 6D3E C64B  30         mov   r11,*stack            ; Push return address
+0022 6D40 0649  14         dect  stack
+0023 6D42 C644  30         mov   tmp0,*stack           ; Push tmp0
+0024 6D44 0649  14         dect  stack
+0025 6D46 C645  30         mov   tmp1,*stack           ; Push tmp1
+0026 6D48 0649  14         dect  stack
+0027 6D4A C646  30         mov   tmp2,*stack           ; Push tmp2
 0028                       ;------------------------------------------------------
 0029                       ; Setup starting position in index
 0030                       ;------------------------------------------------------
-0031 6D7C C820  54         mov   @parm1,@fb.topline
-     6D7E A000     
-     6D80 A304     
-0032 6D82 04E0  34         clr   @parm2                ; Target row in frame buffer
-     6D84 A002     
+0031 6D4C C820  54         mov   @parm1,@fb.topline
+     6D4E A000     
+     6D50 A304     
+0032 6D52 04E0  34         clr   @parm2                ; Target row in frame buffer
+     6D54 A002     
 0033                       ;------------------------------------------------------
 0034                       ; Check if already at EOF
 0035                       ;------------------------------------------------------
-0036 6D86 8820  54         c     @parm1,@edb.lines     ; EOF reached?
-     6D88 A000     
-     6D8A A504     
-0037 6D8C 130F  14         jeq   fb.refresh.erase_eob  ; Yes, no need to unpack
+0036 6D56 8820  54         c     @parm1,@edb.lines     ; EOF reached?
+     6D58 A000     
+     6D5A A504     
+0037 6D5C 130F  14         jeq   fb.refresh.erase_eob  ; Yes, no need to unpack
 0038                       ;------------------------------------------------------
 0039                       ; Unpack line to frame buffer
 0040                       ;------------------------------------------------------
 0041               fb.refresh.unpack_line:
-0042 6D8E 06A0  32         bl    @edb.line.unpack.fb   ; Unpack line from editor buffer
-     6D90 7102     
+0042 6D5E 06A0  32         bl    @edb.line.unpack.fb   ; Unpack line from editor buffer
+     6D60 70D2     
 0043                                                   ; \ i  parm1    = Line to unpack
 0044                                                   ; | i  parm2    = Target row in frame buffer
 0045                                                   ; / o  outparm1 = Length of line
 0046               
-0047 6D92 05A0  34         inc   @parm1                ; Next line in editor buffer
-     6D94 A000     
-0048 6D96 05A0  34         inc   @parm2                ; Next row in frame buffer
-     6D98 A002     
+0047 6D62 05A0  34         inc   @parm1                ; Next line in editor buffer
+     6D64 A000     
+0048 6D66 05A0  34         inc   @parm2                ; Next row in frame buffer
+     6D68 A002     
 0049                       ;------------------------------------------------------
 0050                       ; Last row in editor buffer reached ?
 0051                       ;------------------------------------------------------
-0052 6D9A 8820  54         c     @parm1,@edb.lines     ; BOT reached?
-     6D9C A000     
-     6D9E A504     
-0053 6DA0 1305  14         jeq   fb.refresh.erase_eob  ; yes, erase until end of frame buffer
+0052 6D6A 8820  54         c     @parm1,@edb.lines     ; BOT reached?
+     6D6C A000     
+     6D6E A504     
+0053 6D70 1305  14         jeq   fb.refresh.erase_eob  ; yes, erase until end of frame buffer
 0054               
-0055 6DA2 8820  54         c     @parm2,@fb.scrrows
-     6DA4 A002     
-     6DA6 A31A     
-0056 6DA8 11F2  14         jlt   fb.refresh.unpack_line
+0055 6D72 8820  54         c     @parm2,@fb.scrrows
+     6D74 A002     
+     6D76 A31A     
+0056 6D78 11F2  14         jlt   fb.refresh.unpack_line
 0057                                                   ; No, unpack next line
-0058 6DAA 1011  14         jmp   fb.refresh.exit       ; Yes, exit without erasing
+0058 6D7A 1011  14         jmp   fb.refresh.exit       ; Yes, exit without erasing
 0059                       ;------------------------------------------------------
 0060                       ; Erase until end of frame buffer
 0061                       ;------------------------------------------------------
 0062               fb.refresh.erase_eob:
-0063 6DAC C120  34         mov   @parm2,tmp0           ; Current row
-     6DAE A002     
-0064 6DB0 C160  34         mov   @fb.scrrows,tmp1      ; Rows framebuffer
-     6DB2 A31A     
-0065 6DB4 6144  18         s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
-0066 6DB6 3960  72         mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
-     6DB8 A30E     
+0063 6D7C C120  34         mov   @parm2,tmp0           ; Current row
+     6D7E A002     
+0064 6D80 C160  34         mov   @fb.scrrows,tmp1      ; Rows framebuffer
+     6D82 A31A     
+0065 6D84 6144  18         s     tmp0,tmp1             ; tmp1 = rows framebuffer - current row
+0066 6D86 3960  72         mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
+     6D88 A30E     
 0067               
-0068 6DBA C186  18         mov   tmp2,tmp2             ; Already at end of frame buffer?
-0069 6DBC 1308  14         jeq   fb.refresh.exit       ; Yes, so exit
+0068 6D8A C186  18         mov   tmp2,tmp2             ; Already at end of frame buffer?
+0069 6D8C 1308  14         jeq   fb.refresh.exit       ; Yes, so exit
 0070               
-0071 6DBE 3920  72         mpy   @fb.colsline,tmp0     ; cols per row * tmp0 (Result in tmp1!)
-     6DC0 A30E     
-0072 6DC2 A160  34         a     @fb.top.ptr,tmp1      ; Add framebuffer base
-     6DC4 A300     
+0071 6D8E 3920  72         mpy   @fb.colsline,tmp0     ; cols per row * tmp0 (Result in tmp1!)
+     6D90 A30E     
+0072 6D92 A160  34         a     @fb.top.ptr,tmp1      ; Add framebuffer base
+     6D94 A300     
 0073               
-0074 6DC6 C105  18         mov   tmp1,tmp0             ; tmp0 = Memory start address
-0075 6DC8 04C5  14         clr   tmp1                  ; Clear with >00 character
+0074 6D96 C105  18         mov   tmp1,tmp0             ; tmp0 = Memory start address
+0075 6D98 04C5  14         clr   tmp1                  ; Clear with >00 character
 0076               
-0077 6DCA 06A0  32         bl    @xfilm                ; \ Fill memory
-     6DCC 2250     
+0077 6D9A 06A0  32         bl    @xfilm                ; \ Fill memory
+     6D9C 2250     
 0078                                                   ; | i  tmp0 = Memory start address
 0079                                                   ; | i  tmp1 = Byte to fill
 0080                                                   ; / i  tmp2 = Number of bytes to fill
@@ -11447,15 +11472,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0082                       ; Exit
 0083                       ;------------------------------------------------------
 0084               fb.refresh.exit:
-0085 6DCE 0720  34         seto  @fb.dirty             ; Refresh screen
-     6DD0 A316     
+0085 6D9E 0720  34         seto  @fb.dirty             ; Refresh screen
+     6DA0 A316     
 0086               
-0087 6DD2 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0088 6DD4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0089 6DD6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0090 6DD8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0091 6DDA 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0087 6DA2 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0088 6DA4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0089 6DA6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0090 6DA8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0091 6DAA 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0110                       copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
      **** ****     > fb.restore.asm
 0001               * FILE......: fb.restore.asm
@@ -11478,60 +11503,60 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * NONE
 0019               ********|*****|*********************|**************************
 0020               fb.restore:
-0021 6DDC 0649  14         dect  stack
-0022 6DDE C64B  30         mov   r11,*stack            ; Save return address
-0023 6DE0 0649  14         dect  stack
-0024 6DE2 C660  46         mov   @parm1,*stack         ; Push @parm1
-     6DE4 A000     
+0021 6DAC 0649  14         dect  stack
+0022 6DAE C64B  30         mov   r11,*stack            ; Save return address
+0023 6DB0 0649  14         dect  stack
+0024 6DB2 C660  46         mov   @parm1,*stack         ; Push @parm1
+     6DB4 A000     
 0025                       ;------------------------------------------------------
 0026                       ; Refresh framebuffer
 0027                       ;------------------------------------------------------
-0028 6DE6 C820  54         mov   @fb.topline,@parm1
-     6DE8 A304     
-     6DEA A000     
-0029 6DEC 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
-     6DEE 6D6C     
+0028 6DB6 C820  54         mov   @fb.topline,@parm1
+     6DB8 A304     
+     6DBA A000     
+0029 6DBC 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
+     6DBE 6D3C     
 0030                                                   ; \ @i  parm1 = Line to start with
 0031                       ;------------------------------------------------------
 0032                       ; Color marked lines
 0033                       ;------------------------------------------------------
-0034 6DF0 0720  34         seto  @parm1                ; Skip Asserts
-     6DF2 A000     
-0035 6DF4 06A0  32         bl    @fb.colorlines        ; Colorize frame buffer content
-     6DF6 7D2A     
+0034 6DC0 0720  34         seto  @parm1                ; Skip Asserts
+     6DC2 A000     
+0035 6DC4 06A0  32         bl    @fb.colorlines        ; Colorize frame buffer content
+     6DC6 7CFA     
 0036                                                   ; \ i  @parm1 = Force refresh if >ffff
 0037                                                   ; /
 0038                       ;------------------------------------------------------
 0039                       ; Color status lines
 0040                       ;------------------------------------------------------
-0041 6DF8 C820  54         mov   @tv.color,@parm1      ; Set normal color
-     6DFA A218     
-     6DFC A000     
-0042 6DFE 06A0  32         bl    @pane.action.colorscheme.statlines
-     6E00 7804     
+0041 6DC8 C820  54         mov   @tv.color,@parm1      ; Set normal color
+     6DCA A218     
+     6DCC A000     
+0042 6DCE 06A0  32         bl    @pane.action.colorscheme.statlines
+     6DD0 77D4     
 0043                                                   ; Set color combination for status lines
 0044                                                   ; \ i  @parm1 = Color combination
 0045                                                   ; /
 0046                       ;------------------------------------------------------
 0047                       ; Update status line and show cursor
 0048                       ;------------------------------------------------------
-0049 6E02 0720  34         seto  @fb.status.dirty      ; Trigger status line update
-     6E04 A318     
+0049 6DD2 0720  34         seto  @fb.status.dirty      ; Trigger status line update
+     6DD4 A318     
 0050               
-0051 6E06 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6E08 783C     
+0051 6DD6 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     6DD8 780C     
 0052                       ;------------------------------------------------------
 0053                       ; Exit
 0054                       ;------------------------------------------------------
 0055               fb.restore.exit:
-0056 6E0A C839  50         mov   *stack+,@parm1        ; Pop @parm1
-     6E0C A000     
-0057 6E0E C820  54         mov   @parm1,@wyx           ; Set cursor position
-     6E10 A000     
-     6E12 832A     
-0058 6E14 C2F9  30         mov   *stack+,r11           ; Pop R11
-0059 6E16 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0056 6DDA C839  50         mov   *stack+,@parm1        ; Pop @parm1
+     6DDC A000     
+0057 6DDE C820  54         mov   @parm1,@wyx           ; Set cursor position
+     6DE0 A000     
+     6DE2 832A     
+0058 6DE4 C2F9  30         mov   *stack+,r11           ; Pop R11
+0059 6DE6 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0111                       ;-----------------------------------------------------------------------
 0112                       ; Logic for Index management
 0113                       ;-----------------------------------------------------------------------
@@ -11558,77 +11583,77 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0019               * tmp0,tmp1,tmp2
 0020               ********|*****|*********************|**************************
 0021               idx.entry.update:
-0022 6E18 0649  14         dect  stack
-0023 6E1A C64B  30         mov   r11,*stack            ; Save return address
-0024 6E1C 0649  14         dect  stack
-0025 6E1E C644  30         mov   tmp0,*stack           ; Push tmp0
-0026 6E20 0649  14         dect  stack
-0027 6E22 C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 6DE8 0649  14         dect  stack
+0023 6DEA C64B  30         mov   r11,*stack            ; Save return address
+0024 6DEC 0649  14         dect  stack
+0025 6DEE C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 6DF0 0649  14         dect  stack
+0027 6DF2 C645  30         mov   tmp1,*stack           ; Push tmp1
 0028                       ;------------------------------------------------------
 0029                       ; Get parameters
 0030                       ;------------------------------------------------------
-0031 6E24 C120  34         mov   @parm1,tmp0           ; Get line number
-     6E26 A000     
-0032 6E28 C160  34         mov   @parm2,tmp1           ; Get pointer
-     6E2A A002     
-0033 6E2C 1312  14         jeq   idx.entry.update.clear
+0031 6DF4 C120  34         mov   @parm1,tmp0           ; Get line number
+     6DF6 A000     
+0032 6DF8 C160  34         mov   @parm2,tmp1           ; Get pointer
+     6DFA A002     
+0033 6DFC 1312  14         jeq   idx.entry.update.clear
 0034                                                   ; Special handling for "null"-pointer
 0035                       ;------------------------------------------------------
 0036                       ; Calculate LSB value index slot (pointer offset)
 0037                       ;------------------------------------------------------
-0038 6E2E 0245  22         andi  tmp1,>0fff            ; Remove high-nibble from pointer
-     6E30 0FFF     
-0039 6E32 0945  56         srl   tmp1,4                ; Get offset (divide by 16)
+0038 6DFE 0245  22         andi  tmp1,>0fff            ; Remove high-nibble from pointer
+     6E00 0FFF     
+0039 6E02 0945  56         srl   tmp1,4                ; Get offset (divide by 16)
 0040                       ;------------------------------------------------------
 0041                       ; Calculate MSB value index slot (SAMS page editor buffer)
 0042                       ;------------------------------------------------------
-0043 6E34 06E0  34         swpb  @parm3
-     6E36 A004     
-0044 6E38 D160  34         movb  @parm3,tmp1           ; Put SAMS page in MSB
-     6E3A A004     
-0045 6E3C 06E0  34         swpb  @parm3                ; \ Restore original order again,
-     6E3E A004     
+0043 6E04 06E0  34         swpb  @parm3
+     6E06 A004     
+0044 6E08 D160  34         movb  @parm3,tmp1           ; Put SAMS page in MSB
+     6E0A A004     
+0045 6E0C 06E0  34         swpb  @parm3                ; \ Restore original order again,
+     6E0E A004     
 0046                                                   ; / important for messing up caller parm3!
 0047                       ;------------------------------------------------------
 0048                       ; Update index slot
 0049                       ;------------------------------------------------------
 0050               idx.entry.update.save:
-0051 6E40 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
-     6E42 3246     
+0051 6E10 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
+     6E12 3246     
 0052                                                   ; \ i  tmp0     = Line number
 0053                                                   ; / o  outparm1 = Slot offset in SAMS page
 0054               
-0055 6E44 C120  34         mov   @outparm1,tmp0        ; \ Update index slot
-     6E46 A010     
-0056 6E48 C905  38         mov   tmp1,@idx.top(tmp0)   ; /
-     6E4A B000     
-0057 6E4C C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     6E4E A010     
-0058 6E50 1008  14         jmp   idx.entry.update.exit
+0055 6E14 C120  34         mov   @outparm1,tmp0        ; \ Update index slot
+     6E16 A010     
+0056 6E18 C905  38         mov   tmp1,@idx.top(tmp0)   ; /
+     6E1A B000     
+0057 6E1C C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
+     6E1E A010     
+0058 6E20 1008  14         jmp   idx.entry.update.exit
 0059                       ;------------------------------------------------------
 0060                       ; Special handling for "null"-pointer
 0061                       ;------------------------------------------------------
 0062               idx.entry.update.clear:
-0063 6E52 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
-     6E54 3246     
+0063 6E22 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
+     6E24 3246     
 0064                                                   ; \ i  tmp0     = Line number
 0065                                                   ; / o  outparm1 = Slot offset in SAMS page
 0066               
-0067 6E56 C120  34         mov   @outparm1,tmp0        ; \ Clear index slot
-     6E58 A010     
-0068 6E5A 04E4  34         clr   @idx.top(tmp0)        ; /
-     6E5C B000     
-0069 6E5E C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     6E60 A010     
+0067 6E26 C120  34         mov   @outparm1,tmp0        ; \ Clear index slot
+     6E28 A010     
+0068 6E2A 04E4  34         clr   @idx.top(tmp0)        ; /
+     6E2C B000     
+0069 6E2E C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
+     6E30 A010     
 0070                       ;------------------------------------------------------
 0071                       ; Exit
 0072                       ;------------------------------------------------------
 0073               idx.entry.update.exit:
-0074 6E62 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0075 6E64 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0076 6E66 C2F9  30         mov   *stack+,r11           ; Pop r11
-0077 6E68 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0074 6E32 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0075 6E34 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0076 6E36 C2F9  30         mov   *stack+,r11           ; Pop r11
+0077 6E38 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0115                       copy  "idx.pointer.asm"     ; Index management - Get pointer to line
      **** ****     > idx.pointer.asm
 0001               * FILE......: idx.pointer.asm
@@ -11651,72 +11676,72 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0,tmp1,tmp2
 0019               ********|*****|*********************|**************************
 0020               idx.pointer.get:
-0021 6E6A 0649  14         dect  stack
-0022 6E6C C64B  30         mov   r11,*stack            ; Save return address
-0023 6E6E 0649  14         dect  stack
-0024 6E70 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 6E72 0649  14         dect  stack
-0026 6E74 C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 6E76 0649  14         dect  stack
-0028 6E78 C646  30         mov   tmp2,*stack           ; Push tmp2
+0021 6E3A 0649  14         dect  stack
+0022 6E3C C64B  30         mov   r11,*stack            ; Save return address
+0023 6E3E 0649  14         dect  stack
+0024 6E40 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 6E42 0649  14         dect  stack
+0026 6E44 C645  30         mov   tmp1,*stack           ; Push tmp1
+0027 6E46 0649  14         dect  stack
+0028 6E48 C646  30         mov   tmp2,*stack           ; Push tmp2
 0029                       ;------------------------------------------------------
 0030                       ; Get slot entry
 0031                       ;------------------------------------------------------
-0032 6E7A C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
-     6E7C A000     
+0032 6E4A C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
+     6E4C A000     
 0033               
-0034 6E7E 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page with index slot
-     6E80 3246     
+0034 6E4E 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page with index slot
+     6E50 3246     
 0035                                                   ; \ i  tmp0     = Line number
 0036                                                   ; / o  outparm1 = Slot offset in SAMS page
 0037               
-0038 6E82 C120  34         mov   @outparm1,tmp0        ; \ Get slot entry
-     6E84 A010     
-0039 6E86 C164  34         mov   @idx.top(tmp0),tmp1   ; /
-     6E88 B000     
+0038 6E52 C120  34         mov   @outparm1,tmp0        ; \ Get slot entry
+     6E54 A010     
+0039 6E56 C164  34         mov   @idx.top(tmp0),tmp1   ; /
+     6E58 B000     
 0040               
-0041 6E8A 130C  14         jeq   idx.pointer.get.parm.null
+0041 6E5A 130C  14         jeq   idx.pointer.get.parm.null
 0042                                                   ; Skip if index slot empty
 0043                       ;------------------------------------------------------
 0044                       ; Calculate MSB (SAMS page)
 0045                       ;------------------------------------------------------
-0046 6E8C C185  18         mov   tmp1,tmp2             ; \
-0047 6E8E 0986  56         srl   tmp2,8                ; / Right align SAMS page
+0046 6E5C C185  18         mov   tmp1,tmp2             ; \
+0047 6E5E 0986  56         srl   tmp2,8                ; / Right align SAMS page
 0048                       ;------------------------------------------------------
 0049                       ; Calculate LSB (pointer address)
 0050                       ;------------------------------------------------------
-0051 6E90 0245  22         andi  tmp1,>00ff            ; Get rid of MSB (SAMS page)
-     6E92 00FF     
-0052 6E94 0A45  56         sla   tmp1,4                ; Multiply with 16
-0053 6E96 0225  22         ai    tmp1,edb.top          ; Add editor buffer base address
-     6E98 C000     
+0051 6E60 0245  22         andi  tmp1,>00ff            ; Get rid of MSB (SAMS page)
+     6E62 00FF     
+0052 6E64 0A45  56         sla   tmp1,4                ; Multiply with 16
+0053 6E66 0225  22         ai    tmp1,edb.top          ; Add editor buffer base address
+     6E68 C000     
 0054                       ;------------------------------------------------------
 0055                       ; Return parameters
 0056                       ;------------------------------------------------------
 0057               idx.pointer.get.parm:
-0058 6E9A C805  38         mov   tmp1,@outparm1        ; Index slot -> Pointer
-     6E9C A010     
-0059 6E9E C806  38         mov   tmp2,@outparm2        ; Index slot -> SAMS page
-     6EA0 A012     
-0060 6EA2 1004  14         jmp   idx.pointer.get.exit
+0058 6E6A C805  38         mov   tmp1,@outparm1        ; Index slot -> Pointer
+     6E6C A010     
+0059 6E6E C806  38         mov   tmp2,@outparm2        ; Index slot -> SAMS page
+     6E70 A012     
+0060 6E72 1004  14         jmp   idx.pointer.get.exit
 0061                       ;------------------------------------------------------
 0062                       ; Special handling for "null"-pointer
 0063                       ;------------------------------------------------------
 0064               idx.pointer.get.parm.null:
-0065 6EA4 04E0  34         clr   @outparm1
-     6EA6 A010     
-0066 6EA8 04E0  34         clr   @outparm2
-     6EAA A012     
+0065 6E74 04E0  34         clr   @outparm1
+     6E76 A010     
+0066 6E78 04E0  34         clr   @outparm2
+     6E7A A012     
 0067                       ;------------------------------------------------------
 0068                       ; Exit
 0069                       ;------------------------------------------------------
 0070               idx.pointer.get.exit:
-0071 6EAC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0072 6EAE C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0073 6EB0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0074 6EB2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0075 6EB4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0071 6E7C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0072 6E7E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0073 6E80 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0074 6E82 C2F9  30         mov   *stack+,r11           ; Pop r11
+0075 6E84 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0116                       copy  "idx.delete.asm"      ; Index management - delete slot
      **** ****     > idx.delete.asm
 0001               * FILE......: idx_delete.asm
@@ -11735,19 +11760,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014                       ;------------------------------------------------------
 0015                       ; Reorganize index entries
 0016                       ;------------------------------------------------------
-0017 6EB6 0224  22         ai    tmp0,idx.top          ; Add index base to offset
-     6EB8 B000     
-0018 6EBA C144  18         mov   tmp0,tmp1             ; a = current slot
-0019 6EBC 05C5  14         inct  tmp1                  ; b = current slot + 2
+0017 6E86 0224  22         ai    tmp0,idx.top          ; Add index base to offset
+     6E88 B000     
+0018 6E8A C144  18         mov   tmp0,tmp1             ; a = current slot
+0019 6E8C 05C5  14         inct  tmp1                  ; b = current slot + 2
 0020                       ;------------------------------------------------------
 0021                       ; Loop forward until end of index
 0022                       ;------------------------------------------------------
 0023               _idx.entry.delete.reorg.loop:
-0024 6EBE CD35  46         mov   *tmp1+,*tmp0+         ; Copy b -> a
-0025 6EC0 0606  14         dec   tmp2                  ; tmp2--
-0026 6EC2 16FD  14         jne   _idx.entry.delete.reorg.loop
+0024 6E8E CD35  46         mov   *tmp1+,*tmp0+         ; Copy b -> a
+0025 6E90 0606  14         dec   tmp2                  ; tmp2--
+0026 6E92 16FD  14         jne   _idx.entry.delete.reorg.loop
 0027                                                   ; Loop unless completed
-0028 6EC4 045B  20         b     *r11                  ; Return to caller
+0028 6E94 045B  20         b     *r11                  ; Return to caller
 0029               
 0030               
 0031               
@@ -11765,107 +11790,107 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043               * tmp0,tmp1,tmp2,tmp3
 0044               ********|*****|*********************|**************************
 0045               idx.entry.delete:
-0046 6EC6 0649  14         dect  stack
-0047 6EC8 C64B  30         mov   r11,*stack            ; Save return address
-0048 6ECA 0649  14         dect  stack
-0049 6ECC C644  30         mov   tmp0,*stack           ; Push tmp0
-0050 6ECE 0649  14         dect  stack
-0051 6ED0 C645  30         mov   tmp1,*stack           ; Push tmp1
-0052 6ED2 0649  14         dect  stack
-0053 6ED4 C646  30         mov   tmp2,*stack           ; Push tmp2
-0054 6ED6 0649  14         dect  stack
-0055 6ED8 C647  30         mov   tmp3,*stack           ; Push tmp3
+0046 6E96 0649  14         dect  stack
+0047 6E98 C64B  30         mov   r11,*stack            ; Save return address
+0048 6E9A 0649  14         dect  stack
+0049 6E9C C644  30         mov   tmp0,*stack           ; Push tmp0
+0050 6E9E 0649  14         dect  stack
+0051 6EA0 C645  30         mov   tmp1,*stack           ; Push tmp1
+0052 6EA2 0649  14         dect  stack
+0053 6EA4 C646  30         mov   tmp2,*stack           ; Push tmp2
+0054 6EA6 0649  14         dect  stack
+0055 6EA8 C647  30         mov   tmp3,*stack           ; Push tmp3
 0056                       ;------------------------------------------------------
 0057                       ; Get index slot
 0058                       ;------------------------------------------------------
-0059 6EDA C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
-     6EDC A000     
+0059 6EAA C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
+     6EAC A000     
 0060               
-0061 6EDE 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
-     6EE0 3246     
+0061 6EAE 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
+     6EB0 3246     
 0062                                                   ; \ i  tmp0     = Line number
 0063                                                   ; / o  outparm1 = Slot offset in SAMS page
 0064               
-0065 6EE2 C120  34         mov   @outparm1,tmp0        ; Index offset
-     6EE4 A010     
+0065 6EB2 C120  34         mov   @outparm1,tmp0        ; Index offset
+     6EB4 A010     
 0066                       ;------------------------------------------------------
 0067                       ; Prepare for index reorg
 0068                       ;------------------------------------------------------
-0069 6EE6 C1A0  34         mov   @parm2,tmp2           ; Get last line to check
-     6EE8 A002     
-0070 6EEA 1303  14         jeq   idx.entry.delete.lastline
+0069 6EB6 C1A0  34         mov   @parm2,tmp2           ; Get last line to check
+     6EB8 A002     
+0070 6EBA 1303  14         jeq   idx.entry.delete.lastline
 0071                                                   ; Exit early if last line = 0
 0072               
-0073 6EEC 61A0  34         s     @parm1,tmp2           ; Calculate loop
-     6EEE A000     
-0074 6EF0 1504  14         jgt   idx.entry.delete.reorg
+0073 6EBC 61A0  34         s     @parm1,tmp2           ; Calculate loop
+     6EBE A000     
+0074 6EC0 1504  14         jgt   idx.entry.delete.reorg
 0075                                                   ; Reorganize if loop counter > 0
 0076                       ;------------------------------------------------------
 0077                       ; Special treatment for last line
 0078                       ;------------------------------------------------------
 0079               idx.entry.delete.lastline:
-0080 6EF2 0224  22         ai    tmp0,idx.top          ; Add index base to offset
-     6EF4 B000     
-0081 6EF6 04D4  26         clr   *tmp0                 ; Clear index entry
-0082 6EF8 1012  14         jmp   idx.entry.delete.exit ; Exit early
+0080 6EC2 0224  22         ai    tmp0,idx.top          ; Add index base to offset
+     6EC4 B000     
+0081 6EC6 04D4  26         clr   *tmp0                 ; Clear index entry
+0082 6EC8 1012  14         jmp   idx.entry.delete.exit ; Exit early
 0083                       ;------------------------------------------------------
 0084                       ; Reorganize index entries
 0085                       ;------------------------------------------------------
 0086               idx.entry.delete.reorg:
-0087 6EFA C1E0  34         mov   @parm2,tmp3           ; Get last line to reorganize
-     6EFC A002     
-0088 6EFE 0287  22         ci    tmp3,2048
-     6F00 0800     
-0089 6F02 120A  14         jle   idx.entry.delete.reorg.simple
+0087 6ECA C1E0  34         mov   @parm2,tmp3           ; Get last line to reorganize
+     6ECC A002     
+0088 6ECE 0287  22         ci    tmp3,2048
+     6ED0 0800     
+0089 6ED2 120A  14         jle   idx.entry.delete.reorg.simple
 0090                                                   ; Do simple reorg only if single
 0091                                                   ; SAMS index page, otherwise complex reorg.
 0092                       ;------------------------------------------------------
 0093                       ; Complex index reorganization (multiple SAMS pages)
 0094                       ;------------------------------------------------------
 0095               idx.entry.delete.reorg.complex:
-0096 6F04 06A0  32         bl    @_idx.sams.mapcolumn.on
-     6F06 31D8     
+0096 6ED4 06A0  32         bl    @_idx.sams.mapcolumn.on
+     6ED6 31D8     
 0097                                                   ; Index in continuous memory region
 0098               
 0099                       ;-------------------------------------------------------
 0100                       ; Recalculate index offset in continuous memory region
 0101                       ;-------------------------------------------------------
-0102 6F08 C120  34         mov   @parm1,tmp0           ; Restore line number
-     6F0A A000     
-0103 6F0C 0A14  56         sla   tmp0,1                ; Calculate offset
+0102 6ED8 C120  34         mov   @parm1,tmp0           ; Restore line number
+     6EDA A000     
+0103 6EDC 0A14  56         sla   tmp0,1                ; Calculate offset
 0104               
-0105 6F0E 06A0  32         bl    @_idx.entry.delete.reorg
-     6F10 6EB6     
+0105 6EDE 06A0  32         bl    @_idx.entry.delete.reorg
+     6EE0 6E86     
 0106                                                   ; Reorganize index
 0107                                                   ; \ i  tmp0 = Index offset
 0108                                                   ; / i  tmp2 = Loop count
 0109               
-0110 6F12 06A0  32         bl    @_idx.sams.mapcolumn.off
-     6F14 320C     
+0110 6EE2 06A0  32         bl    @_idx.sams.mapcolumn.off
+     6EE4 320C     
 0111                                                   ; Restore memory window layout
 0112               
-0113 6F16 1002  14         jmp   !
+0113 6EE6 1002  14         jmp   !
 0114                       ;------------------------------------------------------
 0115                       ; Simple index reorganization
 0116                       ;------------------------------------------------------
 0117               idx.entry.delete.reorg.simple:
-0118 6F18 06A0  32         bl    @_idx.entry.delete.reorg
-     6F1A 6EB6     
+0118 6EE8 06A0  32         bl    @_idx.entry.delete.reorg
+     6EEA 6E86     
 0119                       ;------------------------------------------------------
 0120                       ; Clear index entry (base + offset already set)
 0121                       ;------------------------------------------------------
-0122 6F1C 04D4  26 !       clr   *tmp0                 ; Clear index entry
+0122 6EEC 04D4  26 !       clr   *tmp0                 ; Clear index entry
 0123                       ;------------------------------------------------------
 0124                       ; Exit
 0125                       ;------------------------------------------------------
 0126               idx.entry.delete.exit:
-0127 6F1E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0128 6F20 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0129 6F22 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0130 6F24 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0131 6F26 C2F9  30         mov   *stack+,r11           ; Pop r11
-0132 6F28 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0127 6EEE C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0128 6EF0 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0129 6EF2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0130 6EF4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0131 6EF6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0132 6EF8 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0117                       copy  "idx.insert.asm"      ; Index management - insert slot
      **** ****     > idx.insert.asm
 0001               * FILE......: idx.insert.asm
@@ -11884,63 +11909,63 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014                       ;------------------------------------------------------
 0015                       ; Assert 1
 0016                       ;------------------------------------------------------
-0017 6F2A 0286  22         ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
-     6F2C 2800     
+0017 6EFA 0286  22         ci    tmp2,2048*5           ; Crash if loop counter value is unrealistic
+     6EFC 2800     
 0018                                                   ; Max. 5 SAMS pages, each with 2048 index
 0019                                                   ; entries.
 0020               
-0021 6F2E 1204  14         jle   !                     ; Continue if ok
+0021 6EFE 1204  14         jle   !                     ; Continue if ok
 0022                       ;------------------------------------------------------
 0023                       ; Crash and burn
 0024                       ;------------------------------------------------------
 0025               _idx.entry.insert.reorg.crash:
-0026 6F30 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     6F32 FFCE     
-0027 6F34 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6F36 2026     
+0026 6F00 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     6F02 FFCE     
+0027 6F04 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     6F06 2026     
 0028                       ;------------------------------------------------------
 0029                       ; Reorganize index entries
 0030                       ;------------------------------------------------------
-0031 6F38 0224  22 !       ai    tmp0,idx.top          ; Add index base to offset
-     6F3A B000     
-0032 6F3C C144  18         mov   tmp0,tmp1             ; a = current slot
-0033 6F3E 05C5  14         inct  tmp1                  ; b = current slot + 2
-0034 6F40 0586  14         inc   tmp2                  ; One time adjustment for current line
+0031 6F08 0224  22 !       ai    tmp0,idx.top          ; Add index base to offset
+     6F0A B000     
+0032 6F0C C144  18         mov   tmp0,tmp1             ; a = current slot
+0033 6F0E 05C5  14         inct  tmp1                  ; b = current slot + 2
+0034 6F10 0586  14         inc   tmp2                  ; One time adjustment for current line
 0035                       ;------------------------------------------------------
 0036                       ; Assert 2
 0037                       ;------------------------------------------------------
-0038 6F42 C1C6  18         mov   tmp2,tmp3             ; Number of slots to reorganize
-0039 6F44 0A17  56         sla   tmp3,1                ; adjust to slot size
-0040 6F46 0507  16         neg   tmp3                  ; tmp3 = -tmp3
-0041 6F48 A1C4  18         a     tmp0,tmp3             ; tmp3 = tmp3 + tmp0
-0042 6F4A 0287  22         ci    tmp3,idx.top - 4      ; Address before top of index ?
-     6F4C AFFC     
-0043 6F4E 1504  14         jgt   _idx.entry.insert.reorg.loop
+0038 6F12 C1C6  18         mov   tmp2,tmp3             ; Number of slots to reorganize
+0039 6F14 0A17  56         sla   tmp3,1                ; adjust to slot size
+0040 6F16 0507  16         neg   tmp3                  ; tmp3 = -tmp3
+0041 6F18 A1C4  18         a     tmp0,tmp3             ; tmp3 = tmp3 + tmp0
+0042 6F1A 0287  22         ci    tmp3,idx.top - 4      ; Address before top of index ?
+     6F1C AFFC     
+0043 6F1E 1504  14         jgt   _idx.entry.insert.reorg.loop
 0044                                                   ; No, jump to loop start
 0045                       ;------------------------------------------------------
 0046                       ; Crash and burn
 0047                       ;------------------------------------------------------
-0048 6F50 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     6F52 FFCE     
-0049 6F54 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6F56 2026     
+0048 6F20 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     6F22 FFCE     
+0049 6F24 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     6F26 2026     
 0050                       ;------------------------------------------------------
 0051                       ; Loop backwards from end of index up to insert point
 0052                       ;------------------------------------------------------
 0053               _idx.entry.insert.reorg.loop:
-0054 6F58 C554  38         mov   *tmp0,*tmp1           ; Copy a -> b
-0055 6F5A 0644  14         dect  tmp0                  ; Move pointer up
-0056 6F5C 0645  14         dect  tmp1                  ; Move pointer up
-0057 6F5E 0606  14         dec   tmp2                  ; Next index entry
-0058 6F60 15FB  14         jgt   _idx.entry.insert.reorg.loop
+0054 6F28 C554  38         mov   *tmp0,*tmp1           ; Copy a -> b
+0055 6F2A 0644  14         dect  tmp0                  ; Move pointer up
+0056 6F2C 0645  14         dect  tmp1                  ; Move pointer up
+0057 6F2E 0606  14         dec   tmp2                  ; Next index entry
+0058 6F30 15FB  14         jgt   _idx.entry.insert.reorg.loop
 0059                                                   ; Repeat until done
 0060                       ;------------------------------------------------------
 0061                       ; Clear index entry at insert point
 0062                       ;------------------------------------------------------
-0063 6F62 05C4  14         inct  tmp0                  ; \ Clear index entry for line
-0064 6F64 04D4  26         clr   *tmp0                 ; / following insert point
+0063 6F32 05C4  14         inct  tmp0                  ; \ Clear index entry for line
+0064 6F34 04D4  26         clr   *tmp0                 ; / following insert point
 0065               
-0066 6F66 045B  20         b     *r11                  ; Return to caller
+0066 6F36 045B  20         b     *r11                  ; Return to caller
 0067               
 0068               
 0069               
@@ -11962,77 +11987,77 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0085               * tmp0,tmp2
 0086               ********|*****|*********************|**************************
 0087               idx.entry.insert:
-0088 6F68 0649  14         dect  stack
-0089 6F6A C64B  30         mov   r11,*stack            ; Save return address
-0090 6F6C 0649  14         dect  stack
-0091 6F6E C644  30         mov   tmp0,*stack           ; Push tmp0
-0092 6F70 0649  14         dect  stack
-0093 6F72 C645  30         mov   tmp1,*stack           ; Push tmp1
-0094 6F74 0649  14         dect  stack
-0095 6F76 C646  30         mov   tmp2,*stack           ; Push tmp2
-0096 6F78 0649  14         dect  stack
-0097 6F7A C647  30         mov   tmp3,*stack           ; Push tmp3
+0088 6F38 0649  14         dect  stack
+0089 6F3A C64B  30         mov   r11,*stack            ; Save return address
+0090 6F3C 0649  14         dect  stack
+0091 6F3E C644  30         mov   tmp0,*stack           ; Push tmp0
+0092 6F40 0649  14         dect  stack
+0093 6F42 C645  30         mov   tmp1,*stack           ; Push tmp1
+0094 6F44 0649  14         dect  stack
+0095 6F46 C646  30         mov   tmp2,*stack           ; Push tmp2
+0096 6F48 0649  14         dect  stack
+0097 6F4A C647  30         mov   tmp3,*stack           ; Push tmp3
 0098                       ;------------------------------------------------------
 0099                       ; Prepare for index reorg
 0100                       ;------------------------------------------------------
-0101 6F7C C1A0  34         mov   @parm2,tmp2           ; Get last line to check
-     6F7E A002     
-0102 6F80 61A0  34         s     @parm1,tmp2           ; Calculate loop
-     6F82 A000     
-0103 6F84 130F  14         jeq   idx.entry.insert.reorg.simple
+0101 6F4C C1A0  34         mov   @parm2,tmp2           ; Get last line to check
+     6F4E A002     
+0102 6F50 61A0  34         s     @parm1,tmp2           ; Calculate loop
+     6F52 A000     
+0103 6F54 130F  14         jeq   idx.entry.insert.reorg.simple
 0104                                                   ; Special treatment if last line
 0105                       ;------------------------------------------------------
 0106                       ; Reorganize index entries
 0107                       ;------------------------------------------------------
 0108               idx.entry.insert.reorg:
-0109 6F86 C1E0  34         mov   @parm2,tmp3
-     6F88 A002     
-0110 6F8A 0287  22         ci    tmp3,2048
-     6F8C 0800     
-0111 6F8E 110A  14         jlt   idx.entry.insert.reorg.simple
+0109 6F56 C1E0  34         mov   @parm2,tmp3
+     6F58 A002     
+0110 6F5A 0287  22         ci    tmp3,2048
+     6F5C 0800     
+0111 6F5E 110A  14         jlt   idx.entry.insert.reorg.simple
 0112                                                   ; Do simple reorg only if single
 0113                                                   ; SAMS index page, otherwise complex reorg.
 0114                       ;------------------------------------------------------
 0115                       ; Complex index reorganization (multiple SAMS pages)
 0116                       ;------------------------------------------------------
 0117               idx.entry.insert.reorg.complex:
-0118 6F90 06A0  32         bl    @_idx.sams.mapcolumn.on
-     6F92 31D8     
+0118 6F60 06A0  32         bl    @_idx.sams.mapcolumn.on
+     6F62 31D8     
 0119                                                   ; Index in continuous memory region
 0120                                                   ; b000 - ffff (5 SAMS pages)
 0121               
-0122 6F94 C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
-     6F96 A002     
-0123 6F98 0A14  56         sla   tmp0,1                ; tmp0 * 2
+0122 6F64 C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
+     6F66 A002     
+0123 6F68 0A14  56         sla   tmp0,1                ; tmp0 * 2
 0124               
-0125 6F9A 06A0  32         bl    @_idx.entry.insert.reorg
-     6F9C 6F2A     
+0125 6F6A 06A0  32         bl    @_idx.entry.insert.reorg
+     6F6C 6EFA     
 0126                                                   ; Reorganize index
 0127                                                   ; \ i  tmp0 = Last line in index
 0128                                                   ; / i  tmp2 = Num. of index entries to move
 0129               
-0130 6F9E 06A0  32         bl    @_idx.sams.mapcolumn.off
-     6FA0 320C     
+0130 6F6E 06A0  32         bl    @_idx.sams.mapcolumn.off
+     6F70 320C     
 0131                                                   ; Restore memory window layout
 0132               
-0133 6FA2 1008  14         jmp   idx.entry.insert.exit
+0133 6F72 1008  14         jmp   idx.entry.insert.exit
 0134                       ;------------------------------------------------------
 0135                       ; Simple index reorganization
 0136                       ;------------------------------------------------------
 0137               idx.entry.insert.reorg.simple:
-0138 6FA4 C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
-     6FA6 A002     
+0138 6F74 C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
+     6F76 A002     
 0139               
-0140 6FA8 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
-     6FAA 3246     
+0140 6F78 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
+     6F7A 3246     
 0141                                                   ; \ i  tmp0     = Line number
 0142                                                   ; / o  outparm1 = Slot offset in SAMS page
 0143               
-0144 6FAC C120  34         mov   @outparm1,tmp0        ; Index offset
-     6FAE A010     
+0144 6F7C C120  34         mov   @outparm1,tmp0        ; Index offset
+     6F7E A010     
 0145               
-0146 6FB0 06A0  32         bl    @_idx.entry.insert.reorg
-     6FB2 6F2A     
+0146 6F80 06A0  32         bl    @_idx.entry.insert.reorg
+     6F82 6EFA     
 0147                                                   ; Reorganize index
 0148                                                   ; \ i  tmp0 = Last line in index
 0149                                                   ; / i  tmp2 = Num. of index entries to move
@@ -12041,13 +12066,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0152                       ; Exit
 0153                       ;------------------------------------------------------
 0154               idx.entry.insert.exit:
-0155 6FB4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0156 6FB6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0157 6FB8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0158 6FBA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0159 6FBC C2F9  30         mov   *stack+,r11           ; Pop r11
-0160 6FBE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0155 6F84 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0156 6F86 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0157 6F88 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0158 6F8A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0159 6F8C C2F9  30         mov   *stack+,r11           ; Pop r11
+0160 6F8E 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0118                       ;-----------------------------------------------------------------------
 0119                       ; Logic for Editor Buffer
 0120                       ;-----------------------------------------------------------------------
@@ -12073,77 +12098,77 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0, tmp1
 0019               ***************************************************************
 0020               edb.line.mappage:
-0021 6FC0 0649  14         dect  stack
-0022 6FC2 C64B  30         mov   r11,*stack            ; Push return address
-0023 6FC4 0649  14         dect  stack
-0024 6FC6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 6FC8 0649  14         dect  stack
-0026 6FCA C645  30         mov   tmp1,*stack           ; Push tmp1
+0021 6F90 0649  14         dect  stack
+0022 6F92 C64B  30         mov   r11,*stack            ; Push return address
+0023 6F94 0649  14         dect  stack
+0024 6F96 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 6F98 0649  14         dect  stack
+0026 6F9A C645  30         mov   tmp1,*stack           ; Push tmp1
 0027                       ;------------------------------------------------------
 0028                       ; Assert
 0029                       ;------------------------------------------------------
-0030 6FCC 8804  38         c     tmp0,@edb.lines       ; Non-existing line?
-     6FCE A504     
-0031 6FD0 1204  14         jle   edb.line.mappage.lookup
+0030 6F9C 8804  38         c     tmp0,@edb.lines       ; Non-existing line?
+     6F9E A504     
+0031 6FA0 1204  14         jle   edb.line.mappage.lookup
 0032                                                   ; All checks passed, continue
 0033                                                   ;--------------------------
 0034                                                   ; Assert failed
 0035                                                   ;--------------------------
-0036 6FD2 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     6FD4 FFCE     
-0037 6FD6 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6FD8 2026     
+0036 6FA2 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     6FA4 FFCE     
+0037 6FA6 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     6FA8 2026     
 0038                       ;------------------------------------------------------
 0039                       ; Lookup SAMS page for line in parm1
 0040                       ;------------------------------------------------------
 0041               edb.line.mappage.lookup:
-0042 6FDA C804  38         mov   tmp0,@parm1           ; Set line number in editor buffer
-     6FDC A000     
+0042 6FAA C804  38         mov   tmp0,@parm1           ; Set line number in editor buffer
+     6FAC A000     
 0043               
-0044 6FDE 06A0  32         bl    @idx.pointer.get      ; Get pointer to line
-     6FE0 6E6A     
+0044 6FAE 06A0  32         bl    @idx.pointer.get      ; Get pointer to line
+     6FB0 6E3A     
 0045                                                   ; \ i  parm1    = Line number
 0046                                                   ; | o  outparm1 = Pointer to line
 0047                                                   ; / o  outparm2 = SAMS page
 0048               
-0049 6FE2 C120  34         mov   @outparm2,tmp0        ; SAMS page
-     6FE4 A012     
-0050 6FE6 C160  34         mov   @outparm1,tmp1        ; Pointer to line
-     6FE8 A010     
-0051 6FEA 130B  14         jeq   edb.line.mappage.exit ; Nothing to page-in if NULL pointer
+0049 6FB2 C120  34         mov   @outparm2,tmp0        ; SAMS page
+     6FB4 A012     
+0050 6FB6 C160  34         mov   @outparm1,tmp1        ; Pointer to line
+     6FB8 A010     
+0051 6FBA 130B  14         jeq   edb.line.mappage.exit ; Nothing to page-in if NULL pointer
 0052                                                   ; (=empty line)
 0053                       ;------------------------------------------------------
 0054                       ; Determine if requested SAMS page is already active
 0055                       ;------------------------------------------------------
-0056 6FEC 8120  34         c     @tv.sams.c000,tmp0    ; Compare with active page editor buffer
-     6FEE A208     
-0057 6FF0 1308  14         jeq   edb.line.mappage.exit ; Request page already active, so exit
+0056 6FBC 8120  34         c     @tv.sams.c000,tmp0    ; Compare with active page editor buffer
+     6FBE A208     
+0057 6FC0 1308  14         jeq   edb.line.mappage.exit ; Request page already active, so exit
 0058                       ;------------------------------------------------------
 0059                       ; Activate requested SAMS page
 0060                       ;-----------------------------------------------------
-0061 6FF2 06A0  32         bl    @xsams.page.set       ; Switch SAMS memory page
-     6FF4 258A     
+0061 6FC2 06A0  32         bl    @xsams.page.set       ; Switch SAMS memory page
+     6FC4 258A     
 0062                                                   ; \ i  tmp0 = SAMS page
 0063                                                   ; / i  tmp1 = Memory address
 0064               
-0065 6FF6 C820  54         mov   @outparm2,@tv.sams.c000
-     6FF8 A012     
-     6FFA A208     
+0065 6FC6 C820  54         mov   @outparm2,@tv.sams.c000
+     6FC8 A012     
+     6FCA A208     
 0066                                                   ; Set page in shadow registers
 0067               
-0068 6FFC C820  54         mov   @outparm2,@edb.sams.page
-     6FFE A012     
-     7000 A516     
+0068 6FCC C820  54         mov   @outparm2,@edb.sams.page
+     6FCE A012     
+     6FD0 A516     
 0069                                                   ; Set current SAMS page
 0070                       ;------------------------------------------------------
 0071                       ; Exit
 0072                       ;------------------------------------------------------
 0073               edb.line.mappage.exit:
-0074 7002 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0075 7004 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0076 7006 C2F9  30         mov   *stack+,r11           ; Pop r11
-0077 7008 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0074 6FD2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0075 6FD4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0076 6FD6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0077 6FD8 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0122                       copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
      **** ****     > edb.line.pack.fb.asm
 0001               * FILE......: edb.line.pack.fb.asm
@@ -12172,130 +12197,130 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024               * rambuf+4 = Saved length of row
 0025               ********|*****|*********************|**************************
 0026               edb.line.pack.fb:
-0027 700A 0649  14         dect  stack
-0028 700C C64B  30         mov   r11,*stack            ; Save return address
-0029 700E 0649  14         dect  stack
-0030 7010 C644  30         mov   tmp0,*stack           ; Push tmp0
-0031 7012 0649  14         dect  stack
-0032 7014 C645  30         mov   tmp1,*stack           ; Push tmp1
-0033 7016 0649  14         dect  stack
-0034 7018 C646  30         mov   tmp2,*stack           ; Push tmp2
-0035 701A 0649  14         dect  stack
-0036 701C C647  30         mov   tmp3,*stack           ; Push tmp3
+0027 6FDA 0649  14         dect  stack
+0028 6FDC C64B  30         mov   r11,*stack            ; Save return address
+0029 6FDE 0649  14         dect  stack
+0030 6FE0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0031 6FE2 0649  14         dect  stack
+0032 6FE4 C645  30         mov   tmp1,*stack           ; Push tmp1
+0033 6FE6 0649  14         dect  stack
+0034 6FE8 C646  30         mov   tmp2,*stack           ; Push tmp2
+0035 6FEA 0649  14         dect  stack
+0036 6FEC C647  30         mov   tmp3,*stack           ; Push tmp3
 0037                       ;------------------------------------------------------
 0038                       ; Get values
 0039                       ;------------------------------------------------------
-0040 701E C820  54         mov   @fb.column,@rambuf    ; Save @fb.column
-     7020 A30C     
-     7022 A140     
-0041 7024 04E0  34         clr   @fb.column
-     7026 A30C     
-0042 7028 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
-     702A 6B7C     
+0040 6FEE C820  54         mov   @fb.column,@rambuf    ; Save @fb.column
+     6FF0 A30C     
+     6FF2 A140     
+0041 6FF4 04E0  34         clr   @fb.column
+     6FF6 A30C     
+0042 6FF8 06A0  32         bl    @fb.calc_pointer      ; Beginning of row
+     6FFA 6B4C     
 0043                       ;------------------------------------------------------
 0044                       ; Prepare scan
 0045                       ;------------------------------------------------------
-0046 702C 04C4  14         clr   tmp0                  ; Counter
-0047 702E 04C7  14         clr   tmp3                  ; Counter for whitespace
-0048 7030 C160  34         mov   @fb.current,tmp1      ; Get position
-     7032 A302     
-0049 7034 C805  38         mov   tmp1,@rambuf+2        ; Save beginning of row
-     7036 A142     
+0046 6FFC 04C4  14         clr   tmp0                  ; Counter
+0047 6FFE 04C7  14         clr   tmp3                  ; Counter for whitespace
+0048 7000 C160  34         mov   @fb.current,tmp1      ; Get position
+     7002 A302     
+0049 7004 C805  38         mov   tmp1,@rambuf+2        ; Save beginning of row
+     7006 A142     
 0050                       ;------------------------------------------------------
 0051                       ; Scan line for >00 byte termination
 0052                       ;------------------------------------------------------
 0053               edb.line.pack.fb.scan:
-0054 7038 D1B5  28         movb  *tmp1+,tmp2           ; Get char
-0055 703A 0986  56         srl   tmp2,8                ; Right justify
-0056 703C 130D  14         jeq   edb.line.pack.fb.check_setpage
+0054 7008 D1B5  28         movb  *tmp1+,tmp2           ; Get char
+0055 700A 0986  56         srl   tmp2,8                ; Right justify
+0056 700C 130D  14         jeq   edb.line.pack.fb.check_setpage
 0057                                                   ; Stop scan if >00 found
-0058 703E 0584  14         inc   tmp0                  ; Increase string length
+0058 700E 0584  14         inc   tmp0                  ; Increase string length
 0059                       ;------------------------------------------------------
 0060                       ; Check for trailing whitespace
 0061                       ;------------------------------------------------------
-0062 7040 0286  22         ci    tmp2,32               ; Was it a space character?
-     7042 0020     
-0063 7044 1301  14         jeq   edb.line.pack.fb.check80
-0064 7046 C1C4  18         mov   tmp0,tmp3
+0062 7010 0286  22         ci    tmp2,32               ; Was it a space character?
+     7012 0020     
+0063 7014 1301  14         jeq   edb.line.pack.fb.check80
+0064 7016 C1C4  18         mov   tmp0,tmp3
 0065                       ;------------------------------------------------------
 0066                       ; Not more than 80 characters
 0067                       ;------------------------------------------------------
 0068               edb.line.pack.fb.check80:
-0069 7048 0284  22         ci    tmp0,colrow
-     704A 0050     
-0070 704C 1305  14         jeq   edb.line.pack.fb.check_setpage
+0069 7018 0284  22         ci    tmp0,colrow
+     701A 0050     
+0070 701C 1305  14         jeq   edb.line.pack.fb.check_setpage
 0071                                                   ; Stop scan if 80 characters processed
-0072 704E 10F4  14         jmp   edb.line.pack.fb.scan ; Next character
+0072 701E 10F4  14         jmp   edb.line.pack.fb.scan ; Next character
 0073                       ;------------------------------------------------------
 0074                       ; Check failed, crash CPU!
 0075                       ;------------------------------------------------------
 0076               edb.line.pack.fb.crash:
-0077 7050 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7052 FFCE     
-0078 7054 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7056 2026     
+0077 7020 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     7022 FFCE     
+0078 7024 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     7026 2026     
 0079                       ;------------------------------------------------------
 0080                       ; Check if highest SAMS page needs to be increased
 0081                       ;------------------------------------------------------
 0082               edb.line.pack.fb.check_setpage:
-0083 7058 8107  18         c     tmp3,tmp0             ; Trailing whitespace in line?
-0084 705A 1103  14         jlt   edb.line.pack.fb.rtrim
-0085 705C C804  38         mov   tmp0,@rambuf+4        ; Save full length of line
-     705E A144     
-0086 7060 100C  14         jmp   !
+0083 7028 8107  18         c     tmp3,tmp0             ; Trailing whitespace in line?
+0084 702A 1103  14         jlt   edb.line.pack.fb.rtrim
+0085 702C C804  38         mov   tmp0,@rambuf+4        ; Save full length of line
+     702E A144     
+0086 7030 100C  14         jmp   !
 0087               edb.line.pack.fb.rtrim:
 0088                       ;------------------------------------------------------
 0089                       ; Remove trailing blanks from line
 0090                       ;------------------------------------------------------
-0091 7062 C807  38         mov   tmp3,@rambuf+4        ; Save line length without trailing blanks
-     7064 A144     
+0091 7032 C807  38         mov   tmp3,@rambuf+4        ; Save line length without trailing blanks
+     7034 A144     
 0092               
-0093 7066 04C5  14         clr   tmp1                  ; tmp1 = Character to fill (>00)
+0093 7036 04C5  14         clr   tmp1                  ; tmp1 = Character to fill (>00)
 0094               
-0095 7068 C184  18         mov   tmp0,tmp2             ; \
-0096 706A 6187  18         s     tmp3,tmp2             ; | tmp2 = Repeat count
-0097 706C 0586  14         inc   tmp2                  ; /
+0095 7038 C184  18         mov   tmp0,tmp2             ; \
+0096 703A 6187  18         s     tmp3,tmp2             ; | tmp2 = Repeat count
+0097 703C 0586  14         inc   tmp2                  ; /
 0098               
-0099 706E C107  18         mov   tmp3,tmp0             ; \
-0100 7070 A120  34         a     @rambuf+2,tmp0        ; / tmp0 = Start address in CPU memory
-     7072 A142     
+0099 703E C107  18         mov   tmp3,tmp0             ; \
+0100 7040 A120  34         a     @rambuf+2,tmp0        ; / tmp0 = Start address in CPU memory
+     7042 A142     
 0101               
 0102               edb.line.pack.fb.rtrim.loop:
-0103 7074 DD05  32         movb  tmp1,*tmp0+
-0104 7076 0606  14         dec   tmp2
-0105 7078 15FD  14         jgt   edb.line.pack.fb.rtrim.loop
+0103 7044 DD05  32         movb  tmp1,*tmp0+
+0104 7046 0606  14         dec   tmp2
+0105 7048 15FD  14         jgt   edb.line.pack.fb.rtrim.loop
 0106                       ;------------------------------------------------------
 0107                       ; Check and increase highest SAMS page
 0108                       ;------------------------------------------------------
-0109 707A 06A0  32 !       bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
-     707C 7D7C     
+0109 704A 06A0  32 !       bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
+     704C 7D4C     
 0110                                                   ; \ i  @edb.next_free.ptr = Pointer to next
 0111                                                   ; /                         free line
 0112                       ;------------------------------------------------------
 0113                       ; Step 2: Prepare for storing line
 0114                       ;------------------------------------------------------
 0115               edb.line.pack.fb.prepare:
-0116 707E C820  54         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
-     7080 A304     
-     7082 A000     
-0117 7084 A820  54         a     @fb.row,@parm1        ; /
-     7086 A306     
-     7088 A000     
+0116 704E C820  54         mov   @fb.topline,@parm1    ; \ parm1 = fb.topline + fb.row
+     7050 A304     
+     7052 A000     
+0117 7054 A820  54         a     @fb.row,@parm1        ; /
+     7056 A306     
+     7058 A000     
 0118                       ;------------------------------------------------------
 0119                       ; 2a. Update index
 0120                       ;------------------------------------------------------
 0121               edb.line.pack.fb.update_index:
-0122 708A C820  54         mov   @edb.next_free.ptr,@parm2
-     708C A508     
-     708E A002     
+0122 705A C820  54         mov   @edb.next_free.ptr,@parm2
+     705C A508     
+     705E A002     
 0123                                                   ; Pointer to new line
-0124 7090 C820  54         mov   @edb.sams.hipage,@parm3
-     7092 A518     
-     7094 A004     
+0124 7060 C820  54         mov   @edb.sams.hipage,@parm3
+     7062 A518     
+     7064 A004     
 0125                                                   ; SAMS page to use
 0126               
-0127 7096 06A0  32         bl    @idx.entry.update     ; Update index
-     7098 6E18     
+0127 7066 06A0  32         bl    @idx.entry.update     ; Update index
+     7068 6DE8     
 0128                                                   ; \ i  parm1 = Line number in editor buffer
 0129                                                   ; | i  parm2 = pointer to line in
 0130                                                   ; |            editor buffer
@@ -12303,41 +12328,41 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0132                       ;------------------------------------------------------
 0133                       ; 3. Set line prefix in editor buffer
 0134                       ;------------------------------------------------------
-0135 709A C120  34         mov   @rambuf+2,tmp0        ; Source for memory copy
-     709C A142     
-0136 709E C160  34         mov   @edb.next_free.ptr,tmp1
-     70A0 A508     
+0135 706A C120  34         mov   @rambuf+2,tmp0        ; Source for memory copy
+     706C A142     
+0136 706E C160  34         mov   @edb.next_free.ptr,tmp1
+     7070 A508     
 0137                                                   ; Address of line in editor buffer
 0138               
-0139 70A2 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
-     70A4 A508     
+0139 7072 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
+     7074 A508     
 0140               
-0141 70A6 C1A0  34         mov   @rambuf+4,tmp2        ; Get line length
-     70A8 A144     
-0142 70AA CD46  34         mov   tmp2,*tmp1+           ; Set line length as line prefix
-0143 70AC 1317  14         jeq   edb.line.pack.fb.prepexit
+0141 7076 C1A0  34         mov   @rambuf+4,tmp2        ; Get line length
+     7078 A144     
+0142 707A CD46  34         mov   tmp2,*tmp1+           ; Set line length as line prefix
+0143 707C 1317  14         jeq   edb.line.pack.fb.prepexit
 0144                                                   ; Nothing to copy if empty line
 0145                       ;------------------------------------------------------
 0146                       ; 4. Copy line from framebuffer to editor buffer
 0147                       ;------------------------------------------------------
 0148               edb.line.pack.fb.copyline:
-0149 70AE 0286  22         ci    tmp2,2
-     70B0 0002     
-0150 70B2 1603  14         jne   edb.line.pack.fb.copyline.checkbyte
-0151 70B4 DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
-0152 70B6 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
-0153 70B8 1007  14         jmp   edb.line.pack.fb.copyline.align16
+0149 707E 0286  22         ci    tmp2,2
+     7080 0002     
+0150 7082 1603  14         jne   edb.line.pack.fb.copyline.checkbyte
+0151 7084 DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
+0152 7086 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
+0153 7088 1007  14         jmp   edb.line.pack.fb.copyline.align16
 0154               
 0155               edb.line.pack.fb.copyline.checkbyte:
-0156 70BA 0286  22         ci    tmp2,1
-     70BC 0001     
-0157 70BE 1602  14         jne   edb.line.pack.fb.copyline.block
-0158 70C0 D554  38         movb  *tmp0,*tmp1           ; Copy single byte
-0159 70C2 1002  14         jmp   edb.line.pack.fb.copyline.align16
+0156 708A 0286  22         ci    tmp2,1
+     708C 0001     
+0157 708E 1602  14         jne   edb.line.pack.fb.copyline.block
+0158 7090 D554  38         movb  *tmp0,*tmp1           ; Copy single byte
+0159 7092 1002  14         jmp   edb.line.pack.fb.copyline.align16
 0160               
 0161               edb.line.pack.fb.copyline.block:
-0162 70C4 06A0  32         bl    @xpym2m               ; Copy memory block
-     70C6 24F4     
+0162 7094 06A0  32         bl    @xpym2m               ; Copy memory block
+     7096 24F4     
 0163                                                   ; \ i  tmp0 = source
 0164                                                   ; | i  tmp1 = destination
 0165                                                   ; / i  tmp2 = bytes to copy
@@ -12345,50 +12370,50 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0167                       ; 5: Align pointer to multiple of 16 memory address
 0168                       ;------------------------------------------------------
 0169               edb.line.pack.fb.copyline.align16:
-0170 70C8 A820  54         a     @rambuf+4,@edb.next_free.ptr
-     70CA A144     
-     70CC A508     
+0170 7098 A820  54         a     @rambuf+4,@edb.next_free.ptr
+     709A A144     
+     709C A508     
 0171                                                      ; Add length of line
 0172               
-0173 70CE C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
-     70D0 A508     
-0174 70D2 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
-0175 70D4 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
-     70D6 000F     
-0176 70D8 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-     70DA A508     
+0173 709E C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+     70A0 A508     
+0174 70A2 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+0175 70A4 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+     70A6 000F     
+0176 70A8 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
+     70AA A508     
 0177                       ;------------------------------------------------------
 0178                       ; 6: Restore SAMS page and prepare for exit
 0179                       ;------------------------------------------------------
 0180               edb.line.pack.fb.prepexit:
-0181 70DC C820  54         mov   @rambuf,@fb.column    ; Retrieve @fb.column
-     70DE A140     
-     70E0 A30C     
+0181 70AC C820  54         mov   @rambuf,@fb.column    ; Retrieve @fb.column
+     70AE A140     
+     70B0 A30C     
 0182               
-0183 70E2 8820  54         c     @edb.sams.hipage,@edb.sams.page
-     70E4 A518     
-     70E6 A516     
-0184 70E8 1306  14         jeq   edb.line.pack.fb.exit ; Exit early if SAMS page already mapped
+0183 70B2 8820  54         c     @edb.sams.hipage,@edb.sams.page
+     70B4 A518     
+     70B6 A516     
+0184 70B8 1306  14         jeq   edb.line.pack.fb.exit ; Exit early if SAMS page already mapped
 0185               
-0186 70EA C120  34         mov   @edb.sams.page,tmp0
-     70EC A516     
-0187 70EE C160  34         mov   @edb.top.ptr,tmp1
-     70F0 A500     
-0188 70F2 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     70F4 258A     
+0186 70BA C120  34         mov   @edb.sams.page,tmp0
+     70BC A516     
+0187 70BE C160  34         mov   @edb.top.ptr,tmp1
+     70C0 A500     
+0188 70C2 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     70C4 258A     
 0189                                                   ; \ i  tmp0 = SAMS page number
 0190                                                   ; / i  tmp1 = Memory address
 0191                       ;------------------------------------------------------
 0192                       ; Exit
 0193                       ;------------------------------------------------------
 0194               edb.line.pack.fb.exit:
-0195 70F6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp3
-0196 70F8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0197 70FA C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0198 70FC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0199 70FE C2F9  30         mov   *stack+,r11           ; Pop R11
-0200 7100 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0195 70C6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp3
+0196 70C8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0197 70CA C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0198 70CC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0199 70CE C2F9  30         mov   *stack+,r11           ; Pop R11
+0200 70D0 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0123                       copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
      **** ****     > edb.line.unpack.fb.asm
 0001               * FILE......: edb.line.unpack.fb.asm
@@ -12418,112 +12443,112 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025               * rambuf+8  = Length of line
 0026               ********|*****|*********************|**************************
 0027               edb.line.unpack.fb:
-0028 7102 0649  14         dect  stack
-0029 7104 C64B  30         mov   r11,*stack            ; Save return address
-0030 7106 0649  14         dect  stack
-0031 7108 C644  30         mov   tmp0,*stack           ; Push tmp0
-0032 710A 0649  14         dect  stack
-0033 710C C645  30         mov   tmp1,*stack           ; Push tmp1
-0034 710E 0649  14         dect  stack
-0035 7110 C646  30         mov   tmp2,*stack           ; Push tmp2
+0028 70D2 0649  14         dect  stack
+0029 70D4 C64B  30         mov   r11,*stack            ; Save return address
+0030 70D6 0649  14         dect  stack
+0031 70D8 C644  30         mov   tmp0,*stack           ; Push tmp0
+0032 70DA 0649  14         dect  stack
+0033 70DC C645  30         mov   tmp1,*stack           ; Push tmp1
+0034 70DE 0649  14         dect  stack
+0035 70E0 C646  30         mov   tmp2,*stack           ; Push tmp2
 0036                       ;------------------------------------------------------
 0037                       ; Save parameters
 0038                       ;------------------------------------------------------
-0039 7112 C820  54         mov   @parm1,@rambuf
-     7114 A000     
-     7116 A140     
-0040 7118 C820  54         mov   @parm2,@rambuf+2
-     711A A002     
-     711C A142     
+0039 70E2 C820  54         mov   @parm1,@rambuf
+     70E4 A000     
+     70E6 A140     
+0040 70E8 C820  54         mov   @parm2,@rambuf+2
+     70EA A002     
+     70EC A142     
 0041                       ;------------------------------------------------------
 0042                       ; Calculate offset in frame buffer
 0043                       ;------------------------------------------------------
-0044 711E C120  34         mov   @fb.colsline,tmp0
-     7120 A30E     
-0045 7122 3920  72         mpy   @parm2,tmp0           ; Offset is in tmp1!
-     7124 A002     
-0046 7126 C1A0  34         mov   @fb.top.ptr,tmp2
-     7128 A300     
-0047 712A A146  18         a     tmp2,tmp1             ; Add base to offset
-0048 712C C805  38         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
-     712E A146     
+0044 70EE C120  34         mov   @fb.colsline,tmp0
+     70F0 A30E     
+0045 70F2 3920  72         mpy   @parm2,tmp0           ; Offset is in tmp1!
+     70F4 A002     
+0046 70F6 C1A0  34         mov   @fb.top.ptr,tmp2
+     70F8 A300     
+0047 70FA A146  18         a     tmp2,tmp1             ; Add base to offset
+0048 70FC C805  38         mov   tmp1,@rambuf+6        ; Destination row in frame buffer
+     70FE A146     
 0049                       ;------------------------------------------------------
 0050                       ; Return empty row if requested line beyond editor buffer
 0051                       ;------------------------------------------------------
-0052 7130 8820  54         c     @parm1,@edb.lines     ; Requested line at BOT?
-     7132 A000     
-     7134 A504     
-0053 7136 1103  14         jlt   !                     ; No, continue processing
+0052 7100 8820  54         c     @parm1,@edb.lines     ; Requested line at BOT?
+     7102 A000     
+     7104 A504     
+0053 7106 1103  14         jlt   !                     ; No, continue processing
 0054               
-0055 7138 04E0  34         clr   @rambuf+8             ; Set length=0
-     713A A148     
-0056 713C 1018  14         jmp   edb.line.unpack.fb.clear
+0055 7108 04E0  34         clr   @rambuf+8             ; Set length=0
+     710A A148     
+0056 710C 1018  14         jmp   edb.line.unpack.fb.clear
 0057                       ;------------------------------------------------------
 0058                       ; Get pointer to line & page-in editor buffer page
 0059                       ;------------------------------------------------------
-0060 713E C120  34 !       mov   @parm1,tmp0
-     7140 A000     
-0061 7142 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
-     7144 6FC0     
+0060 710E C120  34 !       mov   @parm1,tmp0
+     7110 A000     
+0061 7112 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
+     7114 6F90     
 0062                                                   ; \ i  tmp0     = Line number
 0063                                                   ; | o  outparm1 = Pointer to line
 0064                                                   ; / o  outparm2 = SAMS page
 0065                       ;------------------------------------------------------
 0066                       ; Handle empty line
 0067                       ;------------------------------------------------------
-0068 7146 C120  34         mov   @outparm1,tmp0        ; Get pointer to line
-     7148 A010     
-0069 714A 1603  14         jne   edb.line.unpack.fb.getlen
+0068 7116 C120  34         mov   @outparm1,tmp0        ; Get pointer to line
+     7118 A010     
+0069 711A 1603  14         jne   edb.line.unpack.fb.getlen
 0070                                                   ; Continue if pointer is set
 0071               
-0072 714C 04E0  34         clr   @rambuf+8             ; Set length=0
-     714E A148     
-0073 7150 100E  14         jmp   edb.line.unpack.fb.clear
+0072 711C 04E0  34         clr   @rambuf+8             ; Set length=0
+     711E A148     
+0073 7120 100E  14         jmp   edb.line.unpack.fb.clear
 0074                       ;------------------------------------------------------
 0075                       ; Get line length
 0076                       ;------------------------------------------------------
 0077               edb.line.unpack.fb.getlen:
-0078 7152 C174  30         mov   *tmp0+,tmp1           ; Get line length
-0079 7154 C804  38         mov   tmp0,@rambuf+4        ; Source memory address for block copy
-     7156 A144     
-0080 7158 C805  38         mov   tmp1,@rambuf+8        ; Save line length
-     715A A148     
+0078 7122 C174  30         mov   *tmp0+,tmp1           ; Get line length
+0079 7124 C804  38         mov   tmp0,@rambuf+4        ; Source memory address for block copy
+     7126 A144     
+0080 7128 C805  38         mov   tmp1,@rambuf+8        ; Save line length
+     712A A148     
 0081                       ;------------------------------------------------------
 0082                       ; Assert on line length
 0083                       ;------------------------------------------------------
-0084 715C 0285  22         ci    tmp1,80               ; \ Continue if length <= 80
-     715E 0050     
+0084 712C 0285  22         ci    tmp1,80               ; \ Continue if length <= 80
+     712E 0050     
 0085                                                   ; /
-0086 7160 1206  14         jle   edb.line.unpack.fb.clear
+0086 7130 1206  14         jle   edb.line.unpack.fb.clear
 0087                       ;------------------------------------------------------
 0088                       ; Crash the system
 0089                       ;------------------------------------------------------
-0090 7162 C0E0  34         mov   @rambuf,r3            ; Get Line number to unpack (base 0)
-     7164 A140     
+0090 7132 C0E0  34         mov   @rambuf,r3            ; Get Line number to unpack (base 0)
+     7134 A140     
 0091                                                   ; No purpose, only makes debugging easier
 0092               
-0093 7166 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7168 FFCE     
-0094 716A 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     716C 2026     
+0093 7136 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     7138 FFCE     
+0094 713A 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     713C 2026     
 0095                       ;------------------------------------------------------
 0096                       ; Erase chars from last column until column 80
 0097                       ;------------------------------------------------------
 0098               edb.line.unpack.fb.clear:
-0099 716E C120  34         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
-     7170 A146     
-0100 7172 A120  34         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
-     7174 A148     
+0099 713E C120  34         mov   @rambuf+6,tmp0        ; Start of row in frame buffer
+     7140 A146     
+0100 7142 A120  34         a     @rambuf+8,tmp0        ; Skip until end of row in frame buffer
+     7144 A148     
 0101               
-0102 7176 04C5  14         clr   tmp1                  ; Fill with >00
-0103 7178 C1A0  34         mov   @fb.colsline,tmp2
-     717A A30E     
-0104 717C 61A0  34         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
-     717E A148     
-0105 7180 0586  14         inc   tmp2
+0102 7146 04C5  14         clr   tmp1                  ; Fill with >00
+0103 7148 C1A0  34         mov   @fb.colsline,tmp2
+     714A A30E     
+0104 714C 61A0  34         s     @rambuf+8,tmp2        ; Calculate number of bytes to clear
+     714E A148     
+0105 7150 0586  14         inc   tmp2
 0106               
-0107 7182 06A0  32         bl    @xfilm                ; Fill CPU memory
-     7184 2250     
+0107 7152 06A0  32         bl    @xfilm                ; Fill CPU memory
+     7154 2250     
 0108                                                   ; \ i  tmp0 = Target address
 0109                                                   ; | i  tmp1 = Byte to fill
 0110                                                   ; / i  tmp2 = Repeat count
@@ -12531,37 +12556,37 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0112                       ; Prepare for unpacking data
 0113                       ;------------------------------------------------------
 0114               edb.line.unpack.fb.prepare:
-0115 7186 C1A0  34         mov   @rambuf+8,tmp2        ; Line length
-     7188 A148     
-0116 718A 130F  14         jeq   edb.line.unpack.fb.exit
+0115 7156 C1A0  34         mov   @rambuf+8,tmp2        ; Line length
+     7158 A148     
+0116 715A 130F  14         jeq   edb.line.unpack.fb.exit
 0117                                                   ; Exit if length = 0
-0118 718C C120  34         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
-     718E A144     
-0119 7190 C160  34         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
-     7192 A146     
+0118 715C C120  34         mov   @rambuf+4,tmp0        ; Pointer to line in editor buffer
+     715E A144     
+0119 7160 C160  34         mov   @rambuf+6,tmp1        ; Pointer to row in frame buffer
+     7162 A146     
 0120                       ;------------------------------------------------------
 0121                       ; Assert on line length
 0122                       ;------------------------------------------------------
 0123               edb.line.unpack.fb.copy:
-0124 7194 0286  22         ci    tmp2,80               ; Check line length
-     7196 0050     
-0125 7198 1204  14         jle   edb.line.unpack.fb.copy.doit
+0124 7164 0286  22         ci    tmp2,80               ; Check line length
+     7166 0050     
+0125 7168 1204  14         jle   edb.line.unpack.fb.copy.doit
 0126                       ;------------------------------------------------------
 0127                       ; Crash the system
 0128                       ;------------------------------------------------------
-0129 719A C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     719C FFCE     
-0130 719E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     71A0 2026     
+0129 716A C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     716C FFCE     
+0130 716E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     7170 2026     
 0131                       ;------------------------------------------------------
 0132                       ; Copy memory block
 0133                       ;------------------------------------------------------
 0134               edb.line.unpack.fb.copy.doit:
-0135 71A2 C806  38         mov   tmp2,@outparm1        ; Length of unpacked line
-     71A4 A010     
+0135 7172 C806  38         mov   tmp2,@outparm1        ; Length of unpacked line
+     7174 A010     
 0136               
-0137 71A6 06A0  32         bl    @xpym2m               ; Copy line to frame buffer
-     71A8 24F4     
+0137 7176 06A0  32         bl    @xpym2m               ; Copy line to frame buffer
+     7178 24F4     
 0138                                                   ; \ i  tmp0 = Source address
 0139                                                   ; | i  tmp1 = Target address
 0140                                                   ; / i  tmp2 = Bytes to copy
@@ -12569,12 +12594,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0142                       ; Exit
 0143                       ;------------------------------------------------------
 0144               edb.line.unpack.fb.exit:
-0145 71AA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0146 71AC C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0147 71AE C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0148 71B0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0149 71B2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0145 717A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0146 717C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0147 717E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0148 7180 C2F9  30         mov   *stack+,r11           ; Pop r11
+0149 7182 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0124                       copy  "edb.line.getlen.asm"    ; Get line length
      **** ****     > edb.line.getlen.asm
 0001               * FILE......: edb.line.getlen.asm
@@ -12597,81 +12622,81 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0,tmp1
 0019               ********|*****|*********************|**************************
 0020               edb.line.getlength:
-0021 71B4 0649  14         dect  stack
-0022 71B6 C64B  30         mov   r11,*stack            ; Push return address
-0023 71B8 0649  14         dect  stack
-0024 71BA C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 71BC 0649  14         dect  stack
-0026 71BE C645  30         mov   tmp1,*stack           ; Push tmp1
+0021 7184 0649  14         dect  stack
+0022 7186 C64B  30         mov   r11,*stack            ; Push return address
+0023 7188 0649  14         dect  stack
+0024 718A C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 718C 0649  14         dect  stack
+0026 718E C645  30         mov   tmp1,*stack           ; Push tmp1
 0027                       ;------------------------------------------------------
 0028                       ; Initialisation
 0029                       ;------------------------------------------------------
-0030 71C0 04E0  34         clr   @outparm1             ; Reset length
-     71C2 A010     
-0031 71C4 04E0  34         clr   @outparm2             ; Reset SAMS bank
-     71C6 A012     
+0030 7190 04E0  34         clr   @outparm1             ; Reset length
+     7192 A010     
+0031 7194 04E0  34         clr   @outparm2             ; Reset SAMS bank
+     7196 A012     
 0032                       ;------------------------------------------------------
 0033                       ; Exit if requested line beyond editor buffer
 0034                       ;------------------------------------------------------
-0035 71C8 C120  34         mov   @parm1,tmp0           ; \
-     71CA A000     
-0036 71CC 0584  14         inc   tmp0                  ; /  base 1
+0035 7198 C120  34         mov   @parm1,tmp0           ; \
+     719A A000     
+0036 719C 0584  14         inc   tmp0                  ; /  base 1
 0037               
-0038 71CE 8804  38         c     tmp0,@edb.lines       ; Requested line at BOT?
-     71D0 A504     
-0039 71D2 1101  14         jlt   !                     ; No, continue processing
-0040 71D4 1011  14         jmp   edb.line.getlength.null
+0038 719E 8804  38         c     tmp0,@edb.lines       ; Requested line at BOT?
+     71A0 A504     
+0039 71A2 1101  14         jlt   !                     ; No, continue processing
+0040 71A4 1011  14         jmp   edb.line.getlength.null
 0041                                                   ; Set length 0 and exit early
 0042                       ;------------------------------------------------------
 0043                       ; Map SAMS page
 0044                       ;------------------------------------------------------
-0045 71D6 C120  34 !       mov   @parm1,tmp0           ; Get line
-     71D8 A000     
+0045 71A6 C120  34 !       mov   @parm1,tmp0           ; Get line
+     71A8 A000     
 0046               
-0047 71DA 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
-     71DC 6FC0     
+0047 71AA 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
+     71AC 6F90     
 0048                                                   ; \ i  tmp0     = Line number
 0049                                                   ; | o  outparm1 = Pointer to line
 0050                                                   ; / o  outparm2 = SAMS page
 0051               
-0052 71DE C120  34         mov   @outparm1,tmp0        ; Store pointer in tmp0
-     71E0 A010     
-0053 71E2 130A  14         jeq   edb.line.getlength.null
+0052 71AE C120  34         mov   @outparm1,tmp0        ; Store pointer in tmp0
+     71B0 A010     
+0053 71B2 130A  14         jeq   edb.line.getlength.null
 0054                                                   ; Set length to 0 if null-pointer
 0055                       ;------------------------------------------------------
 0056                       ; Process line prefix
 0057                       ;------------------------------------------------------
-0058 71E4 C154  26         mov   *tmp0,tmp1            ; Get length into tmp1
-0059 71E6 C805  38         mov   tmp1,@outparm1        ; Save length
-     71E8 A010     
+0058 71B4 C154  26         mov   *tmp0,tmp1            ; Get length into tmp1
+0059 71B6 C805  38         mov   tmp1,@outparm1        ; Save length
+     71B8 A010     
 0060                       ;------------------------------------------------------
 0061                       ; Assert
 0062                       ;------------------------------------------------------
-0063 71EA 0285  22         ci    tmp1,80               ; Line length <= 80 ?
-     71EC 0050     
-0064 71EE 1206  14         jle   edb.line.getlength.exit
+0063 71BA 0285  22         ci    tmp1,80               ; Line length <= 80 ?
+     71BC 0050     
+0064 71BE 1206  14         jle   edb.line.getlength.exit
 0065                                                   ; Yes, exit
 0066                       ;------------------------------------------------------
 0067                       ; Crash the system
 0068                       ;------------------------------------------------------
-0069 71F0 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     71F2 FFCE     
-0070 71F4 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     71F6 2026     
+0069 71C0 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     71C2 FFCE     
+0070 71C4 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     71C6 2026     
 0071                       ;------------------------------------------------------
 0072                       ; Set length to 0 if null-pointer
 0073                       ;------------------------------------------------------
 0074               edb.line.getlength.null:
-0075 71F8 04E0  34         clr   @outparm1             ; Set length to 0, was a null-pointer
-     71FA A010     
+0075 71C8 04E0  34         clr   @outparm1             ; Set length to 0, was a null-pointer
+     71CA A010     
 0076                       ;------------------------------------------------------
 0077                       ; Exit
 0078                       ;------------------------------------------------------
 0079               edb.line.getlength.exit:
-0080 71FC C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0081 71FE C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0082 7200 C2F9  30         mov   *stack+,r11           ; Pop r11
-0083 7202 045B  20         b     *r11                  ; Return to caller
+0080 71CC C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0081 71CE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0082 71D0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0083 71D2 045B  20         b     *r11                  ; Return to caller
 0084               
 0085               
 0086               
@@ -12691,36 +12716,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0100               * tmp0
 0101               ********|*****|*********************|**************************
 0102               edb.line.getlength2:
-0103 7204 0649  14         dect  stack
-0104 7206 C64B  30         mov   r11,*stack            ; Save return address
-0105 7208 0649  14         dect  stack
-0106 720A C644  30         mov   tmp0,*stack           ; Push tmp0
+0103 71D4 0649  14         dect  stack
+0104 71D6 C64B  30         mov   r11,*stack            ; Save return address
+0105 71D8 0649  14         dect  stack
+0106 71DA C644  30         mov   tmp0,*stack           ; Push tmp0
 0107                       ;------------------------------------------------------
 0108                       ; Calculate line in editor buffer
 0109                       ;------------------------------------------------------
-0110 720C C120  34         mov   @fb.topline,tmp0      ; Get top line in frame buffer
-     720E A304     
-0111 7210 A120  34         a     @fb.row,tmp0          ; Get current row in frame buffer
-     7212 A306     
+0110 71DC C120  34         mov   @fb.topline,tmp0      ; Get top line in frame buffer
+     71DE A304     
+0111 71E0 A120  34         a     @fb.row,tmp0          ; Get current row in frame buffer
+     71E2 A306     
 0112                       ;------------------------------------------------------
 0113                       ; Get length
 0114                       ;------------------------------------------------------
-0115 7214 C804  38         mov   tmp0,@parm1
-     7216 A000     
-0116 7218 06A0  32         bl    @edb.line.getlength
-     721A 71B4     
-0117 721C C820  54         mov   @outparm1,@fb.row.length
-     721E A010     
-     7220 A308     
+0115 71E4 C804  38         mov   tmp0,@parm1
+     71E6 A000     
+0116 71E8 06A0  32         bl    @edb.line.getlength
+     71EA 7184     
+0117 71EC C820  54         mov   @outparm1,@fb.row.length
+     71EE A010     
+     71F0 A308     
 0118                                                   ; Save row length
 0119                       ;------------------------------------------------------
 0120                       ; Exit
 0121                       ;------------------------------------------------------
 0122               edb.line.getlength2.exit:
-0123 7222 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0124 7224 C2F9  30         mov   *stack+,r11           ; Pop R11
-0125 7226 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0123 71F2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0124 71F4 C2F9  30         mov   *stack+,r11           ; Pop R11
+0125 71F6 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0125                       copy  "edb.line.copy.asm"      ; Copy line
      **** ****     > edb.line.copy.asm
 0001               * FILE......: edb.line.copy.asm
@@ -12753,92 +12778,92 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0028               * we work with base 0!
 0029               ********|*****|*********************|**************************
 0030               edb.line.copy:
-0031 7228 0649  14         dect  stack
-0032 722A C64B  30         mov   r11,*stack            ; Save return address
-0033 722C 0649  14         dect  stack
-0034 722E C644  30         mov   tmp0,*stack           ; Push tmp0
-0035 7230 0649  14         dect  stack
-0036 7232 C645  30         mov   tmp1,*stack           ; Push tmp1
-0037 7234 0649  14         dect  stack
-0038 7236 C646  30         mov   tmp2,*stack           ; Push tmp2
+0031 71F8 0649  14         dect  stack
+0032 71FA C64B  30         mov   r11,*stack            ; Save return address
+0033 71FC 0649  14         dect  stack
+0034 71FE C644  30         mov   tmp0,*stack           ; Push tmp0
+0035 7200 0649  14         dect  stack
+0036 7202 C645  30         mov   tmp1,*stack           ; Push tmp1
+0037 7204 0649  14         dect  stack
+0038 7206 C646  30         mov   tmp2,*stack           ; Push tmp2
 0039                       ;------------------------------------------------------
 0040                       ; Assert
 0041                       ;------------------------------------------------------
-0042 7238 8820  54         c     @parm1,@edb.lines     ; Source line beyond editor buffer ?
-     723A A000     
-     723C A504     
-0043 723E 1204  14         jle   !
-0044 7240 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7242 FFCE     
-0045 7244 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7246 2026     
+0042 7208 8820  54         c     @parm1,@edb.lines     ; Source line beyond editor buffer ?
+     720A A000     
+     720C A504     
+0043 720E 1204  14         jle   !
+0044 7210 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     7212 FFCE     
+0045 7214 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     7216 2026     
 0046                       ;------------------------------------------------------
 0047                       ; Initialize
 0048                       ;------------------------------------------------------
-0049 7248 C120  34 !       mov   @parm2,tmp0           ; Get target line number
-     724A A002     
-0050 724C 0604  14         dec   tmp0                  ; Base 0
-0051 724E C804  38         mov   tmp0,@rambuf+2        ; Save target line number
-     7250 A142     
-0052 7252 04E0  34         clr   @rambuf               ; Set source line length=0
-     7254 A140     
-0053 7256 04E0  34         clr   @rambuf+4             ; Null-pointer source line
-     7258 A144     
-0054 725A 04E0  34         clr   @rambuf+6             ; Null-pointer target line
-     725C A146     
+0049 7218 C120  34 !       mov   @parm2,tmp0           ; Get target line number
+     721A A002     
+0050 721C 0604  14         dec   tmp0                  ; Base 0
+0051 721E C804  38         mov   tmp0,@rambuf+2        ; Save target line number
+     7220 A142     
+0052 7222 04E0  34         clr   @rambuf               ; Set source line length=0
+     7224 A140     
+0053 7226 04E0  34         clr   @rambuf+4             ; Null-pointer source line
+     7228 A144     
+0054 722A 04E0  34         clr   @rambuf+6             ; Null-pointer target line
+     722C A146     
 0055                       ;------------------------------------------------------
 0056                       ; Get pointer to source line & page-in editor buffer SAMS page
 0057                       ;------------------------------------------------------
-0058 725E C120  34         mov   @parm1,tmp0           ; Get source line number
-     7260 A000     
-0059 7262 0604  14         dec   tmp0                  ; Base 0
+0058 722E C120  34         mov   @parm1,tmp0           ; Get source line number
+     7230 A000     
+0059 7232 0604  14         dec   tmp0                  ; Base 0
 0060               
-0061 7264 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
-     7266 6FC0     
+0061 7234 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
+     7236 6F90     
 0062                                                   ; \ i  tmp0     = Line number
 0063                                                   ; | o  outparm1 = Pointer to line
 0064                                                   ; / o  outparm2 = SAMS page
 0065                       ;------------------------------------------------------
 0066                       ; Handle empty source line
 0067                       ;------------------------------------------------------
-0068 7268 C120  34         mov   @outparm1,tmp0        ; Get pointer to line
-     726A A010     
-0069 726C 1601  14         jne   edb.line.copy.getlen  ; Only continue if pointer is set
-0070 726E 103D  14         jmp   edb.line.copy.index   ; Skip copy stuff, only update index
+0068 7238 C120  34         mov   @outparm1,tmp0        ; Get pointer to line
+     723A A010     
+0069 723C 1601  14         jne   edb.line.copy.getlen  ; Only continue if pointer is set
+0070 723E 103D  14         jmp   edb.line.copy.index   ; Skip copy stuff, only update index
 0071                       ;------------------------------------------------------
 0072                       ; Get source line length
 0073                       ;------------------------------------------------------
 0074               edb.line.copy.getlen:
-0075 7270 C154  26         mov   *tmp0,tmp1            ; Get line length
-0076 7272 C805  38         mov   tmp1,@rambuf          ; \ Save length of line
-     7274 A140     
-0077 7276 05E0  34         inct  @rambuf               ; / Consider length of line prefix too
-     7278 A140     
-0078 727A C804  38         mov   tmp0,@rambuf+4        ; Source memory address for block copy
-     727C A144     
+0075 7240 C154  26         mov   *tmp0,tmp1            ; Get line length
+0076 7242 C805  38         mov   tmp1,@rambuf          ; \ Save length of line
+     7244 A140     
+0077 7246 05E0  34         inct  @rambuf               ; / Consider length of line prefix too
+     7248 A140     
+0078 724A C804  38         mov   tmp0,@rambuf+4        ; Source memory address for block copy
+     724C A144     
 0079                       ;------------------------------------------------------
 0080                       ; Assert on line length
 0081                       ;------------------------------------------------------
-0082 727E 0285  22         ci    tmp1,80               ; \ Continue if length <= 80
-     7280 0050     
-0083 7282 1204  14         jle   edb.line.copy.prepare ; /
+0082 724E 0285  22         ci    tmp1,80               ; \ Continue if length <= 80
+     7250 0050     
+0083 7252 1204  14         jle   edb.line.copy.prepare ; /
 0084                       ;------------------------------------------------------
 0085                       ; Crash the system
 0086                       ;------------------------------------------------------
-0087 7284 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7286 FFCE     
-0088 7288 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     728A 2026     
+0087 7254 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     7256 FFCE     
+0088 7258 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     725A 2026     
 0089                       ;------------------------------------------------------
 0090                       ; 1: Prepare pointers for editor buffer in d000-dfff
 0091                       ;------------------------------------------------------
 0092               edb.line.copy.prepare:
-0093 728C A820  54         a     @w$1000,@edb.top.ptr
-     728E 201A     
-     7290 A500     
-0094 7292 A820  54         a     @w$1000,@edb.next_free.ptr
-     7294 201A     
-     7296 A508     
+0093 725C A820  54         a     @w$1000,@edb.top.ptr
+     725E 201A     
+     7260 A500     
+0094 7262 A820  54         a     @w$1000,@edb.next_free.ptr
+     7264 201A     
+     7266 A508     
 0095                                                   ; The editor buffer SAMS page for the target
 0096                                                   ; line will be mapped into memory region
 0097                                                   ; d000-dfff (instead of usual c000-cfff)
@@ -12848,101 +12873,101 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0101                       ;------------------------------------------------------
 0102                       ; 2: Check if highest SAMS page needs to be increased
 0103                       ;------------------------------------------------------
-0104 7298 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
-     729A 7D7C     
+0104 7268 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
+     726A 7D4C     
 0105                                                   ; \ i  @edb.next_free.ptr = Pointer to next
 0106                                                   ; /                         free line
 0107                       ;------------------------------------------------------
 0108                       ; 3: Set parameters for copy line
 0109                       ;------------------------------------------------------
-0110 729C C120  34         mov   @rambuf+4,tmp0        ; Pointer to source line
-     729E A144     
-0111 72A0 C160  34         mov   @edb.next_free.ptr,tmp1
-     72A2 A508     
+0110 726C C120  34         mov   @rambuf+4,tmp0        ; Pointer to source line
+     726E A144     
+0111 7270 C160  34         mov   @edb.next_free.ptr,tmp1
+     7272 A508     
 0112                                                   ; Pointer to space for new target line
 0113               
-0114 72A4 C1A0  34         mov   @rambuf,tmp2          ; Set number of bytes to copy
-     72A6 A140     
+0114 7274 C1A0  34         mov   @rambuf,tmp2          ; Set number of bytes to copy
+     7276 A140     
 0115                       ;------------------------------------------------------
 0116                       ; 4: Copy line
 0117                       ;------------------------------------------------------
 0118               edb.line.copy.line:
-0119 72A8 06A0  32         bl    @xpym2m               ; Copy memory block
-     72AA 24F4     
+0119 7278 06A0  32         bl    @xpym2m               ; Copy memory block
+     727A 24F4     
 0120                                                   ; \ i  tmp0 = source
 0121                                                   ; | i  tmp1 = destination
 0122                                                   ; / i  tmp2 = bytes to copy
 0123                       ;------------------------------------------------------
 0124                       ; 5: Restore pointers to default memory region
 0125                       ;------------------------------------------------------
-0126 72AC 6820  54         s     @w$1000,@edb.top.ptr
-     72AE 201A     
-     72B0 A500     
-0127 72B2 6820  54         s     @w$1000,@edb.next_free.ptr
-     72B4 201A     
-     72B6 A508     
+0126 727C 6820  54         s     @w$1000,@edb.top.ptr
+     727E 201A     
+     7280 A500     
+0127 7282 6820  54         s     @w$1000,@edb.next_free.ptr
+     7284 201A     
+     7286 A508     
 0128                                                   ; Restore memory c000-cfff region for
 0129                                                   ; pointers to top of editor buffer and
 0130                                                   ; next line
 0131               
-0132 72B8 C820  54         mov   @edb.next_free.ptr,@rambuf+6
-     72BA A508     
-     72BC A146     
+0132 7288 C820  54         mov   @edb.next_free.ptr,@rambuf+6
+     728A A508     
+     728C A146     
 0133                                                   ; Save pointer to target line
 0134                       ;------------------------------------------------------
 0135                       ; 6: Restore SAMS page c000-cfff as before copy
 0136                       ;------------------------------------------------------
-0137 72BE C120  34         mov   @edb.sams.page,tmp0
-     72C0 A516     
-0138 72C2 C160  34         mov   @edb.top.ptr,tmp1
-     72C4 A500     
-0139 72C6 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     72C8 258A     
+0137 728E C120  34         mov   @edb.sams.page,tmp0
+     7290 A516     
+0138 7292 C160  34         mov   @edb.top.ptr,tmp1
+     7294 A500     
+0139 7296 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     7298 258A     
 0140                                                   ; \ i  tmp0 = SAMS page number
 0141                                                   ; / i  tmp1 = Memory address
 0142                       ;------------------------------------------------------
 0143                       ; 7: Restore SAMS page d000-dfff as before copy
 0144                       ;------------------------------------------------------
-0145 72CA C120  34         mov   @tv.sams.d000,tmp0
-     72CC A20A     
-0146 72CE 0205  20         li    tmp1,>d000
-     72D0 D000     
-0147 72D2 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     72D4 258A     
+0145 729A C120  34         mov   @tv.sams.d000,tmp0
+     729C A20A     
+0146 729E 0205  20         li    tmp1,>d000
+     72A0 D000     
+0147 72A2 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     72A4 258A     
 0148                                                   ; \ i  tmp0 = SAMS page number
 0149                                                   ; / i  tmp1 = Memory address
 0150                       ;------------------------------------------------------
 0151                       ; 8: Align pointer to multiple of 16 memory address
 0152                       ;------------------------------------------------------
-0153 72D6 A820  54         a     @rambuf,@edb.next_free.ptr
-     72D8 A140     
-     72DA A508     
+0153 72A6 A820  54         a     @rambuf,@edb.next_free.ptr
+     72A8 A140     
+     72AA A508     
 0154                                                      ; Add length of line
 0155               
-0156 72DC C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
-     72DE A508     
-0157 72E0 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
-0158 72E2 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
-     72E4 000F     
-0159 72E6 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-     72E8 A508     
+0156 72AC C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+     72AE A508     
+0157 72B0 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+0158 72B2 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+     72B4 000F     
+0159 72B6 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
+     72B8 A508     
 0160                       ;------------------------------------------------------
 0161                       ; 9: Update index
 0162                       ;------------------------------------------------------
 0163               edb.line.copy.index:
-0164 72EA C820  54         mov   @rambuf+2,@parm1      ; Line number of target line
-     72EC A142     
-     72EE A000     
-0165 72F0 C820  54         mov   @rambuf+6,@parm2      ; Pointer to new line
-     72F2 A146     
-     72F4 A002     
-0166 72F6 C820  54         mov   @edb.sams.hipage,@parm3
-     72F8 A518     
-     72FA A004     
+0164 72BA C820  54         mov   @rambuf+2,@parm1      ; Line number of target line
+     72BC A142     
+     72BE A000     
+0165 72C0 C820  54         mov   @rambuf+6,@parm2      ; Pointer to new line
+     72C2 A146     
+     72C4 A002     
+0166 72C6 C820  54         mov   @edb.sams.hipage,@parm3
+     72C8 A518     
+     72CA A004     
 0167                                                   ; SAMS page to use
 0168               
-0169 72FC 06A0  32         bl    @idx.entry.update     ; Update index
-     72FE 6E18     
+0169 72CC 06A0  32         bl    @idx.entry.update     ; Update index
+     72CE 6DE8     
 0170                                                   ; \ i  parm1 = Line number in editor buffer
 0171                                                   ; | i  parm2 = pointer to line in
 0172                                                   ; |            editor buffer
@@ -12951,12 +12976,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0175                       ; Exit
 0176                       ;------------------------------------------------------
 0177               edb.line.copy.exit:
-0178 7300 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0179 7302 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0180 7304 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0181 7306 C2F9  30         mov   *stack+,r11           ; Pop r11
-0182 7308 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0178 72D0 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0179 72D2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0180 72D4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0181 72D6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0182 72D8 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0126                       copy  "edb.line.del.asm"       ; Delete line
      **** ****     > edb.line.del.asm
 0001               * FILE......: edb.line.del.asm
@@ -12982,120 +13007,120 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0021               * with base 0!
 0022               ********|*****|*********************|**************************
 0023               edb.line.del:
-0024 730A 0649  14         dect  stack
-0025 730C C64B  30         mov   r11,*stack            ; Save return address
-0026 730E 0649  14         dect  stack
-0027 7310 C644  30         mov   tmp0,*stack           ; Push tmp0
+0024 72DA 0649  14         dect  stack
+0025 72DC C64B  30         mov   r11,*stack            ; Save return address
+0026 72DE 0649  14         dect  stack
+0027 72E0 C644  30         mov   tmp0,*stack           ; Push tmp0
 0028                       ;------------------------------------------------------
 0029                       ; Assert
 0030                       ;------------------------------------------------------
-0031 7312 8820  54         c     @parm1,@edb.lines     ; Line beyond editor buffer ?
-     7314 A000     
-     7316 A504     
-0032 7318 1204  14         jle   !
-0033 731A C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     731C FFCE     
-0034 731E 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7320 2026     
+0031 72E2 8820  54         c     @parm1,@edb.lines     ; Line beyond editor buffer ?
+     72E4 A000     
+     72E6 A504     
+0032 72E8 1204  14         jle   !
+0033 72EA C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     72EC FFCE     
+0034 72EE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     72F0 2026     
 0035                       ;------------------------------------------------------
 0036                       ; Initialize
 0037                       ;------------------------------------------------------
-0038 7322 0720  34 !       seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-     7324 A506     
+0038 72F2 0720  34 !       seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+     72F4 A506     
 0039                       ;-------------------------------------------------------
 0040                       ; Special treatment if only 1 line in editor buffer
 0041                       ;-------------------------------------------------------
-0042 7326 C120  34          mov   @edb.lines,tmp0      ; \
-     7328 A504     
-0043 732A 0284  22          ci    tmp0,1               ; | Only single line?
-     732C 0001     
-0044 732E 132C  14          jeq   edb.line.del.1stline ; / Yes, handle single line and exit
+0042 72F6 C120  34          mov   @edb.lines,tmp0      ; \
+     72F8 A504     
+0043 72FA 0284  22          ci    tmp0,1               ; | Only single line?
+     72FC 0001     
+0044 72FE 132C  14          jeq   edb.line.del.1stline ; / Yes, handle single line and exit
 0045                       ;-------------------------------------------------------
 0046                       ; Delete entry in index
 0047                       ;-------------------------------------------------------
-0048 7330 0620  34         dec   @parm1                ; Base 0
-     7332 A000     
-0049 7334 C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
-     7336 A504     
-     7338 A002     
+0048 7300 0620  34         dec   @parm1                ; Base 0
+     7302 A000     
+0049 7304 C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
+     7306 A504     
+     7308 A002     
 0050               
-0051 733A 06A0  32         bl    @idx.entry.delete     ; Delete entry in index
-     733C 6EC6     
+0051 730A 06A0  32         bl    @idx.entry.delete     ; Delete entry in index
+     730C 6E96     
 0052                                                   ; \ i  @parm1 = Line in editor buffer
 0053                                                   ; / i  @parm2 = Last line for index reorg
 0054               
-0055 733E 0620  34         dec   @edb.lines            ; One line less in editor buffer
-     7340 A504     
+0055 730E 0620  34         dec   @edb.lines            ; One line less in editor buffer
+     7310 A504     
 0056                       ;-------------------------------------------------------
 0057                       ; Adjust M1 if set and line number < M1
 0058                       ;-------------------------------------------------------
 0059               edb.line.del.m1:
-0060 7342 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-     7344 A50C     
-     7346 2022     
-0061 7348 130D  14         jeq   edb.line.del.m2       ; Yes, skip to M2
+0060 7312 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
+     7314 A50C     
+     7316 2022     
+0061 7318 130D  14         jeq   edb.line.del.m2       ; Yes, skip to M2
 0062               
-0063 734A 8820  54         c     @parm1,@edb.block.m1  ; \
-     734C A000     
-     734E A50C     
-0064 7350 1309  14         jeq   edb.line.del.m2       ; | Skip to M2 if line number >= M1
-0065 7352 1508  14         jgt   edb.line.del.m2       ; /
+0063 731A 8820  54         c     @parm1,@edb.block.m1  ; \
+     731C A000     
+     731E A50C     
+0064 7320 1309  14         jeq   edb.line.del.m2       ; | Skip to M2 if line number >= M1
+0065 7322 1508  14         jgt   edb.line.del.m2       ; /
 0066               
-0067 7354 8820  54         c     @edb.block.m1,@w$0001 ; \
-     7356 A50C     
-     7358 2002     
-0068 735A 1304  14         jeq   edb.line.del.m2       ; / Skip to M2 if M1 == 1
+0067 7324 8820  54         c     @edb.block.m1,@w$0001 ; \
+     7326 A50C     
+     7328 2002     
+0068 732A 1304  14         jeq   edb.line.del.m2       ; / Skip to M2 if M1 == 1
 0069               
-0070 735C 0620  34         dec   @edb.block.m1         ; M1--
-     735E A50C     
-0071 7360 0720  34         seto  @fb.colorize          ; Set colorize flag
-     7362 A310     
+0070 732C 0620  34         dec   @edb.block.m1         ; M1--
+     732E A50C     
+0071 7330 0720  34         seto  @fb.colorize          ; Set colorize flag
+     7332 A310     
 0072                       ;-------------------------------------------------------
 0073                       ; Adjust M2 if set and line number < M2
 0074                       ;-------------------------------------------------------
 0075               edb.line.del.m2:
-0076 7364 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-     7366 A50E     
-     7368 2022     
-0077 736A 1314  14         jeq   edb.line.del.exit     ; Yes, exit early
+0076 7334 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+     7336 A50E     
+     7338 2022     
+0077 733A 1314  14         jeq   edb.line.del.exit     ; Yes, exit early
 0078               
-0079 736C 8820  54         c     @parm1,@edb.block.m2  ; \
-     736E A000     
-     7370 A50E     
-0080 7372 1310  14         jeq   edb.line.del.exit     ; | Skip to exit if line number >= M2
-0081 7374 150F  14         jgt   edb.line.del.exit     ; /
+0079 733C 8820  54         c     @parm1,@edb.block.m2  ; \
+     733E A000     
+     7340 A50E     
+0080 7342 1310  14         jeq   edb.line.del.exit     ; | Skip to exit if line number >= M2
+0081 7344 150F  14         jgt   edb.line.del.exit     ; /
 0082               
-0083 7376 8820  54         c     @edb.block.m2,@w$0001 ; \
-     7378 A50E     
-     737A 2002     
-0084 737C 130B  14         jeq   edb.line.del.exit     ; / Skip to exit if M1 == 1
+0083 7346 8820  54         c     @edb.block.m2,@w$0001 ; \
+     7348 A50E     
+     734A 2002     
+0084 734C 130B  14         jeq   edb.line.del.exit     ; / Skip to exit if M1 == 1
 0085               
-0086 737E 0620  34         dec   @edb.block.m2         ; M2--
-     7380 A50E     
-0087 7382 0720  34         seto  @fb.colorize          ; Set colorize flag
-     7384 A310     
-0088 7386 1006  14         jmp   edb.line.del.exit     ; Exit early
+0086 734E 0620  34         dec   @edb.block.m2         ; M2--
+     7350 A50E     
+0087 7352 0720  34         seto  @fb.colorize          ; Set colorize flag
+     7354 A310     
+0088 7356 1006  14         jmp   edb.line.del.exit     ; Exit early
 0089                       ;-------------------------------------------------------
 0090                       ; Special treatment if only 1 line in editor buffer
 0091                       ;-------------------------------------------------------
 0092               edb.line.del.1stline:
-0093 7388 04E0  34         clr   @parm1                ; 1st line
-     738A A000     
-0094 738C 04E0  34         clr   @parm2                ; 1st line
-     738E A002     
+0093 7358 04E0  34         clr   @parm1                ; 1st line
+     735A A000     
+0094 735C 04E0  34         clr   @parm2                ; 1st line
+     735E A002     
 0095               
-0096 7390 06A0  32         bl    @idx.entry.delete     ; Delete entry in index
-     7392 6EC6     
+0096 7360 06A0  32         bl    @idx.entry.delete     ; Delete entry in index
+     7362 6E96     
 0097                                                   ; \ i  @parm1 = Line in editor buffer
 0098                                                   ; / i  @parm2 = Last line for index reorg
 0099                       ;------------------------------------------------------
 0100                       ; Exit
 0101                       ;------------------------------------------------------
 0102               edb.line.del.exit:
-0103 7394 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0104 7396 C2F9  30         mov   *stack+,r11           ; Pop r11
-0105 7398 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0103 7364 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0104 7366 C2F9  30         mov   *stack+,r11           ; Pop r11
+0105 7368 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0127                       copy  "edb.block.copy.asm"     ; Copy code block
      **** ****     > edb.block.copy.asm
 0001               * FILE......: edb.block.copy.asm
@@ -13127,197 +13152,197 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0027               * Makes it easier when comparing values.
 0028               ********|*****|*********************|**************************
 0029               edb.block.copy:
-0030 739A 0649  14         dect  stack
-0031 739C C64B  30         mov   r11,*stack            ; Save return address
-0032 739E 0649  14         dect  stack
-0033 73A0 C644  30         mov   tmp0,*stack           ; Push tmp0
-0034 73A2 0649  14         dect  stack
-0035 73A4 C645  30         mov   tmp1,*stack           ; Push tmp1
-0036 73A6 0649  14         dect  stack
-0037 73A8 C646  30         mov   tmp2,*stack           ; Push tmp2
-0038 73AA 0649  14         dect  stack
-0039 73AC C660  46         mov   @parm1,*stack         ; Push parm1
-     73AE A000     
-0040 73B0 04E0  34         clr   @outparm1             ; No action (>0000)
-     73B2 A010     
+0030 736A 0649  14         dect  stack
+0031 736C C64B  30         mov   r11,*stack            ; Save return address
+0032 736E 0649  14         dect  stack
+0033 7370 C644  30         mov   tmp0,*stack           ; Push tmp0
+0034 7372 0649  14         dect  stack
+0035 7374 C645  30         mov   tmp1,*stack           ; Push tmp1
+0036 7376 0649  14         dect  stack
+0037 7378 C646  30         mov   tmp2,*stack           ; Push tmp2
+0038 737A 0649  14         dect  stack
+0039 737C C660  46         mov   @parm1,*stack         ; Push parm1
+     737E A000     
+0040 7380 04E0  34         clr   @outparm1             ; No action (>0000)
+     7382 A010     
 0041                       ;------------------------------------------------------
 0042                       ; Asserts
 0043                       ;------------------------------------------------------
-0044 73B4 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-     73B6 A50C     
-     73B8 2022     
-0045 73BA 1363  14         jeq   edb.block.copy.exit   ; Yes, exit early
+0044 7384 8820  54         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
+     7386 A50C     
+     7388 2022     
+0045 738A 1363  14         jeq   edb.block.copy.exit   ; Yes, exit early
 0046               
-0047 73BC 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-     73BE A50E     
-     73C0 2022     
-0048 73C2 135F  14         jeq   edb.block.copy.exit   ; Yes, exit early
+0047 738C 8820  54         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+     738E A50E     
+     7390 2022     
+0048 7392 135F  14         jeq   edb.block.copy.exit   ; Yes, exit early
 0049               
-0050 73C4 8820  54         c     @edb.block.m1,@edb.block.m2
-     73C6 A50C     
-     73C8 A50E     
+0050 7394 8820  54         c     @edb.block.m1,@edb.block.m2
+     7396 A50C     
+     7398 A50E     
 0051                                                   ; M1 > M2 ?
-0052 73CA 155B  14         jgt   edb.block.copy.exit   ; Yes, exit early
+0052 739A 155B  14         jgt   edb.block.copy.exit   ; Yes, exit early
 0053                       ;------------------------------------------------------
 0054                       ; Get current line position in editor buffer
 0055                       ;------------------------------------------------------
-0056 73CC C820  54         mov   @fb.row,@parm1
-     73CE A306     
-     73D0 A000     
-0057 73D2 06A0  32         bl    @fb.row2line          ; Row to editor line
-     73D4 6B62     
+0056 739C C820  54         mov   @fb.row,@parm1
+     739E A306     
+     73A0 A000     
+0057 73A2 06A0  32         bl    @fb.row2line          ; Row to editor line
+     73A4 6B32     
 0058                                                   ; \ i @fb.topline = Top line in frame buffer
 0059                                                   ; | i @parm1      = Row in frame buffer
 0060                                                   ; / o @outparm1   = Matching line in EB
 0061               
-0062 73D6 C120  34         mov   @outparm1,tmp0        ; \
-     73D8 A010     
-0063 73DA 0584  14         inc   tmp0                  ; | Base 1 for current line in editor buffer
-0064 73DC C804  38         mov   tmp0,@edb.block.var   ; / and store for later use
-     73DE A510     
+0062 73A6 C120  34         mov   @outparm1,tmp0        ; \
+     73A8 A010     
+0063 73AA 0584  14         inc   tmp0                  ; | Base 1 for current line in editor buffer
+0064 73AC C804  38         mov   tmp0,@edb.block.var   ; / and store for later use
+     73AE A510     
 0065                       ;------------------------------------------------------
 0066                       ; Show error and exit if M1 < current line < M2
 0067                       ;------------------------------------------------------
-0068 73E0 8120  34         c     @outparm1,tmp0        ; Current line < M1 ?
-     73E2 A010     
-0069 73E4 110D  14         jlt   !                     ; Yes, skip check
+0068 73B0 8120  34         c     @outparm1,tmp0        ; Current line < M1 ?
+     73B2 A010     
+0069 73B4 110D  14         jlt   !                     ; Yes, skip check
 0070               
-0071 73E6 8160  34         c     @outparm1,tmp1        ; Current line > M2 ?
-     73E8 A010     
-0072 73EA 150A  14         jgt   !                     ; Yes, skip check
+0071 73B6 8160  34         c     @outparm1,tmp1        ; Current line > M2 ?
+     73B8 A010     
+0072 73BA 150A  14         jgt   !                     ; Yes, skip check
 0073               
-0074 73EC 06A0  32         bl    @cpym2m
-     73EE 24EE     
-0075 73F0 3778                   data txt.block.inside,tv.error.msg,53
-     73F2 A22A     
-     73F4 0035     
+0074 73BC 06A0  32         bl    @cpym2m
+     73BE 24EE     
+0075 73C0 3798                   data txt.block.inside,tv.error.msg,53
+     73C2 A22A     
+     73C4 0035     
 0076               
-0077 73F6 06A0  32         bl    @pane.errline.show    ; Show error line
-     73F8 7942     
+0077 73C6 06A0  32         bl    @pane.errline.show    ; Show error line
+     73C8 792A     
 0078               
-0079 73FA 04E0  34         clr   @outparm1             ; No action (>0000)
-     73FC A010     
-0080 73FE 1041  14         jmp   edb.block.copy.exit   ; Exit early
+0079 73CA 04E0  34         clr   @outparm1             ; No action (>0000)
+     73CC A010     
+0080 73CE 1041  14         jmp   edb.block.copy.exit   ; Exit early
 0081                       ;------------------------------------------------------
 0082                       ; Display message Copy/Move
 0083                       ;------------------------------------------------------
-0084 7400 C820  54 !       mov   @tv.busycolor,@parm1  ; Get busy color
-     7402 A21C     
-     7404 A000     
-0085 7406 06A0  32         bl    @pane.action.colorscheme.statlines
-     7408 7804     
+0084 73D0 C820  54 !       mov   @tv.busycolor,@parm1  ; Get busy color
+     73D2 A21C     
+     73D4 A000     
+0085 73D6 06A0  32         bl    @pane.action.colorscheme.statlines
+     73D8 77D4     
 0086                                                   ; Set color combination for status lines
 0087                                                   ; \ i  @parm1 = Color combination
 0088                                                   ; /
 0089               
-0090 740A 06A0  32         bl    @hchar
-     740C 27DC     
-0091 740E 1D00                   byte pane.botrow,0,32,55
-     7410 2037     
-0092 7412 FFFF                   data eol              ; Remove markers and block shortcuts
+0090 73DA 06A0  32         bl    @hchar
+     73DC 27DC     
+0091 73DE 1D00                   byte pane.botrow,0,32,55
+     73E0 2037     
+0092 73E2 FFFF                   data eol              ; Remove markers and block shortcuts
 0093                       ;------------------------------------------------------
 0094                       ; Check message to display
 0095                       ;------------------------------------------------------
-0096 7414 C119  26         mov   *stack,tmp0           ; \ Fetch @parm1 from stack, but don't pop!
+0096 73E4 C119  26         mov   *stack,tmp0           ; \ Fetch @parm1 from stack, but don't pop!
 0097                                                   ; / @parm1 = >0000 ?
-0098 7416 1605  14         jne   edb.block.copy.msg2   ; Yes, display "Moving" message
+0098 73E6 1605  14         jne   edb.block.copy.msg2   ; Yes, display "Moving" message
 0099               
-0100 7418 06A0  32         bl    @putat
-     741A 2456     
-0101 741C 1D00                   byte pane.botrow,0
-0102 741E 359C                   data txt.block.copy   ; Display "Copying block...."
-0103 7420 1004  14         jmp   edb.block.copy.prep
+0100 73E8 06A0  32         bl    @putat
+     73EA 2456     
+0101 73EC 1D00                   byte pane.botrow,0
+0102 73EE 35B4                   data txt.block.copy   ; Display "Copying block...."
+0103 73F0 1004  14         jmp   edb.block.copy.prep
 0104               
 0105               edb.block.copy.msg2:
-0106 7422 06A0  32         bl    @putat
-     7424 2456     
-0107 7426 1D00                   byte pane.botrow,0
-0108 7428 35AE                   data txt.block.move   ; Display "Moving block...."
+0106 73F2 06A0  32         bl    @putat
+     73F4 2456     
+0107 73F6 1D00                   byte pane.botrow,0
+0108 73F8 35C6                   data txt.block.move   ; Display "Moving block...."
 0109                       ;------------------------------------------------------
 0110                       ; Prepare for copy
 0111                       ;------------------------------------------------------
 0112               edb.block.copy.prep:
-0113 742A C120  34         mov   @edb.block.m1,tmp0    ; M1
-     742C A50C     
-0114 742E C1A0  34         mov   @edb.block.m2,tmp2    ; \
-     7430 A50E     
-0115 7432 6184  18         s     tmp0,tmp2             ; | Loop counter = M2-M1
-0116 7434 0586  14         inc   tmp2                  ; /
+0113 73FA C120  34         mov   @edb.block.m1,tmp0    ; M1
+     73FC A50C     
+0114 73FE C1A0  34         mov   @edb.block.m2,tmp2    ; \
+     7400 A50E     
+0115 7402 6184  18         s     tmp0,tmp2             ; | Loop counter = M2-M1
+0116 7404 0586  14         inc   tmp2                  ; /
 0117               
-0118 7436 C160  34         mov   @edb.block.var,tmp1   ; Current line in editor buffer
-     7438 A510     
+0118 7406 C160  34         mov   @edb.block.var,tmp1   ; Current line in editor buffer
+     7408 A510     
 0119                       ;------------------------------------------------------
 0120                       ; Copy code block
 0121                       ;------------------------------------------------------
 0122               edb.block.copy.loop:
-0123 743A C805  38         mov   tmp1,@parm1           ; Target line for insert (current line)
-     743C A000     
-0124 743E 0620  34         dec   @parm1                ; Base 0 offset for index required
-     7440 A000     
-0125 7442 C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
-     7444 A504     
-     7446 A002     
+0123 740A C805  38         mov   tmp1,@parm1           ; Target line for insert (current line)
+     740C A000     
+0124 740E 0620  34         dec   @parm1                ; Base 0 offset for index required
+     7410 A000     
+0125 7412 C820  54         mov   @edb.lines,@parm2     ; Last line to reorganize
+     7414 A504     
+     7416 A002     
 0126               
-0127 7448 06A0  32         bl    @idx.entry.insert     ; Reorganize index, insert new line
-     744A 6F68     
+0127 7418 06A0  32         bl    @idx.entry.insert     ; Reorganize index, insert new line
+     741A 6F38     
 0128                                                   ; \ i  @parm1 = Line for insert
 0129                                                   ; / i  @parm2 = Last line to reorg
 0130                       ;------------------------------------------------------
 0131                       ; Increase M1-M2 block if target line before M1
 0132                       ;------------------------------------------------------
-0133 744C 8805  38         c     tmp1,@edb.block.m1
-     744E A50C     
-0134 7450 1506  14         jgt   edb.block.copy.loop.docopy
-0135 7452 1305  14         jeq   edb.block.copy.loop.docopy
+0133 741C 8805  38         c     tmp1,@edb.block.m1
+     741E A50C     
+0134 7420 1506  14         jgt   edb.block.copy.loop.docopy
+0135 7422 1305  14         jeq   edb.block.copy.loop.docopy
 0136               
-0137 7454 05A0  34         inc   @edb.block.m1         ; M1++
-     7456 A50C     
-0138 7458 05A0  34         inc   @edb.block.m2         ; M2++
-     745A A50E     
-0139 745C 0584  14         inc   tmp0                  ; Increase source line number too!
+0137 7424 05A0  34         inc   @edb.block.m1         ; M1++
+     7426 A50C     
+0138 7428 05A0  34         inc   @edb.block.m2         ; M2++
+     742A A50E     
+0139 742C 0584  14         inc   tmp0                  ; Increase source line number too!
 0140                       ;------------------------------------------------------
 0141                       ; Copy line
 0142                       ;------------------------------------------------------
 0143               edb.block.copy.loop.docopy:
-0144 745E C804  38         mov   tmp0,@parm1           ; Source line for copy
-     7460 A000     
-0145 7462 C805  38         mov   tmp1,@parm2           ; Target line for copy
-     7464 A002     
+0144 742E C804  38         mov   tmp0,@parm1           ; Source line for copy
+     7430 A000     
+0145 7432 C805  38         mov   tmp1,@parm2           ; Target line for copy
+     7434 A002     
 0146               
-0147 7466 06A0  32         bl    @edb.line.copy        ; Copy line
-     7468 7228     
+0147 7436 06A0  32         bl    @edb.line.copy        ; Copy line
+     7438 71F8     
 0148                                                   ; \ i  @parm1 = Source line in editor buffer
 0149                                                   ; / i  @parm2 = Target line in editor buffer
 0150                       ;------------------------------------------------------
 0151                       ; Housekeeping for next copy
 0152                       ;------------------------------------------------------
-0153 746A 05A0  34         inc   @edb.lines            ; One line added to editor buffer
-     746C A504     
-0154 746E 0584  14         inc   tmp0                  ; Next source line
-0155 7470 0585  14         inc   tmp1                  ; Next target line
-0156 7472 0606  14         dec   tmp2                  ; Update ĺoop counter
-0157 7474 15E2  14         jgt   edb.block.copy.loop   ; Next line
+0153 743A 05A0  34         inc   @edb.lines            ; One line added to editor buffer
+     743C A504     
+0154 743E 0584  14         inc   tmp0                  ; Next source line
+0155 7440 0585  14         inc   tmp1                  ; Next target line
+0156 7442 0606  14         dec   tmp2                  ; Update ĺoop counter
+0157 7444 15E2  14         jgt   edb.block.copy.loop   ; Next line
 0158                       ;------------------------------------------------------
 0159                       ; Copy loop completed
 0160                       ;------------------------------------------------------
-0161 7476 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-     7478 A506     
-0162 747A 0720  34         seto  @fb.dirty             ; Frame buffer dirty
-     747C A316     
-0163 747E 0720  34         seto  @outparm1             ; Copy completed
-     7480 A010     
+0161 7446 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+     7448 A506     
+0162 744A 0720  34         seto  @fb.dirty             ; Frame buffer dirty
+     744C A316     
+0163 744E 0720  34         seto  @outparm1             ; Copy completed
+     7450 A010     
 0164                       ;------------------------------------------------------
 0165                       ; Exit
 0166                       ;------------------------------------------------------
 0167               edb.block.copy.exit:
-0168 7482 C839  50         mov   *stack+,@parm1        ; Pop @parm1
-     7484 A000     
-0169 7486 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0170 7488 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0171 748A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0172 748C C2F9  30         mov   *stack+,r11           ; Pop R11
-0173 748E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0168 7452 C839  50         mov   *stack+,@parm1        ; Pop @parm1
+     7454 A000     
+0169 7456 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0170 7458 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0171 745A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0172 745C C2F9  30         mov   *stack+,r11           ; Pop R11
+0173 745E 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0128                       ;-----------------------------------------------------------------------
 0129                       ; User hook, background tasks
 0130                       ;-----------------------------------------------------------------------
@@ -13330,75 +13355,75 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Editor - spectra2 user hook
 0006               ****************************************************************
 0007               hook.keyscan:
-0008 7490 20A0  38         coc   @wbit11,config        ; ANYKEY pressed ?
-     7492 200A     
-0009 7494 161C  14         jne   hook.keyscan.clear_kbbuffer
+0008 7460 20A0  38         coc   @wbit11,config        ; ANYKEY pressed ?
+     7462 200A     
+0009 7464 161C  14         jne   hook.keyscan.clear_kbbuffer
 0010                                                   ; No, clear buffer and exit
-0011 7496 C820  54         mov   @waux1,@keycode1      ; Save current key pressed
-     7498 833C     
-     749A A022     
+0011 7466 C820  54         mov   @waux1,@keycode1      ; Save current key pressed
+     7468 833C     
+     746A A022     
 0012               *---------------------------------------------------------------
 0013               * Identical key pressed ?
 0014               *---------------------------------------------------------------
-0015 749C 40A0  34         szc   @wbit11,config        ; Reset ANYKEY
-     749E 200A     
-0016 74A0 8820  54         c     @keycode1,@keycode2   ; Still pressing previous key?
-     74A2 A022     
-     74A4 A024     
-0017 74A6 1608  14         jne   hook.keyscan.new      ; New key pressed
+0015 746C 40A0  34         szc   @wbit11,config        ; Reset ANYKEY
+     746E 200A     
+0016 7470 8820  54         c     @keycode1,@keycode2   ; Still pressing previous key?
+     7472 A022     
+     7474 A024     
+0017 7476 1608  14         jne   hook.keyscan.new      ; New key pressed
 0018               *---------------------------------------------------------------
 0019               * Activate auto-repeat ?
 0020               *---------------------------------------------------------------
-0021 74A8 05A0  34         inc   @keyrptcnt
-     74AA A020     
-0022 74AC C120  34         mov   @keyrptcnt,tmp0
-     74AE A020     
-0023 74B0 0284  22         ci    tmp0,30
-     74B2 001E     
-0024 74B4 1112  14         jlt   hook.keyscan.bounce   ; No, do keyboard bounce delay and return
-0025 74B6 1002  14         jmp   hook.keyscan.autorepeat
+0021 7478 05A0  34         inc   @keyrptcnt
+     747A A020     
+0022 747C C120  34         mov   @keyrptcnt,tmp0
+     747E A020     
+0023 7480 0284  22         ci    tmp0,30
+     7482 001E     
+0024 7484 1112  14         jlt   hook.keyscan.bounce   ; No, do keyboard bounce delay and return
+0025 7486 1002  14         jmp   hook.keyscan.autorepeat
 0026               *--------------------------------------------------------------
 0027               * New key pressed
 0028               *--------------------------------------------------------------
 0029               hook.keyscan.new:
-0030 74B8 04E0  34         clr   @keyrptcnt            ; Reset key-repeat counter
-     74BA A020     
+0030 7488 04E0  34         clr   @keyrptcnt            ; Reset key-repeat counter
+     748A A020     
 0031               hook.keyscan.autorepeat:
-0032 74BC 0204  20         li    tmp0,250              ; \
-     74BE 00FA     
-0033 74C0 0604  14 !       dec   tmp0                  ; | Inline keyboard bounce delay
-0034 74C2 16FE  14         jne   -!                    ; /
-0035 74C4 C820  54         mov   @keycode1,@keycode2   ; Save as previous key
-     74C6 A022     
-     74C8 A024     
-0036 74CA 0460  28         b     @edkey.key.process    ; Process key
-     74CC 60E6     
+0032 748C 0204  20         li    tmp0,250              ; \
+     748E 00FA     
+0033 7490 0604  14 !       dec   tmp0                  ; | Inline keyboard bounce delay
+0034 7492 16FE  14         jne   -!                    ; /
+0035 7494 C820  54         mov   @keycode1,@keycode2   ; Save as previous key
+     7496 A022     
+     7498 A024     
+0036 749A 0460  28         b     @edkey.key.process    ; Process key
+     749C 60E6     
 0037               *--------------------------------------------------------------
 0038               * Clear keyboard buffer if no key pressed
 0039               *--------------------------------------------------------------
 0040               hook.keyscan.clear_kbbuffer:
-0041 74CE 04E0  34         clr   @keycode1
-     74D0 A022     
-0042 74D2 04E0  34         clr   @keycode2
-     74D4 A024     
-0043 74D6 04E0  34         clr   @keyrptcnt
-     74D8 A020     
+0041 749E 04E0  34         clr   @keycode1
+     74A0 A022     
+0042 74A2 04E0  34         clr   @keycode2
+     74A4 A024     
+0043 74A6 04E0  34         clr   @keyrptcnt
+     74A8 A020     
 0044               *--------------------------------------------------------------
 0045               * Delay to avoid key bouncing
 0046               *--------------------------------------------------------------
 0047               hook.keyscan.bounce:
-0048 74DA 0204  20         li    tmp0,2000             ; Avoid key bouncing
-     74DC 07D0     
+0048 74AA 0204  20         li    tmp0,2000             ; Avoid key bouncing
+     74AC 07D0     
 0049                       ;------------------------------------------------------
 0050                       ; Delay loop
 0051                       ;------------------------------------------------------
 0052               hook.keyscan.bounce.loop:
-0053 74DE 0604  14         dec   tmp0
-0054 74E0 16FE  14         jne   hook.keyscan.bounce.loop
-0055 74E2 0460  28         b     @hookok               ; Return
-     74E4 2EE2     
+0053 74AE 0604  14         dec   tmp0
+0054 74B0 16FE  14         jne   hook.keyscan.bounce.loop
+0055 74B2 0460  28         b     @hookok               ; Return
+     74B4 2EE2     
 0056               
-                   < stevie_b1.asm.61843
+                   < stevie_b1.asm.91724
 0132                       copy  "task.vdp.panes.asm"     ; Draw editor panes in VDP
      **** ****     > task.vdp.panes.asm
 0001               * FILE......: task.vdp.panes.asm
@@ -13408,21 +13433,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Task - VDP draw editor panes (frame buffer, CMDB, status line)
 0006               ********|*****|*********************|**************************
 0007               task.vdp.panes:
-0008 74E6 0649  14         dect  stack
-0009 74E8 C64B  30         mov   r11,*stack            ; Save return address
+0008 74B6 0649  14         dect  stack
+0009 74B8 C64B  30         mov   r11,*stack            ; Save return address
 0010                       ;------------------------------------------------------
 0011                       ; Dump panes to VDP memory
 0012                       ;------------------------------------------------------
-0013 74EA 06A0  32         bl    @pane.vdpdump
-     74EC 7B36     
+0013 74BA 06A0  32         bl    @pane.vdpdump
+     74BC 7B06     
 0014                       ;------------------------------------------------------
 0015                       ; Exit task
 0016                       ;------------------------------------------------------
 0017               task.vdp.panes.exit:
-0018 74EE C2F9  30         mov   *stack+,r11           ; Pop r11
-0019 74F0 0460  28         b     @slotok
-     74F2 2F5E     
-                   < stevie_b1.asm.61843
+0018 74BE C2F9  30         mov   *stack+,r11           ; Pop r11
+0019 74C0 0460  28         b     @slotok
+     74C2 2F5E     
+                   < stevie_b1.asm.91724
 0133               
 0135               
 0136                       copy  "task.vdp.cursor.sat.asm"
@@ -13434,146 +13459,146 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Task - Copy Sprite Attribute Table (SAT) to VDP
 0006               ********|*****|*********************|**************************
 0007               task.vdp.copy.sat:
-0008 74F4 0649  14         dect  stack
-0009 74F6 C64B  30         mov   r11,*stack            ; Save return address
-0010 74F8 0649  14         dect  stack
-0011 74FA C644  30         mov   tmp0,*stack           ; Push tmp0
-0012 74FC 0649  14         dect  stack
-0013 74FE C645  30         mov   tmp1,*stack           ; Push tmp1
-0014 7500 0649  14         dect  stack
-0015 7502 C646  30         mov   tmp2,*stack           ; Push tmp2
+0008 74C4 0649  14         dect  stack
+0009 74C6 C64B  30         mov   r11,*stack            ; Save return address
+0010 74C8 0649  14         dect  stack
+0011 74CA C644  30         mov   tmp0,*stack           ; Push tmp0
+0012 74CC 0649  14         dect  stack
+0013 74CE C645  30         mov   tmp1,*stack           ; Push tmp1
+0014 74D0 0649  14         dect  stack
+0015 74D2 C646  30         mov   tmp2,*stack           ; Push tmp2
 0016                       ;------------------------------------------------------
 0017                       ; Get pane with focus
 0018                       ;------------------------------------------------------
-0019 7504 C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
-     7506 A222     
+0019 74D4 C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
+     74D6 A222     
 0020               
-0021 7508 0284  22         ci    tmp0,pane.focus.fb
-     750A 0000     
-0022 750C 130F  14         jeq   task.vdp.copy.sat.fb  ; Frame buffer has focus
+0021 74D8 0284  22         ci    tmp0,pane.focus.fb
+     74DA 0000     
+0022 74DC 130F  14         jeq   task.vdp.copy.sat.fb  ; Frame buffer has focus
 0023               
-0024 750E 0284  22         ci    tmp0,pane.focus.cmdb
-     7510 0001     
-0025 7512 1304  14         jeq   task.vdp.copy.sat.cmdb
+0024 74DE 0284  22         ci    tmp0,pane.focus.cmdb
+     74E0 0001     
+0025 74E2 1304  14         jeq   task.vdp.copy.sat.cmdb
 0026                                                   ; CMDB buffer has focus
 0027                       ;------------------------------------------------------
 0028                       ; Assert failed. Invalid value
 0029                       ;------------------------------------------------------
-0030 7514 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     7516 FFCE     
-0031 7518 06A0  32         bl    @cpu.crash            ; / Halt system.
-     751A 2026     
+0030 74E4 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     74E6 FFCE     
+0031 74E8 06A0  32         bl    @cpu.crash            ; / Halt system.
+     74EA 2026     
 0032                       ;------------------------------------------------------
 0033                       ; CMDB buffer has focus, position cursor
 0034                       ;------------------------------------------------------
 0035               task.vdp.copy.sat.cmdb:
-0036 751C C820  54         mov   @cmdb.cursor,@wyx     ; Position cursor in CMDB pane
-     751E A70A     
-     7520 832A     
-0037 7522 E0A0  34         soc   @wbit0,config         ; Sprite adjustment on
-     7524 2020     
-0038 7526 06A0  32         bl    @yx2px                ; \ Calculate pixel position
-     7528 2704     
+0036 74EC C820  54         mov   @cmdb.cursor,@wyx     ; Position cursor in CMDB pane
+     74EE A70A     
+     74F0 832A     
+0037 74F2 E0A0  34         soc   @wbit0,config         ; Sprite adjustment on
+     74F4 2020     
+0038 74F6 06A0  32         bl    @yx2px                ; \ Calculate pixel position
+     74F8 2704     
 0039                                                   ; | i  @WYX = Cursor YX
 0040                                                   ; / o  tmp0 = Pixel YX
 0041               
-0042 752A 100C  14         jmp   task.vdp.copy.sat.write
+0042 74FA 100C  14         jmp   task.vdp.copy.sat.write
 0043                       ;------------------------------------------------------
 0044                       ; Frame buffer has focus, position cursor
 0045                       ;------------------------------------------------------
 0046               task.vdp.copy.sat.fb:
-0047 752C E0A0  34         soc   @wbit0,config         ; Sprite adjustment on
-     752E 2020     
-0048 7530 06A0  32         bl    @yx2px                ; \ Calculate pixel position
-     7532 2704     
+0047 74FC E0A0  34         soc   @wbit0,config         ; Sprite adjustment on
+     74FE 2020     
+0048 7500 06A0  32         bl    @yx2px                ; \ Calculate pixel position
+     7502 2704     
 0049                                                   ; | i  @WYX = Cursor YX
 0050                                                   ; / o  tmp0 = Pixel YX
 0051               
 0052                       ;------------------------------------------------------
 0053                       ; Cursor Y adjustment (topline, ruler, ...)
 0054                       ;------------------------------------------------------
-0055 7534 C160  34         mov   @tv.ruler.visible,tmp1
-     7536 A210     
-0056 7538 1303  14         jeq   task.vdp.copy.sat.fb.noruler
-0057 753A 0224  22         ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler
-     753C 1000     
-0058 753E 1002  14         jmp   task.vdp.copy.sat.write
+0055 7504 C160  34         mov   @tv.ruler.visible,tmp1
+     7506 A210     
+0056 7508 1303  14         jeq   task.vdp.copy.sat.fb.noruler
+0057 750A 0224  22         ai    tmp0,>1000            ; Adjust VDP cursor because of topline+ruler
+     750C 1000     
+0058 750E 1002  14         jmp   task.vdp.copy.sat.write
 0059               
 0060               task.vdp.copy.sat.fb.noruler:
-0061 7540 0224  22         ai    tmp0,>0800            ; Adjust VDP cursor because of topline
-     7542 0800     
+0061 7510 0224  22         ai    tmp0,>0800            ; Adjust VDP cursor because of topline
+     7512 0800     
 0062                       ;------------------------------------------------------
 0063                       ; Dump sprite attribute table
 0064                       ;------------------------------------------------------
 0065               task.vdp.copy.sat.write:
-0066 7544 C804  38         mov   tmp0,@ramsat          ; Set cursor YX
-     7546 A1E0     
+0066 7514 C804  38         mov   tmp0,@ramsat          ; Set cursor YX
+     7516 A1E0     
 0067                       ;------------------------------------------------------
 0068                       ; Handle column and row indicators
 0069                       ;------------------------------------------------------
-0070 7548 C160  34         mov   @tv.ruler.visible,tmp1
-     754A A210     
+0070 7518 C160  34         mov   @tv.ruler.visible,tmp1
+     751A A210     
 0071                                                   ; Ruler visible?
-0072 754C 1314  14         jeq   task.vdp.copy.sat.hide.indicators
+0072 751C 1314  14         jeq   task.vdp.copy.sat.hide.indicators
 0073                                                   ; Not visible, skip
 0074               
-0075 754E C160  34         mov   @cmdb.visible,tmp1
-     7550 A702     
-0076 7552 0285  22         ci    tmp1,>ffff            ; CMDB pane visible?
-     7554 FFFF     
-0077 7556 130F  14         jeq   task.vdp.copy.sat.hide.indicators
+0075 751E C160  34         mov   @cmdb.visible,tmp1
+     7520 A702     
+0076 7522 0285  22         ci    tmp1,>ffff            ; CMDB pane visible?
+     7524 FFFF     
+0077 7526 130F  14         jeq   task.vdp.copy.sat.hide.indicators
 0078                                                   ; Not visible, skip
 0079               
-0080 7558 0244  22         andi  tmp0,>ff00            ; \ Clear X position
-     755A FF00     
-0081 755C 0264  22         ori   tmp0,240              ; | Line indicator on pixel X 240
-     755E 00F0     
-0082 7560 C804  38         mov   tmp0,@ramsat+4        ; / Set line indicator    <
-     7562 A1E4     
+0080 7528 0244  22         andi  tmp0,>ff00            ; \ Clear X position
+     752A FF00     
+0081 752C 0264  22         ori   tmp0,240              ; | Line indicator on pixel X 240
+     752E 00F0     
+0082 7530 C804  38         mov   tmp0,@ramsat+4        ; / Set line indicator    <
+     7532 A1E4     
 0083               
-0084 7564 C120  34         mov   @ramsat,tmp0
-     7566 A1E0     
-0085 7568 0244  22         andi  tmp0,>00ff            ; \ Clear Y position
-     756A 00FF     
-0086 756C 0264  22         ori   tmp0,>0800            ; | Column indicator on pixel Y 8
-     756E 0800     
-0087 7570 C804  38         mov   tmp0,@ramsat+8        ; / Set column indicator  v
-     7572 A1E8     
+0084 7534 C120  34         mov   @ramsat,tmp0
+     7536 A1E0     
+0085 7538 0244  22         andi  tmp0,>00ff            ; \ Clear Y position
+     753A 00FF     
+0086 753C 0264  22         ori   tmp0,>0800            ; | Column indicator on pixel Y 8
+     753E 0800     
+0087 7540 C804  38         mov   tmp0,@ramsat+8        ; / Set column indicator  v
+     7542 A1E8     
 0088               
-0089 7574 1005  14         jmp   task.vdp.copy.sat.write2
+0089 7544 1005  14         jmp   task.vdp.copy.sat.write2
 0090                       ;------------------------------------------------------
 0091                       ; Do not show column and row indicators
 0092                       ;------------------------------------------------------
 0093               task.vdp.copy.sat.hide.indicators:
-0094 7576 04C5  14         clr   tmp1
-0095 7578 D805  38         movb  tmp1,@ramsat+7        ; \ Hide line indicator    <
-     757A A1E7     
+0094 7546 04C5  14         clr   tmp1
+0095 7548 D805  38         movb  tmp1,@ramsat+7        ; \ Hide line indicator    <
+     754A A1E7     
 0096                                                   ; / by transparant color
-0097 757C D805  38         movb  tmp1,@ramsat+11       ; \ Hide column indicator  v
-     757E A1EB     
+0097 754C D805  38         movb  tmp1,@ramsat+11       ; \ Hide column indicator  v
+     754E A1EB     
 0098                                                   ; / by transparant color
 0099                       ;------------------------------------------------------
 0100                       ; Dump to VDP
 0101                       ;------------------------------------------------------
 0102               task.vdp.copy.sat.write2:
-0103 7580 06A0  32         bl    @cpym2v               ; Copy sprite SAT to VDP
-     7582 249A     
-0104 7584 2180                   data sprsat,ramsat,14 ; \ i  p0 = VDP destination
-     7586 A1E0     
-     7588 000E     
+0103 7550 06A0  32         bl    @cpym2v               ; Copy sprite SAT to VDP
+     7552 249A     
+0104 7554 2180                   data sprsat,ramsat,14 ; \ i  p0 = VDP destination
+     7556 A1E0     
+     7558 000E     
 0105                                                   ; | i  p1 = ROM/RAM source
 0106                                                   ; / i  p2 = Number of bytes to write
 0107                       ;------------------------------------------------------
 0108                       ; Exit
 0109                       ;------------------------------------------------------
 0110               task.vdp.copy.sat.exit:
-0111 758A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0112 758C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0113 758E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0114 7590 C2F9  30         mov   *stack+,r11           ; Pop r11
-0115 7592 0460  28         b     @slotok               ; Exit task
-     7594 2F5E     
-                   < stevie_b1.asm.61843
+0111 755A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0112 755C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0113 755E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0114 7560 C2F9  30         mov   *stack+,r11           ; Pop r11
+0115 7562 0460  28         b     @slotok               ; Exit task
+     7564 2F5E     
+                   < stevie_b1.asm.91724
 0137                                                      ; Copy cursor SAT to VDP
 0138                       copy  "task.vdp.cursor.f18a.asm"
      **** ****     > task.vdp.cursor.f18a.asm
@@ -13584,52 +13609,52 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               * Task - Update cursor shape (blink)
 0006               ********|*****|*********************|**************************
 0007               task.vdp.cursor:
-0008 7596 0649  14         dect  stack
-0009 7598 C64B  30         mov   r11,*stack            ; Save return address
-0010 759A 0649  14         dect  stack
-0011 759C C644  30         mov   tmp0,*stack           ; Push tmp0
+0008 7566 0649  14         dect  stack
+0009 7568 C64B  30         mov   r11,*stack            ; Save return address
+0010 756A 0649  14         dect  stack
+0011 756C C644  30         mov   tmp0,*stack           ; Push tmp0
 0012                       ;------------------------------------------------------
 0013                       ; Toggle cursor
 0014                       ;------------------------------------------------------
-0015 759E 0560  34         inv   @fb.curtoggle         ; Flip cursor shape flag
-     75A0 A312     
-0016 75A2 1304  14         jeq   task.vdp.cursor.visible
+0015 756E 0560  34         inv   @fb.curtoggle         ; Flip cursor shape flag
+     7570 A312     
+0016 7572 1304  14         jeq   task.vdp.cursor.visible
 0017                       ;------------------------------------------------------
 0018                       ; Hide cursor
 0019                       ;------------------------------------------------------
-0020 75A4 04C4  14         clr   tmp0
-0021 75A6 D804  38         movb  tmp0,@ramsat+3        ; Hide cursor
-     75A8 A1E3     
-0022 75AA 1003  14         jmp   task.vdp.cursor.copy.sat
+0020 7574 04C4  14         clr   tmp0
+0021 7576 D804  38         movb  tmp0,@ramsat+3        ; Hide cursor
+     7578 A1E3     
+0022 757A 1003  14         jmp   task.vdp.cursor.copy.sat
 0023                                                   ; Update VDP SAT and exit task
 0024                       ;------------------------------------------------------
 0025                       ; Show cursor
 0026                       ;------------------------------------------------------
 0027               task.vdp.cursor.visible:
-0028 75AC C820  54         mov   @tv.curshape,@ramsat+2
-     75AE A214     
-     75B0 A1E2     
+0028 757C C820  54         mov   @tv.curshape,@ramsat+2
+     757E A214     
+     7580 A1E2     
 0029                                                   ; Get cursor shape and color
 0030                       ;------------------------------------------------------
 0031                       ; Copy SAT
 0032                       ;------------------------------------------------------
 0033               task.vdp.cursor.copy.sat:
-0034 75B2 06A0  32         bl    @cpym2v               ; Copy sprite SAT to VDP
-     75B4 249A     
-0035 75B6 2180                   data sprsat,ramsat,4  ; \ i  p0 = VDP destination
-     75B8 A1E0     
-     75BA 0004     
+0034 7582 06A0  32         bl    @cpym2v               ; Copy sprite SAT to VDP
+     7584 249A     
+0035 7586 2180                   data sprsat,ramsat,4  ; \ i  p0 = VDP destination
+     7588 A1E0     
+     758A 0004     
 0036                                                   ; | i  p1 = ROM/RAM source
 0037                                                   ; / i  p2 = Number of bytes to write
 0038                       ;------------------------------------------------------
 0039                       ; Exit
 0040                       ;------------------------------------------------------
 0041               task.vdp.cursor.exit:
-0042 75BC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0043 75BE C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 75C0 0460  28         b     @slotok               ; Exit task
-     75C2 2F5E     
-                   < stevie_b1.asm.61843
+0042 758C C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0043 758E C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 7590 0460  28         b     @slotok               ; Exit task
+     7592 2F5E     
+                   < stevie_b1.asm.91724
 0139                                                      ; Set cursor shape in VDP (blink)
 0146               
 0147                       copy  "task.oneshot.asm"       ; Run "one shot" task
@@ -13642,18 +13667,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               ***************************************************************
 0007               
 0008               task.oneshot:
-0009 75C4 C120  34         mov   @tv.task.oneshot,tmp0  ; Get pointer to one-shot task
-     75C6 A224     
-0010 75C8 1301  14         jeq   task.oneshot.exit
+0009 7594 C120  34         mov   @tv.task.oneshot,tmp0  ; Get pointer to one-shot task
+     7596 A224     
+0010 7598 1301  14         jeq   task.oneshot.exit
 0011               
-0012 75CA 0694  24         bl    *tmp0                  ; Execute one-shot task
+0012 759A 0694  24         bl    *tmp0                  ; Execute one-shot task
 0013                       ;------------------------------------------------------
 0014                       ; Exit
 0015                       ;------------------------------------------------------
 0016               task.oneshot.exit:
-0017 75CC 0460  28         b     @slotok                ; Exit task
-     75CE 2F5E     
-                   < stevie_b1.asm.61843
+0017 759C 0460  28         b     @slotok                ; Exit task
+     759E 2F5E     
+                   < stevie_b1.asm.91724
 0148                       ;-----------------------------------------------------------------------
 0149                       ; Screen pane utilities
 0150                       ;-----------------------------------------------------------------------
@@ -13678,31 +13703,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * none
 0018               ********|*****|*********************|**************************
 0019               pane.clearmsg.task.callback:
-0020 75D0 0649  14         dect  stack
-0021 75D2 C64B  30         mov   r11,*stack            ; Push return address
-0022 75D4 0649  14         dect  stack
-0023 75D6 C660  46         mov   @wyx,*stack           ; Push cursor position
-     75D8 832A     
+0020 75A0 0649  14         dect  stack
+0021 75A2 C64B  30         mov   r11,*stack            ; Push return address
+0022 75A4 0649  14         dect  stack
+0023 75A6 C660  46         mov   @wyx,*stack           ; Push cursor position
+     75A8 832A     
 0024                       ;-------------------------------------------------------
 0025                       ; Clear message
 0026                       ;-------------------------------------------------------
-0027 75DA 06A0  32         bl    @hchar
-     75DC 27DC     
-0028 75DE 0034                   byte 0,52,32,18
-     75E0 2012     
-0029 75E2 FFFF                   data EOL              ; Clear message
+0027 75AA 06A0  32         bl    @hchar
+     75AC 27DC     
+0028 75AE 0034                   byte 0,52,32,18
+     75B0 2012     
+0029 75B2 FFFF                   data EOL              ; Clear message
 0030               
-0031 75E4 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task
-     75E6 A224     
+0031 75B4 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task
+     75B6 A224     
 0032                       ;-------------------------------------------------------
 0033                       ; Exit
 0034                       ;-------------------------------------------------------
 0035               pane.clearmsg.task.callback.exit:
-0036 75E8 C839  50         mov   *stack+,@wyx          ; Pop cursor position
-     75EA 832A     
-0037 75EC C2F9  30         mov   *stack+,r11           ; Pop R11
-0038 75EE 045B  20         b     *r11                  ; Return to task
-                   < stevie_b1.asm.61843
+0036 75B8 C839  50         mov   *stack+,@wyx          ; Pop cursor position
+     75BA 832A     
+0037 75BC C2F9  30         mov   *stack+,r11           ; Pop R11
+0038 75BE 045B  20         b     *r11                  ; Return to task
+                   < stevie_b1.asm.91724
 0152                       copy  "pane.utils.colorscheme.asm"
      **** ****     > pane.utils.colorscheme.asm
 0001               * FILE......: pane.utils.colorscheme.asm
@@ -13721,78 +13746,78 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014               * tmp0
 0015               ********|*****|*********************|**************************
 0016               pane.action.colorscheme.cycle:
-0017 75F0 0649  14         dect  stack
-0018 75F2 C64B  30         mov   r11,*stack            ; Push return address
-0019 75F4 0649  14         dect  stack
-0020 75F6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0017 75C0 0649  14         dect  stack
+0018 75C2 C64B  30         mov   r11,*stack            ; Push return address
+0019 75C4 0649  14         dect  stack
+0020 75C6 C644  30         mov   tmp0,*stack           ; Push tmp0
 0021               
-0022 75F8 C120  34         mov   @tv.colorscheme,tmp0  ; Load color scheme index
-     75FA A212     
-0023 75FC 0284  22         ci    tmp0,tv.colorscheme.entries
-     75FE 000A     
+0022 75C8 C120  34         mov   @tv.colorscheme,tmp0  ; Load color scheme index
+     75CA A212     
+0023 75CC 0284  22         ci    tmp0,tv.colorscheme.entries
+     75CE 000A     
 0024                                                   ; Last entry reached?
-0025 7600 1103  14         jlt   !
-0026 7602 0204  20         li    tmp0,1                ; Reset color scheme index
-     7604 0001     
-0027 7606 1001  14         jmp   pane.action.colorscheme.switch
-0028 7608 0584  14 !       inc   tmp0
+0025 75D0 1103  14         jlt   !
+0026 75D2 0204  20         li    tmp0,1                ; Reset color scheme index
+     75D4 0001     
+0027 75D6 1001  14         jmp   pane.action.colorscheme.switch
+0028 75D8 0584  14 !       inc   tmp0
 0029                       ;-------------------------------------------------------
 0030                       ; Switch to new color scheme
 0031                       ;-------------------------------------------------------
 0032               pane.action.colorscheme.switch:
-0033 760A C804  38         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
-     760C A212     
+0033 75DA C804  38         mov   tmp0,@tv.colorscheme  ; Save index of color scheme
+     75DC A212     
 0034               
-0035 760E 06A0  32         bl    @pane.action.colorscheme.load
-     7610 764E     
+0035 75DE 06A0  32         bl    @pane.action.colorscheme.load
+     75E0 761E     
 0036                                                   ; Load current color scheme
 0037                       ;-------------------------------------------------------
 0038                       ; Show current color palette message
 0039                       ;-------------------------------------------------------
-0040 7612 C820  54         mov   @wyx,@waux1           ; Save cursor YX position
-     7614 832A     
-     7616 833C     
+0040 75E2 C820  54         mov   @wyx,@waux1           ; Save cursor YX position
+     75E4 832A     
+     75E6 833C     
 0041               
-0042 7618 06A0  32         bl    @putnum
-     761A 2B28     
-0043 761C 003E                   byte 0,62
-0044 761E A212                   data tv.colorscheme,rambuf,>3020
-     7620 A140     
-     7622 3020     
+0042 75E8 06A0  32         bl    @putnum
+     75EA 2B28     
+0043 75EC 003E                   byte 0,62
+0044 75EE A212                   data tv.colorscheme,rambuf,>3020
+     75F0 A140     
+     75F2 3020     
 0045               
-0046 7624 06A0  32         bl    @putat
-     7626 2456     
-0047 7628 0034                   byte 0,52
-0048 762A 37B0                   data txt.colorscheme  ; Show color palette message
+0046 75F4 06A0  32         bl    @putat
+     75F6 2456     
+0047 75F8 0034                   byte 0,52
+0048 75FA 37C8                   data txt.colorscheme  ; Show color palette message
 0049               
-0050 762C C820  54         mov   @waux1,@wyx           ; Restore cursor YX position
-     762E 833C     
-     7630 832A     
+0050 75FC C820  54         mov   @waux1,@wyx           ; Restore cursor YX position
+     75FE 833C     
+     7600 832A     
 0051                       ;-------------------------------------------------------
 0052                       ; Delay
 0053                       ;-------------------------------------------------------
-0054 7632 0204  20         li    tmp0,12000
-     7634 2EE0     
-0055 7636 0604  14 !       dec   tmp0
-0056 7638 16FE  14         jne   -!
+0054 7602 0204  20         li    tmp0,12000
+     7604 2EE0     
+0055 7606 0604  14 !       dec   tmp0
+0056 7608 16FE  14         jne   -!
 0057                       ;-------------------------------------------------------
 0058                       ; Setup one shot task for removing message
 0059                       ;-------------------------------------------------------
-0060 763A 0204  20         li    tmp0,pane.clearmsg.task.callback
-     763C 75D0     
-0061 763E C804  38         mov   tmp0,@tv.task.oneshot
-     7640 A224     
+0060 760A 0204  20         li    tmp0,pane.clearmsg.task.callback
+     760C 75A0     
+0061 760E C804  38         mov   tmp0,@tv.task.oneshot
+     7610 A224     
 0062               
-0063 7642 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
-     7644 2FD2     
-0064 7646 0003                   data 3                ; / for getting consistent delay
+0063 7612 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
+     7614 2FD2     
+0064 7616 0003                   data 3                ; / for getting consistent delay
 0065                       ;-------------------------------------------------------
 0066                       ; Exit
 0067                       ;-------------------------------------------------------
 0068               pane.action.colorscheme.cycle.exit:
-0069 7648 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0070 764A C2F9  30         mov   *stack+,r11           ; Pop R11
-0071 764C 045B  20         b     *r11                  ; Return to caller
+0069 7618 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0070 761A C2F9  30         mov   *stack+,r11           ; Pop R11
+0071 761C 045B  20         b     *r11                  ; Return to caller
 0072               
 0073               
 0074               
@@ -13814,249 +13839,249 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0090               * tmp0,tmp1,tmp2,tmp3,tmp4
 0091               ********|*****|*********************|**************************
 0092               pane.action.colorscheme.load:
-0093 764E 0649  14         dect  stack
-0094 7650 C64B  30         mov   r11,*stack            ; Save return address
-0095 7652 0649  14         dect  stack
-0096 7654 C644  30         mov   tmp0,*stack           ; Push tmp0
-0097 7656 0649  14         dect  stack
-0098 7658 C645  30         mov   tmp1,*stack           ; Push tmp1
-0099 765A 0649  14         dect  stack
-0100 765C C646  30         mov   tmp2,*stack           ; Push tmp2
-0101 765E 0649  14         dect  stack
-0102 7660 C647  30         mov   tmp3,*stack           ; Push tmp3
-0103 7662 0649  14         dect  stack
-0104 7664 C648  30         mov   tmp4,*stack           ; Push tmp4
-0105 7666 0649  14         dect  stack
-0106 7668 C660  46         mov   @parm1,*stack         ; Push parm1
-     766A A000     
+0093 761E 0649  14         dect  stack
+0094 7620 C64B  30         mov   r11,*stack            ; Save return address
+0095 7622 0649  14         dect  stack
+0096 7624 C644  30         mov   tmp0,*stack           ; Push tmp0
+0097 7626 0649  14         dect  stack
+0098 7628 C645  30         mov   tmp1,*stack           ; Push tmp1
+0099 762A 0649  14         dect  stack
+0100 762C C646  30         mov   tmp2,*stack           ; Push tmp2
+0101 762E 0649  14         dect  stack
+0102 7630 C647  30         mov   tmp3,*stack           ; Push tmp3
+0103 7632 0649  14         dect  stack
+0104 7634 C648  30         mov   tmp4,*stack           ; Push tmp4
+0105 7636 0649  14         dect  stack
+0106 7638 C660  46         mov   @parm1,*stack         ; Push parm1
+     763A A000     
 0107                       ;-------------------------------------------------------
 0108                       ; Turn screen of
 0109                       ;-------------------------------------------------------
-0110 766C C120  34         mov   @parm1,tmp0
-     766E A000     
-0111 7670 0284  22         ci    tmp0,>ffff            ; Skip flag set?
-     7672 FFFF     
-0112 7674 1302  14         jeq   !                     ; Yes, so skip screen off
-0113 7676 06A0  32         bl    @scroff               ; Turn screen off
-     7678 26A2     
+0110 763C C120  34         mov   @parm1,tmp0
+     763E A000     
+0111 7640 0284  22         ci    tmp0,>ffff            ; Skip flag set?
+     7642 FFFF     
+0112 7644 1302  14         jeq   !                     ; Yes, so skip screen off
+0113 7646 06A0  32         bl    @scroff               ; Turn screen off
+     7648 26A2     
 0114                       ;-------------------------------------------------------
 0115                       ; Get FG/BG colors framebuffer text
 0116                       ;-------------------------------------------------------
-0117 767A C120  34 !       mov   @tv.colorscheme,tmp0  ; Get color scheme index
-     767C A212     
-0118 767E 0604  14         dec   tmp0                  ; Internally work with base 0
+0117 764A C120  34 !       mov   @tv.colorscheme,tmp0  ; Get color scheme index
+     764C A212     
+0118 764E 0604  14         dec   tmp0                  ; Internally work with base 0
 0119               
-0120 7680 0A34  56         sla   tmp0,3                ; Offset into color scheme data table
-0121 7682 0224  22         ai    tmp0,tv.colorscheme.table
-     7684 34FA     
+0120 7650 0A34  56         sla   tmp0,3                ; Offset into color scheme data table
+0121 7652 0224  22         ai    tmp0,tv.colorscheme.table
+     7654 3504     
 0122                                                   ; Add base for color scheme data table
-0123 7686 C1F4  30         mov   *tmp0+,tmp3           ; Get colors ABCD
-0124 7688 C807  38         mov   tmp3,@tv.color        ; Save colors ABCD
-     768A A218     
+0123 7656 C1F4  30         mov   *tmp0+,tmp3           ; Get colors ABCD
+0124 7658 C807  38         mov   tmp3,@tv.color        ; Save colors ABCD
+     765A A218     
 0125                       ;-------------------------------------------------------
 0126                       ; Get and save cursor color
 0127                       ;-------------------------------------------------------
-0128 768C C214  26         mov   *tmp0,tmp4            ; Get colors EFGH
-0129 768E 0248  22         andi  tmp4,>00ff            ; Only keep LSB (GH)
-     7690 00FF     
-0130 7692 C808  38         mov   tmp4,@tv.curcolor     ; Save cursor color
-     7694 A216     
+0128 765C C214  26         mov   *tmp0,tmp4            ; Get colors EFGH
+0129 765E 0248  22         andi  tmp4,>00ff            ; Only keep LSB (GH)
+     7660 00FF     
+0130 7662 C808  38         mov   tmp4,@tv.curcolor     ; Save cursor color
+     7664 A216     
 0131                       ;-------------------------------------------------------
 0132                       ; Get FG/BG colors framebuffer marked text & CMDB pane
 0133                       ;-------------------------------------------------------
-0134 7696 C234  30         mov   *tmp0+,tmp4           ; Get colors EFGH again
-0135 7698 0248  22         andi  tmp4,>ff00            ; Only keep MSB (EF)
-     769A FF00     
-0136 769C 0988  56         srl   tmp4,8                ; MSB to LSB
+0134 7666 C234  30         mov   *tmp0+,tmp4           ; Get colors EFGH again
+0135 7668 0248  22         andi  tmp4,>ff00            ; Only keep MSB (EF)
+     766A FF00     
+0136 766C 0988  56         srl   tmp4,8                ; MSB to LSB
 0137               
-0138 769E C174  30         mov   *tmp0+,tmp1           ; Get colors IJKL
-0139 76A0 C185  18         mov   tmp1,tmp2             ; \ Right align IJ and
-0140 76A2 0986  56         srl   tmp2,8                ; | save to @tv.busycolor
-0141 76A4 C806  38         mov   tmp2,@tv.busycolor    ; /
-     76A6 A21C     
+0138 766E C174  30         mov   *tmp0+,tmp1           ; Get colors IJKL
+0139 7670 C185  18         mov   tmp1,tmp2             ; \ Right align IJ and
+0140 7672 0986  56         srl   tmp2,8                ; | save to @tv.busycolor
+0141 7674 C806  38         mov   tmp2,@tv.busycolor    ; /
+     7676 A21C     
 0142               
-0143 76A8 0245  22         andi  tmp1,>00ff            ; | save KL to @tv.markcolor
-     76AA 00FF     
-0144 76AC C805  38         mov   tmp1,@tv.markcolor    ; /
-     76AE A21A     
+0143 7678 0245  22         andi  tmp1,>00ff            ; | save KL to @tv.markcolor
+     767A 00FF     
+0144 767C C805  38         mov   tmp1,@tv.markcolor    ; /
+     767E A21A     
 0145               
-0146 76B0 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
-0147 76B2 0985  56         srl   tmp1,8                ; \ Right align MN and
-0148 76B4 C805  38         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
-     76B6 A220     
+0146 7680 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
+0147 7682 0985  56         srl   tmp1,8                ; \ Right align MN and
+0148 7684 C805  38         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
+     7686 A220     
 0149                       ;-------------------------------------------------------
 0150                       ; Get FG color for ruler
 0151                       ;-------------------------------------------------------
-0152 76B8 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
-0153 76BA 0245  22         andi  tmp1,>000f            ; Only keep P
-     76BC 000F     
-0154 76BE 0A45  56         sla   tmp1,4                ; Make it a FG/BG combination
-0155 76C0 C805  38         mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
-     76C2 A21E     
+0152 7688 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
+0153 768A 0245  22         andi  tmp1,>000f            ; Only keep P
+     768C 000F     
+0154 768E 0A45  56         sla   tmp1,4                ; Make it a FG/BG combination
+0155 7690 C805  38         mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
+     7692 A21E     
 0156                       ;-------------------------------------------------------
 0157                       ; Write sprite color of line and column indicators to SAT
 0158                       ;-------------------------------------------------------
-0159 76C4 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
-0160 76C6 0245  22         andi  tmp1,>00f0            ; Only keep O
-     76C8 00F0     
-0161 76CA 0A45  56         sla   tmp1,4                ; Move O to MSB
-0162 76CC D805  38         movb  tmp1,@ramsat+7        ; Line indicator FG color to SAT
-     76CE A1E7     
-0163 76D0 D805  38         movb  tmp1,@ramsat+11       ; Column indicator FG color to SAT
-     76D2 A1EB     
+0159 7694 C154  26         mov   *tmp0,tmp1            ; Get colors MNOP
+0160 7696 0245  22         andi  tmp1,>00f0            ; Only keep O
+     7698 00F0     
+0161 769A 0A45  56         sla   tmp1,4                ; Move O to MSB
+0162 769C D805  38         movb  tmp1,@ramsat+7        ; Line indicator FG color to SAT
+     769E A1E7     
+0163 76A0 D805  38         movb  tmp1,@ramsat+11       ; Column indicator FG color to SAT
+     76A2 A1EB     
 0164                       ;-------------------------------------------------------
 0165                       ; Dump colors to VDP register 7 (text mode)
 0166                       ;-------------------------------------------------------
-0167 76D4 C147  18         mov   tmp3,tmp1             ; Get work copy
-0168 76D6 0985  56         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
-0169 76D8 0265  22         ori   tmp1,>0700
-     76DA 0700     
-0170 76DC C105  18         mov   tmp1,tmp0
-0171 76DE 06A0  32         bl    @putvrx               ; Write VDP register
-     76E0 2348     
+0167 76A4 C147  18         mov   tmp3,tmp1             ; Get work copy
+0168 76A6 0985  56         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
+0169 76A8 0265  22         ori   tmp1,>0700
+     76AA 0700     
+0170 76AC C105  18         mov   tmp1,tmp0
+0171 76AE 06A0  32         bl    @putvrx               ; Write VDP register
+     76B0 2348     
 0172                       ;-------------------------------------------------------
 0173                       ; Dump colors for frame buffer pane (TAT)
 0174                       ;-------------------------------------------------------
-0175 76E2 C120  34         mov   @tv.ruler.visible,tmp0
-     76E4 A210     
-0176 76E6 1305  14         jeq   pane.action.colorscheme.fbdump.noruler
+0175 76B2 C120  34         mov   @tv.ruler.visible,tmp0
+     76B4 A210     
+0176 76B6 1305  14         jeq   pane.action.colorscheme.fbdump.noruler
 0177                       ;-------------------------------------------------------
 0178                       ; Ruler visible on screen (TAT)
 0179                       ;-------------------------------------------------------
-0180 76E8 0204  20         li    tmp0,vdp.fb.toprow.tat+80
-     76EA 18A0     
+0180 76B8 0204  20         li    tmp0,vdp.fb.toprow.tat+80
+     76BA 18A0     
 0181                                                   ; VDP start address (frame buffer area)
 0182               
-0183 76EC 0206  20         li    tmp2,(pane.botrow-2)*80
-     76EE 0870     
+0183 76BC 0206  20         li    tmp2,(pane.botrow-2)*80
+     76BE 0870     
 0184                                                   ; Number of bytes to fill
-0185 76F0 1004  14         jmp   pane.action.colorscheme.checkcmdb
+0185 76C0 1004  14         jmp   pane.action.colorscheme.checkcmdb
 0186               
 0187               pane.action.colorscheme.fbdump.noruler:
 0188                       ;-------------------------------------------------------
 0189                       ; No ruler visible on screen (TAT)
 0190                       ;-------------------------------------------------------
-0191 76F2 0204  20         li    tmp0,vdp.fb.toprow.tat
-     76F4 1850     
+0191 76C2 0204  20         li    tmp0,vdp.fb.toprow.tat
+     76C4 1850     
 0192                                                   ; VDP start address (frame buffer area)
-0193 76F6 0206  20         li    tmp2,(pane.botrow-1)*80
-     76F8 08C0     
+0193 76C6 0206  20         li    tmp2,(pane.botrow-1)*80
+     76C8 08C0     
 0194                                                   ; Number of bytes to fill
 0195                       ;-------------------------------------------------------
 0196                       ; Adjust bottom of frame buffer if CMDB visible
 0197                       ;-------------------------------------------------------
 0198               pane.action.colorscheme.checkcmdb:
-0199 76FA C820  54         mov   @cmdb.visible,@cmdb.visible
-     76FC A702     
-     76FE A702     
-0200 7700 1302  14         jeq   pane.action.colorscheme.fbdump
+0199 76CA C820  54         mov   @cmdb.visible,@cmdb.visible
+     76CC A702     
+     76CE A702     
+0200 76D0 1302  14         jeq   pane.action.colorscheme.fbdump
 0201                                                   ; Not visible, skip adjustment
-0202 7702 0226  22         ai    tmp2,-320             ; CMDB adjustment
-     7704 FEC0     
+0202 76D2 0226  22         ai    tmp2,-320             ; CMDB adjustment
+     76D4 FEC0     
 0203                       ;-------------------------------------------------------
 0204                       ; Dump colors to VDP (TAT)
 0205                       ;-------------------------------------------------------
 0206               pane.action.colorscheme.fbdump:
-0207 7706 C147  18         mov   tmp3,tmp1             ; Get work copy of colors ABCD
-0208 7708 0985  56         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
+0207 76D6 C147  18         mov   tmp3,tmp1             ; Get work copy of colors ABCD
+0208 76D8 0985  56         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
 0209               
-0210 770A 06A0  32         bl    @xfilv                ; Fill colors
-     770C 22A8     
+0210 76DA 06A0  32         bl    @xfilv                ; Fill colors
+     76DC 22A8     
 0211                                                   ; i \  tmp0 = start address
 0212                                                   ; i |  tmp1 = byte to fill
 0213                                                   ; i /  tmp2 = number of bytes to fill
 0214                       ;-------------------------------------------------------
 0215                       ; Colorize marked lines
 0216                       ;-------------------------------------------------------
-0217 770E C120  34         mov   @parm2,tmp0
-     7710 A002     
-0218 7712 0284  22         ci    tmp0,>ffff            ; Skip colorize flag is on?
-     7714 FFFF     
-0219 7716 1304  14         jeq   pane.action.colorscheme.cmdbpane
+0217 76DE C120  34         mov   @parm2,tmp0
+     76E0 A002     
+0218 76E2 0284  22         ci    tmp0,>ffff            ; Skip colorize flag is on?
+     76E4 FFFF     
+0219 76E6 1304  14         jeq   pane.action.colorscheme.cmdbpane
 0220               
-0221 7718 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-     771A A310     
-0222 771C 06A0  32         bl    @fb.colorlines
-     771E 7D2A     
+0221 76E8 0720  34         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
+     76EA A310     
+0222 76EC 06A0  32         bl    @fb.colorlines
+     76EE 7CFA     
 0223                       ;-------------------------------------------------------
 0224                       ; Dump colors for CMDB header line (TAT)
 0225                       ;-------------------------------------------------------
 0226               pane.action.colorscheme.cmdbpane:
-0227 7720 C120  34         mov   @cmdb.visible,tmp0
-     7722 A702     
-0228 7724 132B  14         jeq   pane.action.colorscheme.errpane
+0227 76F0 C120  34         mov   @cmdb.visible,tmp0
+     76F2 A702     
+0228 76F4 132B  14         jeq   pane.action.colorscheme.errpane
 0229                                                   ; Skip if CMDB pane is hidden
 0230               
-0231 7726 0204  20         li    tmp0,vdp.cmdb.toprow.tat
-     7728 1FD0     
+0231 76F6 0204  20         li    tmp0,vdp.cmdb.toprow.tat
+     76F8 1FD0     
 0232                                                   ; VDP start address (CMDB top line)
 0233               
-0234 772A C160  34         mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
-     772C A220     
-0235 772E 0206  20         li    tmp2,1*67             ; Number of bytes to fill
-     7730 0043     
-0236 7732 06A0  32         bl    @xfilv                ; Fill colors
-     7734 22A8     
+0234 76FA C160  34         mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
+     76FC A220     
+0235 76FE 0206  20         li    tmp2,1*67             ; Number of bytes to fill
+     7700 0043     
+0236 7702 06A0  32         bl    @xfilv                ; Fill colors
+     7704 22A8     
 0237                                                   ; i \  tmp0 = start address
 0238                                                   ; i |  tmp1 = byte to fill
 0239                                                   ; i /  tmp2 = number of bytes to fill
 0240                       ;-------------------------------------------------------
 0241                       ; Dump colors for CMDB Stevie logo (TAT)
 0242                       ;-------------------------------------------------------
-0243 7736 0204  20         li    tmp0,vdp.cmdb.toprow.tat+67
-     7738 2013     
-0244 773A C160  34         mov   @tv.cmdb.hcolor,tmp1  ;
-     773C A220     
-0245 773E D160  34         movb  @tv.cmdb.hcolor+1,tmp1
-     7740 A221     
+0243 7706 0204  20         li    tmp0,vdp.cmdb.toprow.tat+67
+     7708 2013     
+0244 770A C160  34         mov   @tv.cmdb.hcolor,tmp1  ;
+     770C A220     
+0245 770E D160  34         movb  @tv.cmdb.hcolor+1,tmp1
+     7710 A221     
 0246                                                   ; Copy same value into MSB
-0247 7742 0945  56         srl   tmp1,4                ;
-0248 7744 0245  22         andi  tmp1,>00ff            ; Only keep LSB
-     7746 00FF     
+0247 7712 0945  56         srl   tmp1,4                ;
+0248 7714 0245  22         andi  tmp1,>00ff            ; Only keep LSB
+     7716 00FF     
 0249               
-0250 7748 0206  20         li    tmp2,13               ; Number of bytes to fill
-     774A 000D     
-0251 774C 06A0  32         bl    @xfilv                ; Fill colors
-     774E 22A8     
+0250 7718 0206  20         li    tmp2,13               ; Number of bytes to fill
+     771A 000D     
+0251 771C 06A0  32         bl    @xfilv                ; Fill colors
+     771E 22A8     
 0252                                                   ; i \  tmp0 = start address
 0253                                                   ; i |  tmp1 = byte to fill
 0254                                                   ; i /  tmp2 = number of bytes to fill
 0255                       ;-------------------------------------------------------
 0256                       ; Dump colors for CMDB pane content (TAT)
 0257                       ;-------------------------------------------------------
-0258 7750 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 80
-     7752 2020     
+0258 7720 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 80
+     7722 2020     
 0259                                                   ; VDP start address (CMDB top line + 1)
-0260 7754 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0261 7756 0206  20         li    tmp2,1*80             ; Number of bytes to fill
-     7758 0050     
-0262 775A 06A0  32         bl    @xfilv                ; Fill colors
-     775C 22A8     
+0260 7724 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0261 7726 0206  20         li    tmp2,1*80             ; Number of bytes to fill
+     7728 0050     
+0262 772A 06A0  32         bl    @xfilv                ; Fill colors
+     772C 22A8     
 0263                                                   ; i \  tmp0 = start address
 0264                                                   ; i |  tmp1 = byte to fill
 0265                                                   ; i /  tmp2 = number of bytes to fill
 0266               
-0267 775E 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 160
-     7760 2070     
+0267 772E 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 160
+     7730 2070     
 0268                                                   ; VDP start address (CMDB top line + 2)
-0269 7762 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
-     7764 A220     
-0270 7766 0206  20         li    tmp2,1*80             ; Number of bytes to fill
-     7768 0050     
-0271 776A 06A0  32         bl    @xfilv                ; Fill colors
-     776C 22A8     
+0269 7732 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
+     7734 A220     
+0270 7736 0206  20         li    tmp2,1*80             ; Number of bytes to fill
+     7738 0050     
+0271 773A 06A0  32         bl    @xfilv                ; Fill colors
+     773C 22A8     
 0272                                                   ; i \  tmp0 = start address
 0273                                                   ; i |  tmp1 = byte to fill
 0274                                                   ; i /  tmp2 = number of bytes to fill
 0275               
-0276 776E 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 240
-     7770 20C0     
+0276 773E 0204  20         li    tmp0,vdp.cmdb.toprow.tat + 240
+     7740 20C0     
 0277                                                   ; VDP start address (CMDB top line + 3)
-0278 7772 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0279 7774 0206  20         li    tmp2,1*80             ; Number of bytes to fill
-     7776 0050     
-0280 7778 06A0  32         bl    @xfilv                ; Fill colors
-     777A 22A8     
+0278 7742 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0279 7744 0206  20         li    tmp2,1*80             ; Number of bytes to fill
+     7746 0050     
+0280 7748 06A0  32         bl    @xfilv                ; Fill colors
+     774A 22A8     
 0281                                                   ; i \  tmp0 = start address
 0282                                                   ; i |  tmp1 = byte to fill
 0283                                                   ; i /  tmp2 = number of bytes to fill
@@ -14064,110 +14089,110 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0285                       ; Dump colors for error line (TAT)
 0286                       ;-------------------------------------------------------
 0287               pane.action.colorscheme.errpane:
-0288 777C C120  34         mov   @tv.error.visible,tmp0
-     777E A228     
-0289 7780 130A  14         jeq   pane.action.colorscheme.statline
+0288 774C C120  34         mov   @tv.error.visible,tmp0
+     774E A228     
+0289 7750 130A  14         jeq   pane.action.colorscheme.statline
 0290                                                   ; Skip if error line pane is hidden
 0291               
-0292 7782 0205  20         li    tmp1,>00f6            ; White on dark red
-     7784 00F6     
-0293 7786 C805  38         mov   tmp1,@parm1           ; Pass color combination
-     7788 A000     
+0292 7752 0205  20         li    tmp1,>00f6            ; White on dark red
+     7754 00F6     
+0293 7756 C805  38         mov   tmp1,@parm1           ; Pass color combination
+     7758 A000     
 0294               
-0295 778A 0205  20         li    tmp1,pane.botrow-1    ;
-     778C 001C     
-0296 778E C805  38         mov   tmp1,@parm2           ; Error line on screen
-     7790 A002     
+0295 775A 0205  20         li    tmp1,pane.botrow-1    ;
+     775C 001C     
+0296 775E C805  38         mov   tmp1,@parm2           ; Error line on screen
+     7760 A002     
 0297               
-0298 7792 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     7794 785C     
+0298 7762 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     7764 782C     
 0299                                                   ; \ i  @parm1 = Color combination
 0300                                                   ; / i  @parm2 = Row on physical screen
 0301                       ;-------------------------------------------------------
 0302                       ; Dump colors for top line and bottom line (TAT)
 0303                       ;-------------------------------------------------------
 0304               pane.action.colorscheme.statline:
-0305 7796 C160  34         mov   @tv.color,tmp1
-     7798 A218     
-0306 779A 0245  22         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
-     779C 00FF     
-0307 779E C805  38         mov   tmp1,@parm1           ; Set color combination
-     77A0 A000     
+0305 7766 C160  34         mov   @tv.color,tmp1
+     7768 A218     
+0306 776A 0245  22         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
+     776C 00FF     
+0307 776E C805  38         mov   tmp1,@parm1           ; Set color combination
+     7770 A000     
 0308               
 0309               
-0310 77A2 04E0  34         clr   @parm2                ; Top row on screen
-     77A4 A002     
-0311 77A6 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     77A8 785C     
+0310 7772 04E0  34         clr   @parm2                ; Top row on screen
+     7774 A002     
+0311 7776 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     7778 782C     
 0312                                                   ; \ i  @parm1 = Color combination
 0313                                                   ; / i  @parm2 = Row on physical screen
 0314               
-0315 77AA 0205  20         li    tmp1,pane.botrow
-     77AC 001D     
-0316 77AE C805  38         mov   tmp1,@parm2           ; Bottom row on screen
-     77B0 A002     
-0317 77B2 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     77B4 785C     
+0315 777A 0205  20         li    tmp1,pane.botrow
+     777C 001D     
+0316 777E C805  38         mov   tmp1,@parm2           ; Bottom row on screen
+     7780 A002     
+0317 7782 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     7784 782C     
 0318                                                   ; \ i  @parm1 = Color combination
 0319                                                   ; / i  @parm2 = Row on physical screen
 0320                       ;-------------------------------------------------------
 0321                       ; Dump colors for ruler if visible (TAT)
 0322                       ;-------------------------------------------------------
-0323 77B6 C160  34         mov   @tv.ruler.visible,tmp1
-     77B8 A210     
-0324 77BA 1307  14         jeq   pane.action.colorscheme.cursorcolor
+0323 7786 C160  34         mov   @tv.ruler.visible,tmp1
+     7788 A210     
+0324 778A 1307  14         jeq   pane.action.colorscheme.cursorcolor
 0325               
-0326 77BC 06A0  32         bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
-     77BE 7D18     
-0327 77C0 06A0  32         bl    @cpym2v
-     77C2 249A     
-0328 77C4 1850                   data vdp.fb.toprow.tat
-0329 77C6 A36E                   data fb.ruler.tat
-0330 77C8 0050                   data 80               ; Show ruler colors
+0326 778C 06A0  32         bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
+     778E 7CE8     
+0327 7790 06A0  32         bl    @cpym2v
+     7792 249A     
+0328 7794 1850                   data vdp.fb.toprow.tat
+0329 7796 A36E                   data fb.ruler.tat
+0330 7798 0050                   data 80               ; Show ruler colors
 0331                       ;-------------------------------------------------------
 0332                       ; Dump cursor FG color to sprite table (SAT)
 0333                       ;-------------------------------------------------------
 0334               pane.action.colorscheme.cursorcolor:
-0335 77CA C220  34         mov   @tv.curcolor,tmp4     ; Get cursor color
-     77CC A216     
+0335 779A C220  34         mov   @tv.curcolor,tmp4     ; Get cursor color
+     779C A216     
 0336               
-0337 77CE C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
-     77D0 A222     
-0338 77D2 0284  22         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
-     77D4 0000     
-0339 77D6 1304  14         jeq   pane.action.colorscheme.cursorcolor.fb
+0337 779E C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
+     77A0 A222     
+0338 77A2 0284  22         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
+     77A4 0000     
+0339 77A6 1304  14         jeq   pane.action.colorscheme.cursorcolor.fb
 0340                                                   ; Yes, set cursor color
 0341               
 0342               pane.action.colorscheme.cursorcolor.cmdb:
-0343 77D8 0248  22         andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
-     77DA 00F0     
-0344 77DC 0A48  56         sla   tmp4,4                ; Move to MSB
-0345 77DE 1003  14         jmp   !
+0343 77A8 0248  22         andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
+     77AA 00F0     
+0344 77AC 0A48  56         sla   tmp4,4                ; Move to MSB
+0345 77AE 1003  14         jmp   !
 0346               
 0347               pane.action.colorscheme.cursorcolor.fb:
-0348 77E0 0248  22         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
-     77E2 000F     
-0349 77E4 0A88  56         sla   tmp4,8                ; Move to MSB
+0348 77B0 0248  22         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
+     77B2 000F     
+0349 77B4 0A88  56         sla   tmp4,8                ; Move to MSB
 0350               
-0351 77E6 D808  38 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
-     77E8 A1E3     
-0352 77EA D808  38         movb  tmp4,@tv.curshape+1   ; Save cursor color
-     77EC A215     
+0351 77B6 D808  38 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
+     77B8 A1E3     
+0352 77BA D808  38         movb  tmp4,@tv.curshape+1   ; Save cursor color
+     77BC A215     
 0353                       ;-------------------------------------------------------
 0354                       ; Exit
 0355                       ;-------------------------------------------------------
 0356               pane.action.colorscheme.load.exit:
-0357 77EE 06A0  32         bl    @scron                ; Turn screen on
-     77F0 26AA     
-0358 77F2 C839  50         mov   *stack+,@parm1        ; Pop @parm1
-     77F4 A000     
-0359 77F6 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0360 77F8 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0361 77FA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0362 77FC C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0363 77FE C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0364 7800 C2F9  30         mov   *stack+,r11           ; Pop R11
-0365 7802 045B  20         b     *r11                  ; Return to caller
+0357 77BE 06A0  32         bl    @scron                ; Turn screen on
+     77C0 26AA     
+0358 77C2 C839  50         mov   *stack+,@parm1        ; Pop @parm1
+     77C4 A000     
+0359 77C6 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0360 77C8 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0361 77CA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0362 77CC C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0363 77CE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0364 77D0 C2F9  30         mov   *stack+,r11           ; Pop R11
+0365 77D2 045B  20         b     *r11                  ; Return to caller
 0366               
 0367               
 0368               
@@ -14187,29 +14212,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0382               * tmp0, tmp1, tmp2
 0383               ********|*****|*********************|**************************
 0384               pane.action.colorscheme.statlines:
-0385 7804 0649  14         dect  stack
-0386 7806 C64B  30         mov   r11,*stack            ; Save return address
-0387 7808 0649  14         dect  stack
-0388 780A C644  30         mov   tmp0,*stack           ; Push tmp0
+0385 77D4 0649  14         dect  stack
+0386 77D6 C64B  30         mov   r11,*stack            ; Save return address
+0387 77D8 0649  14         dect  stack
+0388 77DA C644  30         mov   tmp0,*stack           ; Push tmp0
 0389                       ;------------------------------------------------------
 0390                       ; Bottom line
 0391                       ;------------------------------------------------------
-0392 780C 0204  20         li    tmp0,pane.botrow
-     780E 001D     
-0393 7810 C804  38         mov   tmp0,@parm2           ; Last row on screen
-     7812 A002     
-0394 7814 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     7816 785C     
+0392 77DC 0204  20         li    tmp0,pane.botrow
+     77DE 001D     
+0393 77E0 C804  38         mov   tmp0,@parm2           ; Last row on screen
+     77E2 A002     
+0394 77E4 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     77E6 782C     
 0395                                                   ; \ i  @parm1 = Color combination
 0396                                                   ; / i  @parm2 = Row on physical screen
 0397                       ;------------------------------------------------------
 0398                       ; Exit
 0399                       ;------------------------------------------------------
 0400               pane.action.colorscheme.statlines.exit:
-0401 7818 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0402 781A C2F9  30         mov   *stack+,r11           ; Pop R11
-0403 781C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0401 77E8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0402 77EA C2F9  30         mov   *stack+,r11           ; Pop R11
+0403 77EC 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0153                                                      ; Colorscheme handling in panes
 0154                       copy  "pane.cursor.asm"        ; Cursor utility functions
      **** ****     > pane.cursor.asm
@@ -14232,32 +14257,32 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * none
 0018               ********|*****|*********************|**************************
 0019               pane.cursor.hide:
-0020 781E 0649  14         dect  stack
-0021 7820 C64B  30         mov   r11,*stack            ; Save return address
+0020 77EE 0649  14         dect  stack
+0021 77F0 C64B  30         mov   r11,*stack            ; Save return address
 0022                       ;-------------------------------------------------------
 0023                       ; Hide cursor
 0024                       ;-------------------------------------------------------
-0025 7822 06A0  32         bl    @filv                 ; Clear sprite SAT in VDP RAM
-     7824 22A2     
-0026 7826 2180                   data sprsat,>00,8     ; \ i  p0 = VDP destination
-     7828 0000     
-     782A 0008     
+0025 77F2 06A0  32         bl    @filv                 ; Clear sprite SAT in VDP RAM
+     77F4 22A2     
+0026 77F6 2180                   data sprsat,>00,8     ; \ i  p0 = VDP destination
+     77F8 0000     
+     77FA 0008     
 0027                                                   ; | i  p1 = Byte to write
 0028                                                   ; / i  p2 = Number of bytes to write
 0029               
-0030 782C 06A0  32         bl    @clslot
-     782E 2FC4     
-0031 7830 0001                   data 1                ; Terminate task.vdp.copy.sat
+0030 77FC 06A0  32         bl    @clslot
+     77FE 2FC4     
+0031 7800 0001                   data 1                ; Terminate task.vdp.copy.sat
 0032               
-0033 7832 06A0  32         bl    @clslot
-     7834 2FC4     
-0034 7836 0002                   data 2                ; Terminate task.vdp.cursor
+0033 7802 06A0  32         bl    @clslot
+     7804 2FC4     
+0034 7806 0002                   data 2                ; Terminate task.vdp.cursor
 0035                       ;-------------------------------------------------------
 0036                       ; Exit
 0037                       ;-------------------------------------------------------
 0038               pane.cursor.hide.exit:
-0039 7838 C2F9  30         mov   *stack+,r11           ; Pop R11
-0040 783A 045B  20         b     *r11                  ; Return to caller
+0039 7808 C2F9  30         mov   *stack+,r11           ; Pop R11
+0040 780A 045B  20         b     *r11                  ; Return to caller
 0041               
 0042               
 0043               
@@ -14277,36 +14302,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0057               * none
 0058               ********|*****|*********************|**************************
 0059               pane.cursor.blink:
-0060 783C 0649  14         dect  stack
-0061 783E C64B  30         mov   r11,*stack            ; Save return address
+0060 780C 0649  14         dect  stack
+0061 780E C64B  30         mov   r11,*stack            ; Save return address
 0062                       ;-------------------------------------------------------
 0063                       ; Hide cursor
 0064                       ;-------------------------------------------------------
-0065 7840 06A0  32         bl    @filv                 ; Clear sprite SAT in VDP RAM
-     7842 22A2     
-0066 7844 2180                   data sprsat,>00,4     ; \ i  p0 = VDP destination
-     7846 0000     
-     7848 0004     
+0065 7810 06A0  32         bl    @filv                 ; Clear sprite SAT in VDP RAM
+     7812 22A2     
+0066 7814 2180                   data sprsat,>00,4     ; \ i  p0 = VDP destination
+     7816 0000     
+     7818 0004     
 0067                                                   ; | i  p1 = Byte to write
 0068                                                   ; / i  p2 = Number of bytes to write
 0069               
 0071               
-0072 784A 06A0  32         bl    @mkslot
-     784C 2FA6     
-0073 784E 0102                   data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
-     7850 74F4     
-0074 7852 020F                   data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
-     7854 7596     
-0075 7856 FFFF                   data eol
+0072 781A 06A0  32         bl    @mkslot
+     781C 2FA6     
+0073 781E 0102                   data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
+     7820 74C4     
+0074 7822 020F                   data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
+     7824 7566     
+0075 7826 FFFF                   data eol
 0076               
 0084               
 0085                       ;-------------------------------------------------------
 0086                       ; Exit
 0087                       ;-------------------------------------------------------
 0088               pane.cursor.blink.exit:
-0089 7858 C2F9  30         mov   *stack+,r11           ; Pop R11
-0090 785A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0089 7828 C2F9  30         mov   *stack+,r11           ; Pop R11
+0090 782A 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0155                       ;-----------------------------------------------------------------------
 0156                       ; Screen panes
 0157                       ;-----------------------------------------------------------------------
@@ -14332,39 +14357,39 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0,tmp1,tmp2
 0019               ********|*****|*********************|**************************
 0020               colors.line.set:
-0021 785C 0649  14         dect  stack
-0022 785E C64B  30         mov   r11,*stack            ; Save return address
-0023 7860 0649  14         dect  stack
-0024 7862 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 7864 0649  14         dect  stack
-0026 7866 C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 7868 0649  14         dect  stack
-0028 786A C646  30         mov   tmp2,*stack           ; Push tmp2
-0029 786C 0649  14         dect  stack
-0030 786E C660  46         mov   @parm1,*stack         ; Push parm1
-     7870 A000     
-0031 7872 0649  14         dect  stack
-0032 7874 C660  46         mov   @parm2,*stack         ; Push parm2
-     7876 A002     
+0021 782C 0649  14         dect  stack
+0022 782E C64B  30         mov   r11,*stack            ; Save return address
+0023 7830 0649  14         dect  stack
+0024 7832 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 7834 0649  14         dect  stack
+0026 7836 C645  30         mov   tmp1,*stack           ; Push tmp1
+0027 7838 0649  14         dect  stack
+0028 783A C646  30         mov   tmp2,*stack           ; Push tmp2
+0029 783C 0649  14         dect  stack
+0030 783E C660  46         mov   @parm1,*stack         ; Push parm1
+     7840 A000     
+0031 7842 0649  14         dect  stack
+0032 7844 C660  46         mov   @parm2,*stack         ; Push parm2
+     7846 A002     
 0033                       ;-------------------------------------------------------
 0034                       ; Dump colors for line in TAT
 0035                       ;-------------------------------------------------------
-0036 7878 C120  34         mov   @parm2,tmp0           ; Get target line
-     787A A002     
-0037 787C 0205  20         li    tmp1,colrow           ; Columns per row (spectra2)
-     787E 0050     
-0038 7880 3944  56         mpy   tmp0,tmp1             ; Calculate VDP address (results in tmp2!)
+0036 7848 C120  34         mov   @parm2,tmp0           ; Get target line
+     784A A002     
+0037 784C 0205  20         li    tmp1,colrow           ; Columns per row (spectra2)
+     784E 0050     
+0038 7850 3944  56         mpy   tmp0,tmp1             ; Calculate VDP address (results in tmp2!)
 0039               
-0040 7882 C106  18         mov   tmp2,tmp0             ; Set VDP start address
-0041 7884 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base address
-     7886 1800     
-0042 7888 C160  34         mov   @parm1,tmp1           ; Get foreground/background color
-     788A A000     
-0043 788C 0206  20         li    tmp2,80               ; Number of bytes to fill
-     788E 0050     
+0040 7852 C106  18         mov   tmp2,tmp0             ; Set VDP start address
+0041 7854 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base address
+     7856 1800     
+0042 7858 C160  34         mov   @parm1,tmp1           ; Get foreground/background color
+     785A A000     
+0043 785C 0206  20         li    tmp2,80               ; Number of bytes to fill
+     785E 0050     
 0044               
-0045 7890 06A0  32         bl    @xfilv                ; Fill colors
-     7892 22A8     
+0045 7860 06A0  32         bl    @xfilv                ; Fill colors
+     7862 22A8     
 0046                                                   ; i \  tmp0 = start address
 0047                                                   ; i |  tmp1 = byte to fill
 0048                                                   ; i /  tmp2 = number of bytes to fill
@@ -14372,16 +14397,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050                       ; Exit
 0051                       ;-------------------------------------------------------
 0052               colors.line.set.exit:
-0053 7894 C839  50         mov   *stack+,@parm2        ; Pop @parm2
-     7896 A002     
-0054 7898 C839  50         mov   *stack+,@parm1        ; Pop @parm1
-     789A A000     
-0055 789C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0056 789E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0057 78A0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0058 78A2 C2F9  30         mov   *stack+,r11           ; Pop R11
-0059 78A4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0053 7864 C839  50         mov   *stack+,@parm2        ; Pop @parm2
+     7866 A002     
+0054 7868 C839  50         mov   *stack+,@parm1        ; Pop @parm1
+     786A A000     
+0055 786C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0056 786E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0057 7870 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0058 7872 C2F9  30         mov   *stack+,r11           ; Pop R11
+0059 7874 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0159                       copy  "pane.topline.asm"       ; Top line
      **** ****     > pane.topline.asm
 0001               * FILE......: pane.topline.asm
@@ -14400,121 +14425,145 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014               * tmp0
 0015               ********|*****|*********************|**************************
 0016               pane.topline:
-0017 78A6 0649  14         dect  stack
-0018 78A8 C64B  30         mov   r11,*stack            ; Save return address
-0019 78AA 0649  14         dect  stack
-0020 78AC C644  30         mov   tmp0,*stack           ; Push tmp0
-0021 78AE 0649  14         dect  stack
-0022 78B0 C660  46         mov   @wyx,*stack           ; Push cursor position
-     78B2 832A     
+0017 7876 0649  14         dect  stack
+0018 7878 C64B  30         mov   r11,*stack            ; Save return address
+0019 787A 0649  14         dect  stack
+0020 787C C644  30         mov   tmp0,*stack           ; Push tmp0
+0021 787E 0649  14         dect  stack
+0022 7880 C660  46         mov   @wyx,*stack           ; Push cursor position
+     7882 832A     
 0023                       ;------------------------------------------------------
 0024                       ; Show current file
 0025                       ;------------------------------------------------------
 0026               pane.topline.file:
-0027 78B4 06A0  32         bl    @at
-     78B6 26E2     
-0028 78B8 0000                   byte 0,0              ; y=0, x=0
+0027 7884 06A0  32         bl    @at
+     7886 26E2     
+0028 7888 0000                   byte 0,0              ; y=0, x=0
 0029               
-0030 78BA C820  54         mov   @edb.filename.ptr,@parm1
-     78BC A512     
-     78BE A000     
+0030 788A C820  54         mov   @edb.filename.ptr,@parm1
+     788C A512     
+     788E A000     
 0031                                                   ; Get string to display
-0032 78C0 0204  20         li    tmp0,47
-     78C2 002F     
-0033 78C4 C804  38         mov   tmp0,@parm2           ; Set requested length
-     78C6 A002     
-0034 78C8 0204  20         li    tmp0,32
-     78CA 0020     
-0035 78CC C804  38         mov   tmp0,@parm3           ; Set character to fill
-     78CE A004     
-0036 78D0 0204  20         li    tmp0,rambuf
-     78D2 A140     
-0037 78D4 C804  38         mov   tmp0,@parm4           ; Set pointer to buffer for output string
-     78D6 A006     
+0032 7890 0204  20         li    tmp0,47
+     7892 002F     
+0033 7894 C804  38         mov   tmp0,@parm2           ; Set requested length
+     7896 A002     
+0034 7898 0204  20         li    tmp0,32
+     789A 0020     
+0035 789C C804  38         mov   tmp0,@parm3           ; Set character to fill
+     789E A004     
+0036 78A0 0204  20         li    tmp0,rambuf
+     78A2 A140     
+0037 78A4 C804  38         mov   tmp0,@parm4           ; Set pointer to buffer for output string
+     78A6 A006     
 0038               
 0039               
-0040 78D8 06A0  32         bl    @tv.pad.string        ; Pad string to specified length
-     78DA 33CA     
+0040 78A8 06A0  32         bl    @tv.pad.string        ; Pad string to specified length
+     78AA 33D4     
 0041                                                   ; \ i  @parm1 = Pointer to string
 0042                                                   ; | i  @parm2 = Requested length
 0043                                                   ; | i  @parm3 = Fill characgter
 0044                                                   ; | i  @parm4 = Pointer to buffer with
 0045                                                   ; /             output string
 0046               
-0047 78DC C160  34         mov   @outparm1,tmp1        ; \ Display padded filename
-     78DE A010     
-0048 78E0 06A0  32         bl    @xutst0               ; /
-     78E2 2434     
+0047 78AC C160  34         mov   @outparm1,tmp1        ; \ Display padded filename
+     78AE A010     
+0048 78B0 06A0  32         bl    @xutst0               ; /
+     78B2 2434     
 0049                       ;------------------------------------------------------
-0050                       ; Show M1 marker
+0050                       ; Show if text was changed in editor buffer
 0051                       ;------------------------------------------------------
-0052 78E4 C120  34         mov   @edb.block.m1,tmp0    ; \
-     78E6 A50C     
-0053 78E8 0584  14         inc   tmp0                  ; | Exit early if M1 unset (>ffff)
-0054 78EA 1326  14         jeq   pane.topline.exit     ; /
-0055               
-0056 78EC 06A0  32         bl    @putat
-     78EE 2456     
-0057 78F0 0034                   byte 0,52
-0058 78F2 3614                   data txt.m1           ; Show M1 marker message
-0059               
-0060 78F4 C820  54         mov   @edb.block.m1,@parm1
-     78F6 A50C     
-     78F8 A000     
-0061 78FA 06A0  32         bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
-     78FC 339E     
-0062                                                   ; \ i @parm1           = uint16
-0063                                                   ; / o @unpacked.string = Output string
-0064               
-0065 78FE 0204  20         li    tmp0,>0500
-     7900 0500     
-0066 7902 D804  38         movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
-     7904 A026     
-0067               
-0068 7906 06A0  32         bl    @putat
-     7908 2456     
-0069 790A 0037                   byte 0,55
-0070 790C A026                   data unpacked.string  ; Show M1 value
+0052               pane.topline.show_dirty:
+0053 78B4 C120  34         mov   @edb.dirty,tmp0
+     78B6 A506     
+0054 78B8 1305  14         jeq   pane.topline.nochange
+0055                       ;------------------------------------------------------
+0056                       ; Show "*"
+0057                       ;------------------------------------------------------
+0058 78BA 06A0  32         bl    @putat
+     78BC 2456     
+0059 78BE 004F                   byte 0,79             ; y=0, x=79
+0060 78C0 3578                   data txt.star
+0061 78C2 1004  14         jmp   pane.topline.showmarkers
+0062                       ;------------------------------------------------------
+0063                       ; Show " "
+0064                       ;------------------------------------------------------
+0065               pane.topline.nochange:
+0066 78C4 06A0  32         bl    @putat
+     78C6 2456     
+0067 78C8 004F                   byte 0,79             ; y=0, x=79
+0068 78CA 36FA                   data txt.ws1          ; Single white space
+0069                       ;------------------------------------------------------
+0070                       ; Show M1 marker
 0071                       ;------------------------------------------------------
-0072                       ; Show M2 marker
-0073                       ;------------------------------------------------------
-0074 790E C120  34         mov   @edb.block.m2,tmp0    ; \
-     7910 A50E     
-0075 7912 0584  14         inc   tmp0                  ; | Exit early if M2 unset (>ffff)
-0076 7914 1311  14         jeq   pane.topline.exit     ; /
-0077               
-0078 7916 06A0  32         bl    @putat
-     7918 2456     
-0079 791A 003E                   byte 0,62
-0080 791C 3618                   data txt.m2           ; Show M2 marker message
-0081               
-0082 791E C820  54         mov   @edb.block.m2,@parm1
-     7920 A50E     
-     7922 A000     
-0083 7924 06A0  32         bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
-     7926 339E     
-0084                                                   ; \ i @parm1           = uint16
-0085                                                   ; / o @unpacked.string = Output string
-0086               
-0087 7928 0204  20         li    tmp0,>0500
-     792A 0500     
-0088 792C D804  38         movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
-     792E A026     
-0089               
-0090 7930 06A0  32         bl    @putat
-     7932 2456     
-0091 7934 0041                   byte 0,65
-0092 7936 A026                   data unpacked.string  ; Show M2 value
-0093                       ;------------------------------------------------------
-0094                       ; Exit
-0095                       ;------------------------------------------------------
-0096               pane.topline.exit:
-0097 7938 C839  50         mov   *stack+,@wyx          ; Pop cursor position
-     793A 832A     
-0098 793C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0099 793E C2F9  30         mov   *stack+,r11           ; Pop r11
-0100 7940 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0072               pane.topline.showmarkers:
+0073 78CC C120  34         mov   @edb.block.m1,tmp0    ; \
+     78CE A50C     
+0074 78D0 0584  14         inc   tmp0                  ; | Exit early if M1 unset (>ffff)
+0075 78D2 1326  14         jeq   pane.topline.exit     ; /
+0076               
+0077 78D4 06A0  32         bl    @putat
+     78D6 2456     
+0078 78D8 0034                   byte 0,52
+0079 78DA 365A                   data txt.m1           ; Show M1 marker message
+0080               
+0081 78DC C820  54         mov   @edb.block.m1,@parm1
+     78DE A50C     
+     78E0 A000     
+0082 78E2 06A0  32         bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+     78E4 33A8     
+0083                                                   ; \ i @parm1           = uint16
+0084                                                   ; / o @unpacked.string = Output string
+0085               
+0086 78E6 0204  20         li    tmp0,>0500
+     78E8 0500     
+0087 78EA D804  38         movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+     78EC A026     
+0088               
+0089 78EE 06A0  32         bl    @putat
+     78F0 2456     
+0090 78F2 0037                   byte 0,55
+0091 78F4 A026                   data unpacked.string  ; Show M1 value
+0092                       ;------------------------------------------------------
+0093                       ; Show M2 marker
+0094                       ;------------------------------------------------------
+0095 78F6 C120  34         mov   @edb.block.m2,tmp0    ; \
+     78F8 A50E     
+0096 78FA 0584  14         inc   tmp0                  ; | Exit early if M2 unset (>ffff)
+0097 78FC 1311  14         jeq   pane.topline.exit     ; /
+0098               
+0099 78FE 06A0  32         bl    @putat
+     7900 2456     
+0100 7902 003E                   byte 0,62
+0101 7904 365E                   data txt.m2           ; Show M2 marker message
+0102               
+0103 7906 C820  54         mov   @edb.block.m2,@parm1
+     7908 A50E     
+     790A A000     
+0104 790C 06A0  32         bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+     790E 33A8     
+0105                                                   ; \ i @parm1           = uint16
+0106                                                   ; / o @unpacked.string = Output string
+0107               
+0108 7910 0204  20         li    tmp0,>0500
+     7912 0500     
+0109 7914 D804  38         movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+     7916 A026     
+0110               
+0111 7918 06A0  32         bl    @putat
+     791A 2456     
+0112 791C 0041                   byte 0,65
+0113 791E A026                   data unpacked.string  ; Show M2 value
+0114                       ;------------------------------------------------------
+0115                       ; Exit
+0116                       ;------------------------------------------------------
+0117               pane.topline.exit:
+0118 7920 C839  50         mov   *stack+,@wyx          ; Pop cursor position
+     7922 832A     
+0119 7924 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0120 7926 C2F9  30         mov   *stack+,r11           ; Pop r11
+0121 7928 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0160                       copy  "pane.errline.asm"       ; Error line
      **** ****     > pane.errline.asm
 0001               * FILE......: pane.errline.asm
@@ -14538,53 +14587,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               pane.errline.show:
-0022 7942 0649  14         dect  stack
-0023 7944 C64B  30         mov   r11,*stack            ; Save return address
-0024 7946 0649  14         dect  stack
-0025 7948 C644  30         mov   tmp0,*stack           ; Push tmp0
-0026 794A 0649  14         dect  stack
-0027 794C C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 792A 0649  14         dect  stack
+0023 792C C64B  30         mov   r11,*stack            ; Save return address
+0024 792E 0649  14         dect  stack
+0025 7930 C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 7932 0649  14         dect  stack
+0027 7934 C645  30         mov   tmp1,*stack           ; Push tmp1
 0028               
-0029 794E 0205  20         li    tmp1,>00f6            ; White on dark red
-     7950 00F6     
-0030 7952 C805  38         mov   tmp1,@parm1
-     7954 A000     
+0029 7936 0205  20         li    tmp1,>00f6            ; White on dark red
+     7938 00F6     
+0030 793A C805  38         mov   tmp1,@parm1
+     793C A000     
 0031               
-0032 7956 0205  20         li    tmp1,pane.botrow-1    ;
-     7958 001C     
-0033 795A C805  38         mov   tmp1,@parm2           ; Error line on screen
-     795C A002     
+0032 793E 0205  20         li    tmp1,pane.botrow-1    ;
+     7940 001C     
+0033 7942 C805  38         mov   tmp1,@parm2           ; Error line on screen
+     7944 A002     
 0034               
-0035 795E 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     7960 785C     
+0035 7946 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     7948 782C     
 0036                                                   ; \ i  @parm1 = Color combination
 0037                                                   ; / i  @parm2 = Row on physical screen
 0038               
 0039                       ;------------------------------------------------------
 0040                       ; Pad error message to 80 characters
 0041                       ;------------------------------------------------------
-0042 7962 0204  20         li    tmp0,tv.error.msg
-     7964 A22A     
-0043 7966 C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     7968 A000     
+0042 794A 0204  20         li    tmp0,tv.error.msg
+     794C A22A     
+0043 794E C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     7950 A000     
 0044               
-0045 796A 0204  20         li    tmp0,80
-     796C 0050     
-0046 796E C804  38         mov   tmp0,@parm2           ; Set requested length
-     7970 A002     
+0045 7952 0204  20         li    tmp0,80
+     7954 0050     
+0046 7956 C804  38         mov   tmp0,@parm2           ; Set requested length
+     7958 A002     
 0047               
-0048 7972 0204  20         li    tmp0,32
-     7974 0020     
-0049 7976 C804  38         mov   tmp0,@parm3           ; Set character to fill
-     7978 A004     
+0048 795A 0204  20         li    tmp0,32
+     795C 0020     
+0049 795E C804  38         mov   tmp0,@parm3           ; Set character to fill
+     7960 A004     
 0050               
-0051 797A 0204  20         li    tmp0,rambuf
-     797C A140     
-0052 797E C804  38         mov   tmp0,@parm4           ; Set pointer to buffer for output string
-     7980 A006     
+0051 7962 0204  20         li    tmp0,rambuf
+     7964 A140     
+0052 7966 C804  38         mov   tmp0,@parm4           ; Set pointer to buffer for output string
+     7968 A006     
 0053               
-0054 7982 06A0  32         bl    @tv.pad.string        ; Pad string to specified length
-     7984 33CA     
+0054 796A 06A0  32         bl    @tv.pad.string        ; Pad string to specified length
+     796C 33D4     
 0055                                                   ; \ i  @parm1 = Pointer to string
 0056                                                   ; | i  @parm2 = Requested length
 0057                                                   ; | i  @parm3 = Fill characgter
@@ -14593,31 +14642,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0060                       ;------------------------------------------------------
 0061                       ; Show error message
 0062                       ;------------------------------------------------------
-0063 7986 06A0  32         bl    @at
-     7988 26E2     
-0064 798A 1C00                   byte pane.botrow-1,0  ; Set cursor
+0063 796E 06A0  32         bl    @at
+     7970 26E2     
+0064 7972 1C00                   byte pane.botrow-1,0  ; Set cursor
 0065               
-0066 798C C160  34         mov   @outparm1,tmp1        ; \ Display error message
-     798E A010     
-0067 7990 06A0  32         bl    @xutst0               ; /
-     7992 2434     
+0066 7974 C160  34         mov   @outparm1,tmp1        ; \ Display error message
+     7976 A010     
+0067 7978 06A0  32         bl    @xutst0               ; /
+     797A 2434     
 0068               
-0069 7994 C120  34         mov   @fb.scrrows.max,tmp0
-     7996 A31C     
-0070 7998 0604  14         dec   tmp0
-0071 799A C804  38         mov   tmp0,@fb.scrrows      ; Decrease size of frame buffer
-     799C A31A     
+0069 797C C120  34         mov   @fb.scrrows.max,tmp0
+     797E A31C     
+0070 7980 0604  14         dec   tmp0
+0071 7982 C804  38         mov   tmp0,@fb.scrrows      ; Decrease size of frame buffer
+     7984 A31A     
 0072               
-0073 799E 0720  34         seto  @tv.error.visible     ; Error line is visible
-     79A0 A228     
+0073 7986 0720  34         seto  @tv.error.visible     ; Error line is visible
+     7988 A228     
 0074                       ;------------------------------------------------------
 0075                       ; Exit
 0076                       ;------------------------------------------------------
 0077               pane.errline.show.exit:
-0078 79A2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0079 79A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0080 79A6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0081 79A8 045B  20         b     *r11                  ; Return to caller
+0078 798A C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0079 798C C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0080 798E C2F9  30         mov   *stack+,r11           ; Pop r11
+0081 7990 045B  20         b     *r11                  ; Return to caller
 0082               
 0083               
 0084               
@@ -14639,61 +14688,61 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0100               * Hiding the error line passes pane focus to frame buffer.
 0101               ********|*****|*********************|**************************
 0102               pane.errline.hide:
-0103 79AA 0649  14         dect  stack
-0104 79AC C64B  30         mov   r11,*stack            ; Save return address
-0105 79AE 0649  14         dect  stack
-0106 79B0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0103 7992 0649  14         dect  stack
+0104 7994 C64B  30         mov   r11,*stack            ; Save return address
+0105 7996 0649  14         dect  stack
+0106 7998 C644  30         mov   tmp0,*stack           ; Push tmp0
 0107                       ;------------------------------------------------------
 0108                       ; Get color combination
 0109                       ;------------------------------------------------------
-0110 79B2 06A0  32         bl    @errline.init         ; Clear error line string in RAM
-     79B4 331C     
+0110 799A 06A0  32         bl    @errline.init         ; Clear error line string in RAM
+     799C 331C     
 0111               
-0112 79B6 C120  34         mov   @cmdb.visible,tmp0
-     79B8 A702     
-0113 79BA 1303  14         jeq   pane.errline.hide.fbcolor
+0112 799E C120  34         mov   @cmdb.visible,tmp0
+     79A0 A702     
+0113 79A2 1303  14         jeq   pane.errline.hide.fbcolor
 0114                       ;------------------------------------------------------
 0115                       ; CMDB pane color
 0116                       ;------------------------------------------------------
-0117 79BC C120  34         mov   @tv.cmdb.hcolor,tmp0  ; Get colors of CMDB header line
-     79BE A220     
-0118 79C0 1003  14         jmp   !
+0117 79A4 C120  34         mov   @tv.cmdb.hcolor,tmp0  ; Get colors of CMDB header line
+     79A6 A220     
+0118 79A8 1003  14         jmp   !
 0119                       ;------------------------------------------------------
 0120                       ; Frame buffer color
 0121                       ;------------------------------------------------------
 0122               pane.errline.hide.fbcolor:
-0123 79C2 C120  34         mov   @tv.color,tmp0        ; Get colors
-     79C4 A218     
-0124 79C6 0984  56         srl   tmp0,8                ; Get rid of status line colors
+0123 79AA C120  34         mov   @tv.color,tmp0        ; Get colors
+     79AC A218     
+0124 79AE 0984  56         srl   tmp0,8                ; Get rid of status line colors
 0125                       ;------------------------------------------------------
 0126                       ; Dump colors
 0127                       ;------------------------------------------------------
-0128 79C8 C804  38 !       mov   tmp0,@parm1           ; set foreground/background color
-     79CA A000     
-0129 79CC 0205  20         li    tmp1,pane.botrow-1    ;
-     79CE 001C     
-0130 79D0 C805  38         mov   tmp1,@parm2           ; Position of error line on screen
-     79D2 A002     
+0128 79B0 C804  38 !       mov   tmp0,@parm1           ; set foreground/background color
+     79B2 A000     
+0129 79B4 0205  20         li    tmp1,pane.botrow-1    ;
+     79B6 001C     
+0130 79B8 C805  38         mov   tmp1,@parm2           ; Position of error line on screen
+     79BA A002     
 0131               
-0132 79D4 06A0  32         bl    @colors.line.set      ; Load color combination for line
-     79D6 785C     
+0132 79BC 06A0  32         bl    @colors.line.set      ; Load color combination for line
+     79BE 782C     
 0133                                                   ; \ i  @parm1 = Color combination
 0134                                                   ; / i  @parm2 = Row on physical screen
 0135               
-0136 79D8 04E0  34         clr   @tv.error.visible     ; Error line no longer visible
-     79DA A228     
-0137 79DC C820  54         mov   @fb.scrrows.max,@fb.scrrows
-     79DE A31C     
-     79E0 A31A     
+0136 79C0 04E0  34         clr   @tv.error.visible     ; Error line no longer visible
+     79C2 A228     
+0137 79C4 C820  54         mov   @fb.scrrows.max,@fb.scrrows
+     79C6 A31C     
+     79C8 A31A     
 0138                                                   ; Set frame buffer to full size again
 0139                       ;------------------------------------------------------
 0140                       ; Exit
 0141                       ;------------------------------------------------------
 0142               pane.errline.hide.exit:
-0143 79E2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0144 79E4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0145 79E6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0143 79CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0144 79CC C2F9  30         mov   *stack+,r11           ; Pop r11
+0145 79CE 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0161                       copy  "pane.botline.asm"       ; Bottom line
      **** ****     > pane.botline.asm
 0001               * FILE......: pane.botline.asm
@@ -14712,278 +14761,255 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0014               * tmp0
 0015               ********|*****|*********************|**************************
 0016               pane.botline:
-0017 79E8 0649  14         dect  stack
-0018 79EA C64B  30         mov   r11,*stack            ; Save return address
-0019 79EC 0649  14         dect  stack
-0020 79EE C644  30         mov   tmp0,*stack           ; Push tmp0
-0021 79F0 0649  14         dect  stack
-0022 79F2 C660  46         mov   @wyx,*stack           ; Push cursor position
-     79F4 832A     
+0017 79D0 0649  14         dect  stack
+0018 79D2 C64B  30         mov   r11,*stack            ; Save return address
+0019 79D4 0649  14         dect  stack
+0020 79D6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0021 79D8 0649  14         dect  stack
+0022 79DA C660  46         mov   @wyx,*stack           ; Push cursor position
+     79DC 832A     
 0023                       ;------------------------------------------------------
 0024                       ; Show block shortcuts if set
 0025                       ;------------------------------------------------------
-0026 79F6 C120  34         mov   @edb.block.m2,tmp0    ; \
-     79F8 A50E     
-0027 79FA 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
+0026 79DE C120  34         mov   @edb.block.m2,tmp0    ; \
+     79E0 A50E     
+0027 79E2 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
 0028                                                   ; /
-0029 79FC 1305  14         jeq   pane.botline.show_keys
+0029 79E4 1305  14         jeq   pane.botline.show_keys
 0030               
-0031 79FE 06A0  32         bl    @putat
-     7A00 2456     
-0032 7A02 1D00                   byte pane.botrow,0
-0033 7A04 3624                   data txt.keys.block   ; Show block shortcuts
+0031 79E6 06A0  32         bl    @putat
+     79E8 2456     
+0032 79EA 1D00                   byte pane.botrow,0
+0033 79EC 366A                   data txt.keys.block   ; Show block shortcuts
 0034               
-0035 7A06 1004  14         jmp   pane.botline.show_dirty
+0035 79EE 1004  14         jmp   pane.botline.show_mode
 0036                       ;------------------------------------------------------
 0037                       ; Show default message
 0038                       ;------------------------------------------------------
 0039               pane.botline.show_keys:
-0040 7A08 06A0  32         bl    @putat
-     7A0A 2456     
-0041 7A0C 1D00                   byte pane.botrow,0
-0042 7A0E 361C                   data txt.keys.default ; Show default shortcuts
+0040 79F0 06A0  32         bl    @putat
+     79F2 2456     
+0041 79F4 1D00                   byte pane.botrow,0
+0042 79F6 3662                   data txt.keys.default ; Show default shortcuts
 0043                       ;------------------------------------------------------
-0044                       ; Show if text was changed in editor buffer
+0044                       ; Show text editing mode
 0045                       ;------------------------------------------------------
-0046               pane.botline.show_dirty:
-0047 7A10 C120  34         mov   @edb.dirty,tmp0
-     7A12 A506     
-0048 7A14 1305  14         jeq   pane.botline.nochange
+0046               pane.botline.show_mode:
+0047 79F8 C120  34         mov   @edb.insmode,tmp0
+     79FA A50A     
+0048 79FC 1605  14         jne   pane.botline.show_mode.insert
 0049                       ;------------------------------------------------------
-0050                       ; Show "*"
+0050                       ; Overwrite mode
 0051                       ;------------------------------------------------------
-0052 7A16 06A0  32         bl    @putat
-     7A18 2456     
-0053 7A1A 1D35                   byte pane.botrow,53   ; x=53
-0054 7A1C 356E                   data txt.star
-0055 7A1E 1004  14         jmp   pane.botline.show_mode
+0052 79FE 06A0  32         bl    @putat
+     7A00 2456     
+0053 7A02 1D37                   byte  pane.botrow,55
+0054 7A04 3570                   data  txt.ovrwrite
+0055 7A06 1004  14         jmp   pane.botline.show_linecol
 0056                       ;------------------------------------------------------
-0057                       ; Show " "
+0057                       ; Insert mode
 0058                       ;------------------------------------------------------
-0059               pane.botline.nochange:
-0060 7A20 06A0  32         bl    @putat
-     7A22 2456     
-0061 7A24 1D35                   byte pane.botrow,53   ; x=53
-0062 7A26 36BA                   data txt.ws1          ; Single white space
+0059               pane.botline.show_mode.insert:
+0060 7A08 06A0  32         bl    @putat
+     7A0A 2456     
+0061 7A0C 1D37                   byte  pane.botrow,55
+0062 7A0E 3574                   data  txt.insert
 0063                       ;------------------------------------------------------
-0064                       ; Show text editing mode
+0064                       ; Show "line,column"
 0065                       ;------------------------------------------------------
-0066               pane.botline.show_mode:
-0067 7A28 C120  34         mov   @edb.insmode,tmp0
-     7A2A A50A     
-0068 7A2C 1605  14         jne   pane.botline.show_mode.insert
-0069                       ;------------------------------------------------------
-0070                       ; Overwrite mode
-0071                       ;------------------------------------------------------
-0072 7A2E 06A0  32         bl    @putat
-     7A30 2456     
-0073 7A32 1D37                   byte  pane.botrow,55
-0074 7A34 3566                   data  txt.ovrwrite
-0075 7A36 1004  14         jmp   pane.botline.show_linecol
+0066               pane.botline.show_linecol:
+0067 7A10 C820  54         mov   @fb.row,@parm1
+     7A12 A306     
+     7A14 A000     
+0068 7A16 06A0  32         bl    @fb.row2line          ; Row to editor line
+     7A18 6B32     
+0069                                                   ; \ i @fb.topline = Top line in frame buffer
+0070                                                   ; | i @parm1      = Row in frame buffer
+0071                                                   ; / o @outparm1   = Matching line in EB
+0072               
+0073 7A1A 05A0  34         inc   @outparm1             ; Add base 1
+     7A1C A010     
+0074                       ;------------------------------------------------------
+0075                       ; Show line
 0076                       ;------------------------------------------------------
-0077                       ; Insert mode
-0078                       ;------------------------------------------------------
-0079               pane.botline.show_mode.insert:
-0080 7A38 06A0  32         bl    @putat
-     7A3A 2456     
-0081 7A3C 1D37                   byte  pane.botrow,55
-0082 7A3E 356A                   data  txt.insert
-0083                       ;------------------------------------------------------
-0084                       ; Show "line,column"
-0085                       ;------------------------------------------------------
-0086               pane.botline.show_linecol:
-0087 7A40 C820  54         mov   @fb.row,@parm1
-     7A42 A306     
-     7A44 A000     
-0088 7A46 06A0  32         bl    @fb.row2line          ; Row to editor line
-     7A48 6B62     
-0089                                                   ; \ i @fb.topline = Top line in frame buffer
-0090                                                   ; | i @parm1      = Row in frame buffer
-0091                                                   ; / o @outparm1   = Matching line in EB
-0092               
-0093 7A4A 05A0  34         inc   @outparm1             ; Add base 1
-     7A4C A010     
-0094                       ;------------------------------------------------------
-0095                       ; Show line
-0096                       ;------------------------------------------------------
-0097 7A4E 06A0  32         bl    @putnum
-     7A50 2B28     
-0098 7A52 1D3B                   byte  pane.botrow,59  ; YX
-0099 7A54 A010                   data  outparm1,rambuf
-     7A56 A140     
-0100 7A58 30                     byte  48              ; ASCII offset
-0101 7A59   20                   byte  32              ; Padding character
-0102                       ;------------------------------------------------------
-0103                       ; Show comma
-0104                       ;------------------------------------------------------
-0105 7A5A 06A0  32         bl    @putat
-     7A5C 2456     
-0106 7A5E 1D40                   byte  pane.botrow,64
-0107 7A60 355E                   data  txt.delim
+0077 7A1E 06A0  32         bl    @putnum
+     7A20 2B28     
+0078 7A22 1D3B                   byte  pane.botrow,59  ; YX
+0079 7A24 A010                   data  outparm1,rambuf
+     7A26 A140     
+0080 7A28 30                     byte  48              ; ASCII offset
+0081 7A29   20                   byte  32              ; Padding character
+0082                       ;------------------------------------------------------
+0083                       ; Show comma
+0084                       ;------------------------------------------------------
+0085 7A2A 06A0  32         bl    @putat
+     7A2C 2456     
+0086 7A2E 1D40                   byte  pane.botrow,64
+0087 7A30 3568                   data  txt.delim
+0088                       ;------------------------------------------------------
+0089                       ; Show column
+0090                       ;------------------------------------------------------
+0091 7A32 06A0  32         bl    @film
+     7A34 224A     
+0092 7A36 A145                   data rambuf+5,32,12   ; Clear work buffer with space character
+     7A38 0020     
+     7A3A 000C     
+0093               
+0094 7A3C C820  54         mov   @fb.column,@waux1
+     7A3E A30C     
+     7A40 833C     
+0095 7A42 05A0  34         inc   @waux1                ; Offset 1
+     7A44 833C     
+0096               
+0097 7A46 06A0  32         bl    @mknum                ; Convert unsigned number to string
+     7A48 2AAA     
+0098 7A4A 833C                   data  waux1,rambuf
+     7A4C A140     
+0099 7A4E 30                     byte  48              ; ASCII offset
+0100 7A4F   20                   byte  32              ; Fill character
+0101               
+0102 7A50 06A0  32         bl    @trimnum              ; Trim number to the left
+     7A52 2B02     
+0103 7A54 A140                   data  rambuf,rambuf+5,32
+     7A56 A145     
+     7A58 0020     
+0104               
+0105 7A5A 0204  20         li    tmp0,>0600            ; "Fix" number length to clear junk chars
+     7A5C 0600     
+0106 7A5E D804  38         movb  tmp0,@rambuf+5        ; Set length byte
+     7A60 A145     
+0107               
 0108                       ;------------------------------------------------------
-0109                       ; Show column
+0109                       ; Decide if row length is to be shown
 0110                       ;------------------------------------------------------
-0111 7A62 06A0  32         bl    @film
-     7A64 224A     
-0112 7A66 A145                   data rambuf+5,32,12   ; Clear work buffer with space character
-     7A68 0020     
-     7A6A 000C     
-0113               
-0114 7A6C C820  54         mov   @fb.column,@waux1
-     7A6E A30C     
-     7A70 833C     
-0115 7A72 05A0  34         inc   @waux1                ; Offset 1
-     7A74 833C     
-0116               
-0117 7A76 06A0  32         bl    @mknum                ; Convert unsigned number to string
-     7A78 2AAA     
-0118 7A7A 833C                   data  waux1,rambuf
-     7A7C A140     
-0119 7A7E 30                     byte  48              ; ASCII offset
-0120 7A7F   20                   byte  32              ; Fill character
-0121               
-0122 7A80 06A0  32         bl    @trimnum              ; Trim number to the left
-     7A82 2B02     
-0123 7A84 A140                   data  rambuf,rambuf+5,32
-     7A86 A145     
-     7A88 0020     
-0124               
-0125 7A8A 0204  20         li    tmp0,>0600            ; "Fix" number length to clear junk chars
-     7A8C 0600     
-0126 7A8E D804  38         movb  tmp0,@rambuf+5        ; Set length byte
-     7A90 A145     
-0127               
-0128                       ;------------------------------------------------------
-0129                       ; Decide if row length is to be shown
-0130                       ;------------------------------------------------------
-0131 7A92 C120  34         mov   @fb.column,tmp0       ; \ Base 1 for comparison
-     7A94 A30C     
-0132 7A96 0584  14         inc   tmp0                  ; /
-0133 7A98 8804  38         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
+0111 7A62 C120  34         mov   @fb.column,tmp0       ; \ Base 1 for comparison
+     7A64 A30C     
+0112 7A66 0584  14         inc   tmp0                  ; /
+0113 7A68 8804  38         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
+     7A6A A308     
+0114 7A6C 1101  14         jlt   pane.botline.show_linecol.linelen
+0115 7A6E 102B  14         jmp   pane.botline.show_linecol.colstring
+0116                                                   ; Yes, skip showing row length
+0117                       ;------------------------------------------------------
+0118                       ; Add ',' delimiter and length of line to string
+0119                       ;------------------------------------------------------
+0120               pane.botline.show_linecol.linelen:
+0121 7A70 C120  34         mov   @fb.column,tmp0       ; \
+     7A72 A30C     
+0122 7A74 0205  20         li    tmp1,rambuf+7         ; | Determine column position for '-' char
+     7A76 A147     
+0123 7A78 0284  22         ci    tmp0,9                ; | based on number of digits in cursor X
+     7A7A 0009     
+0124 7A7C 1101  14         jlt   !                     ; | column.
+0125 7A7E 0585  14         inc   tmp1                  ; /
+0126               
+0127 7A80 0204  20 !       li    tmp0,>2f00            ; \ ASCII '/'
+     7A82 2F00     
+0128 7A84 DD44  32         movb  tmp0,*tmp1+           ; / Add delimiter to string
+0129               
+0130 7A86 C805  38         mov   tmp1,@waux1           ; Backup position in ram buffer
+     7A88 833C     
+0131               
+0132 7A8A 06A0  32         bl    @mknum
+     7A8C 2AAA     
+0133 7A8E A308                   data  fb.row.length,rambuf
+     7A90 A140     
+0134 7A92 30                     byte  48              ; ASCII offset
+0135 7A93   20                   byte  32              ; Padding character
+0136               
+0137 7A94 C160  34         mov   @waux1,tmp1           ; Restore position in ram buffer
+     7A96 833C     
+0138               
+0139 7A98 C120  34         mov   @fb.row.length,tmp0   ; \ Get length of line
      7A9A A308     
-0134 7A9C 1101  14         jlt   pane.botline.show_linecol.linelen
-0135 7A9E 102B  14         jmp   pane.botline.show_linecol.colstring
-0136                                                   ; Yes, skip showing row length
-0137                       ;------------------------------------------------------
-0138                       ; Add ',' delimiter and length of line to string
-0139                       ;------------------------------------------------------
-0140               pane.botline.show_linecol.linelen:
-0141 7AA0 C120  34         mov   @fb.column,tmp0       ; \
-     7AA2 A30C     
-0142 7AA4 0205  20         li    tmp1,rambuf+7         ; | Determine column position for '-' char
-     7AA6 A147     
-0143 7AA8 0284  22         ci    tmp0,9                ; | based on number of digits in cursor X
-     7AAA 0009     
-0144 7AAC 1101  14         jlt   !                     ; | column.
-0145 7AAE 0585  14         inc   tmp1                  ; /
-0146               
-0147 7AB0 0204  20 !       li    tmp0,>2d00            ; \ ASCII 2d '-'
-     7AB2 2D00     
-0148 7AB4 DD44  32         movb  tmp0,*tmp1+           ; / Add delimiter to string
-0149               
-0150 7AB6 C805  38         mov   tmp1,@waux1           ; Backup position in ram buffer
-     7AB8 833C     
-0151               
-0152 7ABA 06A0  32         bl    @mknum
-     7ABC 2AAA     
-0153 7ABE A308                   data  fb.row.length,rambuf
+0140 7A9C 0284  22         ci    tmp0,10               ; /
+     7A9E 000A     
+0141 7AA0 110B  14         jlt   pane.botline.show_line.1digit
+0142                       ;------------------------------------------------------
+0143                       ; Assert
+0144                       ;------------------------------------------------------
+0145 7AA2 0284  22         ci    tmp0,80
+     7AA4 0050     
+0146 7AA6 1204  14         jle   pane.botline.show_line.2digits
+0147                       ;------------------------------------------------------
+0148                       ; Asserts failed
+0149                       ;------------------------------------------------------
+0150 7AA8 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
+     7AAA FFCE     
+0151 7AAC 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     7AAE 2026     
+0152                       ;------------------------------------------------------
+0153                       ; Show length of line (2 digits)
+0154                       ;------------------------------------------------------
+0155               pane.botline.show_line.2digits:
+0156 7AB0 0204  20         li    tmp0,rambuf+3
+     7AB2 A143     
+0157 7AB4 DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
+0158 7AB6 1002  14         jmp   pane.botline.show_line.rest
+0159                       ;------------------------------------------------------
+0160                       ; Show length of line (1 digits)
+0161                       ;------------------------------------------------------
+0162               pane.botline.show_line.1digit:
+0163 7AB8 0204  20         li    tmp0,rambuf+4
+     7ABA A144     
+0164               pane.botline.show_line.rest:
+0165 7ABC DD74  42         movb  *tmp0+,*tmp1+         ; 1st/Next digit row length
+0166 7ABE DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
      7AC0 A140     
-0154 7AC2 30                     byte  48              ; ASCII offset
-0155 7AC3   20                   byte  32              ; Padding character
-0156               
-0157 7AC4 C160  34         mov   @waux1,tmp1           ; Restore position in ram buffer
-     7AC6 833C     
-0158               
-0159 7AC8 C120  34         mov   @fb.row.length,tmp0   ; \ Get length of line
-     7ACA A308     
-0160 7ACC 0284  22         ci    tmp0,10               ; /
-     7ACE 000A     
-0161 7AD0 110B  14         jlt   pane.botline.show_line.1digit
-0162                       ;------------------------------------------------------
-0163                       ; Assert
-0164                       ;------------------------------------------------------
-0165 7AD2 0284  22         ci    tmp0,80
-     7AD4 0050     
-0166 7AD6 1204  14         jle   pane.botline.show_line.2digits
-0167                       ;------------------------------------------------------
-0168                       ; Asserts failed
-0169                       ;------------------------------------------------------
-0170 7AD8 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
-     7ADA FFCE     
-0171 7ADC 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7ADE 2026     
-0172                       ;------------------------------------------------------
-0173                       ; Show length of line (2 digits)
-0174                       ;------------------------------------------------------
-0175               pane.botline.show_line.2digits:
-0176 7AE0 0204  20         li    tmp0,rambuf+3
-     7AE2 A143     
-0177 7AE4 DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
-0178 7AE6 1002  14         jmp   pane.botline.show_line.rest
-0179                       ;------------------------------------------------------
-0180                       ; Show length of line (1 digits)
-0181                       ;------------------------------------------------------
-0182               pane.botline.show_line.1digit:
-0183 7AE8 0204  20         li    tmp0,rambuf+4
-     7AEA A144     
-0184               pane.botline.show_line.rest:
-0185 7AEC DD74  42         movb  *tmp0+,*tmp1+         ; 1st/Next digit row length
-0186 7AEE DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
-     7AF0 A140     
-0187 7AF2 DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
-     7AF4 A140     
+0167 7AC2 DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
+     7AC4 A140     
+0168                       ;------------------------------------------------------
+0169                       ; Show column string
+0170                       ;------------------------------------------------------
+0171               pane.botline.show_linecol.colstring:
+0172 7AC6 06A0  32         bl    @putat
+     7AC8 2456     
+0173 7ACA 1D41                   byte pane.botrow,65
+0174 7ACC A145                   data rambuf+5         ; Show string
+0175                       ;------------------------------------------------------
+0176                       ; Show lines in buffer unless on last line in file
+0177                       ;------------------------------------------------------
+0178 7ACE C820  54         mov   @fb.row,@parm1
+     7AD0 A306     
+     7AD2 A000     
+0179 7AD4 06A0  32         bl    @fb.row2line
+     7AD6 6B32     
+0180 7AD8 8820  54         c     @edb.lines,@outparm1
+     7ADA A504     
+     7ADC A010     
+0181 7ADE 1605  14         jne   pane.botline.show_lines_in_buffer
+0182               
+0183 7AE0 06A0  32         bl    @putat
+     7AE2 2456     
+0184 7AE4 1D48                   byte pane.botrow,72
+0185 7AE6 356A                   data txt.bottom
+0186               
+0187 7AE8 1009  14         jmp   pane.botline.exit
 0188                       ;------------------------------------------------------
-0189                       ; Show column string
+0189                       ; Show lines in buffer
 0190                       ;------------------------------------------------------
-0191               pane.botline.show_linecol.colstring:
-0192 7AF6 06A0  32         bl    @putat
-     7AF8 2456     
-0193 7AFA 1D41                   byte pane.botrow,65
-0194 7AFC A145                   data rambuf+5         ; Show string
-0195                       ;------------------------------------------------------
-0196                       ; Show lines in buffer unless on last line in file
-0197                       ;------------------------------------------------------
-0198 7AFE C820  54         mov   @fb.row,@parm1
-     7B00 A306     
-     7B02 A000     
-0199 7B04 06A0  32         bl    @fb.row2line
-     7B06 6B62     
-0200 7B08 8820  54         c     @edb.lines,@outparm1
-     7B0A A504     
-     7B0C A010     
-0201 7B0E 1605  14         jne   pane.botline.show_lines_in_buffer
-0202               
-0203 7B10 06A0  32         bl    @putat
-     7B12 2456     
-0204 7B14 1D48                   byte pane.botrow,72
-0205 7B16 3560                   data txt.bottom
-0206               
-0207 7B18 1009  14         jmp   pane.botline.exit
-0208                       ;------------------------------------------------------
-0209                       ; Show lines in buffer
-0210                       ;------------------------------------------------------
-0211               pane.botline.show_lines_in_buffer:
-0212 7B1A C820  54         mov   @edb.lines,@waux1
-     7B1C A504     
-     7B1E 833C     
-0213               
-0214 7B20 06A0  32         bl    @putnum
-     7B22 2B28     
-0215 7B24 1D48                   byte pane.botrow,72   ; YX
-0216 7B26 833C                   data waux1,rambuf
-     7B28 A140     
-0217 7B2A 30                     byte 48
-0218 7B2B   20                   byte 32
-0219                       ;------------------------------------------------------
-0220                       ; Exit
-0221                       ;------------------------------------------------------
-0222               pane.botline.exit:
-0223 7B2C C839  50         mov   *stack+,@wyx          ; Pop cursor position
-     7B2E 832A     
-0224 7B30 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0225 7B32 C2F9  30         mov   *stack+,r11           ; Pop r11
-0226 7B34 045B  20         b     *r11                  ; Return
-                   < stevie_b1.asm.61843
+0191               pane.botline.show_lines_in_buffer:
+0192 7AEA C820  54         mov   @edb.lines,@waux1
+     7AEC A504     
+     7AEE 833C     
+0193               
+0194 7AF0 06A0  32         bl    @putnum
+     7AF2 2B28     
+0195 7AF4 1D48                   byte pane.botrow,72   ; YX
+0196 7AF6 833C                   data waux1,rambuf
+     7AF8 A140     
+0197 7AFA 30                     byte 48
+0198 7AFB   20                   byte 32
+0199                       ;------------------------------------------------------
+0200                       ; Exit
+0201                       ;------------------------------------------------------
+0202               pane.botline.exit:
+0203 7AFC C839  50         mov   *stack+,@wyx          ; Pop cursor position
+     7AFE 832A     
+0204 7B00 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0205 7B02 C2F9  30         mov   *stack+,r11           ; Pop r11
+0206 7B04 045B  20         b     *r11                  ; Return
+                   < stevie_b1.asm.91724
 0162                       copy  "pane.vdpdump.asm"       ; Dump panes to VDP memory
      **** ****     > pane.vdpdump.asm
 0001               * FILE......: pane.vdpdump.asm
@@ -15009,126 +15035,126 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0021               * tmp0,tmp1,tmp2
 0022               ********|*****|*********************|**************************
 0023               pane.vdpdump:
-0024 7B36 0649  14         dect  stack
-0025 7B38 C64B  30         mov   r11,*stack            ; Save return address
-0026 7B3A 0649  14         dect  stack
-0027 7B3C C644  30         mov   tmp0,*stack           ; Push tmp0
-0028 7B3E 0649  14         dect  stack
-0029 7B40 C660  46         mov   @wyx,*stack           ; Push cursor position
-     7B42 832A     
+0024 7B06 0649  14         dect  stack
+0025 7B08 C64B  30         mov   r11,*stack            ; Save return address
+0026 7B0A 0649  14         dect  stack
+0027 7B0C C644  30         mov   tmp0,*stack           ; Push tmp0
+0028 7B0E 0649  14         dect  stack
+0029 7B10 C660  46         mov   @wyx,*stack           ; Push cursor position
+     7B12 832A     
 0030                       ;------------------------------------------------------
 0031                       ; ALPHA-Lock key down?
 0032                       ;------------------------------------------------------
 0033               pane.vdpdump.alpha_lock:
-0034 7B44 20A0  38         coc   @wbit10,config
-     7B46 200C     
-0035 7B48 1305  14         jeq   pane.vdpdump.alpha_lock.down
+0034 7B14 20A0  38         coc   @wbit10,config
+     7B16 200C     
+0035 7B18 1305  14         jeq   pane.vdpdump.alpha_lock.down
 0036                       ;------------------------------------------------------
 0037                       ; AlPHA-Lock is up
 0038                       ;------------------------------------------------------
-0039 7B4A 06A0  32         bl    @putat
-     7B4C 2456     
-0040 7B4E 1D4E                   byte pane.botrow,78
-0041 7B50 36C4                   data txt.ws4
-0042 7B52 1004  14         jmp   pane.vdpdump.cmdb.check
+0039 7B1A 06A0  32         bl    @putat
+     7B1C 2456     
+0040 7B1E 1D4E                   byte pane.botrow,78
+0041 7B20 3704                   data txt.ws4
+0042 7B22 1004  14         jmp   pane.vdpdump.cmdb.check
 0043                       ;------------------------------------------------------
 0044                       ; AlPHA-Lock is down
 0045                       ;------------------------------------------------------
 0046               pane.vdpdump.alpha_lock.down:
-0047 7B54 06A0  32         bl    @putat
-     7B56 2456     
-0048 7B58 1D4E                   byte pane.botrow,78
-0049 7B5A 36A8                   data txt.alpha.down
+0047 7B24 06A0  32         bl    @putat
+     7B26 2456     
+0048 7B28 1D4E                   byte pane.botrow,78
+0049 7B2A 36F2                   data txt.alpha.down
 0050                       ;------------------------------------------------------
 0051                       ; Command buffer visible ?
 0052                       ;------------------------------------------------------
 0053               pane.vdpdump.cmdb.check
-0054 7B5C C120  34         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
-     7B5E A702     
-0055 7B60 1308  14         jeq   !                     ; No, skip CMDB pane
+0054 7B2C C120  34         mov   @cmdb.visible,tmp0    ; CMDB pane visible ?
+     7B2E A702     
+0055 7B30 1308  14         jeq   !                     ; No, skip CMDB pane
 0056                       ;-------------------------------------------------------
 0057                       ; Draw command buffer pane if dirty
 0058                       ;-------------------------------------------------------
 0059               pane.vdpdump.cmdb.draw:
-0060 7B62 C120  34         mov   @cmdb.dirty,tmp0      ; Command buffer dirty?
-     7B64 A718     
-0061 7B66 1327  14         jeq   pane.vdpdump.exit     ; No, skip update
+0060 7B32 C120  34         mov   @cmdb.dirty,tmp0      ; Command buffer dirty?
+     7B34 A718     
+0061 7B36 1327  14         jeq   pane.vdpdump.exit     ; No, skip update
 0062               
-0063 7B68 06A0  32         bl    @pane.cmdb.draw       ; Draw CMDB pane
-     7B6A 7CCA     
-0064 7B6C 04E0  34         clr   @cmdb.dirty           ; Reset CMDB dirty flag
-     7B6E A718     
-0065 7B70 1022  14         jmp   pane.vdpdump.exit     ; Exit early
+0063 7B38 06A0  32         bl    @pane.cmdb.draw       ; Draw CMDB pane
+     7B3A 7C9A     
+0064 7B3C 04E0  34         clr   @cmdb.dirty           ; Reset CMDB dirty flag
+     7B3E A718     
+0065 7B40 1022  14         jmp   pane.vdpdump.exit     ; Exit early
 0066                       ;-------------------------------------------------------
 0067                       ; Check if frame buffer dirty
 0068                       ;-------------------------------------------------------
-0069 7B72 C120  34 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
-     7B74 A316     
-0070 7B76 130E  14         jeq   pane.vdpdump.statlines
+0069 7B42 C120  34 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
+     7B44 A316     
+0070 7B46 130E  14         jeq   pane.vdpdump.statlines
 0071                                                   ; No, skip update
-0072 7B78 C820  54         mov   @fb.scrrows,@parm1    ; Number of lines to dump
-     7B7A A31A     
-     7B7C A000     
+0072 7B48 C820  54         mov   @fb.scrrows,@parm1    ; Number of lines to dump
+     7B4A A31A     
+     7B4C A000     
 0073               
 0074               pane.vdpdump.dump:
-0075 7B7E 06A0  32         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT
-     7B80 7D3C     
+0075 7B4E 06A0  32         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT
+     7B50 7D0C     
 0076                                                   ; \ i  @parm1 = number of lines to dump
 0077                                                   ; /
 0078                       ;------------------------------------------------------
 0079                       ; Color the lines in the framebuffer (TAT)
 0080                       ;------------------------------------------------------
-0081 7B82 C120  34         mov   @fb.colorize,tmp0     ; Check if colorization necessary
-     7B84 A310     
-0082 7B86 1302  14         jeq   pane.vdpdump.dumped   ; Skip if flag reset
+0081 7B52 C120  34         mov   @fb.colorize,tmp0     ; Check if colorization necessary
+     7B54 A310     
+0082 7B56 1302  14         jeq   pane.vdpdump.dumped   ; Skip if flag reset
 0083               
-0084 7B88 06A0  32         bl    @fb.colorlines        ; Colorize lines M1/M2
-     7B8A 7D2A     
+0084 7B58 06A0  32         bl    @fb.colorlines        ; Colorize lines M1/M2
+     7B5A 7CFA     
 0085                       ;-------------------------------------------------------
 0086                       ; Finished with frame buffer
 0087                       ;-------------------------------------------------------
 0088               pane.vdpdump.dumped:
-0089 7B8C 04E0  34         clr   @fb.dirty             ; Reset framebuffer dirty flag
-     7B8E A316     
-0090 7B90 0720  34         seto  @fb.status.dirty      ; Do trigger status lines update
-     7B92 A318     
+0089 7B5C 04E0  34         clr   @fb.dirty             ; Reset framebuffer dirty flag
+     7B5E A316     
+0090 7B60 0720  34         seto  @fb.status.dirty      ; Do trigger status lines update
+     7B62 A318     
 0091                       ;-------------------------------------------------------
 0092                       ; Refresh top and bottom line
 0093                       ;-------------------------------------------------------
 0094               pane.vdpdump.statlines:
-0095 7B94 C120  34         mov   @fb.status.dirty,tmp0 ; Are status lines dirty?
-     7B96 A318     
-0096 7B98 130E  14         jeq   pane.vdpdump.exit     ; No, skip update
+0095 7B64 C120  34         mov   @fb.status.dirty,tmp0 ; Are status lines dirty?
+     7B66 A318     
+0096 7B68 130E  14         jeq   pane.vdpdump.exit     ; No, skip update
 0097               
-0098 7B9A 06A0  32         bl    @pane.topline         ; Draw top line
-     7B9C 78A6     
-0099 7B9E 06A0  32         bl    @pane.botline         ; Draw bottom line
-     7BA0 79E8     
-0100 7BA2 04E0  34         clr   @fb.status.dirty      ; Reset status lines dirty flag
-     7BA4 A318     
+0098 7B6A 06A0  32         bl    @pane.topline         ; Draw top line
+     7B6C 7876     
+0099 7B6E 06A0  32         bl    @pane.botline         ; Draw bottom line
+     7B70 79D0     
+0100 7B72 04E0  34         clr   @fb.status.dirty      ; Reset status lines dirty flag
+     7B74 A318     
 0101                       ;------------------------------------------------------
 0102                       ; Show ruler with tab positions
 0103                       ;------------------------------------------------------
-0104 7BA6 C120  34         mov   @tv.ruler.visible,tmp0
-     7BA8 A210     
+0104 7B76 C120  34         mov   @tv.ruler.visible,tmp0
+     7B78 A210     
 0105                                                   ; Should ruler be visible?
-0106 7BAA 1305  14         jeq   pane.vdpdump.exit     ; No, so exit
+0106 7B7A 1305  14         jeq   pane.vdpdump.exit     ; No, so exit
 0107               
-0108 7BAC 06A0  32         bl    @cpym2v
-     7BAE 249A     
-0109 7BB0 0050                   data vdp.fb.toprow.sit
-0110 7BB2 A31E                   data fb.ruler.sit
-0111 7BB4 0050                   data 80               ; Show ruler
+0108 7B7C 06A0  32         bl    @cpym2v
+     7B7E 249A     
+0109 7B80 0050                   data vdp.fb.toprow.sit
+0110 7B82 A31E                   data fb.ruler.sit
+0111 7B84 0050                   data 80               ; Show ruler
 0112                       ;------------------------------------------------------
 0113                       ; Exit task
 0114                       ;------------------------------------------------------
 0115               pane.vdpdump.exit:
-0116 7BB6 C839  50         mov   *stack+,@wyx          ; Pop cursor position
-     7BB8 832A     
-0117 7BBA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0118 7BBC C2F9  30         mov   *stack+,r11           ; Pop r11
-0119 7BBE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0116 7B86 C839  50         mov   *stack+,@wyx          ; Pop cursor position
+     7B88 832A     
+0117 7B8A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0118 7B8C C2F9  30         mov   *stack+,r11           ; Pop r11
+0119 7B8E 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0163                       ;-----------------------------------------------------------------------
 0164                       ; Stubs
 0165                       ;-----------------------------------------------------------------------
@@ -15142,36 +15168,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               * bank2 vec.1
 0007               ********|*****|*********************|**************************
 0008               fm.loadfile:
-0009 7BC0 0649  14         dect  stack
-0010 7BC2 C64B  30         mov   r11,*stack            ; Save return address
-0011 7BC4 0649  14         dect  stack
-0012 7BC6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0009 7B90 0649  14         dect  stack
+0010 7B92 C64B  30         mov   r11,*stack            ; Save return address
+0011 7B94 0649  14         dect  stack
+0012 7B96 C644  30         mov   tmp0,*stack           ; Push tmp0
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 2
 0015                       ;------------------------------------------------------
-0016 7BC8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BCA 30A4     
-0017 7BCC 6004                   data bank2.rom        ; | i  p0 = bank address
-0018 7BCE 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0019 7BD0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 7B98 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B9A 30A4     
+0017 7B9C 6004                   data bank2.rom        ; | i  p0 = bank address
+0018 7B9E 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0019 7BA0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Show "Unsaved changes" dialog if editor buffer dirty
 0022                       ;------------------------------------------------------
-0023 7BD2 C120  34         mov   @outparm1,tmp0
-     7BD4 A010     
-0024 7BD6 1304  14         jeq   fm.loadfile.exit
+0023 7BA2 C120  34         mov   @outparm1,tmp0
+     7BA4 A010     
+0024 7BA6 1304  14         jeq   fm.loadfile.exit
 0025               
-0026 7BD8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0027 7BDA C2F9  30         mov   *stack+,r11           ; Pop r11
-0028 7BDC 0460  28         b     @dialog.unsaved       ; Show dialog and exit
-     7BDE 7C74     
+0026 7BA8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0027 7BAA C2F9  30         mov   *stack+,r11           ; Pop r11
+0028 7BAC 0460  28         b     @dialog.unsaved       ; Show dialog and exit
+     7BAE 7C44     
 0029                       ;------------------------------------------------------
 0030                       ; Exit
 0031                       ;------------------------------------------------------
 0032               fm.loadfile.exit:
-0033 7BE0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0034 7BE2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0035 7BE4 045B  20         b     *r11                  ; Return to caller
+0033 7BB0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0034 7BB2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0035 7BB4 045B  20         b     *r11                  ; Return to caller
 0036               
 0037               
 0038               ***************************************************************
@@ -15179,25 +15205,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0040               * bank2 vec.2
 0041               ********|*****|*********************|**************************
 0042               fm.insertfile:
-0043 7BE6 0649  14         dect  stack
-0044 7BE8 C64B  30         mov   r11,*stack            ; Save return address
-0045 7BEA 0649  14         dect  stack
-0046 7BEC C644  30         mov   tmp0,*stack           ; Push tmp0
+0043 7BB6 0649  14         dect  stack
+0044 7BB8 C64B  30         mov   r11,*stack            ; Save return address
+0045 7BBA 0649  14         dect  stack
+0046 7BBC C644  30         mov   tmp0,*stack           ; Push tmp0
 0047                       ;------------------------------------------------------
 0048                       ; Call function in bank 2
 0049                       ;------------------------------------------------------
-0050 7BEE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BF0 30A4     
-0051 7BF2 6004                   data bank2.rom        ; | i  p0 = bank address
-0052 7BF4 7FC2                   data vec.2            ; | i  p1 = Vector with target address
-0053 7BF6 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0050 7BBE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7BC0 30A4     
+0051 7BC2 6004                   data bank2.rom        ; | i  p0 = bank address
+0052 7BC4 7FC2                   data vec.2            ; | i  p1 = Vector with target address
+0053 7BC6 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0054                       ;------------------------------------------------------
 0055                       ; Exit
 0056                       ;------------------------------------------------------
 0057               fm.insertfile.exit:
-0058 7BF8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0059 7BFA C2F9  30         mov   *stack+,r11           ; Pop r11
-0060 7BFC 045B  20         b     *r11                  ; Return to caller
+0058 7BC8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0059 7BCA C2F9  30         mov   *stack+,r11           ; Pop r11
+0060 7BCC 045B  20         b     *r11                  ; Return to caller
 0061               
 0062               
 0063               **************************************************************
@@ -15205,21 +15231,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0065               * bank2 vec.3
 0066               ********|*****|*********************|**************************
 0067               fm.browse.fname.suffix:
-0068 7BFE 0649  14         dect  stack
-0069 7C00 C64B  30         mov   r11,*stack            ; Save return address
+0068 7BCE 0649  14         dect  stack
+0069 7BD0 C64B  30         mov   r11,*stack            ; Save return address
 0070                       ;------------------------------------------------------
 0071                       ; Call function in bank 2
 0072                       ;------------------------------------------------------
-0073 7C02 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C04 30A4     
-0074 7C06 6004                   data bank2.rom        ; | i  p0 = bank address
-0075 7C08 7FC4                   data vec.3            ; | i  p1 = Vector with target address
-0076 7C0A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0073 7BD2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7BD4 30A4     
+0074 7BD6 6004                   data bank2.rom        ; | i  p0 = bank address
+0075 7BD8 7FC4                   data vec.3            ; | i  p1 = Vector with target address
+0076 7BDA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0077                       ;------------------------------------------------------
 0078                       ; Exit
 0079                       ;------------------------------------------------------
-0080 7C0C C2F9  30         mov   *stack+,r11           ; Pop r11
-0081 7C0E 045B  20         b     *r11                  ; Return to caller
+0080 7BDC C2F9  30         mov   *stack+,r11           ; Pop r11
+0081 7BDE 045B  20         b     *r11                  ; Return to caller
 0082               
 0083               
 0084               ***************************************************************
@@ -15227,21 +15253,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0086               * bank2 vec.4
 0087               ********|*****|*********************|**************************
 0088               fm.savefile:
-0089 7C10 0649  14         dect  stack
-0090 7C12 C64B  30         mov   r11,*stack            ; Save return address
+0089 7BE0 0649  14         dect  stack
+0090 7BE2 C64B  30         mov   r11,*stack            ; Save return address
 0091                       ;------------------------------------------------------
 0092                       ; Call function in bank 2
 0093                       ;------------------------------------------------------
-0094 7C14 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C16 30A4     
-0095 7C18 6004                   data bank2.rom        ; | i  p0 = bank address
-0096 7C1A 7FC6                   data vec.4            ; | i  p1 = Vector with target address
-0097 7C1C 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0094 7BE4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7BE6 30A4     
+0095 7BE8 6004                   data bank2.rom        ; | i  p0 = bank address
+0096 7BEA 7FC6                   data vec.4            ; | i  p1 = Vector with target address
+0097 7BEC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0098                       ;------------------------------------------------------
 0099                       ; Exit
 0100                       ;------------------------------------------------------
-0101 7C1E C2F9  30         mov   *stack+,r11           ; Pop r11
-0102 7C20 045B  20         b     *r11                  ; Return to caller
+0101 7BEE C2F9  30         mov   *stack+,r11           ; Pop r11
+0102 7BF0 045B  20         b     *r11                  ; Return to caller
 0103               
 0104               
 0105               ***************************************************************
@@ -15249,21 +15275,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0107               * bank2 vec.5
 0108               ********|*****|*********************|**************************
 0109               fm.newfile:
-0110 7C22 0649  14         dect  stack
-0111 7C24 C64B  30         mov   r11,*stack            ; Save return address
+0110 7BF2 0649  14         dect  stack
+0111 7BF4 C64B  30         mov   r11,*stack            ; Save return address
 0112                       ;------------------------------------------------------
 0113                       ; Call function in bank 2
 0114                       ;------------------------------------------------------
-0115 7C26 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C28 30A4     
-0116 7C2A 6004                   data bank2.rom        ; | i  p0 = bank address
-0117 7C2C 7FC8                   data vec.5            ; | i  p1 = Vector with target address
-0118 7C2E 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0115 7BF6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7BF8 30A4     
+0116 7BFA 6004                   data bank2.rom        ; | i  p0 = bank address
+0117 7BFC 7FC8                   data vec.5            ; | i  p1 = Vector with target address
+0118 7BFE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0119                       ;------------------------------------------------------
 0120                       ; Exit
 0121                       ;------------------------------------------------------
-0122 7C30 C2F9  30         mov   *stack+,r11           ; Pop r11
-0123 7C32 045B  20         b     *r11                  ; Return to caller
+0122 7C00 C2F9  30         mov   *stack+,r11           ; Pop r11
+0123 7C02 045B  20         b     *r11                  ; Return to caller
 0124               
 0125               
 0126               ***************************************************************
@@ -15271,13 +15297,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0128               * bank3 vec.1
 0129               ********|*****|*********************|**************************
 0130               edkey.action.about:
-0131 7C34 C820  54         mov   @edkey.action.about.vector,@trmpvector
-     7C36 7C3E     
-     7C38 A02E     
-0132 7C3A 0460  28         b     @_trampoline.bank3    ; Show dialog
-     7C3C 7D4E     
+0131 7C04 C820  54         mov   @edkey.action.about.vector,@trmpvector
+     7C06 7C0E     
+     7C08 A02E     
+0132 7C0A 0460  28         b     @_trampoline.bank3    ; Show dialog
+     7C0C 7D1E     
 0133               edkey.action.about.vector:
-0134 7C3E 7FC0             data  vec.1
+0134 7C0E 7FC0             data  vec.1
 0135               
 0136               
 0137               ***************************************************************
@@ -15285,13 +15311,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0139               * bank3 vec.2
 0140               ********|*****|*********************|**************************
 0141               dialog.load:
-0142 7C40 C820  54         mov   @dialog.load.vector,@trmpvector
-     7C42 7C4A     
-     7C44 A02E     
-0143 7C46 0460  28         b     @_trampoline.bank3    ; Show dialog
-     7C48 7D4E     
+0142 7C10 C820  54         mov   @dialog.load.vector,@trmpvector
+     7C12 7C1A     
+     7C14 A02E     
+0143 7C16 0460  28         b     @_trampoline.bank3    ; Show dialog
+     7C18 7D1E     
 0144               dialog.load.vector:
-0145 7C4A 7FC2             data  vec.2
+0145 7C1A 7FC2             data  vec.2
 0146               
 0147               
 0148               ***************************************************************
@@ -15299,12 +15325,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0150               * bank3 vec.3
 0151               ********|*****|*********************|**************************
 0152               dialog.save:
-0153 7C4C C820  54         mov   @dialog.save.vector,@trmpvector
-     7C4E 7C54     
-     7C50 A02E     
-0154 7C52 107D  14         jmp   _trampoline.bank3     ; Show dialog
+0153 7C1C C820  54         mov   @dialog.save.vector,@trmpvector
+     7C1E 7C24     
+     7C20 A02E     
+0154 7C22 107D  14         jmp   _trampoline.bank3     ; Show dialog
 0155               dialog.save.vector:
-0156 7C54 7FC4             data  vec.3
+0156 7C24 7FC4             data  vec.3
 0157               
 0158               
 0159               ***************************************************************
@@ -15312,12 +15338,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0161               * bank3 vec.4
 0162               ********|*****|*********************|**************************
 0163               dialog.insert:
-0164 7C56 C820  54         mov   @dialog.insert.vector,@trmpvector
-     7C58 7C5E     
-     7C5A A02E     
-0165 7C5C 1078  14         jmp   _trampoline.bank3     ; Show dialog
+0164 7C26 C820  54         mov   @dialog.insert.vector,@trmpvector
+     7C28 7C2E     
+     7C2A A02E     
+0165 7C2C 1078  14         jmp   _trampoline.bank3     ; Show dialog
 0166               dialog.insert.vector:
-0167 7C5E 7FC6             data  vec.4
+0167 7C2E 7FC6             data  vec.4
 0168               
 0169               
 0170               ***************************************************************
@@ -15325,12 +15351,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0172               * bank3 vec.5
 0173               ********|*****|*********************|**************************
 0174               dialog.print:
-0175 7C60 C820  54         mov   @dialog.print.vector,@trmpvector
-     7C62 7C68     
-     7C64 A02E     
-0176 7C66 1073  14         jmp   _trampoline.bank3    ; Show dialog
+0175 7C30 C820  54         mov   @dialog.print.vector,@trmpvector
+     7C32 7C38     
+     7C34 A02E     
+0176 7C36 1073  14         jmp   _trampoline.bank3    ; Show dialog
 0177               dialog.print.vector:
-0178 7C68 7FC8             data  vec.5
+0178 7C38 7FC8             data  vec.5
 0179               
 0180               
 0181               ***************************************************************
@@ -15338,12 +15364,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0183               * bank3 vec.6
 0184               ********|*****|*********************|**************************
 0185               dialog.file:
-0186 7C6A C820  54         mov   @dialog.file.vector,@trmpvector
-     7C6C 7C72     
-     7C6E A02E     
-0187 7C70 106E  14         jmp   _trampoline.bank3     ; Show dialog
+0186 7C3A C820  54         mov   @dialog.file.vector,@trmpvector
+     7C3C 7C42     
+     7C3E A02E     
+0187 7C40 106E  14         jmp   _trampoline.bank3     ; Show dialog
 0188               dialog.file.vector:
-0189 7C72 7FCA             data  vec.6
+0189 7C42 7FCA             data  vec.6
 0190               
 0191               
 0192               ***************************************************************
@@ -15351,14 +15377,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0194               * bank3 vec.7
 0195               ********|*****|*********************|**************************
 0196               dialog.unsaved:
-0197 7C74 04E0  34         clr   @cmdb.panmarkers      ; No key markers
-     7C76 A722     
-0198 7C78 C820  54         mov   @dialog.unsaved.vector,@trmpvector
-     7C7A 7C80     
-     7C7C A02E     
-0199 7C7E 1067  14         jmp   _trampoline.bank3     ; Show dialog
+0197 7C44 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+     7C46 A722     
+0198 7C48 C820  54         mov   @dialog.unsaved.vector,@trmpvector
+     7C4A 7C50     
+     7C4C A02E     
+0199 7C4E 1067  14         jmp   _trampoline.bank3     ; Show dialog
 0200               dialog.unsaved.vector:
-0201 7C80 7FCC             data  vec.7
+0201 7C50 7FCC             data  vec.7
 0202               
 0203               
 0204               ***************************************************************
@@ -15366,12 +15392,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0206               * bank3 vec.8
 0207               ********|*****|*********************|**************************
 0208               dialog.clipboard:
-0209 7C82 C820  54         mov   @dialog.clipboard.vector,@trmpvector
-     7C84 7C8A     
-     7C86 A02E     
-0210 7C88 1062  14         jmp   _trampoline.bank3     ; Show dialog
+0209 7C52 C820  54         mov   @dialog.clipboard.vector,@trmpvector
+     7C54 7C5A     
+     7C56 A02E     
+0210 7C58 1062  14         jmp   _trampoline.bank3     ; Show dialog
 0211               dialog.clipboard.vector:
-0212 7C8A 7FCE             data  vec.8
+0212 7C5A 7FCE             data  vec.8
 0213               
 0214               ***************************************************************
 0215               * Stub for dialog "Main Menu"
@@ -15381,26 +15407,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0219                       ;------------------------------------------------------
 0220                       ; Check if block mode is active
 0221                       ;------------------------------------------------------
-0222 7C8C C120  34         mov   @edb.block.m2,tmp0    ; \
-     7C8E A50E     
-0223 7C90 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
+0222 7C5C C120  34         mov   @edb.block.m2,tmp0    ; \
+     7C5E A50E     
+0223 7C60 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
 0224                                                   ; /
-0225 7C92 1302  14         jeq   !                     : Block mode inactive, show dialog
+0225 7C62 1302  14         jeq   !                     : Block mode inactive, show dialog
 0226                       ;------------------------------------------------------
 0227                       ; Special treatment for block mode
 0228                       ;------------------------------------------------------
-0229 7C94 0460  28         b     @edkey.action.block.reset
-     7C96 6788     
+0229 7C64 0460  28         b     @edkey.action.block.reset
+     7C66 6788     
 0230                                                   ; Reset block mode
 0231                       ;------------------------------------------------------
 0232                       ; Show dialog
 0233                       ;------------------------------------------------------
-0234 7C98 C820  54 !       mov   @dialog.menu.vector,@trmpvector
-     7C9A 7CA0     
-     7C9C A02E     
-0235 7C9E 1057  14         jmp   _trampoline.bank3     ; Show dialog
+0234 7C68 C820  54 !       mov   @dialog.menu.vector,@trmpvector
+     7C6A 7C70     
+     7C6C A02E     
+0235 7C6E 1057  14         jmp   _trampoline.bank3     ; Show dialog
 0236               dialog.menu.vector:
-0237 7CA0 7FFA             data  vec.30
+0237 7C70 7FFA             data  vec.30
 0238               
 0239               
 0240               
@@ -15410,12 +15436,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0244               * bank3 vec.10
 0245               ********|*****|*********************|**************************
 0246               tibasic:
-0247 7CA2 C820  54         mov   @tibasic.vector,@trmpvector
-     7CA4 7CAA     
-     7CA6 A02E     
-0248 7CA8 105B  14         jmp   _trampoline.bank3.ret ; Longjump
+0247 7C72 C820  54         mov   @tibasic.vector,@trmpvector
+     7C74 7C7A     
+     7C76 A02E     
+0248 7C78 105B  14         jmp   _trampoline.bank3.ret ; Longjump
 0249               tibasic.vector:
-0250 7CAA 7FD2             data  vec.10
+0250 7C7A 7FD2             data  vec.10
 0251               
 0252               
 0253               ***************************************************************
@@ -15423,12 +15449,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0255               * bank3 vec.18
 0256               ********|*****|*********************|**************************
 0257               pane.show_hint:
-0258 7CAC C820  54         mov   @pane.show_hint,@trmpvector
-     7CAE 7CAC     
-     7CB0 A02E     
-0259 7CB2 1056  14         jmp   _trampoline.bank3.ret ; Longjump
+0258 7C7C C820  54         mov   @pane.show_hint,@trmpvector
+     7C7E 7C7C     
+     7C80 A02E     
+0259 7C82 1056  14         jmp   _trampoline.bank3.ret ; Longjump
 0260               pane.show_hint.vector:
-0261 7CB4 7FE2             data  vec.18
+0261 7C84 7FE2             data  vec.18
 0262               
 0263               
 0264               ***************************************************************
@@ -15436,12 +15462,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0266               * bank3 vec.20
 0267               ********|*****|*********************|**************************
 0268               pane.cmdb.show:
-0269 7CB6 C820  54         mov   @pane.cmdb.show.vector,@trmpvector
-     7CB8 7CBE     
-     7CBA A02E     
-0270 7CBC 1051  14         jmp   _trampoline.bank3.ret ; Longjump
+0269 7C86 C820  54         mov   @pane.cmdb.show.vector,@trmpvector
+     7C88 7C8E     
+     7C8A A02E     
+0270 7C8C 1051  14         jmp   _trampoline.bank3.ret ; Longjump
 0271               pane.cmdb.show.vector:
-0272 7CBE 7FE6             data  vec.20
+0272 7C8E 7FE6             data  vec.20
 0273               
 0274               
 0275               ***************************************************************
@@ -15449,12 +15475,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0277               * bank3 vec.21
 0278               ********|*****|*********************|**************************
 0279               pane.cmdb.hide:
-0280 7CC0 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
-     7CC2 7CC8     
-     7CC4 A02E     
-0281 7CC6 104C  14         jmp   _trampoline.bank3.ret ; Longjump
+0280 7C90 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
+     7C92 7C98     
+     7C94 A02E     
+0281 7C96 104C  14         jmp   _trampoline.bank3.ret ; Longjump
 0282               pane.cmdb.hide.vector:
-0283 7CC8 7FE8             data  vec.21
+0283 7C98 7FE8             data  vec.21
 0284               
 0285               
 0286               ***************************************************************
@@ -15462,12 +15488,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0288               * bank3 vec.22
 0289               ********|*****|*********************|**************************
 0290               pane.cmdb.draw:
-0291 7CCA C820  54         mov   @pane.cmdb.draw.vector,@trmpvector
-     7CCC 7CD2     
-     7CCE A02E     
-0292 7CD0 1047  14         jmp   _trampoline.bank3.ret ; Longjump
+0291 7C9A C820  54         mov   @pane.cmdb.draw.vector,@trmpvector
+     7C9C 7CA2     
+     7C9E A02E     
+0292 7CA0 1047  14         jmp   _trampoline.bank3.ret ; Longjump
 0293               pane.cmdb.draw.vector:
-0294 7CD2 7FEA             data  vec.22
+0294 7CA2 7FEA             data  vec.22
 0295               
 0296               
 0297               ***************************************************************
@@ -15475,12 +15501,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0299               * bank3 vec.24
 0300               ********|*****|*********************|**************************
 0301               cmdb.refresh:
-0302 7CD4 C820  54         mov   @cmdb.refresh.vector,@trmpvector
-     7CD6 7CDC     
-     7CD8 A02E     
-0303 7CDA 1042  14         jmp   _trampoline.bank3.ret ; Longjump
+0302 7CA4 C820  54         mov   @cmdb.refresh.vector,@trmpvector
+     7CA6 7CAC     
+     7CA8 A02E     
+0303 7CAA 1042  14         jmp   _trampoline.bank3.ret ; Longjump
 0304               cmdb.refresh.vector:
-0305 7CDC 7FEE             data  vec.24
+0305 7CAC 7FEE             data  vec.24
 0306               
 0307               
 0308               ***************************************************************
@@ -15488,12 +15514,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0310               * bank3 vec.25
 0311               ********|*****|*********************|**************************
 0312               cmdb.cmd.clear:
-0313 7CDE C820  54         mov   @cmdb.cmd.clear.vector,@trmpvector
-     7CE0 7CE6     
-     7CE2 A02E     
-0314 7CE4 103D  14         jmp   _trampoline.bank3.ret ; Longjump
+0313 7CAE C820  54         mov   @cmdb.cmd.clear.vector,@trmpvector
+     7CB0 7CB6     
+     7CB2 A02E     
+0314 7CB4 103D  14         jmp   _trampoline.bank3.ret ; Longjump
 0315               cmdb.cmd.clear.vector:
-0316 7CE6 7FF0             data  vec.25
+0316 7CB6 7FF0             data  vec.25
 0317               
 0318               
 0319               ***************************************************************
@@ -15501,12 +15527,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0321               * bank3 vec.26
 0322               ********|*****|*********************|**************************
 0323               cmdb.cmd.getlength:
-0324 7CE8 C820  54         mov   @cmdb.cmd.getlength.vector,@trmpvector
-     7CEA 7CF0     
-     7CEC A02E     
-0325 7CEE 1038  14         jmp   _trampoline.bank3.ret ; Longjump
+0324 7CB8 C820  54         mov   @cmdb.cmd.getlength.vector,@trmpvector
+     7CBA 7CC0     
+     7CBC A02E     
+0325 7CBE 1038  14         jmp   _trampoline.bank3.ret ; Longjump
 0326               cmdb.cmd.getlength.vector:
-0327 7CF0 7FF2             data  vec.26
+0327 7CC0 7FF2             data  vec.26
 0328               
 0329               
 0330               ***************************************************************
@@ -15514,12 +15540,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0332               * bank3 vec.27
 0333               ********|*****|*********************|**************************
 0334               cmdb.cmd.addhist:
-0335 7CF2 C820  54         mov   @cmdb.cmd.addhist.vector,@trmpvector
-     7CF4 7CFA     
-     7CF6 A02E     
-0336 7CF8 1033  14         jmp   _trampoline.bank3.ret ; Longjump
+0335 7CC2 C820  54         mov   @cmdb.cmd.addhist.vector,@trmpvector
+     7CC4 7CCA     
+     7CC6 A02E     
+0336 7CC8 1033  14         jmp   _trampoline.bank3.ret ; Longjump
 0337               cmdb.cmd.addhist.vector:
-0338 7CFA 7FF4             data  vec.27
+0338 7CCA 7FF4             data  vec.27
 0339               
 0340               
 0341               **************************************************************
@@ -15527,12 +15553,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0343               * bank3 vec.32
 0344               ********|*****|*********************|**************************
 0345               fm.fastmode:
-0346 7CFC C820  54         mov   @fm.fastmode.vector,@trmpvector
-     7CFE 7D04     
-     7D00 A02E     
-0347 7D02 102E  14         jmp   _trampoline.bank3.ret ; Longjump
+0346 7CCC C820  54         mov   @fm.fastmode.vector,@trmpvector
+     7CCE 7CD4     
+     7CD0 A02E     
+0347 7CD2 102E  14         jmp   _trampoline.bank3.ret ; Longjump
 0348               fm.fastmode.vector:
-0349 7D04 7FFE             data  vec.32
+0349 7CD4 7FFE             data  vec.32
 0350               
 0351               
 0352               ***************************************************************
@@ -15540,21 +15566,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0354               * bank4 vec.1
 0355               ********|*****|*********************|**************************
 0356               fb.tab.next:
-0357 7D06 0649  14         dect  stack
-0358 7D08 C64B  30         mov   r11,*stack            ; Save return address
+0357 7CD6 0649  14         dect  stack
+0358 7CD8 C64B  30         mov   r11,*stack            ; Save return address
 0359                       ;------------------------------------------------------
 0360                       ; Put cursor on next tab position
 0361                       ;------------------------------------------------------
-0362 7D0A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D0C 30A4     
-0363 7D0E 6008                   data bank4.rom        ; | i  p0 = bank address
-0364 7D10 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0365 7D12 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0362 7CDA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CDC 30A4     
+0363 7CDE 6008                   data bank4.rom        ; | i  p0 = bank address
+0364 7CE0 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0365 7CE2 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0366                       ;------------------------------------------------------
 0367                       ; Exit
 0368                       ;------------------------------------------------------
-0369 7D14 C2F9  30         mov   *stack+,r11           ; Pop r11
-0370 7D16 045B  20         b     *r11                  ; Return to caller
+0369 7CE4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0370 7CE6 045B  20         b     *r11                  ; Return to caller
 0371               
 0372               
 0373               ***************************************************************
@@ -15562,21 +15588,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0375               * bank4 vec.2
 0376               ********|*****|*********************|**************************
 0377               fb.ruler.init:
-0378 7D18 0649  14         dect  stack
-0379 7D1A C64B  30         mov   r11,*stack            ; Save return address
+0378 7CE8 0649  14         dect  stack
+0379 7CEA C64B  30         mov   r11,*stack            ; Save return address
 0380                       ;------------------------------------------------------
 0381                       ; Setup ruler in memory
 0382                       ;------------------------------------------------------
-0383 7D1C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D1E 30A4     
-0384 7D20 6008                   data bank4.rom        ; | i  p0 = bank address
-0385 7D22 7FC2                   data vec.2            ; | i  p1 = Vector with target address
-0386 7D24 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0383 7CEC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CEE 30A4     
+0384 7CF0 6008                   data bank4.rom        ; | i  p0 = bank address
+0385 7CF2 7FC2                   data vec.2            ; | i  p1 = Vector with target address
+0386 7CF4 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0387                       ;------------------------------------------------------
 0388                       ; Exit
 0389                       ;------------------------------------------------------
-0390 7D26 C2F9  30         mov   *stack+,r11           ; Pop r11
-0391 7D28 045B  20         b     *r11                  ; Return to caller
+0390 7CF6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0391 7CF8 045B  20         b     *r11                  ; Return to caller
 0392               
 0393               
 0394               ***************************************************************
@@ -15584,21 +15610,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0396               * bank4 vec.3
 0397               ********|*****|*********************|**************************
 0398               fb.colorlines:
-0399 7D2A 0649  14         dect  stack
-0400 7D2C C64B  30         mov   r11,*stack            ; Save return address
+0399 7CFA 0649  14         dect  stack
+0400 7CFC C64B  30         mov   r11,*stack            ; Save return address
 0401                       ;------------------------------------------------------
 0402                       ; Colorize frame buffer content
 0403                       ;------------------------------------------------------
-0404 7D2E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D30 30A4     
-0405 7D32 6008                   data bank4.rom        ; | i  p0 = bank address
-0406 7D34 7FC4                   data vec.3            ; | i  p1 = Vector with target address
-0407 7D36 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0404 7CFE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7D00 30A4     
+0405 7D02 6008                   data bank4.rom        ; | i  p0 = bank address
+0406 7D04 7FC4                   data vec.3            ; | i  p1 = Vector with target address
+0407 7D06 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0408                       ;------------------------------------------------------
 0409                       ; Exit
 0410                       ;------------------------------------------------------
-0411 7D38 C2F9  30         mov   *stack+,r11           ; Pop r11
-0412 7D3A 045B  20         b     *r11                  ; Return to caller
+0411 7D08 C2F9  30         mov   *stack+,r11           ; Pop r11
+0412 7D0A 045B  20         b     *r11                  ; Return to caller
 0413               
 0414               
 0415               ***************************************************************
@@ -15606,21 +15632,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0417               * bank4 vec.4
 0418               ********|*****|*********************|**************************
 0419               fb.vdpdump:
-0420 7D3C 0649  14         dect  stack
-0421 7D3E C64B  30         mov   r11,*stack            ; Save return address
+0420 7D0C 0649  14         dect  stack
+0421 7D0E C64B  30         mov   r11,*stack            ; Save return address
 0422                       ;------------------------------------------------------
 0423                       ; Colorize frame buffer content
 0424                       ;------------------------------------------------------
-0425 7D40 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D42 30A4     
-0426 7D44 6008                   data bank4.rom        ; | i  p0 = bank address
-0427 7D46 7FC6                   data vec.4            ; | i  p1 = Vector with target address
-0428 7D48 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0425 7D10 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7D12 30A4     
+0426 7D14 6008                   data bank4.rom        ; | i  p0 = bank address
+0427 7D16 7FC6                   data vec.4            ; | i  p1 = Vector with target address
+0428 7D18 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0429                       ;------------------------------------------------------
 0430                       ; Exit
 0431                       ;------------------------------------------------------
-0432 7D4A C2F9  30         mov   *stack+,r11           ; Pop r11
-0433 7D4C 045B  20         b     *r11                  ; Return to caller
+0432 7D1A C2F9  30         mov   *stack+,r11           ; Pop r11
+0433 7D1C 045B  20         b     *r11                  ; Return to caller
 0434               
 0435               
 0436               
@@ -15628,22 +15654,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0438               * Trampoline 1 (bank 3, dialog)
 0439               ********|*****|*********************|**************************
 0440               _trampoline.bank3:
-0441 7D4E 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
-     7D50 781E     
+0441 7D1E 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
+     7D20 77EE     
 0442                       ;------------------------------------------------------
 0443                       ; Call routine in specified bank
 0444                       ;------------------------------------------------------
-0445 7D52 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D54 30A4     
-0446 7D56 6006                   data bank3.rom        ; | i  p0 = bank address
-0447 7D58 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0445 7D22 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7D24 30A4     
+0446 7D26 6006                   data bank3.rom        ; | i  p0 = bank address
+0447 7D28 FFFF                   data >ffff            ; | i  p1 = Vector with target address
 0448                                                   ; |         (deref @trmpvector)
-0449 7D5A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0449 7D2A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0450                       ;------------------------------------------------------
 0451                       ; Exit
 0452                       ;------------------------------------------------------
-0453 7D5C 0460  28         b     @edkey.action.cmdb.show
-     7D5E 6942     
+0453 7D2C 0460  28         b     @edkey.action.cmdb.show
+     7D2E 6924     
 0454                                                   ; Show dialog in CMDB pane
 0455               
 0456               
@@ -15651,22 +15677,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0458               * Trampoline bank 3 with return
 0459               ********|*****|*********************|**************************
 0460               _trampoline.bank3.ret:
-0461 7D60 0649  14         dect  stack
-0462 7D62 C64B  30         mov   r11,*stack            ; Save return address
+0461 7D30 0649  14         dect  stack
+0462 7D32 C64B  30         mov   r11,*stack            ; Save return address
 0463                       ;------------------------------------------------------
 0464                       ; Call routine in specified bank
 0465                       ;------------------------------------------------------
-0466 7D64 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D66 30A4     
-0467 7D68 6006                   data bank3.rom        ; | i  p0 = bank address
-0468 7D6A FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0466 7D34 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7D36 30A4     
+0467 7D38 6006                   data bank3.rom        ; | i  p0 = bank address
+0468 7D3A FFFF                   data >ffff            ; | i  p1 = Vector with target address
 0469                                                   ; |         (deref @trmpvector)
-0470 7D6C 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0470 7D3C 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0471                       ;------------------------------------------------------
 0472                       ; Exit
 0473                       ;------------------------------------------------------
-0474 7D6E C2F9  30         mov   *stack+,r11           ; Pop r11
-0475 7D70 045B  20         b     *r11                  ; Return to caller
+0474 7D3E C2F9  30         mov   *stack+,r11           ; Pop r11
+0475 7D40 045B  20         b     *r11                  ; Return to caller
 0476               
 0477               
 0478               
@@ -15676,12 +15702,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0482               * bank5 vec.1
 0483               ********|*****|*********************|**************************
 0484               edb.clear.sams:
-0485 7D72 C820  54         mov   @edb.clear.sams.vector,@trmpvector
-     7D74 7D7A     
-     7D76 A02E     
-0486 7D78 1024  14         jmp   _trampoline.bank5.ret ; Longjump
+0485 7D42 C820  54         mov   @edb.clear.sams.vector,@trmpvector
+     7D44 7D4A     
+     7D46 A02E     
+0486 7D48 1024  14         jmp   _trampoline.bank5.ret ; Longjump
 0487               edb.clear.sams.vector:
-0488 7D7A 7FC0             data  vec.1
+0488 7D4A 7FC0             data  vec.1
 0489               
 0490               
 0491               **************************************************************
@@ -15689,12 +15715,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0493               * bank5 vec.2
 0494               ********|*****|*********************|**************************
 0495               edb.hipage.alloc:
-0496 7D7C C820  54         mov   @edb.hipage.alloc.vector,@trmpvector
-     7D7E 7D84     
-     7D80 A02E     
-0497 7D82 101F  14         jmp   _trampoline.bank5.ret ; Longjump
+0496 7D4C C820  54         mov   @edb.hipage.alloc.vector,@trmpvector
+     7D4E 7D54     
+     7D50 A02E     
+0497 7D52 101F  14         jmp   _trampoline.bank5.ret ; Longjump
 0498               edb.hipage.alloc.vector:
-0499 7D84 7FC2             data  vec.2
+0499 7D54 7FC2             data  vec.2
 0500               
 0501               
 0502               **************************************************************
@@ -15702,12 +15728,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0504               * bank5 vec.3
 0505               ********|*****|*********************|**************************
 0506               edb.block.mark:
-0507 7D86 C820  54         mov   @edb.block.mark.vector,@trmpvector
-     7D88 7D8E     
-     7D8A A02E     
-0508 7D8C 101A  14         jmp   _trampoline.bank5.ret ; Longjump
+0507 7D56 C820  54         mov   @edb.block.mark.vector,@trmpvector
+     7D58 7D5E     
+     7D5A A02E     
+0508 7D5C 101A  14         jmp   _trampoline.bank5.ret ; Longjump
 0509               edb.block.mark.vector:
-0510 7D8E 7FC4             data  vec.3
+0510 7D5E 7FC4             data  vec.3
 0511               
 0512               
 0513               **************************************************************
@@ -15715,12 +15741,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0515               * bank5 vec.4
 0516               ********|*****|*********************|**************************
 0517               edb.block.mark.m1:
-0518 7D90 C820  54         mov   @edb.block.mark.m1.vector,@trmpvector
-     7D92 7D98     
-     7D94 A02E     
-0519 7D96 1015  14         jmp   _trampoline.bank5.ret ; Longjump
+0518 7D60 C820  54         mov   @edb.block.mark.m1.vector,@trmpvector
+     7D62 7D68     
+     7D64 A02E     
+0519 7D66 1015  14         jmp   _trampoline.bank5.ret ; Longjump
 0520               edb.block.mark.m1.vector:
-0521 7D98 7FC6             data  vec.4
+0521 7D68 7FC6             data  vec.4
 0522               
 0523               
 0524               **************************************************************
@@ -15728,12 +15754,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0526               * bank5 vec.5
 0527               ********|*****|*********************|**************************
 0528               edb.block.mark.m2:
-0529 7D9A C820  54         mov   @edb.block.mark.m2.vector,@trmpvector
-     7D9C 7DA2     
-     7D9E A02E     
-0530 7DA0 1010  14         jmp   _trampoline.bank5.ret ; Longjump
+0529 7D6A C820  54         mov   @edb.block.mark.m2.vector,@trmpvector
+     7D6C 7D72     
+     7D6E A02E     
+0530 7D70 1010  14         jmp   _trampoline.bank5.ret ; Longjump
 0531               edb.block.mark.m2.vector:
-0532 7DA2 7FC8             data  vec.5
+0532 7D72 7FC8             data  vec.5
 0533               
 0534               
 0535               **************************************************************
@@ -15741,12 +15767,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0537               * bank5 vec.6
 0538               ********|*****|*********************|**************************
 0539               edb.block.clip:
-0540 7DA4 C820  54         mov   @edb.block.clip.vector,@trmpvector
-     7DA6 7DAC     
-     7DA8 A02E     
-0541 7DAA 100B  14         jmp   _trampoline.bank5.ret ; Longjump
+0540 7D74 C820  54         mov   @edb.block.clip.vector,@trmpvector
+     7D76 7D7C     
+     7D78 A02E     
+0541 7D7A 100B  14         jmp   _trampoline.bank5.ret ; Longjump
 0542               edb.block.clip.vector:
-0543 7DAC 7FCA             data  vec.6
+0543 7D7C 7FCA             data  vec.6
 0544               
 0545               
 0546               **************************************************************
@@ -15754,12 +15780,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0548               * bank5 vec.7
 0549               ********|*****|*********************|**************************
 0550               edb.block.reset:
-0551 7DAE C820  54         mov   @edb.block.reset.vector,@trmpvector
-     7DB0 7DB6     
-     7DB2 A02E     
-0552 7DB4 1006  14         jmp   _trampoline.bank5.ret ; Longjump
+0551 7D7E C820  54         mov   @edb.block.reset.vector,@trmpvector
+     7D80 7D86     
+     7D82 A02E     
+0552 7D84 1006  14         jmp   _trampoline.bank5.ret ; Longjump
 0553               edb.block.reset.vector:
-0554 7DB6 7FCC             data  vec.7
+0554 7D86 7FCC             data  vec.7
 0555               
 0556               
 0557               **************************************************************
@@ -15767,34 +15793,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0559               * bank5 vec.8
 0560               ********|*****|*********************|**************************
 0561               edb.block.delete:
-0562 7DB8 C820  54         mov   @edb.block.delete.vector,@trmpvector
-     7DBA 7DC0     
-     7DBC A02E     
-0563 7DBE 1001  14         jmp   _trampoline.bank5.ret ; Longjump
+0562 7D88 C820  54         mov   @edb.block.delete.vector,@trmpvector
+     7D8A 7D90     
+     7D8C A02E     
+0563 7D8E 1001  14         jmp   _trampoline.bank5.ret ; Longjump
 0564               edb.block.delete.vector:
-0565 7DC0 7FCE             data  vec.8
+0565 7D90 7FCE             data  vec.8
 0566               
 0567               
 0568               ***************************************************************
 0569               * Trampoline bank 5 with return
 0570               ********|*****|*********************|**************************
 0571               _trampoline.bank5.ret:
-0572 7DC2 0649  14         dect  stack
-0573 7DC4 C64B  30         mov   r11,*stack            ; Save return address
+0572 7D92 0649  14         dect  stack
+0573 7D94 C64B  30         mov   r11,*stack            ; Save return address
 0574                       ;------------------------------------------------------
 0575                       ; Call routine in specified bank
 0576                       ;------------------------------------------------------
-0577 7DC6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7DC8 30A4     
-0578 7DCA 600A                   data bank5.rom        ; | i  p0 = bank address
-0579 7DCC FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0577 7D96 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7D98 30A4     
+0578 7D9A 600A                   data bank5.rom        ; | i  p0 = bank address
+0579 7D9C FFFF                   data >ffff            ; | i  p1 = Vector with target address
 0580                                                   ; |         (deref @trmpvector)
-0581 7DCE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0581 7D9E 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0582                       ;------------------------------------------------------
 0583                       ; Exit
 0584                       ;------------------------------------------------------
-0585 7DD0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0586 7DD2 045B  20         b     *r11                  ; Return to caller
+0585 7DA0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0586 7DA2 045B  20         b     *r11                  ; Return to caller
 0587               
 0588               
 0589               
@@ -15806,26 +15832,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0595               * bank6 vec.1
 0596               ********|*****|*********************|**************************
 0597               vdp.patterns.dump:
-0598 7DD4 0649  14         dect  stack
-0599 7DD6 C64B  30         mov   r11,*stack            ; Save return address
+0598 7DA4 0649  14         dect  stack
+0599 7DA6 C64B  30         mov   r11,*stack            ; Save return address
 0600                       ;------------------------------------------------------
 0601                       ; Dump VDP patterns
 0602                       ;------------------------------------------------------
-0603 7DD8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7DDA 30A4     
-0604 7DDC 600C                   data bank6.rom        ; | i  p0 = bank address
-0605 7DDE 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0606 7DE0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0603 7DA8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7DAA 30A4     
+0604 7DAC 600C                   data bank6.rom        ; | i  p0 = bank address
+0605 7DAE 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0606 7DB0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0607                       ;------------------------------------------------------
 0608                       ; Exit
 0609                       ;------------------------------------------------------
-0610 7DE2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0611 7DE4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b1.asm.61843
+0610 7DB2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0611 7DB4 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b1.asm.91724
 0167                       ;-----------------------------------------------------------------------
 0168                       ; Program data
 0169                       ;-----------------------------------------------------------------------
-0170                       copy  "data.keymap.actions.asm"; Data segment - Keyboard actions
+0170                       copy  "data.keymap.actions.asm"; Keyboard actions
      **** ****     > data.keymap.actions.asm
 0001               * FILE......: data.keymap.actions.asm
 0002               * Purpose...: Keyboard actions
@@ -15837,355 +15863,324 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008                       ;-------------------------------------------------------
 0009                       ; Movement keys
 0010                       ;-------------------------------------------------------
-0011 7DE6 0D00             byte  key.enter, pane.focus.fb
-0012 7DE8 65D0             data  edkey.action.enter
+0011 7DB6 0D00             byte  key.enter, pane.focus.fb
+0012 7DB8 65D0             data  edkey.action.enter
 0013               
-0014 7DEA 0800             byte  key.fctn.s, pane.focus.fb
-0015 7DEC 6192             data  edkey.action.left
+0014 7DBA 0800             byte  key.fctn.s, pane.focus.fb
+0015 7DBC 6192             data  edkey.action.left
 0016               
-0017 7DEE 0900             byte  key.fctn.d, pane.focus.fb
-0018 7DF0 61AC             data  edkey.action.right
+0017 7DBE 0900             byte  key.fctn.d, pane.focus.fb
+0018 7DC0 61AC             data  edkey.action.right
 0019               
-0020 7DF2 0B00             byte  key.fctn.e, pane.focus.fb
-0021 7DF4 62A4             data  edkey.action.up
+0020 7DC2 0B00             byte  key.fctn.e, pane.focus.fb
+0021 7DC4 62A4             data  edkey.action.up
 0022               
-0023 7DF6 0A00             byte  key.fctn.x, pane.focus.fb
-0024 7DF8 62AC             data  edkey.action.down
+0023 7DC6 0A00             byte  key.fctn.x, pane.focus.fb
+0024 7DC8 62AC             data  edkey.action.down
 0025               
-0026 7DFA BF00             byte  key.fctn.h, pane.focus.fb
-0027 7DFC 61C8             data  edkey.action.home
+0026 7DCA BF00             byte  key.fctn.h, pane.focus.fb
+0027 7DCC 61C8             data  edkey.action.home
 0028               
-0029 7DFE C000             byte  key.fctn.j, pane.focus.fb
-0030 7E00 61F2             data  edkey.action.pword
+0029 7DCE C000             byte  key.fctn.j, pane.focus.fb
+0030 7DD0 61F2             data  edkey.action.pword
 0031               
-0032 7E02 C100             byte  key.fctn.k, pane.focus.fb
-0033 7E04 6244             data  edkey.action.nword
+0032 7DD2 C100             byte  key.fctn.k, pane.focus.fb
+0033 7DD4 6244             data  edkey.action.nword
 0034               
-0035 7E06 C200             byte  key.fctn.l, pane.focus.fb
-0036 7E08 61D0             data  edkey.action.end
+0035 7DD6 C200             byte  key.fctn.l, pane.focus.fb
+0036 7DD8 61D0             data  edkey.action.end
 0037               
-0038 7E0A 0C00             byte  key.fctn.6, pane.focus.fb
-0039 7E0C 62B4             data  edkey.action.ppage
+0038 7DDA 0C00             byte  key.fctn.6, pane.focus.fb
+0039 7DDC 62B4             data  edkey.action.ppage
 0040               
-0041 7E0E 0200             byte  key.fctn.4, pane.focus.fb
-0042 7E10 62F0             data  edkey.action.npage
+0041 7DDE 0200             byte  key.fctn.4, pane.focus.fb
+0042 7DE0 62F0             data  edkey.action.npage
 0043               
-0044 7E12 8500             byte  key.ctrl.e, pane.focus.fb
-0045 7E14 62B4             data  edkey.action.ppage
+0044 7DE2 8500             byte  key.ctrl.e, pane.focus.fb
+0045 7DE4 62B4             data  edkey.action.ppage
 0046               
-0047 7E16 9800             byte  key.ctrl.x, pane.focus.fb
-0048 7E18 62F0             data  edkey.action.npage
+0047 7DE6 9800             byte  key.ctrl.x, pane.focus.fb
+0048 7DE8 62F0             data  edkey.action.npage
 0049               
-0050 7E1A 7F00             byte  key.fctn.v, pane.focus.fb
-0051 7E1C 6346             data  edkey.action.topscr
+0050 7DEA 7F00             byte  key.fctn.v, pane.focus.fb
+0051 7DEC 6346             data  edkey.action.topscr
 0052               
-0053 7E1E BE00             byte  key.fctn.b, pane.focus.fb
-0054 7E20 6390             data  edkey.action.botscr
+0053 7DEE BE00             byte  key.fctn.b, pane.focus.fb
+0054 7DF0 6390             data  edkey.action.botscr
 0055               
-0056 7E22 9600             byte  key.ctrl.v, pane.focus.fb
-0057 7E24 632A             data  edkey.action.top
+0056 7DF2 9600             byte  key.ctrl.v, pane.focus.fb
+0057 7DF4 632A             data  edkey.action.top
 0058               
-0059 7E26 8200             byte  key.ctrl.b, pane.focus.fb
-0060 7E28 6360             data  edkey.action.bot
+0059 7DF6 8200             byte  key.ctrl.b, pane.focus.fb
+0060 7DF8 6360             data  edkey.action.bot
 0061                       ;-------------------------------------------------------
 0062                       ; Modifier keys - Delete
 0063                       ;-------------------------------------------------------
-0064 7E2A 0300             byte  key.fctn.1, pane.focus.fb
-0065 7E2C 641E             data  edkey.action.del_char
+0064 7DFA 0300             byte  key.fctn.1, pane.focus.fb
+0065 7DFC 641E             data  edkey.action.del_char
 0066               
-0067 7E2E 0700             byte  key.fctn.3, pane.focus.fb
-0068 7E30 64D0             data  edkey.action.del_line
+0067 7DFE 0700             byte  key.fctn.3, pane.focus.fb
+0068 7E00 64D0             data  edkey.action.del_line
 0069               
-0070 7E32 8C00             byte  key.ctrl.l, pane.focus.fb
-0071 7E34 649C             data  edkey.action.del_eol
+0070 7E02 8C00             byte  key.ctrl.l, pane.focus.fb
+0071 7E04 649C             data  edkey.action.del_eol
 0072                       ;-------------------------------------------------------
 0073                       ; Modifier keys - Insert
 0074                       ;-------------------------------------------------------
-0075 7E36 0400             byte  key.fctn.2, pane.focus.fb
-0076 7E38 6532             data  edkey.action.ins_char.ws
+0075 7E06 0400             byte  key.fctn.2, pane.focus.fb
+0076 7E08 6532             data  edkey.action.ins_char.ws
 0077               
-0078 7E3A B900             byte  key.fctn.dot, pane.focus.fb
-0079 7E3C 6648             data  edkey.action.ins_onoff
+0078 7E0A B900             byte  key.fctn.dot, pane.focus.fb
+0079 7E0C 6648             data  edkey.action.ins_onoff
 0080               
-0081 7E3E 0100             byte  key.fctn.7, pane.focus.fb
-0082 7E40 6846             data  edkey.action.fb.tab.next
+0081 7E0E 0100             byte  key.fctn.7, pane.focus.fb
+0082 7E10 6846             data  edkey.action.fb.tab.next
 0083               
-0084 7E42 9400             byte  key.ctrl.t, pane.focus.fb
-0085 7E44 6846             data  edkey.action.fb.tab.next
+0084 7E12 9400             byte  key.ctrl.t, pane.focus.fb
+0085 7E14 6846             data  edkey.action.fb.tab.next
 0086               
-0087 7E46 0600             byte  key.fctn.8, pane.focus.fb
-0088 7E48 65C8             data  edkey.action.ins_line
+0087 7E16 0600             byte  key.fctn.8, pane.focus.fb
+0088 7E18 65C8             data  edkey.action.ins_line
 0089                       ;-------------------------------------------------------
 0090                       ; Block marking/modifier
 0091                       ;-------------------------------------------------------
-0092 7E4A 8100             byte  key.ctrl.a, pane.focus.fb
-0093 7E4C 6780             data  edkey.action.block.mark
+0092 7E1A 8100             byte  key.ctrl.a, pane.focus.fb
+0093 7E1C 6780             data  edkey.action.block.mark
 0094               
-0095 7E4E 8300             byte  key.ctrl.c, pane.focus.fb
-0096 7E50 6710             data  edkey.action.copyblock_or_clipboard
+0095 7E1E 8300             byte  key.ctrl.c, pane.focus.fb
+0096 7E20 6710             data  edkey.action.copyblock_or_clipboard
 0097               
-0098 7E52 8400             byte  key.ctrl.d, pane.focus.fb
-0099 7E54 67D0             data  edkey.action.block.delete
+0098 7E22 8400             byte  key.ctrl.d, pane.focus.fb
+0099 7E24 67D0             data  edkey.action.block.delete
 0100               
-0101 7E56 8D00             byte  key.ctrl.m, pane.focus.fb
-0102 7E58 67FA             data  edkey.action.block.move
+0101 7E26 8D00             byte  key.ctrl.m, pane.focus.fb
+0102 7E28 67FA             data  edkey.action.block.move
 0103               
-0104 7E5A 8700             byte  key.ctrl.g, pane.focus.fb
-0105 7E5C 682C             data  edkey.action.block.goto.m1
+0104 7E2A 8700             byte  key.ctrl.g, pane.focus.fb
+0105 7E2C 682C             data  edkey.action.block.goto.m1
 0106                       ;-------------------------------------------------------
 0107                       ; Clipboards
 0108                       ;-------------------------------------------------------
-0109 7E5E B000             byte  key.ctrl.0, pane.focus.fb
-0110 7E60 6854             data  edkey.action.fb.clip.save.0
+0109 7E2E B100             byte  key.ctrl.1, pane.focus.fb
+0110 7E30 6854             data  edkey.action.fb.clip.save.1
 0111               
-0112 7E62 B100             byte  key.ctrl.1, pane.focus.fb
-0113 7E64 685A             data  edkey.action.fb.clip.save.1
+0112 7E32 B200             byte  key.ctrl.2, pane.focus.fb
+0113 7E34 685A             data  edkey.action.fb.clip.save.2
 0114               
-0115 7E66 B200             byte  key.ctrl.2, pane.focus.fb
-0116 7E68 6860             data  edkey.action.fb.clip.save.2
+0115 7E36 B300             byte  key.ctrl.3, pane.focus.fb
+0116 7E38 6860             data  edkey.action.fb.clip.save.3
 0117               
-0118 7E6A B300             byte  key.ctrl.3, pane.focus.fb
-0119 7E6C 6866             data  edkey.action.fb.clip.save.3
+0118 7E3A B400             byte  key.ctrl.4, pane.focus.fb
+0119 7E3C 6866             data  edkey.action.fb.clip.save.4
 0120               
-0121 7E6E B400             byte  key.ctrl.4, pane.focus.fb
-0122 7E70 686C             data  edkey.action.fb.clip.save.4
-0123               
-0124 7E72 B500             byte  key.ctrl.5, pane.focus.fb
-0125 7E74 6872             data  edkey.action.fb.clip.save.5
-0126               
-0127 7E76 B600             byte  key.ctrl.6, pane.focus.fb
-0128 7E78 6878             data  edkey.action.fb.clip.save.6
-0129               
-0130 7E7A B700             byte  key.ctrl.7, pane.focus.fb
-0131 7E7C 687E             data  edkey.action.fb.clip.save.7
-0132               
-0133 7E7E 9E00             byte  key.ctrl.8, pane.focus.fb
-0134 7E80 6884             data  edkey.action.fb.clip.save.8
-0135               
-0136 7E82 9F00             byte  key.ctrl.9, pane.focus.fb
-0137 7E84 688A             data  edkey.action.fb.clip.save.9
-0138                       ;-------------------------------------------------------
-0139                       ; Other action keys
-0140                       ;-------------------------------------------------------
-0141 7E86 0500             byte  key.fctn.plus, pane.focus.fb
-0142 7E88 6702             data  edkey.action.quit
+0121 7E3E B500             byte  key.ctrl.5, pane.focus.fb
+0122 7E40 686C             data  edkey.action.fb.clip.save.5
+0123                       ;-------------------------------------------------------
+0124                       ; Other action keys
+0125                       ;-------------------------------------------------------
+0126 7E42 0500             byte  key.fctn.plus, pane.focus.fb
+0127 7E44 6702             data  edkey.action.quit
+0128               
+0129 7E46 9100             byte  key.ctrl.q, pane.focus.fb
+0130 7E48 6702             data  edkey.action.quit
+0131               
+0132 7E4A 9500             byte  key.ctrl.u, pane.focus.fb
+0133 7E4C 66C2             data  edkey.action.toggle.ruler
+0134               
+0135 7E4E 9A00             byte  key.ctrl.z, pane.focus.fb
+0136 7E50 75C0             data  pane.action.colorscheme.cycle
+0137               
+0138 7E52 8000             byte  key.ctrl.comma, pane.focus.fb
+0139 7E54 6720             data  edkey.action.fb.fname.dec.load
+0140               
+0141 7E56 9B00             byte  key.ctrl.dot, pane.focus.fb
+0142 7E58 6732             data  edkey.action.fb.fname.inc.load
 0143               
-0144 7E8A 9100             byte  key.ctrl.q, pane.focus.fb
-0145 7E8C 6702             data  edkey.action.quit
-0146               
-0147 7E8E 9500             byte  key.ctrl.u, pane.focus.fb
-0148 7E90 66C2             data  edkey.action.toggle.ruler
-0149               
-0150 7E92 9A00             byte  key.ctrl.z, pane.focus.fb
-0151 7E94 75F0             data  pane.action.colorscheme.cycle
-0152               
-0153 7E96 8000             byte  key.ctrl.comma, pane.focus.fb
-0154 7E98 6720             data  edkey.action.fb.fname.dec.load
-0155               
-0156 7E9A 9B00             byte  key.ctrl.dot, pane.focus.fb
-0157 7E9C 6732             data  edkey.action.fb.fname.inc.load
-0158               
-0159 7E9E BB00             byte  key.ctrl.slash, pane.focus.fb
-0160 7EA0 7CA2             data  tibasic
-0161                       ;-------------------------------------------------------
-0162                       ; Dialog keys
-0163                       ;-------------------------------------------------------
-0164 7EA2 8800             byte  key.ctrl.h, pane.focus.fb
-0165 7EA4 7C34             data  edkey.action.about
+0144 7E5A BB00             byte  key.ctrl.slash, pane.focus.fb
+0145 7E5C 7C72             data  tibasic
+0146                       ;-------------------------------------------------------
+0147                       ; Dialog keys
+0148                       ;-------------------------------------------------------
+0149 7E5E 8800             byte  key.ctrl.h, pane.focus.fb
+0150 7E60 7C04             data  edkey.action.about
+0151               
+0152 7E62 8600             byte  key.ctrl.f, pane.focus.fb
+0153 7E64 7C3A             data  dialog.file
+0154               
+0155 7E66 8900             byte  key.ctrl.i, pane.focus.fb
+0156 7E68 7C26             data  dialog.insert
+0157               
+0158 7E6A 9300             byte  key.ctrl.s, pane.focus.fb
+0159 7E6C 7C1C             data  dialog.save
+0160               
+0161 7E6E 8F00             byte  key.ctrl.o, pane.focus.fb
+0162 7E70 7C10             data  dialog.load
+0163               
+0164 7E72 9000             byte  key.ctrl.p, pane.focus.fb
+0165 7E74 7C30             data  dialog.print
 0166               
-0167 7EA6 8600             byte  key.ctrl.f, pane.focus.fb
-0168 7EA8 7C6A             data  dialog.file
-0169               
-0170 7EAA 8900             byte  key.ctrl.i, pane.focus.fb
-0171 7EAC 7C56             data  dialog.insert
-0172               
-0173 7EAE 9300             byte  key.ctrl.s, pane.focus.fb
-0174 7EB0 7C4C             data  dialog.save
-0175               
-0176 7EB2 8F00             byte  key.ctrl.o, pane.focus.fb
-0177 7EB4 7C40             data  dialog.load
+0167                       ;
+0168                       ; FCTN-9 has multiple purposes, if block mode is on it
+0169                       ; resets the block, otherwise show Stevie menu dialog.
+0170                       ;
+0171 7E76 0F00             byte  key.fctn.9, pane.focus.fb
+0172 7E78 7C5C             data  dialog.menu
+0173                       ;-------------------------------------------------------
+0174                       ; End of list
+0175                       ;-------------------------------------------------------
+0176 7E7A FFFF             data  EOL                           ; EOL
+0177               
 0178               
-0179 7EB6 9000             byte  key.ctrl.p, pane.focus.fb
-0180 7EB8 7C60             data  dialog.print
-0181               
-0182                       ;
-0183                       ; FCTN-9 has multiple purposes, if block mode is on it
-0184                       ; resets the block, otherwise show Stevie menu dialog.
-0185                       ;
-0186 7EBA 0F00             byte  key.fctn.9, pane.focus.fb
-0187 7EBC 7C8C             data  dialog.menu
-0188                       ;-------------------------------------------------------
-0189                       ; End of list
-0190                       ;-------------------------------------------------------
-0191 7EBE FFFF             data  EOL                           ; EOL
+0179               
+0180               *---------------------------------------------------------------
+0181               * Action keys mapping table: Command Buffer (CMDB)
+0182               *---------------------------------------------------------------
+0183               keymap_actions.cmdb:
+0184                       ;-------------------------------------------------------
+0185                       ; Dialog: Main Menu
+0186                       ;-------------------------------------------------------
+0187 7E7C 4664             byte  key.uc.f, id.dialog.menu
+0188 7E7E 7C3A             data  dialog.file
+0189               
+0190 7E80 4264             byte  key.uc.b, id.dialog.menu
+0191 7E82 7C72             data  tibasic
 0192               
-0193               
-0194               
-0195               *---------------------------------------------------------------
-0196               * Action keys mapping table: Command Buffer (CMDB)
-0197               *---------------------------------------------------------------
-0198               keymap_actions.cmdb:
-0199                       ;-------------------------------------------------------
-0200                       ; Dialog: Main Menu
-0201                       ;-------------------------------------------------------
-0202 7EC0 4664             byte  key.uc.f, id.dialog.menu
-0203 7EC2 7C6A             data  dialog.file
-0204               
-0205 7EC4 4264             byte  key.uc.b, id.dialog.menu
-0206 7EC6 7CA2             data  tibasic
-0207               
-0208 7EC8 4864             byte  key.uc.h, id.dialog.menu
-0209 7ECA 7C34             data  edkey.action.about
-0210               
-0211 7ECC 5164             byte  key.uc.q, id.dialog.menu
-0212 7ECE 6702             data  edkey.action.quit
-0213                       ;-------------------------------------------------------
-0214                       ; Dialog: File
-0215                       ;-------------------------------------------------------
-0216 7ED0 4E69             byte  key.uc.n, id.dialog.file
-0217 7ED2 6954             data  edkey.action.cmdb.file.new
-0218               
-0219 7ED4 5369             byte  key.uc.s, id.dialog.file
-0220 7ED6 7C4C             data  dialog.save
-0221               
-0222 7ED8 4F69             byte  key.uc.o, id.dialog.file
-0223 7EDA 7C40             data  dialog.load
-0224               
-0225 7EDC 4969             byte  key.uc.i, id.dialog.file
-0226 7EDE 7C56             data  dialog.insert
-0227               
-0228 7EE0 4369             byte  key.uc.c, id.dialog.file
-0229 7EE2 7C82             data  dialog.clipboard
-0230               
-0231 7EE4 5069             byte  key.uc.p, id.dialog.file
-0232 7EE6 7C60             data  dialog.print
-0233                       ;-------------------------------------------------------
-0234                       ; Dialog: Open file
-0235                       ;-------------------------------------------------------
-0236 7EE8 0E0A             byte  key.fctn.5, id.dialog.load
-0237 7EEA 6B36             data  edkey.action.cmdb.fastmode.toggle
-0238               
-0239 7EEC 0D0A             byte  key.enter, id.dialog.load
-0240 7EEE 6978             data  edkey.action.cmdb.load
-0241                       ;-------------------------------------------------------
-0242                       ; Dialog: Insert file
-0243                       ;-------------------------------------------------------
-0244 7EF0 0E0D             byte  key.fctn.5, id.dialog.insert
-0245 7EF2 6B36             data  edkey.action.cmdb.fastmode.toggle
-0246               
-0247 7EF4 0D0D             byte  key.enter, id.dialog.insert
-0248 7EF6 69BC             data  edkey.action.cmdb.ins
-0249                       ;-------------------------------------------------------
-0250                       ; Dialog: Insert snippet from clipboard
-0251                       ;-------------------------------------------------------
-0252 7EF8 0E67             byte  key.fctn.5, id.dialog.clipboard
-0253 7EFA 6B36             data  edkey.action.cmdb.fastmode.toggle
-0254               
-0255 7EFC 3067             byte  key.num.0, id.dialog.clipboard
-0256 7EFE 6A32             data  edkey.action.cmdb.clip.0
-0257               
-0258 7F00 3167             byte  key.num.1, id.dialog.clipboard
-0259 7F02 6A38             data  edkey.action.cmdb.clip.1
-0260               
-0261 7F04 3267             byte  key.num.2, id.dialog.clipboard
-0262 7F06 6A3E             data  edkey.action.cmdb.clip.2
-0263               
-0264 7F08 3367             byte  key.num.3, id.dialog.clipboard
-0265 7F0A 6A44             data  edkey.action.cmdb.clip.3
-0266               
-0267 7F0C 3467             byte  key.num.4, id.dialog.clipboard
-0268 7F0E 6A4A             data  edkey.action.cmdb.clip.4
-0269               
-0270 7F10 3567             byte  key.num.5, id.dialog.clipboard
-0271 7F12 6A50             data  edkey.action.cmdb.clip.5
-0272               
-0273 7F14 3667             byte  key.num.6, id.dialog.clipboard
-0274 7F16 6A56             data  edkey.action.cmdb.clip.6
+0193 7E84 4864             byte  key.uc.h, id.dialog.menu
+0194 7E86 7C04             data  edkey.action.about
+0195               
+0196 7E88 5164             byte  key.uc.q, id.dialog.menu
+0197 7E8A 6702             data  edkey.action.quit
+0198                       ;-------------------------------------------------------
+0199                       ; Dialog: File
+0200                       ;-------------------------------------------------------
+0201 7E8C 4E69             byte  key.uc.n, id.dialog.file
+0202 7E8E 6936             data  edkey.action.cmdb.file.new
+0203               
+0204 7E90 5369             byte  key.uc.s, id.dialog.file
+0205 7E92 7C1C             data  dialog.save
+0206               
+0207 7E94 4F69             byte  key.uc.o, id.dialog.file
+0208 7E96 7C10             data  dialog.load
+0209               
+0210 7E98 4969             byte  key.uc.i, id.dialog.file
+0211 7E9A 7C26             data  dialog.insert
+0212               
+0213 7E9C 4369             byte  key.uc.c, id.dialog.file
+0214 7E9E 7C52             data  dialog.clipboard
+0215               
+0216 7EA0 5069             byte  key.uc.p, id.dialog.file
+0217 7EA2 7C30             data  dialog.print
+0218                       ;-------------------------------------------------------
+0219                       ; Dialog: Open file
+0220                       ;-------------------------------------------------------
+0221 7EA4 0E0A             byte  key.fctn.5, id.dialog.load
+0222 7EA6 6B06             data  edkey.action.cmdb.fastmode.toggle
+0223               
+0224 7EA8 0D0A             byte  key.enter, id.dialog.load
+0225 7EAA 695A             data  edkey.action.cmdb.load
+0226                       ;-------------------------------------------------------
+0227                       ; Dialog: Insert file
+0228                       ;-------------------------------------------------------
+0229 7EAC 0E0D             byte  key.fctn.5, id.dialog.insert
+0230 7EAE 6B06             data  edkey.action.cmdb.fastmode.toggle
+0231               
+0232 7EB0 0D0D             byte  key.enter, id.dialog.insert
+0233 7EB2 699E             data  edkey.action.cmdb.ins
+0234                       ;-------------------------------------------------------
+0235                       ; Dialog: Insert snippet from clipboard
+0236                       ;-------------------------------------------------------
+0237 7EB4 0E67             byte  key.fctn.5, id.dialog.clipboard
+0238 7EB6 6B06             data  edkey.action.cmdb.fastmode.toggle
+0239               
+0240 7EB8 3167             byte  key.num.1, id.dialog.clipboard
+0241 7EBA 6A14             data  edkey.action.cmdb.clip.1
+0242               
+0243 7EBC 3267             byte  key.num.2, id.dialog.clipboard
+0244 7EBE 6A1A             data  edkey.action.cmdb.clip.2
+0245               
+0246 7EC0 3367             byte  key.num.3, id.dialog.clipboard
+0247 7EC2 6A20             data  edkey.action.cmdb.clip.3
+0248               
+0249 7EC4 3467             byte  key.num.4, id.dialog.clipboard
+0250 7EC6 6A26             data  edkey.action.cmdb.clip.4
+0251               
+0252 7EC8 3567             byte  key.num.5, id.dialog.clipboard
+0253 7ECA 6A2C             data  edkey.action.cmdb.clip.5
+0254                       ;-------------------------------------------------------
+0255                       ; Dialog: Save file
+0256                       ;-------------------------------------------------------
+0257 7ECC 0D0B             byte  key.enter, id.dialog.save
+0258 7ECE 6A60             data  edkey.action.cmdb.save
+0259               
+0260 7ED0 0D0C             byte  key.enter, id.dialog.saveblock
+0261 7ED2 6A60             data  edkey.action.cmdb.save
+0262                       ;-------------------------------------------------------
+0263                       ; Dialog: Print file
+0264                       ;-------------------------------------------------------
+0265 7ED4 0D0E             byte  key.enter, id.dialog.print
+0266 7ED6 6A60             data  edkey.action.cmdb.save
+0267               
+0268 7ED8 0D0F             byte  key.enter, id.dialog.printblock
+0269 7EDA 6A60             data  edkey.action.cmdb.save
+0270                       ;-------------------------------------------------------
+0271                       ; Dialog: Unsaved changes
+0272                       ;-------------------------------------------------------
+0273 7EDC 0C65             byte  key.fctn.6, id.dialog.unsaved
+0274 7EDE 6ADC             data  edkey.action.cmdb.proceed
 0275               
-0276 7F18 3767             byte  key.num.7, id.dialog.clipboard
-0277 7F1A 6A5C             data  edkey.action.cmdb.clip.7
+0276 7EE0 2065             byte  key.space, id.dialog.unsaved
+0277 7EE2 6ADC             data  edkey.action.cmdb.proceed
 0278               
-0279 7F1C 3867             byte  key.num.8, id.dialog.clipboard
-0280 7F1E 6A62             data  edkey.action.cmdb.clip.8
-0281               
-0282 7F20 3967             byte  key.num.9, id.dialog.clipboard
-0283 7F22 6A68             data  edkey.action.cmdb.clip.9
-0284               
-0285                       ;-------------------------------------------------------
-0286                       ; Dialog: Save file
-0287                       ;-------------------------------------------------------
-0288 7F24 0D0B             byte  key.enter, id.dialog.save
-0289 7F26 6A9C             data  edkey.action.cmdb.save
-0290               
-0291 7F28 0D0C             byte  key.enter, id.dialog.saveblock
-0292 7F2A 6A9C             data  edkey.action.cmdb.save
-0293                       ;-------------------------------------------------------
-0294                       ; Dialog: Print file
-0295                       ;-------------------------------------------------------
-0296 7F2C 0D0E             byte  key.enter, id.dialog.print
-0297 7F2E 6A9C             data  edkey.action.cmdb.save
-0298               
-0299 7F30 0D0F             byte  key.enter, id.dialog.printblock
-0300 7F32 6A9C             data  edkey.action.cmdb.save
-0301                       ;-------------------------------------------------------
-0302                       ; Dialog: Unsaved changes
-0303                       ;-------------------------------------------------------
-0304 7F34 0C65             byte  key.fctn.6, id.dialog.unsaved
-0305 7F36 6B0C             data  edkey.action.cmdb.proceed
-0306               
-0307 7F38 2065             byte  key.space, id.dialog.unsaved
-0308 7F3A 6B0C             data  edkey.action.cmdb.proceed
-0309               
-0310 7F3C 0D65             byte  key.enter, id.dialog.unsaved
-0311 7F3E 7C4C             data  dialog.save
-0312                       ;-------------------------------------------------------
-0313                       ; Dialog: Basic
-0314                       ;-------------------------------------------------------
-0315 7F40 426A             byte  key.uc.b, id.dialog.basic
-0316 7F42 7CA2             data  tibasic
-0317                       ;-------------------------------------------------------
-0318                       ; Dialog: Help
-0319                       ;-------------------------------------------------------
-0320 7F44 0F68             byte  key.fctn.9, id.dialog.help
-0321 7F46 6B42             data  edkey.action.cmdb.close.about
-0322               
-0323 7F48 0D68             byte  key.enter, id.dialog.help
-0324 7F4A 6B42             data  edkey.action.cmdb.close.about
-0325                       ;-------------------------------------------------------
-0326                       ; Movement keys
-0327                       ;-------------------------------------------------------
-0328 7F4C 0801             byte  key.fctn.s, pane.focus.cmdb
-0329 7F4E 68A2             data  edkey.action.cmdb.left
-0330               
-0331 7F50 0901             byte  key.fctn.d, pane.focus.cmdb
-0332 7F52 68B4             data  edkey.action.cmdb.right
-0333               
-0334 7F54 BF01             byte  key.fctn.h, pane.focus.cmdb
-0335 7F56 68CC             data  edkey.action.cmdb.home
-0336               
-0337 7F58 C201             byte  key.fctn.l, pane.focus.cmdb
-0338 7F5A 68E0             data  edkey.action.cmdb.end
-0339                       ;-------------------------------------------------------
-0340                       ; Modifier keys
-0341                       ;-------------------------------------------------------
-0342 7F5C 0701             byte  key.fctn.3, pane.focus.cmdb
-0343 7F5E 68F8             data  edkey.action.cmdb.clear
-0344                       ;-------------------------------------------------------
-0345                       ; Other action keys
-0346                       ;-------------------------------------------------------
-0347 7F60 0F01             byte  key.fctn.9, pane.focus.cmdb
-0348 7F62 6B4E             data  edkey.action.cmdb.close.dialog
-0349               
-0350 7F64 0501             byte  key.fctn.plus, pane.focus.cmdb
-0351 7F66 6702             data  edkey.action.quit
-0352               
-0353 7F68 9A01             byte  key.ctrl.z, pane.focus.cmdb
-0354 7F6A 75F0             data  pane.action.colorscheme.cycle
-0355                       ;------------------------------------------------------
-0356                       ; End of list
-0357                       ;-------------------------------------------------------
-0358 7F6C FFFF             data  EOL                           ; EOL
-                   < stevie_b1.asm.61843
+0279 7EE4 0D65             byte  key.enter, id.dialog.unsaved
+0280 7EE6 7C1C             data  dialog.save
+0281                       ;-------------------------------------------------------
+0282                       ; Dialog: Basic
+0283                       ;-------------------------------------------------------
+0284 7EE8 426A             byte  key.uc.b, id.dialog.basic
+0285 7EEA 7C72             data  tibasic
+0286                       ;-------------------------------------------------------
+0287                       ; Dialog: Help
+0288                       ;-------------------------------------------------------
+0289 7EEC 0F68             byte  key.fctn.9, id.dialog.help
+0290 7EEE 6B12             data  edkey.action.cmdb.close.about
+0291               
+0292 7EF0 0D68             byte  key.enter, id.dialog.help
+0293 7EF2 6B12             data  edkey.action.cmdb.close.about
+0294                       ;-------------------------------------------------------
+0295                       ; Movement keys
+0296                       ;-------------------------------------------------------
+0297 7EF4 0801             byte  key.fctn.s, pane.focus.cmdb
+0298 7EF6 6884             data  edkey.action.cmdb.left
+0299               
+0300 7EF8 0901             byte  key.fctn.d, pane.focus.cmdb
+0301 7EFA 6896             data  edkey.action.cmdb.right
+0302               
+0303 7EFC BF01             byte  key.fctn.h, pane.focus.cmdb
+0304 7EFE 68AE             data  edkey.action.cmdb.home
+0305               
+0306 7F00 C201             byte  key.fctn.l, pane.focus.cmdb
+0307 7F02 68C2             data  edkey.action.cmdb.end
+0308                       ;-------------------------------------------------------
+0309                       ; Modifier keys
+0310                       ;-------------------------------------------------------
+0311 7F04 0701             byte  key.fctn.3, pane.focus.cmdb
+0312 7F06 68DA             data  edkey.action.cmdb.clear
+0313                       ;-------------------------------------------------------
+0314                       ; Other action keys
+0315                       ;-------------------------------------------------------
+0316 7F08 0F01             byte  key.fctn.9, pane.focus.cmdb
+0317 7F0A 6B1E             data  edkey.action.cmdb.close.dialog
+0318               
+0319 7F0C 0501             byte  key.fctn.plus, pane.focus.cmdb
+0320 7F0E 6702             data  edkey.action.quit
+0321               
+0322 7F10 9A01             byte  key.ctrl.z, pane.focus.cmdb
+0323 7F12 75C0             data  pane.action.colorscheme.cycle
+0324                       ;------------------------------------------------------
+0325                       ; End of list
+0326                       ;-------------------------------------------------------
+0327 7F14 FFFF             data  EOL                           ; EOL
+                   < stevie_b1.asm.91724
 0171                       ;-----------------------------------------------------------------------
 0172                       ; Bank full check
 0173                       ;-----------------------------------------------------------------------
@@ -16219,46 +16214,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0004               *--------------------------------------------------------------
 0005               * Vector table for trampoline functions
 0006               *--------------------------------------------------------------
-0007 7FC0 6F68     vec.1   data  idx.entry.insert      ;   Vectors 1 - 9 reserved
-0008 7FC2 6E18     vec.2   data  idx.entry.update      ;    for index functions.
-0009 7FC4 6EC6     vec.3   data  idx.entry.delete      ;
-0010 7FC6 6E6A     vec.4   data  idx.pointer.get       ;
+0007 7FC0 6F38     vec.1   data  idx.entry.insert      ;   Vectors 1 - 9 reserved
+0008 7FC2 6DE8     vec.2   data  idx.entry.update      ;    for index functions.
+0009 7FC4 6E96     vec.3   data  idx.entry.delete      ;
+0010 7FC6 6E3A     vec.4   data  idx.pointer.get       ;
 0011 7FC8 2026     vec.5   data  cpu.crash             ;
 0012 7FCA 2026     vec.6   data  cpu.crash             ;
 0013 7FCC 2026     vec.7   data  cpu.crash             ;
 0014 7FCE 2026     vec.8   data  cpu.crash             ;
 0015 7FD0 2026     vec.9   data  cpu.crash             ;
-0016 7FD2 700A     vec.10  data  edb.line.pack.fb      ;
-0017 7FD4 7102     vec.11  data  edb.line.unpack.fb    ;
-0018 7FD6 7D72     vec.12  data  edb.clear.sams        ;
+0016 7FD2 6FDA     vec.10  data  edb.line.pack.fb      ;
+0017 7FD4 70D2     vec.11  data  edb.line.unpack.fb    ;
+0018 7FD6 7D42     vec.12  data  edb.clear.sams        ;
 0019 7FD8 2026     vec.13  data  cpu.crash             ;
 0020 7FDA 2026     vec.14  data  cpu.crash             ;
-0021 7FDC 6942     vec.15  data  edkey.action.cmdb.show
+0021 7FDC 6924     vec.15  data  edkey.action.cmdb.show
 0022 7FDE 2026     vec.16  data  cpu.crash             ;
 0023 7FE0 2026     vec.17  data  cpu.crash             ;
 0024 7FE2 2026     vec.18  data  cpu.crash             ;
-0025 7FE4 7CDE     vec.19  data  cmdb.cmd.clear        ;
-0026 7FE6 6D6C     vec.20  data  fb.refresh            ;
-0027 7FE8 7D3C     vec.21  data  fb.vdpdump            ;
-0028 7FEA 6B62     vec.22  data  fb.row2line           ;
+0025 7FE4 7CAE     vec.19  data  cmdb.cmd.clear        ;
+0026 7FE6 6D3C     vec.20  data  fb.refresh            ;
+0027 7FE8 7D0C     vec.21  data  fb.vdpdump            ;
+0028 7FEA 6B32     vec.22  data  fb.row2line           ;
 0029 7FEC 2026     vec.23  data  cpu.crash             ;
 0030 7FEE 2026     vec.24  data  cpu.crash             ;
 0031 7FF0 2026     vec.25  data  cpu.crash             ;
 0032 7FF2 2026     vec.26  data  cpu.crash             ;
-0033 7FF4 79AA     vec.27  data  pane.errline.hide     ;
-0034 7FF6 783C     vec.28  data  pane.cursor.blink     ;
-0035 7FF8 781E     vec.29  data  pane.cursor.hide      ;
-0036 7FFA 7942     vec.30  data  pane.errline.show     ;
-0037 7FFC 764E     vec.31  data  pane.action.colorscheme.load
-0038 7FFE 7804     vec.32  data  pane.action.colorscheme.statlines
-                   < stevie_b1.asm.61843
+0033 7FF4 7992     vec.27  data  pane.errline.hide     ;
+0034 7FF6 780C     vec.28  data  pane.cursor.blink     ;
+0035 7FF8 77EE     vec.29  data  pane.cursor.hide      ;
+0036 7FFA 792A     vec.30  data  pane.errline.show     ;
+0037 7FFC 761E     vec.31  data  pane.action.colorscheme.load
+0038 7FFE 77D4     vec.32  data  pane.action.colorscheme.statlines
+                   < stevie_b1.asm.91724
 0197                                                   ; Vector table bank 1
 0198               *--------------------------------------------------------------
 0199               * Video mode configuration
 0200               *--------------------------------------------------------------
 0201      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
 0202      0004     spfbck  equ   >04                   ; Screen background color.
-0203      346E     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0203      3478     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
 0204      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 0205      0050     colrow  equ   80                    ; Columns per row
 0206      0FC0     pctadr  equ   >0fc0                 ; VDP color table base

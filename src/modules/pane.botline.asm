@@ -32,7 +32,7 @@ pane.botline:
               byte pane.botrow,0
               data txt.keys.block   ; Show block shortcuts
 
-        jmp   pane.botline.show_dirty
+        jmp   pane.botline.show_mode
         ;------------------------------------------------------
         ; Show default message
         ;------------------------------------------------------
@@ -40,26 +40,6 @@ pane.botline.show_keys:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.default ; Show default shortcuts
-        ;------------------------------------------------------
-        ; Show if text was changed in editor buffer
-        ;------------------------------------------------------        
-pane.botline.show_dirty:
-        mov   @edb.dirty,tmp0 
-        jeq   pane.botline.nochange
-        ;------------------------------------------------------
-        ; Show "*" 
-        ;------------------------------------------------------        
-        bl    @putat
-              byte pane.botrow,53   ; x=53
-              data txt.star
-        jmp   pane.botline.show_mode
-        ;------------------------------------------------------
-        ; Show " " 
-        ;------------------------------------------------------        
-pane.botline.nochange:        
-        bl    @putat
-              byte pane.botrow,53   ; x=53
-              data txt.ws1          ; Single white space
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -144,7 +124,7 @@ pane.botline.show_linecol.linelen:
         jlt   !                     ; | column.
         inc   tmp1                  ; /
 
-!       li    tmp0,>2d00            ; \ ASCII 2d '-'
+!       li    tmp0,>2f00            ; \ ASCII '/'
         movb  tmp0,*tmp1+           ; / Add delimiter to string
 
         mov   tmp1,@waux1           ; Backup position in ram buffer

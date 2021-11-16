@@ -55,6 +55,7 @@ edkey.action.cmdb.save:
 
         mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
 
+        li    tmp0,id.file.saveblock
         jmp   edkey.action.cmdb.save.file
         ;-------------------------------------------------------
         ; Save all lines in editor buffer
@@ -62,15 +63,20 @@ edkey.action.cmdb.save:
 edkey.action.cmdb.save.all:
         clr   @parm2                ; First line to save
         mov   @edb.lines,@parm3     ; Last line to save
+
+        li    tmp0,id.file.savefile
         ;-------------------------------------------------------
         ; Save file
         ;-------------------------------------------------------
 edkey.action.cmdb.save.file:
+        mov   tmp0,@parm4           ; Set work mode
+
         bl    @fm.savefile          ; Save DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; |            device/filename string
                                     ; | i  parm2 = First line to save (base 0)
                                     ; | i  parm3 = Last line to save  (base 0)
+                                    ; | i  parm4 = Work mode                                    
                                     ; /
         ;-------------------------------------------------------
         ; Exit

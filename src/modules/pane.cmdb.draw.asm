@@ -7,6 +7,13 @@
 ***************************************************************
 * bl  @pane.cmdb.draw
 *--------------------------------------------------------------
+* INPUT
+* @cmdb.panhead  = Pointer to string with dialog header
+* @cmdb.paninfo  = Pointer to string with info message or >0000 
+*                  if input prompt required
+* @cmdb.panhint  = Pointer to string with hint message
+* @cmdb.pankeys  = Pointer to string with key shortcuts for dialog
+*--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
@@ -43,7 +50,6 @@ pane.cmdb.draw:
                                     ;
                                     ; Add Stevie banner
                                     ;
-
 
         mov   @cmdb.yxtop,@wyx      ; \
         mov   @outparm1,tmp1        ; | Display pane header

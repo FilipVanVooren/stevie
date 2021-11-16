@@ -47,14 +47,14 @@ edb.block.clip:
         ; Generate clipboard device/file name
         ;------------------------------------------------------
         bl    @cpym2m
-              data edb.clip.filename,heap.top,80
+              data tv.clip.fname,heap.top,80
 
         mov   @parm1,tmp0           ; Check if suffix necessary
         jeq   edb.block.clip.save   ; No suffix, skip to save
         ;------------------------------------------------------
         ; Append suffix character to clipboard device/filename
         ;------------------------------------------------------
-        mov   @edb.clip.filename,tmp0
+        mov   @tv.clip.fname,tmp0
         mov   tmp0,tmp1                                               
         srl   tmp0,8                ; Get string length
         ai    tmp0,heap.top         ; Add base
@@ -74,11 +74,16 @@ edb.block.clip.save:
         dec   @parm2                ; /
 
         mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
+ 
+        li    tmp0,id.file.clipblock
+        mov   tmp0,@parm4           ; Save block to clipboard
+
         bl    @fm.savefile          ; Save DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; |            device/filename string
                                     ; | i  parm2 = First line to save (base 0)
                                     ; | i  parm3 = Last line to save  (base 0)
+                                    ; | i  parm4 = Work mode
                                     ; /
         ;------------------------------------------------------
         ; Exit

@@ -47,8 +47,29 @@ pane.topline.file:
         mov   @outparm1,tmp1        ; \ Display padded filename
         bl    @xutst0               ; / 
         ;------------------------------------------------------
+        ; Show if text was changed in editor buffer
+        ;------------------------------------------------------        
+pane.topline.show_dirty:
+        mov   @edb.dirty,tmp0 
+        jeq   pane.topline.nochange
+        ;------------------------------------------------------
+        ; Show "*" 
+        ;------------------------------------------------------        
+        bl    @putat
+              byte 0,79             ; y=0, x=79
+              data txt.star
+        jmp   pane.topline.showmarkers
+        ;------------------------------------------------------
+        ; Show " " 
+        ;------------------------------------------------------        
+pane.topline.nochange:        
+        bl    @putat
+              byte 0,79             ; y=0, x=79
+              data txt.ws1          ; Single white space        
+        ;------------------------------------------------------
         ; Show M1 marker
         ;------------------------------------------------------
+pane.topline.showmarkers:        
         mov   @edb.block.m1,tmp0    ; \  
         inc   tmp0                  ; | Exit early if M1 unset (>ffff)
         jeq   pane.topline.exit     ; /

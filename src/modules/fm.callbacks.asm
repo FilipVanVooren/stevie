@@ -23,7 +23,7 @@ fm.loadsave.cb.indicator1:
         ; Check file operation mode
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,52
+              byte pane.botrow,0,32,55
               data EOL              ; Clear hint on bottom row
 
 
@@ -36,38 +36,88 @@ fm.loadsave.cb.indicator1:
                                     ; \ i  @parm1 = Color combination
                                     ; / 
 
-        mov   *stack+,@parm1        ; Pop @parm1                                    
+        mov   *stack+,@parm1        ; Pop @parm1
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
-
         ci    tmp0,fh.fopmode.writefile
-        jeq   fm.loadsave.cb.indicator1.saving
+        jeq   fm.loadsave.cb.indicator1.check.saving
                                     ; Saving file?
 
         ci    tmp0,fh.fopmode.readfile
         jeq   fm.loadsave.cb.indicator1.loading
                                     ; Loading file?
         ;------------------------------------------------------
+        ; Check saving mode
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.check.saving:
+        li    tmp0,id.file.savefile
+        c     @fh.workmode,tmp0     ; Saving all of file
+        jeq   fm.loadsave.cb.indicator1.savefile
+
+        li    tmp0,id.file.saveblock
+        c     @fh.workmode,tmp0     ; Saving code block M1-M2 ?
+        jeq   fm.loadsave.cb.indicator1.saveblock
+
+        li    tmp0,id.file.printfile
+        c     @fh.workmode,tmp0     ; Printing all of file
+        jeq   fm.loadsave.cb.indicator1.printfile
+
+        li    tmp0,id.file.printblock
+        c     @fh.workmode,tmp0     ; Printing code block M1-M2 ?
+        jeq   fm.loadsave.cb.indicator1.printblock
+
+        li    tmp0,id.file.clipblock
+        c     @fh.workmode,tmp0     ; Saving block to clipboard ?
+        jeq   fm.loadsave.cb.indicator1.clipblock
+
+        ;------------------------------------------------------
+        ; Unknown save mode. Stop here
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.panic:
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system                                    
+        ;------------------------------------------------------
         ; Display Saving....
         ;------------------------------------------------------
-fm.loadsave.cb.indicator1.saving: 
-        li    tmp0,id.dialog.saveblock
-        c     @cmdb.dialog,tmp0     ; Saving code block M1-M2 ?
-        jeq   fm.loadsave.cb.indicator1.saveblock
-        
+fm.loadsave.cb.indicator1.savefile:
         bl    @putat
               byte pane.botrow,0
-              data txt.saving       ; Display "Saving...."              
+              data txt.saving       ; Display "Saving...."
         jmp   fm.loadsave.cb.indicator1.filename
         ;------------------------------------------------------
-        ; Display Saving block to DV80 file....
+        ; Display Saving block to file....
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.saveblock:        
         bl    @putat
               byte pane.botrow,0
-              data txt.block.save   ; Display "Saving block...."              
+              data txt.block.save   ; Display "Saving block...."
 
         jmp   fm.loadsave.cb.indicator1.exit
+        ;------------------------------------------------------
+        ; Display Printing....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.printfile:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.block.print  ; Display "Printing...."
+        jmp   fm.loadsave.cb.indicator1.exit
+        ;------------------------------------------------------
+        ; Display Printing block....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.printblock:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.block.print  ; Display "Printing block...."
+        jmp   fm.loadsave.cb.indicator1.exit
+        ;------------------------------------------------------
+        ; Display Copying to clipboard....
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.clipblock:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.block.clip  ; Display "Copying to clipboard...."
+        jmp   fm.loadsave.cb.indicator1.exit
+
         ;------------------------------------------------------
         ; Display Loading....
         ;------------------------------------------------------
@@ -255,12 +305,14 @@ fm.loadsave.cb.fioerr:
         dect  stack  
         mov   tmp3,*stack           ; Push tmp3
         dect  stack                          
+        mov   tmp4,*stack           ; Push tmp4
+        dect  stack                          
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
         ; Build I/O error message
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,50
+              byte pane.botrow,0,32,55
               data EOL              ; Erase loading/saving indicator
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
@@ -271,8 +323,8 @@ fm.loadsave.cb.fioerr:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.mgs1:        
         bl    @cpym2m               
-              data txt.ioerr.load+1
-              data tv.error.msg+1
+              data txt.ioerr.load
+              data tv.error.msg
               data 34               ; Error message
         jmp   fm.loadsave.cb.fioerr.mgs3
         ;------------------------------------------------------        
@@ -280,24 +332,30 @@ fm.loadsave.cb.fioerr.mgs1:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.mgs2:                
         bl    @cpym2m               
-              data txt.ioerr.save+1
-              data tv.error.msg+1
+              data txt.ioerr.save
+              data tv.error.msg
               data 34               ; Error message
         ;------------------------------------------------------
         ; Add filename to error message
         ;------------------------------------------------------        
 fm.loadsave.cb.fioerr.mgs3:
         mov   @fh.fname.ptr,tmp0
-        movb  *tmp0,tmp2            ; Get length byte
+        movb  *tmp0,tmp2            ; Get length byte filename
         srl   tmp2,8                ; Right align
 
-        mov   tmp2,tmp3             ; \
-        ai    tmp3,33               ; |  Calculate length byte of error message
-        sla   tmp3,8                ; |  and write to string prefix  
-        movb  tmp3,@tv.error.msg    ; / 
+        movb  @tv.error.msg,tmp3    ; Get length byte error text
+        srl   tmp3,8                ; Right align
+        mov   tmp3,tmp4
 
-        inc   tmp0                  ; Skip length byte
-        li    tmp1,tv.error.msg+33  ; RAM destination address
+        a     tmp2,tmp3             ; \ 
+        sla   tmp3,8                ; | Calculate length of error message                     
+        movb  tmp3,@tv.error.msg    ; / and write to length-prefix byte
+
+        inc   tmp0                  ; RAM source address (skip length byte)
+
+        li    tmp1,tv.error.msg     ; \ 
+        a     tmp4,tmp1             ; | RAM destination address
+        inc   tmp1                  ; /
 
         bl    @xpym2m               ; \ Copy CPU memory to CPU memory
                                     ; | i  tmp0 = ROM/RAM source
@@ -332,6 +390,7 @@ fm.loadsave.cb.fioerr.mgs3:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.exit:
         mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,tmp3          ; Pop tmp4        
         mov   *stack+,tmp3          ; Pop tmp3        
         mov   *stack+,tmp2          ; Pop tmp2        
         mov   *stack+,tmp1          ; Pop tmp1
@@ -357,7 +416,7 @@ fm.load.cb.memfull:
         ; Prepare for error message
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,50
+              byte pane.botrow,0,32,55
               data EOL              ; Erase loading indicator
         ;------------------------------------------------------
         ; Failed loading file
@@ -365,7 +424,7 @@ fm.load.cb.memfull:
         bl    @cpym2m               
               data txt.memfull.load
               data tv.error.msg
-              data 66               ; Error message
+              data 46               ; Error message
         ;------------------------------------------------------
         ; Display memory full error message
         ;------------------------------------------------------

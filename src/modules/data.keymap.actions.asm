@@ -106,9 +106,6 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Clipboards
         ;-------------------------------------------------------
-        byte  key.ctrl.0, pane.focus.fb
-        data  edkey.action.fb.clip.save.0
-
         byte  key.ctrl.1, pane.focus.fb
         data  edkey.action.fb.clip.save.1
 
@@ -123,18 +120,6 @@ keymap_actions.editor:
 
         byte  key.ctrl.5, pane.focus.fb
         data  edkey.action.fb.clip.save.5
-
-        byte  key.ctrl.6, pane.focus.fb
-        data  edkey.action.fb.clip.save.6
-
-        byte  key.ctrl.7, pane.focus.fb
-        data  edkey.action.fb.clip.save.7
-
-        byte  key.ctrl.8, pane.focus.fb
-        data  edkey.action.fb.clip.save.8
-
-        byte  key.ctrl.9, pane.focus.fb
-        data  edkey.action.fb.clip.save.9
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
@@ -252,9 +237,6 @@ keymap_actions.cmdb:
         byte  key.fctn.5, id.dialog.clipboard
         data  edkey.action.cmdb.fastmode.toggle
 
-        byte  key.num.0, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.0
-
         byte  key.num.1, id.dialog.clipboard
         data  edkey.action.cmdb.clip.1
 
@@ -269,19 +251,6 @@ keymap_actions.cmdb:
 
         byte  key.num.5, id.dialog.clipboard
         data  edkey.action.cmdb.clip.5
-
-        byte  key.num.6, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.6
-
-        byte  key.num.7, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.7
-
-        byte  key.num.8, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.8
-
-        byte  key.num.9, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.9
-
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

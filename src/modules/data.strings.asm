@@ -12,11 +12,14 @@ txt.insert         #string 'INS'
 txt.star           #string '*'
 txt.loading        #string 'Loading...'
 txt.saving         #string 'Saving....'
+txt.printing       #string 'Printing.....'
 txt.block.del      #string 'Deleting block....'
 txt.block.copy     #string 'Copying block....'
 txt.block.move     #string 'Moving block....'
 txt.block.save     #string 'Saving block to file....'
-txt.clearmem       #string "Clearing memory...."
+txt.block.clip     #string 'Copying to clipboard....'
+txt.block.print    #string 'Printing block....'
+txt.clearmem       #string 'Clearing memory....'
 txt.fastmode       #string 'Fastmode'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
@@ -25,7 +28,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 txt.keys.default   #string 'F9-Menu'
-txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^[0-9]Clipboard'
+txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'
@@ -47,7 +50,6 @@ txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
 txt.keymarker      byte 1,28
 
-txt.clipboard      #string 'DSK8.CLIP'
 txt.ws1            #string ' '
 txt.ws2            #string '  '
 txt.ws3            #string '   '
@@ -59,11 +61,12 @@ txt.filetype.none  equ txt.ws4
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------
-txt.ioerr.load     #string 'I/O error. Failed loading file: '
-txt.ioerr.save     #string 'I/O error. Failed saving file:  '
-txt.memfull.load   #string 'Index memory full. Could not fully load file into editor buffer.'
-txt.io.nofile      #string 'I/O error. No filename specified.'
-txt.block.inside   #string 'Error. Copy/Move target must be outside block M1-M2.'
+txt.ioerr.load     #string 'Failed loading file: '
+txt.ioerr.save     #string 'Failed saving file: '
+txt.ioerr.print    #string 'Failed printing file:'
+txt.io.nofile      #string 'No filename specified.'
+txt.memfull.load   #string 'Index full. File too large for editor buffer.'
+txt.block.inside   #string 'Copy/Move target must be outside M1-M2 range.'
 
 ;--------------------------------------------------------------
 ; Strings for command buffer

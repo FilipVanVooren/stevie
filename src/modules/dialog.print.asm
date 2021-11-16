@@ -38,13 +38,11 @@ dialog.print:
         ;-------------------------------------------------------
         ; Setup dialog title
         ;-------------------------------------------------------
-        bl    @cmdb.cmd.clear       ; Clear current CMDB command
-
         li    tmp0,id.dialog.printblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.print2  ; Title "Print block to file"                
 
-        jmp   dialog.save.header
+        jmp   dialog.print.header
         ;-------------------------------------------------------
         ; Default dialog
         ;-------------------------------------------------------
@@ -68,6 +66,11 @@ dialog.print.header:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
+        ;-------------------------------------------------------
+        ; Setup printer name
+        ;-------------------------------------------------------
+        bl    @cpym2m
+              data tv.printer.fname+1,cmdb.cmd,80
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------

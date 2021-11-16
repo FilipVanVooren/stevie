@@ -13,5 +13,9 @@
         copy  "tv.asm"                 ; Main editor configuration        
         copy  "tv.utils.asm"           ; General purpose utility functions
         copy  "mem.asm"                ; Memory Management (SAMS)
-        copy  "data.constants.asm"     ; Data Constants
-        copy  "data.strings.asm"       ; Data segment - Strings
+        ;------------------------------------------------------
+        ; Program data
+        ;------------------------------------------------------
+        copy  "data.constants.asm"     ; Constants
+        copy  "data.strings.asm"       ; Strings
+        copy  "data.defaults.asm"      ; Default values (devices, ...)

@@ -112,16 +112,19 @@ tv.colorize.reset         equ  >9900   ; Colorization off
 *--------------------------------------------------------------
 * Suffix characters for clipboards
 *--------------------------------------------------------------
-clip0                     equ  >3000   ; '0'
 clip1                     equ  >3100   ; '1'
 clip2                     equ  >3200   ; '2'
 clip3                     equ  >3300   ; '3'
 clip4                     equ  >3400   ; '4'
 clip5                     equ  >3500   ; '5'
-clip6                     equ  >3600   ; '6'
-clip7                     equ  >3700   ; '7'
-clip8                     equ  >3800   ; '8'
-clip9                     equ  >3900   ; '9'
+*--------------------------------------------------------------
+* File work mode
+*--------------------------------------------------------------
+id.file.savefile          equ  1       ; Save file 
+id.file.saveblock         equ  2       ; Save block to file
+id.file.clipblock         equ  3       ; Save block to clipboard
+id.file.printfile         equ  4       ; Print file
+id.file.printblock        equ  5       ; Print block
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -263,13 +266,14 @@ fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
 fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
-fh.kilobytes.prev equ  fh.struct + 90  ; Kilobytes processed (previous)
-fh.line           equ  fh.struct + 92  ; Editor buffer line currently processing
-fh.temp1          equ  fh.struct + 94  ; Temporary variable 1
-fh.temp2          equ  fh.struct + 96  ; Temporary variable 2
-fh.temp3          equ  fh.struct + 98  ; Temporary variable 3
-fh.membuffer      equ  fh.struct +100  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +180  ; End of structure
+fh.workmode       equ  fh.struct + 90  ; Working mode (used in callbacks)   
+fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
+fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
+fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
+fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
+fh.temp3          equ  fh.struct +100  ; Temporary variable 3
+fh.membuffer      equ  fh.struct +102  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +182  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
@@ -293,8 +297,7 @@ edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
 edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
                                        ; for filename, but not always used.
-edb.clip.filename equ  edb.struct + 106; 80 characters Clipboard device/filename                                       
-edb.free          equ  edb.struct + 186; End of structure
+edb.free          equ  edb.struct + 106; End of structure
 *--------------------------------------------------------------
 * Index structure                     @>a600-a6ff   (256 bytes)
 *--------------------------------------------------------------
@@ -352,10 +355,12 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* Frame buffer                        @>d000-dfff  (4096 bytes)
+* Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
 *--------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (80x30)
 fb.size           equ  80*30           ; Frame buffer size                                     
+tv.printer.fname  equ  >d960           ; Default printer   (80 char)
+tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
 *--------------------------------------------------------------
 * Command buffer history              @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------

@@ -42,7 +42,10 @@ tv.init:
         ; Set defaults
         ;------------------------------------------------------
         bl    @cpym2m
-              data txt.clipboard,edb.clip.filename,10
+              data def.printer.fname,tv.printer.fname,8
+
+        bl    @cpym2m
+              data def.clip.fname,tv.clip.fname,9
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

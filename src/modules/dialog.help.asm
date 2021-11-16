@@ -145,7 +145,7 @@ dialog.help.help.part1:
 dialog.help.help.part2:
         #string '------------- File ----------------'
         #string 'Ctrl i   ^i   Insert file at cursor'
-        #string 'Ctrl c   ^c   Insert clipboard 0-9'
+        #string 'Ctrl c   ^c   Insert clipboard 1-5'
         #string 'Ctrl o   ^o   Open file'
         #string 'Ctrl p   ^p   Print file'
         #string 'Ctrl s   ^s   Save file'
@@ -158,7 +158,7 @@ dialog.help.help.part2:
         #string 'Ctrl g   ^g   Goto marker M1'
         #string 'Ctrl m   ^m   Move block'
         #string 'Ctrl s   ^s   Save block to file'
-        #string 'Ctrl 0..9     Save to clipboard 0-9'
+        #string 'Ctrl ^1..^5   Save to clipboard 1-5'
         #string ' '
         #string '------------- Modifiers -----------'
         #string 'Fctn 1        Delete character'

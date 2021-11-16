@@ -4,10 +4,6 @@
 *---------------------------------------------------------------
 * Insert file from clipboard
 *---------------------------------------------------------------
-edkey.action.cmdb.clip.0
-        li    tmp0,clip0
-        jmp   edkey.action.cmdb.clip
-
 edkey.action.cmdb.clip.1
         li    tmp0,clip1
         jmp   edkey.action.cmdb.clip
@@ -28,21 +24,6 @@ edkey.action.cmdb.clip.5
         li    tmp0,clip5
         jmp   edkey.action.cmdb.clip
 
-edkey.action.cmdb.clip.6
-        li    tmp0,clip6
-        jmp   edkey.action.cmdb.clip
-
-edkey.action.cmdb.clip.7
-        li    tmp0,clip7
-        jmp   edkey.action.cmdb.clip
-
-edkey.action.cmdb.clip.8
-        li    tmp0,clip8
-        jmp   edkey.action.cmdb.clip
-
-edkey.action.cmdb.clip.9
-        li    tmp0,clip9
-        jmp   edkey.action.cmdb.clip
 
 edkey.action.cmdb.clip:
         mov   tmp0,@parm1           ; Get clipboard suffix 0-9
@@ -51,11 +32,11 @@ edkey.action.cmdb.clip:
               data cmdb.cmdall,>00,80
 
         bl    @cpym2m
-              data edb.clip.filename,cmdb.cmdall,80
+              data tv.clip.fname,cmdb.cmdall,80
         ;------------------------------------------------------
         ; Append suffix character to clipboard device/filename
         ;------------------------------------------------------
-        mov   @edb.clip.filename,tmp0
+        mov   @tv.clip.fname,tmp0
         mov   tmp0,tmp1                                               
         srl   tmp0,8                ; Get string length
         ai    tmp0,cmdb.cmdall      ; Add base

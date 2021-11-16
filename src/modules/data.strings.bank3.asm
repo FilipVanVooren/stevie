@@ -112,8 +112,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      #string 'New   Open/Insert/Clipboard   Save   Print'
-pos.info.file      byte 0,6,11,18,30,37,>ff
+txt.info.file      #string 'New   Open   Insert   Clipboard   Save   Print'
+pos.info.file      byte 0,6,13,22,34,41,>ff
 txt.hint.file      #string ' '
 txt.keys.file      #string 'F9-Back'
 

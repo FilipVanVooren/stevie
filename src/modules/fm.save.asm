@@ -12,6 +12,12 @@
 *          device and filename
 * parm2  = First line to save (base 0)
 * parm3  = Last line to save  (base 0)
+* parm4  = Work mode
+*            1 = Save file
+*            2 = Save block to file
+*            3 = Save block to clipboard
+*            4 = Print file
+*            5 = Print block
 *--------------------------------------------------------------- 
 * OUTPUT
 * none
@@ -49,6 +55,7 @@ fm.savefile:
         ;-------------------------------------------------------
 !       mov   @parm2,@parm6         ; First line to save
         mov   @parm3,@parm7         ; Last line to save
+        mov   @parm4,@parm8         ; Work mode
 
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
@@ -78,6 +85,7 @@ fm.savefile:
                                     ; |             "File I/O error"
                                     ; | i  @parm6 = First line to save (base 0)
                                     ; | i  @parm7 = Last line to save  (base 0)
+                                    ; | i  @parm8 = Working mode
                                     ; /
 
         clr   @edb.dirty            ; Editor buffer content replaced, not

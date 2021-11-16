@@ -42,11 +42,14 @@ main:
         bl    @cpu.crash            ; Should never get here
 
         copy  "runlib.asm"
-        copy  "data.constants.asm"  ; Need some constants for SAMS layout
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank7.asm" ; Stubs for functions in other banks      
+        copy  "rom.stubs.bank7.asm" ; Stubs for functions in other banks  
+        ;-----------------------------------------------------------------------
+        ; Program data
+        ;----------------------------------------------------------------------- 
+        copy  "data.constants.asm"  ; Need some constants for SAMS layout
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 

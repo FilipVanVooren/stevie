@@ -15,6 +15,7 @@
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = First line to save (base 0)
 * parm7 = Last line to save  (base 0)
+* parm8 = Work mode
 *--------------------------------------------------------------
 * OUTPUT
 *--------------------------------------------------------------
@@ -51,6 +52,7 @@ fh.file.write.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.records    ; Set records counter
+        mov   @parm8,@fh.workmode   ; Work mode (used in callbacks)
 
         clr   @fh.temp1             ; Not used
         clr   @fh.temp2             ; Not used
