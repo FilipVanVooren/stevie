@@ -63,7 +63,7 @@ txt.filetype.none  equ txt.ws4
 ;--------------------------------------------------------------
 txt.ioerr.load     #string 'Failed loading file: '
 txt.ioerr.save     #string 'Failed saving file: '
-txt.ioerr.print    #string 'Failed printing file:'
+txt.ioerr.print    #string 'Failed printing to device: '
 txt.io.nofile      #string 'No filename specified.'
 txt.memfull.load   #string 'Index full. File too large for editor buffer.'
 txt.block.inside   #string 'Copy/Move target must be outside M1-M2 range.'

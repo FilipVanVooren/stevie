@@ -52,6 +52,9 @@ fm.insertfile:
         li    tmp0,fm.load.cb.memfull
         mov   tmp0,@parm6           ; Register callback 5
 
+        li    tmp0,id.file.loadblock
+        mov   tmp0,@parm8           ; Work mode
+
         bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
@@ -66,7 +69,8 @@ fm.insertfile:
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
                                     ; | i  @parm7 = Line to insert file at
-                                    ; /             or >ffff for new file                                    
+                                    ; |             or >ffff for new file 
+                                    ; / i  @parm8 = Work mode                                                                          
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

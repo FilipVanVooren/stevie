@@ -51,10 +51,10 @@ txt.head.clipboard byte 42,1,1
                    text ' Insert snippet from clipboard at line '
                    byte 1
 txt.info.clipboard #string 'Clipboard?'
-txt.hint.clipboard #string 'Press 0 to 9 for inserting snippet from corresponding clipboard.'
+txt.hint.clipboard #string 'Press 1 to 5 for inserting snippet from corresponding clipboard.'
 
-txt.keys.clipboard  #string 'F9-Back  F5-Fastmode  0..9-Clipboard'
-txt.keys.clipboard2 #string 'F9-Back  *F5-Fastmode  0..9-Clipboard'
+txt.keys.clipboard  #string 'F9-Back  F5-Fastmode  1..5-Clipboard'
+txt.keys.clipboard2 #string 'F9-Back  *F5-Fastmode  1..5-Clipboard'
 
 
 ;--------------------------------------------------------------

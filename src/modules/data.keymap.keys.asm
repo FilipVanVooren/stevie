@@ -129,6 +129,7 @@ key.ctrl.dot    equ >9b             ; ctrl + .
 key.ctrl.comma  equ >80             ; ctrl + ,
 key.ctrl.plus   equ >9d             ; ctrl + +
 key.ctrl.slash  equ >bb             ; ctrl + /
+key.ctrl.space  equ >f0             ; ctrl + SPACE
 *---------------------------------------------------------------
 * Special keys
 *---------------------------------------------------------------

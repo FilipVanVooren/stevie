@@ -314,31 +314,51 @@ fm.loadsave.cb.fioerr:
         bl    @hchar
               byte pane.botrow,0,32,55
               data EOL              ; Erase loading/saving indicator
+        ;------------------------------------------------------
+        ; Determine message to display
+        ;------------------------------------------------------
+        mov   @fh.workmode,tmp0
+        ci    tmp0,id.file.printfile
+        jeq   fm.loadsave.cb.fioerr.print
+        ci    tmp0,id.file.printblock
+        jeq   fm.loadsave.cb.fioerr.print
 
-        mov   @fh.fopmode,tmp0      ; Check file operation mode
-        ci    tmp0,fh.fopmode.writefile
-        jeq   fm.loadsave.cb.fioerr.mgs2
+        ci    tmp0,id.file.savefile
+        jeq   fm.loadsave.cb.fioerr.save
+        ci    tmp0,id.file.saveblock
+        jeq   fm.loadsave.cb.fioerr.save
+        ci    tmp0,id.file.clipblock
+        jeq   fm.loadsave.cb.fioerr.save
         ;------------------------------------------------------
         ; Failed loading file
         ;------------------------------------------------------
-fm.loadsave.cb.fioerr.mgs1:        
+fm.loadsave.cb.fioerr.load:
         bl    @cpym2m               
               data txt.ioerr.load
               data tv.error.msg
-              data 34               ; Error message
-        jmp   fm.loadsave.cb.fioerr.mgs3
+              data 30               ; Error message
+        jmp   fm.loadsave.cb.fioerr.addmsg
         ;------------------------------------------------------        
         ; Failed saving file
         ;------------------------------------------------------
-fm.loadsave.cb.fioerr.mgs2:                
+fm.loadsave.cb.fioerr.save:                
         bl    @cpym2m               
               data txt.ioerr.save
               data tv.error.msg
-              data 34               ; Error message
+              data 30               ; Error message
+        jmp   fm.loadsave.cb.fioerr.addmsg
+        ;------------------------------------------------------        
+        ; Failed saving file
+        ;------------------------------------------------------
+fm.loadsave.cb.fioerr.print:
+        bl    @cpym2m               
+              data txt.ioerr.print
+              data tv.error.msg
+              data 30               ; Error message
         ;------------------------------------------------------
         ; Add filename to error message
         ;------------------------------------------------------        
-fm.loadsave.cb.fioerr.mgs3:
+fm.loadsave.cb.fioerr.addmsg:
         mov   @fh.fname.ptr,tmp0
         movb  *tmp0,tmp2            ; Get length byte filename
         srl   tmp2,8                ; Right align
@@ -364,10 +384,9 @@ fm.loadsave.cb.fioerr.mgs3:
         ;------------------------------------------------------
         ; Reset filename to "new file" 
         ;------------------------------------------------------
-        mov   @fh.fopmode,tmp0      ; Check file operation mode
-
-        ci    tmp0,fh.fopmode.readfile
-        jne   !                     ; Only when reading file
+        mov   @fh.workmode,tmp0     ; Get working mode
+        ci    tmp0,id.file.loadfile
+        jne   !                     ; Only when reading full file
 
         li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr

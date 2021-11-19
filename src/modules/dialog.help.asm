@@ -152,7 +152,7 @@ dialog.help.help.part2:
         #string 'Ctrl ,   ^,   Load prev file'
         #string 'Ctrl .   ^.   Load next file'
         #string '------------- Block mode ----------'
-        #string 'Ctrl a   ^a   Set M1/M2 marker'
+        #string 'Ctrl SPACE    Set M1/M2 marker'
         #string 'Ctrl d   ^d   Delete block'
         #string 'Ctrl c   ^c   Copy block'
         #string 'Ctrl g   ^g   Goto marker M1'

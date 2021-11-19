@@ -1,22 +1,22 @@
-* FILE......: edkey.cmdb.fíle.ins.asm
-* Purpose...: Insert file from command buffer pane.
+* FILE......: edkey.cmdb.fíle.save.asm
+* Purpose...: File related actions in command buffer pane.
 
 *---------------------------------------------------------------
-* Insert file
+* Print file
 *---------------------------------------------------------------
-edkey.action.cmdb.ins:
+edkey.action.cmdb.print:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
-        ; Insert file at current line in editor buffer
+        ; Print file
         ;-------------------------------------------------------
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
         bl    @cmdb.cmd.getlength   ; Get length of current command
         mov   @outparm1,tmp0        ; Length == 0 ?
-        jne   !                     ; No, prepare for load
+        jne   !                     ; No, prepare for save
         ;-------------------------------------------------------
         ; No filename specified
         ;-------------------------------------------------------    
@@ -26,7 +26,7 @@ edkey.action.cmdb.ins:
               byte pane.botrow-1,0
               data txt.io.nofile
 
-        jmp   edkey.action.cmdb.ins.exit
+        jmp   edkey.action.cmdb.print.exit
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -34,7 +34,7 @@ edkey.action.cmdb.ins:
         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
 
         bl    @cpym2m
-              data cmdb.cmdall,heap.top,80
+              data cmdb.cmdlen,heap.top,80
                                     ; Copy filename from command line to buffer
         ;-------------------------------------------------------
         ; Pass filename as parm1
@@ -42,46 +42,46 @@ edkey.action.cmdb.ins:
         li    tmp0,heap.top         ; 1st line in heap
         mov   tmp0,@parm1        
         ;-------------------------------------------------------
-        ; Insert file at line
+        ; Print all lines in editor buffer?
         ;-------------------------------------------------------
-edkey.action.cmdb.ins.file:
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?        
+        jeq   edkey.action.cmdb.print.all
+                                    ; Yes, so print all lines in editor buffer
         ;-------------------------------------------------------
-        ; Get line
+        ; Only print code block M1-M2
         ;-------------------------------------------------------
-        mov   @fb.row,@parm1 
-        bl    @fb.row2line          ; Row to editor line
-                                    ; \ i @fb.topline = Top line in frame buffer 
-                                    ; | i @parm1      = Row in frame buffer
-                                    ; / o @outparm1   = Matching line in EB
+        mov   @edb.block.m1,@parm2  ; \ First line to save (base 0)
+        dec   @parm2                ; /
 
-        mov   @outparm1,@parm2
+        mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
+
+        li    tmp0,id.file.printblock
+        jmp   edkey.action.cmdb.print.file
         ;-------------------------------------------------------
-        ; Get device/filename
+        ; Print all lines in editor buffer
         ;-------------------------------------------------------
-        li    tmp0,heap.top         ; 1st line in heap
-        mov   tmp0,@parm1
+edkey.action.cmdb.print.all:
+        clr   @parm2                ; First line to save
+        mov   @edb.lines,@parm3     ; Last line to save
+
+        li    tmp0,id.file.printfile
         ;-------------------------------------------------------
-        ; Insert file
+        ; Print file
         ;-------------------------------------------------------
-        bl    @fm.insertfile        ; Insert DV80 file
+edkey.action.cmdb.Print.file:
+        mov   tmp0,@parm4           ; Set work mode
+
+        bl    @fm.savefile          ; Save DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; |            device/filename string
-                                    ; | i  parm2 = Line number to load file at
-        ;-------------------------------------------------------
-        ; Refresh frame buffer
-        ;-------------------------------------------------------
-        seto  @fb.dirty             ; Refresh frame buffer
-        seto  @edb.dirty            ; Editor buffer dirty
-
-        mov   @fb.topline,@parm1
-        bl    @fb.refresh           ; \ Refresh frame buffer
-                                    ; | i  @parm1 = Line to start with
-                                    ; /             (becomes @fb.topline)
-
+                                    ; | i  parm2 = First line to save (base 0)
+                                    ; | i  parm3 = Last line to save  (base 0)
+                                    ; | i  parm4 = Work mode                                    
+                                    ; /
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.ins.exit:
+edkey.action.cmdb.print.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
         b     @edkey.goto.fb.toprow ; \ Position cursor and exit

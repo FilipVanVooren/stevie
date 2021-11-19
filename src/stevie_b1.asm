@@ -95,6 +95,7 @@ main:
         copy  "edkey.cmdb.file.ins.asm"  ; Insert file
         copy  "edkey.cmdb.file.clip.asm" ; Insert file from clipboard
         copy  "edkey.cmdb.file.save.asm" ; Save file
+        copy  "edkey.cmdb.file.print.asm"; Print file        
         copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)

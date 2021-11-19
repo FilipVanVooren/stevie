@@ -5,7 +5,7 @@
 *         Texas Instruments TI-99/4a Home Computer.
 *
 *              (c)2018-2021 // Filip van Vooren
-***************************************************************
+*************************************ste**************************
 * File: stevie_b0.asm               ; Version %%build_date%%
 *
 * Bank 0 "Jill"

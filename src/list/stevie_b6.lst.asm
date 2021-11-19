@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b6.asm.104685
+     **** ****     > stevie_b6.asm.23090
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b6.asm               ; Version 211116-2215570
+0009               * File: stevie_b6.asm               ; Version 211119-1551590
 0010               *
 0011               * Bank 6 "Jenifer"
 0012               * VDP utility functions
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -464,7 +464,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0372               * Heap                                @>f000-ffff  (4096 bytes)
 0373               *--------------------------------------------------------------
 0374      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -603,7 +603,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0134               *---------------------------------------------------------------
 0135      000D     key.enter     equ >0d               ; enter
 0136      0020     key.space     equ >20               ; space
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -663,7 +663,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1439,7 +1439,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6230 18               byte  24
-0270 6231   42             text  'Build-ID  211116-2215570'
+0270 6231   42             text  'Build-ID  211119-1551590'
      6232 7569     
      6234 6C64     
      6236 2D49     
@@ -1447,10 +1447,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      623A 2032     
      623C 3131     
      623E 3131     
-     6240 362D     
-     6242 3232     
-     6244 3135     
-     6246 3537     
+     6240 392D     
+     6242 3135     
+     6244 3531     
+     6246 3539     
      6248 30       
 0271                       even
 0272               
@@ -5844,7 +5844,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70E2 0040     
 0370 70E4 0460  28         b     @main                 ; Give control to main program
      70E6 6046     
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0042                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6659,13 +6659,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043                       ;------------------------------------------------------
 0044 73A4 06A0  32         bl    @cpym2m
      73A6 24EE     
-0045 73A8 37D6                   data def.printer.fname,tv.printer.fname,8
+0045 73A8 37DC                   data def.printer.fname,tv.printer.fname,8
      73AA D960     
      73AC 0008     
 0046               
 0047 73AE 06A0  32         bl    @cpym2m
      73B0 24EE     
-0048 73B2 37E0                   data def.clip.fname,tv.clip.fname,9
+0048 73B2 37E6                   data def.clip.fname,tv.clip.fname,9
      73B4 D9B0     
      73B6 0009     
 0049                       ;-------------------------------------------------------
@@ -7652,8 +7652,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0188                       even
 0189               
 0190               txt.ioerr.print
-0191 7780 15               byte  21
-0192 7781   46             text  'Failed printing file:'
+0191 7780 1B               byte  27
+0192 7781   46             text  'Failed printing to device: '
      7782 6169     
      7784 6C65     
      7786 6420     
@@ -7661,79 +7661,82 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      778A 696E     
      778C 7469     
      778E 6E67     
-     7790 2066     
-     7792 696C     
-     7794 653A     
+     7790 2074     
+     7792 6F20     
+     7794 6465     
+     7796 7669     
+     7798 6365     
+     779A 3A20     
 0193                       even
 0194               
 0195               txt.io.nofile
-0196 7796 16               byte  22
-0197 7797   4E             text  'No filename specified.'
-     7798 6F20     
-     779A 6669     
-     779C 6C65     
-     779E 6E61     
-     77A0 6D65     
-     77A2 2073     
-     77A4 7065     
-     77A6 6369     
-     77A8 6669     
-     77AA 6564     
-     77AC 2E       
+0196 779C 16               byte  22
+0197 779D   4E             text  'No filename specified.'
+     779E 6F20     
+     77A0 6669     
+     77A2 6C65     
+     77A4 6E61     
+     77A6 6D65     
+     77A8 2073     
+     77AA 7065     
+     77AC 6369     
+     77AE 6669     
+     77B0 6564     
+     77B2 2E       
 0198                       even
 0199               
 0200               txt.memfull.load
-0201 77AE 2D               byte  45
-0202 77AF   49             text  'Index full. File too large for editor buffer.'
-     77B0 6E64     
-     77B2 6578     
-     77B4 2066     
-     77B6 756C     
-     77B8 6C2E     
-     77BA 2046     
-     77BC 696C     
-     77BE 6520     
-     77C0 746F     
-     77C2 6F20     
-     77C4 6C61     
-     77C6 7267     
-     77C8 6520     
-     77CA 666F     
-     77CC 7220     
-     77CE 6564     
-     77D0 6974     
-     77D2 6F72     
-     77D4 2062     
-     77D6 7566     
-     77D8 6665     
-     77DA 722E     
+0201 77B4 2D               byte  45
+0202 77B5   49             text  'Index full. File too large for editor buffer.'
+     77B6 6E64     
+     77B8 6578     
+     77BA 2066     
+     77BC 756C     
+     77BE 6C2E     
+     77C0 2046     
+     77C2 696C     
+     77C4 6520     
+     77C6 746F     
+     77C8 6F20     
+     77CA 6C61     
+     77CC 7267     
+     77CE 6520     
+     77D0 666F     
+     77D2 7220     
+     77D4 6564     
+     77D6 6974     
+     77D8 6F72     
+     77DA 2062     
+     77DC 7566     
+     77DE 6665     
+     77E0 722E     
 0203                       even
 0204               
 0205               txt.block.inside
-0206 77DC 2D               byte  45
-0207 77DD   43             text  'Copy/Move target must be outside M1-M2 range.'
-     77DE 6F70     
-     77E0 792F     
-     77E2 4D6F     
-     77E4 7665     
-     77E6 2074     
-     77E8 6172     
-     77EA 6765     
-     77EC 7420     
-     77EE 6D75     
-     77F0 7374     
-     77F2 2062     
-     77F4 6520     
-     77F6 6F75     
-     77F8 7473     
-     77FA 6964     
-     77FC 6520     
-     77FE 4D31     
-     7800 2D4D     
-     7802 3220     
-     7804 7261     
-     7806 6E67     
-     7808 652E     
+0206 77E2 2D               byte  45
+0207 77E3   43             text  'Copy/Move target must be outside M1-M2 range.'
+     77E4 6F70     
+     77E6 792F     
+     77E8 4D6F     
+     77EA 7665     
+     77EC 2074     
+     77EE 6172     
+     77F0 6765     
+     77F2 7420     
+     77F4 6D75     
+     77F6 7374     
+     77F8 2062     
+     77FA 6520     
+     77FC 6F75     
+     77FE 7473     
+     7800 6964     
+     7802 6520     
+     7804 4D31     
+     7806 2D4D     
+     7808 3220     
+     780A 7261     
+     780C 6E67     
+     780E 652E     
 0208                       even
 0209               
 0210               
@@ -7741,19 +7744,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0212               ; Strings for command buffer
 0213               ;--------------------------------------------------------------
 0214               txt.cmdb.prompt
-0215 780A 01               byte  1
-0216 780B   3E             text  '>'
+0215 7810 01               byte  1
+0216 7811   3E             text  '>'
 0217                       even
 0218               
 0219               txt.colorscheme
-0220 780C 0D               byte  13
-0221 780D   43             text  'Color scheme:'
-     780E 6F6C     
-     7810 6F72     
-     7812 2073     
-     7814 6368     
-     7816 656D     
-     7818 653A     
+0220 7812 0D               byte  13
+0221 7813   43             text  'Color scheme:'
+     7814 6F6C     
+     7816 6F72     
+     7818 2073     
+     781A 6368     
+     781C 656D     
+     781E 653A     
 0222                       even
 0223               
                    < ram.resident.asm
@@ -7766,34 +7769,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
 0007               def.printer.fname
-0008 781A 08               byte  8
-0009 781B   54             text  'TIPI.PIO'
-     781C 4950     
-     781E 492E     
-     7820 5049     
-     7822 4F       
+0008 7820 08               byte  8
+0009 7821   54             text  'TIPI.PIO'
+     7822 4950     
+     7824 492E     
+     7826 5049     
+     7828 4F       
 0010                       even
 0011               
 0012               def.clip.fname
-0013 7824 09               byte  9
-0014 7825   44             text  'DSK1.CLIP'
-     7826 534B     
-     7828 312E     
-     782A 434C     
-     782C 4950     
+0013 782A 09               byte  9
+0014 782B   44             text  'DSK1.CLIP'
+     782C 534B     
+     782E 312E     
+     7830 434C     
+     7832 4950     
 0015                       even
 0016               
                    < ram.resident.asm
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
-0046 782E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7830 6002     
+0046 7834 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7836 6002     
 0047               
 0051               
-0052 7832 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     7834 6046     
+0052 7838 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     783A 6046     
 0053               ***************************************************************
 0054               * Step 3: Include main editor modules
 0055               ********|*****|*********************|**************************
@@ -7837,7 +7840,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023               vdp.patterns.dump.exit:
 0024 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
 0025 6064 045B  20         b     *r11                  ; Return to task
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0063                                                   ; Dump patterns to VDP
 0064                       copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
      **** ****     > data.patterns.asm
@@ -7994,7 +7997,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6158 0000     
      615A 0000     
      615C 0000     
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0065               
 0066                       ;-----------------------------------------------------------------------
 0067                       ; Stubs
@@ -8003,7 +8006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank6.asm
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0070                       ;-----------------------------------------------------------------------
 0071                       ; Program data
 0072                       ;-----------------------------------------------------------------------
@@ -8073,7 +8076,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b6.asm.104685
+                   < stevie_b6.asm.23090
 0100                                                   ; Vector table bank 6
 0101               
 0102               *--------------------------------------------------------------

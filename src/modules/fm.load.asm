@@ -113,6 +113,9 @@ fm.loadfile.clear:
 
         seto  @parm7                ; Load new file
 
+        li    tmp0,id.file.loadfile
+        mov   tmp0,@parm8           ; Work mode
+
         bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
@@ -127,7 +130,8 @@ fm.loadfile.clear:
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
                                     ; | i  @parm7 = Line to insert file at
-                                    ; /             or >ffff for new file
+                                    ; |             or >ffff for new file
+                                    ; / i  @parm8 = Work mode                                    
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.

@@ -89,7 +89,7 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Block marking/modifier
         ;-------------------------------------------------------
-        byte  key.ctrl.a, pane.focus.fb
+        byte  key.ctrl.space, pane.focus.fb
         data  edkey.action.block.mark
 
         byte  key.ctrl.c, pane.focus.fb
@@ -263,10 +263,10 @@ keymap_actions.cmdb:
         ; Dialog: Print file
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.print
-        data  edkey.action.cmdb.save
+        data  edkey.action.cmdb.print
 
         byte  key.enter, id.dialog.printblock
-        data  edkey.action.cmdb.save
+        data  edkey.action.cmdb.print
         ;-------------------------------------------------------
         ; Dialog: Unsaved changes
         ;-------------------------------------------------------

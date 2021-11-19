@@ -77,6 +77,7 @@ fh.file.read.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close" file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
+        mov   @parm8,@fh.workmode   ; Work mode (used in callbacks)
         ;------------------------------------------------------
         ; Determine if inserting file or loading new file
         ;------------------------------------------------------

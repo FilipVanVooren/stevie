@@ -2,7 +2,7 @@
 * Purpose...: File related actions in command buffer pane.
 
 *---------------------------------------------------------------
-* Save DV 80 file
+* Save file
 *---------------------------------------------------------------
 edkey.action.cmdb.save:
         dect  stack
