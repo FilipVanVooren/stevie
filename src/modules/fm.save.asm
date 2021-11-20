@@ -83,8 +83,7 @@ fm.savefile:
                                     ; | i  @parm8 = Working mode
                                     ; /
 
-        clr   @edb.dirty            ; Editor buffer content replaced, not
-                                    ; longer dirty.
+        clr   @edb.dirty            ; Editor buffer no longer dirty.
 
         li    tmp0,txt.filetype.DV80                                     
         mov   tmp0,@edb.filetype.ptr

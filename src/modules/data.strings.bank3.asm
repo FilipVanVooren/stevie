@@ -47,14 +47,14 @@ txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode'
 ;--------------------------------------------------------------
 ; Insert snippet from clipbaord
 ;--------------------------------------------------------------
-txt.head.clipboard byte 42,1,1
-                   text ' Insert snippet from clipboard at line '
+txt.head.clipboard byte 27,1,1
+                   text ' Copy clipboard to line '
                    byte 1
 txt.info.clipboard #string 'Clipboard?'
-txt.hint.clipboard #string 'Press 1 to 5 for inserting snippet from corresponding clipboard.'
+txt.hint.clipboard #string 'Press 1 to 5 to copy the corresponding clipboard.'
 
-txt.keys.clipboard  #string 'F9-Back  F5-Fastmode  1..5-Clipboard'
-txt.keys.clipboard2 #string 'F9-Back  *F5-Fastmode  1..5-Clipboard'
+txt.keys.clipboard  #string 'F9-Back  F5-Fastmode'
+txt.keys.clipboard2 #string 'F9-Back  *F5-Fastmode'
 
 
 ;--------------------------------------------------------------
@@ -112,8 +112,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      #string 'New   Open   Insert   Clipboard   Save   Print'
-pos.info.file      byte 0,6,13,22,34,41,>ff
+txt.info.file      #string 'New   Open   Save   Print'
+pos.info.file      byte 0,6,13,20,>ff
 txt.hint.file      #string ' '
 txt.keys.file      #string 'F9-Back'
 

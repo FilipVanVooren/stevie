@@ -207,12 +207,6 @@ keymap_actions.cmdb:
         byte  key.uc.o, id.dialog.file
         data  dialog.load
 
-        byte  key.uc.i, id.dialog.file
-        data  dialog.insert
-
-        byte  key.uc.c, id.dialog.file
-        data  dialog.clipboard
-
         byte  key.uc.p, id.dialog.file
         data  dialog.print
         ;-------------------------------------------------------

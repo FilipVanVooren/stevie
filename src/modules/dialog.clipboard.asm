@@ -33,7 +33,7 @@ dialog.clipboard.setup:
         ; Include line number in pane header
         ;------------------------------------------------------
         bl    @cpym2m
-              data txt.head.clipboard,cmdb.panhead.buf,42
+              data txt.head.clipboard,cmdb.panhead.buf,27
 
         mov   @fb.row,@parm1 
         bl    @fb.row2line          ; Row to editor line
@@ -50,10 +50,10 @@ dialog.clipboard.setup:
               byte  48              ; / i  p2 = LSB char for replacing leading 0
 
         bl    @cpym2m
-              data rambuf,cmdb.panhead.buf + 42,5
+              data rambuf,cmdb.panhead.buf + 27,5
                                     ; Add line number to buffer
 
-        li    tmp0,47
+        li    tmp0,32
         sla   tmp0,8
         movb  tmp0,@cmdb.panhead.buf ; Set length byte
 
