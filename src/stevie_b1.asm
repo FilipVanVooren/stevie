@@ -149,7 +149,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.asm"         ; Pane utility functions
         copy  "pane.utils.colorscheme.asm" 
                                        ; Colorscheme handling in panes 
         copy  "pane.cursor.asm"        ; Cursor utility functions        

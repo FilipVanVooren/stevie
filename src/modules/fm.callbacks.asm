@@ -174,6 +174,8 @@ fm.loadsave.cb.indicator1.exit:
 fm.loadsave.cb.indicator2:
         dect  stack
         mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Check if first page processed (speedup impression)
         ;------------------------------------------------------
@@ -216,6 +218,16 @@ fm.loadsave.cb.indicator2.kb:
         c     @fh.kilobytes,@fh.kilobytes.prev
         jeq   fm.loadsave.cb.indicator2.exit
         ;------------------------------------------------------
+        ; Only show updated KB if loading/saving full file
+        ;------------------------------------------------------
+        li    tmp0,id.file.loadfile
+        c     @fh.workmode,tmp0    
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+
+        li    tmp0,id.file.savefile
+        c     @fh.workmode,tmp0        
+        jne   fm.loadsave.cb.indicator2.exit
+        ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
 fm.loadsave.cb.indicator2.kb.processed:
@@ -230,7 +242,7 @@ fm.loadsave.cb.indicator2.kb.processed:
               byte 0,76
               data txt.kb           ; Show "kb" string
 
-fm.loadsave.cb.indicator2.kb.lines:
+fm.loadsave.cb.indicator2.lines:
         bl    @putnum
               byte pane.botrow,72   ; Show lines processed
               data fh.records,rambuf,>3020
@@ -238,6 +250,7 @@ fm.loadsave.cb.indicator2.kb.lines:
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator2.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
@@ -253,18 +266,38 @@ fm.loadsave.cb.indicator2.exit:
 fm.loadsave.cb.indicator3:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack        
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack
         mov   @parm1,*stack         ; Push @parm1            
-
+        ;------------------------------------------------------
+        ; Restore status line colors
+        ;------------------------------------------------------
         bl    @hchar
               byte pane.botrow,0,32,50       
-              data EOL              ; Erase loading indicator
+              data EOL              ; Erase indicator in bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 
+        ;------------------------------------------------------
+        ; Only show updated KB if loading/saving full file
+        ;------------------------------------------------------
+        li    tmp0,id.file.loadfile
+        c     @fh.workmode,tmp0    
+        jeq   fm.loadsave.cb.message
+
+        li    tmp0,id.file.savefile
+        c     @fh.workmode,tmp0        
+        jne   fm.loadsave.cb.message
 
         bl    @putnum
               byte 0,71             ; Show kilobytes processed
@@ -277,15 +310,56 @@ fm.loadsave.cb.indicator3:
         bl    @putnum
               byte pane.botrow,72   ; Show lines processed
               data edb.lines,rambuf,>3020
+        ;-------------------------------------------------------
+        ; Show message 
+        ;------------------------------------------------------- 
+fm.loadsave.cb.message:
+        bl    @hchar
+              byte 0,52,32,20       
+              data EOL              ; Erase any previous message
+              
+        bl    @at
+              byte 0,52             ; Position cursor
+        ;-------------------------------------------------------
+        ; Get pointer and display overlay message
+        ;------------------------------------------------------- 
+        mov   @fh.workmode,tmp0     ; Get work mode
+        dec   tmp0                  ; Base 0 offset
+        sla   tmp0,1                ; Each entry is a word
+        mov   @fm.loadsave.cb.indicator3.data(tmp0),tmp1
+                                    ; Get pointer to message
+
+        bl    @xutst0               ; Display string
+                                    ; \ i  tmp1 = Pointer to string
+                                    ; / i  @wyx = Cursor position at
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing overlay message
+        ;-------------------------------------------------------          
+        li    tmp0,pane.topline.oneshot.clearmsg
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay              
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator3.exit:
         mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-
-
+        ;------------------------------------------------------
+        ; Table with pointers for messages to display.
+        ; (@fh.workmode used as index into table)
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator3.data:
+        data  txt.done.load, txt.done.insert
+        data  txt.done.save, txt.done.save        
+        data  txt.done.clipboard, txt.done.print
+        data  txt.done.print
 
 *---------------------------------------------------------------
 * Callback function "File I/O error handler"

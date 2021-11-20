@@ -30,8 +30,9 @@ fm.savefile:
         ;-------------------------------------------------------
         ; Check if filename must be changed in editor buffer
         ;-------------------------------------------------------
-        c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-        jne   !                     ; Block mode, skip changing current filename
+        li    tmp0,id.file.savefile ; Saving full file?
+        c     @parm4,tmp0 
+        jne   !                     ; No, skip changing filename
         ;-------------------------------------------------------
         ; Change filename
         ;-------------------------------------------------------

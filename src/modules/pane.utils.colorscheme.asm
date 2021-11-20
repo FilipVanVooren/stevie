@@ -57,7 +57,7 @@ pane.action.colorscheme.switch:
         ;-------------------------------------------------------
         ; Setup one shot task for removing message
         ;-------------------------------------------------------  
-        li    tmp0,pane.clearmsg.task.callback
+        li    tmp0,pane.topline.oneshot.clearmsg
         mov   tmp0,@tv.task.oneshot 
 
         bl    @rsslot               ; \ Reset loop counter slot 3

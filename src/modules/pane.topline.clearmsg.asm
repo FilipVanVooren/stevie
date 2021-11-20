@@ -1,11 +1,12 @@
-* FILE......: pane.utils.asm
-* Purpose...: Some utility functions. Shared code for all panes
+* FILE......: pane.topline.clearmsg.asm
+* Purpose...: One-shot task for clearing overlay message in top line
+
 
 ***************************************************************
-* pane.clearmsg.task.callback
-* Remove message
+* pane.topline.oneshot.clearmsg
+* Remove overlay message in top line
 ***************************************************************
-* Called from one-shot task
+* Runs as one-shot task in slot 3
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -16,7 +17,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-pane.clearmsg.task.callback:
+pane.topline.oneshot.clearmsg:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack        
@@ -32,7 +33,7 @@ pane.clearmsg.task.callback:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-pane.clearmsg.task.callback.exit:
+pane.topline.oneshot.clearmsg.exit:
         mov   *stack+,@wyx          ; Pop cursor position                
         mov   *stack+,r11           ; Pop R11        
         b     *r11                  ; Return to task

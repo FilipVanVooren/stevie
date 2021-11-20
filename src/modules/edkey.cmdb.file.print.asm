@@ -1,4 +1,4 @@
-* FILE......: edkey.cmdb.fíle.save.asm
+* FILE......: edkey.cmdb.fíle.print.asm
 * Purpose...: File related actions in command buffer pane.
 
 *---------------------------------------------------------------
@@ -16,7 +16,7 @@ edkey.action.cmdb.print:
 
         bl    @cmdb.cmd.getlength   ; Get length of current command
         mov   @outparm1,tmp0        ; Length == 0 ?
-        jne   !                     ; No, prepare for save
+        jne   !                     ; No, prepare for print
         ;-------------------------------------------------------
         ; No filename specified
         ;-------------------------------------------------------    

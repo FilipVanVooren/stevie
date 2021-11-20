@@ -67,13 +67,20 @@ pane.topline.nochange:
               byte 0,79             ; y=0, x=79
               data txt.ws1          ; Single white space        
         ;------------------------------------------------------
-        ; Show M1 marker
+        ; Check if M1/M2 markers need to be shown
         ;------------------------------------------------------
 pane.topline.showmarkers:        
         mov   @edb.block.m1,tmp0    ; \  
-        inc   tmp0                  ; | Exit early if M1 unset (>ffff)
+        ci    tmp0,>ffff            ; | Exit early if M1 unset (>ffff)
         jeq   pane.topline.exit     ; /
 
+        mov   @tv.task.oneshot,tmp0 ; \
+        ci    tmp0,pane.topline.oneshot.clearmsg
+                                    ; | Exit early if overlay message visible
+        jeq   pane.topline.exit     ; / 
+        ;------------------------------------------------------
+        ; Show M1 marker
+        ;------------------------------------------------------
         bl    @putat
               byte 0,52
               data txt.m1           ; Show M1 marker message
@@ -93,7 +100,7 @@ pane.topline.showmarkers:
         ; Show M2 marker
         ;------------------------------------------------------
         mov   @edb.block.m2,tmp0    ; \  
-        inc   tmp0                  ; | Exit early if M2 unset (>ffff)
+        ci    tmp0,>ffff            ; | Exit early if M2 unset (>ffff)
         jeq   pane.topline.exit     ; /
 
         bl    @putat

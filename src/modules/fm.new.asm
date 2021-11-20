@@ -48,8 +48,9 @@ fm.newfile:
 * Remove message
 *--------------------------------------------------------------
         bl    @hchar
+              byte 0,0,32,80
               byte pane.botrow,0,32,50
-              data EOL              ; Clear hint on bottom row
+              data EOL              ; Clear top row and hint on bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
         bl    @pane.action.colorscheme.statlines

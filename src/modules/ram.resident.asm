@@ -13,6 +13,8 @@
         copy  "tv.asm"                 ; Main editor configuration        
         copy  "tv.utils.asm"           ; General purpose utility functions
         copy  "mem.asm"                ; Memory Management (SAMS)
+        copy  "pane.topline.clearmsg.asm"
+                                       ; Remove overlay messsage in top line
         ;------------------------------------------------------
         ; Program data
         ;------------------------------------------------------
