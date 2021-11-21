@@ -23,7 +23,7 @@ sp2.stktop    equ >af00             ; SP2 stack >ae00 - >aeff
                                     ; grows from high to low.
 ***************************************************************
 * BANK 7
-********|*****|*********************|***s***********************
+********|*****|*********************|**************************
 bankid  equ   bank7.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank

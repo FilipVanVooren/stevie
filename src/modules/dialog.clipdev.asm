@@ -1,11 +1,11 @@
-* FILE......: dialog.menu.asm
-* Purpose...: Dialog "Main Menu"
+* FILE......: dialog.clipdev.asm
+* Purpose...: Dialog "Configure clipboard device"
 
 ***************************************************************
-* dialog.menu
-* Open Dialog "Main Menu"
+* dialog.clipdev
+* Open Dialog "Configure clipboard device"
 ***************************************************************
-* b @dialog.menu
+* b @dialog.clipdevice
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.menu:
+dialog.clipdev:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -26,29 +26,30 @@ dialog.menu:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.menu
+        li    tmp0,id.dialog.clipdev
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.menu
+        li    tmp0,txt.head.clipdev
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.info.menu
-        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
+        clr   @cmdb.paninfo         ; No info message, do input prompt
+        clr   @cmdb.panmarkers      ; No key markers
+        
+        li    tmp0,txt.hint.clipdev
+        mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        li    tmp0,pos.info.menu
-        mov   tmp0,@cmdb.panmarkers ; Show letter markers
-
-        li    tmp0,txt.hint.menu
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-
-        li    tmp0,txt.keys.menu
+        li    tmp0,txt.keys.clipdev
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
-        bl    @pane.cursor.hide     ; Hide cursor
+        ;-------------------------------------------------------
+        ; Set cursor shape
+        ;-------------------------------------------------------
+        bl    @pane.cursor.blink    ; Show cursor
+        mov   @tv.curshape,@ramsat+2 
+                                    ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.menu.exit:
+dialog.clipdevice.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller     

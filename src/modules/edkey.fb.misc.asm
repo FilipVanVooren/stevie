@@ -23,5 +23,6 @@ edkey.action.quit:
 edkey.action.copyblock_or_clipboard:
         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
         jeq   !
-        b     @edb.block.copy       ; Copy code block
+        b     @edkey.action.block.copy
+                                    ; Copy code block
 !       b     @dialog.clipboard     ; Open "Insert from clipboard" dialog

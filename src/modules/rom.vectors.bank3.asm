@@ -7,18 +7,18 @@
 vec.1   data  dialog.help           ; Dialog "About"
 vec.2   data  dialog.load           ; Dialog "Load file"
 vec.3   data  dialog.save           ; Dialog "Save file"
-vec.4   data  dialog.insert         ; Dialog "Insert file"
+vec.4   data  dialog.insert         ; Dialog "Insert file at line ..."
 vec.5   data  dialog.print          ; Dialog "Print file"
 vec.6   data  dialog.file           ; Dialog "File"
 vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
-vec.8   data  dialog.clipboard      ; Dialog "Insert snippet from clipboard"
-vec.9   data  cpu.crash             ; 
-vec.10  data  tibasic               ; Run TI Basic interpreter
+vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
+vec.9   data  dialog.clipdev        ; Dialog "Configure clipboard device"
+vec.10  data  dialog.config         ; Dialog "Configure"
 vec.11  data  cpu.crash             ; 
 vec.12  data  cpu.crash             ; 
 vec.13  data  cpu.crash             ; 
 vec.14  data  cpu.crash             ; 
-vec.15  data  cpu.crash             ; 
+vec.15  data  tibasic               ; Run TI Basic interpreter
 vec.16  data  cpu.crash             ; 
 vec.17  data  cpu.crash             ; 
 vec.18  data  pane.show_hint        ; Show or hide hint

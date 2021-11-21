@@ -42,7 +42,7 @@ tv.init:
         ; Set defaults
         ;------------------------------------------------------
         bl    @cpym2m
-              data def.printer.fname,tv.printer.fname,9
+              data def.printer.fname,tv.printer.fname,7
 
         bl    @cpym2m
               data def.clip.fname,tv.clip.fname,10

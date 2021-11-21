@@ -64,16 +64,18 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------         
-        copy  "dialog.menu.asm"     ; Dialog "Stevie Menu"
-        copy  "dialog.help.asm"     ; Dialog "Help"
-        copy  "dialog.file.asm"     ; Dialog "File"
-        copy  "dialog.load.asm"     ; Dialog "Load file"
-        copy  "dialog.save.asm"     ; Dialog "Save file"
-        copy  "dialog.print.asm"    ; Dialog "Print file"        
-        copy  "dialog.insert.asm"   ; Dialog "Insert file at line"
-        copy  "dialog.clipboard.asm"; Dialog "Insert snippet from clipboard"
-        copy  "dialog.unsaved.asm"  ; Dialog "Unsaved changes"
-        copy  "dialog.basic.asm"    ; Dialog "Basic"
+        copy  "dialog.menu.asm"      ; Dialog "Stevie Menu"
+        copy  "dialog.help.asm"      ; Dialog "Help"
+        copy  "dialog.file.asm"      ; Dialog "File"
+        copy  "dialog.config.asm"    ; Dialog "Configure"
+        copy  "dialog.load.asm"      ; Dialog "Load file"
+        copy  "dialog.save.asm"      ; Dialog "Save file"
+        copy  "dialog.print.asm"     ; Dialog "Print file"        
+        copy  "dialog.insert.asm"    ; Dialog "Insert file at line"
+        copy  "dialog.clipdev.asm"   ; Dialog "Configure clipboard device"
+        copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
+        copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
+        copy  "dialog.basic.asm"     ; Dialog "Basic"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------        

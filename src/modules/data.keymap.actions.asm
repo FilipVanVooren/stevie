@@ -166,7 +166,7 @@ keymap_actions.editor:
 
         ; 
         ; FCTN-9 has multiple purposes, if block mode is on it
-        ; resets the block, otherwise show Stevie menu dialog.
+        ; resets the block, otherwise show dialog "Main Menu".
         ;
         byte  key.fctn.9, pane.focus.fb
         data  dialog.menu 
@@ -209,6 +209,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
+
+        byte  key.uc.c, id.dialog.file
+        data  dialog.config
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
@@ -218,7 +221,7 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.load
         data  edkey.action.cmdb.load
         ;-------------------------------------------------------
-        ; Dialog: Insert file
+        ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
         byte  key.fctn.5, id.dialog.insert
         data  edkey.action.cmdb.fastmode.toggle
@@ -226,10 +229,13 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.ins
         ;-------------------------------------------------------
-        ; Dialog: Insert snippet from clipboard
+        ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------
         byte  key.fctn.5, id.dialog.clipboard
         data  edkey.action.cmdb.fastmode.toggle
+
+        byte  key.fctn.7, id.dialog.clipboard
+        data  dialog.clipdev
 
         byte  key.num.1, id.dialog.clipboard
         data  edkey.action.cmdb.clip.1
@@ -244,7 +250,17 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.clip.4
 
         byte  key.num.5, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.5
+        data  edkey.action.cmdb.clip.5        
+        ;-------------------------------------------------------
+        ; Dialog: Configure clipboard device
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.clipdev
+        data  edkey.action.cmdb.clipdev.configure
+        ;-------------------------------------------------------
+        ; Dialog: Configure
+        ;-------------------------------------------------------
+        byte  key.uc.c, id.dialog.config
+        data  dialog.clipdev
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

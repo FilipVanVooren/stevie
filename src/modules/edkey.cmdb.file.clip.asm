@@ -1,8 +1,8 @@
 * FILE......: edkey.cmdb.fíle.clip.asm
-* Purpose...: Insert file from clipboard
+* Purpose...: Copy clipboard file to line
 
 *---------------------------------------------------------------
-* Insert file from clipboard
+* Copy clipboard file to line
 *---------------------------------------------------------------
 edkey.action.cmdb.clip.1
         li    tmp0,clip1

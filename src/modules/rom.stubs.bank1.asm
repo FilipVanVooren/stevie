@@ -151,7 +151,7 @@ dialog.load.vector:
 ********|*****|*********************|**************************
 dialog.save:
         mov   @dialog.save.vector,@trmpvector
-        jmp   _trampoline.bank3     ; Show dialog
+        b     @_trampoline.bank3    ; Show dialog        
 dialog.save.vector:        
         data  vec.3
 
@@ -162,7 +162,7 @@ dialog.save.vector:
 ********|*****|*********************|**************************
 dialog.insert:
         mov   @dialog.insert.vector,@trmpvector
-        jmp   _trampoline.bank3     ; Show dialog
+        b     @_trampoline.bank3    ; Show dialog        
 dialog.insert.vector:        
         data  vec.4
 
@@ -202,7 +202,7 @@ dialog.unsaved.vector:
 
 
 ***************************************************************
-* Stub for dialog "Insert snippet from clipboard"
+* Stub for dialog "Copy clipboard to line ..."
 * bank3 vec.8
 ********|*****|*********************|**************************
 dialog.clipboard:
@@ -210,6 +210,29 @@ dialog.clipboard:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.clipboard.vector:        
         data  vec.8
+
+
+***************************************************************
+* Stub for dialog "Configure clipboard device"
+* bank3 vec.9
+********|*****|*********************|**************************
+dialog.clipdev:
+        mov   @dialog.clipdev.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.clipdev.vector:        
+        data  vec.9
+
+
+***************************************************************
+* Stub for dialog "Configure"
+* bank3 vec.10
+********|*****|*********************|**************************
+dialog.config:
+        mov   @dialog.config.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.config.vector:        
+        data  vec.10
+
 
 ***************************************************************
 * Stub for dialog "Main Menu"
@@ -241,13 +264,13 @@ dialog.menu.vector:
 
 ***************************************************************
 * Stub for "tibasic"
-* bank3 vec.10
+* bank3 vec.15
 ********|*****|*********************|**************************
 tibasic:
         mov   @tibasic.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 tibasic.vector:        
-        data  vec.10
+        data  vec.15
 
 
 ***************************************************************

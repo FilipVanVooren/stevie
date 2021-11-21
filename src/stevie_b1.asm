@@ -87,16 +87,17 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
-        copy  "edkey.cmdb.mov.asm"       ; Actions for movement keys 
-        copy  "edkey.cmdb.mod.asm"       ; Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm"      ; Miscelanneous actions
-        copy  "edkey.cmdb.file.new.asm"  ; New file
-        copy  "edkey.cmdb.file.load.asm" ; Open file
-        copy  "edkey.cmdb.file.ins.asm"  ; Insert file
-        copy  "edkey.cmdb.file.clip.asm" ; Insert file from clipboard
-        copy  "edkey.cmdb.file.save.asm" ; Save file
-        copy  "edkey.cmdb.file.print.asm"; Print file        
-        copy  "edkey.cmdb.dialog.asm"    ; Dialog specific actions
+        copy  "edkey.cmdb.mov.asm"          ; Actions for movement keys 
+        copy  "edkey.cmdb.mod.asm"          ; Actions for modifier keys
+        copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
+        copy  "edkey.cmdb.file.new.asm"     ; New file
+        copy  "edkey.cmdb.file.load.asm"    ; Open file
+        copy  "edkey.cmdb.file.ins.asm"     ; Insert file
+        copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
+        copy  "edkey.cmdb.file.clipdev.asm" ; Configure clipboard device
+        copy  "edkey.cmdb.file.save.asm"    ; Save file
+        copy  "edkey.cmdb.file.print.asm"   ; Print file        
+        copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------        
@@ -105,8 +106,8 @@ main:
         copy  "fb.cursor.down.asm"  ; Cursor down
         copy  "fb.cursor.home.asm"  ; Cursor home
         copy  "fb.insert.line.asm"  ; Insert new line
-        copy  "fb.get.firstnonblank.asm"
-                                    ; Get column of first non-blank character                                    
+        copy  "fb.get.firstnonblank.asm" 
+                                    ; Get column of first non-blank char
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
         ;-----------------------------------------------------------------------

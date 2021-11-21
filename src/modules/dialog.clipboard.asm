@@ -63,7 +63,7 @@ dialog.clipboard.setup:
         ; Other panel strings
         ;------------------------------------------------------
         li    tmp0,txt.hint.clipboard
-        mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        mov   tmp0,@cmdb.panhint    ; Hint line in dialog        
 
         li    tmp0,txt.info.clipboard
         mov   tmp0,@cmdb.paninfo    ; Show info message

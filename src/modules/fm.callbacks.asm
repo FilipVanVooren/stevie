@@ -99,7 +99,7 @@ fm.loadsave.cb.indicator1.saveblock:
 fm.loadsave.cb.indicator1.printfile:
         bl    @putat
               byte pane.botrow,0
-              data txt.block.print  ; Display "Printing...."
+              data txt.printing    ; Display "Printing...."
         jmp   fm.loadsave.cb.indicator1.exit
         ;------------------------------------------------------
         ; Display Printing block....
@@ -218,7 +218,7 @@ fm.loadsave.cb.indicator2.kb:
         c     @fh.kilobytes,@fh.kilobytes.prev
         jeq   fm.loadsave.cb.indicator2.exit
         ;------------------------------------------------------
-        ; Only show updated KB if loading/saving full file
+        ; Only show updated KB if loading/saving/printing file
         ;------------------------------------------------------
         li    tmp0,id.file.loadfile
         c     @fh.workmode,tmp0    
@@ -226,7 +226,17 @@ fm.loadsave.cb.indicator2.kb:
 
         li    tmp0,id.file.savefile
         c     @fh.workmode,tmp0        
-        jne   fm.loadsave.cb.indicator2.exit
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+
+        li    tmp0,id.file.printfile
+        c     @fh.workmode,tmp0        
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+
+        li    tmp0,id.file.printblock
+        c     @fh.workmode,tmp0        
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+
+        jmp   fm.loadsave.cb.indicator2.exit
         ;------------------------------------------------------
         ; Display updated counters
         ;------------------------------------------------------
