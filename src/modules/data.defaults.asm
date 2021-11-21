@@ -4,5 +4,5 @@
 ***************************************************************
 *                     Default values
 ********|*****|*********************|**************************
-def.printer.fname   #string 'TIPI.PIO'
+def.printer.fname   #string 'PI.PIO'
 def.clip.fname      #string 'DSK1.CLIP'
