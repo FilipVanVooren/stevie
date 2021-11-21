@@ -2,7 +2,7 @@
 * Purpose...: Resident modules in LOW MEMEXP callable from all ROM banks.
  
         ;------------------------------------------------------
-        ; Resident Stevie modules
+        ; Low-level modules
         ;------------------------------------------------------
         copy  "rom.farjump.asm"        ; ROM bankswitch trampoline 
         copy  "fb.asm"                 ; Framebuffer      
@@ -13,6 +13,16 @@
         copy  "tv.asm"                 ; Main editor configuration        
         copy  "tv.utils.asm"           ; General purpose utility functions
         copy  "mem.asm"                ; Memory Management (SAMS)
+        ;-----------------------------------------------------------------------
+        ; Logic for Index management
+        ;-----------------------------------------------------------------------
+        copy  "idx.update.asm"      ; Index management - Update entry
+        copy  "idx.pointer.asm"     ; Index management - Get pointer to line
+        copy  "idx.delete.asm"      ; Index management - delete slot
+        copy  "idx.insert.asm"      ; Index management - insert slot
+        ;-----------------------------------------------------------------------
+        ; Utility functions
+        ;-----------------------------------------------------------------------
         copy  "pane.topline.clearmsg.asm"
                                        ; Remove overlay messsage in top line
         ;------------------------------------------------------

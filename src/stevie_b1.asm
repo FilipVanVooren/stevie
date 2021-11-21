@@ -37,7 +37,7 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 2: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
-        xorg  >2000                 ; Relocate to >2000
+        aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
         copy  "ram.resident.asm"        
         ;------------------------------------------------------
@@ -109,13 +109,6 @@ main:
                                     ; Get column of first non-blank character                                    
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.restore.asm"      ; Restore frame buffer to normal operation
-        ;-----------------------------------------------------------------------
-        ; Logic for Index management
-        ;-----------------------------------------------------------------------
-        copy  "idx.update.asm"      ; Index management - Update entry
-        copy  "idx.pointer.asm"     ; Index management - Get pointer to line
-        copy  "idx.delete.asm"      ; Index management - delete slot
-        copy  "idx.insert.asm"      ; Index management - insert slot
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------

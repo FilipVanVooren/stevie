@@ -11,7 +11,7 @@
 * @edb.clip.filename = Device and filename of clipboard
 * @edb.block.m1      = Marker M1 line
 * @edb.block.m2      = Marker M2 line
-* @parm1             = Suffix clipboard file (none, 0-9)
+* @parm1             = Suffix clipboard file (none, 1-5)
 *--------------------------------------------------------------
 * OUTPUT
 * none
