@@ -329,6 +329,15 @@ keymap_actions.cmdb:
         byte  key.fctn.plus, pane.focus.cmdb
         data  edkey.action.quit
 
+        byte  key.ctrl.a, pane.focus.cmdb
+        data  edkey.action.cmdb.preset
+
+        byte  key.ctrl.b, pane.focus.cmdb
+        data  edkey.action.cmdb.preset
+
+        byte  key.ctrl.c, pane.focus.cmdb
+        data  edkey.action.cmdb.preset
+
         byte  key.ctrl.z, pane.focus.cmdb
         data  pane.action.colorscheme.cycle
         ;------------------------------------------------------

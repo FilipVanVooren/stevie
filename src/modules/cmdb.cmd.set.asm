@@ -1,14 +1,14 @@
-* FILE......: cmdb.cmd.asm
-* Purpose...: Stevie Editor - Command line
+* FILE......: cmdb.cmd.set.asm
+* Purpose...: Set command line
 
 ***************************************************************
-* cmdb.cmd.clear
-* Clear current command
+* cmdb.cmd.set
+* Set current command
 ***************************************************************
-* bl @cmdb.cmd.clear
+* bl @cmdb.cmd.set
 *--------------------------------------------------------------
 * INPUT
-* none
+* @parm1 = Pointer to string with command
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-cmdb.cmd.clear:
+cmdb.cmd.set:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -34,57 +34,36 @@ cmdb.cmd.clear:
         bl    @film                 ; Clear command
               data  cmdb.cmd,>00,80
         ;------------------------------------------------------
+        ; Get string length
+        ;------------------------------------------------------
+        mov   @parm1,tmp0           
+        movb  *tmp0+,tmp2           ; Get length byte
+        srl   tmp2,8                ; Right align
+        jgt   !
+        ;------------------------------------------------------
+        ; Assert: invalid length
+        ;------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
+        ;------------------------------------------------------
+        ; Copy string to command
+        ;------------------------------------------------------
+!       li   tmp1,cmdb.cmd          ; Destination
+        bl   @xpym2m                ; Copy string
+        ;------------------------------------------------------
         ; Put cursor at beginning of line
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,tmp0   
         inc   tmp0                  
         mov   tmp0,@cmdb.cursor     ; Position cursor        
+
+        seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-cmdb.cmd.clear.exit:        
+cmdb.cmd.set.exit:        
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-
-
-
-
-***************************************************************
-* cmdb.cmdb.getlength
-* Get length of current command
-***************************************************************
-* bl @cmdb.cmd.getlength
-*--------------------------------------------------------------
-* INPUT
-* @cmdb.cmd
-*--------------------------------------------------------------
-* OUTPUT
-* @outparm1
-*--------------------------------------------------------------
-* Register usage
-* none
-*--------------------------------------------------------------
-* Notes
-********|*****|*********************|**************************
-cmdb.cmd.getlength:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;-------------------------------------------------------
-        ; Get length of null terminated string
-        ;-------------------------------------------------------
-        bl    @string.getlenc      ; Get length of C-style string
-              data cmdb.cmd,0      ; \ i  p0    = Pointer to C-style string
-                                   ; | i  p1    = Termination character
-                                   ; / o  waux1 = Length of string
-        mov   @waux1,@outparm1     ; Save length of string
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-cmdb.cmd.getlength.exit:        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

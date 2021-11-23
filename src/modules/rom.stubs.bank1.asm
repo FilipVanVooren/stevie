@@ -351,13 +351,13 @@ cmdb.cmd.getlength.vector:
 
 
 ***************************************************************
-* Stub for "cmdb.cmdb.addhist"
+* Stub for "cmdb.cmdb.preset"
 * bank3 vec.27
 ********|*****|*********************|**************************
-cmdb.cmd.addhist:
-        mov   @cmdb.cmd.addhist.vector,@trmpvector
+cmdb.cmd.preset:
+        mov   @cmdb.cmd.preset.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-cmdb.cmd.addhist.vector:
+cmdb.cmd.preset.vector:
         data  vec.27
 
 
@@ -607,10 +607,6 @@ _trampoline.bank5.ret:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
-
-
-
 
 
 ***************************************************************

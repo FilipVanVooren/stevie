@@ -66,6 +66,23 @@ edkey.action.cmdb.fastmode.toggle:
 
 
 
+***************************************************************
+* edkey.action.cmdb.preset
+* Set command value to preset
+***************************************************************
+* b   @edkey.action.cmdb.preset
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* none
+********|*****|*********************|**************************
+edkey.action.cmdb.preset:
+       bl    @cmdb.cmd.preset       ; Set preset
+       b     @hook.keyscan.bounce   ; Back to editor main             
+
+
 
 ***************************************************************
 * dialog.close
@@ -89,8 +106,9 @@ edkey.action.cmdb.close.about:
         jmp   edkey.action.cmdb.close.dialog
 
 
+
 ***************************************************************
-* dialog.close
+* edkey.action.cmdb.close.dialog
 * Close dialog
 ***************************************************************
 * b   @edkey.action.cmdb.close.dialog

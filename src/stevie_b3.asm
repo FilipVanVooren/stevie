@@ -85,6 +85,8 @@ main:
         copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
         copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
         copy  "cmdb.cmd.asm"        ; Command line handling 
+        copy  "cmdb.cmd.set.asm"    ; Set command line to preset value
+        copy  "cmdb.cmd.preset.asm" ; Preset shortcuts in dialogs
         ;-----------------------------------------------------------------------
         ; Toggle fastmode in Load/Save DV80 dialogs
         ;-----------------------------------------------------------------------        
@@ -100,7 +102,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------         
-        copy  "data.strings.bank3.asm" ; Strings used in bank 3
+        copy  "data.strings.bank3.asm"  ; Strings used in bank 3
+        copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 

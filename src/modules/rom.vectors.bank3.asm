@@ -30,8 +30,8 @@ vec.23  data  cpu.crash             ;
 vec.24  data  cmdb.refresh          ; 
 vec.25  data  cmdb.cmd.clear        ; 
 vec.26  data  cmdb.cmd.getlength    ; 
-vec.27  data  cmdb.cmd.history.add  ;
-vec.28  data  cpu.crash             ; 
+vec.27  data  cmdb.cmd.preset       ; 
+vec.28  data  cmdb.cmd.set          ; 
 vec.29  data  cpu.crash             ; 
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  cpu.crash             ; 
