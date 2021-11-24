@@ -53,6 +53,15 @@ dialog.save.default:
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.save    ; Title "Save file"
         ;-------------------------------------------------------
+        ; Set command line
+        ;-------------------------------------------------------
+        li    tmp0,edb.filename     ; Set filename
+        mov   tmp0,@parm1           ; Get pointer to string
+
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+                                    ; /
+        ;-------------------------------------------------------
         ; Setup header
         ;-------------------------------------------------------
 dialog.save.header:
