@@ -18,9 +18,12 @@ edkey.action.cmdb.load:
         ;-------------------------------------------------------    
         bl    @pane.errline.show    ; Show error line
 
-        bl    @pane.show_hint
-              byte pane.botrow-1,0
-              data txt.io.nofile
+        li    tmp0,txt.io.nofile    ; \
+        mov   tmp0,@parm1           ; / Error message
+
+        bl    @error.display        ; Show error message
+                                    ; \ i  @parm1 = Pointer to error message
+                                    ; /
 
         jmp   edkey.action.cmdb.load.exit
         ;-------------------------------------------------------

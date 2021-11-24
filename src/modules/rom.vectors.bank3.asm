@@ -21,7 +21,7 @@ vec.14  data  cpu.crash             ;
 vec.15  data  tibasic               ; Run TI Basic interpreter
 vec.16  data  cpu.crash             ; 
 vec.17  data  cpu.crash             ; 
-vec.18  data  pane.show_hint        ; Show or hide hint
+vec.18  data  error.display         ; Show error message
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane

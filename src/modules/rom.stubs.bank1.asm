@@ -274,14 +274,25 @@ tibasic.vector:
 
 
 ***************************************************************
-* Stub for "pane.show_hint"
+* Stub for "error.display"
 * bank3 vec.18
 ********|*****|*********************|**************************
-pane.show_hint:
-        mov   @pane.show_hint,@trmpvector
+error.display:
+        mov   @error.display.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-pane.show_hint.vector:
+error.display.vector:
         data  vec.18
+
+
+***************************************************************
+* Stub for "pane.show_hintx"
+* bank3 vec.19
+********|*****|*********************|**************************
+pane.show_hintx:
+        mov   @pane.show_hintx.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+pane.show_hintx.vector:
+        data  vec.19
 
 
 ***************************************************************

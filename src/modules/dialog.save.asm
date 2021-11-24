@@ -43,7 +43,7 @@ dialog.save:
         li    tmp0,id.dialog.saveblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.save2   ; Title "Save block to file"                
-
+        mov   tmp0,@cmdb.panhead    ; Header for dialog
         jmp   dialog.save.header
         ;-------------------------------------------------------
         ; Default dialog
@@ -52,6 +52,7 @@ dialog.save.default:
         li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.save    ; Title "Save file"
+        mov   tmp0,@cmdb.panhead    ; Header for dialog
         ;-------------------------------------------------------
         ; Set command line
         ;-------------------------------------------------------
@@ -65,7 +66,6 @@ dialog.save.default:
         ; Setup header
         ;-------------------------------------------------------
 dialog.save.header:
-        mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
         clr   @cmdb.panmarkers      ; No key markers        
