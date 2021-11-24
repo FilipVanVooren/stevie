@@ -41,6 +41,15 @@ dialog.clipdev:
         li    tmp0,txt.keys.clipdev
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
+        ; Set command line
+        ;-------------------------------------------------------
+        li    tmp0,tv.clip.fname    ; Set clipboard
+        mov   tmp0,@parm1           ; Get pointer to string
+
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+                                    ; /
+        ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor

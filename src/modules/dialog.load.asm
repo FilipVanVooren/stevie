@@ -64,6 +64,15 @@ dialog.load.setup:
 dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
+        ; Set command line
+        ;-------------------------------------------------------
+        li    tmp0,edb.filename     ; Set filename
+        mov   tmp0,@parm1           ; Get pointer to string
+
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+                                    ; /
+        ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor

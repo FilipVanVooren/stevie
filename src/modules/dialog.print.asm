@@ -67,10 +67,14 @@ dialog.print.header:
 
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
         ;-------------------------------------------------------
-        ; Setup printer name
+        ; Set command line
         ;-------------------------------------------------------
-        bl    @cpym2m
-              data tv.printer.fname+1,cmdb.cmd,80
+        li    tmp0,tv.printer.fname ; Set printer name
+        mov   tmp0,@parm1           ; Get pointer to string
+
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+                                    ; /
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------

@@ -41,10 +41,9 @@ cmdb.cmd.set:
         srl   tmp2,8                ; Right align
         jgt   !
         ;------------------------------------------------------
-        ; Assert: invalid length
+        ; Assert: invalid length, we just exit here
         ;------------------------------------------------------
-        mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / Crash and halt system
+        jmp   cmdb.cmd.set.exit     ; No harm done
         ;------------------------------------------------------
         ; Copy string to command
         ;------------------------------------------------------
