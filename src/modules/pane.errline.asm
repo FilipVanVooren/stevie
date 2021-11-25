@@ -8,7 +8,7 @@
 * bl @pane.errline.show
 *--------------------------------------------------------------
 * INPUT
-* none
+* @tv.error.msg = Error message to display
 *--------------------------------------------------------------
 * OUTPUT
 * none

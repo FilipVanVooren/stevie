@@ -16,8 +16,6 @@ edkey.action.cmdb.load:
         ;-------------------------------------------------------
         ; No filename specified
         ;-------------------------------------------------------    
-        bl    @pane.errline.show    ; Show error line
-
         li    tmp0,txt.io.nofile    ; \
         mov   tmp0,@parm1           ; / Error message
 
