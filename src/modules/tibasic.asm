@@ -52,6 +52,11 @@ tibasic:
 
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
+
+      ;  bl    @f18unl               ; Unlock the F18a
+
+      ;  bl    @putvr                ; Turn on 30 rows mode.
+      ;        data >3140            ; F18a VR49 (>31).
         ;-------------------------------------------------------
         ; Resume existing TI Basic session?
         ;-------------------------------------------------------

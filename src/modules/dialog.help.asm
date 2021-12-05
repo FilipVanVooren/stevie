@@ -64,15 +64,31 @@ dialog.help.content:
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
-        ; Show About dialog
+        ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - 160
                                     ; Clear screen
+
+        ;
+        ; Colours are also set in pane.action.colorscheme.load
+        ; but we also set them here to avoid flickering due to
+        ; timing delay before function is called.
+        ;
+        
+        li    tmp0,vdp.fb.toprow.tat
+        mov   @tv.color,tmp1        ; Get color for framebuffer
+        srl   tmp1,8                ; Right justify
+        li    tmp2,vdp.sit.size - 160
+                                    ; Prepare for loading color attributes
+
+        bl    @xfilv                ; \ Fill VDP memory
+                                    ; | i  tmp0 = Memory start address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Number of bytes to fill
         
         bl    @filv
-              data sprsat,0,32      ; Turn off sprites
-
+              data sprsat,>d0,32    ; Turn off sprites
         ;------------------------------------------------------
         ; Display keyboard shortcuts (part 1)
         ;------------------------------------------------------

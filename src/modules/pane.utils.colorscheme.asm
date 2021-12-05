@@ -174,6 +174,11 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         mov   @tv.ruler.visible,tmp0
         jeq   pane.action.colorscheme.fbdump.noruler
+
+        mov   @cmdb.dialog,tmp0
+        ci    tmp0,id.dialog.help   ; Help dialog active?
+        jeq   pane.action.colorscheme.fbdump.noruler
+                                    ; Yes, skip ruler
         ;-------------------------------------------------------
         ; Ruler visible on screen (TAT)
         ;-------------------------------------------------------
@@ -214,6 +219,11 @@ pane.action.colorscheme.fbdump:
         ;-------------------------------------------------------
         ; Colorize marked lines
         ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp0
+        ci    tmp0,id.dialog.help   ; Help dialog active?
+        jeq   pane.action.colorscheme.cmdbpane
+                                    ; Yes, skip marked lines
+
         mov   @parm2,tmp0
         ci    tmp0,>ffff            ; Skip colorize flag is on?
         jeq   pane.action.colorscheme.cmdbpane
@@ -320,6 +330,11 @@ pane.action.colorscheme.statline:
         ;-------------------------------------------------------
         ; Dump colors for ruler if visible (TAT)
         ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp1
+        ci    tmp1,id.dialog.help   ; Help dialog active?
+        jeq   pane.action.colorscheme.cursorcolor
+                                    ; Yes, skip ruler
+
         mov   @tv.ruler.visible,tmp1
         jeq   pane.action.colorscheme.cursorcolor
 

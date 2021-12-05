@@ -32,6 +32,10 @@ dialog.insert.setup:
         ;------------------------------------------------------
         ; Include line number in pane header
         ;------------------------------------------------------
+        bl    @film
+              data cmdb.panhead.buf,>00,80
+                                    ; Clear pane header buffer
+
         bl    @cpym2m
               data txt.head.insert,cmdb.panhead.buf,25
 

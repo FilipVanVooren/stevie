@@ -15,7 +15,7 @@
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
-s
+
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************

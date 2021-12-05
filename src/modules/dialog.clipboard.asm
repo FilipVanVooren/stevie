@@ -32,6 +32,10 @@ dialog.clipboard.setup:
         ;------------------------------------------------------
         ; Include line number in pane header
         ;------------------------------------------------------
+        bl    @film
+              data cmdb.panhead.buf,>00,80
+                                    ; Clear pane header buffer
+
         bl    @cpym2m
               data txt.head.clipboard,cmdb.panhead.buf,27
 

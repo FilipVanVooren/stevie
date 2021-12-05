@@ -16,7 +16,6 @@
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
-
 ***************************************************************
 * Spectra2 core configuration
 ********|*****|*********************|**************************

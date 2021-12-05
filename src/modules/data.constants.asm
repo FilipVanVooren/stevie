@@ -84,7 +84,15 @@ tibasic.32x30:
 * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
 * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 * ; VDP#7 Set screen background color
+* ;
+* ; The table by itself is not sufficient for turning on 30 rows
+* ; mode. You also need to unlock the F18a and set VR49 (>31) to
+* ; value >40.
 
+
+***************************************************************
+* Sprite Attribute Table
+*--------------------------------------------------------------
 romsat:                             
                                     ; YX, initial shape and color
         data  >0000,>0001           ; Cursor
