@@ -292,22 +292,20 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
-        ; Dump colors for error line (TAT)
+        ; Dump colors for error pane (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.errpane:        
         mov   @tv.error.visible,tmp0
         jeq   pane.action.colorscheme.statline
-                                    ; Skip if error line pane is hidden
+                                    ; Skip if error pane is hidden
                                     
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1           ; Pass color combination
 
-        li    tmp1,pane.botrow-1    ; 
-        mov   tmp1,@parm2           ; Error line on screen
-
-        bl    @colors.line.set      ; Load color combination for line
-                                    ; \ i  @parm1 = Color combination
-                                    ; / i  @parm2 = Row on physical screen
+        bl    @pane.errline.drawcolor
+                                    ; Draw color on rows in error pane
+                                    ; \ i  @tv.error.rows = Number of rows
+                                    ; / i  @parm1         = Color combination
         ;-------------------------------------------------------
         ; Dump colors for top line and bottom line (TAT)
         ;-------------------------------------------------------

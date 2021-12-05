@@ -85,7 +85,7 @@ tv.reset:
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
-        bl    @errline.init         ; Initialize error line
+        bl    @errpane.init         ; Initialize error pane
         ;------------------------------------------------------        
         ; Remove markers and shortcuts
         ;------------------------------------------------------        

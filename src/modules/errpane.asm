@@ -1,11 +1,11 @@
-* FILE......: errline.asm
-* Purpose...: Stevie Editor - Error line utilities
+* FILE......: errpane.asm
+* Purpose...: Error pane utilities
 
 ***************************************************************
-* errline.init
-* Initialize error line
+* errpane.init
+* Initialize error pane
 ***************************************************************
-* bl @errline.init
+* bl @errpane.init
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -14,27 +14,35 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Notes
 ***************************************************************
-errline.init:
+errpane.init:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------
         clr   @tv.error.visible     ; Set to hidden
+        li    tmp0,5
+        mov   tmp0,@tv.error.rows   ; Number of rows in pane
 
         bl    @film
               data tv.error.msg,0,160
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-errline.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+errpane.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 

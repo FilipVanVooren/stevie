@@ -9,7 +9,7 @@
         copy  "idx.asm"                ; Index management           
         copy  "edb.asm"                ; Editor Buffer   
         copy  "cmdb.asm"               ; Command buffer            
-        copy  "errline.asm"            ; Error line
+        copy  "errpane.asm"            ; Error pane
         copy  "tv.asm"                 ; Main editor configuration        
         copy  "tv.utils.asm"           ; General purpose utility functions
         copy  "mem.asm"                ; Memory Management (SAMS)

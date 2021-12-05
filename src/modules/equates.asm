@@ -211,8 +211,9 @@ tv.pane.focus     equ  tv.top + 34     ; Identify pane that has focus
 tv.task.oneshot   equ  tv.top + 36     ; Pointer to one-shot routine
 tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 40     ; Error pane visible
-tv.error.msg      equ  tv.top + 42     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 202    ; End of structure
+tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
+tv.error.msg      equ  tv.top + 44     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 204    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
