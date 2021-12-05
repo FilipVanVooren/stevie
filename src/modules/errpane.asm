@@ -31,8 +31,8 @@ errpane.init:
         ; Initialize
         ;------------------------------------------------------
         clr   @tv.error.visible     ; Set to hidden
-        li    tmp0,5
-        mov   tmp0,@tv.error.rows   ; Number of rows in pane
+        li    tmp0,3
+        mov   tmp0,@tv.error.rows   ; Number of rows in error pane
 
         bl    @film
               data tv.error.msg,0,160

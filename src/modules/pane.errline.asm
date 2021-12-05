@@ -118,7 +118,7 @@ pane.errline.show:
         ; Show error message
         ;------------------------------------------------------
         bl    @at
-              byte pane.botrow-2,0  ; Set cursor
+              byte pane.botrow-3,0  ; Set cursor
 
         mov   @outparm1,tmp1        ; \ Display error message
         bl    @xutst0               ; /

@@ -149,9 +149,13 @@ fm.loadsave.cb.indicator1.filename:
         abs   @fh.offsetopcode
         jeq   fm.loadsave.cb.indicator1.exit
 
+        bl    @hchar
+              byte 0,52,32,20       
+              data EOL              ; Erase any previous message
+              
         bl    @putat
-              byte pane.botrow,38
-              data txt.fastmode     ; Display "FastMode"
+              byte 0,52             ; Position cursor
+              data txt.fastmode     ; Display "FastMode"       
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -396,7 +400,7 @@ fm.loadsave.cb.fioerr:
         ; Build I/O error message
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,55
+              byte pane.botrow,0,32,80
               data EOL              ; Erase loading/saving indicator
         ;------------------------------------------------------
         ; Determine message to display
@@ -488,6 +492,14 @@ fm.loadsave.cb.fioerr.addmsg:
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing overlay message
+        ;-------------------------------------------------------          
+        li    tmp0,pane.topline.oneshot.clearmsg
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay            
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
