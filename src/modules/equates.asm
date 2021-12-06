@@ -114,6 +114,7 @@ vdp.sit.size              equ  (pane.botrow + 1) * 80
                                        ; VDP SIT size 80 columns, 24/30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
+tv.1timeonly              equ  254     ; One-time only flag indicator
 *--------------------------------------------------------------
 * Suffix characters for clipboards
 *--------------------------------------------------------------

@@ -82,6 +82,7 @@ pane.action.colorscheme.cycle.exit:
 * @tv.colorscheme = Index into color scheme table
 * @parm1          = Skip screen off if >FFFF
 * @parm2          = Skip colorizing marked lines if >FFFF
+* @parm3          = Only colorize CMDB pane if >FFFF
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -103,9 +104,13 @@ pane.action.colorscheme.load:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         dect  stack
-        mov   @parm1,*stack         ; Push parm1        
+        mov   @parm1,*stack         ; Push parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push parm3
         ;-------------------------------------------------------
-        ; Turn screen of
+        ; Turn screen off
         ;-------------------------------------------------------
         mov   @parm1,tmp0
         ci    tmp0,>ffff            ; Skip flag set?
@@ -146,6 +151,13 @@ pane.action.colorscheme.load:
         mov   *tmp0,tmp1            ; Get colors MNOP
         srl   tmp1,8                ; \ Right align MN and
         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
+        ;-------------------------------------------------------
+        ; Check if only CMDB needs to be colorized
+        ;-------------------------------------------------------
+        mov   @parm3,tmp0
+        ci    tmp0,>ffff            ; Only colorize CMDB pane ?
+        jeq   pane.action.colorscheme.cmdbpane
+                                    ; Yes, shortcut jump to CMDB pane
         ;-------------------------------------------------------
         ; Get FG color for ruler
         ;-------------------------------------------------------
@@ -292,6 +304,13 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
+        ; Exit early if only CMDB needed to be colorized
+        ;-------------------------------------------------------
+        mov   @parm3,tmp0
+        ci    tmp0,>ffff            ; Only colorize CMDB pane ?
+        jeq   pane.action.colorscheme.cursorcolor.cmdb
+                                    ; Yes, shortcut to CMDB cursor color
+        ;-------------------------------------------------------
         ; Dump colors for error pane (TAT)
         ;-------------------------------------------------------
 pane.action.colorscheme.errpane:        
@@ -368,6 +387,8 @@ pane.action.colorscheme.cursorcolor.fb:
         ;-------------------------------------------------------
 pane.action.colorscheme.load.exit:
         bl    @scron                ; Turn screen on
+        mov   *stack+,@parm3        ; Pop @parm3        
+        mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3

@@ -42,19 +42,14 @@ pane.cmdb.show:
         mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
 
         seto  @cmdb.visible         ; Show pane
-        seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)
+
+        li    tmp0,tv.1timeonly     ; \ Set CMDB dirty flag (trigger redraw),
+        mov   tmp0,@cmdb.dirty      ; / but colorize CMDB pane only once.
 
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 
         bl    @pane.errline.hide    ; Hide error pane
-
-        seto  @parm1                ; Do not turn screen off while
-                                    ; reloading color scheme
-
-        bl    @pane.action.colorscheme.load
-                                    ; Reload color scheme
-                                    ; i  parm1 = Skip screen off if >FFFF
 
 pane.cmdb.show.exit:
         ;------------------------------------------------------

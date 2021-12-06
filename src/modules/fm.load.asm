@@ -66,15 +66,24 @@ fm.loadfile.clear:
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
         mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
 
-
+        seto  @parm1                ; Do not turn screen off while
+                                    ; reloading color scheme
         seto  @parm2                ; Skip marked lines colorization
-        bl    @pane.action.colorscheme.load
-                                    ; Load color scheme and turn on screen
-                                    ; \ i  @tv.colorscheme = Index color scheme
-                                    ; | i  @parm1 = Skip screen off if >FFFF
-                                    ; / i  @parm2 = Skip colorizing marked lines
+        clr   @parm3                ; Colorize all panes
 
+        bl    @pane.action.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
+
+
+        mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         ;-------------------------------------------------------

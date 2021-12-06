@@ -60,10 +60,16 @@ pane.cmdb.hide.rest:
         ;------------------------------------------------------
         seto  @parm1                ; Do not turn screen off while
                                     ; reloading color scheme
+        clr   @parm2                ; Don't skip colorizing marked lines
+        clr   @parm3                ; Colorize all panes
 
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
-                                    ; i  parm1 = Skip screen off if >FFFF
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
         ;------------------------------------------------------
         ; Show cursor again
         ;------------------------------------------------------

@@ -266,9 +266,16 @@ tibasic.return:
               data >0360            ; based attributes (>40 * >60 = >1800)
 
         clr   @parm1                ; Screen off while reloading color scheme
+        clr   @parm2                ; Don't skip colorizing marked lines
+        clr   @parm3                ; Colorize all panes
+
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
-                                    ; i  parm1 = Skip screen off if >FFFF                      
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

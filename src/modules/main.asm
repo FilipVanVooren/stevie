@@ -86,8 +86,17 @@ main.continue:
         ;------------------------------------------------------
         ; Load colorscheme amd turn on screen
         ;------------------------------------------------------
-        bl    @pane.action.colorscheme.Load
-                                    ; Load color scheme and turn on screen
+        clr   @parm1                ; Screen off while reloading color scheme
+        clr   @parm2                ; Don't skip colorizing marked lines
+        clr   @parm3                ; Colorize all panes
+
+        bl    @pane.action.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
         ;-------------------------------------------------------
         ; Setup editor tasks & hook
         ;-------------------------------------------------------

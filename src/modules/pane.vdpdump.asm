@@ -59,7 +59,43 @@ pane.vdpdump.cmdb.check
 pane.vdpdump.cmdb.draw:
         mov   @cmdb.dirty,tmp0      ; Command buffer dirty?
         jeq   pane.vdpdump.exit     ; No, skip update
+        ;-------------------------------------------------------
+        ; Colorize CMDB pane if "one-time only flag" set?
+        ;-------------------------------------------------------
+        ci    tmp0,tv.1timeonly
+        jne   pane.vdpdump.cmdb.draw.content
+        ;-------------------------------------------------------
+        ; Colorize the CMDB pane
+        ;-------------------------------------------------------
+pane.vdpdump.cmdb.draw.colorscheme:        
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
 
+        seto  @parm1                ; Do not turn screen off 
+        seto  @parm2                ; Skip colorzing marked lines
+        seto  @parm3                ; Only colorize CMDB pane
+
+        bl    @pane.action.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
+
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
+
+        seto  @cmdb.dirty           ; Remove special "one-time only" flag
+        ;-------------------------------------------------------
+        ; Show content in CMDB pane
+        ;-------------------------------------------------------
+pane.vdpdump.cmdb.draw.content:
         bl    @pane.cmdb.draw       ; Draw CMDB pane  
         clr   @cmdb.dirty           ; Reset CMDB dirty flag
         jmp   pane.vdpdump.exit     ; Exit early

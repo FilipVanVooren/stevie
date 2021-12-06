@@ -46,7 +46,7 @@ pane.errline.drawcolor.loop:
 
         inc   tmp1                  ; Next row
         c     tmp1,tmp0             ; Last row reached?
-        jle   pane.errline.drawcolor.loop
+        jlt   pane.errline.drawcolor.loop
                                     ; Not yet, next iteration
         ;-------------------------------------------------------
         ; Exit
