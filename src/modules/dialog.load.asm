@@ -35,6 +35,8 @@ dialog.load:
         ; Setup dialog
         ;-------------------------------------------------------
 dialog.load.setup:        
+        bl    @fb.scan.fname        ; Get possible device/filename
+
         li    tmp0,id.dialog.load
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 

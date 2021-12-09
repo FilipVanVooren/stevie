@@ -33,7 +33,7 @@ dialog.clipboard.setup:
         ; Include line number in pane header
         ;------------------------------------------------------
         bl    @film
-              data cmdb.panhead.buf,>00,80
+              data cmdb.panhead.buf,>00,50
                                     ; Clear pane header buffer
 
         bl    @cpym2m
@@ -59,7 +59,8 @@ dialog.clipboard.setup:
 
         li    tmp0,32
         sla   tmp0,8
-        movb  tmp0,@cmdb.panhead.buf ; Set length byte
+        movb  tmp0,@cmdb.panhead.buf 
+                                    ; Set length byte
 
         li    tmp0,cmdb.panhead.buf 
         mov   tmp0,@cmdb.panhead    ; Header for dialog

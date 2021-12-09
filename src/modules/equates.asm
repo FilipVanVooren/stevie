@@ -343,7 +343,8 @@ cmdb.cmdall       equ  cmdb.struct + 40; Current command including length-byte
 cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
 cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
 cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
-cmdb.free         equ  cmdb.struct +200; End of structure
+cmdb.dflt.fname   equ  cmdb.struct +172; Default for filename
+cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
 * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------
