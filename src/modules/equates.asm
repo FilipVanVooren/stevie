@@ -127,7 +127,7 @@ clip5                     equ  >3500   ; '5'
 * File work mode
 *--------------------------------------------------------------
 id.file.loadfile          equ  1       ; Load file
-id.file.loadblock         equ  2       ; Insert block from file
+id.file.loadblock         equ  2       ; Insert file as block
 id.file.savefile          equ  3       ; Save file 
 id.file.saveblock         equ  4       ; Save block to file
 id.file.clipblock         equ  5       ; Save block to clipboard
@@ -178,15 +178,15 @@ tibasic.status    equ  core1.top + 44  ; TI Basic status flags
                                        ; 0000 = Initialize TI-Basic
                                        ; 0001 = TI-Basic reentry
 trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
-core1.free        equ  core1.top + 48  ; End of structure
+ramsat            equ  core1.top + 48  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 64  ; Timers (80 bytes)
+core1.free        equ  core1.top + 144 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
 core2.top         equ  >a100           ; Structure begin
-timers            equ  core2.top       ; Timer table
-rambuf            equ  core2.top + 64  ; RAM workbuffer (160 bytes)
-ramsat            equ  core2.top + 224 ; Sprite Attr. Table in RAM (14 bytes)
-core2.free        equ  core2.top + 238 ; End of structure
+rambuf            equ  core2.top       ; RAM workbuffer
+core2.free        equ  core2.top + 256 ; End of structure
 *--------------------------------------------------------------
 * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------

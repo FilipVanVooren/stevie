@@ -228,6 +228,10 @@ fm.loadsave.cb.indicator2.kb:
         c     @fh.workmode,tmp0    
         jeq   fm.loadsave.cb.indicator2.kb.processed
 
+        li    tmp0,id.file.loadblock
+        c     @fh.workmode,tmp0    
+        jeq   fm.loadsave.cb.indicator2.kb.processed
+
         li    tmp0,id.file.savefile
         c     @fh.workmode,tmp0        
         jeq   fm.loadsave.cb.indicator2.kb.processed

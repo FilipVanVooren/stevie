@@ -99,7 +99,7 @@ pane.errline.show:
         li    tmp0,tv.error.msg
         mov   tmp0,@parm1           ; Get pointer to string
                                     
-        li    tmp0,160
+        li    tmp0,240
         mov   tmp0,@parm2           ; Set requested length
         
         li    tmp0,32

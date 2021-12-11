@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.61120
+     **** ****     > stevie_b0.asm.69175
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 211211-2109440
+0009               * File: stevie_b0.asm               ; Version 211211-2139530
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -219,7 +219,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0127               * File work mode
 0128               *--------------------------------------------------------------
 0129      0001     id.file.loadfile          equ  1       ; Load file
-0130      0002     id.file.loadblock         equ  2       ; Insert block from file
+0130      0002     id.file.loadblock         equ  2       ; Insert file as block
 0131      0003     id.file.savefile          equ  3       ; Save file
 0132      0004     id.file.saveblock         equ  4       ; Save block to file
 0133      0005     id.file.clipblock         equ  5       ; Save block to clipboard
@@ -270,15 +270,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0178                                                      ; 0000 = Initialize TI-Basic
 0179                                                      ; 0001 = TI-Basic reentry
 0180      A02E     trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
-0181      A030     core1.free        equ  core1.top + 48  ; End of structure
-0182               *--------------------------------------------------------------
-0183               * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
+0181      A030     ramsat            equ  core1.top + 48  ; Sprite Attr. Table in RAM (14 bytes)
+0182      A040     timers            equ  core1.top + 64  ; Timers (80 bytes)
+0183      A090     core1.free        equ  core1.top + 144 ; End of structure
 0184               *--------------------------------------------------------------
-0185      A100     core2.top         equ  >a100           ; Structure begin
-0186      A100     timers            equ  core2.top       ; Timer table
-0187      A140     rambuf            equ  core2.top + 64  ; RAM workbuffer (160 bytes)
-0188      A1E0     ramsat            equ  core2.top + 224 ; Sprite Attr. Table in RAM (14 bytes)
-0189      A1EE     core2.free        equ  core2.top + 238 ; End of structure
+0185               * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
+0186               *--------------------------------------------------------------
+0187      A100     core2.top         equ  >a100           ; Structure begin
+0188      A100     rambuf            equ  core2.top       ; RAM workbuffer
+0189      A200     core2.free        equ  core2.top + 256 ; End of structure
 0190               *--------------------------------------------------------------
 0191               * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
 0192               *--------------------------------------------------------------
@@ -472,7 +472,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0380               * Heap                                @>f000-ffff  (4096 bytes)
 0381               *--------------------------------------------------------------
 0382      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -612,7 +612,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -672,7 +672,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1261,7 +1261,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      612C 2AA0     
 0096 612E 0015                   byte 0,21             ; \ i  p0 = YX position
 0097 6130 FFF6                   data >fff6            ; | i  p1 = Pointer to 16 bit word
-0098 6132 A140                   data rambuf           ; | i  p2 = Pointer to ram buffer
+0098 6132 A100                   data rambuf           ; | i  p2 = Pointer to ram buffer
 0099 6134 4130                   byte 65,48            ; | i  p3 = MSB offset for ASCII digit a-f
 0100                                                   ; /         LSB offset for ASCII digit 0-9
 0101                       ;------------------------------------------------------
@@ -1276,7 +1276,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6140 2AA0     
 0108 6142 0115                   byte 1,21             ; \ i  p0 = YX position
 0109 6144 FFCE                   data >ffce            ; | i  p1 = Pointer to 16 bit word
-0110 6146 A140                   data rambuf           ; | i  p2 = Pointer to ram buffer
+0110 6146 A100                   data rambuf           ; | i  p2 = Pointer to ram buffer
 0111 6148 4130                   byte 65,48            ; | i  p3 = MSB offset for ASCII digit a-f
 0112                                                   ; /         LSB offset for ASCII digit 0-9
 0113                       ;------------------------------------------------------
@@ -1333,7 +1333,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0157 618E 06A0  32         bl    @mknum
      6190 2AAA     
 0158 6192 8302                   data r1hb             ; \ i  p0 = Pointer to 16 bit unsigned word
-0159 6194 A140                   data rambuf           ; | i  p1 = Pointer to ram buffer
+0159 6194 A100                   data rambuf           ; | i  p1 = Pointer to ram buffer
 0160 6196 3020                   byte 48,32            ; | i  p2 = MSB offset for ASCII digit a-f
 0161                                                   ; /         LSB offset for ASCII digit 0-9
 0162               
@@ -1345,11 +1345,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0167 619E 0204  20         li    tmp0,>0400            ; Set string length-prefix byte
      61A0 0400     
 0168 61A2 D804  38         movb  tmp0,@rambuf          ;
-     61A4 A140     
+     61A4 A100     
 0169               
 0170 61A6 06A0  32         bl    @putstr               ; Put length-byte prefixed string at current YX
      61A8 2432     
-0171 61AA A140                   data rambuf           ; \ i  p0 = Pointer to ram buffer
+0171 61AA A100                   data rambuf           ; \ i  p0 = Pointer to ram buffer
 0172                                                   ; /
 0173               
 0174 61AC 06A0  32         bl    @setx                 ; Set cursor X position
@@ -1370,7 +1370,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0185 61C2 06A0  32         bl    @mknum
      61C4 2AAA     
 0186 61C6 8302                   data r1hb             ; \ i  p0 = Pointer to 16 bit unsigned word
-0187 61C8 A140                   data rambuf           ; | i  p1 = Pointer to ram buffer
+0187 61C8 A100                   data rambuf           ; | i  p1 = Pointer to ram buffer
 0188 61CA 3020                   byte 48,32            ; | i  p2 = MSB offset for ASCII digit a-f
 0189                                                   ; /         LSB offset for ASCII digit 0-9
 0190                       ;------------------------------------------------------
@@ -1380,7 +1380,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0194 61CC 06A0  32         bl    @mkhex                ; Convert hex word to string
      61CE 2A1C     
 0195 61D0 8300                   data r0hb             ; \ i  p0 = Pointer to 16 bit word
-0196 61D2 A140                   data rambuf           ; | i  p1 = Pointer to ram buffer
+0196 61D2 A100                   data rambuf           ; | i  p1 = Pointer to ram buffer
 0197 61D4 4130                   byte 65,48            ; | i  p2 = MSB offset for ASCII digit a-f
 0198                                                   ; /         LSB offset for ASCII digit 0-9
 0199               
@@ -1401,11 +1401,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0211 61E8 0204  20         li    tmp0,>0400            ; Set string length-prefix byte
      61EA 0400     
 0212 61EC D804  38         movb  tmp0,@rambuf          ;
-     61EE A140     
+     61EE A100     
 0213               
 0214 61F0 06A0  32         bl    @putstr               ; Put length-byte prefixed string at current YX
      61F2 2432     
-0215 61F4 A140                   data rambuf           ; \ i  p0 = Pointer to ram buffer
+0215 61F4 A100                   data rambuf           ; \ i  p0 = Pointer to ram buffer
 0216                                                   ; /
 0217               
 0218 61F6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
@@ -1501,7 +1501,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6266 18               byte  24
-0270 6267   42             text  'Build-ID  211211-2109440'
+0270 6267   42             text  'Build-ID  211211-2139530'
      6268 7569     
      626A 6C64     
      626C 2D49     
@@ -1511,8 +1511,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6274 3231     
      6276 312D     
      6278 3231     
-     627A 3039     
-     627C 3434     
+     627A 3339     
+     627C 3533     
      627E 30       
 0271                       even
 0272               
@@ -5906,7 +5906,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7118 0040     
 0370 711A 0460  28         b     @main                 ; Give control to main program
      711C 3A9E     
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0087                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6866,7 +6866,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0027 744A 06A0  32         bl    @mknum                ; Convert unsigned number to string
      744C 2AAA     
 0028 744E A000                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
-0029 7450 A140                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
+0029 7450 A100                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
 0030 7452 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
 0031 7453   20                   byte 32               ; / i p2L = Char for replacing leading 0's
 0032               
@@ -6878,7 +6878,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0037               
 0038 745E 06A0  32         bl    @trimnum              ; Trim unsigned number string
      7460 2B02     
-0039 7462 A140                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
+0039 7462 A100                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
 0040 7464 A026                   data unpacked.string  ; | i p1  = Pointer to output buffer
 0041 7466 0020                   data 32               ; / i p2  = Padding char to match against
 0042                       ;-------------------------------------------------------
@@ -8588,7 +8588,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.61120
+                   < stevie_b0.asm.69175
 0088                       ;------------------------------------------------------
 0089                       ; Activate bank 1 and branch to >6046
 0090                       ;------------------------------------------------------
