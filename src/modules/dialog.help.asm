@@ -160,6 +160,7 @@ dialog.help.help.part1:
 
 dialog.help.help.part2:
         #string '------------- File ----------------'
+        #string 'Ctrl a   ^a   Append file'
         #string 'Ctrl i   ^i   Insert file at line'
         #string 'Ctrl c   ^c   Copy clipboard to line'
         #string 'Ctrl o   ^o   Open file'
@@ -175,7 +176,6 @@ dialog.help.help.part2:
         #string 'Ctrl m   ^m   Move block'
         #string 'Ctrl s   ^s   Save block to file'
         #string 'Ctrl ^1..^5   Copy to clipboard 1-5'
-        #string ' '
         #string '------------- Modifiers -----------'
         #string 'Fctn 1        Delete character'
         #string 'Fctn 2        Insert character'

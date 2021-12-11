@@ -1,8 +1,11 @@
+
+
+
 * FILE......: pane.utils.colorscheme.asm
 * Purpose...: Stevie Editor - Color scheme for panes
 
 ***************************************************************
-* pane.action.colorschene.cycle
+* pane.action.colorscheme.cycle
 * Cycle through available color scheme
 ***************************************************************
 * bl  @pane.action.colorscheme.cycle
@@ -154,8 +157,7 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         ; Check if only CMDB needs to be colorized
         ;-------------------------------------------------------
-        mov   @parm3,tmp0
-        ci    tmp0,>ffff            ; Only colorize CMDB pane ?
+        c     @parm3,@w$ffff        ; Only colorize CMDB pane ?
         jeq   pane.action.colorscheme.cmdbpane
                                     ; Yes, shortcut jump to CMDB pane
         ;-------------------------------------------------------
