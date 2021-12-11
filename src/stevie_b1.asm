@@ -107,7 +107,6 @@ main:
         copy  "fb.cursor.home.asm"          ; Cursor home
         copy  "fb.insert.line.asm"          ; Insert new line
         copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
-        copy  "fb.scan.fname.asm"           ; Scan line for device & filename
         copy  "fb.refresh.asm"              ; Refresh framebuffer
         copy  "fb.restore.asm"              ; Restore framebuffer to normal opr.
         ;-----------------------------------------------------------------------

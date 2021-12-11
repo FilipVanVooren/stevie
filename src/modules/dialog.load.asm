@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
@@ -23,6 +23,8 @@ dialog.load:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
@@ -67,16 +69,19 @@ dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set command line
-        ;-------------------------------------------------------
-        li    tmp0,edb.filename     ; Set filename
-        mov   tmp0,@parm1           ; Get pointer to string
+        ;-------------------------------------------------------         
+        li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
+        mov   *tmp0,tmp1            ; Anything set?
+        jeq   dialog.load.cursor    ; No default filename, skip
 
+        mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
+dialog.load.cursor:
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2 
                                     ; Get cursor shape and color
@@ -84,6 +89,7 @@ dialog.load.keylist:
         ; Exit
         ;-------------------------------------------------------
 dialog.load.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller                                         

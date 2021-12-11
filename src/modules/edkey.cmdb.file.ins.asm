@@ -55,7 +55,8 @@ edkey.action.cmdb.ins.file:
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
 
-        mov   @outparm1,@parm2
+        mov   @outparm1,@parm2      ; \ Line to insert file at is the editor
+        inc   @parm2                ; / line where the cursor is at +1
         ;-------------------------------------------------------
         ; Get device/filename
         ;-------------------------------------------------------

@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b6.asm.27446
+     **** ****     > stevie_b6.asm.49119
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b6.asm               ; Version 211209-1936390
+0009               * File: stevie_b6.asm               ; Version 211211-1950470
 0010               *
 0011               * Bank 6 "Jenifer"
 0012               * VDP utility functions
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -435,7 +435,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0343      A728     cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
 0344      A729     cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
 0345      A77A     cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
-0346      A7AC     cmdb.deflt.fname  equ  cmdb.struct +172; Default for filename
+0346      A7AC     cmdb.dflt.fname   equ  cmdb.struct +172; Default for filename
 0347      A800     cmdb.free         equ  cmdb.struct +256; End of structure
 0348               *--------------------------------------------------------------
 0349               * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
@@ -472,7 +472,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0380               * Heap                                @>f000-ffff  (4096 bytes)
 0381               *--------------------------------------------------------------
 0382      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -612,7 +612,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -663,16 +663,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2I'
+0045 6011   53             text  'STEVIE 1.2J'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 3249     
+     601A 324A     
 0046                       even
 0047               
 0049               
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1448,18 +1448,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  211209-1936390'
+0270 21ED   42             text  'Build-ID  211211-1950470'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
      21F4 4420     
      21F6 2032     
      21F8 3131     
-     21FA 3230     
-     21FC 392D     
+     21FA 3231     
+     21FC 312D     
      21FE 3139     
-     2200 3336     
-     2202 3339     
+     2200 3530     
+     2202 3437     
      2204 30       
 0271                       even
 0272               
@@ -5853,7 +5853,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      309E 0040     
 0370 30A0 0460  28         b     @main                 ; Give control to main program
      30A2 6046     
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0042                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6628,7 +6628,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0013                       copy  "tv.asm"                 ; Main editor configuration
      **** ****     > tv.asm
 0001               * FILE......: tv.asm
-0002               * Purpose...: Stevie Editor - Main editor configuration
+0002               * Purpose...: Initialize editor
 0003               
 0004               ***************************************************************
 0005               * tv.init
@@ -6696,63 +6696,96 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0055 338C C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0056 338E C2F9  30         mov   *stack+,r11           ; Pop R11
 0057 3390 045B  20         b     *r11                  ; Return to caller
-0058               
-0059               
-0060               
-0061               ***************************************************************
-0062               * tv.reset
-0063               * Reset editor (clear buffer)
-0064               ***************************************************************
-0065               * bl @tv.reset
-0066               *--------------------------------------------------------------
-0067               * INPUT
-0068               * none
-0069               *--------------------------------------------------------------
-0070               * OUTPUT
-0071               * none
-0072               *--------------------------------------------------------------
-0073               * Register usage
-0074               * r11
-0075               *--------------------------------------------------------------
-0076               * Notes
-0077               ***************************************************************
-0078               tv.reset:
-0079 3392 0649  14         dect  stack
-0080 3394 C64B  30         mov   r11,*stack            ; Save return address
-0081                       ;------------------------------------------------------
-0082                       ; Reset editor
-0083                       ;------------------------------------------------------
-0084 3396 06A0  32         bl    @cmdb.init            ; Initialize command buffer
-     3398 32E0     
-0085 339A 06A0  32         bl    @edb.init             ; Initialize editor buffer
-     339C 3296     
-0086 339E 06A0  32         bl    @idx.init             ; Initialize index
-     33A0 3196     
-0087 33A2 06A0  32         bl    @fb.init              ; Initialize framebuffer
-     33A4 3134     
-0088 33A6 06A0  32         bl    @errpane.init         ; Initialize error pane
-     33A8 331C     
-0089                       ;------------------------------------------------------
-0090                       ; Remove markers and shortcuts
-0091                       ;------------------------------------------------------
-0092 33AA 06A0  32         bl    @hchar
-     33AC 27DC     
-0093 33AE 0034                   byte 0,52,32,18           ; Remove markers
-     33B0 2012     
-0094 33B2 1D00                   byte pane.botrow,0,32,51  ; Remove block shortcuts
-     33B4 2033     
-0095 33B6 FFFF                   data eol
-0096                       ;-------------------------------------------------------
-0097                       ; Exit
-0098                       ;-------------------------------------------------------
-0099               tv.reset.exit:
-0100 33B8 C2F9  30         mov   *stack+,r11           ; Pop R11
-0101 33BA 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
 0014                       copy  "tv.utils.asm"           ; General purpose utility functions
      **** ****     > tv.utils.asm
 0001               * FILE......: tv.utils.asm
 0002               * Purpose...: General purpose utility functions
+0003               
+0004               ***************************************************************
+0005               * tv.quit
+0006               * Reset computer to monitor
+0007               ***************************************************************
+0008               * b    @tv.quit
+0009               *--------------------------------------------------------------
+0010               * INPUT
+0011               * none
+0012               *--------------------------------------------------------------
+0013               * OUTPUT
+0014               * none
+0015               *--------------------------------------------------------------
+0016               * Register usage
+0017               * none
+0018               ***************************************************************
+0019               tv.quit:
+0020                       ;-------------------------------------------------------
+0021                       ; Reset/lock F18a
+0022                       ;-------------------------------------------------------
+0023 3392 06A0  32         bl    @f18rst               ; Reset and lock the F18A
+     3394 27B0     
+0024                       ;-------------------------------------------------------
+0025                       ; Activate bank 0 and exit
+0026                       ;-------------------------------------------------------
+0027 3396 04E0  34         clr   @bank0.rom            ; Activate bank 0
+     3398 6000     
+0028 339A 0420  54         blwp  @0                    ; Reset to monitor
+     339C 0000     
+0029               
+0030               
+0031               ***************************************************************
+0032               * tv.reset
+0033               * Reset editor (clear buffer)
+0034               ***************************************************************
+0035               * bl @tv.reset
+0036               *--------------------------------------------------------------
+0037               * INPUT
+0038               * none
+0039               *--------------------------------------------------------------
+0040               * OUTPUT
+0041               * none
+0042               *--------------------------------------------------------------
+0043               * Register usage
+0044               * r11
+0045               *--------------------------------------------------------------
+0046               * Notes
+0047               ***************************************************************
+0048               tv.reset:
+0049 339E 0649  14         dect  stack
+0050 33A0 C64B  30         mov   r11,*stack            ; Save return address
+0051                       ;------------------------------------------------------
+0052                       ; Reset editor
+0053                       ;------------------------------------------------------
+0054 33A2 06A0  32         bl    @cmdb.init            ; Initialize command buffer
+     33A4 32E0     
+0055 33A6 06A0  32         bl    @edb.init             ; Initialize editor buffer
+     33A8 3296     
+0056 33AA 06A0  32         bl    @idx.init             ; Initialize index
+     33AC 3196     
+0057 33AE 06A0  32         bl    @fb.init              ; Initialize framebuffer
+     33B0 3134     
+0058 33B2 06A0  32         bl    @errpane.init         ; Initialize error pane
+     33B4 331C     
+0059                       ;------------------------------------------------------
+0060                       ; Remove markers and shortcuts
+0061                       ;------------------------------------------------------
+0062 33B6 06A0  32         bl    @hchar
+     33B8 27DC     
+0063 33BA 0034                   byte 0,52,32,18           ; Remove markers
+     33BC 2012     
+0064 33BE 1D00                   byte pane.botrow,0,32,51  ; Remove block shortcuts
+     33C0 2033     
+0065 33C2 FFFF                   data eol
+0066                       ;-------------------------------------------------------
+0067                       ; Exit
+0068                       ;-------------------------------------------------------
+0069               tv.reset.exit:
+0070 33C4 C2F9  30         mov   *stack+,r11           ; Pop R11
+0071 33C6 045B  20         b     *r11                  ; Return to caller
+                   < ram.resident.asm
+0015                       copy  "tv.unpack.uint16.asm"   ; Unpack 16bit unsigned integer to string
+     **** ****     > tv.unpack.uint16.asm
+0001               * FILE......: tv.unpack.uint16.asm
+0002               * Purpose...: Unpack 16bit unsigned integer to string
 0003               
 0004               ***************************************************************
 0005               * tv.unpack.uint16
@@ -6770,187 +6803,159 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0017               * none
 0018               ***************************************************************
 0019               tv.unpack.uint16:
-0020 33BC 0649  14         dect  stack
-0021 33BE C64B  30         mov   r11,*stack            ; Save return address
-0022 33C0 0649  14         dect  stack
-0023 33C2 C644  30         mov   tmp0,*stack           ; Push tmp0
+0020 33C8 0649  14         dect  stack
+0021 33CA C64B  30         mov   r11,*stack            ; Save return address
+0022 33CC 0649  14         dect  stack
+0023 33CE C644  30         mov   tmp0,*stack           ; Push tmp0
 0024                       ;------------------------------------------------------
 0025                       ; Initialize
 0026                       ;------------------------------------------------------
-0027 33C4 06A0  32         bl    @mknum                ; Convert unsigned number to string
-     33C6 2AAA     
-0028 33C8 A000                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
-0029 33CA A140                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
-0030 33CC 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
-0031 33CD   20                   byte 32               ; / i p2L = Char for replacing leading 0's
+0027 33D0 06A0  32         bl    @mknum                ; Convert unsigned number to string
+     33D2 2AAA     
+0028 33D4 A000                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
+0029 33D6 A140                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
+0030 33D8 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
+0031 33D9   20                   byte 32               ; / i p2L = Char for replacing leading 0's
 0032               
-0033 33CE 0204  20         li    tmp0,unpacked.string
-     33D0 A026     
-0034 33D2 04F4  30         clr   *tmp0+                ; Clear string 01
-0035 33D4 04F4  30         clr   *tmp0+                ; Clear string 23
-0036 33D6 04F4  30         clr   *tmp0+                ; Clear string 34
+0033 33DA 0204  20         li    tmp0,unpacked.string
+     33DC A026     
+0034 33DE 04F4  30         clr   *tmp0+                ; Clear string 01
+0035 33E0 04F4  30         clr   *tmp0+                ; Clear string 23
+0036 33E2 04F4  30         clr   *tmp0+                ; Clear string 34
 0037               
-0038 33D8 06A0  32         bl    @trimnum              ; Trim unsigned number string
-     33DA 2B02     
-0039 33DC A140                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
-0040 33DE A026                   data unpacked.string  ; | i p1  = Pointer to output buffer
-0041 33E0 0020                   data 32               ; / i p2  = Padding char to match against
+0038 33E4 06A0  32         bl    @trimnum              ; Trim unsigned number string
+     33E6 2B02     
+0039 33E8 A140                   data rambuf           ; \ i p0  = Pointer to 5 byte string buffer
+0040 33EA A026                   data unpacked.string  ; | i p1  = Pointer to output buffer
+0041 33EC 0020                   data 32               ; / i p2  = Padding char to match against
 0042                       ;-------------------------------------------------------
 0043                       ; Exit
 0044                       ;-------------------------------------------------------
 0045               tv.unpack.uint16.exit:
-0046 33E2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0047 33E4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0048 33E6 045B  20         b     *r11                  ; Return to caller
-0049               
-0050               
-0051               
-0052               
-0053               
-0054               ***************************************************************
-0055               * tv.pad.string
-0056               * pad string to specified length
-0057               ***************************************************************
-0058               * bl @tv.pad.string
-0059               *--------------------------------------------------------------
-0060               * INPUT
-0061               * @parm1 = Pointer to length-prefixed string
-0062               * @parm2 = Requested length
-0063               * @parm3 = Fill character
-0064               * @parm4 = Pointer to string buffer
-0065               *--------------------------------------------------------------
-0066               * OUTPUT
-0067               * @outparm1 = Pointer to padded string
-0068               *--------------------------------------------------------------
-0069               * Register usage
-0070               * none
-0071               ***************************************************************
-0072               tv.pad.string:
-0073 33E8 0649  14         dect  stack
-0074 33EA C64B  30         mov   r11,*stack            ; Push return address
-0075 33EC 0649  14         dect  stack
-0076 33EE C644  30         mov   tmp0,*stack           ; Push tmp0
-0077 33F0 0649  14         dect  stack
-0078 33F2 C645  30         mov   tmp1,*stack           ; Push tmp1
-0079 33F4 0649  14         dect  stack
-0080 33F6 C646  30         mov   tmp2,*stack           ; Push tmp2
-0081 33F8 0649  14         dect  stack
-0082 33FA C647  30         mov   tmp3,*stack           ; Push tmp3
-0083                       ;------------------------------------------------------
-0084                       ; Asserts
-0085                       ;------------------------------------------------------
-0086 33FC C120  34         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
-     33FE A000     
-0087 3400 D194  26         movb  *tmp0,tmp2            ; /
-0088 3402 0986  56         srl   tmp2,8                ; Right align
-0089 3404 C1C6  18         mov   tmp2,tmp3             ; Make copy of length-byte for later use
-0090               
-0091 3406 8806  38         c     tmp2,@parm2           ; String length > requested length?
-     3408 A002     
-0092 340A 1520  14         jgt   tv.pad.string.panic   ; Yes, crash
-0093                       ;------------------------------------------------------
-0094                       ; Copy string to buffer
-0095                       ;------------------------------------------------------
-0096 340C C120  34         mov   @parm1,tmp0           ; Get source address
-     340E A000     
-0097 3410 C160  34         mov   @parm4,tmp1           ; Get destination address
-     3412 A006     
-0098 3414 0586  14         inc   tmp2                  ; Also include length-byte in copy
-0099               
-0100 3416 0649  14         dect  stack
-0101 3418 C647  30         mov   tmp3,*stack           ; Push tmp3 (get overwritten by xpym2m)
-0102               
-0103 341A 06A0  32         bl    @xpym2m               ; Copy length-prefix string to buffer
-     341C 24F4     
-0104                                                   ; \ i  tmp0 = Source CPU memory address
-0105                                                   ; | i  tmp1 = Target CPU memory address
-0106                                                   ; / i  tmp2 = Number of bytes to copy
-0107               
-0108 341E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0109                       ;------------------------------------------------------
-0110                       ; Set length of new string
-0111                       ;------------------------------------------------------
-0112 3420 C120  34         mov   @parm2,tmp0           ; Get requested length
-     3422 A002     
-0113 3424 0A84  56         sla   tmp0,8                ; Left align
-0114 3426 C160  34         mov   @parm4,tmp1           ; Get pointer to buffer
-     3428 A006     
-0115 342A D544  30         movb  tmp0,*tmp1            ; Set new length of string
-0116 342C A147  18         a     tmp3,tmp1             ; \ Skip to end of string
-0117 342E 0585  14         inc   tmp1                  ; /
-0118                       ;------------------------------------------------------
-0119                       ; Prepare for padding string
-0120                       ;------------------------------------------------------
-0121 3430 C1A0  34         mov   @parm2,tmp2           ; \ Get number of bytes to fill
-     3432 A002     
-0122 3434 6187  18         s     tmp3,tmp2             ; |
-0123 3436 0586  14         inc   tmp2                  ; /
-0124               
-0125 3438 C120  34         mov   @parm3,tmp0           ; Get byte to padd
-     343A A004     
-0126 343C 0A84  56         sla   tmp0,8                ; Left align
-0127                       ;------------------------------------------------------
-0128                       ; Right-pad string to destination length
-0129                       ;------------------------------------------------------
-0130               tv.pad.string.loop:
-0131 343E DD44  32         movb  tmp0,*tmp1+           ; Pad character
-0132 3440 0606  14         dec   tmp2                  ; Update loop counter
-0133 3442 15FD  14         jgt   tv.pad.string.loop    ; Next character
-0134               
-0135 3444 C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
-     3446 A006     
-     3448 A010     
-0136 344A 1004  14         jmp   tv.pad.string.exit    ; Exit
-0137                       ;-----------------------------------------------------------------------
-0138                       ; CPU crash
-0139                       ;-----------------------------------------------------------------------
-0140               tv.pad.string.panic:
-0141 344C C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     344E FFCE     
-0142 3450 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     3452 2026     
-0143                       ;------------------------------------------------------
-0144                       ; Exit
-0145                       ;------------------------------------------------------
-0146               tv.pad.string.exit:
-0147 3454 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0148 3456 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0149 3458 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0150 345A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0151 345C C2F9  30         mov   *stack+,r11           ; Pop r11
-0152 345E 045B  20         b     *r11                  ; Return to caller
-0153               
-0154               
-0155               ***************************************************************
-0156               * tv.quit
-0157               * Reset computer to monitor
-0158               ***************************************************************
-0159               * b    @tv.quit
-0160               *--------------------------------------------------------------
-0161               * INPUT
-0162               * none
-0163               *--------------------------------------------------------------
-0164               * OUTPUT
-0165               * none
-0166               *--------------------------------------------------------------
-0167               * Register usage
-0168               * none
-0169               ***************************************************************
-0170               tv.quit:
-0171                       ;-------------------------------------------------------
-0172                       ; Reset/lock F18a
-0173                       ;-------------------------------------------------------
-0174 3460 06A0  32         bl    @f18rst               ; Reset and lock the F18A
-     3462 27B0     
-0175                       ;-------------------------------------------------------
-0176                       ; Activate bank 0 and exit
-0177                       ;-------------------------------------------------------
-0178 3464 04E0  34         clr   @bank0.rom            ; Activate bank 0
-     3466 6000     
-0179 3468 0420  54         blwp  @0                    ; Reset to monitor
-     346A 0000     
+0046 33EE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0047 33F0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0048 33F2 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0015                       copy  "mem.asm"                ; Memory Management (SAMS)
+0016                       copy  "tv.pad.string.asm"      ; Pad string to specified length
+     **** ****     > tv.pad.string.asm
+0001               * FILE......: tv.pad.string.asm
+0002               * Purpose...: pad string to specified length
+0003               
+0004               
+0005               ***************************************************************
+0006               * tv.pad.string
+0007               * pad string to specified length
+0008               ***************************************************************
+0009               * bl @tv.pad.string
+0010               *--------------------------------------------------------------
+0011               * INPUT
+0012               * @parm1 = Pointer to length-prefixed string
+0013               * @parm2 = Requested length
+0014               * @parm3 = Fill character
+0015               * @parm4 = Pointer to string buffer
+0016               *--------------------------------------------------------------
+0017               * OUTPUT
+0018               * @outparm1 = Pointer to padded string
+0019               *--------------------------------------------------------------
+0020               * Register usage
+0021               * none
+0022               ***************************************************************
+0023               tv.pad.string:
+0024 33F4 0649  14         dect  stack
+0025 33F6 C64B  30         mov   r11,*stack            ; Push return address
+0026 33F8 0649  14         dect  stack
+0027 33FA C644  30         mov   tmp0,*stack           ; Push tmp0
+0028 33FC 0649  14         dect  stack
+0029 33FE C645  30         mov   tmp1,*stack           ; Push tmp1
+0030 3400 0649  14         dect  stack
+0031 3402 C646  30         mov   tmp2,*stack           ; Push tmp2
+0032 3404 0649  14         dect  stack
+0033 3406 C647  30         mov   tmp3,*stack           ; Push tmp3
+0034                       ;------------------------------------------------------
+0035                       ; Asserts
+0036                       ;------------------------------------------------------
+0037 3408 C120  34         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
+     340A A000     
+0038 340C D194  26         movb  *tmp0,tmp2            ; /
+0039 340E 0986  56         srl   tmp2,8                ; Right align
+0040 3410 C1C6  18         mov   tmp2,tmp3             ; Make copy of length-byte for later use
+0041               
+0042 3412 8806  38         c     tmp2,@parm2           ; String length > requested length?
+     3414 A002     
+0043 3416 1520  14         jgt   tv.pad.string.panic   ; Yes, crash
+0044                       ;------------------------------------------------------
+0045                       ; Copy string to buffer
+0046                       ;------------------------------------------------------
+0047 3418 C120  34         mov   @parm1,tmp0           ; Get source address
+     341A A000     
+0048 341C C160  34         mov   @parm4,tmp1           ; Get destination address
+     341E A006     
+0049 3420 0586  14         inc   tmp2                  ; Also include length-byte in copy
+0050               
+0051 3422 0649  14         dect  stack
+0052 3424 C647  30         mov   tmp3,*stack           ; Push tmp3 (get overwritten by xpym2m)
+0053               
+0054 3426 06A0  32         bl    @xpym2m               ; Copy length-prefix string to buffer
+     3428 24F4     
+0055                                                   ; \ i  tmp0 = Source CPU memory address
+0056                                                   ; | i  tmp1 = Target CPU memory address
+0057                                                   ; / i  tmp2 = Number of bytes to copy
+0058               
+0059 342A C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0060                       ;------------------------------------------------------
+0061                       ; Set length of new string
+0062                       ;------------------------------------------------------
+0063 342C C120  34         mov   @parm2,tmp0           ; Get requested length
+     342E A002     
+0064 3430 0A84  56         sla   tmp0,8                ; Left align
+0065 3432 C160  34         mov   @parm4,tmp1           ; Get pointer to buffer
+     3434 A006     
+0066 3436 D544  30         movb  tmp0,*tmp1            ; Set new length of string
+0067 3438 A147  18         a     tmp3,tmp1             ; \ Skip to end of string
+0068 343A 0585  14         inc   tmp1                  ; /
+0069                       ;------------------------------------------------------
+0070                       ; Prepare for padding string
+0071                       ;------------------------------------------------------
+0072 343C C1A0  34         mov   @parm2,tmp2           ; \ Get number of bytes to fill
+     343E A002     
+0073 3440 6187  18         s     tmp3,tmp2             ; |
+0074 3442 0586  14         inc   tmp2                  ; /
+0075               
+0076 3444 C120  34         mov   @parm3,tmp0           ; Get byte to padd
+     3446 A004     
+0077 3448 0A84  56         sla   tmp0,8                ; Left align
+0078                       ;------------------------------------------------------
+0079                       ; Right-pad string to destination length
+0080                       ;------------------------------------------------------
+0081               tv.pad.string.loop:
+0082 344A DD44  32         movb  tmp0,*tmp1+           ; Pad character
+0083 344C 0606  14         dec   tmp2                  ; Update loop counter
+0084 344E 15FD  14         jgt   tv.pad.string.loop    ; Next character
+0085               
+0086 3450 C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
+     3452 A006     
+     3454 A010     
+0087 3456 1004  14         jmp   tv.pad.string.exit    ; Exit
+0088                       ;-----------------------------------------------------------------------
+0089                       ; CPU crash
+0090                       ;-----------------------------------------------------------------------
+0091               tv.pad.string.panic:
+0092 3458 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     345A FFCE     
+0093 345C 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     345E 2026     
+0094                       ;------------------------------------------------------
+0095                       ; Exit
+0096                       ;------------------------------------------------------
+0097               tv.pad.string.exit:
+0098 3460 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0099 3462 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0100 3464 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0101 3466 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0102 3468 C2F9  30         mov   *stack+,r11           ; Pop r11
+0103 346A 045B  20         b     *r11                  ; Return to caller
+                   < ram.resident.asm
+0017                       copy  "mem.asm"                ; Memory Management (SAMS)
      **** ****     > mem.asm
 0001               * FILE......: mem.asm
 0002               * Purpose...: Stevie Editor - Memory management (SAMS)
@@ -6995,10 +7000,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035 3488 C2F9  30         mov   *stack+,r11           ; Pop r11
 0036 348A 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0016                       ;-----------------------------------------------------------------------
-0017                       ; Logic for Index management
 0018                       ;-----------------------------------------------------------------------
-0019                       copy  "idx.update.asm"      ; Index management - Update entry
+0019                       ; Logic for Index management
+0020                       ;-----------------------------------------------------------------------
+0021                       copy  "idx.update.asm"      ; Index management - Update entry
      **** ****     > idx.update.asm
 0001               * FILE......: idx.update.asm
 0002               * Purpose...: Update index entry
@@ -7092,7 +7097,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 34DA C2F9  30         mov   *stack+,r11           ; Pop r11
 0077 34DC 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0020                       copy  "idx.pointer.asm"     ; Index management - Get pointer to line
+0022                       copy  "idx.pointer.asm"     ; Index management - Get pointer to line
      **** ****     > idx.pointer.asm
 0001               * FILE......: idx.pointer.asm
 0002               * Purpose...: Get pointer to line in editor buffer
@@ -7180,7 +7185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0074 3526 C2F9  30         mov   *stack+,r11           ; Pop r11
 0075 3528 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0021                       copy  "idx.delete.asm"      ; Index management - delete slot
+0023                       copy  "idx.delete.asm"      ; Index management - delete slot
      **** ****     > idx.delete.asm
 0001               * FILE......: idx_delete.asm
 0002               * Purpose...: Delete index entry
@@ -7329,7 +7334,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0131 359A C2F9  30         mov   *stack+,r11           ; Pop r11
 0132 359C 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0022                       copy  "idx.insert.asm"      ; Index management - insert slot
+0024                       copy  "idx.insert.asm"      ; Index management - insert slot
      **** ****     > idx.insert.asm
 0001               * FILE......: idx.insert.asm
 0002               * Purpose...: Insert index entry
@@ -7511,10 +7516,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0159 3630 C2F9  30         mov   *stack+,r11           ; Pop r11
 0160 3632 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0023                       ;-----------------------------------------------------------------------
-0024                       ; Utility functions
 0025                       ;-----------------------------------------------------------------------
-0026                       copy  "pane.topline.clearmsg.asm"
+0026                       ; Utility functions
+0027                       ;-----------------------------------------------------------------------
+0028                       copy  "pane.topline.clearmsg.asm"
      **** ****     > pane.topline.clearmsg.asm
 0001               * FILE......: pane.topline.clearmsg.asm
 0002               * Purpose...: One-shot task for clearing overlay message in top line
@@ -7561,11 +7566,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0038 3650 C2F9  30         mov   *stack+,r11           ; Pop R11
 0039 3652 045B  20         b     *r11                  ; Return to task
                    < ram.resident.asm
-0027                                                      ; Remove overlay messsage in top line
-0028                       ;------------------------------------------------------
-0029                       ; Program data
+0029                                                      ; Remove overlay messsage in top line
 0030                       ;------------------------------------------------------
-0031                       copy  "data.constants.asm"     ; Constants
+0031                       ; Program data
+0032                       ;------------------------------------------------------
+0033                       copy  "data.constants.asm"     ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -7862,7 +7867,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      3742 0000     
 0220                       even
                    < ram.resident.asm
-0032                       copy  "data.strings.asm"       ; Strings
+0034                       copy  "data.strings.asm"       ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -8454,7 +8459,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0262                       even
 0263               
                    < ram.resident.asm
-0033                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+0035                       copy  "data.defaults.asm"      ; Default values (devices, ...)
      **** ****     > data.defaults.asm
 0001               * FILE......: data.defaults.asm
 0002               * Purpose...: Stevie Editor - data segment (default values)
@@ -8502,48 +8507,44 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025                       even
 0026               
 0027               def.devices
-0028 3A6E 36               byte  54
-0029 3A6F   44             text  'DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232.,RS232/'
-     3A70 534B     
-     3A72 2C48     
-     3A74 4458     
-     3A76 2C49     
-     3A78 4445     
-     3A7A 2C50     
-     3A7C 492E     
-     3A7E 2C50     
-     3A80 494F     
-     3A82 2C54     
-     3A84 4950     
-     3A86 492E     
-     3A88 2C52     
-     3A8A 442C     
-     3A8C 5343     
-     3A8E 532C     
-     3A90 5344     
-     3A92 442C     
-     3A94 5744     
-     3A96 532C     
-     3A98 5253     
-     3A9A 3233     
-     3A9C 322E     
-     3A9E 2C52     
-     3AA0 5332     
-     3AA2 3332     
-     3AA4 2F       
+0028 3A6E 2F               byte  47
+0029 3A6F   2C             text  ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3A70 4453     
+     3A72 4B2C     
+     3A74 4844     
+     3A76 582C     
+     3A78 4944     
+     3A7A 452C     
+     3A7C 5049     
+     3A7E 2E2C     
+     3A80 5049     
+     3A82 4F2C     
+     3A84 5449     
+     3A86 5049     
+     3A88 2E2C     
+     3A8A 5244     
+     3A8C 2C53     
+     3A8E 4353     
+     3A90 2C53     
+     3A92 4444     
+     3A94 2C57     
+     3A96 4453     
+     3A98 2C52     
+     3A9A 5332     
+     3A9C 3332     
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0043                       ;------------------------------------------------------
 0044                       ; Activate bank 1 and branch to  >6036
 0045                       ;------------------------------------------------------
-0046 3AA6 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3AA8 6002     
+0046 3A9E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3AA0 6002     
 0047               
 0051               
-0052 3AAA 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3AAC 6046     
+0052 3AA2 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3AA4 6046     
 0053               ***************************************************************
 0054               * Step 3: Include main editor modules
 0055               ********|*****|*********************|**************************
@@ -8587,7 +8588,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023               vdp.patterns.dump.exit:
 0024 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
 0025 6064 045B  20         b     *r11                  ; Return to task
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0063                                                   ; Dump patterns to VDP
 0064                       copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
      **** ****     > data.patterns.asm
@@ -8744,7 +8745,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6158 0000     
      615A 0000     
      615C 0000     
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0065               
 0066                       ;-----------------------------------------------------------------------
 0067                       ; Stubs
@@ -8753,7 +8754,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank6.asm
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0070                       ;-----------------------------------------------------------------------
 0071                       ; Program data
 0072                       ;-----------------------------------------------------------------------
@@ -8823,7 +8824,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b6.asm.27446
+                   < stevie_b6.asm.49119
 0100                                                   ; Vector table bank 6
 0101               
 0102               *--------------------------------------------------------------

@@ -1,9 +1,9 @@
 * FILE......: fb.scan.fname.asm
-* Purpose...: Scan current line for possible filename string
+* Purpose...: Scan current line for possible filename
 
 ***************************************************************
 * fb.scan.fname
-* Scan current line for possible filename string
+* Scan current line for possible filename
 ***************************************************************
 *  bl   @fb.scan.fname
 *--------------------------------------------------------------
@@ -14,7 +14,7 @@
 * @cmdb.dflt.fname = Pointer to string with default filename
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3,tmp4,r3
+* tmp0,tmp1,tmp2,tmp3,tmp4,r2,r3
 ********|*****|*********************|**************************
 fb.scan.fname:
         dect  stack
@@ -30,11 +30,17 @@ fb.scan.fname:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         dect  stack
+        mov   r2,*stack             ; Push r2
+        dect  stack
         mov   r3,*stack             ; Push r3
         ;-------------------------------------------------------
         ; Initialisation
         ;-------------------------------------------------------
 fb.scan.fname.copy:
+        bl    @film
+              data cmdb.dflt.fname,>00,80
+                                    ; Clear filename in buffer
+
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
                                     ; returns pointer in @fb.current
 
@@ -44,12 +50,13 @@ fb.scan.fname.copy:
         ; tmp1 = Destination address for filename copy
         ; tmp2 = Pointer to last character in framebuffer line
         ; tmp3 = Pointer to first character in valid devices string
-        ; tmp4 = Pointer to last characterw in valid devices string
+        ; tmp4 = Pointer to last character in valid devices string
         ; r3   = Temporary storage
 
         ;-------------------------------------------------------
         ; (1) Prepare for lookup
         ;-------------------------------------------------------
+        clr   r2                    ; Length counter
         li    r3,>2c00              ; Delimiter is ASCII 44 (>2c) ","
 
         mov   @fb.current,tmp0      ; Start address in framebuffer
@@ -57,6 +64,7 @@ fb.scan.fname.copy:
         a     @fb.row.length,tmp2   ; / source line in framebuffer
 
         li    tmp1,cmdb.dflt.fname  ; Destination for character copy
+        inc   tmp1                  ; Skip length byte, will be set later
 
         li    tmp3,def.devices      ; Get string with valid devices
         mov   *tmp3,tmp4            ; \ Get length byte, skipping
@@ -71,7 +79,8 @@ fb.scan.fname.device.loop:
         jne   fb.scan.fname.nextdev.loop 
                                     ; No, look for next device (3)
 
-        movb  *tmp0+,*tmp1+         ; Copy bye to destination
+        movb  *tmp0+,*tmp1+         ; Copy byte to destination
+        inc   r2                    ; Increase length
 
         inc   tmp3                  ; Next char in lookup
         cb    *tmp3,r3              ; Did we find the delimiter?
@@ -105,7 +114,8 @@ fb.scan.fname.nextdev.loop:
 fb.scan.fname.copy.rest:
         nop                         ; Placeholder for now
 fb.scan.fname.copy.rest.loop:
-        movb  *tmp0+,*tmp1+         ; Copy bye to destination        
+        movb  *tmp0+,*tmp1+         ; Copy byte to destination
+        inc   r2                    ; Increase length        
         ;------------------------------------------------------
         ; (4a) Look for delimiters SPACE and NULL
         ;------------------------------------------------------
@@ -144,12 +154,14 @@ fb.scan.fname.crash
         ; (5) File name copy done
         ;------------------------------------------------------             
 fb.scan.fname.done:
-        nop                         ; Placeholder for now
+        sla   r2,8                  ; Left align
+        movb  r2,@cmdb.dflt.fname   ; Set length byte
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.scan.fname.exit:
         mov   *stack+,r3            ; Pop r3
+        mov   *stack+,r2            ; Pop r2        
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2        

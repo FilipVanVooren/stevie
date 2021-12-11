@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.27879
+     **** ****     > stevie_b7.asm.50048
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 211209-1936440
+0009               * File: stevie_b7.asm               ; Version 211211-1951260
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * Empty
@@ -65,7 +65,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               *--------------------------------------------------------------
 0051               * Classic99 F18a 24x80, no FG99 advanced mode
 0052               *--------------------------------------------------------------
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -93,7 +93,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -435,7 +435,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0343      A728     cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
 0344      A729     cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
 0345      A77A     cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
-0346      A7AC     cmdb.deflt.fname  equ  cmdb.struct +172; Default for filename
+0346      A7AC     cmdb.dflt.fname   equ  cmdb.struct +172; Default for filename
 0347      A800     cmdb.free         equ  cmdb.struct +256; End of structure
 0348               *--------------------------------------------------------------
 0349               * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
@@ -472,7 +472,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0380               * Heap                                @>f000-ffff  (4096 bytes)
 0381               *--------------------------------------------------------------
 0382      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -612,7 +612,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0018               
 0019               ***************************************************************
 0020               * Spectra2 core configuration
@@ -663,16 +663,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2I'
+0045 6011   53             text  'STEVIE 1.2J'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 3249     
+     601A 324A     
 0046                       even
 0047               
 0049               
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0031               
 0032               ***************************************************************
 0033               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1452,18 +1452,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 6236 18               byte  24
-0270 6237   42             text  'Build-ID  211209-1936440'
+0270 6237   42             text  'Build-ID  211211-1951260'
      6238 7569     
      623A 6C64     
      623C 2D49     
      623E 4420     
      6240 2032     
      6242 3131     
-     6244 3230     
-     6246 392D     
+     6244 3231     
+     6246 312D     
      6248 3139     
-     624A 3336     
-     624C 3434     
+     624A 3531     
+     624C 3236     
      624E 30       
 0271                       even
 0272               
@@ -5857,7 +5857,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      70E8 0040     
 0370 70EA 0460  28         b     @main                 ; Give control to main program
      70EC 6046     
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0045                       ;-----------------------------------------------------------------------
 0046                       ; Stubs
 0047                       ;-----------------------------------------------------------------------
@@ -5865,7 +5865,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0049                       ;-----------------------------------------------------------------------
 0050                       ; Program data
 0051                       ;-----------------------------------------------------------------------
@@ -6165,7 +6165,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0219 71DA 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
      71DC 0000     
 0220                       even
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0053                       ;-----------------------------------------------------------------------
 0054                       ; Bank full check
 0055                       ;-----------------------------------------------------------------------
@@ -6231,7 +6231,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 6070     vec.30  data  cpu.crash             ;
 0037 7FFC 6070     vec.31  data  cpu.crash             ;
 0038 7FFE 6070     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.27879
+                   < stevie_b7.asm.50048
 0079                                                   ; Vector table bank 7
 0080               
 0081               *--------------------------------------------------------------

@@ -65,6 +65,7 @@ main:
         copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory                
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer        
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT        
+        copy  "fb.scan.fname.asm"   ; Scan line for device & filename        
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        

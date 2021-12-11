@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
@@ -23,29 +23,34 @@ dialog.insert:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-dialog.insert.setup:        
+dialog.insert.setup:
+        bl    @fb.scan.fname        ; Get possible device/filename
+
         li    tmp0,id.dialog.insert
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         ;------------------------------------------------------
         ; Include line number in pane header
         ;------------------------------------------------------
         bl    @film
-              data cmdb.panhead.buf,>00,80
+              data cmdb.panhead.buf,>00,50
                                     ; Clear pane header buffer
 
         bl    @cpym2m
               data txt.head.insert,cmdb.panhead.buf,25
 
-        mov   @fb.row,@parm1 
+        mov   @fb.row,@parm1        ; Get row at cursor
         bl    @fb.row2line          ; Row to editor line
                                     ; \ i @fb.topline = Top line in frame buffer 
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
 
-        inc   @outparm1             ; Add base 1
+        inct  @outparm1             ; \ Add base 1 and insert at line
+                                    ; / following cursor, not line at cursor.
 
         bl    @mknum                ; Convert integer to string
               data  outparm1        ; \ i  p0 = Pointer to 16 bit unsigned int
@@ -72,8 +77,6 @@ dialog.insert.setup:
         li    tmp0,txt.hint.insert
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        bl    @cmdb.cmd.clear       ; Clear current command
-
         abs   @fh.offsetopcode      ; FastMode is off ? 
         jeq   ! 
         ;-------------------------------------------------------
@@ -91,8 +94,20 @@ dialog.insert.setup:
 dialog.insert.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
+        ; Set command line
+        ;-------------------------------------------------------         
+        li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
+        mov   *tmp0,tmp1            ; Anything set?
+        jeq   dialog.insert.cursor  ; No default filename, skip
+
+        mov   tmp0,@parm1           ; Get pointer to string
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+                                    ; /
+        ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
+dialog.insert.cursor:        
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2 
                                     ; Get cursor shape and color
@@ -100,6 +115,7 @@ dialog.insert.keylist:
         ; Exit
         ;-------------------------------------------------------
 dialog.insert.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller                                         

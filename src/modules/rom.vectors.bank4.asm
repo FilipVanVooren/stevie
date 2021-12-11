@@ -8,7 +8,7 @@ vec.1   data  fb.tab.next           ; Move cursor to next tab position
 vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
 vec.3   data  fb.colorlines         ; Colorize frame buffer content
 vec.4   data  fb.vdpdump            ; Dump framebuffer to VDP SIT
-vec.5   data  cpu.crash             ; 
+vec.5   data  fb.scan.fname         ; Scan current line for possible filename
 vec.6   data  cpu.crash             ; 
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 
