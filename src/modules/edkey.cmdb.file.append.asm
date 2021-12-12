@@ -47,8 +47,7 @@ edkey.action.cmdb.append:
         ;-------------------------------------------------------
 edkey.action.cmdb.append.file:
         mov   @edb.lines,@parm2     ; \ Append file after last line in
-                                    ; / editor buffer
-        dec   @parm2
+                                    ; / editor buffer (base 0 offset)
         ;-------------------------------------------------------
         ; Get device/filename
         ;-------------------------------------------------------
