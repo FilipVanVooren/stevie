@@ -1,9 +1,9 @@
 * FILE......: fm.insert.asm
-* Purpose...: File Manager - Insert file into editor buffer
+* Purpose...: File Manager - Insert (or append) file into editor buffer
 
 ***************************************************************
 * fm.insertfile
-* Insert file into editor buffer
+* Insert (or append) file into editor buffer
 ***************************************************************
 * bl  @fm.insertfile
 *--------------------------------------------------------------
@@ -11,6 +11,7 @@
 * parm1  = Pointer to length-prefixed string containing both 
 *          device and filename
 * parm2  = Line number to load file at
+* parm3  = Work mode
 *--------------------------------------------------------------- 
 * OUTPUT
 * none
@@ -27,6 +28,12 @@ fm.insertfile:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
@@ -36,6 +43,7 @@ fm.insertfile:
         ; Read DV80 file and display
         ;-------------------------------------------------------
         mov   @parm2,@parm7         ; Get line number
+        mov   @parm3,@parm8         ; Work mode
 
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
@@ -51,9 +59,6 @@ fm.insertfile:
 
         li    tmp0,fm.load.cb.memfull
         mov   tmp0,@parm6           ; Register callback 5
-
-        li    tmp0,id.file.loadblock
-        mov   tmp0,@parm8           ; Work mode
 
         bl    @fh.file.read.edb     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
@@ -75,6 +80,9 @@ fm.insertfile:
 * Exit
 *--------------------------------------------------------------
 fm.insertfile.exit:
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0      

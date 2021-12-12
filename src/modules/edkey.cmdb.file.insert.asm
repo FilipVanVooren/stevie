@@ -1,10 +1,10 @@
-* FILE......: edkey.cmdb.fíle.ins.asm
+* FILE......: edkey.cmdb.fíle.insert.asm
 * Purpose...: Insert file from command buffer pane.
 
 *---------------------------------------------------------------
 * Insert file
 *---------------------------------------------------------------
-edkey.action.cmdb.ins:
+edkey.action.cmdb.insert:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -27,7 +27,7 @@ edkey.action.cmdb.ins:
                                     ; \ i  @parm1 = Pointer to error message
                                     ; /
 
-        jmp   edkey.action.cmdb.ins.exit
+        jmp   edkey.action.cmdb.insert.exit
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -45,7 +45,7 @@ edkey.action.cmdb.ins:
         ;-------------------------------------------------------
         ; Insert file at line
         ;-------------------------------------------------------
-edkey.action.cmdb.ins.file:
+edkey.action.cmdb.insert.file:
         ;-------------------------------------------------------
         ; Get line
         ;-------------------------------------------------------
@@ -65,10 +65,14 @@ edkey.action.cmdb.ins.file:
         ;-------------------------------------------------------
         ; Insert file
         ;-------------------------------------------------------
+        li    tmp0,id.file.insertfile
+        mov   tmp0,@parm3           ; Set work mode
+
         bl    @fm.insertfile        ; Insert DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; |            device/filename string
                                     ; | i  parm2 = Line number to load file at
+                                    ; / i  parm3 = Work mode
         ;-------------------------------------------------------
         ; Refresh frame buffer
         ;-------------------------------------------------------
@@ -83,7 +87,7 @@ edkey.action.cmdb.ins.file:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.ins.exit:
+edkey.action.cmdb.insert.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
         b     @edkey.goto.fb.toprow ; \ Position cursor and exit

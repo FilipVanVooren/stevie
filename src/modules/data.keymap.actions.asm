@@ -230,7 +230,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.fastmode.toggle
 
         byte  key.enter, id.dialog.insert
-        data  edkey.action.cmdb.ins
+        data  edkey.action.cmdb.insert
         ;-------------------------------------------------------
         ; Dialog: Append file
         ;-------------------------------------------------------

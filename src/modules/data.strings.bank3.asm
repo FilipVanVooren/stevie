@@ -41,7 +41,7 @@ txt.keys.save      #string 'F9-Back  F3-Clear'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    #string 'Give filename of file to append at the end of the current file'
+txt.hint.append    #string 'Give filename of file to append at the end of the current file.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2

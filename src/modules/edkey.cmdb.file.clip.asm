@@ -43,5 +43,5 @@ edkey.action.cmdb.clip:
         inc   tmp0                  ; Consider length-prefix byte
         movb  @parm1,*tmp0          ; Append suffix 
 
-        b     @edkey.action.cmdb.ins 
+        b     @edkey.action.cmdb.insert
                                     ; Insert file

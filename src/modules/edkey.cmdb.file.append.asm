@@ -48,18 +48,23 @@ edkey.action.cmdb.append:
 edkey.action.cmdb.append.file:
         mov   @edb.lines,@parm2     ; \ Append file after last line in
                                     ; / editor buffer
+        dec   @parm2
         ;-------------------------------------------------------
         ; Get device/filename
         ;-------------------------------------------------------
         li    tmp0,heap.top         ; 1st line in heap
-        mov   tmp0,@parm1
+        mov   tmp0,@parm1        
         ;-------------------------------------------------------
-        ; Insert file
+        ; Append file
         ;-------------------------------------------------------
+        li    tmp0,id.file.appendfile
+        mov   tmp0,@parm3           ; Set work mode
+
         bl    @fm.insertfile        ; Insert DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; |            device/filename string
                                     ; | i  parm2 = Line number to load file at
+                                    ; / i  parm3 = Work mode
         ;-------------------------------------------------------
         ; Refresh frame buffer
         ;-------------------------------------------------------

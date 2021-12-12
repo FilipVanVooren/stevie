@@ -224,17 +224,13 @@ fm.loadsave.cb.indicator2.kb:
         ;------------------------------------------------------
         ; Only show updated KB if loading/saving/printing file
         ;------------------------------------------------------
-        li    tmp0,id.file.loadfile
-        c     @fh.workmode,tmp0    
-        jeq   fm.loadsave.cb.indicator2.kb.processed
-
-        li    tmp0,id.file.loadblock
-        c     @fh.workmode,tmp0    
-        jeq   fm.loadsave.cb.indicator2.kb.processed
-
         li    tmp0,id.file.savefile
         c     @fh.workmode,tmp0        
-        jeq   fm.loadsave.cb.indicator2.kb.processed
+        jle   fm.loadsave.cb.indicator2.kb.processed
+                                    ; includes id.file.loadfile
+                                    ; includes id.file.insertfile
+                                    ; includes id.file.appendfile
+                                    ; includes id.file.savefile
 
         li    tmp0,id.file.printfile
         c     @fh.workmode,tmp0        
@@ -374,10 +370,14 @@ fm.loadsave.cb.indicator3.exit:
         ; (@fh.workmode used as index into table)
         ;------------------------------------------------------
 fm.loadsave.cb.indicator3.data:
-        data  txt.done.load, txt.done.insert
-        data  txt.done.save, txt.done.save        
-        data  txt.done.clipboard, txt.done.print
-        data  txt.done.print
+        data  txt.done.load         ; id.file.loadfile
+        data  txt.done.insert       ; id.file.insertfile
+        data  txt.done.append       ; id.file.appendfile
+        data  txt.done.save         ; id.file.savefile
+        data  txt.done.save         ; id.file.saveblock
+        data  txt.done.clipboard    ; id.file.clipblock
+        data  txt.done.print        ; id.file.printfile
+        data  txt.done.print        ; id.file.printblock
 
 *---------------------------------------------------------------
 * Callback function "File I/O error handler"
