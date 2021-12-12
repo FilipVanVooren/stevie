@@ -6,7 +6,10 @@
 *                       Strings
 ***************************************************************
 
-txt.stevie         text ' Stevie 1.2J '
+txt.stevie         text ' Stevie 1.2K '
+                   even
+txt.keys.default1  #string 'F9-Back  F3-Clear  F5-Fastmode'
+txt.keys.default2  #string 'F9-Back  F3-Clear  *F5-Fastmode'
 
 ;--------------------------------------------------------------
 ; Dialog "Load file"
@@ -16,8 +19,8 @@ txt.head.load      byte 14,1,1
                    byte 1
 txt.hint.load      #string 'Give filename of file to open.'
 
-txt.keys.load      #string 'F9-Back  F3-Clear  F5-Fastmode'
-txt.keys.load2     #string 'F9-Back  F3-Clear  *F5-Fastmode'
+txt.keys.load      equ txt.keys.default1
+txt.keys.load2     equ txt.keys.default2
 
 ;--------------------------------------------------------------
 ; Dialog "Save file"
@@ -33,6 +36,18 @@ txt.keys.save      #string 'F9-Back  F3-Clear'
 
 
 ;--------------------------------------------------------------
+; Dialog "Append file"
+;--------------------------------------------------------------
+txt.head.append    byte 16,1,1
+                   text ' Append file '
+                   byte 1
+txt.hint.append    #string 'Give filename of file to append at the end of the current file'
+
+txt.keys.append    equ txt.keys.default1
+txt.keys.append2   equ txt.keys.default2
+
+
+;--------------------------------------------------------------
 ; Dialog "Insert file"
 ;--------------------------------------------------------------
 txt.head.insert    byte 24,1,1
@@ -40,8 +55,8 @@ txt.head.insert    byte 24,1,1
                    byte 1
 txt.hint.insert    #string 'Give filename of file to insert.'
 
-txt.keys.insert    #string 'F9-Back  F3-Clear  F5-Fastmode'
-txt.keys.insert2   #string 'F9-Back  F3-Clear  *F5-Fastmode'
+txt.keys.insert    equ txt.keys.default1
+txt.keys.insert2   equ txt.keys.default2
 
 
 ;--------------------------------------------------------------

@@ -146,6 +146,9 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
+        byte  key.ctrl.a, pane.focus.fb
+        data  dialog.append
+
         byte  key.ctrl.h, pane.focus.fb 
         data  edkey.action.about
 
@@ -228,6 +231,14 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.ins
+        ;-------------------------------------------------------
+        ; Dialog: Append file
+        ;-------------------------------------------------------
+        byte  key.fctn.5, id.dialog.append
+        data  edkey.action.cmdb.fastmode.toggle
+
+        byte  key.enter, id.dialog.append
+        data  edkey.action.cmdb.append
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------

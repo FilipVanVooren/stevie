@@ -84,9 +84,10 @@ id.dialog.load            equ  10      ; "Load file"
 id.dialog.save            equ  11      ; "Save file"
 id.dialog.saveblock       equ  12      ; "Save block to file"
 id.dialog.insert          equ  13      ; "Insert file"
-id.dialog.print           equ  14      ; "Print file"
-id.dialog.printblock      equ  15      ; "Print block"
-id.dialog.clipdev         equ  16      ; "Configure clipboard device"
+id.dialog.append          equ  14      ; "Append file"
+id.dialog.print           equ  15      ; "Print file"
+id.dialog.printblock      equ  16      ; "Print block"
+id.dialog.clipdev         equ  17      ; "Configure clipboard device"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be 
 ;   hidden and no characters added to CMDB keyboard buffer.

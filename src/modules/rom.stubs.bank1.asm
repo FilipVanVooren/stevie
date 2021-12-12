@@ -234,6 +234,18 @@ dialog.config.vector:
         data  vec.10
 
 
+
+***************************************************************
+* Stub for dialog "Append file"
+* bank3 vec.11
+********|*****|*********************|**************************
+dialog.append:
+        mov   @dialog.append.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.append.vector:        
+        data  vec.11
+
+
 ***************************************************************
 * Stub for dialog "Main Menu"
 * bank3 vec.30

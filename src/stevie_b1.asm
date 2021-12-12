@@ -93,6 +93,7 @@ main:
         copy  "edkey.cmdb.file.new.asm"     ; New file
         copy  "edkey.cmdb.file.load.asm"    ; Open file
         copy  "edkey.cmdb.file.ins.asm"     ; Insert file
+        copy  "edkey.cmdb.file.append.asm"  ; Append file        
         copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
         copy  "edkey.cmdb.file.clipdev.asm" ; Configure clipboard device
         copy  "edkey.cmdb.file.save.asm"    ; Save file

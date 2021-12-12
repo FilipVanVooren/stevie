@@ -14,7 +14,7 @@ vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
 vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
 vec.9   data  dialog.clipdev        ; Dialog "Configure clipboard device"
 vec.10  data  dialog.config         ; Dialog "Configure"
-vec.11  data  cpu.crash             ; 
+vec.11  data  dialog.append         ; Dialog "Append file"
 vec.12  data  cpu.crash             ; 
 vec.13  data  cpu.crash             ; 
 vec.14  data  cpu.crash             ; 
