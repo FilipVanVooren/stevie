@@ -76,18 +76,19 @@ SAMS banks are configured as follows:
 
 ## TI Basic session
 
-Each TI Basic session has its own set of SAMS banks assigned exclusively.
-By doing so there's a proper isolation
-
+When running TI Basic or when exiting Stevie, the banks are switched to 
+the default order. This is for assuring external programs behave as 
+expected. With default order the same bank mapping is meant as when
+powering on the SAMS card.
 
 ### Session 1
 
 |  >2000 | >3000 | >a000 | >b000  | >c000  | >d000 | >e000 | >f000 |  
 |--------|-------|-------|--------|--------|-------|-------|-------|  
-|   >02  |  >03  |  >0a  |   >04  |   >05  |  >06  |  >07  |  >08  |  
+|   >02  |  >03  |  >0a  |   >0b  |   >0c  |  >0d  |  >0e  |  >0f  |  
 
 
 ```
     bl @sams.layout          
-       data mem.sams.tibasic1 ; Load SAMS page layout for TI Basic session 1
+       data mem.sams.tibasic ; Load SAMS page layout for TI Basic session 1
 ```
