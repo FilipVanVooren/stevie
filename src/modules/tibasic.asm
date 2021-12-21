@@ -14,7 +14,9 @@
 * r1 in GPL WS, tmp0, tmp1
 *--------------------------------------------------------------
 * Remarks
-* tibasic >> b @0070 (GPL interpreter/TI Basic) >> isr >> tibasic.return
+* tibasic >> b @0070 (GPL interpreter/TI Basic) 
+*         >> isr
+*         >> tibasic.return
 ********|*****|*********************|**************************
 tibasic:
         dect  stack

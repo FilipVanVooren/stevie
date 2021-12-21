@@ -124,8 +124,8 @@ txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
-txt.info.menu      #string 'File   Basic   Help   Quit'
-pos.info.menu      byte 0,7,15,22,>ff
+txt.info.menu      #string 'File   Cartridge   Help   Quit'
+pos.info.menu      byte 0,7,19,26,>ff
 txt.hint.menu      #string ' '
 txt.keys.menu      #string 'F9-Back'
 
@@ -144,16 +144,30 @@ txt.keys.file      #string 'F9-Back'
 
 
 ;--------------------------------------------------------------
+; Dialog "Cartridge"
+;--------------------------------------------------------------
+txt.head.cartridge byte 14,1,1
+                   text ' Cartridge '
+                   byte 1
+
+txt.info.cartridge #string 'Basic   Extended Basic'
+pos.info.cartridge byte 0,8,>ff
+txt.hint.cartridge #string 'Select cartridge to run.'
+txt.keys.cartridge #string 'F9-Back'
+
+
+;--------------------------------------------------------------
 ; Dialog "Basic"
 ;--------------------------------------------------------------
 txt.head.basic     byte 14,1,1
-                   text ' Run basic '
+                   text ' Run Basic '
                    byte 1
 
-txt.info.basic     #string 'TI Basic   TI Extended Basic'
-pos.info.basic     byte 3,14,>ff
-txt.hint.basic     #string ' '
+txt.info.basic     #string 'Session: 1 2 3 4 5 6 7 8 9'
+pos.info.basic     byte 9,11,13,15,17,19,21,23,25,>ff
+txt.hint.basic     #string 'Pick a session. Press F9 in Basic for returning to Stevie.'
 txt.keys.basic     #string 'F9-Back'
+txt.keys.basic2    #string 'F9-Back'
 
 
 ;--------------------------------------------------------------

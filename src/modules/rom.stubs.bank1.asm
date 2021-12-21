@@ -129,7 +129,7 @@ fm.newfile:
 ********|*****|*********************|**************************
 edkey.action.about:
         mov   @edkey.action.about.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog        
+        jmp   _trampoline.bank3     ; Show dialog
 edkey.action.about.vector:        
         data  vec.1
 
@@ -140,7 +140,7 @@ edkey.action.about.vector:
 ********|*****|*********************|**************************
 dialog.load:
         mov   @dialog.load.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog        
+        jmp   _trampoline.bank3     ; Show dialog
 dialog.load.vector:
         data  vec.2
 
@@ -151,7 +151,7 @@ dialog.load.vector:
 ********|*****|*********************|**************************
 dialog.save:
         mov   @dialog.save.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog        
+        jmp   _trampoline.bank3     ; Show dialog
 dialog.save.vector:        
         data  vec.3
 
@@ -162,7 +162,7 @@ dialog.save.vector:
 ********|*****|*********************|**************************
 dialog.insert:
         mov   @dialog.insert.vector,@trmpvector
-        b     @_trampoline.bank3    ; Show dialog        
+        jmp   _trampoline.bank3     ; Show dialog
 dialog.insert.vector:        
         data  vec.4
 
@@ -234,7 +234,6 @@ dialog.config.vector:
         data  vec.10
 
 
-
 ***************************************************************
 * Stub for dialog "Append file"
 * bank3 vec.11
@@ -244,6 +243,28 @@ dialog.append:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.append.vector:        
         data  vec.11
+
+
+***************************************************************
+* Stub for dialog "Cartridge"
+* bank3 vec.12
+********|*****|*********************|**************************
+dialog.cartridge:
+        mov   @dialog.cartridge.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.cartridge.vector:        
+        data  vec.12
+
+
+***************************************************************
+* Stub for dialog "Basic"
+* bank3 vec.13
+********|*****|*********************|**************************
+dialog.basic:
+        mov   @dialog.basic.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.basic.vector:        
+        data  vec.13
 
 
 ***************************************************************
@@ -271,6 +292,26 @@ dialog.menu:
 dialog.menu.vector:        
         data  vec.30
 
+
+
+***************************************************************
+* Trampoline 1 (bank 3, dialog)
+********|*****|*********************|**************************
+_trampoline.bank3:
+        bl    @pane.cursor.hide     ; Hide cursor
+        ;------------------------------------------------------
+        ; Call routine in specified bank
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @trmpvector)
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        b     @edkey.action.cmdb.show
+                                    ; Show dialog in CMDB pane
 
 
 
@@ -406,24 +447,6 @@ fm.fastmode.vector:
         data  vec.32
 
 
-***************************************************************
-* Trampoline 1 (bank 3, dialog)
-********|*****|*********************|**************************
-_trampoline.bank3:
-        bl    @pane.cursor.hide     ; Hide cursor
-        ;------------------------------------------------------
-        ; Call routine in specified bank
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data >ffff            ; | i  p1 = Vector with target address
-                                    ; |         (deref @trmpvector)
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
-                                    ; Show dialog in CMDB pane
 
 
 ***************************************************************

@@ -51,6 +51,7 @@ pane.cmdb.show:
 
         bl    @pane.errline.hide    ; Hide error pane
 
+
 pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit

@@ -60,10 +60,11 @@ pane.vdpdump.cmdb.draw:
         mov   @cmdb.dirty,tmp0      ; Command buffer dirty?
         jeq   pane.vdpdump.exit     ; No, skip update
         ;-------------------------------------------------------
-        ; Colorize CMDB pane if "one-time only flag" set?
+        ; "one-time only" flag set?
         ;-------------------------------------------------------
         ci    tmp0,tv.1timeonly
         jne   pane.vdpdump.cmdb.draw.content
+                                    ; No, skip CMDB colorization        
         ;-------------------------------------------------------
         ; Colorize the CMDB pane
         ;-------------------------------------------------------

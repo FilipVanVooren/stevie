@@ -42,8 +42,8 @@ edkey.key.process.loadmap.cmdb:
 edkey.key.check.next:
         cb    *tmp2,tmp3            ; EOL reached ?
         jeq   edkey.key.process.addbuffer
-                                    ; Yes, means no action key pressed, so
-                                    ; add character to buffer
+                                    ; Yes, means no action key pressed,
+                                    ; so add character to buffer
         ;-------------------------------------------------------
         ; Check for action key match
         ;-------------------------------------------------------

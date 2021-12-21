@@ -130,7 +130,7 @@ mem.sams.external:
         data  >b000,>0030           ; >b000-bfff, SAMS page >30
         data  >c000,>0031           ; >c000-cfff, SAMS page >31
         data  >d000,>0032           ; >d000-dfff, SAMS page >32
-        data  >e000,>0033           ; >e000-efff, SAMS page >33
+        data  >e000,>0033           ; >e000-effef, SAMS page >33
         data  >f000,>0034           ; >f000-ffff, SAMS page >34
 
 

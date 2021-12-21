@@ -98,8 +98,9 @@ id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
 id.dialog.help            equ  104     ; "About"
 id.dialog.file            equ  105     ; "File"
-id.dialog.basic           equ  106     ; "Basic"
-id.dialog.config          equ  107     ; "Configure"
+id.dialog.cartridge       equ  106     ; "Cartridge"
+id.dialog.basic           equ  107     ; "Basic"
+id.dialog.config          equ  108     ; "Configure"
 *--------------------------------------------------------------
 * Stevie specific equates
 *--------------------------------------------------------------
