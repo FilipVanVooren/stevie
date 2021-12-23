@@ -163,8 +163,8 @@ txt.head.basic     byte 14,1,1
                    text ' Run Basic '
                    byte 1
 
-txt.info.basic     #string 'Session: 1 2 3 4 5 6 7 8 9'
-pos.info.basic     byte 9,11,13,15,17,19,21,23,25,>ff
+txt.info.basic     #string 'Session: 1 2 3 4'
+pos.info.basic     byte 9,>ff
 txt.hint.basic     #string 'Pick a session. Press F9 in Basic for returning to Stevie.'
 txt.keys.basic     #string 'F9-Back'
 txt.keys.basic2    #string 'F9-Back'

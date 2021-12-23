@@ -21,6 +21,15 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 
+
+*--------------------------------------------------------------
+* Stack location
+*--------------------------------------------------------------
+sp2.stktop                equ  >8400   ; \ SP2 stack >ae00 - >aeff
+                                       ; | The stack grows from high memory
+                                       ; / to low memory
+
+
 *--------------------------------------------------------------
 * classic99 and JS99er emulators are mutually exclusive.
 * At the time of writing JS99er has full F18a compatibility.

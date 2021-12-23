@@ -17,11 +17,6 @@
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
 
 ***************************************************************
-* Spectra2 core configuration
-********|*****|*********************|**************************
-sp2.stktop    equ >af00             ; SP2 stack >ae00 - >aeff
-                                    ; grows from high to low.
-***************************************************************
 * BANK 5
 ********|*****|*********************|**************************
 bankid  equ   bank5.rom             ; Set bank identifier to current bank

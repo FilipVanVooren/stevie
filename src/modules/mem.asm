@@ -20,8 +20,7 @@ mem.sams.layout:
         ; Set SAMS standard layout
         ;------------------------------------------------------        
         bl    @sams.layout
-              data mem.sams.layout.data
-
+              data mem.sams.stevie
         bl    @sams.layout.copy
               data tv.sams.2000     ; Get SAMS windows
 
