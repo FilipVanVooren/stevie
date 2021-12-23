@@ -151,7 +151,16 @@ mem.sams.tibasic:
         data  >d000,>000d           ; >d000-dfff, SAMS page >0d
         data  >e000,>000e           ; >e000-efff, SAMS page >0e
         data  >f000,>000f           ; >f000-ffff, SAMS page >0f
-
+;
+; TODO
+; REMOVE mem.sams.tibasic
+; Is the same as mem.sams.layout.standard
+; Use "bl @sams.layout.reset" to load this layout
+;
+; or use ....
+;
+;      bl    @sams.layout
+;            data sams.layout.standard
 
 
 ***************************************************************
