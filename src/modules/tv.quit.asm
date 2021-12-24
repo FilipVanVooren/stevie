@@ -27,6 +27,6 @@ tv.quit:
         clr   @bank0.rom            ; Activate bank 0
 
         bl    @sams.layout          
-              data mem.sams.tibasic ; Load SAMS page layout for TI Basic
-
+              data mem.sams.standard 
+                                    ; Load standard SAMS page layout
         blwp  @0                    ; Reset to monitor

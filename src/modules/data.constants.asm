@@ -106,51 +106,38 @@ nosprite:
 * SAMS page layout table for Stevie (16 words)
 *--------------------------------------------------------------
 mem.sams.stevie:
-        data  >2000,>0000           ; >2000-2fff, SAMS page >00
-        data  >3000,>0001           ; >3000-3fff, SAMS page >01
-        data  >a000,>000a           ; >a000-afff, SAMS page >04
-        data  >b000,>0020           ; >b000-bfff, SAMS page >20
+        data  >0000                 ; >2000-2fff, SAMS page >00
+        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0a00                 ; >a000-afff, SAMS page >04
+        data  >2000                 ; >b000-bfff, SAMS page >20
                                     ; \ 
                                     ; | Index can allocate
                                     ; | pages >20 to >3f.                                    
                                     ; /
-        data  >c000,>0040           ; >c000-cfff, SAMS page >40
+        data  >4000                 ; >c000-cfff, SAMS page >40
                                     ; \
                                     ; | Editor buffer can allocate
                                     ; | pages >40 to >ff.
                                     ; /
-        data  >d000,>0005           ; >d000-dfff, SAMS page >05
-        data  >e000,>0006           ; >e000-efff, SAMS page >06
-        data  >f000,>0007           ; >f000-ffff, SAMS page >07        
+        data  >0500                 ; >d000-dfff, SAMS page >05
+        data  >0600                 ; >e000-efff, SAMS page >06
+        data  >0700                 ; >f000-ffff, SAMS page >07        
 
 
 ***************************************************************
-* SAMS page layout table for calling external progam (16 words)
+* SAMS page layout table for calling external progam
 *--------------------------------------------------------------
 mem.sams.external:
-        data  >2000,>0002           ; >2000-2fff, SAMS page >00
-        data  >3000,>0003           ; >3000-3fff, SAMS page >01
-        data  >a000,>000a           ; >a000-afff, SAMS page >04
-        data  >b000,>0010           ; >b000-efff, SAMS page >10
-        data  >c000,>0011           ; \ 
-        data  >d000,>0012           ; | TI Basic can allocate
-        data  >e000,>0013           ; | pages >10 to >1f.
+        data  >0000                 ; >2000-2fff, SAMS page >00
+        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0a00                 ; >a000-afff, SAMS page >04
+
+        data  >1000                 ; >b000-efff, SAMS page >10
+        data  >1100                 ; \ 
+        data  >1200                 ; | TI Basic can allocate
+        data  >1300                 ; | pages >10 to >1f.
                                     ; /
-        data  >f000,>0007           ; >f000-ffff, SAMS page >07
-
-
-***************************************************************
-* SAMS page layout table for TI Basic (16 words)
-*--------------------------------------------------------------
-mem.sams.tibasic:
-        data  >2000,>0002           ; >2000-2fff, SAMS page >02
-        data  >3000,>0003           ; >3000-3fff, SAMS page >03
-        data  >a000,>000a           ; >a000-afff, SAMS page >0a
-        data  >b000,>000b           ; >b000-bfff, SAMS page >0b
-        data  >c000,>000c           ; >c000-cfff, SAMS page >0c
-        data  >d000,>000d           ; >d000-dfff, SAMS page >0d
-        data  >e000,>000e           ; >e000-efff, SAMS page >0e
-        data  >f000,>000f           ; >f000-ffff, SAMS page >0f
+        data  >0700                 ; >f000-ffff, SAMS page >07
 ;
 ; TODO
 ; REMOVE mem.sams.tibasic

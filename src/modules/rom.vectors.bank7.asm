@@ -4,8 +4,8 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  sams.layout.reset     ; 
-vec.2   data  sams.layout.copy      ; 
+vec.1   data  cpu.crash             ;  
+vec.2   data  cpu.crash             ; 
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 
 vec.5   data  cpu.crash             ; 

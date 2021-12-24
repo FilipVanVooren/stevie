@@ -46,7 +46,8 @@ tibasic:
                                     ; buffer >b000->efff                              
 
         bl    @sams.layout          
-              data mem.sams.tibasic ; Load SAMS page layout for TI Basic
+              data mem.sams.standard 
+                                    ; Load standard SAMS page layout
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x24)
         ;-------------------------------------------------------
