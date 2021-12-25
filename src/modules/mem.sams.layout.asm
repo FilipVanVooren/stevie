@@ -94,7 +94,8 @@ mem.sams.set.standard:
 mem.sams.set.standard.exit:
         b     *r11                  ; Return
 
-
+; TODO 
+; Rename "standard" to "legacy". Is a better wording
 
 
 ***************************************************************
