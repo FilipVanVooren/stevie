@@ -86,7 +86,6 @@ tibasic.init:
         ;-------------------------------------------------------
         ; Poke some values
         ;------------------------------------------------------- 
-        clr   r11
         mov   @tibasic.scrpad.83d4,@>83d4
         mov   @tibasic.scrpad.83fa,@>83fa
         mov   @tibasic.scrpad.83fc,@>83fc
@@ -99,23 +98,10 @@ tibasic.init:
                                     ; /
 
         ;-------------------------------------------------------
-        ; Setup SAMS banks (inline code, no library or stack)
-        ;------------------------------------------------------- 
-        li    r12,>1e00             ; SAMS CRU address
-        sbz   1                     ; Disable SAMS mapper                
-        sbo   0                     ; Enable access to SAMS registers
-
-        mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
-        mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
-        mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
-        mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
-        mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
-        mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
-        mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
-        mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
-
-        sbz   0                     ; Disable access to SAMS registers
-        sbo   1                     ; Enable SAMS mapper
+        ; Load standard SAMS bank layout
+        ;-------------------------------------------------------
+        bl    @mem.sams.set.standard        
+        clr   r11
         ;-------------------------------------------------------
         ; Run TI Basic session in GPL Interpreter
         ;-------------------------------------------------------
@@ -172,8 +158,10 @@ tibasic.resume:
         b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
 
+
+
         ;-------------------------------------------------------
-        ; Required values for TI Basic scratchpad
+        ; Required values for TI Basicscratchpad
         ;-------------------------------------------------------
 tibasic.scrpad.83d4:
         data  >e0d5
