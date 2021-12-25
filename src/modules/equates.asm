@@ -146,7 +146,7 @@ kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 
 cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad 
                                        ; | stored in cartridge ROM
-                                       ; / bank3.asm
+                                       ; / bank7.asm
 
 cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
                                        ; | scratchpad RAM

@@ -42,10 +42,7 @@ tibasic:
         bl    @cpyv2m
               data >0000,>b000,16384
                                     ; Copy Stevie 16K VDP memory to RAM buffer
-                                    ; buffer >b000->efff                        
-
-        bl    @mem.sams.set.standard 
-                                    ; Load SAMS page layout (from cart space)
+                                    ; >b000->efff
 
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x24)
@@ -54,11 +51,6 @@ tibasic:
 
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
-
-      ;  bl    @f18unl               ; Unlock the F18a
-
-      ;  bl    @putvr                ; Turn on 30 rows mode.
-      ;        data >3140            ; F18a VR49 (>31).
         ;-------------------------------------------------------
         ; Resume existing TI Basic session?
         ;-------------------------------------------------------
@@ -71,10 +63,10 @@ tibasic:
 tibasic.init:
         bl    @cpym2m
               data cpu.scrpad.src,cpu.scrpad.tgt,256
-                                    ; Initialize TI Basic scrpad memory in
-                                    ; @cpu.scrpad.tgt (SAMS bank #08) with dump 
-                                    ; of OS Monitor scrpad stored at 
-                                    ; @cpu.scrpad.src (bank 3).
+                                    ; Initialize scratchpad memory for TI Basic
+                                    ; @cpu.scrpad.tgt (SAMS bank) with dump 
+                                    ; of OS Monitor scratchpad stored at 
+                                    ; @cpu.scrpad.src (ROM bank 7).
 
         bl    @ldfnt
               data >0900,fnopt3     ; Load font (upper & lower case)
@@ -83,20 +75,47 @@ tibasic.init:
               data >0300,>D0,2      ; No sprites
 
         bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
-              data scrpad.copy      ; | >ad00 and then load TI Basic scrpad from
-                                    ; / predefined address @cpu.scrpad.target
+              data scrpad.copy      ; | >ad00, change WP to >ad00 and then 
+                                    ; | load TI Basic scratchpad from predefined 
+                                    ; / address @cpu.scrpad.target
 
+        ; ATTENTION
+        ; From here on no more access to any of the SP2 or stevie routines.
+        ; We're on unknown territory.
+
+        ;-------------------------------------------------------
+        ; Poke some values
+        ;------------------------------------------------------- 
         clr   r11
         mov   @tibasic.scrpad.83d4,@>83d4
         mov   @tibasic.scrpad.83fa,@>83fa
         mov   @tibasic.scrpad.83fc,@>83fc
         mov   @tibasic.scrpad.83fe,@>83fe
         ;-------------------------------------------------------
-        ; Register ISR hook
+        ; Register ISR hook in scratch pad
         ;------------------------------------------------------- 
         li    r1,isr                ; \
         mov   r1,@>83c4             ; | >83c4 = Pointer to start address of ISR
                                     ; /
+
+        ;-------------------------------------------------------
+        ; Setup SAMS banks (inline code, no library or stack)
+        ;------------------------------------------------------- 
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper                
+        sbo   0                     ; Enable access to SAMS registers
+
+        mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
+        mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
+        mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
+        mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
+        mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
+        mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
+        mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
+        mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
+
+        sbz   0                     ; Disable access to SAMS registers
+        sbo   1                     ; Enable SAMS mapper
         ;-------------------------------------------------------
         ; Run TI Basic session in GPL Interpreter
         ;-------------------------------------------------------
@@ -107,23 +126,56 @@ tibasic.init:
         movb  r1,@grmwa             ; / 
         nop
         b     @>70                  ; Start GPL interpreter
+
+
+
         ;-------------------------------------------------------
-        ; Resume existing TI-Basic session
+        ; Resume previous TI-Basic session
         ;------------------------------------------------------- 
-tibasic.resume:        
+tibasic.resume:      
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
                                     ; RAM buffer >b000->efff (SAMS pages #04-07)
 
         bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
-              data scrpad.copy      ; | >ad00 and then load TI Basic scrpad from
-                                    ; / predefined address @cpu.scrpad.target        
+              data scrpad.copy      ; | >ad00, change WP to >ad00 and then 
+                                    ; | load TI Basic scratchpad from predefined 
+                                    ; / address @cpu.scrpad.target
 
+        ; ATTENTION
+        ; From here on no more access to any of the SP2 or stevie routines.
+        ; We're on unknown territory.
+
+        ;-------------------------------------------------------
+        ; Setup SAMS banks (inline code, no library or stack)
+        ;------------------------------------------------------- 
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper                
+        sbo   0                     ; Enable access to SAMS registers
+
+        mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
+        mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
+        mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
+        mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
+        mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
+        mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
+        mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
+        mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
+
+        sbz   0                     ; Disable access to SAMS registers
+        sbo   1                     ; Enable SAMS mapper
+
+        ;-------------------------------------------------------
+        ; Resume TI Basic interpreter
+        ;------------------------------------------------------- 
         b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
+
+
+
         ;-------------------------------------------------------
-        ; Required values for scratchpad
+        ; Required values for TI Basic scratchpad
         ;-------------------------------------------------------
 tibasic.scrpad.83d4:
         data  >e0d5
@@ -153,7 +205,9 @@ tibasic.scrpad.83fe:
 tibasic.return:
         lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
 
-        
+        bl    @mem.sams.set.external
+                                    ; Load SAMS page layout (from cart space)
+
         movb  @w$ffff,@>8375        ; Reset keycode     
 
         bl    @cpym2m

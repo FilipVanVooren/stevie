@@ -314,18 +314,6 @@ _trampoline.bank3:
                                     ; Show dialog in CMDB pane
 
 
-
-***************************************************************
-* Stub for "tibasic"
-* bank3 vec.15
-********|*****|*********************|**************************
-tibasic:
-        mov   @tibasic.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
-tibasic.vector:        
-        data  vec.15
-
-
 ***************************************************************
 * Stub for "error.display"
 * bank3 vec.18
@@ -689,6 +677,28 @@ vdp.patterns.dump:
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank6.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* Stub for "tibasic"
+* bank7 vec.10
+********|*****|*********************|**************************
+tibasic:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

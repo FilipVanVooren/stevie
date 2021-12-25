@@ -9,7 +9,7 @@
 * File: stevie_b7.asm               ; Version %%build_date%%
 *
 * Bank 7 "Jonas"
-* SAMS support routines
+* SAMS and TI Basic support routines
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
@@ -56,6 +56,10 @@ main:
         ;-----------------------------------------------------------------------    
         copy  "mem.sams.layout.asm" ; Setup SAMS memory banks from cart space
         ;-----------------------------------------------------------------------
+        ; Basic interpreter
+        ;-----------------------------------------------------------------------         
+        copy  "tibasic.asm"         ; Run TI Basic session
+        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        
         copy  "rom.stubs.bank7.asm" ; Bank specific stubs
@@ -81,6 +85,11 @@ cpu.crash.showbank:
         jmp   $
 cpu.crash.showbank.bankstr:
         #string 'ROM#7'
+        ;-----------------------------------------------------------------------
+        ; Scratchpad memory dump
+        ;----------------------------------------------------------------------- 
+        aorg >7e00
+        copy  "data.scrpad.asm"     ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 

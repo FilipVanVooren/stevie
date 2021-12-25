@@ -81,3 +81,9 @@ fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table        
 sprpdt  equ   >2800                 ; VDP sprite pattern table
 
+
+*--------------------------------------------------------------
+* Dummy equates for stubs (we do not use stubs in resident code)
+*--------------------------------------------------------------
+mem.sams.set.standard    equ   cpu.crash
+mem.sams.set.stevie      equ   cpu.crash

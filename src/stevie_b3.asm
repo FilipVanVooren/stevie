@@ -95,10 +95,6 @@ main:
         copy  "rom.stubs.bank3.asm" ; Bank specific stubs
         copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
-        ; Basic interpreter
-        ;-----------------------------------------------------------------------         
-        copy  "tibasic.asm"         ; Run TI Basic session
-        ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------         
         copy  "data.strings.bank3.asm"  ; Strings used in bank 3
@@ -120,11 +116,6 @@ cpu.crash.showbank:
         jmp   $
 cpu.crash.showbank.bankstr:
         #string 'ROM#3'        
-        ;-----------------------------------------------------------------------
-        ; Scratchpad memory dump
-        ;----------------------------------------------------------------------- 
-        aorg >7e00
-        copy  "data.scrpad.asm"     ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 

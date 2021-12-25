@@ -13,7 +13,7 @@ vec.6   data  cpu.crash             ;
 vec.7   data  cpu.crash             ; 
 vec.8   data  cpu.crash             ; 
 vec.9   data  cpu.crash             ; 
-vec.10  data  cpu.crash             ; 
+vec.10  data  tibasic               ; 
 vec.11  data  cpu.crash             ; 
 vec.12  data  cpu.crash             ; 
 vec.13  data  cpu.crash             ; 
