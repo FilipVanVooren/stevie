@@ -63,31 +63,43 @@ mem.sams.set.layout.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, r12
+* r12
+*--------------------------------------------------------------
+* Remarks
+* Setup SAMS standard layout without using any library calls
+* or stack. Must run without dependencies
 ********|*****|*********************|**************************
 mem.sams.set.standard:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        ;------------------------------------------------------
-        ; Set SAMS memory layout
-        ;------------------------------------------------------
-        li    tmp0,mem.sams.layout.standard
-        bl    @mem.sams.set.layout
+        ;-------------------------------------------------------
+        ; Setup SAMS banks using inline code
+        ;------------------------------------------------------- 
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper                
+        sbo   0                     ; Enable access to SAMS registers
+
+        mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
+        mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
+        mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
+        mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
+        mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
+        mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
+        mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
+        mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
+
+        sbz   0                     ; Disable access to SAMS registers
+        sbo   1                     ; Enable SAMS mapper
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 mem.sams.set.standard.exit:
-        mov   *stack+,tmp0          ; Pop tmp0 
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        b     *r11                  ; Return
+
 
 
 
 ***************************************************************
 * mem.sams.set.stevie
-* Setup SAMS memory banks for Stevie
+* Setup SAMS memory banks for stevie
 ***************************************************************
 * INPUT
 * none
@@ -96,25 +108,37 @@ mem.sams.set.standard.exit:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, r12
+* r12
+*--------------------------------------------------------------
+* Remarks
+* Setup SAMS layout for stevie without using any library calls
+* or stack. Must run without dependencies
 ********|*****|*********************|**************************
 mem.sams.set.stevie:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        ;------------------------------------------------------
-        ; Set SAMS layout
-        ;------------------------------------------------------
-        li    tmp0,mem.sams.layout.stevie
-        bl    @mem.sams.set.layout
+        ;-------------------------------------------------------
+        ; Setup SAMS banks using inline code
+        ;------------------------------------------------------- 
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper                
+        sbo   0                     ; Enable access to SAMS registers
+
+        mov   @mem.sams.layout.stevie+0,@>4004  ; Page 2 in >2000 - >2fff
+        mov   @mem.sams.layout.stevie+2,@>4006  ; Page 3 in >3000 - >3fff
+        mov   @mem.sams.layout.stevie+4,@>4014  ; Page A in >a000 - >afff
+        mov   @mem.sams.layout.stevie+6,@>4016  ; Page B in >b000 - >bfff
+        mov   @mem.sams.layout.stevie+8,@>4018  ; Page C in >c000 - >cfff
+        mov   @mem.sams.layout.stevie+10,@>401a ; Page D in >d000 - >dfff
+        mov   @mem.sams.layout.stevie+12,@>401c ; Page E in >e000 - >efff
+        mov   @mem.sams.layout.stevie+14,@>401e ; Page f in >f000 - >ffff
+
+        sbz   0                     ; Disable access to SAMS registers
+        sbo   1                     ; Enable SAMS mapper
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 mem.sams.set.stevie.exit:
-        mov   *stack+,tmp0          ; Pop tmp0 
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        b     *r11                  ; Return
+
 
 
 

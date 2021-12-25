@@ -172,8 +172,6 @@ tibasic.resume:
         b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
 
-
-
         ;-------------------------------------------------------
         ; Required values for TI Basic scratchpad
         ;-------------------------------------------------------

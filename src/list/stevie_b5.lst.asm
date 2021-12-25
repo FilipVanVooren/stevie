@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b5.asm.179063
+     **** ****     > stevie_b5.asm.193554
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2021 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b5.asm               ; Version 211225-2259550
+0009               * File: stevie_b5.asm               ; Version 211225-2336070
 0010               *
 0011               * Bank 5 "Jumbo"
 0012               * Editor Buffer methods delegated from bank 1
@@ -79,7 +79,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0064               *--------------------------------------------------------------
 0065               * Classic99 F18a 24x80, no FG99 advanced mode
 0066               *--------------------------------------------------------------
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -107,7 +107,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -489,7 +489,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0383               * Heap                                @>f000-ffff  (4096 bytes)
 0384               *--------------------------------------------------------------
 0385      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -629,7 +629,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0018               
 0019               ***************************************************************
 0020               * BANK 5
@@ -684,7 +684,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1461,7 +1461,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  211225-2259550'
+0270 21ED   42             text  'Build-ID  211225-2336070'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1470,9 +1470,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3131     
      21FA 3232     
      21FC 352D     
-     21FE 3232     
-     2200 3539     
-     2202 3535     
+     21FE 3233     
+     2200 3336     
+     2202 3037     
      2204 30       
 0271                       even
 0272               
@@ -5847,7 +5847,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      3090 0040     
 0375 3092 0460  28         b     @main                 ; Give control to main program
      3094 6046     
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8438,7 +8438,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -8532,7 +8532,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 608A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 608C C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 608E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0058                       copy  "edb.hipage.alloc.asm"; Allocate SAMS page for editor buffer
      **** ****     > edb.hipage.alloc.asm
 0001               * FILE......: edb.hipage.alloc.asm
@@ -8616,7 +8616,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0067 60D0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0068 60D2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0069 60D4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0059                       copy  "edb.block.mark.asm"  ; Mark code block
      **** ****     > edb.block.mark.asm
 0001               * FILE......: edb.block.mark.asm
@@ -8808,7 +8808,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0159 6166 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0160 6168 C2F9  30         mov   *stack+,r11           ; Pop r11
 0161 616A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0060                       copy  "edb.block.clip.asm"  ; Save code block to clipboard
      **** ****     > edb.block.clip.asm
 0001               * FILE......: edb.block.clip.asm
@@ -8932,7 +8932,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0094 61E6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0095 61E8 C2F9  30         mov   *stack+,r11           ; Pop R11
 0096 61EA 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0061                       copy  "edb.block.reset.asm" ; Reset markers
      **** ****     > edb.block.reset.asm
 0001               ***************************************************************
@@ -9019,7 +9019,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6234 832A     
 0066 6236 C2F9  30         mov   *stack+,r11           ; Pop r11
 0067 6238 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0062                       copy  "edb.block.del.asm"   ; Delete code block
      **** ****     > edb.block.del.asm
 0001               * FILE......: edb.block.del.asm
@@ -9182,7 +9182,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0130 62D8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0131 62DA C2F9  30         mov   *stack+,r11           ; Pop R11
 0132 62DC 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0063                       copy  "edb.block.copy.asm"  ; Copy code block
      **** ****     > edb.block.copy.asm
 0001               * FILE......: edb.block.copy.asm
@@ -9404,7 +9404,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0171 63CE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0172 63D0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0173 63D2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0064                       ;-----------------------------------------------------------------------
 0065                       ; Stubs
 0066                       ;-----------------------------------------------------------------------
@@ -9568,7 +9568,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0149                       ;------------------------------------------------------
 0150 644E C2F9  30         mov   *stack+,r11           ; Pop r11
 0151 6450 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0068                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9646,7 +9646,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0075 6484 C2F9  30         mov   *stack+,r11           ; Pop r11
 0076 6486 045B  20         b     *r11                  ; Return to caller
 0077               
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0069                       ;-----------------------------------------------------------------------
 0070                       ; Program data
 0071                       ;-----------------------------------------------------------------------
@@ -9716,7 +9716,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b5.asm.179063
+                   < stevie_b5.asm.193554
 0099                                                   ; Vector table bank 5
 0100               
 0101               *--------------------------------------------------------------
