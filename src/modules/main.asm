@@ -62,10 +62,6 @@ main.continue:
         bl    @film
               data >a000,00,20000   ; Clear a000-eedf
         ;------------------------------------------------------
-        ; Setup SAMS windows
-        ;------------------------------------------------------
-        bl    @mem.sams.layout      ; Initialize SAMS layout
-        ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------
         bl    @smag1x               ; Sprite magnification 1x
@@ -81,6 +77,9 @@ main.continue:
 *--------------------------------------------------------------
 * Initialize 
 *--------------------------------------------------------------
+        bl    @mem.sams.setup.stevie 
+                                    ; Load SAMS pages for stevie
+
         bl    @tv.init              ; Initialize editor configuration
         bl    @tv.reset             ; Reset editor
         ;------------------------------------------------------

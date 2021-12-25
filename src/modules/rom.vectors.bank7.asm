@@ -4,9 +4,9 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  cpu.crash             ;  
-vec.2   data  cpu.crash             ; 
-vec.3   data  cpu.crash             ; 
+vec.1   data  mem.sams.set.standard ; 
+vec.2   data  mem.sams.set.stevie   ; 
+vec.3   data  mem.sams.set.external ; 
 vec.4   data  cpu.crash             ; 
 vec.5   data  cpu.crash             ; 
 vec.6   data  cpu.crash             ; 

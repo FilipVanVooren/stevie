@@ -26,8 +26,6 @@ edb.init:
         ;------------------------------------------------------
         ; Initialize
         ;------------------------------------------------------ 
-        bl    @mem.sams.layout      ; Load standard SAMS pages again
-
         li    tmp0,edb.top          ; \
         mov   tmp0,@edb.top.ptr     ; / Set pointer to top of editor buffer
         mov   tmp0,@edb.next_free.ptr

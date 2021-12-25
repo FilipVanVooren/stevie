@@ -15,7 +15,6 @@
         copy  "tv.reset.asm"           ; Reset editor (clear buffers)
         copy  "tv.unpack.uint16.asm"   ; Unpack 16bit unsigned integer to string
         copy  "tv.pad.string.asm"      ; Pad string to specified length
-        copy  "mem.asm"                ; Memory Management (SAMS)
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------

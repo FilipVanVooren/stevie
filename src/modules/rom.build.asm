@@ -20,14 +20,19 @@ skip_speech_player        equ  1       ; Skip inclusion of speech player code
 skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
+skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
+                                       ; \ 
+                                       ; | The SAMS support module needs to be
+                                       ; | embedded in the cartridge space, so
+                                       ; / do not load it here.
 
 
 *--------------------------------------------------------------
 * Stack location
 *--------------------------------------------------------------
-sp2.stktop                equ  >8400   ; \ SP2 stack >ae00 - >aeff
-                                       ; | The stack grows from high memory
-                                       ; / to low memory
+sp2.stktop                 equ  >83a0  ; \ SP2 stack >8340 - >8398
+                                       ; | The stack grows from 
+                                       ; / high to low memory.
 
 
 *--------------------------------------------------------------

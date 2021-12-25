@@ -149,7 +149,7 @@ cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad
                                        ; / bank3.asm
 
 cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
-                                       ; | scratchpad RAM (SAMS bank #08)
+                                       ; | scratchpad RAM
                                        ; / 
 
 

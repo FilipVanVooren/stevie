@@ -11,7 +11,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* r1 in GPL WS, tmp0, tmp1
+* r1 in GPL WS, tmp0, tmp1, r12
 *--------------------------------------------------------------
 * Remarks
 * tibasic >> b @0070 (GPL interpreter/TI Basic) 
@@ -23,8 +23,10 @@ tibasic:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack
+        dect  stack        
         mov   tmp1,*stack           ; Push tmp1
+        dect  stack        
+        mov   r12,*stack            ; Push r12
         ;-------------------------------------------------------
         ; Setup SAMS memory
         ;-------------------------------------------------------
@@ -32,22 +34,19 @@ tibasic:
               data tv.sams.2000     ; \ @i = target address of 8 words table
                                     ; /      that contains SAMS layout
 
-
         bl    @scroff               ; Turn off screen
 
-        bl    @sams.layout          
-              data mem.sams.external 
-                                    ; Load SAMS page layout for calling an
-                                    ; external program.
+        bl    @mem.sams.set.external
+                                    ; Load SAMS page layout (from cart space)
 
         bl    @cpyv2m
               data >0000,>b000,16384
                                     ; Copy Stevie 16K VDP memory to RAM buffer
-                                    ; buffer >b000->efff                              
+                                    ; buffer >b000->efff                        
 
-        bl    @sams.layout          
-              data mem.sams.standard 
-                                    ; Load standard SAMS page layout
+        bl    @mem.sams.set.standard 
+                                    ; Load SAMS page layout (from cart space)
+
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x24)
         ;-------------------------------------------------------
@@ -136,43 +135,6 @@ tibasic.scrpad.83fe:
         data  >8c02        
 
 
-
-***************************************************************
-* isr
-* Interrupt Service Routine in TI Basic
-***************************************************************
-* Called from console rom at >0ab6
-* See TI Intern page 32 (german) for details
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* r7, 12
-********|*****|*********************|**************************
-isr:    
-        limi  0                     ; \ Turn off interrupts
-                                    ; / Prevent ISR reentry 
-
-        mov   r7,@rambuf            ; Backup R7
-        mov   r12,@rambuf+2         ; Backup R12
-        ;-------------------------------------------------------
-        ; Hotkey pressed?
-        ;-------------------------------------------------------
-        mov   @>8374,r7             ; Get keyboard scancode
-        andi  r7,>00ff              ; LSB only
-        ci    r7,>0f                ; Hotkey fctn + '9' pressed?
-        jeq   tibasic.return        ; Yes, return to Stevie
-        ;-------------------------------------------------------
-        ; Return from ISR
-        ;-------------------------------------------------------
-isr.exit:
-        mov   @rambuf+2,r12         ; Restore R12
-        mov   @rambuf,r7            ; Restore R7
-        b     *r11                  ; Return from ISR
-
-
-
 ***************************************************************
 * tibasic.return
 * Return from TI Basic to Stevie
@@ -217,17 +179,11 @@ tibasic.return:
         mov   tmp1,@tibasic.status  ; /
 
 
-        bl    @sams.layout          
-              data mem.sams.external 
-                                    ; Load SAMS page layout for returning from
-                                    ; external program.
+        bl    @mem.sams.set.external
+                                    ; Load SAMS page layout (from cart space)
 
-        bl    @cpym2v
-              data >0000,>b000,16384
-                                    ; Restore Stevie 16K to VDP from RAM buffer
-                                    ; >b000->efff
         ;-------------------------------------------------------
-        ; Restore SAMS memory layout for Stevie
+        ; Restore SAMS memory layout for editor buffer and index
         ;-------------------------------------------------------
         mov   @tv.sams.b000,tmp0
         li    tmp1,>b000
@@ -287,3 +243,39 @@ tibasic.return.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+
+
+***************************************************************
+* isr
+* Interrupt Service Routine in TI Basic
+***************************************************************
+* Called from console rom at >0ab6
+* See TI Intern page 32 (german) for details
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* r7, 12
+********|*****|*********************|**************************
+isr:    
+        limi  0                     ; \ Turn off interrupts
+                                    ; / Prevent ISR reentry 
+
+        mov   r7,@rambuf            ; Backup R7
+        mov   r12,@rambuf+2         ; Backup R12
+        ;-------------------------------------------------------
+        ; Hotkey pressed?
+        ;-------------------------------------------------------
+        mov   @>8374,r7             ; Get keyboard scancode
+        andi  r7,>00ff              ; LSB only
+        ci    r7,>0f                ; Hotkey fctn + '9' pressed?
+        jeq   tibasic.return        ; Yes, return to Stevie
+        ;-------------------------------------------------------
+        ; Return from ISR
+        ;-------------------------------------------------------
+isr.exit:
+        mov   @rambuf+2,r12         ; Restore R12
+        mov   @rambuf,r7            ; Restore R7
+        b     *r11                  ; Return from ISR        

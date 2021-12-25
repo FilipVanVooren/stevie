@@ -241,7 +241,11 @@ fh.file.write.edb.done:
 * Exit
 *--------------------------------------------------------------
 fh.file.write.edb.exit:
-        clr   @fh.fopmode           ; Set FOP mode to idle operation                                    
+        clr   @fh.fopmode           ; Set FOP mode to idle operation
+
+        bl    @film
+              data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
+
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

@@ -410,7 +410,8 @@ fh.file.read.edb.next:
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
 
-        bl    @mem.sams.layout      ; Restore SAMS windows    
+        bl    @mem.sams.setup.stevie
+                                    ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Memory full error"
         ;------------------------------------------------------
@@ -439,7 +440,8 @@ fh.file.read.edb.error:
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
 
-        bl    @mem.sams.layout      ; Restore SAMS windows
+        bl    @mem.sams.setup.stevie
+                                    ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
@@ -455,7 +457,8 @@ fh.file.read.edb.eof:
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
 
-        bl    @mem.sams.layout      ; Restore SAMS windows
+        bl    @mem.sams.setup.stevie
+                                    ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
@@ -476,6 +479,9 @@ fh.file.read.edb.exit:
         mov   @fh.sams.hipage,@edb.sams.hipage 
                                     ; Set highest SAMS page in use
         clr   @fh.fopmode           ; Set FOP mode to idle operation
+
+        bl    @film
+              data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
 
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  cpu.crash             ; 
+vec.1   data  mem.sams.setup.stevie ; 
 vec.2   data  cpu.crash             ; 
 vec.3   data  cpu.crash             ; 
 vec.4   data  cpu.crash             ; 
@@ -16,7 +16,7 @@ vec.9   data  cpu.crash             ;
 vec.10  data  edb.line.pack.fb      ; 
 vec.11  data  edb.line.unpack.fb    ; 
 vec.12  data  edb.clear.sams        ; 
-vec.13  data  cpu.crash             ; 
+vec.13  data  edb.line.copy         ; 
 vec.14  data  cpu.crash             ; 
 vec.15  data  edkey.action.cmdb.show
 vec.16  data  cpu.crash             ; 

@@ -22,11 +22,13 @@ tv.quit:
         ;-------------------------------------------------------
         bl    @f18rst               ; Reset and lock the F18A
         ;-------------------------------------------------------
-        ; Prepare for exit
+        ; Set SAMS standard banks
         ;-------------------------------------------------------
-        clr   @bank0.rom            ; Activate bank 0
-
-        bl    @sams.layout          
-              data mem.sams.standard 
+        bl    @mem.sams.set.standard 
                                     ; Load standard SAMS page layout
+
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper
+
+        clr   @bank0.rom            ; Activate bank 0                                    
         blwp  @0                    ; Reset to monitor

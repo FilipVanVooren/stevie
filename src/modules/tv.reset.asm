@@ -24,7 +24,7 @@ tv.reset:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------        
         ; Reset editor
-        ;------------------------------------------------------        
+        ;------------------------------------------------------                
         bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
         bl    @idx.init             ; Initialize index

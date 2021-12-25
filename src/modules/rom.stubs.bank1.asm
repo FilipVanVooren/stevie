@@ -556,11 +556,6 @@ fb.vdpdump:
 
 
 
-
-
-
-
-
 **************************************************************
 * Stub for "edb.clear.sams"
 * bank5 vec.1
@@ -647,6 +642,17 @@ edb.block.delete:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.block.delete.vector:
         data  vec.8
+
+
+**************************************************************
+* Stub for "edb.block.copy"
+* bank5 vec.9
+********|*****|*********************|**************************
+edb.block.copy:
+        mov   @edb.block.copy.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.block.copy.vector:
+        data  vec.9
 
 
 ***************************************************************

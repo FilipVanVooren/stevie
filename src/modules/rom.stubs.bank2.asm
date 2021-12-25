@@ -1,7 +1,7 @@
 * FILE......: rom.stubs.bank2.asm
 * Purpose...: Bank 2 stubs for functions in other banks
 
-
+            
 ***************************************************************
 * Stub for "edb.line.unpack"
 * bank1 vec.11

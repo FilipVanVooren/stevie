@@ -9,7 +9,7 @@
 * File: stevie_b7.asm               ; Version %%build_date%%
 *
 * Bank 7 "Jonas"
-* Empty
+* SAMS support routines
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options        
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
@@ -30,21 +30,40 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
-* Step 2: Copy spectra2 library into cartridge space
+* Step 2: Satisfy assembler, must know relocated code
+********|*****|*********************|**************************
+        aorg  >2000                 ; Relocate to >2000
+        copy  "runlib.asm"
+        copy  "ram.resident.asm"        
+        ;------------------------------------------------------
+        ; Activate bank 1 and branch to  >6036
+        ;------------------------------------------------------
+        clr   @bank1.rom            ; Activate bank 1 "James" ROM
+
+        .ifeq device.fg99.mode.adv,1
+        clr   @bank1.ram            ; Activate bank 1 "James" RAM
+        .endif
+
+        b     @kickstart.code2      ; Jump to entry routine
+***************************************************************
+* Step 3: Include main editor modules
 ********|*****|*********************|**************************
 main:   
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
-
-        copy  "runlib.asm"
+        ;-----------------------------------------------------------------------
+        ; SAMS support routines and utilities
+        ;-----------------------------------------------------------------------    
+        copy  "mem.sams.layout.asm" ; Setup SAMS memory banks from cart space
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank7.asm" ; Stubs for functions in other banks  
+        copy  "rom.stubs.bank7.asm" ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.constants.asm"  ; Need some constants for SAMS layout
+        ;
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 

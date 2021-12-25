@@ -12,7 +12,7 @@ vec.5   data  edb.block.mark.m2     ;
 vec.6   data  edb.block.clip        ; 
 vec.7   data  edb.block.reset       ; 
 vec.8   data  edb.block.delete      ; 
-vec.9   data  cpu.crash             ; 
+vec.9   data  edb.block.copy        ; 
 vec.10  data  cpu.crash             ; 
 vec.11  data  cpu.crash             ; 
 vec.12  data  cpu.crash             ; 

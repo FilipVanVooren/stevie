@@ -55,6 +55,9 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
+
+        copy  "mem.sams.setup.stevie.asm"    
+                                    ; SAMS memory setup for Stevie
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
@@ -114,7 +117,6 @@ main:
         copy  "edb.line.getlen.asm"    ; Get line length
         copy  "edb.line.copy.asm"      ; Copy line
         copy  "edb.line.del.asm"       ; Delete line        
-        copy  "edb.block.copy.asm"     ; Copy code block
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
@@ -152,7 +154,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank1.asm"    ; Stubs for functions in other banks
+        copy  "rom.stubs.bank1.asm"    ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"    ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 

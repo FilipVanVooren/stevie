@@ -60,10 +60,12 @@ main:
         copy  "edb.block.clip.asm"  ; Save code block to clipboard
         copy  "edb.block.reset.asm" ; Reset markers
         copy  "edb.block.del.asm"   ; Delete code block
+        copy  "edb.block.copy.asm"  ; Copy code block
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        
-        copy  "rom.stubs.bank5.asm" ; Stubs for functions in other banks    
+        copy  "rom.stubs.bank5.asm" ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
