@@ -29,12 +29,12 @@ mem.sams.setup.stevie:
 
 
 ***************************************************************
-* Stub for "mem.sams.set.standard"
+* Stub for "mem.sams.set.legacy"
 * bank7 vec.1
 ********|*****|*********************|**************************
  .ifne bankid,bank7.rom
 
-mem.sams.set.standard:
+mem.sams.set.legacy:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

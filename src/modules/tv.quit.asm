@@ -22,10 +22,9 @@ tv.quit:
         ;-------------------------------------------------------
         bl    @f18rst               ; Reset and lock the F18A
         ;-------------------------------------------------------
-        ; Set SAMS standard banks
+        ; Set SAMS transparent mode
         ;-------------------------------------------------------
-        bl    @mem.sams.set.standard 
-                                    ; Load standard SAMS page layout
+        bl    @mem.sams.set.legacy  ; Load legacy SAMS page layout
 
         li    r12,>1e00             ; SAMS CRU address
         sbz   1                     ; Disable SAMS mapper

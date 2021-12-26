@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
-vec.1   data  mem.sams.set.standard ; 
+vec.1   data  mem.sams.set.legacy   ; 
 vec.2   data  mem.sams.set.stevie   ; 
 vec.3   data  mem.sams.set.external ; 
 vec.4   data  cpu.crash             ; 

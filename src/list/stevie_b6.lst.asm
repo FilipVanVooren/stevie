@@ -6717,7 +6717,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024                       ;-------------------------------------------------------
 0025                       ; Set SAMS standard banks
 0026                       ;-------------------------------------------------------
-0027 3384 06A0  32         bl    @mem.sams.set.standard
+0027 3384 06A0  32         bl    @mem.sams.set.legacy  
      3386 6170     
 0028                                                   ; Load standard SAMS page layout
 0029               
@@ -8690,11 +8690,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0029               
 0030               
 0031               ***************************************************************
-0032               * Stub for "mem.sams.set.standard"
+0032               * Stub for "mem.sams.set.legacy  "
 0033               * bank7 vec.1
 0034               ********|*****|*********************|**************************
 0036               
-0037               mem.sams.set.standard:
+0037               mem.sams.set.legacy  :
 0038 6170 0649  14         dect  stack
 0039 6172 C64B  30         mov   r11,*stack            ; Save return address
 0040                       ;------------------------------------------------------

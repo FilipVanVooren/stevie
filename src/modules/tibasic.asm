@@ -101,7 +101,7 @@ tibasic.init:
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
         lwpi  >8300                  ; Workspace must be in scratchpad again!
-        bl    @mem.sams.set.standard ; Load legacy layout       
+        bl    @mem.sams.set.legacy   ; Load legacy layout       
         clr   r11
         ;-------------------------------------------------------
         ; Run TI Basic session in GPL Interpreter
@@ -138,7 +138,7 @@ tibasic.resume:
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
         lwpi  >8300                  ; Workspace must be in scratchpad again!
-        bl    @mem.sams.set.standard ; Load legacy layout       
+        bl    @mem.sams.set.legacy   ; Load legacy layout       
         clr   r11
 
         ;-------------------------------------------------------
@@ -176,17 +176,16 @@ tibasic.scrpad.83fe:
 * Called from ISR code
 ********|*****|*********************|**************************
 tibasic.return:
-        lwpi  >ad00                 ; Activate Stevie workspace in core RAM 2
-
+        lwpi  >8300                 ; Workspace must be in scratchpad again!
         bl    @mem.sams.set.external
                                     ; Load SAMS page layout (from cart space)
 
-        movb  @w$ffff,@>8375        ; Reset keycode     
+        ;movb  @w$ffff,@>8375        ; Reset keycode     
 
         bl    @cpym2m
               data >8300,cpu.scrpad.tgt,256
                                     ; Backup TI Basic scratchpad to
-                                    ; @cpu.scrpad.tgt (SAMS bank #08)
+                                    ; @cpu.scrpad.tgt (SAMS bank)
 
         bl    @cpu.scrpad.pgin      ; Page in copy of Stevie scratch pad memory 
               data scrpad.copy      ; and activate workspace at >8300

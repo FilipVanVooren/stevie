@@ -6717,7 +6717,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024                       ;-------------------------------------------------------
 0025                       ; Set SAMS standard banks
 0026                       ;-------------------------------------------------------
-0027 3384 06A0  32         bl    @mem.sams.set.standard
+0027 3384 06A0  32         bl    @mem.sams.set.legacy  
      3386 608A     
 0028                                                   ; Load standard SAMS page layout
 0029               
@@ -8524,7 +8524,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0053               
 0054               
 0055               ***************************************************************
-0056               * mem.sams.set.standard
+0056               * mem.sams.set.legacy  
 0057               * Setup SAMS memory banks to standard layout for monitor
 0058               ***************************************************************
 0059               * INPUT
@@ -8540,7 +8540,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0069               * Setup SAMS standard layout without using any library calls
 0070               * or stack. Must run without dependencies
 0071               ********|*****|*********************|**************************
-0072               mem.sams.set.standard:
+0072               mem.sams.set.legacy  :
 0073                       ;-------------------------------------------------------
 0074                       ; Setup SAMS banks using inline code
 0075                       ;-------------------------------------------------------
@@ -8549,28 +8549,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0077 608E 1E01  20         sbz   1                     ; Disable SAMS mapper
 0078 6090 1D00  20         sbo   0                     ; Enable access to SAMS registers
 0079               
-0080 6092 C820  54         mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
+0080 6092 C820  54         mov   @mem.sams.layout.legacy+0,@>4004  ; Page 2 in >2000 - >2fff
      6094 611C     
      6096 4004     
-0081 6098 C820  54         mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
+0081 6098 C820  54         mov   @mem.sams.layout.legacy+2,@>4006  ; Page 3 in >3000 - >3fff
      609A 611E     
      609C 4006     
-0082 609E C820  54         mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
+0082 609E C820  54         mov   @mem.sams.layout.legacy+4,@>4014  ; Page A in >a000 - >afff
      60A0 6120     
      60A2 4014     
-0083 60A4 C820  54         mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
+0083 60A4 C820  54         mov   @mem.sams.layout.legacy+6,@>4016  ; Page B in >b000 - >bfff
      60A6 6122     
      60A8 4016     
-0084 60AA C820  54         mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
+0084 60AA C820  54         mov   @mem.sams.layout.legacy+8,@>4018  ; Page C in >c000 - >cfff
      60AC 6124     
      60AE 4018     
-0085 60B0 C820  54         mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
+0085 60B0 C820  54         mov   @mem.sams.layout.legacy+10,@>401a ; Page D in >d000 - >dfff
      60B2 6126     
      60B4 401A     
-0086 60B6 C820  54         mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
+0086 60B6 C820  54         mov   @mem.sams.layout.legacy+12,@>401c ; Page E in >e000 - >efff
      60B8 6128     
      60BA 401C     
-0087 60BC C820  54         mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
+0087 60BC C820  54         mov   @mem.sams.layout.legacy+14,@>401e ; Page f in >f000 - >ffff
      60BE 612A     
      60C0 401E     
 0088               
@@ -8579,7 +8579,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0091                       ;------------------------------------------------------
 0092                       ; Exit
 0093                       ;------------------------------------------------------
-0094               mem.sams.set.standard.exit:
+0094               mem.sams.set.legacy  .exit:
 0095 60C6 045B  20         b     *r11                  ; Return
 0096               
 0097               
@@ -8685,7 +8685,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0178               ***************************************************************
 0179               * SAMS standard page layout table
 0180               *--------------------------------------------------------------
-0181               mem.sams.layout.standard:
+0181               mem.sams.layout.legacy:
 0182 611C 0200             data  >0200                 ; >2000-2fff, SAMS page >02
 0183 611E 0300             data  >0300                 ; >3000-3fff, SAMS page >03
 0184 6120 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
@@ -8872,7 +8872,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0102                       ;-------------------------------------------------------
 0103 61C8 02E0  18         lwpi  >8300                  ; Workspace must be in scratchpad again!
      61CA 8300     
-0104 61CC 06A0  32         bl    @mem.sams.set.standard ; Load legacy layout
+0104 61CC 06A0  32         bl    @mem.sams.set.legacy   ; Load legacy layout
      61CE 608A     
 0105 61D0 04CB  14         clr   r11
 0106                       ;-------------------------------------------------------
@@ -8920,7 +8920,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0139                       ;-------------------------------------------------------
 0140 61FA 02E0  18         lwpi  >8300                  ; Workspace must be in scratchpad again!
      61FC 8300     
-0141 61FE 06A0  32         bl    @mem.sams.set.standard ; Load legacy layout
+0141 61FE 06A0  32         bl    @mem.sams.set.legacy   ; Load legacy layout
      6200 608A     
 0142 6202 04CB  14         clr   r11
 0143               
@@ -9199,7 +9199,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0029               
 0030               
 0031               ***************************************************************
-0032               * Stub for "mem.sams.set.standard"
+0032               * Stub for "mem.sams.set.legacy  "
 0033               * bank7 vec.1
 0034               ********|*****|*********************|**************************
 0054               
@@ -9392,7 +9392,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0004               *--------------------------------------------------------------
 0005               * Vector table for trampoline functions
 0006               *--------------------------------------------------------------
-0007 7FC0 608A     vec.1   data  mem.sams.set.standard ;
+0007 7FC0 608A     vec.1   data  mem.sams.set.legacy   ;
 0008 7FC2 60C8     vec.2   data  mem.sams.set.stevie   ;
 0009 7FC4 6106     vec.3   data  mem.sams.set.external ;
 0010 7FC6 2026     vec.4   data  cpu.crash             ;

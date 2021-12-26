@@ -6726,7 +6726,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024                       ;-------------------------------------------------------
 0025                       ; Set SAMS standard banks
 0026                       ;-------------------------------------------------------
-0027 339C 06A0  32         bl    @mem.sams.set.standard
+0027 339C 06A0  32         bl    @mem.sams.set.legacy  
      339E 2026     
 0028                                                   ; Load standard SAMS page layout
 0029               
@@ -8499,5 +8499,5 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0089               *--------------------------------------------------------------
 0090               * Dummy equates for stubs (we do not use stubs in resident code)
 0091               *--------------------------------------------------------------
-0092      2026     mem.sams.set.standard    equ   cpu.crash
+0092      2026     mem.sams.set.legacy      equ   cpu.crash
 0093      2026     mem.sams.set.stevie      equ   cpu.crash

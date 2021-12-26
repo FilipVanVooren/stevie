@@ -53,7 +53,7 @@ mem.sams.set.layout.exit:
 
 
 ***************************************************************
-* mem.sams.set.standard
+* mem.sams.set.legacy  
 * Setup SAMS memory banks to standard layout for monitor
 ***************************************************************
 * INPUT
@@ -69,7 +69,7 @@ mem.sams.set.layout.exit:
 * Setup SAMS standard layout without using any library calls
 * or stack. Must run without dependencies
 ********|*****|*********************|**************************
-mem.sams.set.standard:
+mem.sams.set.legacy:
         ;-------------------------------------------------------
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
@@ -77,25 +77,22 @@ mem.sams.set.standard:
         sbz   1                     ; Disable SAMS mapper                
         sbo   0                     ; Enable access to SAMS registers
 
-        mov   @mem.sams.layout.standard+0,@>4004  ; Page 2 in >2000 - >2fff
-        mov   @mem.sams.layout.standard+2,@>4006  ; Page 3 in >3000 - >3fff
-        mov   @mem.sams.layout.standard+4,@>4014  ; Page A in >a000 - >afff
-        mov   @mem.sams.layout.standard+6,@>4016  ; Page B in >b000 - >bfff
-        mov   @mem.sams.layout.standard+8,@>4018  ; Page C in >c000 - >cfff
-        mov   @mem.sams.layout.standard+10,@>401a ; Page D in >d000 - >dfff
-        mov   @mem.sams.layout.standard+12,@>401c ; Page E in >e000 - >efff
-        mov   @mem.sams.layout.standard+14,@>401e ; Page f in >f000 - >ffff
+        mov   @mem.sams.layout.legacy+0,@>4004  ; Page 2 in >2000 - >2fff
+        mov   @mem.sams.layout.legacy+2,@>4006  ; Page 3 in >3000 - >3fff
+        mov   @mem.sams.layout.legacy+4,@>4014  ; Page A in >a000 - >afff
+        mov   @mem.sams.layout.legacy+6,@>4016  ; Page B in >b000 - >bfff
+        mov   @mem.sams.layout.legacy+8,@>4018  ; Page C in >c000 - >cfff
+        mov   @mem.sams.layout.legacy+10,@>401a ; Page D in >d000 - >dfff
+        mov   @mem.sams.layout.legacy+12,@>401c ; Page E in >e000 - >efff
+        mov   @mem.sams.layout.legacy+14,@>401e ; Page f in >f000 - >ffff
 
         sbz   0                     ; Disable access to SAMS registers
         sbo   1                     ; Enable SAMS mapper
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-mem.sams.set.standard.exit:
+mem.sams.set.legacy.exit:
         b     *r11                  ; Return
-
-; TODO 
-; Rename "standard" to "legacy". Is a better wording
 
 
 ***************************************************************
@@ -177,9 +174,9 @@ mem.sams.set.external.exit:
 
 
 ***************************************************************
-* SAMS standard page layout table
+* SAMS legacy page layout table (as in SAMS transparent mode)
 *--------------------------------------------------------------
-mem.sams.layout.standard:
+mem.sams.layout.legacy:
         data  >0200                 ; >2000-2fff, SAMS page >02
         data  >0300                 ; >3000-3fff, SAMS page >03
         data  >0a00                 ; >a000-afff, SAMS page >0a

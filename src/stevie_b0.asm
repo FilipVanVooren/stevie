@@ -155,5 +155,5 @@ sprpdt  equ   >2800                 ; VDP sprite pattern table
 *--------------------------------------------------------------
 * Dummy equates for stubs (we do not use stubs in bank 0!)
 *--------------------------------------------------------------
-mem.sams.set.standard    equ   cpu.crash
+mem.sams.set.legacy      equ   cpu.crash
 mem.sams.set.stevie      equ   cpu.crash
