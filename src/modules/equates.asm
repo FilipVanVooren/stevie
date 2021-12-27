@@ -143,16 +143,6 @@ debug                     equ  1       ; Turn on spectra2 debugging
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-
-cpu.scrpad.src            equ  >7e00   ; \ Dump of OS monitor scratchpad 
-                                       ; | stored in cartridge ROM
-                                       ; / bank7.asm
-
-cpu.scrpad.tgt            equ  >f960   ; \ Destination for copy of TI Basic
-                                       ; | scratchpad RAM
-                                       ; / 
-
-
 *--------------------------------------------------------------
 * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
@@ -217,7 +207,9 @@ tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 tv.error.msg      equ  tv.top + 44     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 204    ; End of structure
+tv.sp2.conf       equ  tv.top + 46     ; Backup of SP2 config register
+tv.sp2.xconf      equ  tv.top + 48     ; Backup of SP2 extended config register
+tv.free           equ  tv.top + 208    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
@@ -351,7 +343,15 @@ cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
 * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------
-scrpad.copy       equ  >ad00           ; Copy of Stevie scratchpad memory
+cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad 
+                                       ; / stored in cartridge ROM bank7.asm
+
+cpu.scrpad.tgt    equ  >f960           ; \ Target copy of OS monitor scratchpad
+                                       ; | in high-memory.
+                                       ; / 
+
+cpu.scrpad.moved  equ  >ad00           ; Stevie scratchpad memory when paged-out
+                                       ; because of TI Basic/External program
 *--------------------------------------------------------------
 * Farjump return stack                @>af00-afff   (256 bytes)
 *--------------------------------------------------------------

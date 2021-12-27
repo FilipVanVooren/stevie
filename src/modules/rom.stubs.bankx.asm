@@ -54,8 +54,33 @@ mem.sams.set.legacy:
 
 
 ***************************************************************
-* Stub for "mem.sams.set.stevie"
+* Stub for "mem.sams.set.boot"
 * bank7 vec.2
+********|*****|*********************|**************************
+ .ifne bankid,bank7.rom
+
+mem.sams.set.boot:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.2            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+ .endif
+
+
+***************************************************************
+* Stub for "mem.sams.set.stevie"
+* bank7 vec.3
 ********|*****|*********************|**************************
  .ifne bankid,bank7.rom
 
@@ -67,7 +92,7 @@ mem.sams.set.stevie:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
-              data vec.2            ; | i  p1 = Vector with target address
+              data vec.3            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

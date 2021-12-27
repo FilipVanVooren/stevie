@@ -6,7 +6,7 @@
 *                       Strings
 ***************************************************************
 
-txt.stevie         text ' Stevie 1.2L '
+txt.stevie         text ' Stevie 1.2M '
                    even
 txt.keys.default1  #string 'F9-Back  F3-Clear  F5-Fastmode'
 txt.keys.default2  #string 'F9-Back  F3-Clear  *F5-Fastmode'

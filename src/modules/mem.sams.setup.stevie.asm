@@ -19,10 +19,10 @@ mem.sams.setup.stevie:
         ;------------------------------------------------------
         ; Set SAMS standard layout
         ;------------------------------------------------------        
-        bl    @mem.sams.set.stevie  ; Set SAMS banks for Stevie
+        bl    @mem.sams.set.boot    ; Set SAMS banks in boot for Stevie
 
         bl    @sams.layout.copy
-              data tv.sams.2000     ; Get SAMS windows
+              data tv.sams.2000     ; Copy SAMS bank ID to shadow table.
 
         mov   @tv.sams.c000,@edb.sams.page
         mov   @edb.sams.page,@edb.sams.hipage                  
