@@ -11,7 +11,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* r1 in GPL WS, tmp0, tmp1, r12
+* r1 in GPL WS, tmp0, tmp1, tmp2, r12
 *--------------------------------------------------------------
 * Remarks
 * tibasic >> b @0070 (GPL interpreter/TI Basic) 
@@ -25,7 +25,9 @@ tibasic:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack        
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack        
+        dect  stack      
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack                 
         mov   r12,*stack            ; Push r12
         ;-------------------------------------------------------
         ; Setup SAMS memory
@@ -218,20 +220,19 @@ tibasic.return:
         sbo   1                     ; | We stil have the SAMS banks layout 
                                     ; / mem.sams.layout.external
 
-        lwpi  cpu.scrpad.moved      ; Activate workspace
+        lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
+                                    ; paged out in tibasic.init
 
         ;movb  @w$ffff,@>8375        ; Reset keycode     
  
-        bl    @cpu.scrpad.backup    ; \ Backup TI Basic scratchpad to
-                                    ; / @cpu.scrpad.tgt (SAMS bank)
-
         bl    @cpym2m
               data >8300,cpu.scrpad.tgt,256
                                     ; Backup TI Basic scratchpad to
                                     ; @cpu.scrpad.tgt (SAMS bank)
 
-        bl    @cpu.scrpad.pgin      ; Page in copy of Stevie scratch pad memory 
-              data cpu.scrpad.moved ; and activate workspace at >8300
+        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratch pad memory 
+              data cpu.scrpad.moved ; | and activate workspace at >8300
+                                    ; / Destroys registers tmp0-tmp2
 
         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
         mov   @tv.sp2.xconf,xconfig ; Restore the SP2 extended config register
@@ -304,6 +305,7 @@ tibasic.return:
         ;------------------------------------------------------
 tibasic.return.exit:
         mov   *stack+,r12           ; Pop r12
+        mov   *stack+,tmp2          ; Pop tmp2        
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
