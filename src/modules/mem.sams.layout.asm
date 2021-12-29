@@ -226,6 +226,55 @@ mem.sams.set.basic3:
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
+***************************************************************
+* mem.sams.set.basic4
+* Setup SAMS memory banks for TI Basic session 4
+***************************************************************
+* INPUT
+* none
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0, r12
+*--------------------------------------------------------------
+* Remarks
+* Purpose is to handle backup/restore all the VDP memory
+* used by this TI Basic session.
+********|*****|*********************|**************************
+mem.sams.set.basic4:
+        ;-------------------------------------------------------
+        ; Setup SAMS banks using inline code
+        ;------------------------------------------------------- 
+        li    r0,mem.sams.layout.basic4
+        jmp   _mem.sams.set.banks   ; Set SAMS banks
+
+
+***************************************************************
+* mem.sams.set.basic5
+* Setup SAMS memory banks for TI Basic session 5
+***************************************************************
+* INPUT
+* none
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0, r12
+*--------------------------------------------------------------
+* Remarks
+* Purpose is to handle backup/restore all the VDP memory
+* used by this TI Basic session.
+********|*****|*********************|**************************
+mem.sams.set.basic5:
+        ;-------------------------------------------------------
+        ; Setup SAMS banks using inline code
+        ;------------------------------------------------------- 
+        li    r0,mem.sams.layout.basic5
+        jmp   _mem.sams.set.banks   ; Set SAMS banks
+
 
 ***************************************************************
 * mem.sams.set.stevie

@@ -1,12 +1,17 @@
 * FILE......: tibasic.asm
 * Purpose...: Run console TI Basic 
 
+
+
 ***************************************************************
 * tibasic
 * Run TI Basic session
 ***************************************************************
 * bl   @tibasic
 *--------------------------------------------------------------
+* INPUT
+* @tibasic.session = TI Basic session to start/resume
+*
 * OUTPUT
 * none
 *--------------------------------------------------------------
@@ -33,7 +38,6 @@ tibasic:
         ; Setup SAMS memory
         ;-------------------------------------------------------
         mov   config,@tv.sp2.conf   ; Backup the SP2 config register
-        mov   xconfig,@tv.sp2.xconf ; Backup the SP2 extended config register
 
         bl    @sams.layout.copy     ; Backup Stevie SAMS page layout
               data tv.sams.2000     ; \ @i = target address of 8 words table
@@ -59,16 +63,78 @@ tibasic:
         ;-------------------------------------------------------
         ; Resume existing TI Basic session?
         ;-------------------------------------------------------
-        mov   @tibasic.status,@tibasic.status 
-                                    ; New TI-Basic session?
-        jgt   tibasic.resume        ; No, resume existing session
+        mov   @tibasic.session,tmp0
+        ci    tmp0,1
+        jeq   tibasic.init.basic1
+        ci    tmp0,2
+        jeq   tibasic.init.basic2
+        ci    tmp0,3
+        jeq   tibasic.init.basic3
+        ci    tmp0,4
+        jeq   tibasic.init.basic4
+        ci    tmp0,5
+        jeq   tibasic.init.basic5
         ;-------------------------------------------------------
-        ; New TI Basic session
+        ; Assert, should never get here
+        ;-------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
+        ;-------------------------------------------------------
+        ; New TI Basic session (part 1)
         ;------------------------------------------------------- 
-tibasic.init:
-        bl    @mem.sams.set.basic1  ; Load SAMS page layout (from cart space)
-                                    ; for TI Basic session 1
+tibasic.init.basic1:               
+        mov   @tibasic1.status,tmp0 ; Resume TI Basic session?
+        jgt   tibasic.resume.basic1 ; yes, do resume
+        ori   tmp0,1                ; \ 
+        mov   tmp0,@tibasic1.status ; / Set resume flag for next run
 
+        bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 1
+        jmp   tibasic.init.part2    ; Continue initialisation
+
+tibasic.init.basic2:
+        mov   @tibasic2.status,tmp0 ; Resume TI Basic session?
+        jgt   tibasic.resume.basic2 ; yes, do resume
+        ori   tmp0,1                ; \ 
+        mov   tmp0,@tibasic2.status ; / Set resume flag for next run
+
+        bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 2
+        jmp   tibasic.init.part2    ; Continue initialisation
+
+tibasic.init.basic3:
+        mov   @tibasic3.status,tmp0 ; Resume TI Basic session?
+        jgt   tibasic.resume.basic3 ; yes, do resume
+        ori   tmp0,1                ; \ 
+        mov   tmp0,@tibasic3.status ; / Set resume flag for next run
+
+        bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 3
+        jmp   tibasic.init.part2    ; Continue initialisation
+
+tibasic.init.basic4:
+        mov   @tibasic4.status,tmp0 ; Resume TI Basic session?
+        jgt   tibasic.resume.basic4 ; yes, do resume
+        ori   tmp0,1                ; \ 
+        mov   tmp0,@tibasic4.status ; / Set resume flag for next run
+
+        bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 4
+        jmp   tibasic.init.part2    ; Continue initialisation
+
+tibasic.init.basic5:
+        mov   @tibasic5.status,tmp0 ; Resume TI Basic session?
+        jgt   tibasic.resume.basic5 ; yes, do resume
+        ori   tmp0,1                ; \ 
+        mov   tmp0,@tibasic5.status ; / Set resume flag for next run
+
+        bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 5
+        jmp   tibasic.init.part2    ; Continue initialisation
+        ;-------------------------------------------------------
+        ; New TI Basic session (part 2)
+        ;------------------------------------------------------- 
+tibasic.init.part2:
         bl    @cpym2m
               data cpu.scrpad.src,cpu.scrpad.tgt,256
                                     ; Initialize scratchpad memory for TI Basic
@@ -118,17 +184,50 @@ tibasic.init:
         movb  r1,@grmwa             ; / 
         nop
         b     @>70                  ; Start GPL interpreter
-
-
+        ;-------------------------------------------------------
+        ; Resume TI-Basic session 1
+        ;------------------------------------------------------- 
+tibasic.resume.basic1:
+        bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 1
+        jmp   tibasic.resume.part2  ; Continue resume
+        ;-------------------------------------------------------
+        ; Resume TI-Basic session 2
+        ;------------------------------------------------------- 
+tibasic.resume.basic2:
+        bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 2
+        jmp   tibasic.resume.part2  ; Continue resume
+        ;-------------------------------------------------------
+        ; Resume TI-Basic session 3
+        ;------------------------------------------------------- 
+tibasic.resume.basic3:
+        bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 3
+        jmp   tibasic.resume.part2  ; Continue resume
+        ;-------------------------------------------------------
+        ; Resume TI-Basic session 4
+        ;------------------------------------------------------- 
+tibasic.resume.basic4:
+        bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 4
+        jmp   tibasic.resume.part2  ; Continue resume
+        ;-------------------------------------------------------
+        ; Resume TI-Basic session 5
+        ;------------------------------------------------------- 
+tibasic.resume.basic5:
+        bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
+                                    ; / for TI Basic session 5
+        jmp   tibasic.resume.part2  ; Continue resume
 
         ;-------------------------------------------------------
-        ; Resume previous TI-Basic session
+        ; Resume TI-Basic session (part 2)
         ;------------------------------------------------------- 
-tibasic.resume:      
+tibasic.resume.part2:
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
-                                    ; RAM buffer >b000->efff (SAMS pages #04-07)
+                                    ; RAM buffer >b000->efff
 
         bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
               data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then 
@@ -223,7 +322,7 @@ tibasic.return:
         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
                                     ; paged out in tibasic.init
 
-        ;movb  @w$ffff,@>8375        ; Reset keycode     
+        movb  @w$ffff,@>8375        ; Reset keycode     
  
         bl    @cpym2m
               data >8300,cpu.scrpad.tgt,256
@@ -235,7 +334,6 @@ tibasic.return:
                                     ; / Destroys registers tmp0-tmp2
 
         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
-        mov   @tv.sp2.xconf,xconfig ; Restore the SP2 extended config register
 
         bl    @mute                 ; Mute sound generators              
         ;-------------------------------------------------------
@@ -246,13 +344,10 @@ tibasic.return:
               data >0000,>b000,16384
                                     ; Dump TI Basic 16K VDP memory to ram buffer
                                     ; >b000->efff
-
-        mov   @tibasic.status,tmp1  ; \                                  
-        ori   tmp1,1                ; | Set TI Basic reentry flag
-        mov   tmp1,@tibasic.status  ; /
         ;-------------------------------------------------------
         ; Restore VDP screen with Stevie content
         ;-------------------------------------------------------
+tibasic.return.stevie:        
         bl    @mem.sams.set.external   
                                     ; Load SAMS page layout when returning from
                                     ; external program.

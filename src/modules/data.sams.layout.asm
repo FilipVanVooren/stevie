@@ -101,3 +101,35 @@ mem.sams.layout.basic3:
         data  >1f00                 ; | VDP content
                                     ; /
         data  >0700                 ; >f000-ffff, SAMS page >07                    
+
+
+***************************************************************
+* SAMS page layout table for TI Basic session 4
+*--------------------------------------------------------------
+mem.sams.layout.basic4:
+        data  >0000                 ; >2000-2fff, SAMS page >00
+        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0400                 ; >a000-afff, SAMS page >04
+
+        data  >f800                 ; >b000-efff, SAMS page >f8
+        data  >f900                 ; \ 
+        data  >fa00                 ; | TI Basic session 4
+        data  >fb00                 ; | VDP content
+                                    ; /
+        data  >0700                 ; >f000-ffff, SAMS page >07                    
+
+
+***************************************************************
+* SAMS page layout table for TI Basic session 5
+*--------------------------------------------------------------
+mem.sams.layout.basic5:
+        data  >0000                 ; >2000-2fff, SAMS page >00
+        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0400                 ; >a000-afff, SAMS page >04
+
+        data  >fc00                 ; >b000-efff, SAMS page >fc
+        data  >fd00                 ; \ 
+        data  >fe00                 ; | TI Basic session 5
+        data  >ff00                 ; | VDP content
+                                    ; /
+        data  >0700                 ; >f000-ffff, SAMS page >07                    

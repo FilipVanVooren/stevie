@@ -690,6 +690,25 @@ vdp.patterns.dump:
 * Stub for "tibasic"
 * bank7 vec.10
 ********|*****|*********************|**************************
+tibasic1:
+        li    tmp0,1
+        mov   tmp0,@tibasic.session
+        jmp   tibasic
+tibasic2:
+        li    tmp0,2
+        mov   tmp0,@tibasic.session
+        jmp   tibasic        
+tibasic3:
+        li    tmp0,3
+        mov   tmp0,@tibasic.session
+        jmp   tibasic        
+tibasic4:
+        li    tmp0,4
+        mov   tmp0,@tibasic.session
+        jmp   tibasic        
+tibasic5:
+        li    tmp0,5
+        mov   tmp0,@tibasic.session
 tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address

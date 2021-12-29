@@ -20,7 +20,6 @@ tv.quit:
         ;-------------------------------------------------------
         ; Reset/lock F18a
         ;-------------------------------------------------------
-        bl    @mute
         bl    @f18rst               ; Reset and lock the F18A
         ;-------------------------------------------------------
         ; Load legacy SAMS page layout and exit to monitor

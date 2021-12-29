@@ -167,13 +167,16 @@ keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
 keycode1          equ  core1.top + 34  ; Current key scanned
 keycode2          equ  core1.top + 36  ; Previous key scanned
 unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
-tibasic.status    equ  core1.top + 44  ; TI Basic status flags
-                                       ; 0000 = Initialize TI-Basic
-                                       ; 0001 = TI-Basic reentry
-trmpvector        equ  core1.top + 46  ; Vector trampoline (if p1|tmp1 = >ffff)
-ramsat            equ  core1.top + 48  ; Sprite Attr. Table in RAM (14 bytes)
-timers            equ  core1.top + 64  ; Timers (80 bytes)
-core1.free        equ  core1.top + 144 ; End of structure
+tibasic.session   equ  core1.top + 44  ; Active TI-Basic session (1-5)
+tibasic1.status   equ  core1.top + 46  ; TI Basic session 1
+tibasic2.status   equ  core1.top + 48  ; TI Basic session 2
+tibasic3.status   equ  core1.top + 50  ; TI Basic session 3
+tibasic4.status   equ  core1.top + 52  ; TI Basic session 4
+tibasic5.status   equ  core1.top + 54  ; TI Basic session 5
+trmpvector        equ  core1.top + 56  ; Vector trampoline (if p1|tmp1 = >ffff)
+ramsat            equ  core1.top + 58  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 72  ; Timers (80 bytes)
+core1.free        equ  core1.top + 152 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
@@ -207,9 +210,8 @@ tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
-tv.sp2.xconf      equ  tv.top + 46     ; Backup of SP2 extended config register
-tv.error.msg      equ  tv.top + 48     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 208    ; End of structure
+tv.error.msg      equ  tv.top + 46     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 206    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
