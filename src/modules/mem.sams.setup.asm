@@ -1,4 +1,4 @@
-* FILE......: mem.sams.setup.stevie.asm
+* FILE......: mem.sams.setup.asm
 * Purpose...: SAMS Memory setup for Stevie
 
 ***************************************************************

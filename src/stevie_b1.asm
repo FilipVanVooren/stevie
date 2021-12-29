@@ -55,14 +55,14 @@ main:
         ; Include files
         ;-----------------------------------------------------------------------
         copy  "main.asm"            ; Main file (entrypoint)
-
-        copy  "mem.sams.setup.stevie.asm"    
-                                    ; SAMS memory setup for Stevie
+        ;-----------------------------------------------------------------------
+        ; Low-level modules
+        ;-----------------------------------------------------------------------
+        copy  "mem.sams.setup.asm"       ; SAMS memory setup for Stevie
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.process.asm"
-                                    ; Process keyboard actions
+        copy  "edkey.key.process.asm"    ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer (1)             
         ;-----------------------------------------------------------------------
@@ -180,7 +180,7 @@ cpu.crash.showbank.bankstr:
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 
-        aorg  >7fc0
+        aorg  bankx.vectab
         copy  "rom.vectors.bank1.asm"      
                                     ; Vector table bank 1
 *--------------------------------------------------------------

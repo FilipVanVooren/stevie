@@ -87,7 +87,7 @@ cpu.crash.showbank.bankstr:
         ;-----------------------------------------------------------------------
         ; Vector table
         ;----------------------------------------------------------------------- 
-        aorg  >7fc0
+        aorg  bankx.vectab
         copy  "rom.vectors.bank6.asm"
                                     ; Vector table bank 6
 

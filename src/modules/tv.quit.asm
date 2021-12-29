@@ -20,14 +20,20 @@ tv.quit:
         ;-------------------------------------------------------
         ; Reset/lock F18a
         ;-------------------------------------------------------
+        bl    @mute
         bl    @f18rst               ; Reset and lock the F18A
         ;-------------------------------------------------------
-        ; Set SAMS transparent mode
-        ;-------------------------------------------------------
-        bl    @mem.sams.set.legacy  ; Load legacy SAMS page layout
+        ; Load legacy SAMS page layout and exit to monitor
+        ;-------------------------------------------------------        
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data bankx.vectab     ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return 
 
-        li    r12,>1e00             ; SAMS CRU address
-        sbz   1                     ; Disable SAMS mapper
-
-        clr   @bank0.rom            ; Activate bank 0                                    
-        blwp  @0                    ; Reset to monitor
+        ; We never return here. We call @mem.sams.set.legacy (vector1) and
+        ; in there activate bank 0 in cartridge space and return to monitor.
+        ;
+        ; Reason for doing so is that @tv.quit is located in 
+        ; low memory expansion. So switching SAMS banks or turning off the SAMS
+        ; mapper results in invalid OPCODE's because the program just isn't
+        ; there in low memory expansion anymore.

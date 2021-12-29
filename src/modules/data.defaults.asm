@@ -1,5 +1,5 @@
 * FILE......: data.defaults.asm
-* Purpose...: Stevie Editor - data segment (default values)
+* Purpose...: Default values for Stevie
 
 ***************************************************************
 *                     Default values
