@@ -63,12 +63,12 @@ mem.sams.layout.basic1:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >1400                 ; >b000-efff, SAMS page >14
-        data  >1500                 ; \ 
-        data  >1600                 ; | TI Basic session 1
-        data  >1700                 ; | VDP content
+        data  >e700                 ; >b000-efff, SAMS page >e7
+        data  >e800                 ; \ 
+        data  >e900                 ; | TI Basic session 1
+        data  >ea00                 ; | VDP content
                                     ; /
-        data  >0700                 ; >f000-ffff, SAMS page >07     
+        data  >eb00                 ; >f000-ffff, SAMS page >eb
 
 
 ***************************************************************
@@ -79,12 +79,12 @@ mem.sams.layout.basic2:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >1800                 ; >b000-efff, SAMS page >18
-        data  >1900                 ; \ 
-        data  >1a00                 ; | TI Basic session 2
-        data  >1b00                 ; | VDP content
+        data  >ec00                 ; >b000-efff, SAMS page >ec
+        data  >ed00                 ; \ 
+        data  >ee00                 ; | TI Basic session 2
+        data  >ef00                 ; | VDP content
                                     ; /
-        data  >0700                 ; >f000-ffff, SAMS page >07            
+        data  >f000                 ; >f000-ffff, SAMS page >f0
 
 
 ***************************************************************
@@ -95,12 +95,12 @@ mem.sams.layout.basic3:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >1c00                 ; >b000-efff, SAMS page >1c
-        data  >1d00                 ; \ 
-        data  >1e00                 ; | TI Basic session 3
-        data  >1f00                 ; | VDP content
+        data  >f100                 ; >b000-efff, SAMS page >f1
+        data  >f200                 ; \ 
+        data  >f300                 ; | TI Basic session 3
+        data  >f400                 ; | VDP content
                                     ; /
-        data  >0700                 ; >f000-ffff, SAMS page >07                    
+        data  >f500                 ; >f000-ffff, SAMS page >f5
 
 
 ***************************************************************
@@ -111,12 +111,12 @@ mem.sams.layout.basic4:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >f800                 ; >b000-efff, SAMS page >f8
-        data  >f900                 ; \ 
-        data  >fa00                 ; | TI Basic session 4
-        data  >fb00                 ; | VDP content
+        data  >f600                 ; >b000-efff, SAMS page >f6
+        data  >f700                 ; \ 
+        data  >f800                 ; | TI Basic session 4
+        data  >f900                 ; | VDP content
                                     ; /
-        data  >0700                 ; >f000-ffff, SAMS page >07                    
+        data  >fa00                 ; >f000-ffff, SAMS page >fa
 
 
 ***************************************************************
@@ -127,9 +127,9 @@ mem.sams.layout.basic5:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >fc00                 ; >b000-efff, SAMS page >fc
-        data  >fd00                 ; \ 
-        data  >fe00                 ; | TI Basic session 5
-        data  >ff00                 ; | VDP content
+        data  >fb00                 ; >b000-efff, SAMS page >fc
+        data  >fc00                 ; \ 
+        data  >fd00                 ; | TI Basic session 5
+        data  >fe00                 ; | VDP content
                                     ; /
-        data  >0700                 ; >f000-ffff, SAMS page >07                    
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
