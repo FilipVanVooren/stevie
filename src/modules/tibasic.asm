@@ -63,7 +63,13 @@ tibasic:
         ;-------------------------------------------------------
         ; Resume existing TI Basic session?
         ;-------------------------------------------------------
-        mov   @tibasic.session,tmp0
+        mov   @tibasic.session,tmp0 ; \ 
+                                    ; | Store TI Basic session ID in tmp0.
+                                    ; | Througout the subroutine tmp0 will
+                                    ; | keep this value, even when SAMS
+                                    ; | banks are switched.
+                                    ; /
+
         ci    tmp0,1
         jeq   tibasic.init.basic1
         ci    tmp0,2
@@ -83,50 +89,50 @@ tibasic:
         ; New TI Basic session (part 1)
         ;------------------------------------------------------- 
 tibasic.init.basic1:               
-        mov   @tibasic1.status,tmp0 ; Resume TI Basic session?
+        mov   @tibasic1.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic1 ; yes, do resume
-        ori   tmp0,1                ; \ 
-        mov   tmp0,@tibasic1.status ; / Set resume flag for next run
+        ori   tmp1,1                ; \ 
+        mov   tmp1,@tibasic1.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
         jmp   tibasic.init.part2    ; Continue initialisation
 
 tibasic.init.basic2:
-        mov   @tibasic2.status,tmp0 ; Resume TI Basic session?
+        mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic2 ; yes, do resume
-        ori   tmp0,1                ; \ 
-        mov   tmp0,@tibasic2.status ; / Set resume flag for next run
+        ori   tmp1,1                ; \ 
+        mov   tmp1,@tibasic2.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
         jmp   tibasic.init.part2    ; Continue initialisation
 
 tibasic.init.basic3:
-        mov   @tibasic3.status,tmp0 ; Resume TI Basic session?
+        mov   @tibasic3.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic3 ; yes, do resume
-        ori   tmp0,1                ; \ 
-        mov   tmp0,@tibasic3.status ; / Set resume flag for next run
+        ori   tmp1,1                ; \ 
+        mov   tmp1,@tibasic3.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
         jmp   tibasic.init.part2    ; Continue initialisation
 
 tibasic.init.basic4:
-        mov   @tibasic4.status,tmp0 ; Resume TI Basic session?
+        mov   @tibasic4.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic4 ; yes, do resume
-        ori   tmp0,1                ; \ 
-        mov   tmp0,@tibasic4.status ; / Set resume flag for next run
+        ori   tmp1,1                ; \ 
+        mov   tmp1,@tibasic4.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
         jmp   tibasic.init.part2    ; Continue initialisation
 
 tibasic.init.basic5:
-        mov   @tibasic5.status,tmp0 ; Resume TI Basic session?
+        mov   @tibasic5.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic5 ; yes, do resume
-        ori   tmp0,1                ; \ 
-        mov   tmp0,@tibasic5.status ; / Set resume flag for next run
+        ori   tmp1,1                ; \ 
+        mov   tmp1,@tibasic5.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
@@ -224,6 +230,13 @@ tibasic.resume.basic5:
         ; Resume TI-Basic session (part 2)
         ;------------------------------------------------------- 
 tibasic.resume.part2:
+        li    tmp1,>8080            ; blank blank
+        mov   tmp1,@>b01a           ; row 0, col 28
+        mov   tmp1,@>b01c           ; row 0, col 30
+        mov   tmp0,tmp1             ; Get TI Basic session ID
+        ai    tmp1,>8390            ; Add # prefix and TI Basic char offset
+        mov   tmp1,@>b01c           ; row 0, col 30
+
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
@@ -261,6 +274,10 @@ tibasic.scrpad.83fc:
         data  >0108
 tibasic.scrpad.83fe:
         data  >8c02        
+
+my.session:
+        byte  >80,>83,>91
+
 
 
 
