@@ -22,6 +22,10 @@
 * tibasic >> b @0070 (GPL interpreter/TI Basic) 
 *         >> isr
 *         >> tibasic.return
+*
+* Uses scratchpad memory
+* >83b4   ISR counter to trigger TI Basic Session ID display.
+* >83b6   TI Basic Session ID
 ********|*****|*********************|**************************
 tibasic:
         dect  stack
@@ -61,15 +65,20 @@ tibasic:
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
         ;-------------------------------------------------------
-        ; Resume existing TI Basic session?
+        ; Keep TI Basic session ID for later use
         ;-------------------------------------------------------
         mov   @tibasic.session,tmp0 ; \ 
                                     ; | Store TI Basic session ID in tmp0.
                                     ; | Througout the subroutine tmp0 will
                                     ; | keep this value, even when SAMS
                                     ; | banks are switched.
-                                    ; /
-
+                                    ; |
+        mov   tmp0,@>83ff           ; | Also store a copy in the Stevie
+                                    ; | scratchpad >83ff for later use in
+                                    ; / TI Basic scratchpad.
+        ;-------------------------------------------------------
+        ; Switch for TI Basic session
+        ;-------------------------------------------------------
         ci    tmp0,1
         jeq   tibasic.init.basic1
         ci    tmp0,2
@@ -154,6 +163,7 @@ tibasic.init.part2:
         bl    @filv
               data >0300,>D0,2      ; No sprites
 
+
         bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
               data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then 
                                     ; | load TI Basic scratchpad from
@@ -162,6 +172,12 @@ tibasic.init.part2:
         ; ATTENTION
         ; From here on no more access to any of the SP2 or stevie routines.
         ; We're on unknown territory.
+
+        mov   @cpu.scrpad.moved+254,@>83b6   
+                                    ; \ Store TI Basic session ID in TI Basic
+                                    ; | scratchpad address >83b6. 
+                                    ; | Note that >83fe in Stevie scratchpad has
+                                    ; / a copy of the TI basic session ID.
 
         ;-------------------------------------------------------
         ; Poke some values
@@ -230,13 +246,6 @@ tibasic.resume.basic5:
         ; Resume TI-Basic session (part 2)
         ;------------------------------------------------------- 
 tibasic.resume.part2:
-        li    tmp1,>8080            ; blank blank
-        mov   tmp1,@>b01a           ; row 0, col 28
-        mov   tmp1,@>b01c           ; row 0, col 30
-        mov   tmp0,tmp1             ; Get TI Basic session ID
-        ai    tmp1,>8390            ; Add # prefix and TI Basic char offset
-        mov   tmp1,@>b01c           ; row 0, col 30
-
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
@@ -275,8 +284,7 @@ tibasic.scrpad.83fc:
 tibasic.scrpad.83fe:
         data  >8c02        
 
-my.session:
-        byte  >80,>83,>91
+
 
 
 
@@ -296,13 +304,64 @@ my.session:
 ********|*****|*********************|**************************
 isr:    
         limi  0                     ; \ Turn off interrupts
-                                    ; / Prevent ISR reentry 
+                                    ; / Prevent ISR reentry    
 
         mov   r7,@rambuf            ; Backup R7
         mov   r12,@rambuf+2         ; Backup R12
+        ;--------------------------------------------------------------
+        ; Exit ISR if TI-Basic is busy running a program
+        ;--------------------------------------------------------------
+        mov   @>8344,r7             ; Busy running program?
+        jeq   isr.showid            ; No, TI-Basic is in command line mode.
+        ;--------------------------------------------------------------
+        ; Check if FCTN-4 was pressed before
+        ;--------------------------------------------------------------
+        mov   r11,r7                ; Backup R11
+        bl    @>0020                ; Probably running TI-Basic program, but 
+                                    ; BREAK (FCTN-4) might be pressed before.
+                                    ; Call ROM funtion for checking FCTN-4
+
+        jeq   isr.break             ; Yes, FCTN-4 pressed before so no need
+                                    ; to exit ISR
+        ;--------------------------------------------------------------
+        ; TI-Basic program running
+        ;--------------------------------------------------------------
+        mov   r7,r11                ; Restore R11
+        jmp   isr.exit              ; Exit
+        ;--------------------------------------------------------------
+        ; Continue with ISR
+        ;--------------------------------------------------------------
+isr.break:
+        mov   r7,r11                ; Restore R11
+        ;--------------------------------------------------------------
+        ; Update counter
+        ;--------------------------------------------------------------
+isr.showid:        
+        inc   @>83b4                ; Increase counter in >83b4 
+        mov   @>83b4,r7                
+        ci    r7,>0020              ; Counter reached ?
+        jlt   isr.hotkey            ; Not yet, skip showing Session ID
+        clr   @>83b4                ; Reset counter
+        ;--------------------------------------------------------------
+        ; Setup VDP write address for column 30
+        ;--------------------------------------------------------------
+        li    r7,>401e              ; \
+        swpb  r7                    ; | >1c is the VDP column position 
+        movb  r7,@vdpa              ; | where bytes should be written
+        swpb  r7                    ; | 
+        movb  r7,@vdpa              ; /
+        ;--------------------------------------------------------------
+        ; Write bytes to VDP
+        ;--------------------------------------------------------------
+        mov   @>83b6,r7             ; Get copy of TI Basic session ID
+        ai    r7,>8390              ; Add # prefix and TI Basic char offset
+        movb  r7,@>8c00             ; Write byte
+        swpb  r7
+        movb  r7,@>8c00             ; Write byte
         ;-------------------------------------------------------
         ; Hotkey pressed?
         ;-------------------------------------------------------
+isr.hotkey:        
         mov   @>8374,r7             ; Get keyboard scancode
         andi  r7,>00ff              ; LSB only
         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
