@@ -317,6 +317,8 @@ keymap_actions.cmdb:
         data  tibasic4
         byte  key.num.5, id.dialog.basic
         data  tibasic5
+        byte  key.fctn.5, id.dialog.basic
+        data  edkey.action.cmdb.sid.toggle        
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------

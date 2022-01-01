@@ -34,5 +34,5 @@ vec.27  data  cmdb.cmd.preset       ;
 vec.28  data  cmdb.cmd.set          ; 
 vec.29  data  cpu.crash             ; 
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
-vec.31  data  cpu.crash             ; 
+vec.31  data  tibasic.sid.toggle    ; Toggle 'Show SID' in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog

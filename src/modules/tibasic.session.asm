@@ -1,5 +1,5 @@
-* FILE......: tibasic.asm
-* Purpose...: Run console TI Basic 
+* FILE......: tibasic.session.asm
+* Purpose...: Run TI Basic session
 
 
 
@@ -24,7 +24,7 @@
 *         >> tibasic.return
 *
 * Uses scratchpad memory
-* >83b4   ISR counter to trigger TI Basic Session ID display.
+* >83b4   Hide Flag/ISR counter for triggering SID display.
 * >83b6   TI Basic Session ID
 ********|*****|*********************|**************************
 tibasic:
@@ -65,6 +65,18 @@ tibasic:
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
         ;-------------------------------------------------------
+        ; Keep 'Hide SID' flag for later use
+        ;-------------------------------------------------------
+        mov   @tibasic.hidesid,tmp0 ; \ 
+                                    ; | Store TI Basic session ID in tmp0.
+                                    ; | Througout the subroutine tmp0 will
+                                    ; | keep this value, even when SAMS
+                                    ; | banks are switched.
+                                    ; |
+        mov   tmp0,@>83fc           ; | Also store a copy in the Stevie
+                                    ; | scratchpad >83ff for later use in
+                                    ; / TI Basic scratchpad.
+        ;-------------------------------------------------------
         ; Keep TI Basic session ID for later use
         ;-------------------------------------------------------
         mov   @tibasic.session,tmp0 ; \ 
@@ -73,7 +85,7 @@ tibasic:
                                     ; | keep this value, even when SAMS
                                     ; | banks are switched.
                                     ; |
-        mov   tmp0,@>83ff           ; | Also store a copy in the Stevie
+        mov   tmp0,@>83fe           ; | Also store a copy in the Stevie
                                     ; | scratchpad >83ff for later use in
                                     ; / TI Basic scratchpad.
         ;-------------------------------------------------------
@@ -95,19 +107,27 @@ tibasic:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
-        ; New TI Basic session (part 1)
+        ; New TI Basic session 1
         ;------------------------------------------------------- 
 tibasic.init.basic1:               
         mov   @tibasic1.status,tmp1 ; Resume TI Basic session?
-        jgt   tibasic.resume.basic1 ; yes, do resume
-        ori   tmp1,1                ; \ 
+        jeq   !                     ; No, new session
+        b     @tibasic.resume.basic1 
+!       ori   tmp1,1                ; \ 
         mov   tmp1,@tibasic1.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
-        jmp   tibasic.init.part2    ; Continue initialisation
 
-tibasic.init.basic2:
+        bl    @cpym2v
+              data >06f8,tibasic.patterns,8  
+                                    ; Copy pattern TI-Basic session ID 1
+
+        jmp   tibasic.init.rest     ; Continue initialisation
+        ;-------------------------------------------------------
+        ; New TI Basic session 2
+        ;------------------------------------------------------- 
+tibasic.init.basic2:        
         mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic2 ; yes, do resume
         ori   tmp1,1                ; \ 
@@ -115,8 +135,15 @@ tibasic.init.basic2:
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
-        jmp   tibasic.init.part2    ; Continue initialisation
 
+        bl    @cpym2v
+              data >06f8,tibasic.patterns+8,8  
+                                    ; Copy pattern TI-Basic session ID 2
+
+        jmp   tibasic.init.rest     ; Continue initialisation
+        ;-------------------------------------------------------
+        ; New TI Basic session 3
+        ;------------------------------------------------------- 
 tibasic.init.basic3:
         mov   @tibasic3.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic3 ; yes, do resume
@@ -125,8 +152,15 @@ tibasic.init.basic3:
 
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
-        jmp   tibasic.init.part2    ; Continue initialisation
 
+        bl    @cpym2v
+              data >06f8,tibasic.patterns+16,8  
+                                    ; Copy pattern TI-Basic session ID 3
+                                    
+        jmp   tibasic.init.rest     ; Continue initialisation
+        ;-------------------------------------------------------
+        ; New TI Basic session 4
+        ;------------------------------------------------------- 
 tibasic.init.basic4:
         mov   @tibasic4.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic4 ; yes, do resume
@@ -135,8 +169,15 @@ tibasic.init.basic4:
 
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
-        jmp   tibasic.init.part2    ; Continue initialisation
 
+        bl    @cpym2v
+              data >06f8,tibasic.patterns+24,8  
+                                    ; Copy pattern TI-Basic session ID 4
+
+        jmp   tibasic.init.rest     ; Continue initialisation
+        ;-------------------------------------------------------
+        ; New TI Basic session 5
+        ;------------------------------------------------------- 
 tibasic.init.basic5:
         mov   @tibasic5.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic5 ; yes, do resume
@@ -145,11 +186,16 @@ tibasic.init.basic5:
 
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
-        jmp   tibasic.init.part2    ; Continue initialisation
+
+        bl    @cpym2v
+              data >06f8,tibasic.patterns+32,8  
+                                    ; Copy pattern TI-Basic session ID 5
+
+        jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session (part 2)
         ;------------------------------------------------------- 
-tibasic.init.part2:
+tibasic.init.rest:
         bl    @cpym2m
               data cpu.scrpad.src,cpu.scrpad.tgt,256
                                     ; Initialize scratchpad memory for TI Basic
@@ -173,12 +219,17 @@ tibasic.init.part2:
         ; From here on no more access to any of the SP2 or stevie routines.
         ; We're on unknown territory.
 
+        mov   @cpu.scrpad.moved+252,@>83b4
+                                    ; \ Store 'Hide SID' flag in TI Basic
+                                    ; | scratchpad address >83b4.
+                                    ; | Note that >83fc in Stevie scratchpad
+                                    ; / has copy of the flag.
+
         mov   @cpu.scrpad.moved+254,@>83b6   
                                     ; \ Store TI Basic session ID in TI Basic
                                     ; | scratchpad address >83b6. 
                                     ; | Note that >83fe in Stevie scratchpad has
                                     ; / a copy of the TI basic session ID.
-
         ;-------------------------------------------------------
         ; Poke some values
         ;------------------------------------------------------- 
@@ -241,7 +292,6 @@ tibasic.resume.basic5:
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
         jmp   tibasic.resume.part2  ; Continue resume
-
         ;-------------------------------------------------------
         ; Resume TI-Basic session (part 2)
         ;------------------------------------------------------- 
@@ -260,20 +310,39 @@ tibasic.resume.part2:
         ; From here on no more access to any of the SP2 or stevie routines.
         ; We're on unknown territory.
 
+        mov   @cpu.scrpad.moved+252,@>83b4
+                                    ; \ Store 'Hide SID' flag in TI Basic
+                                    ; | scratchpad address >83b4.
+                                    ; | Note that >83fc in Stevie scratchpad
+                                    ; / has copy of the flag.
+
+        jeq   tibasic.resume.load   ; 'Hide SID' flag is reset, so skip
+                                    ; overwriting SID characters
+        ;-------------------------------------------------------
+        ; Clear SID
+        ;-------------------------------------------------------
+        li    r7,>401e              ; \
+        swpb  r7                    ; | >1c is the VDP column position 
+        movb  r7,@vdpa              ; | where bytes should be written
+        swpb  r7                    ; | 
+        movb  r7,@vdpa              ; /
+
+        li    r7,>8080              ; white-space characters
+        movb  r7,@vdpw              ; Write byte
+        movb  r7,@vdpw              ; Write byte
         ;-------------------------------------------------------
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
+tibasic.resume.load:        
         lwpi  >8300                  ; Workspace must be in scratchpad again!
         clr   r11
-
         ;-------------------------------------------------------
         ; Resume TI Basic interpreter
         ;------------------------------------------------------- 
         b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
-
         ;-------------------------------------------------------
-        ; Required values for TI Basicscratchpad
+        ; Required values for TI Basic scratchpad
         ;-------------------------------------------------------
 tibasic.scrpad.83d4:
         data  >e0d5
@@ -334,13 +403,14 @@ isr:
 isr.break:
         mov   r7,r11                ; Restore R11
         ;--------------------------------------------------------------
-        ; Update counter
+        ; Show TI-Basic session ID ?
         ;--------------------------------------------------------------
 isr.showid:        
-        inc   @>83b4                ; Increase counter in >83b4 
-        mov   @>83b4,r7                
-        ci    r7,>0020              ; Counter reached ?
-        jlt   isr.hotkey            ; Not yet, skip showing Session ID
+        mov   @>83b4,r7             ; Get counter/Hide flag
+        ci    r7,>ffff              ; Hide flag set?
+        jeq   isr.hotkey            ; Yes, skip showing session ID
+        ci    r7,>0010              ; Counter limit reached ?        
+        jlt   isr.counter           ; Not yet, skip showing Session ID
         clr   @>83b4                ; Reset counter
         ;--------------------------------------------------------------
         ; Setup VDP write address for column 30
@@ -351,13 +421,18 @@ isr.showid:
         swpb  r7                    ; | 
         movb  r7,@vdpa              ; /
         ;--------------------------------------------------------------
-        ; Write bytes to VDP
+        ; Dump TI-Basic Session ID to screen
         ;--------------------------------------------------------------
-        mov   @>83b6,r7             ; Get copy of TI Basic session ID
-        ai    r7,>8390              ; Add # prefix and TI Basic char offset
-        movb  r7,@>8c00             ; Write byte
+        li    r7,>83df              ; Char '#' and char >df
+        movb  r7,@vdpw              ; Write byte
         swpb  r7
-        movb  r7,@>8c00             ; Write byte
+        movb  r7,@vdpw              ; Write byte
+        jmp   isr.hotkey
+        ;-------------------------------------------------------
+        ; Increase counter
+        ;-------------------------------------------------------
+isr.counter:
+        inc   @>83b4                ; Increase counter
         ;-------------------------------------------------------
         ; Hotkey pressed?
         ;-------------------------------------------------------
@@ -481,3 +556,12 @@ tibasic.return.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return        
+
+
+
+tibasic.patterns:
+        byte  >00,>7E,>E7,>C7,>E7,>E7,>C3,>7E ; 1
+        byte  >00,>7E,>C3,>F3,>C3,>CF,>C3,>7E ; 2
+        byte  >00,>7E,>C3,>F3,>C3,>F3,>C3,>7E ; 3
+        byte  >00,>7E,>D3,>D3,>C3,>F3,>F3,>7E ; 4
+        byte  >00,>7E,>C3,>CF,>C3,>F3,>C3,>7E ; 5

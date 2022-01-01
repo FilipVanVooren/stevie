@@ -86,9 +86,10 @@ main:
         copy  "cmdb.cmd.set.asm"    ; Set command line to preset value
         copy  "cmdb.cmd.preset.asm" ; Preset shortcuts in dialogs
         ;-----------------------------------------------------------------------
-        ; Toggle fastmode in Load/Save DV80 dialogs
+        ; Dialog toggles
         ;-----------------------------------------------------------------------        
-        copy  "fm.fastmode.asm"     ; Turn fastmode on/off for file operation 
+        copy  "fm.fastmode.asm"     ; Toggle fastmode on/off for file operation 
+        copy  "tibasic.sid.asm"     ; Toggle 'Show SID' for TI-Basic session
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------        

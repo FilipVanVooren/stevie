@@ -65,6 +65,24 @@ edkey.action.cmdb.fastmode.toggle:
        b     @hook.keyscan.bounce   ; Back to editor main             
 
 
+***************************************************************
+* edkey.action.cmdb.sid.toggle
+* Toggle 'Show SID' on/off
+***************************************************************
+* b   @edkey.action.cmdb.sid.toggle
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* none
+********|*****|*********************|**************************
+edkey.action.cmdb.sid.toggle:
+       bl    @tibasic.sid.toggle    ; Toggle SID mode.
+       seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
+       b     @hook.keyscan.bounce   ; Back to editor main          
+
+
 
 ***************************************************************
 * edkey.action.cmdb.preset

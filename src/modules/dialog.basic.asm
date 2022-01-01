@@ -41,9 +41,22 @@ dialog.basic:
         li    tmp0,txt.hint.basic
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
-        li    tmp0,txt.keys.basic
+        mov   @tibasic.hidesid,tmp0 ; Get 'Hide SID' flag
+        jeq   !
+        ;-------------------------------------------------------
+        ; Flag is on
+        ;-------------------------------------------------------
+        li    tmp0,txt.keys.basic2
+        jmp   dialog.basic.keylist
+        ;-------------------------------------------------------
+        ; Flag is off
+        ;-------------------------------------------------------
+!       li    tmp0,txt.keys.basic
+        ;-------------------------------------------------------
+        ; Show dialog
+        ;-------------------------------------------------------
+dialog.basic.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

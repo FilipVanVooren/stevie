@@ -167,16 +167,17 @@ keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
 keycode1          equ  core1.top + 34  ; Current key scanned
 keycode2          equ  core1.top + 36  ; Previous key scanned
 unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
-tibasic.session   equ  core1.top + 44  ; Active TI-Basic session (1-5)
-tibasic1.status   equ  core1.top + 46  ; TI Basic session 1
-tibasic2.status   equ  core1.top + 48  ; TI Basic session 2
-tibasic3.status   equ  core1.top + 50  ; TI Basic session 3
-tibasic4.status   equ  core1.top + 52  ; TI Basic session 4
-tibasic5.status   equ  core1.top + 54  ; TI Basic session 5
-trmpvector        equ  core1.top + 56  ; Vector trampoline (if p1|tmp1 = >ffff)
-ramsat            equ  core1.top + 58  ; Sprite Attr. Table in RAM (14 bytes)
-timers            equ  core1.top + 72  ; Timers (80 bytes)
-core1.free        equ  core1.top + 152 ; End of structure
+tibasic.hidesid   equ  core1.top + 44  ; Hide TI-Basic session ID
+tibasic.session   equ  core1.top + 46  ; Active TI-Basic session (1-5)
+tibasic1.status   equ  core1.top + 48  ; TI Basic session 1
+tibasic2.status   equ  core1.top + 50  ; TI Basic session 2
+tibasic3.status   equ  core1.top + 52  ; TI Basic session 3
+tibasic4.status   equ  core1.top + 54  ; TI Basic session 4
+tibasic5.status   equ  core1.top + 56  ; TI Basic session 5
+trmpvector        equ  core1.top + 58  ; Vector trampoline (if p1|tmp1 = >ffff)
+ramsat            equ  core1.top + 60  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 74  ; Timers (80 bytes)
+core1.free        equ  core1.top + 154 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------

@@ -425,6 +425,17 @@ cmdb.cmd.set.vector:
 
 
 **************************************************************
+* Stub for "tibasic.sid.toggle"
+* bank3 vec.32
+********|*****|*********************|**************************
+tibasic.sid.toggle:
+        mov   @tibasic.sid.toggle.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tibasic.sid.toggle.vector:
+        data  vec.31
+
+
+**************************************************************
 * Stub for "fm.fastmode"
 * bank3 vec.32
 ********|*****|*********************|**************************
