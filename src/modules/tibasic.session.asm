@@ -209,7 +209,6 @@ tibasic.init.rest:
         bl    @filv
               data >0300,>D0,2      ; No sprites
 
-
         bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
               data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then 
                                     ; | load TI Basic scratchpad from
@@ -291,11 +290,19 @@ tibasic.resume.basic4:
 tibasic.resume.basic5:
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
-        jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session (part 2)
         ;------------------------------------------------------- 
 tibasic.resume.part2:
+        mov   @>83fc,r7             ; Get 'Hide SID' flag
+        jeq   tibasic.resume.vdp    ; Flag is reset, skip clearing SID
+
+        li    r7,>8080              ; Whitespace (with TI-Basic offset >60)
+        mov   r7,@>b01e             ; Clear SID in VDP screen backup
+        ;-------------------------------------------------------
+        ; Restore VDP memory
+        ;------------------------------------------------------- 
+tibasic.resume.vdp:
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
@@ -316,20 +323,6 @@ tibasic.resume.part2:
                                     ; | Note that >83fc in Stevie scratchpad
                                     ; / has copy of the flag.
 
-        jeq   tibasic.resume.load   ; 'Hide SID' flag is reset, so skip
-                                    ; overwriting SID characters
-        ;-------------------------------------------------------
-        ; Clear SID
-        ;-------------------------------------------------------
-        li    r7,>401e              ; \
-        swpb  r7                    ; | >1c is the VDP column position 
-        movb  r7,@vdpa              ; | where bytes should be written
-        swpb  r7                    ; | 
-        movb  r7,@vdpa              ; /
-
-        li    r7,>8080              ; white-space characters
-        movb  r7,@vdpw              ; Write byte
-        movb  r7,@vdpw              ; Write byte
         ;-------------------------------------------------------
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
