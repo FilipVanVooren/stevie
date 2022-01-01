@@ -374,27 +374,12 @@ isr:
         ; Exit ISR if TI-Basic is busy running a program
         ;--------------------------------------------------------------
         mov   @>8344,r7             ; Busy running program?
-        jeq   isr.showid            ; No, TI-Basic is in command line mode.
-        ;--------------------------------------------------------------
-        ; Check if FCTN-4 was pressed before
-        ;--------------------------------------------------------------
-        mov   r11,r7                ; Backup R11
-        bl    @>0020                ; Probably running TI-Basic program, but 
-                                    ; BREAK (FCTN-4) might be pressed before.
-                                    ; Call ROM funtion for checking FCTN-4
-
-        jeq   isr.break             ; Yes, FCTN-4 pressed before so no need
-                                    ; to exit ISR
+        ci    r7,>0100
+        jne   isr.showid            ; No, TI-Basic is in command line mode.
         ;--------------------------------------------------------------
         ; TI-Basic program running
         ;--------------------------------------------------------------
-        mov   r7,r11                ; Restore R11
         jmp   isr.exit              ; Exit
-        ;--------------------------------------------------------------
-        ; Continue with ISR
-        ;--------------------------------------------------------------
-isr.break:
-        mov   r7,r11                ; Restore R11
         ;--------------------------------------------------------------
         ; Show TI-Basic session ID ?
         ;--------------------------------------------------------------
