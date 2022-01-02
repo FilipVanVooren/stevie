@@ -6,7 +6,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0004               *       A 21th century Programming Editor for the 1981
 0005               *         Texas Instruments TI-99/4a Home Computer.
 0006               *
-0007               *              (c)2018-2021 // Filip van Vooren
+0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
 0009               * File: stevie_b3.asm               ; Version 220101-2102500
 0010               *
@@ -12937,7 +12937,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0200               
 0201               txt.about.build
 0202 740E 4C               byte  76
-0203 740F   42             text  'Build: 220101-2102500 / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+0203 740F   42             text  'Build: 220101-2102500 / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
      7410 7569     
      7412 6C64     
      7414 3A20     

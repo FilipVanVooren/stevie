@@ -4,7 +4,7 @@
 *       A 21th century Programming Editor for the 1981
 *         Texas Instruments TI-99/4a Home Computer.
 *
-*              (c)2018-2021 // Filip van Vooren
+*              (c)2018-2022 // Filip van Vooren
 ***************************************************************
 * File: stevie_b6.asm               ; Version %%build_date%%
 *

@@ -114,7 +114,7 @@ txt.head.about     byte 9,1,1
 txt.info.about     #string ''
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
 txt.keys.about     #string 'F9-Back  ENTER-Back'
-txt.about.build    #string 'Build: %%build_date%% / 2018-2021 Filip Van Vooren / retroclouds on Atariage'
+txt.about.build    #string 'Build: %%build_date%% / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
 
 
 ;--------------------------------------------------------------
