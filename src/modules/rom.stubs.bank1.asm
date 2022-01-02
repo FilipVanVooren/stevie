@@ -654,6 +654,18 @@ edb.block.copy.vector:
         data  vec.9
 
 
+**************************************************************
+* Stub for "edb.line.del"
+* bank5 vec.10
+********|*****|*********************|**************************
+edb.line.del:
+        mov   @edb.line.del.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.line.del.vector:
+        data  vec.10
+
+
+
 ***************************************************************
 * Trampoline bank 5 with return
 ********|*****|*********************|**************************

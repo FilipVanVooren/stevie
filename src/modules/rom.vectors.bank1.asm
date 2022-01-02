@@ -16,7 +16,7 @@ vec.9   data  cpu.crash             ;
 vec.10  data  edb.line.pack.fb      ; 
 vec.11  data  edb.line.unpack.fb    ; 
 vec.12  data  edb.clear.sams        ; 
-vec.13  data  edb.line.copy         ; 
+vec.13  data  cpu.crash             ; 
 vec.14  data  cpu.crash             ; 
 vec.15  data  edkey.action.cmdb.show
 vec.16  data  cpu.crash             ; 

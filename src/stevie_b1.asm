@@ -114,8 +114,6 @@ main:
         copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm"    ; Get line length
-        copy  "edb.line.copy.asm"      ; Copy line
-        copy  "edb.line.del.asm"       ; Delete line        
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
