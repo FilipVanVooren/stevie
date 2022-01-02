@@ -111,7 +111,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.line.mappage.asm"   ; Activate SAMS page for line
         copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
         copy  "edb.line.getlen.asm"    ; Get line length

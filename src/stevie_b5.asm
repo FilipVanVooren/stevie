@@ -56,6 +56,7 @@ main:
         ;-----------------------------------------------------------------------    
         copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer        
         copy  "edb.hipage.alloc.asm"; Allocate SAMS page for editor buffer         
+        copy  "edb.line.copy.asm"   ; Copy line
         copy  "edb.block.mark.asm"  ; Mark code block
         copy  "edb.block.clip.asm"  ; Save code block to clipboard
         copy  "edb.block.reset.asm" ; Reset markers

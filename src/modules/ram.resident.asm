@@ -18,10 +18,14 @@
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
-        copy  "idx.update.asm"      ; Index management - Update entry
-        copy  "idx.pointer.asm"     ; Index management - Get pointer to line
-        copy  "idx.delete.asm"      ; Index management - delete slot
-        copy  "idx.insert.asm"      ; Index management - insert slot
+        copy  "idx.update.asm"         ; Index management - Update entry
+        copy  "idx.pointer.asm"        ; Index management - Get pointer to line
+        copy  "idx.delete.asm"         ; Index management - delete slot
+        copy  "idx.insert.asm"         ; Index management - insert slot
+        ;-----------------------------------------------------------------------
+        ; Logic for editor buffer
+        ;-----------------------------------------------------------------------
+        copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
         ;-----------------------------------------------------------------------
         ; Utility functions
         ;-----------------------------------------------------------------------
