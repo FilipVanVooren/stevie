@@ -26,6 +26,7 @@
         ; Logic for editor buffer
         ;-----------------------------------------------------------------------
         copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
+        copy  "edb.line.getlen.asm"    ; Get line length
         ;-----------------------------------------------------------------------
         ; Utility functions
         ;-----------------------------------------------------------------------

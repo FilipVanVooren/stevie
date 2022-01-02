@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > resident.asm.12519
+     **** ****     > resident.asm.39876
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: reident.asm                 ; Version 220102-1527000
+0009               * File: reident.asm                 ; Version 220102-1748430
 0010               *
 0011               * Only for debugging
 0012               * Generate list file with contents of resident modules in
@@ -80,7 +80,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0064               *--------------------------------------------------------------
 0065               * Classic99 F18a 24x80, no FG99 advanced mode
 0066               *--------------------------------------------------------------
-                   < resident.asm.12519
+                   < resident.asm.39876
 0016                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -110,7 +110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
 0026               
 0027      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < resident.asm.12519
+                   < resident.asm.39876
 0017                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -495,7 +495,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0386               * Heap                                @>f000-ffff  (4096 bytes)
 0387               *--------------------------------------------------------------
 0388      F000     heap.top          equ  >f000           ; Top of heap
-                   < resident.asm.12519
+                   < resident.asm.39876
 0018                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -635,7 +635,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < resident.asm.12519
+                   < resident.asm.39876
 0019               
 0020               ***************************************************************
 0021               * BANK 0
@@ -690,7 +690,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046                       even
 0047               
 0049               
-                   < resident.asm.12519
+                   < resident.asm.39876
 0027               
 0028               ***************************************************************
 0029               * Code data: Relocated code
@@ -1465,7 +1465,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220102-1527000'
+0270 21ED   42             text  'Build-ID  220102-1748430'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1474,9 +1474,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3230     
      21FA 3130     
      21FC 322D     
-     21FE 3135     
-     2200 3237     
-     2202 3030     
+     21FE 3137     
+     2200 3438     
+     2202 3433     
      2204 30       
 0271                       even
 0272               
@@ -5850,7 +5850,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      308E 0040     
 0375 3090 0460  28         b     @main                 ; Give control to main program
      3092 3A68     
-                   < resident.asm.12519
+                   < resident.asm.39876
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6966,7 +6966,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018                       ;-----------------------------------------------------------------------
 0019                       ; Logic for Index management
 0020                       ;-----------------------------------------------------------------------
-0021                       copy  "idx.update.asm"      ; Index management - Update entry
+0021                       copy  "idx.update.asm"         ; Index management - Update entry
      **** ****     > idx.update.asm
 0001               * FILE......: idx.update.asm
 0002               * Purpose...: Update index entry
@@ -7060,7 +7060,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 34A8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0077 34AA 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0022                       copy  "idx.pointer.asm"     ; Index management - Get pointer to line
+0022                       copy  "idx.pointer.asm"        ; Index management - Get pointer to line
      **** ****     > idx.pointer.asm
 0001               * FILE......: idx.pointer.asm
 0002               * Purpose...: Get pointer to line in editor buffer
@@ -7148,7 +7148,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0074 34F4 C2F9  30         mov   *stack+,r11           ; Pop r11
 0075 34F6 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0023                       copy  "idx.delete.asm"      ; Index management - delete slot
+0023                       copy  "idx.delete.asm"         ; Index management - delete slot
      **** ****     > idx.delete.asm
 0001               * FILE......: idx_delete.asm
 0002               * Purpose...: Delete index entry
@@ -7297,7 +7297,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0131 3568 C2F9  30         mov   *stack+,r11           ; Pop r11
 0132 356A 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0024                       copy  "idx.insert.asm"      ; Index management - insert slot
+0024                       copy  "idx.insert.asm"         ; Index management - insert slot
      **** ****     > idx.insert.asm
 0001               * FILE......: idx.insert.asm
 0002               * Purpose...: Insert index entry
@@ -7479,7 +7479,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0159 35FE C2F9  30         mov   *stack+,r11           ; Pop r11
 0160 3600 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0025                       copy  "edb.line.mappage.asm"
+0025                       ;-----------------------------------------------------------------------
+0026                       ; Logic for editor buffer
+0027                       ;-----------------------------------------------------------------------
+0028                       copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
      **** ****     > edb.line.mappage.asm
 0001               * FILE......: edb.line.mappage.asm
 0002               * Purpose...: Editor buffer SAMS setup
@@ -7572,10 +7575,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 3648 C2F9  30         mov   *stack+,r11           ; Pop r11
 0077 364A 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0026                       ;-----------------------------------------------------------------------
-0027                       ; Utility functions
-0028                       ;-----------------------------------------------------------------------
-0029                       copy  "pane.topline.clearmsg.asm"
+0029                       ;-----------------------------------------------------------------------
+0030                       ; Utility functions
+0031                       ;-----------------------------------------------------------------------
+0032                       copy  "pane.topline.clearmsg.asm"
      **** ****     > pane.topline.clearmsg.asm
 0001               * FILE......: pane.topline.clearmsg.asm
 0002               * Purpose...: One-shot task for clearing overlay message in top line
@@ -7622,11 +7625,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0038 3668 C2F9  30         mov   *stack+,r11           ; Pop R11
 0039 366A 045B  20         b     *r11                  ; Return to task
                    < ram.resident.asm
-0030                                                      ; Remove overlay messsage in top line
-0031                       ;------------------------------------------------------
-0032                       ; Program data
-0033                       ;------------------------------------------------------
-0034                       copy  "data.constants.asm"     ; Constants
+0033                                                      ; Remove overlay messsage in top line
+0034                       ;------------------------------------------------------
+0035                       ; Program data
+0036                       ;------------------------------------------------------
+0037                       copy  "data.constants.asm"     ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -7854,7 +7857,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      36FA 0000     
 0175                       even
                    < ram.resident.asm
-0035                       copy  "data.strings.asm"       ; Strings
+0038                       copy  "data.strings.asm"       ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -8459,7 +8462,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267                       even
 0268               
                    < ram.resident.asm
-0036                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+0039                       copy  "data.defaults.asm"      ; Default values (devices, ...)
      **** ****     > data.defaults.asm
 0001               * FILE......: data.defaults.asm
 0002               * Purpose...: Default values for Stevie
@@ -8535,7 +8538,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < resident.asm.12519
+                   < resident.asm.39876
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to >6046
 0040                       ;------------------------------------------------------

@@ -54,34 +54,33 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
-        copy  "main.asm"            ; Main file (entrypoint)
+        copy  "main.asm"                    ; Main file (entrypoint)
         ;-----------------------------------------------------------------------
         ; Low-level modules
         ;-----------------------------------------------------------------------
-        copy  "mem.sams.setup.asm"       ; SAMS memory setup for Stevie
+        copy  "mem.sams.setup.asm"          ; SAMS memory setup for Stevie
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.process.asm"    ; Process keyboard actions
+        copy  "edkey.key.process.asm"       ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer (1)             
         ;-----------------------------------------------------------------------
-        copy  "edkey.fb.mov.leftright.asm" 
-                                         ; Move left / right / home / end
-        copy  "edkey.fb.mov.word.asm"    ; Move previous / next word
-        copy  "edkey.fb.mov.updown.asm"  ; Move line up / down        
-        copy  "edkey.fb.mov.paging.asm"  ; Move page up / down
-        copy  "edkey.fb.mov.topbot.asm"  ; Move file top / bottom
-        copy  "edkey.fb.mov.goto.asm"    ; Goto line in editor buffer
-        copy  "edkey.fb.del.asm"         ; Delete characters or lines
-        copy  "edkey.fb.ins.asm"         ; Insert characters or lines
-        copy  "edkey.fb.mod.asm"         ; Actions for modifier keys                
-        copy  "edkey.fb.ruler.asm"       ; Toggle ruler on/off
-        copy  "edkey.fb.misc.asm"        ; Miscelanneous actions        
-        copy  "edkey.fb.file.asm"        ; File related actions
-        copy  "edkey.fb.block.asm"       ; Actions for block move/copy/delete...
-        copy  "edkey.fb.tabs.asm"        ; tab-key related actions
-        copy  "edkey.fb.clip.asm"        ; Clipboard actions
+        copy  "edkey.fb.mov.leftright.asm"  ; Move left / right / home / end
+        copy  "edkey.fb.mov.word.asm"       ; Move previous / next word
+        copy  "edkey.fb.mov.updown.asm"     ; Move line up / down        
+        copy  "edkey.fb.mov.paging.asm"     ; Move page up / down
+        copy  "edkey.fb.mov.topbot.asm"     ; Move file top / bottom
+        copy  "edkey.fb.mov.goto.asm"       ; Goto line in editor buffer
+        copy  "edkey.fb.del.asm"            ; Delete characters or lines
+        copy  "edkey.fb.ins.asm"            ; Insert characters or lines
+        copy  "edkey.fb.mod.asm"            ; Actions for modifier keys                
+        copy  "edkey.fb.ruler.asm"          ; Toggle ruler on/off
+        copy  "edkey.fb.misc.asm"           ; Miscelanneous actions        
+        copy  "edkey.fb.file.asm"           ; File related actions
+        copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
+        copy  "edkey.fb.tabs.asm"           ; tab-key related actions
+        copy  "edkey.fb.clip.asm"           ; Clipboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer    
         ;-----------------------------------------------------------------------
@@ -111,52 +110,44 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.line.pack.fb.asm"   ; Pack line into editor buffer
-        copy  "edb.line.unpack.fb.asm" ; Unpack line from editor buffer
-        copy  "edb.line.getlen.asm"    ; Get line length
+        copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
+        copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
         ;-----------------------------------------------------------------------
         ; User hook, background tasks
         ;-----------------------------------------------------------------------
-        copy  "hook.keyscan.asm"       ; spectra2 user hook: keyboard scan
-        copy  "task.vdp.panes.asm"     ; Draw editor panes in VDP
+        copy  "hook.keyscan.asm"            ; SP2 user hook: keyboard scan
+        copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
 
     .ifeq device.f18a,1
-
-        copy  "task.vdp.cursor.sat.asm"
-                                       ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.f18a.asm"  
-                                       ; Set cursor shape in VDP (blink)
+        copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
+        copy  "task.vdp.cursor.f18a.asm"    ; Set cursor shape in VDP (blink)
     .else 
-
-        copy  "task.vdp.cursor.9938.asm"   
-                                       ; Set cursor shape in VDP (blink)    
-  
+        copy  "task.vdp.cursor.9938.asm"    ; Set cursor shape in VDP (blink)    
     .endif
 
-        copy  "task.oneshot.asm"       ; Run "one shot" task
+        copy  "task.oneshot.asm"            ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.colorscheme.asm" 
-                                       ; Colorscheme handling in panes 
-        copy  "pane.cursor.asm"        ; Cursor utility functions        
+        copy  "pane.utils.colorscheme.asm"  ; Colorscheme handling in panes 
+        copy  "pane.cursor.asm"             ; Cursor utility functions        
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------   
-        copy  "colors.line.set.asm"    ; Set color combination for line
-        copy  "pane.topline.asm"       ; Top line
-        copy  "pane.errline.asm"       ; Error line
-        copy  "pane.botline.asm"       ; Bottom line
-        copy  "pane.vdpdump.asm"       ; Dump panes to VDP memory
+        copy  "colors.line.set.asm"         ; Set color combination for line
+        copy  "pane.topline.asm"            ; Top line
+        copy  "pane.errline.asm"            ; Error line
+        copy  "pane.botline.asm"            ; Bottom line
+        copy  "pane.vdpdump.asm"            ; Dump panes to VDP memory
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank1.asm"    ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm"    ; Stubs to include in all banks > 0
+        copy  "rom.stubs.bank1.asm"         ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;----------------------------------------------------------------------- 
-        copy  "data.keymap.actions.asm"; Keyboard actions
+        copy  "data.keymap.actions.asm"     ; Keyboard actions
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;----------------------------------------------------------------------- 
