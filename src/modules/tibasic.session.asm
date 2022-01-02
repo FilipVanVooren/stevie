@@ -329,6 +329,9 @@ tibasic.resume.vdp:
 tibasic.resume.load:        
         lwpi  >8300                  ; Workspace must be in scratchpad again!
         clr   r11
+
+        li    r12,>1e00             ; \ Disable SAMS mapper (transparent mode)
+        sbz   1                     ; / 
         ;-------------------------------------------------------
         ; Resume TI Basic interpreter
         ;------------------------------------------------------- 
