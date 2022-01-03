@@ -26,15 +26,6 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
                                        ; | embedded in the cartridge space, so
                                        ; / do not load it here.
 
-
-*--------------------------------------------------------------
-* Stack location
-*--------------------------------------------------------------
-sp2.stktop                 equ  >83a0  ; \ SP2 stack >8340 - >8398
-                                       ; | The stack grows from 
-                                       ; / high to low memory.
-
-
 *--------------------------------------------------------------
 * classic99 and JS99er emulators are mutually exclusive.
 * At the time of writing JS99er has full F18a compatibility.
@@ -47,7 +38,7 @@ sp2.stktop                 equ  >83a0  ; \ SP2 stack >8340 - >8398
 * trimmed down 9938 version, that only works in classic99, but
 * not on the real TI-99/4a yet.
 *--------------------------------------------------------------
-full_f18a_support         equ  1       ; 30 rows mode with sprites
+full_f18a_support         equ  0       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------

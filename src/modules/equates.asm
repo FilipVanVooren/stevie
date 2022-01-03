@@ -344,6 +344,12 @@ cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
 cmdb.dflt.fname   equ  cmdb.struct +172; Default for filename
 cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
+* Stevie value stack                  @>a800-a8ff   (256 bytes)
+*--------------------------------------------------------------
+sp2.stktop        equ  >a900           ; \ SP2 stack >a800 - >a8ff
+                                       ; | The stack grows from high memory
+                                       ; / to low memory.
+*--------------------------------------------------------------
 * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad 

@@ -66,7 +66,7 @@ txt.head.clipdev   byte 31,1,1
                    text ' Configure clipboard device '
                    byte 1
 txt.hint.clipdev   #string 'Give device and filename prefix of clipboard.'
-txt.keys.clipdev   #string 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK8.CLIP  ^C=TIPI.STEVIE.CLIP'
+txt.keys.clipdev   #string 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
 
 
 ;--------------------------------------------------------------
