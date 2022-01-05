@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.33123
+     **** ****     > stevie_b0.asm.30619
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220103-2055500
+0009               * File: stevie_b0.asm               ; Version 220105-1702290
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -69,7 +69,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0054               *--------------------------------------------------------------
 0055               * Classic99 F18a 24x80, no FG99 advanced mode
 0056               *--------------------------------------------------------------
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -99,7 +99,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
 0026               
 0027      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -490,7 +490,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0392               * Heap                                @>f000-ffff  (4096 bytes)
 0393               *--------------------------------------------------------------
 0394      F000     heap.top          equ  >f000           ; Top of heap
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -630,7 +630,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0018               
 0019               ***************************************************************
 0020               * BANK 0
@@ -676,16 +676,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0035               
 0043               
 0044 6010 0B               byte  11
-0045 6011   53             text  'STEVIE 1.2M'
+0045 6011   53             text  'STEVIE 1.2N'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
-     601A 324D     
+     601A 324E     
 0046                       even
 0047               
 0049               
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1557,7 +1557,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220103-2055500'
+0270 62AB   42             text  'Build-ID  220105-1702290'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1565,10 +1565,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B4 2032     
      62B6 3230     
      62B8 3130     
-     62BA 332D     
-     62BC 3230     
-     62BE 3535     
-     62C0 3530     
+     62BA 352D     
+     62BC 3137     
+     62BE 3032     
+     62C0 3239     
      62C2 30       
 0271                       even
 0272               
@@ -5946,7 +5946,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7150 0040     
 0375 7152 0460  28         b     @main                 ; Give control to main program
      7154 3AD8     
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0109                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8776,7 +8776,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.33123
+                   < stevie_b0.asm.30619
 0110                       ;------------------------------------------------------
 0111                       ; Stevie main entry point
 0112                       ;------------------------------------------------------
