@@ -30,15 +30,14 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 * classic99 and JS99er emulators are mutually exclusive.
 * At the time of writing JS99er has full F18a compatibility.
 *
-* When targetting the JS99er emulator or a real F18a + TI-99/4a 
+* If build target is the JS99er emulator or an F18a equiped TI-99/4a 
 * then set the 'full_f18a_support' equate to 1.
 *
 * When targetting the classic99 emulator then set the 
-* 'full_f18a_support' equate to 0. This will activate the
-* trimmed down 9938 version, that only works in classic99, but
-* not on the real TI-99/4a yet.
+* 'full_f18a_support' equate to 0. 
+* This will build  the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
-full_f18a_support         equ  0       ; 30 rows mode with sprites
+full_f18a_support         equ  1       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------
