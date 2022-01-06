@@ -37,7 +37,7 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 * 'full_f18a_support' equate to 0. 
 * This will build  the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
-full_f18a_support         equ  1       ; 30 rows mode with sprites
+full_f18a_support         equ  0       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------

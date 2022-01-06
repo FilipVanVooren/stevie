@@ -113,18 +113,20 @@ main:
         copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
         ;-----------------------------------------------------------------------
-        ; User hook, background tasks
+        ; User hook
         ;-----------------------------------------------------------------------
         copy  "hook.keyscan.asm"            ; SP2 user hook: keyboard scan
-        copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
-
+        ;-----------------------------------------------------------------------
+        ; Background tasks
+        ;-----------------------------------------------------------------------
     .ifeq device.f18a,1
         copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.f18a.asm"    ; Set cursor shape in VDP (blink)
+        copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
     .else 
-        copy  "task.vdp.cursor.9938.asm"    ; Set cursor shape in VDP (blink)    
+        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)    
     .endif
 
+        copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
         copy  "task.oneshot.asm"            ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities

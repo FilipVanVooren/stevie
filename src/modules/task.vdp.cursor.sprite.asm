@@ -1,5 +1,5 @@
-* FILE......: task.vdp.cursor.f18a.asm
-* Purpose...: VDP sprite cursor shape (F18a version)
+* FILE......: task.vdp.cursor.sprite.asm
+* Purpose...: VDP sprite cursor shape (sprite version)
 
 ***************************************************************
 * Task - Update cursor shape (blink)
