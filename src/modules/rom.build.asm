@@ -27,6 +27,14 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
                                        ; / do not load it here.
 
 *--------------------------------------------------------------
+* SPECTRA2 / Stevie startup options
+*--------------------------------------------------------------
+startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
+kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
+kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+
+
+*--------------------------------------------------------------
 * classic99 and JS99er emulators are mutually exclusive.
 * At the time of writing JS99er has full F18a compatibility.
 *
@@ -37,6 +45,7 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 * 'full_f18a_support' equate to 0. 
 * This will build  the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
+debug                     equ  0       ; Turn on debugging mode
 full_f18a_support         equ  0       ; 30 rows mode with sprites
 
 

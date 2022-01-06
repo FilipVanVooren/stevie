@@ -85,13 +85,18 @@ edb.line.unpack.fb.getlen:
                                     ; / 
         jle   edb.line.unpack.fb.clear 
         ;------------------------------------------------------
-        ; Crash the system
+        ; Crash the system or limit length to 80
         ;------------------------------------------------------
+    .ifeq debug,1
         mov   @rambuf,r3            ; Get Line number to unpack (base 0)
                                     ; No purpose, only makes debugging easier
 
         mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system     
+        bl    @cpu.crash            ; / Crash and halt system
+    .else
+        jmp   edb.line.unpack.fb.prepare
+                                    ; Length was >80, don't erase
+    .endif
         ;------------------------------------------------------
         ; Erase chars from last column until column 80
         ;------------------------------------------------------
@@ -124,10 +129,14 @@ edb.line.unpack.fb.copy:
         ci    tmp2,80               ; Check line length
         jle   edb.line.unpack.fb.copy.doit
         ;------------------------------------------------------
-        ; Crash the system
+        ; Crash the system or limit length to 80
         ;------------------------------------------------------        
+    .ifeq debug,1        
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system       
+    .else
+        li    tmp2,80               ; Only process first 80 characters
+    .endif 
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------

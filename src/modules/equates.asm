@@ -137,13 +137,6 @@ id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
 id.file.printblock        equ  8       ; Print block
 *--------------------------------------------------------------
-* SPECTRA2 / Stevie startup options
-*--------------------------------------------------------------
-debug                     equ  1       ; Turn on spectra2 debugging
-startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
-kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
-kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-*--------------------------------------------------------------
 * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
 core1.top         equ  >a000           ; Structure begin
