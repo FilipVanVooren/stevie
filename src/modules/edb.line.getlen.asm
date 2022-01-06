@@ -64,10 +64,14 @@ edb.line.getlength:
         jle   edb.line.getlength.exit
                                     ; Yes, exit
         ;------------------------------------------------------
-        ; Crash the system
+        ; Crash the system or limit length to 80
         ;------------------------------------------------------
+    .ifeq debug,1        
         mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system
+        bl    @cpu.crash            ; / Crash and halt system       
+    .else
+        li    tmp1,80               ; Only process first 80 characters
+    .endif 
         ;------------------------------------------------------
         ; Set length to 0 if null-pointer
         ;------------------------------------------------------
