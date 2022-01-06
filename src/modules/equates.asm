@@ -230,14 +230,13 @@ fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.colorize       equ  fb.struct + 16  ; M1/M2 colorize refresh required
 fb.curtoggle      equ  fb.struct + 18  ; Cursor shape toggle
 fb.yxsave         equ  fb.struct + 20  ; Copy of cursor YX position
-fb.yxchar         equ  fb.struct + 22  ; Character at cursor YX position
-fb.dirty          equ  fb.struct + 24  ; Frame buffer dirty flag
-fb.status.dirty   equ  fb.struct + 26  ; Status line(s) dirty flag
-fb.scrrows        equ  fb.struct + 28  ; Rows on physical screen for framebuffer
-fb.scrrows.max    equ  fb.struct + 30  ; Max # of rows on physical screen for fb
-fb.ruler.sit      equ  fb.struct + 32  ; 80 char ruler  (no length-prefix!)
-fb.ruler.tat      equ  fb.struct + 112 ; 80 char colors (no length-prefix!)
-fb.free           equ  fb.struct + 192 ; End of structure
+fb.dirty          equ  fb.struct + 22  ; Frame buffer dirty flag
+fb.status.dirty   equ  fb.struct + 24  ; Status line(s) dirty flag
+fb.scrrows        equ  fb.struct + 26  ; Rows on physical screen for framebuffer
+fb.scrrows.max    equ  fb.struct + 28  ; Max # of rows on physical screen for fb
+fb.ruler.sit      equ  fb.struct + 30  ; 80 char ruler  (no length-prefix!)
+fb.ruler.tat      equ  fb.struct + 110 ; 80 char colors (no length-prefix!)
+fb.free           equ  fb.struct + 190 ; End of structure
 *--------------------------------------------------------------
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
