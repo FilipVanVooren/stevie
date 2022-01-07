@@ -10,6 +10,9 @@
 * Editor - spectra2 user hook
 ****************************************************************
 hook.keyscan:
+        clr   @>8374                ; Scan full keyboard
+        bl    @rkscan
+
         coc   @wbit11,config        ; ANYKEY pressed ?
         jne   hook.keyscan.clear_kbbuffer
                                     ; No, clear buffer and exit

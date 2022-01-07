@@ -4,6 +4,7 @@
         ;------------------------------------------------------
         ; Low-level modules
         ;------------------------------------------------------
+        copy  "keyb_rkscan.asm"        ; SP2 console KSCAN wrapper
         copy  "rom.farjump.asm"        ; ROM bankswitch trampoline 
         copy  "fb.asm"                 ; Framebuffer      
         copy  "idx.asm"                ; Index management           
