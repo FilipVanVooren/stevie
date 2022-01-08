@@ -65,7 +65,7 @@ edkey.action.newline.rest:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.newline.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 
@@ -84,7 +84,7 @@ edkey.action.ins_onoff:
         ;-------------------------------------------------------
 edkey.action.ins_onoff.exit: 
         mov   *stack+,r11           ; Pop r11
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 
@@ -158,4 +158,4 @@ edkey.action.char.overwrite.incx:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.char.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

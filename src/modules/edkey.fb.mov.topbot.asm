@@ -70,7 +70,7 @@ edkey.action.bot.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.bot.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 
@@ -123,4 +123,4 @@ edkey.action.botscr.eof:
         ;-------------------------------------------------------
 edkey.action.botscr.exit:
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

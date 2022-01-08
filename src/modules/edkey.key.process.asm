@@ -122,6 +122,7 @@ edkey.key.process.addbuffer:
         ;-------------------------------------------------------
         ; Add character to CMDB
         ;-------------------------------------------------------
+        mov   @keycode1,tmp1        ; Get key pressed
         b     @edkey.action.cmdb.char
                                     ; Add character to CMDB buffer        
         ;-------------------------------------------------------
@@ -134,4 +135,5 @@ edkey.key.process.crash:
         ; Exit
         ;-------------------------------------------------------
 edkey.key.process.exit:
-       b     @edkey.keyscan.hook.bounce   ; Back to editor main        
+        b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main        

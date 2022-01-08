@@ -13,4 +13,4 @@ edkey.action.fb.tab.next:
         ;------------------------------------------------------
 edkey.action.fb.tab.next.exit:
         mov   *stack+,r11           ; Pop r11
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

@@ -34,7 +34,7 @@ edkey.goto.fb.toprow:
                                     ; | i  @fb.row        = Row in frame buffer
                                     ; / o  @fb.row.length = Length of row
 
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 *---------------------------------------------------------------

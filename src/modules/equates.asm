@@ -377,8 +377,8 @@ heap.top          equ  >f000           ; Top of heap
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 rom0_kscan_out            equ  keycode1; Where to store value of key pressed
+
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)

@@ -9,7 +9,7 @@ edkey.action.block.mark:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -21,7 +21,7 @@ edkey.action.block.reset:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -65,7 +65,7 @@ edkey.action.block.copy:
         ;-------------------------------------------------------
 edkey.action.block.copy.exit:
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main                                    
+        b     @edkey.keyscan.hook.debounce; Back to editor main                                    
 
 
 
@@ -104,7 +104,7 @@ edkey.action.block.delete:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.delete.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -146,7 +146,7 @@ edkey.action.block.move:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.move.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -169,4 +169,4 @@ edkey.action.block.goto.m1:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.goto.m1.exit:  
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

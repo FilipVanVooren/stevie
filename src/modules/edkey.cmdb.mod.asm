@@ -57,9 +57,7 @@ edkey.action.cmdb.char:
         ;-------------------------------------------------------
         ; Asserts
         ;-------------------------------------------------------
-        movb  tmp1,tmp0             ; Get keycode
-        srl   tmp0,8                ; MSB to LSB
-
+        mov   @keycode1,tmp0        ; Get keycode
         ci    tmp0,32               ; Keycode < ASCII 32 ?
         jlt   edkey.action.cmdb.char.exit
                                     ; Yes, skip
@@ -74,7 +72,7 @@ edkey.action.cmdb.char:
 
         li    tmp0,cmdb.cmd         ; Get beginning of command
         a     @cmdb.column,tmp0     ; Add current column to command
-        movb  tmp1,*tmp0            ; Add character
+        movb  @keycode1+1,*tmp0     ; Add character
         inc   @cmdb.column          ; Next column
         inc   @cmdb.cursor          ; Next column cursor
 
@@ -91,4 +89,4 @@ edkey.action.cmdb.char:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.char.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

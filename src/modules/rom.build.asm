@@ -32,6 +32,8 @@ skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
+
 
 
 *--------------------------------------------------------------
@@ -46,7 +48,7 @@ kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 * This will build  the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
 debug                     equ  0       ; Turn on debugging mode
-full_f18a_support         equ  0       ; 30 rows mode with sprites
+full_f18a_support         equ  1       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------

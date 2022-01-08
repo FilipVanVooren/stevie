@@ -94,7 +94,7 @@ edkey.action.ins_char.append:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_char.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 
@@ -110,4 +110,4 @@ edkey.action.ins_line:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_line.exit:
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main

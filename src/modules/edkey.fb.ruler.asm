@@ -48,4 +48,4 @@ edkey.action.toggle.ruler.fb:
 edkey.action.toggle.ruler.exit: 
         mov   *stack+,@wyx          ; Pop cursor YX       
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.keyscan.hook.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.debounce; Back to editor main
