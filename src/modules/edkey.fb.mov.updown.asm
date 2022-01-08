@@ -10,7 +10,7 @@ edkey.action.up:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.up.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 
@@ -23,4 +23,4 @@ edkey.action.down:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.down.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main

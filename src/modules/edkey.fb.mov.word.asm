@@ -65,7 +65,7 @@ edkey.action.pword_done:
         ;-------------------------------------------------------
 edkey.action.pword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 
@@ -148,6 +148,6 @@ edkey.action.nword_done:
         ;-------------------------------------------------------
 edkey.action.nword.exit:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 

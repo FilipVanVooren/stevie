@@ -91,4 +91,4 @@ edkey.action.cmdb.char:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.char.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main

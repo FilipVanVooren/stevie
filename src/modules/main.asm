@@ -97,7 +97,7 @@ main.continue:
                                     ; | i  @parm3 = Only colorize CMDB pane 
                                     ; /             if >FFFF
         ;-------------------------------------------------------
-        ; Setup editor tasks & hook
+        ; Setup editor tasks
         ;-------------------------------------------------------
         li    tmp0,>0300
         mov   tmp0,@btihi           ; Highest slot in use
@@ -127,8 +127,11 @@ main.continue:
 
       .endif
 
-
+        ;-------------------------------------------------------
+        ; Setup keyboard scanning and start kernel/timers
+        ;-------------------------------------------------------
         bl    @mkhook
-              data hook.keyscan     ; Setup user hook
+              data edkey.keyscan.hook
+                                    ; Setup keyboard scanning hook
 
-        b     @tmgr                 ; Start timers and kthread
+        b     @tmgr                 ; Start kernel/timers

@@ -15,7 +15,7 @@ edkey.action.cmdb.left:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -33,7 +33,7 @@ edkey.action.cmdb.right:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 
@@ -47,7 +47,7 @@ edkey.action.cmdb.home:
         movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
         mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
         
-        b     @hook.keyscan.bounce   ; Back to editor main
+        b     @edkey.keyscan.hook.bounce   ; Back to editor main
 
 *---------------------------------------------------------------
 * Cursor end of line
@@ -62,4 +62,4 @@ edkey.action.cmdb.end:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        
-        b     @hook.keyscan.bounce   ; Back to editor main
+        b     @edkey.keyscan.hook.bounce   ; Back to editor main

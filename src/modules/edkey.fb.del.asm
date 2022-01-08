@@ -91,7 +91,7 @@ edkey.action.del_char.save:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_char.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -129,7 +129,7 @@ edkey.action.del_eol_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_eol.exit:
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------

@@ -62,6 +62,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
+        copy  "edkey.key.hook.asm"          ; SP2 user hook: keyboard scanning
         copy  "edkey.key.process.asm"       ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer (1)             
@@ -112,10 +113,6 @@ main:
         ;-----------------------------------------------------------------------
         copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
-        ;-----------------------------------------------------------------------
-        ; User hook
-        ;-----------------------------------------------------------------------
-        copy  "hook.keyscan.asm"            ; SP2 user hook: keyboard scan
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------

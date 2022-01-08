@@ -1,42 +1,36 @@
-* FILE......: hook.keyscan.asm
-* Purpose...: Stevie Editor - Keyboard handling (spectra2 user hook)
-
-
-
-
+* FILE......: edkey.key.hook.asm
+* Purpose...: Keyboard handling (spectra2 user hook)
 
 
 ****************************************************************
 * Editor - spectra2 user hook
 ****************************************************************
-hook.keyscan:
-        clr   @>8374                ; Scan full keyboard
-        bl    @rkscan
-
+edkey.keyscan.hook:
         coc   @wbit11,config        ; ANYKEY pressed ?
-        jne   hook.keyscan.clear_kbbuffer
+        jne   edkey.keyscan.hook.clear_kbbuffer
                                     ; No, clear buffer and exit
-        mov   @waux1,@keycode1      ; Save current key pressed                                    
 *---------------------------------------------------------------
 * Identical key pressed ?
 *---------------------------------------------------------------
         szc   @wbit11,config        ; Reset ANYKEY
         c     @keycode1,@keycode2   ; Still pressing previous key?
-        jne   hook.keyscan.new      ; New key pressed
+        jne   edkey.keyscan.hook.new      
+                                    ; New key pressed
 *---------------------------------------------------------------
 * Activate auto-repeat ?
 *---------------------------------------------------------------
         inc   @keyrptcnt
         mov   @keyrptcnt,tmp0
         ci    tmp0,30
-        jlt   hook.keyscan.bounce   ; No, do keyboard bounce delay and return
-        jmp   hook.keyscan.autorepeat
+        jlt   edkey.keyscan.hook.bounce   
+                                     ; No, do keyboard bounce delay and return
+        jmp   edkey.keyscan.hook.autorepeat                                  
 *--------------------------------------------------------------
 * New key pressed
 *--------------------------------------------------------------
-hook.keyscan.new:
+edkey.keyscan.hook.new:
         clr   @keyrptcnt            ; Reset key-repeat counter
-hook.keyscan.autorepeat:        
+edkey.keyscan.hook.autorepeat:        
         li    tmp0,250              ; \
 !       dec   tmp0                  ; | Inline keyboard bounce delay
         jne   -!                    ; /
@@ -45,20 +39,20 @@ hook.keyscan.autorepeat:
 *--------------------------------------------------------------
 * Clear keyboard buffer if no key pressed
 *--------------------------------------------------------------
-hook.keyscan.clear_kbbuffer:
+edkey.keyscan.hook.clear_kbbuffer:
         clr   @keycode1
         clr   @keycode2
         clr   @keyrptcnt
 *--------------------------------------------------------------
 * Delay to avoid key bouncing
 *-------------------------------------------------------------- 
-hook.keyscan.bounce:
+edkey.keyscan.hook.bounce:
         li    tmp0,2000             ; Avoid key bouncing
         ;------------------------------------------------------
         ; Delay loop
         ;------------------------------------------------------
-hook.keyscan.bounce.loop:
+edkey.keyscan.hook.bounce.loop:
         dec   tmp0
-        jne   hook.keyscan.bounce.loop
+        jne   edkey.keyscan.hook.bounce.loop                
         b     @hookok               ; Return
 

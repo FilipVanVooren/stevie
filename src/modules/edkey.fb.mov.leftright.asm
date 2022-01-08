@@ -17,7 +17,7 @@ edkey.action.left:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -36,7 +36,7 @@ edkey.action.right:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @hook.keyscan.bounce  ; Back to editor main
+!       b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -47,7 +47,7 @@ edkey.action.home:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -68,4 +68,4 @@ edkey.action.end:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @hook.keyscan.bounce  ; Back to editor main
+        b     @edkey.keyscan.hook.bounce  ; Back to editor main

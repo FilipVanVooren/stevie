@@ -5,9 +5,8 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
-        mov   @waux1,tmp1           ; \ 
-        andi  tmp1,>ff00            ; | Get key value and clear LSB
-        mov   tmp1,@waux1           ; / 
+        mov   @keycode1,tmp1        ; Get key pressed
+        sla   tmp1,8                ; Move to MSB
         seto  tmp3                  ; EOL marker
         ;-------------------------------------------------------
         ; Process key depending on pane with focus
@@ -135,4 +134,4 @@ edkey.key.process.crash:
         ; Exit
         ;-------------------------------------------------------
 edkey.key.process.exit:
-       b     @hook.keyscan.bounce   ; Back to editor main        
+       b     @edkey.keyscan.hook.bounce   ; Back to editor main        
