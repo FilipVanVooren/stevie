@@ -26,9 +26,7 @@ cmdb.cmd.preset:
 
         li    tmp0,cmdb.cmd.preset.data
                                     ; Load table
-
-        mov   @waux1,tmp2           ; \ Get keyboard code
-        srl   tmp2,8                ; / Right align
+        mov   @keycode1,tmp2        ; Get keyboard code
         ;-------------------------------------------------------
         ; Loop over table with presets
         ;-------------------------------------------------------

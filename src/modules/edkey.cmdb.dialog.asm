@@ -98,7 +98,8 @@ edkey.action.cmdb.sid.toggle:
 ********|*****|*********************|**************************
 edkey.action.cmdb.preset:
        bl    @cmdb.cmd.preset       ; Set preset
-       b     @edkey.keyscan.hook.debounce ; Back to editor main             
+       b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main
 
 
 
