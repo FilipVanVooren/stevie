@@ -49,7 +49,6 @@ bankid  equ   bank3.rom             ; Set bank identifier to current bank
 * Step 3: Include main editor modules
 ********|*****|*********************|**************************
 main:   
-
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------

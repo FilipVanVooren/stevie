@@ -54,6 +54,10 @@ edkey.action.cmdb.clear.exit:
 * Notes
 ********|*****|*********************|**************************
 edkey.action.cmdb.char:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
         ; Asserts
         ;-------------------------------------------------------
@@ -65,14 +69,21 @@ edkey.action.cmdb.char:
         ci    tmp0,126              ; Keycode > ASCII 126 ?
         jgt   edkey.action.cmdb.char.exit
                                     ; Yes, skip
+
+        ci    tmp0,96               ; ASCII 97 'a'
+        jlt   !
+        ai    tmp0,-32              ; Make uppercase
         ;-------------------------------------------------------
         ; Add character
         ;-------------------------------------------------------
+!       mov   tmp0,tmp1             ; \ 
+        sla   tmp1,8                ; / Move keycode to MSB 
+
         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
 
         li    tmp0,cmdb.cmd         ; Get beginning of command
         a     @cmdb.column,tmp0     ; Add current column to command
-        movb  @keycode1+1,*tmp0     ; Add character
+        movb  tmp1,*tmp0            ; Add character
         inc   @cmdb.column          ; Next column
         inc   @cmdb.cursor          ; Next column cursor
 
@@ -83,10 +94,13 @@ edkey.action.cmdb.char:
         ; Addjust length
         ;-------------------------------------------------------
         mov   @outparm1,tmp0
-        sla   tmp0,8               ; LSB to MSB 
+        sla   tmp0,8               ; Move to MSB 
         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.char.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0                
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

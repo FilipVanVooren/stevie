@@ -23,7 +23,7 @@ edkey.keyscan.hook:
         mov   @keyrptcnt,tmp0
         ci    tmp0,30
         jlt   edkey.keyscan.hook.debounce   
-                                     ; No, do keyboard bounce delay and return
+                                    ; No, do keyboard bounce delay and return
         jmp   edkey.keyscan.hook.autorepeat                                  
         ;------------------------------------------------------
         ; New key pressed

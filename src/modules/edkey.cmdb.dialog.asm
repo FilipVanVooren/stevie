@@ -42,7 +42,8 @@ edkey.action.cmdb.proceed:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.proceed.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 
@@ -62,7 +63,8 @@ edkey.action.cmdb.proceed.exit:
 edkey.action.cmdb.fastmode.toggle:
        bl    @fm.fastmode           ; Toggle fast mode.
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @edkey.keyscan.hook.debounce ; Back to editor main             
+       b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main             
 
 
 ***************************************************************
@@ -80,7 +82,8 @@ edkey.action.cmdb.fastmode.toggle:
 edkey.action.cmdb.sid.toggle:
        bl    @tibasic.sid.toggle    ; Toggle SID mode.
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @edkey.keyscan.hook.debounce ; Back to editor main          
+       b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main          
 
 
 
@@ -150,4 +153,5 @@ edkey.action.cmdb.close.dialog:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.close.dialog.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
