@@ -23,10 +23,15 @@ pane.cmdb.show:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        mov   @wyx,@cmdb.fb.yxsave  ; Save YX position in frame buffer
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Hide character cursor (character cursor)
+        ; Hide character cursor
         ;------------------------------------------------------        
+        mov   @wyx,@cmdb.fb.yxsave  ; Save YX position in frame buffer
+
     .ifeq device.f18a,0             
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
@@ -35,7 +40,10 @@ pane.cmdb.show:
         movb  @fb.top(tmp0),tmp1    ; Get character underneath cursor
         srl   tmp1,8                ; Right justify
         
-        ai    tmp0,80               ; Offset because of topline
+        mov   @tv.ruler.visible,tmp2
+        jeq   !                     ; Ruler hidden, skip additional offset
+        ai    tmp0,80               ; Offset because of ruler  
+!       ai    tmp0,80               ; Offset because of topline
 
         bl    @xvputb               ; Dump character to VDP
                                     ; \ i  tmp0 = VDP write address
@@ -69,12 +77,12 @@ pane.cmdb.show:
         mov   tmp0,@tv.pane.focus   ; /
 
         bl    @pane.errline.hide    ; Hide error pane
-
-pane.cmdb.show.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-
+pane.cmdb.show.exit:        
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

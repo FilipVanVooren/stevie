@@ -56,12 +56,25 @@ task.vdp.cursor.fb:
         seto  @fb.dirty             ; Trigger refresh
         jmp   task.vdp.cursor.exit
         ;------------------------------------------------------
-        ; Hide FB cursor
+        ; Show FB cursor
         ;------------------------------------------------------
 task.vdp.cursor.fb.visible:
-        mov   @wyx,tmp0             ; \
-        ai    tmp0,>0100            ; | Offset because of topline
-        mov   tmp0,@wyx             ; /
+        mov   @tv.ruler.visible,tmp0
+        jeq   task.vdp.cursor.fb.visible.noruler
+        ;------------------------------------------------------
+        ; Cursor position adjustment, ruler visible
+        ;------------------------------------------------------
+        mov   @wyx,tmp0             ; Get cursor YX
+        ai    tmp0,>0200            ; Topline + ruler adjustment
+        mov   tmp0,@wyx             ; Save cursor YX
+        jmp   task.vdp.cursor.dump
+        ;------------------------------------------------------
+        ; Cursor position adjustment, ruler hidden
+        ;------------------------------------------------------
+task.vdp.cursor.fb.visible.noruler:
+        mov   @wyx,tmp0             ; Get cursor YX
+        ai    tmp0,>0100            ; Topline adjustment
+        mov   tmp0,@wyx             ; Save cursor YX
         ;------------------------------------------------------
         ; Dump cursor to VDP
         ;------------------------------------------------------
