@@ -85,7 +85,8 @@ edkey.key.check.scope:
         ; Key pressed outside valid scope, ignore action entry
         ;-------------------------------------------------------
         ai    tmp2,3                ; Skip current entry
-        mov   @waux1,tmp1           ; Restore original case of key
+        mov   @keycode1,tmp1        ; Restore original case of key
+        sla   tmp1,8                ; Move to MSB
         jmp   edkey.key.check.next  ; Process next action entry        
         ;-------------------------------------------------------
         ; Trigger keyboard action
