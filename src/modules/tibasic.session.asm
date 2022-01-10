@@ -418,8 +418,8 @@ isr.counter:
         ; Hotkey pressed?
         ;-------------------------------------------------------
 isr.hotkey:        
-        mov   @>8374,r7             ; Get keyboard scancode
-        andi  r7,>00ff              ; LSB only
+        mov   @>8374,r7             ; \ Get keyboard scancode from @>8375
+        andi  r7,>00ff              ; / LSB only
         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
         jeq   tibasic.return        ; Yes, return to Stevie
         ;-------------------------------------------------------
