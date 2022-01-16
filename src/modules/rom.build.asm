@@ -45,10 +45,10 @@ rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 *
 * When targetting the classic99 emulator then set the 
 * 'full_f18a_support' equate to 0. 
-* This will build  the trimmed down version with 24x80 resolution.
+* This will build the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
 debug                     equ  0       ; Turn on debugging mode
-full_f18a_support         equ  0       ; 30 rows mode with sprites
+full_f18a_support         equ  1       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------
