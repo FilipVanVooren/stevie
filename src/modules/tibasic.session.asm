@@ -255,7 +255,7 @@ tibasic.init.rest:
         swpb  r1                    ; | Set GPL address
         movb  r1,@grmwa             ; / 
         nop
-        b     @>70                  ; Start GPL interpreter
+        b     @>0070                ; Start GPL interpreter
         ;-------------------------------------------------------
         ; Resume TI-Basic session 1
         ;------------------------------------------------------- 
@@ -341,7 +341,7 @@ tibasic.resume.load:
         ; Required values for TI Basic scratchpad
         ;-------------------------------------------------------
 tibasic.scrpad.83d4:
-        data  >e0d5
+        data  >e000
 tibasic.scrpad.83fa:
         data  >9800
 tibasic.scrpad.83fc:        
