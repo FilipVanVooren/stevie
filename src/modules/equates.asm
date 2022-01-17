@@ -308,17 +308,18 @@ cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
 cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
 cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-cmdb.panhead      equ  cmdb.struct + 28; Pointer to string pane header
-cmdb.paninfo      equ  cmdb.struct + 30; Pointer to string pane info (1st line)
-cmdb.panhint      equ  cmdb.struct + 32; Pointer to string pane hint (2nd line)
-cmdb.panmarkers   equ  cmdb.struct + 34; Pointer to key marker list  (3rd line)
-cmdb.pankeys      equ  cmdb.struct + 36; Pointer to string pane keys (stat line)
-cmdb.action.ptr   equ  cmdb.struct + 38; Pointer to function to execute
-cmdb.cmdall       equ  cmdb.struct + 40; Current command including length-byte
-cmdb.cmdlen       equ  cmdb.struct + 40; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 41; Current command (80 bytes max.)
-cmdb.panhead.buf  equ  cmdb.struct +122; String buffer for pane header
-cmdb.dflt.fname   equ  cmdb.struct +172; Default for filename
+cmdb.dialog.var   equ  cmdb.struct + 28; Dialog private variable or pointer
+cmdb.panhead      equ  cmdb.struct + 30; Pointer to string pane header
+cmdb.paninfo      equ  cmdb.struct + 32; Pointer to string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct + 34; Pointer to string pane hint (2nd line)
+cmdb.panmarkers   equ  cmdb.struct + 36; Pointer to key marker list  (3rd line)
+cmdb.pankeys      equ  cmdb.struct + 38; Pointer to string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct + 40; Pointer to function to execute
+cmdb.cmdall       equ  cmdb.struct + 42; Current command including length-byte
+cmdb.cmdlen       equ  cmdb.struct + 42; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 43; Current command (80 bytes max.)
+cmdb.panhead.buf  equ  cmdb.struct +124; String buffer for pane header
+cmdb.dflt.fname   equ  cmdb.struct +174; Default for filename
 cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
 * Stevie value stack                  @>a800-a8ff   (256 bytes)

@@ -62,12 +62,14 @@ dialog.help.content:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - 160
+              data vdp.fb.toprow.sit,32,vdp.sit.size - 480
                                     ; Clear screen
 
         ;
@@ -79,7 +81,7 @@ dialog.help.content:
         li    tmp0,vdp.fb.toprow.tat
         mov   @tv.color,tmp1        ; Get color for framebuffer
         srl   tmp1,8                ; Right justify
-        li    tmp2,vdp.sit.size - 160
+        li    tmp2,vdp.sit.size - 480
                                     ; Prepare for loading color attributes
 
         bl    @xfilv                ; \ Fill VDP memory
@@ -90,13 +92,17 @@ dialog.help.content:
         bl    @filv
               data sprsat,>d0,32    ; Turn off sprites
         ;------------------------------------------------------
-        ; Display keyboard shortcuts (part 1)
+        ; Display help page (left column)
         ;------------------------------------------------------
-        li    tmp0,>0100            ; Y=1, X=0
-        mov   tmp0,@wyx             ; Set cursor position
-        li    tmp1,dialog.help.help.part1
-                                    ; Pointer to string
-        li    tmp2,23               ; Set loop counter
+        bl    @at                   ; Set cursor position
+              byte 1,0              ; Y=1, X=0
+
+        mov   @cmdb.dialog.var,tmp3 ; Get Page index
+
+        mov   @dialog.help.data.pages(tmp3),tmp1
+                                    ; Pointer to list of strings
+        mov   @dialog.help.data.pages+2(tmp3),tmp2
+                                    ; Number of strings to display
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -105,13 +111,17 @@ dialog.help.content:
                                     ; / i  tmp2 = Number of strings to display
 
         ;------------------------------------------------------
-        ; Display keyboard shortcuts (part 2)
+        ; Display keyboard shortcuts (right column)
         ;------------------------------------------------------
-        li    tmp0,>012a            ; Y=1, X=42
-        mov   tmp0,@wyx             ; Set cursor position
-        li    tmp1,dialog.help.help.part2
-                                    ; Pointer to string
-        li    tmp2,24               ; Set loop counter
+        bl    @at                   ; Set cursor position
+              byte 0,42             ; Y=0, X=42
+
+        mov   @cmdb.dialog.var,tmp3 ; Get Page index
+
+        mov   @dialog.help.data.pages+4(tmp3),tmp1
+                                    ; Pointer to list of strings
+        mov   @dialog.help.data.pages+6(tmp3),tmp2
+                                    ; Number of strings to display
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -124,6 +134,7 @@ dialog.help.content:
         ;------------------------------------------------------
 dialog.help.content.exit:
         mov   *stack+,@wyx          ; Pop cursor position
+        mov   *stack+,tmp3          ; Pop tmp3        
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0               
@@ -132,7 +143,15 @@ dialog.help.content.exit:
 
 
 
-dialog.help.help.part1:
+dialog.help.data.pages:
+        data  dialog.help.data.page1.left,17
+        data  dialog.help.data.page1.right,18
+        data  dialog.help.data.page2.left,8
+        data  dialog.help.data.page2.right,10
+
+
+dialog.help.data.page1.left:
+        #string ' '
         #string '------------- Cursor --------------'
         #string 'Fctn s        Left'
         #string 'Fctn d        Right'
@@ -150,15 +169,9 @@ dialog.help.help.part1:
         #string 'Ctrl v   ^v   File top'
         #string 'Ctrl b   ^b   File bottom'
 
+dialog.help.data.page1.right:
+        #string '                                 (1/2)'
         #string ' '
-        #string '------------- Others --------------'
-        #string 'Fctn +   ^q   Quit'
-        #string 'Ctrl h   ^h   Help'
-        #string 'ctrl u   ^u   Toggle ruler'
-        #string 'Ctrl z   ^z   Cycle color schemes'
-        #string 'ctrl /   ^/   TI Basic (F9=exit)'
-
-dialog.help.help.part2:
         #string '------------- File ----------------'
         #string 'Ctrl a   ^a   Append file'
         #string 'Ctrl i   ^i   Insert file at line'
@@ -168,6 +181,27 @@ dialog.help.help.part2:
         #string 'Ctrl s   ^s   Save file'
         #string 'Ctrl ,   ^,   Load prev file'
         #string 'Ctrl .   ^.   Load next file'
+        #string ' '
+        #string '------------- Others --------------'
+        #string 'Fctn +   ^q   Quit'
+        #string 'Ctrl h   ^h   Help'
+        #string 'ctrl u   ^u   Toggle ruler'
+        #string 'Ctrl z   ^z   Cycle color schemes'
+        #string 'ctrl /   ^/   TI Basic (F9=exit)'
+
+dialog.help.data.page2.left:
+        #string ' '
+        #string '------------- Modifiers -----------'
+        #string 'Fctn 1        Delete character'
+        #string 'Fctn 2        Insert character'
+        #string 'Fctn 3        Delete line'
+        #string 'Ctrl l   ^l   Delete end of line'
+        #string 'Fctn 8        Insert line'
+        #string 'Fctn .        Insert/Overwrite'
+
+dialog.help.data.page2.right:
+        #string '                                 (2/2)'
+        #string ' '
         #string '------------- Block mode ----------'
         #string 'Ctrl SPACE    Set M1/M2 marker'
         #string 'Ctrl d   ^d   Delete block'
@@ -176,10 +210,3 @@ dialog.help.help.part2:
         #string 'Ctrl m   ^m   Move block'
         #string 'Ctrl s   ^s   Save block to file'
         #string 'Ctrl ^1..^5   Copy to clipboard 1-5'
-        #string '------------- Modifiers -----------'
-        #string 'Fctn 1        Delete character'
-        #string 'Fctn 2        Insert character'
-        #string 'Fctn 3        Delete line'
-        #string 'Ctrl l   ^l   Delete end of line'
-        #string 'Fctn 8        Insert line'
-        #string 'Fctn .        Insert/Overwrite'

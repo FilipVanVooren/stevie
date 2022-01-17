@@ -127,10 +127,16 @@ fm.newfile:
 * Stub for dialog "Help"
 * bank3 vec.1
 ********|*****|*********************|**************************
-edkey.action.about:
-        mov   @edkey.action.about.vector,@trmpvector
+dialog.help.next:
+        c     @w$0008,@cmdb.dialog.var
+        jeq   !
+        a     @w$0008,@cmdb.dialog.var
+        jmp   dialog.help                                    
+!       clr   @cmdb.dialog.var
+dialog.help:
+        mov   @dialog.help.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-edkey.action.about.vector:        
+dialog.help.vector:        
         data  vec.1
 
 

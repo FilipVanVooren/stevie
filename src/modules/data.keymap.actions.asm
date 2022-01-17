@@ -150,7 +150,7 @@ keymap_actions.editor:
         data  dialog.append
 
         byte  key.ctrl.h, pane.focus.fb 
-        data  edkey.action.about
+        data  dialog.help
 
         byte  key.ctrl.f, pane.focus.fb
         data  dialog.file
@@ -194,7 +194,7 @@ keymap_actions.cmdb:
         data  dialog.cartridge
         
         byte  key.uc.h, id.dialog.menu
-        data  edkey.action.about
+        data  dialog.help
 
         byte  key.uc.q, id.dialog.menu
         data  edkey.action.quit
@@ -322,6 +322,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
+        byte  key.space, id.dialog.help
+        data  dialog.help.next
+
         byte  key.fctn.9, id.dialog.help
         data  edkey.action.cmdb.close.about
 

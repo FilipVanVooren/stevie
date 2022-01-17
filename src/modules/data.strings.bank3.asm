@@ -6,7 +6,7 @@
 *                       Strings
 ***************************************************************
 
-txt.stevie         text ' Stevie 1.2P '
+txt.stevie         text ' Stevie 1.2Q '
                    even
 txt.keys.default1  #string 'F9-Back  F3-Clear  F5-Fastmode'
 txt.keys.default2  #string 'F9-Back  F3-Clear  *F5-Fastmode'
@@ -113,7 +113,7 @@ txt.head.about     byte 9,1,1
 
 txt.info.about     #string ''
 txt.hint.about     #string 'Press F9 or ENTER to return to editor.'
-txt.keys.about     #string 'F9-Back  ENTER-Back'
+txt.keys.about     #string 'F9-Back  SPACE-NextPage  ENTER-Back'
 txt.about.build    #string 'Build: %%build_date%% / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
 
 
