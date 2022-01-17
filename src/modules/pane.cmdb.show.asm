@@ -32,7 +32,14 @@ pane.cmdb.show:
         ;------------------------------------------------------        
         mov   @wyx,@cmdb.fb.yxsave  ; Save YX position in frame buffer
 
-    .ifeq device.f18a,0             
+    .ifeq device.f18a,0
+        ; Only do this if cursor is a character. 
+        ; Skip when help dialog is displayed.
+      
+        mov   @cmdb.dialog,tmp0     ; Get dialog ID
+        ci    tmp0,id.dialog.help
+        jeq   pane.cmdb.show.hidechar.done
+
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP write address
@@ -49,6 +56,7 @@ pane.cmdb.show:
                                     ; \ i  tmp0 = VDP write address
                                     ; / i  tmp1 = Byte to write (LSB)
 
+pane.cmdb.show.hidechar.done:
         mov   @fb.yxsave,@wyx       ; Restore YX position
      .endif
         ;------------------------------------------------------

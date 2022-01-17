@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.51711
+     **** ****     > stevie_b7.asm.56542
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220117-2035560
+0009               * File: stevie_b7.asm               ; Version 220117-2050200
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -81,7 +81,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0070      0001     device.9938               equ  1       ; 9938 GPU
 0071      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
 0072      0001     skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -111,7 +111,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
 0026               
 0027      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -500,7 +500,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0390      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0391      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0392      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -640,7 +640,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0018               
 0019               ***************************************************************
 0020               * BANK 7
@@ -699,7 +699,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1479,7 +1479,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220117-2035560'
+0270 21ED   42             text  'Build-ID  220117-2050200'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1489,8 +1489,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21FA 3131     
      21FC 372D     
      21FE 3230     
-     2200 3335     
-     2202 3536     
+     2200 3530     
+     2202 3230     
      2204 30       
 0271                       even
 0272               
@@ -5769,7 +5769,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0380 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8597,7 +8597,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -9025,7 +9025,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 6132 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0058                       ;-----------------------------------------------------------------------
 0059                       ; Basic interpreter
 0060                       ;-----------------------------------------------------------------------
@@ -9739,7 +9739,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      640A C3CF     
      640C C3F3     
      640E C37E     
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0062                       ;-----------------------------------------------------------------------
 0063                       ; Stubs
 0064                       ;-----------------------------------------------------------------------
@@ -9768,7 +9768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0020                       ;------------------------------------------------------
 0021 641E C2F9  30         mov   *stack+,r11           ; Pop r11
 0022 6420 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0066                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9819,7 +9819,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0104               
 0105               
 0106               
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0067                       ;-----------------------------------------------------------------------
 0068                       ; Program data
 0069                       ;-----------------------------------------------------------------------
@@ -9960,7 +9960,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0133 64B0 FE00             data  >fe00                 ; | VDP content
 0134                                                   ; /
 0135 64B2 FF00             data  >ff00                 ; >f000-ffff, SAMS page >ff
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0071                       ;-----------------------------------------------------------------------
 0072                       ; Bank full check
 0073                       ;-----------------------------------------------------------------------
@@ -10127,7 +10127,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0097                       ;-----------------------------------------------------------------------
 0098                       ; Vector table
 0099                       ;-----------------------------------------------------------------------
@@ -10172,7 +10172,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0036 7FFA 2026     vec.30  data  cpu.crash             ;
 0037 7FFC 2026     vec.31  data  cpu.crash             ;
 0038 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.51711
+                   < stevie_b7.asm.56542
 0102                                                   ; Vector table bank 7
 0103               
 0104               *--------------------------------------------------------------

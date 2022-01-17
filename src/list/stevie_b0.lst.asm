@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.48591
+     **** ****     > stevie_b0.asm.53281
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220117-2035260
+0009               * File: stevie_b0.asm               ; Version 220117-2049420
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -81,7 +81,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0070      0001     device.9938               equ  1       ; 9938 GPU
 0071      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
 0072      0001     skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -111,7 +111,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
 0026               
 0027      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -500,7 +500,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0390      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0391      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0392      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -640,7 +640,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0018               
 0019               ***************************************************************
 0020               * BANK 0
@@ -699,7 +699,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1574,7 +1574,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220117-2035260'
+0270 62AB   42             text  'Build-ID  220117-2049420'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1584,8 +1584,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B8 3131     
      62BA 372D     
      62BC 3230     
-     62BE 3335     
-     62C0 3236     
+     62BE 3439     
+     62C0 3432     
      62C2 30       
 0271                       even
 0272               
@@ -5864,7 +5864,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      703C 0040     
 0380 703E 0460  28         b     @main                 ; Give control to main program
      7040 39C0     
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0109                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8692,7 +8692,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.48591
+                   < stevie_b0.asm.53281
 0110                       ;------------------------------------------------------
 0111                       ; Stevie main entry point
 0112                       ;------------------------------------------------------
