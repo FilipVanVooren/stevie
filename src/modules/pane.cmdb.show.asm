@@ -57,7 +57,7 @@ pane.cmdb.show:
                                     ; / i  tmp1 = Byte to write (LSB)
 
 pane.cmdb.show.hidechar.done:
-        mov   @fb.yxsave,@wyx       ; Restore YX position
+        mov   @cmdb.fb.yxsave,@wyx  ; Restore YX position
      .endif
         ;------------------------------------------------------
         ; Show command buffer pane

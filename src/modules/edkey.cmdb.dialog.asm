@@ -119,12 +119,14 @@ edkey.action.cmdb.preset:
 * none
 ********|*****|*********************|**************************
 edkey.action.cmdb.close.about:
+        clr   @cmdb.dialog.var      ; Reset to Help page 1
         ;------------------------------------------------------
         ; Erase header line
         ;------------------------------------------------------        
         bl    @hchar
               byte 0,0,32,80*2
-              data EOL        
+              data EOL
+
         jmp   edkey.action.cmdb.close.dialog
 
 
