@@ -11,10 +11,10 @@
 * Bank 1 "James"
 * Editor core
 ***************************************************************
-        copy  "rom.build.asm"       ; Cartridge build options        
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
+        copy  "rom.build.asm"       ; Cartridge build options
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
-        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************
 * BANK 1
@@ -34,7 +34,7 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "ram.resident.asm"        
+        copy  "ram.resident.asm"
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
@@ -48,9 +48,9 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 3: Include main editor modules
 ********|*****|*********************|**************************
-main:   
+main:
         aorg  kickstart.code2       ; >6046
-        b     @main.stevie          ; Start editor 
+        b     @main.stevie          ; Start editor
         ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
@@ -65,41 +65,41 @@ main:
         copy  "edkey.key.hook.asm"          ; SP2 user hook: keyboard scanning
         copy  "edkey.key.process.asm"       ; Process keyboard actions
         ;-----------------------------------------------------------------------
-        ; Keyboard actions - Framebuffer (1)             
+        ; Keyboard actions - Framebuffer (1)
         ;-----------------------------------------------------------------------
         copy  "edkey.fb.mov.leftright.asm"  ; Move left / right / home / end
         copy  "edkey.fb.mov.word.asm"       ; Move previous / next word
-        copy  "edkey.fb.mov.updown.asm"     ; Move line up / down        
+        copy  "edkey.fb.mov.updown.asm"     ; Move line up / down
         copy  "edkey.fb.mov.paging.asm"     ; Move page up / down
         copy  "edkey.fb.mov.topbot.asm"     ; Move file top / bottom
         copy  "edkey.fb.mov.goto.asm"       ; Goto line in editor buffer
         copy  "edkey.fb.del.asm"            ; Delete characters or lines
         copy  "edkey.fb.ins.asm"            ; Insert characters or lines
-        copy  "edkey.fb.mod.asm"            ; Actions for modifier keys                
+        copy  "edkey.fb.mod.asm"            ; Actions for modifier keys
         copy  "edkey.fb.ruler.asm"          ; Toggle ruler on/off
-        copy  "edkey.fb.misc.asm"           ; Miscelanneous actions        
+        copy  "edkey.fb.misc.asm"           ; Miscelanneous actions
         copy  "edkey.fb.file.asm"           ; File related actions
         copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
         copy  "edkey.fb.tabs.asm"           ; tab-key related actions
         copy  "edkey.fb.clip.asm"           ; Clipboard actions
         ;-----------------------------------------------------------------------
-        ; Keyboard actions - Command Buffer    
+        ; Keyboard actions - Command Buffer
         ;-----------------------------------------------------------------------
-        copy  "edkey.cmdb.mov.asm"          ; Actions for movement keys 
+        copy  "edkey.cmdb.mov.asm"          ; Actions for movement keys
         copy  "edkey.cmdb.mod.asm"          ; Actions for modifier keys
         copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
         copy  "edkey.cmdb.file.new.asm"     ; New file
         copy  "edkey.cmdb.file.load.asm"    ; Open file
         copy  "edkey.cmdb.file.insert.asm"  ; Insert file
-        copy  "edkey.cmdb.file.append.asm"  ; Append file        
+        copy  "edkey.cmdb.file.append.asm"  ; Append file
         copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
         copy  "edkey.cmdb.file.clipdev.asm" ; Configure clipboard device
         copy  "edkey.cmdb.file.save.asm"    ; Save file
-        copy  "edkey.cmdb.file.print.asm"   ; Print file        
+        copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
-        ;-----------------------------------------------------------------------        
+        ;-----------------------------------------------------------------------
         copy  "fb.utils.asm"                ; Framebuffer utilities
         copy  "fb.cursor.up.asm"            ; Cursor up
         copy  "fb.cursor.down.asm"          ; Cursor down
@@ -119,8 +119,8 @@ main:
     .ifeq device.f18a,1
         copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
         copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
-    .else 
-        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)    
+    .else
+        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
     .endif
 
         copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
@@ -128,11 +128,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.colorscheme.asm"  ; Colorscheme handling in panes 
-        copy  "pane.cursor.asm"             ; Cursor utility functions        
+        copy  "pane.utils.colorscheme.asm"  ; Colorscheme handling in panes
+        copy  "pane.cursor.asm"             ; Cursor utility functions
         ;-----------------------------------------------------------------------
         ; Screen panes
-        ;-----------------------------------------------------------------------   
+        ;-----------------------------------------------------------------------
         copy  "colors.line.set.asm"         ; Set color combination for line
         copy  "pane.topline.asm"            ; Top line
         copy  "pane.errline.asm"            ; Error line
@@ -145,17 +145,17 @@ main:
         copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
-        ;----------------------------------------------------------------------- 
+        ;-----------------------------------------------------------------------
         copy  "data.keymap.actions.asm"     ; Keyboard actions
         ;-----------------------------------------------------------------------
         ; Bank full check
-        ;----------------------------------------------------------------------- 
+        ;-----------------------------------------------------------------------
         .ifgt $, >7faf
               .error 'Aborted. Bank 1 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------         
+        ;-----------------------------------------------------------------------
 cpu.crash.showbank:
         aorg  >7fb0
         bl    @putat
@@ -166,9 +166,9 @@ cpu.crash.showbank.bankstr:
         #string 'ROM#1'
         ;-----------------------------------------------------------------------
         ; Vector table
-        ;----------------------------------------------------------------------- 
+        ;-----------------------------------------------------------------------
         aorg  bankx.vectab
-        copy  "rom.vectors.bank1.asm"      
+        copy  "rom.vectors.bank1.asm"
                                     ; Vector table bank 1
 *--------------------------------------------------------------
 * Video mode configuration

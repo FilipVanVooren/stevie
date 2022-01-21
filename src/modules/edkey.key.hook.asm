@@ -10,54 +10,37 @@ edkey.keyscan.hook:
         jne   edkey.keyscan.hook.clear
                                     ; No, clear buffer and exit
         ;------------------------------------------------------
-        ; Identical key pressed ?
+        ; Reset flags
         ;------------------------------------------------------
         szc   @wbit11,config        ; Reset ANYKEY
-        c     @keycode1,@keycode2   ; Still pressing previous key?
-        jne   edkey.keyscan.hook.new      
-                                    ; New key pressed
+        szc   @w$0001,@kbflags      ; Remove keyboard buffer cleared flag
         ;------------------------------------------------------
-        ; Activate auto-repeat ?
+        ; Key pressed
         ;------------------------------------------------------
-        inc   @keyrptcnt
-        mov   @keyrptcnt,tmp0
-        ci    tmp0,30
-        jlt   edkey.keyscan.hook.debounce   
-                                    ; No, do keyboard bounce delay and return
-        jmp   edkey.keyscan.hook.autorepeat                                  
-        ;------------------------------------------------------
-        ; New key pressed
-        ;------------------------------------------------------
-edkey.keyscan.hook.new:
-        clr   @keyrptcnt            ; Reset key-repeat counter
-edkey.keyscan.hook.autorepeat:        
-        li    tmp0,250              ; \
-!       dec   tmp0                  ; | Inline keyboard bounce delay
-        jne   -!                    ; /
         mov   @keycode1,@keycode2   ; Save as previous key
         b     @edkey.key.process    ; Process key
         ;------------------------------------------------------
         ; Clear keyboard buffer if no key pressed
         ;------------------------------------------------------
 edkey.keyscan.hook.clear:
-        clr   @keycode1
-        clr   @keycode2
-        clr   @keyrptcnt
-        jmp   edkey.keyscan.hook.exit
+        mov   @kbflags,tmp0         ; Get keyboard control flags
+        coc   @w$0001,tmp0          ; Keyboard buffer already cleared?
+        jeq   edkey.keyscan.hook.exit
+                                    ; Yes, skip to exit
+
+        clr   @keycode1             ; \
+        clr   @keycode2             ; | Clear keyboard buffer and set
+        ori   tmp0,kbf.kbclear      ; | keyboard buffer cleared flag
+        mov   tmp0,@kbflags         ; /
         ;------------------------------------------------------
         ; Keyboard debounce
         ;------------------------------------------------------
 edkey.keyscan.hook.debounce:
-        li    tmp0,2000             ; Avoid key bouncing
-        ;------------------------------------------------------
-        ; Debounce loop
-        ;------------------------------------------------------
-edkey.keyscan.hook.debounce.loop:
-        dec   tmp0
-        jne   edkey.keyscan.hook.debounce.loop
+        nop                         ; No purpose anymore, but branched to
+                                    ; from several subroutines.
+                                    ; Needs to be refactored.
         ;------------------------------------------------------
         ; Exit keyboard hook
         ;------------------------------------------------------
 edkey.keyscan.hook.exit:
         b     @hookok               ; Return
-

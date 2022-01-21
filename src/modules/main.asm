@@ -17,7 +17,7 @@
 * -
 *--------------------------------------------------------------
 * Notes
-* Main entry point for stevie editor 
+* Main entry point for stevie editor
 ***************************************************************
 
 
@@ -73,11 +73,11 @@ main.continue:
         mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
 
-        bl    @vdp.patterns.dump    ; Load sprite and character patterns                                    
+        bl    @vdp.patterns.dump    ; Load sprite and character patterns
 *--------------------------------------------------------------
-* Initialize 
+* Initialize
 *--------------------------------------------------------------
-        bl    @mem.sams.setup.stevie 
+        bl    @mem.sams.setup.stevie
                                     ; Load SAMS pages for stevie
 
         bl    @tv.init              ; Initialize editor configuration
@@ -93,20 +93,17 @@ main.continue:
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines
-                                    ; |             if >FFFF                                    
-                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; |             if >FFFF
+                                    ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
         ;-------------------------------------------------------
         ; Setup editor tasks
         ;-------------------------------------------------------
-        li    tmp0,>0300
-        mov   tmp0,@btihi           ; Highest slot in use
- 
         bl    @at
               data  >0000           ; Cursor YX position = >0000
 
-        li    tmp0,timers
-        mov   tmp0,@wtitab        
+        li    tmp0,timers           ; \ Set pointer to timers table
+        mov   tmp0,@wtitab          ; /
 
       .ifeq device.f18a,1
 
@@ -117,15 +114,18 @@ main.continue:
               data >0360,task.oneshot      ; Task 3 - One shot task
               data eol
 
-      .else 
+      .else
 
         bl    @mkslot
               data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
-              data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape              
-              data >0350,task.oneshot      ; Task 3 - One shot task
+              data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
+              data >0360,task.oneshot      ; Task 3 - One shot task
               data eol
 
       .endif
+
+        li    tmp0,>0300            ; \ Set highest slot to use in MSB.
+        mov   tmp0,@btihi           ; / Tell Task Scheduler
 
         ;-------------------------------------------------------
         ; Setup keyboard scanning and start kernel/timers

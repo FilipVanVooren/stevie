@@ -21,7 +21,7 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
-                                       ; \ 
+                                       ; \
                                        ; | The SAMS support module needs to be
                                        ; | embedded in the cartridge space, so
                                        ; / do not load it here.
@@ -40,11 +40,11 @@ rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 * classic99 and JS99er emulators are mutually exclusive.
 * At the time of writing JS99er has full F18a compatibility.
 *
-* If build target is the JS99er emulator or an F18a equiped TI-99/4a 
+* If build target is the JS99er emulator or an F18a equiped TI-99/4a
 * then set the 'full_f18a_support' equate to 1.
 *
-* When targetting the classic99 emulator then set the 
-* 'full_f18a_support' equate to 0. 
+* When targetting the classic99 emulator then set the
+* 'full_f18a_support' equate to 0.
 * This will build the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
 debug                     equ  0       ; Turn on debugging mode

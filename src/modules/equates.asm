@@ -89,7 +89,7 @@ id.dialog.print           equ  15      ; "Print file"
 id.dialog.printblock      equ  16      ; "Print block"
 id.dialog.clipdev         equ  17      ; "Configure clipboard device"
 ;-----------------------------------------------------------------
-;   Dialog ID's >= 100 indicate that command prompt should be 
+;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
 ;-----------------------------------------------------------------
 id.dialog.menu            equ  100     ; "Main Menu"
@@ -110,12 +110,17 @@ clip3                     equ  >3300   ; '3'
 clip4                     equ  >3400   ; '4'
 clip5                     equ  >3500   ; '5'
 *--------------------------------------------------------------
+* Keyboard flags in Stevie
+*--------------------------------------------------------------
+kbf.kbclear               equ  >0001   ;  Keyboard buffer cleared / @w$0001
+
+*--------------------------------------------------------------
 * File work mode
 *--------------------------------------------------------------
 id.file.loadfile          equ  1       ; Load file
 id.file.insertfile        equ  2       ; Insert file
 id.file.appendfile        equ  3       ; Append file
-id.file.savefile          equ  4       ; Save file 
+id.file.savefile          equ  4       ; Save file
 id.file.saveblock         equ  5       ; Save block to file
 id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
@@ -140,21 +145,22 @@ outparm5          equ  core1.top + 24  ; Function output parameter 5
 outparm6          equ  core1.top + 26  ; Function output parameter 6
 outparm7          equ  core1.top + 28  ; Function output parameter 7
 outparm8          equ  core1.top + 30  ; Function output parameter 8
-keyrptcnt         equ  core1.top + 32  ; Key repeat-count (auto-repeat function)
+kbflags           equ  core1.top + 32  ; Keyboard control flags
 keycode1          equ  core1.top + 34  ; Current key scanned
 keycode2          equ  core1.top + 36  ; Previous key scanned
-unpacked.string   equ  core1.top + 38  ; 6 char string with unpacked uin16
-tibasic.hidesid   equ  core1.top + 44  ; Hide TI-Basic session ID
-tibasic.session   equ  core1.top + 46  ; Active TI-Basic session (1-5)
-tibasic1.status   equ  core1.top + 48  ; TI Basic session 1
-tibasic2.status   equ  core1.top + 50  ; TI Basic session 2
-tibasic3.status   equ  core1.top + 52  ; TI Basic session 3
-tibasic4.status   equ  core1.top + 54  ; TI Basic session 4
-tibasic5.status   equ  core1.top + 56  ; TI Basic session 5
-trmpvector        equ  core1.top + 58  ; Vector trampoline (if p1|tmp1 = >ffff)
-ramsat            equ  core1.top + 60  ; Sprite Attr. Table in RAM (14 bytes)
-timers            equ  core1.top + 74  ; Timers (80 bytes)
-core1.free        equ  core1.top + 154 ; End of structure
+core1.reserved    equ  core1.top + 38  ; Free for future use
+unpacked.string   equ  core1.top + 40  ; 6 char string with unpacked uin16
+tibasic.hidesid   equ  core1.top + 46  ; Hide TI-Basic session ID
+tibasic.session   equ  core1.top + 48  ; Active TI-Basic session (1-5)
+tibasic1.status   equ  core1.top + 50  ; TI Basic session 1
+tibasic2.status   equ  core1.top + 52  ; TI Basic session 2
+tibasic3.status   equ  core1.top + 54  ; TI Basic session 3
+tibasic4.status   equ  core1.top + 56  ; TI Basic session 4
+tibasic5.status   equ  core1.top + 58  ; TI Basic session 5
+trmpvector        equ  core1.top + 60  ; Vector trampoline (if p1|tmp1 = >ffff)
+ramsat            equ  core1.top + 62  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 76  ; Timers (80 bytes)
+core1.free        equ  core1.top + 156 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
@@ -220,7 +226,7 @@ fb.free           equ  fb.struct + 190 ; End of structure
 fh.struct         equ  >a400           ; stevie file handling structures
 ;***********************************************************************
 ; ATTENTION
-; The dsrlnk variables must form a continuous memory block and keep 
+; The dsrlnk variables must form a continuous memory block and keep
 ; their order!
 ;***********************************************************************
 dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
@@ -231,7 +237,7 @@ dsrlnk.savent     equ  fh.struct + 44  ; DSR entry addr of prev. DSR call
 dsrlnk.savpab     equ  fh.struct + 46  ; Pointer to Device or Subprogram in PAB
 dsrlnk.savver     equ  fh.struct + 48  ; Version used in prev. DSR call
 dsrlnk.savlen     equ  fh.struct + 50  ; Length of DSR name of prev. DSR call
-dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte) 
+dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
 fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
 fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
 fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
@@ -250,7 +256,7 @@ fh.callback2      equ  fh.struct + 82  ; Pointer to callback function 2
 fh.callback3      equ  fh.struct + 84  ; Pointer to callback function 3
 fh.callback4      equ  fh.struct + 86  ; Pointer to callback function 4
 fh.callback5      equ  fh.struct + 88  ; Pointer to callback function 5
-fh.workmode       equ  fh.struct + 90  ; Working mode (used in callbacks)   
+fh.workmode       equ  fh.struct + 90  ; Working mode (used in callbacks)
 fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
 fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
@@ -271,15 +277,15 @@ edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
 edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
-edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset) 
+edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
 edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
 edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
                                        ; with current filename.
 edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
-                                       ; with current file type.                                    
+                                       ; with current file type.
 edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved 
+edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
 edb.free          equ  edb.struct + 106; End of structure
 *--------------------------------------------------------------
@@ -304,7 +310,7 @@ cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
 cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
 cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
 cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
-cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB 
+cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
 cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
 cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
 cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
@@ -330,12 +336,12 @@ sp2.stktop        equ  >a900           ; \ SP2 stack >a800 - >a8ff
 *--------------------------------------------------------------
 * Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------
-cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad 
+cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm
 
 cpu.scrpad.tgt    equ  >f960           ; \ Target copy of OS monitor scratchpad
                                        ; | in high-memory.
-                                       ; / 
+                                       ; /
 
 cpu.scrpad.moved  equ  >ad00           ; Stevie scratchpad memory when paged-out
                                        ; because of TI Basic/External program
@@ -358,7 +364,7 @@ edb.size          equ  4096            ; Editor buffer size
 * Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
 *--------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (80x30)
-fb.size           equ  80*30           ; Frame buffer size                                     
+fb.size           equ  80*30           ; Frame buffer size
 tv.printer.fname  equ  >d960           ; Default printer   (80 char)
 tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
 *--------------------------------------------------------------
@@ -383,8 +389,8 @@ rom0_kscan_out            equ  keycode1; Where to store value of key pressed
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
-                                       ; VDP TAT address of 1st CMDB row 
-vdp.sit.base              equ  >0000   ; VDP SIT base address                                       
+                                       ; VDP TAT address of 1st CMDB row
+vdp.sit.base              equ  >0000   ; VDP SIT base address
 vdp.sit.size              equ  (pane.botrow + 1) * 80
                                        ; VDP SIT size 80 columns, 24/30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
