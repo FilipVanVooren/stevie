@@ -15,7 +15,7 @@ edkey.action.ins_char:
         ;-------------------------------------------------------
         ; Check 1 - Empty line
         ;-------------------------------------------------------
-edkey.actions.ins.char.empty_line:        
+edkey.actions.ins.char.empty_line:
         mov   @fb.current,tmp0      ; Get pointer
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.ins_char.append
@@ -23,12 +23,12 @@ edkey.actions.ins.char.empty_line:
         ;-------------------------------------------------------
         ; Check 2 - line-wrap if at character 80
         ;-------------------------------------------------------
-        mov   @fb.column,tmp1    
+        mov   @fb.column,tmp1
         ci    tmp1,colrow-1         ; At 80th character?
         jlt   !
         mov   @fb.row.length,tmp1
         ci    tmp1,colrow
-        jne   ! 
+        jne   !
         ;-------------------------------------------------------
         ; Wrap to new line
         ;-------------------------------------------------------
@@ -51,14 +51,14 @@ edkey.actions.ins.char.empty_line:
         mov   @fb.row.length,tmp1
         ci    tmp1,colrow
         jlt   edkey.action.ins_char.prep
-        jmp   edkey.action.ins_char.exit        
+        jmp   edkey.action.ins_char.exit
         ;-------------------------------------------------------
         ; Calculate number of characters to move
         ;-------------------------------------------------------
 edkey.action.ins_char.prep:
-        mov   tmp2,tmp3             ; tmp3=line length        
+        mov   tmp2,tmp3             ; tmp3=line length
         s     @fb.column,tmp3
-        dec   tmp3                  ; Remove base 1 offset 
+        dec   tmp3                  ; Remove base 1 offset
         a     tmp3,tmp0             ; tmp0=Pointer to last char in line
         mov   tmp0,tmp1
         inc   tmp1                  ; tmp1=tmp0+1
@@ -94,20 +94,35 @@ edkey.action.ins_char.append:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_char.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
-
-
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 
 
 *---------------------------------------------------------------
-* Insert new line
+* Insert new line on current line
 *---------------------------------------------------------------
 edkey.action.ins_line:
+        clr   @parm1                ; Insert new line on curren line
         bl    @fb.insert.line       ; Insert new line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ins_line.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
+
+
+*---------------------------------------------------------------
+* Insert new line on following line
+*---------------------------------------------------------------
+edkey.action.ins_line_after:
+        seto  @parm1                ; Insert new line on following line
+        bl    @fb.insert.line       ; Insert new line
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.ins_line_after.exit:
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

@@ -24,23 +24,23 @@ fb.null2char:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack        
+        dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
-        mov   tmp3,*stack           ; Push tmp3        
+        mov   tmp3,*stack           ; Push tmp3
         ;-------------------------------------------------------
         ; Sanity checks
         ;-------------------------------------------------------
         mov   tmp2,tmp2             ; Minimum 1 character
-        jeq   fb.null2char.crash  
+        jeq   fb.null2char.crash
         ci    tmp2,80               ; Maximum 80 characters
         jle   fb.null2char.init
         ;------------------------------------------------------
         ; Asserts failed
         ;------------------------------------------------------
-fb.null2char.crash:        
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system       
+fb.null2char.crash:
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
         ; Initialize
         ;-------------------------------------------------------
@@ -71,8 +71,8 @@ fb.null2char.loop:
         ;------------------------------------------------------
 fb.null2char.exit:
         mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0          
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

@@ -10,10 +10,22 @@ edkey.action.enter:
         ; Crunch current line if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.enter.upd_counter
+        jne   edkey.action.enter.newline
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Insert a new line if insert mode is on
+        ;-------------------------------------------------------
+edkey.action.enter.newline:
+        mov   @edb.insmode,tmp0     ; Insert mode or overwrite mode?
+        jeq   edkey.action.enter.upd_counter
+                                    ; Overwrite mode, skip insert
+
+        seto  @parm1                ; Insert line on following line
+        bl    @fb.insert.line       ; Insert a new line
+                                    ; \  i  @parm1 = current/following line
+                                    ; /
         ;-------------------------------------------------------
         ; Update line counter
         ;-------------------------------------------------------
@@ -25,7 +37,7 @@ edkey.action.enter.upd_counter:
         jlt   edkey.action.newline  ; No, continue newline
         inc   @edb.lines            ; Total lines++
         ;-------------------------------------------------------
-        ; Process newline 
+        ; Process newline
         ;-------------------------------------------------------
 edkey.action.newline:
         ;-------------------------------------------------------
@@ -42,7 +54,7 @@ edkey.action.newline:
         mov   @fb.topline,@parm1
         inc   @parm1
         bl    @fb.refresh
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
         jmp   edkey.action.newline.rest
         ;-------------------------------------------------------
         ; Move cursor down a row, there are still rows left
@@ -82,7 +94,7 @@ edkey.action.ins_onoff:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_onoff.exit: 
+edkey.action.ins_onoff.exit:
         mov   *stack+,r11           ; Pop r11
         b     @edkey.keyscan.hook.debounce; Back to editor main
 
@@ -111,7 +123,7 @@ edkey.action.char:
         ;-------------------------------------------------------
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
         movb  tmp1,@parm1           ; Store character for insert
-        mov   @edb.insmode,tmp0     ; Insert or overwrite ?
+        mov   @edb.insmode,tmp0     ; Insert mode or overwrite mode?
         jeq   edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Insert mode
@@ -124,7 +136,7 @@ edkey.action.char.insert:
 edkey.action.char.overwrite:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
         mov   @fb.current,tmp0      ; Get pointer
-        
+
         movb  @parm1,*tmp0          ; Store character in editor buffer
         seto  @fb.row.dirty         ; Current row needs to be crunched/packed
         seto  @fb.dirty             ; Trigger screen refresh
@@ -138,7 +150,7 @@ edkey.action.char.overwrite:
 
         li    tmp1,colrow           ; \
         mov   tmp1,@fb.row.length   ; / Yes, Set row length and exit.
-        jmp   edkey.action.char.exit 
+        jmp   edkey.action.char.exit
         ;-------------------------------------------------------
         ; Increase column
         ;-------------------------------------------------------

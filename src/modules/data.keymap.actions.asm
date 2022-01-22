@@ -2,7 +2,7 @@
 * Purpose...: Keyboard actions
 
 *---------------------------------------------------------------
-* Action keys mapping table: Editor 
+* Action keys mapping table: Editor
 *---------------------------------------------------------------
 keymap_actions.editor:
         ;-------------------------------------------------------
@@ -22,7 +22,7 @@ keymap_actions.editor:
 
         byte  key.fctn.x, pane.focus.fb
         data  edkey.action.down
-        
+
         byte  key.fctn.h, pane.focus.fb
         data  edkey.action.home
 
@@ -78,9 +78,9 @@ keymap_actions.editor:
         byte  key.fctn.dot, pane.focus.fb
         data  edkey.action.ins_onoff
 
-        byte  key.fctn.7, pane.focus.fb        
+        byte  key.fctn.7, pane.focus.fb
         data  edkey.action.fb.tab.next
-        
+
         byte  key.ctrl.t, pane.focus.fb
         data  edkey.action.fb.tab.next
 
@@ -125,12 +125,12 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         byte  key.fctn.plus, pane.focus.fb
         data  edkey.action.quit
-        
+
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
 
         byte  key.ctrl.u, pane.focus.fb
-        data  edkey.action.toggle.ruler        
+        data  edkey.action.toggle.ruler
 
         byte  key.ctrl.z, pane.focus.fb
         data  pane.action.colorscheme.cycle
@@ -149,7 +149,7 @@ keymap_actions.editor:
         byte  key.ctrl.a, pane.focus.fb
         data  dialog.append
 
-        byte  key.ctrl.h, pane.focus.fb 
+        byte  key.ctrl.h, pane.focus.fb
         data  dialog.help
 
         byte  key.ctrl.f, pane.focus.fb
@@ -167,12 +167,12 @@ keymap_actions.editor:
         byte  key.ctrl.p, pane.focus.fb
         data  dialog.print
 
-        ; 
+        ;
         ; FCTN-9 has multiple purposes, if block mode is on it
         ; resets the block, otherwise show dialog "Main Menu".
         ;
         byte  key.fctn.9, pane.focus.fb
-        data  dialog.menu 
+        data  dialog.menu
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -192,7 +192,7 @@ keymap_actions.cmdb:
 
         byte  key.uc.c, id.dialog.menu
         data  dialog.cartridge
-        
+
         byte  key.uc.h, id.dialog.menu
         data  dialog.help
 
@@ -261,7 +261,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.clip.4
 
         byte  key.num.5, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.5        
+        data  edkey.action.cmdb.clip.5
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard device
         ;-------------------------------------------------------
@@ -298,7 +298,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.proceed
 
         byte  key.enter, id.dialog.unsaved
-        data  dialog.save        
+        data  dialog.save
         ;-------------------------------------------------------
         ; Dialog: Cartridge
         ;-------------------------------------------------------
@@ -318,7 +318,7 @@ keymap_actions.cmdb:
         byte  key.num.5, id.dialog.basic
         data  tibasic5
         byte  key.fctn.5, id.dialog.basic
-        data  edkey.action.cmdb.sid.toggle        
+        data  edkey.action.cmdb.sid.toggle
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
@@ -332,7 +332,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.close.about
         ;-------------------------------------------------------
         ; Movement keys
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------
         byte  key.fctn.s, pane.focus.cmdb
         data  edkey.action.cmdb.left
 
