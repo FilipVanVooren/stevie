@@ -150,24 +150,16 @@ main:
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
-        .ifgt $, >7faf
+        .ifgt $, >7f00
               .error 'Aborted. Bank 1 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
-cpu.crash.showbank:
-        aorg  >7fb0
-        bl    @putat
-              byte 3,20
-              data cpu.crash.showbank.bankstr
-        jmp   $
-cpu.crash.showbank.bankstr:
-        #string 'ROM#1'
+        copy "rom.crash.asm"
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------
-        aorg  bankx.vectab
         copy  "rom.vectors.bank1.asm"
                                     ; Vector table bank 1
 *--------------------------------------------------------------

@@ -12,7 +12,7 @@
 * Setup resident SP2/Stevie modules and start SP2 kernel
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options
-        copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"        
+        copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
@@ -27,37 +27,40 @@ bankid  equ   bank0.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
+        aorg  >6038
+        clr   @bank7.rom            ; Switch to bank 7 "Jill"
+
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
 * Step 2: Setup SAMS banks (inline code because no SP2 yet!)
 ********|*****|*********************|**************************
         li    r12,>1e00             ; SAMS CRU address
-        sbz   1                     ; Disable SAMS mapper                
+        sbz   1                     ; Disable SAMS mapper
         sbo   0                     ; Enable access to SAMS registers
         clr   r0                    ; \ Page 0 in >2000 - >2fff
-        movb  r0,@>4004             ; / 
+        movb  r0,@>4004             ; /
 
         li    r0,>0100              ; \ Page 1 in >3000 - >3fff
-        movb  r0,@>4006             ; / 
+        movb  r0,@>4006             ; /
 
         li    r0,>0400              ; \ Page 4 in >a000 - >afff
-        movb  r0,@>4014             ; / 
+        movb  r0,@>4014             ; /
 
         li    r0,>2000              ; \ Page 20 in >b000 - >bfff
-        movb  r0,@>4016             ; / 
+        movb  r0,@>4016             ; /
 
         li    r0,>4000              ; \ Page 40 in >c000 - >bfff
-        movb  r0,@>4018             ; / 
+        movb  r0,@>4018             ; /
 
         li    r0,>0500              ; \ Page 5 in >d000 - >dfff
-        movb  r0,@>401a             ; / 
+        movb  r0,@>401a             ; /
 
         li    r0,>0600              ; \ Page 6 in >ec000 - >efff
-        movb  r0,@>401c             ; / 
+        movb  r0,@>401c             ; /
 
         li    r0,>0700              ; \ Page 7 in >f000 - >ffff
-        movb  r0,@>401e             ; / 
+        movb  r0,@>401e             ; /
 
         sbz   0                     ; Disable access to SAMS registers
         sbo   1                     ; Enable SAMS mapper
@@ -87,15 +90,15 @@ bankid  equ   bank0.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 4: Start SP2 kernel (runs in low MEMEXP)
 ********|*****|*********************|**************************
-        b     @runlib               ; Start spectra2 library        
-                                    ; "main" in low MEMEXP is automatically
-                                    ; called by SP2 runlib.
+        b     @runlib               ; \ Start spectra2 library
+                                    ; | "main" in low MEMEXP is automatically
+                                    ; / called by SP2 runlib.
         ;------------------------------------------------------
         ; Assert. Should not get here!
         ;------------------------------------------------------
         li    r0,$                  ; Current location
-        mov   r0,@>ffce             ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system           
+        mov   r0,@>ffce             ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
 
 ***************************************************************
 * Code data: Relocated code
@@ -106,11 +109,11 @@ reloc.resident:
         ;------------------------------------------------------
         xorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "ram.resident.asm"        
+        copy  "ram.resident.asm"
         ;------------------------------------------------------
         ; Stevie main entry point
         ;------------------------------------------------------
-main:        
+main:
         clr   @bank1.rom            ; Activate bank 1 "James" ROM
 
         .ifeq device.fg99.mode.adv,1
@@ -127,20 +130,16 @@ main:
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
-        .endif     
+        .endif
         ;-----------------------------------------------------------------------
-        ; Show bank in CPU crash screen
-        ;-----------------------------------------------------------------------         
-cpu.crash.showbank:
-        aorg >7fb0
-        bl    @putat
-              byte 3,20
-              data cpu.crash.showbank.bankstr
-        jmp   $
+        ; Show ROM bank in CPU crash screen
+        ;-----------------------------------------------------------------------
+        copy "rom.crash.asm"
+
 cpu.crash.showbank.bankstr:
         #string 'ROM#0'
 *--------------------------------------------------------------
-* Video mode configuration for SP2
+* Video mode configuration
 *--------------------------------------------------------------
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
@@ -149,5 +148,5 @@ spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table        
+sprsat  equ   >2180                 ; VDP sprite attribute table
 sprpdt  equ   >2800                 ; VDP sprite pattern table

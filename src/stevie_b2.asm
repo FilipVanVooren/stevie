@@ -12,9 +12,9 @@
 * File load/save operations
 ***************************************************************
         copy  "rom.build.asm"       ; Cartridge build options
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"        
+        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
-        copy  "data.keymap.keys.asm"; Equates for keyboard mapping        
+        copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************
 * BANK 2
@@ -22,7 +22,7 @@
 bankid  equ   bank2.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
-        copy  "rom.header.asm"      ; Include cartridge header        
+        copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -34,7 +34,7 @@ bankid  equ   bank2.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "ram.resident.asm"        
+        copy  "ram.resident.asm"
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
@@ -48,16 +48,16 @@ bankid  equ   bank2.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 3: Include modules
 ********|*****|*********************|**************************
-main:   
+main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; Include files - Utility functions
-        ;-----------------------------------------------------------------------         
+        ;-----------------------------------------------------------------------
         copy  "colors.line.set.asm" ; Set color combination for line
         ;-----------------------------------------------------------------------
         ; File handling
-        ;-----------------------------------------------------------------------         
+        ;-----------------------------------------------------------------------
         copy  "fh.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.write.edb.asm"    ; Write editor buffer to file
         copy  "fm.load.asm"         ; Load DV80 file into editor buffer
@@ -68,36 +68,28 @@ main:
         copy  "fm.browse.asm"       ; File manager browse support routines
         ;-----------------------------------------------------------------------
         ; Stubs
-        ;-----------------------------------------------------------------------        
+        ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank2.asm" ; Bank specific stubs
         copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
-        ;----------------------------------------------------------------------- 
-        ; Not applicables
+        ;-----------------------------------------------------------------------
+                                    ; Not applicable
         ;-----------------------------------------------------------------------
         ; Bank full check
-        ;----------------------------------------------------------------------- 
-        .ifgt $, >7faf
+        ;-----------------------------------------------------------------------
+        .ifgt $, >7f00
               .error 'Aborted. Bank 2 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------         
-cpu.crash.showbank:
-        aorg >7fb0
-        bl    @putat
-              byte 3,20
-              data cpu.crash.showbank.bankstr
-        jmp   $
-cpu.crash.showbank.bankstr:
-        #string 'ROM#2'        
+        ;-----------------------------------------------------------------------
+        copy "rom.crash.asm"
         ;-----------------------------------------------------------------------
         ; Vector table
-        ;----------------------------------------------------------------------- 
-        aorg  bankx.vectab
-        copy  "rom.vectors.bank2.asm"      ; Vector table bank 2
-
+        ;-----------------------------------------------------------------------
+        copy  "rom.vectors.bank2.asm"
+                                    ; Vector table bank 2
 *--------------------------------------------------------------
 * Video mode configuration
 *--------------------------------------------------------------

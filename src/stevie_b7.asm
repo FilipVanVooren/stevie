@@ -27,6 +27,10 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
+        aorg  >6038
+        clr   @bank7.rom            ; Switch to bank 7 "Jonas"
+        b     @tibasic.return       ; Resume Stevie session
+
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
@@ -69,34 +73,25 @@ main:
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"; SAMS bank layout for multi-purpose
         ;-----------------------------------------------------------------------
-        ; Bank full check
-        ;-----------------------------------------------------------------------
-        .ifgt $, >7faf
-              .error 'Aborted. Bank 2 cartridge program too large!'
-        .endif
-        ;-----------------------------------------------------------------------
-        ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------
-cpu.crash.showbank:
-        aorg >7fb0
-        bl    @putat
-              byte 3,20
-              data cpu.crash.showbank.bankstr
-        jmp   $
-cpu.crash.showbank.bankstr:
-        #string 'ROM#7'
-        ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------
         aorg >7e00
         copy  "data.scrpad.asm"     ; Required for TI Basic
         ;-----------------------------------------------------------------------
+        ; Bank full check
+        ;-----------------------------------------------------------------------
+        .ifgt $, >7f00
+              .error 'Aborted. Bank 7 cartridge program too large!'
+        .endif
+        ;-----------------------------------------------------------------------
+        ; Show ROM bank in CPU crash screen
+        ;-----------------------------------------------------------------------
+        copy "rom.crash.asm"
+        ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------
-        aorg  bankx.vectab
         copy  "rom.vectors.bank7.asm"
                                     ; Vector table bank 7
-
 *--------------------------------------------------------------
 * Video mode configuration
 *--------------------------------------------------------------

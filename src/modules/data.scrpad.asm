@@ -1,5 +1,5 @@
 * FILE......: data.scrpad.asm
-* Purpose...: Stevie Editor - data segment (scratchpad dump()
+* Purpose...: Stevie Editor - data segment (scratchpad dump)
 
 ***************************************************************
 *    TI MONITOR scratchpad dump on cartridge menu screen

@@ -23,5 +23,3 @@ bank4.ram                 equ  >6808   ; Janine
 bank5.ram                 equ  >680a   ; Jumbo
 bank6.ram                 equ  >680c   ; Jenifer
 bank7.ram                 equ  >680e   ; Jonas
-
-bankx.vectab              equ  >7fc0   ; Start address of vector table

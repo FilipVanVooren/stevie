@@ -48,7 +48,7 @@ rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 * This will build the trimmed down version with 24x80 resolution.
 *--------------------------------------------------------------
 debug                     equ  0       ; Turn on debugging mode
-full_f18a_support         equ  0       ; 30 rows mode with sprites
+full_f18a_support         equ  1       ; 30 rows mode with sprites
 
 
 *--------------------------------------------------------------
@@ -71,3 +71,11 @@ device.9938               equ  1       ; 9938 GPU
 device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
 skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
   .endif
+
+
+
+*--------------------------------------------------------------
+* ROM layout
+*--------------------------------------------------------------
+bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
+bankx.vectab              equ  >7fc0   ; Start address of vector table
