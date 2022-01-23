@@ -12,14 +12,14 @@ fm.loadfile:
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Call function in bank 2
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.1            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Show "Unsaved changes" dialog if editor buffer dirty
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
         mov   @outparm1,tmp0
         jeq   fm.loadfile.exit
 
@@ -29,7 +29,7 @@ fm.loadfile:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.loadfile.exit:        
+fm.loadfile.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
@@ -46,7 +46,7 @@ fm.insertfile:
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Call function in bank 2
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.2            ; | i  p1 = Vector with target address
@@ -54,7 +54,7 @@ fm.insertfile:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.insertfile.exit:        
+fm.insertfile.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
@@ -69,7 +69,7 @@ fm.browse.fname.suffix:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 2
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.3            ; | i  p1 = Vector with target address
@@ -90,7 +90,7 @@ fm.savefile:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 2
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.4            ; | i  p1 = Vector with target address
@@ -111,7 +111,7 @@ fm.newfile:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 2
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.5            ; | i  p1 = Vector with target address
@@ -131,12 +131,12 @@ dialog.help.next:
         c     @w$0008,@cmdb.dialog.var
         jeq   !
         a     @w$0008,@cmdb.dialog.var
-        jmp   dialog.help                                    
+        jmp   dialog.help
 !       clr   @cmdb.dialog.var
 dialog.help:
         mov   @dialog.help.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.help.vector:        
+dialog.help.vector:
         data  vec.1
 
 
@@ -158,7 +158,7 @@ dialog.load.vector:
 dialog.save:
         mov   @dialog.save.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.save.vector:        
+dialog.save.vector:
         data  vec.3
 
 
@@ -169,7 +169,7 @@ dialog.save.vector:
 dialog.insert:
         mov   @dialog.insert.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.insert.vector:        
+dialog.insert.vector:
         data  vec.4
 
 
@@ -180,7 +180,7 @@ dialog.insert.vector:
 dialog.print:
         mov   @dialog.print.vector,@trmpvector
         jmp   _trampoline.bank3    ; Show dialog
-dialog.print.vector:        
+dialog.print.vector:
         data  vec.5
 
 
@@ -191,7 +191,7 @@ dialog.print.vector:
 dialog.file:
         mov   @dialog.file.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.file.vector:        
+dialog.file.vector:
         data  vec.6
 
 
@@ -203,7 +203,7 @@ dialog.unsaved:
         clr   @cmdb.panmarkers      ; No key markers
         mov   @dialog.unsaved.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.unsaved.vector:        
+dialog.unsaved.vector:
         data  vec.7
 
 
@@ -214,7 +214,7 @@ dialog.unsaved.vector:
 dialog.clipboard:
         mov   @dialog.clipboard.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.clipboard.vector:        
+dialog.clipboard.vector:
         data  vec.8
 
 
@@ -225,7 +225,7 @@ dialog.clipboard.vector:
 dialog.clipdev:
         mov   @dialog.clipdev.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.clipdev.vector:        
+dialog.clipdev.vector:
         data  vec.9
 
 
@@ -236,7 +236,7 @@ dialog.clipdev.vector:
 dialog.config:
         mov   @dialog.config.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.config.vector:        
+dialog.config.vector:
         data  vec.10
 
 
@@ -247,7 +247,7 @@ dialog.config.vector:
 dialog.append:
         mov   @dialog.append.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.append.vector:        
+dialog.append.vector:
         data  vec.11
 
 
@@ -258,7 +258,7 @@ dialog.append.vector:
 dialog.cartridge:
         mov   @dialog.cartridge.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.cartridge.vector:        
+dialog.cartridge.vector:
         data  vec.12
 
 
@@ -269,7 +269,7 @@ dialog.cartridge.vector:
 dialog.basic:
         mov   @dialog.basic.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.basic.vector:        
+dialog.basic.vector:
         data  vec.13
 
 
@@ -281,7 +281,7 @@ dialog.menu:
         ;------------------------------------------------------
         ; Check if block mode is active
         ;------------------------------------------------------
-        mov   @edb.block.m2,tmp0    ; \  
+        mov   @edb.block.m2,tmp0    ; \
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /
         jeq   !                     : Block mode inactive, show dialog
@@ -295,7 +295,7 @@ dialog.menu:
         ;------------------------------------------------------
 !       mov   @dialog.menu.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.menu.vector:        
+dialog.menu.vector:
         data  vec.30
 
 
@@ -536,7 +536,7 @@ fb.colorlines:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller        
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -557,7 +557,7 @@ fb.vdpdump:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller               
+        b     *r11                  ; Return to caller
 
 
 
@@ -726,15 +726,15 @@ tibasic1:
 tibasic2:
         li    tmp0,2
         mov   tmp0,@tibasic.session
-        jmp   tibasic        
+        jmp   tibasic
 tibasic3:
         li    tmp0,3
         mov   tmp0,@tibasic.session
-        jmp   tibasic        
+        jmp   tibasic
 tibasic4:
         li    tmp0,4
         mov   tmp0,@tibasic.session
-        jmp   tibasic        
+        jmp   tibasic
 tibasic5:
         li    tmp0,5
         mov   tmp0,@tibasic.session
@@ -748,6 +748,14 @@ tibasic:
               data bank7.rom        ; | i  p0 = bank address
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Update TI basic session info
+        ;------------------------------------------------------
+        mov   @tibasic.session,tmp0 ; Get current TI basic session
+        dec   tmp0                  ; Base 0
+        sla   tmp0,2                ; Word align
+        mov   @w$0001,@tibasic1.status(tmp0)
+                                    ; Set resume flag for next run
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
