@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.62397
+     **** ****     > stevie_b7.asm.72888
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220123-2031300
+0009               * File: stevie_b7.asm               ; Version 220123-2057050
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -47,49 +47,50 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030               * SPECTRA2 / Stevie startup options
 0031               *--------------------------------------------------------------
 0032      0001     startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
-0033      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
-0034      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-0035      0001     rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
-0036               
+0033      6038     kickstart.resume          equ  >6038   ; Resume Stevie session
+0034      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
+0035      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+0036      0001     rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 0037               
 0038               
-0039               *--------------------------------------------------------------
-0040               * classic99 and JS99er emulators are mutually exclusive.
-0041               * At the time of writing JS99er has full F18a compatibility.
-0042               *
-0043               * If build target is the JS99er emulator or an F18a equiped TI-99/4a
-0044               * then set the 'full_f18a_support' equate to 1.
-0045               *
-0046               * When targetting the classic99 emulator then set the
-0047               * 'full_f18a_support' equate to 0.
-0048               * This will build the trimmed down version with 24x80 resolution.
-0049               *--------------------------------------------------------------
-0050      0000     debug                     equ  0       ; Turn on debugging mode
-0051      0000     full_f18a_support         equ  0       ; 30 rows mode with sprites
-0052               
+0039               
+0040               *--------------------------------------------------------------
+0041               * classic99 and JS99er emulators are mutually exclusive.
+0042               * At the time of writing JS99er has full F18a compatibility.
+0043               *
+0044               * If build target is the JS99er emulator or an F18a equiped TI-99/4a
+0045               * then set the 'full_f18a_support' equate to 1.
+0046               *
+0047               * When targetting the classic99 emulator then set the
+0048               * 'full_f18a_support' equate to 0.
+0049               * This will build the trimmed down version with 24x80 resolution.
+0050               *--------------------------------------------------------------
+0051      0000     debug                     equ  0       ; Turn on debugging mode
+0052      0000     full_f18a_support         equ  0       ; 30 rows mode with sprites
 0053               
-0054               *--------------------------------------------------------------
-0055               * JS99er F18a 30x80, no FG99 advanced mode
-0056               *--------------------------------------------------------------
-0062               
+0054               
+0055               *--------------------------------------------------------------
+0056               * JS99er F18a 30x80, no FG99 advanced mode
+0057               *--------------------------------------------------------------
 0063               
 0064               
-0065               *--------------------------------------------------------------
-0066               * Classic99 F18a 24x80, no FG99 advanced mode
-0067               *--------------------------------------------------------------
-0069      0000     device.f18a               equ  0       ; F18a GPU
-0070      0001     device.9938               equ  1       ; 9938 GPU
-0071      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
-0072      0001     skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
-0074               
+0065               
+0066               *--------------------------------------------------------------
+0067               * Classic99 F18a 24x80, no FG99 advanced mode
+0068               *--------------------------------------------------------------
+0070      0000     device.f18a               equ  0       ; F18a GPU
+0071      0001     device.9938               equ  1       ; 9938 GPU
+0072      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
+0073      0001     skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
 0075               
 0076               
-0077               *--------------------------------------------------------------
-0078               * ROM layout
-0079               *--------------------------------------------------------------
-0080      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
-0081      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.62397
+0077               
+0078               *--------------------------------------------------------------
+0079               * ROM layout
+0080               *--------------------------------------------------------------
+0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
+0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
+                   < stevie_b7.asm.72888
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -117,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0016                       copy  "equates.asm"         ; Equates Steviee configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -512,7 +513,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0396      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0397      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0398      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -652,7 +653,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0018               
 0019               ***************************************************************
 0020               * BANK 7
@@ -689,10 +690,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025                       ; Program list entry
 0026                       ;-----------------------------------------------------------------------
 0027               rom.program1:
-0028 600C 6024             data  rom.program2          ; 12 \ Next program list entry         >600c
+0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
 0029                                                   ; 13 / (no more items following)
 0030               
-0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
+0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
 0051               
@@ -711,32 +712,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-0067               
-0068               
-0069               
-0070                       ;-----------------------------------------------------------------------
-0071                       ; Program list entry
-0072                       ;-----------------------------------------------------------------------
-0073               rom.program2:
-0074 6024 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0075                                                   ; 13 / (no more items following)
-0076               
-0077 6026 6038             data  >6038                 ; 14 \ Program address                 >600e
-0078                                                   ; 15 /
-0079               
-0080               
-0081 6028 0E               byte  14
-0082 6029   52             text  'RESUME SESSION'
-     602A 4553     
-     602C 554D     
-     602E 4520     
-     6030 5345     
-     6032 5353     
-     6034 494F     
-     6036 4E       
-0083                       even
-0084               
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1522,7 +1498,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220123-2031300'
+0270 21ED   42             text  'Build-ID  220123-2057050'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1532,8 +1508,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21FA 3132     
      21FC 332D     
      21FE 3230     
-     2200 3331     
-     2202 3330     
+     2200 3537     
+     2202 3035     
      2204 30       
 0271                       even
 0272               
@@ -5814,7 +5790,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0380 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0041                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8642,7 +8618,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0042                       ;------------------------------------------------------
 0043                       ; Activate bank 1 and branch to  >6036
 0044                       ;------------------------------------------------------
@@ -8750,7 +8726,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0074                       ; Setup SAMS banks using inline code
 0075                       ;-------------------------------------------------------
 0076 607A 0200  20         li    r0,mem.sams.layout.legacy
-     607C 6472     
+     607C 6488     
 0077 607E 06A0  32         bl    @_mem.sams.set.banks  ; Set SAMS banks
      6080 604A     
 0078                       ;-------------------------------------------------------
@@ -8806,7 +8782,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0115                       ; Setup SAMS banks using inline code
 0116                       ;-------------------------------------------------------
 0117 60AC 0200  20         li    r0,mem.sams.layout.boot
-     60AE 6482     
+     60AE 6498     
 0118 60B0 10CC  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0119               
 0120               
@@ -8836,7 +8812,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0144                       ; Setup SAMS banks using inline code
 0145                       ;-------------------------------------------------------
 0146 60B2 0200  20         li    r0,mem.sams.layout.external
-     60B4 6492     
+     60B4 64A8     
 0147 60B6 10C9  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0148               
 0149               
@@ -8864,7 +8840,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0171                       ; Setup SAMS banks using inline code
 0172                       ;-------------------------------------------------------
 0173 60B8 0200  20         li    r0,mem.sams.layout.basic1
-     60BA 64A2     
+     60BA 64B8     
 0174 60BC 10C6  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0175               
 0176               
@@ -8891,7 +8867,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0197                       ; Setup SAMS banks using inline code
 0198                       ;-------------------------------------------------------
 0199 60BE 0200  20         li    r0,mem.sams.layout.basic2
-     60C0 64B2     
+     60C0 64C8     
 0200 60C2 10C3  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0201               
 0202               
@@ -8918,7 +8894,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0223                       ; Setup SAMS banks using inline code
 0224                       ;-------------------------------------------------------
 0225 60C4 0200  20         li    r0,mem.sams.layout.basic3
-     60C6 64C2     
+     60C6 64D8     
 0226 60C8 10C0  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0227               
 0228               
@@ -8944,7 +8920,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0248                       ; Setup SAMS banks using inline code
 0249                       ;-------------------------------------------------------
 0250 60CA 0200  20         li    r0,mem.sams.layout.basic4
-     60CC 64D2     
+     60CC 64E8     
 0251 60CE 10BD  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0252               
 0253               
@@ -8970,7 +8946,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0273                       ; Setup SAMS banks using inline code
 0274                       ;-------------------------------------------------------
 0275 60D0 0200  20         li    r0,mem.sams.layout.basic5
-     60D2 64E2     
+     60D2 64F8     
 0276 60D4 10BA  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0277               
 0278               
@@ -9070,7 +9046,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 6132 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0062                       ;-----------------------------------------------------------------------
 0063                       ; Basic interpreter
 0064                       ;-----------------------------------------------------------------------
@@ -9226,7 +9202,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0123 61BA 06A0  32         bl    @cpym2v
      61BC 249A     
 0124 61BE 06F8                   data >06f8,tibasic.patterns,8
-     61C0 6426     
+     61C0 643C     
      61C2 0008     
 0125                                                   ; Copy pattern TI-Basic session ID 1
 0126               
@@ -9251,7 +9227,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0141 61D8 06A0  32         bl    @cpym2v
      61DA 249A     
 0142 61DC 06F8                   data >06f8,tibasic.patterns+8,8
-     61DE 642E     
+     61DE 6444     
      61E0 0008     
 0143                                                   ; Copy pattern TI-Basic session ID 2
 0144               
@@ -9276,7 +9252,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0159 61F6 06A0  32         bl    @cpym2v
      61F8 249A     
 0160 61FA 06F8                   data >06f8,tibasic.patterns+16,8
-     61FC 6436     
+     61FC 644C     
      61FE 0008     
 0161                                                   ; Copy pattern TI-Basic session ID 3
 0162               
@@ -9301,7 +9277,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0177 6214 06A0  32         bl    @cpym2v
      6216 249A     
 0178 6218 06F8                   data >06f8,tibasic.patterns+24,8
-     621A 643E     
+     621A 6454     
      621C 0008     
 0179                                                   ; Copy pattern TI-Basic session ID 4
 0180               
@@ -9326,7 +9302,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0195 6232 06A0  32         bl    @cpym2v
      6234 249A     
 0196 6236 06F8                   data >06f8,tibasic.patterns+32,8
-     6238 6446     
+     6238 645C     
      623A 0008     
 0197                                                   ; Copy pattern TI-Basic session ID 5
 0198               
@@ -9626,7 +9602,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      635C 00FF     
 0428 635E 0287  22         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
      6360 000F     
-0429 6362 1324  14         jeq   tibasic.return        ; Yes, return to Stevie
+0429 6362 132F  14         jeq   tibasic.return        ; Yes, return to Stevie
 0430                       ;-------------------------------------------------------
 0431                       ; Return from ISR
 0432                       ;-------------------------------------------------------
@@ -9661,194 +9637,214 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6370 1E00     
 0459 6372 1D01  20         sbo   1                     ; | We stil have the SAMS banks layout
 0460                                                   ; / mem.sams.layout.external
-0461               
-0462 6374 02E0  18         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
-     6376 AD00     
-0463                                                   ; paged out in tibasic.init
-0464               
-0465 6378 06A0  32         bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
-     637A 2B8A     
-0466 637C AD00                   data cpu.scrpad.moved ; | and activate workspace at >8300
-0467                                                   ; / Destroys registers tmp0-tmp2
-0468               
-0469 637E D820  54         movb  @w$ffff,@>8375        ; Reset keycode
-     6380 2022     
-     6382 8375     
-0470               
-0471 6384 C0A0  34         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
-     6386 A22C     
-0472               
-0473 6388 06A0  32         bl    @mute                 ; Mute sound generators
-     638A 280E     
-0474 638C 06A0  32         bl    @scroff               ; Turn screen off
-     638E 269A     
-0475               
-0476                       ; Prevent resuming the TI Basic session that lead us here.
-0477                       ; Easiest thing to do is to reinitalize the session upon next start.
-0478               
-0479                       ;-------------------------------------------------------
-0480                       ; Assert TI basic sesion ID
-0481                       ;-------------------------------------------------------
-0482 6390 C120  34         mov   @tibasic.session,tmp0 ; Get session ID
-     6392 A030     
-0483 6394 1307  14         jeq   !
-0484 6396 0284  22         ci    tmp0,5
-     6398 0005     
-0485 639A 1504  14         jgt   !
-0486                       ;-------------------------------------------------------
-0487                       ; Reset session resume flag (tibasicX.status)
-0488                       ;-------------------------------------------------------
-0489 639C 0A14  56         sla   tmp0,1                ; Word align
-0490 639E 04E4  34         clr   @tibasic.session(tmp0)
-     63A0 A030     
-0491 63A2 101F  14         jmp   tibasic.return.stevie
-0492                       ;-------------------------------------------------------
-0493                       ; Assert failed
-0494                       ;-------------------------------------------------------
-0495 63A4 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
-     63A6 FFCE     
-0496 63A8 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     63AA 2026     
+0461                       ;-------------------------------------------------------
+0462                       ; Returning from interrupted TI Basic session?
+0463                       ;-------------------------------------------------------
+0464 6374 C120  34         mov   @tibasic.session,tmp0
+     6376 A030     
+0465 6378 0284  22         ci    tmp0,1
+     637A 0001     
+0466 637C 1104  14         jlt   !
+0467 637E 0284  22         ci    tmp0,5
+     6380 0005     
+0468 6382 1501  14         jgt   !
+0469 6384 1002  14         jmp   tibasic.return.mon.cont
+0470                       ;-------------------------------------------------------
+0471                       ; Initialize Stevie
+0472                       ;-------------------------------------------------------
+0473 6386 0460  28 !       b     @kickstart.code1      ; Initialize Stevie
+     6388 6040     
+0474                       ;-------------------------------------------------------
+0475                       ; Resume Stevie
+0476                       ;-------------------------------------------------------
+0477               tibasic.return.mon.cont:
+0478 638A 02E0  18         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
+     638C AD00     
+0479                                                   ; paged out in tibasic.init
+0480               
+0481 638E 06A0  32         bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
+     6390 2B8A     
+0482 6392 AD00                   data cpu.scrpad.moved ; | and activate workspace at >8300
+0483                                                   ; / Destroys registers tmp0-tmp2
+0484               
+0485 6394 D820  54         movb  @w$ffff,@>8375        ; Reset keycode
+     6396 2022     
+     6398 8375     
+0486               
+0487 639A C0A0  34         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
+     639C A22C     
+0488               
+0489 639E 06A0  32         bl    @mute                 ; Mute sound generators
+     63A0 280E     
+0490 63A2 06A0  32         bl    @scroff               ; Turn screen off
+     63A4 269A     
+0491               
+0492                       ; Prevent resuming the TI Basic session that lead us here.
+0493                       ; Easiest thing to do is to reinitalize the session upon next start.
+0494               
+0495                       ;-------------------------------------------------------
+0496                       ; Assert TI basic sesion ID
 0497                       ;-------------------------------------------------------
-0498                       ; Return from TI Basic
-0499                       ;-------------------------------------------------------
-0500               tibasic.return:
-0501 63AC 020C  20         li    r12,>1e00             ; \ Enable SAMS mapper again
-     63AE 1E00     
-0502 63B0 1D01  20         sbo   1                     ; | We stil have the SAMS banks layout
-0503                                                   ; / mem.sams.layout.external
-0504               
-0505 63B2 02E0  18         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
-     63B4 AD00     
-0506                                                   ; paged out in tibasic.init
-0507               
-0508 63B6 D820  54         movb  @w$ffff,@>8375        ; Reset keycode
-     63B8 2022     
-     63BA 8375     
-0509               
-0510 63BC 06A0  32         bl    @cpym2m
-     63BE 24EE     
-0511 63C0 8300                   data >8300,cpu.scrpad.tgt,256
-     63C2 F960     
-     63C4 0100     
-0512                                                   ; Backup TI Basic scratchpad to
-0513                                                   ; @cpu.scrpad.tgt (SAMS bank)
-0514               
-0515 63C6 06A0  32         bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
-     63C8 2B8A     
-0516 63CA AD00                   data cpu.scrpad.moved ; | and activate workspace at >8300
-0517                                                   ; / Destroys registers tmp0-tmp2
-0518               
-0519 63CC C0A0  34         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
-     63CE A22C     
+0498 63A6 C120  34         mov   @tibasic.session,tmp0 ; Get session ID
+     63A8 A030     
+0499 63AA 1307  14         jeq   !
+0500 63AC 0284  22         ci    tmp0,5
+     63AE 0005     
+0501 63B0 1504  14         jgt   !
+0502                       ;-------------------------------------------------------
+0503                       ; Reset session resume flag (tibasicX.status)
+0504                       ;-------------------------------------------------------
+0505 63B2 0A14  56         sla   tmp0,1                ; Word align
+0506 63B4 04E4  34         clr   @tibasic.session(tmp0)
+     63B6 A030     
+0507 63B8 101F  14         jmp   tibasic.return.stevie
+0508                       ;-------------------------------------------------------
+0509                       ; Assert failed
+0510                       ;-------------------------------------------------------
+0511 63BA C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
+     63BC FFCE     
+0512 63BE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     63C0 2026     
+0513                       ;-------------------------------------------------------
+0514                       ; Return from TI Basic
+0515                       ;-------------------------------------------------------
+0516               tibasic.return:
+0517 63C2 020C  20         li    r12,>1e00             ; \ Enable SAMS mapper again
+     63C4 1E00     
+0518 63C6 1D01  20         sbo   1                     ; | We stil have the SAMS banks layout
+0519                                                   ; / mem.sams.layout.external
 0520               
-0521 63D0 06A0  32         bl    @mute                 ; Mute sound generators
-     63D2 280E     
-0522                       ;-------------------------------------------------------
-0523                       ; Cleanup after return from TI Basic
-0524                       ;-------------------------------------------------------
-0525 63D4 06A0  32         bl    @scroff               ; Turn screen off
-     63D6 269A     
-0526 63D8 06A0  32         bl    @cpyv2m
-     63DA 24CC     
-0527 63DC 0000                   data >0000,>b000,16384
-     63DE B000     
-     63E0 4000     
-0528                                                   ; Dump TI Basic 16K VDP memory to ram buffer
-0529                                                   ; >b000->efff
-0530                       ;-------------------------------------------------------
-0531                       ; Restore VDP screen with Stevie content
-0532                       ;-------------------------------------------------------
-0533               tibasic.return.stevie:
-0534 63E2 06A0  32         bl    @mem.sams.set.external
-     63E4 60B2     
-0535                                                   ; Load SAMS page layout when returning from
-0536                                                   ; external program.
-0537               
-0538 63E6 06A0  32         bl    @cpym2v
-     63E8 249A     
-0539 63EA 0000                   data >0000,>b000,16384
-     63EC B000     
-     63EE 4000     
-0540                                                   ; Restore Stevie 16K to VDP from RAM buffer
-0541                                                   ; >b000->efff
-0542                       ;-------------------------------------------------------
-0543                       ; Restore SAMS memory layout for editor buffer and index
-0544                       ;-------------------------------------------------------
-0545 63F0 06A0  32         bl    @mem.sams.set.stevie  ; Setup SAMS memory banks for stevie
-     63F2 60D6     
-0546                                                   ; \ For this to work the bank having the
-0547                                                   ; | @tv.sams.xxxx variables must already
-0548                                                   ; | be active and may not switch to
-0549                                                   ; / another bank.
-0550                       ;-------------------------------------------------------
-0551                       ; Setup F18a 80x30 mode again
-0552                       ;-------------------------------------------------------
-0553 63F4 06A0  32         bl    @f18unl               ; Unlock the F18a
-     63F6 273E     
-0560               
-0561 63F8 06A0  32         bl    @vidtab               ; Load video mode table into VDP
-     63FA 230C     
-0562 63FC 35CC                   data stevie.80x30     ; Equate selected video mode table
-0563               
-0564 63FE 06A0  32         bl    @putvr                ; Turn on position based attributes
-     6400 2346     
-0565 6402 3202                   data >3202            ; F18a VR50 (>32), bit 2
-0566               
-0567 6404 06A0  32         bl    @putvr                ; Set VDP TAT base address for position
-     6406 2346     
-0568 6408 0360                   data >0360            ; based attributes (>40 * >60 = >1800)
-0569               
-0570 640A 04E0  34         clr   @parm1                ; Screen off while reloading color scheme
-     640C A000     
-0571 640E 04E0  34         clr   @parm2                ; Don't skip colorizing marked lines
-     6410 A002     
-0572 6412 04E0  34         clr   @parm3                ; Colorize all panes
-     6414 A004     
-0573               
-0574 6416 06A0  32         bl    @pane.action.colorscheme.load
-     6418 644E     
-0575                                                   ; Reload color scheme
-0576                                                   ; \ i  @parm1 = Skip screen off if >FFFF
-0577                                                   ; | i  @parm2 = Skip colorizing marked lines
-0578                                                   ; |             if >FFFF
-0579                                                   ; | i  @parm3 = Only colorize CMDB pane
-0580                                                   ; /             if >FFFF
-0581                       ;------------------------------------------------------
-0582                       ; Exit
-0583                       ;------------------------------------------------------
-0584               tibasic.return.exit:
-0585 641A C339  30         mov   *stack+,r12           ; Pop r12
-0586 641C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0587 641E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0588 6420 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0589 6422 C2F9  30         mov   *stack+,r11           ; Pop r11
-0590 6424 045B  20         b     *r11                  ; Return
-0591               
-0592               
-0593               
-0594               tibasic.patterns:
-0595 6426 007E             byte  >00,>7E,>E7,>C7,>E7,>E7,>C3,>7E ; 1
-     6428 E7C7     
-     642A E7E7     
-     642C C37E     
-0596 642E 007E             byte  >00,>7E,>C3,>F3,>C3,>CF,>C3,>7E ; 2
-     6430 C3F3     
-     6432 C3CF     
-     6434 C37E     
-0597 6436 007E             byte  >00,>7E,>C3,>F3,>C3,>F3,>C3,>7E ; 3
-     6438 C3F3     
-     643A C3F3     
-     643C C37E     
-0598 643E 007E             byte  >00,>7E,>D3,>D3,>C3,>F3,>F3,>7E ; 4
-     6440 D3D3     
-     6442 C3F3     
-     6444 F37E     
-0599 6446 007E             byte  >00,>7E,>C3,>CF,>C3,>F3,>C3,>7E ; 5
+0521 63C8 02E0  18         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
+     63CA AD00     
+0522                                                   ; paged out in tibasic.init
+0523               
+0524 63CC D820  54         movb  @w$ffff,@>8375        ; Reset keycode
+     63CE 2022     
+     63D0 8375     
+0525               
+0526 63D2 06A0  32         bl    @cpym2m
+     63D4 24EE     
+0527 63D6 8300                   data >8300,cpu.scrpad.tgt,256
+     63D8 F960     
+     63DA 0100     
+0528                                                   ; Backup TI Basic scratchpad to
+0529                                                   ; @cpu.scrpad.tgt (SAMS bank)
+0530               
+0531 63DC 06A0  32         bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
+     63DE 2B8A     
+0532 63E0 AD00                   data cpu.scrpad.moved ; | and activate workspace at >8300
+0533                                                   ; / Destroys registers tmp0-tmp2
+0534               
+0535 63E2 C0A0  34         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
+     63E4 A22C     
+0536               
+0537 63E6 06A0  32         bl    @mute                 ; Mute sound generators
+     63E8 280E     
+0538                       ;-------------------------------------------------------
+0539                       ; Cleanup after return from TI Basic
+0540                       ;-------------------------------------------------------
+0541 63EA 06A0  32         bl    @scroff               ; Turn screen off
+     63EC 269A     
+0542 63EE 06A0  32         bl    @cpyv2m
+     63F0 24CC     
+0543 63F2 0000                   data >0000,>b000,16384
+     63F4 B000     
+     63F6 4000     
+0544                                                   ; Dump TI Basic 16K VDP memory to ram buffer
+0545                                                   ; >b000->efff
+0546                       ;-------------------------------------------------------
+0547                       ; Restore VDP screen with Stevie content
+0548                       ;-------------------------------------------------------
+0549               tibasic.return.stevie:
+0550 63F8 06A0  32         bl    @mem.sams.set.external
+     63FA 60B2     
+0551                                                   ; Load SAMS page layout when returning from
+0552                                                   ; external program.
+0553               
+0554 63FC 06A0  32         bl    @cpym2v
+     63FE 249A     
+0555 6400 0000                   data >0000,>b000,16384
+     6402 B000     
+     6404 4000     
+0556                                                   ; Restore Stevie 16K to VDP from RAM buffer
+0557                                                   ; >b000->efff
+0558                       ;-------------------------------------------------------
+0559                       ; Restore SAMS memory layout for editor buffer and index
+0560                       ;-------------------------------------------------------
+0561 6406 06A0  32         bl    @mem.sams.set.stevie  ; Setup SAMS memory banks for stevie
+     6408 60D6     
+0562                                                   ; \ For this to work the bank having the
+0563                                                   ; | @tv.sams.xxxx variables must already
+0564                                                   ; | be active and may not switch to
+0565                                                   ; / another bank.
+0566                       ;-------------------------------------------------------
+0567                       ; Setup F18a 80x30 mode again
+0568                       ;-------------------------------------------------------
+0569 640A 06A0  32         bl    @f18unl               ; Unlock the F18a
+     640C 273E     
+0576               
+0577 640E 06A0  32         bl    @vidtab               ; Load video mode table into VDP
+     6410 230C     
+0578 6412 35CC                   data stevie.80x30     ; Equate selected video mode table
+0579               
+0580 6414 06A0  32         bl    @putvr                ; Turn on position based attributes
+     6416 2346     
+0581 6418 3202                   data >3202            ; F18a VR50 (>32), bit 2
+0582               
+0583 641A 06A0  32         bl    @putvr                ; Set VDP TAT base address for position
+     641C 2346     
+0584 641E 0360                   data >0360            ; based attributes (>40 * >60 = >1800)
+0585               
+0586 6420 04E0  34         clr   @parm1                ; Screen off while reloading color scheme
+     6422 A000     
+0587 6424 04E0  34         clr   @parm2                ; Don't skip colorizing marked lines
+     6426 A002     
+0588 6428 04E0  34         clr   @parm3                ; Colorize all panes
+     642A A004     
+0589               
+0590 642C 06A0  32         bl    @pane.action.colorscheme.load
+     642E 6464     
+0591                                                   ; Reload color scheme
+0592                                                   ; \ i  @parm1 = Skip screen off if >FFFF
+0593                                                   ; | i  @parm2 = Skip colorizing marked lines
+0594                                                   ; |             if >FFFF
+0595                                                   ; | i  @parm3 = Only colorize CMDB pane
+0596                                                   ; /             if >FFFF
+0597                       ;------------------------------------------------------
+0598                       ; Exit
+0599                       ;------------------------------------------------------
+0600               tibasic.return.exit:
+0601 6430 C339  30         mov   *stack+,r12           ; Pop r12
+0602 6432 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0603 6434 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0604 6436 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0605 6438 C2F9  30         mov   *stack+,r11           ; Pop r11
+0606 643A 045B  20         b     *r11                  ; Return
+0607               
+0608               
+0609               
+0610               tibasic.patterns:
+0611 643C 007E             byte  >00,>7E,>E7,>C7,>E7,>E7,>C3,>7E ; 1
+     643E E7C7     
+     6440 E7E7     
+     6442 C37E     
+0612 6444 007E             byte  >00,>7E,>C3,>F3,>C3,>CF,>C3,>7E ; 2
+     6446 C3F3     
      6448 C3CF     
-     644A C3F3     
-     644C C37E     
-                   < stevie_b7.asm.62397
+     644A C37E     
+0613 644C 007E             byte  >00,>7E,>C3,>F3,>C3,>F3,>C3,>7E ; 3
+     644E C3F3     
+     6450 C3F3     
+     6452 C37E     
+0614 6454 007E             byte  >00,>7E,>D3,>D3,>C3,>F3,>F3,>7E ; 4
+     6456 D3D3     
+     6458 C3F3     
+     645A F37E     
+0615 645C 007E             byte  >00,>7E,>C3,>CF,>C3,>F3,>C3,>7E ; 5
+     645E C3CF     
+     6460 C3F3     
+     6462 C37E     
+                   < stevie_b7.asm.72888
 0066                       ;-----------------------------------------------------------------------
 0067                       ; Stubs
 0068                       ;-----------------------------------------------------------------------
@@ -9862,22 +9858,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               * bank1 vec.31
 0007               ********|*****|*********************|**************************
 0008               pane.action.colorscheme.load:
-0009 644E 0649  14         dect  stack
-0010 6450 C64B  30         mov   r11,*stack            ; Save return address
+0009 6464 0649  14         dect  stack
+0010 6466 C64B  30         mov   r11,*stack            ; Save return address
 0011                       ;------------------------------------------------------
 0012                       ; Call function in bank 1
 0013                       ;------------------------------------------------------
-0014 6452 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6454 2F84     
-0015 6456 6002                   data bank1.rom        ; | i  p0 = bank address
-0016 6458 7FFC                   data vec.31           ; | i  p1 = Vector with target address
-0017 645A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0014 6468 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     646A 2F84     
+0015 646C 6002                   data bank1.rom        ; | i  p0 = bank address
+0016 646E 7FFC                   data vec.31           ; | i  p1 = Vector with target address
+0017 6470 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0018                       ;------------------------------------------------------
 0019                       ; Exit
 0020                       ;------------------------------------------------------
-0021 645C C2F9  30         mov   *stack+,r11           ; Pop r11
-0022 645E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.62397
+0021 6472 C2F9  30         mov   *stack+,r11           ; Pop r11
+0022 6474 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b7.asm.72888
 0070                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9891,21 +9887,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0009               ********|*****|*********************|**************************
 0011               
 0012               mem.sams.setup.stevie:
-0013 6460 0649  14         dect  stack
-0014 6462 C64B  30         mov   r11,*stack            ; Save return address
+0013 6476 0649  14         dect  stack
+0014 6478 C64B  30         mov   r11,*stack            ; Save return address
 0015                       ;------------------------------------------------------
 0016                       ; Call function in bank 1
 0017                       ;------------------------------------------------------
-0018 6464 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6466 2F84     
-0019 6468 6002                   data bank1.rom        ; | i  p0 = bank address
-0020 646A 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0021 646C 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0018 647A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     647C 2F84     
+0019 647E 6002                   data bank1.rom        ; | i  p0 = bank address
+0020 6480 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0021 6482 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0022                       ;------------------------------------------------------
 0023                       ; Exit
 0024                       ;------------------------------------------------------
-0025 646E C2F9  30         mov   *stack+,r11           ; Pop r11
-0026 6470 045B  20         b     *r11                  ; Return to caller
+0025 6484 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 6486 045B  20         b     *r11                  ; Return to caller
 0027               
 0029               
 0030               
@@ -9928,7 +9924,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0104               
 0105               
 0106               
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0071                       ;-----------------------------------------------------------------------
 0072                       ; Program data
 0073                       ;-----------------------------------------------------------------------
@@ -9942,36 +9938,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               * SAMS legacy page layout table (as in SAMS transparent mode)
 0007               *--------------------------------------------------------------
 0008               mem.sams.layout.legacy:
-0009 6472 0200             data  >0200                 ; >2000-2fff, SAMS page >02
-0010 6474 0300             data  >0300                 ; >3000-3fff, SAMS page >03
-0011 6476 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
-0012 6478 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
-0013 647A 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
-0014 647C 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
-0015 647E 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
-0016 6480 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
+0009 6488 0200             data  >0200                 ; >2000-2fff, SAMS page >02
+0010 648A 0300             data  >0300                 ; >3000-3fff, SAMS page >03
+0011 648C 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
+0012 648E 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
+0013 6490 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
+0014 6492 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
+0015 6494 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
+0016 6496 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
 0017               
 0018               
 0019               ***************************************************************
 0020               * SAMS page layout table for Stevie boot order
 0021               *--------------------------------------------------------------
 0022               mem.sams.layout.boot:
-0023 6482 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0024 6484 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0025 6486 0400             data  >0400                 ; >a000-afff, SAMS page >04
-0026 6488 2000             data  >2000                 ; >b000-bfff, SAMS page >20
+0023 6498 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0024 649A 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0025 649C 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0026 649E 2000             data  >2000                 ; >b000-bfff, SAMS page >20
 0027                                                   ; \
 0028                                                   ; | Index can allocate
 0029                                                   ; | pages >20 to >3f.
 0030                                                   ; /
-0031 648A 4000             data  >4000                 ; >c000-cfff, SAMS page >40
+0031 64A0 4000             data  >4000                 ; >c000-cfff, SAMS page >40
 0032                                                   ; \
 0033                                                   ; | Editor buffer can allocate
 0034                                                   ; | pages >40 to >ff.
 0035                                                   ; /
-0036 648C 0500             data  >0500                 ; >d000-dfff, SAMS page >05
-0037 648E 0600             data  >0600                 ; >e000-efff, SAMS page >06
-0038 6490 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0036 64A2 0500             data  >0500                 ; >d000-dfff, SAMS page >05
+0037 64A4 0600             data  >0600                 ; >e000-efff, SAMS page >06
+0038 64A6 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0039               
 0040               
 0041               
@@ -9979,97 +9975,97 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043               * SAMS page layout table before calling external progam
 0044               *--------------------------------------------------------------
 0045               mem.sams.layout.external:
-0046 6492 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0047 6494 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0048 6496 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0046 64A8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0047 64AA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0048 64AC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0049               
-0050 6498 1000             data  >1000                 ; >b000-efff, SAMS page >10
-0051 649A 1100             data  >1100                 ; \
-0052 649C 1200             data  >1200                 ; | Stevie session
-0053 649E 1300             data  >1300                 ; | VDP content
+0050 64AE 1000             data  >1000                 ; >b000-efff, SAMS page >10
+0051 64B0 1100             data  >1100                 ; \
+0052 64B2 1200             data  >1200                 ; | Stevie session
+0053 64B4 1300             data  >1300                 ; | VDP content
 0054                                                   ; /
-0055 64A0 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0055 64B6 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0056               
 0057               
 0058               ***************************************************************
 0059               * SAMS page layout table for TI Basic session 1
 0060               *--------------------------------------------------------------
 0061               mem.sams.layout.basic1:
-0062 64A2 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0063 64A4 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0064 64A6 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0062 64B8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0063 64BA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0064 64BC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0065               
-0066 64A8 E700             data  >e700                 ; >b000-efff, SAMS page >e7
-0067 64AA E800             data  >e800                 ; \
-0068 64AC E900             data  >e900                 ; | TI Basic session 1
-0069 64AE EA00             data  >ea00                 ; | VDP content
+0066 64BE E700             data  >e700                 ; >b000-efff, SAMS page >e7
+0067 64C0 E800             data  >e800                 ; \
+0068 64C2 E900             data  >e900                 ; | TI Basic session 1
+0069 64C4 EA00             data  >ea00                 ; | VDP content
 0070                                                   ; /
-0071 64B0 EB00             data  >eb00                 ; >f000-ffff, SAMS page >eb
+0071 64C6 EB00             data  >eb00                 ; >f000-ffff, SAMS page >eb
 0072               
 0073               
 0074               ***************************************************************
 0075               * SAMS page layout table for TI Basic session 2
 0076               *--------------------------------------------------------------
 0077               mem.sams.layout.basic2:
-0078 64B2 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0079 64B4 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0080 64B6 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0078 64C8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0079 64CA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0080 64CC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0081               
-0082 64B8 EC00             data  >ec00                 ; >b000-efff, SAMS page >ec
-0083 64BA ED00             data  >ed00                 ; \
-0084 64BC EE00             data  >ee00                 ; | TI Basic session 2
-0085 64BE EF00             data  >ef00                 ; | VDP content
+0082 64CE EC00             data  >ec00                 ; >b000-efff, SAMS page >ec
+0083 64D0 ED00             data  >ed00                 ; \
+0084 64D2 EE00             data  >ee00                 ; | TI Basic session 2
+0085 64D4 EF00             data  >ef00                 ; | VDP content
 0086                                                   ; /
-0087 64C0 F000             data  >f000                 ; >f000-ffff, SAMS page >f0
+0087 64D6 F000             data  >f000                 ; >f000-ffff, SAMS page >f0
 0088               
 0089               
 0090               ***************************************************************
 0091               * SAMS page layout table for TI Basic session 3
 0092               *--------------------------------------------------------------
 0093               mem.sams.layout.basic3:
-0094 64C2 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0095 64C4 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0096 64C6 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0094 64D8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0095 64DA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0096 64DC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0097               
-0098 64C8 F100             data  >f100                 ; >b000-efff, SAMS page >f1
-0099 64CA F200             data  >f200                 ; \
-0100 64CC F300             data  >f300                 ; | TI Basic session 3
-0101 64CE F400             data  >f400                 ; | VDP content
+0098 64DE F100             data  >f100                 ; >b000-efff, SAMS page >f1
+0099 64E0 F200             data  >f200                 ; \
+0100 64E2 F300             data  >f300                 ; | TI Basic session 3
+0101 64E4 F400             data  >f400                 ; | VDP content
 0102                                                   ; /
-0103 64D0 F500             data  >f500                 ; >f000-ffff, SAMS page >f5
+0103 64E6 F500             data  >f500                 ; >f000-ffff, SAMS page >f5
 0104               
 0105               
 0106               ***************************************************************
 0107               * SAMS page layout table for TI Basic session 4
 0108               *--------------------------------------------------------------
 0109               mem.sams.layout.basic4:
-0110 64D2 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0111 64D4 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0112 64D6 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0110 64E8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0111 64EA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0112 64EC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0113               
-0114 64D8 F600             data  >f600                 ; >b000-efff, SAMS page >f6
-0115 64DA F700             data  >f700                 ; \
-0116 64DC F800             data  >f800                 ; | TI Basic session 4
-0117 64DE F900             data  >f900                 ; | VDP content
+0114 64EE F600             data  >f600                 ; >b000-efff, SAMS page >f6
+0115 64F0 F700             data  >f700                 ; \
+0116 64F2 F800             data  >f800                 ; | TI Basic session 4
+0117 64F4 F900             data  >f900                 ; | VDP content
 0118                                                   ; /
-0119 64E0 FA00             data  >fa00                 ; >f000-ffff, SAMS page >fa
+0119 64F6 FA00             data  >fa00                 ; >f000-ffff, SAMS page >fa
 0120               
 0121               
 0122               ***************************************************************
 0123               * SAMS page layout table for TI Basic session 5
 0124               *--------------------------------------------------------------
 0125               mem.sams.layout.basic5:
-0126 64E2 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0127 64E4 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0128 64E6 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0126 64F8 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0127 64FA 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0128 64FC 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0129               
-0130 64E8 FB00             data  >fb00                 ; >b000-efff, SAMS page >fc
-0131 64EA FC00             data  >fc00                 ; \
-0132 64EC FD00             data  >fd00                 ; | TI Basic session 5
-0133 64EE FE00             data  >fe00                 ; | VDP content
+0130 64FE FB00             data  >fb00                 ; >b000-efff, SAMS page >fc
+0131 6500 FC00             data  >fc00                 ; \
+0132 6502 FD00             data  >fd00                 ; | TI Basic session 5
+0133 6504 FE00             data  >fe00                 ; | VDP content
 0134                                                   ; /
-0135 64F0 FF00             data  >ff00                 ; >f000-ffff, SAMS page >ff
-                   < stevie_b7.asm.62397
+0135 6506 FF00             data  >ff00                 ; >f000-ffff, SAMS page >ff
+                   < stevie_b7.asm.72888
 0075                       ;-----------------------------------------------------------------------
 0076                       ; Scratchpad memory dump
 0077                       ;-----------------------------------------------------------------------
@@ -10215,7 +10211,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0080                       ;-----------------------------------------------------------------------
 0081                       ; Bank full check
 0082                       ;-----------------------------------------------------------------------
@@ -10237,7 +10233,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0090                       ;-----------------------------------------------------------------------
 0091                       ; Vector table
 0092                       ;-----------------------------------------------------------------------
@@ -10295,7 +10291,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.62397
+                   < stevie_b7.asm.72888
 0094                                                   ; Vector table bank 7
 0095               *--------------------------------------------------------------
 0096               * Video mode configuration

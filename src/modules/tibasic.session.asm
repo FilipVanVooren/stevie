@@ -458,7 +458,23 @@ tibasic.return.mon:
         li    r12,>1e00             ; \ Enable SAMS mapper again
         sbo   1                     ; | We stil have the SAMS banks layout
                                     ; / mem.sams.layout.external
-
+        ;-------------------------------------------------------
+        ; Returning from interrupted TI Basic session?
+        ;-------------------------------------------------------
+        mov   @tibasic.session,tmp0
+        ci    tmp0,1
+        jlt   !
+        ci    tmp0,5
+        jgt   !
+        jmp   tibasic.return.mon.cont
+        ;-------------------------------------------------------
+        ; Initialize Stevie
+        ;-------------------------------------------------------
+!       b     @kickstart.code1      ; Initialize Stevie
+        ;-------------------------------------------------------
+        ; Resume Stevie
+        ;-------------------------------------------------------
+tibasic.return.mon.cont:
         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
                                     ; paged out in tibasic.init
 

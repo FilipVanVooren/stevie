@@ -25,10 +25,10 @@
         ; Program list entry
         ;-----------------------------------------------------------------------
 rom.program1:
-        data  rom.program2          ; 12 \ Next program list entry         >600c
+        data  >0000                 ; 12 \ Next program list entry         >600c
                                     ; 13 / (no more items following)
 
-        data  kickstart.code1       ; 14 \ Program address                 >600e
+        data  kickstart.resume      ; 14 \ Program address                 >600e
                                     ; 15 /
 
         .ifeq full_f18a_support,1
@@ -48,17 +48,3 @@ rom.program1:
            .endif
 
         .endif
-
-
-
-        ;-----------------------------------------------------------------------
-        ; Program list entry
-        ;-----------------------------------------------------------------------
-rom.program2:
-        data  >0000                 ; 12 \ Next program list entry         >600c
-                                    ; 13 / (no more items following)
-
-        data  >6038                 ; 14 \ Program address                 >600e
-                                    ; 15 /
-
-        #string 'RESUME SESSION'
