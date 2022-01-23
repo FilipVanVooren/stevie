@@ -29,7 +29,7 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >6038
         clr   @bank7.rom            ; Switch to bank 7 "Jonas"
-        b     @tibasic.return       ; Resume Stevie session
+        b     @tibasic.return.mon   ; Resume Stevie session
 
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"

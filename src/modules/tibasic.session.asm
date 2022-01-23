@@ -19,7 +19,7 @@
 * r1 in GPL WS, tmp0, tmp1, tmp2, r12
 *--------------------------------------------------------------
 * Remarks
-* tibasic >> b @0070 (GPL interpreter/TI Basic) 
+* tibasic >> b @0070 (GPL interpreter/TI Basic)
 *         >> isr
 *         >> tibasic.return
 *
@@ -32,11 +32,11 @@ tibasic:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack        
+        dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack      
+        dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack                 
+        dect  stack
         mov   r12,*stack            ; Push r12
         ;-------------------------------------------------------
         ; Setup SAMS memory
@@ -67,7 +67,7 @@ tibasic:
         ;-------------------------------------------------------
         ; Keep 'Hide SID' flag for later use
         ;-------------------------------------------------------
-        mov   @tibasic.hidesid,tmp0 ; \ 
+        mov   @tibasic.hidesid,tmp0 ; \
                                     ; | Store TI Basic session ID in tmp0.
                                     ; | Througout the subroutine tmp0 will
                                     ; | keep this value, even when SAMS
@@ -79,7 +79,7 @@ tibasic:
         ;-------------------------------------------------------
         ; Keep TI Basic session ID for later use
         ;-------------------------------------------------------
-        mov   @tibasic.session,tmp0 ; \ 
+        mov   @tibasic.session,tmp0 ; \
                                     ; | Store TI Basic session ID in tmp0.
                                     ; | Througout the subroutine tmp0 will
                                     ; | keep this value, even when SAMS
@@ -108,99 +108,89 @@ tibasic:
         bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
         ; New TI Basic session 1
-        ;------------------------------------------------------- 
-tibasic.init.basic1:               
+        ;-------------------------------------------------------
+tibasic.init.basic1:
         mov   @tibasic1.status,tmp1 ; Resume TI Basic session?
         jeq   !                     ; No, new session
-        b     @tibasic.resume.basic1 
-!       ori   tmp1,1                ; \ 
-        mov   tmp1,@tibasic1.status ; / Set resume flag for next run
+        b     @tibasic.resume.basic1
 
-        bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
+!       bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
 
         bl    @cpym2v
-              data >06f8,tibasic.patterns,8  
+              data >06f8,tibasic.patterns,8
                                     ; Copy pattern TI-Basic session ID 1
 
         jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session 2
-        ;------------------------------------------------------- 
-tibasic.init.basic2:        
+        ;-------------------------------------------------------
+tibasic.init.basic2:
         mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic2 ; yes, do resume
-        ori   tmp1,1                ; \ 
-        mov   tmp1,@tibasic2.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
 
         bl    @cpym2v
-              data >06f8,tibasic.patterns+8,8  
+              data >06f8,tibasic.patterns+8,8
                                     ; Copy pattern TI-Basic session ID 2
 
         jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session 3
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.init.basic3:
         mov   @tibasic3.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic3 ; yes, do resume
-        ori   tmp1,1                ; \ 
-        mov   tmp1,@tibasic3.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
 
         bl    @cpym2v
-              data >06f8,tibasic.patterns+16,8  
+              data >06f8,tibasic.patterns+16,8
                                     ; Copy pattern TI-Basic session ID 3
-                                    
+
         jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session 4
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.init.basic4:
         mov   @tibasic4.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic4 ; yes, do resume
-        ori   tmp1,1                ; \ 
-        mov   tmp1,@tibasic4.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
 
         bl    @cpym2v
-              data >06f8,tibasic.patterns+24,8  
+              data >06f8,tibasic.patterns+24,8
                                     ; Copy pattern TI-Basic session ID 4
 
         jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session 5
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.init.basic5:
         mov   @tibasic5.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic5 ; yes, do resume
-        ori   tmp1,1                ; \ 
-        mov   tmp1,@tibasic5.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
 
         bl    @cpym2v
-              data >06f8,tibasic.patterns+32,8  
+              data >06f8,tibasic.patterns+32,8
                                     ; Copy pattern TI-Basic session ID 5
 
         jmp   tibasic.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
         ; New TI Basic session (part 2)
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.init.rest:
         bl    @cpym2m
               data cpu.scrpad.src,cpu.scrpad.tgt,256
                                     ; Initialize scratchpad memory for TI Basic
-                                    ; @cpu.scrpad.tgt (SAMS bank) with dump 
-                                    ; of OS Monitor scratchpad stored at 
+                                    ; @cpu.scrpad.tgt (SAMS bank) with dump
+                                    ; of OS Monitor scratchpad stored at
                                     ; @cpu.scrpad.src (ROM bank 7).
 
         bl    @ldfnt
@@ -209,8 +199,8 @@ tibasic.init.rest:
         bl    @filv
               data >0300,>D0,2      ; No sprites
 
-        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
-              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then 
+        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to
+              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then
                                     ; | load TI Basic scratchpad from
                                     ; / address @cpu.scrpad.target
 
@@ -224,28 +214,28 @@ tibasic.init.rest:
                                     ; | Note that >83fc in Stevie scratchpad
                                     ; / has copy of the flag.
 
-        mov   @cpu.scrpad.moved+254,@>83b6   
+        mov   @cpu.scrpad.moved+254,@>83b6
                                     ; \ Store TI Basic session ID in TI Basic
-                                    ; | scratchpad address >83b6. 
+                                    ; | scratchpad address >83b6.
                                     ; | Note that >83fe in Stevie scratchpad has
                                     ; / a copy of the TI basic session ID.
         ;-------------------------------------------------------
         ; Poke some values
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
         mov   @tibasic.scrpad.83d4,@>83d4
         mov   @tibasic.scrpad.83fa,@>83fa
         mov   @tibasic.scrpad.83fc,@>83fc
         mov   @tibasic.scrpad.83fe,@>83fe
         ;-------------------------------------------------------
         ; Register ISR hook in scratch pad
-        ;------------------------------------------------------- 
-        lwpi  >8300                 ; Scratchpad in >8300 again        
-        li    r1,isr                ; \ 
+        ;-------------------------------------------------------
+        lwpi  >8300                 ; Scratchpad in >8300 again
+        li    r1,isr                ; \
         mov   r1,@>83c4             ; | >83c4 = Pointer to start address of ISR
                                     ; /
 
         li    r12,>1e00             ; \ Disable SAMS mapper (transparent mode)
-        sbz   1                     ; / 
+        sbz   1                     ; /
         ;-------------------------------------------------------
         ; Run TI Basic session in GPL Interpreter
         ;-------------------------------------------------------
@@ -253,46 +243,46 @@ tibasic.init.rest:
         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
         movb  r1,@grmwa             ; \
         swpb  r1                    ; | Set GPL address
-        movb  r1,@grmwa             ; / 
+        movb  r1,@grmwa             ; /
         nop
         b     @>0070                ; Start GPL interpreter
         ;-------------------------------------------------------
         ; Resume TI-Basic session 1
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.basic1:
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 2
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.basic2:
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 3
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.basic3:
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 4
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.basic4:
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 5
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.basic5:
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
         ;-------------------------------------------------------
         ; Resume TI-Basic session (part 2)
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.part2:
         mov   @>83fc,r7             ; Get 'Hide SID' flag
         jeq   tibasic.resume.vdp    ; Flag is reset, skip clearing SID
@@ -301,15 +291,15 @@ tibasic.resume.part2:
         mov   r7,@>b01e             ; Clear SID in VDP screen backup
         ;-------------------------------------------------------
         ; Restore VDP memory
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
 tibasic.resume.vdp:
         bl    @cpym2v
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
                                     ; RAM buffer >b000->efff
 
-        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to 
-              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then 
+        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to
+              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then
                                     ; | load TI Basic scratchpad from
                                     ; / address @cpu.scrpad.target
 
@@ -326,15 +316,15 @@ tibasic.resume.vdp:
         ;-------------------------------------------------------
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
-tibasic.resume.load:        
+tibasic.resume.load:
         lwpi  >8300                  ; Workspace must be in scratchpad again!
         clr   r11
 
         li    r12,>1e00             ; \ Disable SAMS mapper (transparent mode)
-        sbz   1                     ; / 
+        sbz   1                     ; /
         ;-------------------------------------------------------
         ; Resume TI Basic interpreter
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
         b     @>0ab8                ; Return from interrupt routine.
                                     ; See TI Intern page 32 (german)
         ;-------------------------------------------------------
@@ -344,10 +334,10 @@ tibasic.scrpad.83d4:
         data  >e000
 tibasic.scrpad.83fa:
         data  >9800
-tibasic.scrpad.83fc:        
+tibasic.scrpad.83fc:
         data  >0108
 tibasic.scrpad.83fe:
-        data  >8c02        
+        data  >8c02
 
 
 
@@ -367,9 +357,9 @@ tibasic.scrpad.83fe:
 * Register usage
 * r7, 12
 ********|*****|*********************|**************************
-isr:    
+isr:
         limi  0                     ; \ Turn off interrupts
-                                    ; / Prevent ISR reentry    
+                                    ; / Prevent ISR reentry
 
         mov   r7,@rambuf            ; Backup R7
         mov   r12,@rambuf+2         ; Backup R12
@@ -386,20 +376,20 @@ isr:
         ;--------------------------------------------------------------
         ; Show TI-Basic session ID ?
         ;--------------------------------------------------------------
-isr.showid:        
+isr.showid:
         mov   @>83b4,r7             ; Get counter/Hide flag
         ci    r7,>ffff              ; Hide flag set?
         jeq   isr.hotkey            ; Yes, skip showing session ID
-        ci    r7,>0010              ; Counter limit reached ?        
+        ci    r7,>0010              ; Counter limit reached ?
         jlt   isr.counter           ; Not yet, skip showing Session ID
         clr   @>83b4                ; Reset counter
         ;--------------------------------------------------------------
         ; Setup VDP write address for column 30
         ;--------------------------------------------------------------
         li    r7,>401e              ; \
-        swpb  r7                    ; | >1c is the VDP column position 
+        swpb  r7                    ; | >1c is the VDP column position
         movb  r7,@vdpa              ; | where bytes should be written
-        swpb  r7                    ; | 
+        swpb  r7                    ; |
         movb  r7,@vdpa              ; /
         ;--------------------------------------------------------------
         ; Dump TI-Basic Session ID to screen
@@ -417,7 +407,7 @@ isr.counter:
         ;-------------------------------------------------------
         ; Hotkey pressed?
         ;-------------------------------------------------------
-isr.hotkey:        
+isr.hotkey:
         mov   @>8374,r7             ; \ Get keyboard scancode from @>8375
         andi  r7,>00ff              ; / LSB only
         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
@@ -428,12 +418,12 @@ isr.hotkey:
 isr.exit:
         mov   @rambuf+2,r12         ; Restore R12
         mov   @rambuf,r7            ; Restore R7
-        b     *r11                  ; Return from ISR        
+        b     *r11                  ; Return from ISR
 
 
 ***************************************************************
 * tibasic.return
-* Return from TI Basic to Stevie
+* Return from OS Monitor/TI Basic to Stevie
 ***************************************************************
 * bl   @tibasic.return
 *--------------------------------------------------------------
@@ -446,28 +436,53 @@ isr.exit:
 * REMARKS
 * Called from ISR code
 ********|*****|*********************|**************************
-tibasic.return:
+        ;-------------------------------------------------------
+        ; Return from OS Monitor
+        ;-------------------------------------------------------
+tibasic.return.mon:
         li    r12,>1e00             ; \ Enable SAMS mapper again
-        sbo   1                     ; | We stil have the SAMS banks layout 
+        sbo   1                     ; | We stil have the SAMS banks layout
                                     ; / mem.sams.layout.external
 
         lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
                                     ; paged out in tibasic.init
 
-        movb  @w$ffff,@>8375        ; Reset keycode     
- 
+        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
+              data cpu.scrpad.moved ; | and activate workspace at >8300
+                                    ; / Destroys registers tmp0-tmp2
+
+        movb  @w$ffff,@>8375        ; Reset keycode
+
+        mov   @tv.sp2.conf,config   ; Restore the SP2 config register
+
+        bl    @mute                 ; Mute sound generators
+        bl    @scroff               ; Turn screen off
+        jmp   tibasic.return.stevie
+        ;-------------------------------------------------------
+        ; Return from TI Basic
+        ;-------------------------------------------------------
+tibasic.return:
+        li    r12,>1e00             ; \ Enable SAMS mapper again
+        sbo   1                     ; | We stil have the SAMS banks layout
+                                    ; / mem.sams.layout.external
+
+        lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
+                                    ; paged out in tibasic.init
+
+        movb  @w$ffff,@>8375        ; Reset keycode
+
         bl    @cpym2m
               data >8300,cpu.scrpad.tgt,256
                                     ; Backup TI Basic scratchpad to
                                     ; @cpu.scrpad.tgt (SAMS bank)
 
-        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratch pad memory 
+        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
               data cpu.scrpad.moved ; | and activate workspace at >8300
                                     ; / Destroys registers tmp0-tmp2
 
         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
 
-        bl    @mute                 ; Mute sound generators              
+        bl    @mute                 ; Mute sound generators
         ;-------------------------------------------------------
         ; Cleanup after return from TI Basic
         ;-------------------------------------------------------
@@ -479,8 +494,8 @@ tibasic.return:
         ;-------------------------------------------------------
         ; Restore VDP screen with Stevie content
         ;-------------------------------------------------------
-tibasic.return.stevie:        
-        bl    @mem.sams.set.external   
+tibasic.return.stevie:
+        bl    @mem.sams.set.external
                                     ; Load SAMS page layout when returning from
                                     ; external program.
 
@@ -490,16 +505,16 @@ tibasic.return.stevie:
                                     ; >b000->efff
         ;-------------------------------------------------------
         ; Restore SAMS memory layout for editor buffer and index
-        ;-------------------------------------------------------                                      
+        ;-------------------------------------------------------
         bl    @mem.sams.set.stevie  ; Setup SAMS memory banks for stevie
                                     ; \ For this to work the bank having the
                                     ; | @tv.sams.xxxx variables must already
-                                    ; | be active and may not switch to 
+                                    ; | be active and may not switch to
                                     ; / another bank.
         ;-------------------------------------------------------
         ; Setup F18a 80x30 mode again
         ;-------------------------------------------------------
-        bl    @f18unl               ; Unlock the F18a        
+        bl    @f18unl               ; Unlock the F18a
         .ifeq device.f18a,1
 
         bl    @putvr                ; Turn on 30 rows mode.
@@ -524,19 +539,19 @@ tibasic.return.stevie:
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines
-                                    ; |             if >FFFF                                    
-                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; |             if >FFFF
+                                    ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 tibasic.return.exit:
         mov   *stack+,r12           ; Pop r12
-        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0 
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return        
+        b     *r11                  ; Return
 
 
 
