@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.25715
+     **** ****     > stevie_b0.asm.56873
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220123-1905050
+0009               * File: stevie_b0.asm               ; Version 220123-2021200
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -89,7 +89,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0079               *--------------------------------------------------------------
 0080      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0081      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.25715
+                   < stevie_b0.asm.56873
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -117,7 +117,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.25715
+                   < stevie_b0.asm.56873
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -512,7 +512,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0396      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0397      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0398      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.25715
+                   < stevie_b0.asm.56873
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -652,7 +652,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.25715
+                   < stevie_b0.asm.56873
 0018               
 0019               ***************************************************************
 0020               * BANK 0
@@ -736,118 +736,123 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6036 4E       
 0083                       even
 0084               
-                   < stevie_b0.asm.25715
+                   < stevie_b0.asm.56873
 0026               
 0027               ***************************************************************
-0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0028               * Step 1: Switch to bank 7 (Resume Stevie session)
 0029               ********|*****|*********************|**************************
-0030                       aorg  >6038
-0031 6038 04E0  34         clr   @bank7.rom            ; Switch to bank 7 "Jill"
+0030               resume.stevie:
+0031                       aorg  >6038
+0032 6038 04E0  34         clr   @bank7.rom            ; Switch to bank 7 "Jill"
      603A 600E     
-0032               
-0033                       aorg  kickstart.code1       ; >6040
-0034 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0033               
+0034               ***************************************************************
+0035               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0036               ********|*****|*********************|**************************
+0037               new.stevie:
+0038                       aorg  kickstart.code1       ; >6040
+0039 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000     
-0035               ***************************************************************
-0036               * Step 2: Setup SAMS banks (inline code because no SP2 yet!)
-0037               ********|*****|*********************|**************************
-0038 6044 020C  20         li    r12,>1e00             ; SAMS CRU address
+0040               ***************************************************************
+0041               * Step 2: Setup SAMS banks (inline code because no SP2 yet!)
+0042               ********|*****|*********************|**************************
+0043 6044 020C  20         li    r12,>1e00             ; SAMS CRU address
      6046 1E00     
-0039 6048 1E01  20         sbz   1                     ; Disable SAMS mapper
-0040 604A 1D00  20         sbo   0                     ; Enable access to SAMS registers
-0041 604C 04C0  14         clr   r0                    ; \ Page 0 in >2000 - >2fff
-0042 604E D800  38         movb  r0,@>4004             ; /
+0044 6048 1E01  20         sbz   1                     ; Disable SAMS mapper
+0045 604A 1D00  20         sbo   0                     ; Enable access to SAMS registers
+0046 604C 04C0  14         clr   r0                    ; \ Page 0 in >2000 - >2fff
+0047 604E D800  38         movb  r0,@>4004             ; /
      6050 4004     
-0043               
-0044 6052 0200  20         li    r0,>0100              ; \ Page 1 in >3000 - >3fff
+0048               
+0049 6052 0200  20         li    r0,>0100              ; \ Page 1 in >3000 - >3fff
      6054 0100     
-0045 6056 D800  38         movb  r0,@>4006             ; /
+0050 6056 D800  38         movb  r0,@>4006             ; /
      6058 4006     
-0046               
-0047 605A 0200  20         li    r0,>0400              ; \ Page 4 in >a000 - >afff
+0051               
+0052 605A 0200  20         li    r0,>0400              ; \ Page 4 in >a000 - >afff
      605C 0400     
-0048 605E D800  38         movb  r0,@>4014             ; /
+0053 605E D800  38         movb  r0,@>4014             ; /
      6060 4014     
-0049               
-0050 6062 0200  20         li    r0,>2000              ; \ Page 20 in >b000 - >bfff
+0054               
+0055 6062 0200  20         li    r0,>2000              ; \ Page 20 in >b000 - >bfff
      6064 2000     
-0051 6066 D800  38         movb  r0,@>4016             ; /
+0056 6066 D800  38         movb  r0,@>4016             ; /
      6068 4016     
-0052               
-0053 606A 0200  20         li    r0,>4000              ; \ Page 40 in >c000 - >bfff
+0057               
+0058 606A 0200  20         li    r0,>4000              ; \ Page 40 in >c000 - >bfff
      606C 4000     
-0054 606E D800  38         movb  r0,@>4018             ; /
+0059 606E D800  38         movb  r0,@>4018             ; /
      6070 4018     
-0055               
-0056 6072 0200  20         li    r0,>0500              ; \ Page 5 in >d000 - >dfff
+0060               
+0061 6072 0200  20         li    r0,>0500              ; \ Page 5 in >d000 - >dfff
      6074 0500     
-0057 6076 D800  38         movb  r0,@>401a             ; /
+0062 6076 D800  38         movb  r0,@>401a             ; /
      6078 401A     
-0058               
-0059 607A 0200  20         li    r0,>0600              ; \ Page 6 in >ec000 - >efff
+0063               
+0064 607A 0200  20         li    r0,>0600              ; \ Page 6 in >ec000 - >efff
      607C 0600     
-0060 607E D800  38         movb  r0,@>401c             ; /
+0065 607E D800  38         movb  r0,@>401c             ; /
      6080 401C     
-0061               
-0062 6082 0200  20         li    r0,>0700              ; \ Page 7 in >f000 - >ffff
+0066               
+0067 6082 0200  20         li    r0,>0700              ; \ Page 7 in >f000 - >ffff
      6084 0700     
-0063 6086 D800  38         movb  r0,@>401e             ; /
+0068 6086 D800  38         movb  r0,@>401e             ; /
      6088 401E     
-0064               
-0065 608A 1E00  20         sbz   0                     ; Disable access to SAMS registers
-0066 608C 1D01  20         sbo   1                     ; Enable SAMS mapper
-0067               
-0068               ***************************************************************
-0069               * Step 3: Copy resident modules from ROM to RAM >2000 - >3fff
-0070               ********|*****|*********************|**************************
-0071 608E 0200  20         li    r0,reloc.resident     ; Start of code to relocate
+0069               
+0070 608A 1E00  20         sbz   0                     ; Disable access to SAMS registers
+0071 608C 1D01  20         sbo   1                     ; Enable SAMS mapper
+0072               
+0073               ***************************************************************
+0074               * Step 3: Copy resident modules from ROM to RAM >2000 - >3fff
+0075               ********|*****|*********************|**************************
+0076 608E 0200  20         li    r0,reloc.resident     ; Start of code to relocate
      6090 60BE     
-0072 6092 0201  20         li    r1,>2000
+0077 6092 0201  20         li    r1,>2000
      6094 2000     
-0073 6096 0202  20         li    r2,512                ; Copy 8K (512 * 16 bytes)
+0078 6096 0202  20         li    r2,512                ; Copy 8K (512 * 16 bytes)
      6098 0200     
-0074                       ;------------------------------------------------------
-0075                       ; Copy memory to destination
-0076                       ; r0 = Source CPU address
-0077                       ; r1 = Target CPU address
-0078                       ; r2 = Bytes to copy/16
 0079                       ;------------------------------------------------------
-0080 609A CC70  46 !       mov   *r0+,*r1+             ; Copy word 1
-0081 609C CC70  46         mov   *r0+,*r1+             ; Copy word 2
-0082 609E CC70  46         mov   *r0+,*r1+             ; Copy word 3
-0083 60A0 CC70  46         mov   *r0+,*r1+             ; Copy word 4
-0084 60A2 CC70  46         mov   *r0+,*r1+             ; Copy word 5
-0085 60A4 CC70  46         mov   *r0+,*r1+             ; Copy word 6
-0086 60A6 CC70  46         mov   *r0+,*r1+             ; Copy word 7
-0087 60A8 CC70  46         mov   *r0+,*r1+             ; Copy word 8
-0088 60AA 0602  14         dec   r2
-0089 60AC 16F6  14         jne   -!                    ; Loop until done
-0090               ***************************************************************
-0091               * Step 4: Start SP2 kernel (runs in low MEMEXP)
-0092               ********|*****|*********************|**************************
-0093 60AE 0460  28         b     @runlib               ; \ Start spectra2 library
+0080                       ; Copy memory to destination
+0081                       ; r0 = Source CPU address
+0082                       ; r1 = Target CPU address
+0083                       ; r2 = Bytes to copy/16
+0084                       ;------------------------------------------------------
+0085 609A CC70  46 !       mov   *r0+,*r1+             ; Copy word 1
+0086 609C CC70  46         mov   *r0+,*r1+             ; Copy word 2
+0087 609E CC70  46         mov   *r0+,*r1+             ; Copy word 3
+0088 60A0 CC70  46         mov   *r0+,*r1+             ; Copy word 4
+0089 60A2 CC70  46         mov   *r0+,*r1+             ; Copy word 5
+0090 60A4 CC70  46         mov   *r0+,*r1+             ; Copy word 6
+0091 60A6 CC70  46         mov   *r0+,*r1+             ; Copy word 7
+0092 60A8 CC70  46         mov   *r0+,*r1+             ; Copy word 8
+0093 60AA 0602  14         dec   r2
+0094 60AC 16F6  14         jne   -!                    ; Loop until done
+0095               ***************************************************************
+0096               * Step 4: Start SP2 kernel (runs in low MEMEXP)
+0097               ********|*****|*********************|**************************
+0098 60AE 0460  28         b     @runlib               ; \ Start spectra2 library
      60B0 2EE0     
-0094                                                   ; | "main" in low MEMEXP is automatically
-0095                                                   ; / called by SP2 runlib.
-0096                       ;------------------------------------------------------
-0097                       ; Assert. Should not get here!
-0098                       ;------------------------------------------------------
-0099 60B2 0200  20         li    r0,$                  ; Current location
+0099                                                   ; | "main" in low MEMEXP is automatically
+0100                                                   ; / called by SP2 runlib.
+0101                       ;------------------------------------------------------
+0102                       ; Assert. Should not get here!
+0103                       ;------------------------------------------------------
+0104 60B2 0200  20         li    r0,$                  ; Current location
      60B4 60B2     
-0100 60B6 C800  38         mov   r0,@>ffce             ; \ Save caller address
+0105 60B6 C800  38         mov   r0,@>ffce             ; \ Save caller address
      60B8 FFCE     
-0101 60BA 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+0106 60BA 06A0  32         bl    @cpu.crash            ; / Crash and halt system
      60BC 2026     
-0102               
-0103               ***************************************************************
-0104               * Code data: Relocated code
-0105               ********|*****|*********************|**************************
-0106               reloc.resident:
-0107                       ;------------------------------------------------------
-0108                       ; Resident libraries
-0109                       ;------------------------------------------------------
-0110                       xorg  >2000                 ; Relocate to >2000
-0111                       copy  "runlib.asm"
+0107               
+0108               ***************************************************************
+0109               * Code data: Relocated code
+0110               ********|*****|*********************|**************************
+0111               reloc.resident:
+0112                       ;------------------------------------------------------
+0113                       ; Resident libraries
+0114                       ;------------------------------------------------------
+0115                       xorg  >2000                 ; Relocate to >2000
+0116                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -1615,7 +1620,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220123-1905050'
+0270 62AB   42             text  'Build-ID  220123-2021200'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1624,9 +1629,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B6 3230     
      62B8 3132     
      62BA 332D     
-     62BC 3139     
-     62BE 3035     
-     62C0 3035     
+     62BC 3230     
+     62BE 3231     
+     62C0 3230     
      62C2 30       
 0271                       even
 0272               
@@ -5907,8 +5912,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      703C 0040     
 0380 703E 0460  28         b     @main                 ; Give control to main program
      7040 39C0     
-                   < stevie_b0.asm.25715
-0112                       copy  "ram.resident.asm"
+                   < stevie_b0.asm.56873
+0117                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP callable from all ROM banks.
@@ -8735,26 +8740,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.25715
-0113                       ;------------------------------------------------------
-0114                       ; Stevie main entry point
-0115                       ;------------------------------------------------------
-0116               main:
-0117 7A7E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+                   < stevie_b0.asm.56873
+0118                       ;------------------------------------------------------
+0119                       ; Stevie main entry point
+0120                       ;------------------------------------------------------
+0121               main:
+0122 7A7E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      7A80 6002     
-0118               
-0122               
-0123 7A82 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+0123               
+0127               
+0128 7A82 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
      7A84 6046     
-0124                       ;------------------------------------------------------
-0125                       ; Memory full check
-0126                       ;------------------------------------------------------
-0128               
-0132 7A86 39C8                   data $                ; Bank 0 ROM size OK.
-0134                       ;-----------------------------------------------------------------------
-0135                       ; Show ROM bank in CPU crash screen
-0136                       ;-----------------------------------------------------------------------
-0137                       copy "rom.crash.asm"
+0129                       ;------------------------------------------------------
+0130                       ; Memory full check
+0131                       ;------------------------------------------------------
+0133               
+0137 7A86 39C8                   data $                ; Bank 0 ROM size OK.
+0139                       ;-----------------------------------------------------------------------
+0140                       ; Show ROM bank in CPU crash screen
+0141                       ;-----------------------------------------------------------------------
+0142                       copy "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -8769,25 +8774,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b0.asm.25715
-0138               
-0139               cpu.crash.showbank.bankstr:
-0140               
-0141 7F0A 05               byte  5
-0142 7F0B   52             text  'ROM#0'
+                   < stevie_b0.asm.56873
+0143               
+0144               cpu.crash.showbank.bankstr:
+0145               
+0146 7F0A 05               byte  5
+0147 7F0B   52             text  'ROM#0'
      7F0C 4F4D     
      7F0E 2330     
-0143                       even
-0144               
-0145               *--------------------------------------------------------------
-0146               * Video mode configuration
-0147               *--------------------------------------------------------------
-0148      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0149      0004     spfbck  equ   >04                   ; Screen background color.
-0150      35CC     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0151      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0152      0050     colrow  equ   80                    ; Columns per row
-0153      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0154      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0155      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0156      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0148                       even
+0149               
+0150               *--------------------------------------------------------------
+0151               * Video mode configuration
+0152               *--------------------------------------------------------------
+0153      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0154      0004     spfbck  equ   >04                   ; Screen background color.
+0155      35CC     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0156      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0157      0050     colrow  equ   80                    ; Columns per row
+0158      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0159      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0160      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0161      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table

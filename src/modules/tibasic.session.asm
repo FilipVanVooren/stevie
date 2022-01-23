@@ -114,7 +114,10 @@ tibasic.init.basic1:
         jeq   !                     ; No, new session
         b     @tibasic.resume.basic1
 
-!       bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
+!       ori   tmp1,1                ; \
+        mov   tmp1,@tibasic1.status ; / Set resume flag for next run
+
+        bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
 
         bl    @cpym2v
@@ -128,6 +131,9 @@ tibasic.init.basic1:
 tibasic.init.basic2:
         mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic2 ; yes, do resume
+
+        ori   tmp1,1                ; \
+        mov   tmp1,@tibasic2.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
@@ -144,6 +150,9 @@ tibasic.init.basic3:
         mov   @tibasic3.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic3 ; yes, do resume
 
+        ori   tmp1,1                ; \
+        mov   tmp1,@tibasic3.status ; / Set resume flag for next run
+
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
 
@@ -159,6 +168,9 @@ tibasic.init.basic4:
         mov   @tibasic4.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic4 ; yes, do resume
 
+        ori   tmp1,1                ; \
+        mov   tmp1,@tibasic4.status ; / Set resume flag for next run
+
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
 
@@ -173,6 +185,9 @@ tibasic.init.basic4:
 tibasic.init.basic5:
         mov   @tibasic5.status,tmp1 ; Resume TI Basic session?
         jgt   tibasic.resume.basic5 ; yes, do resume
+
+        ori   tmp1,1                ; \
+        mov   tmp1,@tibasic5.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
@@ -457,7 +472,28 @@ tibasic.return.mon:
 
         bl    @mute                 ; Mute sound generators
         bl    @scroff               ; Turn screen off
+
+        ; Prevent resuming the TI Basic session that lead us here.
+        ; Easiest thing to do is to reinitalize the session upon next start.
+
+        ;-------------------------------------------------------
+        ; Assert TI basic sesion ID
+        ;-------------------------------------------------------
+        mov   @tibasic.session,tmp0 ; Get session ID
+        jeq   !
+        ci    tmp0,5
+        jgt   !
+        ;-------------------------------------------------------
+        ; Reset session resume flag (tibasicX.status)
+        ;-------------------------------------------------------
+        sla   tmp0,1                ; Word align
+        clr   @tibasic.session(tmp0)
         jmp   tibasic.return.stevie
+        ;-------------------------------------------------------
+        ; Assert failed
+        ;-------------------------------------------------------
+!       mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
         ; Return from TI Basic
         ;-------------------------------------------------------

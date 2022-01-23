@@ -749,14 +749,6 @@ tibasic:
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
-        ; Update TI basic session info
-        ;------------------------------------------------------
-        mov   @tibasic.session,tmp0 ; Get current TI basic session
-        dec   tmp0                  ; Base 0
-        sla   tmp0,2                ; Word align
-        mov   @w$0001,@tibasic1.status(tmp0)
-                                    ; Set resume flag for next run
-        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
