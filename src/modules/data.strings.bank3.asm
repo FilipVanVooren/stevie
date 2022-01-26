@@ -150,8 +150,8 @@ txt.head.cartridge byte 14,1,1
                    text ' Cartridge '
                    byte 1
 
-txt.info.cartridge #string 'Basic'
-pos.info.cartridge byte 0,>ff
+txt.info.cartridge #string 'TI Basic'
+pos.info.cartridge byte 3,>ff
 txt.hint.cartridge #string 'Select cartridge to run.'
 txt.keys.cartridge #string 'F9-Back'
 
