@@ -437,10 +437,10 @@ isr.exit:
 
 
 ***************************************************************
-* tibasic.return
+* tibasic.return.mon
 * Return from OS Monitor/TI Basic to Stevie
 ***************************************************************
-* bl   @tibasic.return
+* bl   @tibasic.return.mon
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -451,15 +451,21 @@ isr.exit:
 * REMARKS
 * Called from ISR code
 ********|*****|*********************|**************************
-        ;-------------------------------------------------------
-        ; Return from OS Monitor
-        ;-------------------------------------------------------
 tibasic.return.mon:
         li    r12,>1e00             ; \ Enable SAMS mapper again
         sbo   1                     ; | We stil have the SAMS banks layout
                                     ; / mem.sams.layout.external
+        ;------------------------------------------------------
+        ; Check magic string (inline version, no SP2 present!)
+        ;------------------------------------------------------
+        c     @magic.str.w1,@magic.string
+        jne   !
+        c     @magic.str.w2,@magic.string+2
+        jne   !
+        c     @magic.str.w3,@magic.string+4
+        jne   !
         ;-------------------------------------------------------
-        ; Returning from interrupted TI Basic session?
+        ; Initialize
         ;-------------------------------------------------------
         mov   @tibasic.session,tmp0
         ci    tmp0,1
@@ -510,9 +516,24 @@ tibasic.return.mon.cont:
         ;-------------------------------------------------------
 !       mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / Crash and halt system
-        ;-------------------------------------------------------
-        ; Return from TI Basic
-        ;-------------------------------------------------------
+
+
+
+***************************************************************
+* tibasic.return
+* Return from TI Basic to Stevie
+***************************************************************
+* bl   @tibasic.return
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* r1 in GPL WS, tmp0, tmp1
+*--------------------------------------------------------------
+* REMARKS
+* Called from ISR code
+********|*****|*********************|**************************
 tibasic.return:
         li    r12,>1e00             ; \ Enable SAMS mapper again
         sbo   1                     ; | We stil have the SAMS banks layout

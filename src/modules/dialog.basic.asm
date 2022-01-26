@@ -32,9 +32,6 @@ dialog.basic:
         li    tmp0,txt.head.basic
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.info.basic
-        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
-
         li    tmp0,pos.info.basic
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
@@ -47,7 +44,7 @@ dialog.basic:
         ; Flag is on
         ;-------------------------------------------------------
         li    tmp0,txt.keys.basic2
-        jmp   dialog.basic.keylist
+        jmp   dialog.basic.done
         ;-------------------------------------------------------
         ; Flag is off
         ;-------------------------------------------------------
@@ -55,13 +52,14 @@ dialog.basic:
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
-dialog.basic.keylist:
-        mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+dialog.basic.done:
+        mov   tmp0,@cmdb.pankeys    ; First save Keylist in status line
+        bl    @tibasic.buildstr     ; Build session selection string
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.basic.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller

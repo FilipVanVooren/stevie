@@ -134,4 +134,14 @@ main.continue:
               data edkey.keyscan.hook
                                     ; Setup keyboard scanning hook
 
-        b     @tmgr                 ; Start kernel/timers
+
+        ;-------------------------------------------------------
+        ; Initialisation complete
+        ;-------------------------------------------------------
+        bl    @magic.set            ; Set magic string
+
+
+        ;-------------------------------------------------------
+        ; Start kernel
+        ;-------------------------------------------------------
+        b     @tmgr                 ; Run kernel and timers

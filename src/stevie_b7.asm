@@ -58,6 +58,7 @@ main:
         ;-----------------------------------------------------------------------
         ; SAMS support routines and utilities
         ;-----------------------------------------------------------------------
+        copy  "magic.asm"           ; Magic string handling
         copy  "mem.sams.layout.asm" ; Setup SAMS memory banks from cart space
         ;-----------------------------------------------------------------------
         ; Basic interpreter

@@ -1,16 +1,16 @@
 * FILE......: ram.resident.asm
 * Purpose...: Resident modules in LOW MEMEXP callable from all ROM banks.
- 
+
         ;------------------------------------------------------
         ; Low-level modules
         ;------------------------------------------------------
-        copy  "rom.farjump.asm"        ; ROM bankswitch trampoline 
-        copy  "fb.asm"                 ; Framebuffer      
-        copy  "idx.asm"                ; Index management           
-        copy  "edb.asm"                ; Editor Buffer   
-        copy  "cmdb.asm"               ; Command buffer            
+        copy  "rom.farjump.asm"        ; ROM bankswitch trampoline
+        copy  "fb.asm"                 ; Framebuffer
+        copy  "idx.asm"                ; Index management
+        copy  "edb.asm"                ; Editor Buffer
+        copy  "cmdb.asm"               ; Command buffer
         copy  "errpane.asm"            ; Error pane
-        copy  "tv.asm"                 ; Main editor configuration        
+        copy  "tv.asm"                 ; Main editor configuration
         copy  "tv.quit.asm"            ; Exit Stevie and return to monitor
         copy  "tv.reset.asm"           ; Reset editor (clear buffers)
         copy  "tv.unpack.uint16.asm"   ; Unpack 16bit unsigned integer to string

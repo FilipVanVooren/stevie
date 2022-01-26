@@ -129,38 +129,40 @@ id.file.printblock        equ  8       ; Print block
 * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
 core1.top         equ  >a000           ; Structure begin
-parm1             equ  core1.top + 0   ; Function parameter 1
-parm2             equ  core1.top + 2   ; Function parameter 2
-parm3             equ  core1.top + 4   ; Function parameter 3
-parm4             equ  core1.top + 6   ; Function parameter 4
-parm5             equ  core1.top + 8   ; Function parameter 5
-parm6             equ  core1.top + 10  ; Function parameter 6
-parm7             equ  core1.top + 12  ; Function parameter 7
-parm8             equ  core1.top + 14  ; Function parameter 8
-outparm1          equ  core1.top + 16  ; Function output parameter 1
-outparm2          equ  core1.top + 18  ; Function output parameter 2
-outparm3          equ  core1.top + 20  ; Function output parameter 3
-outparm4          equ  core1.top + 22  ; Function output parameter 4
-outparm5          equ  core1.top + 24  ; Function output parameter 5
-outparm6          equ  core1.top + 26  ; Function output parameter 6
-outparm7          equ  core1.top + 28  ; Function output parameter 7
-outparm8          equ  core1.top + 30  ; Function output parameter 8
-kbflags           equ  core1.top + 32  ; Keyboard control flags
-keycode1          equ  core1.top + 34  ; Current key scanned
-keycode2          equ  core1.top + 36  ; Previous key scanned
-core1.reserved    equ  core1.top + 38  ; Free for future use
-unpacked.string   equ  core1.top + 40  ; 6 char string with unpacked uin16
-tibasic.hidesid   equ  core1.top + 46  ; Hide TI-Basic session ID
-tibasic.session   equ  core1.top + 48  ; Active TI-Basic session (1-5)
-tibasic1.status   equ  core1.top + 50  ; TI Basic session 1
-tibasic2.status   equ  core1.top + 52  ; TI Basic session 2
-tibasic3.status   equ  core1.top + 54  ; TI Basic session 3
-tibasic4.status   equ  core1.top + 56  ; TI Basic session 4
-tibasic5.status   equ  core1.top + 58  ; TI Basic session 5
-trmpvector        equ  core1.top + 60  ; Vector trampoline (if p1|tmp1 = >ffff)
-ramsat            equ  core1.top + 62  ; Sprite Attr. Table in RAM (14 bytes)
-timers            equ  core1.top + 76  ; Timers (80 bytes)
-core1.free        equ  core1.top + 156 ; End of structure
+magic.str.w1      equ  core1.top + 0   ; Magic string word 1
+magic.str.w2      equ  core1.top + 2   ; Magic string word 2
+magic.str.w3      equ  core1.top + 4   ; Magic string word 3
+parm1             equ  core1.top + 6   ; Function parameter 1
+parm2             equ  core1.top + 8   ; Function parameter 2
+parm3             equ  core1.top + 10  ; Function parameter 3
+parm4             equ  core1.top + 12  ; Function parameter 4
+parm5             equ  core1.top + 14  ; Function parameter 5
+parm6             equ  core1.top + 16  ; Function parameter 6
+parm7             equ  core1.top + 18  ; Function parameter 7
+parm8             equ  core1.top + 20  ; Function parameter 8
+outparm1          equ  core1.top + 22  ; Function output parameter 1
+outparm2          equ  core1.top + 24  ; Function output parameter 2
+outparm3          equ  core1.top + 26  ; Function output parameter 3
+outparm4          equ  core1.top + 28  ; Function output parameter 4
+outparm5          equ  core1.top + 30  ; Function output parameter 5
+outparm6          equ  core1.top + 32  ; Function output parameter 6
+outparm7          equ  core1.top + 34  ; Function output parameter 7
+outparm8          equ  core1.top + 36  ; Function output parameter 8
+kbflags           equ  core1.top + 38  ; Keyboard control flags
+keycode1          equ  core1.top + 40  ; Current key scanned
+keycode2          equ  core1.top + 42  ; Previous key scanned
+unpacked.string   equ  core1.top + 44  ; 6 char string with unpacked uin16
+tibasic.hidesid   equ  core1.top + 50  ; Hide TI-Basic session ID
+tibasic.session   equ  core1.top + 52  ; Active TI-Basic session (1-5)
+tibasic1.status   equ  core1.top + 54  ; TI Basic session 1
+tibasic2.status   equ  core1.top + 56  ; TI Basic session 2
+tibasic3.status   equ  core1.top + 58  ; TI Basic session 3
+tibasic4.status   equ  core1.top + 60  ; TI Basic session 4
+tibasic5.status   equ  core1.top + 62  ; TI Basic session 5
+trmpvector        equ  core1.top + 64  ; Vector trampoline (if p1|tmp1 = >ffff)
+ramsat            equ  core1.top + 66  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 80  ; Timers (80 bytes)
+core1.free        equ  core1.top + 160 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
