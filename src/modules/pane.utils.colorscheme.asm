@@ -39,7 +39,7 @@ pane.action.colorscheme.switch:
                                     ; Load current color scheme
         ;-------------------------------------------------------
         ; Show current color palette message
-        ;-------------------------------------------------------  
+        ;-------------------------------------------------------
         mov   @wyx,@waux1           ; Save cursor YX position
 
         bl    @putnum
@@ -53,15 +53,15 @@ pane.action.colorscheme.switch:
         mov   @waux1,@wyx           ; Restore cursor YX position
         ;-------------------------------------------------------
         ; Delay
-        ;-------------------------------------------------------  
-        li    tmp0,12000        
+        ;-------------------------------------------------------
+        li    tmp0,12000
 !       dec   tmp0
         jne   -!
         ;-------------------------------------------------------
         ; Setup one shot task for removing message
-        ;-------------------------------------------------------  
+        ;-------------------------------------------------------
         li    tmp0,pane.topline.oneshot.clearmsg
-        mov   tmp0,@tv.task.oneshot 
+        mov   tmp0,@tv.task.oneshot
 
         bl    @rsslot               ; \ Reset loop counter slot 3
               data 3                ; / for getting consistent delay
@@ -69,7 +69,7 @@ pane.action.colorscheme.switch:
         ; Exit
         ;-------------------------------------------------------
 pane.action.colorscheme.cycle.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
@@ -118,11 +118,11 @@ pane.action.colorscheme.load:
         mov   @parm1,tmp0
         ci    tmp0,>ffff            ; Skip flag set?
         jeq   !                     ; Yes, so skip screen off
-        bl    @scroff               ; Turn screen off        
+        bl    @scroff               ; Turn screen off
         ;-------------------------------------------------------
         ; Get FG/BG colors framebuffer text
         ;-------------------------------------------------------
-!       mov   @tv.colorscheme,tmp0  ; Get color scheme index 
+!       mov   @tv.colorscheme,tmp0  ; Get color scheme index
         dec   tmp0                  ; Internally work with base 0
 
         sla   tmp0,3                ; Offset into color scheme data table
@@ -146,11 +146,11 @@ pane.action.colorscheme.load:
         mov   *tmp0+,tmp1           ; Get colors IJKL
         mov   tmp1,tmp2             ; \ Right align IJ and
         srl   tmp2,8                ; | save to @tv.busycolor
-        mov   tmp2,@tv.busycolor    ; / 
+        mov   tmp2,@tv.busycolor    ; /
 
         andi  tmp1,>00ff            ; | save KL to @tv.markcolor
         mov   tmp1,@tv.markcolor    ; /
-                                 
+
         mov   *tmp0,tmp1            ; Get colors MNOP
         srl   tmp1,8                ; \ Right align MN and
         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
@@ -203,7 +203,7 @@ pane.action.colorscheme.load:
                                     ; Number of bytes to fill
         jmp   pane.action.colorscheme.checkcmdb
 
-pane.action.colorscheme.fbdump.noruler:        
+pane.action.colorscheme.fbdump.noruler:
         ;-------------------------------------------------------
         ; No ruler visible on screen (TAT)
         ;-------------------------------------------------------
@@ -247,7 +247,7 @@ pane.action.colorscheme.fbdump:
         ;-------------------------------------------------------
         ; Dump colors for CMDB header line (TAT)
         ;-------------------------------------------------------
-pane.action.colorscheme.cmdbpane:        
+pane.action.colorscheme.cmdbpane:
         mov   @cmdb.visible,tmp0
         jeq   pane.action.colorscheme.errpane
                                     ; Skip if CMDB pane is hidden
@@ -264,11 +264,11 @@ pane.action.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Dump colors for CMDB Stevie logo (TAT)
         ;-------------------------------------------------------
-        li    tmp0,vdp.cmdb.toprow.tat+67        
-        mov   @tv.cmdb.hcolor,tmp1  ; 
+        li    tmp0,vdp.cmdb.toprow.tat+67
+        mov   @tv.cmdb.hcolor,tmp1  ;
         movb  @tv.cmdb.hcolor+1,tmp1
-                                    ; Copy same value into MSB 
-        srl   tmp1,4                ; 
+                                    ; Copy same value into MSB
+        srl   tmp1,4                ;
         andi  tmp1,>00ff            ; Only keep LSB
 
         li    tmp2,13               ; Number of bytes to fill
@@ -315,11 +315,11 @@ pane.action.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Dump colors for error pane (TAT)
         ;-------------------------------------------------------
-pane.action.colorscheme.errpane:        
+pane.action.colorscheme.errpane:
         mov   @tv.error.visible,tmp0
         jeq   pane.action.colorscheme.statline
                                     ; Skip if error pane is hidden
-                                    
+
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1           ; Pass color combination
 
@@ -330,7 +330,7 @@ pane.action.colorscheme.errpane:
         ;-------------------------------------------------------
         ; Dump colors for top line and bottom line (TAT)
         ;-------------------------------------------------------
-pane.action.colorscheme.statline:                
+pane.action.colorscheme.statline:
         mov   @tv.color,tmp1
         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
         mov   tmp1,@parm1           ; Set color combination
@@ -347,8 +347,17 @@ pane.action.colorscheme.statline:
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------
+        ; Dump color for hearts in TI Basic dialog (TAT)
+        ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp1
+        ci    tmp1,id.dialog.basic  ; TI Basic dialog active?
+        jne   pane.action.colorscheme.ruler
+
+        bl    @tibasic.hearts.tat   ; Dump colors for hearts
+        ;-------------------------------------------------------
         ; Dump colors for ruler if visible (TAT)
         ;-------------------------------------------------------
+pane.action.colorscheme.ruler:
         mov   @cmdb.dialog,tmp1
         ci    tmp1,id.dialog.help   ; Help dialog active?
         jeq   pane.action.colorscheme.cursorcolor
@@ -357,49 +366,49 @@ pane.action.colorscheme.statline:
         mov   @tv.ruler.visible,tmp1
         jeq   pane.action.colorscheme.cursorcolor
 
-        bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory        
-        bl    @cpym2v              
+        bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
+        bl    @cpym2v
               data vdp.fb.toprow.tat
               data fb.ruler.tat
               data 80               ; Show ruler colors
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------
-pane.action.colorscheme.cursorcolor:        
+pane.action.colorscheme.cursorcolor:
         mov   @tv.curcolor,tmp4     ; Get cursor color
 
         mov   @tv.pane.focus,tmp0   ; Get pane with focus
         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
         jeq   pane.action.colorscheme.cursorcolor.fb
-                                    ; Yes, set cursor color 
+                                    ; Yes, set cursor color
 
 pane.action.colorscheme.cursorcolor.cmdb:
         andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
         sla   tmp4,4                ; Move to MSB
         jmp   !
-        
+
 pane.action.colorscheme.cursorcolor.fb:
         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
         sla   tmp4,8                ; Move to MSB
 
 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
-        movb  tmp4,@tv.curshape+1   ; Save cursor color                                    
+        movb  tmp4,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 pane.action.colorscheme.load.exit:
         bl    @scron                ; Turn screen on
-        mov   *stack+,@parm3        ; Pop @parm3        
+        mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-  
+
 
 
 ***************************************************************
@@ -424,16 +433,16 @@ pane.action.colorscheme.statlines:
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Bottom line
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         li    tmp0,pane.botrow
-        mov   tmp0,@parm2           ; Last row on screen        
+        mov   tmp0,@parm2           ; Last row on screen
         bl    @colors.line.set      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;------------------------------------------------------
         ; Exit
-        ;------------------------------------------------------                                    
-pane.action.colorscheme.statlines.exit:        
-        mov   *stack+,tmp0          ; Pop tmp0              
+        ;------------------------------------------------------
+pane.action.colorscheme.statlines.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller          
+        b     *r11                  ; Return to caller

@@ -16,10 +16,10 @@ vdp.patterns.dump:
         ; Dump character patterns from ROM to VDP PDT
         ;-------------------------------------------------------
         bl    @cpym2v
-              data >1008,patterns,29*8  
+              data >1008,patterns,31*8
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 vdp.patterns.dump.exit:
-        mov   *stack+,r11           ; Pop R11        
+        mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to task

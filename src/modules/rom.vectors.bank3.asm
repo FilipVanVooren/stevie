@@ -24,7 +24,7 @@ vec.9   data  dialog.clipdev        ; Dialog "Configure clipboard device"
 vec.10  data  dialog.config         ; Dialog "Configure"
 vec.11  data  dialog.append         ; Dialog "Append file"
 vec.12  data  dialog.cartridge      ; Dialog "Cartridge"
-vec.13  data  dialog.basic          ; Dialog "Basic"
+vec.13  data  dialog.basic          ; Dialog "TI Basic"
 vec.14  data  cpu.crash             ;
 vec.15  data  cpu.crash             ;
 vec.16  data  cpu.crash             ;
@@ -40,7 +40,7 @@ vec.25  data  cmdb.cmd.clear        ;
 vec.26  data  cmdb.cmd.getlength    ;
 vec.27  data  cmdb.cmd.preset       ;
 vec.28  data  cmdb.cmd.set          ;
-vec.29  data  cpu.crash             ;
+vec.29  data  tibasic.hearts.tat    ; Dump color for hearts in TI-Basic dialog
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  tibasic.sid.toggle    ; Toggle 'Show SID' in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog

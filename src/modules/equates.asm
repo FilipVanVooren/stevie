@@ -99,7 +99,7 @@ id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
 id.dialog.help            equ  104     ; "About"
 id.dialog.file            equ  105     ; "File"
 id.dialog.cartridge       equ  106     ; "Cartridge"
-id.dialog.basic           equ  107     ; "Basic"
+id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.config          equ  108     ; "Configure"
 *--------------------------------------------------------------
 * Suffix characters for clipboards

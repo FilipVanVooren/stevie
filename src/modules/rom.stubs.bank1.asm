@@ -430,9 +430,22 @@ cmdb.cmd.set.vector:
         data  vec.28
 
 
+
+***************************************************************
+* Stub for "tibasic.hearts.tat"
+* bank3 vec.29
+********|*****|*********************|**************************
+tibasic.hearts.tat:
+        mov   @tibasic.hearts.tat.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tibasic.hearts.tat.vector:
+        data  vec.29
+
+
+
 **************************************************************
 * Stub for "tibasic.sid.toggle"
-* bank3 vec.32
+* bank3 vec.31
 ********|*****|*********************|**************************
 tibasic.sid.toggle:
         mov   @tibasic.sid.toggle.vector,@trmpvector
