@@ -73,6 +73,9 @@ main:
         ; Program data
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"; SAMS bank layout for multi-purpose
+
+        copy  "data.tibasic.tokens.asm"
+                                    ; TI Basic tokens
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------

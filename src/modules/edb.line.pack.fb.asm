@@ -26,14 +26,14 @@
 edb.line.pack.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack        
+        dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack        
+        dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
-        mov   tmp3,*stack           ; Push tmp3        
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Get values
         ;------------------------------------------------------
@@ -44,7 +44,7 @@ edb.line.pack.fb:
         ; Prepare scan
         ;------------------------------------------------------
         clr   tmp0                  ; Counter
-        clr   tmp3                  ; Counter for whitespace 
+        clr   tmp3                  ; Counter for whitespace
         mov   @fb.current,tmp1      ; Get position
         mov   tmp1,@rambuf+2        ; Save beginning of row
         ;------------------------------------------------------
@@ -53,7 +53,7 @@ edb.line.pack.fb:
 edb.line.pack.fb.scan:
         movb  *tmp1+,tmp2           ; Get char
         srl   tmp2,8                ; Right justify
-        jeq   edb.line.pack.fb.check_setpage 
+        jeq   edb.line.pack.fb.check_setpage
                                     ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         ;------------------------------------------------------
@@ -65,20 +65,20 @@ edb.line.pack.fb.scan:
         ;------------------------------------------------------
         ; Not more than 80 characters
         ;------------------------------------------------------
-edb.line.pack.fb.check80:        
+edb.line.pack.fb.check80:
         ci    tmp0,colrow
         jeq   edb.line.pack.fb.check_setpage
                                     ; Stop scan if 80 characters processed
         jmp   edb.line.pack.fb.scan ; Next character
         ;------------------------------------------------------
         ; Check failed, crash CPU!
-        ;------------------------------------------------------  
+        ;------------------------------------------------------
 edb.line.pack.fb.crash:
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system        
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; Check if highest SAMS page needs to be increased
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
 edb.line.pack.fb.check_setpage:
         c     tmp3,tmp0             ; Trailing whitespace in line?
         jlt   edb.line.pack.fb.rtrim
@@ -87,13 +87,13 @@ edb.line.pack.fb.check_setpage:
 edb.line.pack.fb.rtrim:
         ;------------------------------------------------------
         ; Remove trailing blanks from line
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
         mov   tmp3,@rambuf+4        ; Save line length without trailing blanks
 
         clr   tmp1                  ; tmp1 = Character to fill (>00)
 
         mov   tmp0,tmp2             ; \
-        s     tmp3,tmp2             ; | tmp2 = Repeat count 
+        s     tmp3,tmp2             ; | tmp2 = Repeat count
         inc   tmp2                  ; /
 
         mov   tmp3,tmp0             ; \
@@ -105,7 +105,7 @@ edb.line.pack.fb.rtrim.loop:
         jgt   edb.line.pack.fb.rtrim.loop
         ;------------------------------------------------------
         ; Check and increase highest SAMS page
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
 !       bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
                                     ; /                         free line
@@ -121,19 +121,19 @@ edb.line.pack.fb.prepare:
 edb.line.pack.fb.update_index:
         mov   @edb.next_free.ptr,@parm2
                                     ; Pointer to new line
-        mov   @edb.sams.hipage,@parm3 
+        mov   @edb.sams.hipage,@parm3
                                     ; SAMS page to use
 
         bl    @idx.entry.update     ; Update index
                                     ; \ i  parm1 = Line number in editor buffer
-                                    ; | i  parm2 = pointer to line in 
+                                    ; | i  parm2 = pointer to line in
                                     ; |            editor buffer
                                     ; / i  parm3 = SAMS page
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
         mov   @rambuf+2,tmp0        ; Source for memory copy
-        mov   @edb.next_free.ptr,tmp1 
+        mov   @edb.next_free.ptr,tmp1
                                     ; Address of line in editor buffer
 
         inct  @edb.next_free.ptr    ; Adjust pointer
@@ -145,7 +145,7 @@ edb.line.pack.fb.update_index:
         ;------------------------------------------------------
         ; 4. Copy line from framebuffer to editor buffer
         ;------------------------------------------------------
-edb.line.pack.fb.copyline:        
+edb.line.pack.fb.copyline:
         ci    tmp2,2
         jne   edb.line.pack.fb.copyline.checkbyte
         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
@@ -165,8 +165,8 @@ edb.line.pack.fb.copyline.block:
                                     ; / i  tmp2 = bytes to copy
         ;------------------------------------------------------
         ; 5: Align pointer to multiple of 16 memory address
-        ;------------------------------------------------------ 
-edb.line.pack.fb.copyline.align16:        
+        ;------------------------------------------------------
+edb.line.pack.fb.copyline.align16:
         a     @rambuf+4,@edb.next_free.ptr
                                        ; Add length of line
 
@@ -176,7 +176,7 @@ edb.line.pack.fb.copyline.align16:
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
         ;------------------------------------------------------
         ; 6: Restore SAMS page and prepare for exit
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
 edb.line.pack.fb.prepexit:
         mov   @rambuf,@fb.column    ; Retrieve @fb.column
 
@@ -192,9 +192,9 @@ edb.line.pack.fb.prepexit:
         ; Exit
         ;------------------------------------------------------
 edb.line.pack.fb.exit:
-        mov   *stack+,tmp2          ; Pop tmp3
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0          
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
