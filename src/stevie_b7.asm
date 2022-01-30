@@ -58,29 +58,28 @@ main:
         ;-----------------------------------------------------------------------
         ; SAMS support routines and utilities
         ;-----------------------------------------------------------------------
-        copy  "magic.asm"           ; Magic string handling
-        copy  "mem.sams.layout.asm" ; Setup SAMS memory banks from cart space
+        copy  "magic.asm"                ; Magic string handling
+        copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
         ;-----------------------------------------------------------------------
         ; Basic interpreter
         ;-----------------------------------------------------------------------
-        copy  "tibasic.session.asm" ; Run TI Basic session
+        copy  "tibasic.session.asm"      ; Run TI Basic session
+        copy  "tibasic.uncrunch.asm"     ; Uncrunch TI Basic program
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank7.asm" ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+        copy  "rom.stubs.bank7.asm"      ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.sams.layout.asm"; SAMS bank layout for multi-purpose
-
-        copy  "data.tibasic.tokens.asm"
-                                    ; TI Basic tokens
+        copy  "data.sams.layout.asm"     ; SAMS bank layout for multi-purpose
+        copy  "data.tibasic.tokens.asm"  ; TI Basic tokens
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------
         aorg >7e00
-        copy  "data.scrpad.asm"     ; Required for TI Basic
+        copy  "data.scrpad.asm"          ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
@@ -94,8 +93,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------
-        copy  "rom.vectors.bank7.asm"
-                                    ; Vector table bank 7
+        copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
+        
 *--------------------------------------------------------------
 * Video mode configuration
 *--------------------------------------------------------------

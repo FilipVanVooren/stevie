@@ -159,10 +159,20 @@ tibasic2.status   equ  core1.top + 56  ; TI Basic session 2
 tibasic3.status   equ  core1.top + 58  ; TI Basic session 3
 tibasic4.status   equ  core1.top + 60  ; TI Basic session 4
 tibasic5.status   equ  core1.top + 62  ; TI Basic session 5
-trmpvector        equ  core1.top + 64  ; Vector trampoline (if p1|tmp1 = >ffff)
-ramsat            equ  core1.top + 66  ; Sprite Attr. Table in RAM (14 bytes)
-timers            equ  core1.top + 80  ; Timers (80 bytes)
-core1.free        equ  core1.top + 160 ; End of structure
+tibasic.var1      equ  core1.top + 64  ; Temp variable 1
+tibasic.var2      equ  core1.top + 66  ; Temp variable 2
+tibasic.var3      equ  core1.top + 68  ; Temp variable 3
+tibasic.var4      equ  core1.top + 70  ; Temp variable 4
+tibasic.var5      equ  core1.top + 72  ; Temp variable 5
+tibasic.var6      equ  core1.top + 74  ; Temp variable 6
+tibasic.var7      equ  core1.top + 76  ; Temp variable 7
+tibasic.var8      equ  core1.top + 78  ; Temp variable 8
+tibasic.var9      equ  core1.top + 80  ; Temp variable 9
+tibasic.var10     equ  core1.top + 82  ; Temp variable 10
+trmpvector        equ  core1.top + 84  ; Vector trampoline (if p1|tmp1 = >ffff)
+ramsat            equ  core1.top + 86  ; Sprite Attr. Table in RAM (14 bytes)
+timers            equ  core1.top + 100 ; Timers (80 bytes)
+core1.free        equ  core1.top + 180 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
