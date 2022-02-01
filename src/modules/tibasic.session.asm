@@ -67,14 +67,10 @@ tibasic:
         ;-------------------------------------------------------
         ; Keep 'Hide SID' flag for later use
         ;-------------------------------------------------------
-        mov   @tibasic.hidesid,tmp0 ; \
-                                    ; | Store TI Basic session ID in tmp0.
-                                    ; | Througout the subroutine tmp0 will
-                                    ; | keep this value, even when SAMS
-                                    ; | banks are switched.
-                                    ; |
-        mov   tmp0,@>83fc           ; | Also store a copy in the Stevie
-                                    ; | scratchpad >83ff for later use in
+        mov   @tibasic.hidesid,@>83fc
+                                    ; \
+                                    ; | Store a copy in the Stevie
+                                    ; | scratchpad >83fc for later use in
                                     ; / TI Basic scratchpad.
         ;-------------------------------------------------------
         ; Keep TI Basic session ID for later use
@@ -86,7 +82,7 @@ tibasic:
                                     ; | banks are switched.
                                     ; |
         mov   tmp0,@>83fe           ; | Also store a copy in the Stevie
-                                    ; | scratchpad >83ff for later use in
+                                    ; | scratchpad >83fe for later use in
                                     ; / TI Basic scratchpad.
         ;-------------------------------------------------------
         ; Switch for TI Basic session

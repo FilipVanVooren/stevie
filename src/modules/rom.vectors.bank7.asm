@@ -22,7 +22,7 @@ vec.7   data  mem.sams.set.basic3   ;
 vec.8   data  mem.sams.set.basic4   ;
 vec.9   data  mem.sams.set.basic5   ;
 vec.10  data  tibasic               ;
-vec.11  data  cpu.crash             ;
+vec.11  data  tibasic.uncrunch      ;
 vec.12  data  cpu.crash             ;
 vec.13  data  cpu.crash             ;
 vec.14  data  cpu.crash             ;

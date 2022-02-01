@@ -60,6 +60,16 @@
 *                                      (Cursor in F18a, 80 columns, 2K boundary)
 *===============================================================================
 
+***************************************************************
+*                 Extra opcodes for classic99
+********|*****|*********************|**************************
+c99_norm      equ  >0110            ; CPU normal
+c99_ovrd      equ  >0111            ; CPU overdrive
+c99_smax      equ  >0112            ; System Maximum
+c99_brk       equ  >0113            ; Breakpoint
+c99_quit      equ  >0114            ; Quit emulator
+
+
 *--------------------------------------------------------------
 * Graphics mode selection
 *--------------------------------------------------------------
@@ -153,7 +163,7 @@ keycode1          equ  core1.top + 40  ; Current key scanned
 keycode2          equ  core1.top + 42  ; Previous key scanned
 unpacked.string   equ  core1.top + 44  ; 6 char string with unpacked uin16
 tibasic.hidesid   equ  core1.top + 50  ; Hide TI-Basic session ID
-tibasic.session   equ  core1.top + 52  ; Active TI-Basic session (1-5)
+tibasic.session   equ  core1.top + 52  ; Current TI-Basic session (1-5)
 tibasic1.status   equ  core1.top + 54  ; TI Basic session 1
 tibasic2.status   equ  core1.top + 56  ; TI Basic session 2
 tibasic3.status   equ  core1.top + 58  ; TI Basic session 3
@@ -183,14 +193,14 @@ core2.free        equ  core2.top + 256 ; End of structure
 * Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
 *--------------------------------------------------------------
 tv.top            equ  >a200           ; Structure begin
-tv.sams.2000      equ  tv.top + 0      ; SAMS window >2000-2fff
-tv.sams.3000      equ  tv.top + 2      ; SAMS window >3000-3fff
-tv.sams.a000      equ  tv.top + 4      ; SAMS window >a000-afff
-tv.sams.b000      equ  tv.top + 6      ; SAMS window >b000-bfff
-tv.sams.c000      equ  tv.top + 8      ; SAMS window >c000-cfff
-tv.sams.d000      equ  tv.top + 10     ; SAMS window >d000-dfff
-tv.sams.e000      equ  tv.top + 12     ; SAMS window >e000-efff
-tv.sams.f000      equ  tv.top + 14     ; SAMS window >f000-ffff
+tv.sams.2000      equ  tv.top + 0      ; SAMS page in window >2000-2fff
+tv.sams.3000      equ  tv.top + 2      ; SAMS page in window >3000-3fff
+tv.sams.a000      equ  tv.top + 4      ; SAMS page in window >a000-afff
+tv.sams.b000      equ  tv.top + 6      ; SAMS page in window >b000-bfff
+tv.sams.c000      equ  tv.top + 8      ; SAMS page in window >c000-cfff
+tv.sams.d000      equ  tv.top + 10     ; SAMS page in window >d000-dfff
+tv.sams.e000      equ  tv.top + 12     ; SAMS page in window >e000-efff
+tv.sams.f000      equ  tv.top + 14     ; SAMS page in window >f000-ffff
 tv.ruler.visible  equ  tv.top + 16     ; Show ruler with tab positions
 tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
 tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)

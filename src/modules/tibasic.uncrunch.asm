@@ -2,7 +2,6 @@
 * Purpose...: Uncrunch TI Basic program to editor buffer
 
 
-
 ***************************************************************
 * tibasic.uncrunch
 * Uncrunch TI Basic program to editor buffer
@@ -10,7 +9,7 @@
 * bl   @tibasic.uncrunch
 *--------------------------------------------------------------
 * INPUT
-* @tibasic.session = TI Basic session to uncrunch
+* @parm1 = TI Basic session to uncrunch (1-5)
 *
 * OUTPUT
 * none
@@ -36,24 +35,69 @@ tibasic.uncrunch:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
-        ; (1) Get index into SAMS layout data table
+        ; (1) Assert on TI basic session
         ;------------------------------------------------------
-        mov   @tibasic.session,tmp0 ; Get current session
+        mov   @parm1,tmp0           ; Get session to uncrunch
+
+        ci    tmp0,1                ; \
+        jlt   !                     ; | Skip to (2) if valid
+        ci    tmp0,5                ; | session ID.
+        jle   tibasic.uncrunch.2    ; /
+        ;------------------------------------------------------
+        ; Assert failed
+        ;------------------------------------------------------
+!       mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
+        ;------------------------------------------------------
+        ; (2) Get index into SAMS layout data table
+        ;------------------------------------------------------
+tibasic.uncrunch.2:
+        ; The data tables of the 5 TI basic sessions form a
+        ; uniform region, we calculate the index into the last
+        ; word of the specified session.
+
         sla   tmp0,4                ; \ Get index of first word
                                     ; | in data table with SAMS
                                     ; | layout (of following
                                     ; / session!)
 
         ai    tmp0,-2               ; Offset in SAMS data layout
-                                    ; table of f000-ffff in
+                                    ; table (f000-ffff) in
                                     ; current session
 
-        mov   tmp0,tibasic.var10    ; Save index
+        mov   tmp0,@tibasic.var10   ; Save index offset for later use
+
+        mov   @mem.sams.layout.basic(tmp0),tmp0
+                                    ; Get SAMS page
+        srl   tmp0,8                ; Move to LSB
         ;------------------------------------------------------
-        ; (2) Get scratchpad page of current TI Basic session
+        ; (3) Get scratchpad page of current TI Basic session
         ;------------------------------------------------------
-        mov   @tibasic.sams.layout.basic(tmp0),tmp0
-                                    ; Get SAMS page number
+tibasic.uncrunch.3:
+        li    tmp1,>f000            ; Map SAMS page to >f000-ffff
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0  = SAMS page number
+                                    ; / i  tmp1  = Memory map address
+
+        ; The scratchpad >8300 - >83ff as used by the specified
+        ; TI Basic session was previously saved by the subroutine
+        ; "tibasic.return" upon return from TI Basic to Stevie.
+        ; The relevant address range is >f960 - >f9ff
+
+        mov   @>f990,@tibasic.var1  ; @>8330 Save pointer to linenum table bot.
+        mov   @>f992,@tibasic.var2  ; @>8332 Save pointer to linenum table top.
+
+        ;------------------------------------------------------
+        ; (3) Prepare for traversing crunched program
+        ;------------------------------------------------------
+
+
+        ;------------------------------------------------------
+        ; (9) Prepare for exit
+        ;------------------------------------------------------
+tibasic.uncrunch.9:
+        mov   @tv.sams.f000,tmp0    ; Get SAMS page number
+        srl   tmp0,8                ; Move to LSB
 
         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
 
@@ -61,14 +105,7 @@ tibasic.uncrunch:
                                     ; \ i  tmp0  = SAMS page number
                                     ; / i  tmp1  = Memory map address
 
-        mov   @>f030,@tibasic.var1  ; Save pointer to linenum table bot
-        mov   @>f032,@tibasic.var2  ; Save pointer to linenum table top
-        ;------------------------------------------------------
-        ; (3) Prepare for traversing crunched program
-        ;------------------------------------------------------
-
-
-
+        bl    @fb.refresh           ; Refresh frame buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

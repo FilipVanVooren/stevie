@@ -30,6 +30,8 @@ main.stevie:
         nop                         ; Ignore for now if no f18a detected
 
 main.continue:
+      ; data  c99_ovrd              ; classic99: Put CPU in overdrive mode
+
         ;------------------------------------------------------
         ; Setup F18A VDP
         ;------------------------------------------------------

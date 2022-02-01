@@ -309,16 +309,24 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.num.1, id.dialog.basic
         data  tibasic1
+
         byte  key.num.2, id.dialog.basic
         data  tibasic2
+
         byte  key.num.3, id.dialog.basic
         data  tibasic3
+
         byte  key.num.4, id.dialog.basic
         data  tibasic4
+
         byte  key.num.5, id.dialog.basic
         data  tibasic5
+
         byte  key.fctn.5, id.dialog.basic
         data  edkey.action.cmdb.sid.toggle
+
+        byte  key.ctrl.1, id.dialog.basic
+        data  tibasic.uncrunch
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
