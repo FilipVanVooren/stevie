@@ -2,7 +2,6 @@
 * Purpose...: Run TI Basic session
 
 
-
 ***************************************************************
 * tibasic
 * Run TI Basic session
@@ -126,9 +125,10 @@ tibasic.init.basic1:
         ;-------------------------------------------------------
 tibasic.init.basic2:
         mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
-        jgt   tibasic.resume.basic2 ; yes, do resume
+        jeq   !                     ; No, new session
+        b     @tibasic.resume.basic2
 
-        ori   tmp1,1                ; \
+!       ori   tmp1,1                ; \
         mov   tmp1,@tibasic2.status ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
@@ -197,35 +197,40 @@ tibasic.init.basic5:
         ; New TI Basic session (part 2)
         ;-------------------------------------------------------
 tibasic.init.rest:
-        bl    @cpym2m
-              data cpu.scrpad.src,cpu.scrpad.tgt,256
-                                    ; Initialize scratchpad memory for TI Basic
-                                    ; @cpu.scrpad.tgt (SAMS bank) with dump
-                                    ; of OS Monitor scratchpad stored at
-                                    ; @cpu.scrpad.src (ROM bank 7).
-
         bl    @ldfnt
               data >0900,fnopt3     ; Load font (upper & lower case)
 
         bl    @filv
               data >0300,>D0,2      ; No sprites
 
-        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to
-              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then
-                                    ; | load TI Basic scratchpad from
-                                    ; / address @cpu.scrpad.target
+        bl    @cpu.scrpad.backup    ; (1) Backup stevie primary scratchpad to
+                                    ;     fixed memory address @cpu.scrpad.tgt
+
+        bl    @cpym2m
+              data >f000,cpu.scrpad2,256
+                                    ; (2) Stevie scratchpad dump cannot stay
+                                    ;     there, move to final destination.
+
+        bl    @cpym2m
+              data cpu.scrpad.src,cpu.scrpad.tgt,256
+                                    ; (3) Copy OS monitor scratchpad dump from
+                                    ;     cartridge rom to @cpu.scrpad.tgt
+
+        lwpi  cpu.scrpad2           ; Flip workspace before starting restore
+        bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt
+        lwpi  cpu.scrpad1           ; Flip workspace to scratchpad again
 
         ; ATTENTION
         ; From here on no more access to any of the SP2 or stevie routines.
         ; We're on unknown territory.
 
-        mov   @cpu.scrpad.moved+252,@>83b4
+        mov   @cpu.scrpad2+252,@>83b4
                                     ; \ Store 'Hide SID' flag in TI Basic
                                     ; | scratchpad address >83b4.
                                     ; | Note that >83fc in Stevie scratchpad
                                     ; / has copy of the flag.
 
-        mov   @cpu.scrpad.moved+254,@>83b6
+        mov   @cpu.scrpad2+254,@>83b6
                                     ; \ Store TI Basic session ID in TI Basic
                                     ; | scratchpad address >83b6.
                                     ; | Note that >83fe in Stevie scratchpad has
@@ -240,7 +245,7 @@ tibasic.init.rest:
         ;-------------------------------------------------------
         ; Register ISR hook in scratch pad
         ;-------------------------------------------------------
-        lwpi  >8300                 ; Scratchpad in >8300 again
+        lwpi  cpu.scrpad1           ; Scratchpad in >8300 again
         li    r1,isr                ; \
         mov   r1,@>83c4             ; | >83c4 = Pointer to start address of ISR
                                     ; /
@@ -263,6 +268,10 @@ tibasic.init.rest:
 tibasic.resume.basic1:
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
+
+        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
+              data >f100,>f000,256  ; / address @cpu.scrpad.target
+
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 2
@@ -270,6 +279,10 @@ tibasic.resume.basic1:
 tibasic.resume.basic2:
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
+
+        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
+              data >f200,>f000,256  ; / address @cpu.scrpad.target
+
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 3
@@ -277,6 +290,10 @@ tibasic.resume.basic2:
 tibasic.resume.basic3:
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
+
+        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
+              data >f300,>f000,256  ; / address @cpu.scrpad.target
+
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 4
@@ -284,6 +301,10 @@ tibasic.resume.basic3:
 tibasic.resume.basic4:
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
+
+        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
+              data >f400,>f000,256  ; / address @cpu.scrpad.target
+
         jmp   tibasic.resume.part2  ; Continue resume
         ;-------------------------------------------------------
         ; Resume TI-Basic session 5
@@ -291,6 +312,9 @@ tibasic.resume.basic4:
 tibasic.resume.basic5:
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
+
+        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
+              data >f500,>f000,256  ; / address @cpu.scrpad.target
         ;-------------------------------------------------------
         ; Resume TI-Basic session (part 2)
         ;-------------------------------------------------------
@@ -309,16 +333,15 @@ tibasic.resume.vdp:
                                     ; Restore TI Basic 16K VDP memory from
                                     ; RAM buffer >b000->efff
 
-        bl    @cpu.scrpad.pgout     ; \ Copy 256 bytes stevie scratchpad to
-              data cpu.scrpad.moved ; | >ad00, change WP to >ad00 and then
-                                    ; | load TI Basic scratchpad from
-                                    ; / address @cpu.scrpad.target
+        ;-------------------------------------------------------
+        ; Restore scratchpad memory
+        ;-------------------------------------------------------
+tibasic.resume.scrpad:
+        lwpi  cpu.scrpad2           ; Flip workspace before starting restore
+        bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt
+        lwpi  cpu.scrpad1           ; Flip workspace to scratchpad again
 
-        ; ATTENTION
-        ; From here on no more access to any of the SP2 or stevie routines.
-        ; We're on unknown territory.
-
-        mov   @cpu.scrpad.moved+252,@>83b4
+        mov   @cpu.scrpad2+252,@>83b4
                                     ; \ Store 'Hide SID' flag in TI Basic
                                     ; | scratchpad address >83b4.
                                     ; | Note that >83fc in Stevie scratchpad
@@ -328,11 +351,16 @@ tibasic.resume.vdp:
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------
 tibasic.resume.load:
-        lwpi  >8300                  ; Workspace must be in scratchpad again!
+        lwpi  cpu.scrpad1           ; Workspace must be in scratchpad again!
         clr   r11
 
         li    r12,>1e00             ; \ Disable SAMS mapper (transparent mode)
         sbz   1                     ; /
+
+        ; ATTENTION
+        ; From here on no more access to any of the SP2 or stevie routines.
+        ; We're on unknown territory.
+
         ;-------------------------------------------------------
         ; Resume TI Basic interpreter
         ;-------------------------------------------------------
@@ -477,11 +505,11 @@ tibasic.return.mon:
         ; Resume Stevie
         ;-------------------------------------------------------
 tibasic.return.mon.cont:
-        lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
+        lwpi  cpu.scrpad2           ; Activate workspace at >ad00 that was
                                     ; paged out in tibasic.init
 
-        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
-              data cpu.scrpad.moved ; | and activate workspace at >8300
+        bl    @cpu.scrpad.pgin      ; \ Page-in scratchpad memory previously
+              data cpu.scrpad2      ; | stored at >ad00 and set wp at >8300
                                     ; / Destroys registers tmp0-tmp2
 
         movb  @w$ffff,@>8375        ; Reset keycode
@@ -535,19 +563,79 @@ tibasic.return:
         sbo   1                     ; | We stil have the SAMS banks layout
                                     ; / mem.sams.layout.external
 
-        lwpi  cpu.scrpad.moved      ; Activate Stevie workspace that got
-                                    ; paged out in tibasic.init
+        lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
+                                    ; paged-out in tibasic.init
 
         movb  @w$ffff,@>8375        ; Reset keycode
+        ;-------------------------------------------------------
+        ; Backup scratchpad of TI-Basic session 1
+        ;-------------------------------------------------------
+tibasic.return.1:
+        c     @tibasic.session,@w$0001
+        jne   tibasic.return.2      ; Not the current session, check next one.
 
         bl    @cpym2m
-              data >8300,cpu.scrpad.tgt,256
-                                    ; Backup TI Basic scratchpad to
-                                    ; @cpu.scrpad.tgt (SAMS bank)
+              data >8300,>f100,256  ; Backup TI Basic scratchpad to >f100
+                                    ; @cpu.scrpad.tgt in SAMS bank.
+        jmp   !                     ; Skip to page-in
+        ;-------------------------------------------------------
+        ; Backup scratchpad of TI-Basic session 2
+        ;-------------------------------------------------------
+tibasic.return.2:
+        c     @tibasic.session,@w$0002
+        jne   tibasic.return.3      ; Not the current session, check next one.
 
-        bl    @cpu.scrpad.pgin      ; \ Page in copy of Stevie scratchpad memory
-              data cpu.scrpad.moved ; | and activate workspace at >8300
-                                    ; / Destroys registers tmp0-tmp2
+        bl    @cpym2m
+              data >8300,>f200,256  ; Backup TI Basic scratchpad to >f200
+                                    ; @cpu.scrpad.tgt in SAMS bank.
+        jmp   !                     ; Skip to page-in
+        ;-------------------------------------------------------
+        ; Backup scratchpad of TI-Basic session 3
+        ;-------------------------------------------------------
+tibasic.return.3:
+        c     @tibasic.session,@tibasic.const3
+        jne   tibasic.return.4      ; Not the current session, check next one.
+
+        bl    @cpym2m
+              data >8300,>f300,256  ; Backup TI Basic scratchpad to >f300
+                                    ; @cpu.scrpad.tgt in SAMS bank.
+        jmp   !                     ; Skip to page-in
+        ;-------------------------------------------------------
+        ; Backup scratchpad of TI-Basic session 4
+        ;-------------------------------------------------------
+tibasic.return.4:
+        c     @tibasic.session,@w$0004
+        jne   tibasic.return.5      ; Not the current session, check next one.
+
+        bl    @cpym2m
+              data >8300,>f400,256  ; Backup TI Basic scratchpad to >f400
+                                    ; @cpu.scrpad.tgt in SAMS bank.
+        jmp   !                     ; Skip to page-in
+        ;-------------------------------------------------------
+        ; Backup scratchpad of TI-Basic session 5
+        ;-------------------------------------------------------
+tibasic.return.5:
+        c     @tibasic.session,@tibasic.const5
+        jne   tibasic.return.failed ; Not the current session, abort here
+
+        bl    @cpym2m
+              data >8300,>f500,256  ; Backup TI Basic scratchpad to >f500
+                                    ; @cpu.scrpad.tgt in SAMS bank.
+        jmp   !                     ; Skip to page-in
+        ;-------------------------------------------------------
+        ; Asserts failed
+        ;-------------------------------------------------------
+tibasic.return.failed:
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
+        ;-------------------------------------------------------
+        ; Page-in scratchpad memory
+        ;-------------------------------------------------------
+!       bl    @cpym2m
+              data cpu.scrpad2,cpu.scrpad1,256
+                                    ; Restore scratchpad contents
+
+        lwpi  cpu.scrpad1           ; Activate primary scratchpad
 
         mov   @tv.sp2.conf,config   ; Restore the SP2 config register
 
@@ -622,7 +710,8 @@ tibasic.return.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
 
-
+tibasic.const3  data 3
+tibasic.const5  data 5
 
 tibasic.patterns:
         byte  >00,>7E,>E7,>C7,>E7,>E7,>C3,>7E ; 1

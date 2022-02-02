@@ -216,8 +216,9 @@ tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
-tv.error.msg      equ  tv.top + 46     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 206    ; End of structure
+tv.sp2.stack      equ  tv.top + 44     ; Backup of SP2 stack register
+tv.error.msg      equ  tv.top + 48     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 208    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------
@@ -356,17 +357,20 @@ sp2.stktop        equ  >a900           ; \ SP2 stack >a800 - >a8ff
                                        ; | The stack grows from high memory
                                        ; / to low memory.
 *--------------------------------------------------------------
-* Paged-out scratchpad memory         @>ad00-aeff   (256 bytes)
+* Scratchpad memory work copy         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm
 
-cpu.scrpad.tgt    equ  >f960           ; \ Target copy of OS monitor scratchpad
-                                       ; | in high-memory.
+cpu.scrpad.tgt    equ  >f000           ; \ Fixed memory location used for
+                                       ; | scratchpad backup/restore routines.
                                        ; /
 
-cpu.scrpad.moved  equ  >ad00           ; Stevie scratchpad memory when paged-out
-                                       ; because of TI Basic/External program
+cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
+
+cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
+                                       ; calling TI Basic/External programs
+
 *--------------------------------------------------------------
 * Farjump return stack                @>af00-afff   (256 bytes)
 *--------------------------------------------------------------

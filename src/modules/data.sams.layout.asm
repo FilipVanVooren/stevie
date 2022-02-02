@@ -82,7 +82,7 @@ mem.sams.layout.basic2:
         data  >f700                 ; |
         data  >f800                 ; | 16K VDP dump
         data  >f900                 ; /
-        data  >fa00                 ; >f000-ffff, SAMS page >fa
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
 ***************************************************************
@@ -97,7 +97,7 @@ mem.sams.layout.basic3:
         data  >f200                 ; |
         data  >f300                 ; | 16K VDP dump
         data  >f400                 ; /
-        data  >f500                 ; >f000-ffff, SAMS page >f5
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
 ***************************************************************
@@ -112,7 +112,7 @@ mem.sams.layout.basic4:
         data  >ed00                 ; |
         data  >ee00                 ; | 16K VDP dump
         data  >ef00                 ; /
-        data  >f000                 ; >f000-ffff, SAMS page >f0
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
 ***************************************************************
@@ -127,6 +127,6 @@ mem.sams.layout.basic5:
         data  >e800                 ; |
         data  >e900                 ; | 16K VDP dump
         data  >ea00                 ; /
-        data  >eb00                 ; >f000-ffff, SAMS page >eb
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 mem.sams.layout.basic  equ mem.sams.layout.basic1
