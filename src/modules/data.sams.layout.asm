@@ -56,39 +56,37 @@ mem.sams.layout.external:
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 1
+* SAMS page layout table for TI Basic session 1 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
         data  >0000                 ; >2000-2fff, SAMS page >00
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >e700                 ; \ >b000-efff, SAMS page >e7
-        data  >e800                 ; |
-        data  >e900                 ; | 16K VDP dump
-        data  >ea00                 ; /
-        data  >eb00                 ; >f000-ffff, SAMS page >eb
-
-mem.sams.layout.basic  equ mem.sams.layout.basic1
+        data  >fb00                 ; \ >b000-efff, SAMS page >fc
+        data  >fc00                 ; |
+        data  >fd00                 ; | 16K VDP dump
+        data  >fe00                 ; /
+        data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 2
+* SAMS page layout table for TI Basic session 2 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
         data  >0000                 ; >2000-2fff, SAMS page >00
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >ec00                 ; \ >b000-efff, SAMS page >ec
-        data  >ed00                 ; |
-        data  >ee00                 ; | 16K VDP dump
-        data  >ef00                 ; /
-        data  >f000                 ; >f000-ffff, SAMS page >f0
+        data  >f600                 ; \ >b000-efff, SAMS page >f6
+        data  >f700                 ; |
+        data  >f800                 ; | 16K VDP dump
+        data  >f900                 ; /
+        data  >fa00                 ; >f000-ffff, SAMS page >fa
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 3
+* SAMS page layout table for TI Basic session 3 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
         data  >0000                 ; >2000-2fff, SAMS page >00
@@ -103,30 +101,32 @@ mem.sams.layout.basic3:
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 4
+* SAMS page layout table for TI Basic session 4 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic4:
         data  >0000                 ; >2000-2fff, SAMS page >00
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >f600                 ; \ >b000-efff, SAMS page >f6
-        data  >f700                 ; |
-        data  >f800                 ; | 16K VDP dump
-        data  >f900                 ; /
-        data  >fa00                 ; >f000-ffff, SAMS page >fa
+        data  >ec00                 ; \ >b000-efff, SAMS page >ec
+        data  >ed00                 ; |
+        data  >ee00                 ; | 16K VDP dump
+        data  >ef00                 ; /
+        data  >f000                 ; >f000-ffff, SAMS page >f0
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 5
+* SAMS page layout table for TI Basic session 5 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic5:
         data  >0000                 ; >2000-2fff, SAMS page >00
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >fb00                 ; \ >b000-efff, SAMS page >fc
-        data  >fc00                 ; |
-        data  >fd00                 ; | 16K VDP dump
-        data  >fe00                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >e700                 ; \ >b000-efff, SAMS page >e7
+        data  >e800                 ; |
+        data  >e900                 ; | 16K VDP dump
+        data  >ea00                 ; /
+        data  >eb00                 ; >f000-ffff, SAMS page >eb
+
+mem.sams.layout.basic  equ mem.sams.layout.basic1
