@@ -80,8 +80,9 @@ tibasic.buildstr:
         ; Build session selection string
         ;-------------------------------------------------------
         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
+
         bl    @cpym2m
-              data txt.info.basic,rambuf+200,28
+              data txt.info.basic,rambuf+200,30
                                     ; Copy string from rom to ram buffer
 
         li    tmp0,rambuf + 200     ; \

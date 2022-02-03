@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b6.asm.16828
+     **** ****     > stevie_b6.asm.24366
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b6.asm               ; Version 220203-1925120
+0009               * File: stevie_b6.asm               ; Version 220203-1948500
 0010               *
 0011               * Bank 6 "Jenifer"
 0012               * VDP utility functions
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -543,7 +543,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0426      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0427      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0428      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -683,7 +683,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0018               
 0019               ***************************************************************
 0020               * BANK 6
@@ -742,7 +742,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1557,7 +1557,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220203-1925120'
+0270 21ED   42             text  'Build-ID  220203-1948500'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1567,8 +1567,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21FA 3230     
      21FC 332D     
      21FE 3139     
-     2200 3235     
-     2202 3132     
+     2200 3438     
+     2202 3530     
      2204 30       
 0271                       even
 0272               
@@ -5849,7 +5849,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8677,7 +8677,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -8730,7 +8730,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023               vdp.patterns.dump.exit:
 0024 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
 0025 6064 045B  20         b     *r11                  ; Return to task
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0058                                                   ; Dump patterns to VDP
 0059                       copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
      **** ****     > data.patterns.asm
@@ -8895,7 +8895,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6168 8000     
      616A 0000     
      616C 0000     
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0060               
 0061                       ;-----------------------------------------------------------------------
 0062                       ; Stubs
@@ -8904,7 +8904,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank6.asm
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0065                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9063,7 +9063,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160                       ;------------------------------------------------------
 0161 61E8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0162 61EA 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0066                       ;-----------------------------------------------------------------------
 0067                       ; Program data
 0068                       ;-----------------------------------------------------------------------
@@ -9089,7 +9089,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0080                       ;-----------------------------------------------------------------------
 0081                       ; Vector table
 0082                       ;-----------------------------------------------------------------------
@@ -9147,7 +9147,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b6.asm.16828
+                   < stevie_b6.asm.24366
 0084                                                   ; Vector table bank 6
 0085               *--------------------------------------------------------------
 0086               * Video mode configuration

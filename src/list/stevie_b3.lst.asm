@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b3.asm.20559
+     **** ****     > stevie_b3.asm.26588
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 220203-1942220
+0009               * File: stevie_b3.asm               ; Version 220203-2009150
 0010               *
 0011               * Bank 3 "John"
 0012               * Dialogs & Command Buffer pane
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -543,7 +543,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0426      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0427      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0428      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -683,7 +683,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0018               
 0019               ***************************************************************
 0020               * BANK 3
@@ -742,7 +742,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1557,7 +1557,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220203-1942220'
+0270 21ED   42             text  'Build-ID  220203-2009150'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1566,9 +1566,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3230     
      21FA 3230     
      21FC 332D     
-     21FE 3139     
-     2200 3432     
-     2202 3232     
+     21FE 3230     
+     2200 3039     
+     2202 3135     
      2204 30       
 0271                       even
 0272               
@@ -5849,7 +5849,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8677,7 +8677,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -8770,7 +8770,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0062                       copy  "dialog.help.asm"      ; Dialog "Help"
      **** ****     > dialog.help.asm
 0001               * FILE......: dialog.help.asm
@@ -9869,7 +9869,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      66B0 2D35     
 0423                       even
 0424               
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0063                       copy  "dialog.file.asm"      ; Dialog "File"
      **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -9939,7 +9939,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 66EE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 66F0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 66F2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0064                       copy  "dialog.cartridge.asm" ; Dialog "Cartridge"
      **** ****     > dialog.cartridge.asm
 0001               * basic......: dialog.cartridge.asm
@@ -10009,7 +10009,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 6730 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6732 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 6734 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0065                       copy  "dialog.load.asm"      ; Dialog "Load file"
      **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -10128,7 +10128,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0093 67A2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0094 67A4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0095 67A6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0066                       copy  "dialog.save.asm"      ; Dialog "Save file"
      **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -10247,7 +10247,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0088 681A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0089 681C C2F9  30         mov   *stack+,r11           ; Pop R11
 0090 681E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0067                       copy  "dialog.print.asm"     ; Dialog "Print file"
      **** ****     > dialog.print.asm
 0001               * FILE......: dialog.print.asm
@@ -10362,7 +10362,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0086 688A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0087 688C C2F9  30         mov   *stack+,r11           ; Pop R11
 0088 688E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0068                       copy  "dialog.append.asm"    ; Dialog "Append file"
      **** ****     > dialog.append.asm
 0001               * FILE......: dialog.append.asm
@@ -10471,7 +10471,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0085 68F0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0086 68F2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0087 68F4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0069                       copy  "dialog.insert.asm"    ; Dialog "Insert file at line"
      **** ****     > dialog.insert.asm
 0001               * FILE......: dialog.insert.asm
@@ -10630,7 +10630,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119 6996 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0120 6998 C2F9  30         mov   *stack+,r11           ; Pop R11
 0121 699A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0070                       copy  "dialog.config.asm"    ; Dialog "Configure"
      **** ****     > dialog.config.asm
 0001               * FILE......: dialog.config.asm
@@ -10700,7 +10700,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 69D8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 69DA C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 69DC 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0071                       copy  "dialog.clipdev.asm"   ; Dialog "Configure clipboard device"
      **** ****     > dialog.clipdev.asm
 0001               * FILE......: dialog.clipdev.asm
@@ -10783,7 +10783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062 6A24 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0063 6A26 C2F9  30         mov   *stack+,r11           ; Pop R11
 0064 6A28 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0072                       copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
      **** ****     > dialog.clipboard.asm
 0001               * FILE......: dialog.clipboard.asm
@@ -10921,7 +10921,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0102 6AB2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0103 6AB4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0104 6AB6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0073                       copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
      **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -10988,7 +10988,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050 6AF0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 6AF2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 6AF4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0074                       copy  "dialog.basic.asm"     ; Dialog "Basic"
      **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
@@ -11070,7 +11070,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 6B3A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6B3C C2F9  30         mov   *stack+,r11           ; Pop R11
 0065 6B3E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0075                       ;-----------------------------------------------------------------------
 0076                       ; Command buffer handling
 0077                       ;-----------------------------------------------------------------------
@@ -11198,7 +11198,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0106               pane.show_hint.exit:
 0107 6BA6 C2F9  30         mov   *stack+,r11           ; Pop R11
 0108 6BA8 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0079                       copy  "pane.cmdb.show.asm"  ; Show command buffer pane
      **** ****     > pane.cmdb.show.asm
 0001               * FILE......: pane.cmdb.show.asm
@@ -11320,7 +11320,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0094 6C28 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0095 6C2A C2F9  30         mov   *stack+,r11           ; Pop r11
 0096 6C2C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0080                       copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
      **** ****     > pane.cmdb.hide.asm
 0001               * FILE......: pane.cmdb.hide.asm
@@ -11429,7 +11429,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6C8C A006     
 0082 6C8E C2F9  30         mov   *stack+,r11           ; Pop r11
 0083 6C90 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0081                       copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
      **** ****     > pane.cmdb.draw.asm
 0001               * FILE......: pane.cmdb.draw.asm
@@ -11685,7 +11685,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0192 6DAC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0193 6DAE C2F9  30         mov   *stack+,r11           ; Pop r11
 0194 6DB0 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0082                       copy  "error.display.asm"   ; Show error message
      **** ****     > error.display.asm
 0001               
@@ -11743,7 +11743,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 6DDE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0049 6DE0 C2F9  30         mov   *stack+,r11           ; Pop r11
 0050 6DE2 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0083                       copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
      **** ****     > cmdb.refresh.asm
 0001               * FILE......: cmdb.refresh.asm
@@ -11823,7 +11823,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 6E28 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6E2A C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 6E2C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0084                       copy  "cmdb.cmd.asm"        ; Command line handling
      **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -11926,7 +11926,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0088               cmdb.cmd.getlength.exit:
 0089 6E72 C2F9  30         mov   *stack+,r11           ; Pop r11
 0090 6E74 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0085                       copy  "cmdb.cmd.set.asm"    ; Set command line to preset value
      **** ****     > cmdb.cmd.set.asm
 0001               * FILE......: cmdb.cmd.set.asm
@@ -12007,7 +12007,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0066 6EBA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0067 6EBC C2F9  30         mov   *stack+,r11           ; Pop r11
 0068 6EBE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0086                       copy  "cmdb.cmd.preset.asm" ; Preset shortcuts in dialogs
      **** ****     > cmdb.cmd.preset.asm
 0001               * FILE......: cmdb.cmd.preset.asm
@@ -12087,7 +12087,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0069 6EFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0070 6EFE C2F9  30         mov   *stack+,r11           ; Pop r11
 0071 6F00 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Dialog toggles
 0089                       ;-----------------------------------------------------------------------
@@ -12248,7 +12248,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0127 6FAE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0128 6FB0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0129 6FB2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0091                       copy  "tibasic.helper.asm"  ; Helper functions for TI Basic dialog
      **** ****     > tibasic.helper.asm
 0001               * FILE......: tibasic.helper.asm
@@ -12338,150 +12338,151 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0081                       ;-------------------------------------------------------
 0082 6FEA 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
      6FEC A718     
-0083 6FEE 06A0  32         bl    @cpym2m
+0083               
+0084 6FEE 06A0  32         bl    @cpym2m
      6FF0 24EE     
-0084 6FF2 76C6                   data txt.info.basic,rambuf+200,28
+0085 6FF2 76C6                   data txt.info.basic,rambuf+200,30
      6FF4 A1C8     
-     6FF6 001C     
-0085                                                   ; Copy string from rom to ram buffer
-0086               
-0087 6FF8 0204  20         li    tmp0,rambuf + 200     ; \
+     6FF6 001E     
+0086                                                   ; Copy string from rom to ram buffer
+0087               
+0088 6FF8 0204  20         li    tmp0,rambuf + 200     ; \
      6FFA A1C8     
-0088 6FFC C804  38         mov   tmp0,@cmdb.paninfo    ; / Set pointer to session selection string
+0089 6FFC C804  38         mov   tmp0,@cmdb.paninfo    ; / Set pointer to session selection string
      6FFE A720     
-0089               
-0090 7000 0204  20         li    tmp0,tibasic1.status  ; First TI Basic session to check
+0090               
+0091 7000 0204  20         li    tmp0,tibasic1.status  ; First TI Basic session to check
      7002 A036     
-0091 7004 0206  20         li    tmp2,tibasic5.status  ; Last TI Basic session to check
+0092 7004 0206  20         li    tmp2,tibasic5.status  ; Last TI Basic session to check
      7006 A03E     
-0092 7008 0207  20         li    tmp3,rambuf + 212     ; Position in session selection string
+0093 7008 0207  20         li    tmp3,rambuf + 212     ; Position in session selection string
      700A A1D4     
-0093                       ;-------------------------------------------------------
-0094                       ; Loop over TI Basic sessions and check if active
-0095                       ;-------------------------------------------------------
-0096               tibasic.buildstr.loop:
-0097 700C C174  30         mov   *tmp0+,tmp1           ; Session active?
-0098 700E 1305  14         jeq   tibasic.buildstr.next
-0099                                                   ; No, check next session
-0100                       ;-------------------------------------------------------
-0101                       ; Set Basic session active marker
-0102                       ;-------------------------------------------------------
-0103 7010 DDE0  48         movb  @tibasic.buildstr.data.marker,*tmp3+
+0094                       ;-------------------------------------------------------
+0095                       ; Loop over TI Basic sessions and check if active
+0096                       ;-------------------------------------------------------
+0097               tibasic.buildstr.loop:
+0098 700C C174  30         mov   *tmp0+,tmp1           ; Session active?
+0099 700E 1305  14         jeq   tibasic.buildstr.next
+0100                                                   ; No, check next session
+0101                       ;-------------------------------------------------------
+0102                       ; Set Basic session active marker
+0103                       ;-------------------------------------------------------
+0104 7010 DDE0  48         movb  @tibasic.buildstr.data.marker,*tmp3+
      7012 7030     
-0104 7014 D5E0  46         movb  @tibasic.buildstr.data.marker+1,*tmp3
+0105 7014 D5E0  46         movb  @tibasic.buildstr.data.marker+1,*tmp3
      7016 7031     
-0105                                                   ; Set marker
-0106 7018 0607  14         dec   tmp3                  ; Adjustment
-0107                       ;-------------------------------------------------------
-0108                       ; Next entry
-0109                       ;-------------------------------------------------------
-0110               tibasic.buildstr.next:
-0111 701A 0227  22         ai    tmp3,4                ; Next position
+0106                                                   ; Set marker
+0107 7018 0607  14         dec   tmp3                  ; Adjustment
+0108                       ;-------------------------------------------------------
+0109                       ; Next entry
+0110                       ;-------------------------------------------------------
+0111               tibasic.buildstr.next:
+0112 701A 0227  22         ai    tmp3,4                ; Next position
      701C 0004     
-0112 701E 8184  18         c     tmp0,tmp2             ; All sessions checked?
-0113 7020 1501  14         jgt   tibasic.buildstr.exit ; Yes, exit loop
-0114 7022 10F4  14         jmp   tibasic.buildstr.loop ; No, next iteration
-0115                       ;-------------------------------------------------------
-0116                       ; Exit
-0117                       ;-------------------------------------------------------
-0118               tibasic.buildstr.exit:
-0119 7024 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0120 7026 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0121 7028 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0122 702A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0123 702C C2F9  30         mov   *stack+,r11           ; Pop R11
-0124 702E 045B  20         b     *r11                  ; Return to caller
-0125               
-0126               tibasic.buildstr.data.marker:
-0127 7030 1D1E             byte  29,30                 ; ASCII 29-30 (check marker)
-0128               
+0113 701E 8184  18         c     tmp0,tmp2             ; All sessions checked?
+0114 7020 1501  14         jgt   tibasic.buildstr.exit ; Yes, exit loop
+0115 7022 10F4  14         jmp   tibasic.buildstr.loop ; No, next iteration
+0116                       ;-------------------------------------------------------
+0117                       ; Exit
+0118                       ;-------------------------------------------------------
+0119               tibasic.buildstr.exit:
+0120 7024 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0121 7026 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0122 7028 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0123 702A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0124 702C C2F9  30         mov   *stack+,r11           ; Pop R11
+0125 702E 045B  20         b     *r11                  ; Return to caller
+0126               
+0127               tibasic.buildstr.data.marker:
+0128 7030 1D1E             byte  29,30                 ; ASCII 29-30 (check marker)
 0129               
 0130               
-0131               ***************************************************************
-0132               * tibasic.hearts.tat
-0133               * Dump color for hearts in TI Basic session dialog
-0134               ***************************************************************
-0135               * bl   @tibasic.hearts.tat
-0136               *--------------------------------------------------------------
-0137               * INPUT
-0138               * none
-0139               *
-0140               * OUTPUT
-0141               * none
-0142               *--------------------------------------------------------------
-0143               * Register usage
-0144               * tmp0
-0145               *--------------------------------------------------------------
-0146               * Remarks
-0147               * none
-0148               ********|*****|*********************|**************************
-0149               tibasic.hearts.tat:
-0150 7032 0649  14         dect  stack
-0151 7034 C64B  30         mov   r11,*stack            ; Save return address
-0152 7036 0649  14         dect  stack
-0153 7038 C644  30         mov   tmp0,*stack           ; Push tmp0
-0154 703A 0649  14         dect  stack
-0155 703C C645  30         mov   tmp1,*stack           ; Push tmp1
-0156 703E 0649  14         dect  stack
-0157 7040 C646  30         mov   tmp2,*stack           ; Push tmp2
-0158 7042 0649  14         dect  stack
-0159 7044 C647  30         mov   tmp3,*stack           ; Push tmp3
-0160 7046 0649  14         dect  stack
-0161 7048 C648  30         mov   tmp4,*stack           ; Push tmp4
-0162                       ;-------------------------------------------------------
-0163                       ; Get background color for hearts in TAT
-0164                       ;-------------------------------------------------------
-0165 704A 06A0  32         bl    @vgetb                ; Read VDP byte
+0131               
+0132               ***************************************************************
+0133               * tibasic.hearts.tat
+0134               * Dump color for hearts in TI Basic session dialog
+0135               ***************************************************************
+0136               * bl   @tibasic.hearts.tat
+0137               *--------------------------------------------------------------
+0138               * INPUT
+0139               * none
+0140               *
+0141               * OUTPUT
+0142               * none
+0143               *--------------------------------------------------------------
+0144               * Register usage
+0145               * tmp0
+0146               *--------------------------------------------------------------
+0147               * Remarks
+0148               * none
+0149               ********|*****|*********************|**************************
+0150               tibasic.hearts.tat:
+0151 7032 0649  14         dect  stack
+0152 7034 C64B  30         mov   r11,*stack            ; Save return address
+0153 7036 0649  14         dect  stack
+0154 7038 C644  30         mov   tmp0,*stack           ; Push tmp0
+0155 703A 0649  14         dect  stack
+0156 703C C645  30         mov   tmp1,*stack           ; Push tmp1
+0157 703E 0649  14         dect  stack
+0158 7040 C646  30         mov   tmp2,*stack           ; Push tmp2
+0159 7042 0649  14         dect  stack
+0160 7044 C647  30         mov   tmp3,*stack           ; Push tmp3
+0161 7046 0649  14         dect  stack
+0162 7048 C648  30         mov   tmp4,*stack           ; Push tmp4
+0163                       ;-------------------------------------------------------
+0164                       ; Get background color for hearts in TAT
+0165                       ;-------------------------------------------------------
+0166 704A 06A0  32         bl    @vgetb                ; Read VDP byte
      704C 22F6     
-0166 704E 1E4B                   data vdp.cmdb.toprow.tat + 91
-0167                                                   ; 2nd row in CMDB, column 11
-0168               
-0169 7050 C144  18         mov   tmp0,tmp1             ; Save color combination
-0170 7052 0245  22         andi  tmp1,>000f            ; Only keep background
+0167 704E 1E4B                   data vdp.cmdb.toprow.tat + 91
+0168                                                   ; 2nd row in CMDB, column 11
+0169               
+0170 7050 C144  18         mov   tmp0,tmp1             ; Save color combination
+0171 7052 0245  22         andi  tmp1,>000f            ; Only keep background
      7054 000F     
-0171 7056 0265  22         ori   tmp1,>0060            ; Set foreground color to red
+0172 7056 0265  22         ori   tmp1,>0060            ; Set foreground color to red
      7058 0060     
-0172               
-0173 705A 0204  20         li    tmp0,vdp.cmdb.toprow.tat+91
+0173               
+0174 705A 0204  20         li    tmp0,vdp.cmdb.toprow.tat+91
      705C 1E4B     
-0174                                                   ; 2nd row in CMDB, column 11
-0175               
-0176 705E C204  18         mov   tmp0,tmp4             ; Backup TAT position
-0177 7060 C1C5  18         mov   tmp1,tmp3             ; Backup color combination
-0178                       ;-------------------------------------------------------
-0179                       ; Dump colors for 5 hearts if in TI Basic dialog (TAT)
-0180                       ;-------------------------------------------------------
-0181               tibasic.hearts.tat.loop:
-0182 7062 C108  18         mov   tmp4,tmp0             ; Get VDP address in TAT
-0183 7064 C147  18         mov   tmp3,tmp1             ; Get VDP byte to write
-0184 7066 0206  20         li    tmp2,2                ; Number of bytes to fill
+0175                                                   ; 2nd row in CMDB, column 11
+0176               
+0177 705E C204  18         mov   tmp0,tmp4             ; Backup TAT position
+0178 7060 C1C5  18         mov   tmp1,tmp3             ; Backup color combination
+0179                       ;-------------------------------------------------------
+0180                       ; Dump colors for 5 hearts if in TI Basic dialog (TAT)
+0181                       ;-------------------------------------------------------
+0182               tibasic.hearts.tat.loop:
+0183 7062 C108  18         mov   tmp4,tmp0             ; Get VDP address in TAT
+0184 7064 C147  18         mov   tmp3,tmp1             ; Get VDP byte to write
+0185 7066 0206  20         li    tmp2,2                ; Number of bytes to fill
      7068 0002     
-0185               
-0186 706A 06A0  32         bl    @xfilv                ; Fill colors
+0186               
+0187 706A 06A0  32         bl    @xfilv                ; Fill colors
      706C 22A8     
-0187                                                   ; i \  tmp0 = start address
-0188                                                   ; i |  tmp1 = byte to fill
-0189                                                   ; i /  tmp2 = number of bytes to fill
-0190               
-0191 706E 0228  22         ai    tmp4,4                ; Next heart in TAT
+0188                                                   ; i \  tmp0 = start address
+0189                                                   ; i |  tmp1 = byte to fill
+0190                                                   ; i /  tmp2 = number of bytes to fill
+0191               
+0192 706E 0228  22         ai    tmp4,4                ; Next heart in TAT
      7070 0004     
-0192               
-0193 7072 0205  20         li    tmp1,vdp.cmdb.toprow.tat+110
+0193               
+0194 7072 0205  20         li    tmp1,vdp.cmdb.toprow.tat+110
      7074 1E5E     
-0194 7076 8148  18         c     tmp4,tmp1
-0195 7078 12F4  14         jle   tibasic.hearts.tat.loop
-0196                       ;-------------------------------------------------------
-0197                       ; Exit
-0198                       ;-------------------------------------------------------
-0199               tibasic.hearts.tat.exit:
-0200 707A C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0201 707C C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0202 707E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0203 7080 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0204 7082 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0205 7084 C2F9  30         mov   *stack+,r11           ; Pop R11
-0206 7086 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+0195 7076 8148  18         c     tmp4,tmp1
+0196 7078 12F4  14         jle   tibasic.hearts.tat.loop
+0197                       ;-------------------------------------------------------
+0198                       ; Exit
+0199                       ;-------------------------------------------------------
+0200               tibasic.hearts.tat.exit:
+0201 707A C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0202 707C C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0203 707E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0204 7080 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0205 7082 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0206 7084 C2F9  30         mov   *stack+,r11           ; Pop R11
+0207 7086 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b3.asm.26588
 0092                       ;-----------------------------------------------------------------------
 0093                       ; Stubs
 0094                       ;-----------------------------------------------------------------------
@@ -12717,7 +12718,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0218               
 0219               ; TODO Include _trampoline.bank1.ret
 0220               ; TODO Refactor stubs for using _trampoline.bank1.ret
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0096                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -12876,7 +12877,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160                       ;------------------------------------------------------
 0161 71B6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0162 71B8 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0097                       ;-----------------------------------------------------------------------
 0098                       ; Program data
 0099                       ;-----------------------------------------------------------------------
@@ -13551,17 +13552,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0200               
 0201               txt.about.build
 0202 75B0 4C               byte  76
-0203 75B1   42             text  'Build: 220203-1942220 / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
+0203 75B1   42             text  'Build: 220203-2009150 / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
      75B2 7569     
      75B4 6C64     
      75B6 3A20     
      75B8 3232     
      75BA 3032     
      75BC 3033     
-     75BE 2D31     
-     75C0 3934     
-     75C2 3232     
-     75C4 3230     
+     75BE 2D32     
+     75C0 3030     
+     75C2 3931     
+     75C4 3530     
      75C6 202F     
      75C8 2032     
      75CA 3031     
@@ -13884,7 +13885,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      777A 636B     
 0334                       even
 0335               
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0101                       copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
      **** ****     > data.keymap.presets.asm
 0001               * FILE......: data.keymap.presets.asm
@@ -13910,7 +13911,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0015                       ; End of list
 0016                       ;-------------------------------------------------------
 0017 778E FFFF             data  EOL                   ; EOL
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0102                       ;-----------------------------------------------------------------------
 0103                       ; Bank full check
 0104                       ;-----------------------------------------------------------------------
@@ -13932,7 +13933,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0112                       ;-----------------------------------------------------------------------
 0113                       ; Vector table
 0114                       ;-----------------------------------------------------------------------
@@ -13990,7 +13991,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 604A     vec.30  data  dialog.menu           ; Dialog "Main Menu"
 0049 7FFC 6FB4     vec.31  data  tibasic.sid.toggle    ; Toggle 'Show SID' in Run TI-Basic dialog
 0050 7FFE 6F02     vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog
-                   < stevie_b3.asm.20559
+                   < stevie_b3.asm.26588
 0116                                                   ; Vector table bank 3
 0117               *--------------------------------------------------------------
 0118               * Video mode configuration

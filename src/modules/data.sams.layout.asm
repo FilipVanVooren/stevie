@@ -78,10 +78,10 @@ mem.sams.layout.basic2:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >f600                 ; \ >b000-efff, SAMS page >f6
-        data  >f700                 ; |
-        data  >f800                 ; | 16K VDP dump
-        data  >f900                 ; /
+        data  >f700                 ; \ >b000-efff, SAMS page >f6
+        data  >f800                 ; |
+        data  >f900                 ; | 16K VDP dump
+        data  >fa00                 ; /
         data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
@@ -93,10 +93,10 @@ mem.sams.layout.basic3:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >f100                 ; \ >b000-efff, SAMS page >f1
-        data  >f200                 ; |
-        data  >f300                 ; | 16K VDP dump
-        data  >f400                 ; /
+        data  >f300                 ; \ >b000-efff, SAMS page >f1
+        data  >f400                 ; |
+        data  >f500                 ; | 16K VDP dump
+        data  >f600                 ; /
         data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
@@ -108,10 +108,10 @@ mem.sams.layout.basic4:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >ec00                 ; \ >b000-efff, SAMS page >ec
-        data  >ed00                 ; |
-        data  >ee00                 ; | 16K VDP dump
-        data  >ef00                 ; /
+        data  >ef00                 ; \ >b000-efff, SAMS page >ec
+        data  >f000                 ; |
+        data  >f100                 ; | 16K VDP dump
+        data  >f200                 ; /
         data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 
@@ -123,10 +123,10 @@ mem.sams.layout.basic5:
         data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
-        data  >e700                 ; \ >b000-efff, SAMS page >e7
-        data  >e800                 ; |
-        data  >e900                 ; | 16K VDP dump
-        data  >ea00                 ; /
+        data  >eb00                 ; \ >b000-efff, SAMS page >e7
+        data  >ec00                 ; |
+        data  >ed00                 ; | 16K VDP dump
+        data  >ee00                 ; /
         data  >ff00                 ; >f000-ffff, SAMS page >ff
 
 mem.sams.layout.basic  equ mem.sams.layout.basic1
