@@ -104,7 +104,7 @@ indexes if few TI Basic sessions get dumped.
 
 ### SAMS pages
 
-| Session    | VRAM  | 32K   | scratchpad |
+| Session    | VRAM  | 32K   | Scratchpad |
 |------------|-------|-------|------------|
 | TI Basic 1 | fb-fe | xx-xx | ff         |
 | TI Basic 2 | f6-f9 | xx-xx | ff         |
