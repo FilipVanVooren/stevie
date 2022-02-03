@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.60989
+     **** ****     > stevie_b0.asm.14002
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220202-2219260
+0009               * File: stevie_b0.asm               ; Version 220203-1924390
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -470,76 +470,80 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0353               *--------------------------------------------------------------
 0354               * Stevie value stack                  @>a800-a8ff   (256 bytes)
 0355               *--------------------------------------------------------------
-0356      A900     sp2.stktop        equ  >a900           ; \ SP2 stack >a800 - >a8ff
+0356      A900     sp2.stktop        equ  >a900           ; \
 0357                                                      ; | The stack grows from high memory
-0358                                                      ; / to low memory.
-0359               *--------------------------------------------------------------
-0360               * Scratchpad memory work copy         @>ad00-aeff   (256 bytes)
-0361               *--------------------------------------------------------------
-0362      7E00     cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
-0363                                                      ; / stored in cartridge ROM bank7.asm
-0364               
-0365      F000     cpu.scrpad.tgt    equ  >f000           ; \ Fixed memory location used for
-0366                                                      ; | scratchpad backup/restore routines.
-0367                                                      ; /
+0358                                                      ; | towards low memory.
+0359                                                      ; |
+0360                                                      ; | Stack leaking is checked in SP2
+0361                                                      ; | user hook "edkey.keyscan.hook"
+0362                                                      ; /
+0363               *--------------------------------------------------------------
+0364               * Scratchpad memory work copy         @>ad00-aeff   (256 bytes)
+0365               *--------------------------------------------------------------
+0366      7E00     cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
+0367                                                      ; / stored in cartridge ROM bank7.asm
 0368               
-0369      8300     cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
-0370               
-0371      AD00     cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
-0372                                                      ; calling TI Basic/External programs
-0373               
-0374               *--------------------------------------------------------------
-0375               * Farjump return stack                @>af00-afff   (256 bytes)
-0376               *--------------------------------------------------------------
-0377      B000     fj.bottom         equ  >b000           ; Return stack for trampoline function
-0378                                                      ; Grows downwards from high to low.
-0379               *--------------------------------------------------------------
-0380               * Index                               @>b000-bfff  (4096 bytes)
-0381               *--------------------------------------------------------------
-0382      B000     idx.top           equ  >b000           ; Top of index
-0383      1000     idx.size          equ  4096            ; Index size
-0384               *--------------------------------------------------------------
-0385               * Editor buffer                       @>c000-cfff  (4096 bytes)
-0386               *--------------------------------------------------------------
-0387      C000     edb.top           equ  >c000           ; Editor buffer high memory
-0388      1000     edb.size          equ  4096            ; Editor buffer size
-0389               *--------------------------------------------------------------
-0390               * Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
-0391               *--------------------------------------------------------------
-0392      D000     fb.top            equ  >d000           ; Frame buffer (80x30)
-0393      0960     fb.size           equ  80*30           ; Frame buffer size
-0394      D960     tv.printer.fname  equ  >d960           ; Default printer   (80 char)
-0395      D9B0     tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
-0396               *--------------------------------------------------------------
-0397               * Command buffer history              @>e000-efff  (4096 bytes)
-0398               *--------------------------------------------------------------
-0399      E000     cmdb.top          equ  >e000           ; Top of command history buffer
-0400      1000     cmdb.size         equ  4096            ; Command buffer size
-0401               *--------------------------------------------------------------
-0402               * Heap                                @>f000-ffff  (4096 bytes)
-0403               *--------------------------------------------------------------
-0404      F000     heap.top          equ  >f000           ; Top of heap
-0405               
-0406               
+0369      F000     cpu.scrpad.tgt    equ  >f000           ; \ Fixed memory location used for
+0370                                                      ; | scratchpad backup/restore routines.
+0371                                                      ; /
+0372               
+0373      8300     cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
+0374               
+0375      AD00     cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
+0376                                                      ; calling TI Basic/External programs
+0377               
+0378               *--------------------------------------------------------------
+0379               * Farjump return stack                @>af00-afff   (256 bytes)
+0380               *--------------------------------------------------------------
+0381      B000     fj.bottom         equ  >b000           ; Return stack for trampoline function
+0382                                                      ; Grows downwards from high to low.
+0383               *--------------------------------------------------------------
+0384               * Index                               @>b000-bfff  (4096 bytes)
+0385               *--------------------------------------------------------------
+0386      B000     idx.top           equ  >b000           ; Top of index
+0387      1000     idx.size          equ  4096            ; Index size
+0388               *--------------------------------------------------------------
+0389               * Editor buffer                       @>c000-cfff  (4096 bytes)
+0390               *--------------------------------------------------------------
+0391      C000     edb.top           equ  >c000           ; Editor buffer high memory
+0392      1000     edb.size          equ  4096            ; Editor buffer size
+0393               *--------------------------------------------------------------
+0394               * Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
+0395               *--------------------------------------------------------------
+0396      D000     fb.top            equ  >d000           ; Frame buffer (80x30)
+0397      0960     fb.size           equ  80*30           ; Frame buffer size
+0398      D960     tv.printer.fname  equ  >d960           ; Default printer   (80 char)
+0399      D9B0     tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
+0400               *--------------------------------------------------------------
+0401               * Command buffer history              @>e000-efff  (4096 bytes)
+0402               *--------------------------------------------------------------
+0403      E000     cmdb.top          equ  >e000           ; Top of command history buffer
+0404      1000     cmdb.size         equ  4096            ; Command buffer size
+0405               *--------------------------------------------------------------
+0406               * Heap                                @>f000-ffff  (4096 bytes)
 0407               *--------------------------------------------------------------
-0408               * Stevie specific equates
-0409               *--------------------------------------------------------------
-0410      0000     fh.fopmode.none           equ  0       ; No file operation in progress
-0411      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-0412      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-0413      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
-0414               
-0415      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
-0416      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-0417      1DF0     vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
-0418                                                      ; VDP TAT address of 1st CMDB row
-0419      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0420      0780     vdp.sit.size              equ  (pane.botrow + 1) * 80
-0421                                                      ; VDP SIT size 80 columns, 24/30 rows
-0422      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
-0423      9900     tv.colorize.reset         equ  >9900   ; Colorization off
-0424      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.60989
+0408      F000     heap.top          equ  >f000           ; Top of heap
+0409               
+0410               
+0411               *--------------------------------------------------------------
+0412               * Stevie specific equates
+0413               *--------------------------------------------------------------
+0414      0000     fh.fopmode.none           equ  0       ; No file operation in progress
+0415      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
+0416      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+0417      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
+0418               
+0419      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
+0420      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
+0421      1DF0     vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
+0422                                                      ; VDP TAT address of 1st CMDB row
+0423      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
+0424      0780     vdp.sit.size              equ  (pane.botrow + 1) * 80
+0425                                                      ; VDP SIT size 80 columns, 24/30 rows
+0426      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
+0427      9900     tv.colorize.reset         equ  >9900   ; Colorization off
+0428      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
+                   < stevie_b0.asm.14002
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -679,7 +683,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0018               
 0019               ***************************************************************
 0020               * BANK 0
@@ -738,7 +742,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 7 (Resume Stevie session)
@@ -1657,7 +1661,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220202-2219260'
+0270 62AB   42             text  'Build-ID  220203-1924390'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1665,10 +1669,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B4 2032     
      62B6 3230     
      62B8 3230     
-     62BA 322D     
-     62BC 3232     
-     62BE 3139     
-     62C0 3236     
+     62BA 332D     
+     62BC 3139     
+     62BE 3234     
+     62C0 3339     
      62C2 30       
 0271                       even
 0272               
@@ -5949,7 +5953,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      703C 0040     
 0381 703E 0460  28         b     @main                 ; Give control to main program
      7040 39C0     
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0117                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8777,7 +8781,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0118                       ;------------------------------------------------------
 0119                       ; Stevie main entry point
 0120                       ;------------------------------------------------------
@@ -8811,7 +8815,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b0.asm.60989
+                   < stevie_b0.asm.14002
 0143               
 0144               cpu.crash.showbank.bankstr:
 0145               

@@ -6,7 +6,22 @@
 * Editor - spectra2 user hook
 ****************************************************************
 edkey.keyscan.hook:
-        coc   @wbit11,config        ; ANYKEY pressed ?
+        ;-------------------------------------------------------
+        ; Abort if stack is leaking garbage
+        ;-------------------------------------------------------
+        ci    stack,sp2.stktop      ; There shouldn't be anything
+                                    ; on the stack anymore.
+
+        jeq   !                     ; ok, continue
+        ;-------------------------------------------------------
+        ; Assert failed
+        ;-------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
+        ;-------------------------------------------------------
+        ; Check if key pressed
+        ;-------------------------------------------------------
+!       coc   @wbit11,config        ; ANYKEY pressed ?
         jne   edkey.keyscan.hook.clear
                                     ; No, clear buffer and exit
         ;------------------------------------------------------

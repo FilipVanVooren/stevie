@@ -761,8 +761,6 @@ tibasic:
               data bank7.rom        ; | i  p0 = bank address
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
-
-        bl    @dialog.basic         ; Refresh TI Basic dialog upon return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

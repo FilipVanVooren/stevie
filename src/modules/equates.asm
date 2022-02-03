@@ -353,9 +353,13 @@ cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
 * Stevie value stack                  @>a800-a8ff   (256 bytes)
 *--------------------------------------------------------------
-sp2.stktop        equ  >a900           ; \ SP2 stack >a800 - >a8ff
+sp2.stktop        equ  >a900           ; \
                                        ; | The stack grows from high memory
-                                       ; / to low memory.
+                                       ; | towards low memory.
+                                       ; |
+                                       ; | Stack leaking is checked in SP2
+                                       ; | user hook "edkey.keyscan.hook"
+                                       ; /
 *--------------------------------------------------------------
 * Scratchpad memory work copy         @>ad00-aeff   (256 bytes)
 *--------------------------------------------------------------

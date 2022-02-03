@@ -692,6 +692,9 @@ tibasic.return.stevie:
         clr   @parm2                ; Don't skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
 
+
+        bl    @tibasic.buildstr     ; Build session identifier string
+
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
