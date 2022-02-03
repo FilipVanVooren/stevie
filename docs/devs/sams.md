@@ -117,7 +117,7 @@ TI Basic sessions get dumped.
 The scratchpad of the 5 TI Basic sessions is always dumped to the page >ff, but
 to different memory ranges within that page
 
-| Scratchpad dumps in SAMS page >ff   |
+| Address      | Scratchpad dumps     |
 |--------------|----------------------|
 | >f000 - f0ff | Temporary copy       |
 | >f100 - f1ff | TI Basic session 1   |
