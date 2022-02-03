@@ -98,9 +98,9 @@ There is space reserved for dumping up to 5 parallel TI Basic sessions.
 
 The SAMS pages used for storing each dump are hardcoded and defined in the file
 'data.sams.layout.sams'. Note that the dumps are stored in reversed order at the
-end of the 1MB SAMS address page range, going downwards. with this bank
-order there's more space for the file editor buffer(s) and indexes if few
-TI Basic sessions get dumped.
+end of the 1MB SAMS address page range, going downwards.
+With this bank order there's more space for the file editor buffer(s) and
+indexes if few TI Basic sessions get dumped.
 
 ### SAMS pages
 
