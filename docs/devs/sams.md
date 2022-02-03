@@ -91,9 +91,9 @@ powering on the SAMS card.
 
 ## Dumps of TI Basic sessions
 
-The 16K VRAM, 32K memory expansion and scratchpad memory used by a TI Basic session
-is dumped to SAMS upon exit from the TI Basic session. The idea behind being that
-a dumped TI Basic session can be resumed at a later time.
+The 16K VRAM, 32K memory expansion and scratchpad memory used by a TI Basic
+session is dumped to SAMS upon exit from the TI Basic session.
+The idea behind being that a dumped TI Basic session can be resumed later.
 There is space reserved for dumping up to 5 parallel TI Basic sessions.
 
 The SAMS pages used for storing each dump are hardcoded and defined in the file
@@ -104,18 +104,18 @@ TI Basic sessions get dumped.
 
 ### SAMS pages
 
-| VRAM/32K/scratchpad dumps               |
-|-----------------------------------------|
-| TI Basic 1: SAMS pages fb-fe, xx-xx, ff |
-| TI Basic 2: SAMS pages f6-f9, xx-xx, ff |
-| TI Basic 3: SAMS pages f1-f4, xx-xx, ff |
-| TI Basic 4: SAMS pages ec-ef, xx-xx, ff |
-| TI Basic 5: SAMS pages e7-ea, xx-xx, ff |
+| Session    | VRAM  | 32K   | scratchpad |
+|------------|-------|-------|------------|
+| TI Basic 1 | fb-fe | xx-xx | ff         |
+| TI Basic 2 | f6-f9 | xx-xx | ff         |
+| TI Basic 3 | f1-f4 | xx-xx | ff         |
+| TI Basic 4 | ec-ef | xx-xx | ff         |
+| TI Basic 5 | e7-ea | xx-xx | ff         |
 
 ### Scratchpad dumps in SAMS page >ff
 
 The scratchpad of the 5 TI Basic sessions is always dumped to the page >ff, but
-to different memory ranges within that page
+to different memory ranges within that page.
 
 | Address      | Scratchpad dumps     |
 |--------------|----------------------|
