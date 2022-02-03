@@ -104,24 +104,24 @@ TI Basic sessions get dumped.
 
 ### SAMS pages
 
-| TI Basic sessions                                       |
-|---------------------------------------------------------|
-| VRAM/32K/scratch session 1: SAMS pages fb-fe, xx-xx, ff |
-| VRAM/32K/scratch session 2: SAMS pages f6-f9, xx-xx, ff |
-| VRAM/32K/scratch session 3: SAMS pages f1-f4, xx-xx, ff |
-| VRAM/32K/scratch session 4: SAMS pages ec-ef, xx-xx, ff |
-| VRAM/32K/scratch session 5: SAMS pages e7-ea, xx-xx, ff |
+| VRAM/32K/scratchpad dumps               |
+|-----------------------------------------|
+| TI Basic 1: SAMS pages fb-fe, xx-xx, ff |
+| TI Basic 2: SAMS pages f6-f9, xx-xx, ff |
+| TI Basic 3: SAMS pages f1-f4, xx-xx, ff |
+| TI Basic 4: SAMS pages ec-ef, xx-xx, ff |
+| TI Basic 5: SAMS pages e7-ea, xx-xx, ff |
 
-### Scratchpad dump
+### Scratchpad dumps in SAMS page >ff
 
 The scratchpad of the 5 TI Basic sessions is always dumped to the page >ff, but
 to different memory ranges within that page
 
-| Scratchpad dump                             |
+| Scratchpad dumps in SAMS page >ff           |
 |---------------------------------------------|
-| >f000 - f0ff  Scratchpad temporary copy     |
-| >f100 - f1ff  Scratchpad TI Basic session 1 |
-| >f200 - f2ff  Scratchpad TI Basic session 2 |
-| >f300 - f3ff  Scratchpad TI Basic session 3 |
-| >f400 - f4ff  Scratchpad TI Basic session 4 |
-| >f500 - f5ff  Scratchpad TI Basic session 5 |
+| >f000 - f0ff  Temporary copy                |
+| >f100 - f1ff  TI Basic session 1            |
+| >f200 - f2ff  TI Basic session 2            |
+| >f300 - f3ff  TI Basic session 3            |
+| >f400 - f4ff  TI Basic session 4            |
+| >f500 - f5ff  TI Basic session 5            |
