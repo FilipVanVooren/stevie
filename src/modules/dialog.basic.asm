@@ -38,7 +38,7 @@ dialog.basic:
         li    tmp0,txt.hint.basic
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
-        mov   @tibasic.hidesid,tmp0 ; Get 'Hide SID' flag
+        mov   @tib.hidesid,tmp0     ; Get 'Hide SID' flag
         jeq   !
         ;-------------------------------------------------------
         ; Flag is on

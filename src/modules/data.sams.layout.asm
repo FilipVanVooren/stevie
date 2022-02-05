@@ -15,7 +15,6 @@ mem.sams.layout.legacy:
         data  >0e00                 ; >e000-efff, SAMS page >0e
         data  >0f00                 ; >f000-ffff, SAMS page >0f
 
-
 ***************************************************************
 * SAMS page layout table for Stevie boot order
 *--------------------------------------------------------------
@@ -37,8 +36,6 @@ mem.sams.layout.boot:
         data  >0600                 ; >e000-efff, SAMS page >06
         data  >0700                 ; >f000-ffff, SAMS page >07
 
-
-
 ***************************************************************
 * SAMS page layout table before calling external progam
 *--------------------------------------------------------------
@@ -56,77 +53,73 @@ mem.sams.layout.external:
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 1 VRAM
+* SAMS page layout table TI Basic session 1 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
-        data  >0400                 ; >a000-afff, SAMS page >04
-
-        data  >fb00                 ; \ >b000-efff, SAMS page >fc
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
+        data  >0400                 ; . >a000-afff
+        data  >fb00                 ; \ >b000-efff
         data  >fc00                 ; |
         data  >fd00                 ; | 16K VDP dump
         data  >fe00                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >ff00                 ; . >f000-ffff
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 2 VRAM
+* SAMS page layout table TI Basic session 2 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
-        data  >0400                 ; >a000-afff, SAMS page >04
-
-        data  >f700                 ; \ >b000-efff, SAMS page >f6
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
+        data  >0400                 ; . >a000-afff
+        data  >f700                 ; \ >b000-efff
         data  >f800                 ; |
         data  >f900                 ; | 16K VDP dump
         data  >fa00                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >ff00                 ; . >f000-ffff
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 3 VRAM
+* SAMS page layout table TI Basic session 3 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
-        data  >0400                 ; >a000-afff, SAMS page >04
-
-        data  >f300                 ; \ >b000-efff, SAMS page >f1
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
+        data  >0400                 ; . >a000-afff
+        data  >f300                 ; \ >b000-efff
         data  >f400                 ; |
         data  >f500                 ; | 16K VDP dump
         data  >f600                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >ff00                 ; . >f000-ffff
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 4 VRAM
+* SAMS page layout table TI Basic session 4 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic4:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
-        data  >0400                 ; >a000-afff, SAMS page >04
-
-        data  >ef00                 ; \ >b000-efff, SAMS page >ec
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
+        data  >0400                 ; . >a000-afff
+        data  >ef00                 ; \ >b000-efff
         data  >f000                 ; |
         data  >f100                 ; | 16K VDP dump
         data  >f200                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >ff00                 ; . >f000-ffff
 
 
 ***************************************************************
-* SAMS page layout table for TI Basic session 5 VRAM
+* SAMS page layout table TI Basic session 5 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic5:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
-        data  >0400                 ; >a000-afff, SAMS page >04
-
-        data  >eb00                 ; \ >b000-efff, SAMS page >e7
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
+        data  >0400                 ; . >a000-afff
+        data  >eb00                 ; \ >b000-efff
         data  >ec00                 ; |
         data  >ed00                 ; | 16K VDP dump
         data  >ee00                 ; /
-        data  >ff00                 ; >f000-ffff, SAMS page >ff
+        data  >ff00                 ; . >f000-ffff
+
 
 mem.sams.layout.basic  equ mem.sams.layout.basic1

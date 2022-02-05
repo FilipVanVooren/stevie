@@ -1,4 +1,4 @@
-* FILE......: tibasic.helper.asm
+* FILE......: tibasic.dialog.helper.asm
 * Purpose...: TI Basic dialog helper functions
 
 
@@ -29,7 +29,7 @@ tibasic.sid.toggle:
         ;------------------------------------------------------
         ; Toggle SID display
         ;------------------------------------------------------
-        inv   @tibasic.hidesid      ; Toggle 'Hide SID'
+        inv   @tib.hidesid          ; Toggle 'Hide SID'
         jeq   tibasic.sid.off
         li    tmp0,txt.keys.basic2
         jmp   !
@@ -88,8 +88,8 @@ tibasic.buildstr:
         li    tmp0,rambuf + 200     ; \
         mov   tmp0,@cmdb.paninfo    ; / Set pointer to session selection string
 
-        li    tmp0,tibasic1.status  ; First TI Basic session to check
-        li    tmp2,tibasic5.status  ; Last TI Basic session to check
+        li    tmp0,tib.status1      ; First TI Basic session to check
+        li    tmp2,tib.status5      ; Last TI Basic session to check
         li    tmp3,rambuf + 212     ; Position in session selection string
         ;-------------------------------------------------------
         ; Loop over TI Basic sessions and check if active

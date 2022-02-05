@@ -114,8 +114,8 @@ indexes if few TI Basic sessions get dumped.
 
 ### Scratchpad dumps in SAMS page >ff
 
-The scratchpad of the 5 TI Basic sessions is always dumped to the page >ff, but
-to different memory ranges within that page.
+The scratchpads of the 5 TI Basic sessions are always dumped to the page >ff,
+but to different memory ranges within that page.
 
 | Address      | Scratchpad dumps     |
 |--------------|----------------------|

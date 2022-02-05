@@ -1,4 +1,4 @@
-* FILE......: tibasic.session.asm
+* FILE......: tib.session.asm
 * Purpose...: Run TI Basic session
 
 
@@ -9,7 +9,7 @@
 * bl   @tibasic
 *--------------------------------------------------------------
 * INPUT
-* @tibasic.session = TI Basic session to start/resume
+* @tib.session = TI Basic session to start/resume
 *
 * OUTPUT
 * none
@@ -66,15 +66,14 @@ tibasic:
         ;-------------------------------------------------------
         ; Keep 'Hide SID' flag for later use
         ;-------------------------------------------------------
-        mov   @tibasic.hidesid,@>83fc
-                                    ; \
+        mov   @tib.hidesid,@>83fc   ; \
                                     ; | Store a copy in the Stevie
                                     ; | scratchpad >83fc for later use in
                                     ; / TI Basic scratchpad.
         ;-------------------------------------------------------
         ; Keep TI Basic session ID for later use
         ;-------------------------------------------------------
-        mov   @tibasic.session,tmp0 ; \
+        mov   @tib.session,tmp0     ; \
                                     ; | Store TI Basic session ID in tmp0.
                                     ; | Througout the subroutine tmp0 will
                                     ; | keep this value, even when SAMS
@@ -105,12 +104,12 @@ tibasic:
         ; New TI Basic session 1
         ;-------------------------------------------------------
 tibasic.init.basic1:
-        mov   @tibasic1.status,tmp1 ; Resume TI Basic session?
+        mov   @tib.status1,tmp1     ; Resume TI Basic session?
         jeq   !                     ; No, new session
         b     @tibasic.resume.basic1
 
 !       ori   tmp1,1                ; \
-        mov   tmp1,@tibasic1.status ; / Set resume flag for next run
+        mov   tmp1,@tib.status1     ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
@@ -124,12 +123,12 @@ tibasic.init.basic1:
         ; New TI Basic session 2
         ;-------------------------------------------------------
 tibasic.init.basic2:
-        mov   @tibasic2.status,tmp1 ; Resume TI Basic session?
+        mov   @tib.status2,tmp1     ; Resume TI Basic session?
         jeq   !                     ; No, new session
         b     @tibasic.resume.basic2
 
 !       ori   tmp1,1                ; \
-        mov   tmp1,@tibasic2.status ; / Set resume flag for next run
+        mov   tmp1,@tib.status2     ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 2
@@ -143,11 +142,11 @@ tibasic.init.basic2:
         ; New TI Basic session 3
         ;-------------------------------------------------------
 tibasic.init.basic3:
-        mov   @tibasic3.status,tmp1 ; Resume TI Basic session?
+        mov   @tib.status3,tmp1     ; Resume TI Basic session?
         jgt   tibasic.resume.basic3 ; yes, do resume
 
         ori   tmp1,1                ; \
-        mov   tmp1,@tibasic3.status ; / Set resume flag for next run
+        mov   tmp1,@tib.status3     ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 3
@@ -161,11 +160,11 @@ tibasic.init.basic3:
         ; New TI Basic session 4
         ;-------------------------------------------------------
 tibasic.init.basic4:
-        mov   @tibasic4.status,tmp1 ; Resume TI Basic session?
+        mov   @tib.status4,tmp1     ; Resume TI Basic session?
         jgt   tibasic.resume.basic4 ; yes, do resume
 
         ori   tmp1,1                ; \
-        mov   tmp1,@tibasic4.status ; / Set resume flag for next run
+        mov   tmp1,@tib.status4     ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 4
@@ -179,11 +178,11 @@ tibasic.init.basic4:
         ; New TI Basic session 5
         ;-------------------------------------------------------
 tibasic.init.basic5:
-        mov   @tibasic5.status,tmp1 ; Resume TI Basic session?
+        mov   @tib.status5,tmp1     ; Resume TI Basic session?
         jgt   tibasic.resume.basic5 ; yes, do resume
 
         ori   tmp1,1                ; \
-        mov   tmp1,@tibasic5.status ; / Set resume flag for next run
+        mov   tmp1,@tib.status5     ; / Set resume flag for next run
 
         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 5
@@ -491,7 +490,7 @@ tibasic.return.mon:
         ;-------------------------------------------------------
         ; Initialize
         ;-------------------------------------------------------
-        mov   @tibasic.session,tmp0
+        mov   @tib.session,tmp0
         ci    tmp0,1
         jlt   !
         ci    tmp0,5
@@ -525,7 +524,7 @@ tibasic.return.mon.cont:
         ;-------------------------------------------------------
         ; Assert TI basic sesion ID
         ;-------------------------------------------------------
-        mov   @tibasic.session,tmp0 ; Get session ID
+        mov   @tib.session,tmp0     ; Get session ID
         jeq   !
         ci    tmp0,5
         jgt   !
@@ -533,7 +532,7 @@ tibasic.return.mon.cont:
         ; Reset session resume flag (tibasicX.status)
         ;-------------------------------------------------------
         sla   tmp0,1                ; Word align
-        clr   @tibasic.session(tmp0)
+        clr   @tib.session(tmp0)
         jmp   tibasic.return.stevie
         ;-------------------------------------------------------
         ; Assert failed
@@ -571,7 +570,7 @@ tibasic.return:
         ; Backup scratchpad of TI-Basic session 1
         ;-------------------------------------------------------
 tibasic.return.1:
-        c     @tibasic.session,@w$0001
+        c     @tib.session,@w$0001
         jne   tibasic.return.2      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -582,7 +581,7 @@ tibasic.return.1:
         ; Backup scratchpad of TI-Basic session 2
         ;-------------------------------------------------------
 tibasic.return.2:
-        c     @tibasic.session,@w$0002
+        c     @tib.session,@w$0002
         jne   tibasic.return.3      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -593,7 +592,7 @@ tibasic.return.2:
         ; Backup scratchpad of TI-Basic session 3
         ;-------------------------------------------------------
 tibasic.return.3:
-        c     @tibasic.session,@tibasic.const3
+        c     @tib.session,@tibasic.const3
         jne   tibasic.return.4      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -604,7 +603,7 @@ tibasic.return.3:
         ; Backup scratchpad of TI-Basic session 4
         ;-------------------------------------------------------
 tibasic.return.4:
-        c     @tibasic.session,@w$0004
+        c     @tib.session,@w$0004
         jne   tibasic.return.5      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -615,7 +614,7 @@ tibasic.return.4:
         ; Backup scratchpad of TI-Basic session 5
         ;-------------------------------------------------------
 tibasic.return.5:
-        c     @tibasic.session,@tibasic.const5
+        c     @tib.session,@tibasic.const5
         jne   tibasic.return.failed ; Not the current session, abort here
 
         bl    @cpym2m

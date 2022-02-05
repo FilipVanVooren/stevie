@@ -18,8 +18,9 @@
 * tmp0, tmp1, tmp2, r12
 *--------------------------------------------------------------
 * Remarks
-* @tibasic.var1 = >8330, pointer to VDP linenum table bottom
-* @tibasic.var2 = >8332, pointer to VDP linenum table top
+* @tib.var1 = Copy @parm1
+* @tib.var2 = >8330, pointer to VDP linenum table bottom
+* @tib.var3 = >8332, pointer to VDP linenum table top
 ********|*****|*********************|**************************
 tibasic.uncrunch:
         dect  stack
@@ -38,6 +39,7 @@ tibasic.uncrunch:
         ; (1) Assert on TI basic session
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get session to uncrunch
+        mov   tmp0,@tib.var1        ; Make copy
 
         ci    tmp0,1                ; \
         jlt   !                     ; | Skip to (2) if valid
@@ -49,46 +51,53 @@ tibasic.uncrunch:
 !       mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
-        ; (2) Get index into SAMS layout data table
+        ; (2) Get scratchpad of TI Basic session
         ;------------------------------------------------------
 tibasic.uncrunch.2:
-        ; The data tables of the 5 TI basic sessions form a
-        ; uniform region, we calculate the index into the last
-        ; word of the specified session.
+        bl    @sams.page.set        ; Set SAMS page
+              data >00ff,>f000      ; \ i  p1  = SAMS page number
+                                    ; / i  p2  = Memory map address
 
-        sla   tmp0,4                ; \ Get index of first word
-                                    ; | in data table with SAMS
-                                    ; | layout (of following
-                                    ; / session!)
+        ; TI Basic session 1 scratchpad >f100
+        ; TI Basic session 2 scratchpad >f200
+        ; TI Basic session 3 scratchpad >f300
+        ; TI Basic session 4 scratchpad >f400
+        ; TI Basic session 5 scratchpad >f500
 
-        ai    tmp0,-2               ; Offset in SAMS data layout
-                                    ; table (f000-ffff) in
-                                    ; current session
-
-        mov   tmp0,@tibasic.var10   ; Save index offset for later use
-
-        mov   @mem.sams.layout.basic(tmp0),tmp0
-                                    ; Get SAMS page
-        srl   tmp0,8                ; Move to LSB
+        mov   @tib.var1,tmp0        ; Get TI Basic session
+        sla   tmp0,8                ; Get scratchpad offset (>100->500)
+        ai    tmp0,>f000            ; Add base address
+        mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
         ;------------------------------------------------------
-        ; (3) Get scratchpad page of current TI Basic session
+        ; (3) Pick relevant stuff out of scratchpad
         ;------------------------------------------------------
 tibasic.uncrunch.3:
-        li    tmp1,>f000            ; Map SAMS page to >f000-ffff
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0  = SAMS page number
-                                    ; / i  tmp1  = Memory map address
+        mov   @>30(tmp0),@tib.ln.top.ptr
+                                    ; @>8330 Pointer to top of line number
+                                    ; table in VRAM
 
-        ; The scratchpad >8300 - >83ff as used by the specified
-        ; TI Basic session was previously saved by the subroutine
-        ; "tibasic.return" upon return from TI Basic to Stevie.
-        ; The relevant address range is >f960 - >f9ff
-
-        mov   @>f990,@tibasic.var1  ; @>8330 Save pointer to linenum table bot.
-        mov   @>f992,@tibasic.var2  ; @>8332 Save pointer to linenum table top.
-
+        mov   @>32(tmp0),@tib.ln.bot.ptr
+                                    ; @>8332 Pointer to bottom of line number
+                                    ; table in VRAM
         ;------------------------------------------------------
-        ; (3) Prepare for traversing crunched program
+        ; (3) Get index into SAMS layout data table
+        ;------------------------------------------------------
+tibasic.uncrunch.4:
+        ; The data tables of the 5 TI basic sessions form a
+        ; uniform region, we calculate the index of the 1st word in the
+        ; specified session.
+        mov   @tib.var1,tmp0        ; Get TI Basic session
+
+        sla   tmp0,4                ; \ Get index of first word in SAMS page
+                                    ; | layout (of following TI Basic session)
+                                    ; /
+
+        ai    tmp0,mem.sams.layout.basic - 16
+                                    ; Add base address for specified session
+
+        mov   tmp0,@tib.stab.ptr    ; Save pointer
+        ;------------------------------------------------------
+        ; (4) Prepare for traversing crunched program
         ;------------------------------------------------------
 
 

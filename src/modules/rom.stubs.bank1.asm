@@ -734,23 +734,23 @@ vdp.patterns.dump:
 ********|*****|*********************|**************************
 tibasic1:
         li    tmp0,1
-        mov   tmp0,@tibasic.session
+        mov   tmp0,@tib.session
         jmp   tibasic
 tibasic2:
         li    tmp0,2
-        mov   tmp0,@tibasic.session
+        mov   tmp0,@tib.session
         jmp   tibasic
 tibasic3:
         li    tmp0,3
-        mov   tmp0,@tibasic.session
+        mov   tmp0,@tib.session
         jmp   tibasic
 tibasic4:
         li    tmp0,4
-        mov   tmp0,@tibasic.session
+        mov   tmp0,@tib.session
         jmp   tibasic
 tibasic5:
         li    tmp0,5
-        mov   tmp0,@tibasic.session
+        mov   tmp0,@tib.session
 tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
@@ -779,7 +779,7 @@ tibasic.uncrunch:
         ;------------------------------------------------------
         ; Uncrunch TI basic program
         ;------------------------------------------------------
-        mov   @w$0001,@parm1
+        mov   @tib.session,@parm1   ; Get current session
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
               data vec.11           ; | i  p1 = Vector with target address

@@ -162,27 +162,36 @@ kbflags           equ  core1.top + 38  ; Keyboard control flags
 keycode1          equ  core1.top + 40  ; Current key scanned
 keycode2          equ  core1.top + 42  ; Previous key scanned
 unpacked.string   equ  core1.top + 44  ; 6 char string with unpacked uin16
-tibasic.hidesid   equ  core1.top + 50  ; Hide TI-Basic session ID
-tibasic.session   equ  core1.top + 52  ; Current TI-Basic session (1-5)
-tibasic1.status   equ  core1.top + 54  ; TI Basic session 1
-tibasic2.status   equ  core1.top + 56  ; TI Basic session 2
-tibasic3.status   equ  core1.top + 58  ; TI Basic session 3
-tibasic4.status   equ  core1.top + 60  ; TI Basic session 4
-tibasic5.status   equ  core1.top + 62  ; TI Basic session 5
-tibasic.var1      equ  core1.top + 64  ; Temp variable 1
-tibasic.var2      equ  core1.top + 66  ; Temp variable 2
-tibasic.var3      equ  core1.top + 68  ; Temp variable 3
-tibasic.var4      equ  core1.top + 70  ; Temp variable 4
-tibasic.var5      equ  core1.top + 72  ; Temp variable 5
-tibasic.var6      equ  core1.top + 74  ; Temp variable 6
-tibasic.var7      equ  core1.top + 76  ; Temp variable 7
-tibasic.var8      equ  core1.top + 78  ; Temp variable 8
-tibasic.var9      equ  core1.top + 80  ; Temp variable 9
-tibasic.var10     equ  core1.top + 82  ; Temp variable 10
-trmpvector        equ  core1.top + 84  ; Vector trampoline (if p1|tmp1 = >ffff)
+trmpvector        equ  core1.top + 50  ; Vector trampoline (if p1|tmp1 = >ffff)
+core1.free1       equ  core1.top + 52  ; 52-85 **free**
 ramsat            equ  core1.top + 86  ; Sprite Attr. Table in RAM (14 bytes)
 timers            equ  core1.top + 100 ; Timers (80 bytes)
-core1.free        equ  core1.top + 180 ; End of structure
+                  ;--------------------------------------------
+                  ; TI Basic related
+                  ;--------------------------------------------
+tib.session       equ  core1.top + 180 ; Current TI-Basic session (1-5)
+tib.status1       equ  core1.top + 182 ; Status flags TI Basic session 1
+tib.status2       equ  core1.top + 184 ; Status flags TI Basic session 2
+tib.status3       equ  core1.top + 186 ; Status flags TI Basic session 3
+tib.status4       equ  core1.top + 188 ; Status flags TI Basic session 4
+tib.status5       equ  core1.top + 190 ; Status flags TI Basic session 5
+tib.hidesid       equ  core1.top + 192 ; Hide TI-Basic session ID
+tib.stab.ptr      equ  core1.top + 194 ; Pointer to TI-Basic SAMS page table
+tib.scrpad.ptr    equ  core1.top + 196 ; Pointer to TI-Basic scratchpad in SAMS
+tib.ln.top.ptr    equ  core1.top + 198 ; Pointer top of line number table
+tib.ln.bot.ptr    equ  core1.top + 200 ; Pointer bottom of line number table
+core1.free2       equ  core1.top + 202 ; 202-235 **free*
+tib.var1          equ  core1.top + 236 ; Temp variable 1
+tib.var2          equ  core1.top + 238 ; Temp variable 2
+tib.var3          equ  core1.top + 240 ; Temp variable 3
+tib.var4          equ  core1.top + 242 ; Temp variable 4
+tib.var5          equ  core1.top + 244 ; Temp variable 5
+tib.var6          equ  core1.top + 246 ; Temp variable 6
+tib.var7          equ  core1.top + 248 ; Temp variable 7
+tib.var8          equ  core1.top + 250 ; Temp variable 8
+tib.var9          equ  core1.top + 252 ; Temp variable 9
+tib.var10         equ  core1.top + 254 ; Temp variable 10
+core1.free        equ  core1.top + 256 ; End of structure
 *--------------------------------------------------------------
 * Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
 *--------------------------------------------------------------
