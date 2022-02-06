@@ -3,6 +3,79 @@
 
 
 ***************************************************************
+* _v2sams
+* Convert VDP address to index in SAMS page
+***************************************************************
+* bl   _v2sams
+*--------------------------------------------------------------
+* INPUT
+* tmp0 = VDP Address in range >0000 - >3fff
+*
+* OUTPUT
+* @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var3 = SAMS page ID mapped to VRAM address
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1
+*--------------------------------------------------------------
+* Remarks
+* Converts the VDP address to index into SAMS page layout table
+* of TI Basic session and get SAMS page.
+*
+* VRAM 0000-0fff = 0
+* VRAM 1000-1fff = 2
+* VRAM 2000-2fff = 4
+* VRAM 3000-3fff = 6
+********|*****|*********************|**************************
+_v2sams:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        ;------------------------------------------------------
+        ; Calculate index in SAMS page table
+        ;------------------------------------------------------
+        andi  tmp0,>f000            ; Only keep high-nibble of MSB
+
+        srl   tmp0,11               ; Move high-nibble to LSB and multiply by 2
+        a     @tib.stab.ptr,tmp0    ; Add pointer base address
+
+        ;
+        ; In the SAMS page layout table of the TI Basic session, the 16K VDP
+        ; memory dump page starts at the 4th word. So need to add fixed offset
+        ;
+        ai    tmp0,6                ; Add fixed offset
+
+        mov   tmp0,@tib.var2        ; Save memory address
+        mov   *tmp0,tmp0            ; Get SAMS page number
+        ;------------------------------------------------------
+        ; Check if SAMS page needs to be switched
+        ;------------------------------------------------------
+        c     tmp0,@tib.var3        ; SAMS page has changed?
+        jeq   _v2sams.exit          ; No, exit early
+
+        mov   tmp0,@tib.var3        ; Set new SAMS page
+        srl   tmp0,8                ; MSB to LSB
+        li    tmp1,>f000            ; Memory address to map to
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0  = SAMS page number
+                                    ; / i  tmp1  = Memory map address
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+_v2sams.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return
+
+
+
+
+***************************************************************
 * tibasic.uncrunch
 * Uncrunch TI Basic program to editor buffer
 ***************************************************************
@@ -15,7 +88,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, r12
+* tmp0, tmp1, tmp2, tmp3, tmp4
 *--------------------------------------------------------------
 * Remarks
 * @tib.var1 = Copy @parm1
@@ -31,6 +104,11 @@
 * @tib.symt.bot.ptr = Bottom of symbol table
 * @tib.strs.top.ptr = Top of string space
 * @tib.strs.bot.ptr = Bottom of string space
+*
+* Temporary variables
+* @tib.var1 = Copy of @parm1
+* @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var3 = SAMS page ID mapped to VRAM address
 ********|*****|*********************|**************************
 tibasic.uncrunch:
         dect  stack
@@ -45,6 +123,15 @@ tibasic.uncrunch:
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
+        ;------------------------------------------------------
+        ; Initialisation
+        ;------------------------------------------------------
+tibasic.uncrunch.init:
+        clr   @tib.var1             ;
+        clr   @tib.var2             ; Clear temporary variables
+        clr   @tib.var3             ;
+        clr   @tib.var4             ;
+        clr   @tib.var5             ;
         ;------------------------------------------------------
         ; (1) Assert on TI basic session
         ;------------------------------------------------------
@@ -90,12 +177,12 @@ tibasic.uncrunch.3:
                                     ; @>831a Pointer to bottom of string space
                                     ; in VRAM
 
-        mov   @>30(tmp0),@tib.lnt.top.ptr
-                                    ; @>8330 Pointer to top of line number
+        mov   @>30(tmp0),@tib.lnt.bot.ptr
+                                    ; @>8330 Pointer to bottom of line number
                                     ; table in VRAM
 
-        mov   @>32(tmp0),@tib.lnt.bot.ptr
-                                    ; @>8332 Pointer to bottom of line number
+        mov   @>32(tmp0),@tib.lnt.top.ptr
+                                    ; @>8332 Pointer to top of line number
                                     ; table in VRAM
 
         mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
@@ -107,7 +194,7 @@ tibasic.uncrunch.3:
                                     ; @>833e Pointer to bottom of symbol table
                                     ; in VRAM
         ;------------------------------------------------------
-        ; (3) Get index into SAMS layout data table
+        ; (4) Get pointer to SAMS page table
         ;------------------------------------------------------
 tibasic.uncrunch.4:
         ; The data tables of the 5 TI basic sessions form a
@@ -124,8 +211,12 @@ tibasic.uncrunch.4:
 
         mov   tmp0,@tib.stab.ptr    ; Save pointer
         ;------------------------------------------------------
-        ; (4) Prepare for traversing crunched program
+        ; (5) Loop over line number table
         ;------------------------------------------------------
+tibasic.uncrunch.15:
+        mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
+        bl    @_v2sams
+
 
 
         ;------------------------------------------------------
@@ -133,8 +224,6 @@ tibasic.uncrunch.4:
         ;------------------------------------------------------
 tibasic.uncrunch.9:
         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
-        srl   tmp0,8                ; Move to LSB
-
         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
 
         bl    @xsams.page.set       ; Set SAMS page
