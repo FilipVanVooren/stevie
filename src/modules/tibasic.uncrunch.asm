@@ -4,7 +4,7 @@
 
 ***************************************************************
 * _v2sams
-* Convert VDP address to index in SAMS page
+* Convert VDP address to SAMS page equivalent and get SAMS page
 ***************************************************************
 * bl   _v2sams
 *--------------------------------------------------------------
@@ -12,7 +12,8 @@
 * tmp0 = VDP Address in range >0000 - >3fff
 *
 * OUTPUT
-* @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var2 = Address of SAMS page layout table entry mapped to
+*             VRAM address
 * @tib.var3 = SAMS page ID mapped to VRAM address
 *--------------------------------------------------------------
 * Register usage
@@ -20,12 +21,13 @@
 *--------------------------------------------------------------
 * Remarks
 * Converts the VDP address to index into SAMS page layout table
-* of TI Basic session and get SAMS page.
+* mem.sams.layout.basic(X) and get SAMS page.
 *
-* VRAM 0000-0fff = 0
-* VRAM 1000-1fff = 2
-* VRAM 2000-2fff = 4
-* VRAM 3000-3fff = 6
+* Index offset in SAMS page layout table:
+* VRAM 0000-0fff = 6   \
+* VRAM 1000-1fff = 8   |  Offset of slots with SAMS pages having
+* VRAM 2000-2fff = 10  |  the 16K VDP dump of TI basic session.
+* VRAM 3000-3fff = 12  /
 ********|*****|*********************|**************************
 _v2sams:
         dect  stack
