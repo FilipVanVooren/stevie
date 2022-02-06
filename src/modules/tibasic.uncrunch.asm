@@ -19,8 +19,18 @@
 *--------------------------------------------------------------
 * Remarks
 * @tib.var1 = Copy @parm1
-* @tib.var2 = >8330, pointer to VDP linenum table bottom
-* @tib.var3 = >8332, pointer to VDP linenum table top
+*
+* Pointers:
+* @tib.scrpad.ptr = Scratchpad address in SAMS page >ff
+* @tib.stab.ptr   = SAMS page layout table of TI Basic session
+*
+* Pointers to tables in VRAM:
+* @tib.lnt.top.ptr  = Top of line number table
+* @tib.lnt.bot.ptr  = Bottom of line number table
+* @tib.symt.top.ptr = Top of symbol table
+* @tib.symt.bot.ptr = Bottom of symbol table
+* @tib.strs.top.ptr = Top of string space
+* @tib.strs.bot.ptr = Bottom of string space
 ********|*****|*********************|**************************
 tibasic.uncrunch:
         dect  stack
@@ -69,16 +79,33 @@ tibasic.uncrunch.2:
         ai    tmp0,>f000            ; Add base address
         mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
         ;------------------------------------------------------
-        ; (3) Pick relevant stuff out of scratchpad
+        ; (3) Get relevant pointers stored in scratchpad
         ;------------------------------------------------------
 tibasic.uncrunch.3:
-        mov   @>30(tmp0),@tib.ln.top.ptr
+        mov   @>18(tmp0),@tib.strs.top.ptr
+                                    ; @>8318 Pointer to top of string space
+                                    ; in VRAM
+
+        mov   @>1a(tmp0),@tib.strs.bot.ptr
+                                    ; @>831a Pointer to bottom of string space
+                                    ; in VRAM
+
+        mov   @>30(tmp0),@tib.lnt.top.ptr
                                     ; @>8330 Pointer to top of line number
                                     ; table in VRAM
 
-        mov   @>32(tmp0),@tib.ln.bot.ptr
+        mov   @>32(tmp0),@tib.lnt.bot.ptr
                                     ; @>8332 Pointer to bottom of line number
                                     ; table in VRAM
+
+        mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
+        dect  @tib.symt.top.ptr     ; Pointer to top of symbol table in VRAM.
+                                    ; Table top is just below the bottom of
+                                    ; the line number table.
+
+        mov   @>3e(tmp0),@tib.symt.bot.ptr
+                                    ; @>833e Pointer to bottom of symbol table
+                                    ; in VRAM
         ;------------------------------------------------------
         ; (3) Get index into SAMS layout data table
         ;------------------------------------------------------

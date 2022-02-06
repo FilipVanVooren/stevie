@@ -178,9 +178,13 @@ tib.status5       equ  core1.top + 190 ; Status flags TI Basic session 5
 tib.hidesid       equ  core1.top + 192 ; Hide TI-Basic session ID
 tib.stab.ptr      equ  core1.top + 194 ; Pointer to TI-Basic SAMS page table
 tib.scrpad.ptr    equ  core1.top + 196 ; Pointer to TI-Basic scratchpad in SAMS
-tib.ln.top.ptr    equ  core1.top + 198 ; Pointer top of line number table
-tib.ln.bot.ptr    equ  core1.top + 200 ; Pointer bottom of line number table
-core1.free2       equ  core1.top + 202 ; 202-235 **free*
+tib.lnt.top.ptr   equ  core1.top + 198 ; Pointer to top of line number table
+tib.lnt.bot.ptr   equ  core1.top + 200 ; Pointer to bottom of line number table
+tib.symt.top.ptr  equ  core1.top + 202 ; Pointer to top of symbol table
+tib.symt.bot.ptr  equ  core1.top + 204 ; Pointer to bottom of symbol table
+tib.strs.top.ptr  equ  core1.top + 206 ; Pointer to top of string space
+tib.strs.bot.ptr  equ  core1.top + 208 ; Pointer to bottom of string space
+core1.free2       equ  core1.top + 210 ; 210-235 **free*
 tib.var1          equ  core1.top + 236 ; Temp variable 1
 tib.var2          equ  core1.top + 238 ; Temp variable 2
 tib.var3          equ  core1.top + 240 ; Temp variable 3
