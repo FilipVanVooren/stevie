@@ -31,7 +31,11 @@ tib.uncrunch:
                                     ; \ i  @parm1 = TI Basic session to uncrunch
                                     ; /
         ;------------------------------------------------------
-        ; (2) Prepare for exit
+        ; Uncrunch TI Basic program
+        ;------------------------------------------------------
+        bl    @tib.uncrunch.prg     ; Uncrunch TI Basic program
+        ;------------------------------------------------------
+        ; Prepare for exit
         ;------------------------------------------------------
         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
         li    tmp1,>f000            ; Map SAMS page to >f000-ffff

@@ -67,6 +67,7 @@ main:
         copy  "tib.uncrunch.helper.asm"  ; Helper functions for uncrunching
         copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
         copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
+        copy  "tib.uncrunch.prg.asm"     ; Uncrunch tokenized program code
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
