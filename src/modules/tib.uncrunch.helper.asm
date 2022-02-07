@@ -46,7 +46,7 @@ _v2sams:
 
         ;
         ; In the SAMS page layout table of the TI Basic session, the 16K VDP
-        ; memory dump page starts at the 4th word. So need to add fixed offset
+        ; memory dump page starts at the 4th word. So need to add fixed offset.
         ;
         ai    tmp0,6                ; Add fixed offset
 

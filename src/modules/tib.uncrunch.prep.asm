@@ -3,8 +3,8 @@
 
 
 ***************************************************************
-* tibasic.uncrunch
-* Uncrunch TI Basic program to editor buffer
+* tib.uncrunch.prepare
+* Prepare for uncrunching TI-Basic program
 ***************************************************************
 * bl   @tibasic.uncrunch
 *--------------------------------------------------------------
@@ -15,7 +15,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0
 *--------------------------------------------------------------
 * Remarks
 * @tib.var1 = Copy @parm1
@@ -37,23 +37,14 @@
 * @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
 * @tib.var3 = SAMS page ID mapped to VRAM address
 ********|*****|*********************|**************************
-tibasic.uncrunch:
+tib.uncrunch.prepare:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-tibasic.uncrunch.init:
         clr   @tib.var1             ;
         clr   @tib.var2             ; Clear temporary variables
         clr   @tib.var3             ;
@@ -68,7 +59,7 @@ tibasic.uncrunch.init:
         ci    tmp0,1                ; \
         jlt   !                     ; | Skip to (2) if valid
         ci    tmp0,5                ; | session ID.
-        jle   tibasic.uncrunch.2    ; /
+        jle   tib.uncrunch.prepare.2; /
         ;------------------------------------------------------
         ; Assert failed
         ;------------------------------------------------------
@@ -77,7 +68,7 @@ tibasic.uncrunch.init:
         ;------------------------------------------------------
         ; (2) Get scratchpad of TI Basic session
         ;------------------------------------------------------
-tibasic.uncrunch.2:
+tib.uncrunch.prepare.2:
         bl    @sams.page.set        ; Set SAMS page
               data >00ff,>f000      ; \ i  p1  = SAMS page number
                                     ; / i  p2  = Memory map address
@@ -95,7 +86,6 @@ tibasic.uncrunch.2:
         ;------------------------------------------------------
         ; (3) Get relevant pointers stored in scratchpad
         ;------------------------------------------------------
-tibasic.uncrunch.3:
         mov   @>18(tmp0),@tib.strs.top.ptr
                                     ; @>8318 Pointer to top of string space
                                     ; in VRAM
@@ -123,7 +113,7 @@ tibasic.uncrunch.3:
         ;------------------------------------------------------
         ; (4) Get pointer to SAMS page table
         ;------------------------------------------------------
-tibasic.uncrunch.4:
+
         ; The data tables of the 5 TI basic sessions form a
         ; uniform region, we calculate the index of the 1st word in the
         ; specified session.
@@ -140,32 +130,12 @@ tibasic.uncrunch.4:
         ;------------------------------------------------------
         ; (5) Loop over line number table
         ;------------------------------------------------------
-tibasic.uncrunch.15:
         mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
         bl    @_v2sams
-
-
-
-        ;------------------------------------------------------
-        ; (9) Prepare for exit
-        ;------------------------------------------------------
-tibasic.uncrunch.9:
-        mov   @tv.sams.f000,tmp0    ; Get SAMS page number
-        li    tmp1,>f000            ; Map SAMS page to >f000-ffff
-
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0  = SAMS page number
-                                    ; / i  tmp1  = Memory map address
-
-        bl    @fb.refresh           ; Refresh frame buffer content
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-tibasic.uncrunch.exit:
-        mov   *stack+,tmp4          ; Pop tmp4
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
+tib.uncrunch.prepare.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

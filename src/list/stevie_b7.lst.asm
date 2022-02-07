@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.10482
+     **** ****     > stevie_b7.asm.15947
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220207-1834190
+0009               * File: stevie_b7.asm               ; Version 220207-1901370
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -556,7 +556,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0439      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0440      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0441      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -696,7 +696,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0018               
 0019               ***************************************************************
 0020               * BANK 7
@@ -755,7 +755,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -763,7 +763,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       aorg  >6038
 0031 6038 04E0  34         clr   @bank7.rom            ; Switch to bank 7 "Jonas"
      603A 600E     
-0032 603C 0460  28         b     @tibasic.return.mon   ; Resume Stevie session
+0032 603C 0460  28         b     @tib.run.return.mon   ; Resume Stevie session
      603E 6414     
 0033               
 0034                       aorg  kickstart.code1       ; >6040
@@ -1576,7 +1576,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220207-1834190'
+0270 21ED   42             text  'Build-ID  220207-1901370'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1585,9 +1585,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3230     
      21FA 3230     
      21FC 372D     
-     21FE 3138     
-     2200 3334     
-     2202 3139     
+     21FE 3139     
+     2200 3031     
+     2202 3337     
      2204 30       
 0271                       even
 0272               
@@ -5868,7 +5868,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0041                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8696,7 +8696,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0042                       ;------------------------------------------------------
 0043                       ; Activate bank 1 and branch to  >6036
 0044                       ;------------------------------------------------------
@@ -8859,7 +8859,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      609E 994A     
      60A0 BEEF     
 0124                                                   ; DEAD 994A BEEF
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0062                       copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
      **** ****     > mem.sams.layout.asm
 0001               
@@ -9268,7 +9268,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 618A 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0063                       ;-----------------------------------------------------------------------
 0064                       ; TI Basic sessions
 0065                       ;-----------------------------------------------------------------------
@@ -9279,10 +9279,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0003               
 0004               
 0005               ***************************************************************
-0006               * tibasic
+0006               * tib.run
 0007               * Run TI Basic session
 0008               ***************************************************************
-0009               * bl   @tibasic
+0009               * bl   @tib.run
 0010               *--------------------------------------------------------------
 0011               * INPUT
 0012               * @tib.session = TI Basic session to start/resume
@@ -9294,7 +9294,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * r1 in GPL WS, tmp0, tmp1, tmp2, r12
 0019               *--------------------------------------------------------------
 0020               * Remarks
-0021               * tibasic >> b @0070 (GPL interpreter/TI Basic)
+0021               * tib.run >> b @0070 (GPL interpreter/TI Basic)
 0022               *         >> isr
 0023               *         >> tibasic.return
 0024               *
@@ -9302,7 +9302,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0026               * >83b4   Hide Flag/ISR counter for triggering SID display.
 0027               * >83b6   TI Basic Session ID
 0028               ********|*****|*********************|**************************
-0029               tibasic:
+0029               tib.run:
 0030 618C 0649  14         dect  stack
 0031 618E C64B  30         mov   r11,*stack            ; Save return address
 0032 6190 0649  14         dect  stack
@@ -9376,19 +9376,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0087                       ;-------------------------------------------------------
 0088 61D4 0284  22         ci    tmp0,1
      61D6 0001     
-0089 61D8 1310  14         jeq   tibasic.init.basic1
+0089 61D8 1310  14         jeq   tib.run.init.basic1
 0090 61DA 0284  22         ci    tmp0,2
      61DC 0002     
-0091 61DE 131E  14         jeq   tibasic.init.basic2
+0091 61DE 131E  14         jeq   tib.run.init.basic2
 0092 61E0 0284  22         ci    tmp0,3
      61E2 0003     
-0093 61E4 132C  14         jeq   tibasic.init.basic3
+0093 61E4 132C  14         jeq   tib.run.init.basic3
 0094 61E6 0284  22         ci    tmp0,4
      61E8 0004     
-0095 61EA 1338  14         jeq   tibasic.init.basic4
+0095 61EA 1338  14         jeq   tib.run.init.basic4
 0096 61EC 0284  22         ci    tmp0,5
      61EE 0005     
-0097 61F0 1344  14         jeq   tibasic.init.basic5
+0097 61F0 1344  14         jeq   tib.run.init.basic5
 0098                       ;-------------------------------------------------------
 0099                       ; Assert, should never get here
 0100                       ;-------------------------------------------------------
@@ -9399,11 +9399,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0103                       ;-------------------------------------------------------
 0104                       ; New TI Basic session 1
 0105                       ;-------------------------------------------------------
-0106               tibasic.init.basic1:
+0106               tib.run.init.basic1:
 0107 61FA C160  34         mov   @tib.status1,tmp1     ; Resume TI Basic session?
      61FC A0B6     
 0108 61FE 1302  14         jeq   !                     ; No, new session
-0109 6200 0460  28         b     @tibasic.resume.basic1
+0109 6200 0460  28         b     @tib.run.resume.basic1
      6202 631C     
 0110               
 0111 6204 0265  22 !       ori   tmp1,1                ; \
@@ -9422,15 +9422,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6218 0008     
 0119                                                   ; Copy pattern TI-Basic session ID 1
 0120               
-0121 621A 103E  14         jmp   tibasic.init.rest     ; Continue initialisation
+0121 621A 103E  14         jmp   tib.run.init.rest     ; Continue initialisation
 0122                       ;-------------------------------------------------------
 0123                       ; New TI Basic session 2
 0124                       ;-------------------------------------------------------
-0125               tibasic.init.basic2:
+0125               tib.run.init.basic2:
 0126 621C C160  34         mov   @tib.status2,tmp1     ; Resume TI Basic session?
      621E A0B8     
 0127 6220 1302  14         jeq   !                     ; No, new session
-0128 6222 0460  28         b     @tibasic.resume.basic2
+0128 6222 0460  28         b     @tib.run.resume.basic2
      6224 632C     
 0129               
 0130 6226 0265  22 !       ori   tmp1,1                ; \
@@ -9449,14 +9449,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      623A 0008     
 0138                                                   ; Copy pattern TI-Basic session ID 2
 0139               
-0140 623C 102D  14         jmp   tibasic.init.rest     ; Continue initialisation
+0140 623C 102D  14         jmp   tib.run.init.rest     ; Continue initialisation
 0141                       ;-------------------------------------------------------
 0142                       ; New TI Basic session 3
 0143                       ;-------------------------------------------------------
-0144               tibasic.init.basic3:
+0144               tib.run.init.basic3:
 0145 623E C160  34         mov   @tib.status3,tmp1     ; Resume TI Basic session?
      6240 A0BA     
-0146 6242 157C  14         jgt   tibasic.resume.basic3 ; yes, do resume
+0146 6242 157C  14         jgt   tib.run.resume.basic3 ; yes, do resume
 0147               
 0148 6244 0265  22         ori   tmp1,1                ; \
      6246 0001     
@@ -9474,14 +9474,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6258 0008     
 0156                                                   ; Copy pattern TI-Basic session ID 3
 0157               
-0158 625A 101E  14         jmp   tibasic.init.rest     ; Continue initialisation
+0158 625A 101E  14         jmp   tib.run.init.rest     ; Continue initialisation
 0159                       ;-------------------------------------------------------
 0160                       ; New TI Basic session 4
 0161                       ;-------------------------------------------------------
-0162               tibasic.init.basic4:
+0162               tib.run.init.basic4:
 0163 625C C160  34         mov   @tib.status4,tmp1     ; Resume TI Basic session?
      625E A0BC     
-0164 6260 1575  14         jgt   tibasic.resume.basic4 ; yes, do resume
+0164 6260 1575  14         jgt   tib.run.resume.basic4 ; yes, do resume
 0165               
 0166 6262 0265  22         ori   tmp1,1                ; \
      6264 0001     
@@ -9499,14 +9499,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6276 0008     
 0174                                                   ; Copy pattern TI-Basic session ID 4
 0175               
-0176 6278 100F  14         jmp   tibasic.init.rest     ; Continue initialisation
+0176 6278 100F  14         jmp   tib.run.init.rest     ; Continue initialisation
 0177                       ;-------------------------------------------------------
 0178                       ; New TI Basic session 5
 0179                       ;-------------------------------------------------------
-0180               tibasic.init.basic5:
+0180               tib.run.init.basic5:
 0181 627A C160  34         mov   @tib.status5,tmp1     ; Resume TI Basic session?
      627C A0BE     
-0182 627E 156E  14         jgt   tibasic.resume.basic5 ; yes, do resume
+0182 627E 156E  14         jgt   tib.run.resume.basic5 ; yes, do resume
 0183               
 0184 6280 0265  22         ori   tmp1,1                ; \
      6282 0001     
@@ -9524,11 +9524,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6294 0008     
 0192                                                   ; Copy pattern TI-Basic session ID 5
 0193               
-0194 6296 1000  14         jmp   tibasic.init.rest     ; Continue initialisation
+0194 6296 1000  14         jmp   tib.run.init.rest     ; Continue initialisation
 0195                       ;-------------------------------------------------------
 0196                       ; New TI Basic session (part 2)
 0197                       ;-------------------------------------------------------
-0198               tibasic.init.rest:
+0198               tib.run.init.rest:
 0199 6298 06A0  32         bl    @ldfnt
      629A 2374     
 0200 629C 0900                   data >0900,fnopt3     ; Load font (upper & lower case)
@@ -9633,7 +9633,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0264                       ;-------------------------------------------------------
 0265                       ; Resume TI-Basic session 1
 0266                       ;-------------------------------------------------------
-0267               tibasic.resume.basic1:
+0267               tib.run.resume.basic1:
 0268 631C 06A0  32         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
      631E 6110     
 0269                                                   ; / for TI Basic session 1
@@ -9644,11 +9644,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6326 F000     
      6328 0100     
 0273               
-0274 632A 101F  14         jmp   tibasic.resume.part2  ; Continue resume
+0274 632A 101F  14         jmp   tib.run.resume.part2  ; Continue resume
 0275                       ;-------------------------------------------------------
 0276                       ; Resume TI-Basic session 2
 0277                       ;-------------------------------------------------------
-0278               tibasic.resume.basic2:
+0278               tib.run.resume.basic2:
 0279 632C 06A0  32         bl    @mem.sams.set.basic2  ; \ Load SAMS page layout (from cart space)
      632E 6116     
 0280                                                   ; / for TI Basic session 2
@@ -9659,11 +9659,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6336 F000     
      6338 0100     
 0284               
-0285 633A 1017  14         jmp   tibasic.resume.part2  ; Continue resume
+0285 633A 1017  14         jmp   tib.run.resume.part2  ; Continue resume
 0286                       ;-------------------------------------------------------
 0287                       ; Resume TI-Basic session 3
 0288                       ;-------------------------------------------------------
-0289               tibasic.resume.basic3:
+0289               tib.run.resume.basic3:
 0290 633C 06A0  32         bl    @mem.sams.set.basic3  ; \ Load SAMS page layout (from cart space)
      633E 611C     
 0291                                                   ; / for TI Basic session 3
@@ -9674,11 +9674,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6346 F000     
      6348 0100     
 0295               
-0296 634A 100F  14         jmp   tibasic.resume.part2  ; Continue resume
+0296 634A 100F  14         jmp   tib.run.resume.part2  ; Continue resume
 0297                       ;-------------------------------------------------------
 0298                       ; Resume TI-Basic session 4
 0299                       ;-------------------------------------------------------
-0300               tibasic.resume.basic4:
+0300               tib.run.resume.basic4:
 0301 634C 06A0  32         bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
      634E 6122     
 0302                                                   ; / for TI Basic session 4
@@ -9689,11 +9689,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6356 F000     
      6358 0100     
 0306               
-0307 635A 1007  14         jmp   tibasic.resume.part2  ; Continue resume
+0307 635A 1007  14         jmp   tib.run.resume.part2  ; Continue resume
 0308                       ;-------------------------------------------------------
 0309                       ; Resume TI-Basic session 5
 0310                       ;-------------------------------------------------------
-0311               tibasic.resume.basic5:
+0311               tib.run.resume.basic5:
 0312 635C 06A0  32         bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
      635E 6128     
 0313                                                   ; / for TI Basic session 5
@@ -9706,10 +9706,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0317                       ;-------------------------------------------------------
 0318                       ; Resume TI-Basic session (part 2)
 0319                       ;-------------------------------------------------------
-0320               tibasic.resume.part2:
+0320               tib.run.resume.part2:
 0321 636A C1E0  34         mov   @>83fc,r7             ; Get 'Hide SID' flag
      636C 83FC     
-0322 636E 1304  14         jeq   tibasic.resume.vdp    ; Flag is reset, skip clearing SID
+0322 636E 1304  14         jeq   tib.run.resume.vdp    ; Flag is reset, skip clearing SID
 0323               
 0324 6370 0207  20         li    r7,>8080              ; Whitespace (with TI-Basic offset >60)
      6372 8080     
@@ -9718,7 +9718,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0326                       ;-------------------------------------------------------
 0327                       ; Restore VDP memory
 0328                       ;-------------------------------------------------------
-0329               tibasic.resume.vdp:
+0329               tib.run.resume.vdp:
 0330 6378 06A0  32         bl    @cpym2v
      637A 249A     
 0331 637C 0000                   data >0000,>b000,16384
@@ -9730,7 +9730,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0335                       ;-------------------------------------------------------
 0336                       ; Restore scratchpad memory
 0337                       ;-------------------------------------------------------
-0338               tibasic.resume.scrpad:
+0338               tib.run.resume.scrpad:
 0339 6382 02E0  18         lwpi  cpu.scrpad2           ; Flip workspace before starting restore
      6384 AD00     
 0340 6386 06A0  32         bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt
@@ -9871,7 +9871,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6402 00FF     
 0451 6404 0287  22         ci    r7,>0f                ; Hotkey fctn + '9' pressed?
      6406 000F     
-0452 6408 133B  14         jeq   tibasic.return        ; Yes, return to Stevie
+0452 6408 133B  14         jeq   tib.run.return        ; Yes, return to Stevie
 0453                       ;-------------------------------------------------------
 0454                       ; Return from ISR
 0455                       ;-------------------------------------------------------
@@ -9884,10 +9884,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0460               
 0461               
 0462               ***************************************************************
-0463               * tibasic.return.mon
+0463               * tib.run.return.mon
 0464               * Return from OS Monitor/TI Basic to Stevie
 0465               ***************************************************************
-0466               * bl   @tibasic.return.mon
+0466               * bl   @tib.run.return.mon
 0467               *--------------------------------------------------------------
 0468               * OUTPUT
 0469               * none
@@ -9898,7 +9898,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0474               * REMARKS
 0475               * Called from ISR code
 0476               ********|*****|*********************|**************************
-0477               tibasic.return.mon:
+0477               tib.run.return.mon:
 0478 6414 020C  20         li    r12,>1e00             ; \ Enable SAMS mapper again
      6416 1E00     
 0479 6418 1D01  20         sbo   1                     ; | We stil have the SAMS banks layout
@@ -9929,7 +9929,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0496 643C 0284  22         ci    tmp0,5
      643E 0005     
 0497 6440 1501  14         jgt   !
-0498 6442 1002  14         jmp   tibasic.return.mon.cont
+0498 6442 1002  14         jmp   tib.run.return.mon.cont
 0499                       ;-------------------------------------------------------
 0500                       ; Initialize Stevie
 0501                       ;-------------------------------------------------------
@@ -9938,7 +9938,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0503                       ;-------------------------------------------------------
 0504                       ; Resume Stevie
 0505                       ;-------------------------------------------------------
-0506               tibasic.return.mon.cont:
+0506               tib.run.return.mon.cont:
 0507 6448 02E0  18         lwpi  cpu.scrpad2           ; Activate workspace at >ad00 that was
      644A AD00     
 0508                                                   ; paged out in tibasic.init
@@ -9978,7 +9978,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0534 6470 0A14  56         sla   tmp0,1                ; Word align
 0535 6472 04E4  34         clr   @tib.session(tmp0)
      6474 A0B4     
-0536 6476 1054  14         jmp   tibasic.return.stevie
+0536 6476 1054  14         jmp   tib.run.return.stevie
 0537                       ;-------------------------------------------------------
 0538                       ; Assert failed
 0539                       ;-------------------------------------------------------
@@ -9990,10 +9990,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0543               
 0544               
 0545               ***************************************************************
-0546               * tibasic.return
+0546               * tib.run.return
 0547               * Return from TI Basic to Stevie
 0548               ***************************************************************
-0549               * bl   @tibasic.return
+0549               * bl   @tib.run.return
 0550               *--------------------------------------------------------------
 0551               * OUTPUT
 0552               * none
@@ -10004,7 +10004,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0557               * REMARKS
 0558               * Called from ISR code
 0559               ********|*****|*********************|**************************
-0560               tibasic.return:
+0560               tib.run.return:
 0561 6480 020C  20         li    r12,>1e00             ; \ Enable SAMS mapper again
      6482 1E00     
 0562 6484 1D01  20         sbo   1                     ; | We stil have the SAMS banks layout
@@ -10020,11 +10020,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0569                       ;-------------------------------------------------------
 0570                       ; Backup scratchpad of TI-Basic session 1
 0571                       ;-------------------------------------------------------
-0572               tibasic.return.1:
+0572               tib.run.return.1:
 0573 6490 8820  54         c     @tib.session,@w$0001
      6492 A0B4     
      6494 2002     
-0574 6496 1606  14         jne   tibasic.return.2      ; Not the current session, check next one.
+0574 6496 1606  14         jne   tib.run.return.2      ; Not the current session, check next one.
 0575               
 0576 6498 06A0  32         bl    @cpym2m
      649A 24EE     
@@ -10036,11 +10036,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0580                       ;-------------------------------------------------------
 0581                       ; Backup scratchpad of TI-Basic session 2
 0582                       ;-------------------------------------------------------
-0583               tibasic.return.2:
+0583               tib.run.return.2:
 0584 64A4 8820  54         c     @tib.session,@w$0002
      64A6 A0B4     
      64A8 2004     
-0585 64AA 1606  14         jne   tibasic.return.3      ; Not the current session, check next one.
+0585 64AA 1606  14         jne   tib.run.return.3      ; Not the current session, check next one.
 0586               
 0587 64AC 06A0  32         bl    @cpym2m
      64AE 24EE     
@@ -10052,11 +10052,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0591                       ;-------------------------------------------------------
 0592                       ; Backup scratchpad of TI-Basic session 3
 0593                       ;-------------------------------------------------------
-0594               tibasic.return.3:
+0594               tib.run.return.3:
 0595 64B8 8820  54         c     @tib.session,@tibasic.const3
      64BA A0B4     
      64BC 6568     
-0596 64BE 1606  14         jne   tibasic.return.4      ; Not the current session, check next one.
+0596 64BE 1606  14         jne   tib.run.return.4      ; Not the current session, check next one.
 0597               
 0598 64C0 06A0  32         bl    @cpym2m
      64C2 24EE     
@@ -10068,11 +10068,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0602                       ;-------------------------------------------------------
 0603                       ; Backup scratchpad of TI-Basic session 4
 0604                       ;-------------------------------------------------------
-0605               tibasic.return.4:
+0605               tib.run.return.4:
 0606 64CC 8820  54         c     @tib.session,@w$0004
      64CE A0B4     
      64D0 2006     
-0607 64D2 1606  14         jne   tibasic.return.5      ; Not the current session, check next one.
+0607 64D2 1606  14         jne   tib.run.return.5      ; Not the current session, check next one.
 0608               
 0609 64D4 06A0  32         bl    @cpym2m
      64D6 24EE     
@@ -10084,11 +10084,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0613                       ;-------------------------------------------------------
 0614                       ; Backup scratchpad of TI-Basic session 5
 0615                       ;-------------------------------------------------------
-0616               tibasic.return.5:
+0616               tib.run.return.5:
 0617 64E0 8820  54         c     @tib.session,@tibasic.const5
      64E2 A0B4     
      64E4 656A     
-0618 64E6 1606  14         jne   tibasic.return.failed ; Not the current session, abort here
+0618 64E6 1606  14         jne   tib.run.return.failed ; Not the current session, abort here
 0619               
 0620 64E8 06A0  32         bl    @cpym2m
      64EA 24EE     
@@ -10100,7 +10100,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0624                       ;-------------------------------------------------------
 0625                       ; Asserts failed
 0626                       ;-------------------------------------------------------
-0627               tibasic.return.failed:
+0627               tib.run.return.failed:
 0628 64F4 C80B  38         mov   r11,@>ffce            ; \ Save caller address
      64F6 FFCE     
 0629 64F8 06A0  32         bl    @cpu.crash            ; / Crash and halt system
@@ -10138,7 +10138,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0650                       ;-------------------------------------------------------
 0651                       ; Restore VDP screen with Stevie content
 0652                       ;-------------------------------------------------------
-0653               tibasic.return.stevie:
+0653               tib.run.return.stevie:
 0654 6520 06A0  32         bl    @mem.sams.set.external
      6522 610A     
 0655                                                   ; Load SAMS page layout when returning from
@@ -10200,7 +10200,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0704                       ;------------------------------------------------------
 0705                       ; Exit
 0706                       ;------------------------------------------------------
-0707               tibasic.return.exit:
+0707               tib.run.return.exit:
 0708 655C C339  30         mov   *stack+,r12           ; Pop r12
 0709 655E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
 0710 6560 C179  30         mov   *stack+,tmp1          ; Pop tmp1
@@ -10232,7 +10232,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      658E C3CF     
      6590 C3F3     
      6592 C37E     
-                   < stevie_b7.asm.10482
+                   < stevie_b7.asm.15947
 0067                       copy  "tib.uncrunch.helper.asm"  ; Helper functions for uncrunching
      **** ****     > tib.uncrunch.helper.asm
 0001               * FILE......: tib.uncrunch.helper asm
@@ -10285,7 +10285,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0046               
 0047                       ;
 0048                       ; In the SAMS page layout table of the TI Basic session, the 16K VDP
-0049                       ; memory dump page starts at the 4th word. So need to add fixed offset
+0049                       ; memory dump page starts at the 4th word. So need to add fixed offset.
 0050                       ;
 0051 65AA 0224  22         ai    tmp0,6                ; Add fixed offset
      65AC 0006     
@@ -10318,16 +10318,75 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0073 65CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0074 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
 0075 65CE 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.10482
-0068                       copy  "tib.uncrunch.prep.asm"    ; Uncrunch TI Basic program
+                   < stevie_b7.asm.15947
+0068                       copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
+     **** ****     > tib.uncrunch.asm
+0001               * FILE......: tib.uncrunch.prep.asm
+0002               * Purpose...: Uncrunch TI Basic program to editor buffer
+0003               
+0004               
+0005               ***************************************************************
+0006               * tib.uncrunch
+0007               * Uncrunch TI Basic program to editor buffer
+0008               ***************************************************************
+0009               * bl   @tib.uncrunch
+0010               *--------------------------------------------------------------
+0011               * INPUT
+0012               * @parm1 = TI Basic session to uncrunch (1-5)
+0013               *
+0014               * OUTPUT
+0015               * none
+0016               *--------------------------------------------------------------
+0017               * Register usage
+0018               * tmp0, tmp1, tmp2, tmp3, tmp4
+0019               ********|*****|*********************|**************************
+0020               tib.uncrunch:
+0021 65D0 0649  14         dect  stack
+0022 65D2 C64B  30         mov   r11,*stack            ; Save return address
+0023 65D4 0649  14         dect  stack
+0024 65D6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 65D8 0649  14         dect  stack
+0026 65DA C645  30         mov   tmp1,*stack           ; Push tmp1
+0027                       ;------------------------------------------------------
+0028                       ; Prepare for uncrunching
+0029                       ;------------------------------------------------------
+0030 65DC 06A0  32         bl    @tib.uncrunch.prepare ; Prepare for uncrunching TI Basic program
+     65DE 65F8     
+0031                                                   ; \ i  @parm1 = TI Basic session to uncrunch
+0032                                                   ; /
+0033                       ;------------------------------------------------------
+0034                       ; (2) Prepare for exit
+0035                       ;------------------------------------------------------
+0036 65E0 C120  34         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
+     65E2 A20E     
+0037 65E4 0205  20         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
+     65E6 F000     
+0038               
+0039 65E8 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     65EA 258A     
+0040                                                   ; \ i  tmp0  = SAMS page number
+0041                                                   ; / i  tmp1  = Memory map address
+0042               
+0043 65EC 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
+     65EE 668A     
+0044                       ;------------------------------------------------------
+0045                       ; Exit
+0046                       ;------------------------------------------------------
+0047               tib.uncrunch.exit:
+0048 65F0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0049 65F2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0050 65F4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0051 65F6 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.15947
+0069                       copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
      **** ****     > tib.uncrunch.prep.asm
 0001               * FILE......: tib.uncrunch.prep.asm
 0002               * Purpose...: Uncrunch TI Basic program to editor buffer
 0003               
 0004               
 0005               ***************************************************************
-0006               * tibasic.uncrunch
-0007               * Uncrunch TI Basic program to editor buffer
+0006               * tib.uncrunch.prepare
+0007               * Prepare for uncrunching TI-Basic program
 0008               ***************************************************************
 0009               * bl   @tibasic.uncrunch
 0010               *--------------------------------------------------------------
@@ -10338,7 +10397,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0015               * none
 0016               *--------------------------------------------------------------
 0017               * Register usage
-0018               * tmp0, tmp1, tmp2, tmp3, tmp4
+0018               * tmp0
 0019               *--------------------------------------------------------------
 0020               * Remarks
 0021               * @tib.var1 = Copy @parm1
@@ -10360,181 +10419,147 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0037               * @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
 0038               * @tib.var3 = SAMS page ID mapped to VRAM address
 0039               ********|*****|*********************|**************************
-0040               tibasic.uncrunch:
-0041 65D0 0649  14         dect  stack
-0042 65D2 C64B  30         mov   r11,*stack            ; Save return address
-0043 65D4 0649  14         dect  stack
-0044 65D6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0045 65D8 0649  14         dect  stack
-0046 65DA C645  30         mov   tmp1,*stack           ; Push tmp1
-0047 65DC 0649  14         dect  stack
-0048 65DE C646  30         mov   tmp2,*stack           ; Push tmp2
-0049 65E0 0649  14         dect  stack
-0050 65E2 C647  30         mov   tmp3,*stack           ; Push tmp3
-0051 65E4 0649  14         dect  stack
-0052 65E6 C648  30         mov   tmp4,*stack           ; Push tmp4
-0053                       ;------------------------------------------------------
-0054                       ; Initialisation
-0055                       ;------------------------------------------------------
-0056               tibasic.uncrunch.init:
-0057 65E8 04E0  34         clr   @tib.var1             ;
-     65EA A0EC     
-0058 65EC 04E0  34         clr   @tib.var2             ; Clear temporary variables
-     65EE A0EE     
-0059 65F0 04E0  34         clr   @tib.var3             ;
-     65F2 A0F0     
-0060 65F4 04E0  34         clr   @tib.var4             ;
-     65F6 A0F2     
-0061 65F8 04E0  34         clr   @tib.var5             ;
-     65FA A0F4     
-0062                       ;------------------------------------------------------
-0063                       ; (1) Assert on TI basic session
-0064                       ;------------------------------------------------------
-0065 65FC C120  34         mov   @parm1,tmp0           ; Get session to uncrunch
-     65FE A006     
-0066 6600 C804  38         mov   tmp0,@tib.var1        ; Make copy
+0040               tib.uncrunch.prepare:
+0041 65F8 0649  14         dect  stack
+0042 65FA C64B  30         mov   r11,*stack            ; Save return address
+0043 65FC 0649  14         dect  stack
+0044 65FE C644  30         mov   tmp0,*stack           ; Push tmp0
+0045                       ;------------------------------------------------------
+0046                       ; Initialisation
+0047                       ;------------------------------------------------------
+0048 6600 04E0  34         clr   @tib.var1             ;
      6602 A0EC     
-0067               
-0068 6604 0284  22         ci    tmp0,1                ; \
-     6606 0001     
-0069 6608 1103  14         jlt   !                     ; | Skip to (2) if valid
-0070 660A 0284  22         ci    tmp0,5                ; | session ID.
-     660C 0005     
-0071 660E 1204  14         jle   tibasic.uncrunch.2    ; /
-0072                       ;------------------------------------------------------
-0073                       ; Assert failed
-0074                       ;------------------------------------------------------
-0075 6610 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
-     6612 FFCE     
-0076 6614 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6616 2026     
-0077                       ;------------------------------------------------------
-0078                       ; (2) Get scratchpad of TI Basic session
-0079                       ;------------------------------------------------------
-0080               tibasic.uncrunch.2:
-0081 6618 06A0  32         bl    @sams.page.set        ; Set SAMS page
-     661A 2586     
-0082 661C 00FF                   data >00ff,>f000      ; \ i  p1  = SAMS page number
-     661E F000     
-0083                                                   ; / i  p2  = Memory map address
-0084               
-0085                       ; TI Basic session 1 scratchpad >f100
-0086                       ; TI Basic session 2 scratchpad >f200
-0087                       ; TI Basic session 3 scratchpad >f300
-0088                       ; TI Basic session 4 scratchpad >f400
-0089                       ; TI Basic session 5 scratchpad >f500
-0090               
-0091 6620 C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
-     6622 A0EC     
-0092 6624 0A84  56         sla   tmp0,8                ; Get scratchpad offset (>100->500)
-0093 6626 0224  22         ai    tmp0,>f000            ; Add base address
-     6628 F000     
-0094 662A C804  38         mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
-     662C A0C4     
-0095                       ;------------------------------------------------------
-0096                       ; (3) Get relevant pointers stored in scratchpad
-0097                       ;------------------------------------------------------
-0098               tibasic.uncrunch.3:
-0099 662E C824  54         mov   @>18(tmp0),@tib.strs.top.ptr
-     6630 0018     
-     6632 A0CE     
-0100                                                   ; @>8318 Pointer to top of string space
-0101                                                   ; in VRAM
-0102               
-0103 6634 C824  54         mov   @>1a(tmp0),@tib.strs.bot.ptr
-     6636 001A     
-     6638 A0D0     
-0104                                                   ; @>831a Pointer to bottom of string space
-0105                                                   ; in VRAM
-0106               
-0107 663A C824  54         mov   @>30(tmp0),@tib.lnt.bot.ptr
-     663C 0030     
-     663E A0C8     
-0108                                                   ; @>8330 Pointer to bottom of line number
-0109                                                   ; table in VRAM
-0110               
-0111 6640 C824  54         mov   @>32(tmp0),@tib.lnt.top.ptr
-     6642 0032     
-     6644 A0C6     
-0112                                                   ; @>8332 Pointer to top of line number
-0113                                                   ; table in VRAM
-0114               
-0115 6646 C820  54         mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
-     6648 A0C8     
-     664A A0CA     
-0116 664C 0660  34         dect  @tib.symt.top.ptr     ; Pointer to top of symbol table in VRAM.
-     664E A0CA     
-0117                                                   ; Table top is just below the bottom of
-0118                                                   ; the line number table.
-0119               
-0120 6650 C824  54         mov   @>3e(tmp0),@tib.symt.bot.ptr
-     6652 003E     
-     6654 A0CC     
-0121                                                   ; @>833e Pointer to bottom of symbol table
-0122                                                   ; in VRAM
-0123                       ;------------------------------------------------------
-0124                       ; (4) Get pointer to SAMS page table
-0125                       ;------------------------------------------------------
-0126               tibasic.uncrunch.4:
-0127                       ; The data tables of the 5 TI basic sessions form a
-0128                       ; uniform region, we calculate the index of the 1st word in the
-0129                       ; specified session.
-0130 6656 C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
-     6658 A0EC     
-0131               
-0132 665A 0A44  56         sla   tmp0,4                ; \ Get index of first word in SAMS page
-0133                                                   ; | layout (of following TI Basic session)
-0134                                                   ; /
-0135               
-0136 665C 0224  22         ai    tmp0,mem.sams.layout.basic - 16
-     665E 66F2     
-0137                                                   ; Add base address for specified session
-0138               
-0139 6660 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
-     6662 A0C2     
-0140                       ;------------------------------------------------------
-0141                       ; (5) Loop over line number table
-0142                       ;------------------------------------------------------
-0143               tibasic.uncrunch.15:
-0144 6664 C120  34         mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
-     6666 A0C6     
-0145 6668 06A0  32         bl    @_v2sams
-     666A 6594     
-0146               
-0147               
-0148               
-0149                       ;------------------------------------------------------
-0150                       ; (9) Prepare for exit
-0151                       ;------------------------------------------------------
-0152               tibasic.uncrunch.9:
-0153 666C C120  34         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
-     666E A20E     
-0154 6670 0205  20         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
-     6672 F000     
-0155               
-0156 6674 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     6676 258A     
-0157                                                   ; \ i  tmp0  = SAMS page number
-0158                                                   ; / i  tmp1  = Memory map address
-0159               
-0160 6678 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
-     667A 668A     
-0161                       ;------------------------------------------------------
-0162                       ; Exit
-0163                       ;------------------------------------------------------
-0164               tibasic.uncrunch.exit:
-0165 667C C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0166 667E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0167 6680 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0168 6682 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0169 6684 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0170 6686 C2F9  30         mov   *stack+,r11           ; Pop r11
-0171 6688 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.10482
-0069                       ;-----------------------------------------------------------------------
-0070                       ; Stubs
-0071                       ;-----------------------------------------------------------------------
-0072                       copy  "rom.stubs.bank7.asm"      ; Bank specific stubs
+0049 6604 04E0  34         clr   @tib.var2             ; Clear temporary variables
+     6606 A0EE     
+0050 6608 04E0  34         clr   @tib.var3             ;
+     660A A0F0     
+0051 660C 04E0  34         clr   @tib.var4             ;
+     660E A0F2     
+0052 6610 04E0  34         clr   @tib.var5             ;
+     6612 A0F4     
+0053                       ;------------------------------------------------------
+0054                       ; (1) Assert on TI basic session
+0055                       ;------------------------------------------------------
+0056 6614 C120  34         mov   @parm1,tmp0           ; Get session to uncrunch
+     6616 A006     
+0057 6618 C804  38         mov   tmp0,@tib.var1        ; Make copy
+     661A A0EC     
+0058               
+0059 661C 0284  22         ci    tmp0,1                ; \
+     661E 0001     
+0060 6620 1103  14         jlt   !                     ; | Skip to (2) if valid
+0061 6622 0284  22         ci    tmp0,5                ; | session ID.
+     6624 0005     
+0062 6626 1204  14         jle   tib.uncrunch.prepare.2; /
+0063                       ;------------------------------------------------------
+0064                       ; Assert failed
+0065                       ;------------------------------------------------------
+0066 6628 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
+     662A FFCE     
+0067 662C 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     662E 2026     
+0068                       ;------------------------------------------------------
+0069                       ; (2) Get scratchpad of TI Basic session
+0070                       ;------------------------------------------------------
+0071               tib.uncrunch.prepare.2:
+0072 6630 06A0  32         bl    @sams.page.set        ; Set SAMS page
+     6632 2586     
+0073 6634 00FF                   data >00ff,>f000      ; \ i  p1  = SAMS page number
+     6636 F000     
+0074                                                   ; / i  p2  = Memory map address
+0075               
+0076                       ; TI Basic session 1 scratchpad >f100
+0077                       ; TI Basic session 2 scratchpad >f200
+0078                       ; TI Basic session 3 scratchpad >f300
+0079                       ; TI Basic session 4 scratchpad >f400
+0080                       ; TI Basic session 5 scratchpad >f500
+0081               
+0082 6638 C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
+     663A A0EC     
+0083 663C 0A84  56         sla   tmp0,8                ; Get scratchpad offset (>100->500)
+0084 663E 0224  22         ai    tmp0,>f000            ; Add base address
+     6640 F000     
+0085 6642 C804  38         mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
+     6644 A0C4     
+0086                       ;------------------------------------------------------
+0087                       ; (3) Get relevant pointers stored in scratchpad
+0088                       ;------------------------------------------------------
+0089 6646 C824  54         mov   @>18(tmp0),@tib.strs.top.ptr
+     6648 0018     
+     664A A0CE     
+0090                                                   ; @>8318 Pointer to top of string space
+0091                                                   ; in VRAM
+0092               
+0093 664C C824  54         mov   @>1a(tmp0),@tib.strs.bot.ptr
+     664E 001A     
+     6650 A0D0     
+0094                                                   ; @>831a Pointer to bottom of string space
+0095                                                   ; in VRAM
+0096               
+0097 6652 C824  54         mov   @>30(tmp0),@tib.lnt.bot.ptr
+     6654 0030     
+     6656 A0C8     
+0098                                                   ; @>8330 Pointer to bottom of line number
+0099                                                   ; table in VRAM
+0100               
+0101 6658 C824  54         mov   @>32(tmp0),@tib.lnt.top.ptr
+     665A 0032     
+     665C A0C6     
+0102                                                   ; @>8332 Pointer to top of line number
+0103                                                   ; table in VRAM
+0104               
+0105 665E C820  54         mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
+     6660 A0C8     
+     6662 A0CA     
+0106 6664 0660  34         dect  @tib.symt.top.ptr     ; Pointer to top of symbol table in VRAM.
+     6666 A0CA     
+0107                                                   ; Table top is just below the bottom of
+0108                                                   ; the line number table.
+0109               
+0110 6668 C824  54         mov   @>3e(tmp0),@tib.symt.bot.ptr
+     666A 003E     
+     666C A0CC     
+0111                                                   ; @>833e Pointer to bottom of symbol table
+0112                                                   ; in VRAM
+0113                       ;------------------------------------------------------
+0114                       ; (4) Get pointer to SAMS page table
+0115                       ;------------------------------------------------------
+0116               
+0117                       ; The data tables of the 5 TI basic sessions form a
+0118                       ; uniform region, we calculate the index of the 1st word in the
+0119                       ; specified session.
+0120 666E C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
+     6670 A0EC     
+0121               
+0122 6672 0A44  56         sla   tmp0,4                ; \ Get index of first word in SAMS page
+0123                                                   ; | layout (of following TI Basic session)
+0124                                                   ; /
+0125               
+0126 6674 0224  22         ai    tmp0,mem.sams.layout.basic - 16
+     6676 66F2     
+0127                                                   ; Add base address for specified session
+0128               
+0129 6678 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
+     667A A0C2     
+0130                       ;------------------------------------------------------
+0131                       ; (5) Loop over line number table
+0132                       ;------------------------------------------------------
+0133 667C C120  34         mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
+     667E A0C6     
+0134 6680 06A0  32         bl    @_v2sams
+     6682 6594     
+0135                       ;------------------------------------------------------
+0136                       ; Exit
+0137                       ;------------------------------------------------------
+0138               tib.uncrunch.prepare.exit:
+0139 6684 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0140 6686 C2F9  30         mov   *stack+,r11           ; Pop r11
+0141 6688 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.15947
+0070                       ;-----------------------------------------------------------------------
+0071                       ; Stubs
+0072                       ;-----------------------------------------------------------------------
+0073                       copy  "rom.stubs.bank7.asm"      ; Bank specific stubs
      **** ****     > rom.stubs.bank7.asm
 0001               * FILE......: rom.stubs.bank7.asm
 0002               * Purpose...: Bank 7 stubs for functions in other banks
@@ -10605,8 +10630,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0064                       ;------------------------------------------------------
 0065 66BC C2F9  30         mov   *stack+,r11           ; Pop r11
 0066 66BE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.10482
-0073                       copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
+                   < stevie_b7.asm.15947
+0074                       copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks > 0
@@ -10644,11 +10669,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               
 0141               
 0142               
-                   < stevie_b7.asm.10482
-0074                       ;-----------------------------------------------------------------------
-0075                       ; Program data
-0076                       ;-----------------------------------------------------------------------
-0077                       copy  "data.sams.layout.asm"     ; SAMS bank layout for multi-purpose
+                   < stevie_b7.asm.15947
+0075                       ;-----------------------------------------------------------------------
+0076                       ; Program data
+0077                       ;-----------------------------------------------------------------------
+0078                       copy  "data.sams.layout.asm"     ; SAMS bank layout for multi-purpose
      **** ****     > data.sams.layout.asm
 0001               * FILE......: data.sams.layout.asm
 0002               * Purpose...: SAMS bank layout for multi-purpose
@@ -10775,8 +10800,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0123               
 0124               
 0125      6702     mem.sams.layout.basic  equ mem.sams.layout.basic1
-                   < stevie_b7.asm.10482
-0078                       copy  "data.tib.tokens.asm"      ; TI Basic tokens
+                   < stevie_b7.asm.15947
+0079                       copy  "data.tib.tokens.asm"      ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
 0001               * FILE......: data.tib.tokens.asm
 0002               * Purpose...: TI Basic tokens
@@ -11341,12 +11366,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6A50 00FD     
      6A52 6A0D     
 0223 6A54 FFFF             data   eol
-                   < stevie_b7.asm.10482
-0079                       ;-----------------------------------------------------------------------
-0080                       ; Scratchpad memory dump
-0081                       ;-----------------------------------------------------------------------
-0082                       aorg >7e00
-0083                       copy  "data.scrpad.asm"          ; Required for TI Basic
+                   < stevie_b7.asm.15947
+0080                       ;-----------------------------------------------------------------------
+0081                       ; Scratchpad memory dump
+0082                       ;-----------------------------------------------------------------------
+0083                       aorg >7e00
+0084                       copy  "data.scrpad.asm"          ; Required for TI Basic
      **** ****     > data.scrpad.asm
 0001               * FILE......: data.scrpad.asm
 0002               * Purpose...: Stevie Editor - data segment (scratchpad dump)
@@ -11487,14 +11512,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.10482
-0084                       ;-----------------------------------------------------------------------
-0085                       ; Bank full check
-0086                       ;-----------------------------------------------------------------------
-0090                       ;-----------------------------------------------------------------------
-0091                       ; Show ROM bank in CPU crash screen
-0092                       ;-----------------------------------------------------------------------
-0093                       copy "rom.crash.asm"
+                   < stevie_b7.asm.15947
+0085                       ;-----------------------------------------------------------------------
+0086                       ; Bank full check
+0087                       ;-----------------------------------------------------------------------
+0091                       ;-----------------------------------------------------------------------
+0092                       ; Show ROM bank in CPU crash screen
+0093                       ;-----------------------------------------------------------------------
+0094                       copy "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -11509,11 +11534,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b7.asm.10482
-0094                       ;-----------------------------------------------------------------------
-0095                       ; Vector table
-0096                       ;-----------------------------------------------------------------------
-0097                       copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
+                   < stevie_b7.asm.15947
+0095                       ;-----------------------------------------------------------------------
+0096                       ; Vector table
+0097                       ;-----------------------------------------------------------------------
+0098                       copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
      **** ****     > rom.vectors.bank7.asm
 0001               * FILE......: rom.vectors.bank7.asm
 0002               * Purpose...: Bank 7 vectors for trampoline function
@@ -11544,8 +11569,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025 7FCC 611C     vec.7   data  mem.sams.set.basic3   ;
 0026 7FCE 6122     vec.8   data  mem.sams.set.basic4   ;
 0027 7FD0 6128     vec.9   data  mem.sams.set.basic5   ;
-0028 7FD2 618C     vec.10  data  tibasic               ;
-0029 7FD4 65D0     vec.11  data  tibasic.uncrunch      ;
+0028 7FD2 618C     vec.10  data  tib.run               ;
+0029 7FD4 65D0     vec.11  data  tib.uncrunch          ;
 0030 7FD6 2026     vec.12  data  cpu.crash             ;
 0031 7FD8 2026     vec.13  data  cpu.crash             ;
 0032 7FDA 2026     vec.14  data  cpu.crash             ;
@@ -11567,17 +11592,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.10482
-0098               
-0099               *--------------------------------------------------------------
-0100               * Video mode configuration
-0101               *--------------------------------------------------------------
-0102      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0103      0004     spfbck  equ   >04                   ; Screen background color.
-0104      35CC     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0105      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0106      0050     colrow  equ   80                    ; Columns per row
-0107      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0108      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0109      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0110      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+                   < stevie_b7.asm.15947
+0099               
+0100               *--------------------------------------------------------------
+0101               * Video mode configuration
+0102               *--------------------------------------------------------------
+0103      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0104      0004     spfbck  equ   >04                   ; Screen background color.
+0105      35CC     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0106      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0107      0050     colrow  equ   80                    ; Columns per row
+0108      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0109      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0110      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0111      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
