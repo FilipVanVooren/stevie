@@ -1,4 +1,4 @@
-* FILE......: tibasic.dialog.helper.asm
+* FILE......: tib.dialog.helper.asm
 * Purpose...: TI Basic dialog helper functions
 
 

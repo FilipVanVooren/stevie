@@ -61,10 +61,11 @@ main:
         copy  "magic.asm"                ; Magic string handling
         copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
         ;-----------------------------------------------------------------------
-        ; Basic interpreter
+        ; TI Basic sessions
         ;-----------------------------------------------------------------------
-        copy  "tibasic.session.asm"      ; Run TI Basic session
-        copy  "tibasic.uncrunch.asm"     ; Uncrunch TI Basic program
+        copy  "tib.session.asm"          ; Run TI Basic session
+        copy  "tib.uncrunch.helper.asm"  ; Helper functions for uncrunching
+        copy  "tib.uncrunch.prep.asm"    ; Uncrunch TI Basic program
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -74,7 +75,7 @@ main:
         ; Program data
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"     ; SAMS bank layout for multi-purpose
-        copy  "data.tibasic.tokens.asm"  ; TI Basic tokens
+        copy  "data.tib.tokens.asm"      ; TI Basic tokens
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------

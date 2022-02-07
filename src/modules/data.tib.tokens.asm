@@ -1,4 +1,4 @@
-* FILE......: data.tibasic.tokens.asm
+* FILE......: data.tib.tokens.asm
 * Purpose...: TI Basic tokens
 
 

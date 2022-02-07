@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b4.asm.23130
+     **** ****     > stevie_b4.asm.8220
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 220206-1902180
+0009               * File: stevie_b4.asm               ; Version 220207-1832000
 0010               *
 0011               * Bank 4 "Janine"
 0012               * Framebuffer methods delegated from bank 1
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -556,7 +556,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0439      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0440      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0441      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -696,7 +696,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0018               
 0019               ***************************************************************
 0020               * BANK 4
@@ -755,7 +755,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1570,7 +1570,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220206-1902180'
+0270 21ED   42             text  'Build-ID  220207-1832000'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1578,10 +1578,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F6 2032     
      21F8 3230     
      21FA 3230     
-     21FC 362D     
-     21FE 3139     
-     2200 3032     
-     2202 3138     
+     21FC 372D     
+     21FE 3138     
+     2200 3332     
+     2202 3030     
      2204 30       
 0271                       even
 0272               
@@ -5862,7 +5862,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8690,7 +8690,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -8809,7 +8809,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0087 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0088 6088 C2F9  30         mov   *stack+,r11           ; Pop r11
 0089 608A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0058                       copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
      **** ****     > fb.null2char.asm
 0001               * FILE......: fb.null2char.asm
@@ -8897,7 +8897,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 60DA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 60DC C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 60DE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0059                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
      **** ****     > fb.tab.next.asm
 0001               * FILE......: fb.tab.next.asm
@@ -9040,7 +9040,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0118 6164 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0119 6166 C2F9  30         mov   *stack+,r11           ; Pop R11
 0120 6168 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0060                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
      **** ****     > fb.ruler.asm
 0001               * FILE......: fb.ruler.asm
@@ -9128,7 +9128,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0070 61BC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0071 61BE C2F9  30         mov   *stack+,r11           ; Pop r11
 0072 61C0 045B  20         b     *r11                  ; Return
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0061                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
      **** ****     > fb.colorlines.asm
 0001               * FILE......: fb.colorlines.asm
@@ -9262,7 +9262,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0111 624A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0112 624C C2F9  30         mov   *stack+,r11           ; Pop r11
 0113 624E 045B  20         b     *r11                  ; Return
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0062                       copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
      **** ****     > fb.vdpdump.asm
 0001               * FILE......: fb.vdpdump.asm
@@ -9351,7 +9351,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0072 629A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0073 629C C2F9  30         mov   *stack+,r11           ; Pop r11
 0074 629E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0063                       copy  "fb.scan.fname.asm"   ; Scan line for device & filename
      **** ****     > fb.scan.fname.asm
 0001               * FILE......: fb.scan.fname.asm
@@ -9539,7 +9539,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0169 6354 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0170 6356 C2F9  30         mov   *stack+,r11           ; Pop R11
 0171 6358 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0064                       ;-----------------------------------------------------------------------
 0065                       ; Stubs
 0066                       ;-----------------------------------------------------------------------
@@ -9547,7 +9547,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0068                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9706,7 +9706,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160                       ;------------------------------------------------------
 0161 63D4 C2F9  30         mov   *stack+,r11           ; Pop r11
 0162 63D6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0069                       ;-----------------------------------------------------------------------
 0070                       ; Program data
 0071                       ;-----------------------------------------------------------------------
@@ -9732,7 +9732,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0083                       ;-----------------------------------------------------------------------
 0084                       ; Vector table
 0085                       ;-----------------------------------------------------------------------
@@ -9790,7 +9790,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b4.asm.23130
+                   < stevie_b4.asm.8220
 0087                                                   ; Vector table bank 4
 0088               *--------------------------------------------------------------
 0089               * Video mode configuration

@@ -88,7 +88,7 @@ main:
         ; Dialog toggles
         ;-----------------------------------------------------------------------
         copy  "fm.fastmode.asm"     ; Toggle fastmode on/off for file operation
-        copy  "tibasic.dialog.helper.asm"
+        copy  "tib.dialog.helper.asm"
                                     ; Helper functions for TI Basic dialog
         ;-----------------------------------------------------------------------
         ; Stubs
