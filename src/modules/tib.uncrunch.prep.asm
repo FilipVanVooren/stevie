@@ -32,10 +32,11 @@
 * @tib.strs.top.ptr = Top of string space
 * @tib.strs.bot.ptr = Bottom of string space
 *
-* Temporary variables
-* @tib.var1 = Copy of @parm1
-* @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
-* @tib.var3 = SAMS page ID mapped to VRAM address
+* (Temporary) variables
+* @tib.var1  = Copy of @parm1
+* @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var3  = SAMS page ID mapped to VRAM address
+* @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prepare:
         dect  stack
@@ -111,7 +112,15 @@ tib.uncrunch.prepare.2:
                                     ; @>833e Pointer to bottom of symbol table
                                     ; in VRAM
         ;------------------------------------------------------
-        ; (4) Get pointer to SAMS page table
+        ; (4) Calculate number of lines in TI Basic program
+        ;------------------------------------------------------
+        mov   @tib.lnt.top.ptr,tmp0 ; \ Size of line number table entry: 4 bytes
+        s     @tib.lnt.bot.ptr,tmp0 ; |
+        srl   tmp0,2                ; / tmp0=tmp0/4
+
+        mov   tmp0,@tib.lines       ; Save lines
+        ;------------------------------------------------------
+        ; (5) Get pointer to SAMS page table
         ;------------------------------------------------------
 
         ; The data tables of the 5 TI basic sessions form a
@@ -127,11 +136,6 @@ tib.uncrunch.prepare.2:
                                     ; Add base address for specified session
 
         mov   tmp0,@tib.stab.ptr    ; Save pointer
-        ;------------------------------------------------------
-        ; (5) Loop over line number table
-        ;------------------------------------------------------
-        mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
-        bl    @_v2sams
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

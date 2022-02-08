@@ -17,7 +17,6 @@
 * tmp0
 *--------------------------------------------------------------
 * Remarks
-* @tib.var1 = Copy @parm1
 *
 * Pointers:
 * @tib.scrpad.ptr = Scratchpad address in SAMS page >ff
@@ -31,10 +30,11 @@
 * @tib.strs.top.ptr = Top of string space
 * @tib.strs.bot.ptr = Bottom of string space
 *
-* Temporary variables
-* @tib.var1 = Copy of @parm1
-* @tib.var2 = Address of SAMS page layout table entry mapped to VRAM address
-* @tib.var3 = SAMS page ID mapped to VRAM address
+* (Temporary) variables
+* @tib.var1  = Copy of @parm1
+* @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var3  = SAMS page ID mapped to VRAM address
+* @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prg:
         dect  stack
@@ -64,11 +64,11 @@ tib.uncrunch.prg:
                                     ; | instead of VRAM address.
                                     ; / Example: >f7b3 maps to >37b3.
 
-        ai    tmp0,-3
+        ai    tmp0,-3               ; What is this?
         ;------------------------------------------------------
-        ; Calculate number of lines in program
+        ; Get number of lines in program
         ;------------------------------------------------------
-        li    tmp2,100              ; Hard coded for now
+        mov   @tib.lines,tmp2       ; Set loop counter
         ;------------------------------------------------------
         ; (1) Loop over line number table
         ;------------------------------------------------------
@@ -99,18 +99,38 @@ tib.uncrunch.prg.lnt.loop:
               byte  32              ; Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf,rambuf+5,32
+              data  rambuf,rambuf+6,32
 
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         ;------------------------------------------------------
-        ; Next line in line number table
+        ; Uncrunch program line
         ;------------------------------------------------------
-        ai    tmp0,-7
-        dec   tmp2
-        jgt   tib.uncrunch.prg.lnt.loop
 
+
+        ;------------------------------------------------------
+        ; Next entry in line number table
+        ;------------------------------------------------------
+        dec   tmp2                  ; Last line processed?
+        jeq   tib.uncrunch.prg.exit ; yes, exit
+
+        ai    tmp0,-4
+
+        ; Need to deal with split line-number-table entries.
+        ; Need something like an underflow memory area where a split LNT entry
+        ; is copied to. This area needs to be checked and filled accordingly.
+        ;
+        ;     if tmp0 < f000 then
+        ;          copy split LNT entry to underflow RAM area.
+        ;          tmp0 = underflow RAM Area
+        ;          process next entry
+        ;          set tmp0 back to regular LNT
+        ;
+        ; Can also happen for the 1st entry in LNT. So move check to subroutine
+        ; for reuse,
+
+        jmp   tib.uncrunch.prg.lnt.loop
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
