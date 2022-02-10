@@ -115,14 +115,22 @@ tib.uncrunch.prepare.2:
         ; (4) Calculate number of lines in TI Basic program
         ;------------------------------------------------------
         mov   @tib.lnt.top.ptr,tmp0 ; \ Size of line number table entry: 4 bytes
-        s     @tib.lnt.bot.ptr,tmp0 ; |
-        srl   tmp0,2                ; / tmp0=tmp0/4
+        s     @tib.lnt.bot.ptr,tmp0 ; /
+        jeq   tib.uncrunch.prepare.np
 
+        inc   tmp0                  ; One time offset
+        srl   tmp0,2                ; tmp0=tmp0/4
         mov   tmp0,@tib.lines       ; Save lines
+        jmp   tib.uncrunch.prepare.5
+        ;------------------------------------------------------
+        ; No program present
+        ;------------------------------------------------------
+tib.uncrunch.prepare.np:
+        clr   @tib.lines            ; No program
         ;------------------------------------------------------
         ; (5) Get pointer to SAMS page table
         ;------------------------------------------------------
-
+tib.uncrunch.prepare.5:
         ; The data tables of the 5 TI basic sessions form a
         ; uniform region, we calculate the index of the 1st word in the
         ; specified session.

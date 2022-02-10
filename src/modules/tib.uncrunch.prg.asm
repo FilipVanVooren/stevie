@@ -115,7 +115,7 @@ tib.uncrunch.prg.lnt.loop:
         dec   tmp2                  ; Last line processed?
         jeq   tib.uncrunch.prg.exit ; yes, exit
 
-        ai    tmp0,-4
+        ai    tmp0,-7
 
         ; Need to deal with split line-number-table entries.
         ; Need something like an underflow memory area where a split LNT entry
