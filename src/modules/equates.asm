@@ -405,12 +405,17 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 *--------------------------------------------------------------
-* Frame buffer & Default devices      @>d000-dfff  (4096 bytes)
+* Frame buffer & uncrunch area        @>d000-dcff  (3584 bytes)
 *--------------------------------------------------------------
-fb.top            equ  >d000           ; Frame buffer (80x30)
+fb.top            equ  >d000           ; Frame buffer (2400 char)
 fb.size           equ  80*30           ; Frame buffer size
-tv.printer.fname  equ  >d960           ; Default printer   (80 char)
-tv.clip.fname     equ  >d9b0           ; Default clipboard (80 char)
+fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
+                                       ; / >d960->dcff
+*--------------------------------------------------------------
+* Defaults area                       @>de00-dfff  (3584 bytes)
+*--------------------------------------------------------------
+tv.printer.fname  equ  >de00           ; Default printer   (80 char)
+tv.clip.fname     equ  >de50           ; Default clipboard (80 char)
 *--------------------------------------------------------------
 * Command buffer history              @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------

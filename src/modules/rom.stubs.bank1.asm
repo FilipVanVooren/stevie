@@ -586,17 +586,6 @@ edb.clear.sams.vector:
 
 
 **************************************************************
-* Stub for "edb.hipage.alloc"
-* bank5 vec.2
-********|*****|*********************|**************************
-edb.hipage.alloc:
-        mov   @edb.hipage.alloc.vector,@trmpvector
-        jmp   _trampoline.bank5.ret ; Longjump
-edb.hipage.alloc.vector:
-        data  vec.2
-
-
-**************************************************************
 * Stub for "edb.block.mark"
 * bank5 vec.3
 ********|*****|*********************|**************************

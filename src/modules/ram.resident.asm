@@ -27,6 +27,7 @@
         ;-----------------------------------------------------------------------
         copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
         copy  "edb.line.getlen.asm"    ; Get line length
+        copy  "edb.hipage.alloc.asm"   ; Check/increase highest SAMS page
         ;-----------------------------------------------------------------------
         ; Utility functions
         ;-----------------------------------------------------------------------

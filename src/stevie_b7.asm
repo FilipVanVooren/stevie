@@ -64,10 +64,15 @@ main:
         ; TI Basic sessions
         ;-----------------------------------------------------------------------
         copy  "tib.session.asm"          ; Run TI Basic session
+        ;-----------------------------------------------------------------------
+        ; TI Basic program uncruncher
+        ;-----------------------------------------------------------------------
         copy  "tib.uncrunch.helper.asm"  ; Helper functions for uncrunching
         copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
         copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
         copy  "tib.uncrunch.prg.asm"     ; Uncrunch tokenized program code
+        copy  "tib.uncrunch.line.pack.asm"
+                                         ; Pack uncrunched line to editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

@@ -13,7 +13,7 @@ cpu.crash.showbank.bankstr:
         aorg  bankx.vectab
 
 vec.1   data  edb.clear.sams        ;
-vec.2   data  edb.hipage.alloc      ;
+vec.2   data  cpu.crash             ;
 vec.3   data  edb.block.mark        ;
 vec.4   data  edb.block.mark.m1     ;
 vec.5   data  edb.block.mark.m2     ;

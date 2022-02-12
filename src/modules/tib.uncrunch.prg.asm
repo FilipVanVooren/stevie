@@ -34,6 +34,8 @@
 * @tib.var1  = Copy of @parm1
 * @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
 * @tib.var3  = SAMS page ID mapped to VRAM address
+* @tib.var4  = Line number
+* @tib.var5  = Pointer to statement
 * @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prg:
@@ -43,6 +45,10 @@ tib.uncrunch.prg:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Exit early if no TI Basic program
         ;------------------------------------------------------
@@ -69,6 +75,7 @@ tib.uncrunch.prg:
         ; Get number of lines in program
         ;------------------------------------------------------
         mov   @tib.lines,tmp2       ; Set loop counter
+        clr   tmp3                  ; 1st line in editor buffer
         ;------------------------------------------------------
         ; (1) Loop over line number table
         ;------------------------------------------------------
@@ -92,23 +99,38 @@ tib.uncrunch.prg.lnt.loop:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
 
         bl    @mknum                ; Convert unsigned number to string
               data  tib.var4,rambuf
               byte  48              ; ASCII offset
               byte  32              ; Padding character
 
-        bl    @trimnum              ; Trim number to the left
-              data  rambuf,rambuf+6,32
+        clr   @fb.uncrunch.area
+        clr   @fb.uncrunch.area+2
+        clr   @fb.uncrunch.area+4
 
+        bl    @trimnum              ; Trim number in frame buffer uncrunch area
+              data  rambuf,fb.uncrunch.area,32
+
+
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         ;------------------------------------------------------
-        ; Uncrunch program line
+        ; Uncrunch program statement
         ;------------------------------------------------------
+        mov   tmp3,@parm1           ; Get line number for editor buffer
 
-
+        bl    @tib.uncrunch.line.pack
+                                    ; Pack uncrunched line to editor buffer
+                                    ; \ i  @fb.uncrunch.area = Pointer to
+                                    ; |    buffer having uncrushed statement
+                                    ; |
+                                    ; | i  @parm1 = Line number in editor buffer
+                                    ; /
         ;------------------------------------------------------
         ; Next entry in line number table
         ;------------------------------------------------------
@@ -130,11 +152,24 @@ tib.uncrunch.prg.lnt.loop:
         ; Can also happen for the 1st entry in LNT. So move check to subroutine
         ; for reuse,
 
+        inc   tmp3                  ; Next line
+        inc   @edb.lines            ; Line counter
+
         jmp   tib.uncrunch.prg.lnt.loop
+
+
+tib.uncrunch.prg.done:
+        ;------------------------------------------------------
+        ; Finished processing program
+        ;------------------------------------------------------
+        seto  @fb.dirty             ; Refresh screen buffer
+        seto  @edb.dirty            ; Update screen with editor buffer when done
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 tib.uncrunch.prg.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
