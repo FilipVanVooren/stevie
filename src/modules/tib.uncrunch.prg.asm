@@ -146,9 +146,13 @@ tib.uncrunch.prg.lnt.loop:
 tib.uncrunch.prg.process_token:
         movb  *tmp0+,tmp1           ; Get token into MSB
         srl   tmp1,8                ; Move token to LSB
-        inc   tmp2                  ; Set position in statement
+        jeq   tib.uncrnch.prg.copy.statement
+                                    ; Skip to (5) if >00 termination token found
+
+        inc   tmp2                  ; Update position in statement
 
         mov   tmp1,@parm1           ; Set token to process
+
         bl    @tib.uncrunch.token   ; Decode statement token to uncrunch area
                                     ; \ i  @parm1    = Token to process
                                     ; | o  @outparm1 = Bytes processed
@@ -156,14 +160,14 @@ tib.uncrunch.prg.process_token:
                                     ; /
 
         a     @outparm1,tmp1        ; Forward in statement
-        a     @outparm1,tmp2        ; Update position in statement
-
+        a     @outparm1,tmp2        ; Forward in statement
         c     tmp2,@tib.var7        ; End of statement reached?
         jlt   tib.uncrunch.prg.process_token
                                     ; Not yet, process next token
         ;------------------------------------------------------
         ; 5. Copy uncrunched statement to editor buffer
         ;------------------------------------------------------
+tib.uncrnch.prg.copy.statement:
         mov   tmp3,@parm1           ; Get editor buffer line number to store
                                     ; statement in.
 

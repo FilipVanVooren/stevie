@@ -10,11 +10,10 @@
 *--------------------------------------------------------------
 * INPUT
 * @parm1     = token to process
-* @tib.var6  = Byte offset in uncrunch area
-* @tib.var7  = Statement length in bytes
 *
 * OUTPUT
 * @outparm1  = Number of bytes processed
+* @tib.var6  = Byte offset in uncrunch area
 *--------------------------------------------------------------
 * Register usage
 * tmp0
