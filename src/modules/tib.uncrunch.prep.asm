@@ -6,7 +6,7 @@
 * tib.uncrunch.prepare
 * Prepare for uncrunching TI-Basic program
 ***************************************************************
-* bl   @tibasic.uncrunch
+* bl   @tib.uncrunch.prepare
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = TI Basic session to uncrunch (1-5)
@@ -18,7 +18,6 @@
 * tmp0
 *--------------------------------------------------------------
 * Remarks
-* @tib.var1 = Copy @parm1
 *
 * Pointers:
 * @tib.scrpad.ptr = Scratchpad address in SAMS page >ff
@@ -32,8 +31,8 @@
 * @tib.strs.top.ptr = Top of string space
 * @tib.strs.bot.ptr = Bottom of string space
 *
-* (Temporary) variables
-* @tib.var1  = Copy of @parm1
+* Variables
+* @tib.var1  = TI Basic session
 * @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
 * @tib.var3  = SAMS page ID mapped to VRAM address
 * @tib.lines = Number of lines in TI Basic program

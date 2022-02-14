@@ -108,7 +108,7 @@ tib.uncrunch.line.pack.copyline.block:
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
         ;------------------------------------------------------
-        ; 5: Align pointer to multiple of 16 memory address
+        ; 5. Align pointer to multiple of 16 memory address
         ;------------------------------------------------------
 tib.uncrunch.line.pack.copyline.align16:
         a     tmp4,@edb.next_free.ptr  ; Add length of line
@@ -118,7 +118,7 @@ tib.uncrunch.line.pack.copyline.align16:
         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
         ;------------------------------------------------------
-        ; 6: Restore SAMS page and prepare for exit
+        ; 6. Restore SAMS page and prepare for exit
         ;------------------------------------------------------
 tib.uncrunch.line.pack.prepexit:
         c     @edb.sams.hipage,@edb.sams.page

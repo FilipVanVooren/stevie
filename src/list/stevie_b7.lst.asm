@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.42414
+     **** ****     > stevie_b7.asm.42941
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220212-2059520
+0009               * File: stevie_b7.asm               ; Version 220214-2033590
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -562,7 +562,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0445      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0446      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0447      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -702,7 +702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0018               
 0019               ***************************************************************
 0020               * BANK 7
@@ -761,7 +761,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1582,7 +1582,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220212-2059520'
+0270 21ED   42             text  'Build-ID  220214-2033590'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1590,10 +1590,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F6 2032     
      21F8 3230     
      21FA 3231     
-     21FC 322D     
+     21FC 342D     
      21FE 3230     
-     2200 3539     
-     2202 3532     
+     2200 3333     
+     2202 3539     
      2204 30       
 0271                       even
 0272               
@@ -5874,7 +5874,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0041                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7771,7 +7771,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024 35B4 0649  14         dect  stack
 0025 35B6 C645  30         mov   tmp1,*stack           ; Push tmp1
 0026                       ;------------------------------------------------------
-0027                       ; 1a: Check if highest SAMS page needs to be increased
+0027                       ; 1a. Check if highest SAMS page needs to be increased
 0028                       ;------------------------------------------------------
 0029               edb.hipage.alloc.check_setpage:
 0030 35B8 C120  34         mov   @edb.next_free.ptr,tmp0
@@ -7788,7 +7788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0037 35C8 1105  14         jlt   edb.hipage.alloc.setpage
 0038                                                   ; Not yet, don't increase SAMS page
 0039                       ;------------------------------------------------------
-0040                       ; 1b: Increase highest SAMS page (copy-on-write!)
+0040                       ; 1b. Increase highest SAMS page (copy-on-write!)
 0041                       ;------------------------------------------------------
 0042 35CA 05A0  34         inc   @edb.sams.hipage      ; Set highest SAMS page
      35CC A518     
@@ -7797,7 +7797,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      35D2 A508     
 0044                                                   ; Start at top of SAMS page again
 0045                       ;------------------------------------------------------
-0046                       ; 1c: Switch to SAMS page and exit
+0046                       ; 1c. Switch to SAMS page and exit
 0047                       ;------------------------------------------------------
 0048               edb.hipage.alloc.setpage:
 0049 35D4 C120  34         mov   @edb.sams.hipage,tmp0
@@ -8786,7 +8786,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0042                       ;------------------------------------------------------
 0043                       ; Activate bank 1 and branch to  >6036
 0044                       ;------------------------------------------------------
@@ -8949,7 +8949,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      609E 994A     
      60A0 BEEF     
 0124                                                   ; DEAD 994A BEEF
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0062                       copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
      **** ****     > mem.sams.layout.asm
 0001               
@@ -9038,7 +9038,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0074                       ; Setup SAMS banks using inline code
 0075                       ;-------------------------------------------------------
 0076 60D2 0200  20         li    r0,mem.sams.layout.legacy
-     60D4 6830     
+     60D4 6854     
 0077 60D6 06A0  32         bl    @_mem.sams.set.banks  ; Set SAMS banks
      60D8 60A2     
 0078                       ;-------------------------------------------------------
@@ -9094,7 +9094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0115                       ; Setup SAMS banks using inline code
 0116                       ;-------------------------------------------------------
 0117 6104 0200  20         li    r0,mem.sams.layout.boot
-     6106 6840     
+     6106 6864     
 0118 6108 10CC  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0119               
 0120               
@@ -9124,7 +9124,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0144                       ; Setup SAMS banks using inline code
 0145                       ;-------------------------------------------------------
 0146 610A 0200  20         li    r0,mem.sams.layout.external
-     610C 6850     
+     610C 6874     
 0147 610E 10C9  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0148               
 0149               
@@ -9152,7 +9152,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0171                       ; Setup SAMS banks using inline code
 0172                       ;-------------------------------------------------------
 0173 6110 0200  20         li    r0,mem.sams.layout.basic1
-     6112 6860     
+     6112 6884     
 0174 6114 10C6  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0175               
 0176               
@@ -9179,7 +9179,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0197                       ; Setup SAMS banks using inline code
 0198                       ;-------------------------------------------------------
 0199 6116 0200  20         li    r0,mem.sams.layout.basic2
-     6118 6870     
+     6118 6894     
 0200 611A 10C3  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0201               
 0202               
@@ -9206,7 +9206,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0223                       ; Setup SAMS banks using inline code
 0224                       ;-------------------------------------------------------
 0225 611C 0200  20         li    r0,mem.sams.layout.basic3
-     611E 6880     
+     611E 68A4     
 0226 6120 10C0  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0227               
 0228               
@@ -9232,7 +9232,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0248                       ; Setup SAMS banks using inline code
 0249                       ;-------------------------------------------------------
 0250 6122 0200  20         li    r0,mem.sams.layout.basic4
-     6124 6890     
+     6124 68B4     
 0251 6126 10BD  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0252               
 0253               
@@ -9258,7 +9258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0273                       ; Setup SAMS banks using inline code
 0274                       ;-------------------------------------------------------
 0275 6128 0200  20         li    r0,mem.sams.layout.basic5
-     612A 68A0     
+     612A 68C4     
 0276 612C 10BA  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0277               
 0278               
@@ -9358,7 +9358,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 618A 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0063                       ;-----------------------------------------------------------------------
 0064                       ; TI Basic sessions
 0065                       ;-----------------------------------------------------------------------
@@ -10277,10 +10277,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0693               
 0694               
 0695 6554 06A0  32         bl    @tibasic.buildstr     ; Build session identifier string
-     6556 680C     
+     6556 6830     
 0696               
 0697 6558 06A0  32         bl    @pane.action.colorscheme.load
-     655A 67FA     
+     655A 681E     
 0698                                                   ; Reload color scheme
 0699                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0700                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -10322,7 +10322,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      658E C3CF     
      6590 C3F3     
      6592 C37E     
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0067                       ;-----------------------------------------------------------------------
 0068                       ; TI Basic program uncruncher
 0069                       ;-----------------------------------------------------------------------
@@ -10411,7 +10411,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0073 65CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0074 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
 0075 65CE 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0071                       copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
      **** ****     > tib.uncrunch.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -10466,7 +10466,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0045                                                   ; / i  tmp1  = Memory map address
 0046               
 0047 65F0 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
-     65F2 67E8     
+     65F2 680C     
 0048                       ;------------------------------------------------------
 0049                       ; Exit
 0050                       ;------------------------------------------------------
@@ -10475,7 +10475,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0053 65F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0054 65F8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0055 65FA 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0072                       copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
      **** ****     > tib.uncrunch.prep.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -10655,7 +10655,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0141                                                   ; /
 0142               
 0143 6690 0224  22         ai    tmp0,mem.sams.layout.basic - 16
-     6692 6850     
+     6692 6874     
 0144                                                   ; Add base address for specified session
 0145               
 0146 6694 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
@@ -10667,7 +10667,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0151 6698 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0152 669A C2F9  30         mov   *stack+,r11           ; Pop r11
 0153 669C 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0073                       copy  "tib.uncrunch.prg.asm"     ; Uncrunch tokenized program code
      **** ****     > tib.uncrunch.prg.asm
 0001               * FILE......: tib.uncrunch.prg.asm
@@ -10727,7 +10727,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0055 66B2 8820  54         c     @tib.lnt.top.ptr,@tib.lnt.bot.ptr
      66B4 A0C6     
      66B6 A0C8     
-0056 66B8 133F  14         jeq   tib.uncrunch.prg.exit ; Line number table is empty
+0056 66B8 1351  14         jeq   tib.uncrunch.prg.exit ; Line number table is empty
 0057                       ;------------------------------------------------------
 0058                       ; Initialisation
 0059                       ;------------------------------------------------------
@@ -10756,7 +10756,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      66CC A0D2     
 0078 66CE 04C7  14         clr   tmp3                  ; 1st line in editor buffer
 0079                       ;------------------------------------------------------
-0080                       ; (1) Loop over line number table
+0080                       ; 1. Loop over line number table
 0081                       ;------------------------------------------------------
 0082               tib.uncrunch.prg.lnt.loop:
 0083                       ;------------------------------------------------------
@@ -10774,7 +10774,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0092 66DC D814  46         movb  *tmp0,@tib.var5+1     ; Pointer to statement LSB
      66DE A0F5     
 0093                       ;------------------------------------------------------
-0094                       ; Convert line number to string
+0094                       ; 2. Put line number in uncrunch area
 0095                       ;------------------------------------------------------
 0096 66E0 0649  14         dect  stack
 0097 66E2 C644  30         mov   tmp0,*stack           ; Push tmp0
@@ -10805,73 +10805,106 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      670C D960     
      670E 0020     
 0116               
-0117               
-0118 6710 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0119 6712 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0120 6714 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0121 6716 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0122                       ;------------------------------------------------------
-0123                       ; Uncrunch program statement
-0124                       ;------------------------------------------------------
-0125 6718 C807  38         mov   tmp3,@parm1           ; Get line number for editor buffer
-     671A A006     
+0117 6710 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0118 6712 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0119 6714 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0120 6716 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0121                       ;------------------------------------------------------
+0122                       ; 3. Uncrunch statement to uncrunch area
+0123                       ;------------------------------------------------------
+0124 6718 C120  34         mov   @tib.var5,tmp0        ; Get pointer to statement
+     671A A0F4     
+0125 671C 0604  14         dec   tmp0                  ; Statement length prefix
 0126               
-0127 671C 06A0  32         bl    @tib.uncrunch.line.pack
-     671E 6744     
-0128                                                   ; Pack uncrunched line to editor buffer
-0129                                                   ; \ i  @fb.uncrunch.area = Pointer to
-0130                                                   ; |    buffer having uncrushed statement
-0131                                                   ; |
-0132                                                   ; | i  @parm1 = Line number in editor buffer
-0133                                                   ; /
-0134                       ;------------------------------------------------------
-0135                       ; Next entry in line number table
-0136                       ;------------------------------------------------------
-0137 6720 0606  14         dec   tmp2                  ; Last line processed?
-0138 6722 130A  14         jeq   tib.uncrunch.prg.exit ; yes, exit
-0139               
-0140 6724 0224  22         ai    tmp0,-7
-     6726 FFF9     
+0127 671E 0264  22         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
+     6720 F000     
+0128                                                   ; | instead of VRAM address.
+0129                                                   ; / Example: >f7b3 maps to >37b3.
+0130               
+0131 6722 D1B4  28         movb  *tmp0+,tmp2           ; \ Get line size
+0132 6724 0986  56         srl   tmp2,8                ; / MSB to LSB
+0133                       ;------------------------------------------------------
+0134                       ; 4. Uncrunch tokens in statement to uncrunch area
+0135                       ;------------------------------------------------------
+0136               tib.uncrnch.prg.process_token:
+0137 6726 D174  28         movb  *tmp0+,tmp1           ; Get token into MSB
+0138 6728 0985  56         srl   tmp1,8                ; Move token to LSB
+0139 672A 0225  22         ai    tmp1,->0080           ; Token range >80 - >ff
+     672C FF80     
+0140 672E 0A15  56         sla   tmp1,1                ; Make it a word offset
 0141               
-0142                       ; Need to deal with split line-number-table entries.
-0143                       ; Need something like an underflow memory area where a split LNT entry
-0144                       ; is copied to. This area needs to be checked and filled accordingly.
-0145                       ;
-0146                       ;     if tmp0 < f000 then
-0147                       ;          copy split LNT entry to underflow RAM area.
-0148                       ;          tmp0 = underflow RAM Area
-0149                       ;          process next entry
-0150                       ;          set tmp0 back to regular LNT
-0151                       ;
-0152                       ; Can also happen for the 1st entry in LNT. So move check to subroutine
-0153                       ; for reuse,
-0154               
-0155 6728 0587  14         inc   tmp3                  ; Next line
-0156 672A 05A0  34         inc   @edb.lines            ; Line counter
-     672C A504     
-0157               
-0158 672E 10D0  14         jmp   tib.uncrunch.prg.lnt.loop
-0159               
-0160               
-0161               tib.uncrunch.prg.done:
-0162                       ;------------------------------------------------------
-0163                       ; Finished processing program
+0142 6730 C165  34         mov   @tib.tokenindex(tmp1),tmp1
+     6732 6B62     
+0143                                                   ; Get pointer to token definition
+0144 6734 C805  38         mov   tmp1,@tib.var6        ; Save pointer
+     6736 A0F6     
+0145               
+0146               
+0147 6738 0606  14         dec   tmp2                  ; Update loop counter
+0148               
+0149 673A 15F5  14         jgt   tib.uncrnch.prg.process_token
+0150                                                   ; Process next token
+0151                       ;------------------------------------------------------
+0152                       ; 5. Copy uncrunched statement to editor buffer
+0153                       ;------------------------------------------------------
+0154 673C C807  38         mov   tmp3,@parm1           ; Get editor buffer line number to store
+     673E A006     
+0155                                                   ; statement in.
+0156               
+0157 6740 06A0  32         bl    @tib.uncrunch.line.pack
+     6742 6768     
+0158                                                   ; Pack uncrunched line to editor buffer
+0159                                                   ; \ i  @fb.uncrunch.area = Pointer to
+0160                                                   ; |    buffer having uncrushed statement
+0161                                                   ; |
+0162                                                   ; | i  @parm1 = Line number in editor buffer
+0163                                                   ; /
 0164                       ;------------------------------------------------------
-0165 6730 0720  34         seto  @fb.dirty             ; Refresh screen buffer
-     6732 A316     
-0166 6734 0720  34         seto  @edb.dirty            ; Update screen with editor buffer when done
-     6736 A506     
-0167                       ;------------------------------------------------------
-0168                       ; Exit
-0169                       ;------------------------------------------------------
-0170               tib.uncrunch.prg.exit:
-0171 6738 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0172 673A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0173 673C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0174 673E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0175 6740 C2F9  30         mov   *stack+,r11           ; Pop r11
-0176 6742 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.42414
+0165                       ; 6. Next entry in line number table
+0166                       ;------------------------------------------------------
+0167 6744 0606  14         dec   tmp2                  ; Last line processed?
+0168 6746 130A  14         jeq   tib.uncrunch.prg.exit ; yes, exit
+0169               
+0170 6748 0224  22         ai    tmp0,-7
+     674A FFF9     
+0171               
+0172                       ; Need to deal with split line-number-table entries.
+0173                       ; Need something like an underflow memory area where a split LNT entry
+0174                       ; is copied to. This area needs to be checked and filled accordingly.
+0175                       ;
+0176                       ;     if tmp0 < f000 then
+0177                       ;          copy split LNT entry to underflow RAM area.
+0178                       ;          tmp0 = underflow RAM Area
+0179                       ;          process next entry
+0180                       ;          set tmp0 back to regular LNT
+0181                       ;
+0182                       ; Can also happen for the 1st entry in LNT. So move check to subroutine
+0183                       ; for reuse,
+0184               
+0185 674C 0587  14         inc   tmp3                  ; Next line
+0186 674E 05A0  34         inc   @edb.lines            ; Line counter
+     6750 A504     
+0187               
+0188 6752 10BE  14         jmp   tib.uncrunch.prg.lnt.loop
+0189                       ;------------------------------------------------------
+0190                       ; 7. Finished processing program
+0191                       ;------------------------------------------------------
+0192               tib.uncrunch.prg.done:
+0193 6754 0720  34         seto  @fb.dirty             ; Refresh screen buffer
+     6756 A316     
+0194 6758 0720  34         seto  @edb.dirty            ; Update screen with editor buffer when done
+     675A A506     
+0195                       ;------------------------------------------------------
+0196                       ; Exit
+0197                       ;------------------------------------------------------
+0198               tib.uncrunch.prg.exit:
+0199 675C C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0200 675E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0201 6760 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0202 6762 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0203 6764 C2F9  30         mov   *stack+,r11           ; Pop r11
+0204 6766 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.42941
 0074                       copy  "tib.uncrunch.line.pack.asm"
      **** ****     > tib.uncrunch.line.pack.asm
 0001               * FILE......: tib.uncrunch.line.pack
@@ -10896,65 +10929,65 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0020               * none
 0021               ********|*****|*********************|**************************
 0022               tib.uncrunch.line.pack:
-0023 6744 0649  14         dect  stack
-0024 6746 C64B  30         mov   r11,*stack            ; Save return address
-0025 6748 0649  14         dect  stack
-0026 674A C644  30         mov   tmp0,*stack           ; Push tmp0
-0027 674C 0649  14         dect  stack
-0028 674E C645  30         mov   tmp1,*stack           ; Push tmp1
-0029 6750 0649  14         dect  stack
-0030 6752 C646  30         mov   tmp2,*stack           ; Push tmp2
-0031 6754 0649  14         dect  stack
-0032 6756 C647  30         mov   tmp3,*stack           ; Push tmp3
-0033 6758 0649  14         dect  stack
-0034 675A C648  30         mov   tmp4,*stack           ; Push tmp4
+0023 6768 0649  14         dect  stack
+0024 676A C64B  30         mov   r11,*stack            ; Save return address
+0025 676C 0649  14         dect  stack
+0026 676E C644  30         mov   tmp0,*stack           ; Push tmp0
+0027 6770 0649  14         dect  stack
+0028 6772 C645  30         mov   tmp1,*stack           ; Push tmp1
+0029 6774 0649  14         dect  stack
+0030 6776 C646  30         mov   tmp2,*stack           ; Push tmp2
+0031 6778 0649  14         dect  stack
+0032 677A C647  30         mov   tmp3,*stack           ; Push tmp3
+0033 677C 0649  14         dect  stack
+0034 677E C648  30         mov   tmp4,*stack           ; Push tmp4
 0035                       ;------------------------------------------------------
 0036                       ; Prepare scan
 0037                       ;------------------------------------------------------
-0038 675C 04C4  14         clr   tmp0                  ; Counter
-0039 675E 0205  20         li    tmp1,fb.uncrunch.area+1
-     6760 D961     
+0038 6780 04C4  14         clr   tmp0                  ; Counter
+0039 6782 0205  20         li    tmp1,fb.uncrunch.area+1
+     6784 D961     
 0040                                                   ; Get pointer to uncrunch area
-0041 6762 C1E0  34         mov   @parm1,tmp3           ; Editor buffer line
-     6764 A006     
+0041 6786 C1E0  34         mov   @parm1,tmp3           ; Editor buffer line
+     6788 A006     
 0042                       ;------------------------------------------------------
 0043                       ; 1. Scan line for >00 byte termination
 0044                       ;------------------------------------------------------
 0045               tib.uncrunch.line.pack.scan:
-0046 6766 D1B5  28         movb  *tmp1+,tmp2           ; Get char
-0047 6768 0986  56         srl   tmp2,8                ; Right justify
-0048 676A 1302  14         jeq   tib.uncrunch.line.pack.check_setpage
+0046 678A D1B5  28         movb  *tmp1+,tmp2           ; Get char
+0047 678C 0986  56         srl   tmp2,8                ; Right justify
+0048 678E 1302  14         jeq   tib.uncrunch.line.pack.check_setpage
 0049                                                   ; Stop scan if >00 found
-0050 676C 0584  14         inc   tmp0                  ; Increase string length
+0050 6790 0584  14         inc   tmp0                  ; Increase string length
 0051               
-0052 676E 10FB  14         jmp   tib.uncrunch.line.pack.scan
+0052 6792 10FB  14         jmp   tib.uncrunch.line.pack.scan
 0053                                                   ; Next character
 0054                       ;------------------------------------------------------
 0055                       ; Check if highest SAMS page needs to be increased
 0056                       ;------------------------------------------------------
 0057               tib.uncrunch.line.pack.check_setpage:
-0058 6770 C204  18         mov   tmp0,tmp4             ; Save full length of line
+0058 6794 C204  18         mov   tmp0,tmp4             ; Save full length of line
 0059               
-0060 6772 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
-     6774 35AC     
+0060 6796 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
+     6798 35AC     
 0061                                                   ; \ i  @edb.next_free.ptr = Pointer to next
 0062                                                   ; /    free line
 0063                       ;------------------------------------------------------
 0064                       ; 2. Update index
 0065                       ;------------------------------------------------------
-0066 6776 C807  38         mov   tmp3,@parm1           ; Set editor buffer line
-     6778 A006     
-0067 677A C820  54         mov   @edb.next_free.ptr,@parm2
-     677C A508     
-     677E A008     
+0066 679A C807  38         mov   tmp3,@parm1           ; Set editor buffer line
+     679C A006     
+0067 679E C820  54         mov   @edb.next_free.ptr,@parm2
+     67A0 A508     
+     67A2 A008     
 0068                                                   ; Pointer to new line
-0069 6780 C820  54         mov   @edb.sams.hipage,@parm3
-     6782 A518     
-     6784 A00A     
+0069 67A4 C820  54         mov   @edb.sams.hipage,@parm3
+     67A6 A518     
+     67A8 A00A     
 0070                                                   ; SAMS page to use
 0071               
-0072 6786 06A0  32         bl    @idx.entry.update     ; Update index
-     6788 334A     
+0072 67AA 06A0  32         bl    @idx.entry.update     ; Update index
+     67AC 334A     
 0073                                                   ; \ i  parm1 = Line number in editor buffer
 0074                                                   ; | i  parm2 = pointer to line in
 0075                                                   ; |            editor buffer
@@ -10962,86 +10995,86 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0077                       ;------------------------------------------------------
 0078                       ; 3. Set line prefix in editor buffer
 0079                       ;------------------------------------------------------
-0080 678A 0204  20         li    tmp0,fb.uncrunch.area+1
-     678C D961     
+0080 67AE 0204  20         li    tmp0,fb.uncrunch.area+1
+     67B0 D961     
 0081                                                   ; Source for memory copy
-0082 678E C160  34         mov   @edb.next_free.ptr,tmp1
-     6790 A508     
+0082 67B2 C160  34         mov   @edb.next_free.ptr,tmp1
+     67B4 A508     
 0083                                                   ; Address of line in editor buffer
 0084               
-0085 6792 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
-     6794 A508     
+0085 67B6 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
+     67B8 A508     
 0086               
-0087 6796 C188  18         mov   tmp4,tmp2             ; Get line length
-0088 6798 CD46  34         mov   tmp2,*tmp1+           ; Set saved line length as line prefix
+0087 67BA C188  18         mov   tmp4,tmp2             ; Get line length
+0088 67BC CD46  34         mov   tmp2,*tmp1+           ; Set saved line length as line prefix
 0089                       ;------------------------------------------------------
 0090                       ; 4. Copy line from uncrunch area to editor buffer
 0091                       ;------------------------------------------------------
 0092               tib.uncrunch.line.pack.copyline:
-0093 679A 0286  22         ci    tmp2,2
-     679C 0002     
-0094 679E 1603  14         jne   tib.uncrunch.line.pack.copyline.checkbyte
-0095 67A0 DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
-0096 67A2 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
-0097 67A4 1007  14         jmp   tib.uncrunch.line.pack.copyline.align16
+0093 67BE 0286  22         ci    tmp2,2
+     67C0 0002     
+0094 67C2 1603  14         jne   tib.uncrunch.line.pack.copyline.checkbyte
+0095 67C4 DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
+0096 67C6 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
+0097 67C8 1007  14         jmp   tib.uncrunch.line.pack.copyline.align16
 0098               
 0099               tib.uncrunch.line.pack.copyline.checkbyte:
-0100 67A6 0286  22         ci    tmp2,1
-     67A8 0001     
-0101 67AA 1602  14         jne   tib.uncrunch.line.pack.copyline.block
-0102 67AC D554  38         movb  *tmp0,*tmp1           ; Copy single byte
-0103 67AE 1002  14         jmp   tib.uncrunch.line.pack.copyline.align16
+0100 67CA 0286  22         ci    tmp2,1
+     67CC 0001     
+0101 67CE 1602  14         jne   tib.uncrunch.line.pack.copyline.block
+0102 67D0 D554  38         movb  *tmp0,*tmp1           ; Copy single byte
+0103 67D2 1002  14         jmp   tib.uncrunch.line.pack.copyline.align16
 0104               
 0105               tib.uncrunch.line.pack.copyline.block:
-0106 67B0 06A0  32         bl    @xpym2m               ; Copy memory block
-     67B2 24F4     
+0106 67D4 06A0  32         bl    @xpym2m               ; Copy memory block
+     67D6 24F4     
 0107                                                   ; \ i  tmp0 = source
 0108                                                   ; | i  tmp1 = destination
 0109                                                   ; / i  tmp2 = bytes to copy
 0110                       ;------------------------------------------------------
-0111                       ; 5: Align pointer to multiple of 16 memory address
+0111                       ; 5. Align pointer to multiple of 16 memory address
 0112                       ;------------------------------------------------------
 0113               tib.uncrunch.line.pack.copyline.align16:
-0114 67B4 A808  38         a     tmp4,@edb.next_free.ptr  ; Add length of line
-     67B6 A508     
+0114 67D8 A808  38         a     tmp4,@edb.next_free.ptr  ; Add length of line
+     67DA A508     
 0115               
-0116 67B8 C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
-     67BA A508     
-0117 67BC 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
-0118 67BE 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
-     67C0 000F     
-0119 67C2 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-     67C4 A508     
+0116 67DC C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+     67DE A508     
+0117 67E0 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+0118 67E2 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+     67E4 000F     
+0119 67E6 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
+     67E8 A508     
 0120                       ;------------------------------------------------------
-0121                       ; 6: Restore SAMS page and prepare for exit
+0121                       ; 6. Restore SAMS page and prepare for exit
 0122                       ;------------------------------------------------------
 0123               tib.uncrunch.line.pack.prepexit:
-0124 67C6 8820  54         c     @edb.sams.hipage,@edb.sams.page
-     67C8 A518     
-     67CA A516     
-0125 67CC 1306  14         jeq   tib.uncrunch.line.pack.exit
+0124 67EA 8820  54         c     @edb.sams.hipage,@edb.sams.page
+     67EC A518     
+     67EE A516     
+0125 67F0 1306  14         jeq   tib.uncrunch.line.pack.exit
 0126                                                      ; Exit early if SAMS page already mapped
 0127               
-0128 67CE C120  34         mov   @edb.sams.page,tmp0
-     67D0 A516     
-0129 67D2 C160  34         mov   @edb.top.ptr,tmp1
-     67D4 A500     
-0130 67D6 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     67D8 258A     
+0128 67F2 C120  34         mov   @edb.sams.page,tmp0
+     67F4 A516     
+0129 67F6 C160  34         mov   @edb.top.ptr,tmp1
+     67F8 A500     
+0130 67FA 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     67FC 258A     
 0131                                                   ; \ i  tmp0 = SAMS page number
 0132                                                   ; / i  tmp1 = Memory address
 0133                       ;------------------------------------------------------
 0134                       ; Exit
 0135                       ;------------------------------------------------------
 0136               tib.uncrunch.line.pack.exit:
-0137 67DA C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0138 67DC C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0139 67DE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0140 67E0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0141 67E2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0142 67E4 C2F9  30         mov   *stack+,r11           ; Pop R11
-0143 67E6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.42414
+0137 67FE C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0138 6800 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0139 6802 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0140 6804 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0141 6806 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0142 6808 C2F9  30         mov   *stack+,r11           ; Pop R11
+0143 680A 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b7.asm.42941
 0075                                                        ; Pack uncrunched line to editor buffer
 0076                       ;-----------------------------------------------------------------------
 0077                       ; Stubs
@@ -11057,21 +11090,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0007               * bank1 vec.20
 0008               ********|*****|*********************|**************************
 0009               fb.refresh:
-0010 67E8 0649  14         dect  stack
-0011 67EA C64B  30         mov   r11,*stack            ; Save return address
+0010 680C 0649  14         dect  stack
+0011 680E C64B  30         mov   r11,*stack            ; Save return address
 0012                       ;------------------------------------------------------
 0013                       ; Call function in bank 1
 0014                       ;------------------------------------------------------
-0015 67EC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     67EE 2F84     
-0016 67F0 6002                   data bank1.rom        ; | i  p0 = bank address
-0017 67F2 7FE6                   data vec.20           ; | i  p1 = Vector with target address
-0018 67F4 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0015 6810 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6812 2F84     
+0016 6814 6002                   data bank1.rom        ; | i  p0 = bank address
+0017 6816 7FE6                   data vec.20           ; | i  p1 = Vector with target address
+0018 6818 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0019                       ;------------------------------------------------------
 0020                       ; Exit
 0021                       ;------------------------------------------------------
-0022 67F6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 67F8 045B  20         b     *r11                  ; Return to caller
+0022 681A C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 681C 045B  20         b     *r11                  ; Return to caller
 0024               
 0025               
 0026               ***************************************************************
@@ -11079,21 +11112,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0028               * bank1 vec.31
 0029               ********|*****|*********************|**************************
 0030               pane.action.colorscheme.load:
-0031 67FA 0649  14         dect  stack
-0032 67FC C64B  30         mov   r11,*stack            ; Save return address
+0031 681E 0649  14         dect  stack
+0032 6820 C64B  30         mov   r11,*stack            ; Save return address
 0033                       ;------------------------------------------------------
 0034                       ; Call function in bank 1
 0035                       ;------------------------------------------------------
-0036 67FE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6800 2F84     
-0037 6802 6002                   data bank1.rom        ; | i  p0 = bank address
-0038 6804 7FFC                   data vec.31           ; | i  p1 = Vector with target address
-0039 6806 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 6822 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6824 2F84     
+0037 6826 6002                   data bank1.rom        ; | i  p0 = bank address
+0038 6828 7FFC                   data vec.31           ; | i  p1 = Vector with target address
+0039 682A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Exit
 0042                       ;------------------------------------------------------
-0043 6808 C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 680A 045B  20         b     *r11                  ; Return to caller
+0043 682C C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 682E 045B  20         b     *r11                  ; Return to caller
 0045               
 0046               
 0047               
@@ -11102,22 +11135,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               * bank3 vec.23
 0051               ********|*****|*********************|**************************
 0052               tibasic.buildstr:
-0053 680C 0649  14         dect  stack
-0054 680E C64B  30         mov   r11,*stack            ; Save return address
+0053 6830 0649  14         dect  stack
+0054 6832 C64B  30         mov   r11,*stack            ; Save return address
 0055                       ;------------------------------------------------------
 0056                       ; Call function in bank 3
 0057                       ;------------------------------------------------------
-0058 6810 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6812 2F84     
-0059 6814 6006                   data bank3.rom        ; | i  p0 = bank address
-0060 6816 7FEC                   data vec.23           ; | i  p1 = Vector with target address
-0061 6818 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0058 6834 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6836 2F84     
+0059 6838 6006                   data bank3.rom        ; | i  p0 = bank address
+0060 683A 7FEC                   data vec.23           ; | i  p1 = Vector with target address
+0061 683C 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0062                       ;------------------------------------------------------
 0063                       ; Exit
 0064                       ;------------------------------------------------------
-0065 681A C2F9  30         mov   *stack+,r11           ; Pop r11
-0066 681C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.42414
+0065 683E C2F9  30         mov   *stack+,r11           ; Pop r11
+0066 6840 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b7.asm.42941
 0080                       copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -11129,21 +11162,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008               * bank1 vec.1
 0009               ********|*****|*********************|**************************
 0010               mem.sams.setup.stevie:
-0011 681E 0649  14         dect  stack
-0012 6820 C64B  30         mov   r11,*stack            ; Save return address
+0011 6842 0649  14         dect  stack
+0012 6844 C64B  30         mov   r11,*stack            ; Save return address
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 1
 0015                       ;------------------------------------------------------
-0016 6822 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6824 2F84     
-0017 6826 6002                   data bank1.rom        ; | i  p0 = bank address
-0018 6828 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0019 682A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 6846 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6848 2F84     
+0017 684A 6002                   data bank1.rom        ; | i  p0 = bank address
+0018 684C 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0019 684E 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023 682C C2F9  30         mov   *stack+,r11           ; Pop r11
-0024 682E 045B  20         b     *r11                  ; Return to caller
+0023 6850 C2F9  30         mov   *stack+,r11           ; Pop r11
+0024 6852 045B  20         b     *r11                  ; Return to caller
 0026               
 0027               
 0049               
@@ -11156,7 +11189,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               
 0141               
 0142               
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0081                       ;-----------------------------------------------------------------------
 0082                       ; Program data
 0083                       ;-----------------------------------------------------------------------
@@ -11170,124 +11203,124 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               * SAMS legacy page layout table (as in SAMS transparent mode)
 0007               *--------------------------------------------------------------
 0008               mem.sams.layout.legacy:
-0009 6830 0200             data  >0200                 ; >2000-2fff, SAMS page >02
-0010 6832 0300             data  >0300                 ; >3000-3fff, SAMS page >03
-0011 6834 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
-0012 6836 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
-0013 6838 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
-0014 683A 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
-0015 683C 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
-0016 683E 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
+0009 6854 0200             data  >0200                 ; >2000-2fff, SAMS page >02
+0010 6856 0300             data  >0300                 ; >3000-3fff, SAMS page >03
+0011 6858 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
+0012 685A 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
+0013 685C 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
+0014 685E 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
+0015 6860 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
+0016 6862 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
 0017               
 0018               ***************************************************************
 0019               * SAMS page layout table for Stevie boot order
 0020               *--------------------------------------------------------------
 0021               mem.sams.layout.boot:
-0022 6840 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0023 6842 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0024 6844 0400             data  >0400                 ; >a000-afff, SAMS page >04
-0025 6846 2000             data  >2000                 ; >b000-bfff, SAMS page >20
+0022 6864 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0023 6866 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0024 6868 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0025 686A 2000             data  >2000                 ; >b000-bfff, SAMS page >20
 0026                                                   ; \
 0027                                                   ; | Index can allocate
 0028                                                   ; | pages >20 to >3f.
 0029                                                   ; /
-0030 6848 4000             data  >4000                 ; >c000-cfff, SAMS page >40
+0030 686C 4000             data  >4000                 ; >c000-cfff, SAMS page >40
 0031                                                   ; \
 0032                                                   ; | Editor buffer can allocate
 0033                                                   ; | pages >40 to >ff.
 0034                                                   ; /
-0035 684A 0500             data  >0500                 ; >d000-dfff, SAMS page >05
-0036 684C 0600             data  >0600                 ; >e000-efff, SAMS page >06
-0037 684E 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0035 686E 0500             data  >0500                 ; >d000-dfff, SAMS page >05
+0036 6870 0600             data  >0600                 ; >e000-efff, SAMS page >06
+0037 6872 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0038               
 0039               ***************************************************************
 0040               * SAMS page layout table before calling external progam
 0041               *--------------------------------------------------------------
 0042               mem.sams.layout.external:
-0043 6850 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0044 6852 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0045 6854 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0043 6874 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0044 6876 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0045 6878 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0046               
-0047 6856 1000             data  >1000                 ; >b000-efff, SAMS page >10
-0048 6858 1100             data  >1100                 ; \
-0049 685A 1200             data  >1200                 ; | Stevie session
-0050 685C 1300             data  >1300                 ; | VDP content
+0047 687A 1000             data  >1000                 ; >b000-efff, SAMS page >10
+0048 687C 1100             data  >1100                 ; \
+0049 687E 1200             data  >1200                 ; | Stevie session
+0050 6880 1300             data  >1300                 ; | VDP content
 0051                                                   ; /
-0052 685E 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0052 6882 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0053               
 0054               
 0055               ***************************************************************
 0056               * SAMS page layout table TI Basic session 1 VRAM
 0057               *--------------------------------------------------------------
 0058               mem.sams.layout.basic1:
-0059 6860 0000             data  >0000                 ; . >2000-2fff
-0060 6862 0100             data  >0100                 ; . >3000-3fff
-0061 6864 0400             data  >0400                 ; . >a000-afff
-0062 6866 FB00             data  >fb00                 ; \ >b000-efff
-0063 6868 FC00             data  >fc00                 ; |
-0064 686A FD00             data  >fd00                 ; | 16K VDP dump
-0065 686C FE00             data  >fe00                 ; /
-0066 686E FF00             data  >ff00                 ; . >f000-ffff
+0059 6884 0000             data  >0000                 ; . >2000-2fff
+0060 6886 0100             data  >0100                 ; . >3000-3fff
+0061 6888 0400             data  >0400                 ; . >a000-afff
+0062 688A FB00             data  >fb00                 ; \ >b000-efff
+0063 688C FC00             data  >fc00                 ; |
+0064 688E FD00             data  >fd00                 ; | 16K VDP dump
+0065 6890 FE00             data  >fe00                 ; /
+0066 6892 FF00             data  >ff00                 ; . >f000-ffff
 0067               
 0068               
 0069               ***************************************************************
 0070               * SAMS page layout table TI Basic session 2 VRAM
 0071               *--------------------------------------------------------------
 0072               mem.sams.layout.basic2:
-0073 6870 0000             data  >0000                 ; . >2000-2fff
-0074 6872 0100             data  >0100                 ; . >3000-3fff
-0075 6874 0400             data  >0400                 ; . >a000-afff
-0076 6876 F700             data  >f700                 ; \ >b000-efff
-0077 6878 F800             data  >f800                 ; |
-0078 687A F900             data  >f900                 ; | 16K VDP dump
-0079 687C FA00             data  >fa00                 ; /
-0080 687E FF00             data  >ff00                 ; . >f000-ffff
+0073 6894 0000             data  >0000                 ; . >2000-2fff
+0074 6896 0100             data  >0100                 ; . >3000-3fff
+0075 6898 0400             data  >0400                 ; . >a000-afff
+0076 689A F700             data  >f700                 ; \ >b000-efff
+0077 689C F800             data  >f800                 ; |
+0078 689E F900             data  >f900                 ; | 16K VDP dump
+0079 68A0 FA00             data  >fa00                 ; /
+0080 68A2 FF00             data  >ff00                 ; . >f000-ffff
 0081               
 0082               
 0083               ***************************************************************
 0084               * SAMS page layout table TI Basic session 3 VRAM
 0085               *--------------------------------------------------------------
 0086               mem.sams.layout.basic3:
-0087 6880 0000             data  >0000                 ; . >2000-2fff
-0088 6882 0100             data  >0100                 ; . >3000-3fff
-0089 6884 0400             data  >0400                 ; . >a000-afff
-0090 6886 F300             data  >f300                 ; \ >b000-efff
-0091 6888 F400             data  >f400                 ; |
-0092 688A F500             data  >f500                 ; | 16K VDP dump
-0093 688C F600             data  >f600                 ; /
-0094 688E FF00             data  >ff00                 ; . >f000-ffff
+0087 68A4 0000             data  >0000                 ; . >2000-2fff
+0088 68A6 0100             data  >0100                 ; . >3000-3fff
+0089 68A8 0400             data  >0400                 ; . >a000-afff
+0090 68AA F300             data  >f300                 ; \ >b000-efff
+0091 68AC F400             data  >f400                 ; |
+0092 68AE F500             data  >f500                 ; | 16K VDP dump
+0093 68B0 F600             data  >f600                 ; /
+0094 68B2 FF00             data  >ff00                 ; . >f000-ffff
 0095               
 0096               
 0097               ***************************************************************
 0098               * SAMS page layout table TI Basic session 4 VRAM
 0099               *--------------------------------------------------------------
 0100               mem.sams.layout.basic4:
-0101 6890 0000             data  >0000                 ; . >2000-2fff
-0102 6892 0100             data  >0100                 ; . >3000-3fff
-0103 6894 0400             data  >0400                 ; . >a000-afff
-0104 6896 EF00             data  >ef00                 ; \ >b000-efff
-0105 6898 F000             data  >f000                 ; |
-0106 689A F100             data  >f100                 ; | 16K VDP dump
-0107 689C F200             data  >f200                 ; /
-0108 689E FF00             data  >ff00                 ; . >f000-ffff
+0101 68B4 0000             data  >0000                 ; . >2000-2fff
+0102 68B6 0100             data  >0100                 ; . >3000-3fff
+0103 68B8 0400             data  >0400                 ; . >a000-afff
+0104 68BA EF00             data  >ef00                 ; \ >b000-efff
+0105 68BC F000             data  >f000                 ; |
+0106 68BE F100             data  >f100                 ; | 16K VDP dump
+0107 68C0 F200             data  >f200                 ; /
+0108 68C2 FF00             data  >ff00                 ; . >f000-ffff
 0109               
 0110               
 0111               ***************************************************************
 0112               * SAMS page layout table TI Basic session 5 VRAM
 0113               *--------------------------------------------------------------
 0114               mem.sams.layout.basic5:
-0115 68A0 0000             data  >0000                 ; . >2000-2fff
-0116 68A2 0100             data  >0100                 ; . >3000-3fff
-0117 68A4 0400             data  >0400                 ; . >a000-afff
-0118 68A6 EB00             data  >eb00                 ; \ >b000-efff
-0119 68A8 EC00             data  >ec00                 ; |
-0120 68AA ED00             data  >ed00                 ; | 16K VDP dump
-0121 68AC EE00             data  >ee00                 ; /
-0122 68AE FF00             data  >ff00                 ; . >f000-ffff
+0115 68C4 0000             data  >0000                 ; . >2000-2fff
+0116 68C6 0100             data  >0100                 ; . >3000-3fff
+0117 68C8 0400             data  >0400                 ; . >a000-afff
+0118 68CA EB00             data  >eb00                 ; \ >b000-efff
+0119 68CC EC00             data  >ec00                 ; |
+0120 68CE ED00             data  >ed00                 ; | 16K VDP dump
+0121 68D0 EE00             data  >ee00                 ; /
+0122 68D2 FF00             data  >ff00                 ; . >f000-ffff
 0123               
 0124               
-0125      6860     mem.sams.layout.basic  equ mem.sams.layout.basic1
-                   < stevie_b7.asm.42414
+0125      6884     mem.sams.layout.basic  equ mem.sams.layout.basic1
+                   < stevie_b7.asm.42941
 0085                       copy  "data.tib.tokens.asm"      ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
 0001               * FILE......: data.tib.tokens.asm
@@ -11299,561 +11332,554 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0007               ***************************************************************
 0008               
 0009               ;-----------------------------------------------------------------------
-0010               ; Command mode tokens
+0010               ; Command tokens
 0011               ;-----------------------------------------------------------------------
-0012 68B0 0003     tk.00   byte   >00,3,'R','U','N'
-     68B2 5255     
-     68B4 4E       
-0013 68B5   01     tk.01   byte   >01,3,'N','E','W'
-     68B6 034E     
-     68B8 4557     
-0014 68BA 0203     tk.02   byte   >02,3,'C','O','N'
-     68BC 434F     
-     68BE 4E       
-0015 68BF   02     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
-     68C0 0843     
-     68C2 4F4E     
-     68C4 5449     
-     68C6 4E55     
-     68C8 45       
-0016 68C9   03     tk.03   byte   >03,4,'L','I','S','T'
-     68CA 044C     
-     68CC 4953     
-     68CE 54       
-0017 68CF   04     tk.04   byte   >04,3,'B','Y','E'
-     68D0 0342     
-     68D2 5945     
-0018 68D4 0503     tk.05   byte   >05,3,'N','U','M'
-     68D6 4E55     
-     68D8 4D       
-0019 68D9   05     tk.05l  byte   >05,6,'N','U','M','B','E','R'
-     68DA 064E     
-     68DC 554D     
-     68DE 4245     
-     68E0 52       
-0020 68E1   06     tk.06   byte   >06,3,'O','L','D'
-     68E2 034F     
-     68E4 4C44     
-0021 68E6 0703     tk.07   byte   >07,3,'R','E','S'
-     68E8 5245     
-     68EA 53       
-0022 68EB   07     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
-     68EC 0A52     
-     68EE 4553     
-     68F0 4551     
-     68F2 5545     
-     68F4 4E43     
-     68F6 45       
-0023 68F7   08     tk.08   byte   >08,4,'S','A','V','E'
-     68F8 0453     
-     68FA 4156     
-     68FC 45       
-0024 68FD   09     tk.09   byte   >09,4,'E','D','I','T'
-     68FE 0445     
-     6900 4449     
-     6902 54       
-0025               
-0026               
-0027               ;-----------------------------------------------------------------------
-0028               ; Program statement tokens
-0029               ;-----------------------------------------------------------------------
-0030 6903   81     tk.81   byte   >81,4,'E','L','S','E'
-     6904 0445     
-     6906 4C53     
-     6908 45       
-0031 6909   84     tk.84   byte   >84,2,'I','F'
-     690A 0249     
-     690C 46       
-0032 690D   85     tk.85   byte   >85,2,'G','O'
-     690E 0247     
-     6910 4F       
-0033 6911   86     tk.86   byte   >86,4,'G','O','T','O'
-     6912 0447     
-     6914 4F54     
-     6916 4F       
-0034 6917   87     tk.87   byte   >87,5,'G','O','S','U','B'
-     6918 0547     
-     691A 4F53     
-     691C 5542     
-0035 691E 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
-     6920 5245     
-     6922 5455     
-     6924 524E     
-0036 6926 8903     tk.89   byte   >89,3,'D','E','F'
-     6928 4445     
-     692A 46       
-0037 692B   8A     tk.8a   byte   >8A,3,'D','I','M'
-     692C 0344     
-     692E 494D     
-0038 6930 8B03     tk.8b   byte   >8B,3,'E','N','D'
-     6932 454E     
-     6934 44       
-0039 6935   8C     tk.8c   byte   >8C,3,'F','O','R'
-     6936 0346     
-     6938 4F52     
-0040 693A 8D03     tk.8d   byte   >8D,3,'L','E','T'
-     693C 4C45     
-     693E 54       
-0041 693F   8E     tk.8e   byte   >8E,5,'B','R','E','A','K'
-     6940 0542     
-     6942 5245     
-     6944 414B     
-0042 6946 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
-     6948 554E     
-     694A 4252     
-     694C 4541     
-     694E 4B       
-0043 694F   90     tk.90   byte   >90,5,'T','R','A','C','E'
-     6950 0554     
-     6952 5241     
-     6954 4345     
-0044 6956 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
-     6958 554E     
-     695A 5452     
-     695C 4143     
-     695E 45       
-0045 695F   92     tk.92   byte   >92,5,'I','N','P','U','T'
-     6960 0549     
-     6962 4E50     
-     6964 5554     
-0046 6966 9304     tk.93   byte   >93,4,'D','A','T','A'
-     6968 4441     
-     696A 5441     
-0047 696C 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
-     696E 5245     
-     6970 5354     
-     6972 4F52     
-     6974 45       
-0048 6975   95     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
-     6976 0952     
-     6978 414E     
-     697A 444F     
-     697C 4D49     
-     697E 5A45     
-0049 6980 9604     tk.96   byte   >96,4,'N','E','X','T'
-     6982 4E45     
-     6984 5854     
-0050 6986 9704     tk.97   byte   >97,4,'R','E','A','D'
-     6988 5245     
-     698A 4144     
-0051 698C 9804     tk.98   byte   >98,4,'S','T','O','P'
-     698E 5354     
-     6990 4F50     
-0052 6992 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
-     6994 4445     
-     6996 4C45     
-     6998 5445     
-0053 699A 9A03     tk.9a   byte   >9A,3,'R','E','M'
-     699C 5245     
-     699E 4D       
-0054 699F   9B     tk.9b   byte   >9B,2,'O','N'
-     69A0 024F     
-     69A2 4E       
-0055 69A3   9C     tk.9c   byte   >9C,5,'P','R','I','N','T'
-     69A4 0550     
-     69A6 5249     
-     69A8 4E54     
-0056 69AA 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
-     69AC 4341     
-     69AE 4C4C     
-0057 69B0 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
-     69B2 4F50     
-     69B4 5449     
-     69B6 4F4E     
-0058 69B8 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
-     69BA 4F50     
-     69BC 454E     
-0059 69BE A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
-     69C0 434C     
-     69C2 4F53     
-     69C4 45       
-0060 69C5   A1     tk.a1   byte   >A1,3,'S','U','B'
-     69C6 0353     
-     69C8 5542     
-0061 69CA A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
-     69CC 4449     
-     69CE 5350     
-     69D0 4C41     
-     69D2 59       
-0062 69D3   B0     tk.b0   byte   >B0,4,'T','H','E','N'
-     69D4 0454     
-     69D6 4845     
-     69D8 4E       
-0063 69D9   B1     tk.b1   byte   >B1,2,'T','O'
-     69DA 0254     
-     69DC 4F       
-0064 69DD   B2     tk.b2   byte   >B2,4,'S','T','E','P'
-     69DE 0453     
-     69E0 5445     
-     69E2 50       
-0065 69E3   B3     tk.b3   byte   >B3,1,','
-     69E4 012C     
-0066 69E6 B401     tk.b4   byte   >B4,1,';'
-     69E8 3B       
-0067 69E9   B5     tk.b5   byte   >B5,1,':'
-     69EA 013A     
-0068 69EC B601     tk.b6   byte   >B6,1,')'
-     69EE 29       
-0069 69EF   B7     tk.b7   byte   >B7,1,'('
-     69F0 0128     
-0070 69F2 B801     tk.b8   byte   >B8,1,'&'
-     69F4 26       
-0071 69F5   BE     tk.be   byte   >BE,1,'='
-     69F6 013D     
-0072 69F8 BF01     tk.bf   byte   >BF,1,'<'
-     69FA 3C       
-0073 69FB   C0     tk.c0   byte   >C0,1,'>'
-     69FC 013E     
-0074 69FE C101     tk.c1   byte   >C1,1,'+'
-     6A00 2B       
-0075 6A01   C2     tk.c2   byte   >C2,1,'-'
-     6A02 012D     
-0076 6A04 C301     tk.c3   byte   >C3,1,'*'
-     6A06 2A       
-0077 6A07   C4     tk.c4   byte   >C4,1,'/'
-     6A08 012F     
-0078 6A0A C501     tk.c5   byte   >C5,1,'^'
-     6A0C 5E       
-0079 6A0D   C7     tk.c7   byte   >C7,1,'*'
-     6A0E 012A     
-0080 6A10 C800     tk.c8   byte   >C8,0,'#'
-     6A12 23       
-0081 6A13   C9     tk.c9   byte   >C9,0,''
-     6A14 0000     
-0082 6A16 CA03     tk.ca   byte   >CA,3,'E','O','F'
-     6A18 454F     
-     6A1A 46       
-0083 6A1B   CB     tk.cb   byte   >CB,3,'A','B','S'
-     6A1C 0341     
-     6A1E 4253     
-0084 6A20 CC03     tk.cc   byte   >CC,3,'A','T','N'
-     6A22 4154     
-     6A24 4E       
-0085 6A25   CD     tk.cd   byte   >CD,3,'C','O','S'
-     6A26 0343     
-     6A28 4F53     
-0086 6A2A CE03     tk.ce   byte   >CE,3,'E','X','P'
-     6A2C 4558     
-     6A2E 50       
-0087 6A2F   CF     tk.cf   byte   >CF,3,'I','N','T'
-     6A30 0349     
-     6A32 4E54     
-0088 6A34 D003     tk.d0   byte   >D0,3,'L','O','G'
-     6A36 4C4F     
-     6A38 47       
-0089 6A39   D1     tk.d1   byte   >D1,3,'S','G','N'
-     6A3A 0353     
-     6A3C 474E     
-0090 6A3E D203     tk.d2   byte   >D2,3,'S','I','N'
-     6A40 5349     
-     6A42 4E       
-0091 6A43   D3     tk.d3   byte   >D3,3,'S','Q','R'
-     6A44 0353     
-     6A46 5152     
-0092 6A48 D403     tk.d4   byte   >D4,3,'T','A','N'
-     6A4A 5441     
-     6A4C 4E       
-0093 6A4D   D5     tk.d5   byte   >D5,3,'L','E','N'
-     6A4E 034C     
-     6A50 454E     
-0094 6A52 D604     tk.d6   byte   >D6,4,'C','H','R','$'
-     6A54 4348     
-     6A56 5224     
-0095 6A58 D703     tk.d7   byte   >D7,3,'R','N','D'
-     6A5A 524E     
-     6A5C 44       
-0096 6A5D   D8     tk.d8   byte   >D8,4,'S','E','G','$'
-     6A5E 0453     
-     6A60 4547     
-     6A62 24       
-0097 6A63   D9     tk.d9   byte   >D9,3,'P','O','S'
-     6A64 0350     
-     6A66 4F53     
-0098 6A68 DA03     tk.da   byte   >DA,3,'V','A','L'
-     6A6A 5641     
-     6A6C 4C       
-0099 6A6D   DB     tk.db   byte   >DB,4,'S','T','R','$'
-     6A6E 0453     
-     6A70 5452     
-     6A72 24       
-0100 6A73   DC     tk.dc   byte   >DC,3,'A','S','C'
-     6A74 0341     
-     6A76 5343     
-0101 6A78 DE03     tk.de   byte   >DE,3,'R','E','C'
-     6A7A 5245     
-     6A7C 43       
-0102 6A7D   F1     tk.f1   byte   >F1,4,'B','A','S','E'
-     6A7E 0442     
-     6A80 4153     
-     6A82 45       
-0103 6A83   F3     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
-     6A84 0856     
-     6A86 4152     
-     6A88 4941     
-     6A8A 424C     
-     6A8C 45       
-0104 6A8D   F4     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
-     6A8E 0852     
-     6A90 454C     
-     6A92 4154     
-     6A94 4956     
-     6A96 45       
-0105 6A97   F5     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
-     6A98 0849     
-     6A9A 4E54     
-     6A9C 4552     
-     6A9E 4E41     
-     6AA0 4C       
-0106 6AA1   F6     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
-     6AA2 0A53     
-     6AA4 4551     
-     6AA6 5545     
-     6AA8 4E54     
-     6AAA 4941     
-     6AAC 4C       
-0107 6AAD   F7     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
-     6AAE 064F     
-     6AB0 5554     
-     6AB2 5055     
-     6AB4 54       
-0108 6AB5   F8     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
-     6AB6 0655     
-     6AB8 5044     
-     6ABA 4154     
-     6ABC 45       
-0109 6ABD   F9     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
-     6ABE 0641     
-     6AC0 5050     
-     6AC2 454E     
-     6AC4 44       
-0110 6AC5   FA     tk.fa   byte   >FA,5,'F','I','X','E','D'
-     6AC6 0546     
-     6AC8 4958     
-     6ACA 4544     
-0111 6ACC FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
-     6ACE 5045     
-     6AD0 524D     
-     6AD2 414E     
-     6AD4 454E     
-     6AD6 54       
-0112 6AD7   FC     tk.fc   byte   >FC,3,'T','A','B'
-     6AD8 0354     
-     6ADA 4142     
-0113 6ADC FD01     tk.fd   byte   >FD,1,'#'
-     6ADE 23       
-0114               
-0115               
-0116               ;-----------------------------------------------------------------------
-0117               ; Token index
-0118               ;-----------------------------------------------------------------------
-0119 6ADF   00     tki.00  byte   >00,tk.00
-     6AE0 B0       
-0120 6AE1   01     tki.01  byte   >01,tk.01
-     6AE2 B5       
-0121 6AE3   02     tki.02  byte   >02,tk.02
-     6AE4 BA       
-0122 6AE5   02     tki.02l byte   >02,tk.02l
-     6AE6 BF       
-0123 6AE7   03     tki.03  byte   >03,tk.03
-     6AE8 C9       
-0124 6AE9   04     tki.04  byte   >04,tk.04
-     6AEA CF       
-0125 6AEB   05     tki.05  byte   >05,tk.05
-     6AEC D4       
-0126 6AED   05     tki.05l byte   >05,tk.05l
-     6AEE D9       
-0127 6AEF   06     tki.06  byte   >06,tk.06
-     6AF0 E1       
-0128 6AF1   07     tki.07  byte   >07,tk.07
-     6AF2 E6       
-0129 6AF3   08     tki.08  byte   >08,tk.08
-     6AF4 F7       
-0130 6AF5   09     tki.09  byte   >09,tk.09
-     6AF6 FD       
-0131 6AF7   81     tki.81  byte   >81,tk.81
-     6AF8 03       
-0132 6AF9   84     tki.84  byte   >84,tk.84
-     6AFA 09       
-0133 6AFB   85     tki.85  byte   >85,tk.85
-     6AFC 0D       
-0134 6AFD   86     tki.86  byte   >86,tk.86
-     6AFE 11       
-0135 6AFF   87     tki.87  byte   >87,tk.87
-     6B00 17       
-0136 6B01   88     tki.88  byte   >88,tk.88
-     6B02 1E       
-0137 6B03   89     tki.89  byte   >89,tk.89
-     6B04 26       
-0138 6B05   8A     tki.8a  byte   >8A,tk.8a
-     6B06 2B       
-0139 6B07   8B     tki.8b  byte   >8B,tk.8b
-     6B08 30       
-0140 6B09   8C     tki.8c  byte   >8C,tk.8c
-     6B0A 35       
-0141 6B0B   8D     tki.8d  byte   >8D,tk.8d
-     6B0C 3A       
-0142 6B0D   8E     tki.8e  byte   >8E,tk.8e
-     6B0E 3F       
-0143 6B0F   8F     tki.8f  byte   >8F,tk.8f
-     6B10 46       
-0144 6B11   90     tki.90  byte   >90,tk.90
-     6B12 4F       
-0145 6B13   91     tki.91  byte   >91,tk.91
-     6B14 56       
-0146 6B15   92     tki.92  byte   >92,tk.92
-     6B16 5F       
-0147 6B17   93     tki.93  byte   >93,tk.93
-     6B18 66       
-0148 6B19   94     tki.94  byte   >94,tk.94
-     6B1A 6C       
-0149 6B1B   95     tki.95  byte   >95,tk.95
-     6B1C 75       
-0150 6B1D   96     tki.96  byte   >96,tk.96
-     6B1E 80       
-0151 6B1F   97     tki.97  byte   >97,tk.97
-     6B20 86       
-0152 6B21   98     tki.98  byte   >98,tk.98
-     6B22 8C       
-0153 6B23   99     tki.99  byte   >99,tk.99
-     6B24 92       
-0154 6B25   9A     tki.9a  byte   >9A,tk.9a
-     6B26 9A       
-0155 6B27   9B     tki.9b  byte   >9B,tk.9b
-     6B28 9F       
-0156 6B29   9C     tki.9c  byte   >9C,tk.9c
-     6B2A A3       
-0157 6B2B   9D     tki.9d  byte   >9D,tk.9d
-     6B2C AA       
-0158 6B2D   9E     tki.9e  byte   >9E,tk.9e
-     6B2E B0       
-0159 6B2F   9F     tki.9f  byte   >9F,tk.9f
-     6B30 B8       
-0160 6B31   A0     tki.a0  byte   >A0,tk.a0
-     6B32 BE       
-0161 6B33   A1     tki.a1  byte   >A1,tk.a1
-     6B34 C5       
-0162 6B35   A2     tki.a2  byte   >A2,tk.a2
-     6B36 CA       
-0163 6B37   B0     tki.b0  byte   >B0,tk.b0
-     6B38 D3       
-0164 6B39   B1     tki.b1  byte   >B1,tk.b1
-     6B3A D9       
-0165 6B3B   B2     tki.b2  byte   >B2,tk.b2
-     6B3C DD       
-0166 6B3D   B3     tki.b3  byte   >B3,tk.b3
-     6B3E E3       
-0167 6B3F   B4     tki.b4  byte   >B4,tk.b4
-     6B40 E6       
-0168 6B41   B5     tki.b5  byte   >B5,tk.b5
-     6B42 E9       
-0169 6B43   B6     tki.b6  byte   >B6,tk.b6
-     6B44 EC       
-0170 6B45   B7     tki.b7  byte   >B7,tk.b7
-     6B46 EF       
-0171 6B47   B8     tki.b8  byte   >B8,tk.b8
-     6B48 F2       
-0172 6B49   BE     tki.be  byte   >BE,tk.be
-     6B4A F5       
-0173 6B4B   BF     tki.bf  byte   >BF,tk.bf
-     6B4C F8       
-0174 6B4D   C0     tki.c0  byte   >C0,tk.c0
-     6B4E FB       
-0175 6B4F   C1     tki.c1  byte   >C1,tk.c1
-     6B50 FE       
-0176 6B51   C2     tki.c2  byte   >C2,tk.c2
-     6B52 01       
-0177 6B53   C3     tki.c3  byte   >C3,tk.c3
-     6B54 04       
-0178 6B55   C4     tki.c4  byte   >C4,tk.c4
-     6B56 07       
-0179 6B57   C5     tki.c5  byte   >C5,tk.c5
-     6B58 0A       
-0180 6B59   C7     tki.c7  byte   >C7,tk.c7
-     6B5A 0D       
-0181 6B5B   C8     tki.c8  byte   >C8,tk.c8
-     6B5C 10       
-0182 6B5D   C9     tki.c9  byte   >C9,tk.c9
-     6B5E 13       
-0183 6B5F   CA     tki.ca  byte   >CA,tk.ca
-     6B60 16       
-0184 6B61   CB     tki.cb  byte   >CB,tk.cb
-     6B62 1B       
-0185 6B63   CC     tki.cc  byte   >CC,tk.cc
-     6B64 20       
-0186 6B65   CD     tki.cd  byte   >CD,tk.cd
-     6B66 25       
-0187 6B67   CE     tki.ce  byte   >CE,tk.ce
-     6B68 2A       
-0188 6B69   CF     tki.cf  byte   >CF,tk.cf
-     6B6A 2F       
-0189 6B6B   D0     tki.d0  byte   >D0,tk.d0
-     6B6C 34       
-0190 6B6D   D1     tki.d1  byte   >D1,tk.d1
-     6B6E 39       
-0191 6B6F   D2     tki.d2  byte   >D2,tk.d2
-     6B70 3E       
-0192 6B71   D3     tki.d3  byte   >D3,tk.d3
-     6B72 43       
-0193 6B73   D4     tki.d4  byte   >D4,tk.d4
-     6B74 48       
-0194 6B75   D5     tki.d5  byte   >D5,tk.d5
-     6B76 4D       
-0195 6B77   D6     tki.d6  byte   >D6,tk.d6
-     6B78 52       
-0196 6B79   D7     tki.d7  byte   >D7,tk.d7
-     6B7A 58       
-0197 6B7B   D8     tki.d8  byte   >D8,tk.d8
-     6B7C 5D       
-0198 6B7D   D9     tki.d9  byte   >D9,tk.d9
-     6B7E 63       
-0199 6B7F   DA     tki.da  byte   >DA,tk.da
-     6B80 68       
-0200 6B81   DB     tki.db  byte   >DB,tk.db
-     6B82 6D       
-0201 6B83   DC     tki.dc  byte   >DC,tk.dc
-     6B84 73       
-0202 6B85   DE     tki.de  byte   >DE,tk.de
-     6B86 78       
-0203 6B87   F1     tki.f1  byte   >F1,tk.f1
-     6B88 7D       
-0204 6B89   F3     tki.f3  byte   >F3,tk.f3
-     6B8A 83       
-0205 6B8B   F4     tki.f4  byte   >F4,tk.f4
-     6B8C 8D       
-0206 6B8D   F5     tki.f5  byte   >F5,tk.f5
-     6B8E 97       
-0207 6B8F   F6     tki.f6  byte   >F6,tk.f6
-     6B90 A1       
-0208 6B91   F7     tki.f7  byte   >F7,tk.f7
-     6B92 AD       
-0209 6B93   F8     tki.f8  byte   >F8,tk.f8
-     6B94 B5       
-0210 6B95   F9     tki.f9  byte   >F9,tk.f9
-     6B96 BD       
-0211 6B97   FA     tki.fa  byte   >FA,tk.fa
-     6B98 C5       
-0212 6B99   FB     tki.fb  byte   >FB,tk.fb
-     6B9A CC       
-0213 6B9B   FC     tki.fc  byte   >FC,tk.fc
-     6B9C D7       
-0214 6B9D   FD     tki.fd  byte   >FD,tk.fd
-     6B9E DC       
-0215               ;-----------------------------------------------------------------------
-0216               ; Master token index
-0217               ;-----------------------------------------------------------------------
-0218               token.index:
-0219 6B9F   00             byte   >00,>09,tki.00
-     6BA0 09DF     
-0220 6BA2 819F             byte   >81,>9f,tki.81
-     6BA4 F7       
-0221 6BA6 00A0             data   >a0,>cf,tki.a0
-     6BA8 00CF     
-     6BAA 6B31     
-0222 6BAC 00D0             data   >d0,>fd,tki.d0
-     6BAE 00FD     
-     6BB0 6B6B     
-0223 6BB2 FFFF             data   eol
-                   < stevie_b7.asm.42414
+0012 68D4 0003     tk.00   byte   >00,3,'R','U','N'
+     68D6 5255     
+     68D8 4E       
+0013                       even
+0014 68DA 0103     tk.01   byte   >01,3,'N','E','W'
+     68DC 4E45     
+     68DE 57       
+0015                       even
+0016 68E0 0203     tk.02   byte   >02,3,'C','O','N'
+     68E2 434F     
+     68E4 4E       
+0017                       even
+0018 68E6 0208     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
+     68E8 434F     
+     68EA 4E54     
+     68EC 494E     
+     68EE 5545     
+0019                       even
+0020 68F0 0304     tk.03   byte   >03,4,'L','I','S','T'
+     68F2 4C49     
+     68F4 5354     
+0021                       even
+0022 68F6 0403     tk.04   byte   >04,3,'B','Y','E'
+     68F8 4259     
+     68FA 45       
+0023                       even
+0024 68FC 0503     tk.05   byte   >05,3,'N','U','M'
+     68FE 4E55     
+     6900 4D       
+0025                       even
+0026 6902 0506     tk.05l  byte   >05,6,'N','U','M','B','E','R'
+     6904 4E55     
+     6906 4D42     
+     6908 4552     
+0027                       even
+0028 690A 0603     tk.06   byte   >06,3,'O','L','D'
+     690C 4F4C     
+     690E 44       
+0029                       even
+0030 6910 0703     tk.07   byte   >07,3,'R','E','S'
+     6912 5245     
+     6914 53       
+0031                       even
+0032 6916 070A     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
+     6918 5245     
+     691A 5345     
+     691C 5155     
+     691E 454E     
+     6920 4345     
+0033                       even
+0034 6922 0804     tk.08   byte   >08,4,'S','A','V','E'
+     6924 5341     
+     6926 5645     
+0035                       even
+0036 6928 0904     tk.09   byte   >09,4,'E','D','I','T'
+     692A 4544     
+     692C 4954     
+0037                       even
+0038               ;-----------------------------------------------------------------------
+0039               ; Program tokens
+0040               ;-----------------------------------------------------------------------
+0041 692E 8104     tk.81   byte   >81,4,'E','L','S','E'
+     6930 454C     
+     6932 5345     
+0042                       even
+0043 6934 8402     tk.84   byte   >84,2,'I','F'
+     6936 4946     
+0044                       even
+0045 6938 8502     tk.85   byte   >85,2,'G','O'
+     693A 474F     
+0046                       even
+0047 693C 8604     tk.86   byte   >86,4,'G','O','T','O'
+     693E 474F     
+     6940 544F     
+0048                       even
+0049 6942 8705     tk.87   byte   >87,5,'G','O','S','U','B'
+     6944 474F     
+     6946 5355     
+     6948 42       
+0050                       even
+0051 694A 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
+     694C 5245     
+     694E 5455     
+     6950 524E     
+0052                       even
+0053 6952 8903     tk.89   byte   >89,3,'D','E','F'
+     6954 4445     
+     6956 46       
+0054                       even
+0055 6958 8A03     tk.8a   byte   >8A,3,'D','I','M'
+     695A 4449     
+     695C 4D       
+0056                       even
+0057 695E 8B03     tk.8b   byte   >8B,3,'E','N','D'
+     6960 454E     
+     6962 44       
+0058                       even
+0059 6964 8C03     tk.8c   byte   >8C,3,'F','O','R'
+     6966 464F     
+     6968 52       
+0060                       even
+0061 696A 8D03     tk.8d   byte   >8D,3,'L','E','T'
+     696C 4C45     
+     696E 54       
+0062                       even
+0063 6970 8E05     tk.8e   byte   >8E,5,'B','R','E','A','K'
+     6972 4252     
+     6974 4541     
+     6976 4B       
+0064                       even
+0065 6978 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
+     697A 554E     
+     697C 4252     
+     697E 4541     
+     6980 4B       
+0066                       even
+0067 6982 9005     tk.90   byte   >90,5,'T','R','A','C','E'
+     6984 5452     
+     6986 4143     
+     6988 45       
+0068                       even
+0069 698A 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
+     698C 554E     
+     698E 5452     
+     6990 4143     
+     6992 45       
+0070                       even
+0071 6994 9205     tk.92   byte   >92,5,'I','N','P','U','T'
+     6996 494E     
+     6998 5055     
+     699A 54       
+0072                       even
+0073 699C 9304     tk.93   byte   >93,4,'D','A','T','A'
+     699E 4441     
+     69A0 5441     
+0074                       even
+0075 69A2 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
+     69A4 5245     
+     69A6 5354     
+     69A8 4F52     
+     69AA 45       
+0076                       even
+0077 69AC 9509     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
+     69AE 5241     
+     69B0 4E44     
+     69B2 4F4D     
+     69B4 495A     
+     69B6 45       
+0078                       even
+0079 69B8 9604     tk.96   byte   >96,4,'N','E','X','T'
+     69BA 4E45     
+     69BC 5854     
+0080                       even
+0081 69BE 9704     tk.97   byte   >97,4,'R','E','A','D'
+     69C0 5245     
+     69C2 4144     
+0082                       even
+0083 69C4 9804     tk.98   byte   >98,4,'S','T','O','P'
+     69C6 5354     
+     69C8 4F50     
+0084                       even
+0085 69CA 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
+     69CC 4445     
+     69CE 4C45     
+     69D0 5445     
+0086                       even
+0087 69D2 9A03     tk.9a   byte   >9A,3,'R','E','M'
+     69D4 5245     
+     69D6 4D       
+0088                       even
+0089 69D8 9B02     tk.9b   byte   >9B,2,'O','N'
+     69DA 4F4E     
+0090                       even
+0091 69DC 9C05     tk.9c   byte   >9C,5,'P','R','I','N','T'
+     69DE 5052     
+     69E0 494E     
+     69E2 54       
+0092                       even
+0093 69E4 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
+     69E6 4341     
+     69E8 4C4C     
+0094                       even
+0095 69EA 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
+     69EC 4F50     
+     69EE 5449     
+     69F0 4F4E     
+0096                       even
+0097 69F2 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
+     69F4 4F50     
+     69F6 454E     
+0098                       even
+0099 69F8 A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
+     69FA 434C     
+     69FC 4F53     
+     69FE 45       
+0100                       even
+0101 6A00 A103     tk.a1   byte   >A1,3,'S','U','B'
+     6A02 5355     
+     6A04 42       
+0102                       even
+0103 6A06 A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
+     6A08 4449     
+     6A0A 5350     
+     6A0C 4C41     
+     6A0E 59       
+0104                       even
+0105 6A10 B004     tk.b0   byte   >B0,4,'T','H','E','N'
+     6A12 5448     
+     6A14 454E     
+0106                       even
+0107 6A16 B102     tk.b1   byte   >B1,2,'T','O'
+     6A18 544F     
+0108                       even
+0109 6A1A B204     tk.b2   byte   >B2,4,'S','T','E','P'
+     6A1C 5354     
+     6A1E 4550     
+0110                       even
+0111 6A20 B301     tk.b3   byte   >B3,1,','
+     6A22 2C       
+0112                       even
+0113 6A24 B401     tk.b4   byte   >B4,1,';'
+     6A26 3B       
+0114                       even
+0115 6A28 B501     tk.b5   byte   >B5,1,':'
+     6A2A 3A       
+0116                       even
+0117 6A2C B601     tk.b6   byte   >B6,1,')'
+     6A2E 29       
+0118                       even
+0119 6A30 B701     tk.b7   byte   >B7,1,'('
+     6A32 28       
+0120                       even
+0121 6A34 B801     tk.b8   byte   >B8,1,'&'
+     6A36 26       
+0122                       even
+0123 6A38 BE01     tk.be   byte   >BE,1,'='
+     6A3A 3D       
+0124                       even
+0125 6A3C BF01     tk.bf   byte   >BF,1,'<'
+     6A3E 3C       
+0126                       even
+0127 6A40 C001     tk.c0   byte   >C0,1,'>'
+     6A42 3E       
+0128                       even
+0129 6A44 C101     tk.c1   byte   >C1,1,'+'
+     6A46 2B       
+0130                       even
+0131 6A48 C201     tk.c2   byte   >C2,1,'-'
+     6A4A 2D       
+0132                       even
+0133 6A4C C301     tk.c3   byte   >C3,1,'*'
+     6A4E 2A       
+0134                       even
+0135 6A50 C401     tk.c4   byte   >C4,1,'/'
+     6A52 2F       
+0136                       even
+0137 6A54 C501     tk.c5   byte   >C5,1,'^'
+     6A56 5E       
+0138                       even
+0139 6A58 C701     tk.c7   byte   >C7,1,'*'
+     6A5A 2A       
+0140                       even
+0141 6A5C C801     tk.c8   byte   >C8,1,'#'
+     6A5E 23       
+0142                       even
+0143 6A60 C901     tk.c9   byte   >C9,1,' '
+     6A62 20       
+0144                       even
+0145 6A64 CA03     tk.ca   byte   >CA,3,'E','O','F'
+     6A66 454F     
+     6A68 46       
+0146                       even
+0147 6A6A CB03     tk.cb   byte   >CB,3,'A','B','S'
+     6A6C 4142     
+     6A6E 53       
+0148                       even
+0149 6A70 CC03     tk.cc   byte   >CC,3,'A','T','N'
+     6A72 4154     
+     6A74 4E       
+0150                       even
+0151 6A76 CD03     tk.cd   byte   >CD,3,'C','O','S'
+     6A78 434F     
+     6A7A 53       
+0152                       even
+0153 6A7C CE03     tk.ce   byte   >CE,3,'E','X','P'
+     6A7E 4558     
+     6A80 50       
+0154                       even
+0155 6A82 CF03     tk.cf   byte   >CF,3,'I','N','T'
+     6A84 494E     
+     6A86 54       
+0156                       even
+0157 6A88 D003     tk.d0   byte   >D0,3,'L','O','G'
+     6A8A 4C4F     
+     6A8C 47       
+0158                       even
+0159 6A8E D103     tk.d1   byte   >D1,3,'S','G','N'
+     6A90 5347     
+     6A92 4E       
+0160                       even
+0161 6A94 D203     tk.d2   byte   >D2,3,'S','I','N'
+     6A96 5349     
+     6A98 4E       
+0162                       even
+0163 6A9A D303     tk.d3   byte   >D3,3,'S','Q','R'
+     6A9C 5351     
+     6A9E 52       
+0164                       even
+0165 6AA0 D403     tk.d4   byte   >D4,3,'T','A','N'
+     6AA2 5441     
+     6AA4 4E       
+0166                       even
+0167 6AA6 D503     tk.d5   byte   >D5,3,'L','E','N'
+     6AA8 4C45     
+     6AAA 4E       
+0168                       even
+0169 6AAC D604     tk.d6   byte   >D6,4,'C','H','R','$'
+     6AAE 4348     
+     6AB0 5224     
+0170                       even
+0171 6AB2 D703     tk.d7   byte   >D7,3,'R','N','D'
+     6AB4 524E     
+     6AB6 44       
+0172                       even
+0173 6AB8 D804     tk.d8   byte   >D8,4,'S','E','G','$'
+     6ABA 5345     
+     6ABC 4724     
+0174                       even
+0175 6ABE D903     tk.d9   byte   >D9,3,'P','O','S'
+     6AC0 504F     
+     6AC2 53       
+0176                       even
+0177 6AC4 DA03     tk.da   byte   >DA,3,'V','A','L'
+     6AC6 5641     
+     6AC8 4C       
+0178                       even
+0179 6ACA DB04     tk.db   byte   >DB,4,'S','T','R','$'
+     6ACC 5354     
+     6ACE 5224     
+0180                       even
+0181 6AD0 DC03     tk.dc   byte   >DC,3,'A','S','C'
+     6AD2 4153     
+     6AD4 43       
+0182                       even
+0183 6AD6 DE03     tk.de   byte   >DE,3,'R','E','C'
+     6AD8 5245     
+     6ADA 43       
+0184                       even
+0185 6ADC F104     tk.f1   byte   >F1,4,'B','A','S','E'
+     6ADE 4241     
+     6AE0 5345     
+0186                       even
+0187 6AE2 F308     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
+     6AE4 5641     
+     6AE6 5249     
+     6AE8 4142     
+     6AEA 4C45     
+0188                       even
+0189 6AEC F408     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
+     6AEE 5245     
+     6AF0 4C41     
+     6AF2 5449     
+     6AF4 5645     
+0190                       even
+0191 6AF6 F508     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
+     6AF8 494E     
+     6AFA 5445     
+     6AFC 524E     
+     6AFE 414C     
+0192                       even
+0193 6B00 F60A     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
+     6B02 5345     
+     6B04 5155     
+     6B06 454E     
+     6B08 5449     
+     6B0A 414C     
+0194                       even
+0195 6B0C F706     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
+     6B0E 4F55     
+     6B10 5450     
+     6B12 5554     
+0196                       even
+0197 6B14 F806     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
+     6B16 5550     
+     6B18 4441     
+     6B1A 5445     
+0198                       even
+0199 6B1C F906     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
+     6B1E 4150     
+     6B20 5045     
+     6B22 4E44     
+0200                       even
+0201 6B24 FA05     tk.fa   byte   >FA,5,'F','I','X','E','D'
+     6B26 4649     
+     6B28 5845     
+     6B2A 44       
+0202                       even
+0203 6B2C FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
+     6B2E 5045     
+     6B30 524D     
+     6B32 414E     
+     6B34 454E     
+     6B36 54       
+0204                       even
+0205 6B38 FC03     tk.fc   byte   >FC,3,'T','A','B'
+     6B3A 5441     
+     6B3C 42       
+0206                       even
+0207 6B3E FD01     tk.fd   byte   >FD,1,'#'
+     6B40 23       
+0208                       even
+0209 6B42 FF04     tk.noop byte   >FF,4,'N','O','O','P'
+     6B44 4E4F     
+     6B46 4F50     
+0210                       even
+0211               ;-----------------------------------------------------------------------
+0212               ; Token index command mode
+0213               ;-----------------------------------------------------------------------
+0214 6B48 68D4     tki.00  data   tk.00               ; RUN
+0215 6B4A 68DA     tki.01  data   tk.01               ; NEW
+0216 6B4C 68E0     tki.02  data   tk.02               ; CON
+0217 6B4E 68E6     tki.02l data   tk.02l              ; CONTINUE
+0218 6B50 68F0     tki.03  data   tk.03               ; LIST
+0219 6B52 68F6     tki.04  data   tk.04               ; BYE
+0220 6B54 68FC     tki.05  data   tk.05               ; NUM
+0221 6B56 6902     tki.05l data   tk.05l              ; NUMBER
+0222 6B58 690A     tki.06  data   tk.06               ; OLD
+0223 6B5A 6910     tki.07  data   tk.07               ; RES
+0224 6B5C 6916     tki.07l data   tk.07l              ; RESEQUENCE
+0225 6B5E 6922     tki.08  data   tk.08               ; SAVE
+0226 6B60 6928     tki.09  data   tk.09               ; EDIT
+0227               ;-----------------------------------------------------------------------
+0228               ; Token index program statement
+0229               ;-----------------------------------------------------------------------
+0230 6B62 6B42     tki.80  data   tk.noop             ;
+0231 6B64 692E     tki.81  data   tk.81               ; ELSE
+0232 6B66 6B42     tki.82  data   tk.noop             ;
+0233 6B68 6B42     tki.83  data   tk.noop             ;
+0234 6B6A 6934     tki.84  data   tk.84               ; IF
+0235 6B6C 6938     tki.85  data   tk.85               ; GO
+0236 6B6E 693C     tki.86  data   tk.86               ; GOTO
+0237 6B70 6942     tki.87  data   tk.87               ; GOSUB
+0238 6B72 694A     tki.88  data   tk.88               ; RETURN
+0239 6B74 6952     tki.89  data   tk.89               ; DEF
+0240 6B76 6958     tki.8a  data   tk.8a               ; DIM
+0241 6B78 695E     tki.8b  data   tk.8b               ; END
+0242 6B7A 6964     tki.8c  data   tk.8c               ; FOR
+0243 6B7C 696A     tki.8d  data   tk.8d               ; LET
+0244 6B7E 6970     tki.8e  data   tk.8e               ; BREAK
+0245 6B80 6978     tki.8f  data   tk.8f               ; UNBREAK
+0246 6B82 6982     tki.90  data   tk.90               ; TRACE
+0247 6B84 698A     tki.91  data   tk.91               ; UNTRACE
+0248 6B86 6994     tki.92  data   tk.92               ; INPUT
+0249 6B88 699C     tki.93  data   tk.93               ; DATA
+0250 6B8A 69A2     tki.94  data   tk.94               ; RESTORE
+0251 6B8C 69AC     tki.95  data   tk.95               ; RANDOMIZE
+0252 6B8E 69B8     tki.96  data   tk.96               ; NEXT
+0253 6B90 69BE     tki.97  data   tk.97               ; READ
+0254 6B92 69C4     tki.98  data   tk.98               ; STOP
+0255 6B94 69CA     tki.99  data   tk.99               ; DELETE
+0256 6B96 69D2     tki.9a  data   tk.9a               ; REM
+0257 6B98 69D8     tki.9b  data   tk.9b               ; ON
+0258 6B9A 69DC     tki.9c  data   tk.9c               ; PRINT
+0259 6B9C 69E4     tki.9d  data   tk.9d               ; CALL
+0260 6B9E 69EA     tki.9e  data   tk.9e               ; OPTION
+0261 6BA0 69F2     tki.9f  data   tk.9f               ; OPEN
+0262 6BA2 69F8     tki.a0  data   tk.a0               ; CLOSE
+0263 6BA4 6A00     tki.a1  data   tk.a1               ; SUB
+0264 6BA6 6A06     tki.a2  data   tk.a2               ; DISPLAY
+0265 6BA8 6B42     tki.a3  data   tk.noop             ;
+0266 6BAA 6B42     tki.a4  data   tk.noop             ;
+0267 6BAC 6B42     tki.a5  data   tk.noop             ;
+0268 6BAE 6B42     tki.a6  data   tk.noop             ;
+0269 6BB0 6B42     tki.a7  data   tk.noop             ;
+0270 6BB2 6B42     tki.a8  data   tk.noop             ;
+0271 6BB4 6B42     tki.a9  data   tk.noop             ;
+0272 6BB6 6B42     tki.aa  data   tk.noop             ;
+0273 6BB8 6B42     tki.ab  data   tk.noop             ;
+0274 6BBA 6B42     tki.ac  data   tk.noop             ;
+0275 6BBC 6B42     tki.ad  data   tk.noop             ;
+0276 6BBE 6B42     tki.ae  data   tk.noop             ;
+0277 6BC0 6B42     tki.af  data   tk.noop             ;
+0278 6BC2 6A10     tki.b0  data   tk.b0               ; THEN
+0279 6BC4 6A16     tki.b1  data   tk.b1               ; TO
+0280 6BC6 6A1A     tki.b2  data   tk.b2               ; STEP
+0281 6BC8 6A20     tki.b3  data   tk.b3               ; ,
+0282 6BCA 6A24     tki.b4  data   tk.b4               ; ;
+0283 6BCC 6A28     tki.b5  data   tk.b5               ; :
+0284 6BCE 6A2C     tki.b6  data   tk.b6               ; )
+0285 6BD0 6A30     tki.b7  data   tk.b7               ; (
+0286 6BD2 6A34     tki.b8  data   tk.b8               ; &
+0287 6BD4 6B42     tki.b9  data   tk.noop             ;
+0288 6BD6 6B42     tki.ba  data   tk.noop             ;
+0289 6BD8 6B42     tki.bb  data   tk.noop             ;
+0290 6BDA 6B42     tki.bc  data   tk.noop             ;
+0291 6BDC 6B42     tki.bd  data   tk.noop             ;
+0292 6BDE 6A38     tki.be  data   tk.be               ; =
+0293 6BE0 6A3C     tki.bf  data   tk.bf               ; <
+0294 6BE2 6A40     tki.c0  data   tk.c0               ; >
+0295 6BE4 6A44     tki.c1  data   tk.c1               ; +
+0296 6BE6 6A48     tki.c2  data   tk.c2               ; -
+0297 6BE8 6A4C     tki.c3  data   tk.c3               ; *
+0298 6BEA 6A50     tki.c4  data   tk.c4               ; /
+0299 6BEC 6A54     tki.c5  data   tk.c5               ; ^
+0300 6BEE 6A58     tki.c7  data   tk.c7               ; *
+0301 6BF0 6A5C     tki.c8  data   tk.c8               ; #
+0302 6BF2 6A60     tki.c9  data   tk.c9               ; ''
+0303 6BF4 6A64     tki.ca  data   tk.ca               ; EOF
+0304 6BF6 6A6A     tki.cb  data   tk.cb               ; ABS
+0305 6BF8 6A70     tki.cc  data   tk.cc               ; ATN
+0306 6BFA 6A76     tki.cd  data   tk.cd               ; COS
+0307 6BFC 6A7C     tki.ce  data   tk.ce               ; EXP
+0308 6BFE 6A82     tki.cf  data   tk.cf               ; INT
+0309 6C00 6A88     tki.d0  data   tk.d0               ; LOG
+0310 6C02 6A8E     tki.d1  data   tk.d1               ; SGN
+0311 6C04 6A94     tki.d2  data   tk.d2               ; SIN
+0312 6C06 6A9A     tki.d3  data   tk.d3               ; SQR
+0313 6C08 6AA0     tki.d4  data   tk.d4               ; TAN
+0314 6C0A 6AA6     tki.d5  data   tk.d5               ; LEN
+0315 6C0C 6AAC     tki.d6  data   tk.d6               ; CHAR$
+0316 6C0E 6AB2     tki.d7  data   tk.d7               ; RND
+0317 6C10 6AB8     tki.d8  data   tk.d8               ; SEG$
+0318 6C12 6ABE     tki.d9  data   tk.d9               ; POS
+0319 6C14 6AC4     tki.da  data   tk.da               ; VAL
+0320 6C16 6ACA     tki.db  data   tk.db               ; STR$
+0321 6C18 6AD0     tki.dc  data   tk.dc               ; ASC
+0322 6C1A 6AD6     tki.de  data   tk.de               ; REC
+0323 6C1C 6B42     tki.df  data   tk.noop             ;
+0324 6C1E 6B42     tki.f0  data   tk.noop             ;
+0325 6C20 6ADC     tki.f1  data   tk.f1               ; BASE
+0326 6C22 6AE2     tki.f3  data   tk.f3               ; VARIABLE
+0327 6C24 6AEC     tki.f4  data   tk.f4               ; RELATIVE
+0328 6C26 6AF6     tki.f5  data   tk.f5               ; INTERNAL
+0329 6C28 6B00     tki.f6  data   tk.f6               ; SEQUENTIAL
+0330 6C2A 6B0C     tki.f7  data   tk.f7               ; OUTPUT
+0331 6C2C 6B14     tki.f8  data   tk.f8               ; UPDATE
+0332 6C2E 6B1C     tki.f9  data   tk.f9               ; APPEND
+0333 6C30 6B24     tki.fa  data   tk.fa               ; FIXED
+0334 6C32 6B2C     tki.fb  data   tk.fb               ; PERMANENT
+0335 6C34 6B38     tki.fc  data   tk.fc               ; TAB
+0336 6C36 6B3E     tki.fd  data   tk.fd               ; #
+0337 6C38 6B42     tki.fe  data   tk.noop             ;
+0338 6C3A 6B42     tki.ff  data   tk.noop             ; <NOOP>
+0339               
+0340      6B62     tib.tokenindex equ tki.80
+                   < stevie_b7.asm.42941
 0086                       ;-----------------------------------------------------------------------
 0087                       ; Scratchpad memory dump
 0088                       ;-----------------------------------------------------------------------
@@ -11999,7 +12025,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0091                       ;-----------------------------------------------------------------------
 0092                       ; Bank full check
 0093                       ;-----------------------------------------------------------------------
@@ -12021,7 +12047,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0101                       ;-----------------------------------------------------------------------
 0102                       ; Vector table
 0103                       ;-----------------------------------------------------------------------
@@ -12079,7 +12105,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.42414
+                   < stevie_b7.asm.42941
 0105               
 0106               *--------------------------------------------------------------
 0107               * Video mode configuration
