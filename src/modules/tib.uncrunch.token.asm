@@ -91,6 +91,9 @@ tib.uncrunch.token.lookup:
         ; 3. Special handling >c7:  Decode quoted string
         ;------------------------------------------------------
 tib.uncrunch.token.quoted:
+
+        ; todo: always add 1 white space before 1st quote
+
         li    tmp0,>2200            ; ASCII " in MSB
         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
         movb  tmp0,*tmp1+           ; Write 1st quote
