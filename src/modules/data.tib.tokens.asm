@@ -136,9 +136,9 @@ tk.c4   byte   >C4,1,'/'
         even
 tk.c5   byte   >C5,1,'^'
         even
-tk.c7   byte   >C7,1,'*'
+tk.c7   byte   >C7,1,34                ; Quote character
         even
-tk.c8   byte   >C8,1,'#'
+tk.c8   byte   >C8,1,' '
         even
 tk.c9   byte   >C9,1,' '
         even
@@ -297,9 +297,10 @@ tki.c2  data   tk.c2               ; -
 tki.c3  data   tk.c3               ; *
 tki.c4  data   tk.c4               ; /
 tki.c5  data   tk.c5               ; ^
-tki.c7  data   tk.c7               ; *
-tki.c8  data   tk.c8               ; #
-tki.c9  data   tk.c9               ; ''
+tki.c6  data   tk.noop             ;
+tki.c7  data   tk.c7               ; Quoted string
+tki.c8  data   tk.c8               ; Unquoted string
+tki.c9  data   tk.c9               ; Line number
 tki.ca  data   tk.ca               ; EOF
 tki.cb  data   tk.cb               ; ABS
 tki.cc  data   tk.cc               ; ATN

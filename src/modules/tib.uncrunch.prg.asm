@@ -36,8 +36,9 @@
 * @tib.var3  = SAMS page ID mapped to VRAM address
 * @tib.var4  = Line number
 * @tib.var5  = Pointer to statement (VRAM)
-* @tib.var6  = Offset in uncrunch area
-* @tib.var7  = Statement length in bytes
+* @tib.var6  = Current position (addr) in uncrunch area
+* @tib.var7  = Current position (addr) in line number table
+* @tib.var8  = Statement length in bytes
 * @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prg:
@@ -63,10 +64,13 @@ tib.uncrunch.prg:
 
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0      = VRAM address
+                                    ; |
                                     ; | o  @tib.var2 = Address SAMS page layout
                                     ; |    table entry mapped to VRAM address.
+                                    ; |
                                     ; | o  @tib.var3 = SAMS page ID mapped to
-                                    ; /    VRAM address.
+                                    ; |    VRAM address.
+                                    ; /
 
         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
                                     ; | instead of VRAM address.
@@ -79,19 +83,20 @@ tib.uncrunch.prg:
         mov   @tib.lines,tmp2       ; Set loop counter
         clr   tmp3                  ; 1st line in editor buffer
         ;------------------------------------------------------
-        ; 1. Loop over line number table
+        ; Loop over program listing
         ;------------------------------------------------------
 tib.uncrunch.prg.lnt.loop:
         ;------------------------------------------------------
-        ; Get line number
+        ; 1. Get line number
         ;------------------------------------------------------
         movb  *tmp0+,@tib.var4      ; Line number MSB
         movb  *tmp0+,@tib.var4+1    ; Line number LSB
         ;------------------------------------------------------
-        ; Get Pointer to statement
+        ; 1a. Get Pointer to statement
         ;------------------------------------------------------
         movb  *tmp0+,@tib.var5      ; Pointer to statement MSB
         movb  *tmp0,@tib.var5+1     ; Pointer to statement LSB
+        mov   tmp0,@tib.var7        ; Save position in line number table
         ;------------------------------------------------------
         ; 2. Put line number in uncrunch area
         ;------------------------------------------------------
@@ -120,13 +125,24 @@ tib.uncrunch.prg.lnt.loop:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-
+        ;------------------------------------------------------
+        ; 2a. Put white space following line number
+        ;------------------------------------------------------
         movb  @fb.uncrunch.area,tmp0
                                     ; Get length of trimmed number into MSB
         srl   tmp0,8                ; Move to LSB
-        mov   tmp0,@tib.var6        ; Set byte position in uncrunch area
+        ai    tmp0,fb.uncrunch.area+1
+                                    ; Add base address and length byte
+
+        li    tmp1,>2000            ; \ Put white space character (ASCII 32)
+        movb  tmp1,*tmp0+           ; / following line number.
+
+        li    tmp1,>0100            ; Increase length-byte in uncrunch area
+        ab    tmp1,@fb.uncrunch.area
+
+        mov   tmp0,@tib.var6        ; Save position in uncrunch area
         ;------------------------------------------------------
-        ; 3. Uncrunch statement to uncrunch area
+        ; 3. Prepare for uncrunching program statement
         ;------------------------------------------------------
         mov   @tib.var5,tmp0        ; Get pointer to statement
         dec   tmp0                  ; Statement length prefix
@@ -138,32 +154,41 @@ tib.uncrunch.prg.lnt.loop:
         movb  *tmp0+,tmp1           ; \ Get line size
         srl   tmp1,8                ; / MSB to LSB
 
-        mov   tmp1,@tib.var7        ; Statement line length in bytes
-        clr   tmp2                  ; Set position in statement
+        mov   tmp1,@tib.var8        ; Statement length in bytes
+        mov   tmp1,tmp2             ; Work copy
         ;------------------------------------------------------
-        ; 4. Uncrunch tokens in statement to uncrunch area
+        ; 4. Uncrunch program statement to uncrunch area
         ;------------------------------------------------------
-tib.uncrunch.prg.process_token:
-        movb  *tmp0+,tmp1           ; Get token into MSB
+tib.uncrunch.prg.statement.loop:
+        movb  *tmp0,tmp1            ; Get token into MSB
         srl   tmp1,8                ; Move token to LSB
         jeq   tib.uncrnch.prg.copy.statement
-                                    ; Skip to (5) if >00 termination token found
+                                    ; Skip to (5) if line termination token >00
+                                    ; is found
 
-        inc   tmp2                  ; Update position in statement
-
-        mov   tmp1,@parm1           ; Set token to process
+        mov   tmp1,@parm1           ; Token to process
+        mov   tmp0,@parm2           ; Position in crunched statement
 
         bl    @tib.uncrunch.token   ; Decode statement token to uncrunch area
-                                    ; \ i  @parm1    = Token to process
-                                    ; | o  @outparm1 = Bytes processed
-                                    ; | o  @tib.var6 = Offset in uncrunch area
-                                    ; /
+                                    ; \ i  @parm1 = Token to process
+                                    ; |
+                                    ; | i  @parm2 = Position (addr) in
+                                    ; |    crunched statement.
+                                    ; |
+                                    ; | o  @outparm1 = New position (addr) in
+                                    ; |    crunched statement.
+                                    ; |
+                                    ; | o  @outparm2 = Token length
+                                    ; |
+                                    ; | o  @outparm3 = Length of decoded keyword
+                                    ; |
+                                    ; | o  @tib.var6 = Position (addr) in
+                                    ; /    uncrunch area.
 
-        a     @outparm1,tmp1        ; Forward in statement
-        a     @outparm1,tmp2        ; Forward in statement
-        c     tmp2,@tib.var7        ; End of statement reached?
-        jlt   tib.uncrunch.prg.process_token
-                                    ; Not yet, process next token
+        mov   @outparm1,tmp0        ; Forward in crunched statement
+        s     @outparm2,tmp2        ; Update statement length
+        jgt   tib.uncrunch.prg.statement.loop
+                                    ; Process next token(s) unless done
         ;------------------------------------------------------
         ; 5. Copy uncrunched statement to editor buffer
         ;------------------------------------------------------
@@ -184,7 +209,8 @@ tib.uncrnch.prg.copy.statement:
         dec   tmp2                  ; Last line processed?
         jeq   tib.uncrunch.prg.exit ; yes, exit
 
-        ai    tmp0,-7
+        mov   @tib.var7,tmp0        ; Restore position in line number table
+        ai    tmp0,-7               ; Next entry
 
         ; Need to deal with split line-number-table entries.
         ; Need something like an underflow memory area where a split LNT entry
@@ -200,7 +226,7 @@ tib.uncrnch.prg.copy.statement:
         ; for reuse,
 
         inc   tmp3                  ; Next line
-        inc   @edb.lines            ; Line counter
+        inc   @edb.lines            ; Update Line counter
 
         jmp   tib.uncrunch.prg.lnt.loop
         ;------------------------------------------------------
