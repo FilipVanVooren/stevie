@@ -53,11 +53,11 @@ tib.uncrunch.token:
         ;------------------------------------------------------
         ; 1. Decide how to process token
         ;------------------------------------------------------
-        ci    tmp0,>c7              ; Unquoted string?
-        jeq   tib.uncrunch.token.unquoted
-
-        ci    tmp0,>c8              ; Quoted string?
+        ci    tmp0,>c7              ; Quoted string?
         jeq   tib.uncrunch.token.quoted
+
+        ci    tmp0,>c8              ; Unquoted string?
+        jeq   tib.uncrunch.token.unquoted
 
         ci    tmp0,>c9              ; line number?
         jeq   tib.uncrunch.token.linenum
@@ -74,42 +74,41 @@ tib.uncrunch.token.lookup:
         movb  *tmp0+,tmp2           ; Get length of decoded keyword
         srl   tmp2,8                ; MSB to LSB
 
-        mov   @tib.var6,tmp1        ; Get current address in uncrunch area
+        mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
 
-        mov   tmp2,@outparm3        ; Set number of Bytes processed
-        a     tmp2,@tib.var6        ; Update current address in uncrunch area
+        mov   tmp2,@outparm3        ; Set number of bytes processed
+        a     tmp2,@tib.var6        ; Set current pos (addr) in uncrunch area
 
         bl    @xpym2m               ; Copy keyword to uncrunch area
                                     ; i  tmp0 = Source address
                                     ; i  tmp1 = Destination address
                                     ; i  tmp2 = Number of bytes to copy
 
-        inc   @outparm1             ; New position (addr) in crunched statement
+        inc   @outparm1             ; New pos (addr) in crunched statement
         inc   @outparm2             ; Token length = 1
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
-        ; 3. Special handling >C7:  Decode unquoted string
+        ; 3. Special handling >c7:  Decode quoted string
+        ;------------------------------------------------------
+tib.uncrunch.token.quoted:
+        li    tmp0,>2200            ; ASCII " in MSB
+        mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+        movb  tmp0,*tmp1+           ; Write 1st quote
+
+        movb  tmp0,*tmp1+           ; Write 2nd quote
+        mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
+
+        jmp   tib.uncrunch.token.setlen
+        ;------------------------------------------------------
+        ; 4. Special handling >c8: Decode unquoted string
         ;------------------------------------------------------
 tib.uncrunch.token.unquoted:
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
-        ; 4. Special handling >c8: Decode quoted string
-        ;------------------------------------------------------
-tib.uncrunch.token.quoted:
-        li    tmp0,>2200            ; ASCII " in MSB
-        mov   @tib.var6,tmp1        ; Get current address in uncrunch area
-        movb  tmp0,*tmp1+           ; Write 1st quote
-
-
-        movb  tmp0,*tmp1+           ; Write 2nd quote
-
-        jmp   tib.uncrunch.token.setlen
-        ;------------------------------------------------------
-        ; 5. Special handling >C8: Decode line number
+        ; 5. Special handling >c9: Decode line number
         ;------------------------------------------------------
 tib.uncrunch.token.linenum:
         jmp   tib.uncrunch.token.setlen
-
         ;------------------------------------------------------
         ; 6. Update uncrunched statement length
         ;------------------------------------------------------
