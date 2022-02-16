@@ -33,29 +33,13 @@ tib.uncrunch.line.pack:
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
-        ; Prepare scan
+        ; 1. Prepare scan
         ;------------------------------------------------------
-        clr   tmp0                  ; Counter
-        li    tmp1,fb.uncrunch.area+1
-                                    ; Get pointer to uncrunch area
+        li    tmp1,fb.uncrunch.area ; Get pointer to uncrunch area
         mov   @parm1,tmp3           ; Editor buffer line
-        ;------------------------------------------------------
-        ; 1. Scan line for >00 byte termination
-        ;------------------------------------------------------
-tib.uncrunch.line.pack.scan:
-        movb  *tmp1+,tmp2           ; Get char
-        srl   tmp2,8                ; Right justify
-        jeq   tib.uncrunch.line.pack.check_setpage
-                                    ; Stop scan if >00 found
-        inc   tmp0                  ; Increase string length
 
-        jmp   tib.uncrunch.line.pack.scan
-                                    ; Next character
-        ;------------------------------------------------------
-        ; Check if highest SAMS page needs to be increased
-        ;------------------------------------------------------
-tib.uncrunch.line.pack.check_setpage:
-        mov   tmp0,tmp4             ; Save full length of line
+        movb  *tmp1+,tmp4           ; Get length byte
+        srl   tmp4,8                ; MSB to LSB
 
         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
@@ -70,10 +54,10 @@ tib.uncrunch.line.pack.check_setpage:
                                     ; SAMS page to use
 
         bl    @idx.entry.update     ; Update index
-                                    ; \ i  parm1 = Line number in editor buffer
-                                    ; | i  parm2 = pointer to line in
-                                    ; |            editor buffer
-                                    ; / i  parm3 = SAMS page
+                                    ; \ i  @parm1 = Line number in editor buffer
+                                    ; | i  @parm2 = pointer to line in
+                                    ; |             editor buffer
+                                    ; / i  @parm3 = SAMS page
         ;------------------------------------------------------
         ; 3. Set line prefix in editor buffer
         ;------------------------------------------------------
@@ -105,7 +89,7 @@ tib.uncrunch.line.pack.copyline.checkbyte:
 tib.uncrunch.line.pack.copyline.block:
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
-                                    ; | i  tmp1 = destination
+                                    ; | i  tmp1 = destination, see (1)
                                     ; / i  tmp2 = bytes to copy
         ;------------------------------------------------------
         ; 5. Align pointer to multiple of 16 memory address
