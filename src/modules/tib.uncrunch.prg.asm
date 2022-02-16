@@ -136,11 +136,10 @@ tib.uncrunch.prg.lnt.loop:
 
         li    tmp1,>2000            ; \ Put white space character (ASCII 32)
         movb  tmp1,*tmp0+           ; / following line number.
-
-        li    tmp1,>0100            ; Increase length-byte in uncrunch area
-        ab    tmp1,@fb.uncrunch.area
-
         mov   tmp0,@tib.var6        ; Save position in uncrunch area
+
+        ab    w$0100,@fb.uncrunch.area
+                                    ; Increase length-byte in uncrunch area
         ;------------------------------------------------------
         ; 3. Prepare for uncrunching program statement
         ;------------------------------------------------------
@@ -163,8 +162,11 @@ tib.uncrunch.prg.statement.loop:
         movb  *tmp0+,tmp1           ; Get token into MSB
         srl   tmp1,8                ; Move token to LSB
         jeq   tib.uncrnch.prg.copy.statement
-                                    ; Skip to (5) if line termination token >00
-                                    ; is found
+                                    ; Skip to (5) if termination token >00
+
+        ci    tmp1,>80              ; Is a valid token?
+        jlt   tib.uncrunch.prg.statement.loop.nontoken
+                                    ; Skip decode for non-token
 
         mov   tmp1,@parm1           ; Token to process
         mov   tmp0,@parm2           ; Position in crunched statement
@@ -186,6 +188,20 @@ tib.uncrunch.prg.statement.loop:
 
         mov   @outparm1,tmp0        ; Forward in crunched statement
         s     @outparm2,tmp2        ; Update statement length
+        jgt   tib.uncrunch.prg.statement.loop
+                                    ; Process next token(s) unless done
+        ;------------------------------------------------------
+        ; 4a. Non-token without decode
+        ;------------------------------------------------------
+tib.uncrunch.prg.statement.loop.nontoken:
+        mov   @tib.var6,tmp1        ; Get position (addr) in uncrunch area
+        movb  tmp0+,*tmp1+          ; Copy non-token to uncrunch area
+
+        mov   tmp1,@tib.var6        ; Save position in uncrunch area
+        ab    w$0100,@fb.uncrunch.area
+                                    ; Increase length-byte in uncrunch area
+
+        dec   tmp2                  ; update statement length
         jgt   tib.uncrunch.prg.statement.loop
                                     ; Process next token(s) unless done
         ;------------------------------------------------------
