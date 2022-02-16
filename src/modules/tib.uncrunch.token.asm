@@ -91,14 +91,13 @@ tib.uncrunch.token.lookup:
         ; 3. Special handling >c7:  Decode quoted string
         ;------------------------------------------------------
 tib.uncrunch.token.quoted:
-
-        ; todo: always add 1 white space before 1st quote
-
-        li    tmp0,>2200            ; ASCII " in MSB
+        li    tmp0,>2022            ; ASCII WS in MSB, " in LSB
         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-        movb  tmp0,*tmp1+           ; Write 1st quote
+        mov   tmp0,*tmp1+           ; Write WS and 1st double quote
 
-        movb  tmp0,*tmp1+           ; Write 2nd quote
+
+        swpb  tmp0
+        movb  tmp0,*tmp1+           ; Write 2nd double quote
         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
 
         jmp   tib.uncrunch.token.setlen
