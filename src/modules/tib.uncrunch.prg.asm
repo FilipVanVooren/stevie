@@ -160,7 +160,7 @@ tib.uncrunch.prg.lnt.loop:
         ; 4. Uncrunch program statement to uncrunch area
         ;------------------------------------------------------
 tib.uncrunch.prg.statement.loop:
-        movb  *tmp0,tmp1            ; Get token into MSB
+        movb  *tmp0+,tmp1           ; Get token into MSB
         srl   tmp1,8                ; Move token to LSB
         jeq   tib.uncrnch.prg.copy.statement
                                     ; Skip to (5) if line termination token >00
@@ -178,9 +178,8 @@ tib.uncrunch.prg.statement.loop:
                                     ; | o  @outparm1 = New position (addr) in
                                     ; |    crunched statement.
                                     ; |
-                                    ; | o  @outparm2 = Token length
-                                    ; |
-                                    ; | o  @outparm3 = Length of decoded keyword
+                                    ; | o  @outparm2 = Bytes processed in
+                                    ; |    crunched statement.
                                     ; |
                                     ; | o  @tib.var6 = Position (addr) in
                                     ; /    uncrunch area.
