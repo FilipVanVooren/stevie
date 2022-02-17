@@ -14,8 +14,9 @@
 *
 * OUTPUT
 * @outparm1  = New position (addr) in crunched statement
-* @outparm2  = Bytes processed in crunched statement
+* @outparm2  = Input bytes processed in crunched statement
 * @tib.var6  = Current position (addr) in uncrunch area
+* @tib.var10 = Output bytes generated in uncrunch area
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2
@@ -23,6 +24,12 @@
 * Remarks
 * For TI Basic statement decode see:
 * https://www.unige.ch/medecine/nouspikel/ti99/basic.htm#statements
+*
+* Using @outparm2 for storing the number of input bytes
+* processed in crunched statement
+*
+* Using @tib.var10 for storing the number of decoded output bytes
+* generated in uncrunch area.
 *
 * Variables
 * @tib.var1  = TI Basic Session
@@ -51,7 +58,9 @@ tib.uncrunch.token:
         ;------------------------------------------------------
         mov   @parm1,tmp0           ; Get token
         mov   @parm2,@outparm1      ; Position (addr) in crunched statement
-        clr   @outparm2             ; Bytes processed in crunched statement
+
+        clr   @outparm2             ; Reset input bytes processed
+        clr   @tib.var10            ; Reset output bytes generated
         ;------------------------------------------------------
         ; 1. Decide how to process token
         ;------------------------------------------------------
@@ -79,7 +88,8 @@ tib.uncrunch.token.lookup:
         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
         a     tmp2,@tib.var6        ; Set current pos (addr) in uncrunch area
 
-        mov   tmp2, @outparm2       ; Bytes processed in crunched statement
+        mov   tmp2,@outparm2        ; Set input bytes processed
+        mov   tmp2,@tib.var10       ; Set output bytes generated
 
         bl    @xpym2m               ; Copy keyword to uncrunch area
                                     ; \ i  tmp0 = Source address
@@ -131,16 +141,21 @@ tib.uncrunch.token.quoted:
         ; 3a. Update variables related to crunched statement
         ;------------------------------------------------------
         mov   tmp2,tmp0             ; Amount of bytes copied to uncrunch area
-        ai    tmp0,3                ; Including blank and double quotes
-        mov   tmp0,@outparm2        ; Bytes processed in crunched statement
+        mov   tmp0,@outparm2        ; Set input bytes processed
 
-        a     @parm2,tmp0           ; Add original position in crunched staement
-        mov   tmp0,@outparm1        ; New pos (addr) in crunched statement
+        ai    tmp0,3                ; Include blank and double quotes
+        mov   tmp0,@tib.var10       ; Set output bytes generated
+
+        a     @parm2,tmp0           ; Add orig position in crunched statement
+        mov   tmp0,@outparm1        ; New position (addr) in crunched statement
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 4. Special handling >c8: Decode unquoted string
         ;------------------------------------------------------
 tib.uncrunch.token.unquoted:
+
+        ; STILL TO DO
+
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 5. Special handling >c9: Decode line number
@@ -181,9 +196,9 @@ tib.uncrunch.token.linenum:
         movb  @rambuf+5,tmp2        ; Get string length
         srl   tmp2,8                ; MSB to LSB
 
-        mov   tmp2,@outparm2        ; \ Set bytes processed
-        inc   @outparm2             ; / Include leading blank character
-        a     @outparm2,@tib.var6   ; Set current pos (addr) in uncrunch area
+        mov   tmp2,@tib.var10       ; \ Set output bytes generated
+        inc   @tib.var10            ; / Including leading blank
+        a     @tib.var10,@tib.var6  ; Set current pos (addr) in uncrunch area
 
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
@@ -205,15 +220,16 @@ tib.uncrunch.token.linenum:
         ; 5c. Update variables related to crunched statement
         ;------------------------------------------------------
         inct  @outparm1             ; New pos (addr) in crunched statement
+        inct  @outparm2             ; Set input bytes processed
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 6. Update uncrunched statement length byte
         ;------------------------------------------------------
 tib.uncrunch.token.setlen:
-        mov   @outparm2,tmp0        ; Get length processed
+        mov   @tib.var10,tmp0       ; Get output bytes generated
         sla   tmp0,8                ; LSB to MSB
         ab    tmp0,@fb.uncrunch.area
-                                    ; Update length byte
+                                    ; Update string length-prefix byte
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

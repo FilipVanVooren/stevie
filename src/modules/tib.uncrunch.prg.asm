@@ -194,7 +194,10 @@ tib.uncrunch.prg.statement.loop:
                                     ; |    crunched statement.
                                     ; |
                                     ; | o  @tib.var6 = Position (addr) in
-                                    ; /    uncrunch area.
+                                    ; |    uncrunch area.
+                                    ; |
+                                    ; | o  @tib.var10 = Output bytes generated
+                                    ; /    in uncrunch area.
 
         mov   @outparm1,tmp0        ; Forward in crunched statement
         s     @outparm2,tmp2        ; Update statement length
