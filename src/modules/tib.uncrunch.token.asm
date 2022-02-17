@@ -18,7 +18,7 @@
 * @tib.var6  = Current position (addr) in uncrunch area
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1, tmp2
 *--------------------------------------------------------------
 * Remarks
 * For TI Basic statement decode see:
@@ -33,6 +33,8 @@
 * @tib.var6  = Current position (addr) in uncrunch area
 * @tib.var7  = Current position (addr) in line number table
 * @tib.var8  = Statement length in bytes
+* @tib.var9  = Temporary use
+* @tib.var10 = Temporary use
 * @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.token:
@@ -77,6 +79,8 @@ tib.uncrunch.token.lookup:
         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
         a     tmp2,@tib.var6        ; Set current pos (addr) in uncrunch area
 
+        mov   tmp2, @outparm2       ; Bytes processed in crunched statement
+
         bl    @xpym2m               ; Copy keyword to uncrunch area
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Destination address
@@ -85,7 +89,6 @@ tib.uncrunch.token.lookup:
         ; 2a. Update variables related to crunched statement
         ;------------------------------------------------------
         inc   @outparm1             ; New pos (addr) in crunched statement
-        inc   @outparm2             ; Bytes processed in crunched statement
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 3. Special handling >c7:  Decode quoted string
@@ -99,6 +102,7 @@ tib.uncrunch.token.quoted:
         movb  tmp0,*tmp1+           ; Write 1st double quote
 
         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
+        inc   tmp0                  ; Skip token
         movb  *tmp0+,tmp2           ; Get length byte following >C7 token
         srl   tmp2,8                ; MSB to LSB
 
@@ -142,6 +146,65 @@ tib.uncrunch.token.unquoted:
         ; 5. Special handling >c9: Decode line number
         ;------------------------------------------------------
 tib.uncrunch.token.linenum:
+        li    tmp0,>2000            ; ASCII blank in MSB
+        mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+        movb  tmp0,*tmp1+           ; Write blank
+        inc   @tib.var6             ; Set current pos (addr) in uncrunch area
+
+        mov   @parm2,tmp0           ; Get position (addr) in crunched statement
+        inc   tmp0                  ; Skip token
+
+        movb  *tmp0+,tmp1           ; Get MSB of line number into MSB
+        srl   tmp1,8                ; MSB to LSB
+        movb  *tmp0+,tmp1           ; Get LSB of line number into MSB
+        swpb  tmp1                  ; Put it in the right order
+        mov   tmp1,@tib.var9        ; Put line number word in temporary variable
+        ;------------------------------------------------------
+        ; 5a. Convert line number (word) to string
+        ;------------------------------------------------------
+        bl    @mknum                ; Convert unsigned number to string
+              data  tib.var9        ; \ i  p1    = Source
+              data  rambuf          ; | i  p2    = Destination
+              byte  48              ; | i  p3MSB = ASCII offset
+              byte  32              ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number, remove leading spaces
+              data  rambuf          ; \ i  p1 = Source
+              data  rambuf+5        ; | i  p2 = Destination
+              data  32              ; / i  p3 = Padding character to look for
+        ;------------------------------------------------------
+        ; 5b. Copy decoded line number to uncrunch area
+        ;------------------------------------------------------
+        li    tmp0,rambuf+6         ; Start of line number string
+        mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+
+        movb  @rambuf+5,tmp2        ; Get string length
+        srl   tmp2,8                ; MSB to LSB
+
+        mov   tmp2,@outparm2        ; \ Set bytes processed
+        inc   @outparm2             ; / Include leading blank character
+        a     @outparm2,@tib.var6   ; Set current pos (addr) in uncrunch area
+
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+
+        bl    @xpym2m               ; Copy string from crunched statement to
+                                    ; uncrunch area.
+                                    ; \ i  tmp0 = Source address
+                                    ; | i  tmp1 = Destination address
+                                    ; / i  tmp2 = Number of bytes to copy
+
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        ;------------------------------------------------------
+        ; 5c. Update variables related to crunched statement
+        ;------------------------------------------------------
+        inct  @outparm1             ; New pos (addr) in crunched statement
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 6. Update uncrunched statement length byte

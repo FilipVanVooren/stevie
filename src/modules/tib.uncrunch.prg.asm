@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1, tmp2, tmp3, tmp4
 *--------------------------------------------------------------
 * Remarks
 *
@@ -38,7 +38,9 @@
 * @tib.var5  = Pointer to statement (VRAM)
 * @tib.var6  = Current position (addr) in uncrunch area
 * @tib.var7  = Current position (addr) in line number table
-* @tib.var8  = Statement length in bytes
+* @tib.var8  = Basic statement length in bytes
+* @tib.var9  = Temporary use
+* @tib.var10 = Temporary use
 * @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prg:
@@ -52,6 +54,8 @@ tib.uncrunch.prg:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
         ; Exit early if no TI Basic program
         ;------------------------------------------------------
@@ -76,12 +80,12 @@ tib.uncrunch.prg:
                                     ; | instead of VRAM address.
                                     ; / Example: >f7b3 maps to >37b3.
 
-        ai    tmp0,-3               ; What is this?
+        ai    tmp0,-3               ; One time adjustment
         ;------------------------------------------------------
         ; Get number of lines in program
         ;------------------------------------------------------
-        mov   @tib.lines,tmp2       ; Set loop counter
         clr   tmp3                  ; 1st line in editor buffer
+        mov   @tib.lines,tmp4       ; Set line counter
         ;------------------------------------------------------
         ; Loop over program listing
         ;------------------------------------------------------
@@ -108,19 +112,25 @@ tib.uncrunch.prg.lnt.loop:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4
 
         bl    @mknum                ; Convert unsigned number to string
-              data  tib.var4,rambuf
-              byte  48              ; ASCII offset
-              byte  32              ; Padding character
+              data tib.var4         ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
 
         clr   @fb.uncrunch.area
         clr   @fb.uncrunch.area+2
         clr   @fb.uncrunch.area+4
 
-        bl    @trimnum              ; Trim number in frame buffer uncrunch area
-              data  rambuf,fb.uncrunch.area,32
+        bl    @trimnum              ; in frame buffer uncrunch area
+              data rambuf           ; \ i  p1 = Source
+              data fb.uncrunch.area ; | i  p2 = Destination
+              data 32               ; / i  p3 = Padding character to look for
 
+        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
@@ -138,7 +148,7 @@ tib.uncrunch.prg.lnt.loop:
         movb  tmp1,*tmp0+           ; / following line number.
         mov   tmp0,@tib.var6        ; Save position in uncrunch area
 
-        ab    w$0100,@fb.uncrunch.area
+        ab    @w$0100,@fb.uncrunch.area
                                     ; Increase length-byte in uncrunch area
         ;------------------------------------------------------
         ; 3. Prepare for uncrunching program statement
@@ -159,7 +169,7 @@ tib.uncrunch.prg.lnt.loop:
         ; 4. Uncrunch program statement to uncrunch area
         ;------------------------------------------------------
 tib.uncrunch.prg.statement.loop:
-        movb  *tmp0+,tmp1           ; Get token into MSB
+        movb  *tmp0,tmp1            ; Get token into MSB
         srl   tmp1,8                ; Move token to LSB
         jeq   tib.uncrnch.prg.copy.statement
                                     ; Skip to (5) if termination token >00
@@ -195,10 +205,10 @@ tib.uncrunch.prg.statement.loop:
         ;------------------------------------------------------
 tib.uncrunch.prg.statement.loop.nontoken:
         mov   @tib.var6,tmp1        ; Get position (addr) in uncrunch area
-        movb  tmp0+,*tmp1+          ; Copy non-token to uncrunch area
+        movb  *tmp0+,*tmp1+         ; Copy non-token to uncrunch area
 
         mov   tmp1,@tib.var6        ; Save position in uncrunch area
-        ab    w$0100,@fb.uncrunch.area
+        ab    @w$0100,@fb.uncrunch.area
                                     ; Increase length-byte in uncrunch area
 
         dec   tmp2                  ; update statement length
@@ -221,7 +231,7 @@ tib.uncrnch.prg.copy.statement:
         ;------------------------------------------------------
         ; 6. Next entry in line number table
         ;------------------------------------------------------
-        dec   tmp2                  ; Last line processed?
+        dec   tmp4                  ; Last line processed?
         jeq   tib.uncrunch.prg.exit ; yes, exit
 
         mov   @tib.var7,tmp0        ; Restore position in line number table
@@ -254,6 +264,7 @@ tib.uncrunch.prg.done:
         ; Exit
         ;------------------------------------------------------
 tib.uncrunch.prg.exit:
+        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
