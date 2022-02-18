@@ -99,13 +99,25 @@ tib.uncrunch.token.lookup:
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Destination address
                                     ; / i  tmp2 = Number of bytes to copy
+
+        mov   @parm1,tmp0           ; Get token again
+        ci    tmp0,>b2              ; Token range with keyword needing blank?
+        jgt   !                     ; No, as of >b3 skip to (2b)
         ;------------------------------------------------------
-        ; 2a. Update variables related to crunched statement
+        ; 2a. Write trailing blank after decoded keyword
         ;------------------------------------------------------
-        inc   @outparm1             ; New pos (addr) in crunched statement
+        li    tmp0,>2000            ; Blank in MSB
+        mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+        movb  *tmp0,*tmp1           ; Write trailing blank
+        inc   @tib.var6             ; Set current pos (addr) in uncrunch area
+        inc   @tib.var10            ; Set output bytes generated (uncrunch area)
+        ;------------------------------------------------------
+        ; 2b. Update variables related to crunched statement
+        ;------------------------------------------------------
+!       inc   @outparm1             ; New pos (addr) in crunched statement
         b     @tib.uncrunch.token.setlen
         ;------------------------------------------------------
-        ; 3. Special handling >c7:  Decode quoted string
+        ; 3. Special handling >c7: Decode quoted string
         ;------------------------------------------------------
 tib.uncrunch.token.quoted:
         li    tmp0,>2200            ; ASCII " in LSB
