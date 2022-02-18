@@ -60,11 +60,13 @@ tib.uncrunch.prg:
         ; Exit early if no TI Basic program
         ;------------------------------------------------------
         c     @tib.lnt.top.ptr,@tib.lnt.bot.ptr
-        jeq   tib.uncrunch.prg.exit ; Line number table is empty
+                                    ; Line number table is empty
+        jne   !                     ; No, keep on processing
+        b     @tib.uncrunch.prg.exit
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
+!       mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
 
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0      = VRAM address
@@ -200,9 +202,16 @@ tib.uncrunch.prg.statement.loop:
                                     ; /    in uncrunch area.
 
         mov   @outparm1,tmp0        ; Forward in crunched statement
+
         s     @outparm2,tmp2        ; Update statement length
         jgt   tib.uncrunch.prg.statement.loop
                                     ; Process next token(s) unless done
+
+        jeq   tib.uncrnch.prg.copy.statement
+                                    ; Continue with (5)
+
+        jlt   tib.uncrnch.prg.statement.loop.panic
+                                    ; Assert
         ;------------------------------------------------------
         ; 4a. Non-token without decode
         ;------------------------------------------------------
@@ -215,8 +224,18 @@ tib.uncrunch.prg.statement.loop.nontoken:
                                     ; Increase length-byte in uncrunch area
 
         dec   tmp2                  ; update statement length
+        jlt   tib.uncrnch.prg.statement.loop.panic
+                                    ; Assert
+
         jgt   tib.uncrunch.prg.statement.loop
                                     ; Process next token(s) unless done
+        jeq   tib.uncrnch.prg.copy.statement
+        ;------------------------------------------------------
+        ; CPU crash
+        ;------------------------------------------------------
+tib.uncrnch.prg.statement.loop.panic:
+        mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; 5. Copy uncrunched statement to editor buffer
         ;------------------------------------------------------
