@@ -9,11 +9,9 @@
 * bl   _v2sams
 *--------------------------------------------------------------
 * INPUT
-* tmp0 = VDP Address in range >0000 - >3fff
+* tmp0 = VRAM address in range >0000 - >3fff
 *
 * OUTPUT
-* @tib.var2 = Address of SAMS page layout table entry mapped to
-*             VRAM address
 * @tib.var3 = SAMS page ID mapped to VRAM address
 *--------------------------------------------------------------
 * Register usage
@@ -49,8 +47,6 @@ _v2sams:
         ; memory dump page starts at the 4th word. So need to add fixed offset.
         ;
         ai    tmp0,6                ; Add fixed offset
-
-        mov   tmp0,@tib.var2        ; Save memory address
         mov   *tmp0,tmp0            ; Get SAMS page number
         ;------------------------------------------------------
         ; Check if SAMS page needs to be switched

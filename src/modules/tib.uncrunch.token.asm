@@ -10,13 +10,12 @@
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = Token to process
-* @parm2 = Position (addr) in crunched statement
+* @parm2 = Mapped position (addr) in crunched statement
 *
 * OUTPUT
 * @outparm1  = New position (addr) in crunched statement
 * @outparm2  = Input bytes processed in crunched statement
 * @tib.var6  = Current position (addr) in uncrunch area
-* @tib.var10 = Output bytes generated in uncrunch area
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2, tmp3, tmp4
@@ -32,17 +31,9 @@
 * generated in uncrunch area.
 *
 * Variables
-* @tib.var1  = TI Basic Session
-* @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
-* @tib.var3  = SAMS page ID mapped to VRAM address
-* @tib.var4  = Line number
-* @tib.var5  = Pointer to statement (VRAM)
 * @tib.var6  = Current position (addr) in uncrunch area
-* @tib.var7  = Current position (addr) in line number table
-* @tib.var8  = Statement length in bytes
 * @tib.var9  = Temporary use
 * @tib.var10 = Temporary use
-* @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.token:
         dect  stack
@@ -57,6 +48,10 @@ tib.uncrunch.token:
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
         mov   tmp4,*stack           ; Push tmp4
+        dect  stack
+        mov   @tib.var9,*stack      ; Push @tib.var.9
+        dect  stack
+        mov   @tib.var10,*stack     ; Push @tib.var.10
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
@@ -128,7 +123,11 @@ tib.uncrunch.token.quoted:
         inc   tmp0                  ; Skip token
         movb  *tmp0+,tmp2           ; Get length byte following >C7 token
         srl   tmp2,8                ; MSB to LSB
-
+        jeq   tib.uncrunch.token.quoted.quote2
+                                    ; Skip to (3c) if empty string
+        ;------------------------------------------------------
+        ; 3b. Copy string to uncrunch area
+        ;------------------------------------------------------
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -145,21 +144,26 @@ tib.uncrunch.token.quoted:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-
+        ;------------------------------------------------------
+        ; 3c. Write trailing double quote
+        ;------------------------------------------------------
+tib.uncrunch.token.quoted.quote2:
         li    tmp0,>2200            ; " in MSB
         a     tmp2,tmp1             ; Forward in uncrunch area
         movb  tmp0,*tmp1+           ; Write 2nd double quote
         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
         ;------------------------------------------------------
-        ; 3a. Update variables related to crunched statement
+        ; 3d. Update variables related to crunched statement
         ;------------------------------------------------------
-        mov   tmp2,tmp0             ; \ Amount of bytes copied to uncrunch area
-        inct  tmp0                  ; / Include token and length byte
+        mov   tmp2,tmp0             ; \ Get num of bytes copied to uncrunch area
+        inct  tmp0                  ; / Count token byte and length byte
         mov   tmp0,@outparm2        ; Set input bytes processed
-        a     @outparm2,@outparm1   ; New position (addr) in crunched statement
 
-        inct  tmp0                  ; Include surrounding double quotes
         mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
+                                    ; Same number as input bytes processed,
+                                    ; because quotes match token & length byte.
+
+        a     @outparm2,@outparm1   ; New position (addr) in crunched statement
 
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
@@ -195,11 +199,14 @@ tib.uncrunch.token.unquoted:
         ; 4a. Update variables related to crunched statement
         ;------------------------------------------------------
         mov   tmp2,tmp0             ; \ Amount of bytes copied to uncrunch area
-        inct  tmp0                  ; / Include token and length byte
+        inct  tmp0                  ; / Count token byte and length byte
         mov   tmp0,@outparm2        ; Set input bytes processed
+
+        dect  tmp0                  ; Don't count token byte and length byte
+        mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
+
         a     @outparm2,@outparm1   ; New position (addr) in crunched statement
 
-        mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
         jmp   tib.uncrunch.token.setlen
         ;------------------------------------------------------
         ; 5. Special handling >c9: Decode line number
@@ -278,6 +285,8 @@ tib.uncrunch.token.setlen:
         ; Exit
         ;------------------------------------------------------
 tib.uncrunch.token.exit:
+        mov   *stack+,@tib.var10    ; Pop @tib.var10
+        mov   *stack+,@tib.var9     ; Pop @tib.var9
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

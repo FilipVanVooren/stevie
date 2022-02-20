@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b3.asm.24121
+     **** ****     > stevie_b3.asm.33933
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b3.asm               ; Version 220212-1923280
+0009               * File: stevie_b3.asm               ; Version 220220-1941480
 0010               *
 0011               * Bank 3 "John"
 0012               * Dialogs & Command Buffer pane
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -526,7 +526,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0409               *--------------------------------------------------------------
 0410      D000     fb.top            equ  >d000           ; Frame buffer (2400 char)
 0411      0960     fb.size           equ  80*30           ; Frame buffer size
-0412      D960     fb.uncrunch       equ  >d960           ; \ Uncrunched TI Basic statement
+0412      D960     fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 0413                                                      ; / >d960->dcff
 0414               *--------------------------------------------------------------
 0415               * Defaults area                       @>de00-dfff  (3584 bytes)
@@ -562,7 +562,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0445      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0446      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0447      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -702,7 +702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0018               
 0019               ***************************************************************
 0020               * BANK 3
@@ -761,7 +761,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1576,18 +1576,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220212-1923280'
+0270 21ED   42             text  'Build-ID  220220-1941480'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
      21F4 4420     
      21F6 2032     
      21F8 3230     
-     21FA 3231     
-     21FC 322D     
+     21FA 3232     
+     21FC 302D     
      21FE 3139     
-     2200 3233     
-     2202 3238     
+     2200 3431     
+     2202 3438     
      2204 30       
 0271                       even
 0272               
@@ -3989,67 +3989,68 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0081               *  anything that is located there !
 0082               *
 0083               *               01234|56789A
-0084               *  Before...:   XXXXX
-0085               *  After....:   XXXXX|zY       where length byte z=1
-0086               *               XXXXX|zYY      where length byte z=2
-0087               *                 ..
-0088               *               XXXXX|zYYYYY   where length byte z=5
-0089               *--------------------------------------------------------------
-0090               *  Destroys registers tmp0-tmp3
-0091               ********|*****|*********************|**************************
-0092               trimnum:
-0093 2A12 C13B  30         mov   *r11+,tmp0            ; Get pointer to input string
-0094 2A14 C17B  30         mov   *r11+,tmp1            ; Get pointer to output string
-0095 2A16 C1BB  30         mov   *r11+,tmp2            ; Get padding character
-0096 2A18 06C6  14         swpb  tmp2                  ; LO <-> HI
-0097 2A1A 0207  20         li    tmp3,5                ; Set counter
+0084               *  Before...:   XXXXX          length
+0085               *  After....:   XXXXY|zY       z=1
+0086               *               XXXYY|zYY      z=2
+0087               *               XXYYY|zYYY     z=3
+0088               *               XYYYY|zYYYY    z=4
+0089               *               YYYYY|zYYYYY   z=5
+0090               *--------------------------------------------------------------
+0091               *  Destroys registers tmp0-tmp3
+0092               ********|*****|*********************|**************************
+0093               trimnum:
+0094 2A12 C13B  30         mov   *r11+,tmp0            ; Get pointer to input string
+0095 2A14 C17B  30         mov   *r11+,tmp1            ; Get pointer to output string
+0096 2A16 C1BB  30         mov   *r11+,tmp2            ; Get padding character
+0097 2A18 06C6  14         swpb  tmp2                  ; LO <-> HI
+0098 2A1A 0207  20         li    tmp3,5                ; Set counter
      2A1C 0005     
-0098                       ;------------------------------------------------------
-0099                       ; Scan for padding character from left to right
-0100                       ;------------------------------------------------------:
-0101               trimnum_scan:
-0102 2A1E 9194  26         cb    *tmp0,tmp2            ; Matches padding character ?
-0103 2A20 1604  14         jne   trimnum_setlen        ; No, exit loop
-0104 2A22 0584  14         inc   tmp0                  ; Next character
-0105 2A24 0607  14         dec   tmp3                  ; Last digit reached ?
-0106 2A26 1301  14         jeq   trimnum_setlen        ; yes, exit loop
-0107 2A28 10FA  14         jmp   trimnum_scan
-0108                       ;------------------------------------------------------
-0109                       ; Scan completed, set length byte new string
-0110                       ;------------------------------------------------------
-0111               trimnum_setlen:
-0112 2A2A 06C7  14         swpb  tmp3                  ; LO <-> HI
-0113 2A2C DD47  32         movb  tmp3,*tmp1+           ; Update string-length in work buffer
-0114 2A2E 06C7  14         swpb  tmp3                  ; LO <-> HI
-0115                       ;------------------------------------------------------
-0116                       ; Start filling new string
-0117                       ;------------------------------------------------------
-0118               trimnum_fill:
-0119 2A30 DD74  42         movb  *tmp0+,*tmp1+         ; Copy character
-0120 2A32 0607  14         dec   tmp3                  ; Last character ?
-0121 2A34 16FD  14         jne   trimnum_fill          ; Not yet, repeat
-0122 2A36 045B  20         b     *r11                  ; Return
-0123               
+0099                       ;------------------------------------------------------
+0100                       ; Scan for padding character from left to right
+0101                       ;------------------------------------------------------:
+0102               trimnum_scan:
+0103 2A1E 9194  26         cb    *tmp0,tmp2            ; Matches padding character ?
+0104 2A20 1604  14         jne   trimnum_setlen        ; No, exit loop
+0105 2A22 0584  14         inc   tmp0                  ; Next character
+0106 2A24 0607  14         dec   tmp3                  ; Last digit reached ?
+0107 2A26 1301  14         jeq   trimnum_setlen        ; yes, exit loop
+0108 2A28 10FA  14         jmp   trimnum_scan
+0109                       ;------------------------------------------------------
+0110                       ; Scan completed, set length byte new string
+0111                       ;------------------------------------------------------
+0112               trimnum_setlen:
+0113 2A2A 06C7  14         swpb  tmp3                  ; LO <-> HI
+0114 2A2C DD47  32         movb  tmp3,*tmp1+           ; Update string-length in work buffer
+0115 2A2E 06C7  14         swpb  tmp3                  ; LO <-> HI
+0116                       ;------------------------------------------------------
+0117                       ; Start filling new string
+0118                       ;------------------------------------------------------
+0119               trimnum_fill:
+0120 2A30 DD74  42         movb  *tmp0+,*tmp1+         ; Copy character
+0121 2A32 0607  14         dec   tmp3                  ; Last character ?
+0122 2A34 16FD  14         jne   trimnum_fill          ; Not yet, repeat
+0123 2A36 045B  20         b     *r11                  ; Return
 0124               
 0125               
 0126               
-0127               ***************************************************************
-0128               * PUTNUM - Put unsigned number on screen
-0129               ***************************************************************
-0130               *  BL   @PUTNUM
-0131               *  DATA P0,P1,P2,P3
-0132               *--------------------------------------------------------------
-0133               *  P0   = YX position
-0134               *  P1   = Pointer to 16 bit unsigned number
-0135               *  P2   = Pointer to 5 byte string buffer
-0136               *  P3HB = Offset for ASCII digit
-0137               *  P3LB = Character for replacing leading 0's
-0138               ********|*****|*********************|**************************
-0139 2A38 C83B  50 putnum  mov   *r11+,@wyx            ; Set cursor
+0127               
+0128               ***************************************************************
+0129               * PUTNUM - Put unsigned number on screen
+0130               ***************************************************************
+0131               *  BL   @PUTNUM
+0132               *  DATA P0,P1,P2,P3
+0133               *--------------------------------------------------------------
+0134               *  P0   = YX position
+0135               *  P1   = Pointer to 16 bit unsigned number
+0136               *  P2   = Pointer to 5 byte string buffer
+0137               *  P3HB = Offset for ASCII digit
+0138               *  P3LB = Character for replacing leading 0's
+0139               ********|*****|*********************|**************************
+0140 2A38 C83B  50 putnum  mov   *r11+,@wyx            ; Set cursor
      2A3A 832A     
-0140 2A3C 0262  22         ori   config,>8000          ; CONFIG register bit 0=1
+0141 2A3C 0262  22         ori   config,>8000          ; CONFIG register bit 0=1
      2A3E 8000     
-0141 2A40 10BC  14         jmp   mknum                 ; Convert number and display
+0142 2A40 10BC  14         jmp   mknum                 ; Convert number and display
                    < runlib.asm
 0199               
 0203               
@@ -5868,7 +5869,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -7765,7 +7766,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0024 35B4 0649  14         dect  stack
 0025 35B6 C645  30         mov   tmp1,*stack           ; Push tmp1
 0026                       ;------------------------------------------------------
-0027                       ; 1a: Check if highest SAMS page needs to be increased
+0027                       ; 1a. Check if highest SAMS page needs to be increased
 0028                       ;------------------------------------------------------
 0029               edb.hipage.alloc.check_setpage:
 0030 35B8 C120  34         mov   @edb.next_free.ptr,tmp0
@@ -7782,7 +7783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0037 35C8 1105  14         jlt   edb.hipage.alloc.setpage
 0038                                                   ; Not yet, don't increase SAMS page
 0039                       ;------------------------------------------------------
-0040                       ; 1b: Increase highest SAMS page (copy-on-write!)
+0040                       ; 1b. Increase highest SAMS page (copy-on-write!)
 0041                       ;------------------------------------------------------
 0042 35CA 05A0  34         inc   @edb.sams.hipage      ; Set highest SAMS page
      35CC A518     
@@ -7791,7 +7792,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      35D2 A508     
 0044                                                   ; Start at top of SAMS page again
 0045                       ;------------------------------------------------------
-0046                       ; 1c: Switch to SAMS page and exit
+0046                       ; 1c. Switch to SAMS page and exit
 0047                       ;------------------------------------------------------
 0048               edb.hipage.alloc.setpage:
 0049 35D4 C120  34         mov   @edb.sams.hipage,tmp0
@@ -8780,7 +8781,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
@@ -8873,7 +8874,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 6086 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6088 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 608A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0062                       copy  "dialog.help.asm"      ; Dialog "Help"
      **** ****     > dialog.help.asm
 0001               * FILE......: dialog.help.asm
@@ -9972,7 +9973,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      66B0 2D35     
 0423                       even
 0424               
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0063                       copy  "dialog.file.asm"      ; Dialog "File"
      **** ****     > dialog.file.asm
 0001               * FILE......: dialog.file.asm
@@ -10042,7 +10043,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 66EE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 66F0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 66F2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0064                       copy  "dialog.cartridge.asm" ; Dialog "Cartridge"
      **** ****     > dialog.cartridge.asm
 0001               * basic......: dialog.cartridge.asm
@@ -10112,7 +10113,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 6730 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 6732 C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 6734 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0065                       copy  "dialog.load.asm"      ; Dialog "Load file"
      **** ****     > dialog.load.asm
 0001               * FILE......: dialog.load.asm
@@ -10231,7 +10232,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0093 67A2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0094 67A4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0095 67A6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0066                       copy  "dialog.save.asm"      ; Dialog "Save file"
      **** ****     > dialog.save.asm
 0001               * FILE......: dialog.save.asm
@@ -10350,7 +10351,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0088 681A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0089 681C C2F9  30         mov   *stack+,r11           ; Pop R11
 0090 681E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0067                       copy  "dialog.print.asm"     ; Dialog "Print file"
      **** ****     > dialog.print.asm
 0001               * FILE......: dialog.print.asm
@@ -10465,7 +10466,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0086 688A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0087 688C C2F9  30         mov   *stack+,r11           ; Pop R11
 0088 688E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0068                       copy  "dialog.append.asm"    ; Dialog "Append file"
      **** ****     > dialog.append.asm
 0001               * FILE......: dialog.append.asm
@@ -10574,7 +10575,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0085 68F0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0086 68F2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0087 68F4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0069                       copy  "dialog.insert.asm"    ; Dialog "Insert file at line"
      **** ****     > dialog.insert.asm
 0001               * FILE......: dialog.insert.asm
@@ -10733,7 +10734,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119 6996 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0120 6998 C2F9  30         mov   *stack+,r11           ; Pop R11
 0121 699A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0070                       copy  "dialog.config.asm"    ; Dialog "Configure"
      **** ****     > dialog.config.asm
 0001               * FILE......: dialog.config.asm
@@ -10803,7 +10804,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0052 69D8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0053 69DA C2F9  30         mov   *stack+,r11           ; Pop R11
 0054 69DC 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0071                       copy  "dialog.clipdev.asm"   ; Dialog "Configure clipboard device"
      **** ****     > dialog.clipdev.asm
 0001               * FILE......: dialog.clipdev.asm
@@ -10886,7 +10887,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062 6A24 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0063 6A26 C2F9  30         mov   *stack+,r11           ; Pop R11
 0064 6A28 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0072                       copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
      **** ****     > dialog.clipboard.asm
 0001               * FILE......: dialog.clipboard.asm
@@ -11024,7 +11025,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0102 6AB2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0103 6AB4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0104 6AB6 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0073                       copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
      **** ****     > dialog.unsaved.asm
 0001               * FILE......: dialog.unsaved.asm
@@ -11091,7 +11092,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050 6AF0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0051 6AF2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0052 6AF4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0074                       copy  "dialog.basic.asm"     ; Dialog "Basic"
      **** ****     > dialog.basic.asm
 0001               * basic......: dialog.basic.asm
@@ -11173,7 +11174,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 6B3A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6B3C C2F9  30         mov   *stack+,r11           ; Pop R11
 0065 6B3E 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0075                       ;-----------------------------------------------------------------------
 0076                       ; Command buffer handling
 0077                       ;-----------------------------------------------------------------------
@@ -11301,7 +11302,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0106               pane.show_hint.exit:
 0107 6BA6 C2F9  30         mov   *stack+,r11           ; Pop R11
 0108 6BA8 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0079                       copy  "pane.cmdb.show.asm"  ; Show command buffer pane
      **** ****     > pane.cmdb.show.asm
 0001               * FILE......: pane.cmdb.show.asm
@@ -11423,7 +11424,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0094 6C28 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0095 6C2A C2F9  30         mov   *stack+,r11           ; Pop r11
 0096 6C2C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0080                       copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
      **** ****     > pane.cmdb.hide.asm
 0001               * FILE......: pane.cmdb.hide.asm
@@ -11532,7 +11533,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6C8C A006     
 0082 6C8E C2F9  30         mov   *stack+,r11           ; Pop r11
 0083 6C90 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0081                       copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
      **** ****     > pane.cmdb.draw.asm
 0001               * FILE......: pane.cmdb.draw.asm
@@ -11788,7 +11789,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0192 6DAC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0193 6DAE C2F9  30         mov   *stack+,r11           ; Pop r11
 0194 6DB0 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0082                       copy  "error.display.asm"   ; Show error message
      **** ****     > error.display.asm
 0001               
@@ -11846,7 +11847,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 6DDE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0049 6DE0 C2F9  30         mov   *stack+,r11           ; Pop r11
 0050 6DE2 045B  20         b     *r11                  ; Return
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0083                       copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
      **** ****     > cmdb.refresh.asm
 0001               * FILE......: cmdb.refresh.asm
@@ -11926,7 +11927,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0063 6E28 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0064 6E2A C2F9  30         mov   *stack+,r11           ; Pop r11
 0065 6E2C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0084                       copy  "cmdb.cmd.asm"        ; Command line handling
      **** ****     > cmdb.cmd.asm
 0001               * FILE......: cmdb.cmd.asm
@@ -12029,7 +12030,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0088               cmdb.cmd.getlength.exit:
 0089 6E72 C2F9  30         mov   *stack+,r11           ; Pop r11
 0090 6E74 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0085                       copy  "cmdb.cmd.set.asm"    ; Set command line to preset value
      **** ****     > cmdb.cmd.set.asm
 0001               * FILE......: cmdb.cmd.set.asm
@@ -12110,7 +12111,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0066 6EBA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0067 6EBC C2F9  30         mov   *stack+,r11           ; Pop r11
 0068 6EBE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0086                       copy  "cmdb.cmd.preset.asm" ; Preset shortcuts in dialogs
      **** ****     > cmdb.cmd.preset.asm
 0001               * FILE......: cmdb.cmd.preset.asm
@@ -12190,7 +12191,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0069 6EFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0070 6EFE C2F9  30         mov   *stack+,r11           ; Pop r11
 0071 6F00 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Dialog toggles
 0089                       ;-----------------------------------------------------------------------
@@ -12351,7 +12352,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0127 6FAE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0128 6FB0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0129 6FB2 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0091                       copy  "tib.dialog.helper.asm"
      **** ****     > tib.dialog.helper.asm
 0001               * FILE......: tib.dialog.helper.asm
@@ -12585,7 +12586,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0205 7082 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0206 7084 C2F9  30         mov   *stack+,r11           ; Pop R11
 0207 7086 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0092                                                   ; Helper functions for TI Basic dialog
 0093                       ;-----------------------------------------------------------------------
 0094                       ; Stubs
@@ -12822,7 +12823,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0218               
 0219               ; TODO Include _trampoline.bank1.ret
 0220               ; TODO Refactor stubs for using _trampoline.bank1.ret
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0097                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -12981,7 +12982,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160                       ;------------------------------------------------------
 0161 71B6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0162 71B8 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0098                       ;-----------------------------------------------------------------------
 0099                       ; Program data
 0100                       ;-----------------------------------------------------------------------
@@ -13656,16 +13657,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0200               
 0201               txt.about.build
 0202 75B0 4C               byte  76
-0203 75B1   42             text  'Build: 220212-1923280 / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
+0203 75B1   42             text  'Build: 220220-1941480 / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
      75B2 7569     
      75B4 6C64     
      75B6 3A20     
      75B8 3232     
      75BA 3032     
-     75BC 3132     
+     75BC 3230     
      75BE 2D31     
-     75C0 3932     
-     75C2 3332     
+     75C0 3934     
+     75C2 3134     
      75C4 3830     
      75C6 202F     
      75C8 2032     
@@ -13989,7 +13990,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      777A 636B     
 0334                       even
 0335               
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0102                       copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
      **** ****     > data.keymap.presets.asm
 0001               * FILE......: data.keymap.presets.asm
@@ -14015,7 +14016,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0015                       ; End of list
 0016                       ;-------------------------------------------------------
 0017 778E FFFF             data  EOL                   ; EOL
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0103                       ;-----------------------------------------------------------------------
 0104                       ; Bank full check
 0105                       ;-----------------------------------------------------------------------
@@ -14037,7 +14038,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0113                       ;-----------------------------------------------------------------------
 0114                       ; Vector table
 0115                       ;-----------------------------------------------------------------------
@@ -14095,7 +14096,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 604A     vec.30  data  dialog.menu           ; Dialog "Main Menu"
 0049 7FFC 6FB4     vec.31  data  tibasic.sid.toggle    ; Toggle 'Show SID' in Run TI-Basic dialog
 0050 7FFE 6F02     vec.32  data  fm.fastmode           ; Toggle fastmode on/off in Load dialog
-                   < stevie_b3.asm.24121
+                   < stevie_b3.asm.33933
 0117                                                   ; Vector table bank 3
 0118               *--------------------------------------------------------------
 0119               * Video mode configuration

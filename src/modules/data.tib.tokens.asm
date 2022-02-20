@@ -38,7 +38,7 @@ tk.09   byte   >09,4,'E','D','I','T'
 ;-----------------------------------------------------------------------
 ; Program tokens
 ;-----------------------------------------------------------------------
-tk.81   byte   >81,4,'E','L','S','E'
+tk.81   byte   >81,5,' ','E','L','S','E'
         even
 tk.84   byte   >84,2,'I','F'
         even
@@ -102,11 +102,11 @@ tk.a1   byte   >A1,3,'S','U','B'
         even
 tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
         even
-tk.b0   byte   >B0,4,'T','H','E','N'
+tk.b0   byte   >B0,5,' ','T','H','E','N'
         even
-tk.b1   byte   >B1,2,'T','O'
+tk.b1   byte   >B1,3,' ','T','O'
         even
-tk.b2   byte   >B2,4,'S','T','E','P'
+tk.b2   byte   >B2,5,' ','S','T','E','P'
         even
 tk.b3   byte   >B3,1,','
         even
@@ -198,7 +198,7 @@ tk.f8   byte   >F8,6,'U','P','D','A','T','E'
         even
 tk.f9   byte   >F9,6,'A','P','P','E','N','D'
         even
-tk.fa   byte   >FA,5,'F','I','X','E','D'
+tk.fa   byte   >FA,6,'F','I','X','E','D',' '
         even
 tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
         even
@@ -206,7 +206,7 @@ tk.fc   byte   >FC,3,'T','A','B'
         even
 tk.fd   byte   >FD,1,'#'
         even
-tk.noop byte   >FF,4,'N','O','O','P'
+tk.noop byte   >FF,1,'?'
         even
 ;-----------------------------------------------------------------------
 ; Token index command mode
@@ -320,10 +320,28 @@ tki.d9  data   tk.d9               ; POS
 tki.da  data   tk.da               ; VAL
 tki.db  data   tk.db               ; STR$
 tki.dc  data   tk.dc               ; ASC
+tki.dd  data   tk.noop             ;
 tki.de  data   tk.de               ; REC
 tki.df  data   tk.noop             ;
+tki.e0  data   tk.noop             ;
+tki.e1  data   tk.noop             ;
+tki.e2  data   tk.noop             ;
+tki.e3  data   tk.noop             ;
+tki.e4  data   tk.noop             ;
+tki.e5  data   tk.noop             ;
+tki.e6  data   tk.noop             ;
+tki.e7  data   tk.noop             ;
+tki.e8  data   tk.noop             ;
+tki.e9  data   tk.noop             ;
+tki.ea  data   tk.noop             ;
+tki.eb  data   tk.noop             ;
+tki.ec  data   tk.noop             ;
+tki.ed  data   tk.noop             ;
+tki.ee  data   tk.noop             ;
+tki.ef  data   tk.noop             ;
 tki.f0  data   tk.noop             ;
 tki.f1  data   tk.f1               ; BASE
+tki.f2  data   tk.noop             ;
 tki.f3  data   tk.f3               ; VARIABLE
 tki.f4  data   tk.f4               ; RELATIVE
 tki.f5  data   tk.f5               ; INTERNAL

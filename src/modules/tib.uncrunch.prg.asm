@@ -32,16 +32,23 @@
 *
 * Variables
 * @tib.var1  = TI Basic Session
-* @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
+* @tib.var2  = Saved VRAM address
 * @tib.var3  = SAMS page ID mapped to VRAM address
-* @tib.var4  = Line number
+* @tib.var4  = Line number in program
 * @tib.var5  = Pointer to statement (VRAM)
 * @tib.var6  = Current position (addr) in uncrunch area
-* @tib.var7  = Current position (addr) in line number table
+* @tib.var7  = **free**
 * @tib.var8  = Basic statement length in bytes
-* @tib.var9  = Temporary use
-* @tib.var10 = Temporary use
+* @tib.var9  = Target line number in editor buffer
 * @tib.lines = Number of lines in TI Basic program
+*
+* Register usage
+* tmp0  = (Mapped) address of line number or statement in VDP
+* tmp1  = Token to process
+* tmp2  = Statement length
+* tmp3  = Lines to process counter
+*
+* tmp0,tmp1,tmp2 also used as work registers at times
 ********|*****|*********************|**************************
 tib.uncrunch.prg:
         dect  stack
@@ -54,55 +61,52 @@ tib.uncrunch.prg:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
         ;------------------------------------------------------
         ; Exit early if no TI Basic program
         ;------------------------------------------------------
         c     @tib.lnt.top.ptr,@tib.lnt.bot.ptr
-                                    ; Line number table is empty
+                                    ; Line number table is empty?
         jne   !                     ; No, keep on processing
         b     @tib.uncrunch.prg.exit
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
 !       mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
-
-        bl    @_v2sams              ; Get SAMS page mapped to VRAM address
-                                    ; \ i  tmp0      = VRAM address
-                                    ; |
-                                    ; | o  @tib.var2 = Address SAMS page layout
-                                    ; |    table entry mapped to VRAM address.
-                                    ; |
-                                    ; | o  @tib.var3 = SAMS page ID mapped to
-                                    ; |    VRAM address.
-                                    ; /
-
-        ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
-                                    ; | instead of VRAM address.
-                                    ; / Example: >f7b3 maps to >37b3.
-
         ai    tmp0,-3               ; One time adjustment
-        ;------------------------------------------------------
-        ; Get number of lines in program
-        ;------------------------------------------------------
-        clr   tmp3                  ; 1st line in editor buffer
-        mov   @tib.lines,tmp4       ; Set line counter
+        mov   tmp0,@tib.var2        ; Save VRAM address
+
+        clr   @tib.var9             ; 1st line in editor buffer
+        mov   @tib.lines,tmp3       ; Set lines to process counter
         ;------------------------------------------------------
         ; Loop over program listing
         ;------------------------------------------------------
 tib.uncrunch.prg.lnt.loop:
+        mov   @tib.var2,tmp0        ; Get VRAM address
+
+        bl    @_v2sams              ; Get SAMS page mapped to VRAM address
+                                    ; \ i  tmp0 = VRAM address
+                                    ; |
+                                    ; | o  @tib.var3 = SAMS page ID mapped to
+                                    ; |    VRAM address.
+                                    ; /
         ;------------------------------------------------------
         ; 1. Get line number
         ;------------------------------------------------------
+        ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff window
+                                    ; | instead of VRAM address.
+                                    ; |
+                                    ; / Example: >f7b3 maps to >37b3.
+
         movb  *tmp0+,@tib.var4      ; Line number MSB
         movb  *tmp0+,@tib.var4+1    ; Line number LSB
         ;------------------------------------------------------
-        ; 1a. Get Pointer to statement
+        ; 1a. Get Pointer to statement (VRAM)
         ;------------------------------------------------------
         movb  *tmp0+,@tib.var5      ; Pointer to statement MSB
-        movb  *tmp0,@tib.var5+1     ; Pointer to statement LSB
-        mov   tmp0,@tib.var7        ; Save position in line number table
+        movb  *tmp0+,@tib.var5+1    ; Pointer to statement LSB
+
+        a     @w$0004,@tib.var2     ; Sync VRAM address with mapped address in
+                                    ; tmp0 for steps 1 and 1a.
         ;------------------------------------------------------
         ; 2. Put line number in uncrunch area
         ;------------------------------------------------------
@@ -114,8 +118,6 @@ tib.uncrunch.prg.lnt.loop:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
 
         bl    @mknum                ; Convert unsigned number to string
               data tib.var4         ; \ i  p1    = Source
@@ -123,23 +125,25 @@ tib.uncrunch.prg.lnt.loop:
               byte 48               ; | i  p3MSB = ASCII offset
               byte 32               ; / i  p3LSB = Padding character
 
-        clr   @fb.uncrunch.area
-        clr   @fb.uncrunch.area+2
-        clr   @fb.uncrunch.area+4
+        clr   @fb.uncrunch.area     ; \
+        clr   @fb.uncrunch.area+2   ; | Clear length-byte and line number space
+        clr   @fb.uncrunch.area+4   ; /
 
-        bl    @trimnum              ; in frame buffer uncrunch area
+        bl    @trimnum              ; Trim line number and move to uncrunch area
               data rambuf           ; \ i  p1 = Source
               data fb.uncrunch.area ; | i  p2 = Destination
-              data 32               ; / i  p3 = Padding character to look for
+              data 32               ; / i  p3 = Padding character to scan
 
-        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         ;------------------------------------------------------
-        ; 2a. Put white space following line number
+        ; 2a. Put space character following line number
         ;------------------------------------------------------
+
+        ; Temporary re-use of tmp0 as work register for operations.
+
         movb  @fb.uncrunch.area,tmp0
                                     ; Get length of trimmed number into MSB
         srl   tmp0,8                ; Move to LSB
@@ -156,17 +160,25 @@ tib.uncrunch.prg.lnt.loop:
         ; 3. Prepare for uncrunching program statement
         ;------------------------------------------------------
         mov   @tib.var5,tmp0        ; Get pointer to statement
-        dec   tmp0                  ; Statement length prefix
+        dec   tmp0                  ; Goto statement length prefix
 
-        ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
+        bl    @_v2sams              ; Get SAMS page mapped to VRAM address
+                                    ; \ i  tmp0 = VRAM address
+                                    ; |
+                                    ; | o  @tib.var3 = SAMS page ID mapped to
+                                    ; |    VRAM address.
+                                    ; /
+
+        ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff window
                                     ; | instead of VRAM address.
+                                    ; |
                                     ; / Example: >f7b3 maps to >37b3.
 
-        movb  *tmp0+,tmp1           ; \ Get line size
+        movb  *tmp0+,tmp1           ; \ Get statement length in bytes
         srl   tmp1,8                ; / MSB to LSB
 
-        mov   tmp1,@tib.var8        ; Statement length in bytes
-        mov   tmp1,tmp2             ; Work copy
+        mov   tmp1,@tib.var8        ; Save statement length
+        mov   tmp1,tmp2             ; Set statement length in work register
         ;------------------------------------------------------
         ; 4. Uncrunch program statement to uncrunch area
         ;------------------------------------------------------
@@ -180,13 +192,13 @@ tib.uncrunch.prg.statement.loop:
         jlt   tib.uncrunch.prg.statement.loop.nontoken
                                     ; Skip decode for non-token
 
+        mov   tmp0,@parm2           ; Mapped position in crunched statement
         mov   tmp1,@parm1           ; Token to process
-        mov   tmp0,@parm2           ; Position in crunched statement
 
         bl    @tib.uncrunch.token   ; Decode statement token to uncrunch area
                                     ; \ i  @parm1 = Token to process
                                     ; |
-                                    ; | i  @parm2 = Position (addr) in
+                                    ; | i  @parm2 = Mapped position (addr) in
                                     ; |    crunched statement.
                                     ; |
                                     ; | o  @outparm1 = New position (addr) in
@@ -196,10 +208,7 @@ tib.uncrunch.prg.statement.loop:
                                     ; |    crunched statement.
                                     ; |
                                     ; | o  @tib.var6 = Position (addr) in
-                                    ; |    uncrunch area.
-                                    ; |
-                                    ; | o  @tib.var10 = Output bytes generated
-                                    ; /    in uncrunch area.
+                                    ; /    uncrunch area.
 
         mov   @outparm1,tmp0        ; Forward in crunched statement
 
@@ -240,7 +249,7 @@ tib.uncrnch.prg.statement.loop.panic:
         ; 5. Copy uncrunched statement to editor buffer
         ;------------------------------------------------------
 tib.uncrnch.prg.copy.statement:
-        mov   tmp3,@parm1           ; Get editor buffer line number to store
+        mov   @tib.var9,@parm1      ; Get editor buffer line number to store
                                     ; statement in.
 
         bl    @tib.uncrunch.line.pack
@@ -250,14 +259,16 @@ tib.uncrnch.prg.copy.statement:
                                     ; |
                                     ; | i  @parm1 = Line number in editor buffer
                                     ; /
+
+        inc   @tib.var9             ; Next line
+        inc   @edb.lines            ; Update Line counter
         ;------------------------------------------------------
         ; 6. Next entry in line number table
         ;------------------------------------------------------
-        dec   tmp4                  ; Last line processed?
-        jeq   tib.uncrunch.prg.exit ; yes, exit
+        dec   tmp3                  ; Last line processed?
+        jeq   tib.uncrunch.prg.done ; yes, prepare for exit
 
-        mov   @tib.var7,tmp0        ; Restore position in line number table
-        ai    tmp0,-7               ; Next entry
+        s     @w$0008,@tib.var2     ; Next entry in VRAM line number table
 
         ; Need to deal with split line-number-table entries.
         ; Need something like an underflow memory area where a split LNT entry
@@ -272,9 +283,6 @@ tib.uncrnch.prg.copy.statement:
         ; Can also happen for the 1st entry in LNT. So move check to subroutine
         ; for reuse,
 
-        inc   tmp3                  ; Next line
-        inc   @edb.lines            ; Update Line counter
-
         jmp   tib.uncrunch.prg.lnt.loop
         ;------------------------------------------------------
         ; 7. Finished processing program
@@ -286,7 +294,6 @@ tib.uncrunch.prg.done:
         ; Exit
         ;------------------------------------------------------
 tib.uncrunch.prg.exit:
-        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

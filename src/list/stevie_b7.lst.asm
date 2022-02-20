@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.22665
+     **** ****     > stevie_b7.asm.47183
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220218-2100040
+0009               * File: stevie_b7.asm               ; Version 220220-2100010
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -562,7 +562,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0445      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0446      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0447      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -702,7 +702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0018               
 0019               ***************************************************************
 0020               * BANK 7
@@ -761,7 +761,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1582,18 +1582,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220218-2100040'
+0270 21ED   42             text  'Build-ID  220220-2100010'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
      21F4 4420     
      21F6 2032     
      21F8 3230     
-     21FA 3231     
-     21FC 382D     
+     21FA 3232     
+     21FC 302D     
      21FE 3231     
      2200 3030     
-     2202 3034     
+     2202 3031     
      2204 30       
 0271                       even
 0272               
@@ -5875,7 +5875,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0041                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8787,7 +8787,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0042                       ;------------------------------------------------------
 0043                       ; Activate bank 1 and branch to  >6036
 0044                       ;------------------------------------------------------
@@ -8950,7 +8950,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      609E 994A     
      60A0 BEEF     
 0124                                                   ; DEAD 994A BEEF
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0062                       copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
      **** ****     > mem.sams.layout.asm
 0001               
@@ -9039,7 +9039,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0074                       ; Setup SAMS banks using inline code
 0075                       ;-------------------------------------------------------
 0076 60D2 0200  20         li    r0,mem.sams.layout.legacy
-     60D4 6A3E     
+     60D4 6A56     
 0077 60D6 06A0  32         bl    @_mem.sams.set.banks  ; Set SAMS banks
      60D8 60A2     
 0078                       ;-------------------------------------------------------
@@ -9095,7 +9095,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0115                       ; Setup SAMS banks using inline code
 0116                       ;-------------------------------------------------------
 0117 6104 0200  20         li    r0,mem.sams.layout.boot
-     6106 6A4E     
+     6106 6A66     
 0118 6108 10CC  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0119               
 0120               
@@ -9125,7 +9125,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0144                       ; Setup SAMS banks using inline code
 0145                       ;-------------------------------------------------------
 0146 610A 0200  20         li    r0,mem.sams.layout.external
-     610C 6A5E     
+     610C 6A76     
 0147 610E 10C9  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0148               
 0149               
@@ -9153,7 +9153,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0171                       ; Setup SAMS banks using inline code
 0172                       ;-------------------------------------------------------
 0173 6110 0200  20         li    r0,mem.sams.layout.basic1
-     6112 6A6E     
+     6112 6A86     
 0174 6114 10C6  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0175               
 0176               
@@ -9180,7 +9180,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0197                       ; Setup SAMS banks using inline code
 0198                       ;-------------------------------------------------------
 0199 6116 0200  20         li    r0,mem.sams.layout.basic2
-     6118 6A7E     
+     6118 6A96     
 0200 611A 10C3  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0201               
 0202               
@@ -9207,7 +9207,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0223                       ; Setup SAMS banks using inline code
 0224                       ;-------------------------------------------------------
 0225 611C 0200  20         li    r0,mem.sams.layout.basic3
-     611E 6A8E     
+     611E 6AA6     
 0226 6120 10C0  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0227               
 0228               
@@ -9233,7 +9233,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0248                       ; Setup SAMS banks using inline code
 0249                       ;-------------------------------------------------------
 0250 6122 0200  20         li    r0,mem.sams.layout.basic4
-     6124 6A9E     
+     6124 6AB6     
 0251 6126 10BD  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0252               
 0253               
@@ -9259,7 +9259,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0273                       ; Setup SAMS banks using inline code
 0274                       ;-------------------------------------------------------
 0275 6128 0200  20         li    r0,mem.sams.layout.basic5
-     612A 6AAE     
+     612A 6AC6     
 0276 612C 10BA  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0277               
 0278               
@@ -9359,7 +9359,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 618A 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0063                       ;-----------------------------------------------------------------------
 0064                       ; TI Basic sessions
 0065                       ;-----------------------------------------------------------------------
@@ -10278,10 +10278,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0693               
 0694               
 0695 6554 06A0  32         bl    @tibasic.buildstr     ; Build session identifier string
-     6556 6A1A     
+     6556 6A32     
 0696               
 0697 6558 06A0  32         bl    @pane.action.colorscheme.load
-     655A 6A08     
+     655A 6A20     
 0698                                                   ; Reload color scheme
 0699                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0700                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -10323,7 +10323,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      658E C3CF     
      6590 C3F3     
      6592 C37E     
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0067                       ;-----------------------------------------------------------------------
 0068                       ; TI Basic program uncruncher
 0069                       ;-----------------------------------------------------------------------
@@ -10340,79 +10340,74 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0009               * bl   _v2sams
 0010               *--------------------------------------------------------------
 0011               * INPUT
-0012               * tmp0 = VDP Address in range >0000 - >3fff
+0012               * tmp0 = VRAM address in range >0000 - >3fff
 0013               *
 0014               * OUTPUT
-0015               * @tib.var2 = Address of SAMS page layout table entry mapped to
-0016               *             VRAM address
-0017               * @tib.var3 = SAMS page ID mapped to VRAM address
-0018               *--------------------------------------------------------------
-0019               * Register usage
-0020               * tmp0, tmp1
-0021               *--------------------------------------------------------------
-0022               * Remarks
-0023               * Converts the VDP address to index into SAMS page layout table
-0024               * mem.sams.layout.basic(X) and get SAMS page.
-0025               *
-0026               * Index offset in SAMS page layout table:
-0027               * VRAM 0000-0fff = 6   \
-0028               * VRAM 1000-1fff = 8   |  Offset of slots with SAMS pages having
-0029               * VRAM 2000-2fff = 10  |  the 16K VDP dump of TI basic session.
-0030               * VRAM 3000-3fff = 12  /
-0031               ********|*****|*********************|**************************
-0032               _v2sams:
-0033 6594 0649  14         dect  stack
-0034 6596 C64B  30         mov   r11,*stack            ; Save return address
-0035 6598 0649  14         dect  stack
-0036 659A C644  30         mov   tmp0,*stack           ; Push tmp0
-0037 659C 0649  14         dect  stack
-0038 659E C645  30         mov   tmp1,*stack           ; Push tmp1
+0015               * @tib.var3 = SAMS page ID mapped to VRAM address
+0016               *--------------------------------------------------------------
+0017               * Register usage
+0018               * tmp0, tmp1
+0019               *--------------------------------------------------------------
+0020               * Remarks
+0021               * Converts the VDP address to index into SAMS page layout table
+0022               * mem.sams.layout.basic(X) and get SAMS page.
+0023               *
+0024               * Index offset in SAMS page layout table:
+0025               * VRAM 0000-0fff = 6   \
+0026               * VRAM 1000-1fff = 8   |  Offset of slots with SAMS pages having
+0027               * VRAM 2000-2fff = 10  |  the 16K VDP dump of TI basic session.
+0028               * VRAM 3000-3fff = 12  /
+0029               ********|*****|*********************|**************************
+0030               _v2sams:
+0031 6594 0649  14         dect  stack
+0032 6596 C64B  30         mov   r11,*stack            ; Save return address
+0033 6598 0649  14         dect  stack
+0034 659A C644  30         mov   tmp0,*stack           ; Push tmp0
+0035 659C 0649  14         dect  stack
+0036 659E C645  30         mov   tmp1,*stack           ; Push tmp1
+0037                       ;------------------------------------------------------
+0038                       ; Calculate index in SAMS page table
 0039                       ;------------------------------------------------------
-0040                       ; Calculate index in SAMS page table
-0041                       ;------------------------------------------------------
-0042 65A0 0244  22         andi  tmp0,>f000            ; Only keep high-nibble of MSB
+0040 65A0 0244  22         andi  tmp0,>f000            ; Only keep high-nibble of MSB
      65A2 F000     
-0043               
-0044 65A4 09B4  56         srl   tmp0,11               ; Move high-nibble to LSB and multiply by 2
-0045 65A6 A120  34         a     @tib.stab.ptr,tmp0    ; Add pointer base address
+0041               
+0042 65A4 09B4  56         srl   tmp0,11               ; Move high-nibble to LSB and multiply by 2
+0043 65A6 A120  34         a     @tib.stab.ptr,tmp0    ; Add pointer base address
      65A8 A0C2     
-0046               
-0047                       ;
-0048                       ; In the SAMS page layout table of the TI Basic session, the 16K VDP
-0049                       ; memory dump page starts at the 4th word. So need to add fixed offset.
-0050                       ;
-0051 65AA 0224  22         ai    tmp0,6                ; Add fixed offset
+0044               
+0045                       ;
+0046                       ; In the SAMS page layout table of the TI Basic session, the 16K VDP
+0047                       ; memory dump page starts at the 4th word. So need to add fixed offset.
+0048                       ;
+0049 65AA 0224  22         ai    tmp0,6                ; Add fixed offset
      65AC 0006     
-0052               
-0053 65AE C804  38         mov   tmp0,@tib.var2        ; Save memory address
-     65B0 A0EE     
-0054 65B2 C114  26         mov   *tmp0,tmp0            ; Get SAMS page number
-0055                       ;------------------------------------------------------
-0056                       ; Check if SAMS page needs to be switched
-0057                       ;------------------------------------------------------
-0058 65B4 8804  38         c     tmp0,@tib.var3        ; SAMS page has changed?
-     65B6 A0F0     
-0059 65B8 1307  14         jeq   _v2sams.exit          ; No, exit early
+0050 65AE C114  26         mov   *tmp0,tmp0            ; Get SAMS page number
+0051                       ;------------------------------------------------------
+0052                       ; Check if SAMS page needs to be switched
+0053                       ;------------------------------------------------------
+0054 65B0 8804  38         c     tmp0,@tib.var3        ; SAMS page has changed?
+     65B2 A0F0     
+0055 65B4 1307  14         jeq   _v2sams.exit          ; No, exit early
+0056               
+0057 65B6 C804  38         mov   tmp0,@tib.var3        ; Set new SAMS page
+     65B8 A0F0     
+0058 65BA 0984  56         srl   tmp0,8                ; MSB to LSB
+0059 65BC 0205  20         li    tmp1,>f000            ; Memory address to map to
+     65BE F000     
 0060               
-0061 65BA C804  38         mov   tmp0,@tib.var3        ; Set new SAMS page
-     65BC A0F0     
-0062 65BE 0984  56         srl   tmp0,8                ; MSB to LSB
-0063 65C0 0205  20         li    tmp1,>f000            ; Memory address to map to
-     65C2 F000     
-0064               
-0065 65C4 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     65C6 258A     
-0066                                                   ; \ i  tmp0  = SAMS page number
-0067                                                   ; / i  tmp1  = Memory map address
-0068                       ;------------------------------------------------------
-0069                       ; Exit
-0070                       ;------------------------------------------------------
-0071               _v2sams.exit:
-0072 65C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0073 65CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0074 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
-0075 65CE 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+0061 65C0 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     65C2 258A     
+0062                                                   ; \ i  tmp0  = SAMS page number
+0063                                                   ; / i  tmp1  = Memory map address
+0064                       ;------------------------------------------------------
+0065                       ; Exit
+0066                       ;------------------------------------------------------
+0067               _v2sams.exit:
+0068 65C4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0069 65C6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0070 65C8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0071 65CA 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.47183
 0071                       copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
      **** ****     > tib.uncrunch.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -10435,48 +10430,48 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0018               * tmp0, tmp1, tmp2, tmp3, tmp4
 0019               ********|*****|*********************|**************************
 0020               tib.uncrunch:
-0021 65D0 0649  14         dect  stack
-0022 65D2 C64B  30         mov   r11,*stack            ; Save return address
-0023 65D4 0649  14         dect  stack
-0024 65D6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 65D8 0649  14         dect  stack
-0026 65DA C645  30         mov   tmp1,*stack           ; Push tmp1
+0021 65CC 0649  14         dect  stack
+0022 65CE C64B  30         mov   r11,*stack            ; Save return address
+0023 65D0 0649  14         dect  stack
+0024 65D2 C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 65D4 0649  14         dect  stack
+0026 65D6 C645  30         mov   tmp1,*stack           ; Push tmp1
 0027                       ;------------------------------------------------------
 0028                       ; Prepare for uncrunching
 0029                       ;------------------------------------------------------
-0030 65DC 06A0  32         bl    @tib.uncrunch.prepare ; Prepare for uncrunching TI Basic program
-     65DE 65FC     
+0030 65D8 06A0  32         bl    @tib.uncrunch.prepare ; Prepare for uncrunching TI Basic program
+     65DA 65F8     
 0031                                                   ; \ i  @parm1 = TI Basic session to uncrunch
 0032                                                   ; /
 0033                       ;------------------------------------------------------
 0034                       ; Uncrunch TI Basic program
 0035                       ;------------------------------------------------------
-0036 65E0 06A0  32         bl    @tib.uncrunch.prg     ; Uncrunch TI Basic program
-     65E2 669E     
+0036 65DC 06A0  32         bl    @tib.uncrunch.prg     ; Uncrunch TI Basic program
+     65DE 669A     
 0037                       ;------------------------------------------------------
 0038                       ; Prepare for exit
 0039                       ;------------------------------------------------------
-0040 65E4 C120  34         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
-     65E6 A20E     
-0041 65E8 0205  20         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
-     65EA F000     
+0040 65E0 C120  34         mov   @tv.sams.f000,tmp0    ; Get SAMS page number
+     65E2 A20E     
+0041 65E4 0205  20         li    tmp1,>f000            ; Map SAMS page to >f000-ffff
+     65E6 F000     
 0042               
-0043 65EC 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     65EE 258A     
+0043 65E8 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     65EA 258A     
 0044                                                   ; \ i  tmp0  = SAMS page number
 0045                                                   ; / i  tmp1  = Memory map address
 0046               
-0047 65F0 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
-     65F2 69F6     
+0047 65EC 06A0  32         bl    @fb.refresh           ; Refresh frame buffer content
+     65EE 6A0E     
 0048                       ;------------------------------------------------------
 0049                       ; Exit
 0050                       ;------------------------------------------------------
 0051               tib.uncrunch.exit:
-0052 65F4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0053 65F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0054 65F8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0055 65FA 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+0052 65F0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0053 65F2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0054 65F4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0055 65F6 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.47183
 0072                       copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
      **** ****     > tib.uncrunch.prep.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -10519,52 +10514,52 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0038               * @tib.lines = Number of lines in TI Basic program
 0039               ********|*****|*********************|**************************
 0040               tib.uncrunch.prepare:
-0041 65FC 0649  14         dect  stack
-0042 65FE C64B  30         mov   r11,*stack            ; Save return address
-0043 6600 0649  14         dect  stack
-0044 6602 C644  30         mov   tmp0,*stack           ; Push tmp0
+0041 65F8 0649  14         dect  stack
+0042 65FA C64B  30         mov   r11,*stack            ; Save return address
+0043 65FC 0649  14         dect  stack
+0044 65FE C644  30         mov   tmp0,*stack           ; Push tmp0
 0045                       ;------------------------------------------------------
 0046                       ; Initialisation
 0047                       ;------------------------------------------------------
-0048 6604 04E0  34         clr   @tib.var1             ;
-     6606 A0EC     
-0049 6608 04E0  34         clr   @tib.var2             ; Clear temporary variables
-     660A A0EE     
-0050 660C 04E0  34         clr   @tib.var3             ;
-     660E A0F0     
-0051 6610 04E0  34         clr   @tib.var4             ;
-     6612 A0F2     
-0052 6614 04E0  34         clr   @tib.var5             ;
-     6616 A0F4     
+0048 6600 04E0  34         clr   @tib.var1             ;
+     6602 A0EC     
+0049 6604 04E0  34         clr   @tib.var2             ; Clear temporary variables
+     6606 A0EE     
+0050 6608 04E0  34         clr   @tib.var3             ;
+     660A A0F0     
+0051 660C 04E0  34         clr   @tib.var4             ;
+     660E A0F2     
+0052 6610 04E0  34         clr   @tib.var5             ;
+     6612 A0F4     
 0053                       ;------------------------------------------------------
 0054                       ; (1) Assert on TI basic session
 0055                       ;------------------------------------------------------
-0056 6618 C120  34         mov   @parm1,tmp0           ; Get session to uncrunch
-     661A A006     
-0057 661C C804  38         mov   tmp0,@tib.var1        ; Make copy
-     661E A0EC     
+0056 6614 C120  34         mov   @parm1,tmp0           ; Get session to uncrunch
+     6616 A006     
+0057 6618 C804  38         mov   tmp0,@tib.var1        ; Make copy
+     661A A0EC     
 0058               
-0059 6620 0284  22         ci    tmp0,1                ; \
-     6622 0001     
-0060 6624 1103  14         jlt   !                     ; | Skip to (2) if valid
-0061 6626 0284  22         ci    tmp0,5                ; | session ID.
-     6628 0005     
-0062 662A 1204  14         jle   tib.uncrunch.prepare.2; /
+0059 661C 0284  22         ci    tmp0,1                ; \
+     661E 0001     
+0060 6620 1103  14         jlt   !                     ; | Skip to (2) if valid
+0061 6622 0284  22         ci    tmp0,5                ; | session ID.
+     6624 0005     
+0062 6626 1204  14         jle   tib.uncrunch.prepare.2; /
 0063                       ;------------------------------------------------------
 0064                       ; Assert failed
 0065                       ;------------------------------------------------------
-0066 662C C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
-     662E FFCE     
-0067 6630 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6632 2026     
+0066 6628 C80B  38 !       mov   r11,@>ffce            ; \ Save caller address
+     662A FFCE     
+0067 662C 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     662E 2026     
 0068                       ;------------------------------------------------------
 0069                       ; (2) Get scratchpad of TI Basic session
 0070                       ;------------------------------------------------------
 0071               tib.uncrunch.prepare.2:
-0072 6634 06A0  32         bl    @sams.page.set        ; Set SAMS page
-     6636 2586     
-0073 6638 00FF                   data >00ff,>f000      ; \ i  p1  = SAMS page number
-     663A F000     
+0072 6630 06A0  32         bl    @sams.page.set        ; Set SAMS page
+     6632 2586     
+0073 6634 00FF                   data >00ff,>f000      ; \ i  p1  = SAMS page number
+     6636 F000     
 0074                                                   ; / i  p2  = Memory map address
 0075               
 0076                       ; TI Basic session 1 scratchpad >f100
@@ -10573,73 +10568,73 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0079                       ; TI Basic session 4 scratchpad >f400
 0080                       ; TI Basic session 5 scratchpad >f500
 0081               
-0082 663C C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
-     663E A0EC     
-0083 6640 0A84  56         sla   tmp0,8                ; Get scratchpad offset (>100->500)
-0084 6642 0224  22         ai    tmp0,>f000            ; Add base address
-     6644 F000     
-0085 6646 C804  38         mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
-     6648 A0C4     
+0082 6638 C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
+     663A A0EC     
+0083 663C 0A84  56         sla   tmp0,8                ; Get scratchpad offset (>100->500)
+0084 663E 0224  22         ai    tmp0,>f000            ; Add base address
+     6640 F000     
+0085 6642 C804  38         mov   tmp0,@tib.scrpad.ptr  ; Store pointer to scratchpad in SAMS
+     6644 A0C4     
 0086                       ;------------------------------------------------------
 0087                       ; (3) Get relevant pointers stored in scratchpad
 0088                       ;------------------------------------------------------
-0089 664A C824  54         mov   @>18(tmp0),@tib.strs.top.ptr
-     664C 0018     
-     664E A0CE     
+0089 6646 C824  54         mov   @>18(tmp0),@tib.strs.top.ptr
+     6648 0018     
+     664A A0CE     
 0090                                                   ; @>8318 Pointer to top of string space
 0091                                                   ; in VRAM
 0092               
-0093 6650 C824  54         mov   @>1a(tmp0),@tib.strs.bot.ptr
-     6652 001A     
-     6654 A0D0     
+0093 664C C824  54         mov   @>1a(tmp0),@tib.strs.bot.ptr
+     664E 001A     
+     6650 A0D0     
 0094                                                   ; @>831a Pointer to bottom of string space
 0095                                                   ; in VRAM
 0096               
-0097 6656 C824  54         mov   @>30(tmp0),@tib.lnt.bot.ptr
-     6658 0030     
-     665A A0C8     
+0097 6652 C824  54         mov   @>30(tmp0),@tib.lnt.bot.ptr
+     6654 0030     
+     6656 A0C8     
 0098                                                   ; @>8330 Pointer to bottom of line number
 0099                                                   ; table in VRAM
 0100               
-0101 665C C824  54         mov   @>32(tmp0),@tib.lnt.top.ptr
-     665E 0032     
-     6660 A0C6     
+0101 6658 C824  54         mov   @>32(tmp0),@tib.lnt.top.ptr
+     665A 0032     
+     665C A0C6     
 0102                                                   ; @>8332 Pointer to top of line number
 0103                                                   ; table in VRAM
 0104               
-0105 6662 C820  54         mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
-     6664 A0C8     
+0105 665E C820  54         mov   @tib.lnt.bot.ptr,@tib.symt.top.ptr
+     6660 A0C8     
+     6662 A0CA     
+0106 6664 0660  34         dect  @tib.symt.top.ptr     ; Pointer to top of symbol table in VRAM.
      6666 A0CA     
-0106 6668 0660  34         dect  @tib.symt.top.ptr     ; Pointer to top of symbol table in VRAM.
-     666A A0CA     
 0107                                                   ; Table top is just below the bottom of
 0108                                                   ; the line number table.
 0109               
-0110 666C C824  54         mov   @>3e(tmp0),@tib.symt.bot.ptr
-     666E 003E     
-     6670 A0CC     
+0110 6668 C824  54         mov   @>3e(tmp0),@tib.symt.bot.ptr
+     666A 003E     
+     666C A0CC     
 0111                                                   ; @>833e Pointer to bottom of symbol table
 0112                                                   ; in VRAM
 0113                       ;------------------------------------------------------
 0114                       ; (4) Calculate number of lines in TI Basic program
 0115                       ;------------------------------------------------------
-0116 6672 C120  34         mov   @tib.lnt.top.ptr,tmp0 ; \ Size of line number table entry: 4 bytes
-     6674 A0C6     
-0117 6676 6120  34         s     @tib.lnt.bot.ptr,tmp0 ; /
-     6678 A0C8     
-0118 667A 1305  14         jeq   tib.uncrunch.prepare.np
+0116 666E C120  34         mov   @tib.lnt.top.ptr,tmp0 ; \ Size of line number table entry: 4 bytes
+     6670 A0C6     
+0117 6672 6120  34         s     @tib.lnt.bot.ptr,tmp0 ; /
+     6674 A0C8     
+0118 6676 1305  14         jeq   tib.uncrunch.prepare.np
 0119               
-0120 667C 0584  14         inc   tmp0                  ; One time offset
-0121 667E 0924  56         srl   tmp0,2                ; tmp0=tmp0/4
-0122 6680 C804  38         mov   tmp0,@tib.lines       ; Save lines
-     6682 A0D2     
-0123 6684 1002  14         jmp   tib.uncrunch.prepare.5
+0120 6678 0584  14         inc   tmp0                  ; One time offset
+0121 667A 0924  56         srl   tmp0,2                ; tmp0=tmp0/4
+0122 667C C804  38         mov   tmp0,@tib.lines       ; Save lines
+     667E A0D2     
+0123 6680 1002  14         jmp   tib.uncrunch.prepare.5
 0124                       ;------------------------------------------------------
 0125                       ; No program present
 0126                       ;------------------------------------------------------
 0127               tib.uncrunch.prepare.np:
-0128 6686 04E0  34         clr   @tib.lines            ; No program
-     6688 A0D2     
+0128 6682 04E0  34         clr   @tib.lines            ; No program
+     6684 A0D2     
 0129                       ;------------------------------------------------------
 0130                       ; (5) Get pointer to SAMS page table
 0131                       ;------------------------------------------------------
@@ -10647,27 +10642,27 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0133                       ; The data tables of the 5 TI basic sessions form a
 0134                       ; uniform region, we calculate the index of the 1st word in the
 0135                       ; specified session.
-0136 668A C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
-     668C A0EC     
+0136 6686 C120  34         mov   @tib.var1,tmp0        ; Get TI Basic session
+     6688 A0EC     
 0137               
-0138 668E 0A44  56         sla   tmp0,4                ; \ Get index of first word in SAMS page
+0138 668A 0A44  56         sla   tmp0,4                ; \ Get index of first word in SAMS page
 0139                                                   ; | layout (of following TI Basic session)
 0140                                                   ; /
 0141               
-0142 6690 0224  22         ai    tmp0,mem.sams.layout.basic - 16
-     6692 6A5E     
+0142 668C 0224  22         ai    tmp0,mem.sams.layout.basic - 16
+     668E 6A76     
 0143                                                   ; Add base address for specified session
 0144               
-0145 6694 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
-     6696 A0C2     
+0145 6690 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
+     6692 A0C2     
 0146                       ;------------------------------------------------------
 0147                       ; Exit
 0148                       ;------------------------------------------------------
 0149               tib.uncrunch.prepare.exit:
-0150 6698 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0151 669A C2F9  30         mov   *stack+,r11           ; Pop r11
-0152 669C 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+0150 6694 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0151 6696 C2F9  30         mov   *stack+,r11           ; Pop r11
+0152 6698 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.47183
 0073                       copy  "tib.uncrunch.prg.asm"     ; Uncrunch tokenized program code
      **** ****     > tib.uncrunch.prg.asm
 0001               * FILE......: tib.uncrunch.prg.asm
@@ -10704,314 +10699,328 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0032               *
 0033               * Variables
 0034               * @tib.var1  = TI Basic Session
-0035               * @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
+0035               * @tib.var2  = Saved VRAM address
 0036               * @tib.var3  = SAMS page ID mapped to VRAM address
-0037               * @tib.var4  = Line number
+0037               * @tib.var4  = Line number in program
 0038               * @tib.var5  = Pointer to statement (VRAM)
 0039               * @tib.var6  = Current position (addr) in uncrunch area
-0040               * @tib.var7  = Current position (addr) in line number table
+0040               * @tib.var7  = **free**
 0041               * @tib.var8  = Basic statement length in bytes
-0042               * @tib.var9  = Temporary use
-0043               * @tib.var10 = Temporary use
-0044               * @tib.lines = Number of lines in TI Basic program
-0045               ********|*****|*********************|**************************
-0046               tib.uncrunch.prg:
-0047 669E 0649  14         dect  stack
-0048 66A0 C64B  30         mov   r11,*stack            ; Save return address
-0049 66A2 0649  14         dect  stack
-0050 66A4 C644  30         mov   tmp0,*stack           ; Push tmp0
-0051 66A6 0649  14         dect  stack
-0052 66A8 C645  30         mov   tmp1,*stack           ; Push tmp1
-0053 66AA 0649  14         dect  stack
-0054 66AC C646  30         mov   tmp2,*stack           ; Push tmp2
-0055 66AE 0649  14         dect  stack
-0056 66B0 C647  30         mov   tmp3,*stack           ; Push tmp3
-0057 66B2 0649  14         dect  stack
-0058 66B4 C648  30         mov   tmp4,*stack           ; Push tmp4
-0059                       ;------------------------------------------------------
-0060                       ; Exit early if no TI Basic program
-0061                       ;------------------------------------------------------
-0062 66B6 8820  54         c     @tib.lnt.top.ptr,@tib.lnt.bot.ptr
-     66B8 A0C6     
-     66BA A0C8     
-0063                                                   ; Line number table is empty
-0064 66BC 1602  14         jne   !                     ; No, keep on processing
-0065 66BE 0460  28         b     @tib.uncrunch.prg.exit
-     66C0 67C2     
+0042               * @tib.var9  = Target line number in editor buffer
+0043               * @tib.lines = Number of lines in TI Basic program
+0044               *
+0045               * Register usage
+0046               * tmp0  = (Mapped) address of line number or statement in VDP
+0047               * tmp1  = Token to process
+0048               * tmp2  = Statement length
+0049               * tmp3  = Lines to process counter
+0050               *
+0051               * tmp0,tmp1,tmp2 also used as work registers at times
+0052               ********|*****|*********************|**************************
+0053               tib.uncrunch.prg:
+0054 669A 0649  14         dect  stack
+0055 669C C64B  30         mov   r11,*stack            ; Save return address
+0056 669E 0649  14         dect  stack
+0057 66A0 C644  30         mov   tmp0,*stack           ; Push tmp0
+0058 66A2 0649  14         dect  stack
+0059 66A4 C645  30         mov   tmp1,*stack           ; Push tmp1
+0060 66A6 0649  14         dect  stack
+0061 66A8 C646  30         mov   tmp2,*stack           ; Push tmp2
+0062 66AA 0649  14         dect  stack
+0063 66AC C647  30         mov   tmp3,*stack           ; Push tmp3
+0064                       ;------------------------------------------------------
+0065                       ; Exit early if no TI Basic program
 0066                       ;------------------------------------------------------
-0067                       ; Initialisation
-0068                       ;------------------------------------------------------
-0069 66C2 C120  34 !       mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
-     66C4 A0C6     
-0070               
-0071 66C6 06A0  32         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
-     66C8 6594     
-0072                                                   ; \ i  tmp0      = VRAM address
-0073                                                   ; |
-0074                                                   ; | o  @tib.var2 = Address SAMS page layout
-0075                                                   ; |    table entry mapped to VRAM address.
-0076                                                   ; |
-0077                                                   ; | o  @tib.var3 = SAMS page ID mapped to
-0078                                                   ; |    VRAM address.
-0079                                                   ; /
-0080               
-0081 66CA 0264  22         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
-     66CC F000     
-0082                                                   ; | instead of VRAM address.
-0083                                                   ; / Example: >f7b3 maps to >37b3.
-0084               
-0085 66CE 0224  22         ai    tmp0,-3               ; One time adjustment
-     66D0 FFFD     
-0086                       ;------------------------------------------------------
-0087                       ; Get number of lines in program
-0088                       ;------------------------------------------------------
-0089 66D2 04C7  14         clr   tmp3                  ; 1st line in editor buffer
-0090 66D4 C220  34         mov   @tib.lines,tmp4       ; Set line counter
-     66D6 A0D2     
-0091                       ;------------------------------------------------------
-0092                       ; Loop over program listing
-0093                       ;------------------------------------------------------
-0094               tib.uncrunch.prg.lnt.loop:
-0095                       ;------------------------------------------------------
-0096                       ; 1. Get line number
-0097                       ;------------------------------------------------------
-0098 66D8 D834  48         movb  *tmp0+,@tib.var4      ; Line number MSB
-     66DA A0F2     
-0099 66DC D834  48         movb  *tmp0+,@tib.var4+1    ; Line number LSB
-     66DE A0F3     
-0100                       ;------------------------------------------------------
-0101                       ; 1a. Get Pointer to statement
+0067 66AE 8820  54         c     @tib.lnt.top.ptr,@tib.lnt.bot.ptr
+     66B0 A0C6     
+     66B2 A0C8     
+0068                                                   ; Line number table is empty?
+0069 66B4 1602  14         jne   !                     ; No, keep on processing
+0070 66B6 0460  28         b     @tib.uncrunch.prg.exit
+     66B8 67C6     
+0071                       ;------------------------------------------------------
+0072                       ; Initialisation
+0073                       ;------------------------------------------------------
+0074 66BA C120  34 !       mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
+     66BC A0C6     
+0075 66BE 0224  22         ai    tmp0,-3               ; One time adjustment
+     66C0 FFFD     
+0076 66C2 C804  38         mov   tmp0,@tib.var2        ; Save VRAM address
+     66C4 A0EE     
+0077               
+0078 66C6 04E0  34         clr   @tib.var9             ; 1st line in editor buffer
+     66C8 A0FC     
+0079 66CA C1E0  34         mov   @tib.lines,tmp3       ; Set lines to process counter
+     66CC A0D2     
+0080                       ;------------------------------------------------------
+0081                       ; Loop over program listing
+0082                       ;------------------------------------------------------
+0083               tib.uncrunch.prg.lnt.loop:
+0084 66CE C120  34         mov   @tib.var2,tmp0        ; Get VRAM address
+     66D0 A0EE     
+0085               
+0086 66D2 06A0  32         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
+     66D4 6594     
+0087                                                   ; \ i  tmp0 = VRAM address
+0088                                                   ; |
+0089                                                   ; | o  @tib.var3 = SAMS page ID mapped to
+0090                                                   ; |    VRAM address.
+0091                                                   ; /
+0092                       ;------------------------------------------------------
+0093                       ; 1. Get line number
+0094                       ;------------------------------------------------------
+0095 66D6 0264  22         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff window
+     66D8 F000     
+0096                                                   ; | instead of VRAM address.
+0097                                                   ; |
+0098                                                   ; / Example: >f7b3 maps to >37b3.
+0099               
+0100 66DA D834  48         movb  *tmp0+,@tib.var4      ; Line number MSB
+     66DC A0F2     
+0101 66DE D834  48         movb  *tmp0+,@tib.var4+1    ; Line number LSB
+     66E0 A0F3     
 0102                       ;------------------------------------------------------
-0103 66E0 D834  48         movb  *tmp0+,@tib.var5      ; Pointer to statement MSB
-     66E2 A0F4     
-0104 66E4 D814  46         movb  *tmp0,@tib.var5+1     ; Pointer to statement LSB
-     66E6 A0F5     
-0105 66E8 C804  38         mov   tmp0,@tib.var7        ; Save position in line number table
-     66EA A0F8     
-0106                       ;------------------------------------------------------
-0107                       ; 2. Put line number in uncrunch area
-0108                       ;------------------------------------------------------
-0109 66EC 0649  14         dect  stack
-0110 66EE C644  30         mov   tmp0,*stack           ; Push tmp0
-0111 66F0 0649  14         dect  stack
-0112 66F2 C645  30         mov   tmp1,*stack           ; Push tmp1
-0113 66F4 0649  14         dect  stack
-0114 66F6 C646  30         mov   tmp2,*stack           ; Push tmp2
-0115 66F8 0649  14         dect  stack
-0116 66FA C647  30         mov   tmp3,*stack           ; Push tmp3
-0117 66FC 0649  14         dect  stack
-0118 66FE C648  30         mov   tmp4,*stack           ; Push tmp4
-0119               
-0120 6700 06A0  32         bl    @mknum                ; Convert unsigned number to string
+0103                       ; 1a. Get Pointer to statement (VRAM)
+0104                       ;------------------------------------------------------
+0105 66E2 D834  48         movb  *tmp0+,@tib.var5      ; Pointer to statement MSB
+     66E4 A0F4     
+0106 66E6 D834  48         movb  *tmp0+,@tib.var5+1    ; Pointer to statement LSB
+     66E8 A0F5     
+0107               
+0108 66EA A820  54         a     @w$0004,@tib.var2     ; Sync VRAM address with mapped address in
+     66EC 2006     
+     66EE A0EE     
+0109                                                   ; tmp0 for steps 1 and 1a.
+0110                       ;------------------------------------------------------
+0111                       ; 2. Put line number in uncrunch area
+0112                       ;------------------------------------------------------
+0113 66F0 0649  14         dect  stack
+0114 66F2 C644  30         mov   tmp0,*stack           ; Push tmp0
+0115 66F4 0649  14         dect  stack
+0116 66F6 C645  30         mov   tmp1,*stack           ; Push tmp1
+0117 66F8 0649  14         dect  stack
+0118 66FA C646  30         mov   tmp2,*stack           ; Push tmp2
+0119 66FC 0649  14         dect  stack
+0120 66FE C647  30         mov   tmp3,*stack           ; Push tmp3
+0121               
+0122 6700 06A0  32         bl    @mknum                ; Convert unsigned number to string
      6702 29BA     
-0121 6704 A0F2                   data tib.var4         ; \ i  p1    = Source
-0122 6706 A100                   data rambuf           ; | i  p2    = Destination
-0123 6708 30                     byte 48               ; | i  p3MSB = ASCII offset
-0124 6709   20                   byte 32               ; / i  p3LSB = Padding character
-0125               
-0126 670A 04E0  34         clr   @fb.uncrunch.area
+0123 6704 A0F2                   data tib.var4         ; \ i  p1    = Source
+0124 6706 A100                   data rambuf           ; | i  p2    = Destination
+0125 6708 30                     byte 48               ; | i  p3MSB = ASCII offset
+0126 6709   20                   byte 32               ; / i  p3LSB = Padding character
+0127               
+0128 670A 04E0  34         clr   @fb.uncrunch.area     ; \
      670C D960     
-0127 670E 04E0  34         clr   @fb.uncrunch.area+2
+0129 670E 04E0  34         clr   @fb.uncrunch.area+2   ; | Clear length-byte and line number space
      6710 D962     
-0128 6712 04E0  34         clr   @fb.uncrunch.area+4
+0130 6712 04E0  34         clr   @fb.uncrunch.area+4   ; /
      6714 D964     
-0129               
-0130 6716 06A0  32         bl    @trimnum              ; in frame buffer uncrunch area
+0131               
+0132 6716 06A0  32         bl    @trimnum              ; Trim line number and move to uncrunch area
      6718 2A12     
-0131 671A A100                   data rambuf           ; \ i  p1 = Source
-0132 671C D960                   data fb.uncrunch.area ; | i  p2 = Destination
-0133 671E 0020                   data 32               ; / i  p3 = Padding character to look for
-0134               
-0135 6720 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0136 6722 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0137 6724 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0138 6726 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0139 6728 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0140                       ;------------------------------------------------------
-0141                       ; 2a. Put white space following line number
-0142                       ;------------------------------------------------------
-0143 672A D120  34         movb  @fb.uncrunch.area,tmp0
-     672C D960     
-0144                                                   ; Get length of trimmed number into MSB
-0145 672E 0984  56         srl   tmp0,8                ; Move to LSB
-0146 6730 0224  22         ai    tmp0,fb.uncrunch.area+1
-     6732 D961     
-0147                                                   ; Add base address and length byte
-0148               
-0149 6734 0205  20         li    tmp1,>2000            ; \ Put white space character (ASCII 32)
-     6736 2000     
-0150 6738 DD05  32         movb  tmp1,*tmp0+           ; / following line number.
-0151 673A C804  38         mov   tmp0,@tib.var6        ; Save position in uncrunch area
-     673C A0F6     
+0133 671A A100                   data rambuf           ; \ i  p1 = Source
+0134 671C D960                   data fb.uncrunch.area ; | i  p2 = Destination
+0135 671E 0020                   data 32               ; / i  p3 = Padding character to scan
+0136               
+0137 6720 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0138 6722 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0139 6724 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0140 6726 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0141                       ;------------------------------------------------------
+0142                       ; 2a. Put space character following line number
+0143                       ;------------------------------------------------------
+0144               
+0145                       ; Temporary re-use of tmp0 as work register for operations.
+0146               
+0147 6728 D120  34         movb  @fb.uncrunch.area,tmp0
+     672A D960     
+0148                                                   ; Get length of trimmed number into MSB
+0149 672C 0984  56         srl   tmp0,8                ; Move to LSB
+0150 672E 0224  22         ai    tmp0,fb.uncrunch.area+1
+     6730 D961     
+0151                                                   ; Add base address and length byte
 0152               
-0153 673E B820  54         ab    @w$0100,@fb.uncrunch.area
-     6740 2012     
-     6742 D960     
-0154                                                   ; Increase length-byte in uncrunch area
-0155                       ;------------------------------------------------------
-0156                       ; 3. Prepare for uncrunching program statement
-0157                       ;------------------------------------------------------
-0158 6744 C120  34         mov   @tib.var5,tmp0        ; Get pointer to statement
-     6746 A0F4     
-0159 6748 0604  14         dec   tmp0                  ; Statement length prefix
-0160               
-0161 674A 0264  22         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff region
-     674C F000     
-0162                                                   ; | instead of VRAM address.
-0163                                                   ; / Example: >f7b3 maps to >37b3.
+0153 6732 0205  20         li    tmp1,>2000            ; \ Put white space character (ASCII 32)
+     6734 2000     
+0154 6736 DD05  32         movb  tmp1,*tmp0+           ; / following line number.
+0155 6738 C804  38         mov   tmp0,@tib.var6        ; Save position in uncrunch area
+     673A A0F6     
+0156               
+0157 673C B820  54         ab    @w$0100,@fb.uncrunch.area
+     673E 2012     
+     6740 D960     
+0158                                                   ; Increase length-byte in uncrunch area
+0159                       ;------------------------------------------------------
+0160                       ; 3. Prepare for uncrunching program statement
+0161                       ;------------------------------------------------------
+0162 6742 C120  34         mov   @tib.var5,tmp0        ; Get pointer to statement
+     6744 A0F4     
+0163 6746 0604  14         dec   tmp0                  ; Goto statement length prefix
 0164               
-0165 674E D174  28         movb  *tmp0+,tmp1           ; \ Get line size
-0166 6750 0985  56         srl   tmp1,8                ; / MSB to LSB
-0167               
-0168 6752 C805  38         mov   tmp1,@tib.var8        ; Statement length in bytes
-     6754 A0FA     
-0169 6756 C185  18         mov   tmp1,tmp2             ; Work copy
-0170                       ;------------------------------------------------------
-0171                       ; 4. Uncrunch program statement to uncrunch area
-0172                       ;------------------------------------------------------
-0173               tib.uncrunch.prg.statement.loop:
-0174 6758 D154  26         movb  *tmp0,tmp1            ; Get token into MSB
-0175 675A 0985  56         srl   tmp1,8                ; Move token to LSB
-0176 675C 1320  14         jeq   tib.uncrnch.prg.copy.statement
-0177                                                   ; Skip to (5) if termination token >00
-0178               
-0179 675E 0285  22         ci    tmp1,>80              ; Is a valid token?
-     6760 0080     
-0180 6762 110D  14         jlt   tib.uncrunch.prg.statement.loop.nontoken
-0181                                                   ; Skip decode for non-token
-0182               
-0183 6764 C805  38         mov   tmp1,@parm1           ; Token to process
-     6766 A006     
-0184 6768 C804  38         mov   tmp0,@parm2           ; Position in crunched statement
-     676A A008     
-0185               
-0186 676C 06A0  32         bl    @tib.uncrunch.token   ; Decode statement token to uncrunch area
-     676E 67D0     
-0187                                                   ; \ i  @parm1 = Token to process
-0188                                                   ; |
-0189                                                   ; | i  @parm2 = Position (addr) in
-0190                                                   ; |    crunched statement.
-0191                                                   ; |
-0192                                                   ; | o  @outparm1 = New position (addr) in
-0193                                                   ; |    crunched statement.
-0194                                                   ; |
-0195                                                   ; | o  @outparm2 = Bytes processed in
-0196                                                   ; |    crunched statement.
-0197                                                   ; |
-0198                                                   ; | o  @tib.var6 = Position (addr) in
-0199                                                   ; |    uncrunch area.
+0165 6748 06A0  32         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
+     674A 6594     
+0166                                                   ; \ i  tmp0 = VRAM address
+0167                                                   ; |
+0168                                                   ; | o  @tib.var3 = SAMS page ID mapped to
+0169                                                   ; |    VRAM address.
+0170                                                   ; /
+0171               
+0172 674C 0264  22         ori   tmp0,>f000            ; \ Use mapped address in >f000->ffff window
+     674E F000     
+0173                                                   ; | instead of VRAM address.
+0174                                                   ; |
+0175                                                   ; / Example: >f7b3 maps to >37b3.
+0176               
+0177 6750 D174  28         movb  *tmp0+,tmp1           ; \ Get statement length in bytes
+0178 6752 0985  56         srl   tmp1,8                ; / MSB to LSB
+0179               
+0180 6754 C805  38         mov   tmp1,@tib.var8        ; Save statement length
+     6756 A0FA     
+0181 6758 C185  18         mov   tmp1,tmp2             ; Set statement length in work register
+0182                       ;------------------------------------------------------
+0183                       ; 4. Uncrunch program statement to uncrunch area
+0184                       ;------------------------------------------------------
+0185               tib.uncrunch.prg.statement.loop:
+0186 675A D154  26         movb  *tmp0,tmp1            ; Get token into MSB
+0187 675C 0985  56         srl   tmp1,8                ; Move token to LSB
+0188 675E 1320  14         jeq   tib.uncrnch.prg.copy.statement
+0189                                                   ; Skip to (5) if termination token >00
+0190               
+0191 6760 0285  22         ci    tmp1,>80              ; Is a valid token?
+     6762 0080     
+0192 6764 110D  14         jlt   tib.uncrunch.prg.statement.loop.nontoken
+0193                                                   ; Skip decode for non-token
+0194               
+0195 6766 C804  38         mov   tmp0,@parm2           ; Mapped position in crunched statement
+     6768 A008     
+0196 676A C805  38         mov   tmp1,@parm1           ; Token to process
+     676C A006     
+0197               
+0198 676E 06A0  32         bl    @tib.uncrunch.token   ; Decode statement token to uncrunch area
+     6770 67D2     
+0199                                                   ; \ i  @parm1 = Token to process
 0200                                                   ; |
-0201                                                   ; | o  @tib.var10 = Output bytes generated
-0202                                                   ; /    in uncrunch area.
-0203               
-0204 6770 C120  34         mov   @outparm1,tmp0        ; Forward in crunched statement
-     6772 A016     
-0205               
-0206 6774 61A0  34         s     @outparm2,tmp2        ; Update statement length
-     6776 A018     
-0207 6778 15EF  14         jgt   tib.uncrunch.prg.statement.loop
-0208                                                   ; Process next token(s) unless done
-0209               
-0210 677A 1311  14         jeq   tib.uncrnch.prg.copy.statement
-0211                                                   ; Continue with (5)
+0201                                                   ; | i  @parm2 = Mapped position (addr) in
+0202                                                   ; |    crunched statement.
+0203                                                   ; |
+0204                                                   ; | o  @outparm1 = New position (addr) in
+0205                                                   ; |    crunched statement.
+0206                                                   ; |
+0207                                                   ; | o  @outparm2 = Bytes processed in
+0208                                                   ; |    crunched statement.
+0209                                                   ; |
+0210                                                   ; | o  @tib.var6 = Position (addr) in
+0211                                                   ; /    uncrunch area.
 0212               
-0213 677C 110C  14         jlt   tib.uncrnch.prg.statement.loop.panic
-0214                                                   ; Assert
-0215                       ;------------------------------------------------------
-0216                       ; 4a. Non-token without decode
-0217                       ;------------------------------------------------------
-0218               tib.uncrunch.prg.statement.loop.nontoken:
-0219 677E C160  34         mov   @tib.var6,tmp1        ; Get position (addr) in uncrunch area
-     6780 A0F6     
-0220 6782 DD74  42         movb  *tmp0+,*tmp1+         ; Copy non-token to uncrunch area
+0213 6772 C120  34         mov   @outparm1,tmp0        ; Forward in crunched statement
+     6774 A016     
+0214               
+0215 6776 61A0  34         s     @outparm2,tmp2        ; Update statement length
+     6778 A018     
+0216 677A 15EF  14         jgt   tib.uncrunch.prg.statement.loop
+0217                                                   ; Process next token(s) unless done
+0218               
+0219 677C 1311  14         jeq   tib.uncrnch.prg.copy.statement
+0220                                                   ; Continue with (5)
 0221               
-0222 6784 C805  38         mov   tmp1,@tib.var6        ; Save position in uncrunch area
-     6786 A0F6     
-0223 6788 B820  54         ab    @w$0100,@fb.uncrunch.area
-     678A 2012     
-     678C D960     
-0224                                                   ; Increase length-byte in uncrunch area
-0225               
-0226 678E 0606  14         dec   tmp2                  ; update statement length
-0227 6790 1102  14         jlt   tib.uncrnch.prg.statement.loop.panic
-0228                                                   ; Assert
-0229               
-0230 6792 15E2  14         jgt   tib.uncrunch.prg.statement.loop
-0231                                                   ; Process next token(s) unless done
-0232 6794 1304  14         jeq   tib.uncrnch.prg.copy.statement
-0233                       ;------------------------------------------------------
-0234                       ; CPU crash
-0235                       ;------------------------------------------------------
-0236               tib.uncrnch.prg.statement.loop.panic:
-0237 6796 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     6798 FFCE     
-0238 679A 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     679C 2026     
-0239                       ;------------------------------------------------------
-0240                       ; 5. Copy uncrunched statement to editor buffer
-0241                       ;------------------------------------------------------
-0242               tib.uncrnch.prg.copy.statement:
-0243 679E C807  38         mov   tmp3,@parm1           ; Get editor buffer line number to store
-     67A0 A006     
-0244                                                   ; statement in.
-0245               
-0246 67A2 06A0  32         bl    @tib.uncrunch.line.pack
-     67A4 695C     
-0247                                                   ; Pack uncrunched line to editor buffer
-0248                                                   ; \ i  @fb.uncrunch.area = Pointer to
-0249                                                   ; |    buffer having uncrushed statement
-0250                                                   ; |
-0251                                                   ; | i  @parm1 = Line number in editor buffer
-0252                                                   ; /
-0253                       ;------------------------------------------------------
-0254                       ; 6. Next entry in line number table
-0255                       ;------------------------------------------------------
-0256 67A6 0608  14         dec   tmp4                  ; Last line processed?
-0257 67A8 130C  14         jeq   tib.uncrunch.prg.exit ; yes, exit
-0258               
-0259 67AA C120  34         mov   @tib.var7,tmp0        ; Restore position in line number table
-     67AC A0F8     
-0260 67AE 0224  22         ai    tmp0,-7               ; Next entry
-     67B0 FFF9     
-0261               
-0262                       ; Need to deal with split line-number-table entries.
-0263                       ; Need something like an underflow memory area where a split LNT entry
-0264                       ; is copied to. This area needs to be checked and filled accordingly.
-0265                       ;
-0266                       ;     if tmp0 < f000 then
-0267                       ;          copy split LNT entry to underflow RAM area.
-0268                       ;          tmp0 = underflow RAM Area
-0269                       ;          process next entry
-0270                       ;          set tmp0 back to regular LNT
-0271                       ;
-0272                       ; Can also happen for the 1st entry in LNT. So move check to subroutine
-0273                       ; for reuse,
-0274               
-0275 67B2 0587  14         inc   tmp3                  ; Next line
-0276 67B4 05A0  34         inc   @edb.lines            ; Update Line counter
-     67B6 A504     
-0277               
-0278 67B8 108F  14         jmp   tib.uncrunch.prg.lnt.loop
-0279                       ;------------------------------------------------------
-0280                       ; 7. Finished processing program
-0281                       ;------------------------------------------------------
-0282               tib.uncrunch.prg.done:
-0283 67BA 0720  34         seto  @fb.dirty             ; Refresh screen buffer
-     67BC A316     
-0284 67BE 0720  34         seto  @edb.dirty            ; Update screen with editor buffer when done
-     67C0 A506     
-0285                       ;------------------------------------------------------
-0286                       ; Exit
+0222 677E 110C  14         jlt   tib.uncrnch.prg.statement.loop.panic
+0223                                                   ; Assert
+0224                       ;------------------------------------------------------
+0225                       ; 4a. Non-token without decode
+0226                       ;------------------------------------------------------
+0227               tib.uncrunch.prg.statement.loop.nontoken:
+0228 6780 C160  34         mov   @tib.var6,tmp1        ; Get position (addr) in uncrunch area
+     6782 A0F6     
+0229 6784 DD74  42         movb  *tmp0+,*tmp1+         ; Copy non-token to uncrunch area
+0230               
+0231 6786 C805  38         mov   tmp1,@tib.var6        ; Save position in uncrunch area
+     6788 A0F6     
+0232 678A B820  54         ab    @w$0100,@fb.uncrunch.area
+     678C 2012     
+     678E D960     
+0233                                                   ; Increase length-byte in uncrunch area
+0234               
+0235 6790 0606  14         dec   tmp2                  ; update statement length
+0236 6792 1102  14         jlt   tib.uncrnch.prg.statement.loop.panic
+0237                                                   ; Assert
+0238               
+0239 6794 15E2  14         jgt   tib.uncrunch.prg.statement.loop
+0240                                                   ; Process next token(s) unless done
+0241 6796 1304  14         jeq   tib.uncrnch.prg.copy.statement
+0242                       ;------------------------------------------------------
+0243                       ; CPU crash
+0244                       ;------------------------------------------------------
+0245               tib.uncrnch.prg.statement.loop.panic:
+0246 6798 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     679A FFCE     
+0247 679C 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     679E 2026     
+0248                       ;------------------------------------------------------
+0249                       ; 5. Copy uncrunched statement to editor buffer
+0250                       ;------------------------------------------------------
+0251               tib.uncrnch.prg.copy.statement:
+0252 67A0 C820  54         mov   @tib.var9,@parm1      ; Get editor buffer line number to store
+     67A2 A0FC     
+     67A4 A006     
+0253                                                   ; statement in.
+0254               
+0255 67A6 06A0  32         bl    @tib.uncrunch.line.pack
+     67A8 6974     
+0256                                                   ; Pack uncrunched line to editor buffer
+0257                                                   ; \ i  @fb.uncrunch.area = Pointer to
+0258                                                   ; |    buffer having uncrushed statement
+0259                                                   ; |
+0260                                                   ; | i  @parm1 = Line number in editor buffer
+0261                                                   ; /
+0262               
+0263 67AA 05A0  34         inc   @tib.var9             ; Next line
+     67AC A0FC     
+0264 67AE 05A0  34         inc   @edb.lines            ; Update Line counter
+     67B0 A504     
+0265                       ;------------------------------------------------------
+0266                       ; 6. Next entry in line number table
+0267                       ;------------------------------------------------------
+0268 67B2 0607  14         dec   tmp3                  ; Last line processed?
+0269 67B4 1304  14         jeq   tib.uncrunch.prg.done ; yes, prepare for exit
+0270               
+0271 67B6 6820  54         s     @w$0008,@tib.var2     ; Next entry in VRAM line number table
+     67B8 2008     
+     67BA A0EE     
+0272               
+0273                       ; Need to deal with split line-number-table entries.
+0274                       ; Need something like an underflow memory area where a split LNT entry
+0275                       ; is copied to. This area needs to be checked and filled accordingly.
+0276                       ;
+0277                       ;     if tmp0 < f000 then
+0278                       ;          copy split LNT entry to underflow RAM area.
+0279                       ;          tmp0 = underflow RAM Area
+0280                       ;          process next entry
+0281                       ;          set tmp0 back to regular LNT
+0282                       ;
+0283                       ; Can also happen for the 1st entry in LNT. So move check to subroutine
+0284                       ; for reuse,
+0285               
+0286 67BC 1088  14         jmp   tib.uncrunch.prg.lnt.loop
 0287                       ;------------------------------------------------------
-0288               tib.uncrunch.prg.exit:
-0289 67C2 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0290 67C4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0291 67C6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0292 67C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0293 67CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0294 67CC C2F9  30         mov   *stack+,r11           ; Pop r11
-0295 67CE 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+0288                       ; 7. Finished processing program
+0289                       ;------------------------------------------------------
+0290               tib.uncrunch.prg.done:
+0291 67BE 0720  34         seto  @fb.dirty             ; Refresh screen buffer
+     67C0 A316     
+0292 67C2 0720  34         seto  @edb.dirty            ; Update screen with editor buffer when done
+     67C4 A506     
+0293                       ;------------------------------------------------------
+0294                       ; Exit
+0295                       ;------------------------------------------------------
+0296               tib.uncrunch.prg.exit:
+0297 67C6 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0298 67C8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0299 67CA C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0300 67CC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0301 67CE C2F9  30         mov   *stack+,r11           ; Pop r11
+0302 67D0 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.47183
 0074                       copy  "tib.uncrunch.token.asm"   ; Decode statement token
      **** ****     > tib.uncrunch.token.asm
 0001               * FILE......: tib.uncrunch.token.asm
@@ -11026,340 +11035,353 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010               *--------------------------------------------------------------
 0011               * INPUT
 0012               * @parm1 = Token to process
-0013               * @parm2 = Position (addr) in crunched statement
+0013               * @parm2 = Mapped position (addr) in crunched statement
 0014               *
 0015               * OUTPUT
 0016               * @outparm1  = New position (addr) in crunched statement
 0017               * @outparm2  = Input bytes processed in crunched statement
 0018               * @tib.var6  = Current position (addr) in uncrunch area
-0019               * @tib.var10 = Output bytes generated in uncrunch area
-0020               *--------------------------------------------------------------
-0021               * Register usage
-0022               * tmp0, tmp1, tmp2, tmp3, tmp4
-0023               *--------------------------------------------------------------
-0024               * Remarks
-0025               * For TI Basic statement decode see:
-0026               * https://www.unige.ch/medecine/nouspikel/ti99/basic.htm#statements
-0027               *
-0028               * Using @outparm2 for storing the number of input bytes
-0029               * processed in crunched statement
-0030               *
-0031               * Using @tib.var10 for storing the number of decoded output bytes
-0032               * generated in uncrunch area.
-0033               *
-0034               * Variables
-0035               * @tib.var1  = TI Basic Session
-0036               * @tib.var2  = Address of SAMS page layout table entry mapped to VRAM address
-0037               * @tib.var3  = SAMS page ID mapped to VRAM address
-0038               * @tib.var4  = Line number
-0039               * @tib.var5  = Pointer to statement (VRAM)
-0040               * @tib.var6  = Current position (addr) in uncrunch area
-0041               * @tib.var7  = Current position (addr) in line number table
-0042               * @tib.var8  = Statement length in bytes
-0043               * @tib.var9  = Temporary use
-0044               * @tib.var10 = Temporary use
-0045               * @tib.lines = Number of lines in TI Basic program
-0046               ********|*****|*********************|**************************
-0047               tib.uncrunch.token:
-0048 67D0 0649  14         dect  stack
-0049 67D2 C64B  30         mov   r11,*stack            ; Save return address
-0050 67D4 0649  14         dect  stack
-0051 67D6 C644  30         mov   tmp0,*stack           ; Push tmp0
-0052 67D8 0649  14         dect  stack
-0053 67DA C645  30         mov   tmp1,*stack           ; Push tmp1
-0054 67DC 0649  14         dect  stack
-0055 67DE C646  30         mov   tmp2,*stack           ; Push tmp2
-0056 67E0 0649  14         dect  stack
-0057 67E2 C647  30         mov   tmp3,*stack           ; Push tmp3
-0058 67E4 0649  14         dect  stack
-0059 67E6 C648  30         mov   tmp4,*stack           ; Push tmp4
-0060                       ;------------------------------------------------------
-0061                       ; Initialisation
-0062                       ;------------------------------------------------------
-0063 67E8 C120  34         mov   @parm1,tmp0           ; Get token
-     67EA A006     
-0064 67EC C820  54         mov   @parm2,@outparm1      ; Position (addr) in crunched statement
-     67EE A008     
-     67F0 A016     
-0065               
-0066 67F2 04E0  34         clr   @outparm2             ; Set input bytes processed
-     67F4 A018     
-0067 67F6 04E0  34         clr   @tib.var10            ; Set output bytes generated (uncrunch area)
-     67F8 A0FE     
-0068                       ;------------------------------------------------------
-0069                       ; 1. Decide how to process token
-0070                       ;------------------------------------------------------
-0071 67FA 0284  22         ci    tmp0,>c7              ; Quoted string?
-     67FC 00C7     
-0072 67FE 132A  14         jeq   tib.uncrunch.token.quoted
-0073               
-0074 6800 0284  22         ci    tmp0,>c8              ; Unquoted string?
-     6802 00C8     
-0075 6804 134D  14         jeq   tib.uncrunch.token.unquoted
-0076               
-0077 6806 0284  22         ci    tmp0,>c9              ; line number?
-     6808 00C9     
-0078 680A 1369  14         jeq   tib.uncrunch.token.linenum
-0079                       ;------------------------------------------------------
-0080                       ; 2. Decode token range >80 - >ff in lookup table
-0081                       ;------------------------------------------------------
-0082               tib.uncrunch.token.lookup:
-0083 680C 0224  22         ai    tmp0,->0080           ; Token range >80 - >ff
-     680E FF80     
-0084 6810 0A14  56         sla   tmp0,1                ; Make it a word offset
-0085 6812 C124  34         mov   @tib.tokenindex(tmp0),tmp0
-     6814 6D4C     
-0086                                                   ; Get pointer to token definition
-0087 6816 0584  14         inc   tmp0                  ; Skip token identifier
-0088               
-0089 6818 D1B4  28         movb  *tmp0+,tmp2           ; Get length of decoded keyword
-0090 681A 0986  56         srl   tmp2,8                ; MSB to LSB
-0091               
-0092 681C C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     681E A0F6     
-0093 6820 A806  38         a     tmp2,@tib.var6        ; Set current pos (addr) in uncrunch area
-     6822 A0F6     
-0094               
-0095 6824 05A0  34         inc   @outparm2             ; Set input bytes processed
-     6826 A018     
-0096 6828 C806  38         mov   tmp2,@tib.var10       ; Set output bytes generated (uncrunch area)
-     682A A0FE     
+0019               *--------------------------------------------------------------
+0020               * Register usage
+0021               * tmp0, tmp1, tmp2, tmp3, tmp4
+0022               *--------------------------------------------------------------
+0023               * Remarks
+0024               * For TI Basic statement decode see:
+0025               * https://www.unige.ch/medecine/nouspikel/ti99/basic.htm#statements
+0026               *
+0027               * Using @outparm2 for storing the number of input bytes
+0028               * processed in crunched statement
+0029               *
+0030               * Using @tib.var10 for storing the number of decoded output bytes
+0031               * generated in uncrunch area.
+0032               *
+0033               * Variables
+0034               * @tib.var6  = Current position (addr) in uncrunch area
+0035               * @tib.var9  = Temporary use
+0036               * @tib.var10 = Temporary use
+0037               ********|*****|*********************|**************************
+0038               tib.uncrunch.token:
+0039 67D2 0649  14         dect  stack
+0040 67D4 C64B  30         mov   r11,*stack            ; Save return address
+0041 67D6 0649  14         dect  stack
+0042 67D8 C644  30         mov   tmp0,*stack           ; Push tmp0
+0043 67DA 0649  14         dect  stack
+0044 67DC C645  30         mov   tmp1,*stack           ; Push tmp1
+0045 67DE 0649  14         dect  stack
+0046 67E0 C646  30         mov   tmp2,*stack           ; Push tmp2
+0047 67E2 0649  14         dect  stack
+0048 67E4 C647  30         mov   tmp3,*stack           ; Push tmp3
+0049 67E6 0649  14         dect  stack
+0050 67E8 C648  30         mov   tmp4,*stack           ; Push tmp4
+0051 67EA 0649  14         dect  stack
+0052 67EC C660  46         mov   @tib.var9,*stack      ; Push @tib.var.9
+     67EE A0FC     
+0053 67F0 0649  14         dect  stack
+0054 67F2 C660  46         mov   @tib.var10,*stack     ; Push @tib.var.10
+     67F4 A0FE     
+0055                       ;------------------------------------------------------
+0056                       ; Initialisation
+0057                       ;------------------------------------------------------
+0058 67F6 C120  34         mov   @parm1,tmp0           ; Get token
+     67F8 A006     
+0059 67FA C820  54         mov   @parm2,@outparm1      ; Position (addr) in crunched statement
+     67FC A008     
+     67FE A016     
+0060               
+0061 6800 04E0  34         clr   @outparm2             ; Set input bytes processed
+     6802 A018     
+0062 6804 04E0  34         clr   @tib.var10            ; Set output bytes generated (uncrunch area)
+     6806 A0FE     
+0063                       ;------------------------------------------------------
+0064                       ; 1. Decide how to process token
+0065                       ;------------------------------------------------------
+0066 6808 0284  22         ci    tmp0,>c7              ; Quoted string?
+     680A 00C7     
+0067 680C 132A  14         jeq   tib.uncrunch.token.quoted
+0068               
+0069 680E 0284  22         ci    tmp0,>c8              ; Unquoted string?
+     6810 00C8     
+0070 6812 134D  14         jeq   tib.uncrunch.token.unquoted
+0071               
+0072 6814 0284  22         ci    tmp0,>c9              ; line number?
+     6816 00C9     
+0073 6818 136A  14         jeq   tib.uncrunch.token.linenum
+0074                       ;------------------------------------------------------
+0075                       ; 2. Decode token range >80 - >ff in lookup table
+0076                       ;------------------------------------------------------
+0077               tib.uncrunch.token.lookup:
+0078 681A 0224  22         ai    tmp0,->0080           ; Token range >80 - >ff
+     681C FF80     
+0079 681E 0A14  56         sla   tmp0,1                ; Make it a word offset
+0080 6820 C124  34         mov   @tib.tokenindex(tmp0),tmp0
+     6822 6D6A     
+0081                                                   ; Get pointer to token definition
+0082 6824 0584  14         inc   tmp0                  ; Skip token identifier
+0083               
+0084 6826 D1B4  28         movb  *tmp0+,tmp2           ; Get length of decoded keyword
+0085 6828 0986  56         srl   tmp2,8                ; MSB to LSB
+0086               
+0087 682A C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+     682C A0F6     
+0088 682E A806  38         a     tmp2,@tib.var6        ; Set current pos (addr) in uncrunch area
+     6830 A0F6     
+0089               
+0090 6832 05A0  34         inc   @outparm2             ; Set input bytes processed
+     6834 A018     
+0091 6836 C806  38         mov   tmp2,@tib.var10       ; Set output bytes generated (uncrunch area)
+     6838 A0FE     
+0092               
+0093 683A 06A0  32         bl    @xpym2m               ; Copy keyword to uncrunch area
+     683C 24F4     
+0094                                                   ; \ i  tmp0 = Source address
+0095                                                   ; | i  tmp1 = Destination address
+0096                                                   ; / i  tmp2 = Number of bytes to copy
 0097               
-0098 682C 06A0  32         bl    @xpym2m               ; Copy keyword to uncrunch area
-     682E 24F4     
-0099                                                   ; \ i  tmp0 = Source address
-0100                                                   ; | i  tmp1 = Destination address
-0101                                                   ; / i  tmp2 = Number of bytes to copy
-0102               
-0103 6830 C120  34         mov   @parm1,tmp0           ; Get token again
-     6832 A006     
-0104 6834 0284  22         ci    tmp0,>b2              ; Token range with keyword needing blank?
-     6836 00B2     
-0105 6838 1509  14         jgt   !                     ; No, as of >b3 skip to (2b)
-0106                       ;------------------------------------------------------
-0107                       ; 2a. Write trailing blank after decoded keyword
-0108                       ;------------------------------------------------------
-0109 683A 0204  20         li    tmp0,>2000            ; Blank in MSB
-     683C 2000     
-0110 683E C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     6840 A0F6     
-0111 6842 D554  38         movb  *tmp0,*tmp1           ; Write trailing blank
-0112 6844 05A0  34         inc   @tib.var6             ; Set current pos (addr) in uncrunch area
-     6846 A0F6     
-0113 6848 05A0  34         inc   @tib.var10            ; Set output bytes generated (uncrunch area)
-     684A A0FE     
+0098 683E C120  34         mov   @parm1,tmp0           ; Get token again
+     6840 A006     
+0099 6842 0284  22         ci    tmp0,>b2              ; Token range with keyword needing blank?
+     6844 00B2     
+0100 6846 1509  14         jgt   !                     ; No, as of >b3 skip to (2b)
+0101                       ;------------------------------------------------------
+0102                       ; 2a. Write trailing blank after decoded keyword
+0103                       ;------------------------------------------------------
+0104 6848 0204  20         li    tmp0,>2000            ; Blank in MSB
+     684A 2000     
+0105 684C C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+     684E A0F6     
+0106 6850 D554  38         movb  *tmp0,*tmp1           ; Write trailing blank
+0107 6852 05A0  34         inc   @tib.var6             ; Set current pos (addr) in uncrunch area
+     6854 A0F6     
+0108 6856 05A0  34         inc   @tib.var10            ; Set output bytes generated (uncrunch area)
+     6858 A0FE     
+0109                       ;------------------------------------------------------
+0110                       ; 2b. Update variables related to crunched statement
+0111                       ;------------------------------------------------------
+0112 685A 05A0  34 !       inc   @outparm1             ; New pos (addr) in crunched statement
+     685C A016     
+0113 685E 0460  28         b     @tib.uncrunch.token.setlen
+     6860 6954     
 0114                       ;------------------------------------------------------
-0115                       ; 2b. Update variables related to crunched statement
+0115                       ; 3. Special handling >c7: Decode quoted string
 0116                       ;------------------------------------------------------
-0117 684C 05A0  34 !       inc   @outparm1             ; New pos (addr) in crunched statement
-     684E A016     
-0118 6850 0460  28         b     @tib.uncrunch.token.setlen
-     6852 6944     
-0119                       ;------------------------------------------------------
-0120                       ; 3. Special handling >c7:  Decode quoted string
-0121                       ;------------------------------------------------------
-0122               tib.uncrunch.token.quoted:
-0123 6854 0204  20         li    tmp0,>2200            ; ASCII " in LSB
-     6856 2200     
-0124 6858 C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     685A A0F6     
-0125 685C DD44  32         movb  tmp0,*tmp1+           ; Write 1st double quote
-0126               
-0127 685E C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
-     6860 A008     
-0128 6862 0584  14         inc   tmp0                  ; Skip token
-0129 6864 D1B4  28         movb  *tmp0+,tmp2           ; Get length byte following >C7 token
-0130 6866 0986  56         srl   tmp2,8                ; MSB to LSB
-0131               
-0132 6868 0649  14         dect  stack
-0133 686A C644  30         mov   tmp0,*stack           ; Push tmp0
-0134 686C 0649  14         dect  stack
-0135 686E C645  30         mov   tmp1,*stack           ; Push tmp1
-0136 6870 0649  14         dect  stack
-0137 6872 C646  30         mov   tmp2,*stack           ; Push tmp2
-0138               
-0139 6874 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
-     6876 24F4     
-0140                                                   ; uncrunch area.
-0141                                                   ; \ i  tmp0 = Source address
-0142                                                   ; | i  tmp1 = Destination address
-0143                                                   ; / i  tmp2 = Number of bytes to copy
-0144               
-0145 6878 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0146 687A C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0147 687C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0148               
-0149 687E 0204  20         li    tmp0,>2200            ; " in MSB
-     6880 2200     
-0150 6882 A146  18         a     tmp2,tmp1             ; Forward in uncrunch area
-0151 6884 DD44  32         movb  tmp0,*tmp1+           ; Write 2nd double quote
-0152 6886 C805  38         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
-     6888 A0F6     
-0153                       ;------------------------------------------------------
-0154                       ; 3a. Update variables related to crunched statement
+0117               tib.uncrunch.token.quoted:
+0118 6862 0204  20         li    tmp0,>2200            ; ASCII " in LSB
+     6864 2200     
+0119 6866 C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+     6868 A0F6     
+0120 686A DD44  32         movb  tmp0,*tmp1+           ; Write 1st double quote
+0121               
+0122 686C C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
+     686E A008     
+0123 6870 0584  14         inc   tmp0                  ; Skip token
+0124 6872 D1B4  28         movb  *tmp0+,tmp2           ; Get length byte following >C7 token
+0125 6874 0986  56         srl   tmp2,8                ; MSB to LSB
+0126 6876 130B  14         jeq   tib.uncrunch.token.quoted.quote2
+0127                                                   ; Skip to (3c) if empty string
+0128                       ;------------------------------------------------------
+0129                       ; 3b. Copy string to uncrunch area
+0130                       ;------------------------------------------------------
+0131 6878 0649  14         dect  stack
+0132 687A C644  30         mov   tmp0,*stack           ; Push tmp0
+0133 687C 0649  14         dect  stack
+0134 687E C645  30         mov   tmp1,*stack           ; Push tmp1
+0135 6880 0649  14         dect  stack
+0136 6882 C646  30         mov   tmp2,*stack           ; Push tmp2
+0137               
+0138 6884 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
+     6886 24F4     
+0139                                                   ; uncrunch area.
+0140                                                   ; \ i  tmp0 = Source address
+0141                                                   ; | i  tmp1 = Destination address
+0142                                                   ; / i  tmp2 = Number of bytes to copy
+0143               
+0144 6888 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0145 688A C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0146 688C C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0147                       ;------------------------------------------------------
+0148                       ; 3c. Write trailing double quote
+0149                       ;------------------------------------------------------
+0150               tib.uncrunch.token.quoted.quote2:
+0151 688E 0204  20         li    tmp0,>2200            ; " in MSB
+     6890 2200     
+0152 6892 A146  18         a     tmp2,tmp1             ; Forward in uncrunch area
+0153 6894 DD44  32         movb  tmp0,*tmp1+           ; Write 2nd double quote
+0154 6896 C805  38         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
+     6898 A0F6     
 0155                       ;------------------------------------------------------
-0156 688A C106  18         mov   tmp2,tmp0             ; \ Amount of bytes copied to uncrunch area
-0157 688C 05C4  14         inct  tmp0                  ; / Include token and length byte
-0158 688E C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
-     6890 A018     
-0159 6892 A820  54         a     @outparm2,@outparm1   ; New position (addr) in crunched statement
-     6894 A018     
-     6896 A016     
-0160               
-0161 6898 05C4  14         inct  tmp0                  ; Include surrounding double quotes
-0162 689A C804  38         mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
-     689C A0FE     
-0163               
-0164 689E 1052  14         jmp   tib.uncrunch.token.setlen
-0165                       ;------------------------------------------------------
-0166                       ; 4. Special handling >c8: Decode unquoted string
-0167                       ;------------------------------------------------------
-0168               tib.uncrunch.token.unquoted:
-0169 68A0 C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     68A2 A0F6     
-0170 68A4 C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
-     68A6 A008     
-0171 68A8 0584  14         inc   tmp0                  ; Skip token
-0172 68AA D1B4  28         movb  *tmp0+,tmp2           ; Get length byte following >C8 token
-0173 68AC 0986  56         srl   tmp2,8                ; MSB to LSB
-0174               
-0175 68AE 0649  14         dect  stack
-0176 68B0 C644  30         mov   tmp0,*stack           ; Push tmp0
-0177 68B2 0649  14         dect  stack
-0178 68B4 C645  30         mov   tmp1,*stack           ; Push tmp1
-0179 68B6 0649  14         dect  stack
-0180 68B8 C646  30         mov   tmp2,*stack           ; Push tmp2
-0181               
-0182 68BA 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
-     68BC 24F4     
-0183                                                   ; uncrunch area.
-0184                                                   ; \ i  tmp0 = Source address
-0185                                                   ; | i  tmp1 = Destination address
-0186                                                   ; / i  tmp2 = Number of bytes to copy
-0187               
-0188 68BE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0189 68C0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0190 68C2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0156                       ; 3d. Update variables related to crunched statement
+0157                       ;------------------------------------------------------
+0158 689A C106  18         mov   tmp2,tmp0             ; \ Get num of bytes copied to uncrunch area
+0159 689C 05C4  14         inct  tmp0                  ; / Count token byte and length byte
+0160 689E C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
+     68A0 A018     
+0161               
+0162 68A2 C804  38         mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
+     68A4 A0FE     
+0163                                                   ; Same number as input bytes processed,
+0164                                                   ; because quotes match token & length byte.
+0165               
+0166 68A6 A820  54         a     @outparm2,@outparm1   ; New position (addr) in crunched statement
+     68A8 A018     
+     68AA A016     
+0167               
+0168 68AC 1053  14         jmp   tib.uncrunch.token.setlen
+0169                       ;------------------------------------------------------
+0170                       ; 4. Special handling >c8: Decode unquoted string
+0171                       ;------------------------------------------------------
+0172               tib.uncrunch.token.unquoted:
+0173 68AE C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+     68B0 A0F6     
+0174 68B2 C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
+     68B4 A008     
+0175 68B6 0584  14         inc   tmp0                  ; Skip token
+0176 68B8 D1B4  28         movb  *tmp0+,tmp2           ; Get length byte following >C8 token
+0177 68BA 0986  56         srl   tmp2,8                ; MSB to LSB
+0178               
+0179 68BC 0649  14         dect  stack
+0180 68BE C644  30         mov   tmp0,*stack           ; Push tmp0
+0181 68C0 0649  14         dect  stack
+0182 68C2 C645  30         mov   tmp1,*stack           ; Push tmp1
+0183 68C4 0649  14         dect  stack
+0184 68C6 C646  30         mov   tmp2,*stack           ; Push tmp2
+0185               
+0186 68C8 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
+     68CA 24F4     
+0187                                                   ; uncrunch area.
+0188                                                   ; \ i  tmp0 = Source address
+0189                                                   ; | i  tmp1 = Destination address
+0190                                                   ; / i  tmp2 = Number of bytes to copy
 0191               
-0192 68C4 A146  18         a     tmp2,tmp1             ; Forward in uncrunch area
-0193 68C6 C805  38         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
-     68C8 A0F6     
-0194                       ;------------------------------------------------------
-0195                       ; 4a. Update variables related to crunched statement
-0196                       ;------------------------------------------------------
-0197 68CA C106  18         mov   tmp2,tmp0             ; \ Amount of bytes copied to uncrunch area
-0198 68CC 05C4  14         inct  tmp0                  ; / Include token and length byte
-0199 68CE C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
-     68D0 A018     
-0200 68D2 A820  54         a     @outparm2,@outparm1   ; New position (addr) in crunched statement
-     68D4 A018     
-     68D6 A016     
-0201               
-0202 68D8 C804  38         mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
-     68DA A0FE     
-0203 68DC 1033  14         jmp   tib.uncrunch.token.setlen
-0204                       ;------------------------------------------------------
-0205                       ; 5. Special handling >c9: Decode line number
-0206                       ;------------------------------------------------------
-0207               tib.uncrunch.token.linenum:
-0208 68DE C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
-     68E0 A008     
-0209 68E2 0584  14         inc   tmp0                  ; Skip token
-0210 68E4 C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     68E6 A0F6     
-0211               
-0212 68E8 D174  28         movb  *tmp0+,tmp1           ; Get MSB of line number into MSB
-0213 68EA 0985  56         srl   tmp1,8                ; MSB to LSB
-0214 68EC D174  28         movb  *tmp0+,tmp1           ; Get LSB of line number into MSB
-0215 68EE 06C5  14         swpb  tmp1                  ; Put it in the right order
-0216 68F0 C805  38         mov   tmp1,@tib.var9        ; Put line number word in temporary variable
-     68F2 A0FC     
-0217                       ;------------------------------------------------------
-0218                       ; 5a. Convert line number (word) to string
-0219                       ;------------------------------------------------------
-0220               
-0221                       ; mknum destroys tmp0-tmp4
-0222                       ; That's why we push/pop up to tmp4 although tmp3-tmp4 not used here.
-0223               
-0224 68F4 06A0  32         bl    @mknum                ; Convert unsigned number to string
-     68F6 29BA     
-0225 68F8 A0FC                   data  tib.var9        ; \ i  p1    = Source
-0226 68FA A100                   data  rambuf          ; | i  p2    = Destination
-0227 68FC 30                     byte  48              ; | i  p3MSB = ASCII offset
-0228 68FD   20                   byte  32              ; / i  p3LSB = Padding character
-0229               
-0230 68FE 06A0  32         bl    @trimnum              ; Trim number, remove leading spaces
-     6900 2A12     
-0231 6902 A100                   data  rambuf          ; \ i  p1 = Source
-0232 6904 A105                   data  rambuf+5        ; | i  p2 = Destination
-0233 6906 0020                   data  32              ; / i  p3 = Padding character to look for
-0234                       ;------------------------------------------------------
-0235                       ; 5b. Copy decoded line number to uncrunch area
-0236                       ;------------------------------------------------------
-0237 6908 0204  20         li    tmp0,rambuf+6         ; Start of line number string
-     690A A106     
-0238 690C C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
-     690E A0F6     
-0239               
-0240 6910 D1A0  34         movb  @rambuf+5,tmp2        ; Get string length
-     6912 A105     
-0241 6914 0986  56         srl   tmp2,8                ; MSB to LSB
-0242               
-0243 6916 C806  38         mov   tmp2,@tib.var10       ; Set output bytes generated
-     6918 A0FE     
-0244 691A A820  54         a     @tib.var10,@tib.var6  ; Set current pos (addr) in uncrunch area
-     691C A0FE     
+0192 68CC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0193 68CE C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0194 68D0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0195               
+0196 68D2 A146  18         a     tmp2,tmp1             ; Forward in uncrunch area
+0197 68D4 C805  38         mov   tmp1,@tib.var6        ; Set current pos (addr) in uncrunch area
+     68D6 A0F6     
+0198                       ;------------------------------------------------------
+0199                       ; 4a. Update variables related to crunched statement
+0200                       ;------------------------------------------------------
+0201 68D8 C106  18         mov   tmp2,tmp0             ; \ Amount of bytes copied to uncrunch area
+0202 68DA 05C4  14         inct  tmp0                  ; / Count token byte and length byte
+0203 68DC C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
+     68DE A018     
+0204               
+0205 68E0 0644  14         dect  tmp0                  ; Don't count token byte and length byte
+0206 68E2 C804  38         mov   tmp0,@tib.var10       ; Set output bytes generated (uncrunch area)
+     68E4 A0FE     
+0207               
+0208 68E6 A820  54         a     @outparm2,@outparm1   ; New position (addr) in crunched statement
+     68E8 A018     
+     68EA A016     
+0209               
+0210 68EC 1033  14         jmp   tib.uncrunch.token.setlen
+0211                       ;------------------------------------------------------
+0212                       ; 5. Special handling >c9: Decode line number
+0213                       ;------------------------------------------------------
+0214               tib.uncrunch.token.linenum:
+0215 68EE C120  34         mov   @parm2,tmp0           ; Get position (addr) in crunched statement
+     68F0 A008     
+0216 68F2 0584  14         inc   tmp0                  ; Skip token
+0217 68F4 C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
+     68F6 A0F6     
+0218               
+0219 68F8 D174  28         movb  *tmp0+,tmp1           ; Get MSB of line number into MSB
+0220 68FA 0985  56         srl   tmp1,8                ; MSB to LSB
+0221 68FC D174  28         movb  *tmp0+,tmp1           ; Get LSB of line number into MSB
+0222 68FE 06C5  14         swpb  tmp1                  ; Put it in the right order
+0223 6900 C805  38         mov   tmp1,@tib.var9        ; Put line number word in temporary variable
+     6902 A0FC     
+0224                       ;------------------------------------------------------
+0225                       ; 5a. Convert line number (word) to string
+0226                       ;------------------------------------------------------
+0227               
+0228                       ; mknum destroys tmp0-tmp4
+0229                       ; That's why we push/pop up to tmp4 although tmp3-tmp4 not used here.
+0230               
+0231 6904 06A0  32         bl    @mknum                ; Convert unsigned number to string
+     6906 29BA     
+0232 6908 A0FC                   data  tib.var9        ; \ i  p1    = Source
+0233 690A A100                   data  rambuf          ; | i  p2    = Destination
+0234 690C 30                     byte  48              ; | i  p3MSB = ASCII offset
+0235 690D   20                   byte  32              ; / i  p3LSB = Padding character
+0236               
+0237 690E 06A0  32         bl    @trimnum              ; Trim number, remove leading spaces
+     6910 2A12     
+0238 6912 A100                   data  rambuf          ; \ i  p1 = Source
+0239 6914 A105                   data  rambuf+5        ; | i  p2 = Destination
+0240 6916 0020                   data  32              ; / i  p3 = Padding character to look for
+0241                       ;------------------------------------------------------
+0242                       ; 5b. Copy decoded line number to uncrunch area
+0243                       ;------------------------------------------------------
+0244 6918 0204  20         li    tmp0,rambuf+6         ; Start of line number string
+     691A A106     
+0245 691C C160  34         mov   @tib.var6,tmp1        ; Get current pos (addr) in uncrunch area
      691E A0F6     
-0245               
-0246 6920 0649  14         dect  stack
-0247 6922 C644  30         mov   tmp0,*stack           ; Push tmp0
-0248 6924 0649  14         dect  stack
-0249 6926 C645  30         mov   tmp1,*stack           ; Push tmp1
-0250 6928 0649  14         dect  stack
-0251 692A C646  30         mov   tmp2,*stack           ; Push tmp2
+0246               
+0247 6920 D1A0  34         movb  @rambuf+5,tmp2        ; Get string length
+     6922 A105     
+0248 6924 0986  56         srl   tmp2,8                ; MSB to LSB
+0249               
+0250 6926 C806  38         mov   tmp2,@tib.var10       ; Set output bytes generated
+     6928 A0FE     
+0251 692A A820  54         a     @tib.var10,@tib.var6  ; Set current pos (addr) in uncrunch area
+     692C A0FE     
+     692E A0F6     
 0252               
-0253 692C 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
-     692E 24F4     
-0254                                                   ; uncrunch area.
-0255                                                   ; \ i  tmp0 = Source address
-0256                                                   ; | i  tmp1 = Destination address
-0257                                                   ; / i  tmp2 = Number of bytes to copy
-0258               
-0259 6930 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0260 6932 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0261 6934 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0262                       ;------------------------------------------------------
-0263                       ; 5c. Update variables related to crunched statement
-0264                       ;------------------------------------------------------
-0265 6936 0204  20         li    tmp0,3                ; Token + line number word
-     6938 0003     
-0266 693A A804  38         a     tmp0,@outparm1        ; New pos (addr) in crunched statement
-     693C A016     
-0267 693E C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
-     6940 A018     
-0268 6942 1000  14         jmp   tib.uncrunch.token.setlen
+0253 6930 0649  14         dect  stack
+0254 6932 C644  30         mov   tmp0,*stack           ; Push tmp0
+0255 6934 0649  14         dect  stack
+0256 6936 C645  30         mov   tmp1,*stack           ; Push tmp1
+0257 6938 0649  14         dect  stack
+0258 693A C646  30         mov   tmp2,*stack           ; Push tmp2
+0259               
+0260 693C 06A0  32         bl    @xpym2m               ; Copy string from crunched statement to
+     693E 24F4     
+0261                                                   ; uncrunch area.
+0262                                                   ; \ i  tmp0 = Source address
+0263                                                   ; | i  tmp1 = Destination address
+0264                                                   ; / i  tmp2 = Number of bytes to copy
+0265               
+0266 6940 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0267 6942 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0268 6944 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0269                       ;------------------------------------------------------
-0270                       ; 6. Update uncrunched statement length byte
+0270                       ; 5c. Update variables related to crunched statement
 0271                       ;------------------------------------------------------
-0272               tib.uncrunch.token.setlen:
-0273 6944 C120  34         mov   @tib.var10,tmp0       ; Get output bytes generated
-     6946 A0FE     
-0274 6948 0A84  56         sla   tmp0,8                ; LSB to MSB
-0275 694A B804  38         ab    tmp0,@fb.uncrunch.area
-     694C D960     
-0276                                                   ; Update string length-prefix byte
-0277                       ;------------------------------------------------------
-0278                       ; Exit
-0279                       ;------------------------------------------------------
-0280               tib.uncrunch.token.exit:
-0281 694E C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0282 6950 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0283 6952 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0284 6954 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0285 6956 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0286 6958 C2F9  30         mov   *stack+,r11           ; Pop r11
-0287 695A 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.22665
+0272 6946 0204  20         li    tmp0,3                ; Token + line number word
+     6948 0003     
+0273 694A A804  38         a     tmp0,@outparm1        ; New pos (addr) in crunched statement
+     694C A016     
+0274 694E C804  38         mov   tmp0,@outparm2        ; Set input bytes processed
+     6950 A018     
+0275 6952 1000  14         jmp   tib.uncrunch.token.setlen
+0276                       ;------------------------------------------------------
+0277                       ; 6. Update uncrunched statement length byte
+0278                       ;------------------------------------------------------
+0279               tib.uncrunch.token.setlen:
+0280 6954 C120  34         mov   @tib.var10,tmp0       ; Get output bytes generated
+     6956 A0FE     
+0281 6958 0A84  56         sla   tmp0,8                ; LSB to MSB
+0282 695A B804  38         ab    tmp0,@fb.uncrunch.area
+     695C D960     
+0283                                                   ; Update string length-prefix byte
+0284                       ;------------------------------------------------------
+0285                       ; Exit
+0286                       ;------------------------------------------------------
+0287               tib.uncrunch.token.exit:
+0288 695E C839  50         mov   *stack+,@tib.var10    ; Pop @tib.var10
+     6960 A0FE     
+0289 6962 C839  50         mov   *stack+,@tib.var9     ; Pop @tib.var9
+     6964 A0FC     
+0290 6966 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0291 6968 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0292 696A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0293 696C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0294 696E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0295 6970 C2F9  30         mov   *stack+,r11           ; Pop r11
+0296 6972 045B  20         b     *r11                  ; Return
+                   < stevie_b7.asm.47183
 0075                       copy  "tib.uncrunch.line.pack.asm"
      **** ****     > tib.uncrunch.line.pack.asm
 0001               * FILE......: tib.uncrunch.line.pack
@@ -11384,49 +11406,49 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0020               * none
 0021               ********|*****|*********************|**************************
 0022               tib.uncrunch.line.pack:
-0023 695C 0649  14         dect  stack
-0024 695E C64B  30         mov   r11,*stack            ; Save return address
-0025 6960 0649  14         dect  stack
-0026 6962 C644  30         mov   tmp0,*stack           ; Push tmp0
-0027 6964 0649  14         dect  stack
-0028 6966 C645  30         mov   tmp1,*stack           ; Push tmp1
-0029 6968 0649  14         dect  stack
-0030 696A C646  30         mov   tmp2,*stack           ; Push tmp2
-0031 696C 0649  14         dect  stack
-0032 696E C647  30         mov   tmp3,*stack           ; Push tmp3
-0033 6970 0649  14         dect  stack
-0034 6972 C648  30         mov   tmp4,*stack           ; Push tmp4
+0023 6974 0649  14         dect  stack
+0024 6976 C64B  30         mov   r11,*stack            ; Save return address
+0025 6978 0649  14         dect  stack
+0026 697A C644  30         mov   tmp0,*stack           ; Push tmp0
+0027 697C 0649  14         dect  stack
+0028 697E C645  30         mov   tmp1,*stack           ; Push tmp1
+0029 6980 0649  14         dect  stack
+0030 6982 C646  30         mov   tmp2,*stack           ; Push tmp2
+0031 6984 0649  14         dect  stack
+0032 6986 C647  30         mov   tmp3,*stack           ; Push tmp3
+0033 6988 0649  14         dect  stack
+0034 698A C648  30         mov   tmp4,*stack           ; Push tmp4
 0035                       ;------------------------------------------------------
 0036                       ; 1. Prepare scan
 0037                       ;------------------------------------------------------
-0038 6974 0205  20         li    tmp1,fb.uncrunch.area ; Get pointer to uncrunch area
-     6976 D960     
-0039 6978 C1E0  34         mov   @parm1,tmp3           ; Editor buffer line
-     697A A006     
+0038 698C 0205  20         li    tmp1,fb.uncrunch.area ; Get pointer to uncrunch area
+     698E D960     
+0039 6990 C1E0  34         mov   @parm1,tmp3           ; Editor buffer line
+     6992 A006     
 0040               
-0041 697C D235  28         movb  *tmp1+,tmp4           ; Get length byte
-0042 697E 0988  56         srl   tmp4,8                ; MSB to LSB
+0041 6994 D235  28         movb  *tmp1+,tmp4           ; Get length byte
+0042 6996 0988  56         srl   tmp4,8                ; MSB to LSB
 0043               
-0044 6980 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
-     6982 35AC     
+0044 6998 06A0  32         bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
+     699A 35AC     
 0045                                                   ; \ i  @edb.next_free.ptr = Pointer to next
 0046                                                   ; /    free line
 0047                       ;------------------------------------------------------
 0048                       ; 2. Update index
 0049                       ;------------------------------------------------------
-0050 6984 C807  38         mov   tmp3,@parm1           ; Set editor buffer line
-     6986 A006     
-0051 6988 C820  54         mov   @edb.next_free.ptr,@parm2
-     698A A508     
-     698C A008     
+0050 699C C807  38         mov   tmp3,@parm1           ; Set editor buffer line
+     699E A006     
+0051 69A0 C820  54         mov   @edb.next_free.ptr,@parm2
+     69A2 A508     
+     69A4 A008     
 0052                                                   ; Pointer to new line
-0053 698E C820  54         mov   @edb.sams.hipage,@parm3
-     6990 A518     
-     6992 A00A     
+0053 69A6 C820  54         mov   @edb.sams.hipage,@parm3
+     69A8 A518     
+     69AA A00A     
 0054                                                   ; SAMS page to use
 0055               
-0056 6994 06A0  32         bl    @idx.entry.update     ; Update index
-     6996 334A     
+0056 69AC 06A0  32         bl    @idx.entry.update     ; Update index
+     69AE 334A     
 0057                                                   ; \ i  @parm1 = Line number in editor buffer
 0058                                                   ; | i  @parm2 = pointer to line in
 0059                                                   ; |             editor buffer
@@ -11434,39 +11456,39 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0061                       ;------------------------------------------------------
 0062                       ; 3. Set line prefix in editor buffer
 0063                       ;------------------------------------------------------
-0064 6998 0204  20         li    tmp0,fb.uncrunch.area+1
-     699A D961     
+0064 69B0 0204  20         li    tmp0,fb.uncrunch.area+1
+     69B2 D961     
 0065                                                   ; Source for memory copy
-0066 699C C160  34         mov   @edb.next_free.ptr,tmp1
-     699E A508     
+0066 69B4 C160  34         mov   @edb.next_free.ptr,tmp1
+     69B6 A508     
 0067                                                   ; Address of line in editor buffer
 0068               
-0069 69A0 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
-     69A2 A508     
+0069 69B8 05E0  34         inct  @edb.next_free.ptr    ; Adjust pointer
+     69BA A508     
 0070               
-0071 69A4 C188  18         mov   tmp4,tmp2             ; Get line length
-0072 69A6 CD46  34         mov   tmp2,*tmp1+           ; Set saved line length as line prefix
+0071 69BC C188  18         mov   tmp4,tmp2             ; Get line length
+0072 69BE CD46  34         mov   tmp2,*tmp1+           ; Set saved line length as line prefix
 0073                       ;------------------------------------------------------
 0074                       ; 4. Copy line from uncrunch area to editor buffer
 0075                       ;------------------------------------------------------
 0076               tib.uncrunch.line.pack.copyline:
-0077 69A8 0286  22         ci    tmp2,2
-     69AA 0002     
-0078 69AC 1603  14         jne   tib.uncrunch.line.pack.copyline.checkbyte
-0079 69AE DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
-0080 69B0 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
-0081 69B2 1007  14         jmp   tib.uncrunch.line.pack.copyline.align16
+0077 69C0 0286  22         ci    tmp2,2
+     69C2 0002     
+0078 69C4 1603  14         jne   tib.uncrunch.line.pack.copyline.checkbyte
+0079 69C6 DD74  42         movb  *tmp0+,*tmp1+         ; \ Copy single word on possible
+0080 69C8 DD74  42         movb  *tmp0+,*tmp1+         ; / uneven address
+0081 69CA 1007  14         jmp   tib.uncrunch.line.pack.copyline.align16
 0082               
 0083               tib.uncrunch.line.pack.copyline.checkbyte:
-0084 69B4 0286  22         ci    tmp2,1
-     69B6 0001     
-0085 69B8 1602  14         jne   tib.uncrunch.line.pack.copyline.block
-0086 69BA D554  38         movb  *tmp0,*tmp1           ; Copy single byte
-0087 69BC 1002  14         jmp   tib.uncrunch.line.pack.copyline.align16
+0084 69CC 0286  22         ci    tmp2,1
+     69CE 0001     
+0085 69D0 1602  14         jne   tib.uncrunch.line.pack.copyline.block
+0086 69D2 D554  38         movb  *tmp0,*tmp1           ; Copy single byte
+0087 69D4 1002  14         jmp   tib.uncrunch.line.pack.copyline.align16
 0088               
 0089               tib.uncrunch.line.pack.copyline.block:
-0090 69BE 06A0  32         bl    @xpym2m               ; Copy memory block
-     69C0 24F4     
+0090 69D6 06A0  32         bl    @xpym2m               ; Copy memory block
+     69D8 24F4     
 0091                                                   ; \ i  tmp0 = source
 0092                                                   ; | i  tmp1 = destination, see (1)
 0093                                                   ; / i  tmp2 = bytes to copy
@@ -11474,46 +11496,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0095                       ; 5. Align pointer to multiple of 16 memory address
 0096                       ;------------------------------------------------------
 0097               tib.uncrunch.line.pack.copyline.align16:
-0098 69C2 A808  38         a     tmp4,@edb.next_free.ptr  ; Add length of line
-     69C4 A508     
+0098 69DA A808  38         a     tmp4,@edb.next_free.ptr  ; Add length of line
+     69DC A508     
 0099               
-0100 69C6 C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
-     69C8 A508     
-0101 69CA 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
-0102 69CC 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
-     69CE 000F     
-0103 69D0 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-     69D2 A508     
+0100 69DE C120  34         mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
+     69E0 A508     
+0101 69E2 0504  16         neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
+0102 69E4 0244  22         andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
+     69E6 000F     
+0103 69E8 A804  38         a     tmp0,@edb.next_free.ptr  ; / Chapter 2
+     69EA A508     
 0104                       ;------------------------------------------------------
 0105                       ; 6. Restore SAMS page and prepare for exit
 0106                       ;------------------------------------------------------
 0107               tib.uncrunch.line.pack.prepexit:
-0108 69D4 8820  54         c     @edb.sams.hipage,@edb.sams.page
-     69D6 A518     
-     69D8 A516     
-0109 69DA 1306  14         jeq   tib.uncrunch.line.pack.exit
+0108 69EC 8820  54         c     @edb.sams.hipage,@edb.sams.page
+     69EE A518     
+     69F0 A516     
+0109 69F2 1306  14         jeq   tib.uncrunch.line.pack.exit
 0110                                                      ; Exit early if SAMS page already mapped
 0111               
-0112 69DC C120  34         mov   @edb.sams.page,tmp0
-     69DE A516     
-0113 69E0 C160  34         mov   @edb.top.ptr,tmp1
-     69E2 A500     
-0114 69E4 06A0  32         bl    @xsams.page.set       ; Set SAMS page
-     69E6 258A     
+0112 69F4 C120  34         mov   @edb.sams.page,tmp0
+     69F6 A516     
+0113 69F8 C160  34         mov   @edb.top.ptr,tmp1
+     69FA A500     
+0114 69FC 06A0  32         bl    @xsams.page.set       ; Set SAMS page
+     69FE 258A     
 0115                                                   ; \ i  tmp0 = SAMS page number
 0116                                                   ; / i  tmp1 = Memory address
 0117                       ;------------------------------------------------------
 0118                       ; Exit
 0119                       ;------------------------------------------------------
 0120               tib.uncrunch.line.pack.exit:
-0121 69E8 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0122 69EA C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0123 69EC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0124 69EE C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0125 69F0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0126 69F2 C2F9  30         mov   *stack+,r11           ; Pop R11
-0127 69F4 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.22665
+0121 6A00 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0122 6A02 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0123 6A04 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0124 6A06 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0125 6A08 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0126 6A0A C2F9  30         mov   *stack+,r11           ; Pop R11
+0127 6A0C 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b7.asm.47183
 0076                                                        ; Pack uncrunched line to editor buffer
 0077                       ;-----------------------------------------------------------------------
 0078                       ; Stubs
@@ -11529,21 +11551,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0007               * bank1 vec.20
 0008               ********|*****|*********************|**************************
 0009               fb.refresh:
-0010 69F6 0649  14         dect  stack
-0011 69F8 C64B  30         mov   r11,*stack            ; Save return address
+0010 6A0E 0649  14         dect  stack
+0011 6A10 C64B  30         mov   r11,*stack            ; Save return address
 0012                       ;------------------------------------------------------
 0013                       ; Call function in bank 1
 0014                       ;------------------------------------------------------
-0015 69FA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     69FC 2F84     
-0016 69FE 6002                   data bank1.rom        ; | i  p0 = bank address
-0017 6A00 7FE6                   data vec.20           ; | i  p1 = Vector with target address
-0018 6A02 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0015 6A12 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A14 2F84     
+0016 6A16 6002                   data bank1.rom        ; | i  p0 = bank address
+0017 6A18 7FE6                   data vec.20           ; | i  p1 = Vector with target address
+0018 6A1A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0019                       ;------------------------------------------------------
 0020                       ; Exit
 0021                       ;------------------------------------------------------
-0022 6A04 C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 6A06 045B  20         b     *r11                  ; Return to caller
+0022 6A1C C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 6A1E 045B  20         b     *r11                  ; Return to caller
 0024               
 0025               
 0026               ***************************************************************
@@ -11551,21 +11573,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0028               * bank1 vec.31
 0029               ********|*****|*********************|**************************
 0030               pane.action.colorscheme.load:
-0031 6A08 0649  14         dect  stack
-0032 6A0A C64B  30         mov   r11,*stack            ; Save return address
+0031 6A20 0649  14         dect  stack
+0032 6A22 C64B  30         mov   r11,*stack            ; Save return address
 0033                       ;------------------------------------------------------
 0034                       ; Call function in bank 1
 0035                       ;------------------------------------------------------
-0036 6A0C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A0E 2F84     
-0037 6A10 6002                   data bank1.rom        ; | i  p0 = bank address
-0038 6A12 7FFC                   data vec.31           ; | i  p1 = Vector with target address
-0039 6A14 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 6A24 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A26 2F84     
+0037 6A28 6002                   data bank1.rom        ; | i  p0 = bank address
+0038 6A2A 7FFC                   data vec.31           ; | i  p1 = Vector with target address
+0039 6A2C 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Exit
 0042                       ;------------------------------------------------------
-0043 6A16 C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 6A18 045B  20         b     *r11                  ; Return to caller
+0043 6A2E C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 6A30 045B  20         b     *r11                  ; Return to caller
 0045               
 0046               
 0047               
@@ -11574,22 +11596,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0050               * bank3 vec.23
 0051               ********|*****|*********************|**************************
 0052               tibasic.buildstr:
-0053 6A1A 0649  14         dect  stack
-0054 6A1C C64B  30         mov   r11,*stack            ; Save return address
+0053 6A32 0649  14         dect  stack
+0054 6A34 C64B  30         mov   r11,*stack            ; Save return address
 0055                       ;------------------------------------------------------
 0056                       ; Call function in bank 3
 0057                       ;------------------------------------------------------
-0058 6A1E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A20 2F84     
-0059 6A22 6006                   data bank3.rom        ; | i  p0 = bank address
-0060 6A24 7FEC                   data vec.23           ; | i  p1 = Vector with target address
-0061 6A26 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0058 6A36 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A38 2F84     
+0059 6A3A 6006                   data bank3.rom        ; | i  p0 = bank address
+0060 6A3C 7FEC                   data vec.23           ; | i  p1 = Vector with target address
+0061 6A3E 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0062                       ;------------------------------------------------------
 0063                       ; Exit
 0064                       ;------------------------------------------------------
-0065 6A28 C2F9  30         mov   *stack+,r11           ; Pop r11
-0066 6A2A 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.22665
+0065 6A40 C2F9  30         mov   *stack+,r11           ; Pop r11
+0066 6A42 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b7.asm.47183
 0081                       copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -11601,21 +11623,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0008               * bank1 vec.1
 0009               ********|*****|*********************|**************************
 0010               mem.sams.setup.stevie:
-0011 6A2C 0649  14         dect  stack
-0012 6A2E C64B  30         mov   r11,*stack            ; Save return address
+0011 6A44 0649  14         dect  stack
+0012 6A46 C64B  30         mov   r11,*stack            ; Save return address
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 1
 0015                       ;------------------------------------------------------
-0016 6A30 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A32 2F84     
-0017 6A34 6002                   data bank1.rom        ; | i  p0 = bank address
-0018 6A36 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0019 6A38 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 6A48 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A4A 2F84     
+0017 6A4C 6002                   data bank1.rom        ; | i  p0 = bank address
+0018 6A4E 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0019 6A50 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023 6A3A C2F9  30         mov   *stack+,r11           ; Pop r11
-0024 6A3C 045B  20         b     *r11                  ; Return to caller
+0023 6A52 C2F9  30         mov   *stack+,r11           ; Pop r11
+0024 6A54 045B  20         b     *r11                  ; Return to caller
 0026               
 0027               
 0049               
@@ -11628,7 +11650,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               
 0141               
 0142               
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Program data
 0084                       ;-----------------------------------------------------------------------
@@ -11642,124 +11664,124 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               * SAMS legacy page layout table (as in SAMS transparent mode)
 0007               *--------------------------------------------------------------
 0008               mem.sams.layout.legacy:
-0009 6A3E 0200             data  >0200                 ; >2000-2fff, SAMS page >02
-0010 6A40 0300             data  >0300                 ; >3000-3fff, SAMS page >03
-0011 6A42 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
-0012 6A44 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
-0013 6A46 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
-0014 6A48 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
-0015 6A4A 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
-0016 6A4C 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
+0009 6A56 0200             data  >0200                 ; >2000-2fff, SAMS page >02
+0010 6A58 0300             data  >0300                 ; >3000-3fff, SAMS page >03
+0011 6A5A 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
+0012 6A5C 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
+0013 6A5E 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
+0014 6A60 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
+0015 6A62 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
+0016 6A64 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
 0017               
 0018               ***************************************************************
 0019               * SAMS page layout table for Stevie boot order
 0020               *--------------------------------------------------------------
 0021               mem.sams.layout.boot:
-0022 6A4E 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0023 6A50 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0024 6A52 0400             data  >0400                 ; >a000-afff, SAMS page >04
-0025 6A54 2000             data  >2000                 ; >b000-bfff, SAMS page >20
+0022 6A66 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0023 6A68 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0024 6A6A 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0025 6A6C 2000             data  >2000                 ; >b000-bfff, SAMS page >20
 0026                                                   ; \
 0027                                                   ; | Index can allocate
 0028                                                   ; | pages >20 to >3f.
 0029                                                   ; /
-0030 6A56 4000             data  >4000                 ; >c000-cfff, SAMS page >40
+0030 6A6E 4000             data  >4000                 ; >c000-cfff, SAMS page >40
 0031                                                   ; \
 0032                                                   ; | Editor buffer can allocate
 0033                                                   ; | pages >40 to >ff.
 0034                                                   ; /
-0035 6A58 0500             data  >0500                 ; >d000-dfff, SAMS page >05
-0036 6A5A 0600             data  >0600                 ; >e000-efff, SAMS page >06
-0037 6A5C 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0035 6A70 0500             data  >0500                 ; >d000-dfff, SAMS page >05
+0036 6A72 0600             data  >0600                 ; >e000-efff, SAMS page >06
+0037 6A74 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0038               
 0039               ***************************************************************
 0040               * SAMS page layout table before calling external progam
 0041               *--------------------------------------------------------------
 0042               mem.sams.layout.external:
-0043 6A5E 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0044 6A60 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0045 6A62 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0043 6A76 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0044 6A78 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0045 6A7A 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0046               
-0047 6A64 1000             data  >1000                 ; >b000-efff, SAMS page >10
-0048 6A66 1100             data  >1100                 ; \
-0049 6A68 1200             data  >1200                 ; | Stevie session
-0050 6A6A 1300             data  >1300                 ; | VDP content
+0047 6A7C 1000             data  >1000                 ; >b000-efff, SAMS page >10
+0048 6A7E 1100             data  >1100                 ; \
+0049 6A80 1200             data  >1200                 ; | Stevie session
+0050 6A82 1300             data  >1300                 ; | VDP content
 0051                                                   ; /
-0052 6A6C 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0052 6A84 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0053               
 0054               
 0055               ***************************************************************
 0056               * SAMS page layout table TI Basic session 1 VRAM
 0057               *--------------------------------------------------------------
 0058               mem.sams.layout.basic1:
-0059 6A6E 0000             data  >0000                 ; . >2000-2fff
-0060 6A70 0100             data  >0100                 ; . >3000-3fff
-0061 6A72 0400             data  >0400                 ; . >a000-afff
-0062 6A74 FB00             data  >fb00                 ; \ >b000-efff
-0063 6A76 FC00             data  >fc00                 ; |
-0064 6A78 FD00             data  >fd00                 ; | 16K VDP dump
-0065 6A7A FE00             data  >fe00                 ; /
-0066 6A7C FF00             data  >ff00                 ; . >f000-ffff
+0059 6A86 0000             data  >0000                 ; . >2000-2fff
+0060 6A88 0100             data  >0100                 ; . >3000-3fff
+0061 6A8A 0400             data  >0400                 ; . >a000-afff
+0062 6A8C FB00             data  >fb00                 ; \ >b000-efff
+0063 6A8E FC00             data  >fc00                 ; |
+0064 6A90 FD00             data  >fd00                 ; | 16K VDP dump
+0065 6A92 FE00             data  >fe00                 ; /
+0066 6A94 FF00             data  >ff00                 ; . >f000-ffff
 0067               
 0068               
 0069               ***************************************************************
 0070               * SAMS page layout table TI Basic session 2 VRAM
 0071               *--------------------------------------------------------------
 0072               mem.sams.layout.basic2:
-0073 6A7E 0000             data  >0000                 ; . >2000-2fff
-0074 6A80 0100             data  >0100                 ; . >3000-3fff
-0075 6A82 0400             data  >0400                 ; . >a000-afff
-0076 6A84 F700             data  >f700                 ; \ >b000-efff
-0077 6A86 F800             data  >f800                 ; |
-0078 6A88 F900             data  >f900                 ; | 16K VDP dump
-0079 6A8A FA00             data  >fa00                 ; /
-0080 6A8C FF00             data  >ff00                 ; . >f000-ffff
+0073 6A96 0000             data  >0000                 ; . >2000-2fff
+0074 6A98 0100             data  >0100                 ; . >3000-3fff
+0075 6A9A 0400             data  >0400                 ; . >a000-afff
+0076 6A9C F700             data  >f700                 ; \ >b000-efff
+0077 6A9E F800             data  >f800                 ; |
+0078 6AA0 F900             data  >f900                 ; | 16K VDP dump
+0079 6AA2 FA00             data  >fa00                 ; /
+0080 6AA4 FF00             data  >ff00                 ; . >f000-ffff
 0081               
 0082               
 0083               ***************************************************************
 0084               * SAMS page layout table TI Basic session 3 VRAM
 0085               *--------------------------------------------------------------
 0086               mem.sams.layout.basic3:
-0087 6A8E 0000             data  >0000                 ; . >2000-2fff
-0088 6A90 0100             data  >0100                 ; . >3000-3fff
-0089 6A92 0400             data  >0400                 ; . >a000-afff
-0090 6A94 F300             data  >f300                 ; \ >b000-efff
-0091 6A96 F400             data  >f400                 ; |
-0092 6A98 F500             data  >f500                 ; | 16K VDP dump
-0093 6A9A F600             data  >f600                 ; /
-0094 6A9C FF00             data  >ff00                 ; . >f000-ffff
+0087 6AA6 0000             data  >0000                 ; . >2000-2fff
+0088 6AA8 0100             data  >0100                 ; . >3000-3fff
+0089 6AAA 0400             data  >0400                 ; . >a000-afff
+0090 6AAC F300             data  >f300                 ; \ >b000-efff
+0091 6AAE F400             data  >f400                 ; |
+0092 6AB0 F500             data  >f500                 ; | 16K VDP dump
+0093 6AB2 F600             data  >f600                 ; /
+0094 6AB4 FF00             data  >ff00                 ; . >f000-ffff
 0095               
 0096               
 0097               ***************************************************************
 0098               * SAMS page layout table TI Basic session 4 VRAM
 0099               *--------------------------------------------------------------
 0100               mem.sams.layout.basic4:
-0101 6A9E 0000             data  >0000                 ; . >2000-2fff
-0102 6AA0 0100             data  >0100                 ; . >3000-3fff
-0103 6AA2 0400             data  >0400                 ; . >a000-afff
-0104 6AA4 EF00             data  >ef00                 ; \ >b000-efff
-0105 6AA6 F000             data  >f000                 ; |
-0106 6AA8 F100             data  >f100                 ; | 16K VDP dump
-0107 6AAA F200             data  >f200                 ; /
-0108 6AAC FF00             data  >ff00                 ; . >f000-ffff
+0101 6AB6 0000             data  >0000                 ; . >2000-2fff
+0102 6AB8 0100             data  >0100                 ; . >3000-3fff
+0103 6ABA 0400             data  >0400                 ; . >a000-afff
+0104 6ABC EF00             data  >ef00                 ; \ >b000-efff
+0105 6ABE F000             data  >f000                 ; |
+0106 6AC0 F100             data  >f100                 ; | 16K VDP dump
+0107 6AC2 F200             data  >f200                 ; /
+0108 6AC4 FF00             data  >ff00                 ; . >f000-ffff
 0109               
 0110               
 0111               ***************************************************************
 0112               * SAMS page layout table TI Basic session 5 VRAM
 0113               *--------------------------------------------------------------
 0114               mem.sams.layout.basic5:
-0115 6AAE 0000             data  >0000                 ; . >2000-2fff
-0116 6AB0 0100             data  >0100                 ; . >3000-3fff
-0117 6AB2 0400             data  >0400                 ; . >a000-afff
-0118 6AB4 EB00             data  >eb00                 ; \ >b000-efff
-0119 6AB6 EC00             data  >ec00                 ; |
-0120 6AB8 ED00             data  >ed00                 ; | 16K VDP dump
-0121 6ABA EE00             data  >ee00                 ; /
-0122 6ABC FF00             data  >ff00                 ; . >f000-ffff
+0115 6AC6 0000             data  >0000                 ; . >2000-2fff
+0116 6AC8 0100             data  >0100                 ; . >3000-3fff
+0117 6ACA 0400             data  >0400                 ; . >a000-afff
+0118 6ACC EB00             data  >eb00                 ; \ >b000-efff
+0119 6ACE EC00             data  >ec00                 ; |
+0120 6AD0 ED00             data  >ed00                 ; | 16K VDP dump
+0121 6AD2 EE00             data  >ee00                 ; /
+0122 6AD4 FF00             data  >ff00                 ; . >f000-ffff
 0123               
 0124               
-0125      6A6E     mem.sams.layout.basic  equ mem.sams.layout.basic1
-                   < stevie_b7.asm.22665
+0125      6A86     mem.sams.layout.basic  equ mem.sams.layout.basic1
+                   < stevie_b7.asm.47183
 0086                       copy  "data.tib.tokens.asm"      ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
 0001               * FILE......: data.tib.tokens.asm
@@ -11773,553 +11795,574 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0009               ;-----------------------------------------------------------------------
 0010               ; Command tokens
 0011               ;-----------------------------------------------------------------------
-0012 6ABE 0003     tk.00   byte   >00,3,'R','U','N'
-     6AC0 5255     
-     6AC2 4E       
+0012 6AD6 0003     tk.00   byte   >00,3,'R','U','N'
+     6AD8 5255     
+     6ADA 4E       
 0013                       even
-0014 6AC4 0103     tk.01   byte   >01,3,'N','E','W'
-     6AC6 4E45     
-     6AC8 57       
+0014 6ADC 0103     tk.01   byte   >01,3,'N','E','W'
+     6ADE 4E45     
+     6AE0 57       
 0015                       even
-0016 6ACA 0203     tk.02   byte   >02,3,'C','O','N'
-     6ACC 434F     
-     6ACE 4E       
+0016 6AE2 0203     tk.02   byte   >02,3,'C','O','N'
+     6AE4 434F     
+     6AE6 4E       
 0017                       even
-0018 6AD0 0208     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
-     6AD2 434F     
-     6AD4 4E54     
-     6AD6 494E     
-     6AD8 5545     
+0018 6AE8 0208     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
+     6AEA 434F     
+     6AEC 4E54     
+     6AEE 494E     
+     6AF0 5545     
 0019                       even
-0020 6ADA 0304     tk.03   byte   >03,4,'L','I','S','T'
-     6ADC 4C49     
-     6ADE 5354     
+0020 6AF2 0304     tk.03   byte   >03,4,'L','I','S','T'
+     6AF4 4C49     
+     6AF6 5354     
 0021                       even
-0022 6AE0 0403     tk.04   byte   >04,3,'B','Y','E'
-     6AE2 4259     
-     6AE4 45       
+0022 6AF8 0403     tk.04   byte   >04,3,'B','Y','E'
+     6AFA 4259     
+     6AFC 45       
 0023                       even
-0024 6AE6 0503     tk.05   byte   >05,3,'N','U','M'
-     6AE8 4E55     
-     6AEA 4D       
+0024 6AFE 0503     tk.05   byte   >05,3,'N','U','M'
+     6B00 4E55     
+     6B02 4D       
 0025                       even
-0026 6AEC 0506     tk.05l  byte   >05,6,'N','U','M','B','E','R'
-     6AEE 4E55     
-     6AF0 4D42     
-     6AF2 4552     
+0026 6B04 0506     tk.05l  byte   >05,6,'N','U','M','B','E','R'
+     6B06 4E55     
+     6B08 4D42     
+     6B0A 4552     
 0027                       even
-0028 6AF4 0603     tk.06   byte   >06,3,'O','L','D'
-     6AF6 4F4C     
-     6AF8 44       
+0028 6B0C 0603     tk.06   byte   >06,3,'O','L','D'
+     6B0E 4F4C     
+     6B10 44       
 0029                       even
-0030 6AFA 0703     tk.07   byte   >07,3,'R','E','S'
-     6AFC 5245     
-     6AFE 53       
+0030 6B12 0703     tk.07   byte   >07,3,'R','E','S'
+     6B14 5245     
+     6B16 53       
 0031                       even
-0032 6B00 070A     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
-     6B02 5245     
-     6B04 5345     
-     6B06 5155     
-     6B08 454E     
-     6B0A 4345     
+0032 6B18 070A     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
+     6B1A 5245     
+     6B1C 5345     
+     6B1E 5155     
+     6B20 454E     
+     6B22 4345     
 0033                       even
-0034 6B0C 0804     tk.08   byte   >08,4,'S','A','V','E'
-     6B0E 5341     
-     6B10 5645     
+0034 6B24 0804     tk.08   byte   >08,4,'S','A','V','E'
+     6B26 5341     
+     6B28 5645     
 0035                       even
-0036 6B12 0904     tk.09   byte   >09,4,'E','D','I','T'
-     6B14 4544     
-     6B16 4954     
+0036 6B2A 0904     tk.09   byte   >09,4,'E','D','I','T'
+     6B2C 4544     
+     6B2E 4954     
 0037                       even
 0038               ;-----------------------------------------------------------------------
 0039               ; Program tokens
 0040               ;-----------------------------------------------------------------------
-0041 6B18 8104     tk.81   byte   >81,4,'E','L','S','E'
-     6B1A 454C     
-     6B1C 5345     
+0041 6B30 8105     tk.81   byte   >81,5,' ','E','L','S','E'
+     6B32 2045     
+     6B34 4C53     
+     6B36 45       
 0042                       even
-0043 6B1E 8402     tk.84   byte   >84,2,'I','F'
-     6B20 4946     
+0043 6B38 8402     tk.84   byte   >84,2,'I','F'
+     6B3A 4946     
 0044                       even
-0045 6B22 8502     tk.85   byte   >85,2,'G','O'
-     6B24 474F     
+0045 6B3C 8502     tk.85   byte   >85,2,'G','O'
+     6B3E 474F     
 0046                       even
-0047 6B26 8604     tk.86   byte   >86,4,'G','O','T','O'
-     6B28 474F     
-     6B2A 544F     
+0047 6B40 8604     tk.86   byte   >86,4,'G','O','T','O'
+     6B42 474F     
+     6B44 544F     
 0048                       even
-0049 6B2C 8705     tk.87   byte   >87,5,'G','O','S','U','B'
-     6B2E 474F     
-     6B30 5355     
-     6B32 42       
+0049 6B46 8705     tk.87   byte   >87,5,'G','O','S','U','B'
+     6B48 474F     
+     6B4A 5355     
+     6B4C 42       
 0050                       even
-0051 6B34 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
-     6B36 5245     
-     6B38 5455     
-     6B3A 524E     
+0051 6B4E 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
+     6B50 5245     
+     6B52 5455     
+     6B54 524E     
 0052                       even
-0053 6B3C 8903     tk.89   byte   >89,3,'D','E','F'
-     6B3E 4445     
-     6B40 46       
+0053 6B56 8903     tk.89   byte   >89,3,'D','E','F'
+     6B58 4445     
+     6B5A 46       
 0054                       even
-0055 6B42 8A03     tk.8a   byte   >8A,3,'D','I','M'
-     6B44 4449     
-     6B46 4D       
+0055 6B5C 8A03     tk.8a   byte   >8A,3,'D','I','M'
+     6B5E 4449     
+     6B60 4D       
 0056                       even
-0057 6B48 8B03     tk.8b   byte   >8B,3,'E','N','D'
-     6B4A 454E     
-     6B4C 44       
+0057 6B62 8B03     tk.8b   byte   >8B,3,'E','N','D'
+     6B64 454E     
+     6B66 44       
 0058                       even
-0059 6B4E 8C03     tk.8c   byte   >8C,3,'F','O','R'
-     6B50 464F     
-     6B52 52       
+0059 6B68 8C03     tk.8c   byte   >8C,3,'F','O','R'
+     6B6A 464F     
+     6B6C 52       
 0060                       even
-0061 6B54 8D03     tk.8d   byte   >8D,3,'L','E','T'
-     6B56 4C45     
-     6B58 54       
+0061 6B6E 8D03     tk.8d   byte   >8D,3,'L','E','T'
+     6B70 4C45     
+     6B72 54       
 0062                       even
-0063 6B5A 8E05     tk.8e   byte   >8E,5,'B','R','E','A','K'
-     6B5C 4252     
-     6B5E 4541     
-     6B60 4B       
+0063 6B74 8E05     tk.8e   byte   >8E,5,'B','R','E','A','K'
+     6B76 4252     
+     6B78 4541     
+     6B7A 4B       
 0064                       even
-0065 6B62 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
-     6B64 554E     
-     6B66 4252     
-     6B68 4541     
-     6B6A 4B       
+0065 6B7C 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
+     6B7E 554E     
+     6B80 4252     
+     6B82 4541     
+     6B84 4B       
 0066                       even
-0067 6B6C 9005     tk.90   byte   >90,5,'T','R','A','C','E'
-     6B6E 5452     
-     6B70 4143     
-     6B72 45       
+0067 6B86 9005     tk.90   byte   >90,5,'T','R','A','C','E'
+     6B88 5452     
+     6B8A 4143     
+     6B8C 45       
 0068                       even
-0069 6B74 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
-     6B76 554E     
-     6B78 5452     
-     6B7A 4143     
-     6B7C 45       
+0069 6B8E 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
+     6B90 554E     
+     6B92 5452     
+     6B94 4143     
+     6B96 45       
 0070                       even
-0071 6B7E 9205     tk.92   byte   >92,5,'I','N','P','U','T'
-     6B80 494E     
-     6B82 5055     
-     6B84 54       
+0071 6B98 9205     tk.92   byte   >92,5,'I','N','P','U','T'
+     6B9A 494E     
+     6B9C 5055     
+     6B9E 54       
 0072                       even
-0073 6B86 9304     tk.93   byte   >93,4,'D','A','T','A'
-     6B88 4441     
-     6B8A 5441     
+0073 6BA0 9304     tk.93   byte   >93,4,'D','A','T','A'
+     6BA2 4441     
+     6BA4 5441     
 0074                       even
-0075 6B8C 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
-     6B8E 5245     
-     6B90 5354     
-     6B92 4F52     
-     6B94 45       
+0075 6BA6 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
+     6BA8 5245     
+     6BAA 5354     
+     6BAC 4F52     
+     6BAE 45       
 0076                       even
-0077 6B96 9509     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
-     6B98 5241     
-     6B9A 4E44     
-     6B9C 4F4D     
-     6B9E 495A     
-     6BA0 45       
+0077 6BB0 9509     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
+     6BB2 5241     
+     6BB4 4E44     
+     6BB6 4F4D     
+     6BB8 495A     
+     6BBA 45       
 0078                       even
-0079 6BA2 9604     tk.96   byte   >96,4,'N','E','X','T'
-     6BA4 4E45     
-     6BA6 5854     
+0079 6BBC 9604     tk.96   byte   >96,4,'N','E','X','T'
+     6BBE 4E45     
+     6BC0 5854     
 0080                       even
-0081 6BA8 9704     tk.97   byte   >97,4,'R','E','A','D'
-     6BAA 5245     
-     6BAC 4144     
+0081 6BC2 9704     tk.97   byte   >97,4,'R','E','A','D'
+     6BC4 5245     
+     6BC6 4144     
 0082                       even
-0083 6BAE 9804     tk.98   byte   >98,4,'S','T','O','P'
-     6BB0 5354     
-     6BB2 4F50     
+0083 6BC8 9804     tk.98   byte   >98,4,'S','T','O','P'
+     6BCA 5354     
+     6BCC 4F50     
 0084                       even
-0085 6BB4 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
-     6BB6 4445     
-     6BB8 4C45     
-     6BBA 5445     
+0085 6BCE 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
+     6BD0 4445     
+     6BD2 4C45     
+     6BD4 5445     
 0086                       even
-0087 6BBC 9A03     tk.9a   byte   >9A,3,'R','E','M'
-     6BBE 5245     
-     6BC0 4D       
+0087 6BD6 9A03     tk.9a   byte   >9A,3,'R','E','M'
+     6BD8 5245     
+     6BDA 4D       
 0088                       even
-0089 6BC2 9B02     tk.9b   byte   >9B,2,'O','N'
-     6BC4 4F4E     
+0089 6BDC 9B02     tk.9b   byte   >9B,2,'O','N'
+     6BDE 4F4E     
 0090                       even
-0091 6BC6 9C05     tk.9c   byte   >9C,5,'P','R','I','N','T'
-     6BC8 5052     
-     6BCA 494E     
-     6BCC 54       
+0091 6BE0 9C05     tk.9c   byte   >9C,5,'P','R','I','N','T'
+     6BE2 5052     
+     6BE4 494E     
+     6BE6 54       
 0092                       even
-0093 6BCE 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
-     6BD0 4341     
-     6BD2 4C4C     
+0093 6BE8 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
+     6BEA 4341     
+     6BEC 4C4C     
 0094                       even
-0095 6BD4 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
-     6BD6 4F50     
-     6BD8 5449     
-     6BDA 4F4E     
+0095 6BEE 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
+     6BF0 4F50     
+     6BF2 5449     
+     6BF4 4F4E     
 0096                       even
-0097 6BDC 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
-     6BDE 4F50     
-     6BE0 454E     
+0097 6BF6 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
+     6BF8 4F50     
+     6BFA 454E     
 0098                       even
-0099 6BE2 A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
-     6BE4 434C     
-     6BE6 4F53     
-     6BE8 45       
+0099 6BFC A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
+     6BFE 434C     
+     6C00 4F53     
+     6C02 45       
 0100                       even
-0101 6BEA A103     tk.a1   byte   >A1,3,'S','U','B'
-     6BEC 5355     
-     6BEE 42       
+0101 6C04 A103     tk.a1   byte   >A1,3,'S','U','B'
+     6C06 5355     
+     6C08 42       
 0102                       even
-0103 6BF0 A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
-     6BF2 4449     
-     6BF4 5350     
-     6BF6 4C41     
-     6BF8 59       
+0103 6C0A A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
+     6C0C 4449     
+     6C0E 5350     
+     6C10 4C41     
+     6C12 59       
 0104                       even
-0105 6BFA B004     tk.b0   byte   >B0,4,'T','H','E','N'
-     6BFC 5448     
-     6BFE 454E     
+0105 6C14 B005     tk.b0   byte   >B0,5,' ','T','H','E','N'
+     6C16 2054     
+     6C18 4845     
+     6C1A 4E       
 0106                       even
-0107 6C00 B102     tk.b1   byte   >B1,2,'T','O'
-     6C02 544F     
+0107 6C1C B103     tk.b1   byte   >B1,3,' ','T','O'
+     6C1E 2054     
+     6C20 4F       
 0108                       even
-0109 6C04 B204     tk.b2   byte   >B2,4,'S','T','E','P'
-     6C06 5354     
-     6C08 4550     
+0109 6C22 B205     tk.b2   byte   >B2,5,' ','S','T','E','P'
+     6C24 2053     
+     6C26 5445     
+     6C28 50       
 0110                       even
-0111 6C0A B301     tk.b3   byte   >B3,1,','
-     6C0C 2C       
+0111 6C2A B301     tk.b3   byte   >B3,1,','
+     6C2C 2C       
 0112                       even
-0113 6C0E B401     tk.b4   byte   >B4,1,';'
-     6C10 3B       
+0113 6C2E B401     tk.b4   byte   >B4,1,';'
+     6C30 3B       
 0114                       even
-0115 6C12 B501     tk.b5   byte   >B5,1,':'
-     6C14 3A       
+0115 6C32 B501     tk.b5   byte   >B5,1,':'
+     6C34 3A       
 0116                       even
-0117 6C16 B601     tk.b6   byte   >B6,1,')'
-     6C18 29       
+0117 6C36 B601     tk.b6   byte   >B6,1,')'
+     6C38 29       
 0118                       even
-0119 6C1A B701     tk.b7   byte   >B7,1,'('
-     6C1C 28       
+0119 6C3A B701     tk.b7   byte   >B7,1,'('
+     6C3C 28       
 0120                       even
-0121 6C1E B801     tk.b8   byte   >B8,1,'&'
-     6C20 26       
+0121 6C3E B801     tk.b8   byte   >B8,1,'&'
+     6C40 26       
 0122                       even
-0123 6C22 BE01     tk.be   byte   >BE,1,'='
-     6C24 3D       
+0123 6C42 BE01     tk.be   byte   >BE,1,'='
+     6C44 3D       
 0124                       even
-0125 6C26 BF01     tk.bf   byte   >BF,1,'<'
-     6C28 3C       
+0125 6C46 BF01     tk.bf   byte   >BF,1,'<'
+     6C48 3C       
 0126                       even
-0127 6C2A C001     tk.c0   byte   >C0,1,'>'
-     6C2C 3E       
+0127 6C4A C001     tk.c0   byte   >C0,1,'>'
+     6C4C 3E       
 0128                       even
-0129 6C2E C101     tk.c1   byte   >C1,1,'+'
-     6C30 2B       
+0129 6C4E C101     tk.c1   byte   >C1,1,'+'
+     6C50 2B       
 0130                       even
-0131 6C32 C201     tk.c2   byte   >C2,1,'-'
-     6C34 2D       
+0131 6C52 C201     tk.c2   byte   >C2,1,'-'
+     6C54 2D       
 0132                       even
-0133 6C36 C301     tk.c3   byte   >C3,1,'*'
-     6C38 2A       
+0133 6C56 C301     tk.c3   byte   >C3,1,'*'
+     6C58 2A       
 0134                       even
-0135 6C3A C401     tk.c4   byte   >C4,1,'/'
-     6C3C 2F       
+0135 6C5A C401     tk.c4   byte   >C4,1,'/'
+     6C5C 2F       
 0136                       even
-0137 6C3E C501     tk.c5   byte   >C5,1,'^'
-     6C40 5E       
+0137 6C5E C501     tk.c5   byte   >C5,1,'^'
+     6C60 5E       
 0138                       even
-0139 6C42 C701     tk.c7   byte   >C7,1,34                ; Quote character
-     6C44 22       
+0139 6C62 C701     tk.c7   byte   >C7,1,34                ; Quote character
+     6C64 22       
 0140                       even
-0141 6C46 C801     tk.c8   byte   >C8,1,' '
-     6C48 20       
+0141 6C66 C801     tk.c8   byte   >C8,1,' '
+     6C68 20       
 0142                       even
-0143 6C4A C901     tk.c9   byte   >C9,1,' '
-     6C4C 20       
+0143 6C6A C901     tk.c9   byte   >C9,1,' '
+     6C6C 20       
 0144                       even
-0145 6C4E CA03     tk.ca   byte   >CA,3,'E','O','F'
-     6C50 454F     
-     6C52 46       
+0145 6C6E CA03     tk.ca   byte   >CA,3,'E','O','F'
+     6C70 454F     
+     6C72 46       
 0146                       even
-0147 6C54 CB03     tk.cb   byte   >CB,3,'A','B','S'
-     6C56 4142     
-     6C58 53       
+0147 6C74 CB03     tk.cb   byte   >CB,3,'A','B','S'
+     6C76 4142     
+     6C78 53       
 0148                       even
-0149 6C5A CC03     tk.cc   byte   >CC,3,'A','T','N'
-     6C5C 4154     
-     6C5E 4E       
+0149 6C7A CC03     tk.cc   byte   >CC,3,'A','T','N'
+     6C7C 4154     
+     6C7E 4E       
 0150                       even
-0151 6C60 CD03     tk.cd   byte   >CD,3,'C','O','S'
-     6C62 434F     
-     6C64 53       
+0151 6C80 CD03     tk.cd   byte   >CD,3,'C','O','S'
+     6C82 434F     
+     6C84 53       
 0152                       even
-0153 6C66 CE03     tk.ce   byte   >CE,3,'E','X','P'
-     6C68 4558     
-     6C6A 50       
+0153 6C86 CE03     tk.ce   byte   >CE,3,'E','X','P'
+     6C88 4558     
+     6C8A 50       
 0154                       even
-0155 6C6C CF03     tk.cf   byte   >CF,3,'I','N','T'
-     6C6E 494E     
-     6C70 54       
+0155 6C8C CF03     tk.cf   byte   >CF,3,'I','N','T'
+     6C8E 494E     
+     6C90 54       
 0156                       even
-0157 6C72 D003     tk.d0   byte   >D0,3,'L','O','G'
-     6C74 4C4F     
-     6C76 47       
+0157 6C92 D003     tk.d0   byte   >D0,3,'L','O','G'
+     6C94 4C4F     
+     6C96 47       
 0158                       even
-0159 6C78 D103     tk.d1   byte   >D1,3,'S','G','N'
-     6C7A 5347     
-     6C7C 4E       
+0159 6C98 D103     tk.d1   byte   >D1,3,'S','G','N'
+     6C9A 5347     
+     6C9C 4E       
 0160                       even
-0161 6C7E D203     tk.d2   byte   >D2,3,'S','I','N'
-     6C80 5349     
-     6C82 4E       
+0161 6C9E D203     tk.d2   byte   >D2,3,'S','I','N'
+     6CA0 5349     
+     6CA2 4E       
 0162                       even
-0163 6C84 D303     tk.d3   byte   >D3,3,'S','Q','R'
-     6C86 5351     
-     6C88 52       
+0163 6CA4 D303     tk.d3   byte   >D3,3,'S','Q','R'
+     6CA6 5351     
+     6CA8 52       
 0164                       even
-0165 6C8A D403     tk.d4   byte   >D4,3,'T','A','N'
-     6C8C 5441     
-     6C8E 4E       
+0165 6CAA D403     tk.d4   byte   >D4,3,'T','A','N'
+     6CAC 5441     
+     6CAE 4E       
 0166                       even
-0167 6C90 D503     tk.d5   byte   >D5,3,'L','E','N'
-     6C92 4C45     
-     6C94 4E       
+0167 6CB0 D503     tk.d5   byte   >D5,3,'L','E','N'
+     6CB2 4C45     
+     6CB4 4E       
 0168                       even
-0169 6C96 D604     tk.d6   byte   >D6,4,'C','H','R','$'
-     6C98 4348     
-     6C9A 5224     
+0169 6CB6 D604     tk.d6   byte   >D6,4,'C','H','R','$'
+     6CB8 4348     
+     6CBA 5224     
 0170                       even
-0171 6C9C D703     tk.d7   byte   >D7,3,'R','N','D'
-     6C9E 524E     
-     6CA0 44       
+0171 6CBC D703     tk.d7   byte   >D7,3,'R','N','D'
+     6CBE 524E     
+     6CC0 44       
 0172                       even
-0173 6CA2 D804     tk.d8   byte   >D8,4,'S','E','G','$'
-     6CA4 5345     
-     6CA6 4724     
+0173 6CC2 D804     tk.d8   byte   >D8,4,'S','E','G','$'
+     6CC4 5345     
+     6CC6 4724     
 0174                       even
-0175 6CA8 D903     tk.d9   byte   >D9,3,'P','O','S'
-     6CAA 504F     
-     6CAC 53       
+0175 6CC8 D903     tk.d9   byte   >D9,3,'P','O','S'
+     6CCA 504F     
+     6CCC 53       
 0176                       even
-0177 6CAE DA03     tk.da   byte   >DA,3,'V','A','L'
-     6CB0 5641     
-     6CB2 4C       
+0177 6CCE DA03     tk.da   byte   >DA,3,'V','A','L'
+     6CD0 5641     
+     6CD2 4C       
 0178                       even
-0179 6CB4 DB04     tk.db   byte   >DB,4,'S','T','R','$'
-     6CB6 5354     
-     6CB8 5224     
+0179 6CD4 DB04     tk.db   byte   >DB,4,'S','T','R','$'
+     6CD6 5354     
+     6CD8 5224     
 0180                       even
-0181 6CBA DC03     tk.dc   byte   >DC,3,'A','S','C'
-     6CBC 4153     
-     6CBE 43       
+0181 6CDA DC03     tk.dc   byte   >DC,3,'A','S','C'
+     6CDC 4153     
+     6CDE 43       
 0182                       even
-0183 6CC0 DE03     tk.de   byte   >DE,3,'R','E','C'
-     6CC2 5245     
-     6CC4 43       
+0183 6CE0 DE03     tk.de   byte   >DE,3,'R','E','C'
+     6CE2 5245     
+     6CE4 43       
 0184                       even
-0185 6CC6 F104     tk.f1   byte   >F1,4,'B','A','S','E'
-     6CC8 4241     
-     6CCA 5345     
+0185 6CE6 F104     tk.f1   byte   >F1,4,'B','A','S','E'
+     6CE8 4241     
+     6CEA 5345     
 0186                       even
-0187 6CCC F308     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
-     6CCE 5641     
-     6CD0 5249     
-     6CD2 4142     
-     6CD4 4C45     
+0187 6CEC F308     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
+     6CEE 5641     
+     6CF0 5249     
+     6CF2 4142     
+     6CF4 4C45     
 0188                       even
-0189 6CD6 F408     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
-     6CD8 5245     
-     6CDA 4C41     
-     6CDC 5449     
-     6CDE 5645     
+0189 6CF6 F408     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
+     6CF8 5245     
+     6CFA 4C41     
+     6CFC 5449     
+     6CFE 5645     
 0190                       even
-0191 6CE0 F508     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
-     6CE2 494E     
-     6CE4 5445     
-     6CE6 524E     
-     6CE8 414C     
-0192                       even
-0193 6CEA F60A     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
-     6CEC 5345     
-     6CEE 5155     
-     6CF0 454E     
-     6CF2 5449     
-     6CF4 414C     
-0194                       even
-0195 6CF6 F706     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
-     6CF8 4F55     
-     6CFA 5450     
-     6CFC 5554     
-0196                       even
-0197 6CFE F806     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
-     6D00 5550     
-     6D02 4441     
+0191 6D00 F508     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
+     6D02 494E     
      6D04 5445     
+     6D06 524E     
+     6D08 414C     
+0192                       even
+0193 6D0A F60A     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
+     6D0C 5345     
+     6D0E 5155     
+     6D10 454E     
+     6D12 5449     
+     6D14 414C     
+0194                       even
+0195 6D16 F706     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
+     6D18 4F55     
+     6D1A 5450     
+     6D1C 5554     
+0196                       even
+0197 6D1E F806     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
+     6D20 5550     
+     6D22 4441     
+     6D24 5445     
 0198                       even
-0199 6D06 F906     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
-     6D08 4150     
-     6D0A 5045     
-     6D0C 4E44     
+0199 6D26 F906     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
+     6D28 4150     
+     6D2A 5045     
+     6D2C 4E44     
 0200                       even
-0201 6D0E FA05     tk.fa   byte   >FA,5,'F','I','X','E','D'
-     6D10 4649     
-     6D12 5845     
-     6D14 44       
+0201 6D2E FA06     tk.fa   byte   >FA,6,'F','I','X','E','D',' '
+     6D30 4649     
+     6D32 5845     
+     6D34 4420     
 0202                       even
-0203 6D16 FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
-     6D18 5045     
-     6D1A 524D     
-     6D1C 414E     
-     6D1E 454E     
-     6D20 54       
+0203 6D36 FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
+     6D38 5045     
+     6D3A 524D     
+     6D3C 414E     
+     6D3E 454E     
+     6D40 54       
 0204                       even
-0205 6D22 FC03     tk.fc   byte   >FC,3,'T','A','B'
-     6D24 5441     
-     6D26 42       
+0205 6D42 FC03     tk.fc   byte   >FC,3,'T','A','B'
+     6D44 5441     
+     6D46 42       
 0206                       even
-0207 6D28 FD01     tk.fd   byte   >FD,1,'#'
-     6D2A 23       
+0207 6D48 FD01     tk.fd   byte   >FD,1,'#'
+     6D4A 23       
 0208                       even
-0209 6D2C FF04     tk.noop byte   >FF,4,'N','O','O','P'
-     6D2E 4E4F     
-     6D30 4F50     
+0209 6D4C FF01     tk.noop byte   >FF,1,'?'
+     6D4E 3F       
 0210                       even
 0211               ;-----------------------------------------------------------------------
 0212               ; Token index command mode
 0213               ;-----------------------------------------------------------------------
-0214 6D32 6ABE     tki.00  data   tk.00               ; RUN
-0215 6D34 6AC4     tki.01  data   tk.01               ; NEW
-0216 6D36 6ACA     tki.02  data   tk.02               ; CON
-0217 6D38 6AD0     tki.02l data   tk.02l              ; CONTINUE
-0218 6D3A 6ADA     tki.03  data   tk.03               ; LIST
-0219 6D3C 6AE0     tki.04  data   tk.04               ; BYE
-0220 6D3E 6AE6     tki.05  data   tk.05               ; NUM
-0221 6D40 6AEC     tki.05l data   tk.05l              ; NUMBER
-0222 6D42 6AF4     tki.06  data   tk.06               ; OLD
-0223 6D44 6AFA     tki.07  data   tk.07               ; RES
-0224 6D46 6B00     tki.07l data   tk.07l              ; RESEQUENCE
-0225 6D48 6B0C     tki.08  data   tk.08               ; SAVE
-0226 6D4A 6B12     tki.09  data   tk.09               ; EDIT
+0214 6D50 6AD6     tki.00  data   tk.00               ; RUN
+0215 6D52 6ADC     tki.01  data   tk.01               ; NEW
+0216 6D54 6AE2     tki.02  data   tk.02               ; CON
+0217 6D56 6AE8     tki.02l data   tk.02l              ; CONTINUE
+0218 6D58 6AF2     tki.03  data   tk.03               ; LIST
+0219 6D5A 6AF8     tki.04  data   tk.04               ; BYE
+0220 6D5C 6AFE     tki.05  data   tk.05               ; NUM
+0221 6D5E 6B04     tki.05l data   tk.05l              ; NUMBER
+0222 6D60 6B0C     tki.06  data   tk.06               ; OLD
+0223 6D62 6B12     tki.07  data   tk.07               ; RES
+0224 6D64 6B18     tki.07l data   tk.07l              ; RESEQUENCE
+0225 6D66 6B24     tki.08  data   tk.08               ; SAVE
+0226 6D68 6B2A     tki.09  data   tk.09               ; EDIT
 0227               ;-----------------------------------------------------------------------
 0228               ; Token index program statement
 0229               ;-----------------------------------------------------------------------
-0230 6D4C 6D2C     tki.80  data   tk.noop             ;
-0231 6D4E 6B18     tki.81  data   tk.81               ; ELSE
-0232 6D50 6D2C     tki.82  data   tk.noop             ;
-0233 6D52 6D2C     tki.83  data   tk.noop             ;
-0234 6D54 6B1E     tki.84  data   tk.84               ; IF
-0235 6D56 6B22     tki.85  data   tk.85               ; GO
-0236 6D58 6B26     tki.86  data   tk.86               ; GOTO
-0237 6D5A 6B2C     tki.87  data   tk.87               ; GOSUB
-0238 6D5C 6B34     tki.88  data   tk.88               ; RETURN
-0239 6D5E 6B3C     tki.89  data   tk.89               ; DEF
-0240 6D60 6B42     tki.8a  data   tk.8a               ; DIM
-0241 6D62 6B48     tki.8b  data   tk.8b               ; END
-0242 6D64 6B4E     tki.8c  data   tk.8c               ; FOR
-0243 6D66 6B54     tki.8d  data   tk.8d               ; LET
-0244 6D68 6B5A     tki.8e  data   tk.8e               ; BREAK
-0245 6D6A 6B62     tki.8f  data   tk.8f               ; UNBREAK
-0246 6D6C 6B6C     tki.90  data   tk.90               ; TRACE
-0247 6D6E 6B74     tki.91  data   tk.91               ; UNTRACE
-0248 6D70 6B7E     tki.92  data   tk.92               ; INPUT
-0249 6D72 6B86     tki.93  data   tk.93               ; DATA
-0250 6D74 6B8C     tki.94  data   tk.94               ; RESTORE
-0251 6D76 6B96     tki.95  data   tk.95               ; RANDOMIZE
-0252 6D78 6BA2     tki.96  data   tk.96               ; NEXT
-0253 6D7A 6BA8     tki.97  data   tk.97               ; READ
-0254 6D7C 6BAE     tki.98  data   tk.98               ; STOP
-0255 6D7E 6BB4     tki.99  data   tk.99               ; DELETE
-0256 6D80 6BBC     tki.9a  data   tk.9a               ; REM
-0257 6D82 6BC2     tki.9b  data   tk.9b               ; ON
-0258 6D84 6BC6     tki.9c  data   tk.9c               ; PRINT
-0259 6D86 6BCE     tki.9d  data   tk.9d               ; CALL
-0260 6D88 6BD4     tki.9e  data   tk.9e               ; OPTION
-0261 6D8A 6BDC     tki.9f  data   tk.9f               ; OPEN
-0262 6D8C 6BE2     tki.a0  data   tk.a0               ; CLOSE
-0263 6D8E 6BEA     tki.a1  data   tk.a1               ; SUB
-0264 6D90 6BF0     tki.a2  data   tk.a2               ; DISPLAY
-0265 6D92 6D2C     tki.a3  data   tk.noop             ;
-0266 6D94 6D2C     tki.a4  data   tk.noop             ;
-0267 6D96 6D2C     tki.a5  data   tk.noop             ;
-0268 6D98 6D2C     tki.a6  data   tk.noop             ;
-0269 6D9A 6D2C     tki.a7  data   tk.noop             ;
-0270 6D9C 6D2C     tki.a8  data   tk.noop             ;
-0271 6D9E 6D2C     tki.a9  data   tk.noop             ;
-0272 6DA0 6D2C     tki.aa  data   tk.noop             ;
-0273 6DA2 6D2C     tki.ab  data   tk.noop             ;
-0274 6DA4 6D2C     tki.ac  data   tk.noop             ;
-0275 6DA6 6D2C     tki.ad  data   tk.noop             ;
-0276 6DA8 6D2C     tki.ae  data   tk.noop             ;
-0277 6DAA 6D2C     tki.af  data   tk.noop             ;
-0278 6DAC 6BFA     tki.b0  data   tk.b0               ; THEN
-0279 6DAE 6C00     tki.b1  data   tk.b1               ; TO
-0280 6DB0 6C04     tki.b2  data   tk.b2               ; STEP
-0281 6DB2 6C0A     tki.b3  data   tk.b3               ; ,
-0282 6DB4 6C0E     tki.b4  data   tk.b4               ; ;
-0283 6DB6 6C12     tki.b5  data   tk.b5               ; :
-0284 6DB8 6C16     tki.b6  data   tk.b6               ; )
-0285 6DBA 6C1A     tki.b7  data   tk.b7               ; (
-0286 6DBC 6C1E     tki.b8  data   tk.b8               ; &
-0287 6DBE 6D2C     tki.b9  data   tk.noop             ;
-0288 6DC0 6D2C     tki.ba  data   tk.noop             ;
-0289 6DC2 6D2C     tki.bb  data   tk.noop             ;
-0290 6DC4 6D2C     tki.bc  data   tk.noop             ;
-0291 6DC6 6D2C     tki.bd  data   tk.noop             ;
-0292 6DC8 6C22     tki.be  data   tk.be               ; =
-0293 6DCA 6C26     tki.bf  data   tk.bf               ; <
-0294 6DCC 6C2A     tki.c0  data   tk.c0               ; >
-0295 6DCE 6C2E     tki.c1  data   tk.c1               ; +
-0296 6DD0 6C32     tki.c2  data   tk.c2               ; -
-0297 6DD2 6C36     tki.c3  data   tk.c3               ; *
-0298 6DD4 6C3A     tki.c4  data   tk.c4               ; /
-0299 6DD6 6C3E     tki.c5  data   tk.c5               ; ^
-0300 6DD8 6D2C     tki.c6  data   tk.noop             ;
-0301 6DDA 6C42     tki.c7  data   tk.c7               ; Quoted string
-0302 6DDC 6C46     tki.c8  data   tk.c8               ; Unquoted string
-0303 6DDE 6C4A     tki.c9  data   tk.c9               ; Line number
-0304 6DE0 6C4E     tki.ca  data   tk.ca               ; EOF
-0305 6DE2 6C54     tki.cb  data   tk.cb               ; ABS
-0306 6DE4 6C5A     tki.cc  data   tk.cc               ; ATN
-0307 6DE6 6C60     tki.cd  data   tk.cd               ; COS
-0308 6DE8 6C66     tki.ce  data   tk.ce               ; EXP
-0309 6DEA 6C6C     tki.cf  data   tk.cf               ; INT
-0310 6DEC 6C72     tki.d0  data   tk.d0               ; LOG
-0311 6DEE 6C78     tki.d1  data   tk.d1               ; SGN
-0312 6DF0 6C7E     tki.d2  data   tk.d2               ; SIN
-0313 6DF2 6C84     tki.d3  data   tk.d3               ; SQR
-0314 6DF4 6C8A     tki.d4  data   tk.d4               ; TAN
-0315 6DF6 6C90     tki.d5  data   tk.d5               ; LEN
-0316 6DF8 6C96     tki.d6  data   tk.d6               ; CHAR$
-0317 6DFA 6C9C     tki.d7  data   tk.d7               ; RND
-0318 6DFC 6CA2     tki.d8  data   tk.d8               ; SEG$
-0319 6DFE 6CA8     tki.d9  data   tk.d9               ; POS
-0320 6E00 6CAE     tki.da  data   tk.da               ; VAL
-0321 6E02 6CB4     tki.db  data   tk.db               ; STR$
-0322 6E04 6CBA     tki.dc  data   tk.dc               ; ASC
-0323 6E06 6CC0     tki.de  data   tk.de               ; REC
-0324 6E08 6D2C     tki.df  data   tk.noop             ;
-0325 6E0A 6D2C     tki.f0  data   tk.noop             ;
-0326 6E0C 6CC6     tki.f1  data   tk.f1               ; BASE
-0327 6E0E 6CCC     tki.f3  data   tk.f3               ; VARIABLE
-0328 6E10 6CD6     tki.f4  data   tk.f4               ; RELATIVE
-0329 6E12 6CE0     tki.f5  data   tk.f5               ; INTERNAL
-0330 6E14 6CEA     tki.f6  data   tk.f6               ; SEQUENTIAL
-0331 6E16 6CF6     tki.f7  data   tk.f7               ; OUTPUT
-0332 6E18 6CFE     tki.f8  data   tk.f8               ; UPDATE
-0333 6E1A 6D06     tki.f9  data   tk.f9               ; APPEND
-0334 6E1C 6D0E     tki.fa  data   tk.fa               ; FIXED
-0335 6E1E 6D16     tki.fb  data   tk.fb               ; PERMANENT
-0336 6E20 6D22     tki.fc  data   tk.fc               ; TAB
-0337 6E22 6D28     tki.fd  data   tk.fd               ; #
-0338 6E24 6D2C     tki.fe  data   tk.noop             ;
-0339 6E26 6D2C     tki.ff  data   tk.noop             ; <NOOP>
-0340               
-0341      6D4C     tib.tokenindex equ tki.80
-                   < stevie_b7.asm.22665
+0230 6D6A 6D4C     tki.80  data   tk.noop             ;
+0231 6D6C 6B30     tki.81  data   tk.81               ; ELSE
+0232 6D6E 6D4C     tki.82  data   tk.noop             ;
+0233 6D70 6D4C     tki.83  data   tk.noop             ;
+0234 6D72 6B38     tki.84  data   tk.84               ; IF
+0235 6D74 6B3C     tki.85  data   tk.85               ; GO
+0236 6D76 6B40     tki.86  data   tk.86               ; GOTO
+0237 6D78 6B46     tki.87  data   tk.87               ; GOSUB
+0238 6D7A 6B4E     tki.88  data   tk.88               ; RETURN
+0239 6D7C 6B56     tki.89  data   tk.89               ; DEF
+0240 6D7E 6B5C     tki.8a  data   tk.8a               ; DIM
+0241 6D80 6B62     tki.8b  data   tk.8b               ; END
+0242 6D82 6B68     tki.8c  data   tk.8c               ; FOR
+0243 6D84 6B6E     tki.8d  data   tk.8d               ; LET
+0244 6D86 6B74     tki.8e  data   tk.8e               ; BREAK
+0245 6D88 6B7C     tki.8f  data   tk.8f               ; UNBREAK
+0246 6D8A 6B86     tki.90  data   tk.90               ; TRACE
+0247 6D8C 6B8E     tki.91  data   tk.91               ; UNTRACE
+0248 6D8E 6B98     tki.92  data   tk.92               ; INPUT
+0249 6D90 6BA0     tki.93  data   tk.93               ; DATA
+0250 6D92 6BA6     tki.94  data   tk.94               ; RESTORE
+0251 6D94 6BB0     tki.95  data   tk.95               ; RANDOMIZE
+0252 6D96 6BBC     tki.96  data   tk.96               ; NEXT
+0253 6D98 6BC2     tki.97  data   tk.97               ; READ
+0254 6D9A 6BC8     tki.98  data   tk.98               ; STOP
+0255 6D9C 6BCE     tki.99  data   tk.99               ; DELETE
+0256 6D9E 6BD6     tki.9a  data   tk.9a               ; REM
+0257 6DA0 6BDC     tki.9b  data   tk.9b               ; ON
+0258 6DA2 6BE0     tki.9c  data   tk.9c               ; PRINT
+0259 6DA4 6BE8     tki.9d  data   tk.9d               ; CALL
+0260 6DA6 6BEE     tki.9e  data   tk.9e               ; OPTION
+0261 6DA8 6BF6     tki.9f  data   tk.9f               ; OPEN
+0262 6DAA 6BFC     tki.a0  data   tk.a0               ; CLOSE
+0263 6DAC 6C04     tki.a1  data   tk.a1               ; SUB
+0264 6DAE 6C0A     tki.a2  data   tk.a2               ; DISPLAY
+0265 6DB0 6D4C     tki.a3  data   tk.noop             ;
+0266 6DB2 6D4C     tki.a4  data   tk.noop             ;
+0267 6DB4 6D4C     tki.a5  data   tk.noop             ;
+0268 6DB6 6D4C     tki.a6  data   tk.noop             ;
+0269 6DB8 6D4C     tki.a7  data   tk.noop             ;
+0270 6DBA 6D4C     tki.a8  data   tk.noop             ;
+0271 6DBC 6D4C     tki.a9  data   tk.noop             ;
+0272 6DBE 6D4C     tki.aa  data   tk.noop             ;
+0273 6DC0 6D4C     tki.ab  data   tk.noop             ;
+0274 6DC2 6D4C     tki.ac  data   tk.noop             ;
+0275 6DC4 6D4C     tki.ad  data   tk.noop             ;
+0276 6DC6 6D4C     tki.ae  data   tk.noop             ;
+0277 6DC8 6D4C     tki.af  data   tk.noop             ;
+0278 6DCA 6C14     tki.b0  data   tk.b0               ; THEN
+0279 6DCC 6C1C     tki.b1  data   tk.b1               ; TO
+0280 6DCE 6C22     tki.b2  data   tk.b2               ; STEP
+0281 6DD0 6C2A     tki.b3  data   tk.b3               ; ,
+0282 6DD2 6C2E     tki.b4  data   tk.b4               ; ;
+0283 6DD4 6C32     tki.b5  data   tk.b5               ; :
+0284 6DD6 6C36     tki.b6  data   tk.b6               ; )
+0285 6DD8 6C3A     tki.b7  data   tk.b7               ; (
+0286 6DDA 6C3E     tki.b8  data   tk.b8               ; &
+0287 6DDC 6D4C     tki.b9  data   tk.noop             ;
+0288 6DDE 6D4C     tki.ba  data   tk.noop             ;
+0289 6DE0 6D4C     tki.bb  data   tk.noop             ;
+0290 6DE2 6D4C     tki.bc  data   tk.noop             ;
+0291 6DE4 6D4C     tki.bd  data   tk.noop             ;
+0292 6DE6 6C42     tki.be  data   tk.be               ; =
+0293 6DE8 6C46     tki.bf  data   tk.bf               ; <
+0294 6DEA 6C4A     tki.c0  data   tk.c0               ; >
+0295 6DEC 6C4E     tki.c1  data   tk.c1               ; +
+0296 6DEE 6C52     tki.c2  data   tk.c2               ; -
+0297 6DF0 6C56     tki.c3  data   tk.c3               ; *
+0298 6DF2 6C5A     tki.c4  data   tk.c4               ; /
+0299 6DF4 6C5E     tki.c5  data   tk.c5               ; ^
+0300 6DF6 6D4C     tki.c6  data   tk.noop             ;
+0301 6DF8 6C62     tki.c7  data   tk.c7               ; Quoted string
+0302 6DFA 6C66     tki.c8  data   tk.c8               ; Unquoted string
+0303 6DFC 6C6A     tki.c9  data   tk.c9               ; Line number
+0304 6DFE 6C6E     tki.ca  data   tk.ca               ; EOF
+0305 6E00 6C74     tki.cb  data   tk.cb               ; ABS
+0306 6E02 6C7A     tki.cc  data   tk.cc               ; ATN
+0307 6E04 6C80     tki.cd  data   tk.cd               ; COS
+0308 6E06 6C86     tki.ce  data   tk.ce               ; EXP
+0309 6E08 6C8C     tki.cf  data   tk.cf               ; INT
+0310 6E0A 6C92     tki.d0  data   tk.d0               ; LOG
+0311 6E0C 6C98     tki.d1  data   tk.d1               ; SGN
+0312 6E0E 6C9E     tki.d2  data   tk.d2               ; SIN
+0313 6E10 6CA4     tki.d3  data   tk.d3               ; SQR
+0314 6E12 6CAA     tki.d4  data   tk.d4               ; TAN
+0315 6E14 6CB0     tki.d5  data   tk.d5               ; LEN
+0316 6E16 6CB6     tki.d6  data   tk.d6               ; CHAR$
+0317 6E18 6CBC     tki.d7  data   tk.d7               ; RND
+0318 6E1A 6CC2     tki.d8  data   tk.d8               ; SEG$
+0319 6E1C 6CC8     tki.d9  data   tk.d9               ; POS
+0320 6E1E 6CCE     tki.da  data   tk.da               ; VAL
+0321 6E20 6CD4     tki.db  data   tk.db               ; STR$
+0322 6E22 6CDA     tki.dc  data   tk.dc               ; ASC
+0323 6E24 6D4C     tki.dd  data   tk.noop             ;
+0324 6E26 6CE0     tki.de  data   tk.de               ; REC
+0325 6E28 6D4C     tki.df  data   tk.noop             ;
+0326 6E2A 6D4C     tki.e0  data   tk.noop             ;
+0327 6E2C 6D4C     tki.e1  data   tk.noop             ;
+0328 6E2E 6D4C     tki.e2  data   tk.noop             ;
+0329 6E30 6D4C     tki.e3  data   tk.noop             ;
+0330 6E32 6D4C     tki.e4  data   tk.noop             ;
+0331 6E34 6D4C     tki.e5  data   tk.noop             ;
+0332 6E36 6D4C     tki.e6  data   tk.noop             ;
+0333 6E38 6D4C     tki.e7  data   tk.noop             ;
+0334 6E3A 6D4C     tki.e8  data   tk.noop             ;
+0335 6E3C 6D4C     tki.e9  data   tk.noop             ;
+0336 6E3E 6D4C     tki.ea  data   tk.noop             ;
+0337 6E40 6D4C     tki.eb  data   tk.noop             ;
+0338 6E42 6D4C     tki.ec  data   tk.noop             ;
+0339 6E44 6D4C     tki.ed  data   tk.noop             ;
+0340 6E46 6D4C     tki.ee  data   tk.noop             ;
+0341 6E48 6D4C     tki.ef  data   tk.noop             ;
+0342 6E4A 6D4C     tki.f0  data   tk.noop             ;
+0343 6E4C 6CE6     tki.f1  data   tk.f1               ; BASE
+0344 6E4E 6D4C     tki.f2  data   tk.noop             ;
+0345 6E50 6CEC     tki.f3  data   tk.f3               ; VARIABLE
+0346 6E52 6CF6     tki.f4  data   tk.f4               ; RELATIVE
+0347 6E54 6D00     tki.f5  data   tk.f5               ; INTERNAL
+0348 6E56 6D0A     tki.f6  data   tk.f6               ; SEQUENTIAL
+0349 6E58 6D16     tki.f7  data   tk.f7               ; OUTPUT
+0350 6E5A 6D1E     tki.f8  data   tk.f8               ; UPDATE
+0351 6E5C 6D26     tki.f9  data   tk.f9               ; APPEND
+0352 6E5E 6D2E     tki.fa  data   tk.fa               ; FIXED
+0353 6E60 6D36     tki.fb  data   tk.fb               ; PERMANENT
+0354 6E62 6D42     tki.fc  data   tk.fc               ; TAB
+0355 6E64 6D48     tki.fd  data   tk.fd               ; #
+0356 6E66 6D4C     tki.fe  data   tk.noop             ;
+0357 6E68 6D4C     tki.ff  data   tk.noop             ; <NOOP>
+0358               
+0359      6D6A     tib.tokenindex equ tki.80
+                   < stevie_b7.asm.47183
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Scratchpad memory dump
 0089                       ;-----------------------------------------------------------------------
@@ -12465,7 +12508,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0092                       ;-----------------------------------------------------------------------
 0093                       ; Bank full check
 0094                       ;-----------------------------------------------------------------------
@@ -12487,7 +12530,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0102                       ;-----------------------------------------------------------------------
 0103                       ; Vector table
 0104                       ;-----------------------------------------------------------------------
@@ -12523,7 +12566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0026 7FCE 6122     vec.8   data  mem.sams.set.basic4   ;
 0027 7FD0 6128     vec.9   data  mem.sams.set.basic5   ;
 0028 7FD2 618C     vec.10  data  tib.run               ;
-0029 7FD4 65D0     vec.11  data  tib.uncrunch          ;
+0029 7FD4 65CC     vec.11  data  tib.uncrunch          ;
 0030 7FD6 2026     vec.12  data  cpu.crash             ;
 0031 7FD8 2026     vec.13  data  cpu.crash             ;
 0032 7FDA 2026     vec.14  data  cpu.crash             ;
@@ -12545,7 +12588,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.22665
+                   < stevie_b7.asm.47183
 0106               
 0107               *--------------------------------------------------------------
 0108               * Video mode configuration
