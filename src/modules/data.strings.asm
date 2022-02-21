@@ -30,6 +30,7 @@ txt.done.delete    #string 'Delete completed'
 txt.done.clipboard #string 'Clipboard saved'
 txt.done.clipdev   #string 'Clipboard set'
 txt.fastmode       #string 'Fastmode'
+txt.uncrunching    #string 'Expanding TI Basic program line....'
 txt.kb             #string 'kb'
 txt.lines          #string 'Lines'
 txt.newfile        #string '[New file]'
@@ -47,11 +48,11 @@ txt.ruler          text    '.........'
                    text    '.........'
                    byte    21
                    text    '.........'
-                   byte    22                   
-                   text    '.........'                   
-                   byte    23                   
+                   byte    22
                    text    '.........'
-                   byte    24                   
+                   byte    23
+                   text    '.........'
+                   byte    24
                    text    '.........'
                    byte    25
                    even

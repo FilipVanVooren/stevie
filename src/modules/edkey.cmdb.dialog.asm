@@ -36,8 +36,8 @@ edkey.action.cmdb.proceed:
         ;------------------------------------------------------
         ; Asserts failed
         ;------------------------------------------------------
-!       mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system       
+!       mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -63,8 +63,8 @@ edkey.action.cmdb.proceed.exit:
 edkey.action.cmdb.fastmode.toggle:
        bl    @fm.fastmode           ; Toggle fast mode.
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @edkey.keyscan.hook.debounce 
-                                    ; Back to editor main             
+       b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 ***************************************************************
@@ -82,8 +82,8 @@ edkey.action.cmdb.fastmode.toggle:
 edkey.action.cmdb.sid.toggle:
        bl    @tibasic.sid.toggle    ; Toggle SID mode.
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @edkey.keyscan.hook.debounce 
-                                    ; Back to editor main          
+       b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 
@@ -101,7 +101,7 @@ edkey.action.cmdb.sid.toggle:
 ********|*****|*********************|**************************
 edkey.action.cmdb.preset:
        bl    @cmdb.cmd.preset       ; Set preset
-       b     @edkey.keyscan.hook.debounce 
+       b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 
 
@@ -122,12 +122,18 @@ edkey.action.cmdb.close.about:
         clr   @cmdb.dialog.var      ; Reset to Help page 1
         ;------------------------------------------------------
         ; Erase header line
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @hchar
               byte 0,0,32,80*2
               data EOL
 
-        jmp   edkey.action.cmdb.close.dialog
+        bl    @cmdb.dialog.close    ; Close dialog
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
+
 
 
 
@@ -144,13 +150,7 @@ edkey.action.cmdb.close.about:
 * none
 ********|*****|*********************|**************************
 edkey.action.cmdb.close.dialog:
-        ;------------------------------------------------------
-        ; Close dialog
-        ;------------------------------------------------------        
-        clr   @cmdb.dialog          ; Reset dialog ID
-        bl    @pane.cursor.blink    ; Show cursor
-        bl    @pane.cmdb.hide       ; Hide command buffer pane
-        seto  @fb.status.dirty      ; Trigger status lines update        
+        bl    @cmdb.dialog.close    ; Close dialog
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

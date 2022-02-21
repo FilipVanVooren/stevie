@@ -25,6 +25,27 @@ tib.uncrunch:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
+        ; Set indicator
+        ;------------------------------------------------------
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+
+        mov   @tv.busycolor,@parm1  ; Get busy color
+        bl    @pane.action.colorscheme.statlines
+                                    ; Set color combination for status line
+                                    ; \ i  @parm1 = Color combination
+                                    ; /
+
+        mov   *stack+,@parm1        ; Pop @parm1
+
+        bl    @hchar
+              byte pane.botrow,0,32,55
+              data eol              ; Remove shortcuts
+
+        bl    @putat
+              byte pane.botrow,0
+              data txt.uncrunching  ; Show expansion message
+        ;------------------------------------------------------
         ; Prepare for uncrunching
         ;------------------------------------------------------
         bl    @tib.uncrunch.prepare ; Prepare for uncrunching TI Basic program
@@ -43,8 +64,16 @@ tib.uncrunch:
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0  = SAMS page number
                                     ; / i  tmp1  = Memory map address
+        ;------------------------------------------------------
+        ; Close dialog and refresh frame buffer
+        ;------------------------------------------------------
+        bl    @cmdb.dialog.close    ; Close dialog
 
-        bl    @fb.refresh           ; Refresh frame buffer content
+        clr   @parm1                ; Goto line 1
+
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

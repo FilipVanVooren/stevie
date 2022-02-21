@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.32465
+     **** ****     > stevie_b0.asm.24488
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220220-1941290
+0009               * File: stevie_b0.asm               ; Version 220221-1937350
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -562,7 +562,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0445      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0446      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0447      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -702,7 +702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0018               
 0019               ***************************************************************
 0020               * BANK 0
@@ -761,7 +761,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 7 (Resume Stevie session)
@@ -1680,7 +1680,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220220-1941290'
+0270 62AB   42             text  'Build-ID  220221-1937350'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1688,10 +1688,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B4 2032     
      62B6 3230     
      62B8 3232     
-     62BA 302D     
+     62BA 312D     
      62BC 3139     
-     62BE 3431     
-     62C0 3239     
+     62BE 3337     
+     62C0 3335     
      62C2 30       
 0271                       even
 0272               
@@ -5972,8 +5972,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0380 703A 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      703C 0040     
 0381 703E 0460  28         b     @main                 ; Give control to main program
-     7040 3A06     
-                   < stevie_b0.asm.32465
+     7040 3A2A     
+                   < stevie_b0.asm.24488
 0117                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6592,7 +6592,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      725A A50E     
 0041               
 0042 725C 0204  20         li    tmp0,txt.newfile      ; "New file"
-     725E 381C     
+     725E 3840     
 0043 7260 C804  38         mov   tmp0,@edb.filename.ptr
      7262 A512     
 0044               
@@ -6602,7 +6602,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      726A A45C     
 0047               
 0048 726C 0204  20         li    tmp0,txt.filetype.none
-     726E 38D8     
+     726E 38FC     
 0049 7270 C804  38         mov   tmp0,@edb.filetype.ptr
      7272 A514     
 0050               
@@ -6795,13 +6795,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043                       ;------------------------------------------------------
 0044 730E 06A0  32         bl    @cpym2m
      7310 24EE     
-0045 7312 39B0                   data def.printer.fname,tv.printer.fname,7
+0045 7312 39D4                   data def.printer.fname,tv.printer.fname,7
      7314 DE00     
      7316 0007     
 0046               
 0047 7318 06A0  32         bl    @cpym2m
      731A 24EE     
-0048 731C 39B8                   data def.clip.fname,tv.clip.fname,10
+0048 731C 39DC                   data def.clip.fname,tv.clip.fname,10
      731E DE50     
      7320 000A     
 0049                       ;-------------------------------------------------------
@@ -8501,317 +8501,339 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      78CE 65       
 0131                       even
 0132               
-0133               txt.kb
-0134 78D0 02               byte  2
-0135 78D1   6B             text  'kb'
-     78D2 62       
+0133               txt.uncrunching
+0134 78D0 23               byte  35
+0135 78D1   45             text  'Expanding TI Basic program line....'
+     78D2 7870     
+     78D4 616E     
+     78D6 6469     
+     78D8 6E67     
+     78DA 2054     
+     78DC 4920     
+     78DE 4261     
+     78E0 7369     
+     78E2 6320     
+     78E4 7072     
+     78E6 6F67     
+     78E8 7261     
+     78EA 6D20     
+     78EC 6C69     
+     78EE 6E65     
+     78F0 2E2E     
+     78F2 2E2E     
 0136                       even
 0137               
-0138               txt.lines
-0139 78D4 05               byte  5
-0140 78D5   4C             text  'Lines'
-     78D6 696E     
-     78D8 6573     
+0138               txt.kb
+0139 78F4 02               byte  2
+0140 78F5   6B             text  'kb'
+     78F6 62       
 0141                       even
 0142               
-0143               txt.newfile
-0144 78DA 0A               byte  10
-0145 78DB   5B             text  '[New file]'
-     78DC 4E65     
-     78DE 7720     
-     78E0 6669     
-     78E2 6C65     
-     78E4 5D       
+0143               txt.lines
+0144 78F8 05               byte  5
+0145 78F9   4C             text  'Lines'
+     78FA 696E     
+     78FC 6573     
 0146                       even
 0147               
-0148               txt.filetype.dv80
-0149 78E6 04               byte  4
-0150 78E7   44             text  'DV80'
-     78E8 5638     
-     78EA 30       
+0148               txt.newfile
+0149 78FE 0A               byte  10
+0150 78FF   5B             text  '[New file]'
+     7900 4E65     
+     7902 7720     
+     7904 6669     
+     7906 6C65     
+     7908 5D       
 0151                       even
 0152               
-0153               txt.m1
-0154 78EC 03               byte  3
-0155 78ED   4D             text  'M1='
-     78EE 313D     
+0153               txt.filetype.dv80
+0154 790A 04               byte  4
+0155 790B   44             text  'DV80'
+     790C 5638     
+     790E 30       
 0156                       even
 0157               
-0158               txt.m2
-0159 78F0 03               byte  3
-0160 78F1   4D             text  'M2='
-     78F2 323D     
+0158               txt.m1
+0159 7910 03               byte  3
+0160 7911   4D             text  'M1='
+     7912 313D     
 0161                       even
 0162               
-0163               txt.keys.default
-0164 78F4 07               byte  7
-0165 78F5   46             text  'F9-Menu'
-     78F6 392D     
-     78F8 4D65     
-     78FA 6E75     
+0163               txt.m2
+0164 7914 03               byte  3
+0165 7915   4D             text  'M2='
+     7916 323D     
 0166                       even
 0167               
-0168               txt.keys.block
-0169 78FC 36               byte  54
-0170 78FD   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
-     78FE 392D     
-     7900 4261     
-     7902 636B     
-     7904 2020     
-     7906 5E43     
-     7908 6F70     
-     790A 7920     
-     790C 205E     
-     790E 4D6F     
-     7910 7665     
-     7912 2020     
-     7914 5E44     
-     7916 656C     
-     7918 2020     
-     791A 5E53     
-     791C 6176     
-     791E 6520     
-     7920 205E     
-     7922 5072     
-     7924 696E     
-     7926 7420     
-     7928 205E     
-     792A 5B31     
-     792C 2D35     
-     792E 5D43     
-     7930 6C69     
-     7932 70       
+0168               txt.keys.default
+0169 7918 07               byte  7
+0170 7919   46             text  'F9-Menu'
+     791A 392D     
+     791C 4D65     
+     791E 6E75     
 0171                       even
 0172               
-0173 7934 2E2E     txt.ruler          text    '.........'
-     7936 2E2E     
-     7938 2E2E     
-     793A 2E2E     
-     793C 2E       
-0174 793D   12                        byte    18
-0175 793E 2E2E                        text    '.........'
-     7940 2E2E     
-     7942 2E2E     
-     7944 2E2E     
-     7946 2E       
-0176 7947   13                        byte    19
-0177 7948 2E2E                        text    '.........'
-     794A 2E2E     
-     794C 2E2E     
-     794E 2E2E     
-     7950 2E       
-0178 7951   14                        byte    20
-0179 7952 2E2E                        text    '.........'
-     7954 2E2E     
-     7956 2E2E     
-     7958 2E2E     
-     795A 2E       
-0180 795B   15                        byte    21
-0181 795C 2E2E                        text    '.........'
+0173               txt.keys.block
+0174 7920 36               byte  54
+0175 7921   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
+     7922 392D     
+     7924 4261     
+     7926 636B     
+     7928 2020     
+     792A 5E43     
+     792C 6F70     
+     792E 7920     
+     7930 205E     
+     7932 4D6F     
+     7934 7665     
+     7936 2020     
+     7938 5E44     
+     793A 656C     
+     793C 2020     
+     793E 5E53     
+     7940 6176     
+     7942 6520     
+     7944 205E     
+     7946 5072     
+     7948 696E     
+     794A 7420     
+     794C 205E     
+     794E 5B31     
+     7950 2D35     
+     7952 5D43     
+     7954 6C69     
+     7956 70       
+0176                       even
+0177               
+0178 7958 2E2E     txt.ruler          text    '.........'
+     795A 2E2E     
+     795C 2E2E     
      795E 2E2E     
-     7960 2E2E     
-     7962 2E2E     
-     7964 2E       
-0182 7965   16                        byte    22
-0183 7966 2E2E                        text    '.........'
+     7960 2E       
+0179 7961   12                        byte    18
+0180 7962 2E2E                        text    '.........'
+     7964 2E2E     
+     7966 2E2E     
      7968 2E2E     
-     796A 2E2E     
-     796C 2E2E     
-     796E 2E       
-0184 796F   17                        byte    23
-0185 7970 2E2E                        text    '.........'
+     796A 2E       
+0181 796B   13                        byte    19
+0182 796C 2E2E                        text    '.........'
+     796E 2E2E     
+     7970 2E2E     
      7972 2E2E     
-     7974 2E2E     
-     7976 2E2E     
-     7978 2E       
-0186 7979   18                        byte    24
-0187 797A 2E2E                        text    '.........'
+     7974 2E       
+0183 7975   14                        byte    20
+0184 7976 2E2E                        text    '.........'
+     7978 2E2E     
+     797A 2E2E     
      797C 2E2E     
-     797E 2E2E     
-     7980 2E2E     
-     7982 2E       
-0188 7983   19                        byte    25
-0189                                  even
-0190 7984 020E     txt.alpha.down     data >020e,>0f00
-     7986 0F00     
-0191 7988 0110     txt.vertline       data >0110
-0192 798A 011C     txt.keymarker      byte 1,28
-0193               
-0194               txt.ws1
-0195 798C 01               byte  1
-0196 798D   20             text  ' '
-0197                       even
+     797E 2E       
+0185 797F   15                        byte    21
+0186 7980 2E2E                        text    '.........'
+     7982 2E2E     
+     7984 2E2E     
+     7986 2E2E     
+     7988 2E       
+0187 7989   16                        byte    22
+0188 798A 2E2E                        text    '.........'
+     798C 2E2E     
+     798E 2E2E     
+     7990 2E2E     
+     7992 2E       
+0189 7993   17                        byte    23
+0190 7994 2E2E                        text    '.........'
+     7996 2E2E     
+     7998 2E2E     
+     799A 2E2E     
+     799C 2E       
+0191 799D   18                        byte    24
+0192 799E 2E2E                        text    '.........'
+     79A0 2E2E     
+     79A2 2E2E     
+     79A4 2E2E     
+     79A6 2E       
+0193 79A7   19                        byte    25
+0194                                  even
+0195 79A8 020E     txt.alpha.down     data >020e,>0f00
+     79AA 0F00     
+0196 79AC 0110     txt.vertline       data >0110
+0197 79AE 011C     txt.keymarker      byte 1,28
 0198               
-0199               txt.ws2
-0200 798E 02               byte  2
-0201 798F   20             text  '  '
-     7990 20       
+0199               txt.ws1
+0200 79B0 01               byte  1
+0201 79B1   20             text  ' '
 0202                       even
 0203               
-0204               txt.ws3
-0205 7992 03               byte  3
-0206 7993   20             text  '   '
-     7994 2020     
+0204               txt.ws2
+0205 79B2 02               byte  2
+0206 79B3   20             text  '  '
+     79B4 20       
 0207                       even
 0208               
-0209               txt.ws4
-0210 7996 04               byte  4
-0211 7997   20             text  '    '
-     7998 2020     
-     799A 20       
+0209               txt.ws3
+0210 79B6 03               byte  3
+0211 79B7   20             text  '   '
+     79B8 2020     
 0212                       even
 0213               
-0214               txt.ws5
-0215 799C 05               byte  5
-0216 799D   20             text  '     '
-     799E 2020     
-     79A0 2020     
+0214               txt.ws4
+0215 79BA 04               byte  4
+0216 79BB   20             text  '    '
+     79BC 2020     
+     79BE 20       
 0217                       even
 0218               
-0219      38D8     txt.filetype.none  equ txt.ws4
-0220               
-0221               
-0222               ;--------------------------------------------------------------
-0223               ; Strings for error line pane
-0224               ;--------------------------------------------------------------
-0225               txt.ioerr.load
-0226 79A2 15               byte  21
-0227 79A3   46             text  'Failed loading file: '
-     79A4 6169     
-     79A6 6C65     
-     79A8 6420     
-     79AA 6C6F     
-     79AC 6164     
-     79AE 696E     
-     79B0 6720     
-     79B2 6669     
-     79B4 6C65     
-     79B6 3A20     
-0228                       even
-0229               
-0230               txt.ioerr.save
-0231 79B8 14               byte  20
-0232 79B9   46             text  'Failed saving file: '
-     79BA 6169     
-     79BC 6C65     
-     79BE 6420     
-     79C0 7361     
-     79C2 7669     
-     79C4 6E67     
-     79C6 2066     
-     79C8 696C     
-     79CA 653A     
-     79CC 20       
+0219               txt.ws5
+0220 79C0 05               byte  5
+0221 79C1   20             text  '     '
+     79C2 2020     
+     79C4 2020     
+0222                       even
+0223               
+0224      38FC     txt.filetype.none  equ txt.ws4
+0225               
+0226               
+0227               ;--------------------------------------------------------------
+0228               ; Strings for error line pane
+0229               ;--------------------------------------------------------------
+0230               txt.ioerr.load
+0231 79C6 15               byte  21
+0232 79C7   46             text  'Failed loading file: '
+     79C8 6169     
+     79CA 6C65     
+     79CC 6420     
+     79CE 6C6F     
+     79D0 6164     
+     79D2 696E     
+     79D4 6720     
+     79D6 6669     
+     79D8 6C65     
+     79DA 3A20     
 0233                       even
 0234               
-0235               txt.ioerr.print
-0236 79CE 1B               byte  27
-0237 79CF   46             text  'Failed printing to device: '
-     79D0 6169     
-     79D2 6C65     
-     79D4 6420     
-     79D6 7072     
-     79D8 696E     
-     79DA 7469     
-     79DC 6E67     
-     79DE 2074     
-     79E0 6F20     
-     79E2 6465     
-     79E4 7669     
-     79E6 6365     
-     79E8 3A20     
+0235               txt.ioerr.save
+0236 79DC 14               byte  20
+0237 79DD   46             text  'Failed saving file: '
+     79DE 6169     
+     79E0 6C65     
+     79E2 6420     
+     79E4 7361     
+     79E6 7669     
+     79E8 6E67     
+     79EA 2066     
+     79EC 696C     
+     79EE 653A     
+     79F0 20       
 0238                       even
 0239               
-0240               txt.io.nofile
-0241 79EA 16               byte  22
-0242 79EB   4E             text  'No filename specified.'
-     79EC 6F20     
-     79EE 6669     
-     79F0 6C65     
-     79F2 6E61     
-     79F4 6D65     
-     79F6 2073     
-     79F8 7065     
-     79FA 6369     
-     79FC 6669     
-     79FE 6564     
-     7A00 2E       
+0240               txt.ioerr.print
+0241 79F2 1B               byte  27
+0242 79F3   46             text  'Failed printing to device: '
+     79F4 6169     
+     79F6 6C65     
+     79F8 6420     
+     79FA 7072     
+     79FC 696E     
+     79FE 7469     
+     7A00 6E67     
+     7A02 2074     
+     7A04 6F20     
+     7A06 6465     
+     7A08 7669     
+     7A0A 6365     
+     7A0C 3A20     
 0243                       even
 0244               
-0245               txt.memfull.load
-0246 7A02 2D               byte  45
-0247 7A03   49             text  'Index full. File too large for editor buffer.'
-     7A04 6E64     
-     7A06 6578     
-     7A08 2066     
-     7A0A 756C     
-     7A0C 6C2E     
-     7A0E 2046     
-     7A10 696C     
-     7A12 6520     
-     7A14 746F     
-     7A16 6F20     
-     7A18 6C61     
-     7A1A 7267     
-     7A1C 6520     
-     7A1E 666F     
-     7A20 7220     
+0245               txt.io.nofile
+0246 7A0E 16               byte  22
+0247 7A0F   4E             text  'No filename specified.'
+     7A10 6F20     
+     7A12 6669     
+     7A14 6C65     
+     7A16 6E61     
+     7A18 6D65     
+     7A1A 2073     
+     7A1C 7065     
+     7A1E 6369     
+     7A20 6669     
      7A22 6564     
-     7A24 6974     
-     7A26 6F72     
-     7A28 2062     
-     7A2A 7566     
-     7A2C 6665     
-     7A2E 722E     
+     7A24 2E       
 0248                       even
 0249               
-0250               txt.block.inside
-0251 7A30 2D               byte  45
-0252 7A31   43             text  'Copy/Move target must be outside M1-M2 range.'
-     7A32 6F70     
-     7A34 792F     
-     7A36 4D6F     
-     7A38 7665     
-     7A3A 2074     
-     7A3C 6172     
-     7A3E 6765     
-     7A40 7420     
-     7A42 6D75     
-     7A44 7374     
-     7A46 2062     
-     7A48 6520     
-     7A4A 6F75     
-     7A4C 7473     
-     7A4E 6964     
-     7A50 6520     
-     7A52 4D31     
-     7A54 2D4D     
-     7A56 3220     
-     7A58 7261     
-     7A5A 6E67     
-     7A5C 652E     
+0250               txt.memfull.load
+0251 7A26 2D               byte  45
+0252 7A27   49             text  'Index full. File too large for editor buffer.'
+     7A28 6E64     
+     7A2A 6578     
+     7A2C 2066     
+     7A2E 756C     
+     7A30 6C2E     
+     7A32 2046     
+     7A34 696C     
+     7A36 6520     
+     7A38 746F     
+     7A3A 6F20     
+     7A3C 6C61     
+     7A3E 7267     
+     7A40 6520     
+     7A42 666F     
+     7A44 7220     
+     7A46 6564     
+     7A48 6974     
+     7A4A 6F72     
+     7A4C 2062     
+     7A4E 7566     
+     7A50 6665     
+     7A52 722E     
 0253                       even
 0254               
-0255               
-0256               ;--------------------------------------------------------------
-0257               ; Strings for command buffer
-0258               ;--------------------------------------------------------------
-0259               txt.cmdb.prompt
-0260 7A5E 01               byte  1
-0261 7A5F   3E             text  '>'
-0262                       even
-0263               
-0264               txt.colorscheme
-0265 7A60 0D               byte  13
-0266 7A61   43             text  'Color scheme:'
-     7A62 6F6C     
-     7A64 6F72     
-     7A66 2073     
-     7A68 6368     
-     7A6A 656D     
-     7A6C 653A     
+0255               txt.block.inside
+0256 7A54 2D               byte  45
+0257 7A55   43             text  'Copy/Move target must be outside M1-M2 range.'
+     7A56 6F70     
+     7A58 792F     
+     7A5A 4D6F     
+     7A5C 7665     
+     7A5E 2074     
+     7A60 6172     
+     7A62 6765     
+     7A64 7420     
+     7A66 6D75     
+     7A68 7374     
+     7A6A 2062     
+     7A6C 6520     
+     7A6E 6F75     
+     7A70 7473     
+     7A72 6964     
+     7A74 6520     
+     7A76 4D31     
+     7A78 2D4D     
+     7A7A 3220     
+     7A7C 7261     
+     7A7E 6E67     
+     7A80 652E     
+0258                       even
+0259               
+0260               
+0261               ;--------------------------------------------------------------
+0262               ; Strings for command buffer
+0263               ;--------------------------------------------------------------
+0264               txt.cmdb.prompt
+0265 7A82 01               byte  1
+0266 7A83   3E             text  '>'
 0267                       even
 0268               
+0269               txt.colorscheme
+0270 7A84 0D               byte  13
+0271 7A85   43             text  'Color scheme:'
+     7A86 6F6C     
+     7A88 6F72     
+     7A8A 2073     
+     7A8C 6368     
+     7A8E 656D     
+     7A90 653A     
+0272                       even
+0273               
                    < ram.resident.asm
 0041                       copy  "data.defaults.asm"      ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -8822,85 +8844,85 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
 0007               def.printer.fname
-0008 7A6E 06               byte  6
-0009 7A6F   50             text  'PI.PIO'
-     7A70 492E     
-     7A72 5049     
-     7A74 4F       
+0008 7A92 06               byte  6
+0009 7A93   50             text  'PI.PIO'
+     7A94 492E     
+     7A96 5049     
+     7A98 4F       
 0010                       even
 0011               
 0012               def.clip.fname
-0013 7A76 09               byte  9
-0014 7A77   44             text  'DSK1.CLIP'
-     7A78 534B     
-     7A7A 312E     
-     7A7C 434C     
-     7A7E 4950     
+0013 7A9A 09               byte  9
+0014 7A9B   44             text  'DSK1.CLIP'
+     7A9C 534B     
+     7A9E 312E     
+     7AA0 434C     
+     7AA2 4950     
 0015                       even
 0016               
 0017               def.clip.fname.b
-0018 7A80 09               byte  9
-0019 7A81   44             text  'DSK2.CLIP'
-     7A82 534B     
-     7A84 322E     
-     7A86 434C     
-     7A88 4950     
+0018 7AA4 09               byte  9
+0019 7AA5   44             text  'DSK2.CLIP'
+     7AA6 534B     
+     7AA8 322E     
+     7AAA 434C     
+     7AAC 4950     
 0020                       even
 0021               
 0022               def.clip.fname.c
-0023 7A8A 09               byte  9
-0024 7A8B   54             text  'TIPI.CLIP'
-     7A8C 4950     
-     7A8E 492E     
-     7A90 434C     
-     7A92 4950     
+0023 7AAE 09               byte  9
+0024 7AAF   54             text  'TIPI.CLIP'
+     7AB0 4950     
+     7AB2 492E     
+     7AB4 434C     
+     7AB6 4950     
 0025                       even
 0026               
 0027               def.devices
-0028 7A94 2F               byte  47
-0029 7A95   2C             text  ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     7A96 4453     
-     7A98 4B2C     
-     7A9A 4844     
-     7A9C 582C     
-     7A9E 4944     
-     7AA0 452C     
-     7AA2 5049     
-     7AA4 2E2C     
-     7AA6 5049     
-     7AA8 4F2C     
-     7AAA 5449     
-     7AAC 5049     
-     7AAE 2E2C     
-     7AB0 5244     
-     7AB2 2C53     
-     7AB4 4353     
-     7AB6 2C53     
-     7AB8 4444     
-     7ABA 2C57     
-     7ABC 4453     
-     7ABE 2C52     
-     7AC0 5332     
-     7AC2 3332     
+0028 7AB8 2F               byte  47
+0029 7AB9   2C             text  ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     7ABA 4453     
+     7ABC 4B2C     
+     7ABE 4844     
+     7AC0 582C     
+     7AC2 4944     
+     7AC4 452C     
+     7AC6 5049     
+     7AC8 2E2C     
+     7ACA 5049     
+     7ACC 4F2C     
+     7ACE 5449     
+     7AD0 5049     
+     7AD2 2E2C     
+     7AD4 5244     
+     7AD6 2C53     
+     7AD8 4353     
+     7ADA 2C53     
+     7ADC 4444     
+     7ADE 2C57     
+     7AE0 4453     
+     7AE2 2C52     
+     7AE4 5332     
+     7AE6 3332     
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0118                       ;------------------------------------------------------
 0119                       ; Stevie main entry point
 0120                       ;------------------------------------------------------
 0121               main:
-0122 7AC4 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7AC6 6002     
+0122 7AE8 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7AEA 6002     
 0123               
 0127               
-0128 7AC8 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
-     7ACA 6046     
+0128 7AEC 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+     7AEE 6046     
 0129                       ;------------------------------------------------------
 0130                       ; Memory full check
 0131                       ;------------------------------------------------------
 0133               
-0137 7ACC 3A0E                   data $                ; Bank 0 ROM size OK.
+0137 7AF0 3A32                   data $                ; Bank 0 ROM size OK.
 0139                       ;-----------------------------------------------------------------------
 0140                       ; Show ROM bank in CPU crash screen
 0141                       ;-----------------------------------------------------------------------
@@ -8919,7 +8941,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b0.asm.32465
+                   < stevie_b0.asm.24488
 0143               
 0144               cpu.crash.showbank.bankstr:
 0145               

@@ -24,7 +24,7 @@ dialog.save:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Crunch current row if dirty 
+        ; Crunch current row if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   !                     ; Skip crunching if clean
@@ -42,13 +42,13 @@ dialog.save:
 
         li    tmp0,id.dialog.saveblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-        li    tmp0,txt.head.save2   ; Title "Save block to file"                
+        li    tmp0,txt.head.save2   ; Title "Save block to file"
         mov   tmp0,@cmdb.panhead    ; Header for dialog
         jmp   dialog.save.header
         ;-------------------------------------------------------
         ; Default dialog
         ;-------------------------------------------------------
-dialog.save.default:        
+dialog.save.default:
         li    tmp0,id.dialog.save
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.save    ; Title "Save file"
@@ -66,9 +66,8 @@ dialog.save.default:
         ; Setup header
         ;-------------------------------------------------------
 dialog.save.header:
-
         clr   @cmdb.paninfo         ; No info message, do input prompt
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
@@ -80,11 +79,11 @@ dialog.save.header:
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-        bl    @pane.cursor.blink    ; Show cursor 
+        bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.save.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

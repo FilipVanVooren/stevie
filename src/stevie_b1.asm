@@ -97,6 +97,7 @@ main:
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
+        copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------

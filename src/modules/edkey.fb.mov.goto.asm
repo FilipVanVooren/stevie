@@ -2,13 +2,13 @@
 * Purpose...: Goto specified line in editor buffer
 
 ***************************************************************
-* _edkey.goto.fb.toprow
+* edkey.goto.fb.toprow
 *
-* Position cursor on first row in frame buffer and 
+* Position cursor on first row in frame buffer and
 * align variables in editor buffer to match with that position.
 *
 * Internal method that needs to be called via jmp or branch
-* instruction. 
+* instruction.
 ***************************************************************
 * b    @edkey.goto.fb.toprow
 *--------------------------------------------------------------
@@ -26,7 +26,7 @@ edkey.goto.fb.toprow:
                                     ; /             (becomes @fb.topline)
 
         clr   @fb.row               ; Frame buffer line 0
-        clr   @fb.column            ; Frame buffer column 0 
+        clr   @fb.column            ; Frame buffer column 0
         clr   @wyx                  ; Position VDP cursor
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
 
@@ -42,7 +42,7 @@ edkey.goto.fb.toprow:
 *---------------------------------------------------------------
 edkey.action.goto:
         ;-------------------------------------------------------
-        ; Crunch current row if dirty 
+        ; Crunch current row if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.goto.refresh
@@ -56,8 +56,8 @@ edkey.action.goto:
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------
-edkey.action.goto.refresh:        
-        seto  @fb.colorize           ; Colorize M1/M2 marked lines (if present)        
+edkey.action.goto.refresh:
+        seto  @fb.colorize           ; Colorize M1/M2 marked lines (if present)
 
         b     @edkey.goto.fb.toprow  ; Position cursor and exit
                                      ; \ i  @parm1 = Line in editor buffer
