@@ -43,7 +43,7 @@ txt.filetype.dv80  #string 'DV80'
 txt.m1             #string 'M1='
 txt.m2             #string 'M2='
 txt.keys.default   #string 'F9-Menu  ^H-Help'
-txt.keys.defaultb  #string 'F9-Menu  F0-TI Basic  ^H-Help'
+txt.keys.defaultb  #string 'F9-Menu  ^H-Help  F0-TI Basic'
 txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
 txt.ruler          text    '.........'
                    byte    18
