@@ -22,7 +22,7 @@ dialog.help:
 
         li    tmp0,txt.about.build
         mov   tmp0,@cmdb.paninfo    ; Info line
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.about
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
@@ -37,7 +37,7 @@ dialog.help:
 dialog.help.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
-               
+
 
 
 ***************************************************************
@@ -77,7 +77,7 @@ dialog.help.content:
         ; but we also set them here to avoid flickering due to
         ; timing delay before function is called.
         ;
-        
+
         li    tmp0,vdp.fb.toprow.tat
         mov   @tv.color,tmp1        ; Get color for framebuffer
         srl   tmp1,8                ; Right justify
@@ -88,7 +88,7 @@ dialog.help.content:
                                     ; | i  tmp0 = Memory start address
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Number of bytes to fill
-        
+
         bl    @filv
               data sprsat,>d0,32    ; Turn off sprites
         ;------------------------------------------------------
@@ -134,10 +134,10 @@ dialog.help.content:
         ;------------------------------------------------------
 dialog.help.content.exit:
         mov   *stack+,@wyx          ; Pop cursor position
-        mov   *stack+,tmp3          ; Pop tmp3        
+        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0               
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
 
@@ -187,7 +187,7 @@ dialog.help.data.page1.right:
         #string 'Ctrl h   ^h   Help'
         #string 'ctrl u   ^u   Toggle ruler'
         #string 'Ctrl z   ^z   Cycle color schemes'
-        #string 'ctrl /   ^/   TI Basic (F9=exit)'
+        #string 'ctrl /   ^/   TI Basic  (F9=exit)'
 
 dialog.help.data.page2.left:
         #string ' '

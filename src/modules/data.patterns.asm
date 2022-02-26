@@ -14,8 +14,8 @@ cursors:
 ;--------------------------------------------------------------
 patterns:
         data  >0000,>0000,>ff00,>0000 ; 01. Single line
-        data  >8080,>8080,>ff80,>8080 ; 02. Connector |-
-        data  >0404,>0404,>ff04,>0404 ; 03. Connector -|
+        data  >367f,>3e1c,>0800,>0000 ; 02. Heart solid (left)
+        data  >80c0,>8000,>0000,>0000 ; 03. Heart solid (right)
 
 patterns.box:
         data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
@@ -43,13 +43,12 @@ vertline:
         data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
 
 
-low.digits:
-        ; digits 1-4 (18-21)
+low.digits:                           ; digits 1-4 (18-21)
         byte >00,>00,>00,>10,>30,>10,>10,>38
         byte >00,>00,>00,>38,>08,>38,>20,>38
         byte >00,>00,>00,>38,>08,>38,>08,>38
         byte >00,>00,>00,>28,>28,>38,>08,>08
-        ; digits 5-8 (22-25)
+                                      ; digits 5-8 (22-25)
         byte >00,>00,>00,>38,>20,>38,>08,>38
         byte >00,>00,>00,>38,>20,>38,>28,>38
         byte >00,>00,>00,>38,>08,>10,>20,>20
@@ -58,5 +57,5 @@ low.digits:
 cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
 arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
 hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
-check:  data  >3649,>2214,>0800,>0000 ; 29. Checkmark left part
-        data  >8040,>8000,>0000,>0000 ; 30. Checkmark right part
+heart:  data  >3649,>2214,>0800,>0000 ; 29. Heart open (left)
+        data  >8040,>8000,>0000,>0000 ; 30. Heart open (right)

@@ -16,7 +16,7 @@
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
-***************************************************************
+****************************************************s***********
 * BANK 3
 ********|*****|*********************|**************************
 bankid  equ   bank3.rom             ; Set bank identifier to current bank

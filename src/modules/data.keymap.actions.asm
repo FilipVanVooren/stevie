@@ -325,7 +325,7 @@ keymap_actions.cmdb:
         byte  key.fctn.5, id.dialog.basic
         data  edkey.action.cmdb.sid.toggle
 
-        byte  key.ctrl.1, id.dialog.basic
+        byte  key.space, id.dialog.basic
         data  tibasic.uncrunch
         ;-------------------------------------------------------
         ; Dialog: Help

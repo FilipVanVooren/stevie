@@ -30,6 +30,9 @@ tib.uncrunch:
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
 
+
+        bl    @fm.newfile
+
         mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
                                     ; Set color combination for status line
