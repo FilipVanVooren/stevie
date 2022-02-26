@@ -166,8 +166,8 @@ txt.head.basic     byte 13,1,1
 txt.info.basic     #string 'Session:  1   2   3   4   5  '
 pos.info.basic     byte 10,14,18,22,26,>ff
 txt.hint.basic     #string 'Pick session 1-5. Press F9 in TI Basic for returning to Stevie.'
-txt.keys.basic     #string 'F9-Back  F5-Hide SID  SPACE-GetProg'
-txt.keys.basic2    #string 'F9-Back  *F5-Hide SID  SPACE-GetProg'
+txt.keys.basic     #string 'F9-Back  F5-Hide SID  SPACE-Get Source'
+txt.keys.basic2    #string 'F9-Back  *F5-Hide SID  SPACE-Get Source'
 
 
 ;--------------------------------------------------------------

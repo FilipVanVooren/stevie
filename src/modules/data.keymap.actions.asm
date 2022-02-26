@@ -143,6 +143,9 @@ keymap_actions.editor:
 
         byte  key.ctrl.slash, pane.focus.fb
         data  dialog.basic
+
+        byte  key.fctn.0, pane.focus.fb
+        data  dialog.basic
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

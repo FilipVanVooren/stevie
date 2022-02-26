@@ -23,7 +23,7 @@ pane.botline:
         ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
-        mov   @edb.block.m2,tmp0    ; \  
+        mov   @edb.block.m2,tmp0    ; \
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /
         jeq   pane.botline.show_keys
@@ -36,10 +36,20 @@ pane.botline:
         ;------------------------------------------------------
         ; Show default message
         ;------------------------------------------------------
-pane.botline.show_keys:        
+pane.botline.show_keys:
+        mov   @tib.session,tmp0     ; Active TI Basic session?
+        jeq   !
+
         bl    @putat
               byte pane.botrow,0
-              data txt.keys.default ; Show default shortcuts
+              data txt.keys.defaultb
+                                    ; Show defaults TI Basic
+        ;------------------------------------------------------
+        ; Show default keys
+        ;------------------------------------------------------
+!       bl    @putat
+              byte pane.botrow,0
+              data txt.keys.default ; Show default keys
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -62,11 +72,11 @@ pane.botline.show_mode.insert:
               data  txt.insert
         ;------------------------------------------------------
         ; Show "line,column"
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
 pane.botline.show_linecol:
-        mov   @fb.row,@parm1 
+        mov   @fb.row,@parm1
         bl    @fb.row2line          ; Row to editor line
-                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; \ i @fb.topline = Top line in frame buffer
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
 
@@ -77,7 +87,7 @@ pane.botline.show_linecol:
         bl    @putnum
               byte  pane.botrow,59  ; YX
               data  outparm1,rambuf
-              byte  48              ; ASCII offset 
+              byte  48              ; ASCII offset
               byte  32              ; Padding character
         ;------------------------------------------------------
         ; Show comma
@@ -86,7 +96,7 @@ pane.botline.show_linecol:
               byte  pane.botrow,64
               data  txt.delim
         ;------------------------------------------------------
-        ; Show column 
+        ; Show column
         ;------------------------------------------------------
         bl    @film
               data rambuf+5,32,12   ; Clear work buffer with space character
@@ -102,7 +112,7 @@ pane.botline.show_linecol:
         bl    @trimnum              ; Trim number to the left
               data  rambuf,rambuf+5,32
 
-        li    tmp0,>0600            ; "Fix" number length to clear junk chars  
+        li    tmp0,>0600            ; "Fix" number length to clear junk chars
         movb  tmp0,@rambuf+5        ; Set length byte
 
         ;------------------------------------------------------
@@ -113,12 +123,12 @@ pane.botline.show_linecol:
         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
         jlt   pane.botline.show_linecol.linelen
         jmp   pane.botline.show_linecol.colstring
-                                    ; Yes, skip showing row length        
+                                    ; Yes, skip showing row length
         ;------------------------------------------------------
         ; Add ',' delimiter and length of line to string
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
 pane.botline.show_linecol.linelen:
-        mov   @fb.column,tmp0       ; \ 
+        mov   @fb.column,tmp0       ; \
         li    tmp1,rambuf+7         ; | Determine column position for '-' char
         ci    tmp0,9                ; | based on number of digits in cursor X
         jlt   !                     ; | column.
@@ -131,34 +141,34 @@ pane.botline.show_linecol.linelen:
 
         bl    @mknum
               data  fb.row.length,rambuf
-              byte  48              ; ASCII offset 
+              byte  48              ; ASCII offset
               byte  32              ; Padding character
 
         mov   @waux1,tmp1           ; Restore position in ram buffer
 
         mov   @fb.row.length,tmp0   ; \ Get length of line
-        ci    tmp0,10               ; / 
+        ci    tmp0,10               ; /
         jlt   pane.botline.show_line.1digit
         ;------------------------------------------------------
         ; Assert
-        ;------------------------------------------------------           
+        ;------------------------------------------------------
         ci    tmp0,80
         jle   pane.botline.show_line.2digits
         ;------------------------------------------------------
         ; Asserts failed
         ;------------------------------------------------------
-!       mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system       
+!       mov   r11,@>ffce            ; \ Save caller address
+        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; Show length of line (2 digits)
-        ;------------------------------------------------------   
+        ;------------------------------------------------------
 pane.botline.show_line.2digits:
         li    tmp0,rambuf+3
         movb  *tmp0+,*tmp1+         ; 1st digit row length
         jmp   pane.botline.show_line.rest
         ;------------------------------------------------------
         ; Show length of line (1 digits)
-        ;------------------------------------------------------   
+        ;------------------------------------------------------
 pane.botline.show_line.1digit:
         li    tmp0,rambuf+4
 pane.botline.show_line.rest:
@@ -175,8 +185,8 @@ pane.botline.show_linecol.colstring:
         ;------------------------------------------------------
         ; Show lines in buffer unless on last line in file
         ;------------------------------------------------------
-        mov   @fb.row,@parm1 
-        bl    @fb.row2line 
+        mov   @fb.row,@parm1
+        bl    @fb.row2line
         c     @edb.lines,@outparm1
         jne   pane.botline.show_lines_in_buffer
 
@@ -200,7 +210,7 @@ pane.botline.show_lines_in_buffer:
         ; Exit
         ;------------------------------------------------------
 pane.botline.exit:
-        mov   *stack+,@wyx          ; Pop cursor position        
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

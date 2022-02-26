@@ -272,20 +272,6 @@ tib.uncrnch.prg.copy.statement:
         jeq   tib.uncrunch.prg.done ; yes, prepare for exit
 
         s     @w$0008,@tib.var2     ; Next entry in VRAM line number table
-
-        ; Need to deal with split line-number-table entries.
-        ; Need something like an underflow memory area where a split LNT entry
-        ; is copied to. This area needs to be checked and filled accordingly.
-        ;
-        ;     if tmp0 < f000 then
-        ;          copy split LNT entry to underflow RAM area.
-        ;          tmp0 = underflow RAM Area
-        ;          process next entry
-        ;          set tmp0 back to regular LNT
-        ;
-        ; Can also happen for the 1st entry in LNT. So move check to subroutine
-        ; for reuse,
-
         jmp   tib.uncrunch.prg.lnt.loop
         ;------------------------------------------------------
         ; 7. Finished processing program

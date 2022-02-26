@@ -152,7 +152,11 @@ dialog.help.data.pages:
 
 dialog.help.data.page1.left:
         #string ' '
-        #string '------------- Cursor --------------'
+        byte    35
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' Cursor '
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        even
         #string 'Fctn s        Left'
         #string 'Fctn d        Right'
         #string 'Fctn e        Up'
@@ -172,7 +176,11 @@ dialog.help.data.page1.left:
 dialog.help.data.page1.right:
         #string '                                 (1/2)'
         #string ' '
-        #string '------------- File ----------------'
+        byte    36
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' File '
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        even
         #string 'Ctrl a   ^a   Append file'
         #string 'Ctrl i   ^i   Insert file at line'
         #string 'Ctrl c   ^c   Copy clipboard to line'
@@ -182,16 +190,24 @@ dialog.help.data.page1.right:
         #string 'Ctrl ,   ^,   Load prev file'
         #string 'Ctrl .   ^.   Load next file'
         #string ' '
-        #string '------------- Others --------------'
+        byte    35
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' Others '
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        even
         #string 'Fctn +   ^q   Quit'
+        #string 'Fctn 0   ^/   TI Basic'
         #string 'Ctrl h   ^h   Help'
-        #string 'ctrl u   ^u   Toggle ruler'
+        #string 'Ctrl u   ^u   Toggle ruler'
         #string 'Ctrl z   ^z   Cycle color schemes'
-        #string 'ctrl /   ^/   TI Basic  (F9=exit)'
 
 dialog.help.data.page2.left:
         #string ' '
-        #string '------------- Modifiers -----------'
+        byte    35
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' Modifiers '
+        byte    1,1,1,1,1,1,1,1,1,1,1
+        even
         #string 'Fctn 1        Delete character'
         #string 'Fctn 2        Insert character'
         #string 'Fctn 3        Delete line'
@@ -202,7 +218,11 @@ dialog.help.data.page2.left:
 dialog.help.data.page2.right:
         #string '                                 (2/2)'
         #string ' '
-        #string '------------- Block mode ----------'
+        byte    36
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' Block Mode '
+        byte    1,1,1,1,1,1,1,1,1,1,1
+        even
         #string 'Ctrl SPACE    Set M1/M2 marker'
         #string 'Ctrl d   ^d   Delete block'
         #string 'Ctrl c   ^c   Copy block'
