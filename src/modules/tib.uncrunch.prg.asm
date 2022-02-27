@@ -130,7 +130,7 @@ tib.uncrunch.prg.lnt.loop:
         clr   @fb.uncrunch.area+4   ; /
 
         bl    @at
-              byte pane.botrow,36   ; Position cursor
+              byte pane.botrow,28   ; Position cursor
 
         bl    @trimnum              ; Trim line number and move to uncrunch area
               data rambuf           ; \ i  p1 = Source

@@ -18,8 +18,9 @@ edkey.action.cmdb.file.new:
         mov   @edb.dirty,tmp0       ; Editor dirty?
         jeq   !                     ; No, skip "Unsaved changes"
 
-        bl    @dialog.unsaved       ; Show dialog
-        jmp   edkey.action.cmdb.file.new.exit
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+        b     @dialog.unsaved       ; Show dialog and exit
         ;-------------------------------------------------------
         ; Reset editor
         ;-------------------------------------------------------
@@ -29,6 +30,6 @@ edkey.action.cmdb.file.new:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.file.new.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     @edkey.action.top     ; Goto 1st line in editor buffer 
+        b     @edkey.action.top     ; Goto 1st line in editor buffer
