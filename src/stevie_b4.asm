@@ -54,7 +54,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (2)
         ;-----------------------------------------------------------------------
-        copy  "fb.utils.asm"        ; Framebuffer utilities
         copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
         copy  "fb.tab.next.asm"     ; Move cursor to next tab position
         copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory

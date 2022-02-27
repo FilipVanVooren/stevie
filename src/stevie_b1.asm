@@ -101,7 +101,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
         ;-----------------------------------------------------------------------
-        copy  "fb.utils.asm"                ; Framebuffer utilities
         copy  "fb.cursor.up.asm"            ; Cursor up
         copy  "fb.cursor.down.asm"          ; Cursor down
         copy  "fb.cursor.home.asm"          ; Cursor home

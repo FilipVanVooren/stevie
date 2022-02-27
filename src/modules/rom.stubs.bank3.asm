@@ -11,7 +11,7 @@ edb.line.pack:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.10           ; | i  p1 = Vector with target address
@@ -20,7 +20,7 @@ edb.line.pack:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller              
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -32,7 +32,7 @@ edkey.action.cmdb.show:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.15           ; | i  p1 = Vector with target address
@@ -41,7 +41,7 @@ edkey.action.cmdb.show:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -53,7 +53,7 @@ fb.refresh:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.20           ; | i  p1 = Vector with target address
@@ -62,29 +62,7 @@ fb.refresh:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller      
-
-
-***************************************************************
-* Stub for "fb.row2line"
-* bank1 vec.22
-********|*****|*********************|**************************
-fb.row2line:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 1
-        ;------------------------------------------------------        
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
-              data vec.22           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller 
-
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -96,7 +74,7 @@ pane.errline.hide:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.27           ; | i  p1 = Vector with target address
@@ -105,7 +83,7 @@ pane.errline.hide:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller         
+        b     *r11                  ; Return to caller
 
 
 
@@ -118,7 +96,7 @@ pane.cursor.blink:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.28           ; | i  p1 = Vector with target address
@@ -127,7 +105,7 @@ pane.cursor.blink:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller         
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -139,7 +117,7 @@ pane.cursor.hide:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.29           ; | i  p1 = Vector with target address
@@ -148,7 +126,7 @@ pane.cursor.hide:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller             
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -160,7 +138,7 @@ pane.errline.show:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.30           ; | i  p1 = Vector with target address
@@ -169,7 +147,7 @@ pane.errline.show:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller         
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -181,7 +159,7 @@ pane.action.colorscheme.load:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.31           ; | i  p1 = Vector with target address
@@ -190,7 +168,7 @@ pane.action.colorscheme.load:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller            
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -202,7 +180,7 @@ fb.scan.fname:
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
         ; Call function in bank 4
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
               data vec.5            ; | i  p1 = Vector with target address
@@ -211,10 +189,10 @@ fb.scan.fname:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller 
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
 
 ; TODO Include _trampoline.bank1.ret
-; TODO Refactor stubs for using _trampoline.bank1.ret        
+; TODO Refactor stubs for using _trampoline.bank1.ret

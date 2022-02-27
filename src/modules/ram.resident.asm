@@ -6,6 +6,7 @@
         ;------------------------------------------------------
         copy  "rom.farjump.asm"        ; ROM bankswitch trampoline
         copy  "fb.asm"                 ; Framebuffer
+        copy  "fb.utils.asm"           ; Framebuffer utilities
         copy  "idx.asm"                ; Index management
         copy  "edb.asm"                ; Editor Buffer
         copy  "cmdb.asm"               ; Command buffer

@@ -77,6 +77,15 @@ tib.uncrunch:
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
+
+        clr   @fb.row               ; Frame buffer line 0
+        clr   @fb.column            ; Frame buffer column 0
+        clr   @wyx                  ; Position VDP cursor
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
