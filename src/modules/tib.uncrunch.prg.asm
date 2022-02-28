@@ -165,6 +165,10 @@ tib.uncrunch.prg.lnt.loop:
         mov   @tib.var5,tmp0        ; Get pointer to statement
         dec   tmp0                  ; Goto statement length prefix
 
+        data  c99_dbg_tmp0          ; \ Print vram address on classic99
+        data  >1001                 ; | debugger console.
+        data  data.debug.format     ; /
+
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0 = VRAM address
                                     ; |
@@ -289,3 +293,8 @@ tib.uncrunch.prg.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+
+data.debug.format:
+       text   'VRAM address >%X'
+       byte   0

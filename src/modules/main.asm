@@ -32,6 +32,7 @@ main.stevie:
 main.continue:
       ; data  c99_ovrd              ; classic99: Put CPU in overdrive mode
 
+
         ;------------------------------------------------------
         ; Setup F18A VDP
         ;------------------------------------------------------
@@ -128,21 +129,20 @@ main.continue:
 
         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
         mov   tmp0,@btihi           ; / Tell Task Scheduler
-
         ;-------------------------------------------------------
         ; Setup keyboard scanning and start kernel/timers
         ;-------------------------------------------------------
         bl    @mkhook
               data edkey.keyscan.hook
                                     ; Setup keyboard scanning hook
-
-
         ;-------------------------------------------------------
         ; Initialisation complete
         ;-------------------------------------------------------
         bl    @magic.set            ; Set magic string
 
-
+        li    tmp0,>37D7            ; \ Silence classic99 debugger console,
+        mov   tmp0,@>8370           ; | otherwise message flood with text
+        clr   tmp0                  ; / "VDP disk buffer header corrupted at PC"
         ;-------------------------------------------------------
         ; Start kernel
         ;-------------------------------------------------------
