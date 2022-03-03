@@ -83,6 +83,10 @@ tib.uncrunch.prg:
 tib.uncrunch.prg.lnt.loop:
         mov   @tib.var2,tmp0        ; Get VRAM address
 
+        data  c99_dbg_tmp0          ; \ Print vram address in tmp0 on classic99
+        data  >1001                 ; | debugger console.
+        data  data.printf.vram.lnt  ; /
+
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0 = VRAM address
                                     ; |
@@ -99,6 +103,7 @@ tib.uncrunch.prg.lnt.loop:
 
         movb  *tmp0+,@tib.var4      ; Line number MSB
         movb  *tmp0+,@tib.var4+1    ; Line number LSB
+
         ;------------------------------------------------------
         ; 1a. Get Pointer to statement (VRAM)
         ;------------------------------------------------------
@@ -165,9 +170,9 @@ tib.uncrunch.prg.lnt.loop:
         mov   @tib.var5,tmp0        ; Get pointer to statement
         dec   tmp0                  ; Goto statement length prefix
 
-        data  c99_dbg_tmp0          ; \ Print vram address on classic99
+        data  c99_dbg_tmp0          ; \ Print vram address in tmp0 on classic99
         data  >1001                 ; | debugger console.
-        data  data.printf.vram      ; /
+        data  data.printf.vram.stmt ; /
 
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0 = VRAM address
@@ -180,6 +185,13 @@ tib.uncrunch.prg.lnt.loop:
                                     ; | instead of VRAM address.
                                     ; |
                                     ; / Example: >f7b3 maps to >37b3.
+
+
+        mov   @tib.var4,tmp1
+        data  c99_dbg_tmp1          ; \ Print line number in tmp1 on classic99
+        data  >1001                 ; | debugger console.
+        data  data.printf.vram.lnum ; /
+
 
         movb  *tmp0+,tmp1           ; \ Get statement length in bytes
         srl   tmp1,8                ; / MSB to LSB
@@ -276,7 +288,7 @@ tib.uncrnch.prg.copy.statement:
         jeq   tib.uncrunch.prg.done ; yes, prepare for exit
 
         s     @w$0008,@tib.var2     ; Next entry in VRAM line number table
-        jmp   tib.uncrunch.prg.lnt.loop
+        b     @tib.uncrunch.prg.lnt.loop
         ;------------------------------------------------------
         ; 7. Finished processing program
         ;------------------------------------------------------
@@ -295,6 +307,16 @@ tib.uncrunch.prg.exit:
         b     *r11                  ; Return
 
 
-data.printf.vram:
-       text   'VRAM address >%X'
+data.printf.vram.lnt:
+       text   'VRAM LNT >%04X'
+       byte   0
+       even
+
+data.printf.vram.stmt:
+       text   'VRAM STM >%04X'
+       byte   0
+       even
+
+data.printf.vram.lnum:
+       text   'Basic line: %u'
        byte   0
