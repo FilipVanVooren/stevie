@@ -64,6 +64,7 @@ main:
         ; TI Basic sessions
         ;-----------------------------------------------------------------------
         copy  "tib.session.asm"          ; Run TI Basic session
+        copy  "tib.session.isr.asm"      ; TI Basic integration hook
         ;-----------------------------------------------------------------------
         ; TI Basic program uncruncher
         ;-----------------------------------------------------------------------
