@@ -1,4 +1,4 @@
-* FILE......: tib.session.asm
+* FILE......: tib.session.run.asm
 * Purpose...: Run TI Basic session
 
 
@@ -23,7 +23,7 @@
 *         >> tibasic.return
 *
 * Uses scratchpad memory
-* >83b4   Hide Flag/ISR counter for triggering SID display.
+* >83b4   ISR counter for triggering periodic actions
 * >83b6   TI Basic Session ID
 ********|*****|*********************|**************************
 tib.run:
@@ -63,13 +63,6 @@ tib.run:
 
         bl    @vidtab               ; Load video mode table into VDP
               data tibasic.32x24    ; Equate selected video mode table
-        ;-------------------------------------------------------
-        ; Keep 'Hide SID' flag for later use
-        ;-------------------------------------------------------
-        mov   @tib.hidesid,@>83fc   ; \
-                                    ; | Store a copy in the Stevie
-                                    ; | scratchpad >83fc for later use in
-                                    ; / TI Basic scratchpad.
         ;-------------------------------------------------------
         ; Keep TI Basic session ID for later use
         ;-------------------------------------------------------
@@ -223,12 +216,6 @@ tib.run.init.rest:
         ; From here on no more access to any of the SP2 or stevie routines.
         ; We're on unknown territory.
 
-        mov   @cpu.scrpad2+252,@>83b4
-                                    ; \ Store 'Hide SID' flag in TI Basic
-                                    ; | scratchpad address >83b4.
-                                    ; | Note that >83fc in Stevie scratchpad
-                                    ; / has copy of the flag.
-
         mov   @cpu.scrpad2+254,@>83b6
                                     ; \ Store TI Basic session ID in TI Basic
                                     ; | scratchpad address >83b6.
@@ -379,262 +366,10 @@ tibasic.scrpad.83fe:
 
 
 
+
 ***************************************************************
-* tib.run.return.mon
-* Return from OS Monitor/TI Basic to Stevie
-***************************************************************
-* bl   @tib.run.return.mon
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* r1 in GPL WS, tmp0, tmp1
-*--------------------------------------------------------------
-* REMARKS
-* Called from ISR code
+* Patterns for session indicator digits 1-5
 ********|*****|*********************|**************************
-tib.run.return.mon:
-        li    r12,>1e00             ; \ Enable SAMS mapper again
-        sbo   1                     ; | We stil have the SAMS banks layout
-                                    ; / mem.sams.layout.external
-        ;------------------------------------------------------
-        ; Check magic string (inline version, no SP2 present!)
-        ;------------------------------------------------------
-        c     @magic.str.w1,@magic.string
-        jne   !
-        c     @magic.str.w2,@magic.string+2
-        jne   !
-        c     @magic.str.w3,@magic.string+4
-        jne   !
-        ;-------------------------------------------------------
-        ; Initialize
-        ;-------------------------------------------------------
-        mov   @tib.session,tmp0
-        ci    tmp0,1
-        jlt   !
-        ci    tmp0,5
-        jgt   !
-        jmp   tib.run.return.mon.cont
-        ;-------------------------------------------------------
-        ; Initialize Stevie
-        ;-------------------------------------------------------
-!       b     @kickstart.code1      ; Initialize Stevie
-        ;-------------------------------------------------------
-        ; Resume Stevie
-        ;-------------------------------------------------------
-tib.run.return.mon.cont:
-        lwpi  cpu.scrpad2           ; Activate workspace at >ad00 that was
-                                    ; paged out in tibasic.init
-
-        bl    @cpu.scrpad.pgin      ; \ Page-in scratchpad memory previously
-              data cpu.scrpad2      ; | stored at >ad00 and set wp at >8300
-                                    ; / Destroys registers tmp0-tmp2
-
-        movb  @w$ffff,@>8375        ; Reset keycode
-
-        mov   @tv.sp2.conf,config   ; Restore the SP2 config register
-
-        bl    @mute                 ; Mute sound generators
-        bl    @scroff               ; Turn screen off
-
-        ; Prevent resuming the TI Basic session that lead us here.
-        ; Easiest thing to do is to reinitalize the session upon next start.
-
-        ;-------------------------------------------------------
-        ; Assert TI basic sesion ID
-        ;-------------------------------------------------------
-        mov   @tib.session,tmp0     ; Get session ID
-        jeq   !
-        ci    tmp0,5
-        jgt   !
-        ;-------------------------------------------------------
-        ; Reset session resume flag (tibasicX.status)
-        ;-------------------------------------------------------
-        sla   tmp0,1                ; Word align
-        clr   @tib.session(tmp0)
-        jmp   tib.run.return.stevie
-        ;-------------------------------------------------------
-        ; Assert failed
-        ;-------------------------------------------------------
-!       mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / Crash and halt system
-
-
-
-***************************************************************
-* tib.run.return
-* Return from TI Basic to Stevie
-***************************************************************
-* bl   @tib.run.return
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* r1 in GPL WS, tmp0, tmp1
-*--------------------------------------------------------------
-* REMARKS
-* Called from ISR code
-********|*****|*********************|**************************
-tib.run.return:
-        li    r12,>1e00             ; \ Enable SAMS mapper again
-        sbo   1                     ; | We stil have the SAMS banks layout
-                                    ; / mem.sams.layout.external
-
-        lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
-                                    ; paged-out in tibasic.init
-
-        movb  @w$ffff,@>8375        ; Reset keycode
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 1
-        ;-------------------------------------------------------
-tib.run.return.1:
-        c     @tib.session,@w$0001
-        jne   tib.run.return.2      ; Not the current session, check next one.
-
-        bl    @cpym2m
-              data >8300,>f100,256  ; Backup TI Basic scratchpad to >f100
-                                    ; @cpu.scrpad.tgt in SAMS bank.
-        jmp   !                     ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 2
-        ;-------------------------------------------------------
-tib.run.return.2:
-        c     @tib.session,@w$0002
-        jne   tib.run.return.3      ; Not the current session, check next one.
-
-        bl    @cpym2m
-              data >8300,>f200,256  ; Backup TI Basic scratchpad to >f200
-                                    ; @cpu.scrpad.tgt in SAMS bank.
-        jmp   !                     ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 3
-        ;-------------------------------------------------------
-tib.run.return.3:
-        c     @tib.session,@tibasic.const3
-        jne   tib.run.return.4      ; Not the current session, check next one.
-
-        bl    @cpym2m
-              data >8300,>f300,256  ; Backup TI Basic scratchpad to >f300
-                                    ; @cpu.scrpad.tgt in SAMS bank.
-        jmp   !                     ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 4
-        ;-------------------------------------------------------
-tib.run.return.4:
-        c     @tib.session,@w$0004
-        jne   tib.run.return.5      ; Not the current session, check next one.
-
-        bl    @cpym2m
-              data >8300,>f400,256  ; Backup TI Basic scratchpad to >f400
-                                    ; @cpu.scrpad.tgt in SAMS bank.
-        jmp   !                     ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 5
-        ;-------------------------------------------------------
-tib.run.return.5:
-        c     @tib.session,@tibasic.const5
-        jne   tib.run.return.failed ; Not the current session, abort here
-
-        bl    @cpym2m
-              data >8300,>f500,256  ; Backup TI Basic scratchpad to >f500
-                                    ; @cpu.scrpad.tgt in SAMS bank.
-        jmp   !                     ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Asserts failed
-        ;-------------------------------------------------------
-tib.run.return.failed:
-        mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / Crash and halt system
-        ;-------------------------------------------------------
-        ; Page-in scratchpad memory
-        ;-------------------------------------------------------
-!       bl    @cpym2m
-              data cpu.scrpad2,cpu.scrpad1,256
-                                    ; Restore scratchpad contents
-
-        lwpi  cpu.scrpad1           ; Activate primary scratchpad
-
-        mov   @tv.sp2.conf,config   ; Restore the SP2 config register
-
-        bl    @mute                 ; Mute sound generators
-        ;-------------------------------------------------------
-        ; Cleanup after return from TI Basic
-        ;-------------------------------------------------------
-        bl    @scroff               ; Turn screen off
-        bl    @cpyv2m
-              data >0000,>b000,16384
-                                    ; Dump TI Basic 16K VDP memory to ram buffer
-                                    ; >b000->efff
-        ;-------------------------------------------------------
-        ; Restore VDP screen with Stevie content
-        ;-------------------------------------------------------
-tib.run.return.stevie:
-        bl    @mem.sams.set.external
-                                    ; Load SAMS page layout when returning from
-                                    ; external program.
-
-        bl    @cpym2v
-              data >0000,>b000,16384
-                                    ; Restore Stevie 16K to VDP from RAM buffer
-                                    ; >b000->efff
-        ;-------------------------------------------------------
-        ; Restore SAMS memory layout for editor buffer and index
-        ;-------------------------------------------------------
-        bl    @mem.sams.set.stevie  ; Setup SAMS memory banks for stevie
-                                    ; \ For this to work the bank having the
-                                    ; | @tv.sams.xxxx variables must already
-                                    ; | be active and may not switch to
-                                    ; / another bank.
-        ;-------------------------------------------------------
-        ; Setup F18a 80x30 mode again
-        ;-------------------------------------------------------
-        bl    @f18unl               ; Unlock the F18a
-        .ifeq device.f18a,1
-
-        bl    @putvr                ; Turn on 30 rows mode.
-              data >3140            ; F18a VR49 (>31), bit 40
-
-        .endif
-
-        bl    @vidtab               ; Load video mode table into VDP
-              data stevie.80x30     ; Equate selected video mode table
-
-        bl    @putvr                ; Turn on position based attributes
-              data >3202            ; F18a VR50 (>32), bit 2
-
-        bl    @putvr                ; Set VDP TAT base address for position
-              data >0360            ; based attributes (>40 * >60 = >1800)
-
-        clr   @parm1                ; Screen off while reloading color scheme
-        clr   @parm2                ; Don't skip colorizing marked lines
-        clr   @parm3                ; Colorize all panes
-
-
-        bl    @tibasic.buildstr     ; Build session identifier string
-
-        bl    @pane.action.colorscheme.load
-                                    ; Reload color scheme
-                                    ; \ i  @parm1 = Skip screen off if >FFFF
-                                    ; | i  @parm2 = Skip colorizing marked lines
-                                    ; |             if >FFFF
-                                    ; | i  @parm3 = Only colorize CMDB pane
-                                    ; /             if >FFFF
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-tib.run.return.exit:
-        mov   *stack+,r12           ; Pop r12
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
-
-tibasic.const3  data 3
-tibasic.const5  data 5
-
 tibasic.patterns:
         byte  >00,>7E,>E7,>C7,>E7,>E7,>C3,>7E ; 1
         byte  >00,>7E,>C3,>F3,>C3,>CF,>C3,>7E ; 2

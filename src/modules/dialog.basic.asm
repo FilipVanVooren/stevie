@@ -38,7 +38,7 @@ dialog.basic:
         li    tmp0,txt.hint.basic
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
 
-        mov   @tib.hidesid,tmp0     ; Get 'Hide SID' flag
+        mov   @tib.automode,tmp0    ; Get 'Automode' flag
         jeq   !
         ;-------------------------------------------------------
         ; Flag is on

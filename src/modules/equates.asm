@@ -197,7 +197,7 @@ tib.status2       equ  core1.top + 184 ; Status flags TI Basic session 2
 tib.status3       equ  core1.top + 186 ; Status flags TI Basic session 3
 tib.status4       equ  core1.top + 188 ; Status flags TI Basic session 4
 tib.status5       equ  core1.top + 190 ; Status flags TI Basic session 5
-tib.hidesid       equ  core1.top + 192 ; Hide TI-Basic session ID
+tib.automode      equ  core1.top + 192 ; TI-Basic AutoMode (crunch/uncrunch)
 tib.stab.ptr      equ  core1.top + 194 ; Pointer to TI-Basic SAMS page table
 tib.scrpad.ptr    equ  core1.top + 196 ; Pointer to TI-Basic scratchpad in SAMS
 tib.lnt.top.ptr   equ  core1.top + 198 ; Pointer to top of line number table

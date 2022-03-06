@@ -58,38 +58,38 @@ main:
         ;-----------------------------------------------------------------------
         ; SAMS support routines and utilities
         ;-----------------------------------------------------------------------
-        copy  "magic.asm"                ; Magic string handling
-        copy  "mem.sams.layout.asm"      ; Setup SAMS banks from cart space
+        copy  "magic.asm"                  ; Magic string handling
+        copy  "mem.sams.layout.asm"        ; Setup SAMS banks from cart space
         ;-----------------------------------------------------------------------
         ; TI Basic sessions
         ;-----------------------------------------------------------------------
-        copy  "tib.session.asm"          ; Run TI Basic session
-        copy  "tib.session.isr.asm"      ; TI Basic integration hook
+        copy  "tib.session.run.asm"        ; Run TI Basic session
+        copy  "tib.session.isr.asm"        ; TI Basic integration hook
+        copy  "tib.session.return.asm"     ; Return to Stevie
         ;-----------------------------------------------------------------------
         ; TI Basic program uncruncher
         ;-----------------------------------------------------------------------
-        copy  "tib.uncrunch.helper.asm"  ; Helper functions for uncrunching
-        copy  "tib.uncrunch.asm"         ; Uncrunch TI Basic program
-        copy  "tib.uncrunch.prep.asm"    ; Prepare for uncrunching
-        copy  "tib.uncrunch.prg.asm"     ; Uncrunch tokenized program code
-        copy  "tib.uncrunch.token.asm"   ; Decode statement token
-        copy  "tib.uncrunch.line.pack.asm"
-                                         ; Pack uncrunched line to editor buffer
+        copy  "tib.uncrunch.helper.asm"    ; Helper functions for uncrunching
+        copy  "tib.uncrunch.asm"           ; Uncrunch TI Basic program
+        copy  "tib.uncrunch.prep.asm"      ; Prepare for uncrunching
+        copy  "tib.uncrunch.prg.asm"       ; Uncrunch tokenized program code
+        copy  "tib.uncrunch.token.asm"     ; Decode statement token
+        copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank7.asm"      ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm"      ; Stubs to include in all banks > 0
+        copy  "rom.stubs.bank7.asm"        ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"        ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.sams.layout.asm"     ; SAMS bank layout for multi-purpose
-        copy  "data.tib.tokens.asm"      ; TI Basic tokens
+        copy  "data.sams.layout.asm"       ; SAMS bank layout for multi-purpose
+        copy  "data.tib.tokens.asm"        ; TI Basic tokens
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------
         aorg >7e00
-        copy  "data.scrpad.asm"          ; Required for TI Basic
+        copy  "data.scrpad.asm"            ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

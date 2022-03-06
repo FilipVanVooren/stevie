@@ -326,7 +326,7 @@ keymap_actions.cmdb:
         data  tibasic5
 
         byte  key.fctn.5, id.dialog.basic
-        data  edkey.action.cmdb.sid.toggle
+        data  edkey.action.cmdb.am.toggle
 
         byte  key.space, id.dialog.basic
         data  tibasic.uncrunch

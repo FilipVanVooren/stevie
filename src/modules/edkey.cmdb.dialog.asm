@@ -68,10 +68,10 @@ edkey.action.cmdb.fastmode.toggle:
 
 
 ***************************************************************
-* edkey.action.cmdb.sid.toggle
-* Toggle 'Show SID' on/off
+* edkey.action.cmdb.am.toggle
+* Toggle 'AutoMode' on/off
 ***************************************************************
-* b   @edkey.action.cmdb.sid.toggle
+* b   @edkey.action.cmdb.am.toggle
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -79,8 +79,8 @@ edkey.action.cmdb.fastmode.toggle:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.sid.toggle:
-       bl    @tibasic.sid.toggle    ; Toggle SID mode.
+edkey.action.cmdb.am.toggle:
+       bl    @tibasic.am.toggle     ; Toggle AutoMode
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
        b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -133,7 +133,6 @@ edkey.action.cmdb.close.about:
         ;-------------------------------------------------------
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
-
 
 
 

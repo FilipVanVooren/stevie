@@ -4,10 +4,10 @@
 
 
 ***************************************************************
-* tibasic.sid
-* Toggle TI Basic SID display
+* tibasic.am.toggle
+* Toggle TI Basic AutoMode
 ***************************************************************
-* bl   @tibasic.sid.toggle
+* bl   @tibasic.am.toggle
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -21,25 +21,25 @@
 * Remarks
 * none
 ********|*****|*********************|**************************
-tibasic.sid.toggle:
+tibasic.am.toggle:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Toggle SID display
+        ; Toggle AutoMode display
         ;------------------------------------------------------
-        inv   @tib.hidesid          ; Toggle 'Hide SID'
-        jeq   tibasic.sid.off
+        inv   @tib.automode         ; Toggle 'AutoMode'
+        jeq   tibasic.am.off
         li    tmp0,txt.keys.basic2
         jmp   !
-tibasic.sid.off:
+tibasic.am.off:
         li    tmp0,txt.keys.basic
 !       mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-tibasic.sid.exit:
+tibasic.am.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

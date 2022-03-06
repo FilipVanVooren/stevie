@@ -32,18 +32,13 @@ isr:
         ;--------------------------------------------------------------
         jmp   isr.exit              ; Exit
         ;--------------------------------------------------------------
-        ; Show TI-Basic session ID and scan crunch buffer?
+        ; Show TI-Basic session ID and scan crunch buffer
         ;--------------------------------------------------------------
 isr.showid:
-        mov   @>83b4,r7             ; Get counter/Hide flag
+        mov   @>83b4,r7             ; Get counter
         ci    r7,>003c              ; Counter limit reached ?
         jlt   isr.counter           ; Not yet, skip showing Session ID
         clr   @>83b4                ; Reset counter
-        ;--------------------------------------------------------------
-        ; Dump TI-Basic Session ID to screen?
-        ;--------------------------------------------------------------
-        ci    r7,>ffff              ; Hide flag set?
-        jeq   isr.scan.crunchbuf    ; Yes, skip showing session ID
         ;--------------------------------------------------------------
         ; Setup VDP write address for column 30
         ;--------------------------------------------------------------
@@ -159,7 +154,9 @@ isr.scan.exit:
 
 
 
-
+***************************************************************
+* Tokens TI Basic commands
+********|*****|*********************|**************************
 data.tk.new   byte >01              ; NEW
 data.tk.old   byte >06              ; OLD
 data.tk.save  byte >08              ; SAVE

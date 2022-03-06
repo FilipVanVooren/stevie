@@ -444,13 +444,13 @@ tibasic.hearts.tat.vector:
 
 
 **************************************************************
-* Stub for "tibasic.sid.toggle"
+* Stub for "tibasic.am.toggle"
 * bank3 vec.31
 ********|*****|*********************|**************************
-tibasic.sid.toggle:
-        mov   @tibasic.sid.toggle.vector,@trmpvector
+tibasic.am.toggle:
+        mov   @tibasic.am.toggle.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-tibasic.sid.toggle.vector:
+tibasic.am.toggle.vector:
         data  vec.31
 
 
