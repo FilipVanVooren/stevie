@@ -48,12 +48,20 @@ dialog.basic:
         ;-------------------------------------------------------
         ; Flag is off
         ;-------------------------------------------------------
-!       li    tmp0,txt.keys.basic
+!       mov   @tib.session,tmp0     ; Already did session before?
+        jeq   dialog.basic.amonly   ; No, only AutoMode
+        li    tmp0,txt.keys.basic1  ; Yes, add "Uncrunch program"
+        jmp   dialog.basic.done
+        ;-------------------------------------------------------
+        ; AutoMode option only
+        ;-------------------------------------------------------
+dialog.basic.amonly:
+        li    tmp0,txt.keys.basic   ; Only AutoMode
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
 dialog.basic.done:
-        mov   tmp0,@cmdb.pankeys    ; First save Keylist in status line
+        mov   tmp0,@cmdb.pankeys    ; Save Keylist in status line
         bl    @tibasic.buildstr     ; Build session selection string
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------

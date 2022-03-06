@@ -93,24 +93,24 @@ tibasic.32x30:
 ***************************************************************
 * Sprite Attribute Table
 *--------------------------------------------------------------
-romsat:                             
+romsat:
                                     ; YX, initial shape and color
         data  >0000,>0001           ; Cursor
-        data  >0000,>0101           ; Current line indicator     < 
+        data  >0000,>0101           ; Current line indicator     <
         data  >0820,>0201           ; Current column indicator   v
-nosprite:        
+nosprite:
         data  >d000                 ; End-of-Sprites list
 
 
 
 
 ***************************************************************
-* Stevie color schemes table   
+* Stevie color schemes table
 *--------------------------------------------------------------
 * Word 1
 * A  MSB  high-nibble    Foreground color text line in frame buffer
 * B  MSB  low-nibble     Background color text line in frame buffer
-* C  LSB  high-nibble    Foreground color top/bottom line 
+* C  LSB  high-nibble    Foreground color top/bottom line
 * D  LSB  low-nibble     Background color top/bottom line
 *
 * Word 2
@@ -122,7 +122,7 @@ nosprite:
 * Word 3
 * I  MSB  high-nibble    Foreground color busy top/bottom line
 * J  MSB  low-nibble     Background color busy top/bottom line
-* K  LSB  high-nibble    Foreground color marked line in frame buffer 
+* K  LSB  high-nibble    Foreground color marked line in frame buffer
 * L  LSB  low-nibble     Background color marked line in frame buffer
 *
 * Word 4
@@ -138,7 +138,7 @@ nosprite:
 * 3  Light Green
 * 4  Blue
 * 5  Light Blue
-* 6  Dark Red 
+* 6  Dark Red
 * 7  Cyan
 * 8  Red
 * 9  Light Red
@@ -151,8 +151,8 @@ nosprite:
 *--------------------------------------------------------------
 tv.colorscheme.entries   equ 10 ; Entries in table
 
-tv.colorscheme.table:                  
-        ;                             ; #  
+tv.colorscheme.table:
+        ;                             ; #
         ;      ABCD  EFGH  IJKL  MNOP ; -
         data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
         data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
@@ -161,15 +161,32 @@ tv.colorscheme.table:
         data  >e11e,>e1ff,>1f1e,>e1ff ; 5  Grey on black
         data  >1771,>1016,>1b71,>1711 ; 6  Black on cyan
         data  >1ff1,>1011,>f1f1,>1f11 ; 7  Black on white
-        data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow 
+        data  >1af1,>a1ff,>1f1f,>f11f ; 8  Black on dark yellow
         data  >21f0,>12ff,>1b12,>12ff ; 9  Dark green on black
-        data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue 
+        data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
         even
 
 tv.tabs.table:
-        byte  0,7,12,25               ; \   Default tab positions as used
-        byte  30,45,59,79             ; |   in Editor/Assembler module.
-        byte  >ff,0,0,0               ; |   
-        byte  0,0,0,0                 ; |   Up to 20 positions supported.
-        byte  0,0,0,0                 ; /   >ff means end-of-list.
+        byte  0,7,12,25             ; \   Default tab positions as used
+        byte  30,45,59,79           ; |   in Editor/Assembler module.
+        byte  >ff,0,0,0             ; |
+        byte  0,0,0,0               ; |   Up to 20 positions supported.
+        byte  0,0,0,0               ; /   >ff means end-of-list.
         even
+
+
+
+***************************************************************
+* Constants for numbers 0-10
+********|*****|*********************|**************************
+const.0       equ   w$0000          ; 0
+const.1       equ   w$0001          ; 1
+const.2       equ   w$0002          ; 2
+const.3       data  3               ; 3
+const.4       equ   w$0004          ; 4
+const.5       data  5               ; 5
+const.6       data  6               ; 6
+const.7       data  7               ; 7
+const.8       equ   w$0008          ; 8
+const.9       data  9               ; 9
+const.10      data  10              ; 10

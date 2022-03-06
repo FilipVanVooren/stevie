@@ -45,6 +45,7 @@ txt.m2             #string 'M2='
 txt.keys.default   #string 'F9-Menu  ^H-Help'
 txt.keys.defaultb  #string 'F9-Menu  ^H-Help  F0-Basic'
 txt.keys.block     #string 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
+txt.keys.basic1    #string 'F9-Back  F5-AutoMode  SPACE-Uncrunch program'
 txt.ruler          text    '.........'
                    byte    18
                    text    '.........'

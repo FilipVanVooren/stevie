@@ -22,9 +22,10 @@
 *         >> isr
 *         >> tibasic.return
 *
-* Uses scratchpad memory
-* >83b4   ISR counter for triggering periodic actions
-* >83b6   TI Basic Session ID
+* Memory
+* >83b4       ISR counter for triggering periodic actions
+* >83b6       TI Basic Session ID
+* >f000-ffff  Mailbox Stevie integration
 ********|*****|*********************|**************************
 tib.run:
         dect  stack

@@ -722,27 +722,24 @@ vdp.patterns.dump:
 * bank7 vec.10
 ********|*****|*********************|**************************
 tibasic1:
-        li    tmp0,1
-        mov   tmp0,@tib.session
+        mov   @const.1,@tib.session
         jmp   tibasic
 tibasic2:
-        li    tmp0,2
-        mov   tmp0,@tib.session
+        mov   @const.2,@tib.session
         jmp   tibasic
 tibasic3:
-        li    tmp0,3
-        mov   tmp0,@tib.session
+        mov   @const.3,@tib.session
         jmp   tibasic
 tibasic4:
-        li    tmp0,4
-        mov   tmp0,@tib.session
+        mov   @const.4,@tib.session
         jmp   tibasic
 tibasic5:
-        li    tmp0,5
-        mov   tmp0,@tib.session
+        mov   @const.5,@tib.session
 tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Run TI Basic session
         ;------------------------------------------------------
@@ -750,9 +747,16 @@ tibasic:
               data bank7.rom        ; | i  p0 = bank address
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
+
+        mov   @tib.automode,tmp0    ; AutoMode flag set?
+        jeq   tibasic.exit          ; No, skip uncrunching
+
+        bl    @tibasic.uncrunch     ; Uncrunch TI Basic program
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+tibasic.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
@@ -769,6 +773,8 @@ tibasic.uncrunch:
         ; Uncrunch TI basic program
         ;------------------------------------------------------
         mov   @tib.session,@parm1   ; Get current session
+        jeq   tibasic.uncrunch.exit ; Exit early if no session
+
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
               data vec.11           ; | i  p1 = Vector with target address
@@ -776,5 +782,6 @@ tibasic.uncrunch:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+tibasic.uncrunch.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

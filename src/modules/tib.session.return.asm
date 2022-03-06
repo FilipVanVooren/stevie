@@ -113,7 +113,7 @@ tib.run.return:
         ; Backup scratchpad of TI-Basic session 1
         ;-------------------------------------------------------
 tib.run.return.1:
-        c     @tib.session,@w$0001
+        c     @tib.session,@const.1
         jne   tib.run.return.2      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -124,7 +124,7 @@ tib.run.return.1:
         ; Backup scratchpad of TI-Basic session 2
         ;-------------------------------------------------------
 tib.run.return.2:
-        c     @tib.session,@w$0002
+        c     @tib.session,@const.2
         jne   tib.run.return.3      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -135,7 +135,7 @@ tib.run.return.2:
         ; Backup scratchpad of TI-Basic session 3
         ;-------------------------------------------------------
 tib.run.return.3:
-        c     @tib.session,@tibasic.const3
+        c     @tib.session,@const.3
         jne   tib.run.return.4      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -146,7 +146,7 @@ tib.run.return.3:
         ; Backup scratchpad of TI-Basic session 4
         ;-------------------------------------------------------
 tib.run.return.4:
-        c     @tib.session,@w$0004
+        c     @tib.session,@const.4
         jne   tib.run.return.5      ; Not the current session, check next one.
 
         bl    @cpym2m
@@ -157,7 +157,7 @@ tib.run.return.4:
         ; Backup scratchpad of TI-Basic session 5
         ;-------------------------------------------------------
 tib.run.return.5:
-        c     @tib.session,@tibasic.const5
+        c     @tib.session,@const.5
         jne   tib.run.return.failed ; Not the current session, abort here
 
         bl    @cpym2m
@@ -244,6 +244,14 @@ tib.run.return.stevie:
                                     ; |             if >FFFF
                                     ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
+
+        mov   @tib.automode,tmp0    ; AutoMode is on?
+        jne   tib.run.return.exit   ; Yes, skip keylist
+        ;------------------------------------------------------
+        ; Set shortcut list in bottom status line
+        ;------------------------------------------------------
+        li    tmp0,txt.keys.basic1
+        mov   tmp0,@cmdb.pankeys    ; Save Keylist in status line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -254,6 +262,3 @@ tib.run.return.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
-
-tibasic.const3  data 3
-tibasic.const5  data 5

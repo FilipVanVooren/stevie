@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b4.asm.24160
+     **** ****     > stevie_b4.asm.53360
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b4.asm               ; Version 220306-1812400
+0009               * File: stevie_b4.asm               ; Version 220306-1958460
 0010               *
 0011               * Bank 4 "Janine"
 0012               * Framebuffer methods delegated from bank 1
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -584,7 +584,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0467      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0468      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0469      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0017                       copy  "data.keymap.keys.asm"; Equates for keyboard mapping
      **** ****     > data.keymap.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -724,7 +724,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0018               
 0019               ***************************************************************
 0020               * BANK 4
@@ -783,7 +783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0026               
 0027               ***************************************************************
 0028               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1598,7 +1598,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220306-1812400'
+0270 21ED   42             text  'Build-ID  220306-1958460'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1607,9 +1607,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3230     
      21FA 3330     
      21FC 362D     
-     21FE 3138     
-     2200 3132     
-     2202 3430     
+     21FE 3139     
+     2200 3538     
+     2202 3436     
      2204 30       
 0271                       even
 0272               
@@ -5891,7 +5891,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0037                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -6624,7 +6624,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      31F2 A45C     
 0050               
 0051 31F4 0204  20         li    tmp0,txt.filetype.none
-     31F6 39B2     
+     31F6 39EC     
 0052 31F8 C804  38         mov   tmp0,@edb.filetype.ptr
      31FA A514     
 0053               
@@ -6639,12 +6639,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062               
 0063               
 0064               data.filename.ptr:
-0065 3202 388A             data  txt.newfile,txt.tib1,txt.tib2,txt.tib3,txt.tib4,txt.tib5
-     3204 3896     
-     3206 38A4     
-     3208 38B2     
-     320A 38C0     
-     320C 38CE     
+0065 3202 3896             data  txt.newfile,txt.tib1,txt.tib2,txt.tib3,txt.tib4,txt.tib5
+     3204 38A2     
+     3206 38B0     
+     3208 38BE     
+     320A 38CC     
+     320C 38DA     
                    < ram.resident.asm
 0012                       copy  "cmdb.asm"               ; Command buffer
      **** ****     > cmdb.asm
@@ -6823,13 +6823,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0043                       ;------------------------------------------------------
 0044 32A2 06A0  32         bl    @cpym2m
      32A4 24EE     
-0045 32A6 3A8A                   data def.printer.fname,tv.printer.fname,7
+0045 32A6 3AC4                   data def.printer.fname,tv.printer.fname,7
      32A8 DE00     
      32AA 0007     
 0046               
 0047 32AC 06A0  32         bl    @cpym2m
      32AE 24EE     
-0048 32B0 3A92                   data def.clip.fname,tv.clip.fname,10
+0048 32B0 3ACC                   data def.clip.fname,tv.clip.fname,10
      32B2 DE50     
      32B4 000A     
 0049                       ;-------------------------------------------------------
@@ -8224,17 +8224,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0167                       even
 0168               
 0169               tv.tabs.table:
-0170 36E0 0007             byte  0,7,12,25               ; \   Default tab positions as used
+0170 36E0 0007             byte  0,7,12,25             ; \   Default tab positions as used
      36E2 0C19     
-0171 36E4 1E2D             byte  30,45,59,79             ; |   in Editor/Assembler module.
+0171 36E4 1E2D             byte  30,45,59,79           ; |   in Editor/Assembler module.
      36E6 3B4F     
-0172 36E8 FF00             byte  >ff,0,0,0               ; |
+0172 36E8 FF00             byte  >ff,0,0,0             ; |
      36EA 0000     
-0173 36EC 0000             byte  0,0,0,0                 ; |   Up to 20 positions supported.
+0173 36EC 0000             byte  0,0,0,0               ; |   Up to 20 positions supported.
      36EE 0000     
-0174 36F0 0000             byte  0,0,0,0                 ; /   >ff means end-of-list.
+0174 36F0 0000             byte  0,0,0,0               ; /   >ff means end-of-list.
      36F2 0000     
 0175                       even
+0176               
+0177               
+0178               
+0179               ***************************************************************
+0180               * Constants for numbers 0-10
+0181               ********|*****|*********************|**************************
+0182      2000     const.0       equ   w$0000          ; 0
+0183      2002     const.1       equ   w$0001          ; 1
+0184      2004     const.2       equ   w$0002          ; 2
+0185 36F4 0003     const.3       data  3               ; 3
+0186      2006     const.4       equ   w$0004          ; 4
+0187 36F6 0005     const.5       data  5               ; 5
+0188 36F8 0006     const.6       data  6               ; 6
+0189 36FA 0007     const.7       data  7               ; 7
+0190      2008     const.8       equ   w$0008          ; 8
+0191 36FC 0009     const.9       data  9               ; 9
+0192 36FE 000A     const.10      data  10              ; 10
                    < ram.resident.asm
 0041                       copy  "data.strings.asm"       ; Strings
      **** ****     > data.strings.asm
@@ -8246,696 +8263,723 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               ***************************************************************
 0007               
 0008               txt.delim
-0009 36F4 01               byte  1
-0010 36F5   2C             text  ','
+0009 3700 01               byte  1
+0010 3701   2C             text  ','
 0011                       even
 0012               
 0013               txt.bottom
-0014 36F6 05               byte  5
-0015 36F7   20             text  '  BOT'
-     36F8 2042     
-     36FA 4F54     
+0014 3702 05               byte  5
+0015 3703   20             text  '  BOT'
+     3704 2042     
+     3706 4F54     
 0016                       even
 0017               
 0018               txt.ovrwrite
-0019 36FC 03               byte  3
-0020 36FD   4F             text  'OVR'
-     36FE 5652     
+0019 3708 03               byte  3
+0020 3709   4F             text  'OVR'
+     370A 5652     
 0021                       even
 0022               
 0023               txt.insert
-0024 3700 03               byte  3
-0025 3701   49             text  'INS'
-     3702 4E53     
+0024 370C 03               byte  3
+0025 370D   49             text  'INS'
+     370E 4E53     
 0026                       even
 0027               
 0028               txt.star
-0029 3704 01               byte  1
-0030 3705   2A             text  '*'
+0029 3710 01               byte  1
+0030 3711   2A             text  '*'
 0031                       even
 0032               
 0033               txt.loading
-0034 3706 0A               byte  10
-0035 3707   4C             text  'Loading...'
-     3708 6F61     
-     370A 6469     
-     370C 6E67     
-     370E 2E2E     
-     3710 2E       
+0034 3712 0A               byte  10
+0035 3713   4C             text  'Loading...'
+     3714 6F61     
+     3716 6469     
+     3718 6E67     
+     371A 2E2E     
+     371C 2E       
 0036                       even
 0037               
 0038               txt.saving
-0039 3712 0A               byte  10
-0040 3713   53             text  'Saving....'
-     3714 6176     
-     3716 696E     
-     3718 672E     
-     371A 2E2E     
-     371C 2E       
+0039 371E 0A               byte  10
+0040 371F   53             text  'Saving....'
+     3720 6176     
+     3722 696E     
+     3724 672E     
+     3726 2E2E     
+     3728 2E       
 0041                       even
 0042               
 0043               txt.printing
-0044 371E 12               byte  18
-0045 371F   50             text  'Printing file.....'
-     3720 7269     
-     3722 6E74     
-     3724 696E     
-     3726 6720     
-     3728 6669     
-     372A 6C65     
-     372C 2E2E     
-     372E 2E2E     
-     3730 2E       
+0044 372A 12               byte  18
+0045 372B   50             text  'Printing file.....'
+     372C 7269     
+     372E 6E74     
+     3730 696E     
+     3732 6720     
+     3734 6669     
+     3736 6C65     
+     3738 2E2E     
+     373A 2E2E     
+     373C 2E       
 0046                       even
 0047               
 0048               txt.block.del
-0049 3732 12               byte  18
-0050 3733   44             text  'Deleting block....'
-     3734 656C     
-     3736 6574     
-     3738 696E     
-     373A 6720     
-     373C 626C     
-     373E 6F63     
-     3740 6B2E     
-     3742 2E2E     
-     3744 2E       
+0049 373E 12               byte  18
+0050 373F   44             text  'Deleting block....'
+     3740 656C     
+     3742 6574     
+     3744 696E     
+     3746 6720     
+     3748 626C     
+     374A 6F63     
+     374C 6B2E     
+     374E 2E2E     
+     3750 2E       
 0051                       even
 0052               
 0053               txt.block.copy
-0054 3746 11               byte  17
-0055 3747   43             text  'Copying block....'
-     3748 6F70     
-     374A 7969     
-     374C 6E67     
-     374E 2062     
-     3750 6C6F     
-     3752 636B     
-     3754 2E2E     
-     3756 2E2E     
+0054 3752 11               byte  17
+0055 3753   43             text  'Copying block....'
+     3754 6F70     
+     3756 7969     
+     3758 6E67     
+     375A 2062     
+     375C 6C6F     
+     375E 636B     
+     3760 2E2E     
+     3762 2E2E     
 0056                       even
 0057               
 0058               txt.block.move
-0059 3758 10               byte  16
-0060 3759   4D             text  'Moving block....'
-     375A 6F76     
-     375C 696E     
-     375E 6720     
-     3760 626C     
-     3762 6F63     
-     3764 6B2E     
-     3766 2E2E     
-     3768 2E       
+0059 3764 10               byte  16
+0060 3765   4D             text  'Moving block....'
+     3766 6F76     
+     3768 696E     
+     376A 6720     
+     376C 626C     
+     376E 6F63     
+     3770 6B2E     
+     3772 2E2E     
+     3774 2E       
 0061                       even
 0062               
 0063               txt.block.save
-0064 376A 18               byte  24
-0065 376B   53             text  'Saving block to file....'
-     376C 6176     
-     376E 696E     
-     3770 6720     
-     3772 626C     
-     3774 6F63     
-     3776 6B20     
-     3778 746F     
-     377A 2066     
-     377C 696C     
-     377E 652E     
-     3780 2E2E     
-     3782 2E       
+0064 3776 18               byte  24
+0065 3777   53             text  'Saving block to file....'
+     3778 6176     
+     377A 696E     
+     377C 6720     
+     377E 626C     
+     3780 6F63     
+     3782 6B20     
+     3784 746F     
+     3786 2066     
+     3788 696C     
+     378A 652E     
+     378C 2E2E     
+     378E 2E       
 0066                       even
 0067               
 0068               txt.block.clip
-0069 3784 18               byte  24
-0070 3785   43             text  'Copying to clipboard....'
-     3786 6F70     
-     3788 7969     
-     378A 6E67     
-     378C 2074     
-     378E 6F20     
-     3790 636C     
-     3792 6970     
-     3794 626F     
-     3796 6172     
-     3798 642E     
-     379A 2E2E     
-     379C 2E       
+0069 3790 18               byte  24
+0070 3791   43             text  'Copying to clipboard....'
+     3792 6F70     
+     3794 7969     
+     3796 6E67     
+     3798 2074     
+     379A 6F20     
+     379C 636C     
+     379E 6970     
+     37A0 626F     
+     37A2 6172     
+     37A4 642E     
+     37A6 2E2E     
+     37A8 2E       
 0071                       even
 0072               
 0073               txt.block.print
-0074 379E 12               byte  18
-0075 379F   50             text  'Printing block....'
-     37A0 7269     
-     37A2 6E74     
-     37A4 696E     
-     37A6 6720     
-     37A8 626C     
-     37AA 6F63     
-     37AC 6B2E     
-     37AE 2E2E     
-     37B0 2E       
+0074 37AA 12               byte  18
+0075 37AB   50             text  'Printing block....'
+     37AC 7269     
+     37AE 6E74     
+     37B0 696E     
+     37B2 6720     
+     37B4 626C     
+     37B6 6F63     
+     37B8 6B2E     
+     37BA 2E2E     
+     37BC 2E       
 0076                       even
 0077               
 0078               txt.clearmem
-0079 37B2 13               byte  19
-0080 37B3   43             text  'Clearing memory....'
-     37B4 6C65     
-     37B6 6172     
-     37B8 696E     
-     37BA 6720     
-     37BC 6D65     
-     37BE 6D6F     
-     37C0 7279     
-     37C2 2E2E     
-     37C4 2E2E     
+0079 37BE 13               byte  19
+0080 37BF   43             text  'Clearing memory....'
+     37C0 6C65     
+     37C2 6172     
+     37C4 696E     
+     37C6 6720     
+     37C8 6D65     
+     37CA 6D6F     
+     37CC 7279     
+     37CE 2E2E     
+     37D0 2E2E     
 0081                       even
 0082               
 0083               txt.done.load
-0084 37C6 0E               byte  14
-0085 37C7   4C             text  'Load completed'
-     37C8 6F61     
-     37CA 6420     
-     37CC 636F     
-     37CE 6D70     
-     37D0 6C65     
-     37D2 7465     
-     37D4 64       
+0084 37D2 0E               byte  14
+0085 37D3   4C             text  'Load completed'
+     37D4 6F61     
+     37D6 6420     
+     37D8 636F     
+     37DA 6D70     
+     37DC 6C65     
+     37DE 7465     
+     37E0 64       
 0086                       even
 0087               
 0088               txt.done.insert
-0089 37D6 10               byte  16
-0090 37D7   49             text  'Insert completed'
-     37D8 6E73     
-     37DA 6572     
-     37DC 7420     
-     37DE 636F     
-     37E0 6D70     
-     37E2 6C65     
-     37E4 7465     
-     37E6 64       
+0089 37E2 10               byte  16
+0090 37E3   49             text  'Insert completed'
+     37E4 6E73     
+     37E6 6572     
+     37E8 7420     
+     37EA 636F     
+     37EC 6D70     
+     37EE 6C65     
+     37F0 7465     
+     37F2 64       
 0091                       even
 0092               
 0093               txt.done.append
-0094 37E8 10               byte  16
-0095 37E9   41             text  'Append completed'
-     37EA 7070     
-     37EC 656E     
-     37EE 6420     
-     37F0 636F     
-     37F2 6D70     
-     37F4 6C65     
-     37F6 7465     
-     37F8 64       
+0094 37F4 10               byte  16
+0095 37F5   41             text  'Append completed'
+     37F6 7070     
+     37F8 656E     
+     37FA 6420     
+     37FC 636F     
+     37FE 6D70     
+     3800 6C65     
+     3802 7465     
+     3804 64       
 0096                       even
 0097               
 0098               txt.done.save
-0099 37FA 0E               byte  14
-0100 37FB   53             text  'Save completed'
-     37FC 6176     
-     37FE 6520     
-     3800 636F     
-     3802 6D70     
-     3804 6C65     
-     3806 7465     
-     3808 64       
+0099 3806 0E               byte  14
+0100 3807   53             text  'Save completed'
+     3808 6176     
+     380A 6520     
+     380C 636F     
+     380E 6D70     
+     3810 6C65     
+     3812 7465     
+     3814 64       
 0101                       even
 0102               
 0103               txt.done.copy
-0104 380A 0E               byte  14
-0105 380B   43             text  'Copy completed'
-     380C 6F70     
-     380E 7920     
-     3810 636F     
-     3812 6D70     
-     3814 6C65     
-     3816 7465     
-     3818 64       
+0104 3816 0E               byte  14
+0105 3817   43             text  'Copy completed'
+     3818 6F70     
+     381A 7920     
+     381C 636F     
+     381E 6D70     
+     3820 6C65     
+     3822 7465     
+     3824 64       
 0106                       even
 0107               
 0108               txt.done.print
-0109 381A 0F               byte  15
-0110 381B   50             text  'Print completed'
-     381C 7269     
-     381E 6E74     
-     3820 2063     
-     3822 6F6D     
-     3824 706C     
-     3826 6574     
-     3828 6564     
+0109 3826 0F               byte  15
+0110 3827   50             text  'Print completed'
+     3828 7269     
+     382A 6E74     
+     382C 2063     
+     382E 6F6D     
+     3830 706C     
+     3832 6574     
+     3834 6564     
 0111                       even
 0112               
 0113               txt.done.delete
-0114 382A 10               byte  16
-0115 382B   44             text  'Delete completed'
-     382C 656C     
-     382E 6574     
-     3830 6520     
-     3832 636F     
-     3834 6D70     
-     3836 6C65     
-     3838 7465     
-     383A 64       
+0114 3836 10               byte  16
+0115 3837   44             text  'Delete completed'
+     3838 656C     
+     383A 6574     
+     383C 6520     
+     383E 636F     
+     3840 6D70     
+     3842 6C65     
+     3844 7465     
+     3846 64       
 0116                       even
 0117               
 0118               txt.done.clipboard
-0119 383C 0F               byte  15
-0120 383D   43             text  'Clipboard saved'
-     383E 6C69     
-     3840 7062     
-     3842 6F61     
-     3844 7264     
-     3846 2073     
-     3848 6176     
-     384A 6564     
+0119 3848 0F               byte  15
+0120 3849   43             text  'Clipboard saved'
+     384A 6C69     
+     384C 7062     
+     384E 6F61     
+     3850 7264     
+     3852 2073     
+     3854 6176     
+     3856 6564     
 0121                       even
 0122               
 0123               txt.done.clipdev
-0124 384C 0D               byte  13
-0125 384D   43             text  'Clipboard set'
-     384E 6C69     
-     3850 7062     
-     3852 6F61     
-     3854 7264     
-     3856 2073     
-     3858 6574     
+0124 3858 0D               byte  13
+0125 3859   43             text  'Clipboard set'
+     385A 6C69     
+     385C 7062     
+     385E 6F61     
+     3860 7264     
+     3862 2073     
+     3864 6574     
 0126                       even
 0127               
 0128               txt.fastmode
-0129 385A 08               byte  8
-0130 385B   46             text  'Fastmode'
-     385C 6173     
-     385E 746D     
-     3860 6F64     
-     3862 65       
+0129 3866 08               byte  8
+0130 3867   46             text  'Fastmode'
+     3868 6173     
+     386A 746D     
+     386C 6F64     
+     386E 65       
 0131                       even
 0132               
 0133               txt.uncrunching
-0134 3864 1B               byte  27
-0135 3865   45             text  'Expanding TI Basic line....'
-     3866 7870     
-     3868 616E     
-     386A 6469     
-     386C 6E67     
-     386E 2054     
-     3870 4920     
-     3872 4261     
-     3874 7369     
-     3876 6320     
-     3878 6C69     
-     387A 6E65     
-     387C 2E2E     
-     387E 2E2E     
+0134 3870 1B               byte  27
+0135 3871   45             text  'Expanding TI Basic line....'
+     3872 7870     
+     3874 616E     
+     3876 6469     
+     3878 6E67     
+     387A 2054     
+     387C 4920     
+     387E 4261     
+     3880 7369     
+     3882 6320     
+     3884 6C69     
+     3886 6E65     
+     3888 2E2E     
+     388A 2E2E     
 0136                       even
 0137               
 0138               txt.kb
-0139 3880 02               byte  2
-0140 3881   6B             text  'kb'
-     3882 62       
+0139 388C 02               byte  2
+0140 388D   6B             text  'kb'
+     388E 62       
 0141                       even
 0142               
 0143               txt.lines
-0144 3884 05               byte  5
-0145 3885   4C             text  'Lines'
-     3886 696E     
-     3888 6573     
+0144 3890 05               byte  5
+0145 3891   4C             text  'Lines'
+     3892 696E     
+     3894 6573     
 0146                       even
 0147               
 0148               txt.newfile
-0149 388A 0A               byte  10
-0150 388B   5B             text  '[New file]'
-     388C 4E65     
-     388E 7720     
-     3890 6669     
-     3892 6C65     
-     3894 5D       
+0149 3896 0A               byte  10
+0150 3897   5B             text  '[New file]'
+     3898 4E65     
+     389A 7720     
+     389C 6669     
+     389E 6C65     
+     38A0 5D       
 0151                       even
 0152               
 0153               txt.tib1
-0154 3896 0D               byte  13
-0155 3897   5B             text  '[TI Basic #1]'
-     3898 5449     
-     389A 2042     
-     389C 6173     
-     389E 6963     
-     38A0 2023     
-     38A2 315D     
+0154 38A2 0D               byte  13
+0155 38A3   5B             text  '[TI Basic #1]'
+     38A4 5449     
+     38A6 2042     
+     38A8 6173     
+     38AA 6963     
+     38AC 2023     
+     38AE 315D     
 0156                       even
 0157               
 0158               txt.tib2
-0159 38A4 0D               byte  13
-0160 38A5   5B             text  '[TI Basic #2]'
-     38A6 5449     
-     38A8 2042     
-     38AA 6173     
-     38AC 6963     
-     38AE 2023     
-     38B0 325D     
+0159 38B0 0D               byte  13
+0160 38B1   5B             text  '[TI Basic #2]'
+     38B2 5449     
+     38B4 2042     
+     38B6 6173     
+     38B8 6963     
+     38BA 2023     
+     38BC 325D     
 0161                       even
 0162               
 0163               txt.tib3
-0164 38B2 0D               byte  13
-0165 38B3   5B             text  '[TI Basic #3]'
-     38B4 5449     
-     38B6 2042     
-     38B8 6173     
-     38BA 6963     
-     38BC 2023     
-     38BE 335D     
+0164 38BE 0D               byte  13
+0165 38BF   5B             text  '[TI Basic #3]'
+     38C0 5449     
+     38C2 2042     
+     38C4 6173     
+     38C6 6963     
+     38C8 2023     
+     38CA 335D     
 0166                       even
 0167               
 0168               txt.tib4
-0169 38C0 0D               byte  13
-0170 38C1   5B             text  '[TI Basic #4]'
-     38C2 5449     
-     38C4 2042     
-     38C6 6173     
-     38C8 6963     
-     38CA 2023     
-     38CC 345D     
+0169 38CC 0D               byte  13
+0170 38CD   5B             text  '[TI Basic #4]'
+     38CE 5449     
+     38D0 2042     
+     38D2 6173     
+     38D4 6963     
+     38D6 2023     
+     38D8 345D     
 0171                       even
 0172               
 0173               txt.tib5
-0174 38CE 0D               byte  13
-0175 38CF   5B             text  '[TI Basic #5]'
-     38D0 5449     
-     38D2 2042     
-     38D4 6173     
-     38D6 6963     
-     38D8 2023     
-     38DA 355D     
+0174 38DA 0D               byte  13
+0175 38DB   5B             text  '[TI Basic #5]'
+     38DC 5449     
+     38DE 2042     
+     38E0 6173     
+     38E2 6963     
+     38E4 2023     
+     38E6 355D     
 0176                       even
 0177               
 0178               txt.filetype.dv80
-0179 38DC 04               byte  4
-0180 38DD   44             text  'DV80'
-     38DE 5638     
-     38E0 30       
+0179 38E8 04               byte  4
+0180 38E9   44             text  'DV80'
+     38EA 5638     
+     38EC 30       
 0181                       even
 0182               
 0183               txt.m1
-0184 38E2 03               byte  3
-0185 38E3   4D             text  'M1='
-     38E4 313D     
+0184 38EE 03               byte  3
+0185 38EF   4D             text  'M1='
+     38F0 313D     
 0186                       even
 0187               
 0188               txt.m2
-0189 38E6 03               byte  3
-0190 38E7   4D             text  'M2='
-     38E8 323D     
+0189 38F2 03               byte  3
+0190 38F3   4D             text  'M2='
+     38F4 323D     
 0191                       even
 0192               
 0193               txt.keys.default
-0194 38EA 10               byte  16
-0195 38EB   46             text  'F9-Menu  ^H-Help'
-     38EC 392D     
-     38EE 4D65     
-     38F0 6E75     
-     38F2 2020     
-     38F4 5E48     
-     38F6 2D48     
-     38F8 656C     
-     38FA 70       
+0194 38F6 10               byte  16
+0195 38F7   46             text  'F9-Menu  ^H-Help'
+     38F8 392D     
+     38FA 4D65     
+     38FC 6E75     
+     38FE 2020     
+     3900 5E48     
+     3902 2D48     
+     3904 656C     
+     3906 70       
 0196                       even
 0197               
 0198               txt.keys.defaultb
-0199 38FC 1A               byte  26
-0200 38FD   46             text  'F9-Menu  ^H-Help  F0-Basic'
-     38FE 392D     
-     3900 4D65     
-     3902 6E75     
-     3904 2020     
-     3906 5E48     
-     3908 2D48     
-     390A 656C     
-     390C 7020     
-     390E 2046     
-     3910 302D     
-     3912 4261     
-     3914 7369     
-     3916 63       
+0199 3908 1A               byte  26
+0200 3909   46             text  'F9-Menu  ^H-Help  F0-Basic'
+     390A 392D     
+     390C 4D65     
+     390E 6E75     
+     3910 2020     
+     3912 5E48     
+     3914 2D48     
+     3916 656C     
+     3918 7020     
+     391A 2046     
+     391C 302D     
+     391E 4261     
+     3920 7369     
+     3922 63       
 0201                       even
 0202               
 0203               txt.keys.block
-0204 3918 36               byte  54
-0205 3919   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
-     391A 392D     
-     391C 4261     
-     391E 636B     
-     3920 2020     
-     3922 5E43     
-     3924 6F70     
-     3926 7920     
-     3928 205E     
-     392A 4D6F     
-     392C 7665     
-     392E 2020     
-     3930 5E44     
-     3932 656C     
-     3934 2020     
-     3936 5E53     
-     3938 6176     
-     393A 6520     
-     393C 205E     
-     393E 5072     
-     3940 696E     
-     3942 7420     
-     3944 205E     
-     3946 5B31     
-     3948 2D35     
-     394A 5D43     
-     394C 6C69     
-     394E 70       
+0204 3924 36               byte  54
+0205 3925   46             text  'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
+     3926 392D     
+     3928 4261     
+     392A 636B     
+     392C 2020     
+     392E 5E43     
+     3930 6F70     
+     3932 7920     
+     3934 205E     
+     3936 4D6F     
+     3938 7665     
+     393A 2020     
+     393C 5E44     
+     393E 656C     
+     3940 2020     
+     3942 5E53     
+     3944 6176     
+     3946 6520     
+     3948 205E     
+     394A 5072     
+     394C 696E     
+     394E 7420     
+     3950 205E     
+     3952 5B31     
+     3954 2D35     
+     3956 5D43     
+     3958 6C69     
+     395A 70       
 0206                       even
 0207               
-0208 3950 2E2E     txt.ruler          text    '.........'
-     3952 2E2E     
-     3954 2E2E     
-     3956 2E2E     
-     3958 2E       
-0209 3959   12                        byte    18
-0210 395A 2E2E                        text    '.........'
-     395C 2E2E     
-     395E 2E2E     
-     3960 2E2E     
-     3962 2E       
-0211 3963   13                        byte    19
-0212 3964 2E2E                        text    '.........'
-     3966 2E2E     
-     3968 2E2E     
-     396A 2E2E     
-     396C 2E       
-0213 396D   14                        byte    20
-0214 396E 2E2E                        text    '.........'
-     3970 2E2E     
-     3972 2E2E     
-     3974 2E2E     
-     3976 2E       
-0215 3977   15                        byte    21
-0216 3978 2E2E                        text    '.........'
-     397A 2E2E     
-     397C 2E2E     
-     397E 2E2E     
-     3980 2E       
-0217 3981   16                        byte    22
-0218 3982 2E2E                        text    '.........'
-     3984 2E2E     
-     3986 2E2E     
-     3988 2E2E     
-     398A 2E       
-0219 398B   17                        byte    23
-0220 398C 2E2E                        text    '.........'
+0208               txt.keys.basic1
+0209 395C 2C               byte  44
+0210 395D   46             text  'F9-Back  F5-AutoMode  SPACE-Uncrunch program'
+     395E 392D     
+     3960 4261     
+     3962 636B     
+     3964 2020     
+     3966 4635     
+     3968 2D41     
+     396A 7574     
+     396C 6F4D     
+     396E 6F64     
+     3970 6520     
+     3972 2053     
+     3974 5041     
+     3976 4345     
+     3978 2D55     
+     397A 6E63     
+     397C 7275     
+     397E 6E63     
+     3980 6820     
+     3982 7072     
+     3984 6F67     
+     3986 7261     
+     3988 6D       
+0211                       even
+0212               
+0213 398A 2E2E     txt.ruler          text    '.........'
+     398C 2E2E     
      398E 2E2E     
      3990 2E2E     
-     3992 2E2E     
-     3994 2E       
-0221 3995   18                        byte    24
-0222 3996 2E2E                        text    '.........'
+     3992 2E       
+0214 3993   12                        byte    18
+0215 3994 2E2E                        text    '.........'
+     3996 2E2E     
      3998 2E2E     
      399A 2E2E     
-     399C 2E2E     
-     399E 2E       
-0223 399F   19                        byte    25
-0224                                  even
-0225 39A0 020E     txt.alpha.down     data >020e,>0f00
-     39A2 0F00     
-0226 39A4 0110     txt.vertline       data >0110
-0227 39A6 011C     txt.keymarker      byte 1,28
-0228               
-0229               txt.ws1
-0230 39A8 01               byte  1
-0231 39A9   20             text  ' '
-0232                       even
+     399C 2E       
+0216 399D   13                        byte    19
+0217 399E 2E2E                        text    '.........'
+     39A0 2E2E     
+     39A2 2E2E     
+     39A4 2E2E     
+     39A6 2E       
+0218 39A7   14                        byte    20
+0219 39A8 2E2E                        text    '.........'
+     39AA 2E2E     
+     39AC 2E2E     
+     39AE 2E2E     
+     39B0 2E       
+0220 39B1   15                        byte    21
+0221 39B2 2E2E                        text    '.........'
+     39B4 2E2E     
+     39B6 2E2E     
+     39B8 2E2E     
+     39BA 2E       
+0222 39BB   16                        byte    22
+0223 39BC 2E2E                        text    '.........'
+     39BE 2E2E     
+     39C0 2E2E     
+     39C2 2E2E     
+     39C4 2E       
+0224 39C5   17                        byte    23
+0225 39C6 2E2E                        text    '.........'
+     39C8 2E2E     
+     39CA 2E2E     
+     39CC 2E2E     
+     39CE 2E       
+0226 39CF   18                        byte    24
+0227 39D0 2E2E                        text    '.........'
+     39D2 2E2E     
+     39D4 2E2E     
+     39D6 2E2E     
+     39D8 2E       
+0228 39D9   19                        byte    25
+0229                                  even
+0230 39DA 020E     txt.alpha.down     data >020e,>0f00
+     39DC 0F00     
+0231 39DE 0110     txt.vertline       data >0110
+0232 39E0 011C     txt.keymarker      byte 1,28
 0233               
-0234               txt.ws2
-0235 39AA 02               byte  2
-0236 39AB   20             text  '  '
-     39AC 20       
+0234               txt.ws1
+0235 39E2 01               byte  1
+0236 39E3   20             text  ' '
 0237                       even
 0238               
-0239               txt.ws3
-0240 39AE 03               byte  3
-0241 39AF   20             text  '   '
-     39B0 2020     
+0239               txt.ws2
+0240 39E4 02               byte  2
+0241 39E5   20             text  '  '
+     39E6 20       
 0242                       even
 0243               
-0244               txt.ws4
-0245 39B2 04               byte  4
-0246 39B3   20             text  '    '
-     39B4 2020     
-     39B6 20       
+0244               txt.ws3
+0245 39E8 03               byte  3
+0246 39E9   20             text  '   '
+     39EA 2020     
 0247                       even
 0248               
-0249               txt.ws5
-0250 39B8 05               byte  5
-0251 39B9   20             text  '     '
-     39BA 2020     
-     39BC 2020     
+0249               txt.ws4
+0250 39EC 04               byte  4
+0251 39ED   20             text  '    '
+     39EE 2020     
+     39F0 20       
 0252                       even
 0253               
-0254      39B2     txt.filetype.none  equ txt.ws4
-0255               
-0256               
-0257               ;--------------------------------------------------------------
-0258               ; Strings for error line pane
-0259               ;--------------------------------------------------------------
-0260               txt.ioerr.load
-0261 39BE 15               byte  21
-0262 39BF   46             text  'Failed loading file: '
-     39C0 6169     
-     39C2 6C65     
-     39C4 6420     
-     39C6 6C6F     
-     39C8 6164     
-     39CA 696E     
-     39CC 6720     
-     39CE 6669     
-     39D0 6C65     
-     39D2 3A20     
-0263                       even
-0264               
-0265               txt.ioerr.save
-0266 39D4 14               byte  20
-0267 39D5   46             text  'Failed saving file: '
-     39D6 6169     
-     39D8 6C65     
-     39DA 6420     
-     39DC 7361     
-     39DE 7669     
-     39E0 6E67     
-     39E2 2066     
-     39E4 696C     
-     39E6 653A     
-     39E8 20       
+0254               txt.ws5
+0255 39F2 05               byte  5
+0256 39F3   20             text  '     '
+     39F4 2020     
+     39F6 2020     
+0257                       even
+0258               
+0259      39EC     txt.filetype.none  equ txt.ws4
+0260               
+0261               
+0262               ;--------------------------------------------------------------
+0263               ; Strings for error line pane
+0264               ;--------------------------------------------------------------
+0265               txt.ioerr.load
+0266 39F8 15               byte  21
+0267 39F9   46             text  'Failed loading file: '
+     39FA 6169     
+     39FC 6C65     
+     39FE 6420     
+     3A00 6C6F     
+     3A02 6164     
+     3A04 696E     
+     3A06 6720     
+     3A08 6669     
+     3A0A 6C65     
+     3A0C 3A20     
 0268                       even
 0269               
-0270               txt.ioerr.print
-0271 39EA 1B               byte  27
-0272 39EB   46             text  'Failed printing to device: '
-     39EC 6169     
-     39EE 6C65     
-     39F0 6420     
-     39F2 7072     
-     39F4 696E     
-     39F6 7469     
-     39F8 6E67     
-     39FA 2074     
-     39FC 6F20     
-     39FE 6465     
-     3A00 7669     
-     3A02 6365     
-     3A04 3A20     
+0270               txt.ioerr.save
+0271 3A0E 14               byte  20
+0272 3A0F   46             text  'Failed saving file: '
+     3A10 6169     
+     3A12 6C65     
+     3A14 6420     
+     3A16 7361     
+     3A18 7669     
+     3A1A 6E67     
+     3A1C 2066     
+     3A1E 696C     
+     3A20 653A     
+     3A22 20       
 0273                       even
 0274               
-0275               txt.io.nofile
-0276 3A06 16               byte  22
-0277 3A07   4E             text  'No filename specified.'
-     3A08 6F20     
-     3A0A 6669     
-     3A0C 6C65     
-     3A0E 6E61     
-     3A10 6D65     
-     3A12 2073     
-     3A14 7065     
-     3A16 6369     
-     3A18 6669     
-     3A1A 6564     
-     3A1C 2E       
+0275               txt.ioerr.print
+0276 3A24 1B               byte  27
+0277 3A25   46             text  'Failed printing to device: '
+     3A26 6169     
+     3A28 6C65     
+     3A2A 6420     
+     3A2C 7072     
+     3A2E 696E     
+     3A30 7469     
+     3A32 6E67     
+     3A34 2074     
+     3A36 6F20     
+     3A38 6465     
+     3A3A 7669     
+     3A3C 6365     
+     3A3E 3A20     
 0278                       even
 0279               
-0280               txt.memfull.load
-0281 3A1E 2D               byte  45
-0282 3A1F   49             text  'Index full. File too large for editor buffer.'
-     3A20 6E64     
-     3A22 6578     
-     3A24 2066     
-     3A26 756C     
-     3A28 6C2E     
-     3A2A 2046     
-     3A2C 696C     
-     3A2E 6520     
-     3A30 746F     
-     3A32 6F20     
-     3A34 6C61     
-     3A36 7267     
-     3A38 6520     
-     3A3A 666F     
-     3A3C 7220     
-     3A3E 6564     
-     3A40 6974     
-     3A42 6F72     
-     3A44 2062     
-     3A46 7566     
-     3A48 6665     
-     3A4A 722E     
+0280               txt.io.nofile
+0281 3A40 16               byte  22
+0282 3A41   4E             text  'No filename specified.'
+     3A42 6F20     
+     3A44 6669     
+     3A46 6C65     
+     3A48 6E61     
+     3A4A 6D65     
+     3A4C 2073     
+     3A4E 7065     
+     3A50 6369     
+     3A52 6669     
+     3A54 6564     
+     3A56 2E       
 0283                       even
 0284               
-0285               txt.block.inside
-0286 3A4C 2D               byte  45
-0287 3A4D   43             text  'Copy/Move target must be outside M1-M2 range.'
-     3A4E 6F70     
-     3A50 792F     
-     3A52 4D6F     
-     3A54 7665     
-     3A56 2074     
-     3A58 6172     
-     3A5A 6765     
-     3A5C 7420     
-     3A5E 6D75     
-     3A60 7374     
-     3A62 2062     
-     3A64 6520     
-     3A66 6F75     
-     3A68 7473     
-     3A6A 6964     
-     3A6C 6520     
-     3A6E 4D31     
-     3A70 2D4D     
-     3A72 3220     
-     3A74 7261     
-     3A76 6E67     
-     3A78 652E     
+0285               txt.memfull.load
+0286 3A58 2D               byte  45
+0287 3A59   49             text  'Index full. File too large for editor buffer.'
+     3A5A 6E64     
+     3A5C 6578     
+     3A5E 2066     
+     3A60 756C     
+     3A62 6C2E     
+     3A64 2046     
+     3A66 696C     
+     3A68 6520     
+     3A6A 746F     
+     3A6C 6F20     
+     3A6E 6C61     
+     3A70 7267     
+     3A72 6520     
+     3A74 666F     
+     3A76 7220     
+     3A78 6564     
+     3A7A 6974     
+     3A7C 6F72     
+     3A7E 2062     
+     3A80 7566     
+     3A82 6665     
+     3A84 722E     
 0288                       even
 0289               
-0290               
-0291               ;--------------------------------------------------------------
-0292               ; Strings for command buffer
-0293               ;--------------------------------------------------------------
-0294               txt.cmdb.prompt
-0295 3A7A 01               byte  1
-0296 3A7B   3E             text  '>'
-0297                       even
-0298               
-0299               txt.colorscheme
-0300 3A7C 0D               byte  13
-0301 3A7D   43             text  'Color scheme:'
-     3A7E 6F6C     
-     3A80 6F72     
-     3A82 2073     
-     3A84 6368     
-     3A86 656D     
-     3A88 653A     
+0290               txt.block.inside
+0291 3A86 2D               byte  45
+0292 3A87   43             text  'Copy/Move target must be outside M1-M2 range.'
+     3A88 6F70     
+     3A8A 792F     
+     3A8C 4D6F     
+     3A8E 7665     
+     3A90 2074     
+     3A92 6172     
+     3A94 6765     
+     3A96 7420     
+     3A98 6D75     
+     3A9A 7374     
+     3A9C 2062     
+     3A9E 6520     
+     3AA0 6F75     
+     3AA2 7473     
+     3AA4 6964     
+     3AA6 6520     
+     3AA8 4D31     
+     3AAA 2D4D     
+     3AAC 3220     
+     3AAE 7261     
+     3AB0 6E67     
+     3AB2 652E     
+0293                       even
+0294               
+0295               
+0296               ;--------------------------------------------------------------
+0297               ; Strings for command buffer
+0298               ;--------------------------------------------------------------
+0299               txt.cmdb.prompt
+0300 3AB4 01               byte  1
+0301 3AB5   3E             text  '>'
 0302                       even
 0303               
+0304               txt.colorscheme
+0305 3AB6 0D               byte  13
+0306 3AB7   43             text  'Color scheme:'
+     3AB8 6F6C     
+     3ABA 6F72     
+     3ABC 2073     
+     3ABE 6368     
+     3AC0 656D     
+     3AC2 653A     
+0307                       even
+0308               
                    < ram.resident.asm
 0042                       copy  "data.defaults.asm"      ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -8946,79 +8990,79 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
 0007               def.printer.fname
-0008 3A8A 06               byte  6
-0009 3A8B   50             text  'PI.PIO'
-     3A8C 492E     
-     3A8E 5049     
-     3A90 4F       
+0008 3AC4 06               byte  6
+0009 3AC5   50             text  'PI.PIO'
+     3AC6 492E     
+     3AC8 5049     
+     3ACA 4F       
 0010                       even
 0011               
 0012               def.clip.fname
-0013 3A92 09               byte  9
-0014 3A93   44             text  'DSK1.CLIP'
-     3A94 534B     
-     3A96 312E     
-     3A98 434C     
-     3A9A 4950     
+0013 3ACC 09               byte  9
+0014 3ACD   44             text  'DSK1.CLIP'
+     3ACE 534B     
+     3AD0 312E     
+     3AD2 434C     
+     3AD4 4950     
 0015                       even
 0016               
 0017               def.clip.fname.b
-0018 3A9C 09               byte  9
-0019 3A9D   44             text  'DSK2.CLIP'
-     3A9E 534B     
-     3AA0 322E     
-     3AA2 434C     
-     3AA4 4950     
+0018 3AD6 09               byte  9
+0019 3AD7   44             text  'DSK2.CLIP'
+     3AD8 534B     
+     3ADA 322E     
+     3ADC 434C     
+     3ADE 4950     
 0020                       even
 0021               
 0022               def.clip.fname.c
-0023 3AA6 09               byte  9
-0024 3AA7   54             text  'TIPI.CLIP'
-     3AA8 4950     
-     3AAA 492E     
-     3AAC 434C     
-     3AAE 4950     
+0023 3AE0 09               byte  9
+0024 3AE1   54             text  'TIPI.CLIP'
+     3AE2 4950     
+     3AE4 492E     
+     3AE6 434C     
+     3AE8 4950     
 0025                       even
 0026               
 0027               def.devices
-0028 3AB0 2F               byte  47
-0029 3AB1   2C             text  ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     3AB2 4453     
-     3AB4 4B2C     
-     3AB6 4844     
-     3AB8 582C     
-     3ABA 4944     
-     3ABC 452C     
-     3ABE 5049     
-     3AC0 2E2C     
-     3AC2 5049     
-     3AC4 4F2C     
-     3AC6 5449     
-     3AC8 5049     
-     3ACA 2E2C     
-     3ACC 5244     
-     3ACE 2C53     
-     3AD0 4353     
-     3AD2 2C53     
-     3AD4 4444     
-     3AD6 2C57     
-     3AD8 4453     
-     3ADA 2C52     
-     3ADC 5332     
-     3ADE 3332     
+0028 3AEA 2F               byte  47
+0029 3AEB   2C             text  ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3AEC 4453     
+     3AEE 4B2C     
+     3AF0 4844     
+     3AF2 582C     
+     3AF4 4944     
+     3AF6 452C     
+     3AF8 5049     
+     3AFA 2E2C     
+     3AFC 5049     
+     3AFE 4F2C     
+     3B00 5449     
+     3B02 5049     
+     3B04 2E2C     
+     3B06 5244     
+     3B08 2C53     
+     3B0A 4353     
+     3B0C 2C53     
+     3B0E 4444     
+     3B10 2C57     
+     3B12 4453     
+     3B14 2C52     
+     3B16 5332     
+     3B18 3332     
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0038                       ;------------------------------------------------------
 0039                       ; Activate bank 1 and branch to  >6036
 0040                       ;------------------------------------------------------
-0041 3AE0 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3AE2 6002     
+0041 3B1A 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3B1C 6002     
 0042               
 0046               
-0047 3AE4 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3AE6 6046     
+0047 3B1E 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3B20 6046     
 0048               ***************************************************************
 0049               * Step 3: Include main editor modules
 0050               ********|*****|*********************|**************************
@@ -9116,7 +9160,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0076 6098 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0077 609A C2F9  30         mov   *stack+,r11           ; Pop R11
 0078 609C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0058                       copy  "fb.tab.next.asm"     ; Move cursor to next tab position
      **** ****     > fb.tab.next.asm
 0001               * FILE......: fb.tab.next.asm
@@ -9259,7 +9303,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0118 6122 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0119 6124 C2F9  30         mov   *stack+,r11           ; Pop R11
 0120 6126 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0059                       copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
      **** ****     > fb.ruler.asm
 0001               * FILE......: fb.ruler.asm
@@ -9291,7 +9335,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0027                       ;-------------------------------------------------------
 0028 6138 06A0  32         bl    @cpym2m
      613A 24EE     
-0029 613C 3950                   data txt.ruler,fb.ruler.sit,80
+0029 613C 398A                   data txt.ruler,fb.ruler.sit,80
      613E A31E     
      6140 0050     
 0030                                                   ; Copy ruler from ROM to RAM
@@ -9347,7 +9391,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0070 617A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0071 617C C2F9  30         mov   *stack+,r11           ; Pop r11
 0072 617E 045B  20         b     *r11                  ; Return
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0060                       copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
      **** ****     > fb.colorlines.asm
 0001               * FILE......: fb.colorlines.asm
@@ -9481,7 +9525,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0111 6208 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0112 620A C2F9  30         mov   *stack+,r11           ; Pop r11
 0113 620C 045B  20         b     *r11                  ; Return
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0061                       copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
      **** ****     > fb.vdpdump.asm
 0001               * FILE......: fb.vdpdump.asm
@@ -9570,7 +9614,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0072 6258 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0073 625A C2F9  30         mov   *stack+,r11           ; Pop r11
 0074 625C 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0062                       copy  "fb.scan.fname.asm"   ; Scan line for device & filename
      **** ****     > fb.scan.fname.asm
 0001               * FILE......: fb.scan.fname.asm
@@ -9650,7 +9694,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0067 62A0 0585  14         inc   tmp1                  ; Skip length byte, will be set later
 0068               
 0069 62A2 0207  20         li    tmp3,def.devices      ; Get string with valid devices
-     62A4 3AB0     
+     62A4 3AEA     
 0070 62A6 C217  26         mov   *tmp3,tmp4            ; \ Get length byte, skipping
 0071 62A8 0988  56         srl   tmp4,8                ; / 1st following character
 0072 62AA A207  18         a     tmp3,tmp4             ; Calc end address of valid devices
@@ -9758,7 +9802,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0169 6312 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0170 6314 C2F9  30         mov   *stack+,r11           ; Pop R11
 0171 6316 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0063                       ;-----------------------------------------------------------------------
 0064                       ; Stubs
 0065                       ;-----------------------------------------------------------------------
@@ -9766,7 +9810,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0067                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -9925,7 +9969,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160                       ;------------------------------------------------------
 0161 6392 C2F9  30         mov   *stack+,r11           ; Pop r11
 0162 6394 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0068                       ;-----------------------------------------------------------------------
 0069                       ; Program data
 0070                       ;-----------------------------------------------------------------------
@@ -9951,7 +9995,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Vector table
 0084                       ;-----------------------------------------------------------------------
@@ -10009,7 +10053,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b4.asm.24160
+                   < stevie_b4.asm.53360
 0086                                                   ; Vector table bank 4
 0087               *--------------------------------------------------------------
 0088               * Video mode configuration
