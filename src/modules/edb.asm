@@ -39,11 +39,8 @@ edb.init:
         seto  @edb.block.m1         ; Reset block start line
         seto  @edb.block.m2         ; Reset block end line
 
-
-        mov   @tib.session,tmp0     ; Get TI Basic session
-        sla   tmp0,1                ; Align to word boundary
-        mov   @data.filename.ptr(tmp0),@edb.filename.ptr
-
+        li    tmp0,txt.newfile      ; "New file"
+        mov   tmp0,@edb.filename.ptr
 
         clr   @fh.kilobytes         ; \ Clear kilobytes processed
         clr   @fh.kilobytes.prev    ; /
@@ -58,8 +55,3 @@ edb.init.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
-
-
-data.filename.ptr:
-        data  txt.newfile,txt.tib1,txt.tib2,txt.tib3,txt.tib4,txt.tib5

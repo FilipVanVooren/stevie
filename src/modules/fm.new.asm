@@ -42,7 +42,7 @@ fm.newfile:
 *--------------------------------------------------------------
 * Clear SAMS pages and exit editor
 *--------------------------------------------------------------
-        bl    @edb.clear.sams       ; Clear SAMS memory pages used in editor buffer
+        bl    @edb.clear.sams       ; Clear SAMS memory used by editor buffer
         bl    @tv.reset             ; Reset editor
 *--------------------------------------------------------------
 * Remove message

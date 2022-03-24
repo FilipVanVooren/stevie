@@ -79,8 +79,6 @@ pane.cmdb.show.hidechar.done:
         li    tmp0,tv.1timeonly     ; \ Set CMDB dirty flag (trigger redraw),
         mov   tmp0,@cmdb.dirty      ; / but colorize CMDB pane only once.
 
-
-
         li    tmp0,pane.focus.cmdb  ; \ CMDB pane has focus
         mov   tmp0,@tv.pane.focus   ; /
 

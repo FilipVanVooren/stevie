@@ -30,8 +30,14 @@ tib.uncrunch:
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
 
-
-        bl    @fm.newfile
+        bl    @fm.newfile           ; \ Clear editor buffer 
+                                    ; / (destroys parm1)
+        ;------------------------------------------------------
+        ; Determine filename
+        ;------------------------------------------------------
+        mov   *stack,tmp0           ; Get TI Basic session
+        sla   tmp0,1                ; Align to word boundary
+        mov   @data.filename.ptr(tmp0),@edb.filename.ptr
 
         mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.action.colorscheme.statlines
@@ -94,3 +100,7 @@ tib.uncrunch.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+
+data.filename.ptr:
+        data  txt.newfile,txt.tib1,txt.tib2,txt.tib3,txt.tib4,txt.tib5
