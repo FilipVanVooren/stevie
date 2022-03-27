@@ -41,6 +41,9 @@ keymap_actions.editor:
         byte  key.fctn.4, pane.focus.fb
         data  edkey.action.npage
 
+        byte  key.fctn.5, pane.focus.fb
+        data  edkey.action.vwco.set
+
         byte  key.ctrl.e, pane.focus.fb
         data  edkey.action.ppage
 

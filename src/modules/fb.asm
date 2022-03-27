@@ -34,6 +34,7 @@ fb.init:
 
         li    tmp0,colrow 
         mov   tmp0,@fb.colsline     ; Columns per row=80
+        clr   @fb.vwco              ; Set view window column offset
         ;------------------------------------------------------
         ; Determine size of rows on screen
         ;------------------------------------------------------
@@ -66,4 +67,3 @@ fb.init.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-

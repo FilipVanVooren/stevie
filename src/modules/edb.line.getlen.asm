@@ -53,25 +53,11 @@ edb.line.getlength:
         jeq   edb.line.getlength.null
                                     ; Set length to 0 if null-pointer
         ;------------------------------------------------------
-        ; Process line prefix
+        ; Process line prefix and exit
         ;------------------------------------------------------
         mov   *tmp0,tmp1            ; Get length into tmp1
         mov   tmp1,@outparm1        ; Save length                
-        ;------------------------------------------------------
-        ; Assert
-        ;------------------------------------------------------
-        ci    tmp1,80               ; Line length <= 80 ?
-        jle   edb.line.getlength.exit
-                                    ; Yes, exit
-        ;------------------------------------------------------
-        ; Crash the system or limit length to 80
-        ;------------------------------------------------------
-    .ifeq debug,1        
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system       
-    .else
-        li    tmp1,80               ; Only process first 80 characters
-    .endif 
+        jmp   edb.line.getlength.exit
         ;------------------------------------------------------
         ; Set length to 0 if null-pointer
         ;------------------------------------------------------

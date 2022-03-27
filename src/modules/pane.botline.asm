@@ -101,8 +101,10 @@ pane.botline.show_linecol:
         bl    @film
               data rambuf+5,32,12   ; Clear work buffer with space character
 
-        mov   @fb.column,@waux1
-        inc   @waux1                ; Offset 1
+        mov   @fb.column,tmp0       ; Get column
+        a     @fb.vwco,tmp0         ; Add view window column offset
+        inc   tmp0                  ; Offset 1
+        mov   tmp0,@waux1           ; Save in temporary 
 
         bl    @mknum                ; Convert unsigned number to string
               data  waux1,rambuf
@@ -152,14 +154,16 @@ pane.botline.show_linecol.linelen:
         ;------------------------------------------------------
         ; Assert
         ;------------------------------------------------------
-        ci    tmp0,80
+        ci    tmp0,99
         jle   pane.botline.show_line.2digits
         ;------------------------------------------------------
-        ; Asserts failed
+        ; Show length of line (3 digits)
         ;------------------------------------------------------
-!       mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / Crash and halt system
-        ;------------------------------------------------------
+        li    tmp0,rambuf+2
+        movb  *tmp0+,*tmp1+         ; 1st digit row length
+        movb  *tmp0+,*tmp1+         ; 2nd digit row length
+        jmp   pane.botline.show_line.rest        
+        ;------------------------------------------------------        
         ; Show length of line (2 digits)
         ;------------------------------------------------------
 pane.botline.show_line.2digits:

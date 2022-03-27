@@ -39,9 +39,12 @@ fb.refresh:
         ; Unpack line to frame buffer
         ;------------------------------------------------------
 fb.refresh.unpack_line:
+        mov   @fb.vwco,@parm3       ; Set view window column offset
+
         bl    @edb.line.unpack.fb   ; Unpack line from editor buffer
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
+                                    ; | i  parm3    = Column offset
                                     ; / o  outparm1 = Length of line
 
         inc   @parm1                ; Next line in editor buffer
