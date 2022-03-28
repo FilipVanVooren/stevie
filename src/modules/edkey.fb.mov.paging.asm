@@ -44,7 +44,8 @@ edkey.action.ppage.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.ppage.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 
@@ -88,4 +89,5 @@ edkey.action.npage.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.npage.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

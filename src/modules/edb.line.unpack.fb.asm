@@ -94,13 +94,13 @@ edb.line.unpack.fb.getlen:
         ;------------------------------------------------------
 edb.line.unpack.fb.clear: 
         mov   @rambuf+8,tmp0        ; \ Start of row in frame buffer
-        a     @rambuf+10,tmp0       ; / Skip until end of row in frame buffer
-        s     @rambuf+4,tmp0
+        a     @rambuf+10,tmp0       ; | Skip until end of row in frame buffer
+        s     @rambuf+4,tmp0        ; / honouring column offset (see @fb.vwco)
 
         clr   tmp1                  ; Fill with >00
         mov   @fb.colsline,tmp2
         s     @rambuf+10,tmp2       ; \ Calculate number of bytes to clear
-        a     @rambuf+4,tmp2        ; / honouring column offset (see @fb.vwco)        
+        a     @rambuf+4,tmp2        ; / honouring column offset (see @fb.vwco)
         inc   tmp2
 
         bl    @xfilm                ; Fill CPU memory
@@ -123,14 +123,16 @@ edb.line.unpack.fb.prepare:
         ;------------------------------------------------------
         ; Assert on line length
         ;------------------------------------------------------
-edb.line.unpack.fb.copy:     
+        jeq   edb.line.unpack.fb.exit
+                                    ; Exit if line length = 0
+
         ci    tmp2,80               ; Check line length
-        jle   edb.line.unpack.fb.copy.doit
+        jle   edb.line.unpack.fb.copy
         li    tmp2,80               ; Only process first 80 characters
         ;------------------------------------------------------
         ; Copy memory block
         ;------------------------------------------------------
-edb.line.unpack.fb.copy.doit:        
+edb.line.unpack.fb.copy:        
         bl    @xpym2m               ; Copy line to frame buffer
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Target address 

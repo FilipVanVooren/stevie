@@ -121,6 +121,7 @@ pane.botline.show_linecol:
         ; Decide if row length is to be shown
         ;------------------------------------------------------
         mov   @fb.column,tmp0       ; \ Base 1 for comparison
+        a     @fb.vwco,tmp0         ; | Add view window column offset        
         inc   tmp0                  ; /
         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
         jlt   pane.botline.show_linecol.linelen
@@ -131,7 +132,8 @@ pane.botline.show_linecol:
         ;------------------------------------------------------
 pane.botline.show_linecol.linelen:
         mov   @fb.column,tmp0       ; \
-        li    tmp1,rambuf+7         ; | Determine column position for '-' char
+        a     @fb.vwco,tmp0         ; | Add view window column offset        
+        li    tmp1,rambuf+7         ; | Determine column position for '/' char
         ci    tmp0,9                ; | based on number of digits in cursor X
         jlt   !                     ; | column.
         inc   tmp1                  ; /
@@ -159,6 +161,7 @@ pane.botline.show_linecol.linelen:
         ;------------------------------------------------------
         ; Show length of line (3 digits)
         ;------------------------------------------------------
+pane.botline.show_line.3digits:        
         li    tmp0,rambuf+2
         movb  *tmp0+,*tmp1+         ; 1st digit row length
         movb  *tmp0+,*tmp1+         ; 2nd digit row length
@@ -171,7 +174,7 @@ pane.botline.show_line.2digits:
         movb  *tmp0+,*tmp1+         ; 1st digit row length
         jmp   pane.botline.show_line.rest
         ;------------------------------------------------------
-        ; Show length of line (1 digits)
+        ; Show length of line (1 digit)
         ;------------------------------------------------------
 pane.botline.show_line.1digit:
         li    tmp0,rambuf+4

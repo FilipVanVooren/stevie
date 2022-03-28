@@ -42,7 +42,7 @@ keymap_actions.editor:
         data  edkey.action.npage
 
         byte  key.fctn.5, pane.focus.fb
-        data  edkey.action.vwco.set
+        data  edkey.action.scroll.right
 
         byte  key.ctrl.e, pane.focus.fb
         data  edkey.action.ppage

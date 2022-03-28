@@ -17,7 +17,8 @@ edkey.action.left:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @edkey.keyscan.hook.debounce; Back to editor main
+!       b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -36,7 +37,8 @@ edkey.action.right:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @edkey.keyscan.hook.debounce; Back to editor main
+!       b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -47,7 +49,8 @@ edkey.action.home:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -68,13 +71,5 @@ edkey.action.end:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.debounce; Back to editor main
-
-
-edkey.action.vwco.set:
-        li    tmp0,5
-        mov   tmp0,@fb.vwco
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
