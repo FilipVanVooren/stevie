@@ -229,4 +229,4 @@ dialog.help.data.page2.right:
         #string 'Ctrl g   ^g   Goto marker M1'
         #string 'Ctrl m   ^m   Move block'
         #string 'Ctrl s   ^s   Save block to file'
-        #string 'Ctrl ^1..^5   Copy to clipboard 1-5'
+        #string 'Ctrl ^1..^3   Copy to clipboard 1-3'

@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Save clipboards
 *---------------------------------------------------------------
-* b   @edkey.action.fb.clip.save.[1-5]
+* b   @edkey.action.fb.clip.save.[1-3]
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -20,12 +20,6 @@ edkey.action.fb.clip.save.2:
         jmp   !
 edkey.action.fb.clip.save.3:
         li    tmp0,clip3
-        jmp   !
-edkey.action.fb.clip.save.4:
-        li    tmp0,clip4
-        jmp   !
-edkey.action.fb.clip.save.5:
-        li    tmp0,clip5
         ;-------------------------------------------------------
         ; Save block to clipboard
         ;-------------------------------------------------------

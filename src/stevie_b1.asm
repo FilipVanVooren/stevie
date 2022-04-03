@@ -109,6 +109,7 @@ main:
         copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
         copy  "fb.refresh.asm"              ; Refresh framebuffer
         copy  "fb.restore.asm"              ; Restore framebuffer to normal opr.
+        copy  "fb.hscroll.asm"              ; Horizontal scroll frame buffer
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------

@@ -118,11 +118,8 @@ keymap_actions.editor:
         byte  key.ctrl.3, pane.focus.fb
         data  edkey.action.fb.clip.save.3
 
-        byte  key.ctrl.4, pane.focus.fb
-        data  edkey.action.fb.clip.save.4
-
         byte  key.ctrl.5, pane.focus.fb
-        data  edkey.action.fb.clip.save.5
+        data  edkey.action.scroll.left
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
@@ -183,7 +180,6 @@ keymap_actions.editor:
         ; End of list
         ;-------------------------------------------------------
         data  EOL                           ; EOL
-
 
 
 *---------------------------------------------------------------
