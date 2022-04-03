@@ -55,7 +55,7 @@ edb.line.unpack.fb:
         c     @parm1,@edb.lines     ; Requested line at BOT?
         jlt   !                     ; No, continue processing
         
-        clr   @rambuf+10            ; Set length=0
+        clr   @rambuf+10            ; Set line length = 0
         jmp   edb.line.unpack.fb.clear
         ;------------------------------------------------------
         ; Get pointer to line & page-in editor buffer page
@@ -70,7 +70,7 @@ edb.line.unpack.fb:
         ;------------------------------------------------------        
         mov   @outparm1,tmp0        ; Get pointer to line
         jne   edb.line.unpack.fb.getlen
-                                    ; Continue if pointer is set
+                                    ; Only continue if pointer is set
 
         clr   @rambuf+10            ; Set length=0
         jmp   edb.line.unpack.fb.clear
@@ -78,30 +78,15 @@ edb.line.unpack.fb:
         ; Get line length
         ;------------------------------------------------------ 
 edb.line.unpack.fb.getlen:                                        
-        mov   *tmp0+,tmp1           ; Get line length
+        mov   *tmp0+,@rambuf+10     ; Get line length
         mov   tmp0,@rambuf+6        ; Source memory address for block copy
-        mov   tmp1,@rambuf+10       ; Save line length        
         ;------------------------------------------------------
-        ; Assert on line length
-        ;------------------------------------------------------        
-        ci    tmp1,80               ; \ Continue if length <= 80
-                                    ; / 
-        jle   edb.line.unpack.fb.clear 
-        jmp   edb.line.unpack.fb.prepare
-                                    ; Length > 80 so don't erase
-        ;------------------------------------------------------
-        ; Erase chars from last column until column 80
+        ; Erase 80 columns line
         ;------------------------------------------------------
 edb.line.unpack.fb.clear: 
         mov   @rambuf+8,tmp0        ; \ Start of row in frame buffer
-        a     @rambuf+10,tmp0       ; | Skip until end of row in frame buffer
-        s     @rambuf+4,tmp0        ; / honouring column offset (see @fb.vwco)
-
-        clr   tmp1                  ; Fill with >00
-        mov   @fb.colsline,tmp2
-        s     @rambuf+10,tmp2       ; \ Calculate number of bytes to clear
-        a     @rambuf+4,tmp2        ; / honouring column offset (see @fb.vwco)
-        inc   tmp2
+        clr   tmp1                  ; | Fill with >00
+        li    tmp2,80               ; / 
 
         bl    @xfilm                ; Fill CPU memory
                                     ; \ i  tmp0 = Target address
@@ -111,20 +96,22 @@ edb.line.unpack.fb.clear:
         ; Prepare for unpacking data
         ;------------------------------------------------------
 edb.line.unpack.fb.prepare: 
-        mov   @rambuf+10,tmp2       ; Line length
+        mov   @rambuf+10,tmp2       ; Get Line length
         mov   tmp2,@outparm1        ; Store in output parameter        
         jeq   edb.line.unpack.fb.exit  
                                     ; Exit if length = 0
 
-        mov   @rambuf+6,tmp0        ; Pointer to line in editor buffer
-        a     @rambuf+4,tmp0        ; Add column offset (see @fb.vwco)
+        c     @rambuf+4,tmp2        ; Column offset (@fb.vwco) > line length
+        jhe   edb.line.unpack.fb.exit
+                                    ; Yes, exit
+
         mov   @rambuf+8,tmp1        ; Pointer to row in frame buffer
-        s     @rambuf+4,tmp2        ; Subtract @fb.vwco from line length        
+        s     @rambuf+4,tmp2        ; Subtract @fb.vwco from line length
         ;------------------------------------------------------
         ; Assert on line length
         ;------------------------------------------------------
-        jeq   edb.line.unpack.fb.exit
-                                    ; Exit if line length = 0
+        jle   edb.line.unpack.fb.exit
+                                    ; Exit if line length <= 0
 
         ci    tmp2,80               ; Check line length
         jle   edb.line.unpack.fb.copy
@@ -133,6 +120,10 @@ edb.line.unpack.fb.prepare:
         ; Copy memory block
         ;------------------------------------------------------
 edb.line.unpack.fb.copy:        
+        mov   @rambuf+6,tmp0        ; Pointer to line in editor buffer
+        a     @rambuf+4,tmp0        ; Add column offset (@fb.vwco)
+
+
         bl    @xpym2m               ; Copy line to frame buffer
                                     ; \ i  tmp0 = Source address
                                     ; | i  tmp1 = Target address 

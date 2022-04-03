@@ -14,7 +14,7 @@ edkey.action.scroll.right:
         ;-------------------------------------------------------
         clr   tmp0                  ; Reset view window column offset
         jmp   edkey.action.scroll.right.vwco
-!       ai    tmp0,20               ; Scroll right
+!       ai    tmp0,2                ; Scroll right
         ;-------------------------------------------------------
         ; Set view window column offset
         ;-------------------------------------------------------

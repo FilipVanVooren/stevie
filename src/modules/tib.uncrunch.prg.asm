@@ -83,9 +83,9 @@ tib.uncrunch.prg:
 tib.uncrunch.prg.lnt.loop:
         mov   @tib.var2,tmp0        ; Get VRAM address
 
-        data  c99_dbg_tmp0          ; \ Print vram address in tmp0 on classic99
-        data  >1001                 ; | debugger console.
-        data  data.printf.vram.lnt  ; /
+        ; data  c99_dbg_tmp0          ; \ Print vram address in tmp0 on classic99
+        ; data  >1001                 ; | debugger console.
+        ; data  data.printf.vram.lnt  ; /
 
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0 = VRAM address
