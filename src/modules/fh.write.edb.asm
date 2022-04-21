@@ -144,10 +144,12 @@ fh.file.write.edb.record:
         ;------------------------------------------------------
         mov   @fh.records,@parm1    ; Line to unpack
         clr   @parm2                ; 1st row in frame buffer
+        clr   @parm3                ; Column Offset must be 0 for proper save
 
         bl    @edb.line.unpack      ; Unpack line
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
+                                    ; | i  parm3    = Column offset
                                     ; / o  outparm1 = Length of line                                    
         ;------------------------------------------------------        
         ; 1b: Copy unpacked line to VDP memory
