@@ -4,8 +4,7 @@
 
 Stevie requires a 1MB SAMS card to run.
 
-Depending on the mode currently active, SAMS banks are constantly being paged-in
-and out.
+Depending on the mode currently active, SAMS banks are paged-in and out.
 This is for the most handled via the subroutines in the spectra2 module
 ``/modules/cpu_sams_support.asm``
 
@@ -76,7 +75,7 @@ SAMS banks are configured as follows:
 
 ## TI Basic session
 
-When running TI Basic or when exiting Stevie, the banks are switched to
+When calling TI Basic or when exiting Stevie, the banks are switched to
 the default order. This is for assuring external programs behave as
 expected. With default order the same bank mapping is meant as when
 powering on the SAMS card.
@@ -99,8 +98,8 @@ There is space reserved for dumping up to 5 parallel TI Basic sessions.
 The SAMS pages used for storing each dump are hardcoded and defined in the file
 'data.sams.layout.sams'. Note that the dumps are stored in reversed order at the
 end of the 1MB SAMS address page range, going downwards.
-With this bank order there's more space for the file editor buffer(s) and
-indexes if few TI Basic sessions get dumped.
+With this bank order there's more space for editor buffer(s) and indexes 
+if few TI Basic sessions get dumped.
 
 ### SAMS pages
 
@@ -125,3 +124,18 @@ but to different memory ranges within that page.
 | >f300 - f3ff | TI Basic session 3   |
 | >f400 - f4ff | TI Basic session 4   |
 | >f500 - f5ff | TI Basic session 5   |
+
+
+### Auxiliary stuff in SAMS page >ff
+
+Each of the TI Basic sessions dump some auxiliary stuff to the page >ff,
+but to different memory ranges within that page, e.g. TI Basic program file name
+captured by Stevie helper ISR in TI Basic.
+
+| Address      | Auxiliary memory     |
+|--------------|----------------------|
+| >f600 - f6ff | TI Basic session 1   |
+| >f700 - f7ff | TI Basic session 2   |
+| >f800 - f8ff | TI Basic session 3   |
+| >f900 - f9ff | TI Basic session 4   |
+| >fa00 - faff | TI Basic session 5   |

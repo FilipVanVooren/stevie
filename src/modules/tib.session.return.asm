@@ -4,7 +4,7 @@
 
 ***************************************************************
 * tib.run.return.mon
-* Return from OS Monitor/TI Basic to Stevie
+* Return from OS Monitor to Stevie
 ***************************************************************
 * bl   @tib.run.return.mon
 *--------------------------------------------------------------
