@@ -15,6 +15,7 @@
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "equates.c99.asm"     ; Equates related to classic99 emulator
+        copy  "equates.tib.asm"     ; Equates related to TI Basic session        
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************

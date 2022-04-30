@@ -118,7 +118,11 @@ tib.run.return.1:
 
         bl    @cpym2m
               data >8300,>f100,256  ; Backup TI Basic scratchpad to >f100
-                                    ; @cpu.scrpad.tgt in SAMS bank.
+
+        bl    @cpym2m
+              data tib.aux.fname,>f600,256
+                                    ; Backup auxiliary memory to >f600
+
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 2
@@ -129,7 +133,11 @@ tib.run.return.2:
 
         bl    @cpym2m
               data >8300,>f200,256  ; Backup TI Basic scratchpad to >f200
-                                    ; @cpu.scrpad.tgt in SAMS bank.
+
+        bl    @cpym2m
+              data tib.aux.fname,>f700,256
+                                    ; Backup auxiliary memory to >f700
+
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 3
@@ -140,7 +148,11 @@ tib.run.return.3:
 
         bl    @cpym2m
               data >8300,>f300,256  ; Backup TI Basic scratchpad to >f300
-                                    ; @cpu.scrpad.tgt in SAMS bank.
+
+        bl    @cpym2m
+              data tib.aux.fname,>f800,256
+                                    ; Backup auxiliary memory to >f800
+
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 4
@@ -151,7 +163,11 @@ tib.run.return.4:
 
         bl    @cpym2m
               data >8300,>f400,256  ; Backup TI Basic scratchpad to >f400
-                                    ; @cpu.scrpad.tgt in SAMS bank.
+
+        bl    @cpym2m
+              data tib.aux.fname,>f900,256
+                                    ; Backup auxiliary memory to >f900
+
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 5
@@ -162,7 +178,11 @@ tib.run.return.5:
 
         bl    @cpym2m
               data >8300,>f500,256  ; Backup TI Basic scratchpad to >f500
-                                    ; @cpu.scrpad.tgt in SAMS bank.
+
+        bl    @cpym2m
+              data tib.aux.fname,>fa00,256
+                                    ; Backup auxiliary memory to >fa00
+
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
         ; Asserts failed

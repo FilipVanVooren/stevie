@@ -1,5 +1,5 @@
 * FILE......: equates.c99.asm
-* Purpose...: Some equates related to classic99
+* Purpose...: Equates related to classic99
 
 ***************************************************************
 *                 Extra opcodes for classic99

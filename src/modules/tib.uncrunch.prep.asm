@@ -143,6 +143,32 @@ tib.uncrunch.prepare.5:
                                     ; Add base address for specified session
 
         mov   tmp0,@tib.stab.ptr    ; Save pointer
+
+        ;------------------------------------------------------
+        ; (6) Get filename of TI basic program
+        ;------------------------------------------------------
+        mov   @tib.scrpad.ptr,tmp0  ; Get pointer to scratchpad in SAMS
+        ai    tmp0,>0500            ; Add offset for reaching auxiliary memory
+                                    ; \ Session 1: >f100 + >0500 = >f600
+                                    ; | ...
+                                    ; / Session 5: >f500 + >0500 = >fa00
+
+        mov   *tmp0,tmp1            ; Check if filename set
+        jeq   tib.uncrunch.prepare.exit
+                                    ; No, skip setting filename
+        ;------------------------------------------------------
+        ; Set filename of editor buffer
+        ;------------------------------------------------------
+        li    tmp1,edb.filename     ; Destination for copy
+        li    tmp2,80               ; Number of bytes to copy
+
+        bl    @cpym2m               ; \ Copy TI Basic filename
+                                    ; | i  tmp0 = Source address
+                                    ; | i  tmp1 = Target address
+                                    ; / i  tmp2 = Number of bytes to copy
+
+        li    tmp0,edb.filename     ; Set pointer to filename
+        mov   tmp0,@edb.filename.ptr
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

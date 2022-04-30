@@ -129,25 +129,25 @@ isr.scan.new:
         cb    r7,@data.tk.new       ; NEW?
         jne   isr.scan.exit         ; Exit crunch buffer scan
         ;-------------------------------------------------------
-        ; Clear memory buffer >ff00 - >ffe0
+        ; Clear TI Basic auxiliary memory buffer
         ;-------------------------------------------------------
-        li    r7,>ff00
+        li    r7,tib.aux
 !       clr   *r7+                  ; \
-        ci    r7,>fffa              ; | Clear memory
+        ci    r7,tib.aux.end        ; | Clear memory
         jle   -!                    ; /
         jmp   isr.scan.exit         ; Exit
         ;-------------------------------------------------------
-        ; Copy TI Basic program filename to >ff00
+        ; Copy TI Basic program filename to high memory
         ;-------------------------------------------------------
 isr.scan.copy:
         clr   r7                    ;
-        li    r10,>ff00             ; Target address in high memory
+        li    r10,tib.aux.fname     ; Target address in high memory
 isr.scan.copy.loop:
         movb  @vdpr,r7              ; Read LSB
         movb  r7,*r10+              ; Copy byte to RAM
         jne   isr.scan.copy.loop    ; Copy until termination token found
         ;-------------------------------------------------------
-        ; Copy TI Basic program filename to >ff00
+        ; TI Basic program filename copied
         ;-------------------------------------------------------
 isr.scan.exit:
         jmp   isr.hotkey            ; Continue processing isr
