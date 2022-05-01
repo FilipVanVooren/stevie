@@ -25,6 +25,18 @@
         ; Program list entry
         ;-----------------------------------------------------------------------
 rom.program1:
+        data  rom.program2          ; 12 \ Next program list entry         >600c
+                                    ; 13 / (no more items following)
+
+        data  kickstart.code1       ; 14 \ Program address                 >600e
+                                    ; 15 /
+
+        #string 'STEVIE TOOLS'
+
+        ;-----------------------------------------------------------------------
+        ; Program list entry
+        ;-----------------------------------------------------------------------
+rom.program2:
         data  >0000                 ; 12 \ Next program list entry         >600c
                                     ; 13 / (no more items following)
 
@@ -32,19 +44,7 @@ rom.program1:
                                     ; 15 /
 
         .ifeq full_f18a_support,1
-
-           .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.3F+'
-           .else
-              #string 'STEVIE 1.3F'
-           .endif
-
+            #string 'STEVIE IDE (1.3F-30)'
         .else
-
-           .ifeq device.fg99.mode.adv,1
-              #string 'STEVIE 1.3F+ (24X80)'
-           .else
-              #string 'STEVIE 1.3F (24X80)'
-           .endif
-
+            #string 'STEVIE IDE (1.3F-24)'
         .endif

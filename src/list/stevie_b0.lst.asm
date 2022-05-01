@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.23808
+     **** ****     > stevie_b0.asm.65758
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220501-1742570
+0009               * File: stevie_b0.asm               ; Version 220501-2123330
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -553,7 +553,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0436      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0437      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0438      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0017                       copy  "equates.c99.asm"     ; Equates related to classic99 emulator
      **** ****     > equates.c99.asm
 0001               * FILE......: equates.c99.asm
@@ -589,7 +589,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0031      0127     c99_dbg_tmp3  equ  c99_dbg_r7       ; Debug printf tmp3
 0032      0128     c99_dbg_tmp4  equ  c99_dbg_r8       ; Debug printf tmp4
 0033      0199     c99_dbg_stck  equ  c99_dbg_r9       ; Debug printf stack
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0018                       copy  "equates.keys.asm"    ; Equates for keyboard mapping
      **** ****     > equates.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -729,7 +729,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0019               
 0020               ***************************************************************
 0021               * BANK 0
@@ -766,29 +766,50 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0025                       ; Program list entry
 0026                       ;-----------------------------------------------------------------------
 0027               rom.program1:
-0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
+0028 600C 601E             data  rom.program2          ; 12 \ Next program list entry         >600c
 0029                                                   ; 13 / (no more items following)
 0030               
-0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
+0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0051               
-0059               
-0060 6010 13               byte  19
-0061 6011   53             text  'STEVIE 1.3F (24X80)'
+0034               
+0035 6010 0C               byte  12
+0036 6011   53             text  'STEVIE TOOLS'
      6012 5445     
      6014 5649     
      6016 4520     
-     6018 312E     
-     601A 3346     
-     601C 2028     
-     601E 3234     
-     6020 5838     
-     6022 3029     
-0062                       even
-0063               
-0065               
-                   < stevie_b0.asm.23808
+     6018 544F     
+     601A 4F4C     
+     601C 53       
+0037                       even
+0038               
+0039               
+0040                       ;-----------------------------------------------------------------------
+0041                       ; Program list entry
+0042                       ;-----------------------------------------------------------------------
+0043               rom.program2:
+0044 601E 0000             data  >0000                 ; 12 \ Next program list entry         >600c
+0045                                                   ; 13 / (no more items following)
+0046               
+0047 6020 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
+0048                                                   ; 15 /
+0049               
+0057               
+0058 6022 14               byte  20
+0059 6023   53             text  'STEVIE IDE (1.3F-24)'
+     6024 5445     
+     6026 5649     
+     6028 4520     
+     602A 4944     
+     602C 4520     
+     602E 2831     
+     6030 2E33     
+     6032 462D     
+     6034 3234     
+     6036 29       
+0060                       even
+0061               
+                   < stevie_b0.asm.65758
 0027               
 0028               ***************************************************************
 0029               * Step 1: Switch to bank 7 (Resume Stevie session)
@@ -1707,7 +1728,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220501-1742570'
+0270 62AB   42             text  'Build-ID  220501-2123330'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1716,9 +1737,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B6 3230     
      62B8 3530     
      62BA 312D     
-     62BC 3137     
-     62BE 3432     
-     62C0 3537     
+     62BC 3231     
+     62BE 3233     
+     62C0 3333     
      62C2 30       
 0271                       even
 0272               
@@ -6000,7 +6021,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      703C 0040     
 0381 703E 0460  28         b     @main                 ; Give control to main program
      7040 3B06     
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0118                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -9138,7 +9159,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0119                       ;------------------------------------------------------
 0120                       ; Stevie main entry point
 0121                       ;------------------------------------------------------
@@ -9172,7 +9193,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b0.asm.23808
+                   < stevie_b0.asm.65758
 0144               
 0145               cpu.crash.showbank.bankstr:
 0146               

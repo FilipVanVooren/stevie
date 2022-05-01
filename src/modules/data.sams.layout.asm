@@ -1,19 +1,32 @@
 * FILE......: data.sams.layout.asm
-* Purpose...: SAMS bank layout for multi-purpose
+* Purpose...: SAMS bank layout for Stevie
 
 
-***************************************************************
-* SAMS legacy page layout table (as in SAMS transparent mode)
-*--------------------------------------------------------------
-mem.sams.layout.legacy:
-        data  >0200                 ; >2000-2fff, SAMS page >02
-        data  >0300                 ; >3000-3fff, SAMS page >03
-        data  >0a00                 ; >a000-afff, SAMS page >0a
-        data  >0b00                 ; >b000-bfff, SAMS page >0b
-        data  >0c00                 ; >c000-cfff, SAMS page >0c
-        data  >0d00                 ; >d000-dfff, SAMS page >0d
-        data  >0e00                 ; >e000-efff, SAMS page >0e
-        data  >0f00                 ; >f000-ffff, SAMS page >0f
+; Following 32K memory regions are locked with
+; fixed SAMS pages while running Stevie:
+;
+;  ---------------------------------------
+;  >2000-2fff  SAMS page >00      locked
+;  >3000-3fff  SAMS page >01      locked
+;  >a000-afff  SAMS page >04      locked
+;  ---------------------------------------
+;  >b000-bfff  SAMS page >20-3f   variable
+;  >c000-cfff  SAMS page >40-ff   variable
+;  ---------------------------------------
+;  >d000-dfff  SAMS page >05      locked+
+;  >e000-efff  SAMS page >06      locked+
+;  >f000-ffff  SAMS page >07      locked+
+;  ---------------------------------------
+;
+;  1. During index search/reorganization the index(+)
+;     extends into memory range d000-ffff causing, with
+;     temporary allocation of other SAMS pages 
+;
+;  2. Only when en external program is running (e.g. TI Basic)
+;     or when terminating Stevie, the legacy page layout table
+;     gets reactivated.
+
+
 
 ***************************************************************
 * SAMS page layout table for Stevie boot order
@@ -36,6 +49,7 @@ mem.sams.layout.boot:
         data  >0600                 ; >e000-efff, SAMS page >06
         data  >0700                 ; >f000-ffff, SAMS page >07
 
+
 ***************************************************************
 * SAMS page layout table before calling external progam
 *--------------------------------------------------------------
@@ -51,8 +65,24 @@ mem.sams.layout.external:
                                     ; /
         data  >0700                 ; >f000-ffff, SAMS page >07
 
+
 ***************************************************************
-* SAMS page layout table TI Basic session 1 VRAM
+* SAMS legacy page layout table while running external program
+*--------------------------------------------------------------
+mem.sams.layout.legacy:
+        data  >0200                 ; >2000-2fff, SAMS page >02
+        data  >0300                 ; >3000-3fff, SAMS page >03
+        data  >0a00                 ; >a000-afff, SAMS page >0a
+        data  >0b00                 ; >b000-bfff, SAMS page >0b
+        data  >0c00                 ; >c000-cfff, SAMS page >0c
+        data  >0d00                 ; >d000-dfff, SAMS page >0d
+        data  >0e00                 ; >e000-efff, SAMS page >0e
+        data  >0f00                 ; >f000-ffff, SAMS page >0f
+
+
+
+***************************************************************
+* SAMS page layout table for backup of TI Basic session 1 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
         data  >0000                 ; . >2000-2fff
@@ -66,7 +96,7 @@ mem.sams.layout.basic1:
 
 
 ***************************************************************
-* SAMS page layout table TI Basic session 2 VRAM
+* SAMS page layout table for backup of TI Basic session 2 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
         data  >0000                 ; . >2000-2fff
@@ -80,7 +110,7 @@ mem.sams.layout.basic2:
 
 
 ***************************************************************
-* SAMS page layout table TI Basic session 3 VRAM
+* SAMS page layout table for backup of TI Basic session 3 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
         data  >0000                 ; . >2000-2fff
@@ -94,7 +124,7 @@ mem.sams.layout.basic3:
 
 
 ***************************************************************
-* SAMS page layout table TI Basic session 4 VRAM
+* SAMS page layout table for backup of TI Basic session 4 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic4:
         data  >0000                 ; . >2000-2fff
@@ -108,7 +138,7 @@ mem.sams.layout.basic4:
 
 
 ***************************************************************
-* SAMS page layout table TI Basic session 5 VRAM
+* SAMS page layout table for backup of TI Basic session 5 VRAM
 *--------------------------------------------------------------
 mem.sams.layout.basic5:
         data  >0000                 ; . >2000-2fff
