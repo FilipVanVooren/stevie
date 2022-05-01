@@ -15,7 +15,7 @@
         copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "equates.c99.asm"     ; Equates related to classic99 emulator
-        copy  "data.keymap.keys.asm"; Equates for keyboard mapping
+        copy  "equates.keys.asm"    ; Equates for keyboard mapping
 
 ***************************************************************
 * BANK 0
