@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b7.asm.9457
+     **** ****     > stevie_b7.asm.20030
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version 220501-1516440
+0009               * File: stevie_b7.asm               ; Version 220501-1711130
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0015                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -553,7 +553,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0436      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0437      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0438      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0017                       copy  "equates.c99.asm"     ; Equates related to classic99 emulator
      **** ****     > equates.c99.asm
 0001               * FILE......: equates.c99.asm
@@ -589,7 +589,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0031      0127     c99_dbg_tmp3  equ  c99_dbg_r7       ; Debug printf tmp3
 0032      0128     c99_dbg_tmp4  equ  c99_dbg_r8       ; Debug printf tmp4
 0033      0199     c99_dbg_stck  equ  c99_dbg_r9       ; Debug printf stack
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0018                       copy  "equates.tib.asm"     ; Equates related to TI Basic session
      **** ****     > equates.tib.asm
 0001               * FILE......: equates.tib.asm
@@ -603,7 +603,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0009      FFFA     tib.aux.end       equ  >fffa           ; \ End of auxiliary memory
 0010                                                      ; | >fffc-ffff is reserved
 0011                                                      ; / for NMI vector.
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0019                       copy  "equates.keys.asm"    ; Equates for keyboard mapping
      **** ****     > equates.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -743,7 +743,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0020               
 0021               ***************************************************************
 0022               * BANK 7
@@ -802,7 +802,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0028               
 0029               ***************************************************************
 0030               * Step 1: Switch to bank 0 (uniform code accross all banks)
@@ -1623,7 +1623,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 21EC 18               byte  24
-0270 21ED   42             text  'Build-ID  220501-1516440'
+0270 21ED   42             text  'Build-ID  220501-1711130'
      21EE 7569     
      21F0 6C64     
      21F2 2D49     
@@ -1632,9 +1632,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      21F8 3230     
      21FA 3530     
      21FC 312D     
-     21FE 3135     
-     2200 3136     
-     2202 3434     
+     21FE 3137     
+     2200 3131     
+     2202 3133     
      2204 30       
 0271                       even
 0272               
@@ -5916,7 +5916,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      2F7E 0040     
 0381 2F80 0460  28         b     @main                 ; Give control to main program
      2F82 6046     
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0043                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -9054,7 +9054,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0044                       ;------------------------------------------------------
 0045                       ; Activate bank 1 and branch to  >6036
 0046                       ;------------------------------------------------------
@@ -9217,7 +9217,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      609E 994A     
      60A0 BEEF     
 0124                                                   ; DEAD 994A BEEF
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0064                       copy  "mem.sams.layout.asm"        ; Setup SAMS banks from cart space
      **** ****     > mem.sams.layout.asm
 0001               
@@ -9626,7 +9626,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0355                       ;------------------------------------------------------
 0356               mem.sams.set.stevie.exit:
 0357 618A 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0065                       ;-----------------------------------------------------------------------
 0066                       ; TI Basic sessions
 0067                       ;-----------------------------------------------------------------------
@@ -10149,7 +10149,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      63C2 C3CF     
      63C4 C3F3     
      63C6 C37E     
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0069                       copy  "tib.session.isr.asm"        ; TI Basic integration hook
      **** ****     > tib.session.isr.asm
 0001               * FILE......: tib.session.isr.asm
@@ -10347,7 +10347,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0160 647E 01       data.tk.new   byte >01              ; NEW
 0161 647F   06     data.tk.old   byte >06              ; OLD
 0162 6480 08       data.tk.save  byte >08              ; SAVE
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0070                       copy  "tib.session.return.asm"     ; Return to Stevie
      **** ****     > tib.session.return.asm
 0001               * FILE......: tib.session.return.asm
@@ -10724,7 +10724,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0282 6610 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0283 6612 C2F9  30         mov   *stack+,r11           ; Pop r11
 0284 6614 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0071                       ;-----------------------------------------------------------------------
 0072                       ; TI Basic program uncruncher
 0073                       ;-----------------------------------------------------------------------
@@ -10808,7 +10808,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0069 6648 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0070 664A C2F9  30         mov   *stack+,r11           ; Pop r11
 0071 664C 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0075                       copy  "tib.uncrunch.asm"           ; Uncrunch TI Basic program
      **** ****     > tib.uncrunch.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -10946,7 +10946,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      66D0 38AA     
      66D2 38B8     
      66D4 38C6     
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0076                       copy  "tib.uncrunch.prep.asm"      ; Prepare for uncrunching
      **** ****     > tib.uncrunch.prep.asm
 0001               * FILE......: tib.uncrunch.prep.asm
@@ -11170,7 +11170,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0176 6792 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0177 6794 C2F9  30         mov   *stack+,r11           ; Pop r11
 0178 6796 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0077                       copy  "tib.uncrunch.prg.asm"       ; Uncrunch tokenized program code
      **** ****     > tib.uncrunch.prg.asm
 0001               * FILE......: tib.uncrunch.prg.asm
@@ -11569,7 +11569,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      6912 3A20     
      6914 2575     
 0322 6916 00              byte   0
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0078                       copy  "tib.uncrunch.token.asm"     ; Decode statement token
      **** ****     > tib.uncrunch.token.asm
 0001               * FILE......: tib.uncrunch.token.asm
@@ -11930,7 +11930,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0294 6AB4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0295 6AB6 C2F9  30         mov   *stack+,r11           ; Pop r11
 0296 6AB8 045B  20         b     *r11                  ; Return
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0079                       copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
      **** ****     > tib.uncrunch.line.pack.asm
 0001               * FILE......: tib.uncrunch.line.pack
@@ -12084,7 +12084,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0125 6B4E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0126 6B50 C2F9  30         mov   *stack+,r11           ; Pop R11
 0127 6B52 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0080                       ;-----------------------------------------------------------------------
 0081                       ; Stubs
 0082                       ;-----------------------------------------------------------------------
@@ -12224,7 +12224,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0126                       ;------------------------------------------------------
 0127 6BBC C2F9  30         mov   *stack+,r11           ; Pop r11
 0128 6BBE 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0084                       copy  "rom.stubs.bankx.asm"        ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
@@ -12263,7 +12263,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0119               
 0141               
 0142               
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0085                       ;-----------------------------------------------------------------------
 0086                       ; Program data
 0087                       ;-----------------------------------------------------------------------
@@ -12322,79 +12322,78 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0051                                                   ; /
 0052 6C00 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0053               
-0054               
-0055               ***************************************************************
-0056               * SAMS page layout table TI Basic session 1 VRAM
-0057               *--------------------------------------------------------------
-0058               mem.sams.layout.basic1:
-0059 6C02 0000             data  >0000                 ; . >2000-2fff
-0060 6C04 0100             data  >0100                 ; . >3000-3fff
-0061 6C06 0400             data  >0400                 ; . >a000-afff
-0062 6C08 FB00             data  >fb00                 ; \ >b000-efff
-0063 6C0A FC00             data  >fc00                 ; |
-0064 6C0C FD00             data  >fd00                 ; | 16K VDP dump
-0065 6C0E FE00             data  >fe00                 ; /
-0066 6C10 FF00             data  >ff00                 ; . >f000-ffff
+0054               ***************************************************************
+0055               * SAMS page layout table TI Basic session 1 VRAM
+0056               *--------------------------------------------------------------
+0057               mem.sams.layout.basic1:
+0058 6C02 0000             data  >0000                 ; . >2000-2fff
+0059 6C04 0100             data  >0100                 ; . >3000-3fff
+0060 6C06 0400             data  >0400                 ; . >a000-afff
+0061 6C08 FB00             data  >fb00                 ; \ >b000-efff
+0062 6C0A FC00             data  >fc00                 ; |
+0063 6C0C FD00             data  >fd00                 ; | 16K VDP dump
+0064 6C0E FE00             data  >fe00                 ; /
+0065 6C10 FF00             data  >ff00                 ; . >f000-ffff
+0066               
 0067               
-0068               
-0069               ***************************************************************
-0070               * SAMS page layout table TI Basic session 2 VRAM
-0071               *--------------------------------------------------------------
-0072               mem.sams.layout.basic2:
-0073 6C12 0000             data  >0000                 ; . >2000-2fff
-0074 6C14 0100             data  >0100                 ; . >3000-3fff
-0075 6C16 0400             data  >0400                 ; . >a000-afff
-0076 6C18 F700             data  >f700                 ; \ >b000-efff
-0077 6C1A F800             data  >f800                 ; |
-0078 6C1C F900             data  >f900                 ; | 16K VDP dump
-0079 6C1E FA00             data  >fa00                 ; /
-0080 6C20 FF00             data  >ff00                 ; . >f000-ffff
+0068               ***************************************************************
+0069               * SAMS page layout table TI Basic session 2 VRAM
+0070               *--------------------------------------------------------------
+0071               mem.sams.layout.basic2:
+0072 6C12 0000             data  >0000                 ; . >2000-2fff
+0073 6C14 0100             data  >0100                 ; . >3000-3fff
+0074 6C16 0400             data  >0400                 ; . >a000-afff
+0075 6C18 F700             data  >f700                 ; \ >b000-efff
+0076 6C1A F800             data  >f800                 ; |
+0077 6C1C F900             data  >f900                 ; | 16K VDP dump
+0078 6C1E FA00             data  >fa00                 ; /
+0079 6C20 FF00             data  >ff00                 ; . >f000-ffff
+0080               
 0081               
-0082               
-0083               ***************************************************************
-0084               * SAMS page layout table TI Basic session 3 VRAM
-0085               *--------------------------------------------------------------
-0086               mem.sams.layout.basic3:
-0087 6C22 0000             data  >0000                 ; . >2000-2fff
-0088 6C24 0100             data  >0100                 ; . >3000-3fff
-0089 6C26 0400             data  >0400                 ; . >a000-afff
-0090 6C28 F300             data  >f300                 ; \ >b000-efff
-0091 6C2A F400             data  >f400                 ; |
-0092 6C2C F500             data  >f500                 ; | 16K VDP dump
-0093 6C2E F600             data  >f600                 ; /
-0094 6C30 FF00             data  >ff00                 ; . >f000-ffff
+0082               ***************************************************************
+0083               * SAMS page layout table TI Basic session 3 VRAM
+0084               *--------------------------------------------------------------
+0085               mem.sams.layout.basic3:
+0086 6C22 0000             data  >0000                 ; . >2000-2fff
+0087 6C24 0100             data  >0100                 ; . >3000-3fff
+0088 6C26 0400             data  >0400                 ; . >a000-afff
+0089 6C28 F300             data  >f300                 ; \ >b000-efff
+0090 6C2A F400             data  >f400                 ; |
+0091 6C2C F500             data  >f500                 ; | 16K VDP dump
+0092 6C2E F600             data  >f600                 ; /
+0093 6C30 FF00             data  >ff00                 ; . >f000-ffff
+0094               
 0095               
-0096               
-0097               ***************************************************************
-0098               * SAMS page layout table TI Basic session 4 VRAM
-0099               *--------------------------------------------------------------
-0100               mem.sams.layout.basic4:
-0101 6C32 0000             data  >0000                 ; . >2000-2fff
-0102 6C34 0100             data  >0100                 ; . >3000-3fff
-0103 6C36 0400             data  >0400                 ; . >a000-afff
-0104 6C38 EF00             data  >ef00                 ; \ >b000-efff
-0105 6C3A F000             data  >f000                 ; |
-0106 6C3C F100             data  >f100                 ; | 16K VDP dump
-0107 6C3E F200             data  >f200                 ; /
-0108 6C40 FF00             data  >ff00                 ; . >f000-ffff
+0096               ***************************************************************
+0097               * SAMS page layout table TI Basic session 4 VRAM
+0098               *--------------------------------------------------------------
+0099               mem.sams.layout.basic4:
+0100 6C32 0000             data  >0000                 ; . >2000-2fff
+0101 6C34 0100             data  >0100                 ; . >3000-3fff
+0102 6C36 0400             data  >0400                 ; . >a000-afff
+0103 6C38 EF00             data  >ef00                 ; \ >b000-efff
+0104 6C3A F000             data  >f000                 ; |
+0105 6C3C F100             data  >f100                 ; | 16K VDP dump
+0106 6C3E F200             data  >f200                 ; /
+0107 6C40 FF00             data  >ff00                 ; . >f000-ffff
+0108               
 0109               
-0110               
-0111               ***************************************************************
-0112               * SAMS page layout table TI Basic session 5 VRAM
-0113               *--------------------------------------------------------------
-0114               mem.sams.layout.basic5:
-0115 6C42 0000             data  >0000                 ; . >2000-2fff
-0116 6C44 0100             data  >0100                 ; . >3000-3fff
-0117 6C46 0400             data  >0400                 ; . >a000-afff
-0118 6C48 EB00             data  >eb00                 ; \ >b000-efff
-0119 6C4A EC00             data  >ec00                 ; |
-0120 6C4C ED00             data  >ed00                 ; | 16K VDP dump
-0121 6C4E EE00             data  >ee00                 ; /
-0122 6C50 FF00             data  >ff00                 ; . >f000-ffff
+0110               ***************************************************************
+0111               * SAMS page layout table TI Basic session 5 VRAM
+0112               *--------------------------------------------------------------
+0113               mem.sams.layout.basic5:
+0114 6C42 0000             data  >0000                 ; . >2000-2fff
+0115 6C44 0100             data  >0100                 ; . >3000-3fff
+0116 6C46 0400             data  >0400                 ; . >a000-afff
+0117 6C48 EB00             data  >eb00                 ; \ >b000-efff
+0118 6C4A EC00             data  >ec00                 ; |
+0119 6C4C ED00             data  >ed00                 ; | 16K VDP dump
+0120 6C4E EE00             data  >ee00                 ; /
+0121 6C50 FF00             data  >ff00                 ; . >f000-ffff
+0122               
 0123               
-0124               
-0125      6C02     mem.sams.layout.basic  equ mem.sams.layout.basic1
-                   < stevie_b7.asm.9457
+0124      6C02     mem.sams.layout.basic  equ mem.sams.layout.basic1
+                   < stevie_b7.asm.20030
 0089                       copy  "data.tib.tokens.asm"        ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
 0001               * FILE......: data.tib.tokens.asm
@@ -12975,7 +12974,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0357 6FE4 6EC8     tki.ff  data   tk.noop             ; <NOOP>
 0358               
 0359      6EE6     tib.tokenindex equ tki.80
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0090                       ;-----------------------------------------------------------------------
 0091                       ; Scratchpad memory dump
 0092                       ;-----------------------------------------------------------------------
@@ -13121,7 +13120,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      7EFA 9800     
      7EFC 0108     
      7EFE 8C02     
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0095                       ;-----------------------------------------------------------------------
 0096                       ; Bank full check
 0097                       ;-----------------------------------------------------------------------
@@ -13143,7 +13142,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0105                       ;-----------------------------------------------------------------------
 0106                       ; Vector table
 0107                       ;-----------------------------------------------------------------------
@@ -13201,7 +13200,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0048 7FFA 2026     vec.30  data  cpu.crash             ;
 0049 7FFC 2026     vec.31  data  cpu.crash             ;
 0050 7FFE 2026     vec.32  data  cpu.crash             ;
-                   < stevie_b7.asm.9457
+                   < stevie_b7.asm.20030
 0109               
 0110               *--------------------------------------------------------------
 0111               * Video mode configuration

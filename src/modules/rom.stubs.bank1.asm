@@ -741,6 +741,11 @@ tibasic:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
+        ; Exit early if no TI Basic session
+        ;------------------------------------------------------
+        mov   @tib.session,tmp0     ; Get session ID
+        jeq   tibasic.exit          ; Exit early if no session
+        ;------------------------------------------------------
         ; Run TI Basic session
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank

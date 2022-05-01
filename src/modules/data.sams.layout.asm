@@ -51,7 +51,6 @@ mem.sams.layout.external:
                                     ; /
         data  >0700                 ; >f000-ffff, SAMS page >07
 
-
 ***************************************************************
 * SAMS page layout table TI Basic session 1 VRAM
 *--------------------------------------------------------------

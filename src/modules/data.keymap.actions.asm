@@ -145,7 +145,7 @@ keymap_actions.editor:
         data  dialog.basic
 
         byte  key.fctn.0, pane.focus.fb
-        data  dialog.basic
+        data  tibasic
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

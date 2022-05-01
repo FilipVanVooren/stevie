@@ -39,11 +39,24 @@ pane.botline:
 pane.botline.show_keys:
         mov   @tib.session,tmp0     ; Active TI Basic session?
         jeq   !
-
+        ;------------------------------------------------------
+        ; Show TI Basic session ID
+        ;------------------------------------------------------
         bl    @putat
               byte pane.botrow,0
               data txt.keys.defaultb
-                                    ; Show defaults TI Basic
+                                    ; Show defaults + TI Basic
+
+        mov   @tib.session,tmp0     ; Get Session ID
+        ai    tmp0,>0130            ; \ Turn into string with 
+                                    ; | length-byte prefix and
+                                    ; / ASCII offset 48 (>30)
+
+        mov   tmp0,@rambuf          ; Copy to ram buffer for display
+
+        bl    @putat                ; \ 
+              byte pane.botrow,27   ; | Display session-ID string 
+              data rambuf           ; / Y=bottom row, X=27
         ;------------------------------------------------------
         ; Show default keys
         ;------------------------------------------------------

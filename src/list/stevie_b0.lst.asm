@@ -1,5 +1,5 @@
 XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
-     **** ****     > stevie_b0.asm.6009
+     **** ****     > stevie_b0.asm.23808
 0001               ***************************************************************
 0002               *                          Stevie
 0003               *
@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b0.asm               ; Version 220501-1515350
+0009               * File: stevie_b0.asm               ; Version 220501-1742570
 0010               *
 0011               * Bank 0 "Jill"
 0012               * Setup resident SP2/Stevie modules and start SP2 kernel
@@ -90,7 +90,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0080               *--------------------------------------------------------------
 0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0015                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
@@ -118,7 +118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0023      680A     bank5.ram                 equ  >680a   ; Jumbo
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0016                       copy  "equates.asm"         ; Equates Stevie configuration
      **** ****     > equates.asm
 0001               * FILE......: equates.asm
@@ -553,7 +553,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0436      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0437      9900     tv.colorize.reset         equ  >9900   ; Colorization off
 0438      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0017                       copy  "equates.c99.asm"     ; Equates related to classic99 emulator
      **** ****     > equates.c99.asm
 0001               * FILE......: equates.c99.asm
@@ -589,7 +589,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0031      0127     c99_dbg_tmp3  equ  c99_dbg_r7       ; Debug printf tmp3
 0032      0128     c99_dbg_tmp4  equ  c99_dbg_r8       ; Debug printf tmp4
 0033      0199     c99_dbg_stck  equ  c99_dbg_r9       ; Debug printf stack
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0018                       copy  "equates.keys.asm"    ; Equates for keyboard mapping
      **** ****     > equates.keys.asm
 0001               * FILE......: data.keymap.keys.asm
@@ -729,7 +729,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0135               *---------------------------------------------------------------
 0136      000D     key.enter     equ >0d               ; enter
 0137      0020     key.space     equ >20               ; space
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0019               
 0020               ***************************************************************
 0021               * BANK 0
@@ -788,7 +788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0062                       even
 0063               
 0065               
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0027               
 0028               ***************************************************************
 0029               * Step 1: Switch to bank 7 (Resume Stevie session)
@@ -1707,7 +1707,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0267               
 0268               cpu.crash.msg.id
 0269 62AA 18               byte  24
-0270 62AB   42             text  'Build-ID  220501-1515350'
+0270 62AB   42             text  'Build-ID  220501-1742570'
      62AC 7569     
      62AE 6C64     
      62B0 2D49     
@@ -1716,9 +1716,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      62B6 3230     
      62B8 3530     
      62BA 312D     
-     62BC 3135     
-     62BE 3135     
-     62C0 3335     
+     62BC 3137     
+     62BE 3432     
+     62C0 3537     
      62C2 30       
 0271                       even
 0272               
@@ -6000,7 +6000,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      703C 0040     
 0381 703E 0460  28         b     @main                 ; Give control to main program
      7040 3B06     
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0118                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
@@ -8760,8 +8760,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0196                       even
 0197               
 0198               txt.keys.defaultb
-0199 79B2 1A               byte  26
-0200 79B3   46             text  'F9-Menu  ^H-Help  F0-Basic'
+0199 79B2 1B               byte  27
+0200 79B3   46             text  'F9-Menu  ^H-Help  F0-Basic#'
      79B4 392D     
      79B6 4D65     
      79B8 6E75     
@@ -8774,7 +8774,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
      79C6 302D     
      79C8 4261     
      79CA 7369     
-     79CC 63       
+     79CC 6323     
 0201                       even
 0202               
 0203               txt.keys.block
@@ -9138,7 +9138,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0030                       even
 0031               
                    < ram.resident.asm
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0119                       ;------------------------------------------------------
 0120                       ; Stevie main entry point
 0121                       ;------------------------------------------------------
@@ -9172,7 +9172,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.1.0
 0010 7F04 0314                   byte 3,20
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
-                   < stevie_b0.asm.6009
+                   < stevie_b0.asm.23808
 0144               
 0145               cpu.crash.showbank.bankstr:
 0146               
