@@ -18,9 +18,9 @@
 ;  >f000-ffff  SAMS page >07      locked+
 ;  ---------------------------------------
 ;
-;  1. During index search/reorganization the index(+)
-;     extends into memory range d000-ffff causing, with
-;     temporary allocation of other SAMS pages 
+;  1. During index search/reorganization the index temporarily
+;     extends into memory range d000-ffff swapping the
+;     otherwise locked+ pages as required.
 ;
 ;  2. Only when en external program is running (e.g. TI Basic)
 ;     or when terminating Stevie, the legacy page layout table
@@ -29,7 +29,8 @@
 
 
 ***************************************************************
-* SAMS page layout table for Stevie boot order
+* SAMS page layout table 
+* Stevie boot order
 *--------------------------------------------------------------
 mem.sams.layout.boot:
         data  >0000                 ; >2000-2fff, SAMS page >00
@@ -51,7 +52,8 @@ mem.sams.layout.boot:
 
 
 ***************************************************************
-* SAMS page layout table before calling external progam
+* SAMS page layout table 
+* Before running external progam
 *--------------------------------------------------------------
 mem.sams.layout.external:
         data  >0000                 ; >2000-2fff, SAMS page >00
@@ -67,7 +69,8 @@ mem.sams.layout.external:
 
 
 ***************************************************************
-* SAMS legacy page layout table while running external program
+* SAMS legacy page layout table 
+* While running external program
 *--------------------------------------------------------------
 mem.sams.layout.legacy:
         data  >0200                 ; >2000-2fff, SAMS page >02
@@ -82,7 +85,8 @@ mem.sams.layout.legacy:
 
 
 ***************************************************************
-* SAMS page layout table for backup of TI Basic session 1 VRAM
+* SAMS page layout table 
+* Backup TI Basic session 1 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
         data  >0000                 ; . >2000-2fff
@@ -96,7 +100,8 @@ mem.sams.layout.basic1:
 
 
 ***************************************************************
-* SAMS page layout table for backup of TI Basic session 2 VRAM
+* SAMS page layout table 
+* Backup TI Basic session 2 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
         data  >0000                 ; . >2000-2fff
@@ -110,7 +115,8 @@ mem.sams.layout.basic2:
 
 
 ***************************************************************
-* SAMS page layout table for backup of TI Basic session 3 VRAM
+* SAMS page layout table 
+* Backup TI Basic session 3 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
         data  >0000                 ; . >2000-2fff
@@ -124,7 +130,8 @@ mem.sams.layout.basic3:
 
 
 ***************************************************************
-* SAMS page layout table for backup of TI Basic session 4 VRAM
+* SAMS page layout table 
+* Backup TI Basic session 4 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic4:
         data  >0000                 ; . >2000-2fff
@@ -138,7 +145,8 @@ mem.sams.layout.basic4:
 
 
 ***************************************************************
-* SAMS page layout table for backup of TI Basic session 5 VRAM
+* SAMS page layout table 
+* Backup TI Basic session 5 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic5:
         data  >0000                 ; . >2000-2fff

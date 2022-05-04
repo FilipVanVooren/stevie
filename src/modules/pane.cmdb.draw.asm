@@ -46,7 +46,7 @@ pane.cmdb.draw:
                                     ; /             output string
 
         bl    @cpym2m
-              data txt.stevie,rambuf+68,13
+              data txt.stevie,rambuf+61,20
                                     ;
                                     ; Add Stevie banner
                                     ;

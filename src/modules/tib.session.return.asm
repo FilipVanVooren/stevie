@@ -15,7 +15,9 @@
 * r1 in GPL WS, tmp0, tmp1
 *--------------------------------------------------------------
 * REMARKS
-* Called from ISR code
+* Only called from program selection screen after exit out of 
+* TI Basic with FCTN-QUIT, BYE or by running an assembly 
+* program that did "BLWP @0".
 ********|*****|*********************|**************************
 tib.run.return.mon:
         li    r12,>1e00             ; \ Enable SAMS mapper again
@@ -101,14 +103,29 @@ tib.run.return.mon.cont:
 * Called from ISR code
 ********|*****|*********************|**************************
 tib.run.return:
-        li    r12,>1e00             ; \ Enable SAMS mapper again
-        sbo   1                     ; | We stil have the SAMS banks layout
-                                    ; / mem.sams.layout.external
+        li    r12,>1e00             ; \ Enable SAMS mapper again with        
+        sbo   1                     ; | sams layout table
+                                    ; / mem.sams.layout.basic[1-5]
+
+        mov   *r0+,@>401c           ; Set page for >e000 - >efff                                    
 
         lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
                                     ; paged-out in tibasic.init
 
         movb  @w$ffff,@>8375        ; Reset keycode
+
+        
+        sbo   0                     ; Enable writing to SAMS registers
+        mov   @tib.run.return.data.samspage,@>401c
+                                    ; \ Temporarily map SAMS page >0f to
+                                    ; | memory window >0e00 - >0eff
+                                    ; |
+                                    ; | Needed for copying BASIC program
+                                    ; | filename at >ef00 to destination >f?00 
+                                    ; | in SAMS page >ff
+                                    ; /
+        sbz   0                     ; Disable writing to SAMS registers
+
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 1
         ;-------------------------------------------------------
@@ -120,8 +137,7 @@ tib.run.return.1:
               data >8300,>f100,256  ; Backup TI Basic scratchpad to >f100
 
         bl    @cpym2m
-              data tib.aux.fname,>f600,256
-                                    ; Backup auxiliary memory to >f600
+              data >ef00,>f600,256  ; Backup auxiliary memory to >f600
 
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
@@ -135,8 +151,7 @@ tib.run.return.2:
               data >8300,>f200,256  ; Backup TI Basic scratchpad to >f200
 
         bl    @cpym2m
-              data tib.aux.fname,>f700,256
-                                    ; Backup auxiliary memory to >f700
+              data >ef00,>f700,256  ; Backup auxiliary memory to >f700
 
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
@@ -150,8 +165,7 @@ tib.run.return.3:
               data >8300,>f300,256  ; Backup TI Basic scratchpad to >f300
 
         bl    @cpym2m
-              data tib.aux.fname,>f800,256
-                                    ; Backup auxiliary memory to >f800
+              data >ef00,>f800,256  ; Backup auxiliary memory to >f800
 
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
@@ -165,8 +179,7 @@ tib.run.return.4:
               data >8300,>f400,256  ; Backup TI Basic scratchpad to >f400
 
         bl    @cpym2m
-              data tib.aux.fname,>f900,256
-                                    ; Backup auxiliary memory to >f900
+              data >ef00,>f900,256  ; Backup auxiliary memory to >f900
 
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
@@ -180,8 +193,7 @@ tib.run.return.5:
               data >8300,>f500,256  ; Backup TI Basic scratchpad to >f500
 
         bl    @cpym2m
-              data tib.aux.fname,>fa00,256
-                                    ; Backup auxiliary memory to >fa00
+              data >ef00,>fa00,256  ; Backup auxiliary memory to >fa00
 
         jmp   !                     ; Skip to page-in
         ;-------------------------------------------------------
@@ -282,3 +294,6 @@ tib.run.return.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+tib.run.return.data.samspage
+        data  >0f00                 ; SAMS page >0f

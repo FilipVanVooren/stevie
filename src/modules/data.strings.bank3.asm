@@ -6,8 +6,15 @@
 *                       Strings
 ***************************************************************
 
-txt.stevie         text ' Stevie 1.3F '
-                   even
+txt.stevie:
+        .ifeq full_f18a_support,1
+            text ' Stevie IDE 1.3F-30'
+            even
+        .else
+            text ' Stevie IDE 1.3F-24'
+            even
+        .endif
+
 txt.keys.default1  #string 'F9-Back  F3-Clear  F5-Fastmode'
 txt.keys.default2  #string 'F9-Back  F3-Clear  *F5-Fastmode'
 

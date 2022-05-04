@@ -342,7 +342,7 @@ tibasic.resume.load:
         clr   r11
 
         li    r12,>1e00             ; \ Disable SAMS mapper (transparent mode)
-        sbz   1                     ; /
+        sbz   1                     ; / >02 >03 >0a >0b >0c >0d >0e >0f
 
         ; ATTENTION
         ; From here on no more access to any of the SP2 or stevie routines.
