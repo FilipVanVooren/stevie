@@ -166,7 +166,7 @@ tib.uncrunch.prepare.5:
         li    tmp1,edb.filename     ; Destination for copy
         li    tmp2,80               ; Number of bytes to copy
 
-        bl    @cpym2m               ; \ Copy TI Basic filename
+        bl    @xpym2m               ; \ Copy TI Basic filename
                                     ; | i  tmp0 = Source address
                                     ; | i  tmp1 = Target address
                                     ; / i  tmp2 = Number of bytes to copy
