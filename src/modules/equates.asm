@@ -176,7 +176,8 @@ tib.symt.bot.ptr  equ  core1.top + 204 ; Pointer to bottom of symbol table
 tib.strs.top.ptr  equ  core1.top + 206 ; Pointer to top of string space
 tib.strs.bot.ptr  equ  core1.top + 208 ; Pointer to bottom of string space
 tib.lines         equ  core1.top + 210 ; Number of lines in TI Basic program
-core1.free2       equ  core1.top + 212 ; **free* up to 235
+core1.free2       equ  core1.top + 212 ; **free* up to 233
+tib.samstab.ptr   equ  core1.top + 234 ; Pointer to active SAMS mem layout table
 tib.var1          equ  core1.top + 236 ; Temp variable 1
 tib.var2          equ  core1.top + 238 ; Temp variable 2
 tib.var3          equ  core1.top + 240 ; Temp variable 3

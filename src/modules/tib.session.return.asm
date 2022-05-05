@@ -137,7 +137,7 @@ tib.run.return.1:
         bl    @cpym2m
               data >ef00,>f600,256  ; Backup auxiliary memory to >f600
 
-        jmp   !                     ; Skip to page-in
+        jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 2
         ;-------------------------------------------------------
@@ -151,7 +151,7 @@ tib.run.return.2:
         bl    @cpym2m
               data >ef00,>f700,256  ; Backup auxiliary memory to >f700
 
-        jmp   !                     ; Skip to page-in
+        jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 3
         ;-------------------------------------------------------
@@ -165,7 +165,7 @@ tib.run.return.3:
         bl    @cpym2m
               data >ef00,>f800,256  ; Backup auxiliary memory to >f800
 
-        jmp   !                     ; Skip to page-in
+        jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 4
         ;-------------------------------------------------------
@@ -179,7 +179,7 @@ tib.run.return.4:
         bl    @cpym2m
               data >ef00,>f900,256  ; Backup auxiliary memory to >f900
 
-        jmp   !                     ; Skip to page-in
+        jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
         ; Backup scratchpad of TI-Basic session 5
         ;-------------------------------------------------------
@@ -193,7 +193,7 @@ tib.run.return.5:
         bl    @cpym2m
               data >ef00,>fa00,256  ; Backup auxiliary memory to >fa00
 
-        jmp   !                     ; Skip to page-in
+        jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
         ; Asserts failed
         ;-------------------------------------------------------
@@ -202,8 +202,22 @@ tib.run.return.failed:
         bl    @cpu.crash            ; / Crash and halt system
         ;-------------------------------------------------------
         ; Page-in scratchpad memory
-        ;-------------------------------------------------------
-!       bl    @cpym2m
+        ;-------------------------------------------------------        
+tib.return.page_in:
+        sbo   0                     ; Enable writing to SAMS registers
+
+        mov   @tib.samstab.ptr,tmp0 ; \ Get pointer to basic session SAMS table. 
+        ai    tmp0,12               ; / Get 7th entry in table
+
+        mov   *tmp0,@>401c          ; \ Restore SAMS page in
+                                    ; | memory window >0e00 - >0eff
+                                    ; | Was temporarily paged-out 
+                                    ; | in tib.return.run
+                                    ; / Required before doing VDP memory dump
+
+        sbz   0                     ; Disable writing to SAMS registers
+
+        bl    @cpym2m
               data cpu.scrpad2,cpu.scrpad1,256
                                     ; Restore scratchpad contents
 
@@ -215,6 +229,7 @@ tib.run.return.failed:
         ;-------------------------------------------------------
         ; Cleanup after return from TI Basic
         ;-------------------------------------------------------
+tib.run.return.vdpdump:        
         bl    @scroff               ; Turn screen off
         bl    @cpyv2m
               data >0000,>b000,16384

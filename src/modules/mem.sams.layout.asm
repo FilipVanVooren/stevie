@@ -171,6 +171,7 @@ mem.sams.set.basic1:
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
         li    r0,mem.sams.layout.basic1
+        mov   r0,@tib.samstab.ptr
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
@@ -197,6 +198,7 @@ mem.sams.set.basic2:
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
         li    r0,mem.sams.layout.basic2
+        mov   r0,@tib.samstab.ptr        
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
@@ -223,6 +225,7 @@ mem.sams.set.basic3:
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
         li    r0,mem.sams.layout.basic3
+        mov   r0,@tib.samstab.ptr        
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
@@ -248,6 +251,7 @@ mem.sams.set.basic4:
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
         li    r0,mem.sams.layout.basic4
+        mov   r0,@tib.samstab.ptr        
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
@@ -273,6 +277,7 @@ mem.sams.set.basic5:
         ; Setup SAMS banks using inline code
         ;------------------------------------------------------- 
         li    r0,mem.sams.layout.basic5
+        mov   r0,@tib.samstab.ptr        
         jmp   _mem.sams.set.banks   ; Set SAMS banks
 
 
