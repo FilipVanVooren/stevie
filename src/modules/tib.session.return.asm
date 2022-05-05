@@ -107,8 +107,6 @@ tib.run.return:
         sbo   1                     ; | sams layout table
                                     ; / mem.sams.layout.basic[1-5]
 
-        mov   *r0+,@>401c           ; Set page for >e000 - >efff                                    
-
         lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
                                     ; paged-out in tibasic.init
 
