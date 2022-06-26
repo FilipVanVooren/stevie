@@ -19,7 +19,7 @@
 *--------------------------------------------------------------
 * Remarks
 * For simplicity reasons we're assuming base 1 during copy
-* (first line starts at 1 instead of 0). 
+* (first line starts at 1 instead of 0).
 * Makes it easier when comparing values.
 ********|*****|*********************|**************************
 fb.tab.next:
@@ -38,7 +38,7 @@ fb.tab.next:
         ;-------------------------------------------------------
         ; Find next tab position
         ;-------------------------------------------------------
-fb.tab.next.loop:        
+fb.tab.next.loop:
         movb  *tmp0+,tmp1           ; \ Get tab position
         srl   tmp1,8                ; / Right align
 
@@ -73,22 +73,22 @@ fb.tab.next.loop:
 
         seto  @fb.row.dirty         ; Current row dirty in frame buffer
         seto  @fb.dirty             ; Frame buffer dirty
-        seto  @fb.status.dirty      ; Refresh status line        
+        seto  @fb.status.dirty      ; Refresh status line
         seto  @edb.dirty            ; Editor buffer dirty (text changed)
         ;-------------------------------------------------------
         ; Set row length
-        ;------------------------------------------------------- 
+        ;-------------------------------------------------------
         mov   @fb.column,tmp0
         inc   tmp0                  ; Base 1
         c     @fb.column,@fb.row.length
         jlt   fb.tab.next.exit      ; No need to set row length, exit
-        mov   tmp0,@fb.row.length   : Set new length
+        mov   tmp0,@fb.row.length   ; Set new length
         jmp   fb.tab.next.exit      ; Exit
         ;-------------------------------------------------------
         ; End-of-list reached, special treatment home cursor
-        ;------------------------------------------------------- 
-fb.tab.next.eol:        
-        clr   @fb.column            ; Home cursor         
+        ;-------------------------------------------------------
+fb.tab.next.eol:
+        clr   @fb.column            ; Home cursor
         clr   tmp0                  ; Home cursor
 
         bl    @xsetx                ; \ Set VDP cursor column position
@@ -116,5 +116,5 @@ fb.tab.next.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11 
+        mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

@@ -284,7 +284,7 @@ dialog.menu:
         mov   @edb.block.m2,tmp0    ; \
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /
-        jeq   !                     : Block mode inactive, show dialog
+        jeq   !                     ; Block mode inactive, show dialog
         ;------------------------------------------------------
         ; Special treatment for block mode
         ;------------------------------------------------------
