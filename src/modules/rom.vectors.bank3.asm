@@ -5,7 +5,7 @@
 * ROM identification string for CPU crash
 *--------------------------------------------------------------
 cpu.crash.showbank.bankstr:
-        #string 'ROM#3'
+        stri 'ROM#3'
 
 *--------------------------------------------------------------
 * Vector table for trampoline functions

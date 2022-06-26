@@ -143,7 +143,7 @@ main:
         copy "rom.crash.asm"
 
 cpu.crash.showbank.bankstr:
-        #string 'ROM#0'
+        stri 'ROM#0'
 *--------------------------------------------------------------
 * Video mode configuration
 *--------------------------------------------------------------

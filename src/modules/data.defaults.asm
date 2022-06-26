@@ -4,8 +4,8 @@
 ***************************************************************
 *                     Default values
 ********|*****|*********************|**************************
-def.printer.fname   #string 'PI.PIO'
-def.clip.fname      #string 'DSK1.CLIP'
-def.clip.fname.b    #string 'DSK2.CLIP'
-def.clip.fname.c    #string 'TIPI.CLIP'
-def.devices         #string ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+def.printer.fname   stri 'PI.PIO'
+def.clip.fname      stri 'DSK1.CLIP'
+def.clip.fname.b    stri 'DSK2.CLIP'
+def.clip.fname.c    stri 'TIPI.CLIP'
+def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'

@@ -151,82 +151,82 @@ dialog.help.data.pages:
 
 
 dialog.help.data.page1.left:
-        #string ' '
+        stri ' '
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Cursor '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
-        #string 'Fctn s        Left'
-        #string 'Fctn d        Right'
-        #string 'Fctn e        Up'
-        #string 'Fctn x        Down'
-        #string 'Fctn h        Home'
-        #string 'Fctn l        End'
-        #string 'Fctn j        Prev word'
-        #string 'Fctn k        Next word'
-        #string 'Fctn 7   ^t   Next tab'
-        #string 'Fctn 6   ^e   Page up'
-        #string 'Fctn 4   ^x   Page down'
-        #string 'Fctn v        Screen top'
-        #string 'Fctn b        Screen bottom'
-        #string 'Ctrl v   ^v   File top'
-        #string 'Ctrl b   ^b   File bottom'
+        stri 'Fctn s        Left'
+        stri 'Fctn d        Right'
+        stri 'Fctn e        Up'
+        stri 'Fctn x        Down'
+        stri 'Fctn h        Home'
+        stri 'Fctn l        End'
+        stri 'Fctn j        Prev word'
+        stri 'Fctn k        Next word'
+        stri 'Fctn 7   ^t   Next tab'
+        stri 'Fctn 6   ^e   Page up'
+        stri 'Fctn 4   ^x   Page down'
+        stri 'Fctn v        Screen top'
+        stri 'Fctn b        Screen bottom'
+        stri 'Ctrl v   ^v   File top'
+        stri 'Ctrl b   ^b   File bottom'
 
 dialog.help.data.page1.right:
-        #string '                                 (1/2)'
-        #string ' '
+        stri '                                 (1/2)'
+        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
-        #string 'Ctrl a   ^a   Append file'
-        #string 'Ctrl i   ^i   Insert file at line'
-        #string 'Ctrl c   ^c   Copy clipboard to line'
-        #string 'Ctrl o   ^o   Open file'
-        #string 'Ctrl p   ^p   Print file'
-        #string 'Ctrl s   ^s   Save file'
-        #string 'Ctrl ,   ^,   Load prev file'
-        #string 'Ctrl .   ^.   Load next file'
-        #string ' '
+        stri 'Ctrl a   ^a   Append file'
+        stri 'Ctrl i   ^i   Insert file at line'
+        stri 'Ctrl c   ^c   Copy clipboard to line'
+        stri 'Ctrl o   ^o   Open file'
+        stri 'Ctrl p   ^p   Print file'
+        stri 'Ctrl s   ^s   Save file'
+        stri 'Ctrl ,   ^,   Load prev file'
+        stri 'Ctrl .   ^.   Load next file'
+        stri ' '
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
-        #string 'Fctn +   ^q   Quit'
-        #string 'Fctn 0   ^/   TI Basic'
-        #string 'Ctrl h   ^h   Help'
-        #string 'Ctrl u   ^u   Toggle ruler'
-        #string 'Ctrl z   ^z   Cycle color schemes'
+        stri 'Fctn +   ^q   Quit'
+        stri 'Fctn 0   ^/   TI Basic'
+        stri 'Ctrl h   ^h   Help'
+        stri 'Ctrl u   ^u   Toggle ruler'
+        stri 'Ctrl z   ^z   Cycle color schemes'
 
 dialog.help.data.page2.left:
-        #string ' '
+        stri ' '
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Modifiers '
         byte    1,1,1,1,1,1,1,1,1,1,1
         even
-        #string 'Fctn 1        Delete character'
-        #string 'Fctn 2        Insert character'
-        #string 'Fctn 3        Delete line'
-        #string 'Ctrl l   ^l   Delete end of line'
-        #string 'Fctn 8        Insert line'
-        #string 'Fctn .        Insert/Overwrite'
+        stri 'Fctn 1        Delete character'
+        stri 'Fctn 2        Insert character'
+        stri 'Fctn 3        Delete line'
+        stri 'Ctrl l   ^l   Delete end of line'
+        stri 'Fctn 8        Insert line'
+        stri 'Fctn .        Insert/Overwrite'
 
 dialog.help.data.page2.right:
-        #string '                                 (2/2)'
-        #string ' '
+        stri '                                 (2/2)'
+        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
         byte    1,1,1,1,1,1,1,1,1,1,1
         even
-        #string 'Ctrl SPACE    Set M1/M2 marker'
-        #string 'Ctrl d   ^d   Delete block'
-        #string 'Ctrl c   ^c   Copy block'
-        #string 'Ctrl g   ^g   Goto marker M1'
-        #string 'Ctrl m   ^m   Move block'
-        #string 'Ctrl s   ^s   Save block to file'
-        #string 'Ctrl ^1..^3   Copy to clipboard 1-3'
+        stri 'Ctrl SPACE    Set M1/M2 marker'
+        stri 'Ctrl d   ^d   Delete block'
+        stri 'Ctrl c   ^c   Copy block'
+        stri 'Ctrl g   ^g   Goto marker M1'
+        stri 'Ctrl m   ^m   Move block'
+        stri 'Ctrl s   ^s   Save block to file'
+        stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
