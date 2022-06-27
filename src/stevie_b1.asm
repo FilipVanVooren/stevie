@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b1.asm               ; Version %%build_date%%
+* File: stevie_b1.asm
 *
 * Bank 1 "James"
 * Editor core

@@ -8,10 +8,10 @@
 
 txt.stevie:
         .ifeq full_f18a_support,1
-            text ' Stevie IDE 1.3F-30'
+            text ' Stevie 1.3F-30'
             even
         .else
-            text ' Stevie IDE 1.3F-24'
+            text ' Stevie 1.3F-24'
             even
         .endif
 
@@ -121,7 +121,12 @@ txt.head.about     byte 9,1,1
 txt.info.about     stri ''
 txt.hint.about     stri 'Press F9 or ENTER to return to editor.'
 txt.keys.about     stri 'F9-Back  SPACE-Next Page  ENTER-Back'
-txt.about.build    stri 'Build: %%build_date%% / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
+
+txt.about.build    byte s#txt.about.build
+                   text 'Build: '
+                   copy "buildstr.asm"
+                   text ' / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
+                   even
 
 
 ;--------------------------------------------------------------

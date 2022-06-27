@@ -6,11 +6,12 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b0.asm               ; Version %%build_date%%
+* File: stevie_b0.asm
 *
 * Bank 0 "Jill"
 * Setup resident SP2/Stevie modules and start SP2 kernel
 ***************************************************************
+        copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration

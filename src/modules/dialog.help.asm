@@ -92,7 +92,7 @@ dialog.help.content:
         bl    @filv
               data sprsat,>d0,32    ; Turn off sprites
         ;------------------------------------------------------
-        ; Display help page (left column)
+        ; Display left column
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
               byte 1,0              ; Y=1, X=0
@@ -111,7 +111,7 @@ dialog.help.content:
                                     ; / i  tmp2 = Number of strings to display
 
         ;------------------------------------------------------
-        ; Display keyboard shortcuts (right column)
+        ; Display right column
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
               byte 0,42             ; Y=0, X=42
@@ -152,81 +152,128 @@ dialog.help.data.pages:
 
 dialog.help.data.page1.left:
         stri ' '
+        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Cursor '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
         stri 'Fctn s        Left'
+        even
         stri 'Fctn d        Right'
+        even
         stri 'Fctn e        Up'
+        even
         stri 'Fctn x        Down'
+        even
         stri 'Fctn h        Home'
+        even
         stri 'Fctn l        End'
+        even
         stri 'Fctn j        Prev word'
+        even
         stri 'Fctn k        Next word'
+        even
         stri 'Fctn 7   ^t   Next tab'
+        even
         stri 'Fctn 6   ^e   Page up'
+        even
         stri 'Fctn 4   ^x   Page down'
+        even
         stri 'Fctn v        Screen top'
+        even
         stri 'Fctn b        Screen bottom'
+        even
         stri 'Ctrl v   ^v   File top'
+        even
         stri 'Ctrl b   ^b   File bottom'
 
 dialog.help.data.page1.right:
         stri '                                 (1/2)'
+        even
         stri ' '
+        even
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
         stri 'Ctrl a   ^a   Append file'
+        even
         stri 'Ctrl i   ^i   Insert file at line'
+        even
         stri 'Ctrl c   ^c   Copy clipboard to line'
+        even
         stri 'Ctrl o   ^o   Open file'
+        even
         stri 'Ctrl p   ^p   Print file'
+        even
         stri 'Ctrl s   ^s   Save file'
+        even
         stri 'Ctrl ,   ^,   Load prev file'
+        even
         stri 'Ctrl .   ^.   Load next file'
+        even
         stri ' '
+        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
         stri 'Fctn +   ^q   Quit'
+        even
         stri 'Fctn 0   ^/   TI Basic'
+        even
         stri 'Ctrl h   ^h   Help'
+        even
         stri 'Ctrl u   ^u   Toggle ruler'
+        even
         stri 'Ctrl z   ^z   Cycle color schemes'
+        even
 
 dialog.help.data.page2.left:
         stri ' '
+        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Modifiers '
         byte    1,1,1,1,1,1,1,1,1,1,1
         even
         stri 'Fctn 1        Delete character'
+        even
         stri 'Fctn 2        Insert character'
+        even
         stri 'Fctn 3        Delete line'
+        even
         stri 'Ctrl l   ^l   Delete end of line'
+        even
         stri 'Fctn 8        Insert line'
+        even
         stri 'Fctn .        Insert/Overwrite'
+        even
 
 dialog.help.data.page2.right:
         stri '                                 (2/2)'
+        even
         stri ' '
+        even
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
         byte    1,1,1,1,1,1,1,1,1,1,1
         even
         stri 'Ctrl SPACE    Set M1/M2 marker'
+        even
         stri 'Ctrl d   ^d   Delete block'
+        even
         stri 'Ctrl c   ^c   Copy block'
+        even
         stri 'Ctrl g   ^g   Goto marker M1'
+        even
         stri 'Ctrl m   ^m   Move block'
+        even
         stri 'Ctrl s   ^s   Save block to file'
+        even
         stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
+        even

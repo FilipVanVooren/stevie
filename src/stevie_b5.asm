@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b5.asm               ; Version %%build_date%%
+* File: stevie_b5.asm
 *
 * Bank 5 "Jumbo"
 * Editor Buffer methods delegated from bank 1

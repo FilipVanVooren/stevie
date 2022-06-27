@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b2.asm               ; Version %%build_date%%
+* File: stevie_b2.asm
 *
 * Bank 2 "Jacky"
 * File load/save operations
@@ -15,8 +15,8 @@
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "equates.c99.asm"     ; Equates related to classic99 emulator
-        copy  "equates.tib.asm"     ; Equates related to TI Basic session   
-        copy  "equates.keys.asm"    ; Equates for keyboard mapping        
+        copy  "equates.tib.asm"     ; Equates related to TI Basic session
+        copy  "equates.keys.asm"    ; Equates for keyboard mapping
 
 ***************************************************************
 * BANK 2

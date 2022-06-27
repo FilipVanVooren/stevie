@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: reident.asm                 ; Version %%build_date%%
+* File: reident.asm
 *
 * Only for debugging
 * Generate list file with contents of resident modules in

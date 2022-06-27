@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b7.asm               ; Version %%build_date%%
+0009               * File: stevie_b7.asm
 0010               *
 0011               * Bank 7 "Jonas"
 0012               * SAMS and TI Basic support routines

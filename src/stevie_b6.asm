@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b6.asm               ; Version %%build_date%%
+* File: stevie_b6.asm
 *
 * Bank 6 "Jenifer"
 * VDP utility functions
@@ -15,7 +15,7 @@
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
         copy  "equates.c99.asm"     ; Equates related to classic99 emulator
-        copy  "equates.tib.asm"     ; Equates related to TI Basic session        
+        copy  "equates.tib.asm"     ; Equates related to TI Basic session
         copy  "equates.keys.asm"    ; Equates for keyboard mapping
 
 ***************************************************************

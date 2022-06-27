@@ -6,7 +6,7 @@
 *
 *              (c)2018-2022 // Filip van Vooren
 ***************************************************************
-* File: stevie_b7.asm               ; Version %%build_date%%
+* File: stevie_b7.asm
 *
 * Bank 7 "Jonas"
 * SAMS and TI Basic support routines

@@ -8,7 +8,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               *
 0007               *              (c)2018-2022 // Filip van Vooren
 0008               ***************************************************************
-0009               * File: stevie_b1.asm               ; Version %%build_date%%
+0009               * File: stevie_b1.asm
 0010               *
 0011               * Bank 1 "James"
 0012               * Editor core
@@ -14226,8 +14226,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0264                       ;-------------------------------------------------------
 0265                       ; Dump colors for CMDB Stevie logo (TAT)
 0266                       ;-------------------------------------------------------
-0267 745E 0204  20         li    tmp0,vdp.cmdb.toprow.tat+60
-     7460 1E2C     
+0267 745E 0204  20         li    tmp0,vdp.cmdb.toprow.tat+64
+     7460 1E30     
 0268 7462 C160  34         mov   @tv.cmdb.hcolor,tmp1  ;
      7464 A220     
 0269 7466 D160  34         movb  @tv.cmdb.hcolor+1,tmp1
@@ -14237,8 +14237,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0272 746C 0245  22         andi  tmp1,>00ff            ; Only keep LSB
      746E 00FF     
 0273               
-0274 7470 0206  20         li    tmp2,21               ; Number of bytes to fill
-     7472 0015     
+0274 7470 0206  20         li    tmp2,16               ; Number of bytes to fill
+     7472 0010     
 0275 7474 06A0  32         bl    @xfilv                ; Fill colors
      7476 22A2     
 0276                                                   ; i \  tmp0 = start address

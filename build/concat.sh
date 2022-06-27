@@ -1,16 +1,17 @@
-#!/usr/bin/env
+#!/usr/bin/env bash
 
 set -e
 
-binary="$1"
+vnow="$(date '+%y-%m-%d %H:%M:%S')"        # Current date & time format 2
+image="$1"
 shift
 
-echo "Concatenating binaries to $binary"
+echo "$vnow  Concatenating binaries to binary image $image"
 
-rm -f "$binary"
+rm -f "$image"
 
 for bin in "$@";
 do
-    echo "   Adding ${bin}.bin ...."
-    cat "bin/${bin}.bin" >>"${binary}"
+    echo "$vnow        Adding ${bin}.bin ...."
+    cat "bin/${bin}.bin" >>"${image}"
 done
