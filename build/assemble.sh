@@ -14,6 +14,10 @@ do
       vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
       vnow="$(date '+%y-%m-%d %H:%M:%S')"        # Current date & time format 2
 
+      if [[ "$count" -eq "0" ]]; then
+            echo "$vnow  Assembly started"
+      fi
+
       # Write asm file with build info
       echo "$marker"                             > ./.buildinfo/buildinfo.asm
       echo "* BUILD: $vdate "                   >> ./.buildinfo/buildinfo.asm
@@ -24,7 +28,6 @@ do
       ((count+=1))
       main="${src:-main}"
       list="${main}.lst"
-      bin="${main}.bin"
 
       echo "$vnow  Assembling ${main}.asm ...."
 
@@ -32,10 +35,16 @@ do
             --quiet-opts                     \
             --listing-file "list/${list}" -S \
             -b                               \
+            -o bin                           \
             "$main.asm" -I "$include"        \
-            -D build_date="$vdate"
+            -D build_date="$vdate" &
 
-      mv "$bin" "bin/$bin"
+      pids[count]=$!
+done
+
+# wait for assembly subprocesses
+for pid in "${pids[@]}"; do
+    wait $pid
 done
 
 if (( count > 0 )); then

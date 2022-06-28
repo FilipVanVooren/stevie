@@ -11,6 +11,7 @@
 * Bank 3 "John"
 * Dialogs & Command Buffer pane
 ***************************************************************
+        copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         copy  "equates.asm"         ; Equates Stevie configuration
