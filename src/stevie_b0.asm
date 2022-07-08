@@ -131,8 +131,6 @@ main:
         ;------------------------------------------------------
         ; Memory full check
         ;------------------------------------------------------
-        .print "***** Relocated libraries @ >2000 - ", $, "(dec)"
-
         .ifgt $, >3fff
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else

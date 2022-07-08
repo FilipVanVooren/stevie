@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091,SC2086,SC2181
 
 set -e
+source helper.sh
 
+# Variables
 include="../../spectra2/src/equates,../../spectra2/src/modules,"
 include+="../../spectra2/src,../src/modules/,../src,.buildinfo"
 marker="***************************************************************"
@@ -12,10 +15,9 @@ count=0
 for src in "$@"
 do
       vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
-      vnow="$(date '+%y-%m-%d %H:%M:%S')"        # Current date & time format 2
 
       if [[ "$count" -eq "0" ]]; then
-            echo "$vnow  Assembly started"
+            log "Assembly started"
       fi
 
       # Write asm file with build info
@@ -29,15 +31,15 @@ do
       main="${src:-main}"
       list="${main}.lst"
 
-      echo "$vnow  Assembling ${main}.asm ...."
+      log "    Assembling ${main}.asm ...."
 
-      xas99 --quiet-unused-syms              \
-            --quiet-opts                     \
-            --listing-file "list/${list}" -S \
-            -b                               \
-            -o bin                           \
-            "$main.asm" -I "$include"        \
-            -D build_date="$vdate" &
+      xas99.py --quiet-unused-syms              \
+               --quiet-opts                     \
+               --listing-file "list/${list}" -S \
+               -b                               \
+               -o bin                           \
+               "$main.asm" -I "$include"        \
+               -D build_date="$vdate" &
 
       pids[count]=$!
 done
@@ -48,7 +50,7 @@ for pid in "${pids[@]}"; do
 done
 
 if (( count > 0 )); then
-      echo "$vnow  Assembly completed"
+      log "Assembly completed"
 else
-      echo "$vnow  Nothing to assemble"
+      log "Nothing to assemble"
 fi

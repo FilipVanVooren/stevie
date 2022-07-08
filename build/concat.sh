@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091,SC2086,SC2181
 
 set -e
+source helper.sh
 
-vnow="$(date '+%y-%m-%d %H:%M:%S')"        # Current date & time format 2
 image="$1"
 shift
 
-echo "$vnow  Concatenating binaries to binary image $image"
+log "Concatenating binaries to image $image"
 
 rm -f "$image"
 
 for bin in "$@";
 do
-    echo "$vnow        Adding ${bin}.bin ...."
+    log "    Adding ${bin}.bin ...."
     cat "bin/${bin}.bin" >>"${image}"
 done
+
+md5=$(md5sum "${image}")
+log "Concatenation done."
+log "md5: $md5"

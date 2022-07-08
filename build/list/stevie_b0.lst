@@ -16,7 +16,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220628-1345110
+0002               * BUILD: 220708-1542440
 0003               ***************************************************************
                    < stevie_b0.asm
 0015                       copy  "rom.build.asm"       ; Cartridge build options
@@ -8918,12 +8918,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0131                       ;------------------------------------------------------
 0132                       ; Memory full check
 0133                       ;------------------------------------------------------
-0135               
-0139 7BAE 3AF0                   data $                ; Bank 0 ROM size OK.
+0137 7BAE 3AF0                   data $                ; Bank 0 ROM size OK.
+0139                       ;-----------------------------------------------------------------------
+0140                       ; Show ROM bank in CPU crash screen
 0141                       ;-----------------------------------------------------------------------
-0142                       ; Show ROM bank in CPU crash screen
-0143                       ;-----------------------------------------------------------------------
-0144                       copy "rom.crash.asm"
+0142                       copy "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -8939,23 +8938,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
                    < stevie_b0.asm
-0145               
-0146               cpu.crash.showbank.bankstr:
-0147 7F0A 0552             stri 'ROM#0'
+0143               
+0144               cpu.crash.showbank.bankstr:
+0145 7F0A 0552             stri 'ROM#0'
      7F0C 4F4D     
      7F0E 2330     
+0146               *--------------------------------------------------------------
+0147               * Video mode configuration
 0148               *--------------------------------------------------------------
-0149               * Video mode configuration
-0150               *--------------------------------------------------------------
-0151      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0152      0004     spfbck  equ   >04                   ; Screen background color.
-0153      364A     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0154      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0155      0050     colrow  equ   80                    ; Columns per row
-0156      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0157      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0158      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0159      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0149      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0150      0004     spfbck  equ   >04                   ; Screen background color.
+0151      364A     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0152      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0153      0050     colrow  equ   80                    ; Columns per row
+0154      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0155      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0156      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0157      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 
     ANYKEY.............. >200A :     
     AT.................. >26D4 :     
