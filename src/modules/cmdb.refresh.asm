@@ -27,7 +27,7 @@ cmdb.refresh:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack        
+        dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
         ; Dump Command buffer content
@@ -36,7 +36,7 @@ cmdb.refresh:
 
         inc   @wyx                  ; X +1 for prompt
 
-        bl    @yx2pnt               ; Get VDP PNT address for current YX pos.                              
+        bl    @yx2pnt               ; Get VDP PNT address for current YX pos.
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP target address
 
@@ -46,7 +46,7 @@ cmdb.refresh:
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
                                     ; | i  tmp0 = VDP target address
                                     ; | i  tmp1 = RAM source address
-                                    ; / i  tmp2 = Number of bytes to copy       
+                                    ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
         ; Show command buffer prompt
         ;------------------------------------------------------
@@ -57,9 +57,9 @@ cmdb.refresh:
         ; Exit
         ;------------------------------------------------------
 cmdb.refresh.exit:
-        mov   *stack+,@wyx          ; Pop cursor position        
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

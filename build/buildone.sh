@@ -5,7 +5,8 @@ set -e
 source helper.sh
 
 banks="stevie_b0 stevie_b1 stevie_b2 stevie_b3 stevie_b4 stevie_b5 stevie_b6 stevie_b7"
-stevie="bin/stevie.bin"
+
+binary="bin/stevie.bin"
 
 if [[ "$1" =~ ^[0-9]+$ ]]; then
     bash assemble.sh "stevie_b$1"
@@ -15,8 +16,7 @@ else
 fi
 
 if [ "$?" -eq "0" ]; then
-    bash concat.sh "$stevie" $banks
+    bash concat.sh "$binary" $banks
 else
-    log "$**** Error **** Error during assembly process. Terminated."
+    log "**** Error **** Error during assembly process. Terminated."
 fi
-log "**** Done ****"

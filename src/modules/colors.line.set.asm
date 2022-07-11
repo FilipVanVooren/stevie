@@ -54,6 +54,6 @@ colors.line.set.exit:
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller
