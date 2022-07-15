@@ -4,8 +4,12 @@
 set -e
 source helper.sh
 
+# Constants
+IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.10-alpine}"
+
 banks="stevie_b0 stevie_b1 stevie_b2 stevie_b3 stevie_b4 stevie_b5 stevie_b6 stevie_b7"
 binary="bin/stevie.bin"
+
 
 bash assemble.sh $banks
 if [ "$?" -eq "0" ]; then

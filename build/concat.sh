@@ -17,6 +17,4 @@ do
     cat "bin/${bin}.bin" >>"${image}"
 done
 
-md5=$(md5sum "${image}")
 log "Concatenation done."
-log "md5: $md5"
