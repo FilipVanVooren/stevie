@@ -2,16 +2,13 @@
 # shellcheck disable=SC1091,SC2086,SC2181
 
 source helper.sh
-#set -e
-#set -x
 
 # Constants
 IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.10}"
 
 # Variables
-include="../../spectra2/src/equates,../../spectra2/src/modules,"
-include+="../../spectra2/src,../src/modules/,../src,.buildinfo"
 marker="***************************************************************"
+vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
 
 # Check if xas99.py available
 xas99found="$(which xas99.py)" || true
@@ -20,7 +17,6 @@ xas99found="$(which xas99.py)" || true
 mkdir -p .buildinfo
 
 # Write asm file with build info
-vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
 echo "$marker"                             > ./.buildinfo/buildinfo.asm
 echo "* BUILD: $vdate "                   >> ./.buildinfo/buildinfo.asm
 echo "$marker"                            >> ./.buildinfo/buildinfo.asm
@@ -39,10 +35,11 @@ do
       main="${src:-main}"
       list="${main}.lst"
 
-      # run on host (can be devcontainer) or run in new container
       if [ "${#xas99found}" -gt "0" ]; then
+            # run on host (or in devcontainer)
             log "    Assembling ${main}.asm ...."
 
+            #shellcheck disable=SC2140,SC2154
             xas99.py --quiet-unused-syms           \
                   --quiet-opts                     \
                   --listing-file "list/${list}" -S \
@@ -54,28 +51,29 @@ do
             pids[count]=$!
 
       else
+            # Spin easyxdt99 container
             container="easyxdt99-xas99-$main-$$.asm"
             log "    Assembling ${main}.asm in container .... $container"
 
-            set -x
-            #shellcheck disable=SC2140
-            docker run -it \
+            #shellcheck disable=SC2140,SC2154
+            docker run \
                   --mount type=bind,source="$(pwd)/../../",target="/workspace" \
-                  --env main="$main"           \
-                  --env include="$include"     \
-                  --env list="$list"           \
-                  --env vdate="$vdate"         \
-                  --name "$container"          \
-                  $IMAGE                       \
-                  xas99.py --quiet-unused-syms                \
-                             --quiet-opts                     \
-                             --listing-file "list/${list}" -S \
+                  --workdir "$workdir"     \
+                  --env main="$main"       \
+                  --env include="$include" \
+                  --env list="$list"       \
+                  --env vdate="$vdate"     \
+                  --name "$container"      \
+                  $IMAGE                   \
+                  xas99.py \
+                        --quiet-unused-syms              \
+                        --quiet-opts                     \
+                        --listing-file "list/${list}" -S \
                         -b                               \
                         -o bin                           \
                         "$main.asm" -I "$include"        \
-                        -D build_date="$vdate"
+                        -D build_date="$vdate" &
 
-            set +x
             pids[count]=$!
       fi
 done
