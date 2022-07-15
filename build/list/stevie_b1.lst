@@ -16,7 +16,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220715-1738050
+0002               * BUILD: 220715-1915470
 0003               ***************************************************************
                    < stevie_b1.asm
 0015                       copy  "rom.build.asm"       ; Cartridge build options
@@ -16728,7 +16728,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0129 7D94 9100             byte  key.ctrl.q, pane.focus.fb
 0130 7D96 6844             data  edkey.action.quit
 0131               
-0132 7D98 9500             byte  key.ctrl.u, pane.focus.fb
+0132 7D98 9200             byte  key.ctrl.r, pane.focus.fb
 0133 7D9A 6804             data  edkey.action.toggle.ruler
 0134               
 0135 7D9C 9A00             byte  key.ctrl.z, pane.focus.fb

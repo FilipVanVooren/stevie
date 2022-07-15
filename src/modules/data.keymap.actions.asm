@@ -129,7 +129,7 @@ keymap_actions.editor:
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
 
-        byte  key.ctrl.u, pane.focus.fb
+        byte  key.ctrl.r, pane.focus.fb
         data  edkey.action.toggle.ruler
 
         byte  key.ctrl.z, pane.focus.fb

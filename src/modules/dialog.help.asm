@@ -227,7 +227,7 @@ dialog.help.data.page1.right:
         even
         stri 'Ctrl h   ^h   Help'
         even
-        stri 'Ctrl u   ^u   Toggle ruler'
+        stri 'Ctrl r   ^r   Toggle ruler'
         even
         stri 'Ctrl z   ^z   Cycle color schemes'
         even

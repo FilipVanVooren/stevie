@@ -16,7 +16,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220715-1738050
+0002               * BUILD: 220715-1915470
 0003               ***************************************************************
                    < stevie_b3.asm
 0015                       copy  "rom.build.asm"       ; Cartridge build options
@@ -9538,12 +9538,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      646A 656C     
      646C 70       
 0229                       even
-0230 646E 1A43             stri 'Ctrl u   ^u   Toggle ruler'
+0230 646E 1A43             stri 'Ctrl r   ^r   Toggle ruler'
      6470 7472     
      6472 6C20     
-     6474 7520     
+     6474 7220     
      6476 2020     
-     6478 5E75     
+     6478 5E72     
      647A 2020     
      647C 2054     
      647E 6F67     
@@ -13480,13 +13480,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      75C6 3A20     
 0127                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 75C8 3232                        text '220715-1738050'
+0001 75C8 3232                        text '220715-1915470'
      75CA 3037     
      75CC 3135     
      75CE 2D31     
-     75D0 3733     
-     75D2 3830     
-     75D4 3530     
+     75D0 3931     
+     75D2 3534     
+     75D4 3730     
                    < data.strings.bank3.asm
 0128 75D6 202F                        text ' / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
      75D8 2032     
