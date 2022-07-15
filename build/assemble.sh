@@ -20,6 +20,7 @@ xas99found="$(which xas99.py)" || true
 mkdir -p .buildinfo
 
 # Write asm file with build info
+vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
 echo "$marker"                             > ./.buildinfo/buildinfo.asm
 echo "* BUILD: $vdate "                   >> ./.buildinfo/buildinfo.asm
 echo "$marker"                            >> ./.buildinfo/buildinfo.asm
@@ -29,8 +30,6 @@ echo "                   text '${vdate}'"  > ./.buildinfo/buildstr.asm
 count=0
 for src in "$@"
 do
-      vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
-
       if [[ "$count" -eq "0" ]]; then
             log "Assembly started"
       fi

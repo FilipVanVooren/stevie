@@ -44,7 +44,7 @@ rom.program2:
                                     ; 15 /
 
         .ifeq full_f18a_support,1
-            stri 'STEVIE IDE 1.3F-30'
+            stri 'STEVIE 1.3G-30'
         .else
-            stri 'STEVIE IDE 1.3F-24'
+            stri 'STEVIE 1.3G-24'
         .endif
