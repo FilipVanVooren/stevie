@@ -195,6 +195,9 @@ keymap_actions.cmdb:
         byte  key.uc.c, id.dialog.menu
         data  dialog.cartridge
 
+        byte  key.uc.o, id.dialog.menu
+        data  dialog.config
+
         byte  key.uc.h, id.dialog.menu
         data  dialog.help
 
@@ -214,9 +217,6 @@ keymap_actions.cmdb:
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
-
-        byte  key.uc.c, id.dialog.file
-        data  dialog.config
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
@@ -265,7 +265,7 @@ keymap_actions.cmdb:
         byte  key.num.5, id.dialog.clipboard
         data  edkey.action.cmdb.clip.5
         ;-------------------------------------------------------
-        ; Dialog: Configure clipboard device
+        ; Dialog: Configure clipboard
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.clipdev
         data  edkey.action.cmdb.clipdev.configure

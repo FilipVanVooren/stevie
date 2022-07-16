@@ -67,10 +67,10 @@ txt.keys.insert2   equ txt.keys.default2
 
 
 ;--------------------------------------------------------------
-; Dialog "Configure clipboard device"
+; Dialog "Configure clipboard"
 ;--------------------------------------------------------------
-txt.head.clipdev   byte 31,1,1
-                   text ' Configure clipboard device '
+txt.head.clipdev   byte 24,1,1
+                   text ' Configure clipboard '
                    byte 1
 txt.hint.clipdev   stri 'Give device and filename prefix of clipboard.'
 txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
@@ -119,13 +119,13 @@ txt.head.about     byte 9,1,1
                    byte 1
 
 txt.info.about     stri ''
-txt.hint.about     stri 'Press F9 or ENTER to return to editor.'
+txt.hint.about     stri 'Licensed under GPLv3. Press F9 or ENTER to return to editor.'
 txt.keys.about     stri 'F9-Back  SPACE-Next Page  ENTER-Back'
 
 txt.about.build    byte s#txt.about.build
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' / 2018-2022 Filip Van Vooren / retroclouds on Atariage'
+                   text ' / 2018-2022 Filip Van Vooren / retroclouds on Atariage '
                    even
 
 
@@ -136,8 +136,8 @@ txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
-txt.info.menu      stri 'File   Cartridge   Help   Quit'
-pos.info.menu      byte 0,7,19,26,>ff
+txt.info.menu      stri 'File   Cartridge   Configure   Help   Quit'
+pos.info.menu      byte 0,7,20,31,38,>ff
 txt.hint.menu      stri ' '
 txt.keys.menu      stri 'F9-Back'
 
@@ -149,8 +149,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Save   Print   Configure'
-pos.info.file      byte 0,6,13,20,28,>ff
+txt.info.file      stri 'New   Open   Save   Print'
+pos.info.file      byte 0,6,13,20,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back'
 
@@ -189,7 +189,7 @@ txt.head.config    byte 14,1,1
                    text ' Configure '
                    byte 1
 
-txt.info.config    stri 'Clipboard'
-pos.info.config    byte 0,>ff
+txt.info.config    stri 'Clipboard   Editor'
+pos.info.config    byte 0,12,>ff
 txt.hint.config    stri ' '
 txt.keys.config    stri 'F9-Back'

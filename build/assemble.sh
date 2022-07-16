@@ -46,7 +46,8 @@ do
                   -b                               \
                   -o bin                           \
                   "$main.asm" -I "$include"        \
-                  -D build_date="$vdate" &
+                  -D build_date="$vdate"           \
+                  ${xas99_options} &
 
             pids[count]=$!
 
@@ -72,7 +73,8 @@ do
                         -b                               \
                         -o bin                           \
                         "$main.asm" -I "$include"        \
-                        -D build_date="$vdate" &
+                        -D build_date="$vdate"           \
+                        ${xas99_options} &
 
             pids[count]=$!
       fi
