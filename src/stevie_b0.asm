@@ -139,7 +139,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
-        copy "rom.crash.asm"
+        copy  "rom.crash.asm"
 
 cpu.crash.showbank.bankstr:
         stri 'ROM#0'

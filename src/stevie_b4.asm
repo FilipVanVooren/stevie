@@ -63,6 +63,7 @@ main:
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.scan.fname.asm"   ; Scan line for device & filename
+        copy  "fb.hscroll.asm"      ; Horizontal scroll frame buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -81,7 +82,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
-        copy "rom.crash.asm"
+        copy  "rom.crash.asm"
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------

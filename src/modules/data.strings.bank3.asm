@@ -8,10 +8,10 @@
 
 txt.stevie:
         .ifeq full_f18a_support,1
-            text ' Stevie 1.3G-30'
+            text ' Stevie 1.3H-30'
             even
         .else
-            text ' Stevie 1.3G-24'
+            text ' Stevie 1.3H-24'
             even
         .endif
 
@@ -136,8 +136,8 @@ txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
-txt.info.menu      stri 'File   Cartridge   Configure   Help   Quit'
-pos.info.menu      byte 0,7,20,31,38,>ff
+txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
+pos.info.menu      byte 0,7,20,31,43,50,>ff
 txt.hint.menu      stri ' '
 txt.keys.menu      stri 'F9-Back'
 
@@ -149,8 +149,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Save   Print'
-pos.info.file      byte 0,6,13,20,>ff
+txt.info.file      stri 'New   Open   Insert/Append   Save   Print'
+pos.info.file      byte 0,6,13,20,29,36,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back'
 
@@ -189,7 +189,20 @@ txt.head.config    byte 14,1,1
                    text ' Configure '
                    byte 1
 
-txt.info.config    stri 'Clipboard   Editor'
-pos.info.config    byte 0,12,>ff
+txt.info.config    stri 'Clipboard'
+pos.info.config    byte 0,>ff
 txt.hint.config    stri ' '
 txt.keys.config    stri 'F9-Back'
+
+
+;--------------------------------------------------------------
+; Dialog "Shortcuts"
+;--------------------------------------------------------------
+txt.head.shortcuts byte 14,1,1
+                   text ' Shortcuts '
+                   byte 1
+
+txt.info.shortcuts stri 'Colors   Ruler   M1/M2'
+pos.info.shortcuts byte 0,9,18,21,>ff
+txt.hint.shortcuts stri ' '
+txt.keys.shortcuts stri 'F9-Back'

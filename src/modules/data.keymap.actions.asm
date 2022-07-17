@@ -198,6 +198,9 @@ keymap_actions.cmdb:
         byte  key.uc.o, id.dialog.menu
         data  dialog.config
 
+        byte  key.uc.s, id.dialog.menu
+        data  dialog.shortcuts
+
         byte  key.uc.h, id.dialog.menu
         data  dialog.help
 
@@ -214,6 +217,12 @@ keymap_actions.cmdb:
 
         byte  key.uc.o, id.dialog.file
         data  dialog.load
+
+        byte  key.uc.i, id.dialog.file
+        data  dialog.insert
+
+        byte  key.uc.a, id.dialog.file
+        data  dialog.append
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
@@ -329,6 +338,20 @@ keymap_actions.cmdb:
 
         byte  key.space, id.dialog.basic
         data  tibasic.uncrunch
+        ;-------------------------------------------------------
+        ; Dialog: Shortcuts
+        ;-------------------------------------------------------
+        byte  key.uc.c, id.dialog.shortcuts
+        data  pane.action.colorscheme.cycle
+
+        byte  key.uc.r, id.dialog.shortcuts
+        data  edkey.action.toggle.ruler
+
+        byte  key.num.1, id.dialog.shortcuts
+        data  edkey.action.block.m1
+
+        byte  key.num.2, id.dialog.shortcuts
+        data  edkey.action.block.m2
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------

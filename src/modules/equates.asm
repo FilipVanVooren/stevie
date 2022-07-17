@@ -102,6 +102,7 @@ id.dialog.file            equ  105     ; "File"
 id.dialog.cartridge       equ  106     ; "Cartridge"
 id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.config          equ  108     ; "Configure"
+id.dialog.shortcuts       equ  109     ; "Shortcuts"
 *--------------------------------------------------------------
 * Suffix characters for clipboards
 *--------------------------------------------------------------
@@ -385,7 +386,7 @@ cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
 * Farjump return stack                @>af00-afff   (256 bytes)
 *--------------------------------------------------------------
 fj.bottom         equ  >b000           ; Return stack for trampoline function
-                                       ; Grows downwards from high to low.                                       
+                                       ; Grows downwards from high to low.
 *--------------------------------------------------------------
 * Index                               @>b000-bfff  (4096 bytes)
 *--------------------------------------------------------------

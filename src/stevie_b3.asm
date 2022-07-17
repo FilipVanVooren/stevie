@@ -75,6 +75,7 @@ main:
         copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
         copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"     ; Dialog "Basic"
+        copy  "dialog.shortcuts.asm" ; Dialog "Shortcuts"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
@@ -112,7 +113,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
-        copy "rom.crash.asm"
+        copy  "rom.crash.asm"
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------

@@ -13,6 +13,28 @@ edkey.action.block.mark:
 
 
 *---------------------------------------------------------------
+* Mark line M1
+********|*****|*********************|**************************
+edkey.action.block.m1:
+        bl    @edb.block.mark.m1    ; Set M1 marker
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        b     @edkey.action.cmdb.close.dialog ; Close dialog
+
+
+*---------------------------------------------------------------
+* Mark line M2
+********|*****|*********************|**************************
+edkey.action.block.m2:
+        bl    @edb.block.mark.m2    ; Set M2 marker
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        b     @edkey.action.cmdb.close.dialog ; Close dialog
+
+
+*---------------------------------------------------------------
 * Reset block markers M1/M2
 ********|*****|*********************|**************************
 edkey.action.block.reset:
@@ -43,7 +65,7 @@ edkey.action.block.copy:
         andi  tmp0,>ff00            ; Move cursor home (X=00)
         mov   tmp0,@fb.yxsave       ; Backup cursor position
         ;-------------------------------------------------------
-        ; Copy 
+        ; Copy
         ;-------------------------------------------------------
         bl    @pane.errline.hide    ; Hide error line if visible
 
@@ -52,7 +74,7 @@ edkey.action.block.copy:
                                     ; \ i  @parm1    = Message flag
                                     ; / o  @outparm1 = >ffff if success
 
-        c     @outparm1,@w$0000     ; Copy skipped?        
+        c     @outparm1,@w$0000     ; Copy skipped?
         jeq   edkey.action.block.copy.exit
                                     ; If yes, exit early
 
@@ -65,7 +87,7 @@ edkey.action.block.copy:
         ;-------------------------------------------------------
 edkey.action.block.copy.exit:
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.keyscan.hook.debounce; Back to editor main                                    
+        b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
 
@@ -92,9 +114,9 @@ edkey.action.block.delete:
         ;-------------------------------------------------------
         ; Reposition in frame buffer
         ;-------------------------------------------------------
-        c     @outparm1,@w$0000     ; Delete skipped?        
+        c     @outparm1,@w$0000     ; Delete skipped?
         jeq   edkey.action.block.delete.exit
-                                    ; If yes, exit early        
+                                    ; If yes, exit early
 
         mov   @fb.topline,@parm1
         b     @edkey.goto.fb.toprow ; Position on top row in frame buffer
@@ -134,14 +156,14 @@ edkey.action.block.move:
         ;-------------------------------------------------------
         ; Reposition in frame buffer
         ;-------------------------------------------------------
-        c     @outparm1,@w$0000     ; Delete skipped?        
+        c     @outparm1,@w$0000     ; Delete skipped?
         jeq   edkey.action.block.delete.exit
-                                    ; If yes, exit early        
+                                    ; If yes, exit early
 
         mov   @fb.topline,@parm1
         b     @edkey.goto.fb.toprow ; Position on top row in frame buffer
                                     ; \ i  @parm1 = Line to display as top row
-                                    ; /        
+                                    ; /
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -159,8 +181,8 @@ edkey.action.block.goto.m1:
         ;-------------------------------------------------------
         ; Goto marker M1
         ;-------------------------------------------------------
-        mov   @edb.block.m1,@parm1   
-        dec   @parm1                ; Base 0 offset 
+        mov   @edb.block.m1,@parm1
+        dec   @parm1                ; Base 0 offset
 
         b     @edkey.action.goto    ; Goto specified line in editor bufer
                                     ; \ i @parm1 = Target line in EB
@@ -168,5 +190,5 @@ edkey.action.block.goto.m1:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.goto.m1.exit:  
+edkey.action.block.goto.m1.exit:
         b     @edkey.keyscan.hook.debounce; Back to editor main

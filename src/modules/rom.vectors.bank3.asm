@@ -25,7 +25,7 @@ vec.10  data  dialog.config         ; Dialog "Configure"
 vec.11  data  dialog.append         ; Dialog "Append file"
 vec.12  data  dialog.cartridge      ; Dialog "Cartridge"
 vec.13  data  dialog.basic          ; Dialog "TI Basic"
-vec.14  data  cpu.crash             ;
+vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  cpu.crash             ;
 vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;

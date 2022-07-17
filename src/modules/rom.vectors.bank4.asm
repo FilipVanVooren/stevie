@@ -17,7 +17,7 @@ vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
 vec.3   data  fb.colorlines         ; Colorize frame buffer content
 vec.4   data  fb.vdpdump            ; Dump framebuffer to VDP SIT
 vec.5   data  fb.scan.fname         ; Scan current line for possible filename
-vec.6   data  cpu.crash             ;
+vec.6   data  fb.hscroll            ; Horizontal scroll frame buffer window
 vec.7   data  cpu.crash             ;
 vec.8   data  cpu.crash             ;
 vec.9   data  cpu.crash             ;
