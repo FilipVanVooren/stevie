@@ -5,7 +5,7 @@
 * dialog.append
 * Open Dialog for inserting DV 80 file
 ***************************************************************
-* b @dialog.append
+* bl @dialog.append
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -38,13 +38,13 @@ dialog.append.setup:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.append
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        abs   @fh.offsetopcode      ; FastMode is off ? 
-        jeq   ! 
+        abs   @fh.offsetopcode      ; FastMode is off ?
+        jeq   !
         ;-------------------------------------------------------
         ; Show that FastMode is on
         ;-------------------------------------------------------
@@ -61,7 +61,7 @@ dialog.append.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set command line
-        ;-------------------------------------------------------         
+        ;-------------------------------------------------------
         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
         mov   *tmp0,tmp1            ; Anything set?
         jeq   dialog.append.cursor  ; No default filename, skip
@@ -73,15 +73,15 @@ dialog.append.keylist:
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-dialog.append.cursor:        
+dialog.append.cursor:
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2 
+        mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.append.exit:
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller                                         
+        b     *r11                  ; Return to caller

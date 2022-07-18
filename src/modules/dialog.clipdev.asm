@@ -5,7 +5,7 @@
 * dialog.clipdev
 * Open Dialog "Configure clipboard device"
 ***************************************************************
-* b @dialog.clipdevice
+* bl @dialog.clipdevice
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -34,7 +34,7 @@ dialog.clipdev:
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
         clr   @cmdb.panmarkers      ; No key markers
-        
+
         li    tmp0,txt.hint.clipdev
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
@@ -53,12 +53,12 @@ dialog.clipdev:
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2 
+        mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.clipdevice.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller

@@ -286,6 +286,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.uc.c, id.dialog.config
         data  dialog.clipdev
+
+        byte  key.uc.e, id.dialog.config
+        data  dialog.editor
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

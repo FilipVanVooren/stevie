@@ -5,7 +5,7 @@
 * dialog.load
 * Open Dialog for loading DV 80 file
 ***************************************************************
-* b @dialog.load
+* bl @dialog.load
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -36,7 +36,7 @@ dialog.load:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-dialog.load.setup:        
+dialog.load.setup:
         bl    @fb.scan.fname        ; Get possible device/filename
 
         li    tmp0,id.dialog.load
@@ -46,13 +46,13 @@ dialog.load.setup:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.load
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        abs   @fh.offsetopcode      ; FastMode is off ? 
-        jeq   ! 
+        abs   @fh.offsetopcode      ; FastMode is off ?
+        jeq   !
         ;-------------------------------------------------------
         ; Show that FastMode is on
         ;-------------------------------------------------------
@@ -61,7 +61,7 @@ dialog.load.setup:
         ;-------------------------------------------------------
         ; Show that FastMode is off
         ;-------------------------------------------------------
-!       li    tmp0,txt.keys.load 
+!       li    tmp0,txt.keys.load
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
@@ -69,7 +69,7 @@ dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set command line
-        ;-------------------------------------------------------         
+        ;-------------------------------------------------------
         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
         mov   *tmp0,tmp1            ; Anything set?
         jeq   dialog.load.cursor    ; No default filename, skip
@@ -83,7 +83,7 @@ dialog.load.keylist:
         ;-------------------------------------------------------
 dialog.load.cursor:
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2 
+        mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
@@ -92,4 +92,4 @@ dialog.load.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller                                         
+        b     *r11                  ; Return to caller

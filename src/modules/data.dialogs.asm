@@ -24,7 +24,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode'
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      stri 'Give filename of file to open.'
+txt.hint.load      stri 'Enter filename of file to open.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
@@ -38,7 +38,7 @@ txt.head.save      byte 14,1,1
 txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
-txt.hint.save      stri 'Give filename of file to save.'
+txt.hint.save      stri 'Enter filename of file to save.'
 txt.keys.save      stri 'F9-Back  F3-Clear'
 
 
@@ -48,7 +48,7 @@ txt.keys.save      stri 'F9-Back  F3-Clear'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Give filename of file to append at the end of the current file.'
+txt.hint.append    stri 'Ebter filename of file to append at end of current file.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -60,20 +60,10 @@ txt.keys.append2   equ txt.keys.default2
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    stri 'Give filename of file to insert.'
+txt.hint.insert    stri 'Enter filename of file to insert at current line.'
 
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
-
-
-;--------------------------------------------------------------
-; Dialog "Configure clipboard"
-;--------------------------------------------------------------
-txt.head.clipdev   byte 24,1,1
-                   text ' Configure clipboard '
-                   byte 1
-txt.hint.clipdev   stri 'Give device and filename prefix of clipboard.'
-txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
 
 
 ;--------------------------------------------------------------
@@ -83,7 +73,7 @@ txt.head.clipboard byte 27,1,1
                    text ' Copy clipboard to line '
                    byte 1
 txt.info.clipboard stri 'Clipboard [1-5]?'
-txt.hint.clipboard stri 'Press 1 to 5 to copy clipboard, press F7 to configure clipboard device.'
+txt.hint.clipboard stri 'Press 1 to 5 to copy clipboard, press F7 to configure.'
 
 txt.keys.clipboard  stri 'F9-Back  F5-Fastmode  F7-Configure'
 txt.keys.clipboard2 stri 'F9-Back  *F5-Fastmode  F7-Configure'
@@ -98,7 +88,7 @@ txt.head.print     byte 15,1,1
 txt.head.print2    byte 16,1,1
                    text ' Print block '
                    byte 1
-txt.hint.print     stri 'Give printer device name (PIO, PI.PIO, ...)'
+txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
 txt.keys.print     stri 'F9-Back  F3-Clear'
 
 ;--------------------------------------------------------------
@@ -122,10 +112,11 @@ txt.info.about     stri ''
 txt.hint.about     stri 'Licensed under GPLv3. Press F9 or ENTER to return to editor.'
 txt.keys.about     stri 'F9-Back  SPACE-Next Page  ENTER-Back'
 
-txt.about.build    byte s#txt.about.build
+txt.about.build    byte 76
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' / 2018-2022 Filip Van Vooren / retroclouds on Atariage '
+                   text ' / 2018-2022 Filip Van Vooren'
+                   text ' / retroclouds on Atariage'
                    even
 
 
@@ -189,10 +180,31 @@ txt.head.config    byte 14,1,1
                    text ' Configure '
                    byte 1
 
-txt.info.config    stri 'Clipboard'
-pos.info.config    byte 0,>ff
+txt.info.config    stri 'Clipboard   Editor'
+pos.info.config    byte 0,12,>ff
 txt.hint.config    stri ' '
 txt.keys.config    stri 'F9-Back'
+
+
+;--------------------------------------------------------------
+; Dialog "Configure clipboard"
+;--------------------------------------------------------------
+txt.head.clipdev   byte 24,1,1
+                   text ' Configure clipboard '
+                   byte 1
+txt.hint.clipdev   stri 'Give device and filename prefix of clipboard file.'
+txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
+
+
+;--------------------------------------------------------------
+; Dialog "Configure editor"
+;--------------------------------------------------------------
+txt.head.editor    byte 21,1,1
+                   text ' Configure editor '
+                   byte 1
+txt.info.editor    stri 'New line on ENTER / No new line on ENTER.'
+txt.hint.editor    stri 'Select editor preferences.'
+txt.keys.editor    stri 'F9-Back'
 
 
 ;--------------------------------------------------------------
@@ -204,5 +216,5 @@ txt.head.shortcuts byte 14,1,1
 
 txt.info.shortcuts stri 'Colors   Ruler   M1/M2'
 pos.info.shortcuts byte 0,9,18,21,>ff
-txt.hint.shortcuts stri ' '
+txt.hint.shortcuts stri 'Select a shortcut or press F9 to return.'
 txt.keys.shortcuts stri 'F9-Back'

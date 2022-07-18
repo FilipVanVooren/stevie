@@ -5,7 +5,7 @@
 * dialog.insert
 * Open Dialog for inserting DV 80 file
 ***************************************************************
-* b @dialog.insert
+* bl @dialog.insert
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -45,7 +45,7 @@ dialog.insert.setup:
 
         mov   @fb.row,@parm1        ; Get row at cursor
         bl    @fb.row2line          ; Row to editor line
-                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; \ i @fb.topline = Top line in frame buffer
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
 
@@ -66,19 +66,19 @@ dialog.insert.setup:
         sla   tmp0,8
         movb  tmp0,@cmdb.panhead.buf ; Set length byte
 
-        li    tmp0,cmdb.panhead.buf 
+        li    tmp0,cmdb.panhead.buf
         mov   tmp0,@cmdb.panhead    ; Header for dialog
         ;------------------------------------------------------
         ; Other panel strings
         ;------------------------------------------------------
         clr   @cmdb.paninfo         ; No info message, do input prompt
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.insert
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        abs   @fh.offsetopcode      ; FastMode is off ? 
-        jeq   ! 
+        abs   @fh.offsetopcode      ; FastMode is off ?
+        jeq   !
         ;-------------------------------------------------------
         ; Show that FastMode is on
         ;-------------------------------------------------------
@@ -95,7 +95,7 @@ dialog.insert.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set command line
-        ;-------------------------------------------------------         
+        ;-------------------------------------------------------
         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
         mov   *tmp0,tmp1            ; Anything set?
         jeq   dialog.insert.cursor  ; No default filename, skip
@@ -107,15 +107,15 @@ dialog.insert.keylist:
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-dialog.insert.cursor:        
+dialog.insert.cursor:
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2 
+        mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.insert.exit:
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller                                         
+        b     *r11                  ; Return to caller

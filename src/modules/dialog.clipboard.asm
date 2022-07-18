@@ -5,7 +5,7 @@
 * dialog.clipboard
 * Open Dialog for inserting snippet from clipboard
 ***************************************************************
-* b @dialog.clipboard
+* bl @dialog.clipboard
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -26,7 +26,7 @@ dialog.clipboard:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-dialog.clipboard.setup:        
+dialog.clipboard.setup:
         li    tmp0,id.dialog.clipboard
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         ;------------------------------------------------------
@@ -39,9 +39,9 @@ dialog.clipboard.setup:
         bl    @cpym2m
               data txt.head.clipboard,cmdb.panhead.buf,27
 
-        mov   @fb.row,@parm1 
+        mov   @fb.row,@parm1
         bl    @fb.row2line          ; Row to editor line
-                                    ; \ i @fb.topline = Top line in frame buffer 
+                                    ; \ i @fb.topline = Top line in frame buffer
                                     ; | i @parm1      = Row in frame buffer
                                     ; / o @outparm1   = Matching line in EB
 
@@ -59,26 +59,26 @@ dialog.clipboard.setup:
 
         li    tmp0,32
         sla   tmp0,8
-        movb  tmp0,@cmdb.panhead.buf 
+        movb  tmp0,@cmdb.panhead.buf
                                     ; Set length byte
 
-        li    tmp0,cmdb.panhead.buf 
+        li    tmp0,cmdb.panhead.buf
         mov   tmp0,@cmdb.panhead    ; Header for dialog
         ;------------------------------------------------------
         ; Other panel strings
         ;------------------------------------------------------
         li    tmp0,txt.hint.clipboard
-        mov   tmp0,@cmdb.panhint    ; Hint line in dialog        
+        mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
         li    tmp0,txt.info.clipboard
         mov   tmp0,@cmdb.paninfo    ; Show info message
-        
-        clr   @cmdb.panmarkers      ; No key markers       
+
+        clr   @cmdb.panmarkers      ; No key markers
 
         bl    @cmdb.cmd.clear       ; Clear current command
 
-        abs   @fh.offsetopcode      ; FastMode is off ? 
-        jeq   ! 
+        abs   @fh.offsetopcode      ; FastMode is off ?
+        jeq   !
         ;-------------------------------------------------------
         ; Show that FastMode is on
         ;-------------------------------------------------------
@@ -94,11 +94,11 @@ dialog.clipboard.setup:
 dialog.clipboard.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
-        bl    @pane.cursor.hide     ; Hide cursor        
+        bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.clipboard.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller                                         
+        b     *r11                  ; Return to caller

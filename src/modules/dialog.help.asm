@@ -1,5 +1,5 @@
 * FILE......: dialog.help.asm
-* Purpose...: Stevie Editor - About dialog
+* Purpose...: Dialog "Help"
 
 *---------------------------------------------------------------
 * Show Stevie welcome/about dialog

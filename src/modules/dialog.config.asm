@@ -5,7 +5,7 @@
 * dialog.config
 * Open Dialog "Configure"
 ***************************************************************
-* b @dialog.config
+* bl @dialog.config
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -49,6 +49,6 @@ dialog.config:
         ; Exit
         ;-------------------------------------------------------
 dialog.config.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller

@@ -5,7 +5,7 @@
 * dialog.file
 * Open Dialog "File"
 ***************************************************************
-* b @dialog.file
+* bl @dialog.file
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -49,6 +49,6 @@ dialog.file:
         ; Exit
         ;-------------------------------------------------------
 dialog.file.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller

@@ -88,7 +88,7 @@ id.dialog.insert          equ  13      ; "Insert file"
 id.dialog.append          equ  14      ; "Append file"
 id.dialog.print           equ  15      ; "Print file"
 id.dialog.printblock      equ  16      ; "Print block"
-id.dialog.clipdev         equ  17      ; "Configure clipboard device"
+id.dialog.clipdev         equ  17      ; "Configure clipboard"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -102,7 +102,8 @@ id.dialog.file            equ  105     ; "File"
 id.dialog.cartridge       equ  106     ; "Cartridge"
 id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.config          equ  108     ; "Configure"
-id.dialog.shortcuts       equ  109     ; "Shortcuts"
+id.dialog.editor          equ  109     ; "Configure editor"
+id.dialog.shortcuts       equ  110     ; "Shortcuts"
 *--------------------------------------------------------------
 * Suffix characters for clipboards
 *--------------------------------------------------------------

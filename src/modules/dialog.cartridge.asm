@@ -5,7 +5,7 @@
 * dialog.cartridge
 * Open Dialog "Cartridge"
 ***************************************************************
-* b @dialog.cartridge
+* bl @dialog.cartridge
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -49,6 +49,6 @@ dialog.cartridge:
         ; Exit
         ;-------------------------------------------------------
 dialog.cartridge.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller     
+        b     *r11                  ; Return to caller

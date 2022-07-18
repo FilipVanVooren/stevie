@@ -71,7 +71,8 @@ main:
         copy  "dialog.append.asm"    ; Dialog "Append file"
         copy  "dialog.insert.asm"    ; Dialog "Insert file at line"
         copy  "dialog.config.asm"    ; Dialog "Configure"
-        copy  "dialog.clipdev.asm"   ; Dialog "Configure clipboard device"
+        copy  "dialog.clipdev.asm"   ; Dialog "Configure clipboard"
+        copy  "dialog.editor.asm"    ; Dialog "Configure editor"
         copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
         copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"     ; Dialog "Basic"
@@ -102,7 +103,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.strings.bank3.asm"  ; Strings used in bank 3
+        copy  "data.dialogs.asm"        ; Strings used in bank 3
         copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
         ;-----------------------------------------------------------------------
         ; Bank full check

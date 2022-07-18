@@ -3,9 +3,9 @@
 
 ***************************************************************
 * dialog.print
-* Open Dialog for printing file
+* Dialog "Print"
 ***************************************************************
-* b @dialog.print
+* bl @dialog.print
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -24,7 +24,7 @@ dialog.print:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Crunch current row if dirty 
+        ; Crunch current row if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   !                     ; Skip crunching if clean
@@ -40,13 +40,13 @@ dialog.print:
         ;-------------------------------------------------------
         li    tmp0,id.dialog.printblock
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-        li    tmp0,txt.head.print2  ; Title "Print block to file"                
+        li    tmp0,txt.head.print2  ; Title "Print block to file"
 
         jmp   dialog.print.header
         ;-------------------------------------------------------
         ; Default dialog
         ;-------------------------------------------------------
-dialog.print.default:        
+dialog.print.default:
         li    tmp0,id.dialog.print
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
         li    tmp0,txt.head.print   ; Title "Print file"
@@ -57,7 +57,7 @@ dialog.print.header:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
-        clr   @cmdb.panmarkers      ; No key markers        
+        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.print
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
@@ -78,11 +78,11 @@ dialog.print.header:
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-        bl    @pane.cursor.blink    ; Show cursor 
+        bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.print.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
