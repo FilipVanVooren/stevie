@@ -167,6 +167,9 @@ keymap_actions.editor:
         byte  key.ctrl.o, pane.focus.fb
         data  dialog.load
 
+        byte  key.ctrl.u, pane.focus.fb
+        data  dialog.shortcuts
+
         byte  key.ctrl.p, pane.focus.fb
         data  dialog.print
 

@@ -110,7 +110,7 @@ main:
         copy  "fb.insert.line.asm"          ; Insert new line
         copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
         copy  "fb.refresh.asm"              ; Refresh framebuffer
-        copy  "fb.restore.asm"              ; Restore framebuffer to normal opr.
+  ;     copy  "fb.restore.asm"              ; Restore framebuffer to normal opr.
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------

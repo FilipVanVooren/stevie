@@ -214,8 +214,6 @@ dialog.help.data.page1.right:
         even
         stri 'Ctrl .   ^.   Load next file'
         even
-        stri ' '
-        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '
@@ -228,6 +226,8 @@ dialog.help.data.page1.right:
         stri 'Ctrl h   ^h   Help'
         even
         stri 'Ctrl r   ^r   Toggle ruler'
+        even
+        stri 'Ctrl u   ^u   Shortcuts menu'
         even
         stri 'Ctrl z   ^z   Cycle color schemes'
         even

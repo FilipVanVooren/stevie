@@ -64,6 +64,7 @@ main:
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
         copy  "fb.scan.fname.asm"   ; Scan line for device & filename
         copy  "fb.hscroll.asm"      ; Horizontal scroll frame buffer
+        copy  "fb.restore.asm"      ; Restore framebuffer to normal opr.
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
