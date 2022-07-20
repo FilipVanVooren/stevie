@@ -224,7 +224,7 @@ tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
 tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
-tv.sp2.stack      equ  tv.top + 44     ; Backup of SP2 stack register
+tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
 tv.error.msg      equ  tv.top + 48     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 208    ; End of structure
 *--------------------------------------------------------------
