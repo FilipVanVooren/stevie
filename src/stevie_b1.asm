@@ -100,6 +100,7 @@ main:
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
+        copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)
@@ -109,7 +110,6 @@ main:
         copy  "fb.cursor.home.asm"          ; Cursor home
         copy  "fb.insert.line.asm"          ; Insert new line
         copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
-        copy  "fb.refresh.asm"              ; Refresh framebuffer
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------

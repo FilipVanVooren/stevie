@@ -308,18 +308,20 @@ edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
 edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
 edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
 edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-edb.block.m1      equ  edb.struct + 12 ; Block start line marker (>ffff = unset)
-edb.block.m2      equ  edb.struct + 14 ; Block end line marker   (>ffff = unset)
-edb.block.var     equ  edb.struct + 16 ; Local var used in block operation
-edb.filename.ptr  equ  edb.struct + 18 ; Pointer to length-prefixed string
+edb.autoinsert    equ  edb.struct + 12 ; Auto-insert on ENTER flag (>ffff = on)
+edb.block.m1      equ  edb.struct + 14 ; Block start line marker (>ffff = unset)
+edb.block.m2      equ  edb.struct + 16 ; Block end line marker   (>ffff = unset)
+edb.block.var     equ  edb.struct + 18 ; Local var used in block operation
+edb.filename.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
                                        ; with current filename.
-edb.filetype.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
+edb.filetype.ptr  equ  edb.struct + 22 ; Pointer to length-prefixed string
                                        ; with current file type.
-edb.sams.page     equ  edb.struct + 22 ; Current SAMS page
-edb.sams.hipage   equ  edb.struct + 24 ; Highest SAMS page in use
-edb.filename      equ  edb.struct + 26 ; 80 characters inline buffer reserved
+edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
+edb.sams.hipage   equ  edb.struct + 26 ; Highest SAMS page in use
+
+edb.filename      equ  edb.struct + 28 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
-edb.free          equ  edb.struct + 106; End of structure
+edb.free          equ  edb.struct + 108; End of structure
 *--------------------------------------------------------------
 * Index structure                     @>a600-a6ff   (256 bytes)
 *--------------------------------------------------------------

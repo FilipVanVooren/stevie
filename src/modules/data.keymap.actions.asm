@@ -286,9 +286,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.uc.c, id.dialog.config
         data  dialog.clipdev
-
-        byte  key.uc.e, id.dialog.config
-        data  dialog.editor
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------
@@ -352,6 +349,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.r, id.dialog.shortcuts
         data  edkey.action.toggle.ruler
+
+        byte  key.uc.a, id.dialog.shortcuts
+        data  edkey.action.cmdb.autoinsert
 
         byte  key.num.1, id.dialog.shortcuts
         data  edkey.action.block.m1

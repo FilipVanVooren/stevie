@@ -34,7 +34,9 @@ dialog.editor:
 
         li    tmp0,txt.info.editor
         mov   tmp0,@cmdb.paninfo    ; Show info message
-        clr   @cmdb.panmarkers      ; No key markers
+
+        li    tmp0,pos.info.editor
+        mov   tmp0,@cmdb.panmarkers ; Show key markers
 
         li    tmp0,txt.hint.editor
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog

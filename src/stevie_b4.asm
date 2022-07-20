@@ -65,6 +65,7 @@ main:
         copy  "fb.scan.fname.asm"   ; Scan line for device & filename
         copy  "fb.hscroll.asm"      ; Horizontal scroll frame buffer
         copy  "fb.restore.asm"      ; Restore framebuffer to normal opr.
+        copy  "fb.refresh.asm"      ; Refresh framebuffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

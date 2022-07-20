@@ -2,10 +2,10 @@
 * Purpose...: Bank 4 stubs for functions in other banks
 
 ***************************************************************
-* Stub for "fb.refresh"
-* bank1 vec.20
+* Stub for "edb.line.unpack.fb"
+* bank1 vec.11
 ********|*****|*********************|**************************
-fb.refresh:
+edb.line.unpack.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -13,7 +13,7 @@ fb.refresh:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data vec.11           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

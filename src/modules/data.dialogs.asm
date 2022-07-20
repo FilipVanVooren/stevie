@@ -48,7 +48,7 @@ txt.keys.save      stri 'F9-Back  F3-Clear'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Ebter filename of file to append at end of current file.'
+txt.hint.append    stri 'Eter filename of file to append at end of current file.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -180,8 +180,8 @@ txt.head.config    byte 14,1,1
                    text ' Configure '
                    byte 1
 
-txt.info.config    stri 'Clipboard   Editor'
-pos.info.config    byte 0,12,>ff
+txt.info.config    stri 'Clipboard'
+pos.info.config    byte 0,>ff
 txt.hint.config    stri ' '
 txt.keys.config    stri 'F9-Back'
 
@@ -202,7 +202,9 @@ txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.
 txt.head.editor    byte 21,1,1
                    text ' Configure editor '
                    byte 1
-txt.info.editor    stri 'New line on ENTER / No new line on ENTER.'
+txt.info.editor    stri 'AutoInsert: Yes/No'
+pos.info.editor    byte 12,16,>ff
+
 txt.hint.editor    stri 'Select editor preferences.'
 txt.keys.editor    stri 'F9-Back'
 
@@ -214,7 +216,7 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   M1/M2'
-pos.info.shortcuts byte 0,9,18,21,>ff
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
+pos.info.shortcuts byte 0,9,17,31,34,>ff
 txt.hint.shortcuts stri 'Select a shortcut or press F9 to return.'
 txt.keys.shortcuts stri 'F9-Back'

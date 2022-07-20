@@ -31,7 +31,7 @@ vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cmdb.dialog.close     ;
 vec.19  data  cmdb.cmd.clear        ;
-vec.20  data  fb.refresh            ;
+vec.20  data  cpu.crash             ;
 vec.21  data  fb.vdpdump            ;
 vec.22  data  fb.row2line           ;
 vec.23  data  cpu.crash             ;

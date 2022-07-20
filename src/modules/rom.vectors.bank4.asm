@@ -15,11 +15,11 @@ cpu.crash.showbank.bankstr:
 vec.1   data  fb.tab.next           ; Move cursor to next tab position
 vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
 vec.3   data  fb.colorlines         ; Colorize frame buffer content
-vec.4   data  fb.vdpdump            ; Dump framebuffer to VDP SIT
+vec.4   data  fb.vdpdump            ; Dump frame buffer to VDP SIT
 vec.5   data  fb.scan.fname         ; Scan current line for possible filename
 vec.6   data  fb.hscroll            ; Horizontal scroll frame buffer window
-vec.7   data  fb.restore            ; Restore framebuffer to normal operations
-vec.8   data  cpu.crash             ;
+vec.7   data  fb.restore            ; Restore frame buffer to normal operations
+vec.8   data  fb.refresh            ; Refresh frame buffer
 vec.9   data  cpu.crash             ;
 vec.10  data  cpu.crash             ;
 vec.11  data  cpu.crash             ;

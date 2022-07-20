@@ -48,14 +48,14 @@ pane.botline.show_keys:
                                     ; Show defaults + TI Basic
 
         mov   @tib.session,tmp0     ; Get Session ID
-        ai    tmp0,>0130            ; \ Turn into string with 
+        ai    tmp0,>0130            ; \ Turn into string with
                                     ; | length-byte prefix and
                                     ; / ASCII offset 48 (>30)
 
         mov   tmp0,@rambuf          ; Copy to ram buffer for display
 
-        bl    @putat                ; \ 
-              byte pane.botrow,27   ; | Display session-ID string 
+        bl    @putat                ; \
+              byte pane.botrow,27   ; | Display session-ID string
               data rambuf           ; / Y=bottom row, X=27
         ;------------------------------------------------------
         ; Show default keys
@@ -80,6 +80,19 @@ pane.botline.show_mode:
         ; Insert mode
         ;------------------------------------------------------
 pane.botline.show_mode.insert:
+        mov   @edb.autoinsert,tmp0
+        jeq   pane.botline.show_mode.insert.noauto
+        ;------------------------------------------------------
+        ; Auto-Insert
+        ;------------------------------------------------------
+        bl    @putat
+              byte  pane.botrow,55
+              data  txt.autoinsert
+        jmp   pane.botline.show_linecol
+        ;------------------------------------------------------
+        ; No Auto-Insert
+        ;------------------------------------------------------
+pane.botline.show_mode.insert.noauto:
         bl    @putat
               byte  pane.botrow,55
               data  txt.insert
@@ -117,7 +130,7 @@ pane.botline.show_linecol:
         mov   @fb.column,tmp0       ; Get column
         a     @fb.vwco,tmp0         ; Add view window column offset
         inc   tmp0                  ; Offset 1
-        mov   tmp0,@waux1           ; Save in temporary 
+        mov   tmp0,@waux1           ; Save in temporary
 
         bl    @mknum                ; Convert unsigned number to string
               data  waux1,rambuf
@@ -134,7 +147,7 @@ pane.botline.show_linecol:
         ; Decide if row length is to be shown
         ;------------------------------------------------------
         mov   @fb.column,tmp0       ; \ Base 1 for comparison
-        a     @fb.vwco,tmp0         ; | Add view window column offset        
+        a     @fb.vwco,tmp0         ; | Add view window column offset
         inc   tmp0                  ; /
         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
         jlt   pane.botline.show_linecol.linelen
@@ -145,7 +158,7 @@ pane.botline.show_linecol:
         ;------------------------------------------------------
 pane.botline.show_linecol.linelen:
         mov   @fb.column,tmp0       ; \
-        a     @fb.vwco,tmp0         ; | Add view window column offset        
+        a     @fb.vwco,tmp0         ; | Add view window column offset
         li    tmp1,rambuf+7         ; | Determine column position for '/' char
         ci    tmp0,9                ; | based on number of digits in cursor X
         jlt   !                     ; | column.
@@ -174,12 +187,12 @@ pane.botline.show_linecol.linelen:
         ;------------------------------------------------------
         ; Show length of line (3 digits)
         ;------------------------------------------------------
-pane.botline.show_line.3digits:        
+pane.botline.show_line.3digits:
         li    tmp0,rambuf+2
         movb  *tmp0+,*tmp1+         ; 1st digit row length
         movb  *tmp0+,*tmp1+         ; 2nd digit row length
-        jmp   pane.botline.show_line.rest        
-        ;------------------------------------------------------        
+        jmp   pane.botline.show_line.rest
+        ;------------------------------------------------------
         ; Show length of line (2 digits)
         ;------------------------------------------------------
 pane.botline.show_line.2digits:
