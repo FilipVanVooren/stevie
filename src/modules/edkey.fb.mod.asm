@@ -22,6 +22,10 @@ edkey.action.enter.newline:
         jeq   edkey.action.enter.upd_counter
                                     ; Overwrite mode, skip insert
 
+        mov   @edb.autoinsert,tmp0  ; Autoinsert on?
+        jeq   edkey.action.enter.upd_counter
+                                    ; Autoinsert off, skip insert
+
         seto  @parm1                ; Insert line on following line
         bl    @fb.insert.line       ; Insert a new line
                                     ; \  i  @parm1 = current/following line

@@ -37,5 +37,6 @@ edkey.action.cmdb.autoinsert.oneshot:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.autoinsert.exit:
+        bl    @cmdb.dialog.close    ; Close dialog
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
