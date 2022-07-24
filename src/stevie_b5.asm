@@ -1,16 +1,26 @@
-***************************************************************
-*                          Stevie
+********************************************************************************
+*   Stevie
+*   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
+*   Copyright (C) 2018-2022 / Filip van Vooren
 *
-*       A 21th century Programming Editor for the 1981
-*         Texas Instruments TI-99/4a Home Computer.
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
 *
-*              (c)2018-2022 // Filip van Vooren
-***************************************************************
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+********************************************************************************
 * File: stevie_b5.asm
 *
 * Bank 5 "Jumbo"
 * Editor Buffer methods delegated from bank 1
-***************************************************************
+********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
