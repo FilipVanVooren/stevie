@@ -16,7 +16,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220722-1415110
+0002               * BUILD: 220724-1531180
 0003               ***************************************************************
                    < stevie_b3.asm
 0015                       copy  "rom.build.asm"       ; Cartridge build options
@@ -817,12 +817,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043 6020 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0044                                                   ; 15 /
 0045               
-0047 6022 0E53                 stri 'STEVIE 1.3I-30'
+0047 6022 0E53                 stri 'STEVIE 1.3J-30'
      6024 5445     
      6026 5649     
      6028 4520     
      602A 312E     
-     602C 3349     
+     602C 334A     
      602E 2D33     
      6030 30       
                    < stevie_b3.asm
@@ -13043,12 +13043,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 723E 2053                 text ' Stevie 1.3I-30'
+0011 723E 2053                 text ' Stevie 1.3J-30'
      7240 7465     
      7242 7669     
      7244 6520     
      7246 312E     
-     7248 3349     
+     7248 334A     
      724A 2D33     
      724C 30       
 0012                           even
@@ -13570,13 +13570,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      75BE 20       
 0117                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 75BF   32                        text '220722-1415110'
+0001 75BF   32                        text '220724-1531180'
      75C0 3230     
      75C2 3732     
-     75C4 322D     
-     75C6 3134     
-     75C8 3135     
-     75CA 3131     
+     75C4 342D     
+     75C6 3135     
+     75C8 3331     
+     75CA 3138     
      75CC 30       
                    < data.dialogs.asm
 0118 75CD   20                        text ' / 2018-2022 Filip Van Vooren'

@@ -48,9 +48,6 @@ do
                   "$main.asm" -I "$include"        \
                   -D build_date="$vdate"           \
                   ${xas99_options} &
-
-            pids[count]=$!
-
       else
             # Spin easyxdt99 container
             container="easyxdt99-xas99-$main-$$.asm"
@@ -69,20 +66,31 @@ do
                   xas99.py \
                         --quiet-unused-syms              \
                         --quiet-opts                     \
-                        --listing-file "list/${list}" -S \
+                        --listing-file "/workspace/stevie/build/list/${list}" \
+                        -S                               \
                         -b                               \
-                        -o bin                           \
+                        -o "/workspace/stevie/build/bin" \
                         "$main.asm" -I "$include"        \
                         -D build_date="$vdate"           \
                         ${xas99_options} &
-
-            pids[count]=$!
       fi
+      pids[count]=$!
 done
 
 # wait for assembly subprocesses
 for pid in "${pids[@]}"; do
     wait $pid
+    exits[$pid]=$?
+done
+
+
+# Exit with error if any of the processes returned > 0
+for excode in "${exits[@]}"; do
+    if (( excode > 0 )); then
+        log "    Assembly process returned with exit code ${excode} > 0"
+        log "Assembly aborted"
+        exit $excode
+    fi
 done
 
 if (( count > 0 )); then
