@@ -50,6 +50,7 @@ dialog.load.setup:
 
         li    tmp0,txt.hint.load
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         abs   @fh.offsetopcode      ; FastMode is off ?
         jeq   !

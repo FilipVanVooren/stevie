@@ -37,6 +37,7 @@ dialog.basic:
 
         li    tmp0,txt.hint.basic
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         mov   @tib.automode,tmp0    ; Get 'Automode' flag
         jeq   !

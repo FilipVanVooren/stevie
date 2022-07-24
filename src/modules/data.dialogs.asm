@@ -109,16 +109,15 @@ txt.head.about     byte 9,1,1
                    byte 1
 
 txt.info.about     stri ''
-txt.hint.about     stri 'Licensed under GPLv3. Press F9 or ENTER to return to editor.'
+txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
+txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
 txt.keys.about     stri 'F9-Back  SPACE-Next Page  ENTER-Back'
 
-txt.about.build    byte 76
+txt.about.build    byte 73
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' / 2018-2022 Filip Van Vooren'
-                   text ' / retroclouds on Atariage'
+                   text ' / Stevie  Copyright (C) 2018-2022  Filip Van Vooren'
                    even
-
 
 ;--------------------------------------------------------------
 ; Dialog "Main Menu"
@@ -129,9 +128,8 @@ txt.head.menu      byte 14,1,1
 
 txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
 pos.info.menu      byte 0,7,20,31,43,50,>ff
-txt.hint.menu      stri ' '
+txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9-Back'
-
 
 ;--------------------------------------------------------------
 ; Dialog "File"

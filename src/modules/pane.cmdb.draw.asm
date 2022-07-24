@@ -139,8 +139,26 @@ pane.cmdb.draw.hint:
                                     ; \ i  parm1 = Pointer to string with hint
                                     ; / i  parm2 = YX position
         ;------------------------------------------------------
+        ; Display extra pane hint in command buffer
+        ;------------------------------------------------------
+        mov   @cmdb.panmarkers,tmp0 ; Any key markers to display?
+        jne   pane.cmdb.draw.keys   ; yes, skip extra pane hint
+
+        mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
+        jeq   pane.cmdb.draw.keys   ; No extra pane hint to display
+
+        li    tmp0,pane.botrow - 2  ; \
+        sla   tmp0,8                ; / Y=bottom row - 2, X=0
+        mov   tmp0,@parm1           ; Set parameter
+        mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
+
+        bl    @pane.show_hintx      ; Display pane hint
+                                    ; \ i  parm1 = Pointer to string with hint
+                                    ; / i  parm2 = YX position
+        ;------------------------------------------------------
         ; Display keys in status line
         ;------------------------------------------------------
+pane.cmdb.draw.keys:
         li    tmp0,pane.botrow      ; \
         sla   tmp0,8                ; / Y=bottom row, X=0
         mov   tmp0,@parm1           ; Set parameter

@@ -38,6 +38,7 @@ dialog.unsaved:
 
         li    tmp0,txt.hint.unsaved
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.unsaved
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

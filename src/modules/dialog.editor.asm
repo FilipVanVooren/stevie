@@ -40,6 +40,7 @@ dialog.editor:
 
         li    tmp0,txt.hint.editor
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.editor
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

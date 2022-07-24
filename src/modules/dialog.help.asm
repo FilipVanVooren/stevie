@@ -26,11 +26,11 @@ dialog.help:
 
         li    tmp0,txt.hint.about
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        li    tmp0,txt.hint.about2
+        mov   tmp0,@cmdb.panhint2   ; Extra hint to display
 
         li    tmp0,txt.keys.about
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
-        bl    @scron                ; Turn screen on
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

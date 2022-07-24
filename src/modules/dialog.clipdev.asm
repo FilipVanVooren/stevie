@@ -37,6 +37,7 @@ dialog.clipdev:
 
         li    tmp0,txt.hint.clipdev
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.clipdev
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

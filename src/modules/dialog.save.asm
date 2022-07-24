@@ -71,6 +71,7 @@ dialog.save.header:
 
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.save
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

@@ -11,7 +11,7 @@
 * @parm1 = Cursor YX position
 * @parm2 = Pointer to Length-prefixed string
 *--------------------------------------------------------------
-* OUTPUT test
+* OUTPUT
 * none
 *--------------------------------------------------------------
 * Register usage
@@ -33,7 +33,7 @@ pane.show_hintx:
         ;-------------------------------------------------------
         mov   @parm1,@wyx           ; Set cursor
         mov   @parm2,tmp1           ; Get string to display
-        bl    @xutst0               ; Display string       
+        bl    @xutst0               ; Display string
         ;-------------------------------------------------------
         ; Get number of bytes to fill ...
         ;-------------------------------------------------------
@@ -43,7 +43,7 @@ pane.show_hintx:
         mov   tmp0,tmp2
         mov   tmp0,tmp3             ; Work copy
         neg   tmp2
-        ai    tmp2,80               ; Number of bytes to fill        
+        ai    tmp2,80               ; Number of bytes to fill
         ;-------------------------------------------------------
         ; ... and clear until end of line
         ;-------------------------------------------------------
@@ -68,7 +68,7 @@ pane.show_hintx.exit:
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 

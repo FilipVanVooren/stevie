@@ -40,6 +40,7 @@ dialog.menu:
 
         li    tmp0,txt.hint.menu
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.menu
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
