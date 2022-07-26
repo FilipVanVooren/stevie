@@ -16,7 +16,9 @@ txt.stevie:
         .endif
 
 txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode'
+                   even
 txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode'
+                   even
 
 ;--------------------------------------------------------------
 ; Dialog "Load file"
@@ -48,7 +50,7 @@ txt.keys.save      stri 'F9-Back  F3-Clear'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Eter filename of file to append at end of current file.'
+txt.hint.append    stri 'Enter filename of file to append at end of current file.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -111,7 +113,7 @@ txt.head.about     byte 9,1,1
 txt.info.about     stri ''
 txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
-txt.keys.about     stri 'F9-Back  SPACE-Next Page  ENTER-Back'
+txt.keys.about     stri 'F9-Back   ENTER-Back   SPACE-Next Page'
 
 txt.about.build    byte 73
                    text 'Build: '
@@ -129,7 +131,7 @@ txt.head.menu      byte 14,1,1
 txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
 pos.info.menu      byte 0,7,20,31,43,50,>ff
 txt.hint.menu      stri ''
-txt.keys.menu      stri 'F9-Back'
+txt.keys.menu      stri 'F9-Back  ENTER-Back'
 
 ;--------------------------------------------------------------
 ; Dialog "File"
@@ -141,7 +143,7 @@ txt.head.file      byte 9,1,1
 txt.info.file      stri 'New   Open   Insert/Append   Save   Print'
 pos.info.file      byte 0,6,13,20,29,36,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back'
+txt.keys.file      stri 'F9-Back  ENTER-Back'
 
 
 ;--------------------------------------------------------------
@@ -154,7 +156,7 @@ txt.head.cartridge byte 14,1,1
 txt.info.cartridge stri 'TI Basic'
 pos.info.cartridge byte 3,>ff
 txt.hint.cartridge stri 'Select cartridge to run.'
-txt.keys.cartridge stri 'F9-Back'
+txt.keys.cartridge stri 'F9-Back  ENTER-Back'
 
 
 ;--------------------------------------------------------------
@@ -166,9 +168,9 @@ txt.head.basic     byte 13,1,1
 
 txt.info.basic     stri 'Session:  1   2   3   4   5  '
 pos.info.basic     byte 10,14,18,22,26,>ff
-txt.hint.basic     stri 'Pick session 1-5. Press F9 in TI BASIC for returning to Stevie.'
-txt.keys.basic     stri 'F9-Back  F5-AutoMode'
-txt.keys.basic2    stri 'F9-Back  *F5-AutoMode'
+txt.hint.basic     stri 'Pick session 1-5. Press F9 in TI Basic to return to Stevie.'
+txt.keys.basic     stri 'F9-Back  ENTER-Back  F5-AutoMode'
+txt.keys.basic2    stri 'F9-Back  ENTER-Back *F5-AutoMode'
 
 
 ;--------------------------------------------------------------
@@ -181,7 +183,7 @@ txt.head.config    byte 14,1,1
 txt.info.config    stri 'Clipboard'
 pos.info.config    byte 0,>ff
 txt.hint.config    stri ' '
-txt.keys.config    stri 'F9-Back'
+txt.keys.config    stri 'F9-Back  ENTER-Back'
 
 
 ;--------------------------------------------------------------
@@ -204,7 +206,7 @@ txt.info.editor    stri 'AutoInsert: Yes/No'
 pos.info.editor    byte 12,16,>ff
 
 txt.hint.editor    stri 'Select editor preferences.'
-txt.keys.editor    stri 'F9-Back'
+txt.keys.editor    stri 'F9-Back  ENTER-Back'
 
 
 ;--------------------------------------------------------------
@@ -216,5 +218,5 @@ txt.head.shortcuts byte 14,1,1
 
 txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
 pos.info.shortcuts byte 0,9,17,31,34,>ff
-txt.hint.shortcuts stri 'Select a shortcut or press F9 to return.'
-txt.keys.shortcuts stri 'F9-Back'
+txt.hint.shortcuts stri ''
+txt.keys.shortcuts stri 'F9-Back  ENTER-Back'

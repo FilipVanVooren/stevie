@@ -12,7 +12,7 @@ edkey.key.process:
         ; (1) Process key depending on pane with focus
         ;-------------------------------------------------------
         mov   @tv.pane.focus,tmp2
-        ci    tmp2,pane.focus.fb    ; Framebuffer has focus ?  
+        ci    tmp2,pane.focus.fb    ; Framebuffer has focus ?
         jeq   edkey.key.process.special
                                     ; First check special key combinations
 
@@ -25,7 +25,7 @@ edkey.key.process:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / File error occured. Halt system.
         ;-------------------------------------------------------
-        ; (2) Check special key combination 
+        ; (2) Check special key combination
         ;-------------------------------------------------------
 edkey.key.process.special:
         ci    tmp1,>2000            ; Space key pressed?
@@ -41,7 +41,7 @@ edkey.key.process.special:
         dect  stack
         mov   r12,*stack            ; Push r12
 
-        clr   tmp0                  ; Keyboard column 0  
+        clr   tmp0                  ; Keyboard column 0
         li    r12,>0024             ; CRU address decoder
         ldcr  tmp0,3                ; Select column
         li    r12,>0006             ; Address of the first row
@@ -67,13 +67,13 @@ edkey.key.process.special.postprocess:
         ;-------------------------------------------------------
         ; (3) Load Editor keyboard map
         ;-------------------------------------------------------
-edkey.key.process.loadmap.editor:        
-        li    tmp2,keymap_actions.editor 
+edkey.key.process.loadmap.editor:
+        li    tmp2,keymap_actions.editor
         jmp   edkey.key.check.next
         ;-------------------------------------------------------
         ; (4) Load CMDB keyboard map
         ;-------------------------------------------------------
-edkey.key.process.loadmap.cmdb:                
+edkey.key.process.loadmap.cmdb:
         li    tmp2,keymap_actions.cmdb
         ;-------------------------------------------------------
         ; (5) Iterate over keyboard map for matching action key
@@ -96,7 +96,7 @@ edkey.key.check.next:
         jlt   edkey.key.check.next.entry
 
         ci    tmp1,>7a00            ; ASCII 122 'z'
-        jgt   edkey.key.check.next.entry        
+        jgt   edkey.key.check.next.entry
 
         ai    tmp1,->2000           ; Make uppercase
         cb    tmp1,*tmp2            ; Action key matched?
@@ -115,7 +115,7 @@ edkey.key.check.next.entry:
         ;-------------------------------------------------------
 edkey.key.check.scope:
         inc   tmp2                  ; Move to scope
-        cb    *tmp2,@tv.pane.focus+1 
+        cb    *tmp2,@tv.pane.focus+1
                                     ; (1) Process key if scope matches pane
         jeq   edkey.key.process.action
 
@@ -127,7 +127,7 @@ edkey.key.check.scope:
         ai    tmp2,3                ; Skip current entry
         mov   @keycode1,tmp1        ; Restore original case of key
         sla   tmp1,8                ; Move to MSB
-        jmp   edkey.key.check.next  ; Process next action entry        
+        jmp   edkey.key.check.next  ; Process next action entry
         ;-------------------------------------------------------
         ; (9) Trigger keyboard action
         ;-------------------------------------------------------
@@ -146,8 +146,8 @@ edkey.key.process.action:
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
         mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
-        jne   !                     ; No, skip frame buffer 
-        b     @edkey.action.char    ; Add character to frame buffer        
+        jne   !                     ; No, skip frame buffer
+        b     @edkey.action.char    ; Add character to frame buffer
         ;-------------------------------------------------------
         ; (11) CMDB buffer
         ;-------------------------------------------------------
@@ -159,12 +159,12 @@ edkey.key.process.addbuffer:
         ;-------------------------------------------------------
         mov   @cmdb.dialog,tmp0
         ci    tmp0,99
-        jgt   edkey.key.process.exit
+        jgt   edkey.key.process.enter
         ;-------------------------------------------------------
         ; Add character to CMDB
         ;-------------------------------------------------------
         b     @edkey.action.cmdb.char
-                                    ; Add character to CMDB buffer        
+                                    ; Add character to CMDB buffer
         ;-------------------------------------------------------
         ; Crash
         ;-------------------------------------------------------
@@ -172,8 +172,16 @@ edkey.key.process.crash:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / File error occured. Halt system.
         ;-------------------------------------------------------
+        ; Check ENTER key if ID >= 100 and close pane if match
+        ;-------------------------------------------------------
+edkey.key.process.enter:
+        mov   @keycode1,tmp0        ; Get key
+        ci    tmp0,key.enter        ; ENTER ?
+        jne   edkey.key.process.exit
+        b     @edkey.action.cmdb.close.dialog
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.key.process.exit:
-        b     @edkey.keyscan.hook.debounce 
-                                    ; Back to editor main        
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

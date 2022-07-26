@@ -38,8 +38,6 @@ dialog.shortcuts:
         li    tmp0,pos.info.shortcuts
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
-        li    tmp0,txt.hint.shortcuts
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
         clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.shortcuts
