@@ -46,6 +46,8 @@ tv.init:
 
         bl    @cpym2m
               data def.clip.fname,tv.clip.fname,10
+
+        seto  @edb.autoinsert       ; Set AutoInsert on by default
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

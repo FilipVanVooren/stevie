@@ -48,7 +48,6 @@ edb.init:
         li    tmp0,txt.filetype.none
         mov   tmp0,@edb.filetype.ptr
 
-        seto  @edb.autoinsert       ; Auto-Insert on ENTER on by default
 
 edb.init.exit:
         ;------------------------------------------------------
