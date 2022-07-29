@@ -70,7 +70,10 @@ edkey.action.newline.down:
         ; Set VDP cursor and save variables
         ;-------------------------------------------------------
 edkey.action.newline.rest:
-        bl    @fb.get.firstnonblank
+        bl    @fb.get.nonblank      ; \ Get column of first nonblank character
+                                    ; | o  @outparm1 = Matching column
+                                    ; / o  @outparm2 = Char on matching column
+
         mov   @outparm1,tmp0
         mov   tmp0,@fb.column
         bl    @xsetx                ; Set Column=tmp0 (VDP cursor)

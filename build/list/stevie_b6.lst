@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220729-2012110
+0002               * BUILD: 220729-2139530
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -490,7 +490,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0358      A72A     cmdb.pankeys      equ  cmdb.struct + 42; Pointer to string pane keys (stat line)
 0359      A72C     cmdb.action.ptr   equ  cmdb.struct + 44; Pointer to function to execute
 0360      A72E     cmdb.cmdall       equ  cmdb.struct + 46; Current command including length-byte
-0361      A730     cmdb.cmdlen       equ  cmdb.struct + 48; Length of current command (MSB byte!)
+0361      A72E     cmdb.cmdlen       equ  cmdb.struct + 46; Length of current command (MSB byte!)
 0362      A72F     cmdb.cmd          equ  cmdb.struct + 47; Current command (80 bytes max.)
 0363      A780     cmdb.panhead.buf  equ  cmdb.struct +128; String buffer for pane header
 0364      A7B2     cmdb.dflt.fname   equ  cmdb.struct +178; Default for filename
@@ -563,18 +563,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0431      0000     fh.fopmode.none           equ  0       ; No file operation in progress
 0432      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 0433      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-0434      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
-0435               
-0436      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
-0437      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-0438               ;vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
-0439                                                      ; VDP TAT address of 1st CMDB row
-0440      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0441      0960     vdp.sit.size              equ  (pane.botrow + 1) * 80
-0442                                                      ; VDP SIT size 80 columns, 24/30 rows
-0443      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
-0444      9900     tv.colorize.reset         equ  >9900   ; Colorization off
-0445      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
+0434      0005     cmdb.rows                 equ  5       ; Number of rows in CMDB pane
+0435      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
+0436               
+0437      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
+0438      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
+0439      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
+0440      0960     vdp.sit.size              equ  (pane.botrow + 1) * 80
+0441                                                      ; VDP SIT size 80 columns, 24/30 rows
+0442      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
+0443      9900     tv.colorize.reset         equ  >9900   ; Colorization off
+0444      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
                    < stevie_b6.asm
 0028                       copy  "equates.c99.asm"     ; Equates related to classic99 emulator
      **** ****     > equates.c99.asm
@@ -9491,7 +9490,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.ACTION.PTR..... >A72C :     
     CMDB.CMD............ >A72F :     
     CMDB.CMDALL......... >A72E :     
-    CMDB.CMDLEN......... >A730 :     
+    CMDB.CMDLEN......... >A72E :     
     CMDB.COLUMN......... >A714 :     
     CMDB.CURSOR......... >A70A :     
     CMDB.DEFAULT........ >A708 :     
@@ -9512,6 +9511,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.PANINFO........ >A722 :     
     CMDB.PANKEYS........ >A72A :     
     CMDB.PANMARKERS..... >A728 :     
+    CMDB.ROWS........... >0005 :     
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >1000 :     
     CMDB.STRUCT......... >A700 :     

@@ -1,17 +1,17 @@
-* FILE......: fb.get.firstnonblank.asm
+* FILE......: fb.get.nonblank.asm
 * Purpose...: Get column of first non-blank character
 
 ***************************************************************
-* fb.get.firstnonblank
+* fb.get.nonblank
 * Get column of first non-blank character in specified line
 ***************************************************************
-* bl @fb.get.firstnonblank
+* bl @fb.get.nonblank
 *--------------------------------------------------------------
 * OUTPUT
-* @outparm1 = Column containing first non-blank character
-* @outparm2 = Character
+* @outparm1 = Matching column
+* @outparm2 = Character on matching column
 ********|*****|*********************|**************************
-fb.get.firstnonblank:
+fb.get.nonblank:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -21,40 +21,40 @@ fb.get.firstnonblank:
         bl    @fb.calc_pointer
         bl    @edb.line.getlength2  ; Get length current line
         mov   @fb.row.length,tmp2   ; Set loop counter
-        jeq   fb.get.firstnonblank.nomatch
+        jeq   fb.get.nonblank.nomatch
                                     ; Exit if empty line
         mov   @fb.current,tmp0      ; Pointer to current char
         clr   tmp1
         ;------------------------------------------------------
         ; Scan line for non-blank character
         ;------------------------------------------------------
-fb.get.firstnonblank.loop:
+fb.get.nonblank.loop:
         movb  *tmp0+,tmp1           ; Get character
-        jeq   fb.get.firstnonblank.nomatch 
+        jeq   fb.get.nonblank.nomatch
                                     ; Exit if empty line
         ci    tmp1,>2000            ; Whitespace?
-        jgt   fb.get.firstnonblank.match
+        jgt   fb.get.nonblank.match
         dec   tmp2                  ; Counter--
-        jne   fb.get.firstnonblank.loop
-        jmp   fb.get.firstnonblank.nomatch
+        jne   fb.get.nonblank.loop
+        jmp   fb.get.nonblank.nomatch
         ;------------------------------------------------------
         ; Non-blank character found
         ;------------------------------------------------------
-fb.get.firstnonblank.match:
+fb.get.nonblank.match:
         s     @fb.current,tmp0      ; Calculate column
         dec   tmp0
         mov   tmp0,@outparm1        ; Save column
         movb  tmp1,@outparm2        ; Save character
-        jmp   fb.get.firstnonblank.exit
+        jmp   fb.get.nonblank.exit
         ;------------------------------------------------------
         ; No non-blank character found
         ;------------------------------------------------------
-fb.get.firstnonblank.nomatch:
+fb.get.nonblank.nomatch:
         clr   @outparm1             ; X=0
         clr   @outparm2             ; Null
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.get.firstnonblank.exit:
+fb.get.nonblank.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

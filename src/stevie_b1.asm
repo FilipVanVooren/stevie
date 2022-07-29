@@ -119,7 +119,7 @@ main:
         copy  "fb.cursor.down.asm"          ; Cursor down
         copy  "fb.cursor.home.asm"          ; Cursor home
         copy  "fb.insert.line.asm"          ; Insert new line
-        copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
+        ;copy  "fb.get.firstnonblank.asm"    ; Get column of first non-blank char
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
@@ -163,7 +163,7 @@ main:
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifgt $, >7f00
-        ;      .error 'Aborted. Bank 1 cartridge program too large!'
+              .error 'Aborted. Bank 1 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen

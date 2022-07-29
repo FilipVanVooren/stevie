@@ -20,7 +20,7 @@ vec.5   data  fb.scan.fname         ; Scan current line for possible filename
 vec.6   data  fb.hscroll            ; Horizontal scroll frame buffer window
 vec.7   data  fb.restore            ; Restore frame buffer to normal operations
 vec.8   data  fb.refresh            ; Refresh frame buffer
-vec.9   data  cpu.crash             ;
+vec.9   data  fb.get.nonblank       ; Get column of first non-blank character
 vec.10  data  cpu.crash             ;
 vec.11  data  cpu.crash             ;
 vec.12  data  cpu.crash             ;
