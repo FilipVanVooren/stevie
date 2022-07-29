@@ -184,17 +184,17 @@ tibasic.hearts.tat:
         ;-------------------------------------------------------
         ; Get background color for hearts in TAT
         ;-------------------------------------------------------
-        bl    @vgetb                ; Read VDP byte
-              data vdp.cmdb.toprow.tat + 91
-                                    ; 2nd row in CMDB, column 11
+        mov   @cmdb.vdptop,tmp0     ; \ 2nd row in CMDB, column 11
+        ai    tmp0,91               ; /
+        bl    @xvgetb               ; Read VDP byte
 
         mov   tmp0,tmp1             ; Save color combination
         andi  tmp1,>000f            ; Only keep background
         ori   tmp1,>0060            ; Set foreground color to red
 
-        li    tmp0,vdp.cmdb.toprow.tat+91
-                                    ; 2nd row in CMDB, column 11
 
+        mov   @cmdb.vdptop,tmp0     ; \ 2nd row in CMDB, column 11
+        ai    tmp0,91               ; /
         mov   tmp0,tmp4             ; Backup TAT position
         mov   tmp1,tmp3             ; Backup color combination
         ;-------------------------------------------------------
@@ -212,7 +212,8 @@ tibasic.hearts.tat.loop:
 
         ai    tmp4,4                ; Next heart in TAT
 
-        li    tmp1,vdp.cmdb.toprow.tat+110
+        mov   @cmdb.vdptop,tmp1     ; \ 2nd row in CMDB, column X
+        ai    tmp0,111              ; /
         c     tmp4,tmp1
         jle   tibasic.hearts.tat.loop
         ;-------------------------------------------------------

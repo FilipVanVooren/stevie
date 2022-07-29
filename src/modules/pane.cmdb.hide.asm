@@ -24,7 +24,7 @@ pane.cmdb.hide:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
-        ;------------------------------------------------------        
+        ;------------------------------------------------------
         ; Hide command buffer pane
         ;------------------------------------------------------
         mov   @fb.scrrows.max,@fb.scrrows
@@ -32,15 +32,15 @@ pane.cmdb.hide:
         ; Adjust frame buffer size if error pane visible
         ;------------------------------------------------------
         mov   @tv.error.visible,@tv.error.visible
-        jeq   !  
-        dec   @fb.scrrows           
+        jeq   !
+        dec   @fb.scrrows
         ;------------------------------------------------------
         ; Clear error/hint & status line
         ;------------------------------------------------------
 !       bl    @hchar
-              byte pane.botrow-4,0,32,80*3
+              byte pane.botrow-5,0,32,80*4
               byte pane.botrow-1,0,32,80*2
-              data EOL              
+              data EOL
         ;------------------------------------------------------
         ; Adjust frame buffer size if ruler visible
         ;------------------------------------------------------
@@ -50,7 +50,7 @@ pane.cmdb.hide:
         ;------------------------------------------------------
         ; Hide command buffer pane (rest)
         ;------------------------------------------------------
-pane.cmdb.hide.rest:        
+pane.cmdb.hide.rest:
         mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
@@ -67,8 +67,8 @@ pane.cmdb.hide.rest:
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines
-                                    ; |             if >FFFF                                    
-                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; |             if >FFFF
+                                    ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
         ;------------------------------------------------------
         ; Show cursor again
@@ -77,7 +77,7 @@ pane.cmdb.hide.rest:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.cmdb.hide.exit:        
+pane.cmdb.hide.exit:
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

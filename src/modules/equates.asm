@@ -435,7 +435,7 @@ rom0_kscan_out            equ  keycode1; Where to store value of key pressed
 
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
+;vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
                                        ; VDP TAT address of 1st CMDB row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
 vdp.sit.size              equ  (pane.botrow + 1) * 80

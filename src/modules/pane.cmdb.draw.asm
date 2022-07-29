@@ -94,7 +94,7 @@ pane.cmdb.draw:
         ;------------------------------------------------------
 pane.cmdb.draw.clear:
         bl    @hchar
-              byte pane.botrow-3,0,32,80
+              byte pane.botrow-4,0,32,80
               data EOL              ; Remove key markers
         ;------------------------------------------------------
         ; Show key markers ?

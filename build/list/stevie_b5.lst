@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220729-1535170
+0002               * BUILD: 220729-2012110
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -567,7 +567,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0435               
 0436      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 0437      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-0438      1FD0     vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
+0438               ;vdp.cmdb.toprow.tat       equ  >1800 + ((pane.botrow - 4) * 80)
 0439                                                      ; VDP TAT address of 1st CMDB row
 0440      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
 0441      0960     vdp.sit.size              equ  (pane.botrow + 1) * 80
@@ -11633,7 +11633,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.WS5............. >3A32 :     
     UNPACKED.STRING..... >A02C :     
     UP.................. >26D4 :     
-    VDP.CMDB.TOPROW.TAT. >1FD0 :     
     VDP.FB.TOPROW.SIT... >0050 :     
     VDP.FB.TOPROW.TAT... >1850 :     
     VDP.SIT.BASE........ >0000 :     

@@ -196,9 +196,8 @@ pane.action.colorscheme.load:
         ;-------------------------------------------------------
         ; Ruler visible on screen (TAT)
         ;-------------------------------------------------------
-        li    tmp0,vdp.fb.toprow.tat+80
-                                    ; VDP start address (frame buffer area)
-
+        mov   @cmdb.vdptop,tmp0     ;
+        ai    tmp0,80               ; VDP start address (frame buffer area)
         li    tmp2,(pane.botrow-2)*80
                                     ; Number of bytes to fill
         jmp   pane.action.colorscheme.checkcmdb
@@ -280,6 +279,7 @@ pane.action.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
+                                    ;
         mov   tmp4,tmp1             ; Get work copy fg/bg color
         li    tmp2,2*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
@@ -287,8 +287,9 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
 
-        li    tmp0,vdp.cmdb.toprow.tat + 160
-                                    ; VDP start address (CMDB top line + 2)
+        mov   @cmdb.vdptop,tmp0     ; \
+        ai    tmp0,160              ; / VDP start address (CMDB top line + 2)
+                                    ;
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
         li    tmp2,1*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
@@ -296,8 +297,9 @@ pane.action.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
 
-        li    tmp0,vdp.cmdb.toprow.tat + 240
-                                    ; VDP start address (CMDB top line + 3)
+        mov   @cmdb.vdptop,tmp0     ; \
+        ai    tmp0,240              ; / VDP start address (CMDB top line + 3)
+                                    ;
         mov   tmp4,tmp1             ; Get work copy fg/bg color
         li    tmp2,1*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
