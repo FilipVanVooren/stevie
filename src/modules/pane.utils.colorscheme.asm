@@ -252,11 +252,9 @@ pane.action.colorscheme.cmdbpane:
         jeq   pane.action.colorscheme.errpane
                                     ; Skip if CMDB pane is hidden
 
-        li    tmp0,vdp.cmdb.toprow.tat
-                                    ; VDP start address (CMDB top line)
-
+        mov   @cmdb.vdptop,tmp0     ; Get VDP start address
         mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
-        li    tmp2,1*67             ; Number of bytes to fill
+        li    tmp2,1*64             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
@@ -264,7 +262,8 @@ pane.action.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Dump colors for CMDB Stevie logo (TAT)
         ;-------------------------------------------------------
-        li    tmp0,vdp.cmdb.toprow.tat+64
+        mov   @cmdb.vdptop,tmp0     ; Get VDP start address
+        ai    tmp0,64               ; Add offset for logo
         mov   @tv.cmdb.hcolor,tmp1  ;
         movb  @tv.cmdb.hcolor+1,tmp1
                                     ; Copy same value into MSB
@@ -279,10 +278,10 @@ pane.action.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-        li    tmp0,vdp.cmdb.toprow.tat + 80
-                                    ; VDP start address (CMDB top line + 1)
+        mov   @cmdb.vdptop,tmp0     ; \
+        ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
-        li    tmp2,1*80             ; Number of bytes to fill
+        li    tmp2,2*80             ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill

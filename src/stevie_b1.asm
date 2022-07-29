@@ -163,7 +163,7 @@ main:
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifgt $, >7f00
-              .error 'Aborted. Bank 1 cartridge program too large!'
+        ;      .error 'Aborted. Bank 1 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen

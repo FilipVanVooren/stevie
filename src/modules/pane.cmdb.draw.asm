@@ -85,16 +85,16 @@ pane.cmdb.draw:
                                     ; /             output string
 
         bl    @at
-              byte pane.botrow-3,0  ; Position cursor
+              byte pane.botrow-5,0  ; Position cursor
 
-        mov   @outparm1,tmp1        ; \ Display pane header
+        mov   @outparm1,tmp1        ; \ Display info message
         bl    @xutst0               ; /
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------
 pane.cmdb.draw.clear:
         bl    @hchar
-              byte pane.botrow-2,0,32,80
+              byte pane.botrow-3,0,32,80
               data EOL              ; Remove key markers
         ;------------------------------------------------------
         ; Show key markers ?
@@ -110,7 +110,7 @@ pane.cmdb.draw.marker.loop:
         ci    tmp1,>00ff            ; End of list reached?
         jeq   pane.cmdb.draw.hint   ; Yes, exit loop
 
-        ori   tmp1,(pane.botrow - 2) * 256
+        ori   tmp1,(pane.botrow - 4) * 256
                                     ; y=bottom row - 3, x=(key marker position)
         mov   tmp1,@wyx             ; Set cursor position
 

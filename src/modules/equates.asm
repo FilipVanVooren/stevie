@@ -341,26 +341,27 @@ cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
 cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
 cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
 cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-cmdb.yxtop        equ  cmdb.struct + 14; YX position of CMDB pane header line
-cmdb.yxprompt     equ  cmdb.struct + 16; YX position of command buffer prompt
-cmdb.column       equ  cmdb.struct + 18; Current column in command buffer pane
-cmdb.length       equ  cmdb.struct + 20; Length of current row in CMDB
-cmdb.lines        equ  cmdb.struct + 22; Total lines in CMDB
-cmdb.dirty        equ  cmdb.struct + 24; Command buffer dirty (Text changed!)
-cmdb.dialog       equ  cmdb.struct + 26; Dialog identifier
-cmdb.dialog.var   equ  cmdb.struct + 28; Dialog private variable or pointer
-cmdb.panhead      equ  cmdb.struct + 30; Pointer to string pane header
-cmdb.paninfo      equ  cmdb.struct + 32; Pointer to string pane info (1st line)
-cmdb.panhint      equ  cmdb.struct + 34; Pointer to string pane hint (2nd line)
-cmdb.panhint2     equ  cmdb.struct + 36; Pointer to string pane hint (extra)
-cmdb.panmarkers   equ  cmdb.struct + 38; Pointer to key marker list  (3rd line)
-cmdb.pankeys      equ  cmdb.struct + 40; Pointer to string pane keys (stat line)
-cmdb.action.ptr   equ  cmdb.struct + 42; Pointer to function to execute
-cmdb.cmdall       equ  cmdb.struct + 44; Current command including length-byte
-cmdb.cmdlen       equ  cmdb.struct + 44; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 45; Current command (80 bytes max.)
-cmdb.panhead.buf  equ  cmdb.struct +126; String buffer for pane header
-cmdb.dflt.fname   equ  cmdb.struct +176; Default for filename
+cmdb.vdptop       equ  cmdb.struct + 14; VDP address of CMDB pane header line
+cmdb.yxtop        equ  cmdb.struct + 16; YX position of CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct + 18; YX position of command buffer prompt
+cmdb.column       equ  cmdb.struct + 20; Current column in command buffer pane
+cmdb.length       equ  cmdb.struct + 22; Length of current row in CMDB
+cmdb.lines        equ  cmdb.struct + 24; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct + 26; Command buffer dirty (Text changed!)
+cmdb.dialog       equ  cmdb.struct + 28; Dialog identifier
+cmdb.dialog.var   equ  cmdb.struct + 30; Dialog private variable or pointer
+cmdb.panhead      equ  cmdb.struct + 32; Pointer to string pane header
+cmdb.paninfo      equ  cmdb.struct + 34; Pointer to string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct + 36; Pointer to string pane hint (2nd line)
+cmdb.panhint2     equ  cmdb.struct + 38; Pointer to string pane hint (extra)
+cmdb.panmarkers   equ  cmdb.struct + 40; Pointer to key marker list  (3rd line)
+cmdb.pankeys      equ  cmdb.struct + 42; Pointer to string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct + 44; Pointer to function to execute
+cmdb.cmdall       equ  cmdb.struct + 46; Current command including length-byte
+cmdb.cmdlen       equ  cmdb.struct + 48; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 47; Current command (80 bytes max.)
+cmdb.panhead.buf  equ  cmdb.struct +128; String buffer for pane header
+cmdb.dflt.fname   equ  cmdb.struct +178; Default for filename
 cmdb.free         equ  cmdb.struct +256; End of structure
 *--------------------------------------------------------------
 * Stevie value stack                  @>a800-a8ff   (256 bytes)

@@ -217,6 +217,10 @@ txt.head.shortcuts byte 14,1,1
                    byte 1
 
 txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
+                   even
 pos.info.shortcuts byte 0,9,17,31,34,>ff
-txt.hint.shortcuts stri ''
+                   even
+txt.hint.shortcuts stri ' '
+                   even
 txt.keys.shortcuts stri 'F9-Back  ENTER-Back'
+                   even
