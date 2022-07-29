@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220729-2139530
+0002               * BUILD: 220729-2152590
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -103,7 +103,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0078               *--------------------------------------------------------------
 0079               * ROM layout
 0080               *--------------------------------------------------------------
-0081      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
+0081      7F50     bankx.crash.showbank      equ  >7f50   ; Show ROM bank in CPU crash screen
 0082      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
                    < stevie_b5.asm
 0026                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
@@ -1565,7 +1565,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0222                       ; Kernel takes over
 0223                       ;------------------------------------------------------
 0224 217E 0460  28         b     @cpu.crash.showbank   ; Expected to be included in
-     2180 7F00     
+     2180 7F50     
 0225               
 0226               
 0227 2182 1553     cpu.crash.msg.crashed      stri 'System crashed near >'
@@ -10485,11 +10485,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               ********|*****|*********************|**************************
 0007               cpu.crash.showbank:
 0008                       aorg  bankx.crash.showbank
-0009 7F00 06A0  32         bl    @putat
-     7F02 2442     
-0010 7F04 0314                   byte 3,20
-0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
-0012 7F08 10FF  14         jmp   $
+0009 7F50 06A0  32         bl    @putat
+     7F52 2442     
+0010 7F54 0314                   byte 3,20
+0011 7F56 7F5A                   data cpu.crash.showbank.bankstr
+0012 7F58 10FF  14         jmp   $
                    < stevie_b5.asm
 0097                       ;-----------------------------------------------------------------------
 0098                       ; Vector table
@@ -10503,9 +10503,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0005               * ROM identification string for CPU crash
 0006               *--------------------------------------------------------------
 0007               cpu.crash.showbank.bankstr:
-0008 7F0A 0552             stri 'ROM#5'
-     7F0C 4F4D     
-     7F0E 2335     
+0008 7F5A 0552             stri 'ROM#5'
+     7F5C 4F4D     
+     7F5E 2335     
 0009               
 0010               *--------------------------------------------------------------
 0011               * Vector table for trampoline functions
@@ -10578,7 +10578,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     BANK7.RAM........... >680E :     
     BANK7.ROM........... >600E :     
     BANKID.............. >600A :     
-    BANKX.CRASH.SHOWBANK >7F00 :     
+    BANKX.CRASH.SHOWBANK >7F50 :     
     BANKX.VECTAB........ >7FC0 :     
     BTIHI............... >8314 :     
     BVDPST.............. >831A :     
@@ -10699,8 +10699,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPU.CRASH.MSG.ST.... >21BA :     
     CPU.CRASH.MSG.WP.... >21B4 :     
     CPU.CRASH.RESET..... >2076 :     
-    CPU.CRASH.SHOWBANK.. >7F00 :     
-    CPU.CRASH.SHOWBANK.BANKSTR >7F0A :     
+    CPU.CRASH.SHOWBANK.. >7F50 :     
+    CPU.CRASH.SHOWBANK.BANKSTR >7F5A :     
     CPU.CRASH.SHOWREG... >20EC :     
     CPU.CRASH.SHOWREG.CONTENT >2142 :     
     CPU.CRASH.SHOWREG.LABEL >20FA :     

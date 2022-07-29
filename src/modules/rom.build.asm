@@ -78,5 +78,5 @@ skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
 *--------------------------------------------------------------
 * ROM layout
 *--------------------------------------------------------------
-bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
+bankx.crash.showbank      equ  >7f50   ; Show ROM bank in CPU crash screen
 bankx.vectab              equ  >7fc0   ; Start address of vector table
