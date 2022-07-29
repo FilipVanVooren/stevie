@@ -132,10 +132,13 @@ pane.cmdb.draw.marker.loop:
         ; Display pane hint in command buffer
         ;------------------------------------------------------
 pane.cmdb.draw.hint:
+        mov   @cmdb.panhint,@parm2  ; Pane hint to display
+        jeq   pane.cmdb.draw.extrahint
+                                    ; No pane hint to display
+
         li    tmp0,pane.botrow - 1  ; \
         sla   tmp0,8                ; / Y=bottom row - 1, X=0
         mov   tmp0,@parm1           ; Set parameter
-        mov   @cmdb.panhint,@parm2  ; Pane hint to display
 
         bl    @pane.show_hintx      ; Display pane hint
                                     ; \ i  parm1 = Pointer to string with hint
@@ -143,6 +146,7 @@ pane.cmdb.draw.hint:
         ;------------------------------------------------------
         ; Display extra pane hint in command buffer
         ;------------------------------------------------------
+pane.cmdb.draw.extrahint:
         mov   @cmdb.panmarkers,tmp0 ; Any key markers to display?
         jne   pane.cmdb.draw.keys   ; yes, skip extra pane hint
 
