@@ -38,8 +38,7 @@ dialog.config:
         li    tmp0,pos.info.config
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
-        li    tmp0,txt.hint.config
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
+        clr   @cmdb.panhint         ; No hint to display
         clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.config

@@ -131,7 +131,7 @@ txt.head.menu      byte 14,1,1
 txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
 pos.info.menu      byte 0,7,20,31,43,50,>ff
 txt.hint.menu      stri ''
-txt.keys.menu      stri 'F9-Back  ENTER-Back'
+txt.keys.menu      stri 'F9/SPACE-Close menu'
 
 ;--------------------------------------------------------------
 ; Dialog "File"
@@ -143,7 +143,7 @@ txt.head.file      byte 9,1,1
 txt.info.file      stri 'New   Open   Insert/Append   Save   Print'
 pos.info.file      byte 0,6,13,20,29,36,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back  ENTER-Back'
+txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -156,7 +156,7 @@ txt.head.cartridge byte 14,1,1
 txt.info.cartridge stri 'TI Basic'
 pos.info.cartridge byte 3,>ff
 txt.hint.cartridge stri 'Select cartridge to run.'
-txt.keys.cartridge stri 'F9-Back  ENTER-Back'
+txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -169,8 +169,8 @@ txt.head.basic     byte 13,1,1
 txt.info.basic     stri 'Session:  1   2   3   4   5  '
 pos.info.basic     byte 10,14,18,22,26,>ff
 txt.hint.basic     stri 'Pick session 1-5. Press F9 in TI Basic to return to Stevie.'
-txt.keys.basic     stri 'F9-Back  ENTER-Back  F5-AutoMode'
-txt.keys.basic2    stri 'F9-Back  ENTER-Back *F5-AutoMode'
+txt.keys.basic     stri 'F9-Back  F5-AutoMode  SPACE-Close menu'
+txt.keys.basic2    stri 'F9-Back  *F5-AutoMode SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -182,8 +182,7 @@ txt.head.config    byte 14,1,1
 
 txt.info.config    stri 'Clipboard'
 pos.info.config    byte 0,>ff
-txt.hint.config    stri ' '
-txt.keys.config    stri 'F9-Back  ENTER-Back'
+txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -206,7 +205,7 @@ txt.info.editor    stri 'AutoInsert: Yes/No'
 pos.info.editor    byte 12,16,>ff
 
 txt.hint.editor    stri 'Select editor preferences.'
-txt.keys.editor    stri 'F9-Back  ENTER-Back'
+txt.keys.editor    stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -222,5 +221,5 @@ pos.info.shortcuts byte 0,9,17,31,34,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even
-txt.keys.shortcuts stri 'F9-Back  ENTER-Back'
+txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
                    even

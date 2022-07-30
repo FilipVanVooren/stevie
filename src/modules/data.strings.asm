@@ -85,9 +85,9 @@ txt.m1             stri 'M1='
                    even
 txt.m2             stri 'M2='
                    even
-txt.keys.default   stri 'F9-Menu  ^H-Help'
+txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
                    even
-txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#'
+txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
                    even
 txt.keys.block     stri 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
                    even

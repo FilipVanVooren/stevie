@@ -209,6 +209,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.q, id.dialog.menu
         data  edkey.action.quit
+
+        byte  key.fctn.9, id.dialog.menu
+        data  edkey.action.cmdb.close.dialog
         ;-------------------------------------------------------
         ; Dialog: File
         ;-------------------------------------------------------
@@ -392,7 +395,7 @@ keymap_actions.cmdb:
         ; Other action keys
         ;-------------------------------------------------------
         byte  key.fctn.9, pane.focus.cmdb
-        data  edkey.action.cmdb.close.dialog
+        data  dialog.menu
 
         byte  key.fctn.plus, pane.focus.cmdb
         data  edkey.action.quit

@@ -176,7 +176,7 @@ edkey.key.process.crash:
         ;-------------------------------------------------------
 edkey.key.process.enter:
         mov   @keycode1,tmp0        ; Get key
-        ci    tmp0,key.enter        ; ENTER ?
+        ci    tmp0,key.space        ; SPACE ?
         jne   edkey.key.process.exit
         b     @edkey.action.cmdb.close.dialog
         ;-------------------------------------------------------
