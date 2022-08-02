@@ -20,7 +20,6 @@ cmdb.dialog.close:
         ; Close dialog
         ;------------------------------------------------------
         clr   @cmdb.dialog          ; Reset dialog ID
-        bl    @pane.cursor.blink    ; Show cursor
         bl    @pane.cmdb.hide       ; Hide command buffer pane
         seto  @fb.status.dirty      ; Trigger status lines update
         ;-------------------------------------------------------

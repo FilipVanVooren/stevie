@@ -113,7 +113,7 @@ txt.head.about     byte 9,1,1
 txt.info.about     stri ''
 txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
-txt.keys.about     stri 'F9-Back   ENTER-Back   SPACE-Next Page'
+txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
 txt.about.build    byte 73
                    text 'Build: '
@@ -130,7 +130,7 @@ txt.head.menu      byte 14,1,1
 
 txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
 pos.info.menu      byte 0,7,20,31,43,50,>ff
-txt.hint.menu      stri ''
+txt.hint.menu      stri 'Press F9 or SPACE to close the main menu.'
 txt.keys.menu      stri 'F9/SPACE-Close menu'
 
 ;--------------------------------------------------------------
@@ -170,7 +170,7 @@ txt.info.basic     stri 'Session:  1   2   3   4   5  '
 pos.info.basic     byte 10,14,18,22,26,>ff
 txt.hint.basic     stri 'Pick session 1-5. Press F9 in TI Basic to return to Stevie.'
 txt.keys.basic     stri 'F9-Back  F5-AutoMode  SPACE-Close menu'
-txt.keys.basic2    stri 'F9-Back  *F5-AutoMode SPACE-Close menu'
+txt.keys.basic2    stri 'F9-Back  *F5-AutoMode  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -218,8 +218,6 @@ txt.head.shortcuts byte 14,1,1
 txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
                    even
 pos.info.shortcuts byte 0,9,17,31,34,>ff
-                   even
-txt.hint.shortcuts stri ' '
                    even
 txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
                    even

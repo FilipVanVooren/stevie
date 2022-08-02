@@ -28,14 +28,23 @@ pane.cmdb.show:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
-        ; Hide character cursor
-        ;------------------------------------------------------        
+        ; Backup framebuffer cursor position
+        ;------------------------------------------------------
+        mov   @cmdb.fb.yxsave,tmp0  ; Check if variable is "write protected"
+        jne   pane.cmdb.show.rest   ; Skip, is protected.
         mov   @wyx,@cmdb.fb.yxsave  ; Save YX position in frame buffer
-
-    .ifeq device.f18a,0
-        ; Only do this if cursor is a character. 
+        ;------------------------------------------------------
+        ; Further processing
+        ;------------------------------------------------------
+pane.cmdb.show.rest:
+        nop
+  .ifeq device.f18a,0
+        ;------------------------------------------------------
+        ; Hide character cursor
+        ;------------------------------------------------------
+        ; Only do this if cursor is a character.
         ; Skip when help dialog is displayed.
-      
+
         mov   @cmdb.dialog,tmp0     ; Get dialog ID
         ci    tmp0,id.dialog.help
         jeq   pane.cmdb.show.hidechar.done
@@ -46,10 +55,10 @@ pane.cmdb.show:
 
         movb  @fb.top(tmp0),tmp1    ; Get character underneath cursor
         srl   tmp1,8                ; Right justify
-        
+
         mov   @tv.ruler.visible,tmp2
         jeq   !                     ; Ruler hidden, skip additional offset
-        ai    tmp0,80               ; Offset because of ruler  
+        ai    tmp0,80               ; Offset because of ruler
 !       ai    tmp0,80               ; Offset because of topline
 
         bl    @xvputb               ; Dump character to VDP
@@ -58,14 +67,14 @@ pane.cmdb.show:
 
 pane.cmdb.show.hidechar.done:
         mov   @cmdb.fb.yxsave,@wyx  ; Restore YX position
-     .endif
+  .endif
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------
         li    tmp0,pane.botrow
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
-        
+
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
 
@@ -86,7 +95,7 @@ pane.cmdb.show.hidechar.done:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.cmdb.show.exit:        
+pane.cmdb.show.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
