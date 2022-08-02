@@ -219,5 +219,7 @@ txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
                    even
 pos.info.shortcuts byte 0,9,17,31,34,>ff
                    even
+txt.hint.shortcuts stri ' '
+                   even
 txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
                    even
