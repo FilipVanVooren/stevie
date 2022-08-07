@@ -10,7 +10,7 @@ IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.10-alpine}"
 # Banks and destination binary
 banks="stevie_b0 stevie_b1 stevie_b2 stevie_b3"
 banks+=" stevie_b4 stevie_b5 stevie_b6 stevie_b7"
-binary="bin/stevie30.bin"
+binary="bin/stevie.bin"
 
 # Directories
 workdir="/workspace/stevie/src"

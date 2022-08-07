@@ -31,7 +31,7 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        stri 'STEVIE TOOLS'
+        stri 'STEVIE RESET'
 
         ;-----------------------------------------------------------------------
         ; Program list entry
@@ -44,7 +44,7 @@ rom.program2:
                                     ; 15 /
 
         .ifeq full_f18a_support,1
-            stri 'STEVIE 1.3J-30'
+            stri 'STEVIE 1.3J'
         .else
             stri 'STEVIE 1.3J-24'
         .endif

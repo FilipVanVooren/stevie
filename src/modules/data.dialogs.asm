@@ -8,7 +8,7 @@
 
 txt.stevie:
         .ifeq full_f18a_support,1
-            text ' Stevie 1.3J-30'
+            text '  Stevie 1.3J  '
             even
         .else
             text ' Stevie 1.3J-24'

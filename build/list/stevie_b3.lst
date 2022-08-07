@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220802-2122550
+0002               * BUILD: 220807-1412530
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -810,13 +810,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0034 6010 0C53             stri 'STEVIE TOOLS'
+0034 6010 0C53             stri 'STEVIE RESET'
      6012 5445     
      6014 5649     
      6016 4520     
-     6018 544F     
-     601A 4F4C     
-     601C 53       
+     6018 5245     
+     601A 5345     
+     601C 54       
 0035               
 0036                       ;-----------------------------------------------------------------------
 0037                       ; Program list entry
@@ -828,14 +828,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043 6020 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0044                                                   ; 15 /
 0045               
-0047 6022 0E53                 stri 'STEVIE 1.3J-30'
+0047 6022 0B53                 stri 'STEVIE 1.3J'
      6024 5445     
      6026 5649     
      6028 4520     
      602A 312E     
      602C 334A     
-     602E 2D33     
-     6030 30       
                    < stevie_b3.asm
 0039               
 0040               ***************************************************************
@@ -13204,14 +13202,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 72B8 2053                 text ' Stevie 1.3J-30'
-     72BA 7465     
-     72BC 7669     
-     72BE 6520     
-     72C0 312E     
-     72C2 334A     
-     72C4 2D33     
-     72C6 30       
+0011 72B8 2020                 text '  Stevie 1.3J  '
+     72BA 5374     
+     72BC 6576     
+     72BE 6965     
+     72C0 2031     
+     72C2 2E33     
+     72C4 4A20     
+     72C6 20       
 0012                           even
 0017               
 0018 72C8 1E46     txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode'
@@ -13785,13 +13783,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      769E 20       
 0120                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 769F   32                        text '220802-2122550'
+0001 769F   32                        text '220807-1412530'
      76A0 3230     
      76A2 3830     
-     76A4 322D     
-     76A6 3231     
-     76A8 3232     
-     76AA 3535     
+     76A4 372D     
+     76A6 3134     
+     76A8 3132     
+     76AA 3533     
      76AC 30       
                    < data.dialogs.asm
 0121 76AD   20                        text ' / Stevie  Copyright (C) 2018-2022  Filip Van Vooren'

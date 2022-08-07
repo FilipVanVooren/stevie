@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 220802-2122550
+0002               * BUILD: 220807-1412530
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -796,13 +796,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0034 6010 0C53             stri 'STEVIE TOOLS'
+0034 6010 0C53             stri 'STEVIE RESET'
      6012 5445     
      6014 5649     
      6016 4520     
-     6018 544F     
-     601A 4F4C     
-     601C 53       
+     6018 5245     
+     601A 5345     
+     601C 54       
 0035               
 0036                       ;-----------------------------------------------------------------------
 0037                       ; Program list entry
@@ -814,14 +814,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043 6020 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0044                                                   ; 15 /
 0045               
-0047 6022 0E53                 stri 'STEVIE 1.3J-30'
+0047 6022 0B53                 stri 'STEVIE 1.3J'
      6024 5445     
      6026 5649     
      6028 4520     
      602A 312E     
      602C 334A     
-     602E 2D33     
-     6030 30       
                    < stevie_b1.asm
 0038               
 0039               ***************************************************************
