@@ -35,14 +35,20 @@ keymap_actions.editor:
         byte  key.fctn.l, pane.focus.fb
         data  edkey.action.end
 
-        byte  key.fctn.6, pane.focus.fb
-        data  edkey.action.ppage
-
         byte  key.fctn.4, pane.focus.fb
         data  edkey.action.npage
 
         byte  key.fctn.5, pane.focus.fb
         data  edkey.action.scroll.right
+
+        byte  key.fctn.6, pane.focus.fb
+        data  edkey.action.ppage
+
+        byte  key.ctrl.7, pane.focus.fb
+        data  edkey.action.fb.tab.prev
+
+        byte  key.fctn.7, pane.focus.fb
+        data  edkey.action.fb.tab.next
 
         byte  key.ctrl.e, pane.focus.fb
         data  edkey.action.ppage
@@ -80,12 +86,6 @@ keymap_actions.editor:
 
         byte  key.fctn.dot, pane.focus.fb
         data  edkey.action.ins_onoff
-
-        byte  key.fctn.7, pane.focus.fb
-        data  edkey.action.fb.tab.next
-
-        byte  key.ctrl.t, pane.focus.fb
-        data  edkey.action.fb.tab.next
 
         byte  key.fctn.8, pane.focus.fb
         data  edkey.action.ins_line

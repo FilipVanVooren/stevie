@@ -174,7 +174,7 @@ dialog.help.data.page1.left:
         even
         stri 'Fctn k        Next word'
         even
-        stri 'Fctn 7   ^t   Next tab'
+        stri 'Fctn 7        Next tab'
         even
         stri 'Fctn 6   ^e   Page up'
         even

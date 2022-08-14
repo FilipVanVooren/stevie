@@ -166,15 +166,17 @@ tv.colorscheme.table:
         data  >f5f1,>e1ff,>1b1f,>f131 ; 10 White on light blue
         even
 
-tv.tabs.table:
+tv.tabs.table.lr:
         byte  0,7,12,25             ; \   Default tab positions as used
         byte  30,45,59,79           ; |   in Editor/Assembler module.
-        byte  >ff,0,0,0             ; |
-        byte  0,0,0,0               ; |   Up to 20 positions supported.
-        byte  0,0,0,0               ; /   >ff means end-of-list.
-        even
+        byte  >ff,0,0,0             ; |   Up to 11 positions supported.
+                                    ; /   >ff means end-of-list.
 
-
+tv.tabs.table.rl:
+        byte  79,59,45,30           ; \   Default tab positions as used
+        byte  25,12,7,0             ; |   in Editor/Assembler module.
+        byte  >ff,0,0,0             ; |   Up to 11 positions supported.
+                                    ; /   >ff means end-of-list.
 
 ***************************************************************
 * Constants for numbers 0-10

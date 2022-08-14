@@ -18,11 +18,11 @@ fb.ruler.init:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack        
+        dect  stack
         mov   tmp1,*stack           ; Push tmp1
-        dect  stack            
+        dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        ;-------------------------------------------------------        
+        ;-------------------------------------------------------
         ; Initialize
         ;-------------------------------------------------------
         bl    @cpym2m
@@ -30,15 +30,15 @@ fb.ruler.init:
                                     ; Copy ruler from ROM to RAM
 
         li    tmp0,fb.ruler.tat
-        mov   @tv.rulercolor,tmp1         
+        mov   @tv.rulercolor,tmp1
         li    tmp2,80
 
         bl    @xfilm                ; Setup FG/BG color for ruler in RAM
                                     ; \ i  tmp0 = Target address in RAM
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Number of bytes to fill
-                                                     
-        li    tmp0,tv.tabs.table    ; Get pointer to tabs table
+
+        li    tmp0,tv.tabs.table.lr ; Get pointer to tabs table
         ;------------------------------------------------------
         ; Setup ruler with current tab positions
         ;------------------------------------------------------
@@ -69,4 +69,4 @@ fb.ruler.init.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return                                    
+        b     *r11                  ; Return
