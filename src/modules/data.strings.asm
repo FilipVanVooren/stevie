@@ -150,3 +150,14 @@ txt.cmdb.prompt    stri '>'
                    even
 txt.colorscheme    stri 'Color scheme:'
                    even
+
+txt.welcome        stri '            Welcome to Stevie 1.3K'
+                   even
+                   stri '        (c)2018-2022 Filip van Vooren'
+                   even
+                   stri '  '
+                   even
+                   stri '        For the latest version check:'
+                   even
+                   stri 'https://www.github.com/FilipVanVooren/stevie'
+                   even

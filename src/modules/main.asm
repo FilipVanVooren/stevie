@@ -99,6 +99,9 @@ main.continue:
                                     ; |             if >FFFF
                                     ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
+
+        li    tmp0,pane.welcome.oneshot
+        mov   tmp0,@tv.task.oneshot ; Setup oneshot task
         ;-------------------------------------------------------
         ; Setup editor tasks
         ;-------------------------------------------------------
@@ -145,5 +148,5 @@ main.continue:
         clr   tmp0                  ; / "VDP disk buffer header corrupted at PC"
         ;-------------------------------------------------------
         ; Start kernel
-        ;-------------------------------------------------------
+        ;-------------------------------------------------------        
         b     @tmgr                 ; Run kernel and timers
