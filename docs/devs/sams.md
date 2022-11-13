@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Stevie requires a 1MB SAMS card to run.
+stevie requires a 1MB SAMS card to run.
 
 Depending on the mode currently active, SAMS banks are paged-in and out.
 This is for the most handled via the subroutines in the spectra2 module
