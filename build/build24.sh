@@ -5,7 +5,7 @@ set -e
 source helper.sh
 
 # Constants
-IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.10-alpine}"
+IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 
 # Banks and destination binary
 banks="stevie_b0 stevie_b1 stevie_b2 stevie_b3"
