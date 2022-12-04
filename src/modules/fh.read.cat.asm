@@ -1,11 +1,11 @@
-* FILE......: fh.read.edb.asm
-* Purpose...: File reader module
+* FILE......: fh.read.cat.asm
+* Purpose...: File catalog reader module
 
 ***************************************************************
-* fh.file.read.edb
-* Read or insert file into editor buffer
+* fh.file.read.cat
+* Read catalog into memory region
 ***************************************************************
-*  bl   @fh.file.read.edb
+*  bl   @fh.file.read.cat
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed file descriptor
@@ -14,7 +14,7 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
-* parm7 = Line number to insert file at or >FFFF if new file.
+* parm7 = Destination memory address for catalog
 * parm8 = Work mode
 *
 * Callbacks can be skipped by passing >0000 as pointer.
@@ -26,10 +26,9 @@
 * tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------
 * Remarks
-* @fh.temp1 =  >ffff if loading new file into editor buffer
-*              >0000 if inserting file at line in editor buffer
+* Based on documentation "Reading directories" by Fred G. Kaal
 ********|*****|*********************|**************************
-fh.file.read.edb:
+fh.file.read.cat:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -46,24 +45,7 @@ fh.file.read.edb:
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
-        clr   @fh.ioresult          ; Clear status register contents
-       
-        mov   @edb.top.ptr,tmp0
-        bl    @xsams.page.get       ; Get SAMS page
-                                    ; \ i  tmp0  = Memory address
-                                    ; | o  waux1 = SAMS page number
-                                    ; / o  waux2 = Address of SAMS register
-                                    
-        mov   @edb.sams.hipage,tmp0 ; \
-        mov   tmp0,@fh.sams.hipage  ; | Set current SAMS page to highest page 
-                                    ; / used by Editor Buffer
-
-        mov   tmp0,@tv.sams.c000    ; Sync SAMS window. Important!                                    
-
-        mov   @edb.top.ptr,tmp1
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address                                    
+        clr   @fh.ioresult          ; Clear status register contents                           
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -77,95 +59,82 @@ fh.file.read.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
+        mov   @parm7,@fh.cat.ptr    ; Set pointer to RAM destination
         mov   @parm8,@fh.workmode   ; Work mode (used in callbacks)
         ;------------------------------------------------------
-        ; Determine if inserting file or loading new file
+        ; Loading catalog file in destination memory
         ;------------------------------------------------------
-        mov   @parm7,tmp0
-        ci    tmp0,>ffff            ; Load file?
-        jeq   fh.file.read.edb.newfile
-
-        clr   @fh.temp1             ; Set flag "insert file"
-        clr   @fh.temp2             ; Not used
-        clr   @fh.temp3             ; Not used
-
-        mov   tmp0,@fh.line         ; Line to insert file at
-        jmp   fh.file.read.edb.assert1
-        ;------------------------------------------------------
-        ; Loading new file into editor buffer
-        ;------------------------------------------------------
-fh.file.read.edb.newfile:
-        clr   @fh.line              ; New file 
+fh.file.read.cat.newfile:
         seto  @fh.temp1             ; Set flag "load file"
         clr   @fh.temp2             ; Not used
         clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
-fh.file.read.edb.assert1:        
+fh.file.read.cat.assert1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.read.edb.assert2
+        jeq   fh.file.read.cat.assert2
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
+        jlt   fh.file.read.cat.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
+        jgt   fh.file.read.cat.crsh ; Yes, crash!
 
-fh.file.read.edb.assert2
+fh.file.read.cat.assert2
         mov   @fh.callback2,tmp0
-        jeq   fh.file.read.edb.assert3
+        jeq   fh.file.read.cat.assert3
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
+        jlt   fh.file.read.cat.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
+        jgt   fh.file.read.cat.crsh ; Yes, crash!
 
-fh.file.read.edb.assert3:
+fh.file.read.cat.assert3:
         mov   @fh.callback3,tmp0
-        jeq   fh.file.read.edb.assert4
+        jeq   fh.file.read.cat.assert4
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
+        jlt   fh.file.read.cat.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
+        jgt   fh.file.read.cat.crsh ; Yes, crash!
 
-fh.file.read.edb.assert4:         
+fh.file.read.cat.assert4:         
         mov   @fh.callback4,tmp0
-        jeq   fh.file.read.edb.assert5
+        jeq   fh.file.read.cat.assert5
 
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
+        jlt   fh.file.read.cat.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
+        jgt   fh.file.read.cat.crsh ; Yes, crash!
 
-fh.file.read.edb.assert5:
+fh.file.read.cat.assert5:
         mov   @fh.callback5,tmp0
-        jeq   fh.file.read.edb.load1
+        jeq   fh.file.read.cat.load1
 
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.crash    ; Yes, crash!
+        jlt   fh.file.read.cat.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
+        jgt   fh.file.read.cat.crsh ; Yes, crash!
 
-        jmp   fh.file.read.edb.load1
+        jmp   fh.file.read.cat.load1
                                     ; All checks passed, continue
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
-fh.file.read.crash:                                    
+fh.file.read.cat.crsh:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Callback "Before Open file"
         ;------------------------------------------------------
-fh.file.read.edb.load1:        
+fh.file.read.cat.load1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.read.edb.pabheader
+        jeq   fh.file.read.cat.pabheader
                                     ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.read.edb.pabheader:        
+fh.file.read.cat.pabheader:        
         bl    @cpym2v
-              data fh.vpab,fh.file.pab.header,9
+              data fh.vpab,fh.file.pab.header.cat,9
                                     ; Copy PAB header to VDP
         ;------------------------------------------------------
         ; Append file descriptor to PAB header in VDP
@@ -185,80 +154,20 @@ fh.file.read.edb.pabheader:
         ;------------------------------------------------------
         bl    @file.open            ; Open file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-              data io.seq.inp.dis.var
+              data io.rel.inp.int.fix
                                     ; / i  p1 = File type/mode
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.read.edb.check_setpage
+        jne   fh.file.read.cat.record
         
-        b     @fh.file.read.edb.error  
+        b     @fh.file.read.cat.error  
                                     ; Yes, IO error occured
-        ;------------------------------------------------------
-        ; 1a: Check if SAMS page needs to be increased
-        ;------------------------------------------------------ 
-fh.file.read.edb.check_setpage:        
-        mov   @edb.next_free.ptr,tmp0
-                                    ;--------------------------
-                                    ; Assert
-                                    ;-------------------------- 
-        ci    tmp0,edb.top + edb.size
-                                    ; Insane address ?
-        jgt   fh.file.read.crash    ; Yes, crash!
-                                    ;--------------------------
-                                    ; Check for page overflow
-                                    ;-------------------------- 
-        andi  tmp0,>0fff            ; Get rid of highest nibble        
-        ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
-        ci    tmp0,>1000 - 16       ; 4K boundary reached?
-        jlt   fh.file.read.edb.record
-                                    ; Not yet so skip SAMS page switch
-        ;------------------------------------------------------
-        ; 1b: Increase SAMS page
-        ;------------------------------------------------------ 
-        inc   @fh.sams.hipage       ; Set highest SAMS page
-        mov   @edb.top.ptr,@edb.next_free.ptr
-                                    ; Start at top of SAMS page again
-        ;------------------------------------------------------
-        ; 1c: Switch to SAMS page
-        ;------------------------------------------------------ 
-        mov   @fh.sams.hipage,tmp0
-        mov   @edb.top.ptr,tmp1
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address
-
-        mov   @fh.sams.hipage,@tv.sams.c000
-                                    ; Sync SAMS window. Important!                                    
-        ;------------------------------------------------------
-        ; 1d: Fill new SAMS page with garbage (debug only)
-        ;------------------------------------------------------ 
-        ; bl  @film
-        ;     data >c000,>99,4092
         ;------------------------------------------------------
         ; Step 2: Read file record
         ;------------------------------------------------------
-fh.file.read.edb.record:        
+fh.file.read.cat.record:        
         inc   @fh.records           ; Update counter        
         clr   @fh.reclen            ; Reset record length
-
-        abs   @fh.offsetopcode
-        jeq   !                     ; Skip CPU buffer logic if offset = 0
-        ;------------------------------------------------------
-        ; 2a: Write address of CPU buffer to VDP PAB bytes 2-3
-        ;------------------------------------------------------
-        mov   @edb.next_free.ptr,tmp1
-        inct  tmp1
-        li    tmp0,fh.vpab + 2
-
-        ori   tmp0,>4000            ; Prepare VDP address for write
-        swpb  tmp0                  ; \
-        movb  tmp0,@vdpa            ; | Set VDP write address
-        swpb  tmp0                  ; | inlined @vdwa call
-        movb  tmp0,@vdpa            ; / 
-
-        movb  tmp1,*r15             ; Write MSB
-        swpb  tmp1
-        movb  tmp1,*r15             ; Write LSB
         ;------------------------------------------------------
         ; 2b: Read file record
         ;------------------------------------------------------
@@ -274,72 +183,34 @@ fh.file.read.edb.record:
         mov   tmp1,@fh.reclen       ; Save bytes read
         mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
-        ; 2c: Calculate kilobytes processed
-        ;------------------------------------------------------
-        a     tmp1,@fh.counter      ; Add record length to counter
-        mov   @fh.counter,tmp1      ;
-        ci    tmp1,1024             ; 1 KB boundary reached ?
-        jlt   fh.file.read.edb.check_fioerr
-                                    ; Not yet, goto (2d)
-        inc   @fh.kilobytes
-        ai    tmp1,-1024            ; Remove KB portion, only keep bytes
-        mov   tmp1,@fh.counter      ; Update counter
-        ;------------------------------------------------------
         ; 2d: Check if a file error occured
         ;------------------------------------------------------
-fh.file.read.edb.check_fioerr:     
+fh.file.read.cat.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.read.edb.insertline
-                                    ; No, goto (2e)
-        b     @fh.file.read.edb.error  
+        jne   fh.file.read.cat.process_line
+                                    ; No, goto (3)
+        b     @fh.file.read.cat.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 2e: Check if we need to insert index entry
-        ;------------------------------------------------------ 
-fh.file.read.edb.insertline:
-        mov   @fh.temp1,tmp0        ; \ Is flag "new file" set?
-        ci    tmp0,>ffff            ; /
-        jeq   fh.file.read.edb.process_line
-                                    ; Flag is set, so just load file
+        ; 3: Process line
         ;------------------------------------------------------
-        ; 2f: Insert new index entry (index reorg)
-        ;------------------------------------------------------ 
-        mov   @fh.line,@parm1      
-        mov   @edb.lines,@parm2
-        bl    @idx.entry.insert     ; Reorganize index
-                                    ; \ i  parm1 = Line for insert
-                                    ; / i  parm2 = Last line to reorg
-        ;------------------------------------------------------
-        ; Step 3: Process line
-        ;------------------------------------------------------
-fh.file.read.edb.process_line:
+fh.file.read.cat.process_line:
         li    tmp0,fh.vrecbuf       ; VDP source address
-        mov   @edb.next_free.ptr,tmp1
-                                    ; RAM target in editor buffer
-
-        mov   tmp1,@parm2           ; Needed in step 4b (index update)
-
+        mov   @fh.cat.ptr,tmp1      ; RAM target in editor buffer
         mov   @fh.reclen,tmp2       ; Number of bytes to copy        
-        jeq   fh.file.read.edb.prepindex.emptyline
-                                    ; Handle empty line
+
         ;------------------------------------------------------
         ; 3a: Set length of line in CPU editor buffer
         ;------------------------------------------------------
         clr   *tmp1                 ; Clear word before string
         inc   tmp1                  ; Adjust position for length byte string
         movb  @fh.reclen+1,*tmp1+   ; Put line length byte before string
-       
-        inct  @edb.next_free.ptr    ; Keep pointer synced with tmp1
-        a     tmp2,@edb.next_free.ptr
-                                    ; Add line length 
-
-        abs   @fh.offsetopcode      ; Use CPU buffer if offset > 0
-        jne   fh.file.read.edb.preppointer         
+ 
         ;------------------------------------------------------
         ; 3b: Copy line from VDP to CPU editor buffer
         ;------------------------------------------------------
-fh.file.read.edb.vdp2cpu:        
+fh.file.read.cat.vdp2cpu:        
         ; 
         ; Executed for devices that need their disk buffer in VDP memory
         ; (TI Disk Controller, tipi, nanopeb, ...).
@@ -349,91 +220,33 @@ fh.file.read.edb.vdp2cpu:
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                                                            
         ;------------------------------------------------------
-        ; 3c: Align pointer for next line
-        ;------------------------------------------------------ 
-fh.file.read.edb.preppointer:        
-        mov   @edb.next_free.ptr,tmp0  ; \ Round up to next multiple of 16.
-        neg   tmp0                     ; | tmp0 = tmp0 + (-tmp0 & 15)
-        andi  tmp0,15                  ; | Hacker's Delight 2nd Edition
-        a     tmp0,@edb.next_free.ptr  ; / Chapter 2
-        ;------------------------------------------------------
-        ; Step 4: Update index
-        ;------------------------------------------------------
-fh.file.read.edb.prepindex:
-        mov   @fh.line,@parm1       ; parm1 = Line number
-                                    ; parm2 = Must allready be set!
-        mov   @fh.sams.hipage,@parm3
-                                    ; parm3 = SAMS page number
-                                    
-        jmp   fh.file.read.edb.updindex
-                                    ; Update index
-        ;------------------------------------------------------
-        ; 4a: Special handling for empty line
-        ;------------------------------------------------------
-fh.file.read.edb.prepindex.emptyline:
-        mov   @fh.line,@parm1       ; parm1 = Line number
-        clr   @parm2                ; parm2 = Pointer to >0000
-        seto  @parm3                ; parm3 = SAMS not used >FFFF
-        ;------------------------------------------------------
-        ; 4b: Do actual index update
-        ;------------------------------------------------------                                    
-fh.file.read.edb.updindex:                
-        bl    @idx.entry.update     ; Update index 
-                                    ; \ i  parm1    = Line num in editor buffer
-                                    ; | i  parm2    = Pointer to line in EB
-                                    ; | i  parm3    = SAMS page
-                                    ; | o  outparm1 = Pointer to updated index
-                                    ; /               entry     
-        ;------------------------------------------------------
         ; Step 5: Callback "Read line from file"
         ;------------------------------------------------------
-fh.file.read.edb.display:
+fh.file.read.cat.display:
         mov   @fh.callback2,tmp0    ; Get pointer to Callback
                                     ;   "Read line from file"
-        jeq   fh.file.read.edb.next
+        jeq   fh.file.read.cat.next
                                     ; Skip callback        
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; 5a: Prepare for next record
         ;------------------------------------------------------
-fh.file.read.edb.next:
+fh.file.read.cat.next:
         inc   @fh.line              ; lines++
-        inc   @edb.lines            ; total lines++
-
-        mov   @edb.lines,tmp0
-        ci    tmp0,10200            ; Maximum line in index reached?
-        jle   fh.file.read.edb.next.do_it
-                                    ; Not yet, next record
-        ;------------------------------------------------------
-        ; 5b: Index memory full. Close file and exit
-        ;------------------------------------------------------
-        bl    @file.close           ; Close file
-              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-                                    ; /
-
-        bl    @mem.sams.setup.stevie
-                                    ; Restore SAMS windows
-        ;------------------------------------------------------
-        ; Callback "Memory full error"
-        ;------------------------------------------------------
-        mov   @fh.callback5,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.edb.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.edb.exit
         ;------------------------------------------------------
         ; 5c: Next record
         ;------------------------------------------------------
-fh.file.read.edb.next.do_it:
-        b     @fh.file.read.edb.check_setpage
+fh.file.read.cat.next.do_it:
+        b     @fh.file.read.cat.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-fh.file.read.edb.error:        
+fh.file.read.cat.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.read.edb.eof  ; All good. File closed by DSRLNK
+        jeq   fh.file.read.cat.eof  ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
@@ -447,13 +260,13 @@ fh.file.read.edb.error:
         ; Callback "File I/O error"
         ;------------------------------------------------------
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.edb.exit ; Skip callback
+        jeq   fh.file.read.cat.exit ; Skip callback
         bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.edb.exit
+        jmp   fh.file.read.cat.exit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
-fh.file.read.edb.eof:
+fh.file.read.cat.eof:
         bl    @file.close           ; Close file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
@@ -465,18 +278,18 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         mov   @fh.temp1,tmp0        ; Insert file or load file?
         ci    tmp0,>ffff
-        jne   fh.file.read.edb.eof.callback
+        jne   fh.file.read.cat.eof.callback
                                     ; Insert file, skip to callback
         dec   @edb.lines            ; Load file, one-time adjustment
 
-fh.file.read.edb.eof.callback:
+fh.file.read.cat.eof.callback:
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
-        jeq   fh.file.read.edb.exit ; Skip callback
+        jeq   fh.file.read.cat.exit ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.read.edb.exit:
+fh.file.read.cat.exit:
         mov   @fh.sams.hipage,@edb.sams.hipage 
                                     ; Set highest SAMS page in use
         clr   @fh.fopmode           ; Set FOP mode to idle operation
@@ -493,14 +306,14 @@ fh.file.read.edb.exit:
 
 
 ***************************************************************
-* PAB for accessing DV/80 file
+* PAB for accessing catalog file
 ********|*****|*********************|**************************
         even                        ; Must always start on even address!!
-fh.file.pab.header:
+fh.file.pab.header.cat:
         byte  io.op.open            ;  0    - OPEN
-        byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
+        byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
         data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-        byte  80                    ;  4    - Record length (80 chars max)
+        byte  00                    ;  4    - Record length (unset, DSR control)
         byte  00                    ;  5    - Character count
         data  >0000                 ;  6-7  - Seek record (only for fixed recs)
         byte  >00                   ;  8    - Screen offset (cassette DSR only)

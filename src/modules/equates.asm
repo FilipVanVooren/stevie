@@ -299,6 +299,11 @@ fh.free           equ  fh.struct +182  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
+* File handle structure for catalog   @>a400-a4ff   (256 bytes)
+* Entries overload file handle structure
+*--------------------------------------------------------------
+fh.cat.ptr        equ  fh.struct + 92  ; RAM address catalog entry
+*--------------------------------------------------------------
 * Editor buffer structure             @>a500-a5ff   (256 bytes)
 *--------------------------------------------------------------
 edb.struct        equ  >a500           ; Begin structure

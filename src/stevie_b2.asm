@@ -71,6 +71,7 @@ main:
         ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
+        copy  "fh.read.cat.asm"     ; Read catalog file into memory        
         copy  "fh.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.write.edb.asm"    ; Write editor buffer to file
         copy  "fm.load.asm"         ; Load DV80 file into editor buffer
