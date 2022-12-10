@@ -8,7 +8,7 @@
 *  bl   @fh.file.read.edb
 *--------------------------------------------------------------
 * INPUT
-* parm1 = Pointer to length-prefixed file descriptor
+* parm1 = Pointer to length-prefixed filename descriptor
 * parm2 = Pointer to callback function "Before Open file"
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
@@ -490,23 +490,3 @@ fh.file.read.edb.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-
-
-***************************************************************
-* PAB for accessing DV/80 file
-********|*****|*********************|**************************
-        even                        ; Must always start on even address!!
-fh.file.pab.header:
-        byte  io.op.open            ;  0    - OPEN
-        byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
-        data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-        byte  80                    ;  4    - Record length (80 chars max)
-        byte  00                    ;  5    - Character count
-        data  >0000                 ;  6-7  - Seek record (only for fixed recs)
-        byte  >00                   ;  8    - Screen offset (cassette DSR only)
-        ;------------------------------------------------------
-        ; File descriptor part (variable length)
-        ;------------------------------------------------------        
-        ; byte  12                  ;  9    - File descriptor length
-        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
-                                    ;         (Device + '.' + File name)          

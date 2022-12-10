@@ -143,14 +143,14 @@ parm5             equ  core1.top + 14  ; Function parameter 5
 parm6             equ  core1.top + 16  ; Function parameter 6
 parm7             equ  core1.top + 18  ; Function parameter 7
 parm8             equ  core1.top + 20  ; Function parameter 8
-outparm1          equ  core1.top + 22  ; Function output parameter 1
-outparm2          equ  core1.top + 24  ; Function output parameter 2
-outparm3          equ  core1.top + 26  ; Function output parameter 3
-outparm4          equ  core1.top + 28  ; Function output parameter 4
-outparm5          equ  core1.top + 30  ; Function output parameter 5
-outparm6          equ  core1.top + 32  ; Function output parameter 6
-outparm7          equ  core1.top + 34  ; Function output parameter 7
-outparm8          equ  core1.top + 36  ; Function output parameter 8
+parm9             equ  core1.top + 22  ; Function parameter 9
+outparm1          equ  core1.top + 24  ; Function output parameter 1
+outparm2          equ  core1.top + 26  ; Function output parameter 2
+outparm3          equ  core1.top + 28  ; Function output parameter 3
+outparm4          equ  core1.top + 30  ; Function output parameter 4
+outparm5          equ  core1.top + 32  ; Function output parameter 5
+outparm6          equ  core1.top + 34  ; Function output parameter 6
+outparm7          equ  core1.top + 36  ; Function output parameter 7
 kbflags           equ  core1.top + 38  ; Keyboard control flags
 keycode1          equ  core1.top + 40  ; Current key scanned
 keycode2          equ  core1.top + 42  ; Previous key scanned
@@ -256,11 +256,9 @@ fb.free           equ  fb.struct + 192 ; End of structure
 * File handle structure               @>a400-a4ff   (256 bytes)
 *--------------------------------------------------------------
 fh.struct         equ  >a400           ; stevie file handling structures
-;***********************************************************************
-; ATTENTION
-; The dsrlnk variables must form a continuous memory block and keep
-; their order!
-;***********************************************************************
+;*******************************************************************************
+; ATTENTION: dsrlnk vars must form a continuous memory block & keep their order!
+;*******************************************************************************
 dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
 dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
 dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
@@ -294,15 +292,18 @@ fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
 fh.temp3          equ  fh.struct +100  ; Temporary variable 3
-fh.membuffer      equ  fh.struct +102  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +182  ; End of structure
+fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
+fh.membuffer      equ  fh.struct +104  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +184  ; End of structure
 fh.vrecbuf        equ  >0960           ; VDP address record buffer
 fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
-* File handle structure for catalog   @>a400-a4ff   (256 bytes)
-* Entries overload file handle structure
+* File handle structure for generic   @>a400-a4ff   (256 bytes)
+* Overload file handle structure
 *--------------------------------------------------------------
-fh.cat.ptr        equ  fh.struct + 92  ; RAM address catalog entry
+fh.ftype.init     equ  fh.struct + 90  ; File type/mode (becomes fh.filetype)
+fh.ram.ptr        equ  fh.struct + 92  ; RAM destination address
+
 *--------------------------------------------------------------
 * Editor buffer structure             @>a500-a5ff   (256 bytes)
 *--------------------------------------------------------------

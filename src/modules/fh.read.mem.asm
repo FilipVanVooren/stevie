@@ -1,21 +1,22 @@
-* FILE......: fh.read.cat.asm
-* Purpose...: File catalog reader module
+* FILE......: fh.read.mem.asm
+* Purpose...: Read any kind of file into 32K memory region
 
 ***************************************************************
-* fh.file.read.cat
-* Read catalog into memory region
+* fh.file.read.mem
+* Read any kind of file into 32K memory
 ***************************************************************
-*  bl   @fh.file.read.cat
+*  bl   @fh.file.read.mem
 *--------------------------------------------------------------
 * INPUT
-* parm1 = Pointer to length-prefixed file descriptor
+* parm1 = Pointer to length-prefixed filename descriptor
 * parm2 = Pointer to callback function "Before Open file"
 * parm3 = Pointer to callback function "Read line from file"
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
-* parm7 = Destination memory address for catalog
-* parm8 = Work mode
+* parm7 = Destination RAM memory address
+* parm8 = PAB template header in ROM/RAM
+* parm9 = File type/mode (in LSB), becomes PAB byte 1
 *
 * Callbacks can be skipped by passing >0000 as pointer.
 *--------------------------------------------------------------
@@ -26,9 +27,11 @@
 * tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------
 * Remarks
-* Based on documentation "Reading directories" by Fred G. Kaal
+* File content processing expected to be handled in callback.
+* Might replace "fh.read.edb" someday, with SAMS and editor
+* buffer handling purely done in callback code.
 ********|*****|*********************|**************************
-fh.file.read.cat:
+fh.file.read.mem:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -50,7 +53,7 @@ fh.file.read.cat:
         ; Save parameters / callback functions
         ;------------------------------------------------------
         li    tmp0,fh.fopmode.readfile
-                                    ; We are going to read a file
+                                    ; Going to read a file
         mov   tmp0,@fh.fopmode      ; Set file operations mode
 
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
@@ -59,83 +62,86 @@ fh.file.read.cat:
         mov   @parm4,@fh.callback3  ; Callback function "Close file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
-        mov   @parm7,@fh.cat.ptr    ; Set pointer to RAM destination
-        mov   @parm8,@fh.workmode   ; Work mode (used in callbacks)
+        mov   @parm7,@fh.ram.ptr    ; Set pointer to RAM destination
+        mov   @parm8,@fh.pabtpl.ptr ; Set pointer to PAB template in ROM/RAM
+        mov   @parm9,@fh.ftype.init ; File type/mode (in LSB)
         ;------------------------------------------------------
-        ; Loading catalog file in destination memory
+        ; Loading file in destination memory
         ;------------------------------------------------------
-fh.file.read.cat.newfile:
+fh.file.read.mem.newfile:
         seto  @fh.temp1             ; Set flag "load file"
-        clr   @fh.temp2             ; Not used
         clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
-fh.file.read.cat.assert1:        
+fh.file.read.mem.assert1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.read.cat.assert2
+        jeq   fh.file.read.mem.assert2
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.cat.crsh ; Yes, crash!
+        jlt   fh.file.read.mem.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.cat.crsh ; Yes, crash!
+        jgt   fh.file.read.mem.crsh ; Yes, crash!
 
-fh.file.read.cat.assert2
+fh.file.read.mem.assert2
         mov   @fh.callback2,tmp0
-        jeq   fh.file.read.cat.assert3
+        jeq   fh.file.read.mem.assert3
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.cat.crsh ; Yes, crash!
+        jlt   fh.file.read.mem.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.cat.crsh ; Yes, crash!
+        jgt   fh.file.read.mem.crsh ; Yes, crash!
 
-fh.file.read.cat.assert3:
+fh.file.read.mem.assert3:
         mov   @fh.callback3,tmp0
-        jeq   fh.file.read.cat.assert4
+        jeq   fh.file.read.mem.assert4
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.cat.crsh ; Yes, crash!
+        jlt   fh.file.read.mem.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.cat.crsh ; Yes, crash!
+        jgt   fh.file.read.mem.crsh ; Yes, crash!
 
-fh.file.read.cat.assert4:         
+fh.file.read.mem.assert4:         
         mov   @fh.callback4,tmp0
-        jeq   fh.file.read.cat.assert5
-
+        jeq   fh.file.read.mem.assert5
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.cat.crsh ; Yes, crash!
+        jlt   fh.file.read.mem.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.cat.crsh ; Yes, crash!
+        jgt   fh.file.read.mem.crsh ; Yes, crash!
 
-fh.file.read.cat.assert5:
+fh.file.read.mem.assert5:
         mov   @fh.callback5,tmp0
-        jeq   fh.file.read.cat.load1
-
+        jeq   fh.file.read.mem.load1
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.read.cat.crsh ; Yes, crash!
+        jlt   fh.file.read.mem.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.read.cat.crsh ; Yes, crash!
+        jgt   fh.file.read.mem.crsh ; Yes, crash!
 
-        jmp   fh.file.read.cat.load1
+        jmp   fh.file.read.mem.load1
                                     ; All checks passed, continue
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
-fh.file.read.cat.crsh:                                    
+fh.file.read.mem.crsh:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Callback "Before Open file"
         ;------------------------------------------------------
-fh.file.read.cat.load1:        
+fh.file.read.mem.load1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.read.cat.pabheader
+        jeq   fh.file.read.mem.pabheader
                                     ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.read.cat.pabheader:        
-        bl    @cpym2v
-              data fh.vpab,fh.file.pab.header.cat,9
-                                    ; Copy PAB header to VDP
+fh.file.read.mem.pabheader:        
+        li    tmp0,fh.vpab          ; VDP destination
+        mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
+        li    tmp2,9                ; 9 bytes to copy
+
+        bl    @xpym2v               ; Copy CPU memory to VDP memory
+                                    ; \ i  tmp0 = VDP destination
+                                    ; | i  tmp1 = CPU source
+                                    ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
         ; Append file descriptor to PAB header in VDP
         ;------------------------------------------------------
@@ -152,27 +158,28 @@ fh.file.read.cat.pabheader:
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
-        bl    @file.open            ; Open file
-              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-              data io.rel.inp.int.fix
-                                    ; / i  p1 = File type/mode
+        li    r0,fh.vpab            ; Address of PAB in VRAM
+        mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
+
+        bl    @xfile.open           ; Open file (register version)
+                                    ; \ i  r0 = Address of PAB in VRAM
+                                    ; / i  r1 = File type/mode (in lSB)
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.read.cat.record
-        
-        b     @fh.file.read.cat.error  
+        jne   fh.file.read.mem.record        
+        b     @fh.file.read.mem.error  
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Step 2: Read file record
         ;------------------------------------------------------
-fh.file.read.cat.record:        
+fh.file.read.mem.record:        
         inc   @fh.records           ; Update counter        
         clr   @fh.reclen            ; Reset record length
         ;------------------------------------------------------
         ; 2b: Read file record
         ;------------------------------------------------------
 !       bl    @file.record.read     ; Read file record
-              data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
+              data fh.vpab          ; \ i  p0 file  = Address of PAB in VDP RAM 
                                     ; |           (without +9 offset!)
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read
@@ -185,21 +192,20 @@ fh.file.read.cat.record:
         ;------------------------------------------------------
         ; 2d: Check if a file error occured
         ;------------------------------------------------------
-fh.file.read.cat.check_fioerr:     
+fh.file.read.mem.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.read.cat.process_line
+        jne   fh.file.read.mem.process
                                     ; No, goto (3)
-        b     @fh.file.read.cat.error  
+        b     @fh.file.read.mem.error  
                                     ; Yes, so handle file error
         ;------------------------------------------------------
-        ; 3: Process line
+        ; 3: Process record/line
         ;------------------------------------------------------
-fh.file.read.cat.process_line:
+fh.file.read.mem.process:
         li    tmp0,fh.vrecbuf       ; VDP source address
-        mov   @fh.cat.ptr,tmp1      ; RAM target in editor buffer
+        mov   @fh.ram.ptr,tmp1      ; RAM target address
         mov   @fh.reclen,tmp2       ; Number of bytes to copy        
-
         ;------------------------------------------------------
         ; 3a: Set length of line in CPU editor buffer
         ;------------------------------------------------------
@@ -210,7 +216,7 @@ fh.file.read.cat.process_line:
         ;------------------------------------------------------
         ; 3b: Copy line from VDP to CPU editor buffer
         ;------------------------------------------------------
-fh.file.read.cat.vdp2cpu:        
+fh.file.read.mem.vdp2cpu:        
         ; 
         ; Executed for devices that need their disk buffer in VDP memory
         ; (TI Disk Controller, tipi, nanopeb, ...).
@@ -222,76 +228,60 @@ fh.file.read.cat.vdp2cpu:
         ;------------------------------------------------------
         ; Step 5: Callback "Read line from file"
         ;------------------------------------------------------
-fh.file.read.cat.display:
-        mov   @fh.callback2,tmp0    ; Get pointer to Callback
-                                    ;   "Read line from file"
-        jeq   fh.file.read.cat.next
-                                    ; Skip callback        
+fh.file.read.mem.display:
+        mov   @fh.callback2,tmp0    ; Get pointer to callback
+        jeq   fh.file.read.mem.next ; Skip callback        
         bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; 5a: Prepare for next record
         ;------------------------------------------------------
-fh.file.read.cat.next:
+fh.file.read.mem.next:
         inc   @fh.line              ; lines++
         ;------------------------------------------------------
         ; 5c: Next record
         ;------------------------------------------------------
-fh.file.read.cat.next.do_it:
-        b     @fh.file.read.cat.record
+fh.file.read.mem.next.do_it:
+        b     @fh.file.read.mem.record
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-fh.file.read.cat.error:        
+fh.file.read.mem.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
         srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.read.cat.eof  ; All good. File closed by DSRLNK
+        jeq   fh.file.read.mem.eof  ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; File error occured
         ;------------------------------------------------------ 
         bl    @file.close           ; Close file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
-
-        bl    @mem.sams.setup.stevie
-                                    ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.cat.exit ; Skip callback
+        jeq   fh.file.read.mem.exit ; Skip callback
         bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.cat.exit
+        jmp   fh.file.read.mem.exit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
-fh.file.read.cat.eof:
+fh.file.read.mem.eof:
         bl    @file.close           ; Close file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
                                     ; /
-
-        bl    @mem.sams.setup.stevie
-                                    ; Restore SAMS windows
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
-        mov   @fh.temp1,tmp0        ; Insert file or load file?
-        ci    tmp0,>ffff
-        jne   fh.file.read.cat.eof.callback
-                                    ; Insert file, skip to callback
-        dec   @edb.lines            ; Load file, one-time adjustment
-
-fh.file.read.cat.eof.callback:
+fh.file.read.mem.eof.callback:
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
-        jeq   fh.file.read.cat.exit ; Skip callback
+        jeq   fh.file.read.mem.exit ; Skip callback
         bl    *tmp0                 ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.read.cat.exit:
-        mov   @fh.sams.hipage,@edb.sams.hipage 
-                                    ; Set highest SAMS page in use
+fh.file.read.mem.exit:
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film
@@ -302,24 +292,4 @@ fh.file.read.cat.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
-
-***************************************************************
-* PAB for accessing catalog file
-********|*****|*********************|**************************
-        even                        ; Must always start on even address!!
-fh.file.pab.header.cat:
-        byte  io.op.open            ;  0    - OPEN
-        byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
-        data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-        byte  00                    ;  4    - Record length (unset, DSR control)
-        byte  00                    ;  5    - Character count
-        data  >0000                 ;  6-7  - Seek record (only for fixed recs)
-        byte  >00                   ;  8    - Screen offset (cassette DSR only)
-        ;------------------------------------------------------
-        ; File descriptor part (variable length)
-        ;------------------------------------------------------        
-        ; byte  12                  ;  9    - File descriptor length
-        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
-                                    ;         (Device + '.' + File name)          
+        b     *r11                  ; Return to caller   
