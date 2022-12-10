@@ -4,8 +4,10 @@
 set -e
 source helper.sh
 
+# Variables
 image="$1"
 shift
+start="$(date +%s%N | cut -b1-13)"
 
 log "Concatenating binaries to image $image"
 
@@ -25,5 +27,11 @@ do
         exit 255
     fi
 done
+
+# Write time spend
+now=$(date +%s%N | cut -b1-13)
+dur=$((now-start))
+log "    Time spend: $dur ms"
+
 
 log "Concatenation done."

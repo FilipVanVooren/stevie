@@ -9,6 +9,7 @@ IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 # Variables
 marker="***************************************************************"
 vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
+start="$(date +%s%N | cut -b1-13)"
 
 # Check if xas99.py available
 xas99found="$(which xas99.py)" || true
@@ -83,6 +84,10 @@ for pid in "${pids[@]}"; do
     exits[$pid]=$?
 done
 
+# Write time spend
+now=$(date +%s%N | cut -b1-13)
+dur=$((now-start))
+log "    Time spend: $dur ms"
 
 # Exit with error if any of the processes returned > 0
 for excode in "${exits[@]}"; do
