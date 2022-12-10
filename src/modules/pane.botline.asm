@@ -73,9 +73,9 @@ pane.botline.show_mode:
         ; Overwrite mode
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,55
+              byte  pane.botrow,54
               data  txt.ovrwrite
-        jmp   pane.botline.show_linecol
+        jmp   pane.botline.show_dirty
         ;------------------------------------------------------
         ; Insert mode
         ;------------------------------------------------------
@@ -86,16 +86,36 @@ pane.botline.show_mode.insert:
         ; Auto-Insert
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,55
+              byte  pane.botrow,54
               data  txt.autoinsert
-        jmp   pane.botline.show_linecol
+        jmp   pane.botline.show_dirty
         ;------------------------------------------------------
         ; No Auto-Insert
         ;------------------------------------------------------
 pane.botline.show_mode.insert.noauto:
         bl    @putat
-              byte  pane.botrow,55
+              byte  pane.botrow,54
               data  txt.insert
+        ;------------------------------------------------------
+        ; Show if text was changed in editor buffer
+        ;------------------------------------------------------        
+pane.botline.show_dirty:
+        mov   @edb.dirty,tmp0 
+        jeq   pane.botline.nochange
+        ;------------------------------------------------------
+        ; Show "*" 
+        ;------------------------------------------------------        
+        bl    @putat
+              byte pane.botrow,58
+              data txt.star
+        jmp   pane.botline.show_linecol
+        ;------------------------------------------------------
+        ; Show " " 
+        ;------------------------------------------------------        
+pane.botline.nochange:        
+        bl    @putat
+              byte pane.botrow,58
+              data txt.ws1          ; Single white space      
         ;------------------------------------------------------
         ; Show "line,column"
         ;------------------------------------------------------

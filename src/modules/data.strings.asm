@@ -89,7 +89,7 @@ txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
                    even
 txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
                    even
-txt.keys.block     stri 'F9-Back  ^Copy  ^Move  ^Del  ^Save  ^Print  ^[1-5]Clip'
+txt.keys.block     stri 'F9-Back  ^Copy ^Move ^Del ^Save ^Print ^[1-5]Clipbrd'
                    even
 txt.keys.basic1    stri 'F9-Back  ENTER-Back  F5-AutoMode  SPACE-Uncrunch'
                    even
