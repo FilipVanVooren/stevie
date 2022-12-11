@@ -89,6 +89,7 @@ id.dialog.append          equ  14      ; "Append file"
 id.dialog.print           equ  15      ; "Print file"
 id.dialog.printblock      equ  16      ; "Print block"
 id.dialog.clipdev         equ  17      ; "Configure clipboard"
+id.dialog.goto            equ  18      ; "Goto"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -154,9 +155,10 @@ outparm7          equ  core1.top + 36  ; Function output parameter 7
 kbflags           equ  core1.top + 38  ; Keyboard control flags
 keycode1          equ  core1.top + 40  ; Current key scanned
 keycode2          equ  core1.top + 42  ; Previous key scanned
-unpacked.string   equ  core1.top + 44  ; 6 char string with unpacked uin16
-trmpvector        equ  core1.top + 50  ; Vector trampoline (if p1|tmp1 = >ffff)
-core1.free1       equ  core1.top + 52  ; 52-85 **free**
+uint16.unpacked   equ  core1.top + 44  ; Unpacked uint16 (len-prefixed string)
+uint16.packed     equ  core1.top + 50  ; Packed uint16 (2 bytes)
+trmpvector        equ  core1.top + 52  ; Vector trampoline (if p1|tmp1 = >ffff)
+core1.free1       equ  core1.top + 54  ; 54-85 **free**
 ramsat            equ  core1.top + 86  ; Sprite Attr. Table in RAM (14 bytes)
 timers            equ  core1.top + 100 ; Timers (80 bytes)
                   ;--------------------------------------------

@@ -6,7 +6,7 @@
 * Open file
 *---------------------------------------------------------------
 * INPUT
-* @parm1 = Pointer to length-prefixed file descriptor
+* @parm1 = Pointer to length-prefixed filname descriptor
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
 *---------------------------------------------------------------

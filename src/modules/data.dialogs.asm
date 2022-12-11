@@ -93,6 +93,17 @@ txt.head.print2    byte 16,1,1
 txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
 txt.keys.print     stri 'F9-Back  F3-Clear'
 
+
+;--------------------------------------------------------------
+; Dialog "Goto line"
+;--------------------------------------------------------------
+txt.head.goto      byte 14,1,1
+                   text ' Goto line '
+                   byte 1
+txt.hint.goto      stri 'Type line number to navigate to and press ENTER.'
+txt.keys.goto      stri 'F9-Back  F3-Clear  ENTER-Goto line'
+
+
 ;--------------------------------------------------------------
 ; Dialog "Unsaved changes"
 ;--------------------------------------------------------------
@@ -115,7 +126,7 @@ txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with 
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
-txt.about.build    byte 72
+txt.about.build    byte 71
                    text 'Build: '
                    copy "buildstr.asm"
                    text ' / Stevie copyright (c)2018-2022  Filip Van Vooren'
@@ -215,9 +226,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2'
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto'
                    even
-pos.info.shortcuts byte 0,9,17,31,34,>ff
+pos.info.shortcuts byte 0,9,17,31,34,38,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

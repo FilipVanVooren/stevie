@@ -21,10 +21,15 @@ key.num.9     equ >39               ; 9
 key.uc.a      equ >41               ; A
 key.uc.b      equ >42               ; B
 key.uc.c      equ >43               ; C
+key.uc.d      equ >44               ; D
 key.uc.e      equ >45               ; E
 key.uc.f      equ >46               ; F
+key.uc.g      equ >47               ; G
 key.uc.h      equ >48               ; H
 key.uc.i      equ >49               ; I
+key.uc.j      equ >4a               ; J
+key.uc.k      equ >4b               ; K
+key.uc.l      equ >4c               ; L
 key.uc.m      equ >4d               ; M
 key.uc.n      equ >4e               ; N
 key.uc.r      equ >52               ; R

@@ -69,16 +69,24 @@ dialog.load.setup:
 dialog.load.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
-        ; Set command line
+        ; Set command
         ;-------------------------------------------------------
         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
         mov   *tmp0,tmp1            ; Anything set?
-        jeq   dialog.load.cursor    ; No default filename, skip
+        jeq   dialog.load.clearcmd  ; No default filename to set, clear command
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
+        jmp   dialog.load.cursor    ; Set cursor shape
+        ;------------------------------------------------------
+        ; Clear command
+        ;------------------------------------------------------
+dialog.load.clearcmd:        
+        clr   @cmdb.cmdlen          ; Reset length 
+        bl    @film                 ; Clear command
+              data  cmdb.cmd,>00,80
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------

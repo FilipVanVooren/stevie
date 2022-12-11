@@ -66,16 +66,16 @@ pane.topline.showmarkers:
               data txt.m1           ; Show M1 marker message
 
         mov   @edb.block.m1,@parm1
-        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+        bl    @tv.uint16.unpack     ; Unpack 16 bit unsigned integer to string
                                     ; \ i @parm1           = uint16
-                                    ; / o @unpacked.string = Output string
+                                    ; / o @uint16.unpacked = Output string
 
         li    tmp0,>0500
-        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+        movb  tmp0,@uint16.unpacked ; Set string length to 5 (padding)
 
         bl    @putat
               byte 0,55
-              data unpacked.string  ; Show M1 value
+              data uint16.unpacked  ; Show M1 value
         ;------------------------------------------------------
         ; Show M2 marker
         ;------------------------------------------------------
@@ -88,16 +88,16 @@ pane.topline.showmarkers:
               data txt.m2           ; Show M2 marker message
 
         mov   @edb.block.m2,@parm1
-        bl    @tv.unpack.uint16     ; Unpack 16 bit unsigned integer to string
+        bl    @tv.uint16.unpack     ; Unpack 16 bit unsigned integer to string
                                     ; \ i @parm1           = uint16
-                                    ; / o @unpacked.string = Output string
+                                    ; / o @uint16.unpacked = Output string
 
         li    tmp0,>0500
-        movb  tmp0,@unpacked.string ; Set string length to 5 (padding)
+        movb  tmp0,@uint16.unpacked ; Set string length to 5 (padding)
 
         bl    @putat
               byte 0,65
-              data unpacked.string  ; Show M2 value
+              data uint16.unpacked  ; Show M2 value
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

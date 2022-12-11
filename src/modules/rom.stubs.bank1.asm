@@ -296,6 +296,17 @@ dialog.editor.vector:
 
 
 ***************************************************************
+* Stub for dialog "Go to line"
+* bank3 vec.16
+********|*****|*********************|**************************
+dialog.goto:
+        mov   @dialog.goto.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.goto.vector:
+        data  vec.16
+
+
+***************************************************************
 * Stub for dialog "Main Menu"
 * bank3 vec.30
 ********|*****|*********************|**************************

@@ -87,6 +87,7 @@ main:
         copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
         copy  "dialog.basic.asm"     ; Dialog "Basic"
         copy  "dialog.shortcuts.asm" ; Dialog "Shortcuts"
+        copy  "dialog.goto.asm"      ; Dialog "Goto"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------

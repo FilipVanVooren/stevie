@@ -27,7 +27,7 @@ vec.12  data  dialog.cartridge      ; Dialog "Cartridge"
 vec.13  data  dialog.basic          ; Dialog "TI Basic"
 vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  dialog.editor         ; Dialog "Configure editor"
-vec.16  data  cpu.crash             ;
+vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  cpu.crash             ;
 vec.18  data  error.display         ; Show error message
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)

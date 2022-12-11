@@ -53,6 +53,9 @@ keymap_actions.editor:
         byte  key.ctrl.e, pane.focus.fb
         data  edkey.action.ppage
 
+        byte  key.ctrl.g, pane.focus.fb
+        data  dialog.goto
+
         byte  key.ctrl.x, pane.focus.fb
         data  edkey.action.npage
 
@@ -361,6 +364,9 @@ keymap_actions.cmdb:
 
         byte  key.num.2, id.dialog.shortcuts
         data  edkey.action.block.m2
+
+        byte  key.uc.g, id.dialog.shortcuts
+        data  dialog.goto
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
