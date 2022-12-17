@@ -85,7 +85,7 @@ main:
         copy  "edkey.fb.mov.updown.asm"     ; Move line up / down
         copy  "edkey.fb.mov.paging.asm"     ; Move page up / down
         copy  "edkey.fb.mov.topbot.asm"     ; Move file top / bottom
-        copy  "edkey.fb.mov.goto.asm"       ; Goto line in editor buffer
+        copy  "edkey.fb.goto.asm"           ; Goto line in editor buffer
         copy  "edkey.fb.del.asm"            ; Delete characters or lines
         copy  "edkey.fb.ins.asm"            ; Insert characters or lines
         copy  "edkey.fb.mod.asm"            ; Actions for modifier keys
@@ -111,6 +111,7 @@ main:
         copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
+        copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (1)

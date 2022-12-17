@@ -34,5 +34,5 @@ edkey.action.fb.clip.save.exit:
         mov   *stack+,tmp0          ; Pop tmp0
 
         mov   @fb.topline,@parm1    ; Get topline
-        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer

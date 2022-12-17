@@ -19,7 +19,7 @@ edkey.action.top.refresh:
         clr   @parm1                ; Set to 1st line in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
 
 
@@ -36,7 +36,7 @@ edkey.action.topscr:
         clr   @fb.row.dirty         ; Current row no longer dirty
 edkey.action.topscr.refresh:        
         mov   @fb.topline,@parm1    ; Set to top line in frame buffer
-        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
 
 
@@ -64,7 +64,7 @@ edkey.action.bot.refresh:
         mov   tmp0,@parm1           ; Set to last page in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
         ;-------------------------------------------------------
         ; Exit

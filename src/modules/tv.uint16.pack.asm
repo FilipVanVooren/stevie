@@ -1,14 +1,14 @@
 * FILE......: tv.uint16.pack.asm
-* Purpose...: Pack number string to 16bit unsigned integer
+* Purpose...: Pack string to 16bit unsigned integer
 
 ***************************************************************
 * tv.uint16.pack
-* Pack number string to 16bit unsigned integer
+* Pack (number) string to 16bit unsigned integer
 ***************************************************************
 * bl @tv.uint16.pack
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Pointer to input string (no-length byte prefix!)
+* @parm1 = Pointer to input string (no length-byte prefix!)
 *--------------------------------------------------------------
 * OUTPUT
 * @uint16.packed = Packed uint16 in range 0-65534
@@ -41,7 +41,6 @@ tv.uint16.pack:
         ; Get character
         ;------------------------------------------------------
 tv.uint16.pack.loop:
-        sla   tmp3,4                ; Shift left uint16 nibble
         movb  *tmp0+,tmp1           ; Get character
         srl   tmp1,8                ; MSB to LSB
         ;------------------------------------------------------
@@ -60,10 +59,13 @@ tv.uint16.pack.loop:
         ;------------------------------------------------------
         ; Pack digit char to byte
         ;------------------------------------------------------
-        soc   tmp1,tmp3             ; (tmp1 or tmp3) -> Set digit in LSB uint16
+        c     @parm1,tmp0           ; Initial loop?
+        jeq   !                     ; Yes, skip shift left
+        sla   tmp3,4                ; Shift left uint16 nibble
+!       soc   tmp1,tmp3             ; (tmp1 or tmp3) -> Set digit in LSB uint16
         dec   tmp2                  ; Update loop counter
-        jne   tv.uint16.pack.loop   ; Next iteration
-        jmp   tv.uint16.pack.done   ; Done packing uint16
+        jeq   tv.uint16.pack.done   ; Done packing uint16
+        jmp   tv.uint16.pack.loop   ; Next iteration        
         ;------------------------------------------------------
         ; Invalid character, stop packing and exit
         ;------------------------------------------------------

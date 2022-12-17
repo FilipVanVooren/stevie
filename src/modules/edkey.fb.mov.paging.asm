@@ -38,7 +38,7 @@ edkey.action.ppage.refresh:
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        jmp   edkey.goto.fb.toprow  ; \ Position cursor and exit
+        jmp   edkey.fb.goto.toprow  ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
         ;-------------------------------------------------------
         ; Exit
@@ -83,7 +83,7 @@ edkey.action.npage.refresh:
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        jmp   edkey.goto.fb.toprow  ; \ Position cursor and exit
+        jmp   edkey.fb.goto.toprow  ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer
         ;-------------------------------------------------------
         ; Exit

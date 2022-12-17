@@ -81,5 +81,5 @@ edkey.action.cmdb.append.file:
 edkey.action.cmdb.append.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.goto.fb.toprow ; \ Position cursor and exit
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; / i  @parm1 = Line in editor buffer

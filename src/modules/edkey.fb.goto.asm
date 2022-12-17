@@ -1,8 +1,8 @@
-* FILE......: edkey.fb.mov.goto.asm
-* Purpose...: Goto specified line in editor buffer
+* FILE......: edkey.fb.goto.asm
+* Purpose...: Goto specified line
 
 ***************************************************************
-* edkey.goto.fb.toprow
+* edkey.fb.goto.toprow
 *
 * Position cursor on first row in frame buffer and
 * align variables in editor buffer to match with that position.
@@ -10,7 +10,7 @@
 * Internal method that needs to be called via jmp or branch
 * instruction.
 ***************************************************************
-* b    @edkey.goto.fb.toprow
+* b    @edkey.fb.goto.toprow
 *--------------------------------------------------------------
 * INPUT
 * @parm1  = Line in editor buffer to display as top row (goto)
@@ -18,7 +18,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.goto.fb.toprow:
+edkey.fb.goto.toprow:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
 
         bl    @fb.refresh           ; \ Refresh frame buffer
@@ -59,6 +59,6 @@ edkey.action.goto:
 edkey.action.goto.refresh:
         seto  @fb.colorize           ; Colorize M1/M2 marked lines (if present)
 
-        b     @edkey.goto.fb.toprow  ; Position cursor and exit
+        b     @edkey.fb.goto.toprow  ; Position cursor and exit
                                      ; \ i  @parm1 = Line in editor buffer
                                      ; /

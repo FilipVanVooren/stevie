@@ -177,8 +177,8 @@ keymap_actions.editor:
         data  dialog.print
 
         ;
-        ; FCTN-9 has multiple purposes, if block mode is on it
-        ; resets the block, otherwise show dialog "Main Menu".
+        ; FCTN-9 has multiple purposes, if block mode is on
+        ; reset block, otherwise show dialog "Main Menu".
         ;
         byte  key.fctn.9, pane.focus.fb
         data  dialog.menu
@@ -367,6 +367,11 @@ keymap_actions.cmdb:
 
         byte  key.uc.g, id.dialog.shortcuts
         data  dialog.goto
+        ;-------------------------------------------------------
+        ; Dialog: Goto
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.goto
+        data  edkey.action.cmdb.goto
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
