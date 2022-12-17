@@ -19,7 +19,16 @@
 * none
 ********|*****|*********************|**************************
 edkey.fb.goto.toprow:
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
+        ;-------------------------------------------------------        
+        ; Assert
+        ;-------------------------------------------------------
+;        c     @parm1,@edb.lines     ; Goto beyond EOF ?
+;        jlt   !                     ; No, keep on going
+;        mov   @edb.lines,@parm1     ; 
+        ;-------------------------------------------------------        
+        ; Goto line
+        ;-------------------------------------------------------
+!       seto  @fb.status.dirty      ; Trigger refresh of status lines
 
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
@@ -34,7 +43,8 @@ edkey.fb.goto.toprow:
                                     ; | i  @fb.row        = Row in frame buffer
                                     ; / o  @fb.row.length = Length of row
 
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -57,8 +67,8 @@ edkey.action.goto:
         ; Refresh page
         ;-------------------------------------------------------
 edkey.action.goto.refresh:
-        seto  @fb.colorize           ; Colorize M1/M2 marked lines (if present)
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
 
-        b     @edkey.fb.goto.toprow  ; Position cursor and exit
-                                     ; \ i  @parm1 = Line in editor buffer
-                                     ; /
+        b     @edkey.fb.goto.toprow ; Position cursor and exit
+                                    ; \ i  @parm1 = Line in editor buffer
+                                    ; /

@@ -16,21 +16,36 @@ edkey.action.cmdb.goto:
         ; Scan input line number and pack as uint16
         ;-------------------------------------------------------
         li    tmp0,cmdb.cmd         ; \ Pointer to command
-        mov   tmp0,@parm1           ; / (skipped length-prefix)
+        mov   tmp0,@parm1           ; / (no length-byte prefix)
 
         bl    @tv.uint16.pack       ; Pack string to 16bit unsigned integer
                                     ; \ i  @parm1 = Pointer to input string
-                                    ; /             (no length-byte prefix)
+                                    ; |             (no length-byte prefix)
+                                    ; | 
+                                    ; | o  @outparm1 = 16bit unsigned integer
+                                    ; | o  @outparm2 = 0 conversion ok, 
+                                    ; /                >FFFF invalid input
 
-        c     @uint16.packed,@w$ffff
-                                   ; Invalid number?
+        c     @outparm2,@w$ffff     ; Invalid number?
         jeq   edkey.action.cmdb.goto.exit
-                                   ; Yes, exit
+                                    ; Yes, exit
         ;-------------------------------------------------------        
         ; Goto line
         ;-------------------------------------------------------
 edkey.action.cmdb.goto.line:
+        dect  stack
+        mov   @outparm1,*stack      ; Push @outparm1
+
         bl    @cmdb.dialog.close    ; Close dialog
+
+        mov   *stack+,@parm1        ; Pop @outparm1 as @parm1
+        dec   @parm1                ; Base 0 offset in editor buffer
+
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
+
+        b     @edkey.fb.goto.toprow ; Position cursor and exit
+                                    ; \ i  @parm1 = Line in editor buffer
+                                    ; /
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        
