@@ -52,7 +52,7 @@ do
       else
             # Spin easyxdt99 container
             container="easyxdt99-xas99-$main-$$.asm"
-            log "    Assembling ${main}.asm in container .... $container"
+            log "    Assembling ${main}.asm in $container (docker $IMAGE)"
 
             #shellcheck disable=SC2140,SC2154
             docker run \
@@ -81,7 +81,7 @@ done
 # wait for assembly subprocesses
 for pid in "${pids[@]}"; do
     wait $pid
-    exits[$pid]=$?
+    exits[pid]=$?
 done
 
 # Write time spend

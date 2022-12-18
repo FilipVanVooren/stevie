@@ -128,15 +128,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
-    .ifeq device.f18a,1
-        copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
-    .else
-        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
-    .endif
-
         copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
-        copy  "task.oneshot.asm"            ; Run "one shot" task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------

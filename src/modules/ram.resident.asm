@@ -35,6 +35,17 @@
         ;-----------------------------------------------------------------------
         copy  "pane.topline.clearmsg.asm"
                                        ; Remove overlay messsage in top line
+        ;-----------------------------------------------------------------------
+        ; Background tasks
+        ;-----------------------------------------------------------------------
+    .ifeq device.f18a,1
+        copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
+        copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
+    .else
+        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
+    .endif
+    
+        copy  "task.oneshot.asm"            ; Run "one shot" task                                       
         ;------------------------------------------------------
         ; Program data
         ;------------------------------------------------------

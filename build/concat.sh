@@ -9,7 +9,7 @@ image="$1"
 shift
 start="$(date +%s%N | cut -b1-13)"
 
-log "Concatenating binaries to image $image"
+log "Concatenating binaries to final binary $image"
 
 rm -f "$image"
 
