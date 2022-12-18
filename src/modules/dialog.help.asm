@@ -144,7 +144,7 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,17
+        data  dialog.help.data.page1.left,13
         data  dialog.help.data.page1.right,18
         data  dialog.help.data.page2.left,8
         data  dialog.help.data.page2.right,10
@@ -153,32 +153,22 @@ dialog.help.data.pages:
 dialog.help.data.page1.left:
         stri ' '
         even
-        byte    35
-        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        byte    38
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Cursor '
-        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
-        stri 'Fctn s        Left'
+        stri 'Fctn s/d/e/x  Left - Right - Up - Down'
         even
-        stri 'Fctn d        Right'
+        stri 'Fctn h/l      Position 1 - End of line'
         even
-        stri 'Fctn e        Up'
-        even
-        stri 'Fctn x        Down'
-        even
-        stri 'Fctn h        Home'
-        even
-        stri 'Fctn l        End'
-        even
-        stri 'Fctn j        Prev word'
-        even
-        stri 'Fctn k        Next word'
-        even
-        stri 'Fctn 7        Next tab'
+        stri 'Fctn j/k      Prev. word - Next word'
+        even        
+        stri 'Fctn 4   ^x   Page down'
         even
         stri 'Fctn 6   ^e   Page up'
         even
-        stri 'Fctn 4   ^x   Page down'
+        stri 'Fctn 7        Next tab'
         even
         stri 'Fctn v        Screen top'
         even
@@ -187,6 +177,9 @@ dialog.help.data.page1.left:
         stri 'Ctrl v   ^v   File top'
         even
         stri 'Ctrl b   ^b   File bottom'
+        even
+        stri 'Ctrl g   ^g   Goto line'
+
 
 dialog.help.data.page1.right:
         stri '                                 (1/2)'
@@ -269,7 +262,7 @@ dialog.help.data.page2.right:
         even
         stri 'Ctrl c   ^c   Copy block'
         even
-        stri 'Ctrl g   ^g   Goto marker M1'
+        stri 'Ctrl g   ^g   Goto line'
         even
         stri 'Ctrl m   ^m   Move block'
         even
