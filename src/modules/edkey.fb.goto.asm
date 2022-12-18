@@ -22,9 +22,10 @@ edkey.fb.goto.toprow:
         ;-------------------------------------------------------        
         ; Assert
         ;-------------------------------------------------------
-;        c     @parm1,@edb.lines     ; Goto beyond EOF ?
-;        jlt   !                     ; No, keep on going
-;        mov   @edb.lines,@parm1     ; 
+        c     @parm1,@edb.lines     ; Goto beyond EOF ?
+        jlt   !                     ; No, keep on going
+        mov   @edb.lines,@parm1     ; \ Goto EOF
+        dec   @parm1                ; / Base 0
         ;-------------------------------------------------------        
         ; Goto line
         ;-------------------------------------------------------

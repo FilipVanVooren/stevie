@@ -26,7 +26,16 @@ edkey.action.cmdb.goto:
                                     ; | o  @outparm2 = 0 conversion ok, 
                                     ; /                >FFFF invalid input
 
+        ;-------------------------------------------------------        
+        ; Assert - Line number could not be parsed
+        ;-------------------------------------------------------
         c     @outparm2,@w$ffff     ; Invalid number?
+        jeq   edkey.action.cmdb.goto.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------        
+        ; Assert - Line number is invalid
+        ;-------------------------------------------------------
+        mov   @outparm1,tmp0
         jeq   edkey.action.cmdb.goto.exit
                                     ; Yes, exit
         ;-------------------------------------------------------        
