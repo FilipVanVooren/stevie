@@ -19,11 +19,14 @@
 * none
 ********|*****|*********************|**************************
 edkey.fb.goto.toprow:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------        
         ; Assert
         ;-------------------------------------------------------
-        c     @parm1,@edb.lines     ; Goto beyond EOF ?
-        jlt   !                     ; No, keep on going
+        mov   @parm1,tmp0           ; \ Goto beyond EOF ?
+        c     @edb.lines,tmp0       ; / 
+        jh    !                     ; No, keep on going
         mov   @edb.lines,@parm1     ; \ Goto EOF
         dec   @parm1                ; / Base 0
         ;-------------------------------------------------------        
@@ -44,6 +47,10 @@ edkey.fb.goto.toprow:
                                     ; | i  @fb.row        = Row in frame buffer
                                     ; / o  @fb.row.length = Length of row
 
+        ;-------------------------------------------------------        
+        ; Exit
+        ;-------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0        
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 
