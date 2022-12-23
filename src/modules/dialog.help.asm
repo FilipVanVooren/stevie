@@ -144,7 +144,7 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,13
+        data  dialog.help.data.page1.left,14
         data  dialog.help.data.page1.right,18
         data  dialog.help.data.page2.left,8
         data  dialog.help.data.page2.right,10
@@ -167,8 +167,10 @@ dialog.help.data.page1.left:
         stri 'Fctn 4   ^x   Page down'
         even
         stri 'Fctn 6   ^e   Page up'
-        even
+        even        
         stri 'Fctn 7        Next tab'
+        even
+        stri 'Ctrl 7        Prev. tab'
         even
         stri 'Fctn v        Screen top'
         even
