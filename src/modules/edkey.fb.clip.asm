@@ -13,12 +13,18 @@
 * tmp0
 ********|*****|*********************|**************************
 edkey.action.fb.clip.save.1:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0        
         li    tmp0,clip1
         jmp   !
 edkey.action.fb.clip.save.2:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0        
         li    tmp0,clip2
         jmp   !
 edkey.action.fb.clip.save.3:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0        
         li    tmp0,clip3
         ;-------------------------------------------------------
         ; Save block to clipboard
