@@ -31,7 +31,8 @@ pane.cmdb.show:
         ; Backup framebuffer cursor position
         ;------------------------------------------------------
         mov   @cmdb.fb.yxsave,tmp0  ; Check if variable is "write protected"
-        jne   pane.cmdb.show.rest   ; Skip, is protected.
+        inv   tmp0                  ; \ Was it >ffff before, so now >0000 ?
+        jne   pane.cmdb.show.rest   ; / No, it's write protected.
         mov   @wyx,@cmdb.fb.yxsave  ; Save YX position in frame buffer
         ;------------------------------------------------------
         ; Further processing

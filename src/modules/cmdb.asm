@@ -39,6 +39,7 @@ cmdb.init:
         clr   @cmdb.lines           ; Number of lines in cmdb buffer
         clr   @cmdb.dirty           ; Command buffer is clean
         clr   @cmdb.action.ptr      ; Reset action to execute pointer
+        seto  @cmdb.fb.yxsave       ; Reset (removes "write protection")        
         ;------------------------------------------------------
         ; Calculate VDP address of CMDB top row
         ;------------------------------------------------------

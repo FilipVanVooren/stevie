@@ -53,7 +53,7 @@ pane.cmdb.hide:
         ;------------------------------------------------------
 pane.cmdb.hide.rest:
         mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
-        clr   @cmdb.fb.yxsave       ; Reset (removes "write protection")
+        seto  @cmdb.fb.yxsave       ; Reset (removes "write protection")
         clr   @cmdb.visible         ; Hide command buffer pane
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!
