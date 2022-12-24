@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221224-1650210
+0002               * BUILD: 221224-1705070
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -804,7 +804,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
 0013                                                   ; 5  /
 0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
+0015 6006 601E             data  rom.program2          ; 6  \ Pointer to program list         >6006
 0016                                                   ; 7  /
 0017               
 0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
@@ -14334,13 +14334,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7764 3A20     
 0131                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7766 3232                        text '221224-1650210'
+0001 7766 3232                        text '221224-1705070'
      7768 3132     
      776A 3234     
      776C 2D31     
-     776E 3635     
-     7770 3032     
-     7772 3130     
+     776E 3730     
+     7770 3530     
+     7772 3730     
                    < data.dialogs.asm
 0132 7774 202F                        text ' / Stevie copyright (c)2018-2022  Filip Van Vooren'
      7776 2053     

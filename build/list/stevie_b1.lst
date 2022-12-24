@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221224-1650210
+0002               * BUILD: 221224-1705070
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -790,7 +790,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
 0013                                                   ; 5  /
 0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
+0015 6006 601E             data  rom.program2          ; 6  \ Pointer to program list         >6006
 0016                                                   ; 7  /
 0017               
 0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
