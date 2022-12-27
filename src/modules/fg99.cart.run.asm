@@ -9,7 +9,7 @@
 * bl   @fg99.cart.run
 *--------------------------------------------------------------
 * INPUT
-* @tv.fg99.cartidx = Index into table 
+* @tv.fg99.img.ptr = Pointer to cartridge image entry
 *
 * OUTPUT
 * none
@@ -84,13 +84,10 @@ fg99.cart.run.init.rest:
                                     ; (3) Copy OS monitor scratchpad dump from
                                     ;     cartridge rom to @cpu.scrpad.tgt
 
-        mov   @tv.fg99.cartidx,tmp0
-        sla   tmp0,1                
-        mov   @fg99.carts.index(tmp0),tmp0
-
+        mov   @tv.fg99.img.ptr,tmp0 ; Get pointer to cartridge image
         bl    @xfg99                ; Run FinalGROM cartridge image
                                     ; \ i tmp0 = Pointer to cartridge image
-                                    ; /          table entry
+                                    ; /
 
         ;lwpi  cpu.scrpad2           ; Flip workspace before starting restore
         ;bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt

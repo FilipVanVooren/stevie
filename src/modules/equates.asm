@@ -227,7 +227,7 @@ tv.error.visible  equ  tv.top + 40     ; Error pane visible
 tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
 tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
-tv.fg99.cartidx   equ  tv.top + 48     ; Index of Final GROM cartridge to load
+tv.fg99.img.ptr   equ  tv.top + 48     ; Pointer to Final GROM cartridge to load
 tv.error.msg      equ  tv.top + 50     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 210    ; End of structure
 *--------------------------------------------------------------

@@ -102,7 +102,6 @@ main:
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"       ; SAMS bank layout for multi-purpose
         copy  "data.tib.tokens.asm"        ; TI Basic tokens
-        copy  "data.fg99.carts.asm"        ; Cartridge images
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------

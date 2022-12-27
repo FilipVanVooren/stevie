@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221227-2334190
+0002               * BUILD: 221228-0016510
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -360,7 +360,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0227      A22A     tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 0228      A22C     tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
 0229      A22E     tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
-0230      A230     tv.fg99.cartidx   equ  tv.top + 48     ; Index of Final GROM cartridge to load
+0230      A230     tv.fg99.img.ptr   equ  tv.top + 48     ; Pointer to Final GROM cartridge to load
 0231      A232     tv.error.msg      equ  tv.top + 50     ; Error message (max. 160 characters)
 0232      A2D2     tv.free           equ  tv.top + 210    ; End of structure
 0233               *--------------------------------------------------------------
@@ -5507,7 +5507,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0015               *--------------------------------------------------------------
 0016               *  bl   @xfg99
 0017               *
-0018               *  tmp0   = Pointer to FG99 cartridge table entry
+0018               *  tmp0 = Pointer to FG99 cartridge table entry
 0019               *--------------------------------------------------------------
 0020               * Remark
 0021               * https://github.com/endlos99/finalgrom99/blob/master/lib/reload_example.a99
@@ -5542,9 +5542,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047 2DDA 0602  22         dec   r2                    ; Prepare for next iteration
 0048 2DDC 16F7  14         jne   fg99.send.loop        ; Next byte
 0049               
-0050 2DDE 04E0  34         clr   @>6000                ; done sending filename
+0050 2DDE 04E0  34         clr   @>6000                ; Done sending filename
      2DE0 6000     
-0051 2DE2 0B80  40         src   r0, 8                 ; burn at least 21 cycles
+0051 2DE2 0B80  40         src   r0, 8                 ; Burn at least 21 cycles
 0052               *--------------------------------------------------------------
 0053               * (3) Wait for image to be loaded by FinalGROM
 0054               *--------------------------------------------------------------
@@ -8433,7 +8433,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049                       ;------------------------------------------------------
 0050                       ; Program data
 0051                       ;------------------------------------------------------
-0052                       copy  "data.constants.asm"     ; Constants
+0052                       copy  "data.constants.asm"          ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -8681,7 +8681,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0193 385E 0009     const.9       data  9               ; 9
 0194 3860 000A     const.10      data  10              ; 10
                    < ram.resident.asm
-0053                       copy  "data.strings.asm"       ; Strings
+0053                       copy  "data.strings.asm"            ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -9286,7 +9286,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C6C 653A     
 0152                                  even
                    < ram.resident.asm
-0054                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+0054                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
 0001               * FILE......: data.defaults.asm
 0002               * Purpose...: Default values for Stevie
@@ -9342,16 +9342,100 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3CC0 3233     
      3CC2 32       
                    < ram.resident.asm
+0055                       copy  "data.fg99.carts.asm"         ; Cartridge images
+     **** ****     > data.fg99.carts.asm
+0001               * FILE......: data.fg99.carts.asm
+0002               * Purpose...: FinalGROM cartridge images
+0003               
+0004               ***************************************************************
+0005               *                   Cartridge images
+0006               ***************************************************************
+0007                      even
+0008               *--------------------------------------------------------------
+0009               * Cartridge 'Force Command'
+0010               *--------------------------------------------------------------
+0011               fg99.cart.fcmd:
+0012 3CC4 99              byte   >99                   ; \
+0013 3CC5   4F            text   'OKFG99'              ; | Send this to reload
+     3CC6 4B46     
+     3CC8 4739     
+     3CCA 39       
+0014 3CCB   99            byte   >99                   ; /
+0015 3CCC 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3CCE 4D44     
+     3CD0 47       
+0016 3CD1   00            byte   >00, >00, >00         ; /
+     3CD2 0000     
+0017 3CD4 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3CD6 0000            data   >0000                 ; Start address
+0019                      even
+0020               
+0021               *--------------------------------------------------------------
+0022               * Cartridge 'TI Extended Basic'
+0023               *--------------------------------------------------------------
+0024               fg99.cart.xb:
+0025 3CD8 99              byte   >99                   ; \
+0026 3CD9   4F            text   'OKFG99'              ; | Send this to reload
+     3CDA 4B46     
+     3CDC 4739     
+     3CDE 39       
+0027 3CDF   99            byte   >99                   ; /
+0028 3CE0 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
+     3CE2 3239     
+     3CE4 4745     
+     3CE6 4D43     
+0029                      ;                            ; /
+0030 3CE8 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3CEA 0000            data   >0000                 ; Start address
+0032                      even
+0033               
+0034               *--------------------------------------------------------------
+0035               * Cartridge 'Extended Basic GEM'
+0036               *--------------------------------------------------------------
+0037               fg99.cart.xbgem:
+0038 3CEC 99              byte   >99                   ; \
+0039 3CED   4F            text   'OKFG99'              ; | Send this to reload
+     3CEE 4B46     
+     3CF0 4739     
+     3CF2 39       
+0040 3CF3   99            byte   >99                   ; /
+0041 3CF4 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3CF6 3239     
+     3CF8 4745     
+     3CFA 4D47     
+0042                      ;                            ; /
+0043 3CFC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3CFE 0000            data   >0000                 ; Start address
+0045                      even
+0046               
+0047               *--------------------------------------------------------------
+0048               * Cartridge 'Rich Extended Basic'
+0049               *--------------------------------------------------------------
+0050               fg99.cart.rxb:
+0051 3D00 99              byte   >99                   ; \
+0052 3D01   4F            text   'OKFG99'              ; | Send this to reload
+     3D02 4B46     
+     3D04 4739     
+     3D06 39       
+0053 3D07   99            byte   >99                   ; /
+0054 3D08 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3D0A 4247     
+0055 3D0C 0000            byte   >00, >00, >00, >00    ; /
+     3D0E 0000     
+0056 3D10 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3D12 0000            data   >0000                 ; Start address
+0058                      even
+                   < ram.resident.asm
                    < stevie_b1.asm
 0050                       ;------------------------------------------------------
 0051                       ; Activate bank 1 and branch to  >6036
 0052                       ;------------------------------------------------------
-0053 3CC4 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3CC6 6002     
+0053 3D14 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3D16 6002     
 0054               
 0058               
-0059 3CC8 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3CCA 6046     
+0059 3D18 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3D1A 6046     
 0060               ***************************************************************
 0061               * Step 3: Include main editor modules
 0062               ********|*****|*********************|**************************
@@ -9526,7 +9610,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0140                       ; Initialisation complete
 0141                       ;-------------------------------------------------------
 0142 60E4 06A0  32         bl    @magic.set            ; Set magic string
-     60E6 7CAE     
+     60E6 7CB2     
 0143               
 0144 60E8 0204  20         li    tmp0,>37D7            ; \ Silence classic99 debugger console,
      60EA 37D7     
@@ -9566,7 +9650,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0020                       ; Set SAMS standard layout
 0021                       ;------------------------------------------------------
 0022 60FA 06A0  32         bl    @mem.sams.set.boot    ; Set SAMS banks in boot for Stevie
-     60FC 7C8A     
+     60FC 7C8E     
 0023               
 0024 60FE 06A0  32         bl    @sams.layout.copy
      6100 263E     
@@ -9754,14 +9838,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0069                       ;-------------------------------------------------------
 0070               edkey.key.process.loadmap.editor:
 0071 61B2 0206  20         li    tmp2,keymap_actions.editor
-     61B4 7CE4     
+     61B4 7CE8     
 0072 61B6 1002  14         jmp   edkey.key.check.next
 0073                       ;-------------------------------------------------------
 0074                       ; (4) Load CMDB keyboard map
 0075                       ;-------------------------------------------------------
 0076               edkey.key.process.loadmap.cmdb:
 0077 61B8 0206  20         li    tmp2,keymap_actions.cmdb
-     61BA 7DBA     
+     61BA 7DBE     
 0078                       ;-------------------------------------------------------
 0079                       ; (5) Iterate over keyboard map for matching action key
 0080                       ;-------------------------------------------------------
@@ -16917,49 +17001,51 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0932               * Stub for "fg99.cart.run"
 0933               * bank7 vec.15
 0934               ********|*****|*********************|**************************
-0935               fg99.cart.run.fcmd:
-0936 7C42 04E0  34         clr   @tv.fg99.cartidx      ; Load Force Command
-     7C44 A230     
-0937 7C46 100F  14         jmp   fg99.cart.run
-0938               
-0939               fg99.cart.run.xb:
-0940 7C48 0204  20         li    tmp0,1
-     7C4A 0001     
-0941 7C4C C804  38         mov   tmp0,@tv.fg99.cartidx ; Load TI Extended Basic
-     7C4E A230     
-0942 7C50 100A  14         jmp   fg99.cart.run
-0943               
-0944               fg99.cart.run.xbgem:
-0945 7C52 0204  20         li    tmp0,2
-     7C54 0002     
-0946 7C56 C804  38         mov   tmp0,@tv.fg99.cartidx ; Load Extended Basic GEM
-     7C58 A230     
-0947 7C5A 1005  14         jmp   fg99.cart.run
-0948               
-0949               fg99.cart.run.rxb:
-0950 7C5C 0204  20         li    tmp0,3
-     7C5E 0003     
-0951 7C60 C804  38         mov   tmp0,@tv.fg99.cartidx ; Load Rich Extended Basic
-     7C62 A230     
-0952 7C64 1000  14         jmp   fg99.cart.run
-0953               
-0954               fg99.cart.run:
-0955 7C66 0649  14         dect  stack
-0956 7C68 C64B  30         mov   r11,*stack            ; Save return address
-0957                       ;------------------------------------------------------
-0958                       ; Run FinalGROM cartridge image
-0959                       ;------------------------------------------------------
-0960 7C6A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C6C 2FA6     
-0961 7C6E 600E                   data bank7.rom        ; | i  p0 = bank address
-0962 7C70 7FDC                   data vec.15           ; | i  p1 = Vector with target address
-0963 7C72 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-0964                       ;------------------------------------------------------
-0965                       ; Exit
-0966                       ;------------------------------------------------------
-0967               fg99.cart.run.exit:
-0968 7C74 C2F9  30         mov   *stack+,r11           ; Pop r11
-0969 7C76 045B  20         b     *r11                  ; Return to caller
+0935               fg99.cart.run.xb:
+0936 7C42 0204  20         li    tmp0,fg99.cart.xb     ; Load TI Extended Basic
+     7C44 3CD8     
+0937 7C46 C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
+     7C48 A230     
+0938 7C4A 100F  14         jmp   fg99.cart.run
+0939               
+0940               fg99.cart.run.xbgem:
+0941 7C4C 0204  20         li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
+     7C4E 3CEC     
+0942 7C50 C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
+     7C52 A230     
+0943 7C54 100A  14         jmp   fg99.cart.run
+0944               
+0945               fg99.cart.run.rxb:
+0946 7C56 0204  20         li    tmp0,fg99.cart.rxb    ; Load Rich Extended Basic
+     7C58 3D00     
+0947 7C5A C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
+     7C5C A230     
+0948 7C5E 1005  14         jmp   fg99.cart.run
+0949               
+0950               fg99.cart.run.fcmd:
+0951 7C60 0204  20         li    tmp0,fg99.cart.fcmd   ; Load Force Command
+     7C62 3CC4     
+0952 7C64 C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
+     7C66 A230     
+0953 7C68 1000  14         jmp   fg99.cart.run
+0954               
+0955               fg99.cart.run:
+0956 7C6A 0649  14         dect  stack
+0957 7C6C C64B  30         mov   r11,*stack            ; Save return address
+0958                       ;------------------------------------------------------
+0959                       ; Run FinalGROM cartridge image
+0960                       ;------------------------------------------------------
+0961 7C6E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C70 2FA6     
+0962 7C72 600E                   data bank7.rom        ; | i  p0 = bank address
+0963 7C74 7FDC                   data vec.15           ; | i  p1 = Vector with target address
+0964 7C76 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0965                       ;------------------------------------------------------
+0966                       ; Exit
+0967                       ;------------------------------------------------------
+0968               fg99.cart.run.exit:
+0969 7C78 C2F9  30         mov   *stack+,r11           ; Pop r11
+0970 7C7A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b1.asm
 0149                       copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
@@ -16974,21 +17060,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031               * bank7 vec.1
 0032               ********|*****|*********************|**************************
 0033               mem.sams.set.legacy:
-0034 7C78 0649  14         dect  stack
-0035 7C7A C64B  30         mov   r11,*stack            ; Save return address
+0034 7C7C 0649  14         dect  stack
+0035 7C7E C64B  30         mov   r11,*stack            ; Save return address
 0036                       ;------------------------------------------------------
 0037                       ; Dump VDP patterns
 0038                       ;------------------------------------------------------
-0039 7C7C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C7E 2FA6     
-0040 7C80 600E                   data bank7.rom        ; | i  p0 = bank address
-0041 7C82 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0042 7C84 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0039 7C80 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C82 2FA6     
+0040 7C84 600E                   data bank7.rom        ; | i  p0 = bank address
+0041 7C86 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0042 7C88 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0043                       ;------------------------------------------------------
 0044                       ; Exit
 0045                       ;------------------------------------------------------
-0046 7C86 C2F9  30         mov   *stack+,r11           ; Pop r11
-0047 7C88 045B  20         b     *r11                  ; Return to caller
+0046 7C8A C2F9  30         mov   *stack+,r11           ; Pop r11
+0047 7C8C 045B  20         b     *r11                  ; Return to caller
 0049               
 0050               
 0052               ***************************************************************
@@ -16996,21 +17082,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054               * bank7 vec.2
 0055               ********|*****|*********************|**************************
 0056               mem.sams.set.boot:
-0057 7C8A 0649  14         dect  stack
-0058 7C8C C64B  30         mov   r11,*stack            ; Save return address
+0057 7C8E 0649  14         dect  stack
+0058 7C90 C64B  30         mov   r11,*stack            ; Save return address
 0059                       ;------------------------------------------------------
 0060                       ; Dump VDP patterns
 0061                       ;------------------------------------------------------
-0062 7C8E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C90 2FA6     
-0063 7C92 600E                   data bank7.rom        ; | i  p0 = bank address
-0064 7C94 7FC2                   data vec.2            ; | i  p1 = Vector with target address
-0065 7C96 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0062 7C92 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C94 2FA6     
+0063 7C96 600E                   data bank7.rom        ; | i  p0 = bank address
+0064 7C98 7FC2                   data vec.2            ; | i  p1 = Vector with target address
+0065 7C9A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0066                       ;------------------------------------------------------
 0067                       ; Exit
 0068                       ;------------------------------------------------------
-0069 7C98 C2F9  30         mov   *stack+,r11           ; Pop r11
-0070 7C9A 045B  20         b     *r11                  ; Return to caller
+0069 7C9C C2F9  30         mov   *stack+,r11           ; Pop r11
+0070 7C9E 045B  20         b     *r11                  ; Return to caller
 0072               
 0073               
 0075               ***************************************************************
@@ -17018,21 +17104,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 7C9C 0649  14         dect  stack
-0081 7C9E C64B  30         mov   r11,*stack            ; Save return address
+0080 7CA0 0649  14         dect  stack
+0081 7CA2 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 7CA0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CA2 2FA6     
-0086 7CA4 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 7CA6 7FC4                   data vec.3            ; | i  p1 = Vector with target address
-0088 7CA8 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 7CA4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CA6 2FA6     
+0086 7CA8 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 7CAA 7FC4                   data vec.3            ; | i  p1 = Vector with target address
+0088 7CAC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 7CAA C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 7CAC 045B  20         b     *r11                  ; Return to caller
+0092 7CAE C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 7CB0 045B  20         b     *r11                  ; Return to caller
 0095               
 0096               
 0098               ***************************************************************
@@ -17040,21 +17126,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0100               * bank7 vec.20
 0101               ********|*****|*********************|**************************
 0102               magic.set:
-0103 7CAE 0649  14         dect  stack
-0104 7CB0 C64B  30         mov   r11,*stack            ; Save return address
+0103 7CB2 0649  14         dect  stack
+0104 7CB4 C64B  30         mov   r11,*stack            ; Save return address
 0105                       ;------------------------------------------------------
 0106                       ; Dump VDP patterns
 0107                       ;------------------------------------------------------
-0108 7CB2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CB4 2FA6     
-0109 7CB6 600E                   data bank7.rom        ; | i  p0 = bank address
-0110 7CB8 7FE6                   data vec.20           ; | i  p1 = Vector with target address
-0111 7CBA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0108 7CB6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CB8 2FA6     
+0109 7CBA 600E                   data bank7.rom        ; | i  p0 = bank address
+0110 7CBC 7FE6                   data vec.20           ; | i  p1 = Vector with target address
+0111 7CBE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0112                       ;------------------------------------------------------
 0113                       ; Exit
 0114                       ;------------------------------------------------------
-0115 7CBC C2F9  30         mov   *stack+,r11           ; Pop r11
-0116 7CBE 045B  20         b     *r11                  ; Return to caller
+0115 7CC0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0116 7CC2 045B  20         b     *r11                  ; Return to caller
 0118               
 0119               
 0121               ***************************************************************
@@ -17062,21 +17148,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0123               * bank7 vec.21
 0124               ********|*****|*********************|**************************
 0125               magic.clear:
-0126 7CC0 0649  14         dect  stack
-0127 7CC2 C64B  30         mov   r11,*stack            ; Save return address
+0126 7CC4 0649  14         dect  stack
+0127 7CC6 C64B  30         mov   r11,*stack            ; Save return address
 0128                       ;------------------------------------------------------
 0129                       ; Dump VDP patterns
 0130                       ;------------------------------------------------------
-0131 7CC4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CC6 2FA6     
-0132 7CC8 600E                   data bank7.rom        ; | i  p0 = bank address
-0133 7CCA 7FE8                   data vec.21           ; | i  p1 = Vector with target address
-0134 7CCC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0131 7CC8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CCA 2FA6     
+0132 7CCC 600E                   data bank7.rom        ; | i  p0 = bank address
+0133 7CCE 7FE8                   data vec.21           ; | i  p1 = Vector with target address
+0134 7CD0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0135                       ;------------------------------------------------------
 0136                       ; Exit
 0137                       ;------------------------------------------------------
-0138 7CCE C2F9  30         mov   *stack+,r11           ; Pop r11
-0139 7CD0 045B  20         b     *r11                  ; Return to caller
+0138 7CD2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0139 7CD4 045B  20         b     *r11                  ; Return to caller
 0141               
 0142               
 0144               ***************************************************************
@@ -17084,21 +17170,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0146               * bank7 vec.22
 0147               ********|*****|*********************|**************************
 0148               magic.check:
-0149 7CD2 0649  14         dect  stack
-0150 7CD4 C64B  30         mov   r11,*stack            ; Save return address
+0149 7CD6 0649  14         dect  stack
+0150 7CD8 C64B  30         mov   r11,*stack            ; Save return address
 0151                       ;------------------------------------------------------
 0152                       ; Dump VDP patterns
 0153                       ;------------------------------------------------------
-0154 7CD6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CD8 2FA6     
-0155 7CDA 600E                   data bank7.rom        ; | i  p0 = bank address
-0156 7CDC 7FEA                   data vec.22           ; | i  p1 = Vector with target address
-0157 7CDE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0154 7CDA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CDC 2FA6     
+0155 7CDE 600E                   data bank7.rom        ; | i  p0 = bank address
+0156 7CE0 7FEA                   data vec.22           ; | i  p1 = Vector with target address
+0157 7CE2 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0158                       ;------------------------------------------------------
 0159                       ; Exit
 0160                       ;------------------------------------------------------
-0161 7CE0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0162 7CE2 045B  20         b     *r11                  ; Return to caller
+0161 7CE4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0162 7CE6 045B  20         b     *r11                  ; Return to caller
                    < stevie_b1.asm
 0150                       ;-----------------------------------------------------------------------
 0151                       ; Program data
@@ -17115,184 +17201,184 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008                       ;-------------------------------------------------------
 0009                       ; Movement keys
 0010                       ;-------------------------------------------------------
-0011 7CE4 0D00             byte  key.enter, pane.focus.fb
-0012 7CE6 672C             data  edkey.action.enter
+0011 7CE8 0D00             byte  key.enter, pane.focus.fb
+0012 7CEA 672C             data  edkey.action.enter
 0013               
-0014 7CE8 0800             byte  key.fctn.s, pane.focus.fb
-0015 7CEA 6248             data  edkey.action.left
+0014 7CEC 0800             byte  key.fctn.s, pane.focus.fb
+0015 7CEE 6248             data  edkey.action.left
 0016               
-0017 7CEC 0900             byte  key.fctn.d, pane.focus.fb
-0018 7CEE 6262             data  edkey.action.right
+0017 7CF0 0900             byte  key.fctn.d, pane.focus.fb
+0018 7CF2 6262             data  edkey.action.right
 0019               
-0020 7CF0 0B00             byte  key.fctn.e, pane.focus.fb
-0021 7CF2 63C6             data  edkey.action.up
+0020 7CF4 0B00             byte  key.fctn.e, pane.focus.fb
+0021 7CF6 63C6             data  edkey.action.up
 0022               
-0023 7CF4 0A00             byte  key.fctn.x, pane.focus.fb
-0024 7CF6 63CE             data  edkey.action.down
+0023 7CF8 0A00             byte  key.fctn.x, pane.focus.fb
+0024 7CFA 63CE             data  edkey.action.down
 0025               
-0026 7CF8 BF00             byte  key.fctn.h, pane.focus.fb
-0027 7CFA 627E             data  edkey.action.home
+0026 7CFC BF00             byte  key.fctn.h, pane.focus.fb
+0027 7CFE 627E             data  edkey.action.home
 0028               
-0029 7CFC C000             byte  key.fctn.j, pane.focus.fb
-0030 7CFE 62A8             data  edkey.action.pword
+0029 7D00 C000             byte  key.fctn.j, pane.focus.fb
+0030 7D02 62A8             data  edkey.action.pword
 0031               
-0032 7D00 C100             byte  key.fctn.k, pane.focus.fb
-0033 7D02 62FA             data  edkey.action.nword
+0032 7D04 C100             byte  key.fctn.k, pane.focus.fb
+0033 7D06 62FA             data  edkey.action.nword
 0034               
-0035 7D04 C200             byte  key.fctn.l, pane.focus.fb
-0036 7D06 6286             data  edkey.action.end
+0035 7D08 C200             byte  key.fctn.l, pane.focus.fb
+0036 7D0A 6286             data  edkey.action.end
 0037               
-0038 7D08 0200             byte  key.fctn.4, pane.focus.fb
-0039 7D0A 6412             data  edkey.action.npage
+0038 7D0C 0200             byte  key.fctn.4, pane.focus.fb
+0039 7D0E 6412             data  edkey.action.npage
 0040               
-0041 7D0C 0E00             byte  key.fctn.5, pane.focus.fb
-0042 7D0E 638E             data  edkey.action.scroll.right
+0041 7D10 0E00             byte  key.fctn.5, pane.focus.fb
+0042 7D12 638E             data  edkey.action.scroll.right
 0043               
-0044 7D10 0C00             byte  key.fctn.6, pane.focus.fb
-0045 7D12 63D6             data  edkey.action.ppage
+0044 7D14 0C00             byte  key.fctn.6, pane.focus.fb
+0045 7D16 63D6             data  edkey.action.ppage
 0046               
-0047 7D14 B700             byte  key.ctrl.7, pane.focus.fb
-0048 7D16 69B6             data  edkey.action.fb.tab.prev
+0047 7D18 B700             byte  key.ctrl.7, pane.focus.fb
+0048 7D1A 69B6             data  edkey.action.fb.tab.prev
 0049               
-0050 7D18 0100             byte  key.fctn.7, pane.focus.fb
-0051 7D1A 69C4             data  edkey.action.fb.tab.next
+0050 7D1C 0100             byte  key.fctn.7, pane.focus.fb
+0051 7D1E 69C4             data  edkey.action.fb.tab.next
 0052               
-0053 7D1C 8500             byte  key.ctrl.e, pane.focus.fb
-0054 7D1E 63D6             data  edkey.action.ppage
+0053 7D20 8500             byte  key.ctrl.e, pane.focus.fb
+0054 7D22 63D6             data  edkey.action.ppage
 0055               
-0056 7D20 8700             byte  key.ctrl.g, pane.focus.fb
-0057 7D22 79F4             data  dialog.goto
+0056 7D24 8700             byte  key.ctrl.g, pane.focus.fb
+0057 7D26 79F4             data  dialog.goto
 0058               
-0059 7D24 9800             byte  key.ctrl.x, pane.focus.fb
-0060 7D26 6412             data  edkey.action.npage
+0059 7D28 9800             byte  key.ctrl.x, pane.focus.fb
+0060 7D2A 6412             data  edkey.action.npage
 0061               
-0062 7D28 7F00             byte  key.fctn.v, pane.focus.fb
-0063 7D2A 6468             data  edkey.action.topscr
+0062 7D2C 7F00             byte  key.fctn.v, pane.focus.fb
+0063 7D2E 6468             data  edkey.action.topscr
 0064               
-0065 7D2C BE00             byte  key.fctn.b, pane.focus.fb
-0066 7D2E 64B2             data  edkey.action.botscr
+0065 7D30 BE00             byte  key.fctn.b, pane.focus.fb
+0066 7D32 64B2             data  edkey.action.botscr
 0067               
-0068 7D30 9600             byte  key.ctrl.v, pane.focus.fb
-0069 7D32 644C             data  edkey.action.top
+0068 7D34 9600             byte  key.ctrl.v, pane.focus.fb
+0069 7D36 644C             data  edkey.action.top
 0070               
-0071 7D34 8200             byte  key.ctrl.b, pane.focus.fb
-0072 7D36 6482             data  edkey.action.bot
+0071 7D38 8200             byte  key.ctrl.b, pane.focus.fb
+0072 7D3A 6482             data  edkey.action.bot
 0073                       ;-------------------------------------------------------
 0074                       ; Modifier keys - Delete
 0075                       ;-------------------------------------------------------
-0076 7D38 0300             byte  key.fctn.1, pane.focus.fb
-0077 7D3A 655A             data  edkey.action.del_char
+0076 7D3C 0300             byte  key.fctn.1, pane.focus.fb
+0077 7D3E 655A             data  edkey.action.del_char
 0078               
-0079 7D3C 0700             byte  key.fctn.3, pane.focus.fb
-0080 7D3E 660C             data  edkey.action.del_line
+0079 7D40 0700             byte  key.fctn.3, pane.focus.fb
+0080 7D42 660C             data  edkey.action.del_line
 0081               
-0082 7D40 8C00             byte  key.ctrl.l, pane.focus.fb
-0083 7D42 65D8             data  edkey.action.del_eol
+0082 7D44 8C00             byte  key.ctrl.l, pane.focus.fb
+0083 7D46 65D8             data  edkey.action.del_eol
 0084                       ;-------------------------------------------------------
 0085                       ; Modifier keys - Insert
 0086                       ;-------------------------------------------------------
-0087 7D44 0400             byte  key.fctn.2, pane.focus.fb
-0088 7D46 666E             data  edkey.action.ins_char.ws
+0087 7D48 0400             byte  key.fctn.2, pane.focus.fb
+0088 7D4A 666E             data  edkey.action.ins_char.ws
 0089               
-0090 7D48 B900             byte  key.fctn.dot, pane.focus.fb
-0091 7D4A 67B8             data  edkey.action.ins_onoff
+0090 7D4C B900             byte  key.fctn.dot, pane.focus.fb
+0091 7D4E 67B8             data  edkey.action.ins_onoff
 0092               
-0093 7D4C 0600             byte  key.fctn.8, pane.focus.fb
-0094 7D4E 6714             data  edkey.action.ins_line
+0093 7D50 0600             byte  key.fctn.8, pane.focus.fb
+0094 7D52 6714             data  edkey.action.ins_line
 0095                       ;-------------------------------------------------------
 0096                       ; Block marking/modifier
 0097                       ;-------------------------------------------------------
-0098 7D50 F000             byte  key.ctrl.space, pane.focus.fb
-0099 7D52 68E0             data  edkey.action.block.mark
+0098 7D54 F000             byte  key.ctrl.space, pane.focus.fb
+0099 7D56 68E0             data  edkey.action.block.mark
 0100               
-0101 7D54 8300             byte  key.ctrl.c, pane.focus.fb
-0102 7D56 6880             data  edkey.action.copyblock_or_clipboard
+0101 7D58 8300             byte  key.ctrl.c, pane.focus.fb
+0102 7D5A 6880             data  edkey.action.copyblock_or_clipboard
 0103               
-0104 7D58 8400             byte  key.ctrl.d, pane.focus.fb
-0105 7D5A 6940             data  edkey.action.block.delete
+0104 7D5C 8400             byte  key.ctrl.d, pane.focus.fb
+0105 7D5E 6940             data  edkey.action.block.delete
 0106               
-0107 7D5C 8D00             byte  key.ctrl.m, pane.focus.fb
-0108 7D5E 696A             data  edkey.action.block.move
+0107 7D60 8D00             byte  key.ctrl.m, pane.focus.fb
+0108 7D62 696A             data  edkey.action.block.move
 0109               
-0110 7D60 8700             byte  key.ctrl.g, pane.focus.fb
-0111 7D62 699C             data  edkey.action.block.goto.m1
+0110 7D64 8700             byte  key.ctrl.g, pane.focus.fb
+0111 7D66 699C             data  edkey.action.block.goto.m1
 0112                       ;-------------------------------------------------------
 0113                       ; Clipboards
 0114                       ;-------------------------------------------------------
-0115 7D64 B100             byte  key.ctrl.1, pane.focus.fb
-0116 7D66 69D2             data  edkey.action.fb.clip.save.1
+0115 7D68 B100             byte  key.ctrl.1, pane.focus.fb
+0116 7D6A 69D2             data  edkey.action.fb.clip.save.1
 0117               
-0118 7D68 B200             byte  key.ctrl.2, pane.focus.fb
-0119 7D6A 69DC             data  edkey.action.fb.clip.save.2
+0118 7D6C B200             byte  key.ctrl.2, pane.focus.fb
+0119 7D6E 69DC             data  edkey.action.fb.clip.save.2
 0120               
-0121 7D6C B300             byte  key.ctrl.3, pane.focus.fb
-0122 7D6E 69E6             data  edkey.action.fb.clip.save.3
+0121 7D70 B300             byte  key.ctrl.3, pane.focus.fb
+0122 7D72 69E6             data  edkey.action.fb.clip.save.3
 0123               
-0124 7D70 B500             byte  key.ctrl.5, pane.focus.fb
-0125 7D72 635A             data  edkey.action.scroll.left
+0124 7D74 B500             byte  key.ctrl.5, pane.focus.fb
+0125 7D76 635A             data  edkey.action.scroll.left
 0126                       ;-------------------------------------------------------
 0127                       ; Other action keys
 0128                       ;-------------------------------------------------------
-0129 7D74 0500             byte  key.fctn.plus, pane.focus.fb
-0130 7D76 6872             data  edkey.action.quit
+0129 7D78 0500             byte  key.fctn.plus, pane.focus.fb
+0130 7D7A 6872             data  edkey.action.quit
 0131               
-0132 7D78 9100             byte  key.ctrl.q, pane.focus.fb
-0133 7D7A 6872             data  edkey.action.quit
+0132 7D7C 9100             byte  key.ctrl.q, pane.focus.fb
+0133 7D7E 6872             data  edkey.action.quit
 0134               
-0135 7D7C 9200             byte  key.ctrl.r, pane.focus.fb
-0136 7D7E 6832             data  edkey.action.toggle.ruler
+0135 7D80 9200             byte  key.ctrl.r, pane.focus.fb
+0136 7D82 6832             data  edkey.action.toggle.ruler
 0137               
-0138 7D80 9A00             byte  key.ctrl.z, pane.focus.fb
-0139 7D82 71FE             data  pane.action.colorscheme.cycle
+0138 7D84 9A00             byte  key.ctrl.z, pane.focus.fb
+0139 7D86 71FE             data  pane.action.colorscheme.cycle
 0140               
-0141 7D84 8000             byte  key.ctrl.comma, pane.focus.fb
-0142 7D86 6890             data  edkey.action.fb.fname.dec.load
+0141 7D88 8000             byte  key.ctrl.comma, pane.focus.fb
+0142 7D8A 6890             data  edkey.action.fb.fname.dec.load
 0143               
-0144 7D88 9B00             byte  key.ctrl.dot, pane.focus.fb
-0145 7D8A 68A2             data  edkey.action.fb.fname.inc.load
+0144 7D8C 9B00             byte  key.ctrl.dot, pane.focus.fb
+0145 7D8E 68A2             data  edkey.action.fb.fname.inc.load
 0146               
-0147 7D8C BB00             byte  key.ctrl.slash, pane.focus.fb
-0148 7D8E 79D6             data  dialog.basic
+0147 7D90 BB00             byte  key.ctrl.slash, pane.focus.fb
+0148 7D92 79D6             data  dialog.basic
 0149               
-0150 7D90 BC00             byte  key.fctn.0, pane.focus.fb
-0151 7D92 7C00             data  tibasic
+0150 7D94 BC00             byte  key.fctn.0, pane.focus.fb
+0151 7D96 7C00             data  tibasic
 0152                       ;-------------------------------------------------------
 0153                       ; Dialog keys
 0154                       ;-------------------------------------------------------
-0155 7D94 8100             byte  key.ctrl.a, pane.focus.fb
-0156 7D96 79C2             data  dialog.append
+0155 7D98 8100             byte  key.ctrl.a, pane.focus.fb
+0156 7D9A 79C2             data  dialog.append
 0157               
-0158 7D98 8800             byte  key.ctrl.h, pane.focus.fb
-0159 7D9A 795A             data  dialog.help
+0158 7D9C 8800             byte  key.ctrl.h, pane.focus.fb
+0159 7D9E 795A             data  dialog.help
 0160               
-0161 7D9C 8600             byte  key.ctrl.f, pane.focus.fb
-0162 7D9E 798C             data  dialog.file
+0161 7DA0 8600             byte  key.ctrl.f, pane.focus.fb
+0162 7DA2 798C             data  dialog.file
 0163               
-0164 7DA0 8900             byte  key.ctrl.i, pane.focus.fb
-0165 7DA2 7978             data  dialog.insert
+0164 7DA4 8900             byte  key.ctrl.i, pane.focus.fb
+0165 7DA6 7978             data  dialog.insert
 0166               
-0167 7DA4 9300             byte  key.ctrl.s, pane.focus.fb
-0168 7DA6 796E             data  dialog.save
+0167 7DA8 9300             byte  key.ctrl.s, pane.focus.fb
+0168 7DAA 796E             data  dialog.save
 0169               
-0170 7DA8 8F00             byte  key.ctrl.o, pane.focus.fb
-0171 7DAA 7964             data  dialog.load
+0170 7DAC 8F00             byte  key.ctrl.o, pane.focus.fb
+0171 7DAE 7964             data  dialog.load
 0172               
-0173 7DAC 9500             byte  key.ctrl.u, pane.focus.fb
-0174 7DAE 79E0             data  dialog.shortcuts
+0173 7DB0 9500             byte  key.ctrl.u, pane.focus.fb
+0174 7DB2 79E0             data  dialog.shortcuts
 0175               
-0176 7DB0 9000             byte  key.ctrl.p, pane.focus.fb
-0177 7DB2 7982             data  dialog.print
+0176 7DB4 9000             byte  key.ctrl.p, pane.focus.fb
+0177 7DB6 7982             data  dialog.print
 0178               
 0179                       ;
 0180                       ; FCTN-9 has multiple purposes, if block mode is on
 0181                       ; reset block, otherwise show dialog "Main Menu".
 0182                       ;
-0183 7DB4 0F00             byte  key.fctn.9, pane.focus.fb
-0184 7DB6 79FE             data  dialog.menu
+0183 7DB8 0F00             byte  key.fctn.9, pane.focus.fb
+0184 7DBA 79FE             data  dialog.menu
 0185                       ;-------------------------------------------------------
 0186                       ; End of list
 0187                       ;-------------------------------------------------------
-0188 7DB8 FFFF             data  EOL                           ; EOL
+0188 7DBC FFFF             data  EOL                           ; EOL
 0189               
 0190               
 0191               *---------------------------------------------------------------
@@ -17302,249 +17388,249 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0195                       ;-------------------------------------------------------
 0196                       ; Dialog: Main Menu
 0197                       ;-------------------------------------------------------
-0198 7DBA 4664             byte  key.uc.f, id.dialog.menu
-0199 7DBC 798C             data  dialog.file
+0198 7DBE 4664             byte  key.uc.f, id.dialog.menu
+0199 7DC0 798C             data  dialog.file
 0200               
-0201 7DBE 4364             byte  key.uc.c, id.dialog.menu
-0202 7DC0 79CC             data  dialog.cartridge
+0201 7DC2 4364             byte  key.uc.c, id.dialog.menu
+0202 7DC4 79CC             data  dialog.cartridge
 0203               
-0204 7DC2 4F64             byte  key.uc.o, id.dialog.menu
-0205 7DC4 79B8             data  dialog.config
+0204 7DC6 4F64             byte  key.uc.o, id.dialog.menu
+0205 7DC8 79B8             data  dialog.config
 0206               
-0207 7DC6 5364             byte  key.uc.s, id.dialog.menu
-0208 7DC8 79E0             data  dialog.shortcuts
+0207 7DCA 5364             byte  key.uc.s, id.dialog.menu
+0208 7DCC 79E0             data  dialog.shortcuts
 0209               
-0210 7DCA 4864             byte  key.uc.h, id.dialog.menu
-0211 7DCC 795A             data  dialog.help
+0210 7DCE 4864             byte  key.uc.h, id.dialog.menu
+0211 7DD0 795A             data  dialog.help
 0212               
-0213 7DCE 5164             byte  key.uc.q, id.dialog.menu
-0214 7DD0 6872             data  edkey.action.quit
+0213 7DD2 5164             byte  key.uc.q, id.dialog.menu
+0214 7DD4 6872             data  edkey.action.quit
 0215               
-0216 7DD2 0F64             byte  key.fctn.9, id.dialog.menu
-0217 7DD4 6E22             data  edkey.action.cmdb.close.dialog
+0216 7DD6 0F64             byte  key.fctn.9, id.dialog.menu
+0217 7DD8 6E22             data  edkey.action.cmdb.close.dialog
 0218                       ;-------------------------------------------------------
 0219                       ; Dialog: File
 0220                       ;-------------------------------------------------------
-0221 7DD6 4E69             byte  key.uc.n, id.dialog.file
-0222 7DD8 6ACE             data  edkey.action.cmdb.file.new
+0221 7DDA 4E69             byte  key.uc.n, id.dialog.file
+0222 7DDC 6ACE             data  edkey.action.cmdb.file.new
 0223               
-0224 7DDA 5369             byte  key.uc.s, id.dialog.file
-0225 7DDC 796E             data  dialog.save
+0224 7DDE 5369             byte  key.uc.s, id.dialog.file
+0225 7DE0 796E             data  dialog.save
 0226               
-0227 7DDE 4F69             byte  key.uc.o, id.dialog.file
-0228 7DE0 7964             data  dialog.load
+0227 7DE2 4F69             byte  key.uc.o, id.dialog.file
+0228 7DE4 7964             data  dialog.load
 0229               
-0230 7DE2 4969             byte  key.uc.i, id.dialog.file
-0231 7DE4 7978             data  dialog.insert
+0230 7DE6 4969             byte  key.uc.i, id.dialog.file
+0231 7DE8 7978             data  dialog.insert
 0232               
-0233 7DE6 4169             byte  key.uc.a, id.dialog.file
-0234 7DE8 79C2             data  dialog.append
+0233 7DEA 4169             byte  key.uc.a, id.dialog.file
+0234 7DEC 79C2             data  dialog.append
 0235               
-0236 7DEA 5069             byte  key.uc.p, id.dialog.file
-0237 7DEC 7982             data  dialog.print
+0236 7DEE 5069             byte  key.uc.p, id.dialog.file
+0237 7DF0 7982             data  dialog.print
 0238                       ;-------------------------------------------------------
 0239                       ; Dialog: Open file
 0240                       ;-------------------------------------------------------
-0241 7DEE 0E0A             byte  key.fctn.5, id.dialog.load
-0242 7DF0 6DEC             data  edkey.action.cmdb.fastmode.toggle
+0241 7DF2 0E0A             byte  key.fctn.5, id.dialog.load
+0242 7DF4 6DEC             data  edkey.action.cmdb.fastmode.toggle
 0243               
-0244 7DF2 0D0A             byte  key.enter, id.dialog.load
-0245 7DF4 6AF4             data  edkey.action.cmdb.load
+0244 7DF6 0D0A             byte  key.enter, id.dialog.load
+0245 7DF8 6AF4             data  edkey.action.cmdb.load
 0246                       ;-------------------------------------------------------
 0247                       ; Dialog: Insert file at line ...
 0248                       ;-------------------------------------------------------
-0249 7DF6 0E0D             byte  key.fctn.5, id.dialog.insert
-0250 7DF8 6DEC             data  edkey.action.cmdb.fastmode.toggle
+0249 7DFA 0E0D             byte  key.fctn.5, id.dialog.insert
+0250 7DFC 6DEC             data  edkey.action.cmdb.fastmode.toggle
 0251               
-0252 7DFA 0D0D             byte  key.enter, id.dialog.insert
-0253 7DFC 6B38             data  edkey.action.cmdb.insert
+0252 7DFE 0D0D             byte  key.enter, id.dialog.insert
+0253 7E00 6B38             data  edkey.action.cmdb.insert
 0254                       ;-------------------------------------------------------
 0255                       ; Dialog: Append file
 0256                       ;-------------------------------------------------------
-0257 7DFE 0E0E             byte  key.fctn.5, id.dialog.append
-0258 7E00 6DEC             data  edkey.action.cmdb.fastmode.toggle
+0257 7E02 0E0E             byte  key.fctn.5, id.dialog.append
+0258 7E04 6DEC             data  edkey.action.cmdb.fastmode.toggle
 0259               
-0260 7E02 0D0E             byte  key.enter, id.dialog.append
-0261 7E04 6BBA             data  edkey.action.cmdb.append
+0260 7E06 0D0E             byte  key.enter, id.dialog.append
+0261 7E08 6BBA             data  edkey.action.cmdb.append
 0262                       ;-------------------------------------------------------
 0263                       ; Dialog: Copy clipboard to line ...
 0264                       ;-------------------------------------------------------
-0265 7E06 0E67             byte  key.fctn.5, id.dialog.clipboard
-0266 7E08 6DEC             data  edkey.action.cmdb.fastmode.toggle
+0265 7E0A 0E67             byte  key.fctn.5, id.dialog.clipboard
+0266 7E0C 6DEC             data  edkey.action.cmdb.fastmode.toggle
 0267               
-0268 7E0A 0167             byte  key.fctn.7, id.dialog.clipboard
-0269 7E0C 79AE             data  dialog.clipdev
+0268 7E0E 0167             byte  key.fctn.7, id.dialog.clipboard
+0269 7E10 79AE             data  dialog.clipdev
 0270               
-0271 7E0E 3167             byte  key.num.1, id.dialog.clipboard
-0272 7E10 6C2E             data  edkey.action.cmdb.clip.1
+0271 7E12 3167             byte  key.num.1, id.dialog.clipboard
+0272 7E14 6C2E             data  edkey.action.cmdb.clip.1
 0273               
-0274 7E12 3267             byte  key.num.2, id.dialog.clipboard
-0275 7E14 6C34             data  edkey.action.cmdb.clip.2
+0274 7E16 3267             byte  key.num.2, id.dialog.clipboard
+0275 7E18 6C34             data  edkey.action.cmdb.clip.2
 0276               
-0277 7E16 3367             byte  key.num.3, id.dialog.clipboard
-0278 7E18 6C3A             data  edkey.action.cmdb.clip.3
+0277 7E1A 3367             byte  key.num.3, id.dialog.clipboard
+0278 7E1C 6C3A             data  edkey.action.cmdb.clip.3
 0279               
-0280 7E1A 3467             byte  key.num.4, id.dialog.clipboard
-0281 7E1C 6C40             data  edkey.action.cmdb.clip.4
+0280 7E1E 3467             byte  key.num.4, id.dialog.clipboard
+0281 7E20 6C40             data  edkey.action.cmdb.clip.4
 0282               
-0283 7E1E 3567             byte  key.num.5, id.dialog.clipboard
-0284 7E20 6C46             data  edkey.action.cmdb.clip.5
+0283 7E22 3567             byte  key.num.5, id.dialog.clipboard
+0284 7E24 6C46             data  edkey.action.cmdb.clip.5
 0285                       ;-------------------------------------------------------
 0286                       ; Dialog: Configure clipboard
 0287                       ;-------------------------------------------------------
-0288 7E22 0D11             byte  key.enter, id.dialog.clipdev
-0289 7E24 6C7A             data  edkey.action.cmdb.clipdev.configure
+0288 7E26 0D11             byte  key.enter, id.dialog.clipdev
+0289 7E28 6C7A             data  edkey.action.cmdb.clipdev.configure
 0290                       ;-------------------------------------------------------
 0291                       ; Dialog: Configure
 0292                       ;-------------------------------------------------------
-0293 7E26 436C             byte  key.uc.c, id.dialog.config
-0294 7E28 79AE             data  dialog.clipdev
+0293 7E2A 436C             byte  key.uc.c, id.dialog.config
+0294 7E2C 79AE             data  dialog.clipdev
 0295                       ;-------------------------------------------------------
 0296                       ; Dialog: Save file
 0297                       ;-------------------------------------------------------
-0298 7E2A 0D0B             byte  key.enter, id.dialog.save
-0299 7E2C 6CCA             data  edkey.action.cmdb.save
+0298 7E2E 0D0B             byte  key.enter, id.dialog.save
+0299 7E30 6CCA             data  edkey.action.cmdb.save
 0300               
-0301 7E2E 0D0C             byte  key.enter, id.dialog.saveblock
-0302 7E30 6CCA             data  edkey.action.cmdb.save
+0301 7E32 0D0C             byte  key.enter, id.dialog.saveblock
+0302 7E34 6CCA             data  edkey.action.cmdb.save
 0303                       ;-------------------------------------------------------
 0304                       ; Dialog: Print file
 0305                       ;-------------------------------------------------------
-0306 7E32 0D0F             byte  key.enter, id.dialog.print
-0307 7E34 6D46             data  edkey.action.cmdb.print
+0306 7E36 0D0F             byte  key.enter, id.dialog.print
+0307 7E38 6D46             data  edkey.action.cmdb.print
 0308               
-0309 7E36 0D10             byte  key.enter, id.dialog.printblock
-0310 7E38 6D46             data  edkey.action.cmdb.print
+0309 7E3A 0D10             byte  key.enter, id.dialog.printblock
+0310 7E3C 6D46             data  edkey.action.cmdb.print
 0311                       ;-------------------------------------------------------
 0312                       ; Dialog: Unsaved changes
 0313                       ;-------------------------------------------------------
-0314 7E3A 0C65             byte  key.fctn.6, id.dialog.unsaved
-0315 7E3C 6DC2             data  edkey.action.cmdb.proceed
+0314 7E3E 0C65             byte  key.fctn.6, id.dialog.unsaved
+0315 7E40 6DC2             data  edkey.action.cmdb.proceed
 0316               
-0317 7E3E 2065             byte  key.space, id.dialog.unsaved
-0318 7E40 6DC2             data  edkey.action.cmdb.proceed
+0317 7E42 2065             byte  key.space, id.dialog.unsaved
+0318 7E44 6DC2             data  edkey.action.cmdb.proceed
 0319               
-0320 7E42 0D65             byte  key.enter, id.dialog.unsaved
-0321 7E44 796E             data  dialog.save
+0320 7E46 0D65             byte  key.enter, id.dialog.unsaved
+0321 7E48 796E             data  dialog.save
 0322                       ;-------------------------------------------------------
 0323                       ; Dialog: Cartridge
 0324                       ;-------------------------------------------------------
-0325 7E46 426A             byte  key.uc.b, id.dialog.cartridge
-0326 7E48 79D6             data  dialog.basic
+0325 7E4A 426A             byte  key.uc.b, id.dialog.cartridge
+0326 7E4C 79D6             data  dialog.basic
 0327               
-0328 7E4A 466A             byte  key.uc.f, id.dialog.cartridge
-0329 7E4C 7C42             data  fg99.cart.run.fcmd
+0328 7E4E 466A             byte  key.uc.f, id.dialog.cartridge
+0329 7E50 7C60             data  fg99.cart.run.fcmd
 0330               
-0331 7E4E 586A             byte  key.uc.x, id.dialog.cartridge
-0332 7E50 7C48             data  fg99.cart.run.xb
+0331 7E52 586A             byte  key.uc.x, id.dialog.cartridge
+0332 7E54 7C42             data  fg99.cart.run.xb
 0333               
-0334 7E52 476A             byte  key.uc.g, id.dialog.cartridge
-0335 7E54 7C52             data  fg99.cart.run.xbgem
+0334 7E56 476A             byte  key.uc.g, id.dialog.cartridge
+0335 7E58 7C4C             data  fg99.cart.run.xbgem
 0336               
-0337 7E56 526A             byte  key.uc.r, id.dialog.cartridge
-0338 7E58 7C5C             data  fg99.cart.run.rxb
+0337 7E5A 526A             byte  key.uc.r, id.dialog.cartridge
+0338 7E5C 7C56             data  fg99.cart.run.rxb
 0339                       ;-------------------------------------------------------
 0340                       ; Dialog: Basic
 0341                       ;-------------------------------------------------------
-0342 7E5A 316B             byte  key.num.1, id.dialog.basic
-0343 7E5C 7BDA             data  tibasic1
+0342 7E5E 316B             byte  key.num.1, id.dialog.basic
+0343 7E60 7BDA             data  tibasic1
 0344               
-0345 7E5E 326B             byte  key.num.2, id.dialog.basic
-0346 7E60 7BE2             data  tibasic2
+0345 7E62 326B             byte  key.num.2, id.dialog.basic
+0346 7E64 7BE2             data  tibasic2
 0347               
-0348 7E62 336B             byte  key.num.3, id.dialog.basic
-0349 7E64 7BEA             data  tibasic3
+0348 7E66 336B             byte  key.num.3, id.dialog.basic
+0349 7E68 7BEA             data  tibasic3
 0350               
-0351 7E66 346B             byte  key.num.4, id.dialog.basic
-0352 7E68 7BF2             data  tibasic4
+0351 7E6A 346B             byte  key.num.4, id.dialog.basic
+0352 7E6C 7BF2             data  tibasic4
 0353               
-0354 7E6A 356B             byte  key.num.5, id.dialog.basic
-0355 7E6C 7BFA             data  tibasic5
+0354 7E6E 356B             byte  key.num.5, id.dialog.basic
+0355 7E70 7BFA             data  tibasic5
 0356               
-0357 7E6E 0E6B             byte  key.fctn.5, id.dialog.basic
-0358 7E70 6DF8             data  edkey.action.cmdb.am.toggle
+0357 7E72 0E6B             byte  key.fctn.5, id.dialog.basic
+0358 7E74 6DF8             data  edkey.action.cmdb.am.toggle
 0359               
-0360 7E72 206B             byte  key.space, id.dialog.basic
-0361 7E74 7C28             data  tibasic.uncrunch
+0360 7E76 206B             byte  key.space, id.dialog.basic
+0361 7E78 7C28             data  tibasic.uncrunch
 0362                       ;-------------------------------------------------------
 0363                       ; Dialog: Shortcuts
 0364                       ;-------------------------------------------------------
-0365 7E76 436E             byte  key.uc.c, id.dialog.shortcuts
-0366 7E78 71FE             data  pane.action.colorscheme.cycle
+0365 7E7A 436E             byte  key.uc.c, id.dialog.shortcuts
+0366 7E7C 71FE             data  pane.action.colorscheme.cycle
 0367               
-0368 7E7A 526E             byte  key.uc.r, id.dialog.shortcuts
-0369 7E7C 6832             data  edkey.action.toggle.ruler
+0368 7E7E 526E             byte  key.uc.r, id.dialog.shortcuts
+0369 7E80 6832             data  edkey.action.toggle.ruler
 0370               
-0371 7E7E 416E             byte  key.uc.a, id.dialog.shortcuts
-0372 7E80 6E2A             data  edkey.action.cmdb.autoinsert
+0371 7E82 416E             byte  key.uc.a, id.dialog.shortcuts
+0372 7E84 6E2A             data  edkey.action.cmdb.autoinsert
 0373               
-0374 7E82 316E             byte  key.num.1, id.dialog.shortcuts
-0375 7E84 68E8             data  edkey.action.block.m1
+0374 7E86 316E             byte  key.num.1, id.dialog.shortcuts
+0375 7E88 68E8             data  edkey.action.block.m1
 0376               
-0377 7E86 326E             byte  key.num.2, id.dialog.shortcuts
-0378 7E88 68F0             data  edkey.action.block.m2
+0377 7E8A 326E             byte  key.num.2, id.dialog.shortcuts
+0378 7E8C 68F0             data  edkey.action.block.m2
 0379               
-0380 7E8A 476E             byte  key.uc.g, id.dialog.shortcuts
-0381 7E8C 79F4             data  dialog.goto
+0380 7E8E 476E             byte  key.uc.g, id.dialog.shortcuts
+0381 7E90 79F4             data  dialog.goto
 0382                       ;-------------------------------------------------------
 0383                       ; Dialog: Goto
 0384                       ;-------------------------------------------------------
-0385 7E8E 0D12             byte  key.enter, id.dialog.goto
-0386 7E90 6E62             data  edkey.action.cmdb.goto
+0385 7E92 0D12             byte  key.enter, id.dialog.goto
+0386 7E94 6E62             data  edkey.action.cmdb.goto
 0387                       ;-------------------------------------------------------
 0388                       ; Dialog: Help
 0389                       ;-------------------------------------------------------
-0390 7E92 2068             byte  key.space, id.dialog.help
-0391 7E94 7946             data  dialog.help.next
+0390 7E96 2068             byte  key.space, id.dialog.help
+0391 7E98 7946             data  dialog.help.next
 0392               
-0393 7E96 0F68             byte  key.fctn.9, id.dialog.help
-0394 7E98 6E0C             data  edkey.action.cmdb.close.about
+0393 7E9A 0F68             byte  key.fctn.9, id.dialog.help
+0394 7E9C 6E0C             data  edkey.action.cmdb.close.about
 0395               
-0396 7E9A 0D68             byte  key.enter, id.dialog.help
-0397 7E9C 6E0C             data  edkey.action.cmdb.close.about
+0396 7E9E 0D68             byte  key.enter, id.dialog.help
+0397 7EA0 6E0C             data  edkey.action.cmdb.close.about
 0398                       ;-------------------------------------------------------
 0399                       ; Movement keys
 0400                       ;-------------------------------------------------------
-0401 7E9E 0801             byte  key.fctn.s, pane.focus.cmdb
-0402 7EA0 6A02             data  edkey.action.cmdb.left
+0401 7EA2 0801             byte  key.fctn.s, pane.focus.cmdb
+0402 7EA4 6A02             data  edkey.action.cmdb.left
 0403               
-0404 7EA2 0901             byte  key.fctn.d, pane.focus.cmdb
-0405 7EA4 6A14             data  edkey.action.cmdb.right
+0404 7EA6 0901             byte  key.fctn.d, pane.focus.cmdb
+0405 7EA8 6A14             data  edkey.action.cmdb.right
 0406               
-0407 7EA6 BF01             byte  key.fctn.h, pane.focus.cmdb
-0408 7EA8 6A2C             data  edkey.action.cmdb.home
+0407 7EAA BF01             byte  key.fctn.h, pane.focus.cmdb
+0408 7EAC 6A2C             data  edkey.action.cmdb.home
 0409               
-0410 7EAA C201             byte  key.fctn.l, pane.focus.cmdb
-0411 7EAC 6A40             data  edkey.action.cmdb.end
+0410 7EAE C201             byte  key.fctn.l, pane.focus.cmdb
+0411 7EB0 6A40             data  edkey.action.cmdb.end
 0412                       ;-------------------------------------------------------
 0413                       ; Modifier keys
 0414                       ;-------------------------------------------------------
-0415 7EAE 0701             byte  key.fctn.3, pane.focus.cmdb
-0416 7EB0 6A58             data  edkey.action.cmdb.clear
+0415 7EB2 0701             byte  key.fctn.3, pane.focus.cmdb
+0416 7EB4 6A58             data  edkey.action.cmdb.clear
 0417                       ;-------------------------------------------------------
 0418                       ; Other action keys
 0419                       ;-------------------------------------------------------
-0420 7EB2 0F01             byte  key.fctn.9, pane.focus.cmdb
-0421 7EB4 79FE             data  dialog.menu
+0420 7EB6 0F01             byte  key.fctn.9, pane.focus.cmdb
+0421 7EB8 79FE             data  dialog.menu
 0422               
-0423 7EB6 0501             byte  key.fctn.plus, pane.focus.cmdb
-0424 7EB8 6872             data  edkey.action.quit
+0423 7EBA 0501             byte  key.fctn.plus, pane.focus.cmdb
+0424 7EBC 6872             data  edkey.action.quit
 0425               
-0426 7EBA 8101             byte  key.ctrl.a, pane.focus.cmdb
-0427 7EBC 6E04             data  edkey.action.cmdb.preset
+0426 7EBE 8101             byte  key.ctrl.a, pane.focus.cmdb
+0427 7EC0 6E04             data  edkey.action.cmdb.preset
 0428               
-0429 7EBE 8201             byte  key.ctrl.b, pane.focus.cmdb
-0430 7EC0 6E04             data  edkey.action.cmdb.preset
+0429 7EC2 8201             byte  key.ctrl.b, pane.focus.cmdb
+0430 7EC4 6E04             data  edkey.action.cmdb.preset
 0431               
-0432 7EC2 8301             byte  key.ctrl.c, pane.focus.cmdb
-0433 7EC4 6E04             data  edkey.action.cmdb.preset
+0432 7EC6 8301             byte  key.ctrl.c, pane.focus.cmdb
+0433 7EC8 6E04             data  edkey.action.cmdb.preset
 0434               
-0435 7EC6 9A01             byte  key.ctrl.z, pane.focus.cmdb
-0436 7EC8 71FE             data  pane.action.colorscheme.cycle
+0435 7ECA 9A01             byte  key.ctrl.z, pane.focus.cmdb
+0436 7ECC 71FE             data  pane.action.colorscheme.cycle
 0437                       ;------------------------------------------------------
 0438                       ; End of list
 0439                       ;-------------------------------------------------------
-0440 7ECA FFFF             data  EOL                           ; EOL
+0440 7ECE FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
 0154                       ;-----------------------------------------------------------------------
 0155                       ; Bank full check
@@ -18235,12 +18321,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
-    FG99.CART.RUN....... >7C66 :     
-    FG99.CART.RUN.EXIT.. >7C74 :     
-    FG99.CART.RUN.FCMD.. >7C42 :     
-    FG99.CART.RUN.RXB... >7C5C :     
-    FG99.CART.RUN.XB.... >7C48 :     
-    FG99.CART.RUN.XBGEM. >7C52 :     
+    FG99.CART.FCMD...... >3CC4 :     
+    FG99.CART.RUN....... >7C6A :     
+    FG99.CART.RUN.EXIT.. >7C78 :     
+    FG99.CART.RUN.FCMD.. >7C60 :     
+    FG99.CART.RUN.RXB... >7C56 :     
+    FG99.CART.RUN.XB.... >7C42 :     
+    FG99.CART.RUN.XBGEM. >7C4C :     
+    FG99.CART.RXB....... >3D00 :     
+    FG99.CART.XB........ >3CD8 :     
+    FG99.CART.XBGEM..... >3CEC :     
     FG99.RUN............ >2DF6 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
@@ -18563,8 +18653,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     KEY.UC.X............ >0058 :     
     KEYCODE1............ >A028 :     
     KEYCODE2............ >A02A :     
-    KEYMAP_ACTIONS.CMDB. >7DBA :     
-    KEYMAP_ACTIONS.EDITOR >7CE4 :     
+    KEYMAP_ACTIONS.CMDB. >7DBE :     
+    KEYMAP_ACTIONS.EDITOR >7CE8 :     
     KICKSTART.CODE1..... >6040 :     
     KICKSTART.CODE2..... >6046 :     
     KICKSTART.RESUME.... >6038 :     
@@ -18578,9 +18668,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    MAGIC.CHECK......... >7CD2 :     
-    MAGIC.CLEAR......... >7CC0 :     
-    MAGIC.SET........... >7CAE :     
+    MAGIC.CHECK......... >7CD6 :     
+    MAGIC.CLEAR......... >7CC4 :     
+    MAGIC.SET........... >7CB2 :     
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
@@ -18590,9 +18680,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.SET.BOOT... >7C8A :     
-    MEM.SAMS.SET.LEGACY. >7C78 :     
-    MEM.SAMS.SET.STEVIE. >7C9C :     
+    MEM.SAMS.SET.BOOT... >7C8E :     
+    MEM.SAMS.SET.LEGACY. >7C7C :     
+    MEM.SAMS.SET.STEVIE. >7CA0 :     
     MEM.SAMS.SETUP.STEVIE >60F6 :     
     MEM.SAMS.SETUP.STEVIE.EXIT >6110 :     
     MKHEX............... >2918 :     
@@ -19005,7 +19095,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.ERROR.MSG........ >A232 :     
     TV.ERROR.ROWS....... >A22A :     
     TV.ERROR.VISIBLE.... >A228 :     
-    TV.FG99.CARTIDX..... >A230 :     
+    TV.FG99.IMG.PTR..... >A230 :     
     TV.FJ.STACKPNT...... >A226 :     
     TV.FREE............. >A2D2 :     
     TV.INIT............. >32B0 :     

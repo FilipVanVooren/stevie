@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221227-2334190
+0002               * BUILD: 221228-0016510
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -360,7 +360,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0227      A22A     tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 0228      A22C     tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
 0229      A22E     tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
-0230      A230     tv.fg99.cartidx   equ  tv.top + 48     ; Index of Final GROM cartridge to load
+0230      A230     tv.fg99.img.ptr   equ  tv.top + 48     ; Pointer to Final GROM cartridge to load
 0231      A232     tv.error.msg      equ  tv.top + 50     ; Error message (max. 160 characters)
 0232      A2D2     tv.free           equ  tv.top + 210    ; End of structure
 0233               *--------------------------------------------------------------
@@ -5521,7 +5521,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0015               *--------------------------------------------------------------
 0016               *  bl   @xfg99
 0017               *
-0018               *  tmp0   = Pointer to FG99 cartridge table entry
+0018               *  tmp0 = Pointer to FG99 cartridge table entry
 0019               *--------------------------------------------------------------
 0020               * Remark
 0021               * https://github.com/endlos99/finalgrom99/blob/master/lib/reload_example.a99
@@ -5556,9 +5556,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047 2DDA 0602  22         dec   r2                    ; Prepare for next iteration
 0048 2DDC 16F7  14         jne   fg99.send.loop        ; Next byte
 0049               
-0050 2DDE 04E0  34         clr   @>6000                ; done sending filename
+0050 2DDE 04E0  34         clr   @>6000                ; Done sending filename
      2DE0 6000     
-0051 2DE2 0B80  40         src   r0, 8                 ; burn at least 21 cycles
+0051 2DE2 0B80  40         src   r0, 8                 ; Burn at least 21 cycles
 0052               *--------------------------------------------------------------
 0053               * (3) Wait for image to be loaded by FinalGROM
 0054               *--------------------------------------------------------------
@@ -8447,7 +8447,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049                       ;------------------------------------------------------
 0050                       ; Program data
 0051                       ;------------------------------------------------------
-0052                       copy  "data.constants.asm"     ; Constants
+0052                       copy  "data.constants.asm"          ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -8695,7 +8695,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0193 385E 0009     const.9       data  9               ; 9
 0194 3860 000A     const.10      data  10              ; 10
                    < ram.resident.asm
-0053                       copy  "data.strings.asm"       ; Strings
+0053                       copy  "data.strings.asm"            ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -9300,7 +9300,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C6C 653A     
 0152                                  even
                    < ram.resident.asm
-0054                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+0054                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
 0001               * FILE......: data.defaults.asm
 0002               * Purpose...: Default values for Stevie
@@ -9356,16 +9356,100 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3CC0 3233     
      3CC2 32       
                    < ram.resident.asm
+0055                       copy  "data.fg99.carts.asm"         ; Cartridge images
+     **** ****     > data.fg99.carts.asm
+0001               * FILE......: data.fg99.carts.asm
+0002               * Purpose...: FinalGROM cartridge images
+0003               
+0004               ***************************************************************
+0005               *                   Cartridge images
+0006               ***************************************************************
+0007                      even
+0008               *--------------------------------------------------------------
+0009               * Cartridge 'Force Command'
+0010               *--------------------------------------------------------------
+0011               fg99.cart.fcmd:
+0012 3CC4 99              byte   >99                   ; \
+0013 3CC5   4F            text   'OKFG99'              ; | Send this to reload
+     3CC6 4B46     
+     3CC8 4739     
+     3CCA 39       
+0014 3CCB   99            byte   >99                   ; /
+0015 3CCC 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3CCE 4D44     
+     3CD0 47       
+0016 3CD1   00            byte   >00, >00, >00         ; /
+     3CD2 0000     
+0017 3CD4 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3CD6 0000            data   >0000                 ; Start address
+0019                      even
+0020               
+0021               *--------------------------------------------------------------
+0022               * Cartridge 'TI Extended Basic'
+0023               *--------------------------------------------------------------
+0024               fg99.cart.xb:
+0025 3CD8 99              byte   >99                   ; \
+0026 3CD9   4F            text   'OKFG99'              ; | Send this to reload
+     3CDA 4B46     
+     3CDC 4739     
+     3CDE 39       
+0027 3CDF   99            byte   >99                   ; /
+0028 3CE0 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
+     3CE2 3239     
+     3CE4 4745     
+     3CE6 4D43     
+0029                      ;                            ; /
+0030 3CE8 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3CEA 0000            data   >0000                 ; Start address
+0032                      even
+0033               
+0034               *--------------------------------------------------------------
+0035               * Cartridge 'Extended Basic GEM'
+0036               *--------------------------------------------------------------
+0037               fg99.cart.xbgem:
+0038 3CEC 99              byte   >99                   ; \
+0039 3CED   4F            text   'OKFG99'              ; | Send this to reload
+     3CEE 4B46     
+     3CF0 4739     
+     3CF2 39       
+0040 3CF3   99            byte   >99                   ; /
+0041 3CF4 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3CF6 3239     
+     3CF8 4745     
+     3CFA 4D47     
+0042                      ;                            ; /
+0043 3CFC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3CFE 0000            data   >0000                 ; Start address
+0045                      even
+0046               
+0047               *--------------------------------------------------------------
+0048               * Cartridge 'Rich Extended Basic'
+0049               *--------------------------------------------------------------
+0050               fg99.cart.rxb:
+0051 3D00 99              byte   >99                   ; \
+0052 3D01   4F            text   'OKFG99'              ; | Send this to reload
+     3D02 4B46     
+     3D04 4739     
+     3D06 39       
+0053 3D07   99            byte   >99                   ; /
+0054 3D08 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3D0A 4247     
+0055 3D0C 0000            byte   >00, >00, >00, >00    ; /
+     3D0E 0000     
+0056 3D10 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3D12 0000            data   >0000                 ; Start address
+0058                      even
+                   < ram.resident.asm
                    < stevie_b3.asm
 0051                       ;------------------------------------------------------
 0052                       ; Activate bank 1 and branch to  >6036
 0053                       ;------------------------------------------------------
-0054 3CC4 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3CC6 6002     
+0054 3D14 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3D16 6002     
 0055               
 0059               
-0060 3CC8 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3CCA 6046     
+0060 3D18 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3D1A 6046     
 0061               ***************************************************************
 0062               * Step 3: Include main editor modules
 0063               ********|*****|*********************|**************************
@@ -14382,13 +14466,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7790 3A20     
 0131                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7792 3232                        text '221227-2334190'
+0001 7792 3232                        text '221228-0016510'
      7794 3132     
-     7796 3237     
-     7798 2D32     
-     779A 3333     
-     779C 3431     
-     779E 3930     
+     7796 3238     
+     7798 2D30     
+     779A 3031     
+     779C 3635     
+     779E 3130     
                    < data.dialogs.asm
 0132 77A0 202F                        text ' / Stevie (c)2018-2023 Filip Van Vooren'
      77A2 2053     
@@ -15465,6 +15549,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
+    FG99.CART.FCMD...... >3CC4 :     
+    FG99.CART.RXB....... >3D00 :     
+    FG99.CART.XB........ >3CD8 :     
+    FG99.CART.XBGEM..... >3CEC :     
     FG99.RUN............ >2DF6 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
@@ -16195,7 +16283,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.ERROR.MSG........ >A232 :     
     TV.ERROR.ROWS....... >A22A :     
     TV.ERROR.VISIBLE.... >A228 :     
-    TV.FG99.CARTIDX..... >A230 :     
+    TV.FG99.IMG.PTR..... >A230 :     
     TV.FJ.STACKPNT...... >A226 :     
     TV.FREE............. >A2D2 :     
     TV.INIT............. >32B0 :     

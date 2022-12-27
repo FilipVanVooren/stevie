@@ -49,6 +49,7 @@
         ;------------------------------------------------------
         ; Program data
         ;------------------------------------------------------
-        copy  "data.constants.asm"     ; Constants
-        copy  "data.strings.asm"       ; Strings
-        copy  "data.defaults.asm"      ; Default values (devices, ...)
+        copy  "data.constants.asm"          ; Constants
+        copy  "data.strings.asm"            ; Strings
+        copy  "data.defaults.asm"           ; Default values (devices, ...)
+        copy  "data.fg99.carts.asm"         ; Cartridge images

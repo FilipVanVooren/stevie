@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221227-2334190
+0002               * BUILD: 221228-0016510
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -360,7 +360,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0227      A22A     tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
 0228      A22C     tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
 0229      A22E     tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
-0230      A230     tv.fg99.cartidx   equ  tv.top + 48     ; Index of Final GROM cartridge to load
+0230      A230     tv.fg99.img.ptr   equ  tv.top + 48     ; Pointer to Final GROM cartridge to load
 0231      A232     tv.error.msg      equ  tv.top + 50     ; Error message (max. 160 characters)
 0232      A2D2     tv.free           equ  tv.top + 210    ; End of structure
 0233               *--------------------------------------------------------------
@@ -5527,7 +5527,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0015               *--------------------------------------------------------------
 0016               *  bl   @xfg99
 0017               *
-0018               *  tmp0   = Pointer to FG99 cartridge table entry
+0018               *  tmp0 = Pointer to FG99 cartridge table entry
 0019               *--------------------------------------------------------------
 0020               * Remark
 0021               * https://github.com/endlos99/finalgrom99/blob/master/lib/reload_example.a99
@@ -5562,9 +5562,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047 2DDA 0602  22         dec   r2                    ; Prepare for next iteration
 0048 2DDC 16F7  14         jne   fg99.send.loop        ; Next byte
 0049               
-0050 2DDE 04E0  34         clr   @>6000                ; done sending filename
+0050 2DDE 04E0  34         clr   @>6000                ; Done sending filename
      2DE0 6000     
-0051 2DE2 0B80  40         src   r0, 8                 ; burn at least 21 cycles
+0051 2DE2 0B80  40         src   r0, 8                 ; Burn at least 21 cycles
 0052               *--------------------------------------------------------------
 0053               * (3) Wait for image to be loaded by FinalGROM
 0054               *--------------------------------------------------------------
@@ -8453,7 +8453,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049                       ;------------------------------------------------------
 0050                       ; Program data
 0051                       ;------------------------------------------------------
-0052                       copy  "data.constants.asm"     ; Constants
+0052                       copy  "data.constants.asm"          ; Constants
      **** ****     > data.constants.asm
 0001               * FILE......: data.constants.asm
 0002               * Purpose...: Stevie Editor - data segment (constants)
@@ -8701,7 +8701,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0193 385E 0009     const.9       data  9               ; 9
 0194 3860 000A     const.10      data  10              ; 10
                    < ram.resident.asm
-0053                       copy  "data.strings.asm"       ; Strings
+0053                       copy  "data.strings.asm"            ; Strings
      **** ****     > data.strings.asm
 0001               * FILE......: data.strings.asm
 0002               * Purpose...: Stevie Editor - data segment (strings)
@@ -9306,7 +9306,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C6C 653A     
 0152                                  even
                    < ram.resident.asm
-0054                       copy  "data.defaults.asm"      ; Default values (devices, ...)
+0054                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
 0001               * FILE......: data.defaults.asm
 0002               * Purpose...: Default values for Stevie
@@ -9362,16 +9362,100 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3CC0 3233     
      3CC2 32       
                    < ram.resident.asm
+0055                       copy  "data.fg99.carts.asm"         ; Cartridge images
+     **** ****     > data.fg99.carts.asm
+0001               * FILE......: data.fg99.carts.asm
+0002               * Purpose...: FinalGROM cartridge images
+0003               
+0004               ***************************************************************
+0005               *                   Cartridge images
+0006               ***************************************************************
+0007                      even
+0008               *--------------------------------------------------------------
+0009               * Cartridge 'Force Command'
+0010               *--------------------------------------------------------------
+0011               fg99.cart.fcmd:
+0012 3CC4 99              byte   >99                   ; \
+0013 3CC5   4F            text   'OKFG99'              ; | Send this to reload
+     3CC6 4B46     
+     3CC8 4739     
+     3CCA 39       
+0014 3CCB   99            byte   >99                   ; /
+0015 3CCC 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3CCE 4D44     
+     3CD0 47       
+0016 3CD1   00            byte   >00, >00, >00         ; /
+     3CD2 0000     
+0017 3CD4 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3CD6 0000            data   >0000                 ; Start address
+0019                      even
+0020               
+0021               *--------------------------------------------------------------
+0022               * Cartridge 'TI Extended Basic'
+0023               *--------------------------------------------------------------
+0024               fg99.cart.xb:
+0025 3CD8 99              byte   >99                   ; \
+0026 3CD9   4F            text   'OKFG99'              ; | Send this to reload
+     3CDA 4B46     
+     3CDC 4739     
+     3CDE 39       
+0027 3CDF   99            byte   >99                   ; /
+0028 3CE0 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
+     3CE2 3239     
+     3CE4 4745     
+     3CE6 4D43     
+0029                      ;                            ; /
+0030 3CE8 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3CEA 0000            data   >0000                 ; Start address
+0032                      even
+0033               
+0034               *--------------------------------------------------------------
+0035               * Cartridge 'Extended Basic GEM'
+0036               *--------------------------------------------------------------
+0037               fg99.cart.xbgem:
+0038 3CEC 99              byte   >99                   ; \
+0039 3CED   4F            text   'OKFG99'              ; | Send this to reload
+     3CEE 4B46     
+     3CF0 4739     
+     3CF2 39       
+0040 3CF3   99            byte   >99                   ; /
+0041 3CF4 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3CF6 3239     
+     3CF8 4745     
+     3CFA 4D47     
+0042                      ;                            ; /
+0043 3CFC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3CFE 0000            data   >0000                 ; Start address
+0045                      even
+0046               
+0047               *--------------------------------------------------------------
+0048               * Cartridge 'Rich Extended Basic'
+0049               *--------------------------------------------------------------
+0050               fg99.cart.rxb:
+0051 3D00 99              byte   >99                   ; \
+0052 3D01   4F            text   'OKFG99'              ; | Send this to reload
+     3D02 4B46     
+     3D04 4739     
+     3D06 39       
+0053 3D07   99            byte   >99                   ; /
+0054 3D08 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3D0A 4247     
+0055 3D0C 0000            byte   >00, >00, >00, >00    ; /
+     3D0E 0000     
+0056 3D10 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3D12 0000            data   >0000                 ; Start address
+0058                      even
+                   < ram.resident.asm
                    < stevie_b7.asm
 0055                       ;------------------------------------------------------
 0056                       ; Activate bank 1 and branch to  >6036
 0057                       ;------------------------------------------------------
-0058 3CC4 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3CC6 6002     
+0058 3D14 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3D16 6002     
 0059               
 0063               
-0064 3CC8 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3CCA 6046     
+0064 3D18 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3D1A 6046     
 0065               ***************************************************************
 0066               * Step 3: Include main editor modules
 0067               ********|*****|*********************|**************************
@@ -9614,7 +9698,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0074                       ; Setup SAMS banks using inline code
 0075                       ;-------------------------------------------------------
 0076 60D2 0200  20         li    r0,mem.sams.layout.legacy
-     60D4 6CA8     
+     60D4 6CA2     
 0077 60D6 06A0  32         bl    @_mem.sams.set.banks  ; Set SAMS banks
      60D8 60A2     
 0078                       ;-------------------------------------------------------
@@ -9670,7 +9754,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0115                       ; Setup SAMS banks using inline code
 0116                       ;-------------------------------------------------------
 0117 6104 0200  20         li    r0,mem.sams.layout.boot
-     6106 6C88     
+     6106 6C82     
 0118 6108 10CC  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0119               
 0120               
@@ -9700,7 +9784,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0144                       ; Setup SAMS banks using inline code
 0145                       ;-------------------------------------------------------
 0146 610A 0200  20         li    r0,mem.sams.layout.external
-     610C 6C98     
+     610C 6C92     
 0147 610E 10C9  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
 0148               
 0149               
@@ -9728,7 +9812,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0171                       ; Setup SAMS banks using inline code
 0172                       ;-------------------------------------------------------
 0173 6110 0200  20         li    r0,mem.sams.layout.basic1
-     6112 6CB8     
+     6112 6CB2     
 0174 6114 C800  38         mov   r0,@tib.samstab.ptr
      6116 A0EA     
 0175 6118 10C4  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
@@ -9757,7 +9841,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0198                       ; Setup SAMS banks using inline code
 0199                       ;-------------------------------------------------------
 0200 611A 0200  20         li    r0,mem.sams.layout.basic2
-     611C 6CC8     
+     611C 6CC2     
 0201 611E C800  38         mov   r0,@tib.samstab.ptr
      6120 A0EA     
 0202 6122 10BF  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
@@ -9786,7 +9870,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0225                       ; Setup SAMS banks using inline code
 0226                       ;-------------------------------------------------------
 0227 6124 0200  20         li    r0,mem.sams.layout.basic3
-     6126 6CD8     
+     6126 6CD2     
 0228 6128 C800  38         mov   r0,@tib.samstab.ptr
      612A A0EA     
 0229 612C 10BA  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
@@ -9814,7 +9898,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0251                       ; Setup SAMS banks using inline code
 0252                       ;-------------------------------------------------------
 0253 612E 0200  20         li    r0,mem.sams.layout.basic4
-     6130 6CE8     
+     6130 6CE2     
 0254 6132 C800  38         mov   r0,@tib.samstab.ptr
      6134 A0EA     
 0255 6136 10B5  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
@@ -9842,7 +9926,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0277                       ; Setup SAMS banks using inline code
 0278                       ;-------------------------------------------------------
 0279 6138 0200  20         li    r0,mem.sams.layout.basic5
-     613A 6CF8     
+     613A 6CF2     
 0280 613C C800  38         mov   r0,@tib.samstab.ptr
      613E A0EA     
 0281 6140 10B0  14         jmp   _mem.sams.set.banks   ; Set SAMS banks
@@ -11041,10 +11125,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0281               
 0282               
 0283 6622 06A0  32         bl    @tibasic.buildstr     ; Build session identifier string
-     6624 6C52     
+     6624 6C4C     
 0284               
 0285 6626 06A0  32         bl    @pane.action.colorscheme.load
-     6628 6C1C     
+     6628 6C16     
 0286                                                   ; Reload color scheme
 0287                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0288                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -11196,7 +11280,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      668E A006     
 0032               
 0033 6690 06A0  32         bl    @fm.newfile           ; \ Clear editor buffer
-     6692 6C40     
+     6692 6C3A     
 0034                                                   ; / (destroys parm1)
 0035                       ;------------------------------------------------------
 0036                       ; Determine filename
@@ -11211,7 +11295,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      66A0 A21C     
      66A2 A006     
 0043 66A4 06A0  32         bl    @pane.action.colorscheme.statlines
-     66A6 6C2E     
+     66A6 6C28     
 0044                                                   ; Set color combination for status line
 0045                                                   ; \ i  @parm1 = Color combination
 0046                                                   ; /
@@ -11257,13 +11341,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077                       ; Close dialog and refresh frame buffer
 0078                       ;------------------------------------------------------
 0079 66D2 06A0  32         bl    @cmdb.dialog.close    ; Close dialog
-     66D4 6C0A     
+     66D4 6C04     
 0080               
 0081 66D6 04E0  34         clr   @parm1                ; Goto line 1
      66D8 A006     
 0082               
 0083 66DA 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     66DC 6C64     
+     66DC 6C5E     
 0084                                                   ; | i  @parm1 = Line to start with
 0085                                                   ; /             (becomes @fb.topline)
 0086               
@@ -11480,7 +11564,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0144                                                   ; /
 0145               
 0146 67A2 0224  22         ai    tmp0,mem.sams.layout.basic - 16
-     67A4 6CA8     
+     67A4 6CA2     
 0147                                                   ; Add base address for specified session
 0148               
 0149 67A6 C804  38         mov   tmp0,@tib.stab.ptr    ; Save pointer
@@ -12020,7 +12104,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      699E FF80     
 0079 69A0 0A14  18         sla   tmp0,1                ; Make it a word offset
 0080 69A2 C124  34         mov   @tib.tokenindex(tmp0),tmp0
-     69A4 6F9C     
+     69A4 6F96     
 0081                                                   ; Get pointer to token definition
 0082 69A6 0584  14         inc   tmp0                  ; Skip token identifier
 0083               
@@ -12458,7 +12542,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * bl   @fg99.cart.run
 0010               *--------------------------------------------------------------
 0011               * INPUT
-0012               * @parm1 = Pointer to cartridge image
+0012               * @tv.fg99.img.ptr = Pointer to cartridge image entry
 0013               *
 0014               * OUTPUT
 0015               * none
@@ -12556,24 +12640,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0084                                                   ; (3) Copy OS monitor scratchpad dump from
 0085                                                   ;     cartridge rom to @cpu.scrpad.tgt
 0086               
-0087 6BFC C120  34         mov   @tv.fg99.cartidx,tmp0
+0087 6BFC C120  34         mov   @tv.fg99.img.ptr,tmp0 ; Get pointer to cartridge image
      6BFE A230     
-0088 6C00 0A14  18         sla   tmp0,1
-0089 6C02 C124  34         mov   @fg99.carts.index(tmp0),tmp0
-     6C04 70F0     
-0090               
-0091 6C06 06A0  32         bl    @xfg99                ; Run FinalGROM cartridge image
-     6C08 2DC6     
-0092                                                   ; \ i tmp0 = Pointer to cartridge image
-0093                                                   ; /          table entry
-0094               
-0095                       ;lwpi  cpu.scrpad2           ; Flip workspace before starting restore
-0096                       ;bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt
-0097                       ;lwpi  cpu.scrpad1           ; Flip workspace to scratchpad again
-0098               
-0099                       ; ATTENTION
-0100                       ; From here on no more access to any of the SP2 or stevie routines.
-0101                       ; We're on unknown territory.
+0088 6C00 06A0  32         bl    @xfg99                ; Run FinalGROM cartridge image
+     6C02 2DC6     
+0089                                                   ; \ i tmp0 = Pointer to cartridge image
+0090                                                   ; /
+0091               
+0092                       ;lwpi  cpu.scrpad2           ; Flip workspace before starting restore
+0093                       ;bl    @cpu.scrpad.restore   ; Restore scratchpad from @cpu.scrpad.tgt
+0094                       ;lwpi  cpu.scrpad1           ; Flip workspace to scratchpad again
+0095               
+0096                       ; ATTENTION
+0097                       ; From here on no more access to any of the SP2 or stevie routines.
+0098                       ; We're on unknown territory.
                    < stevie_b7.asm
 0095                       ;-----------------------------------------------------------------------
 0096                       ; Stubs
@@ -12590,21 +12670,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008               * bank1 vec.18
 0009               ********|*****|*********************|**************************
 0010               cmdb.dialog.close:
-0011 6C0A 0649  14         dect  stack
-0012 6C0C C64B  30         mov   r11,*stack            ; Save return address
+0011 6C04 0649  14         dect  stack
+0012 6C06 C64B  30         mov   r11,*stack            ; Save return address
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 1
 0015                       ;------------------------------------------------------
-0016 6C0E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C10 2FA6     
-0017 6C12 6002                   data bank1.rom        ; | i  p0 = bank address
-0018 6C14 7FE2                   data vec.18           ; | i  p1 = Vector with target address
-0019 6C16 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 6C08 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C0A 2FA6     
+0017 6C0C 6002                   data bank1.rom        ; | i  p0 = bank address
+0018 6C0E 7FE2                   data vec.18           ; | i  p1 = Vector with target address
+0019 6C10 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023 6C18 C2F9  30         mov   *stack+,r11           ; Pop r11
-0024 6C1A 045B  20         b     *r11                  ; Return to caller
+0023 6C12 C2F9  30         mov   *stack+,r11           ; Pop r11
+0024 6C14 045B  20         b     *r11                  ; Return to caller
 0025               
 0026               
 0027               ***************************************************************
@@ -12612,21 +12692,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029               * bank1 vec.31
 0030               ********|*****|*********************|**************************
 0031               pane.action.colorscheme.load:
-0032 6C1C 0649  14         dect  stack
-0033 6C1E C64B  30         mov   r11,*stack            ; Save return address
+0032 6C16 0649  14         dect  stack
+0033 6C18 C64B  30         mov   r11,*stack            ; Save return address
 0034                       ;------------------------------------------------------
 0035                       ; Call function in bank 1
 0036                       ;------------------------------------------------------
-0037 6C20 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C22 2FA6     
-0038 6C24 6002                   data bank1.rom        ; | i  p0 = bank address
-0039 6C26 7FFC                   data vec.31           ; | i  p1 = Vector with target address
-0040 6C28 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0037 6C1A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C1C 2FA6     
+0038 6C1E 6002                   data bank1.rom        ; | i  p0 = bank address
+0039 6C20 7FFC                   data vec.31           ; | i  p1 = Vector with target address
+0040 6C22 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0041                       ;------------------------------------------------------
 0042                       ; Exit
 0043                       ;------------------------------------------------------
-0044 6C2A C2F9  30         mov   *stack+,r11           ; Pop r11
-0045 6C2C 045B  20         b     *r11                  ; Return to caller
+0044 6C24 C2F9  30         mov   *stack+,r11           ; Pop r11
+0045 6C26 045B  20         b     *r11                  ; Return to caller
 0046               
 0047               
 0048               ***************************************************************
@@ -12634,42 +12714,42 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0050               * bank1 vec.32
 0051               ********|*****|*********************|**************************
 0052               pane.action.colorscheme.statlines:
-0053 6C2E 0649  14         dect  stack
-0054 6C30 C64B  30         mov   r11,*stack            ; Save return address
+0053 6C28 0649  14         dect  stack
+0054 6C2A C64B  30         mov   r11,*stack            ; Save return address
 0055                       ;------------------------------------------------------
 0056                       ; Call function in bank 1
 0057                       ;------------------------------------------------------
-0058 6C32 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C34 2FA6     
-0059 6C36 6002                   data bank1.rom        ; | i  p0 = bank address
-0060 6C38 7FFE                   data vec.32           ; | i  p1 = Vector with target address
-0061 6C3A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0058 6C2C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C2E 2FA6     
+0059 6C30 6002                   data bank1.rom        ; | i  p0 = bank address
+0060 6C32 7FFE                   data vec.32           ; | i  p1 = Vector with target address
+0061 6C34 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0062                       ;------------------------------------------------------
 0063                       ; Exit
 0064                       ;------------------------------------------------------
-0065 6C3C C2F9  30         mov   *stack+,r11           ; Pop r11
-0066 6C3E 045B  20         b     *r11                  ; Return to caller
+0065 6C36 C2F9  30         mov   *stack+,r11           ; Pop r11
+0066 6C38 045B  20         b     *r11                  ; Return to caller
 0067               
 0068               ***************************************************************
 0069               * Stub for "fm.newfile"
 0070               * bank2 vec.5
 0071               ********|*****|*********************|**************************
 0072               fm.newfile:
-0073 6C40 0649  14         dect  stack
-0074 6C42 C64B  30         mov   r11,*stack            ; Save return address
+0073 6C3A 0649  14         dect  stack
+0074 6C3C C64B  30         mov   r11,*stack            ; Save return address
 0075                       ;------------------------------------------------------
 0076                       ; Call function in bank 2
 0077                       ;------------------------------------------------------
-0078 6C44 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C46 2FA6     
-0079 6C48 6004                   data bank2.rom        ; | i  p0 = bank address
-0080 6C4A 7FC8                   data vec.5            ; | i  p1 = Vector with target address
-0081 6C4C 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0078 6C3E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C40 2FA6     
+0079 6C42 6004                   data bank2.rom        ; | i  p0 = bank address
+0080 6C44 7FC8                   data vec.5            ; | i  p1 = Vector with target address
+0081 6C46 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0082                       ;------------------------------------------------------
 0083                       ; Exit
 0084                       ;------------------------------------------------------
-0085 6C4E C2F9  30         mov   *stack+,r11           ; Pop r11
-0086 6C50 045B  20         b     *r11                  ; Return to caller
+0085 6C48 C2F9  30         mov   *stack+,r11           ; Pop r11
+0086 6C4A 045B  20         b     *r11                  ; Return to caller
 0087               
 0088               
 0089               ***************************************************************
@@ -12677,21 +12757,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0091               * bank3 vec.23
 0092               ********|*****|*********************|**************************
 0093               tibasic.buildstr:
-0094 6C52 0649  14         dect  stack
-0095 6C54 C64B  30         mov   r11,*stack            ; Save return address
+0094 6C4C 0649  14         dect  stack
+0095 6C4E C64B  30         mov   r11,*stack            ; Save return address
 0096                       ;------------------------------------------------------
 0097                       ; Call function in bank 3
 0098                       ;------------------------------------------------------
-0099 6C56 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C58 2FA6     
-0100 6C5A 6006                   data bank3.rom        ; | i  p0 = bank address
-0101 6C5C 7FEC                   data vec.23           ; | i  p1 = Vector with target address
-0102 6C5E 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0099 6C50 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C52 2FA6     
+0100 6C54 6006                   data bank3.rom        ; | i  p0 = bank address
+0101 6C56 7FEC                   data vec.23           ; | i  p1 = Vector with target address
+0102 6C58 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0103                       ;------------------------------------------------------
 0104                       ; Exit
 0105                       ;------------------------------------------------------
-0106 6C60 C2F9  30         mov   *stack+,r11           ; Pop r11
-0107 6C62 045B  20         b     *r11                  ; Return to caller
+0106 6C5A C2F9  30         mov   *stack+,r11           ; Pop r11
+0107 6C5C 045B  20         b     *r11                  ; Return to caller
 0108               
 0109               
 0110               ***************************************************************
@@ -12699,21 +12779,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0112               * bank4 vec.8
 0113               ********|*****|*********************|**************************
 0114               fb.refresh:
-0115 6C64 0649  14         dect  stack
-0116 6C66 C64B  30         mov   r11,*stack            ; Save return address
+0115 6C5E 0649  14         dect  stack
+0116 6C60 C64B  30         mov   r11,*stack            ; Save return address
 0117                       ;------------------------------------------------------
 0118                       ; Call function in bank 1
 0119                       ;------------------------------------------------------
-0120 6C68 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C6A 2FA6     
-0121 6C6C 6008                   data bank4.rom        ; | i  p0 = bank address
-0122 6C6E 7FCE                   data vec.8            ; | i  p1 = Vector with target address
-0123 6C70 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0120 6C62 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C64 2FA6     
+0121 6C66 6008                   data bank4.rom        ; | i  p0 = bank address
+0122 6C68 7FCE                   data vec.8            ; | i  p1 = Vector with target address
+0123 6C6A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0124                       ;------------------------------------------------------
 0125                       ; Exit
 0126                       ;------------------------------------------------------
-0127 6C72 C2F9  30         mov   *stack+,r11           ; Pop r11
-0128 6C74 045B  20         b     *r11                  ; Return to caller
+0127 6C6C C2F9  30         mov   *stack+,r11           ; Pop r11
+0128 6C6E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b7.asm
 0099                       copy  "rom.stubs.bankx.asm"        ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
@@ -12726,21 +12806,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008               * bank1 vec.1
 0009               ********|*****|*********************|**************************
 0010               mem.sams.setup.stevie:
-0011 6C76 0649  14         dect  stack
-0012 6C78 C64B  30         mov   r11,*stack            ; Save return address
+0011 6C70 0649  14         dect  stack
+0012 6C72 C64B  30         mov   r11,*stack            ; Save return address
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 1
 0015                       ;------------------------------------------------------
-0016 6C7A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6C7C 2FA6     
-0017 6C7E 6002                   data bank1.rom        ; | i  p0 = bank address
-0018 6C80 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0019 6C82 600E                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 6C74 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6C76 2FA6     
+0017 6C78 6002                   data bank1.rom        ; | i  p0 = bank address
+0018 6C7A 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0019 6C7C 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023 6C84 C2F9  30         mov   *stack+,r11           ; Pop r11
-0024 6C86 045B  20         b     *r11                  ; Return to caller
+0023 6C7E C2F9  30         mov   *stack+,r11           ; Pop r11
+0024 6C80 045B  20         b     *r11                  ; Return to caller
 0026               
 0027               
 0049               
@@ -12794,22 +12874,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0033               * Stevie boot order
 0034               *--------------------------------------------------------------
 0035               mem.sams.layout.boot:
-0036 6C88 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0037 6C8A 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0038 6C8C 0400             data  >0400                 ; >a000-afff, SAMS page >04
-0039 6C8E 2000             data  >2000                 ; >b000-bfff, SAMS page >20
+0036 6C82 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0037 6C84 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0038 6C86 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0039 6C88 2000             data  >2000                 ; >b000-bfff, SAMS page >20
 0040                                                   ; \
 0041                                                   ; | Index can allocate
 0042                                                   ; | pages >20 to >3f.
 0043                                                   ; /
-0044 6C90 4000             data  >4000                 ; >c000-cfff, SAMS page >40
+0044 6C8A 4000             data  >4000                 ; >c000-cfff, SAMS page >40
 0045                                                   ; \
 0046                                                   ; | Editor buffer can allocate
 0047                                                   ; | pages >40 to >ff.
 0048                                                   ; /
-0049 6C92 0500             data  >0500                 ; >d000-dfff, SAMS page >05
-0050 6C94 0600             data  >0600                 ; >e000-efff, SAMS page >06
-0051 6C96 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0049 6C8C 0500             data  >0500                 ; >d000-dfff, SAMS page >05
+0050 6C8E 0600             data  >0600                 ; >e000-efff, SAMS page >06
+0051 6C90 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0052               
 0053               
 0054               ***************************************************************
@@ -12817,16 +12897,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056               * Before running external progam
 0057               *--------------------------------------------------------------
 0058               mem.sams.layout.external:
-0059 6C98 0000             data  >0000                 ; >2000-2fff, SAMS page >00
-0060 6C9A 0100             data  >0100                 ; >3000-3fff, SAMS page >01
-0061 6C9C 0400             data  >0400                 ; >a000-afff, SAMS page >04
+0059 6C92 0000             data  >0000                 ; >2000-2fff, SAMS page >00
+0060 6C94 0100             data  >0100                 ; >3000-3fff, SAMS page >01
+0061 6C96 0400             data  >0400                 ; >a000-afff, SAMS page >04
 0062               
-0063 6C9E 1000             data  >1000                 ; >b000-efff, SAMS page >10
-0064 6CA0 1100             data  >1100                 ; \
-0065 6CA2 1200             data  >1200                 ; | Stevie session
-0066 6CA4 1300             data  >1300                 ; | VDP content
+0063 6C98 1000             data  >1000                 ; >b000-efff, SAMS page >10
+0064 6C9A 1100             data  >1100                 ; \
+0065 6C9C 1200             data  >1200                 ; | Stevie session
+0066 6C9E 1300             data  >1300                 ; | VDP content
 0067                                                   ; /
-0068 6CA6 0700             data  >0700                 ; >f000-ffff, SAMS page >07
+0068 6CA0 0700             data  >0700                 ; >f000-ffff, SAMS page >07
 0069               
 0070               
 0071               ***************************************************************
@@ -12834,14 +12914,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0073               * While running external program
 0074               *--------------------------------------------------------------
 0075               mem.sams.layout.legacy:
-0076 6CA8 0200             data  >0200                 ; >2000-2fff, SAMS page >02
-0077 6CAA 0300             data  >0300                 ; >3000-3fff, SAMS page >03
-0078 6CAC 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
-0079 6CAE 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
-0080 6CB0 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
-0081 6CB2 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
-0082 6CB4 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
-0083 6CB6 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
+0076 6CA2 0200             data  >0200                 ; >2000-2fff, SAMS page >02
+0077 6CA4 0300             data  >0300                 ; >3000-3fff, SAMS page >03
+0078 6CA6 0A00             data  >0a00                 ; >a000-afff, SAMS page >0a
+0079 6CA8 0B00             data  >0b00                 ; >b000-bfff, SAMS page >0b
+0080 6CAA 0C00             data  >0c00                 ; >c000-cfff, SAMS page >0c
+0081 6CAC 0D00             data  >0d00                 ; >d000-dfff, SAMS page >0d
+0082 6CAE 0E00             data  >0e00                 ; >e000-efff, SAMS page >0e
+0083 6CB0 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
 0084               
 0085               
 0086               
@@ -12850,14 +12930,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089               * Backup TI Basic session 1 VRAM, scratchpad + auxiliary
 0090               *--------------------------------------------------------------
 0091               mem.sams.layout.basic1:
-0092 6CB8 0000             data  >0000                 ; . >2000-2fff
-0093 6CBA 0100             data  >0100                 ; . >3000-3fff
-0094 6CBC 0400             data  >0400                 ; . >a000-afff
-0095 6CBE FB00             data  >fb00                 ; \ >b000-efff
-0096 6CC0 FC00             data  >fc00                 ; |
-0097 6CC2 FD00             data  >fd00                 ; | 16K VDP dump
-0098 6CC4 FE00             data  >fe00                 ; /
-0099 6CC6 FF00             data  >ff00                 ; . >f000-ffff
+0092 6CB2 0000             data  >0000                 ; . >2000-2fff
+0093 6CB4 0100             data  >0100                 ; . >3000-3fff
+0094 6CB6 0400             data  >0400                 ; . >a000-afff
+0095 6CB8 FB00             data  >fb00                 ; \ >b000-efff
+0096 6CBA FC00             data  >fc00                 ; |
+0097 6CBC FD00             data  >fd00                 ; | 16K VDP dump
+0098 6CBE FE00             data  >fe00                 ; /
+0099 6CC0 FF00             data  >ff00                 ; . >f000-ffff
 0100               
 0101               
 0102               ***************************************************************
@@ -12865,14 +12945,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0104               * Backup TI Basic session 2 VRAM, scratchpad + auxiliary
 0105               *--------------------------------------------------------------
 0106               mem.sams.layout.basic2:
-0107 6CC8 0000             data  >0000                 ; . >2000-2fff
-0108 6CCA 0100             data  >0100                 ; . >3000-3fff
-0109 6CCC 0400             data  >0400                 ; . >a000-afff
-0110 6CCE F700             data  >f700                 ; \ >b000-efff
-0111 6CD0 F800             data  >f800                 ; |
-0112 6CD2 F900             data  >f900                 ; | 16K VDP dump
-0113 6CD4 FA00             data  >fa00                 ; /
-0114 6CD6 FF00             data  >ff00                 ; . >f000-ffff
+0107 6CC2 0000             data  >0000                 ; . >2000-2fff
+0108 6CC4 0100             data  >0100                 ; . >3000-3fff
+0109 6CC6 0400             data  >0400                 ; . >a000-afff
+0110 6CC8 F700             data  >f700                 ; \ >b000-efff
+0111 6CCA F800             data  >f800                 ; |
+0112 6CCC F900             data  >f900                 ; | 16K VDP dump
+0113 6CCE FA00             data  >fa00                 ; /
+0114 6CD0 FF00             data  >ff00                 ; . >f000-ffff
 0115               
 0116               
 0117               ***************************************************************
@@ -12880,14 +12960,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0119               * Backup TI Basic session 3 VRAM, scratchpad + auxiliary
 0120               *--------------------------------------------------------------
 0121               mem.sams.layout.basic3:
-0122 6CD8 0000             data  >0000                 ; . >2000-2fff
-0123 6CDA 0100             data  >0100                 ; . >3000-3fff
-0124 6CDC 0400             data  >0400                 ; . >a000-afff
-0125 6CDE F300             data  >f300                 ; \ >b000-efff
-0126 6CE0 F400             data  >f400                 ; |
-0127 6CE2 F500             data  >f500                 ; | 16K VDP dump
-0128 6CE4 F600             data  >f600                 ; /
-0129 6CE6 FF00             data  >ff00                 ; . >f000-ffff
+0122 6CD2 0000             data  >0000                 ; . >2000-2fff
+0123 6CD4 0100             data  >0100                 ; . >3000-3fff
+0124 6CD6 0400             data  >0400                 ; . >a000-afff
+0125 6CD8 F300             data  >f300                 ; \ >b000-efff
+0126 6CDA F400             data  >f400                 ; |
+0127 6CDC F500             data  >f500                 ; | 16K VDP dump
+0128 6CDE F600             data  >f600                 ; /
+0129 6CE0 FF00             data  >ff00                 ; . >f000-ffff
 0130               
 0131               
 0132               ***************************************************************
@@ -12895,14 +12975,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0134               * Backup TI Basic session 4 VRAM, scratchpad + auxiliary
 0135               *--------------------------------------------------------------
 0136               mem.sams.layout.basic4:
-0137 6CE8 0000             data  >0000                 ; . >2000-2fff
-0138 6CEA 0100             data  >0100                 ; . >3000-3fff
-0139 6CEC 0400             data  >0400                 ; . >a000-afff
-0140 6CEE EF00             data  >ef00                 ; \ >b000-efff
-0141 6CF0 F000             data  >f000                 ; |
-0142 6CF2 F100             data  >f100                 ; | 16K VDP dump
-0143 6CF4 F200             data  >f200                 ; /
-0144 6CF6 FF00             data  >ff00                 ; . >f000-ffff
+0137 6CE2 0000             data  >0000                 ; . >2000-2fff
+0138 6CE4 0100             data  >0100                 ; . >3000-3fff
+0139 6CE6 0400             data  >0400                 ; . >a000-afff
+0140 6CE8 EF00             data  >ef00                 ; \ >b000-efff
+0141 6CEA F000             data  >f000                 ; |
+0142 6CEC F100             data  >f100                 ; | 16K VDP dump
+0143 6CEE F200             data  >f200                 ; /
+0144 6CF0 FF00             data  >ff00                 ; . >f000-ffff
 0145               
 0146               
 0147               ***************************************************************
@@ -12910,17 +12990,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0149               * Backup TI Basic session 5 VRAM, scratchpad + auxiliary
 0150               *--------------------------------------------------------------
 0151               mem.sams.layout.basic5:
-0152 6CF8 0000             data  >0000                 ; . >2000-2fff
-0153 6CFA 0100             data  >0100                 ; . >3000-3fff
-0154 6CFC 0400             data  >0400                 ; . >a000-afff
-0155 6CFE EB00             data  >eb00                 ; \ >b000-efff
-0156 6D00 EC00             data  >ec00                 ; |
-0157 6D02 ED00             data  >ed00                 ; | 16K VDP dump
-0158 6D04 EE00             data  >ee00                 ; /
-0159 6D06 FF00             data  >ff00                 ; . >f000-ffff
+0152 6CF2 0000             data  >0000                 ; . >2000-2fff
+0153 6CF4 0100             data  >0100                 ; . >3000-3fff
+0154 6CF6 0400             data  >0400                 ; . >a000-afff
+0155 6CF8 EB00             data  >eb00                 ; \ >b000-efff
+0156 6CFA EC00             data  >ec00                 ; |
+0157 6CFC ED00             data  >ed00                 ; | 16K VDP dump
+0158 6CFE EE00             data  >ee00                 ; /
+0159 6D00 FF00             data  >ff00                 ; . >f000-ffff
 0160               
 0161               
-0162      6CB8     mem.sams.layout.basic  equ mem.sams.layout.basic1
+0162      6CB2     mem.sams.layout.basic  equ mem.sams.layout.basic1
                    < stevie_b7.asm
 0104                       copy  "data.tib.tokens.asm"        ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
@@ -12935,672 +13015,579 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               ;-----------------------------------------------------------------------
 0010               ; Command tokens
 0011               ;-----------------------------------------------------------------------
-0012 6D08 0003     tk.00   byte   >00,3,'R','U','N'
-     6D0A 5255     
-     6D0C 4E       
+0012 6D02 0003     tk.00   byte   >00,3,'R','U','N'
+     6D04 5255     
+     6D06 4E       
 0013                       even
-0014 6D0E 0103     tk.01   byte   >01,3,'N','E','W'
-     6D10 4E45     
-     6D12 57       
+0014 6D08 0103     tk.01   byte   >01,3,'N','E','W'
+     6D0A 4E45     
+     6D0C 57       
 0015                       even
-0016 6D14 0203     tk.02   byte   >02,3,'C','O','N'
-     6D16 434F     
-     6D18 4E       
+0016 6D0E 0203     tk.02   byte   >02,3,'C','O','N'
+     6D10 434F     
+     6D12 4E       
 0017                       even
-0018 6D1A 0208     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
-     6D1C 434F     
-     6D1E 4E54     
-     6D20 494E     
-     6D22 5545     
+0018 6D14 0208     tk.02l  byte   >02,8,'C','O','N','T','I','N','U','E'
+     6D16 434F     
+     6D18 4E54     
+     6D1A 494E     
+     6D1C 5545     
 0019                       even
-0020 6D24 0304     tk.03   byte   >03,4,'L','I','S','T'
-     6D26 4C49     
-     6D28 5354     
+0020 6D1E 0304     tk.03   byte   >03,4,'L','I','S','T'
+     6D20 4C49     
+     6D22 5354     
 0021                       even
-0022 6D2A 0403     tk.04   byte   >04,3,'B','Y','E'
-     6D2C 4259     
-     6D2E 45       
+0022 6D24 0403     tk.04   byte   >04,3,'B','Y','E'
+     6D26 4259     
+     6D28 45       
 0023                       even
-0024 6D30 0503     tk.05   byte   >05,3,'N','U','M'
-     6D32 4E55     
-     6D34 4D       
+0024 6D2A 0503     tk.05   byte   >05,3,'N','U','M'
+     6D2C 4E55     
+     6D2E 4D       
 0025                       even
-0026 6D36 0506     tk.05l  byte   >05,6,'N','U','M','B','E','R'
-     6D38 4E55     
-     6D3A 4D42     
-     6D3C 4552     
+0026 6D30 0506     tk.05l  byte   >05,6,'N','U','M','B','E','R'
+     6D32 4E55     
+     6D34 4D42     
+     6D36 4552     
 0027                       even
-0028 6D3E 0603     tk.06   byte   >06,3,'O','L','D'
-     6D40 4F4C     
-     6D42 44       
+0028 6D38 0603     tk.06   byte   >06,3,'O','L','D'
+     6D3A 4F4C     
+     6D3C 44       
 0029                       even
-0030 6D44 0703     tk.07   byte   >07,3,'R','E','S'
-     6D46 5245     
-     6D48 53       
+0030 6D3E 0703     tk.07   byte   >07,3,'R','E','S'
+     6D40 5245     
+     6D42 53       
 0031                       even
-0032 6D4A 070A     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
-     6D4C 5245     
-     6D4E 5345     
-     6D50 5155     
-     6D52 454E     
-     6D54 4345     
+0032 6D44 070A     tk.07l  byte   >07,10,'R','E','S','E','Q','U','E','N','C','E'
+     6D46 5245     
+     6D48 5345     
+     6D4A 5155     
+     6D4C 454E     
+     6D4E 4345     
 0033                       even
-0034 6D56 0804     tk.08   byte   >08,4,'S','A','V','E'
-     6D58 5341     
-     6D5A 5645     
+0034 6D50 0804     tk.08   byte   >08,4,'S','A','V','E'
+     6D52 5341     
+     6D54 5645     
 0035                       even
-0036 6D5C 0904     tk.09   byte   >09,4,'E','D','I','T'
-     6D5E 4544     
-     6D60 4954     
+0036 6D56 0904     tk.09   byte   >09,4,'E','D','I','T'
+     6D58 4544     
+     6D5A 4954     
 0037                       even
 0038               ;-----------------------------------------------------------------------
 0039               ; Program tokens
 0040               ;-----------------------------------------------------------------------
-0041 6D62 8105     tk.81   byte   >81,5,' ','E','L','S','E'
-     6D64 2045     
-     6D66 4C53     
-     6D68 45       
+0041 6D5C 8105     tk.81   byte   >81,5,' ','E','L','S','E'
+     6D5E 2045     
+     6D60 4C53     
+     6D62 45       
 0042                       even
-0043 6D6A 8402     tk.84   byte   >84,2,'I','F'
-     6D6C 4946     
+0043 6D64 8402     tk.84   byte   >84,2,'I','F'
+     6D66 4946     
 0044                       even
-0045 6D6E 8502     tk.85   byte   >85,2,'G','O'
-     6D70 474F     
+0045 6D68 8502     tk.85   byte   >85,2,'G','O'
+     6D6A 474F     
 0046                       even
-0047 6D72 8604     tk.86   byte   >86,4,'G','O','T','O'
-     6D74 474F     
-     6D76 544F     
+0047 6D6C 8604     tk.86   byte   >86,4,'G','O','T','O'
+     6D6E 474F     
+     6D70 544F     
 0048                       even
-0049 6D78 8705     tk.87   byte   >87,5,'G','O','S','U','B'
-     6D7A 474F     
-     6D7C 5355     
-     6D7E 42       
+0049 6D72 8705     tk.87   byte   >87,5,'G','O','S','U','B'
+     6D74 474F     
+     6D76 5355     
+     6D78 42       
 0050                       even
-0051 6D80 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
-     6D82 5245     
-     6D84 5455     
-     6D86 524E     
+0051 6D7A 8806     tk.88   byte   >88,6,'R','E','T','U','R','N'
+     6D7C 5245     
+     6D7E 5455     
+     6D80 524E     
 0052                       even
-0053 6D88 8903     tk.89   byte   >89,3,'D','E','F'
-     6D8A 4445     
-     6D8C 46       
+0053 6D82 8903     tk.89   byte   >89,3,'D','E','F'
+     6D84 4445     
+     6D86 46       
 0054                       even
-0055 6D8E 8A03     tk.8a   byte   >8A,3,'D','I','M'
-     6D90 4449     
-     6D92 4D       
+0055 6D88 8A03     tk.8a   byte   >8A,3,'D','I','M'
+     6D8A 4449     
+     6D8C 4D       
 0056                       even
-0057 6D94 8B03     tk.8b   byte   >8B,3,'E','N','D'
-     6D96 454E     
-     6D98 44       
+0057 6D8E 8B03     tk.8b   byte   >8B,3,'E','N','D'
+     6D90 454E     
+     6D92 44       
 0058                       even
-0059 6D9A 8C03     tk.8c   byte   >8C,3,'F','O','R'
-     6D9C 464F     
-     6D9E 52       
+0059 6D94 8C03     tk.8c   byte   >8C,3,'F','O','R'
+     6D96 464F     
+     6D98 52       
 0060                       even
-0061 6DA0 8D03     tk.8d   byte   >8D,3,'L','E','T'
-     6DA2 4C45     
-     6DA4 54       
+0061 6D9A 8D03     tk.8d   byte   >8D,3,'L','E','T'
+     6D9C 4C45     
+     6D9E 54       
 0062                       even
-0063 6DA6 8E05     tk.8e   byte   >8E,5,'B','R','E','A','K'
-     6DA8 4252     
-     6DAA 4541     
-     6DAC 4B       
+0063 6DA0 8E05     tk.8e   byte   >8E,5,'B','R','E','A','K'
+     6DA2 4252     
+     6DA4 4541     
+     6DA6 4B       
 0064                       even
-0065 6DAE 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
-     6DB0 554E     
-     6DB2 4252     
-     6DB4 4541     
-     6DB6 4B       
+0065 6DA8 8F07     tk.8f   byte   >8F,7,'U','N','B','R','E','A','K'
+     6DAA 554E     
+     6DAC 4252     
+     6DAE 4541     
+     6DB0 4B       
 0066                       even
-0067 6DB8 9005     tk.90   byte   >90,5,'T','R','A','C','E'
-     6DBA 5452     
-     6DBC 4143     
-     6DBE 45       
+0067 6DB2 9005     tk.90   byte   >90,5,'T','R','A','C','E'
+     6DB4 5452     
+     6DB6 4143     
+     6DB8 45       
 0068                       even
-0069 6DC0 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
-     6DC2 554E     
-     6DC4 5452     
-     6DC6 4143     
-     6DC8 45       
+0069 6DBA 9107     tk.91   byte   >91,7,'U','N','T','R','A','C','E'
+     6DBC 554E     
+     6DBE 5452     
+     6DC0 4143     
+     6DC2 45       
 0070                       even
-0071 6DCA 9205     tk.92   byte   >92,5,'I','N','P','U','T'
-     6DCC 494E     
-     6DCE 5055     
-     6DD0 54       
+0071 6DC4 9205     tk.92   byte   >92,5,'I','N','P','U','T'
+     6DC6 494E     
+     6DC8 5055     
+     6DCA 54       
 0072                       even
-0073 6DD2 9304     tk.93   byte   >93,4,'D','A','T','A'
-     6DD4 4441     
-     6DD6 5441     
+0073 6DCC 9304     tk.93   byte   >93,4,'D','A','T','A'
+     6DCE 4441     
+     6DD0 5441     
 0074                       even
-0075 6DD8 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
-     6DDA 5245     
-     6DDC 5354     
-     6DDE 4F52     
-     6DE0 45       
+0075 6DD2 9407     tk.94   byte   >94,7,'R','E','S','T','O','R','E'
+     6DD4 5245     
+     6DD6 5354     
+     6DD8 4F52     
+     6DDA 45       
 0076                       even
-0077 6DE2 9509     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
-     6DE4 5241     
-     6DE6 4E44     
-     6DE8 4F4D     
-     6DEA 495A     
-     6DEC 45       
+0077 6DDC 9509     tk.95   byte   >95,9,'R','A','N','D','O','M','I','Z','E'
+     6DDE 5241     
+     6DE0 4E44     
+     6DE2 4F4D     
+     6DE4 495A     
+     6DE6 45       
 0078                       even
-0079 6DEE 9604     tk.96   byte   >96,4,'N','E','X','T'
-     6DF0 4E45     
-     6DF2 5854     
+0079 6DE8 9604     tk.96   byte   >96,4,'N','E','X','T'
+     6DEA 4E45     
+     6DEC 5854     
 0080                       even
-0081 6DF4 9704     tk.97   byte   >97,4,'R','E','A','D'
-     6DF6 5245     
-     6DF8 4144     
+0081 6DEE 9704     tk.97   byte   >97,4,'R','E','A','D'
+     6DF0 5245     
+     6DF2 4144     
 0082                       even
-0083 6DFA 9804     tk.98   byte   >98,4,'S','T','O','P'
-     6DFC 5354     
-     6DFE 4F50     
+0083 6DF4 9804     tk.98   byte   >98,4,'S','T','O','P'
+     6DF6 5354     
+     6DF8 4F50     
 0084                       even
-0085 6E00 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
-     6E02 4445     
-     6E04 4C45     
-     6E06 5445     
+0085 6DFA 9906     tk.99   byte   >99,6,'D','E','L','E','T','E'
+     6DFC 4445     
+     6DFE 4C45     
+     6E00 5445     
 0086                       even
-0087 6E08 9A03     tk.9a   byte   >9A,3,'R','E','M'
-     6E0A 5245     
-     6E0C 4D       
+0087 6E02 9A03     tk.9a   byte   >9A,3,'R','E','M'
+     6E04 5245     
+     6E06 4D       
 0088                       even
-0089 6E0E 9B02     tk.9b   byte   >9B,2,'O','N'
-     6E10 4F4E     
+0089 6E08 9B02     tk.9b   byte   >9B,2,'O','N'
+     6E0A 4F4E     
 0090                       even
-0091 6E12 9C05     tk.9c   byte   >9C,5,'P','R','I','N','T'
-     6E14 5052     
-     6E16 494E     
-     6E18 54       
+0091 6E0C 9C05     tk.9c   byte   >9C,5,'P','R','I','N','T'
+     6E0E 5052     
+     6E10 494E     
+     6E12 54       
 0092                       even
-0093 6E1A 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
-     6E1C 4341     
-     6E1E 4C4C     
+0093 6E14 9D04     tk.9d   byte   >9D,4,'C','A','L','L'
+     6E16 4341     
+     6E18 4C4C     
 0094                       even
-0095 6E20 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
-     6E22 4F50     
-     6E24 5449     
-     6E26 4F4E     
+0095 6E1A 9E06     tk.9e   byte   >9E,6,'O','P','T','I','O','N'
+     6E1C 4F50     
+     6E1E 5449     
+     6E20 4F4E     
 0096                       even
-0097 6E28 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
-     6E2A 4F50     
-     6E2C 454E     
+0097 6E22 9F04     tk.9f   byte   >9F,4,'O','P','E','N'
+     6E24 4F50     
+     6E26 454E     
 0098                       even
-0099 6E2E A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
-     6E30 434C     
-     6E32 4F53     
-     6E34 45       
+0099 6E28 A005     tk.a0   byte   >A0,5,'C','L','O','S','E'
+     6E2A 434C     
+     6E2C 4F53     
+     6E2E 45       
 0100                       even
-0101 6E36 A103     tk.a1   byte   >A1,3,'S','U','B'
-     6E38 5355     
-     6E3A 42       
+0101 6E30 A103     tk.a1   byte   >A1,3,'S','U','B'
+     6E32 5355     
+     6E34 42       
 0102                       even
-0103 6E3C A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
-     6E3E 4449     
-     6E40 5350     
-     6E42 4C41     
-     6E44 59       
+0103 6E36 A207     tk.a2   byte   >A2,7,'D','I','S','P','L','A','Y'
+     6E38 4449     
+     6E3A 5350     
+     6E3C 4C41     
+     6E3E 59       
 0104                       even
-0105 6E46 B005     tk.b0   byte   >B0,5,' ','T','H','E','N'
-     6E48 2054     
-     6E4A 4845     
-     6E4C 4E       
+0105 6E40 B005     tk.b0   byte   >B0,5,' ','T','H','E','N'
+     6E42 2054     
+     6E44 4845     
+     6E46 4E       
 0106                       even
-0107 6E4E B103     tk.b1   byte   >B1,3,' ','T','O'
-     6E50 2054     
-     6E52 4F       
+0107 6E48 B103     tk.b1   byte   >B1,3,' ','T','O'
+     6E4A 2054     
+     6E4C 4F       
 0108                       even
-0109 6E54 B205     tk.b2   byte   >B2,5,' ','S','T','E','P'
-     6E56 2053     
-     6E58 5445     
-     6E5A 50       
+0109 6E4E B205     tk.b2   byte   >B2,5,' ','S','T','E','P'
+     6E50 2053     
+     6E52 5445     
+     6E54 50       
 0110                       even
-0111 6E5C B301     tk.b3   byte   >B3,1,','
-     6E5E 2C       
+0111 6E56 B301     tk.b3   byte   >B3,1,','
+     6E58 2C       
 0112                       even
-0113 6E60 B401     tk.b4   byte   >B4,1,';'
-     6E62 3B       
+0113 6E5A B401     tk.b4   byte   >B4,1,';'
+     6E5C 3B       
 0114                       even
-0115 6E64 B501     tk.b5   byte   >B5,1,':'
-     6E66 3A       
+0115 6E5E B501     tk.b5   byte   >B5,1,':'
+     6E60 3A       
 0116                       even
-0117 6E68 B601     tk.b6   byte   >B6,1,')'
-     6E6A 29       
+0117 6E62 B601     tk.b6   byte   >B6,1,')'
+     6E64 29       
 0118                       even
-0119 6E6C B701     tk.b7   byte   >B7,1,'('
-     6E6E 28       
+0119 6E66 B701     tk.b7   byte   >B7,1,'('
+     6E68 28       
 0120                       even
-0121 6E70 B801     tk.b8   byte   >B8,1,'&'
-     6E72 26       
+0121 6E6A B801     tk.b8   byte   >B8,1,'&'
+     6E6C 26       
 0122                       even
-0123 6E74 BE01     tk.be   byte   >BE,1,'='
-     6E76 3D       
+0123 6E6E BE01     tk.be   byte   >BE,1,'='
+     6E70 3D       
 0124                       even
-0125 6E78 BF01     tk.bf   byte   >BF,1,'<'
-     6E7A 3C       
+0125 6E72 BF01     tk.bf   byte   >BF,1,'<'
+     6E74 3C       
 0126                       even
-0127 6E7C C001     tk.c0   byte   >C0,1,'>'
-     6E7E 3E       
+0127 6E76 C001     tk.c0   byte   >C0,1,'>'
+     6E78 3E       
 0128                       even
-0129 6E80 C101     tk.c1   byte   >C1,1,'+'
-     6E82 2B       
+0129 6E7A C101     tk.c1   byte   >C1,1,'+'
+     6E7C 2B       
 0130                       even
-0131 6E84 C201     tk.c2   byte   >C2,1,'-'
-     6E86 2D       
+0131 6E7E C201     tk.c2   byte   >C2,1,'-'
+     6E80 2D       
 0132                       even
-0133 6E88 C301     tk.c3   byte   >C3,1,'*'
-     6E8A 2A       
+0133 6E82 C301     tk.c3   byte   >C3,1,'*'
+     6E84 2A       
 0134                       even
-0135 6E8C C401     tk.c4   byte   >C4,1,'/'
-     6E8E 2F       
+0135 6E86 C401     tk.c4   byte   >C4,1,'/'
+     6E88 2F       
 0136                       even
-0137 6E90 C501     tk.c5   byte   >C5,1,'^'
-     6E92 5E       
+0137 6E8A C501     tk.c5   byte   >C5,1,'^'
+     6E8C 5E       
 0138                       even
-0139 6E94 C701     tk.c7   byte   >C7,1,34                ; Quote character
-     6E96 22       
+0139 6E8E C701     tk.c7   byte   >C7,1,34                ; Quote character
+     6E90 22       
 0140                       even
-0141 6E98 C801     tk.c8   byte   >C8,1,' '
-     6E9A 20       
+0141 6E92 C801     tk.c8   byte   >C8,1,' '
+     6E94 20       
 0142                       even
-0143 6E9C C901     tk.c9   byte   >C9,1,' '
-     6E9E 20       
+0143 6E96 C901     tk.c9   byte   >C9,1,' '
+     6E98 20       
 0144                       even
-0145 6EA0 CA03     tk.ca   byte   >CA,3,'E','O','F'
-     6EA2 454F     
-     6EA4 46       
+0145 6E9A CA03     tk.ca   byte   >CA,3,'E','O','F'
+     6E9C 454F     
+     6E9E 46       
 0146                       even
-0147 6EA6 CB03     tk.cb   byte   >CB,3,'A','B','S'
-     6EA8 4142     
-     6EAA 53       
+0147 6EA0 CB03     tk.cb   byte   >CB,3,'A','B','S'
+     6EA2 4142     
+     6EA4 53       
 0148                       even
-0149 6EAC CC03     tk.cc   byte   >CC,3,'A','T','N'
-     6EAE 4154     
-     6EB0 4E       
+0149 6EA6 CC03     tk.cc   byte   >CC,3,'A','T','N'
+     6EA8 4154     
+     6EAA 4E       
 0150                       even
-0151 6EB2 CD03     tk.cd   byte   >CD,3,'C','O','S'
-     6EB4 434F     
-     6EB6 53       
+0151 6EAC CD03     tk.cd   byte   >CD,3,'C','O','S'
+     6EAE 434F     
+     6EB0 53       
 0152                       even
-0153 6EB8 CE03     tk.ce   byte   >CE,3,'E','X','P'
-     6EBA 4558     
-     6EBC 50       
+0153 6EB2 CE03     tk.ce   byte   >CE,3,'E','X','P'
+     6EB4 4558     
+     6EB6 50       
 0154                       even
-0155 6EBE CF03     tk.cf   byte   >CF,3,'I','N','T'
-     6EC0 494E     
-     6EC2 54       
+0155 6EB8 CF03     tk.cf   byte   >CF,3,'I','N','T'
+     6EBA 494E     
+     6EBC 54       
 0156                       even
-0157 6EC4 D003     tk.d0   byte   >D0,3,'L','O','G'
-     6EC6 4C4F     
-     6EC8 47       
+0157 6EBE D003     tk.d0   byte   >D0,3,'L','O','G'
+     6EC0 4C4F     
+     6EC2 47       
 0158                       even
-0159 6ECA D103     tk.d1   byte   >D1,3,'S','G','N'
-     6ECC 5347     
-     6ECE 4E       
+0159 6EC4 D103     tk.d1   byte   >D1,3,'S','G','N'
+     6EC6 5347     
+     6EC8 4E       
 0160                       even
-0161 6ED0 D203     tk.d2   byte   >D2,3,'S','I','N'
-     6ED2 5349     
-     6ED4 4E       
+0161 6ECA D203     tk.d2   byte   >D2,3,'S','I','N'
+     6ECC 5349     
+     6ECE 4E       
 0162                       even
-0163 6ED6 D303     tk.d3   byte   >D3,3,'S','Q','R'
-     6ED8 5351     
-     6EDA 52       
+0163 6ED0 D303     tk.d3   byte   >D3,3,'S','Q','R'
+     6ED2 5351     
+     6ED4 52       
 0164                       even
-0165 6EDC D403     tk.d4   byte   >D4,3,'T','A','N'
-     6EDE 5441     
-     6EE0 4E       
+0165 6ED6 D403     tk.d4   byte   >D4,3,'T','A','N'
+     6ED8 5441     
+     6EDA 4E       
 0166                       even
-0167 6EE2 D503     tk.d5   byte   >D5,3,'L','E','N'
-     6EE4 4C45     
-     6EE6 4E       
+0167 6EDC D503     tk.d5   byte   >D5,3,'L','E','N'
+     6EDE 4C45     
+     6EE0 4E       
 0168                       even
-0169 6EE8 D604     tk.d6   byte   >D6,4,'C','H','R','$'
-     6EEA 4348     
-     6EEC 5224     
+0169 6EE2 D604     tk.d6   byte   >D6,4,'C','H','R','$'
+     6EE4 4348     
+     6EE6 5224     
 0170                       even
-0171 6EEE D703     tk.d7   byte   >D7,3,'R','N','D'
-     6EF0 524E     
-     6EF2 44       
+0171 6EE8 D703     tk.d7   byte   >D7,3,'R','N','D'
+     6EEA 524E     
+     6EEC 44       
 0172                       even
-0173 6EF4 D804     tk.d8   byte   >D8,4,'S','E','G','$'
-     6EF6 5345     
-     6EF8 4724     
+0173 6EEE D804     tk.d8   byte   >D8,4,'S','E','G','$'
+     6EF0 5345     
+     6EF2 4724     
 0174                       even
-0175 6EFA D903     tk.d9   byte   >D9,3,'P','O','S'
-     6EFC 504F     
-     6EFE 53       
+0175 6EF4 D903     tk.d9   byte   >D9,3,'P','O','S'
+     6EF6 504F     
+     6EF8 53       
 0176                       even
-0177 6F00 DA03     tk.da   byte   >DA,3,'V','A','L'
-     6F02 5641     
-     6F04 4C       
+0177 6EFA DA03     tk.da   byte   >DA,3,'V','A','L'
+     6EFC 5641     
+     6EFE 4C       
 0178                       even
-0179 6F06 DB04     tk.db   byte   >DB,4,'S','T','R','$'
-     6F08 5354     
-     6F0A 5224     
+0179 6F00 DB04     tk.db   byte   >DB,4,'S','T','R','$'
+     6F02 5354     
+     6F04 5224     
 0180                       even
-0181 6F0C DC03     tk.dc   byte   >DC,3,'A','S','C'
-     6F0E 4153     
-     6F10 43       
+0181 6F06 DC03     tk.dc   byte   >DC,3,'A','S','C'
+     6F08 4153     
+     6F0A 43       
 0182                       even
-0183 6F12 DE03     tk.de   byte   >DE,3,'R','E','C'
-     6F14 5245     
-     6F16 43       
+0183 6F0C DE03     tk.de   byte   >DE,3,'R','E','C'
+     6F0E 5245     
+     6F10 43       
 0184                       even
-0185 6F18 F104     tk.f1   byte   >F1,4,'B','A','S','E'
-     6F1A 4241     
-     6F1C 5345     
+0185 6F12 F104     tk.f1   byte   >F1,4,'B','A','S','E'
+     6F14 4241     
+     6F16 5345     
 0186                       even
-0187 6F1E F308     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
-     6F20 5641     
-     6F22 5249     
-     6F24 4142     
-     6F26 4C45     
+0187 6F18 F308     tk.f3   byte   >F3,8,'V','A','R','I','A','B','L','E'
+     6F1A 5641     
+     6F1C 5249     
+     6F1E 4142     
+     6F20 4C45     
 0188                       even
-0189 6F28 F408     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
-     6F2A 5245     
-     6F2C 4C41     
-     6F2E 5449     
-     6F30 5645     
+0189 6F22 F408     tk.f4   byte   >F4,8,'R','E','L','A','T','I','V','E'
+     6F24 5245     
+     6F26 4C41     
+     6F28 5449     
+     6F2A 5645     
 0190                       even
-0191 6F32 F508     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
-     6F34 494E     
-     6F36 5445     
-     6F38 524E     
-     6F3A 414C     
+0191 6F2C F508     tk.f5   byte   >F5,8,'I','N','T','E','R','N','A','L'
+     6F2E 494E     
+     6F30 5445     
+     6F32 524E     
+     6F34 414C     
 0192                       even
-0193 6F3C F60A     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
-     6F3E 5345     
-     6F40 5155     
-     6F42 454E     
-     6F44 5449     
-     6F46 414C     
+0193 6F36 F60A     tk.f6   byte   >F6,10,'S','E','Q','U','E','N','T','I','A','L'
+     6F38 5345     
+     6F3A 5155     
+     6F3C 454E     
+     6F3E 5449     
+     6F40 414C     
 0194                       even
-0195 6F48 F706     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
-     6F4A 4F55     
-     6F4C 5450     
-     6F4E 5554     
+0195 6F42 F706     tk.f7   byte   >F7,6,'O','U','T','P','U','T'
+     6F44 4F55     
+     6F46 5450     
+     6F48 5554     
 0196                       even
-0197 6F50 F806     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
-     6F52 5550     
-     6F54 4441     
-     6F56 5445     
+0197 6F4A F806     tk.f8   byte   >F8,6,'U','P','D','A','T','E'
+     6F4C 5550     
+     6F4E 4441     
+     6F50 5445     
 0198                       even
-0199 6F58 F906     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
-     6F5A 4150     
-     6F5C 5045     
-     6F5E 4E44     
+0199 6F52 F906     tk.f9   byte   >F9,6,'A','P','P','E','N','D'
+     6F54 4150     
+     6F56 5045     
+     6F58 4E44     
 0200                       even
-0201 6F60 FA06     tk.fa   byte   >FA,6,'F','I','X','E','D',' '
-     6F62 4649     
-     6F64 5845     
-     6F66 4420     
+0201 6F5A FA06     tk.fa   byte   >FA,6,'F','I','X','E','D',' '
+     6F5C 4649     
+     6F5E 5845     
+     6F60 4420     
 0202                       even
-0203 6F68 FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
-     6F6A 5045     
-     6F6C 524D     
-     6F6E 414E     
-     6F70 454E     
-     6F72 54       
+0203 6F62 FB09     tk.fb   byte   >FB,9,'P','E','R','M','A','N','E','N','T'
+     6F64 5045     
+     6F66 524D     
+     6F68 414E     
+     6F6A 454E     
+     6F6C 54       
 0204                       even
-0205 6F74 FC03     tk.fc   byte   >FC,3,'T','A','B'
-     6F76 5441     
-     6F78 42       
+0205 6F6E FC03     tk.fc   byte   >FC,3,'T','A','B'
+     6F70 5441     
+     6F72 42       
 0206                       even
-0207 6F7A FD01     tk.fd   byte   >FD,1,'#'
-     6F7C 23       
+0207 6F74 FD01     tk.fd   byte   >FD,1,'#'
+     6F76 23       
 0208                       even
-0209 6F7E FF01     tk.noop byte   >FF,1,'?'
-     6F80 3F       
+0209 6F78 FF01     tk.noop byte   >FF,1,'?'
+     6F7A 3F       
 0210                       even
 0211               ;-----------------------------------------------------------------------
 0212               ; Token index command mode
 0213               ;-----------------------------------------------------------------------
-0214 6F82 6D08     tki.00  data   tk.00               ; RUN
-0215 6F84 6D0E     tki.01  data   tk.01               ; NEW
-0216 6F86 6D14     tki.02  data   tk.02               ; CON
-0217 6F88 6D1A     tki.02l data   tk.02l              ; CONTINUE
-0218 6F8A 6D24     tki.03  data   tk.03               ; LIST
-0219 6F8C 6D2A     tki.04  data   tk.04               ; BYE
-0220 6F8E 6D30     tki.05  data   tk.05               ; NUM
-0221 6F90 6D36     tki.05l data   tk.05l              ; NUMBER
-0222 6F92 6D3E     tki.06  data   tk.06               ; OLD
-0223 6F94 6D44     tki.07  data   tk.07               ; RES
-0224 6F96 6D4A     tki.07l data   tk.07l              ; RESEQUENCE
-0225 6F98 6D56     tki.08  data   tk.08               ; SAVE
-0226 6F9A 6D5C     tki.09  data   tk.09               ; EDIT
+0214 6F7C 6D02     tki.00  data   tk.00               ; RUN
+0215 6F7E 6D08     tki.01  data   tk.01               ; NEW
+0216 6F80 6D0E     tki.02  data   tk.02               ; CON
+0217 6F82 6D14     tki.02l data   tk.02l              ; CONTINUE
+0218 6F84 6D1E     tki.03  data   tk.03               ; LIST
+0219 6F86 6D24     tki.04  data   tk.04               ; BYE
+0220 6F88 6D2A     tki.05  data   tk.05               ; NUM
+0221 6F8A 6D30     tki.05l data   tk.05l              ; NUMBER
+0222 6F8C 6D38     tki.06  data   tk.06               ; OLD
+0223 6F8E 6D3E     tki.07  data   tk.07               ; RES
+0224 6F90 6D44     tki.07l data   tk.07l              ; RESEQUENCE
+0225 6F92 6D50     tki.08  data   tk.08               ; SAVE
+0226 6F94 6D56     tki.09  data   tk.09               ; EDIT
 0227               ;-----------------------------------------------------------------------
 0228               ; Token index program statement
 0229               ;-----------------------------------------------------------------------
-0230 6F9C 6F7E     tki.80  data   tk.noop             ;
-0231 6F9E 6D62     tki.81  data   tk.81               ; ELSE
-0232 6FA0 6F7E     tki.82  data   tk.noop             ;
-0233 6FA2 6F7E     tki.83  data   tk.noop             ;
-0234 6FA4 6D6A     tki.84  data   tk.84               ; IF
-0235 6FA6 6D6E     tki.85  data   tk.85               ; GO
-0236 6FA8 6D72     tki.86  data   tk.86               ; GOTO
-0237 6FAA 6D78     tki.87  data   tk.87               ; GOSUB
-0238 6FAC 6D80     tki.88  data   tk.88               ; RETURN
-0239 6FAE 6D88     tki.89  data   tk.89               ; DEF
-0240 6FB0 6D8E     tki.8a  data   tk.8a               ; DIM
-0241 6FB2 6D94     tki.8b  data   tk.8b               ; END
-0242 6FB4 6D9A     tki.8c  data   tk.8c               ; FOR
-0243 6FB6 6DA0     tki.8d  data   tk.8d               ; LET
-0244 6FB8 6DA6     tki.8e  data   tk.8e               ; BREAK
-0245 6FBA 6DAE     tki.8f  data   tk.8f               ; UNBREAK
-0246 6FBC 6DB8     tki.90  data   tk.90               ; TRACE
-0247 6FBE 6DC0     tki.91  data   tk.91               ; UNTRACE
-0248 6FC0 6DCA     tki.92  data   tk.92               ; INPUT
-0249 6FC2 6DD2     tki.93  data   tk.93               ; DATA
-0250 6FC4 6DD8     tki.94  data   tk.94               ; RESTORE
-0251 6FC6 6DE2     tki.95  data   tk.95               ; RANDOMIZE
-0252 6FC8 6DEE     tki.96  data   tk.96               ; NEXT
-0253 6FCA 6DF4     tki.97  data   tk.97               ; READ
-0254 6FCC 6DFA     tki.98  data   tk.98               ; STOP
-0255 6FCE 6E00     tki.99  data   tk.99               ; DELETE
-0256 6FD0 6E08     tki.9a  data   tk.9a               ; REM
-0257 6FD2 6E0E     tki.9b  data   tk.9b               ; ON
-0258 6FD4 6E12     tki.9c  data   tk.9c               ; PRINT
-0259 6FD6 6E1A     tki.9d  data   tk.9d               ; CALL
-0260 6FD8 6E20     tki.9e  data   tk.9e               ; OPTION
-0261 6FDA 6E28     tki.9f  data   tk.9f               ; OPEN
-0262 6FDC 6E2E     tki.a0  data   tk.a0               ; CLOSE
-0263 6FDE 6E36     tki.a1  data   tk.a1               ; SUB
-0264 6FE0 6E3C     tki.a2  data   tk.a2               ; DISPLAY
-0265 6FE2 6F7E     tki.a3  data   tk.noop             ;
-0266 6FE4 6F7E     tki.a4  data   tk.noop             ;
-0267 6FE6 6F7E     tki.a5  data   tk.noop             ;
-0268 6FE8 6F7E     tki.a6  data   tk.noop             ;
-0269 6FEA 6F7E     tki.a7  data   tk.noop             ;
-0270 6FEC 6F7E     tki.a8  data   tk.noop             ;
-0271 6FEE 6F7E     tki.a9  data   tk.noop             ;
-0272 6FF0 6F7E     tki.aa  data   tk.noop             ;
-0273 6FF2 6F7E     tki.ab  data   tk.noop             ;
-0274 6FF4 6F7E     tki.ac  data   tk.noop             ;
-0275 6FF6 6F7E     tki.ad  data   tk.noop             ;
-0276 6FF8 6F7E     tki.ae  data   tk.noop             ;
-0277 6FFA 6F7E     tki.af  data   tk.noop             ;
-0278 6FFC 6E46     tki.b0  data   tk.b0               ; THEN
-0279 6FFE 6E4E     tki.b1  data   tk.b1               ; TO
-0280 7000 6E54     tki.b2  data   tk.b2               ; STEP
-0281 7002 6E5C     tki.b3  data   tk.b3               ; ,
-0282 7004 6E60     tki.b4  data   tk.b4               ; ;
-0283 7006 6E64     tki.b5  data   tk.b5               ; :
-0284 7008 6E68     tki.b6  data   tk.b6               ; )
-0285 700A 6E6C     tki.b7  data   tk.b7               ; (
-0286 700C 6E70     tki.b8  data   tk.b8               ; &
-0287 700E 6F7E     tki.b9  data   tk.noop             ;
-0288 7010 6F7E     tki.ba  data   tk.noop             ;
-0289 7012 6F7E     tki.bb  data   tk.noop             ;
-0290 7014 6F7E     tki.bc  data   tk.noop             ;
-0291 7016 6F7E     tki.bd  data   tk.noop             ;
-0292 7018 6E74     tki.be  data   tk.be               ; =
-0293 701A 6E78     tki.bf  data   tk.bf               ; <
-0294 701C 6E7C     tki.c0  data   tk.c0               ; >
-0295 701E 6E80     tki.c1  data   tk.c1               ; +
-0296 7020 6E84     tki.c2  data   tk.c2               ; -
-0297 7022 6E88     tki.c3  data   tk.c3               ; *
-0298 7024 6E8C     tki.c4  data   tk.c4               ; /
-0299 7026 6E90     tki.c5  data   tk.c5               ; ^
-0300 7028 6F7E     tki.c6  data   tk.noop             ;
-0301 702A 6E94     tki.c7  data   tk.c7               ; Quoted string
-0302 702C 6E98     tki.c8  data   tk.c8               ; Unquoted string
-0303 702E 6E9C     tki.c9  data   tk.c9               ; Line number
-0304 7030 6EA0     tki.ca  data   tk.ca               ; EOF
-0305 7032 6EA6     tki.cb  data   tk.cb               ; ABS
-0306 7034 6EAC     tki.cc  data   tk.cc               ; ATN
-0307 7036 6EB2     tki.cd  data   tk.cd               ; COS
-0308 7038 6EB8     tki.ce  data   tk.ce               ; EXP
-0309 703A 6EBE     tki.cf  data   tk.cf               ; INT
-0310 703C 6EC4     tki.d0  data   tk.d0               ; LOG
-0311 703E 6ECA     tki.d1  data   tk.d1               ; SGN
-0312 7040 6ED0     tki.d2  data   tk.d2               ; SIN
-0313 7042 6ED6     tki.d3  data   tk.d3               ; SQR
-0314 7044 6EDC     tki.d4  data   tk.d4               ; TAN
-0315 7046 6EE2     tki.d5  data   tk.d5               ; LEN
-0316 7048 6EE8     tki.d6  data   tk.d6               ; CHAR$
-0317 704A 6EEE     tki.d7  data   tk.d7               ; RND
-0318 704C 6EF4     tki.d8  data   tk.d8               ; SEG$
-0319 704E 6EFA     tki.d9  data   tk.d9               ; POS
-0320 7050 6F00     tki.da  data   tk.da               ; VAL
-0321 7052 6F06     tki.db  data   tk.db               ; STR$
-0322 7054 6F0C     tki.dc  data   tk.dc               ; ASC
-0323 7056 6F7E     tki.dd  data   tk.noop             ;
-0324 7058 6F12     tki.de  data   tk.de               ; REC
-0325 705A 6F7E     tki.df  data   tk.noop             ;
-0326 705C 6F7E     tki.e0  data   tk.noop             ;
-0327 705E 6F7E     tki.e1  data   tk.noop             ;
-0328 7060 6F7E     tki.e2  data   tk.noop             ;
-0329 7062 6F7E     tki.e3  data   tk.noop             ;
-0330 7064 6F7E     tki.e4  data   tk.noop             ;
-0331 7066 6F7E     tki.e5  data   tk.noop             ;
-0332 7068 6F7E     tki.e6  data   tk.noop             ;
-0333 706A 6F7E     tki.e7  data   tk.noop             ;
-0334 706C 6F7E     tki.e8  data   tk.noop             ;
-0335 706E 6F7E     tki.e9  data   tk.noop             ;
-0336 7070 6F7E     tki.ea  data   tk.noop             ;
-0337 7072 6F7E     tki.eb  data   tk.noop             ;
-0338 7074 6F7E     tki.ec  data   tk.noop             ;
-0339 7076 6F7E     tki.ed  data   tk.noop             ;
-0340 7078 6F7E     tki.ee  data   tk.noop             ;
-0341 707A 6F7E     tki.ef  data   tk.noop             ;
-0342 707C 6F7E     tki.f0  data   tk.noop             ;
-0343 707E 6F18     tki.f1  data   tk.f1               ; BASE
-0344 7080 6F7E     tki.f2  data   tk.noop             ;
-0345 7082 6F1E     tki.f3  data   tk.f3               ; VARIABLE
-0346 7084 6F28     tki.f4  data   tk.f4               ; RELATIVE
-0347 7086 6F32     tki.f5  data   tk.f5               ; INTERNAL
-0348 7088 6F3C     tki.f6  data   tk.f6               ; SEQUENTIAL
-0349 708A 6F48     tki.f7  data   tk.f7               ; OUTPUT
-0350 708C 6F50     tki.f8  data   tk.f8               ; UPDATE
-0351 708E 6F58     tki.f9  data   tk.f9               ; APPEND
-0352 7090 6F60     tki.fa  data   tk.fa               ; FIXED
-0353 7092 6F68     tki.fb  data   tk.fb               ; PERMANENT
-0354 7094 6F74     tki.fc  data   tk.fc               ; TAB
-0355 7096 6F7A     tki.fd  data   tk.fd               ; #
-0356 7098 6F7E     tki.fe  data   tk.noop             ;
-0357 709A 6F7E     tki.ff  data   tk.noop             ; <NOOP>
+0230 6F96 6F78     tki.80  data   tk.noop             ;
+0231 6F98 6D5C     tki.81  data   tk.81               ; ELSE
+0232 6F9A 6F78     tki.82  data   tk.noop             ;
+0233 6F9C 6F78     tki.83  data   tk.noop             ;
+0234 6F9E 6D64     tki.84  data   tk.84               ; IF
+0235 6FA0 6D68     tki.85  data   tk.85               ; GO
+0236 6FA2 6D6C     tki.86  data   tk.86               ; GOTO
+0237 6FA4 6D72     tki.87  data   tk.87               ; GOSUB
+0238 6FA6 6D7A     tki.88  data   tk.88               ; RETURN
+0239 6FA8 6D82     tki.89  data   tk.89               ; DEF
+0240 6FAA 6D88     tki.8a  data   tk.8a               ; DIM
+0241 6FAC 6D8E     tki.8b  data   tk.8b               ; END
+0242 6FAE 6D94     tki.8c  data   tk.8c               ; FOR
+0243 6FB0 6D9A     tki.8d  data   tk.8d               ; LET
+0244 6FB2 6DA0     tki.8e  data   tk.8e               ; BREAK
+0245 6FB4 6DA8     tki.8f  data   tk.8f               ; UNBREAK
+0246 6FB6 6DB2     tki.90  data   tk.90               ; TRACE
+0247 6FB8 6DBA     tki.91  data   tk.91               ; UNTRACE
+0248 6FBA 6DC4     tki.92  data   tk.92               ; INPUT
+0249 6FBC 6DCC     tki.93  data   tk.93               ; DATA
+0250 6FBE 6DD2     tki.94  data   tk.94               ; RESTORE
+0251 6FC0 6DDC     tki.95  data   tk.95               ; RANDOMIZE
+0252 6FC2 6DE8     tki.96  data   tk.96               ; NEXT
+0253 6FC4 6DEE     tki.97  data   tk.97               ; READ
+0254 6FC6 6DF4     tki.98  data   tk.98               ; STOP
+0255 6FC8 6DFA     tki.99  data   tk.99               ; DELETE
+0256 6FCA 6E02     tki.9a  data   tk.9a               ; REM
+0257 6FCC 6E08     tki.9b  data   tk.9b               ; ON
+0258 6FCE 6E0C     tki.9c  data   tk.9c               ; PRINT
+0259 6FD0 6E14     tki.9d  data   tk.9d               ; CALL
+0260 6FD2 6E1A     tki.9e  data   tk.9e               ; OPTION
+0261 6FD4 6E22     tki.9f  data   tk.9f               ; OPEN
+0262 6FD6 6E28     tki.a0  data   tk.a0               ; CLOSE
+0263 6FD8 6E30     tki.a1  data   tk.a1               ; SUB
+0264 6FDA 6E36     tki.a2  data   tk.a2               ; DISPLAY
+0265 6FDC 6F78     tki.a3  data   tk.noop             ;
+0266 6FDE 6F78     tki.a4  data   tk.noop             ;
+0267 6FE0 6F78     tki.a5  data   tk.noop             ;
+0268 6FE2 6F78     tki.a6  data   tk.noop             ;
+0269 6FE4 6F78     tki.a7  data   tk.noop             ;
+0270 6FE6 6F78     tki.a8  data   tk.noop             ;
+0271 6FE8 6F78     tki.a9  data   tk.noop             ;
+0272 6FEA 6F78     tki.aa  data   tk.noop             ;
+0273 6FEC 6F78     tki.ab  data   tk.noop             ;
+0274 6FEE 6F78     tki.ac  data   tk.noop             ;
+0275 6FF0 6F78     tki.ad  data   tk.noop             ;
+0276 6FF2 6F78     tki.ae  data   tk.noop             ;
+0277 6FF4 6F78     tki.af  data   tk.noop             ;
+0278 6FF6 6E40     tki.b0  data   tk.b0               ; THEN
+0279 6FF8 6E48     tki.b1  data   tk.b1               ; TO
+0280 6FFA 6E4E     tki.b2  data   tk.b2               ; STEP
+0281 6FFC 6E56     tki.b3  data   tk.b3               ; ,
+0282 6FFE 6E5A     tki.b4  data   tk.b4               ; ;
+0283 7000 6E5E     tki.b5  data   tk.b5               ; :
+0284 7002 6E62     tki.b6  data   tk.b6               ; )
+0285 7004 6E66     tki.b7  data   tk.b7               ; (
+0286 7006 6E6A     tki.b8  data   tk.b8               ; &
+0287 7008 6F78     tki.b9  data   tk.noop             ;
+0288 700A 6F78     tki.ba  data   tk.noop             ;
+0289 700C 6F78     tki.bb  data   tk.noop             ;
+0290 700E 6F78     tki.bc  data   tk.noop             ;
+0291 7010 6F78     tki.bd  data   tk.noop             ;
+0292 7012 6E6E     tki.be  data   tk.be               ; =
+0293 7014 6E72     tki.bf  data   tk.bf               ; <
+0294 7016 6E76     tki.c0  data   tk.c0               ; >
+0295 7018 6E7A     tki.c1  data   tk.c1               ; +
+0296 701A 6E7E     tki.c2  data   tk.c2               ; -
+0297 701C 6E82     tki.c3  data   tk.c3               ; *
+0298 701E 6E86     tki.c4  data   tk.c4               ; /
+0299 7020 6E8A     tki.c5  data   tk.c5               ; ^
+0300 7022 6F78     tki.c6  data   tk.noop             ;
+0301 7024 6E8E     tki.c7  data   tk.c7               ; Quoted string
+0302 7026 6E92     tki.c8  data   tk.c8               ; Unquoted string
+0303 7028 6E96     tki.c9  data   tk.c9               ; Line number
+0304 702A 6E9A     tki.ca  data   tk.ca               ; EOF
+0305 702C 6EA0     tki.cb  data   tk.cb               ; ABS
+0306 702E 6EA6     tki.cc  data   tk.cc               ; ATN
+0307 7030 6EAC     tki.cd  data   tk.cd               ; COS
+0308 7032 6EB2     tki.ce  data   tk.ce               ; EXP
+0309 7034 6EB8     tki.cf  data   tk.cf               ; INT
+0310 7036 6EBE     tki.d0  data   tk.d0               ; LOG
+0311 7038 6EC4     tki.d1  data   tk.d1               ; SGN
+0312 703A 6ECA     tki.d2  data   tk.d2               ; SIN
+0313 703C 6ED0     tki.d3  data   tk.d3               ; SQR
+0314 703E 6ED6     tki.d4  data   tk.d4               ; TAN
+0315 7040 6EDC     tki.d5  data   tk.d5               ; LEN
+0316 7042 6EE2     tki.d6  data   tk.d6               ; CHAR$
+0317 7044 6EE8     tki.d7  data   tk.d7               ; RND
+0318 7046 6EEE     tki.d8  data   tk.d8               ; SEG$
+0319 7048 6EF4     tki.d9  data   tk.d9               ; POS
+0320 704A 6EFA     tki.da  data   tk.da               ; VAL
+0321 704C 6F00     tki.db  data   tk.db               ; STR$
+0322 704E 6F06     tki.dc  data   tk.dc               ; ASC
+0323 7050 6F78     tki.dd  data   tk.noop             ;
+0324 7052 6F0C     tki.de  data   tk.de               ; REC
+0325 7054 6F78     tki.df  data   tk.noop             ;
+0326 7056 6F78     tki.e0  data   tk.noop             ;
+0327 7058 6F78     tki.e1  data   tk.noop             ;
+0328 705A 6F78     tki.e2  data   tk.noop             ;
+0329 705C 6F78     tki.e3  data   tk.noop             ;
+0330 705E 6F78     tki.e4  data   tk.noop             ;
+0331 7060 6F78     tki.e5  data   tk.noop             ;
+0332 7062 6F78     tki.e6  data   tk.noop             ;
+0333 7064 6F78     tki.e7  data   tk.noop             ;
+0334 7066 6F78     tki.e8  data   tk.noop             ;
+0335 7068 6F78     tki.e9  data   tk.noop             ;
+0336 706A 6F78     tki.ea  data   tk.noop             ;
+0337 706C 6F78     tki.eb  data   tk.noop             ;
+0338 706E 6F78     tki.ec  data   tk.noop             ;
+0339 7070 6F78     tki.ed  data   tk.noop             ;
+0340 7072 6F78     tki.ee  data   tk.noop             ;
+0341 7074 6F78     tki.ef  data   tk.noop             ;
+0342 7076 6F78     tki.f0  data   tk.noop             ;
+0343 7078 6F12     tki.f1  data   tk.f1               ; BASE
+0344 707A 6F78     tki.f2  data   tk.noop             ;
+0345 707C 6F18     tki.f3  data   tk.f3               ; VARIABLE
+0346 707E 6F22     tki.f4  data   tk.f4               ; RELATIVE
+0347 7080 6F2C     tki.f5  data   tk.f5               ; INTERNAL
+0348 7082 6F36     tki.f6  data   tk.f6               ; SEQUENTIAL
+0349 7084 6F42     tki.f7  data   tk.f7               ; OUTPUT
+0350 7086 6F4A     tki.f8  data   tk.f8               ; UPDATE
+0351 7088 6F52     tki.f9  data   tk.f9               ; APPEND
+0352 708A 6F5A     tki.fa  data   tk.fa               ; FIXED
+0353 708C 6F62     tki.fb  data   tk.fb               ; PERMANENT
+0354 708E 6F6E     tki.fc  data   tk.fc               ; TAB
+0355 7090 6F74     tki.fd  data   tk.fd               ; #
+0356 7092 6F78     tki.fe  data   tk.noop             ;
+0357 7094 6F78     tki.ff  data   tk.noop             ; <NOOP>
 0358               
-0359      6F9C     tib.tokenindex equ tki.80
+0359      6F96     tib.tokenindex equ tki.80
                    < stevie_b7.asm
-0105                       copy  "data.fg99.carts.asm"        ; Cartridge images
-     **** ****     > data.fg99.carts.asm
-0001               * FILE......: data.fg99.carts.asm
-0002               * Purpose...: FinalGROM cartridge images
-0003               
-0004               ***************************************************************
-0005               *                   Cartridge images
-0006               ***************************************************************
-0007               
-0008               *--------------------------------------------------------------
-0009               * Cartridge 'Force Command'
-0010               *--------------------------------------------------------------
-0011               fg99.cart.fcmd:
-0012 709C 99              byte   >99                   ; \
-0013 709D   4F            text   'OKFG99'              ; | Send this to reload
-     709E 4B46     
-     70A0 4739     
-     70A2 39       
-0014 70A3   99            byte   >99                   ; /
-0015 70A4 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
-     70A6 4D44     
-     70A8 47       
-0016 70A9   00            byte   >00, >00, >00         ; /
-     70AA 0000     
-0017 70AC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0018 70AE 0000            data   >0000                 ; Start address
-0019                      even
-0020               
-0021               *--------------------------------------------------------------
-0022               * Cartridge 'TI Extended Basic'
-0023               *--------------------------------------------------------------
-0024               fg99.cart.xb:
-0025 70B0 99              byte   >99                   ; \
-0026 70B1   4F            text   'OKFG99'              ; | Send this to reload
-     70B2 4B46     
-     70B4 4739     
-     70B6 39       
-0027 70B7   99            byte   >99                   ; /
-0028 70B8 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-     70BA 3239     
-     70BC 4745     
-     70BE 4D43     
-0029                                                   ; /
-0030 70C0 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0031 70C2 0000            data   >0000                 ; Start address
-0032               
-0033               *--------------------------------------------------------------
-0034               * Cartridge 'Extended Basic GEM'
-0035               *--------------------------------------------------------------
-0036               fg99.cart.xbgem:
-0037 70C4 99              byte   >99                   ; \
-0038 70C5   4F            text   'OKFG99'              ; | Send this to reload
-     70C6 4B46     
-     70C8 4739     
-     70CA 39       
-0039 70CB   99            byte   >99                   ; /
-0040 70CC 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-     70CE 3239     
-     70D0 4745     
-     70D2 4D43     
-0041                                                   ; /
-0042 70D4 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0043 70D6 0000            data   >0000                 ; Start address
-0044               
-0045               *--------------------------------------------------------------
-0046               * Cartridge 'Rich Extended Basic'
-0047               *--------------------------------------------------------------
-0048               fg99.cart.rxb:
-0049 70D8 99              byte   >99                   ; \
-0050 70D9   4F            text   'OKFG99'              ; | Send this to reload
-     70DA 4B46     
-     70DC 4739     
-     70DE 39       
-0051 70DF   99            byte   >99                   ; /
-0052 70E0 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-     70E2 3239     
-     70E4 4745     
-     70E6 4D43     
-0053 70E8 0000            byte   >00, >00, >00         ; /
-     70EA 00       
-0054 70EC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0055 70EE 0000            data   >0000                 ; Start address
-0056               
-0057               *--------------------------------------------------------------
-0058               * Index
-0059               *--------------------------------------------------------------
-0060               fg99.carts.index:
-0061 70F0 709C            data fg99.cart.fcmd          ; 0: Force Command
-0062 70F2 70B0            data fg99.cart.xb            ; 1: TI Extended Basic
-0063 70F4 70C4            data fg99.cart.xbgem         ; 2: Extended Basic GEM
-0064 70F6 70D8            data fg99.cart.rxb           ; 3: Rich Extended Basic
-0065               
-                   < stevie_b7.asm
-0106                       ;-----------------------------------------------------------------------
-0107                       ; Scratchpad memory dump
-0108                       ;-----------------------------------------------------------------------
-0109                       aorg >7e00
-0110                       copy  "data.scrpad.asm"            ; Required for TI Basic
+0105                       ;-----------------------------------------------------------------------
+0106                       ; Scratchpad memory dump
+0107                       ;-----------------------------------------------------------------------
+0108                       aorg >7e00
+0109                       copy  "data.scrpad.asm"            ; Required for TI Basic
      **** ****     > data.scrpad.asm
 0001               * FILE......: data.scrpad.asm
 0002               * Purpose...: Stevie Editor - data segment (scratchpad dump)
@@ -13742,13 +13729,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7EFC 0108     
      7EFE 8C02     
                    < stevie_b7.asm
-0111                       ;-----------------------------------------------------------------------
-0112                       ; Bank full check
-0113                       ;-----------------------------------------------------------------------
-0117                       ;-----------------------------------------------------------------------
-0118                       ; Show ROM bank in CPU crash screen
-0119                       ;-----------------------------------------------------------------------
-0120                       copy  "rom.crash.asm"
+0110                       ;-----------------------------------------------------------------------
+0111                       ; Bank full check
+0112                       ;-----------------------------------------------------------------------
+0116                       ;-----------------------------------------------------------------------
+0117                       ; Show ROM bank in CPU crash screen
+0118                       ;-----------------------------------------------------------------------
+0119                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -13764,10 +13751,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7F56 7F5A                   data cpu.crash.showbank.bankstr
 0012 7F58 10FF  14         jmp   $
                    < stevie_b7.asm
-0121                       ;-----------------------------------------------------------------------
-0122                       ; Vector table
-0123                       ;-----------------------------------------------------------------------
-0124                       copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
+0120                       ;-----------------------------------------------------------------------
+0121                       ; Vector table
+0122                       ;-----------------------------------------------------------------------
+0123                       copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
      **** ****     > rom.vectors.bank7.asm
 0001               * FILE......: rom.vectors.bank7.asm
 0002               * Purpose...: Bank 7 vectors for trampoline function
@@ -13818,19 +13805,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045 7FFC 2026     vec.31  data  cpu.crash             ;
 0046 7FFE 2026     vec.32  data  cpu.crash             ;
                    < stevie_b7.asm
-0125               
-0126               *--------------------------------------------------------------
-0127               * Video mode configuration
-0128               *--------------------------------------------------------------
-0129      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0130      0004     spfbck  equ   >04                   ; Screen background color.
-0131      37C2     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-0132      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
-0133      0050     colrow  equ   80                    ; Columns per row
-0134      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0135      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0136      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0137      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0124               
+0125               *--------------------------------------------------------------
+0126               * Video mode configuration
+0127               *--------------------------------------------------------------
+0128      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0129      0004     spfbck  equ   >04                   ; Screen background color.
+0130      37C2     spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
+0131      000C     spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+0132      0050     colrow  equ   80                    ; Columns per row
+0133      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0134      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0135      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0136      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 
     ANYKEY.............. >200A :     
     AT.................. >26C6 :     
@@ -13916,7 +13903,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.DEFAULT........ >A708 :     
     CMDB.DFLT.FNAME..... >A7B2 :     
     CMDB.DIALOG......... >A71C :     
-    CMDB.DIALOG.CLOSE... >6C0A :     
+    CMDB.DIALOG.CLOSE... >6C04 :     
     CMDB.DIALOG.VAR..... >A71E :     
     CMDB.DIRTY.......... >A71A :     
     CMDB.FB.YXSAVE...... >A704 :     
@@ -14113,7 +14100,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.INIT............. >3036 :     
     FB.INIT.CONT........ >3072 :     
     FB.INIT.EXIT........ >3094 :     
-    FB.REFRESH.......... >6C64 :     
+    FB.REFRESH.......... >6C5E :     
     FB.ROW.............. >A306 :     
     FB.ROW.DIRTY........ >A30A :     
     FB.ROW.LENGTH....... >A308 :     
@@ -14133,13 +14120,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
-    FG99.CART.FCMD...... >709C :     
+    FG99.CART.FCMD...... >3CC4 :     
     FG99.CART.RUN....... >6B90 :     
     FG99.CART.RUN.INIT.REST >6BD2 :     
-    FG99.CART.RXB....... >70D8 :     
-    FG99.CART.XB........ >70B0 :     
-    FG99.CART.XBGEM..... >70C4 :     
-    FG99.CARTS.INDEX.... >70F0 :     
+    FG99.CART.RXB....... >3D00 :     
+    FG99.CART.XB........ >3CD8 :     
+    FG99.CART.XBGEM..... >3CEC :     
     FG99.RUN............ >2DF6 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
@@ -14197,7 +14183,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FILV................ >228E :     
     FILZZ............... >22B4 :     
     FJ.BOTTOM........... >B000 :     
-    FM.NEWFILE.......... >6C40 :     
+    FM.NEWFILE.......... >6C3A :     
     FNOPT1.............. >0000 :     
     FNOPT2.............. >0006 :     
     FNOPT3.............. >000C :     
@@ -14493,15 +14479,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.LAYOUT.BASIC >6CB8 :     
-    MEM.SAMS.LAYOUT.BASIC1 >6CB8 :     
-    MEM.SAMS.LAYOUT.BASIC2 >6CC8 :     
-    MEM.SAMS.LAYOUT.BASIC3 >6CD8 :     
-    MEM.SAMS.LAYOUT.BASIC4 >6CE8 :     
-    MEM.SAMS.LAYOUT.BASIC5 >6CF8 :     
-    MEM.SAMS.LAYOUT.BOOT >6C88 :     
-    MEM.SAMS.LAYOUT.EXTERNAL >6C98 :     
-    MEM.SAMS.LAYOUT.LEGACY >6CA8 :     
+    MEM.SAMS.LAYOUT.BASIC >6CB2 :     
+    MEM.SAMS.LAYOUT.BASIC1 >6CB2 :     
+    MEM.SAMS.LAYOUT.BASIC2 >6CC2 :     
+    MEM.SAMS.LAYOUT.BASIC3 >6CD2 :     
+    MEM.SAMS.LAYOUT.BASIC4 >6CE2 :     
+    MEM.SAMS.LAYOUT.BASIC5 >6CF2 :     
+    MEM.SAMS.LAYOUT.BOOT >6C82 :     
+    MEM.SAMS.LAYOUT.EXTERNAL >6C92 :     
+    MEM.SAMS.LAYOUT.LEGACY >6CA2 :     
     MEM.SAMS.SET.BANKS.EXIT >60CA :     
     MEM.SAMS.SET.BASIC1. >6110 :     
     MEM.SAMS.SET.BASIC2. >611A :     
@@ -14514,7 +14500,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MEM.SAMS.SET.LEGACY.CODE >60FC :     
     MEM.SAMS.SET.STEVIE. >6142 :     
     MEM.SAMS.SET.STEVIE.EXIT >619E :     
-    MEM.SAMS.SETUP.STEVIE >6C76 :     
+    MEM.SAMS.SETUP.STEVIE >6C70 :     
     MKHEX............... >2918 :     
     MKHEX1.............. >2930 :     
     MKHEX1.DIGIT09...... >2946 :     
@@ -14550,8 +14536,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.ACTION.COLORSCHEME.LOAD >6C1C :     
-    PANE.ACTION.COLORSCHEME.STATLINES >6C2E :     
+    PANE.ACTION.COLORSCHEME.LOAD >6C16 :     
+    PANE.ACTION.COLORSCHEME.STATLINES >6C28 :     
     PANE.BOTROW......... >0017 :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
@@ -14811,7 +14797,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TIB.STRS.TOP.PTR.... >A0CE :     
     TIB.SYMT.BOT.PTR.... >A0CC :     
     TIB.SYMT.TOP.PTR.... >A0CA :     
-    TIB.TOKENINDEX...... >6F9C :     
+    TIB.TOKENINDEX...... >6F96 :     
     TIB.UNCRNCH.PRG.COPY.STATEMENT >68F0 :     
     TIB.UNCRNCH.PRG.STATEMENT.LOOP.PANIC >68E8 :     
     TIB.UNCRUNCH........ >667E :     
@@ -14854,7 +14840,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TIB.VAR9............ >A0FC :     
     TIBASIC.32X24....... >37CC :     
     TIBASIC.32X30....... >37D6 :     
-    TIBASIC.BUILDSTR.... >6C52 :     
+    TIBASIC.BUILDSTR.... >6C4C :     
     TIBASIC.PATTERNS.... >63B4 :     
     TIBASIC.RESUME.LOAD. >639C :     
     TIBASIC.SCRPAD.83D4. >63AC :     
@@ -14862,245 +14848,245 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TIBASIC.SCRPAD.83FC. >63B0 :     
     TIBASIC.SCRPAD.83FE. >63B2 :     
     TIMERS.............. >A064 :     
-    TK.00............... >6D08 :     
-    TK.01............... >6D0E :     
-    TK.02............... >6D14 :     
-    TK.02L.............. >6D1A :     
-    TK.03............... >6D24 :     
-    TK.04............... >6D2A :     
-    TK.05............... >6D30 :     
-    TK.05L.............. >6D36 :     
-    TK.06............... >6D3E :     
-    TK.07............... >6D44 :     
-    TK.07L.............. >6D4A :     
-    TK.08............... >6D56 :     
-    TK.09............... >6D5C :     
-    TK.81............... >6D62 :     
-    TK.84............... >6D6A :     
-    TK.85............... >6D6E :     
-    TK.86............... >6D72 :     
-    TK.87............... >6D78 :     
-    TK.88............... >6D80 :     
-    TK.89............... >6D88 :     
-    TK.8A............... >6D8E :     
-    TK.8B............... >6D94 :     
-    TK.8C............... >6D9A :     
-    TK.8D............... >6DA0 :     
-    TK.8E............... >6DA6 :     
-    TK.8F............... >6DAE :     
-    TK.90............... >6DB8 :     
-    TK.91............... >6DC0 :     
-    TK.92............... >6DCA :     
-    TK.93............... >6DD2 :     
-    TK.94............... >6DD8 :     
-    TK.95............... >6DE2 :     
-    TK.96............... >6DEE :     
-    TK.97............... >6DF4 :     
-    TK.98............... >6DFA :     
-    TK.99............... >6E00 :     
-    TK.9A............... >6E08 :     
-    TK.9B............... >6E0E :     
-    TK.9C............... >6E12 :     
-    TK.9D............... >6E1A :     
-    TK.9E............... >6E20 :     
-    TK.9F............... >6E28 :     
-    TK.A0............... >6E2E :     
-    TK.A1............... >6E36 :     
-    TK.A2............... >6E3C :     
-    TK.B0............... >6E46 :     
-    TK.B1............... >6E4E :     
-    TK.B2............... >6E54 :     
-    TK.B3............... >6E5C :     
-    TK.B4............... >6E60 :     
-    TK.B5............... >6E64 :     
-    TK.B6............... >6E68 :     
-    TK.B7............... >6E6C :     
-    TK.B8............... >6E70 :     
-    TK.BE............... >6E74 :     
-    TK.BF............... >6E78 :     
-    TK.C0............... >6E7C :     
-    TK.C1............... >6E80 :     
-    TK.C2............... >6E84 :     
-    TK.C3............... >6E88 :     
-    TK.C4............... >6E8C :     
-    TK.C5............... >6E90 :     
-    TK.C7............... >6E94 :     
-    TK.C8............... >6E98 :     
-    TK.C9............... >6E9C :     
-    TK.CA............... >6EA0 :     
-    TK.CB............... >6EA6 :     
-    TK.CC............... >6EAC :     
-    TK.CD............... >6EB2 :     
-    TK.CE............... >6EB8 :     
-    TK.CF............... >6EBE :     
-    TK.D0............... >6EC4 :     
-    TK.D1............... >6ECA :     
-    TK.D2............... >6ED0 :     
-    TK.D3............... >6ED6 :     
-    TK.D4............... >6EDC :     
-    TK.D5............... >6EE2 :     
-    TK.D6............... >6EE8 :     
-    TK.D7............... >6EEE :     
-    TK.D8............... >6EF4 :     
-    TK.D9............... >6EFA :     
-    TK.DA............... >6F00 :     
-    TK.DB............... >6F06 :     
-    TK.DC............... >6F0C :     
-    TK.DE............... >6F12 :     
-    TK.F1............... >6F18 :     
-    TK.F3............... >6F1E :     
-    TK.F4............... >6F28 :     
-    TK.F5............... >6F32 :     
-    TK.F6............... >6F3C :     
-    TK.F7............... >6F48 :     
-    TK.F8............... >6F50 :     
-    TK.F9............... >6F58 :     
-    TK.FA............... >6F60 :     
-    TK.FB............... >6F68 :     
-    TK.FC............... >6F74 :     
-    TK.FD............... >6F7A :     
-    TK.NOOP............. >6F7E :     
-    TKI.00.............. >6F82 :     
-    TKI.01.............. >6F84 :     
-    TKI.02.............. >6F86 :     
-    TKI.02L............. >6F88 :     
-    TKI.03.............. >6F8A :     
-    TKI.04.............. >6F8C :     
-    TKI.05.............. >6F8E :     
-    TKI.05L............. >6F90 :     
-    TKI.06.............. >6F92 :     
-    TKI.07.............. >6F94 :     
-    TKI.07L............. >6F96 :     
-    TKI.08.............. >6F98 :     
-    TKI.09.............. >6F9A :     
-    TKI.80.............. >6F9C :     
-    TKI.81.............. >6F9E :     
-    TKI.82.............. >6FA0 :     
-    TKI.83.............. >6FA2 :     
-    TKI.84.............. >6FA4 :     
-    TKI.85.............. >6FA6 :     
-    TKI.86.............. >6FA8 :     
-    TKI.87.............. >6FAA :     
-    TKI.88.............. >6FAC :     
-    TKI.89.............. >6FAE :     
-    TKI.8A.............. >6FB0 :     
-    TKI.8B.............. >6FB2 :     
-    TKI.8C.............. >6FB4 :     
-    TKI.8D.............. >6FB6 :     
-    TKI.8E.............. >6FB8 :     
-    TKI.8F.............. >6FBA :     
-    TKI.90.............. >6FBC :     
-    TKI.91.............. >6FBE :     
-    TKI.92.............. >6FC0 :     
-    TKI.93.............. >6FC2 :     
-    TKI.94.............. >6FC4 :     
-    TKI.95.............. >6FC6 :     
-    TKI.96.............. >6FC8 :     
-    TKI.97.............. >6FCA :     
-    TKI.98.............. >6FCC :     
-    TKI.99.............. >6FCE :     
-    TKI.9A.............. >6FD0 :     
-    TKI.9B.............. >6FD2 :     
-    TKI.9C.............. >6FD4 :     
-    TKI.9D.............. >6FD6 :     
-    TKI.9E.............. >6FD8 :     
-    TKI.9F.............. >6FDA :     
-    TKI.A0.............. >6FDC :     
-    TKI.A1.............. >6FDE :     
-    TKI.A2.............. >6FE0 :     
-    TKI.A3.............. >6FE2 :     
-    TKI.A4.............. >6FE4 :     
-    TKI.A5.............. >6FE6 :     
-    TKI.A6.............. >6FE8 :     
-    TKI.A7.............. >6FEA :     
-    TKI.A8.............. >6FEC :     
-    TKI.A9.............. >6FEE :     
-    TKI.AA.............. >6FF0 :     
-    TKI.AB.............. >6FF2 :     
-    TKI.AC.............. >6FF4 :     
-    TKI.AD.............. >6FF6 :     
-    TKI.AE.............. >6FF8 :     
-    TKI.AF.............. >6FFA :     
-    TKI.B0.............. >6FFC :     
-    TKI.B1.............. >6FFE :     
-    TKI.B2.............. >7000 :     
-    TKI.B3.............. >7002 :     
-    TKI.B4.............. >7004 :     
-    TKI.B5.............. >7006 :     
-    TKI.B6.............. >7008 :     
-    TKI.B7.............. >700A :     
-    TKI.B8.............. >700C :     
-    TKI.B9.............. >700E :     
-    TKI.BA.............. >7010 :     
-    TKI.BB.............. >7012 :     
-    TKI.BC.............. >7014 :     
-    TKI.BD.............. >7016 :     
-    TKI.BE.............. >7018 :     
-    TKI.BF.............. >701A :     
-    TKI.C0.............. >701C :     
-    TKI.C1.............. >701E :     
-    TKI.C2.............. >7020 :     
-    TKI.C3.............. >7022 :     
-    TKI.C4.............. >7024 :     
-    TKI.C5.............. >7026 :     
-    TKI.C6.............. >7028 :     
-    TKI.C7.............. >702A :     
-    TKI.C8.............. >702C :     
-    TKI.C9.............. >702E :     
-    TKI.CA.............. >7030 :     
-    TKI.CB.............. >7032 :     
-    TKI.CC.............. >7034 :     
-    TKI.CD.............. >7036 :     
-    TKI.CE.............. >7038 :     
-    TKI.CF.............. >703A :     
-    TKI.D0.............. >703C :     
-    TKI.D1.............. >703E :     
-    TKI.D2.............. >7040 :     
-    TKI.D3.............. >7042 :     
-    TKI.D4.............. >7044 :     
-    TKI.D5.............. >7046 :     
-    TKI.D6.............. >7048 :     
-    TKI.D7.............. >704A :     
-    TKI.D8.............. >704C :     
-    TKI.D9.............. >704E :     
-    TKI.DA.............. >7050 :     
-    TKI.DB.............. >7052 :     
-    TKI.DC.............. >7054 :     
-    TKI.DD.............. >7056 :     
-    TKI.DE.............. >7058 :     
-    TKI.DF.............. >705A :     
-    TKI.E0.............. >705C :     
-    TKI.E1.............. >705E :     
-    TKI.E2.............. >7060 :     
-    TKI.E3.............. >7062 :     
-    TKI.E4.............. >7064 :     
-    TKI.E5.............. >7066 :     
-    TKI.E6.............. >7068 :     
-    TKI.E7.............. >706A :     
-    TKI.E8.............. >706C :     
-    TKI.E9.............. >706E :     
-    TKI.EA.............. >7070 :     
-    TKI.EB.............. >7072 :     
-    TKI.EC.............. >7074 :     
-    TKI.ED.............. >7076 :     
-    TKI.EE.............. >7078 :     
-    TKI.EF.............. >707A :     
-    TKI.F0.............. >707C :     
-    TKI.F1.............. >707E :     
-    TKI.F2.............. >7080 :     
-    TKI.F3.............. >7082 :     
-    TKI.F4.............. >7084 :     
-    TKI.F5.............. >7086 :     
-    TKI.F6.............. >7088 :     
-    TKI.F7.............. >708A :     
-    TKI.F8.............. >708C :     
-    TKI.F9.............. >708E :     
-    TKI.FA.............. >7090 :     
-    TKI.FB.............. >7092 :     
-    TKI.FC.............. >7094 :     
-    TKI.FD.............. >7096 :     
-    TKI.FE.............. >7098 :     
-    TKI.FF.............. >709A :     
+    TK.00............... >6D02 :     
+    TK.01............... >6D08 :     
+    TK.02............... >6D0E :     
+    TK.02L.............. >6D14 :     
+    TK.03............... >6D1E :     
+    TK.04............... >6D24 :     
+    TK.05............... >6D2A :     
+    TK.05L.............. >6D30 :     
+    TK.06............... >6D38 :     
+    TK.07............... >6D3E :     
+    TK.07L.............. >6D44 :     
+    TK.08............... >6D50 :     
+    TK.09............... >6D56 :     
+    TK.81............... >6D5C :     
+    TK.84............... >6D64 :     
+    TK.85............... >6D68 :     
+    TK.86............... >6D6C :     
+    TK.87............... >6D72 :     
+    TK.88............... >6D7A :     
+    TK.89............... >6D82 :     
+    TK.8A............... >6D88 :     
+    TK.8B............... >6D8E :     
+    TK.8C............... >6D94 :     
+    TK.8D............... >6D9A :     
+    TK.8E............... >6DA0 :     
+    TK.8F............... >6DA8 :     
+    TK.90............... >6DB2 :     
+    TK.91............... >6DBA :     
+    TK.92............... >6DC4 :     
+    TK.93............... >6DCC :     
+    TK.94............... >6DD2 :     
+    TK.95............... >6DDC :     
+    TK.96............... >6DE8 :     
+    TK.97............... >6DEE :     
+    TK.98............... >6DF4 :     
+    TK.99............... >6DFA :     
+    TK.9A............... >6E02 :     
+    TK.9B............... >6E08 :     
+    TK.9C............... >6E0C :     
+    TK.9D............... >6E14 :     
+    TK.9E............... >6E1A :     
+    TK.9F............... >6E22 :     
+    TK.A0............... >6E28 :     
+    TK.A1............... >6E30 :     
+    TK.A2............... >6E36 :     
+    TK.B0............... >6E40 :     
+    TK.B1............... >6E48 :     
+    TK.B2............... >6E4E :     
+    TK.B3............... >6E56 :     
+    TK.B4............... >6E5A :     
+    TK.B5............... >6E5E :     
+    TK.B6............... >6E62 :     
+    TK.B7............... >6E66 :     
+    TK.B8............... >6E6A :     
+    TK.BE............... >6E6E :     
+    TK.BF............... >6E72 :     
+    TK.C0............... >6E76 :     
+    TK.C1............... >6E7A :     
+    TK.C2............... >6E7E :     
+    TK.C3............... >6E82 :     
+    TK.C4............... >6E86 :     
+    TK.C5............... >6E8A :     
+    TK.C7............... >6E8E :     
+    TK.C8............... >6E92 :     
+    TK.C9............... >6E96 :     
+    TK.CA............... >6E9A :     
+    TK.CB............... >6EA0 :     
+    TK.CC............... >6EA6 :     
+    TK.CD............... >6EAC :     
+    TK.CE............... >6EB2 :     
+    TK.CF............... >6EB8 :     
+    TK.D0............... >6EBE :     
+    TK.D1............... >6EC4 :     
+    TK.D2............... >6ECA :     
+    TK.D3............... >6ED0 :     
+    TK.D4............... >6ED6 :     
+    TK.D5............... >6EDC :     
+    TK.D6............... >6EE2 :     
+    TK.D7............... >6EE8 :     
+    TK.D8............... >6EEE :     
+    TK.D9............... >6EF4 :     
+    TK.DA............... >6EFA :     
+    TK.DB............... >6F00 :     
+    TK.DC............... >6F06 :     
+    TK.DE............... >6F0C :     
+    TK.F1............... >6F12 :     
+    TK.F3............... >6F18 :     
+    TK.F4............... >6F22 :     
+    TK.F5............... >6F2C :     
+    TK.F6............... >6F36 :     
+    TK.F7............... >6F42 :     
+    TK.F8............... >6F4A :     
+    TK.F9............... >6F52 :     
+    TK.FA............... >6F5A :     
+    TK.FB............... >6F62 :     
+    TK.FC............... >6F6E :     
+    TK.FD............... >6F74 :     
+    TK.NOOP............. >6F78 :     
+    TKI.00.............. >6F7C :     
+    TKI.01.............. >6F7E :     
+    TKI.02.............. >6F80 :     
+    TKI.02L............. >6F82 :     
+    TKI.03.............. >6F84 :     
+    TKI.04.............. >6F86 :     
+    TKI.05.............. >6F88 :     
+    TKI.05L............. >6F8A :     
+    TKI.06.............. >6F8C :     
+    TKI.07.............. >6F8E :     
+    TKI.07L............. >6F90 :     
+    TKI.08.............. >6F92 :     
+    TKI.09.............. >6F94 :     
+    TKI.80.............. >6F96 :     
+    TKI.81.............. >6F98 :     
+    TKI.82.............. >6F9A :     
+    TKI.83.............. >6F9C :     
+    TKI.84.............. >6F9E :     
+    TKI.85.............. >6FA0 :     
+    TKI.86.............. >6FA2 :     
+    TKI.87.............. >6FA4 :     
+    TKI.88.............. >6FA6 :     
+    TKI.89.............. >6FA8 :     
+    TKI.8A.............. >6FAA :     
+    TKI.8B.............. >6FAC :     
+    TKI.8C.............. >6FAE :     
+    TKI.8D.............. >6FB0 :     
+    TKI.8E.............. >6FB2 :     
+    TKI.8F.............. >6FB4 :     
+    TKI.90.............. >6FB6 :     
+    TKI.91.............. >6FB8 :     
+    TKI.92.............. >6FBA :     
+    TKI.93.............. >6FBC :     
+    TKI.94.............. >6FBE :     
+    TKI.95.............. >6FC0 :     
+    TKI.96.............. >6FC2 :     
+    TKI.97.............. >6FC4 :     
+    TKI.98.............. >6FC6 :     
+    TKI.99.............. >6FC8 :     
+    TKI.9A.............. >6FCA :     
+    TKI.9B.............. >6FCC :     
+    TKI.9C.............. >6FCE :     
+    TKI.9D.............. >6FD0 :     
+    TKI.9E.............. >6FD2 :     
+    TKI.9F.............. >6FD4 :     
+    TKI.A0.............. >6FD6 :     
+    TKI.A1.............. >6FD8 :     
+    TKI.A2.............. >6FDA :     
+    TKI.A3.............. >6FDC :     
+    TKI.A4.............. >6FDE :     
+    TKI.A5.............. >6FE0 :     
+    TKI.A6.............. >6FE2 :     
+    TKI.A7.............. >6FE4 :     
+    TKI.A8.............. >6FE6 :     
+    TKI.A9.............. >6FE8 :     
+    TKI.AA.............. >6FEA :     
+    TKI.AB.............. >6FEC :     
+    TKI.AC.............. >6FEE :     
+    TKI.AD.............. >6FF0 :     
+    TKI.AE.............. >6FF2 :     
+    TKI.AF.............. >6FF4 :     
+    TKI.B0.............. >6FF6 :     
+    TKI.B1.............. >6FF8 :     
+    TKI.B2.............. >6FFA :     
+    TKI.B3.............. >6FFC :     
+    TKI.B4.............. >6FFE :     
+    TKI.B5.............. >7000 :     
+    TKI.B6.............. >7002 :     
+    TKI.B7.............. >7004 :     
+    TKI.B8.............. >7006 :     
+    TKI.B9.............. >7008 :     
+    TKI.BA.............. >700A :     
+    TKI.BB.............. >700C :     
+    TKI.BC.............. >700E :     
+    TKI.BD.............. >7010 :     
+    TKI.BE.............. >7012 :     
+    TKI.BF.............. >7014 :     
+    TKI.C0.............. >7016 :     
+    TKI.C1.............. >7018 :     
+    TKI.C2.............. >701A :     
+    TKI.C3.............. >701C :     
+    TKI.C4.............. >701E :     
+    TKI.C5.............. >7020 :     
+    TKI.C6.............. >7022 :     
+    TKI.C7.............. >7024 :     
+    TKI.C8.............. >7026 :     
+    TKI.C9.............. >7028 :     
+    TKI.CA.............. >702A :     
+    TKI.CB.............. >702C :     
+    TKI.CC.............. >702E :     
+    TKI.CD.............. >7030 :     
+    TKI.CE.............. >7032 :     
+    TKI.CF.............. >7034 :     
+    TKI.D0.............. >7036 :     
+    TKI.D1.............. >7038 :     
+    TKI.D2.............. >703A :     
+    TKI.D3.............. >703C :     
+    TKI.D4.............. >703E :     
+    TKI.D5.............. >7040 :     
+    TKI.D6.............. >7042 :     
+    TKI.D7.............. >7044 :     
+    TKI.D8.............. >7046 :     
+    TKI.D9.............. >7048 :     
+    TKI.DA.............. >704A :     
+    TKI.DB.............. >704C :     
+    TKI.DC.............. >704E :     
+    TKI.DD.............. >7050 :     
+    TKI.DE.............. >7052 :     
+    TKI.DF.............. >7054 :     
+    TKI.E0.............. >7056 :     
+    TKI.E1.............. >7058 :     
+    TKI.E2.............. >705A :     
+    TKI.E3.............. >705C :     
+    TKI.E4.............. >705E :     
+    TKI.E5.............. >7060 :     
+    TKI.E6.............. >7062 :     
+    TKI.E7.............. >7064 :     
+    TKI.E8.............. >7066 :     
+    TKI.E9.............. >7068 :     
+    TKI.EA.............. >706A :     
+    TKI.EB.............. >706C :     
+    TKI.EC.............. >706E :     
+    TKI.ED.............. >7070 :     
+    TKI.EE.............. >7072 :     
+    TKI.EF.............. >7074 :     
+    TKI.F0.............. >7076 :     
+    TKI.F1.............. >7078 :     
+    TKI.F2.............. >707A :     
+    TKI.F3.............. >707C :     
+    TKI.F4.............. >707E :     
+    TKI.F5.............. >7080 :     
+    TKI.F6.............. >7082 :     
+    TKI.F7.............. >7084 :     
+    TKI.F8.............. >7086 :     
+    TKI.F9.............. >7088 :     
+    TKI.FA.............. >708A :     
+    TKI.FB.............. >708C :     
+    TKI.FC.............. >708E :     
+    TKI.FD.............. >7090 :     
+    TKI.FE.............. >7092 :     
+    TKI.FF.............. >7094 :     
     TMDAT............... >2E96 :     
     TMGR................ >2DFA :     
     TMGR1............... >2DFE :     
@@ -15154,7 +15140,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.ERROR.MSG........ >A232 :     
     TV.ERROR.ROWS....... >A22A :     
     TV.ERROR.VISIBLE.... >A228 :     
-    TV.FG99.CARTIDX..... >A230 :     
+    TV.FG99.IMG.PTR..... >A230 :     
     TV.FJ.STACKPNT...... >A226 :     
     TV.FREE............. >A2D2 :     
     TV.INIT............. >32B0 :     

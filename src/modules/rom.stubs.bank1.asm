@@ -932,23 +932,24 @@ tibasic.uncrunch.exit:
 * Stub for "fg99.cart.run"
 * bank7 vec.15
 ********|*****|*********************|**************************
-fg99.cart.run.fcmd:
-        clr   @tv.fg99.cartidx      ; Load Force Command
-        jmp   fg99.cart.run
-
 fg99.cart.run.xb:
-        li    tmp0,1
-        mov   tmp0,@tv.fg99.cartidx ; Load TI Extended Basic
+        li    tmp0,fg99.cart.xb     ; Load TI Extended Basic 
+        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
         jmp   fg99.cart.run
 
 fg99.cart.run.xbgem:
-        li    tmp0,2
-        mov   tmp0,@tv.fg99.cartidx ; Load Extended Basic GEM
+        li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
+        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
         jmp   fg99.cart.run
 
 fg99.cart.run.rxb:
-        li    tmp0,3
-        mov   tmp0,@tv.fg99.cartidx ; Load Rich Extended Basic
+        li    tmp0,fg99.cart.rxb    ; Load Rich Extended Basic
+        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
+        jmp   fg99.cart.run
+
+fg99.cart.run.fcmd:
+        li    tmp0,fg99.cart.fcmd   ; Load Force Command
+        mov   tmp0,@tv.fg99.img.ptr ; Set pointer
         jmp   fg99.cart.run
 
 fg99.cart.run:

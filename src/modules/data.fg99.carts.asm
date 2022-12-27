@@ -4,7 +4,7 @@
 ***************************************************************
 *                   Cartridge images
 ***************************************************************
-
+       even
 *--------------------------------------------------------------
 * Cartridge 'Force Command'
 *--------------------------------------------------------------
@@ -26,7 +26,7 @@ fg99.cart.xb:
        text   'OKFG99'              ; | Send this to reload
        byte   >99                   ; / 
        text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-                                    ; /
+       ;                            ; /
        data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
        data   >0000                 ; Start address
        even
@@ -38,8 +38,8 @@ fg99.cart.xbgem:
        byte   >99                   ; \
        text   'OKFG99'              ; | Send this to reload
        byte   >99                   ; / 
-       text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-                                    ; /
+       text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+       ;                            ; /
        data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
        data   >0000                 ; Start address
        even       
@@ -56,13 +56,3 @@ fg99.cart.rxb:
        data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
        data   >0000                 ; Start address
        even       
-
-*--------------------------------------------------------------
-* Index
-*--------------------------------------------------------------
-fg99.carts.index:
-       data fg99.cart.fcmd          ; 0: Force Command
-       data fg99.cart.xb            ; 1: TI Extended Basic
-       data fg99.cart.xbgem         ; 2: Extended Basic GEM
-       data fg99.cart.rxb           ; 3: Rich Extended Basic
-    
