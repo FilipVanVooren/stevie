@@ -925,3 +925,45 @@ tibasic.uncrunch:
 tibasic.uncrunch.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* Stub for "fg99.cart.run"
+* bank7 vec.15
+********|*****|*********************|**************************
+fg99.cart.run.fcmd:
+        clr   @tv.fg99.cartidx      ; Load Force Command
+        jmp   fg99.cart.run
+
+fg99.cart.run.xb:
+        li    tmp0,1
+        mov   tmp0,@tv.fg99.cartidx ; Load TI Extended Basic
+        jmp   fg99.cart.run
+
+fg99.cart.run.xbgem:
+        li    tmp0,2
+        mov   tmp0,@tv.fg99.cartidx ; Load Extended Basic GEM
+        jmp   fg99.cart.run
+
+fg99.cart.run.rxb:
+        li    tmp0,3
+        mov   tmp0,@tv.fg99.cartidx ; Load Rich Extended Basic
+        jmp   fg99.cart.run
+
+fg99.cart.run:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Run FinalGROM cartridge image
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.15           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+fg99.cart.run.exit:
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller

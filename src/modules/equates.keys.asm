@@ -37,6 +37,8 @@ key.uc.s      equ >53               ; S
 key.uc.o      equ >4f               ; O
 key.uc.p      equ >50               ; P
 key.uc.q      equ >51               ; Q
+key.uc.r      equ >52               ; R
+key.uc.x      equ >58               ; X
 key.lc.b      equ >a2               ; b
 key.lc.e      equ >a5               ; e
 key.lc.f      equ >a6               ; f
@@ -46,6 +48,8 @@ key.lc.s      equ >73               ; s
 key.lc.o      equ >6f               ; o
 key.lc.p      equ >70               ; p
 key.lc.q      equ >71               ; q
+key.lc.r      equ >72               ; r
+key.lc.x      equ >78               ; x
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------

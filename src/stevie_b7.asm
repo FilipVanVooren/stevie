@@ -89,6 +89,10 @@ main:
         copy  "tib.uncrunch.token.asm"     ; Decode statement token
         copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
         ;-----------------------------------------------------------------------
+        ; Run FinalGROM cartridge image
+        ;-----------------------------------------------------------------------        
+        copy  "fg99.cart.run.asm"          ; Run FinalGROM cartridge image
+        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank7.asm"        ; Bank specific stubs
@@ -98,6 +102,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"       ; SAMS bank layout for multi-purpose
         copy  "data.tib.tokens.asm"        ; TI Basic tokens
+        copy  "data.fg99.carts.asm"        ; Cartridge images
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------

@@ -126,10 +126,10 @@ txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with 
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
-txt.about.build    byte 71
+txt.about.build    byte 60
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' / Stevie copyright (c)2018-2022  Filip Van Vooren'
+                   text ' / Stevie (c)2018-2023 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -164,9 +164,9 @@ txt.head.cartridge byte 14,1,1
                    text ' Cartridge '
                    byte 1
 
-txt.info.cartridge stri 'TI Basic'
-pos.info.cartridge byte 3,>ff
-txt.hint.cartridge stri 'Select cartridge to run.'
+txt.info.cartridge stri 'TI Basic   TI XB   XB GEM   RXB   FCMD   Editor/Assembler'
+pos.info.cartridge byte 3,14,22,28,34,41,>ff
+txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared flash image required (except TI Basic).'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 
