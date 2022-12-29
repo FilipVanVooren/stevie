@@ -38,9 +38,11 @@ dialog.cartridge:
         li    tmp0,pos.info.cartridge
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
+        li    tmp0,txt.hint.cartridg2
+        mov   tmp0,@cmdb.panhint2   ; Extra hint to display
+
         li    tmp0,txt.hint.cartridge
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-        clr   @cmdb.panhint2        ; No extra hint to display
 
         li    tmp0,txt.keys.cartridge
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

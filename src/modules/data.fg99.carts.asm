@@ -25,7 +25,7 @@ fg99.cart.xb:
        byte   >99                   ; \
        text   'OKFG99'              ; | Send this to reload
        byte   >99                   ; / 
-       text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
+       text   "EXBASICG"            ; \ File to load (8 chars, pad with >00)
        ;                            ; /
        data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
        data   >0000                 ; Start address
@@ -53,6 +53,19 @@ fg99.cart.rxb:
        byte   >99                   ; / 
        text   "RXBG"                ; \ File to load (8 chars, pad with >00)
        byte   >00, >00, >00, >00    ; /
+       data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+       data   >0000                 ; Start address
+       even       
+
+*--------------------------------------------------------------
+* Cartridge 'fbForth'
+*--------------------------------------------------------------
+fg99.cart.fbforth:
+       byte   >99                   ; \
+       text   'OKFG99'              ; | Send this to reload
+       byte   >99                   ; / 
+       text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+       ;                            ; /
        data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
        data   >0000                 ; Start address
        even       

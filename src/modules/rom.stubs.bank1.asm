@@ -952,6 +952,11 @@ fg99.cart.run.fcmd:
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
         jmp   fg99.cart.run
 
+fg99.cart.run.fbforth:
+        li    tmp0,fg99.cart.fbforth ; Load fbForth
+        mov   tmp0,@tv.fg99.img.ptr  ; Set pointer
+        jmp   fg99.cart.run
+
 fg99.cart.run:
         dect  stack
         mov   r11,*stack            ; Save return address

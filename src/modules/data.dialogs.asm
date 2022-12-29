@@ -164,9 +164,11 @@ txt.head.cartridge byte 14,1,1
                    text ' Cartridge '
                    byte 1
 
-txt.info.cartridge stri 'TI Basic   TI XB   XB GEM   RXB   FCMD   Editor/Assembler'
-pos.info.cartridge byte 3,14,22,28,34,41,>ff
-txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared flash image required (except TI Basic).'
+
+txt.info.cartridge stri 'TI Basic / XB / GEM / RXB / FCMD / Editor/Assembler / fbForth'
+pos.info.cartridge byte 3,11,16,22,28,35,57,>ff
+txt.hint.cartridg2 stri ' '
+txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared flash image required (except for TI Basic)'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 

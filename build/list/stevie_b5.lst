@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221228-0016510
+0002               * BUILD: 221229-2227460
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -9394,10 +9394,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3CDC 4739     
      3CDE 39       
 0027 3CDF   99            byte   >99                   ; /
-0028 3CE0 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-     3CE2 3239     
-     3CE4 4745     
-     3CE6 4D43     
+0028 3CE0 4558            text   "EXBASICG"            ; \ File to load (8 chars, pad with >00)
+     3CE2 4241     
+     3CE4 5349     
+     3CE6 4347     
 0029                      ;                            ; /
 0030 3CE8 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
 0031 3CEA 0000            data   >0000                 ; Start address
@@ -9439,17 +9439,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056 3D10 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
 0057 3D12 0000            data   >0000                 ; Start address
 0058                      even
+0059               
+0060               *--------------------------------------------------------------
+0061               * Cartridge 'fbForth'
+0062               *--------------------------------------------------------------
+0063               fg99.cart.fbforth:
+0064 3D14 99              byte   >99                   ; \
+0065 3D15   4F            text   'OKFG99'              ; | Send this to reload
+     3D16 4B46     
+     3D18 4739     
+     3D1A 39       
+0066 3D1B   99            byte   >99                   ; /
+0067 3D1C 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     3D1E 464F     
+     3D20 5254     
+     3D22 4843     
+0068                      ;                            ; /
+0069 3D24 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0070 3D26 0000            data   >0000                 ; Start address
+0071                      even
                    < ram.resident.asm
                    < stevie_b5.asm
 0051                       ;------------------------------------------------------
 0052                       ; Activate bank 1 and branch to  >6036
 0053                       ;------------------------------------------------------
-0054 3D14 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3D16 6002     
+0054 3D28 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3D2A 6002     
 0055               
 0059               
-0060 3D18 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3D1A 6046     
+0060 3D2C 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3D2E 6046     
 0061               ***************************************************************
 0062               * Step 3: Include main editor modules
 0063               ********|*****|*********************|**************************
@@ -11399,6 +11418,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
+    FG99.CART.FBFORTH... >3D14 :     
     FG99.CART.FCMD...... >3CC4 :     
     FG99.CART.RXB....... >3D00 :     
     FG99.CART.XB........ >3CD8 :     

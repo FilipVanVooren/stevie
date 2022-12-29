@@ -147,9 +147,6 @@ pane.cmdb.draw.hint:
         ; Display extra pane hint in command buffer
         ;------------------------------------------------------
 pane.cmdb.draw.extrahint:
-        mov   @cmdb.panmarkers,tmp0 ; Any key markers to display?
-        jne   pane.cmdb.draw.keys   ; yes, skip extra pane hint
-
         mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
         jeq   pane.cmdb.draw.keys   ; No extra pane hint to display
 

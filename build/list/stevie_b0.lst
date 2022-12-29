@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221228-0016510
+0002               * BUILD: 221229-2227460
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -6110,7 +6110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0385 705C 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      705E 0040     
 0386 7060 0460  28         b     @main                 ; Give control to main program
-     7062 3D14     
+     7062 3D28     
                    < stevie_b0.asm
 0129                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
@@ -9484,10 +9484,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7D9A 4739     
      7D9C 39       
 0027 7D9D   99            byte   >99                   ; /
-0028 7D9E 5842            text   "XB29GEMC"            ; \ File to load (8 chars, pad with >00)
-     7DA0 3239     
-     7DA2 4745     
-     7DA4 4D43     
+0028 7D9E 4558            text   "EXBASICG"            ; \ File to load (8 chars, pad with >00)
+     7DA0 4241     
+     7DA2 5349     
+     7DA4 4347     
 0029                      ;                            ; /
 0030 7DA6 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
 0031 7DA8 0000            data   >0000                 ; Start address
@@ -9529,22 +9529,41 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056 7DCE 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
 0057 7DD0 0000            data   >0000                 ; Start address
 0058                      even
+0059               
+0060               *--------------------------------------------------------------
+0061               * Cartridge 'fbForth'
+0062               *--------------------------------------------------------------
+0063               fg99.cart.fbforth:
+0064 7DD2 99              byte   >99                   ; \
+0065 7DD3   4F            text   'OKFG99'              ; | Send this to reload
+     7DD4 4B46     
+     7DD6 4739     
+     7DD8 39       
+0066 7DD9   99            byte   >99                   ; /
+0067 7DDA 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     7DDC 464F     
+     7DDE 5254     
+     7DE0 4843     
+0068                      ;                            ; /
+0069 7DE2 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0070 7DE4 0000            data   >0000                 ; Start address
+0071                      even
                    < ram.resident.asm
                    < stevie_b0.asm
 0130                       ;------------------------------------------------------
 0131                       ; Stevie main entry point
 0132                       ;------------------------------------------------------
 0133               main:
-0134 7DD2 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7DD4 6002     
+0134 7DE6 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7DE8 6002     
 0135               
 0139               
-0140 7DD6 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
-     7DD8 6046     
+0140 7DEA 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+     7DEC 6046     
 0141                       ;------------------------------------------------------
 0142                       ; Memory full check
 0143                       ;------------------------------------------------------
-0147 7DDA 3D1C                   data $                ; Bank 0 ROM size OK.
+0147 7DEE 3D30                   data $                ; Bank 0 ROM size OK.
 0149                       ;-----------------------------------------------------------------------
 0150                       ; Show ROM bank in CPU crash screen
 0151                       ;-----------------------------------------------------------------------
@@ -9874,6 +9893,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
+    FG99.CART.FBFORTH... >3D14 :     
     FG99.CART.FCMD...... >3CC4 :     
     FG99.CART.RXB....... >3D00 :     
     FG99.CART.XB........ >3CD8 :     
@@ -10207,7 +10227,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
-    MAIN................ >3D14 :     
+    MAIN................ >3D28 :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
