@@ -89,10 +89,6 @@ main:
         copy  "tib.uncrunch.token.asm"     ; Decode statement token
         copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
         ;-----------------------------------------------------------------------
-        ; Run FinalGROM cartridge image
-        ;-----------------------------------------------------------------------        
-        copy  "fg99.run.asm"               ; Run FinalGROM cartridge image
-        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank7.asm"        ; Bank specific stubs

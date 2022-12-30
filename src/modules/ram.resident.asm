@@ -33,8 +33,8 @@
         ;-----------------------------------------------------------------------
         ; Utility functions
         ;-----------------------------------------------------------------------
-        copy  "pane.topline.clearmsg.asm"
-                                       ; Remove overlay messsage in top line
+        copy  "pane.topline.clearmsg.asm"   ; Remove overlay msg in top line
+        copy  "fg99.run.asm"                ; Run FinalGROM cartridge image                                       
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------

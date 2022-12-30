@@ -930,7 +930,6 @@ tibasic.uncrunch.exit:
 
 ***************************************************************
 * Stub for "fg99.run"
-* bank7 vec.15
 ********|*****|*********************|**************************
 fg99.run.xbgem:
         li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
@@ -958,10 +957,9 @@ fg99.run.stub:
         ;------------------------------------------------------
         ; Run FinalGROM cartridge image
         ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank7.rom        ; | i  p0 = bank address
-              data vec.15           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
+        bl    @fg99.run             ; Run FinalGROM cartridge
+                                    ; \ i @tv.fg99.img.ptr = Pointer to image
+                                    ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

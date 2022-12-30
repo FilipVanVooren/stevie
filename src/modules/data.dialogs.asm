@@ -168,7 +168,7 @@ txt.head.cartridge byte 14,1,1
 txt.info.cartridge stri 'TI Basic / XB-GEM / RXB / FCMD / fbForth'
 pos.info.cartridge byte 3,11,20,26,36,>ff
 txt.hint.cartridg2 stri ' '
-txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared flash image required (except for TI Basic)'
+txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared SD card required (except for TI Basic)'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 
