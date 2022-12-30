@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221229-2227460
+0002               * BUILD: 221230-1651130
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -860,12 +860,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056 6020 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0057                                                   ; 15 /
 0058               
-0062 6022 0E53                 stri 'STEVIE 1.3N-24'
+0062 6022 0E53                 stri 'STEVIE 1.3O-24'
      6024 5445     
      6026 5649     
      6028 4520     
      602A 312E     
-     602C 334E     
+     602C 334F     
      602E 2D32     
      6030 34       
                    < stevie_b3.asm
@@ -13851,12 +13851,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0014 7346 2053                 text ' Stevie 1.3N-24'
+0014 7346 2053                 text ' Stevie 1.3O-24'
      7348 7465     
      734A 7669     
      734C 6520     
      734E 312E     
-     7350 334E     
+     7350 334F     
      7352 2D32     
      7354 34       
 0015                           even
@@ -14484,13 +14484,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      778E 3A20     
 0131                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7790 3232                        text '221229-2227460'
+0001 7790 3232                        text '221230-1651130'
      7792 3132     
-     7794 3239     
-     7796 2D32     
-     7798 3232     
-     779A 3734     
-     779C 3630     
+     7794 3330     
+     7796 2D31     
+     7798 3635     
+     779A 3131     
+     779C 3330     
                    < data.dialogs.asm
 0132 779E 202F                        text ' / Stevie (c)2018-2023 Filip Van Vooren'
      77A0 2053     
