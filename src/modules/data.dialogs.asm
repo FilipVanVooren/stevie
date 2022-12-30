@@ -15,9 +15,9 @@ txt.stevie:
             even
         .endif
 
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode'
+txt.keys.default1  stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  F5-Fastmode IO'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode'
+txt.keys.default2  stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  *F5-Fastmode IO'
                    even
 
 ;--------------------------------------------------------------
@@ -134,15 +134,15 @@ txt.about.build    byte 60
 
 ;--------------------------------------------------------------
 ; Dialog "Main Menu"
-;--------------------------------------------------------------
+;------------------------------------------------------f--------
 txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
 txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
 pos.info.menu      byte 0,7,20,31,43,50,>ff
-txt.hint.menu      stri 'Press F9 or SPACE to close the main menu.'
-txt.keys.menu      stri 'F9/SPACE-Close menu'
+txt.hint.menu      stri ''
+txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
 
 ;--------------------------------------------------------------
 ; Dialog "File"

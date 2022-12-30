@@ -38,6 +38,7 @@ cmdb.cmd.set:
         ;------------------------------------------------------
         mov   @parm1,tmp0           
         movb  *tmp0+,tmp2           ; Get length byte
+        movb  tmp2,@cmdb.cmdlen     ; Set length byte
         srl   tmp2,8                ; Right align
         jgt   !
         ;------------------------------------------------------

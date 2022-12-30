@@ -158,19 +158,19 @@ dialog.help.data.page1.left:
         text    ' Cursor '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         even
-        stri 'Fctn s/d/e/x  Left - Right - Up - Down'
+        stri 'Fctn s/d/e/x  Left, Right, Up, Down'
         even
-        stri 'Fctn h/l      Position 1 - End of line'
+        stri 'Fctn h/l      Home, End of line'
         even
-        stri 'Fctn j/k      Prev. word - Next word'
+        stri 'Fctn j/k      Previous word, Next word'
         even        
         stri 'Fctn 4   ^x   Page down'
         even
         stri 'Fctn 6   ^e   Page up'
         even        
-        stri 'Fctn 7        Next tab'
+        stri 'Fctn 7        Next tab position'
         even
-        stri 'Ctrl 7        Prev. tab'
+        stri 'Ctrl 7        Previous tab position'
         even
         stri 'Fctn v        Screen top'
         even
