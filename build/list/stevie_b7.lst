@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221230-2129090
+0002               * BUILD: 221230-2138440
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -5574,14 +5574,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057 2DE8 0202  24         li    r2,>100
      2DEA 0100     
 0058 2DEC C070  46 !       mov   *r0+, r1
-0059 2DEE 1603  14         jne   fg99.run              ; Done loading, run cartridge
+0059 2DEE 1603  14         jne   fg99.go               ; Done loading, run cartridge
 0060 2DF0 0602  22         dec   r2
 0061 2DF2 16FC  14         jne   -!
 0062 2DF4 10F7  14         jmp   fg99.wait
 0063               *--------------------------------------------------------------
 0064               * (4) Image finished loading. Start cartridge.
 0065               *--------------------------------------------------------------
-0066               fg99.run:
+0066               fg99.go:
 0067 2DF6 0420  54         blwp  @0                    ; Reset TI-99/4a
      2DF8 0000     
                    < runlib.asm
@@ -12532,15 +12532,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093                       ;-----------------------------------------------------------------------
 0094                       copy  "fg99.run.asm"               ; Run FinalGROM cartridge image
      **** ****     > fg99.run.asm
-0001               * FILE......: fg99.cart.run.asm
+0001               * FILE......: fg99.run.asm
 0002               * Purpose...: Run FinalGROM cartridge image
 0003               
 0004               
 0005               ***************************************************************
-0006               * fg99.cart.run
+0006               * fg99.run
 0007               * Run FinalGROM cartridge image
 0008               ***************************************************************
-0009               * bl   @fg99.cart.run
+0009               * bl   @fg99.run
 0010               *--------------------------------------------------------------
 0011               * INPUT
 0012               * @tv.fg99.img.ptr = Pointer to cartridge image entry
@@ -12554,7 +12554,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0020               * Remarks
 0021               * Based on tib.run
 0022               ********|*****|*********************|**************************
-0023               fg99.cart.run:
+0023               fg99.run:
 0024 6B90 0649  14         dect  stack
 0025 6B92 C64B  30         mov   r11,*stack            ; Save return address
 0026 6B94 0649  14         dect  stack
@@ -12609,7 +12609,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0065 6BCE 06A0  32         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
      6BD0 6110     
 0066                                                   ; / for TI Basic session 1
-0067               fg99.cart.run.init.rest:
+0067               fg99.run.init.rest:
 0068 6BD2 06A0  32         bl    @ldfnt
      6BD4 2360     
 0069 6BD6 0900                   data >0900,fnopt3     ; Load font (upper & lower case)
@@ -13787,7 +13787,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026 7FD6 2026     vec.12  data  cpu.crash             ;
 0027 7FD8 2026     vec.13  data  cpu.crash             ;
 0028 7FDA 2026     vec.14  data  cpu.crash             ;
-0029 7FDC 2DF6     vec.15  data  fg99.run              ;
+0029 7FDC 6B90     vec.15  data  fg99.run              ;
 0030 7FDE 2026     vec.16  data  cpu.crash             ;
 0031 7FE0 2026     vec.17  data  cpu.crash             ;
 0032 7FE2 2026     vec.18  data  cpu.crash             ;
@@ -14123,11 +14123,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FG99................ >2DC4 :     
     FG99.CART.FBFORTH... >3D02 :     
     FG99.CART.FCMD...... >3CC6 :     
-    FG99.CART.RUN....... >6B90 :     
-    FG99.CART.RUN.INIT.REST >6BD2 :     
     FG99.CART.RXB....... >3CEE :     
     FG99.CART.XBGEM..... >3CDA :     
-    FG99.RUN............ >2DF6 :     
+    FG99.GO............. >2DF6 :     
+    FG99.RUN............ >6B90 :     
+    FG99.RUN.INIT.REST.. >6BD2 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
     FH.CALLBACK1........ >A450 :     

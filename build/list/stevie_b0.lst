@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221230-2129090
+0002               * BUILD: 221230-2138440
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -5658,14 +5658,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057 6EA6 0202  24         li    r2,>100
      6EA8 0100     
 0058 6EAA C070  46 !       mov   *r0+, r1
-0059 6EAC 1603  14         jne   fg99.run              ; Done loading, run cartridge
+0059 6EAC 1603  14         jne   fg99.go               ; Done loading, run cartridge
 0060 6EAE 0602  22         dec   r2
 0061 6EB0 16FC  14         jne   -!
 0062 6EB2 10F7  14         jmp   fg99.wait
 0063               *--------------------------------------------------------------
 0064               * (4) Image finished loading. Start cartridge.
 0065               *--------------------------------------------------------------
-0066               fg99.run:
+0066               fg99.go:
 0067 6EB4 0420  54         blwp  @0                    ; Reset TI-99/4a
      6EB6 0000     
                    < runlib.asm
@@ -9879,7 +9879,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FG99.CART.FCMD...... >3CC6 :     
     FG99.CART.RXB....... >3CEE :     
     FG99.CART.XBGEM..... >3CDA :     
-    FG99.RUN............ >2DF6 :     
+    FG99.GO............. >2DF6 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
     FH.CALLBACK1........ >A450 :     
