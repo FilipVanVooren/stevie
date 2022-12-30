@@ -19,19 +19,6 @@ fg99.cart.fcmd:
        even
 
 *--------------------------------------------------------------
-* Cartridge 'TI Extended Basic'
-*--------------------------------------------------------------
-fg99.cart.xb:
-       byte   >99                   ; \
-       text   'OKFG99'              ; | Send this to reload
-       byte   >99                   ; / 
-       text   "EXBASICG"            ; \ File to load (8 chars, pad with >00)
-       ;                            ; /
-       data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-       data   >0000                 ; Start address
-       even
-
-*--------------------------------------------------------------
 * Cartridge 'Extended Basic GEM'
 *--------------------------------------------------------------
 fg99.cart.xbgem:

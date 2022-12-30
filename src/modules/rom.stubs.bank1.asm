@@ -932,11 +932,6 @@ tibasic.uncrunch.exit:
 * Stub for "fg99.cart.run"
 * bank7 vec.15
 ********|*****|*********************|**************************
-fg99.cart.run.xb:
-        li    tmp0,fg99.cart.xb     ; Load TI Extended Basic 
-        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
-        jmp   fg99.cart.run
-
 fg99.cart.run.xbgem:
         li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer        

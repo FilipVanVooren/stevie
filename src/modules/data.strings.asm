@@ -59,7 +59,7 @@ txt.autoins.on     stri 'Autoinsert: on'
                    even
 txt.autoins.off    stri 'Autoinsert: off'
                    even
-txt.fastmode       stri 'Fastmode'
+txt.fastmode       stri 'Fastmode IO'
                    even
 txt.uncrunching    stri 'Expanding TI Basic line....'
                    even
