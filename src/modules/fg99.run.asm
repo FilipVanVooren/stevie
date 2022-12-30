@@ -1,12 +1,12 @@
-* FILE......: fg99.cart.run.asm
+* FILE......: fg99.run.asm
 * Purpose...: Run FinalGROM cartridge image
 
 
 ***************************************************************
-* fg99.cart.run
+* fg99.run
 * Run FinalGROM cartridge image
 ***************************************************************
-* bl   @fg99.cart.run
+* bl   @fg99.run
 *--------------------------------------------------------------
 * INPUT
 * @tv.fg99.img.ptr = Pointer to cartridge image entry
@@ -20,7 +20,7 @@
 * Remarks
 * Based on tib.run
 ********|*****|*********************|**************************
-fg99.cart.run:
+fg99.run:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -64,7 +64,7 @@ fg99.cart.run:
         ;-------------------------------------------------------
         bl    @mem.sams.set.basic1  ; \ Load SAMS page layout (from cart space)
                                     ; / for TI Basic session 1
-fg99.cart.run.init.rest:
+fg99.run.init.rest:
         bl    @ldfnt
               data >0900,fnopt3     ; Load font (upper & lower case)
 
