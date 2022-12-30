@@ -57,8 +57,8 @@ edkey.action.cmdb.end:
         srl   tmp0,8                 ; Right justify
         mov   tmp0,@cmdb.column      ; Save column position
         inc   tmp0                   ; One time adjustment command prompt        
-        ai    tmp0,>1a00             ; Y=26
-        mov   tmp0,@cmdb.cursor      ; Set cursor position
+        swpb  tmp0                   ; LSB TO MSB
+        movb  tmp0,@cmdb.cursor+1    ; Set cursor position
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        

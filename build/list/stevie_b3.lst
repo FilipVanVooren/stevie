@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221230-1651130
+0002               * BUILD: 221230-1701400
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -14484,13 +14484,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      778E 3A20     
 0131                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7790 3232                        text '221230-1651130'
+0001 7790 3232                        text '221230-1701400'
      7792 3132     
      7794 3330     
      7796 2D31     
-     7798 3635     
-     779A 3131     
-     779C 3330     
+     7798 3730     
+     779A 3134     
+     779C 3030     
                    < data.dialogs.asm
 0132 779E 202F                        text ' / Stevie (c)2018-2023 Filip Van Vooren'
      77A0 2053     
