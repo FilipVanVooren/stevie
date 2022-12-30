@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221230-2113330
+0002               * BUILD: 221230-2129090
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -12530,8 +12530,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0091                       ;-----------------------------------------------------------------------
 0092                       ; Run FinalGROM cartridge image
 0093                       ;-----------------------------------------------------------------------
-0094                       copy  "fg99.cart.run.asm"          ; Run FinalGROM cartridge image
-     **** ****     > fg99.cart.run.asm
+0094                       copy  "fg99.run.asm"               ; Run FinalGROM cartridge image
+     **** ****     > fg99.run.asm
 0001               * FILE......: fg99.cart.run.asm
 0002               * Purpose...: Run FinalGROM cartridge image
 0003               
@@ -13787,7 +13787,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026 7FD6 2026     vec.12  data  cpu.crash             ;
 0027 7FD8 2026     vec.13  data  cpu.crash             ;
 0028 7FDA 2026     vec.14  data  cpu.crash             ;
-0029 7FDC 6B90     vec.15  data  fg99.cart.run         ;
+0029 7FDC 2DF6     vec.15  data  fg99.run              ;
 0030 7FDE 2026     vec.16  data  cpu.crash             ;
 0031 7FE0 2026     vec.17  data  cpu.crash             ;
 0032 7FE2 2026     vec.18  data  cpu.crash             ;

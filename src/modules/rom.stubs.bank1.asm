@@ -929,30 +929,30 @@ tibasic.uncrunch.exit:
 
 
 ***************************************************************
-* Stub for "fg99.cart.run"
+* Stub for "fg99.run"
 * bank7 vec.15
 ********|*****|*********************|**************************
-fg99.cart.run.xbgem:
+fg99.run.xbgem:
         li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
-        jmp   fg99.cart.run
+        jmp   fg99.run.stub
 
-fg99.cart.run.rxb:
+fg99.run.rxb:
         li    tmp0,fg99.cart.rxb    ; Load Rich Extended Basic
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
-        jmp   fg99.cart.run
+        jmp   fg99.run.stub
 
-fg99.cart.run.fcmd:
+fg99.run.fcmd:
         li    tmp0,fg99.cart.fcmd   ; Load Force Command
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
-        jmp   fg99.cart.run
+        jmp   fg99.run.stub
 
-fg99.cart.run.fbforth:
+fg99.run.fbforth:
         li    tmp0,fg99.cart.fbforth ; Load fbForth
         mov   tmp0,@tv.fg99.img.ptr  ; Set pointer
-        jmp   fg99.cart.run
+        jmp   fg99.run.stub
 
-fg99.cart.run:
+fg99.run.stub:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -965,6 +965,6 @@ fg99.cart.run:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fg99.cart.run.exit:
+fg99.run.stub.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

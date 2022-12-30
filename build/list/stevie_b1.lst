@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221230-2113330
+0002               * BUILD: 221230-2129090
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -16998,38 +16998,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0929               
 0930               
 0931               ***************************************************************
-0932               * Stub for "fg99.cart.run"
+0932               * Stub for "fg99.run"
 0933               * bank7 vec.15
 0934               ********|*****|*********************|**************************
-0935               fg99.cart.run.xbgem:
+0935               fg99.run.xbgem:
 0936 7C40 0204  20         li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
      7C42 3CDA     
 0937 7C44 C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
      7C46 A230     
-0938 7C48 100F  14         jmp   fg99.cart.run
+0938 7C48 100F  14         jmp   fg99.run.stub
 0939               
-0940               fg99.cart.run.rxb:
+0940               fg99.run.rxb:
 0941 7C4A 0204  20         li    tmp0,fg99.cart.rxb    ; Load Rich Extended Basic
      7C4C 3CEE     
 0942 7C4E C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
      7C50 A230     
-0943 7C52 100A  14         jmp   fg99.cart.run
+0943 7C52 100A  14         jmp   fg99.run.stub
 0944               
-0945               fg99.cart.run.fcmd:
+0945               fg99.run.fcmd:
 0946 7C54 0204  20         li    tmp0,fg99.cart.fcmd   ; Load Force Command
      7C56 3CC6     
 0947 7C58 C804  38         mov   tmp0,@tv.fg99.img.ptr ; Set pointer
      7C5A A230     
-0948 7C5C 1005  14         jmp   fg99.cart.run
+0948 7C5C 1005  14         jmp   fg99.run.stub
 0949               
-0950               fg99.cart.run.fbforth:
+0950               fg99.run.fbforth:
 0951 7C5E 0204  20         li    tmp0,fg99.cart.fbforth ; Load fbForth
      7C60 3D02     
 0952 7C62 C804  38         mov   tmp0,@tv.fg99.img.ptr  ; Set pointer
      7C64 A230     
-0953 7C66 1000  14         jmp   fg99.cart.run
+0953 7C66 1000  14         jmp   fg99.run.stub
 0954               
-0955               fg99.cart.run:
+0955               fg99.run.stub:
 0956 7C68 0649  14         dect  stack
 0957 7C6A C64B  30         mov   r11,*stack            ; Save return address
 0958                       ;------------------------------------------------------
@@ -17043,7 +17043,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0965                       ;------------------------------------------------------
 0966                       ; Exit
 0967                       ;------------------------------------------------------
-0968               fg99.cart.run.exit:
+0968               fg99.run.stub.exit:
 0969 7C76 C2F9  30         mov   *stack+,r11           ; Pop r11
 0970 7C78 045B  20         b     *r11                  ; Return to caller
                    < stevie_b1.asm
@@ -17519,16 +17519,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0326 7E4A 79D4             data  dialog.basic
 0327               
 0328 7E4C 466A             byte  key.uc.f, id.dialog.cartridge
-0329 7E4E 7C54             data  fg99.cart.run.fcmd
+0329 7E4E 7C54             data  fg99.run.fcmd
 0330               
 0331 7E50 586A             byte  key.uc.x, id.dialog.cartridge
-0332 7E52 7C40             data  fg99.cart.run.xbgem
+0332 7E52 7C40             data  fg99.run.xbgem
 0333               
 0334 7E54 526A             byte  key.uc.r, id.dialog.cartridge
-0335 7E56 7C4A             data  fg99.cart.run.rxb
+0335 7E56 7C4A             data  fg99.run.rxb
 0336               
 0337 7E58 4F6A             byte  key.uc.o, id.dialog.cartridge
-0338 7E5A 7C5E             data  fg99.cart.run.fbforth
+0338 7E5A 7C5E             data  fg99.run.fbforth
 0339                       ;-------------------------------------------------------
 0340                       ; Dialog: Basic
 0341                       ;-------------------------------------------------------
@@ -18323,15 +18323,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FG99................ >2DC4 :     
     FG99.CART.FBFORTH... >3D02 :     
     FG99.CART.FCMD...... >3CC6 :     
-    FG99.CART.RUN....... >7C68 :     
-    FG99.CART.RUN.EXIT.. >7C76 :     
-    FG99.CART.RUN.FBFORTH >7C5E :     
-    FG99.CART.RUN.FCMD.. >7C54 :     
-    FG99.CART.RUN.RXB... >7C4A :     
-    FG99.CART.RUN.XBGEM. >7C40 :     
     FG99.CART.RXB....... >3CEE :     
     FG99.CART.XBGEM..... >3CDA :     
     FG99.RUN............ >2DF6 :     
+    FG99.RUN.FBFORTH.... >7C5E :     
+    FG99.RUN.FCMD....... >7C54 :     
+    FG99.RUN.RXB........ >7C4A :     
+    FG99.RUN.STUB....... >7C68 :     
+    FG99.RUN.STUB.EXIT.. >7C76 :     
+    FG99.RUN.XBGEM...... >7C40 :     
     FG99.SEND.LOOP...... >2DCC :     
     FG99.WAIT........... >2DE4 :     
     FH.CALLBACK1........ >A450 :     

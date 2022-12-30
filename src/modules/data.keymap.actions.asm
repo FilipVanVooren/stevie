@@ -326,16 +326,16 @@ keymap_actions.cmdb:
         data  dialog.basic
 
         byte  key.uc.f, id.dialog.cartridge
-        data  fg99.cart.run.fcmd
+        data  fg99.run.fcmd
 
         byte  key.uc.x, id.dialog.cartridge
-        data  fg99.cart.run.xbgem
+        data  fg99.run.xbgem
 
         byte  key.uc.r, id.dialog.cartridge
-        data  fg99.cart.run.rxb
+        data  fg99.run.rxb
 
         byte  key.uc.o, id.dialog.cartridge
-        data  fg99.cart.run.fbforth
+        data  fg99.run.fbforth
         ;-------------------------------------------------------
         ; Dialog: Basic
         ;-------------------------------------------------------
