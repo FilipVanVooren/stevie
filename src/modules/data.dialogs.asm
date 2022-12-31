@@ -8,10 +8,10 @@
 
 txt.stevie:
         .ifeq full_f18a_support,1
-            text '  Stevie 1.3P  '
+            text '  Stevie 1.3Q  '
             even
         .else
-            text ' Stevie 1.3P-24'
+            text ' Stevie 1.3Q-24'
             even
         .endif
 
