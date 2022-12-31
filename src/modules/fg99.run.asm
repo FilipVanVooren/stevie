@@ -40,8 +40,8 @@ fg99.run:
         ;-------------------------------------------------------
         ; Turn SAMS mapper off and exit to monitor
         ;-------------------------------------------------------
-        ;li    r12,>1e00             ; SAMS CRU address
-        ;sbz   1                     ; Disable SAMS mapper
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper
                                     ; \ We keep the mapper off while
                                     ; | running TI Basic or other external
                                     ; / programs.      

@@ -33,8 +33,8 @@
 * Stevie boot order
 *--------------------------------------------------------------
 mem.sams.layout.boot:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0200                 ; >2000-2fff, SAMS page >02
+        data  >0300                 ; >3000-3fff, SAMS page >03
         data  >0400                 ; >a000-afff, SAMS page >04
         data  >2000                 ; >b000-bfff, SAMS page >20
                                     ; \
@@ -56,8 +56,8 @@ mem.sams.layout.boot:
 * Before running external progam
 *--------------------------------------------------------------
 mem.sams.layout.external:
-        data  >0000                 ; >2000-2fff, SAMS page >00
-        data  >0100                 ; >3000-3fff, SAMS page >01
+        data  >0200                 ; >2000-2fff, SAMS page >00
+        data  >0300                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
         data  >1000                 ; >b000-efff, SAMS page >10
@@ -89,8 +89,8 @@ mem.sams.layout.legacy:
 * Backup TI Basic session 1 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
-        data  >0000                 ; . >2000-2fff
-        data  >0100                 ; . >3000-3fff
+        data  >0200                 ; . >2000-2fff
+        data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >fb00                 ; \ >b000-efff
         data  >fc00                 ; |
@@ -104,8 +104,8 @@ mem.sams.layout.basic1:
 * Backup TI Basic session 2 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
-        data  >0000                 ; . >2000-2fff
-        data  >0100                 ; . >3000-3fff
+        data  >0200                 ; . >2000-2fff
+        data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >f700                 ; \ >b000-efff
         data  >f800                 ; |
@@ -119,8 +119,8 @@ mem.sams.layout.basic2:
 * Backup TI Basic session 3 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
-        data  >0000                 ; . >2000-2fff
-        data  >0100                 ; . >3000-3fff
+        data  >0200                 ; . >2000-2fff
+        data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >f300                 ; \ >b000-efff
         data  >f400                 ; |
@@ -134,8 +134,8 @@ mem.sams.layout.basic3:
 * Backup TI Basic session 4 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic4:
-        data  >0000                 ; . >2000-2fff
-        data  >0100                 ; . >3000-3fff
+        data  >0200                 ; . >2000-2fff
+        data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >ef00                 ; \ >b000-efff
         data  >f000                 ; |
@@ -149,8 +149,8 @@ mem.sams.layout.basic4:
 * Backup TI Basic session 5 VRAM, scratchpad + auxiliary
 *--------------------------------------------------------------
 mem.sams.layout.basic5:
-        data  >0000                 ; . >2000-2fff
-        data  >0100                 ; . >3000-3fff
+        data  >0200                 ; . >2000-2fff
+        data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >eb00                 ; \ >b000-efff
         data  >ec00                 ; |

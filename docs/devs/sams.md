@@ -11,7 +11,11 @@ This is for the most handled via the subroutines in the spectra2 module
 There are some additional high-level modules in stevie for dealing with SAMS
 banks.
 
-* ``/modules/mem.asm``
+* ``/modules/mem_sams_setup.asm``
+* ``/modules/mem_sams_layout.asm``
+
+There's also boot-specific SAMS setup code in ``stevie_b0.asm``.
+
 
 ## Editor mode
 
@@ -139,3 +143,17 @@ captured by Stevie helper ISR in TI Basic.
 | >f800 - f8ff | TI Basic session 3   |
 | >f900 - f9ff | TI Basic session 4   |
 | >fa00 - faff | TI Basic session 5   |
+
+
+## Locked pages >02 and >03
+
+|  >2000 | >3000 | 
+|--------|-------|
+|   >02  |  >03  |
+
+The memory regions ``>2000 - >2fff`` and ``>3000 - >3fff`` contains spectra2  
+modules, Stevie core memory and Stevie resident modules. These memory regions   
+are locked to pages ``>02`` and ``>03``. This is required so that the mapper can
+be turned off and the that resides there can still be executed.
+
+This is important for memory setup when chaining to another FinalGROM cartridge.

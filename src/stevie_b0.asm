@@ -55,10 +55,10 @@ new.stevie:
         li    r12,>1e00             ; SAMS CRU address
         sbz   1                     ; Disable SAMS mapper
         sbo   0                     ; Enable access to SAMS registers
-        clr   r0                    ; \ Page 0 in >2000 - >2fff
+        li    r0,>0200              ; \ Page 2 in >2000 - >2fff
         movb  r0,@>4004             ; /
 
-        li    r0,>0100              ; \ Page 1 in >3000 - >3fff
+        li    r0,>0300              ; \ Page 3 in >3000 - >3fff
         movb  r0,@>4006             ; /
 
         li    r0,>0400              ; \ Page 4 in >a000 - >afff
