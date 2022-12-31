@@ -13,19 +13,14 @@
                                     ; 5  /
 
         ; 
-        ; Change to rom.program1 to add the menu option STEVIE RESET.
-        ; That option can be used in the case where we jump to TI Basic, 
-        ; but resume fails afterwards (because of memory being overwritten).
+        ; Change to rom.program1 to add the menu option RESET STEVIE MEMORY.
+        ; That option can be used in the case where we jump to TI Basic, but
+        ; resuming fails afterwards (e.g. memory overwritten by ext. program).
         ;
         ; If resume fails, you can only reset the TI-99/4a by turning of
         ; the memory expansion, it's not sufficient to reset the console.
         ;
-        ; Not sure how many people will use the TI Basic sessions to begin with,
-        ; so am turning the menu option off. Having a single menu option on a 
-        ; FG99 cartridge is better because you don't have to go through the
-        ; TI Selection screen when loaded (e.g. from ForceCommand).
-        ;
-        data  rom.program2          ; 6  \ Pointer to program list         >6006
+        data  rom.program1          ; 6  \ Pointer to program list         >6006
                                     ; 7  /
 
         data  >0000                 ; 8  \ Pointer to DSR list             >6008
@@ -44,7 +39,7 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        stri 'STEVIE RESET'
+        stri 'RESET STEVIE MEMORY'
 
         ;-----------------------------------------------------------------------
         ; Program list entry
