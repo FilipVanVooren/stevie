@@ -290,7 +290,7 @@ tib.run.return.stevie:
                                     ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
 
-        mov   @tib.automode,tmp0    ; AutoMode is on?
+        mov   @tib.autounpk,tmp0    ; AutoUnpack is on?
         jne   tib.run.return.exit   ; Yes, skip keylist
         ;------------------------------------------------------
         ; Set shortcut list in bottom status line

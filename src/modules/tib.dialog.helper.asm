@@ -5,7 +5,7 @@
 
 ***************************************************************
 * tibasic.am.toggle
-* Toggle TI Basic AutoMode
+* Toggle TI Basic AutoUnpack
 ***************************************************************
 * bl   @tibasic.am.toggle
 *--------------------------------------------------------------
@@ -27,9 +27,9 @@ tibasic.am.toggle:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Toggle AutoMode display
+        ; Toggle AutoUnpack display
         ;------------------------------------------------------
-        inv   @tib.automode         ; Toggle 'AutoMode'
+        inv   @tib.autounpk         ; Toggle 'AutoUnpack'
         jeq   tibasic.am.off
         li    tmp0,txt.keys.basic2
         jmp   !

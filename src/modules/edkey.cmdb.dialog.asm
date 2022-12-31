@@ -69,7 +69,7 @@ edkey.action.cmdb.fastmode.toggle:
 
 ***************************************************************
 * edkey.action.cmdb.am.toggle
-* Toggle 'AutoMode' on/off
+* Toggle 'AutoUnpack' on/off
 ***************************************************************
 * b   @edkey.action.cmdb.am.toggle
 *--------------------------------------------------------------
@@ -80,7 +80,7 @@ edkey.action.cmdb.fastmode.toggle:
 * none
 ********|*****|*********************|**************************
 edkey.action.cmdb.am.toggle:
-       bl    @tibasic.am.toggle     ; Toggle AutoMode
+       bl    @tibasic.am.toggle     ; Toggle AutoUnpack
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
        b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

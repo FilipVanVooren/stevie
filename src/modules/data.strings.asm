@@ -91,7 +91,7 @@ txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
                    even
 txt.keys.block     stri 'F9-Back  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
                    even
-txt.keys.basic1    stri 'F9-Back  ENTER-Back  F5-AutoMode  SPACE-Uncrunch'
+txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
                    even
 txt.ruler          text    '.........'
                    byte    18

@@ -888,7 +888,7 @@ tibasic:
               data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
 
-        mov   @tib.automode,tmp0    ; AutoMode flag set?
+        mov   @tib.autounpk,tmp0    ; AutoUnpack flag set?
         jeq   tibasic.exit          ; No, skip uncrunching
 
         bl    @tibasic.uncrunch     ; Uncrunch TI Basic program
@@ -896,6 +896,7 @@ tibasic:
         ; Exit
         ;------------------------------------------------------
 tibasic.exit:
+        seto  @fb.status.dirty      ; Trigger status lines update
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

@@ -42,5 +42,5 @@ vec.27  data  cmdb.cmd.preset       ;
 vec.28  data  cmdb.cmd.set          ;
 vec.29  data  tibasic.hearts.tat    ; Dump color for hearts in TI-Basic dialog
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
-vec.31  data  tibasic.am.toggle     ; Toggle AutoMode in Run TI-Basic dialog
+vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load dialog

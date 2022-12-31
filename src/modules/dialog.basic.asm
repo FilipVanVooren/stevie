@@ -37,9 +37,11 @@ dialog.basic:
 
         li    tmp0,txt.hint.basic
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-        clr   @cmdb.panhint2        ; No extra hint to display
 
-        mov   @tib.automode,tmp0    ; Get 'Automode' flag
+        li    tmp0,txt.hint.basic2  ; \ Display extra hint
+        mov   tmp0,@cmdb.panhint2   ; / 
+
+        mov   @tib.autounpk,tmp0    ; Get 'AutoUnpack' flag
         jeq   !
         ;-------------------------------------------------------
         ; Flag is on
@@ -50,19 +52,20 @@ dialog.basic:
         ; Flag is off
         ;-------------------------------------------------------
 !       mov   @tib.session,tmp0     ; Already did session before?
-        jeq   dialog.basic.amonly   ; No, only AutoMode
-        li    tmp0,txt.keys.basic1  ; Yes, add "Uncrunch program"
+        jeq   dialog.basic.amonly   ; No, only AutoUnpack
+
+        li    tmp0,txt.keys.basic1  ; Add "Unpack" option to keylist
         jmp   dialog.basic.done
         ;-------------------------------------------------------
-        ; AutoMode option only
+        ; AutoUnpack option only
         ;-------------------------------------------------------
 dialog.basic.amonly:
-        li    tmp0,txt.keys.basic   ; Only AutoMode
+        li    tmp0,txt.keys.basic   ; Only AutoUnpack
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
 dialog.basic.done:
-        mov   tmp0,@cmdb.pankeys    ; Save Keylist in status line
+        mov   tmp0,@cmdb.pankeys    ; Save keylist in status line
         bl    @tibasic.buildstr     ; Build session selection string
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
