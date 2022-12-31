@@ -55,8 +55,8 @@ pane.botline.show_keys:
         mov   tmp0,@rambuf          ; Copy to ram buffer for display
 
         bl    @putat                ; \
-              byte pane.botrow,27   ; | Display session-ID string
-              data rambuf           ; / Y=bottom row, X=27
+              byte pane.botrow,41   ; | Display session-ID string
+              data rambuf           ; / Y=bottom row, X=41
         ;------------------------------------------------------
         ; Show default keys
         ;------------------------------------------------------
