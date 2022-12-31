@@ -30,6 +30,15 @@ fg99.run:
               data tibasic.32x24    ; Equate selected video mode table
 
         bl    @scroff               ; Turn off screen
+        ;------------------------------------------------------
+        ; Clear magic string
+        ;------------------------------------------------------
+        ; Clear the bytes 'DEAD994ABEEF' in core memory.
+        ; Indicate it's unsafe to resume Stevie and initialization
+        ; is necessary.
+        clr   @magic.str.w1
+        clr   @magic.str.w2
+        clr   @magic.str.w3
         ;-------------------------------------------------------
         ; Load FG99 cartridge, but do not start cartridge yet
         ;------------------------------------------------------- 
