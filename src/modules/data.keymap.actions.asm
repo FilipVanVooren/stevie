@@ -120,14 +120,14 @@ keymap_actions.editor:
 
         byte  key.ctrl.3, pane.focus.fb
         data  edkey.action.fb.clip.save.3
-
-        byte  key.ctrl.5, pane.focus.fb
-        data  edkey.action.scroll.left
         ;-------------------------------------------------------
         ; Other action keys
         ;-------------------------------------------------------
         byte  key.fctn.plus, pane.focus.fb
         data  edkey.action.quit
+
+        byte  key.ctrl.5, pane.focus.fb
+        data  edkey.action.scroll.left
 
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
@@ -149,6 +149,9 @@ keymap_actions.editor:
 
         byte  key.fctn.0, pane.focus.fb
         data  tibasic
+
+        byte  key.ctrl.0, pane.focus.fb
+        data  edkey.action.fb.load.mastcat
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

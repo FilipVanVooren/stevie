@@ -205,7 +205,7 @@ dialog.help.data.page1.right:
         even
         stri 'Ctrl s   ^s   Save file'
         even
-        stri 'Ctrl ,   ^,   Load prev file'
+        stri 'Ctrl ,   ^,   Load previous file'
         even
         stri 'Ctrl .   ^.   Load next file'
         even
@@ -217,6 +217,8 @@ dialog.help.data.page1.right:
         stri 'Fctn +   ^q   Quit'
         even
         stri 'Fctn 0   ^/   TI Basic'
+        even
+        stri 'Ctrl 0   ^0   Load file TIPI.MASTCAT'
         even
         stri 'Ctrl h   ^h   Help'
         even

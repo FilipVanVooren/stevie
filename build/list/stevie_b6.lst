@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 221231-1630140
+0002               * BUILD: 230106-2044130
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -858,12 +858,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0057 6028 0E53                 stri 'STEVIE 1.3Q-24'
+0057 6028 0E53                 stri 'STEVIE 1.4A-24'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
-     6032 3351     
+     6032 3441     
      6034 2D32     
      6036 34       
                    < stevie_b6.asm
@@ -9429,6 +9429,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3CF2 5253     
      3CF4 3233     
      3CF6 32       
+0012 3CF7   0C     def.mastercat       stri 'TIPI.MASTCAT'
+     3CF8 5449     
+     3CFA 5049     
+     3CFC 2E4D     
+     3CFE 4153     
+     3D00 5443     
+     3D02 4154     
                    < ram.resident.asm
 0055                       copy  "data.fg99.carts.asm"         ; Cartridge images
      **** ****     > data.fg99.carts.asm
@@ -9443,87 +9450,87 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * Cartridge 'Force Command'
 0010               *--------------------------------------------------------------
 0011               fg99.cart.fcmd:
-0012 3CF8 99              byte   >99                   ; \
-0013 3CF9   4F            text   'OKFG99'              ; | Send this to reload
-     3CFA 4B46     
-     3CFC 4739     
-     3CFE 39       
-0014 3CFF   99            byte   >99                   ; /
-0015 3D00 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
-     3D02 4D44     
-     3D04 47       
-0016 3D05   00            byte   >00, >00, >00         ; /
-     3D06 0000     
-0017 3D08 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0018 3D0A 0000            data   >0000                 ; Start address
+0012 3D04 99              byte   >99                   ; \
+0013 3D05   4F            text   'OKFG99'              ; | Send this to reload
+     3D06 4B46     
+     3D08 4739     
+     3D0A 39       
+0014 3D0B   99            byte   >99                   ; /
+0015 3D0C 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3D0E 4D44     
+     3D10 47       
+0016 3D11   00            byte   >00, >00, >00         ; /
+     3D12 0000     
+0017 3D14 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3D16 0000            data   >0000                 ; Start address
 0019                      even
 0020               
 0021               *--------------------------------------------------------------
 0022               * Cartridge 'Extended Basic GEM'
 0023               *--------------------------------------------------------------
 0024               fg99.cart.xbgem:
-0025 3D0C 99              byte   >99                   ; \
-0026 3D0D   4F            text   'OKFG99'              ; | Send this to reload
-     3D0E 4B46     
-     3D10 4739     
-     3D12 39       
-0027 3D13   99            byte   >99                   ; /
-0028 3D14 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
-     3D16 3239     
-     3D18 4745     
-     3D1A 4D47     
+0025 3D18 99              byte   >99                   ; \
+0026 3D19   4F            text   'OKFG99'              ; | Send this to reload
+     3D1A 4B46     
+     3D1C 4739     
+     3D1E 39       
+0027 3D1F   99            byte   >99                   ; /
+0028 3D20 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3D22 3239     
+     3D24 4745     
+     3D26 4D47     
 0029                      ;                            ; /
-0030 3D1C 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0031 3D1E 0000            data   >0000                 ; Start address
+0030 3D28 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3D2A 0000            data   >0000                 ; Start address
 0032                      even
 0033               
 0034               *--------------------------------------------------------------
 0035               * Cartridge 'Rich Extended Basic'
 0036               *--------------------------------------------------------------
 0037               fg99.cart.rxb:
-0038 3D20 99              byte   >99                   ; \
-0039 3D21   4F            text   'OKFG99'              ; | Send this to reload
-     3D22 4B46     
-     3D24 4739     
-     3D26 39       
-0040 3D27   99            byte   >99                   ; /
-0041 3D28 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
-     3D2A 4247     
-0042 3D2C 0000            byte   >00, >00, >00, >00    ; /
-     3D2E 0000     
-0043 3D30 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0044 3D32 0000            data   >0000                 ; Start address
+0038 3D2C 99              byte   >99                   ; \
+0039 3D2D   4F            text   'OKFG99'              ; | Send this to reload
+     3D2E 4B46     
+     3D30 4739     
+     3D32 39       
+0040 3D33   99            byte   >99                   ; /
+0041 3D34 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3D36 4247     
+0042 3D38 0000            byte   >00, >00, >00, >00    ; /
+     3D3A 0000     
+0043 3D3C 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3D3E 0000            data   >0000                 ; Start address
 0045                      even
 0046               
 0047               *--------------------------------------------------------------
 0048               * Cartridge 'fbForth'
 0049               *--------------------------------------------------------------
 0050               fg99.cart.fbforth:
-0051 3D34 99              byte   >99                   ; \
-0052 3D35   4F            text   'OKFG99'              ; | Send this to reload
-     3D36 4B46     
-     3D38 4739     
-     3D3A 39       
-0053 3D3B   99            byte   >99                   ; /
-0054 3D3C 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
-     3D3E 464F     
-     3D40 5254     
-     3D42 4843     
+0051 3D40 99              byte   >99                   ; \
+0052 3D41   4F            text   'OKFG99'              ; | Send this to reload
+     3D42 4B46     
+     3D44 4739     
+     3D46 39       
+0053 3D47   99            byte   >99                   ; /
+0054 3D48 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     3D4A 464F     
+     3D4C 5254     
+     3D4E 4843     
 0055                      ;                            ; /
-0056 3D44 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0057 3D46 0000            data   >0000                 ; Start address
+0056 3D50 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3D52 0000            data   >0000                 ; Start address
 0058                      even
                    < ram.resident.asm
                    < stevie_b6.asm
 0051                       ;------------------------------------------------------
 0052                       ; Activate bank 1 and branch to  >6036
 0053                       ;------------------------------------------------------
-0054 3D48 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3D4A 6002     
+0054 3D54 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3D56 6002     
 0055               
 0059               
-0060 3D4C 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3D4E 6046     
+0060 3D58 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3D5A 6046     
 0061               ***************************************************************
 0062               * Step 3: Include main editor modules
 0063               ********|*****|*********************|**************************
@@ -10174,6 +10181,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEF.CLIP.FNAME.B.... >3CB3 :     
     DEF.CLIP.FNAME.C.... >3CBD :     
     DEF.DEVICES......... >3CC7 :     
+    DEF.MASTERCAT....... >3CF7 :     
     DEF.PRINTER.FNAME... >3CA2 :     
     DEVICE.9938......... >0001 :     
     DEVICE.F18A......... >0000 :     
@@ -10290,10 +10298,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
-    FG99.CART.FBFORTH... >3D34 :     
-    FG99.CART.FCMD...... >3CF8 :     
-    FG99.CART.RXB....... >3D20 :     
-    FG99.CART.XBGEM..... >3D0C :     
+    FG99.CART.FBFORTH... >3D40 :     
+    FG99.CART.FCMD...... >3D04 :     
+    FG99.CART.RXB....... >3D2C :     
+    FG99.CART.XBGEM..... >3D18 :     
     FG99.EXIT........... >2DFE :     
     FG99.RUN............ >3738 :     
     FG99.SEND.LOOP...... >2DD4 :     

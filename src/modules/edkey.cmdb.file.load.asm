@@ -34,16 +34,11 @@ edkey.action.cmdb.load:
               data cmdb.cmdlen,heap.top,80
                                     ; Copy filename from command line to buffer
         ;-------------------------------------------------------
-        ; Pass filename as parm1
-        ;-------------------------------------------------------
-        li    tmp0,heap.top         ; 1st line in heap
-        mov   tmp0,@parm1        
-        ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
 edkey.action.cmdb.load.file:
-        li    tmp0,heap.top         ; 1st line in heap
-        mov   tmp0,@parm1
+        li    tmp0,heap.top         ; Pass filename as parm1
+        mov   tmp0,@parm1           ; (1st line in heap)
 
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
