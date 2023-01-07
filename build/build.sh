@@ -15,7 +15,8 @@ binary="bin/stevie.bin"
 # Directories
 workdir="/workspace/stevie/src"
 include="../../spectra2/src/equates,../../spectra2/src/modules,"
-include+="../../spectra2/src,../src/modules/,../src,../build/.buildinfo"
+include+="../../spectra2/src,../src/modules/,../src,../build/.buildinfo,"
+include+="../src/assets/"
 
 # Call xas99 wrapper
 log "Building stevie (30x80) version"

@@ -831,10 +831,10 @@ _trampoline.bank5.ret:
 
 
 ***************************************************************
-* Stub for "vdp.patterns.dump"
+* Stub for "vdp.dump.patterns"
 * bank6 vec.1
 ********|*****|*********************|**************************
-vdp.patterns.dump:
+vdp.dump.patterns:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -850,6 +850,26 @@ vdp.patterns.dump:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
+
+***************************************************************
+* Stub for "vdp.dump.font"
+* bank6 vec.2
+********|*****|*********************|**************************
+vdp.dump.font:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Dump VDP patterns
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank6.rom        ; | i  p0 = bank address
+              data vec.2            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************

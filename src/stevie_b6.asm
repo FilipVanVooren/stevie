@@ -19,7 +19,7 @@
 * File: stevie_b6.asm
 *
 * Bank 6 "Jenifer"
-* VDP utility functions
+* VDP utility functions and fonts
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
@@ -67,10 +67,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Patterns
         ;-----------------------------------------------------------------------
-        copy  "patterns.vdpdump.asm"
-                                    ; Dump patterns to VDP
-        copy  "data.patterns.asm"   ; Pattern definitions sprites & chars
-
+        copy  "vdpdump.patterns.asm" ; Dump patterns to VDP
+        copy  "vdpdump.font.asm"     ; Dump font to VDP
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -79,7 +77,10 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-                                    ; Not applicable
+        copy  "data.patterns.asm"    ; Pattern definitions sprites & chars        
+        aorg  >6200
+        bcopy "FONT1D"               ; Harry's Extended Basic GEM 2.9 font 1
+        bcopy "FONT7"                ; Harry's Extended Basic GEM 2.9 font 7
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

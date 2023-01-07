@@ -1,10 +1,26 @@
-* FILE......: patterns.vdpdump.asm
+* FILE......: vdpdump.patterns.asm
 * Purpose...: Dump sprite/character patterns to VDP
 
+
 ***************************************************************
-* Dump sprite/character patterns to VDP
-********|*****|*********************|**************************
-vdp.patterns.dump:
+* vdpdump.patterns
+* Dump Stevie sprite & tile patterns to VDP
+***************************************************************
+* bl @vdpdump.patterns
+*--------------------------------------------------------------
+* INPUT
+* None
+*--------------------------------------------------------------
+* OUTPUT
+* None
+*--------------------------------------------------------------
+* REMARK
+* None
+*--------------------------------------------------------------
+* Register usage
+* r11
+***************************************************************
+vdp.dump.patterns:
         dect  stack
         mov   r11,*stack            ; Push return address
         ;-------------------------------------------------------
@@ -20,6 +36,6 @@ vdp.patterns.dump:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-vdp.patterns.dump.exit:
+vdp.dump.patterns.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to task

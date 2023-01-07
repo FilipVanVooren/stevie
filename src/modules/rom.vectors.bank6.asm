@@ -5,15 +5,15 @@
 * ROM identification string for CPU crash
 *--------------------------------------------------------------
 cpu.crash.showbank.bankstr:
-        stri 'ROM#7'
+        stri 'ROM#6'
 
 *--------------------------------------------------------------
 * Vector table for trampoline functions
 *--------------------------------------------------------------
         aorg  bankx.vectab
 
-vec.1   data  vdp.patterns.dump     ; Dump sprite/character patterns to VDP
-vec.2   data  cpu.crash             ;
+vec.1   data  vdp.dump.patterns     ; Dump sprite/character patterns to VDP
+vec.2   data  vdp.dump.font         ; Dump font to VDP
 vec.3   data  cpu.crash             ;
 vec.4   data  cpu.crash             ;
 vec.5   data  cpu.crash             ;

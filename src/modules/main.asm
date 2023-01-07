@@ -76,7 +76,8 @@ main.continue:
         mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
 
-        bl    @vdp.patterns.dump    ; Load sprite and character patterns
+        bl    @vdp.dump.patterns    ; Dump sprite and character patterns to VDP
+        bl    @vdp.dump.font        ; Dump font to VDP
 *--------------------------------------------------------------
 * Initialize
 *--------------------------------------------------------------
