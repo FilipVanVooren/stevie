@@ -114,14 +114,8 @@ main:
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line
+        copy  "edkey.cmdb.font.asm"         ; Set font
         copy  "cmdb.dialog.close.asm"       ; Close dialog
-        ;-----------------------------------------------------------------------
-        ; Logic for Framebuffer (1)
-        ;-----------------------------------------------------------------------
-        copy  "fb.cursor.up.asm"            ; Cursor up
-        copy  "fb.cursor.down.asm"          ; Cursor down
-        copy  "fb.cursor.home.asm"          ; Cursor home
-        copy  "fb.insert.line.asm"          ; Insert new line
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
@@ -174,7 +168,7 @@ main:
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+spfont  equ   nofont                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)

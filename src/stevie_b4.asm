@@ -19,7 +19,7 @@
 * File: stevie_b4.asm
 *
 * Bank 4 "Janine"
-* Framebuffer methods delegated from bank 1
+* Framebuffer methods
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
@@ -67,6 +67,10 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer (2)
         ;-----------------------------------------------------------------------
+        copy  "fb.cursor.up.asm"    ; Cursor up
+        copy  "fb.cursor.down.asm"  ; Cursor down
+        copy  "fb.cursor.home.asm"  ; Cursor home
+        copy  "fb.insert.line.asm"  ; Insert new line
         copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
         copy  "fb.tab.prev.asm"     ; Move cursor to previous tab position
         copy  "fb.tab.next.asm"     ; Move cursor to next tab position
@@ -108,7 +112,7 @@ main:
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+spfont  equ   nofont                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)

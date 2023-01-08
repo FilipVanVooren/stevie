@@ -23,10 +23,10 @@ vec.8   data  fb.refresh            ; Refresh frame buffer
 vec.9   data  fb.get.nonblank       ; Get column of first non-blank character
 vec.10  data  fb.tab.prev           ; Move cursor to previous tab position
 vec.11  data  fb.tab.next           ; Move cursor to nexttab position
-vec.12  data  cpu.crash             ;
-vec.13  data  cpu.crash             ;
-vec.14  data  cpu.crash             ;
-vec.15  data  cpu.crash             ;
+vec.12  data  fb.cursor.up          ; Move cursor up 1 line
+vec.13  data  fb.cursor.down        ; Move cursor down 1 line
+vec.14  data  fb.cursor.home        ; Move cursor home
+vec.15  data  fb.insert.line        ; Insert a new line
 vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cpu.crash             ;

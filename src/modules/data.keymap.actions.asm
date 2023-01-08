@@ -286,15 +286,35 @@ keymap_actions.cmdb:
         byte  key.num.5, id.dialog.clipboard
         data  edkey.action.cmdb.clip.5
         ;-------------------------------------------------------
+        ; Dialog: Configure
+        ;-------------------------------------------------------
+        byte  key.uc.c, id.dialog.config
+        data  dialog.clipdev
+        
+        byte  key.uc.f, id.dialog.config
+        data  dialog.font        
+        ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.clipdev
         data  edkey.action.cmdb.clipdev.configure
         ;-------------------------------------------------------
-        ; Dialog: Configure
+        ; Dialog: Configure font
         ;-------------------------------------------------------
-        byte  key.uc.c, id.dialog.config
-        data  dialog.clipdev
+        byte  key.num.1, id.dialog.font
+        data  edkey.action.cmdb.font1
+
+        byte  key.num.2, id.dialog.font
+        data  edkey.action.cmdb.font2
+
+        byte  key.num.3, id.dialog.font
+        data  edkey.action.cmdb.font3
+
+        byte  key.num.4, id.dialog.font
+        data  edkey.action.cmdb.font4
+
+        byte  key.num.5, id.dialog.font
+        data  edkey.action.cmdb.font5
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

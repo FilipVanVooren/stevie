@@ -77,7 +77,11 @@ main.continue:
                                     ; Save cursor shape & color
 
         bl    @vdp.dump.patterns    ; Dump sprite and character patterns to VDP
-        bl    @vdp.dump.font        ; Dump font to VDP
+
+        clr   @parm1                ; Pick font 0
+        bl    @tv.set.font          ; Set current font (dumps font to VDP)
+                                    ; \ i  @parm1       = Font index (0-5)
+                                    ; / o  @tv.font.ptr = Pointer to font
 *--------------------------------------------------------------
 * Initialize
 *--------------------------------------------------------------

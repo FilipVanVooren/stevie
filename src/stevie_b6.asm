@@ -67,8 +67,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Patterns
         ;-----------------------------------------------------------------------
-        copy  "vdpdump.patterns.asm" ; Dump patterns to VDP
-        copy  "vdpdump.font.asm"     ; Dump font to VDP
+        copy  "vdp.dump.patterns.asm" ; Dump patterns to VDP
+        copy  "vdp.dump.font.asm"     ; Dump font to VDP
+        copy  "tv.set.font.asm"       ; Set current font
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -78,9 +79,23 @@ main:
         ; Program data
         ;-----------------------------------------------------------------------
         copy  "data.patterns.asm"    ; Pattern definitions sprites & chars        
-        aorg  >6200
-        bcopy "FONT1D"               ; Harry's Extended Basic GEM 2.9 font 1
-        bcopy "FONT7"                ; Harry's Extended Basic GEM 2.9 font 7
+        ;-----------------------------------------------------------------------
+        ; Fonts
+        ;-----------------------------------------------------------------------        
+font1   bcopy "FONTX.bin"            ; Stevie >1.4A default font
+
+font2   bcopy "FONT7.bin"            ; \ Default font (Stevie 1.0 - 1.3Q)
+                                     ; / Harry's Extended Basic GEM 2.9 font 7
+
+font3   byte  >00                    ; \ Push font one pixel down
+        bcopy "FONT14.bin"           ; / Harry's Extended Basic GEM 2.9 font 14
+
+font4   aorg  font3 + 784            ; \
+        byte  >00                    ; | Push font one pixel down 
+        bcopy "FONT40.bin"           ; / Harry's Extended Basic GEM 2.9 font 40
+
+font5   aorg  font4 + 784            ; \
+        bcopy "FONT60.bin"           ; / Harry's Extended Basic GEM 2.9 font 60
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
@@ -102,7 +117,7 @@ main:
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-spfont  equ   fnopt3                ; Font to load. See LDFONT for details.
+spfont  equ   nofont                ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)

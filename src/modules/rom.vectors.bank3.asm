@@ -28,7 +28,7 @@ vec.13  data  dialog.basic          ; Dialog "TI Basic"
 vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  dialog.editor         ; Dialog "Configure editor"
 vec.16  data  dialog.goto           ; Dialog "Go to line"
-vec.17  data  cpu.crash             ;
+vec.17  data  dialog.font           ; Dialog "Configure font"
 vec.18  data  error.display         ; Show error message
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)

@@ -307,6 +307,17 @@ dialog.goto.vector:
 
 
 ***************************************************************
+* Stub for dialog "Configure font"
+* bank3 vec.17
+********|*****|*********************|**************************
+dialog.font:
+        mov   @dialog.font.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.font.vector:
+        data  vec.17
+
+
+***************************************************************
 * Stub for dialog "Main Menu"
 * bank3 vec.30
 ********|*****|*********************|**************************
@@ -498,8 +509,6 @@ fm.fastmode.vector:
         data  vec.32
 
 
-
-
 ***************************************************************
 * Trampoline bank 3 with return
 ********|*****|*********************|**************************
@@ -521,193 +530,170 @@ _trampoline.bank3.ret:
         b     *r11                  ; Return to caller
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.ruler.init"
 * bank4 vec.2
 ********|*****|*********************|**************************
 fb.ruler.init:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Setup ruler in memory
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.2            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.ruler.init.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.ruler.init.vector:
+        data  vec.2
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.colorlines"
 * bank4 vec.3
 ********|*****|*********************|**************************
 fb.colorlines:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.3            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.colorlines.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.colorlines.vector:
+        data  vec.3
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.vdpdump"
 * bank4 vec.4
 ********|*****|*********************|**************************
 fb.vdpdump:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.4            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.vdpdump.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.vdpdump.vector:
+        data  vec.4
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.hscroll"
 * bank4 vec.6
 ********|*****|*********************|**************************
 fb.hscroll:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.6            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.hscroll.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.hscroll.vector:
+        data  vec.6
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.restore"
 * bank4 vec.7
 ********|*****|*********************|**************************
 fb.restore:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.7            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.restore.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.restore.vector:
+        data  vec.7
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.refresh"
 * bank4 vec.8
 ********|*****|*********************|**************************
 fb.refresh:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.8            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.refresh.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.refresh.vector:
+        data  vec.8
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.get.nonblank"
 * bank4 vec.9
 ********|*****|*********************|**************************
 fb.get.nonblank:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Colorize frame buffer content
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.9            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.get.nonblank.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.get.nonblank.vector:
+        data  vec.9
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.tab.prev"
 * bank4 vec.10
 ********|*****|*********************|**************************
 fb.tab.prev:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Put cursor on next tab position
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.10           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @fb.tab.prev.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.tab.prev.vector:
+        data  vec.10
 
 
-***************************************************************
+**************************************************************
 * Stub for "fb.tab.next"
 * bank4 vec.11
 ********|*****|*********************|**************************
 fb.tab.next:
+        mov   @fb.tab.next.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.tab.next.vector:
+        data  vec.11
+
+
+**************************************************************
+* Stub for "fb.cursor.up"
+* bank4 vec.12
+********|*****|*********************|**************************
+fb.cursor.up:
+        mov   @fb.cursor.up.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.cursor.up.vector:
+        data  vec.12
+
+
+**************************************************************
+* Stub for "fb.cursor.down"
+* bank4 vec.13
+********|*****|*********************|**************************
+fb.cursor.down:
+        mov   @fb.cursor.down.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.cursor.down.vector:
+        data  vec.13
+
+
+**************************************************************
+* Stub for "fb.cursor.home"
+* bank4 vec.14
+********|*****|*********************|**************************
+fb.cursor.home:
+        mov   @fb.cursor.home.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.cursor.home.vector:
+        data  vec.14
+
+
+**************************************************************
+* Stub for "fb.insert.line"
+* bank4 vec.15
+********|*****|*********************|**************************
+fb.insert.line:
+        mov   @fb.insert.line.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.insert.line.vector:
+        data  vec.15
+
+
+***************************************************************
+* Trampoline bank 4 with return
+********|*****|*********************|**************************
+_trampoline.bank4.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Put cursor on next tab position
+        ; Call routine in specified bank
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
-              data vec.11           ; | i  p1 = Vector with target address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @trmpvector)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
 
 **************************************************************
 * Stub for "edb.clear.sams"
@@ -835,20 +821,10 @@ _trampoline.bank5.ret:
 * bank6 vec.1
 ********|*****|*********************|**************************
 vdp.dump.patterns:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Dump VDP patterns
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank6.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @vdp.dump.patterns.vector,@trmpvector
+        jmp   _trampoline.bank6.ret ; Longjump
+vdp.dump.patterns.vector:
+        data  vec.1
 
 
 ***************************************************************
@@ -856,14 +832,36 @@ vdp.dump.patterns:
 * bank6 vec.2
 ********|*****|*********************|**************************
 vdp.dump.font:
+        mov   @vdp.dump.font.vector,@trmpvector
+        jmp   _trampoline.bank6.ret ; Longjump
+vdp.dump.font.vector:
+        data  vec.2
+
+
+***************************************************************
+* Stub for "tv.set.font"
+* bank6 vec.3
+********|*****|*********************|**************************
+tv.set.font:
+        mov   @tv.set.font.vector,@trmpvector
+        jmp   _trampoline.bank6.ret ; Longjump
+tv.set.font.vector:
+        data  vec.3
+
+
+***************************************************************
+* Trampoline bank 6 with return
+********|*****|*********************|**************************
+_trampoline.bank6.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Dump VDP patterns
+        ; Call routine in specified bank
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank6.rom        ; | i  p0 = bank address
-              data vec.2            ; | i  p1 = Vector with target address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @trmpvector)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

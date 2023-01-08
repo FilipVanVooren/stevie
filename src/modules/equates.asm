@@ -89,7 +89,7 @@ id.dialog.append          equ  14      ; "Append file"
 id.dialog.print           equ  15      ; "Print file"
 id.dialog.printblock      equ  16      ; "Print block"
 id.dialog.clipdev         equ  17      ; "Configure clipboard"
-id.dialog.goto            equ  18      ; "Goto"
+id.dialog.goto            equ  19      ; "Goto"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -104,7 +104,8 @@ id.dialog.cartridge       equ  106     ; "Cartridge"
 id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.config          equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
-id.dialog.shortcuts       equ  110     ; "Shortcuts"
+id.dialog.font            equ  110     ; "Configure font"
+id.dialog.shortcuts       equ  111     ; "Shortcuts"
 *--------------------------------------------------------------
 * Suffix characters for clipboards
 *--------------------------------------------------------------
@@ -220,16 +221,17 @@ tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
 tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
 tv.rulercolor     equ  tv.top + 30     ; FG/BG-color ruler line
 tv.cmdb.hcolor    equ  tv.top + 32     ; FG/BG-color command buffer header line
-tv.pane.focus     equ  tv.top + 34     ; Identify pane that has focus
-tv.task.oneshot   equ  tv.top + 36     ; Pointer to one-shot routine
-tv.fj.stackpnt    equ  tv.top + 38     ; Pointer to farjump return stack
-tv.error.visible  equ  tv.top + 40     ; Error pane visible
-tv.error.rows     equ  tv.top + 42     ; Number of rows in error pane
-tv.sp2.conf       equ  tv.top + 44     ; Backup of SP2 config register
-tv.sp2.stack      equ  tv.top + 46     ; Backup of SP2 stack register
-tv.fg99.img.ptr   equ  tv.top + 48     ; Pointer to Final GROM cartridge to load
-tv.error.msg      equ  tv.top + 50     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 210    ; End of structure
+tv.font.ptr       equ  tv.top + 34     ; Pointer to font (in ROM bank 6 or RAM)
+tv.pane.focus     equ  tv.top + 36     ; Identify pane that has focus
+tv.task.oneshot   equ  tv.top + 38     ; Pointer to one-shot routine
+tv.fj.stackpnt    equ  tv.top + 40     ; Pointer to farjump return stack
+tv.error.visible  equ  tv.top + 42     ; Error pane visible
+tv.error.rows     equ  tv.top + 44     ; Number of rows in error pane
+tv.sp2.conf       equ  tv.top + 46     ; Backup of SP2 config register
+tv.sp2.stack      equ  tv.top + 48     ; Backup of SP2 stack register
+tv.fg99.img.ptr   equ  tv.top + 50     ; Pointer to Final GROM cartridge to load
+tv.error.msg      equ  tv.top + 52     ; Error message (max. 160 characters)
+tv.free           equ  tv.top + 212    ; End of structure
 *--------------------------------------------------------------
 * Frame buffer structure              @>a300-a3ff   (256 bytes)
 *--------------------------------------------------------------

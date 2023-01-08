@@ -194,10 +194,9 @@ txt.head.config    byte 14,1,1
                    text ' Configure '
                    byte 1
 
-txt.info.config    stri 'Clipboard'
-pos.info.config    byte 0,>ff
+txt.info.config    stri 'Clipboard   Font'
+pos.info.config    byte 0,12,>ff
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
-
 
 ;--------------------------------------------------------------
 ; Dialog "Configure clipboard"
@@ -207,6 +206,19 @@ txt.head.clipdev   byte 24,1,1
                    byte 1
 txt.hint.clipdev   stri 'Give device and filename prefix of clipboard file.'
 txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
+
+
+;--------------------------------------------------------------
+; Dialog "Configure font"
+;--------------------------------------------------------------
+txt.head.font      byte 19,1,1
+                   text ' Configure font '
+                   byte 1
+txt.info.font      stri 'Font:  1   2   3   4   5'
+pos.info.font      byte 7,11,15,19,23,>ff
+
+txt.hint.font      stri 'Pick desired font 1-5. Default font is 1.'
+txt.keys.font      stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
@@ -225,8 +237,8 @@ txt.keys.editor    stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Shortcuts"
 ;--------------------------------------------------------------
-txt.head.shortcuts byte 14,1,1
-                   text ' Shortcuts '
+txt.head.shortcuts byte 21,1,1
+                   text ' Editor shortcuts '
                    byte 1
 
 txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto'
