@@ -1,4 +1,4 @@
-* FILE......: tib.dialog.helper.asm
+* FILE......: pane.utils.dialog.asm
 * Purpose...: Dialog helper functions
 
 
