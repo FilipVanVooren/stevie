@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230110-2019090
+0002               * BUILD: 230110-2049230
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -484,8 +484,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0352      A708     cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
 0353      A70A     cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
 0354      A70C     cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-0355      A70E     cmdb.vdptop       equ  cmdb.struct + 14; VDP address of CMDB pane header line
-0356      A710     cmdb.yxtop        equ  cmdb.struct + 16; YX position of CMDB pane header line
+0355      A70E     cmdb.vdptop       equ  cmdb.struct + 14; VDP address CMDB pane header line (TAT)
+0356      A710     cmdb.yxtop        equ  cmdb.struct + 16; YX position CMDB pane header line
 0357      A712     cmdb.yxprompt     equ  cmdb.struct + 18; YX position of command buffer prompt
 0358      A714     cmdb.column       equ  cmdb.struct + 20; Current column in command buffer pane
 0359      A716     cmdb.length       equ  cmdb.struct + 22; Length of current row in CMDB
@@ -6836,7 +6836,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042 3278 0720  34         seto  @cmdb.fb.yxsave       ; Reset (removes "write protection")
      327A A704     
 0043                       ;------------------------------------------------------
-0044                       ; Calculate VDP address of CMDB top row
+0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 327C 0204  20         li    tmp0,pane.botrow      ; \
      327E 001D     

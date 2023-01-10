@@ -92,15 +92,16 @@ main:
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.hint.asm" ; Show hint in pane
-        copy  "pane.cmdb.show.asm"  ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"  ; Hide command buffer pane
-        copy  "pane.cmdb.draw.asm"  ; Draw command buffer pane contents
-        copy  "error.display.asm"   ; Show error message
-        copy  "cmdb.refresh.asm"    ; Refresh command buffer contents
-        copy  "cmdb.cmd.asm"        ; Command line handling
-        copy  "cmdb.cmd.set.asm"    ; Set command line to preset value
-        copy  "cmdb.cmd.preset.asm" ; Preset shortcuts in dialogs
+        copy  "pane.utils.hint.asm"   ; Show hint in pane
+        copy  "pane.utils.dialog.asm" ; Dialog utility functions        
+        copy  "pane.cmdb.show.asm"    ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"    ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"    ; Draw command buffer pane contents
+        copy  "error.display.asm"     ; Show error message
+        copy  "cmdb.refresh.asm"      ; Refresh command buffer contents
+        copy  "cmdb.cmd.asm"          ; Command line handling
+        copy  "cmdb.cmd.set.asm"      ; Set command line to preset value
+        copy  "cmdb.cmd.preset.asm"   ; Preset shortcuts in dialogs
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------

@@ -204,7 +204,14 @@ pane.cmdb.draw.hearts:
         mov   @cmdb.dialog,tmp0
         ci    tmp0,id.dialog.basic  ; TI Basic dialog active?
         jne   pane.cmdb.draw.exit   ; No, so exit early
-        bl    @tibasic.hearts.tat   ; Set color for hearts
+
+
+        li    tmp0,11               ; 1st Heart after string "Session: 1"
+        mov   tmp0,@parm1           ; Set parameter
+
+        bl    @dialog.hearts.tat    ; Dump colors for hearts
+                                    ; \ i  @parm1 = Start column (pos 1st heart)
+                                    ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

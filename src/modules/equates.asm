@@ -352,8 +352,8 @@ cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
 cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
 cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
 cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-cmdb.vdptop       equ  cmdb.struct + 14; VDP address of CMDB pane header line
-cmdb.yxtop        equ  cmdb.struct + 16; YX position of CMDB pane header line
+cmdb.vdptop       equ  cmdb.struct + 14; VDP address CMDB pane header line (TAT)
+cmdb.yxtop        equ  cmdb.struct + 16; YX position CMDB pane header line
 cmdb.yxprompt     equ  cmdb.struct + 18; YX position of command buffer prompt
 cmdb.column       equ  cmdb.struct + 20; Current column in command buffer pane
 cmdb.length       equ  cmdb.struct + 22; Length of current row in CMDB

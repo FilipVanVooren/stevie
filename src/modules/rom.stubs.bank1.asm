@@ -476,13 +476,13 @@ cmdb.cmd.set.vector:
 
 
 ***************************************************************
-* Stub for "tibasic.hearts.tat"
+* Stub for "dialog.hearts.tat"
 * bank3 vec.29
 ********|*****|*********************|**************************
-tibasic.hearts.tat:
-        mov   @tibasic.hearts.tat.vector,@trmpvector
+dialog.hearts.tat:
+        mov   @dialog.hearts.tat.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-tibasic.hearts.tat.vector:
+dialog.hearts.tat.vector:
         data  vec.29
 
 

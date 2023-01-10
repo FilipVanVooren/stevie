@@ -354,7 +354,12 @@ pane.action.colorscheme.statline:
         ci    tmp1,id.dialog.basic  ; TI Basic dialog active?
         jne   pane.action.colorscheme.ruler
 
-        bl    @tibasic.hearts.tat   ; Dump colors for hearts
+        li    tmp0,11               ; 1st Heart after string "Session: 1"
+        mov   tmp0,@parm1           ; Set parameter
+
+        bl    @dialog.hearts.tat    ; Dump colors for hearts
+                                    ; \ i  @parm1 = Start column (pos 1st heart)
+                                    ; /
         ;-------------------------------------------------------
         ; Dump colors for ruler if visible (TAT)
         ;-------------------------------------------------------

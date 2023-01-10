@@ -41,7 +41,7 @@ cmdb.init:
         clr   @cmdb.action.ptr      ; Reset action to execute pointer
         seto  @cmdb.fb.yxsave       ; Reset (removes "write protection")        
         ;------------------------------------------------------
-        ; Calculate VDP address of CMDB top row
+        ; Calculate VDP address of CMDB top row (TAT!)
         ;------------------------------------------------------
         li    tmp0,pane.botrow      ; \
         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
