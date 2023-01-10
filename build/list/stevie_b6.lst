@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230108-2112460
+0002               * BUILD: 230110-2019090
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -9663,22 +9663,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029 604E 06A0  32         bl    @cpym2v
      6050 2486     
 0030 6052 2800                   data sprpdt,cursors,3*8
-     6054 6148     
+     6054 614C     
      6056 0018     
 0031                       ;-------------------------------------------------------
 0032                       ; Dump character patterns from ROM to VDP PDT
 0033                       ;-------------------------------------------------------
 0034 6058 06A0  32         bl    @cpym2v
      605A 2486     
-0035 605C 1008                   data >1008,patterns,31*8
-     605E 6160     
-     6060 00F8     
-0036                       ;-------------------------------------------------------
-0037                       ; Exit
-0038                       ;-------------------------------------------------------
-0039               vdp.dump.patterns.exit:
-0040 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
-0041 6064 045B  20         b     *r11                  ; Return to task
+0035 605C 1008                   data >1008,patterns,32*8
+     605E 6164     
+     6060 0100     
+0036                                                   ; Start with ASCII >01
+0037                       ;-------------------------------------------------------
+0038                       ; Exit
+0039                       ;-------------------------------------------------------
+0040               vdp.dump.patterns.exit:
+0041 6062 C2F9  30         mov   *stack+,r11           ; Pop R11
+0042 6064 045B  20         b     *r11                  ; Return to task
                    < stevie_b6.asm
 0071                       copy  "vdp.dump.font.asm"     ; Dump font to VDP
      **** ****     > vdp.dump.font.asm
@@ -9715,27 +9716,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031                       ;-------------------------------------------------------
 0032                       ; Dump from ROM to VDP PDT
 0033                       ;-------------------------------------------------------
-0034 6076 0204  20         li    tmp0,fntadr - 16      ; VDP destination
-     6078 10F0     
+0034 6076 0204  20         li    tmp0,fntadr           ; VDP destination
+     6078 1100     
 0035 607A C160  34         mov   @tv.font.ptr,tmp1     ; Get pointer to font in ROM/RAM
      607C A222     
-0036 607E 0206  20         li    tmp2,784              ; Size of font dump
-     6080 0310     
-0037               
-0038 6082 06A0  32         bl    @xpym2v               ; Copy CPU memory to VDP memory
-     6084 248C     
-0039                                                   ; \ i  tmp0 = VDP destination
-0040                                                   ; | i  tmp1 = CPU source
-0041                                                   ; / i  tmp2 = Number of bytes to copy
-0042                       ;-------------------------------------------------------
-0043                       ; Exit
-0044                       ;-------------------------------------------------------
-0045               vdp.dump.font.exit:
-0046 6086 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0047 6088 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0048 608A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0049 608C C2F9  30         mov   *stack+,r11           ; Pop R11
-0050 608E 045B  20         b     *r11                  ; Return to task
+0036 607E 0225  22         ai    tmp1,16               ; Skip definitions for ASCII 30 + ASCII 31
+     6080 0010     
+0037 6082 0206  20         li    tmp2,784 - 16         ; Bytes to dump
+     6084 0300     
+0038               
+0039 6086 06A0  32         bl    @xpym2v               ; Copy CPU memory to VDP memory
+     6088 248C     
+0040                                                   ; \ i  tmp0 = VDP destination
+0041                                                   ; | i  tmp1 = CPU source
+0042                                                   ; / i  tmp2 = Number of bytes to copy
+0043                       ;-------------------------------------------------------
+0044                       ; Exit
+0045                       ;-------------------------------------------------------
+0046               vdp.dump.font.exit:
+0047 608A C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0048 608C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0049 608E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0050 6090 C2F9  30         mov   *stack+,r11           ; Pop R11
+0051 6092 045B  20         b     *r11                  ; Return to task
                    < stevie_b6.asm
 0072                       copy  "tv.set.font.asm"       ; Set current font
      **** ****     > tv.set.font.asm
@@ -9762,55 +9765,55 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0021               * Dumps current font to VDP
 0022               ********|*****|*********************|**************************
 0023               tv.set.font:
-0024 6090 0649  14         dect  stack
-0025 6092 C64B  30         mov   r11,*stack            ; Save return address
-0026 6094 0649  14         dect  stack
-0027 6096 C644  30         mov   tmp0,*stack           ; Push tmp0
-0028 6098 0649  14         dect  stack
-0029 609A C645  30         mov   tmp1,*stack           ; Push tmp1
+0024 6094 0649  14         dect  stack
+0025 6096 C64B  30         mov   r11,*stack            ; Save return address
+0026 6098 0649  14         dect  stack
+0027 609A C644  30         mov   tmp0,*stack           ; Push tmp0
+0028 609C 0649  14         dect  stack
+0029 609E C645  30         mov   tmp1,*stack           ; Push tmp1
 0030                       ;------------------------------------------------------
 0031                       ; Assert check index
 0032                       ;------------------------------------------------------
-0033 609C C120  34         mov   @parm1,tmp0           ; Get index
-     609E A006     
-0034 60A0 0284  22         ci    tmp0,5                ; Valid index entry?
-     60A2 0005     
-0035 60A4 1204  14         jle   tv.set.font.ptr       ; Yes, set pointer
+0033 60A0 C120  34         mov   @parm1,tmp0           ; Get index
+     60A2 A006     
+0034 60A4 0284  22         ci    tmp0,5                ; Valid index entry?
+     60A6 0005     
+0035 60A8 1204  14         jle   tv.set.font.ptr       ; Yes, set pointer
 0036                       ;------------------------------------------------------
 0037                       ; Assert failed
 0038                       ;------------------------------------------------------
-0039 60A6 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     60A8 FFCE     
-0040 60AA 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     60AC 2026     
+0039 60AA C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     60AC FFCE     
+0040 60AE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     60B0 2026     
 0041                       ;------------------------------------------------------
 0042                       ; Set pointer to font
 0043                       ;------------------------------------------------------
 0044               tv.set.font.ptr:
-0045 60AE 0204  20         li    tmp0,784              ; Size of font dump (in bytes)
-     60B0 0310     
-0046 60B2 3920  74         mpy   @parm1,tmp0           ; Result is in tmp1
-     60B4 A006     
-0047 60B6 0225  22         ai    tmp1,font1            ; Add font base address
-     60B8 6250     
-0048 60BA C805  38         mov   tmp1,@tv.font.ptr     ; Set pointer
-     60BC A222     
+0045 60B2 0204  20         li    tmp0,784              ; Size of font dump (in bytes)
+     60B4 0310     
+0046 60B6 3920  74         mpy   @parm1,tmp0           ; Result is in tmp1
+     60B8 A006     
+0047 60BA 0225  22         ai    tmp1,font1            ; Add font base address
+     60BC 6254     
+0048 60BE C805  38         mov   tmp1,@tv.font.ptr     ; Set pointer
+     60C0 A222     
 0049                       ;------------------------------------------------------
 0050                       ; Dump font to VDP
 0051                       ;------------------------------------------------------
 0052               tv.set.font.vdpdump:
-0053 60BE 06A0  32         bl    @vdp.dump.font        ; Dump font to VDP
-     60C0 6066     
+0053 60C2 06A0  32         bl    @vdp.dump.font        ; Dump font to VDP
+     60C4 6066     
 0054                                                   ; \ i  @tv.font.ptr = Pointer to font in ROM
 0055                                                   ; /
 0056                       ;------------------------------------------------------
 0057                       ; Exit
 0058                       ;------------------------------------------------------
 0059               tv.set.font.exit:
-0060 60C2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0061 60C4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0062 60C6 C2F9  30         mov   *stack+,r11           ; Pop R11
-0063 60C8 045B  20         b     *r11                  ; Return to caller
+0060 60C6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0061 60C8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0062 60CA C2F9  30         mov   *stack+,r11           ; Pop R11
+0063 60CC 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0073                       ;-----------------------------------------------------------------------
 0074                       ; Stubs
@@ -9831,21 +9834,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008               * bank1 vec.1
 0009               ********|*****|*********************|**************************
 0010               mem.sams.setup.stevie:
-0011 60CA 0649  14         dect  stack
-0012 60CC C64B  30         mov   r11,*stack            ; Save return address
+0011 60CE 0649  14         dect  stack
+0012 60D0 C64B  30         mov   r11,*stack            ; Save return address
 0013                       ;------------------------------------------------------
 0014                       ; Call function in bank 1
 0015                       ;------------------------------------------------------
-0016 60CE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     60D0 2FCA     
-0017 60D2 6002                   data bank1.rom        ; | i  p0 = bank address
-0018 60D4 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0019 60D6 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0016 60D2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     60D4 2FCA     
+0017 60D6 6002                   data bank1.rom        ; | i  p0 = bank address
+0018 60D8 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0019 60DA 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023 60D8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0024 60DA 045B  20         b     *r11                  ; Return to caller
+0023 60DC C2F9  30         mov   *stack+,r11           ; Pop r11
+0024 60DE 045B  20         b     *r11                  ; Return to caller
 0026               
 0027               
 0029               ***************************************************************
@@ -9853,21 +9856,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031               * bank7 vec.1
 0032               ********|*****|*********************|**************************
 0033               mem.sams.set.legacy:
-0034 60DC 0649  14         dect  stack
-0035 60DE C64B  30         mov   r11,*stack            ; Save return address
+0034 60E0 0649  14         dect  stack
+0035 60E2 C64B  30         mov   r11,*stack            ; Save return address
 0036                       ;------------------------------------------------------
 0037                       ; Dump VDP patterns
 0038                       ;------------------------------------------------------
-0039 60E0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     60E2 2FCA     
-0040 60E4 600E                   data bank7.rom        ; | i  p0 = bank address
-0041 60E6 7FC0                   data vec.1            ; | i  p1 = Vector with target address
-0042 60E8 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0039 60E4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     60E6 2FCA     
+0040 60E8 600E                   data bank7.rom        ; | i  p0 = bank address
+0041 60EA 7FC0                   data vec.1            ; | i  p1 = Vector with target address
+0042 60EC 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0043                       ;------------------------------------------------------
 0044                       ; Exit
 0045                       ;------------------------------------------------------
-0046 60EA C2F9  30         mov   *stack+,r11           ; Pop r11
-0047 60EC 045B  20         b     *r11                  ; Return to caller
+0046 60EE C2F9  30         mov   *stack+,r11           ; Pop r11
+0047 60F0 045B  20         b     *r11                  ; Return to caller
 0049               
 0050               
 0052               ***************************************************************
@@ -9875,21 +9878,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054               * bank7 vec.2
 0055               ********|*****|*********************|**************************
 0056               mem.sams.set.boot:
-0057 60EE 0649  14         dect  stack
-0058 60F0 C64B  30         mov   r11,*stack            ; Save return address
+0057 60F2 0649  14         dect  stack
+0058 60F4 C64B  30         mov   r11,*stack            ; Save return address
 0059                       ;------------------------------------------------------
 0060                       ; Dump VDP patterns
 0061                       ;------------------------------------------------------
-0062 60F2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     60F4 2FCA     
-0063 60F6 600E                   data bank7.rom        ; | i  p0 = bank address
-0064 60F8 7FC2                   data vec.2            ; | i  p1 = Vector with target address
-0065 60FA 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0062 60F6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     60F8 2FCA     
+0063 60FA 600E                   data bank7.rom        ; | i  p0 = bank address
+0064 60FC 7FC2                   data vec.2            ; | i  p1 = Vector with target address
+0065 60FE 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0066                       ;------------------------------------------------------
 0067                       ; Exit
 0068                       ;------------------------------------------------------
-0069 60FC C2F9  30         mov   *stack+,r11           ; Pop r11
-0070 60FE 045B  20         b     *r11                  ; Return to caller
+0069 6100 C2F9  30         mov   *stack+,r11           ; Pop r11
+0070 6102 045B  20         b     *r11                  ; Return to caller
 0072               
 0073               
 0075               ***************************************************************
@@ -9897,21 +9900,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 6100 0649  14         dect  stack
-0081 6102 C64B  30         mov   r11,*stack            ; Save return address
+0080 6104 0649  14         dect  stack
+0081 6106 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 6104 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6106 2FCA     
-0086 6108 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 610A 7FC4                   data vec.3            ; | i  p1 = Vector with target address
-0088 610C 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 6108 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     610A 2FCA     
+0086 610C 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 610E 7FC4                   data vec.3            ; | i  p1 = Vector with target address
+0088 6110 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 610E C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 6110 045B  20         b     *r11                  ; Return to caller
+0092 6112 C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 6114 045B  20         b     *r11                  ; Return to caller
 0095               
 0096               
 0098               ***************************************************************
@@ -9919,21 +9922,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0100               * bank7 vec.20
 0101               ********|*****|*********************|**************************
 0102               magic.set:
-0103 6112 0649  14         dect  stack
-0104 6114 C64B  30         mov   r11,*stack            ; Save return address
+0103 6116 0649  14         dect  stack
+0104 6118 C64B  30         mov   r11,*stack            ; Save return address
 0105                       ;------------------------------------------------------
 0106                       ; Dump VDP patterns
 0107                       ;------------------------------------------------------
-0108 6116 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6118 2FCA     
-0109 611A 600E                   data bank7.rom        ; | i  p0 = bank address
-0110 611C 7FE6                   data vec.20           ; | i  p1 = Vector with target address
-0111 611E 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0108 611A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     611C 2FCA     
+0109 611E 600E                   data bank7.rom        ; | i  p0 = bank address
+0110 6120 7FE6                   data vec.20           ; | i  p1 = Vector with target address
+0111 6122 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0112                       ;------------------------------------------------------
 0113                       ; Exit
 0114                       ;------------------------------------------------------
-0115 6120 C2F9  30         mov   *stack+,r11           ; Pop r11
-0116 6122 045B  20         b     *r11                  ; Return to caller
+0115 6124 C2F9  30         mov   *stack+,r11           ; Pop r11
+0116 6126 045B  20         b     *r11                  ; Return to caller
 0118               
 0119               
 0121               ***************************************************************
@@ -9941,21 +9944,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0123               * bank7 vec.21
 0124               ********|*****|*********************|**************************
 0125               magic.clear:
-0126 6124 0649  14         dect  stack
-0127 6126 C64B  30         mov   r11,*stack            ; Save return address
+0126 6128 0649  14         dect  stack
+0127 612A C64B  30         mov   r11,*stack            ; Save return address
 0128                       ;------------------------------------------------------
 0129                       ; Dump VDP patterns
 0130                       ;------------------------------------------------------
-0131 6128 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     612A 2FCA     
-0132 612C 600E                   data bank7.rom        ; | i  p0 = bank address
-0133 612E 7FE8                   data vec.21           ; | i  p1 = Vector with target address
-0134 6130 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0131 612C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     612E 2FCA     
+0132 6130 600E                   data bank7.rom        ; | i  p0 = bank address
+0133 6132 7FE8                   data vec.21           ; | i  p1 = Vector with target address
+0134 6134 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0135                       ;------------------------------------------------------
 0136                       ; Exit
 0137                       ;------------------------------------------------------
-0138 6132 C2F9  30         mov   *stack+,r11           ; Pop r11
-0139 6134 045B  20         b     *r11                  ; Return to caller
+0138 6136 C2F9  30         mov   *stack+,r11           ; Pop r11
+0139 6138 045B  20         b     *r11                  ; Return to caller
 0141               
 0142               
 0144               ***************************************************************
@@ -9963,21 +9966,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0146               * bank7 vec.22
 0147               ********|*****|*********************|**************************
 0148               magic.check:
-0149 6136 0649  14         dect  stack
-0150 6138 C64B  30         mov   r11,*stack            ; Save return address
+0149 613A 0649  14         dect  stack
+0150 613C C64B  30         mov   r11,*stack            ; Save return address
 0151                       ;------------------------------------------------------
 0152                       ; Dump VDP patterns
 0153                       ;------------------------------------------------------
-0154 613A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     613C 2FCA     
-0155 613E 600E                   data bank7.rom        ; | i  p0 = bank address
-0156 6140 7FEA                   data vec.22           ; | i  p1 = Vector with target address
-0157 6142 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0154 613E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6140 2FCA     
+0155 6142 600E                   data bank7.rom        ; | i  p0 = bank address
+0156 6144 7FEA                   data vec.22           ; | i  p1 = Vector with target address
+0157 6146 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0158                       ;------------------------------------------------------
 0159                       ; Exit
 0160                       ;------------------------------------------------------
-0161 6144 C2F9  30         mov   *stack+,r11           ; Pop r11
-0162 6146 045B  20         b     *r11                  ; Return to caller
+0161 6148 C2F9  30         mov   *stack+,r11           ; Pop r11
+0162 614A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0078                       ;-----------------------------------------------------------------------
 0079                       ; Program data
@@ -9991,166 +9994,164 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0005               ; Sprite patterns
 0006               ;--------------------------------------------------------------
 0007               cursors:
-0008 6148 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor
-     614A 1C1C     
-     614C 1C1C     
-     614E 1C00     
-0009 6150 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
-     6152 0307     
-     6154 0703     
-     6156 0100     
-0010 6158 1C08             byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
-     615A 0000     
-     615C 0000     
+0008 614C 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor
+     614E 1C1C     
+     6150 1C1C     
+     6152 1C00     
+0009 6154 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
+     6156 0307     
+     6158 0703     
+     615A 0100     
+0010 615C 1C08             byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
      615E 0000     
+     6160 0000     
+     6162 0000     
 0011               
 0012               ;--------------------------------------------------------------
 0013               ; Character patterns
 0014               ;--------------------------------------------------------------
 0015               patterns:
-0016 6160 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
-     6162 0000     
-     6164 FF00     
+0016 6164 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
      6166 0000     
-0017 6168 367F             data  >367f,>3e1c,>0800,>0000 ; 02. Heart solid (left)
-     616A 3E1C     
-     616C 0800     
-     616E 0000     
-0018 6170 80C0             data  >80c0,>8000,>0000,>0000 ; 03. Heart solid (right)
-     6172 8000     
-     6174 0000     
-     6176 0000     
+     6168 FF00     
+     616A 0000     
+0017 616C 367F             data  >367f,>3e1c,>0800,>0000 ; 02. Heart solid (left)
+     616E 3E1C     
+     6170 0800     
+     6172 0000     
+0018 6174 80C0             data  >80c0,>8000,>0000,>0000 ; 03. Heart solid (right)
+     6176 8000     
+     6178 0000     
+     617A 0000     
 0019               
 0020               patterns.box:
-0021 6178 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
-     617A 0000     
-     617C FF80     
-     617E BFA0     
-0022 6180 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
-     6182 0000     
-     6184 FC04     
-     6186 F414     
-0023 6188 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
-     618A A0A0     
-     618C A0A0     
+0021 617C 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
+     617E 0000     
+     6180 FF80     
+     6182 BFA0     
+0022 6184 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
+     6186 0000     
+     6188 FC04     
+     618A F414     
+0023 618C A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
      618E A0A0     
-0024 6190 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
-     6192 1414     
-     6194 1414     
+     6190 A0A0     
+     6192 A0A0     
+0024 6194 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
      6196 1414     
-0025 6198 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
-     619A A0A0     
-     619C BF80     
-     619E FF00     
-0026 61A0 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
-     61A2 1414     
-     61A4 F404     
-     61A6 FC00     
-0027 61A8 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
-     61AA C0C0     
-     61AC C0C0     
-     61AE 0080     
-0028 61B0 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
-     61B2 0F0F     
-     61B4 0F0F     
-     61B6 0000     
+     6198 1414     
+     619A 1414     
+0025 619C A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
+     619E A0A0     
+     61A0 BF80     
+     61A2 FF00     
+0026 61A4 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
+     61A6 1414     
+     61A8 F404     
+     61AA FC00     
+0027 61AC 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
+     61AE C0C0     
+     61B0 C0C0     
+     61B2 0080     
+0028 61B4 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+     61B6 0F0F     
+     61B8 0F0F     
+     61BA 0000     
 0029               
 0030               
 0031               patterns.cr:
-0032 61B8 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
-     61BA 6C48     
-     61BC 4800     
-     61BE 7C00     
-0033 61C0 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
-     61C2 64FC     
-     61C4 6020     
-     61C6 0000     
+0032 61BC 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+     61BE 6C48     
+     61C0 4800     
+     61C2 7C00     
+0033 61C4 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+     61C6 64FC     
+     61C8 6020     
+     61CA 0000     
 0034               
 0035               
 0036               alphalock:
-0037 61C8 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
-     61CA 8894     
-     61CC 9C94     
-     61CE C0FF     
-0038 61D0 FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
-     61D2 4444     
-     61D4 4474     
-     61D6 0CFC     
+0037 61CC FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
+     61CE 8894     
+     61D0 9C94     
+     61D2 C0FF     
+0038 61D4 FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
+     61D6 4444     
+     61D8 4474     
+     61DA 0CFC     
 0039               
 0040               
 0041               vertline:
-0042 61D8 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
-     61DA 1010     
-     61DC 1010     
+0042 61DC 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
      61DE 1010     
-0043 61E0 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
-     61E2 0030     
-     61E4 3030     
-     61E6 3030     
+     61E0 1010     
+     61E2 1010     
+0043 61E4 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
+     61E6 0030     
+     61E8 3030     
+     61EA 3030     
 0044               
 0045               
 0046               low.digits:                           ; digits 1-4 (18-21)
-0047 61E8 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
-     61EA 0010     
-     61EC 3010     
-     61EE 1038     
-0048 61F0 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
-     61F2 0038     
-     61F4 0838     
-     61F6 2038     
-0049 61F8 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
-     61FA 0038     
-     61FC 0838     
-     61FE 0838     
-0050 6200 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
-     6202 0028     
-     6204 2838     
-     6206 0808     
+0047 61EC 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
+     61EE 0010     
+     61F0 3010     
+     61F2 1038     
+0048 61F4 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
+     61F6 0038     
+     61F8 0838     
+     61FA 2038     
+0049 61FC 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
+     61FE 0038     
+     6200 0838     
+     6202 0838     
+0050 6204 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
+     6206 0028     
+     6208 2838     
+     620A 0808     
 0051                                                     ; digits 5-8 (22-25)
-0052 6208 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
-     620A 0038     
-     620C 2038     
-     620E 0838     
-0053 6210 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
-     6212 0038     
-     6214 2038     
-     6216 2838     
-0054 6218 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
-     621A 0038     
-     621C 0810     
-     621E 2020     
-0055 6220 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
-     6222 0038     
-     6224 2838     
-     6226 2838     
+0052 620C 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
+     620E 0038     
+     6210 2038     
+     6212 0838     
+0053 6214 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
+     6216 0038     
+     6218 2038     
+     621A 2838     
+0054 621C 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
+     621E 0038     
+     6220 0810     
+     6222 2020     
+0055 6224 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
+     6226 0038     
+     6228 2838     
+     622A 2838     
 0056               
-0057 6228 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
-     622A 7F7F     
-     622C 7F7F     
+0057 622C 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
      622E 7F7F     
-0058 6230 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
-     6232 0010     
-     6234 08FC     
-     6236 0810     
-0059 6238 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
-     623A 0000     
-     623C 0000     
+     6230 7F7F     
+     6232 7F7F     
+0058 6234 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
+     6236 0010     
+     6238 08FC     
+     623A 0810     
+0059 623C 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
      623E 0000     
-0060 6240 3649     heart:  data  >3649,>2214,>0800,>0000 ; 29. Heart open (left)
-     6242 2214     
-     6244 0800     
-     6246 0000     
-0061 6248 8040             data  >8040,>8000,>0000,>0000 ; 30. Heart open (right)
-     624A 8000     
-     624C 0000     
-     624E 0000     
+     6240 0000     
+     6242 0000     
+0060 6244 3649     heart:  data  >3649,>2214,>0800,>0000 ; 29. Heart open (left)
+     6246 2214     
+     6248 0800     
+     624A 0000     
+0061 624C 8040             data  >8040,>8000,>0000,>0000 ; 30. Heart open (right)
+     624E 8000     
+     6250 0000     
+     6252 0000     
                    < stevie_b6.asm
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Fonts
 0084                       ;-----------------------------------------------------------------------
-0085 6250 0000     font1   bcopy "FONTX.bin"            ; Stevie >1.4A default font
-     6252 0000     
-     6254 0000     
+0085 6254 0000     font1   bcopy "FONTX.bin"            ; Stevie >1.4A default font
      6256 0000     
      6258 0000     
      625A 0000     
@@ -10160,390 +10161,390 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6262 0000     
      6264 0000     
      6266 0000     
-     6268 0010     
-     626A 1010     
-     626C 1010     
-     626E 0010     
-     6270 0028     
-     6272 2828     
-     6274 0000     
-     6276 0000     
-     6278 0028     
-     627A 287C     
-     627C 287C     
-     627E 2828     
-     6280 0038     
-     6282 5450     
-     6284 3814     
-     6286 5438     
-     6288 0060     
-     628A 6408     
-     628C 1020     
-     628E 4C0C     
-     6290 0020     
-     6292 5050     
-     6294 2054     
-     6296 4834     
-     6298 0008     
-     629A 0810     
-     629C 0000     
-     629E 0000     
-     62A0 0008     
-     62A2 1020     
-     62A4 2020     
-     62A6 1008     
-     62A8 0020     
+     6268 0000     
+     626A 0000     
+     626C 0010     
+     626E 1010     
+     6270 1010     
+     6272 0010     
+     6274 0028     
+     6276 2828     
+     6278 0000     
+     627A 0000     
+     627C 0028     
+     627E 287C     
+     6280 287C     
+     6282 2828     
+     6284 0038     
+     6286 5450     
+     6288 3814     
+     628A 5438     
+     628C 0060     
+     628E 6408     
+     6290 1020     
+     6292 4C0C     
+     6294 0020     
+     6296 5050     
+     6298 2054     
+     629A 4834     
+     629C 0008     
+     629E 0810     
+     62A0 0000     
+     62A2 0000     
+     62A4 0008     
+     62A6 1020     
+     62A8 2020     
      62AA 1008     
-     62AC 0808     
-     62AE 1020     
-     62B0 0000     
-     62B2 2810     
-     62B4 7C10     
-     62B6 2800     
-     62B8 0000     
-     62BA 1010     
-     62BC 7C10     
-     62BE 1000     
-     62C0 0000     
-     62C2 0000     
-     62C4 0030     
-     62C6 1020     
-     62C8 0000     
-     62CA 0000     
-     62CC 7C00     
+     62AC 0020     
+     62AE 1008     
+     62B0 0808     
+     62B2 1020     
+     62B4 0000     
+     62B6 2810     
+     62B8 7C10     
+     62BA 2800     
+     62BC 0000     
+     62BE 1010     
+     62C0 7C10     
+     62C2 1000     
+     62C4 0000     
+     62C6 0000     
+     62C8 0030     
+     62CA 1020     
+     62CC 0000     
      62CE 0000     
-     62D0 0000     
+     62D0 7C00     
      62D2 0000     
      62D4 0000     
-     62D6 3030     
+     62D6 0000     
      62D8 0000     
-     62DA 0408     
-     62DC 1020     
-     62DE 4000     
-     62E0 0038     
-     62E2 4444     
-     62E4 5444     
-     62E6 4438     
-     62E8 0010     
-     62EA 3010     
-     62EC 1010     
-     62EE 1038     
-     62F0 0038     
-     62F2 4404     
-     62F4 0810     
-     62F6 207C     
-     62F8 0038     
-     62FA 4404     
-     62FC 1804     
-     62FE 4438     
-     6300 0008     
-     6302 1828     
-     6304 487C     
-     6306 0808     
-     6308 007C     
-     630A 4078     
-     630C 0404     
-     630E 4438     
-     6310 0018     
-     6312 2040     
-     6314 7844     
-     6316 4438     
-     6318 007C     
-     631A 0408     
-     631C 1020     
-     631E 2020     
-     6320 0038     
-     6322 4444     
-     6324 3844     
-     6326 4438     
-     6328 0038     
-     632A 4444     
-     632C 3C04     
-     632E 0830     
-     6330 0000     
-     6332 3030     
-     6334 0030     
-     6336 3000     
-     6338 0000     
-     633A 3030     
-     633C 0030     
-     633E 1020     
-     6340 0008     
+     62DA 3030     
+     62DC 0000     
+     62DE 0408     
+     62E0 1020     
+     62E2 4000     
+     62E4 0038     
+     62E6 4444     
+     62E8 5444     
+     62EA 4438     
+     62EC 0010     
+     62EE 3010     
+     62F0 1010     
+     62F2 1038     
+     62F4 0038     
+     62F6 4404     
+     62F8 0810     
+     62FA 207C     
+     62FC 0038     
+     62FE 4404     
+     6300 1804     
+     6302 4438     
+     6304 0008     
+     6306 1828     
+     6308 487C     
+     630A 0808     
+     630C 007C     
+     630E 4078     
+     6310 0404     
+     6312 4438     
+     6314 0018     
+     6316 2040     
+     6318 7844     
+     631A 4438     
+     631C 007C     
+     631E 0408     
+     6320 1020     
+     6322 2020     
+     6324 0038     
+     6326 4444     
+     6328 3844     
+     632A 4438     
+     632C 0038     
+     632E 4444     
+     6330 3C04     
+     6332 0830     
+     6334 0000     
+     6336 3030     
+     6338 0030     
+     633A 3000     
+     633C 0000     
+     633E 3030     
+     6340 0030     
      6342 1020     
-     6344 4020     
-     6346 1008     
-     6348 0000     
-     634A 007C     
-     634C 007C     
-     634E 0000     
-     6350 0020     
-     6352 1008     
-     6354 0408     
-     6356 1020     
-     6358 0038     
-     635A 4404     
-     635C 0810     
-     635E 0010     
-     6360 0038     
-     6362 445C     
-     6364 545C     
-     6366 4038     
-     6368 0038     
-     636A 4444     
-     636C 7C44     
+     6344 0008     
+     6346 1020     
+     6348 4020     
+     634A 1008     
+     634C 0000     
+     634E 007C     
+     6350 007C     
+     6352 0000     
+     6354 0020     
+     6356 1008     
+     6358 0408     
+     635A 1020     
+     635C 0038     
+     635E 4404     
+     6360 0810     
+     6362 0010     
+     6364 0038     
+     6366 445C     
+     6368 545C     
+     636A 4038     
+     636C 0038     
      636E 4444     
-     6370 0078     
-     6372 2424     
-     6374 3824     
-     6376 2478     
-     6378 0038     
-     637A 4440     
-     637C 4040     
-     637E 4438     
-     6380 0078     
-     6382 2424     
-     6384 2424     
-     6386 2478     
-     6388 007C     
-     638A 4040     
-     638C 7840     
-     638E 407C     
-     6390 007C     
-     6392 4040     
-     6394 7840     
+     6370 7C44     
+     6372 4444     
+     6374 0078     
+     6376 2424     
+     6378 3824     
+     637A 2478     
+     637C 0038     
+     637E 4440     
+     6380 4040     
+     6382 4438     
+     6384 0078     
+     6386 2424     
+     6388 2424     
+     638A 2478     
+     638C 007C     
+     638E 4040     
+     6390 7840     
+     6392 407C     
+     6394 007C     
      6396 4040     
-     6398 003C     
+     6398 7840     
      639A 4040     
-     639C 5C44     
-     639E 4438     
-     63A0 0044     
-     63A2 4444     
-     63A4 7C44     
+     639C 003C     
+     639E 4040     
+     63A0 5C44     
+     63A2 4438     
+     63A4 0044     
      63A6 4444     
-     63A8 0038     
-     63AA 1010     
-     63AC 1010     
-     63AE 1038     
-     63B0 0004     
-     63B2 0404     
-     63B4 0404     
-     63B6 4438     
-     63B8 0044     
-     63BA 4850     
-     63BC 6050     
-     63BE 4844     
-     63C0 0040     
-     63C2 4040     
-     63C4 4040     
-     63C6 407C     
-     63C8 0044     
-     63CA 6C54     
-     63CC 5444     
-     63CE 4444     
-     63D0 0044     
-     63D2 6464     
-     63D4 544C     
-     63D6 4C44     
-     63D8 0038     
-     63DA 4444     
-     63DC 4444     
-     63DE 4438     
-     63E0 0078     
-     63E2 4444     
-     63E4 7840     
-     63E6 4040     
-     63E8 0038     
-     63EA 4444     
-     63EC 4454     
-     63EE 4834     
-     63F0 0078     
-     63F2 4444     
-     63F4 7850     
-     63F6 4844     
-     63F8 0038     
-     63FA 4440     
-     63FC 3804     
-     63FE 4438     
-     6400 007C     
-     6402 1010     
-     6404 1010     
+     63A8 7C44     
+     63AA 4444     
+     63AC 0038     
+     63AE 1010     
+     63B0 1010     
+     63B2 1038     
+     63B4 0004     
+     63B6 0404     
+     63B8 0404     
+     63BA 4438     
+     63BC 0044     
+     63BE 4850     
+     63C0 6050     
+     63C2 4844     
+     63C4 0040     
+     63C6 4040     
+     63C8 4040     
+     63CA 407C     
+     63CC 0044     
+     63CE 6C54     
+     63D0 5444     
+     63D2 4444     
+     63D4 0044     
+     63D6 6464     
+     63D8 544C     
+     63DA 4C44     
+     63DC 0038     
+     63DE 4444     
+     63E0 4444     
+     63E2 4438     
+     63E4 0078     
+     63E6 4444     
+     63E8 7840     
+     63EA 4040     
+     63EC 0038     
+     63EE 4444     
+     63F0 4454     
+     63F2 4834     
+     63F4 0078     
+     63F6 4444     
+     63F8 7850     
+     63FA 4844     
+     63FC 0038     
+     63FE 4440     
+     6400 3804     
+     6402 4438     
+     6404 007C     
      6406 1010     
-     6408 0044     
-     640A 4444     
-     640C 4444     
-     640E 4438     
-     6410 0044     
-     6412 4444     
-     6414 2828     
-     6416 1010     
-     6418 0044     
-     641A 4444     
-     641C 5454     
-     641E 5428     
-     6420 0044     
-     6422 4428     
-     6424 1028     
-     6426 4444     
-     6428 0044     
-     642A 4428     
-     642C 1010     
-     642E 1010     
-     6430 007C     
-     6432 0408     
-     6434 1020     
-     6436 407C     
-     6438 0038     
-     643A 2020     
-     643C 2020     
-     643E 2038     
-     6440 0000     
-     6442 4020     
-     6444 1008     
-     6446 0400     
-     6448 0038     
-     644A 0808     
-     644C 0808     
-     644E 0838     
-     6450 0000     
-     6452 1028     
-     6454 4400     
-     6456 0000     
-     6458 0000     
+     6408 1010     
+     640A 1010     
+     640C 0044     
+     640E 4444     
+     6410 4444     
+     6412 4438     
+     6414 0044     
+     6416 4444     
+     6418 2828     
+     641A 1010     
+     641C 0044     
+     641E 4444     
+     6420 5454     
+     6422 5428     
+     6424 0044     
+     6426 4428     
+     6428 1028     
+     642A 4444     
+     642C 0044     
+     642E 4428     
+     6430 1010     
+     6432 1010     
+     6434 007C     
+     6436 0408     
+     6438 1020     
+     643A 407C     
+     643C 0038     
+     643E 2020     
+     6440 2020     
+     6442 2038     
+     6444 0000     
+     6446 4020     
+     6448 1008     
+     644A 0400     
+     644C 0038     
+     644E 0808     
+     6450 0808     
+     6452 0838     
+     6454 0000     
+     6456 1028     
+     6458 4400     
      645A 0000     
      645C 0000     
-     645E 007C     
+     645E 0000     
      6460 0000     
-     6462 2010     
-     6464 0800     
-     6466 0000     
-     6468 0000     
-     646A 0038     
-     646C 043C     
-     646E 443C     
-     6470 0040     
-     6472 4078     
-     6474 4444     
-     6476 4478     
-     6478 0000     
-     647A 003C     
-     647C 4040     
-     647E 403C     
-     6480 0004     
-     6482 043C     
-     6484 4444     
-     6486 443C     
-     6488 0000     
-     648A 0038     
-     648C 447C     
-     648E 403C     
-     6490 0018     
-     6492 2420     
-     6494 7820     
-     6496 2020     
-     6498 0000     
-     649A 003C     
-     649C 443C     
-     649E 0438     
-     64A0 0040     
-     64A2 4078     
-     64A4 4444     
-     64A6 4444     
-     64A8 0010     
-     64AA 0030     
-     64AC 1010     
-     64AE 1038     
-     64B0 0008     
-     64B2 0008     
-     64B4 0808     
-     64B6 4830     
-     64B8 0040     
-     64BA 4044     
-     64BC 4870     
-     64BE 4844     
-     64C0 0030     
-     64C2 1010     
-     64C4 1010     
-     64C6 1038     
-     64C8 0000     
-     64CA 0068     
-     64CC 5454     
-     64CE 5454     
-     64D0 0000     
-     64D2 0058     
-     64D4 6444     
-     64D6 4444     
-     64D8 0000     
-     64DA 0038     
-     64DC 4444     
-     64DE 4438     
-     64E0 0000     
-     64E2 0078     
-     64E4 4478     
-     64E6 4040     
-     64E8 0000     
-     64EA 003C     
-     64EC 443C     
-     64EE 0404     
-     64F0 0000     
-     64F2 0058     
-     64F4 6440     
-     64F6 4040     
-     64F8 0000     
-     64FA 003C     
-     64FC 4038     
-     64FE 0478     
-     6500 0020     
-     6502 2078     
-     6504 2020     
-     6506 2418     
-     6508 0000     
-     650A 0044     
-     650C 4444     
-     650E 443C     
-     6510 0000     
-     6512 0044     
-     6514 4428     
-     6516 2810     
-     6518 0000     
-     651A 0044     
-     651C 4454     
-     651E 5428     
-     6520 0000     
-     6522 0044     
-     6524 2810     
-     6526 2844     
-     6528 0000     
-     652A 0044     
-     652C 443C     
-     652E 0438     
-     6530 0000     
-     6532 007C     
-     6534 0810     
-     6536 207C     
-     6538 0018     
-     653A 2020     
-     653C 4020     
-     653E 2018     
-     6540 0010     
-     6542 1010     
+     6462 007C     
+     6464 0000     
+     6466 2010     
+     6468 0800     
+     646A 0000     
+     646C 0000     
+     646E 0038     
+     6470 043C     
+     6472 443C     
+     6474 0040     
+     6476 4078     
+     6478 4444     
+     647A 4478     
+     647C 0000     
+     647E 003C     
+     6480 4040     
+     6482 403C     
+     6484 0004     
+     6486 043C     
+     6488 4444     
+     648A 443C     
+     648C 0000     
+     648E 0038     
+     6490 447C     
+     6492 403C     
+     6494 0018     
+     6496 2420     
+     6498 7820     
+     649A 2020     
+     649C 0000     
+     649E 003C     
+     64A0 443C     
+     64A2 0438     
+     64A4 0040     
+     64A6 4078     
+     64A8 4444     
+     64AA 4444     
+     64AC 0010     
+     64AE 0030     
+     64B0 1010     
+     64B2 1038     
+     64B4 0008     
+     64B6 0008     
+     64B8 0808     
+     64BA 4830     
+     64BC 0040     
+     64BE 4044     
+     64C0 4870     
+     64C2 4844     
+     64C4 0030     
+     64C6 1010     
+     64C8 1010     
+     64CA 1038     
+     64CC 0000     
+     64CE 0068     
+     64D0 5454     
+     64D2 5454     
+     64D4 0000     
+     64D6 0058     
+     64D8 6444     
+     64DA 4444     
+     64DC 0000     
+     64DE 0038     
+     64E0 4444     
+     64E2 4438     
+     64E4 0000     
+     64E6 0078     
+     64E8 4478     
+     64EA 4040     
+     64EC 0000     
+     64EE 003C     
+     64F0 443C     
+     64F2 0404     
+     64F4 0000     
+     64F6 0058     
+     64F8 6440     
+     64FA 4040     
+     64FC 0000     
+     64FE 003C     
+     6500 4038     
+     6502 0478     
+     6504 0020     
+     6506 2078     
+     6508 2020     
+     650A 2418     
+     650C 0000     
+     650E 0044     
+     6510 4444     
+     6512 443C     
+     6514 0000     
+     6516 0044     
+     6518 4428     
+     651A 2810     
+     651C 0000     
+     651E 0044     
+     6520 4454     
+     6522 5428     
+     6524 0000     
+     6526 0044     
+     6528 2810     
+     652A 2844     
+     652C 0000     
+     652E 0044     
+     6530 443C     
+     6532 0438     
+     6534 0000     
+     6536 007C     
+     6538 0810     
+     653A 207C     
+     653C 0018     
+     653E 2020     
+     6540 4020     
+     6542 2018     
      6544 0010     
      6546 1010     
-     6548 0030     
-     654A 0808     
-     654C 0408     
-     654E 0830     
-     6550 0000     
-     6552 0020     
-     6554 5408     
-     6556 0000     
-     6558 007C     
-     655A 7C7C     
-     655C 7C7C     
+     6548 0010     
+     654A 1010     
+     654C 0030     
+     654E 0808     
+     6550 0408     
+     6552 0830     
+     6554 0000     
+     6556 0020     
+     6558 5408     
+     655A 0000     
+     655C 007C     
      655E 7C7C     
+     6560 7C7C     
+     6562 7C7C     
 0086               
-0087 6560 0000     font2   bcopy "FONT7.bin"            ; \ Default font (Stevie 1.0 - 1.3Q)
-     6562 0000     
-     6564 0000     
+0087 6564 0000     font2   bcopy "FONT7.bin"            ; \ Default font (Stevie 1.0 - 1.3Q)
      6566 0000     
      6568 0000     
      656A 0000     
@@ -10553,392 +10554,392 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6572 0000     
      6574 0000     
      6576 0000     
-     6578 0010     
-     657A 1010     
-     657C 1010     
-     657E 0010     
-     6580 0028     
-     6582 2828     
-     6584 0000     
-     6586 0000     
-     6588 0028     
-     658A 287C     
-     658C 287C     
-     658E 2828     
-     6590 0038     
-     6592 5450     
-     6594 3814     
-     6596 5438     
-     6598 0060     
-     659A 6408     
-     659C 1020     
-     659E 4C0C     
-     65A0 0020     
-     65A2 5050     
-     65A4 2054     
-     65A6 4834     
-     65A8 0008     
-     65AA 0810     
-     65AC 0000     
-     65AE 0000     
-     65B0 0008     
-     65B2 1020     
-     65B4 2020     
-     65B6 1008     
-     65B8 0020     
+     6578 0000     
+     657A 0000     
+     657C 0010     
+     657E 1010     
+     6580 1010     
+     6582 0010     
+     6584 0028     
+     6586 2828     
+     6588 0000     
+     658A 0000     
+     658C 0028     
+     658E 287C     
+     6590 287C     
+     6592 2828     
+     6594 0038     
+     6596 5450     
+     6598 3814     
+     659A 5438     
+     659C 0060     
+     659E 6408     
+     65A0 1020     
+     65A2 4C0C     
+     65A4 0020     
+     65A6 5050     
+     65A8 2054     
+     65AA 4834     
+     65AC 0008     
+     65AE 0810     
+     65B0 0000     
+     65B2 0000     
+     65B4 0008     
+     65B6 1020     
+     65B8 2020     
      65BA 1008     
-     65BC 0808     
-     65BE 1020     
-     65C0 0000     
-     65C2 2810     
-     65C4 7C10     
-     65C6 2800     
-     65C8 0000     
-     65CA 1010     
-     65CC 7C10     
-     65CE 1000     
-     65D0 0000     
-     65D2 0000     
-     65D4 0030     
-     65D6 1020     
-     65D8 0000     
-     65DA 0000     
-     65DC 7C00     
+     65BC 0020     
+     65BE 1008     
+     65C0 0808     
+     65C2 1020     
+     65C4 0000     
+     65C6 2810     
+     65C8 7C10     
+     65CA 2800     
+     65CC 0000     
+     65CE 1010     
+     65D0 7C10     
+     65D2 1000     
+     65D4 0000     
+     65D6 0000     
+     65D8 0030     
+     65DA 1020     
+     65DC 0000     
      65DE 0000     
-     65E0 0000     
+     65E0 7C00     
      65E2 0000     
      65E4 0000     
-     65E6 3030     
+     65E6 0000     
      65E8 0000     
-     65EA 0408     
-     65EC 1020     
-     65EE 4000     
-     65F0 0038     
-     65F2 4444     
-     65F4 4444     
-     65F6 4438     
-     65F8 0010     
-     65FA 3010     
-     65FC 1010     
-     65FE 1038     
-     6600 0038     
-     6602 4404     
-     6604 0810     
-     6606 207C     
-     6608 0038     
-     660A 4404     
-     660C 1804     
-     660E 4438     
-     6610 0008     
-     6612 1828     
-     6614 487C     
-     6616 0808     
-     6618 007C     
-     661A 4078     
-     661C 0404     
-     661E 4438     
-     6620 0018     
-     6622 2040     
-     6624 7844     
-     6626 4438     
-     6628 007C     
-     662A 0408     
-     662C 1020     
-     662E 2020     
-     6630 0038     
-     6632 4444     
-     6634 3844     
-     6636 4438     
-     6638 0038     
-     663A 4444     
-     663C 3C04     
-     663E 0830     
-     6640 0000     
-     6642 3030     
-     6644 0030     
-     6646 3000     
-     6648 0000     
-     664A 3030     
-     664C 0030     
-     664E 1020     
-     6650 0008     
+     65EA 3030     
+     65EC 0000     
+     65EE 0408     
+     65F0 1020     
+     65F2 4000     
+     65F4 0038     
+     65F6 4444     
+     65F8 4444     
+     65FA 4438     
+     65FC 0010     
+     65FE 3010     
+     6600 1010     
+     6602 1038     
+     6604 0038     
+     6606 4404     
+     6608 0810     
+     660A 207C     
+     660C 0038     
+     660E 4404     
+     6610 1804     
+     6612 4438     
+     6614 0008     
+     6616 1828     
+     6618 487C     
+     661A 0808     
+     661C 007C     
+     661E 4078     
+     6620 0404     
+     6622 4438     
+     6624 0018     
+     6626 2040     
+     6628 7844     
+     662A 4438     
+     662C 007C     
+     662E 0408     
+     6630 1020     
+     6632 2020     
+     6634 0038     
+     6636 4444     
+     6638 3844     
+     663A 4438     
+     663C 0038     
+     663E 4444     
+     6640 3C04     
+     6642 0830     
+     6644 0000     
+     6646 3030     
+     6648 0030     
+     664A 3000     
+     664C 0000     
+     664E 3030     
+     6650 0030     
      6652 1020     
-     6654 4020     
-     6656 1008     
-     6658 0000     
-     665A 007C     
-     665C 007C     
-     665E 0000     
-     6660 0020     
-     6662 1008     
-     6664 0408     
-     6666 1020     
-     6668 0038     
-     666A 4404     
-     666C 0810     
-     666E 0010     
-     6670 0038     
-     6672 445C     
-     6674 545C     
-     6676 4038     
-     6678 0038     
-     667A 4444     
-     667C 7C44     
+     6654 0008     
+     6656 1020     
+     6658 4020     
+     665A 1008     
+     665C 0000     
+     665E 007C     
+     6660 007C     
+     6662 0000     
+     6664 0020     
+     6666 1008     
+     6668 0408     
+     666A 1020     
+     666C 0038     
+     666E 4404     
+     6670 0810     
+     6672 0010     
+     6674 0038     
+     6676 445C     
+     6678 545C     
+     667A 4038     
+     667C 0038     
      667E 4444     
-     6680 0078     
-     6682 2424     
-     6684 3824     
-     6686 2478     
-     6688 0038     
-     668A 4440     
-     668C 4040     
-     668E 4438     
-     6690 0078     
-     6692 2424     
-     6694 2424     
-     6696 2478     
-     6698 007C     
-     669A 4040     
-     669C 7840     
-     669E 407C     
-     66A0 007C     
-     66A2 4040     
-     66A4 7840     
+     6680 7C44     
+     6682 4444     
+     6684 0078     
+     6686 2424     
+     6688 3824     
+     668A 2478     
+     668C 0038     
+     668E 4440     
+     6690 4040     
+     6692 4438     
+     6694 0078     
+     6696 2424     
+     6698 2424     
+     669A 2478     
+     669C 007C     
+     669E 4040     
+     66A0 7840     
+     66A2 407C     
+     66A4 007C     
      66A6 4040     
-     66A8 003C     
+     66A8 7840     
      66AA 4040     
-     66AC 5C44     
-     66AE 4438     
-     66B0 0044     
-     66B2 4444     
-     66B4 7C44     
+     66AC 003C     
+     66AE 4040     
+     66B0 5C44     
+     66B2 4438     
+     66B4 0044     
      66B6 4444     
-     66B8 0038     
-     66BA 1010     
-     66BC 1010     
-     66BE 1038     
-     66C0 0004     
-     66C2 0404     
-     66C4 0404     
-     66C6 4438     
-     66C8 0044     
-     66CA 4850     
-     66CC 6050     
-     66CE 4844     
-     66D0 0040     
-     66D2 4040     
-     66D4 4040     
-     66D6 407C     
-     66D8 0044     
-     66DA 6C54     
-     66DC 5444     
-     66DE 4444     
-     66E0 0044     
-     66E2 6464     
-     66E4 544C     
-     66E6 4C44     
-     66E8 007C     
-     66EA 4444     
-     66EC 4444     
-     66EE 447C     
-     66F0 0078     
-     66F2 4444     
-     66F4 7840     
-     66F6 4040     
-     66F8 0038     
-     66FA 4444     
-     66FC 4454     
-     66FE 4834     
-     6700 0078     
-     6702 4444     
-     6704 7850     
-     6706 4844     
-     6708 0038     
-     670A 4440     
-     670C 3804     
-     670E 4438     
-     6710 007C     
-     6712 1010     
-     6714 1010     
+     66B8 7C44     
+     66BA 4444     
+     66BC 0038     
+     66BE 1010     
+     66C0 1010     
+     66C2 1038     
+     66C4 0004     
+     66C6 0404     
+     66C8 0404     
+     66CA 4438     
+     66CC 0044     
+     66CE 4850     
+     66D0 6050     
+     66D2 4844     
+     66D4 0040     
+     66D6 4040     
+     66D8 4040     
+     66DA 407C     
+     66DC 0044     
+     66DE 6C54     
+     66E0 5444     
+     66E2 4444     
+     66E4 0044     
+     66E6 6464     
+     66E8 544C     
+     66EA 4C44     
+     66EC 007C     
+     66EE 4444     
+     66F0 4444     
+     66F2 447C     
+     66F4 0078     
+     66F6 4444     
+     66F8 7840     
+     66FA 4040     
+     66FC 0038     
+     66FE 4444     
+     6700 4454     
+     6702 4834     
+     6704 0078     
+     6706 4444     
+     6708 7850     
+     670A 4844     
+     670C 0038     
+     670E 4440     
+     6710 3804     
+     6712 4438     
+     6714 007C     
      6716 1010     
-     6718 0044     
-     671A 4444     
-     671C 4444     
-     671E 4438     
-     6720 0044     
-     6722 4444     
-     6724 2828     
-     6726 1010     
-     6728 0044     
-     672A 4444     
-     672C 5454     
-     672E 5428     
-     6730 0044     
-     6732 4428     
-     6734 1028     
-     6736 4444     
-     6738 0044     
-     673A 4428     
-     673C 1010     
-     673E 1010     
-     6740 007C     
-     6742 0408     
-     6744 1020     
-     6746 407C     
-     6748 0038     
-     674A 2020     
-     674C 2020     
-     674E 2038     
-     6750 0000     
-     6752 4020     
-     6754 1008     
-     6756 0400     
-     6758 0038     
-     675A 0808     
-     675C 0808     
-     675E 0838     
-     6760 0000     
-     6762 1028     
-     6764 4400     
-     6766 0000     
-     6768 0000     
+     6718 1010     
+     671A 1010     
+     671C 0044     
+     671E 4444     
+     6720 4444     
+     6722 4438     
+     6724 0044     
+     6726 4444     
+     6728 2828     
+     672A 1010     
+     672C 0044     
+     672E 4444     
+     6730 5454     
+     6732 5428     
+     6734 0044     
+     6736 4428     
+     6738 1028     
+     673A 4444     
+     673C 0044     
+     673E 4428     
+     6740 1010     
+     6742 1010     
+     6744 007C     
+     6746 0408     
+     6748 1020     
+     674A 407C     
+     674C 0038     
+     674E 2020     
+     6750 2020     
+     6752 2038     
+     6754 0000     
+     6756 4020     
+     6758 1008     
+     675A 0400     
+     675C 0038     
+     675E 0808     
+     6760 0808     
+     6762 0838     
+     6764 0000     
+     6766 1028     
+     6768 4400     
      676A 0000     
      676C 0000     
-     676E 007C     
+     676E 0000     
      6770 0000     
-     6772 2010     
-     6774 0800     
-     6776 0000     
-     6778 0000     
-     677A 0038     
-     677C 447C     
-     677E 4444     
-     6780 0000     
-     6782 0078     
-     6784 2438     
-     6786 2478     
-     6788 0000     
-     678A 003C     
-     678C 4040     
-     678E 403C     
-     6790 0000     
-     6792 0078     
-     6794 2424     
-     6796 2478     
-     6798 0000     
-     679A 007C     
-     679C 4078     
-     679E 407C     
-     67A0 0000     
-     67A2 007C     
-     67A4 4078     
-     67A6 4040     
-     67A8 0000     
-     67AA 003C     
-     67AC 405C     
-     67AE 4438     
-     67B0 0000     
-     67B2 0044     
-     67B4 447C     
-     67B6 4444     
-     67B8 0000     
-     67BA 0038     
-     67BC 1010     
-     67BE 1038     
-     67C0 0000     
-     67C2 0008     
-     67C4 0808     
-     67C6 4830     
-     67C8 0000     
-     67CA 0024     
-     67CC 2830     
-     67CE 2824     
-     67D0 0000     
-     67D2 0040     
-     67D4 4040     
-     67D6 407C     
-     67D8 0000     
-     67DA 0044     
-     67DC 6C54     
-     67DE 4444     
-     67E0 0000     
-     67E2 0044     
-     67E4 6454     
-     67E6 4C44     
-     67E8 0000     
-     67EA 007C     
-     67EC 4444     
-     67EE 447C     
-     67F0 0000     
-     67F2 0078     
-     67F4 4478     
-     67F6 4040     
-     67F8 0000     
-     67FA 0038     
-     67FC 4454     
-     67FE 4834     
-     6800 0000     
-     6802 0078     
-     6804 4478     
-     6806 4844     
-     6808 0000     
-     680A 003C     
-     680C 4038     
-     680E 0478     
-     6810 0000     
-     6812 007C     
-     6814 1010     
-     6816 1010     
-     6818 0000     
-     681A 0044     
-     681C 4444     
-     681E 4438     
-     6820 0000     
-     6822 0044     
-     6824 4428     
-     6826 2810     
-     6828 0000     
-     682A 0044     
-     682C 4454     
-     682E 5428     
-     6830 0000     
-     6832 0044     
-     6834 2810     
-     6836 2844     
-     6838 0000     
-     683A 0044     
-     683C 2810     
-     683E 1010     
-     6840 0000     
-     6842 007C     
-     6844 0810     
-     6846 207C     
-     6848 0018     
-     684A 2020     
-     684C 4020     
-     684E 2018     
-     6850 0010     
-     6852 1010     
+     6772 007C     
+     6774 0000     
+     6776 2010     
+     6778 0800     
+     677A 0000     
+     677C 0000     
+     677E 0038     
+     6780 447C     
+     6782 4444     
+     6784 0000     
+     6786 0078     
+     6788 2438     
+     678A 2478     
+     678C 0000     
+     678E 003C     
+     6790 4040     
+     6792 403C     
+     6794 0000     
+     6796 0078     
+     6798 2424     
+     679A 2478     
+     679C 0000     
+     679E 007C     
+     67A0 4078     
+     67A2 407C     
+     67A4 0000     
+     67A6 007C     
+     67A8 4078     
+     67AA 4040     
+     67AC 0000     
+     67AE 003C     
+     67B0 405C     
+     67B2 4438     
+     67B4 0000     
+     67B6 0044     
+     67B8 447C     
+     67BA 4444     
+     67BC 0000     
+     67BE 0038     
+     67C0 1010     
+     67C2 1038     
+     67C4 0000     
+     67C6 0008     
+     67C8 0808     
+     67CA 4830     
+     67CC 0000     
+     67CE 0024     
+     67D0 2830     
+     67D2 2824     
+     67D4 0000     
+     67D6 0040     
+     67D8 4040     
+     67DA 407C     
+     67DC 0000     
+     67DE 0044     
+     67E0 6C54     
+     67E2 4444     
+     67E4 0000     
+     67E6 0044     
+     67E8 6454     
+     67EA 4C44     
+     67EC 0000     
+     67EE 007C     
+     67F0 4444     
+     67F2 447C     
+     67F4 0000     
+     67F6 0078     
+     67F8 4478     
+     67FA 4040     
+     67FC 0000     
+     67FE 0038     
+     6800 4454     
+     6802 4834     
+     6804 0000     
+     6806 0078     
+     6808 4478     
+     680A 4844     
+     680C 0000     
+     680E 003C     
+     6810 4038     
+     6812 0478     
+     6814 0000     
+     6816 007C     
+     6818 1010     
+     681A 1010     
+     681C 0000     
+     681E 0044     
+     6820 4444     
+     6822 4438     
+     6824 0000     
+     6826 0044     
+     6828 4428     
+     682A 2810     
+     682C 0000     
+     682E 0044     
+     6830 4454     
+     6832 5428     
+     6834 0000     
+     6836 0044     
+     6838 2810     
+     683A 2844     
+     683C 0000     
+     683E 0044     
+     6840 2810     
+     6842 1010     
+     6844 0000     
+     6846 007C     
+     6848 0810     
+     684A 207C     
+     684C 0018     
+     684E 2020     
+     6850 4020     
+     6852 2018     
      6854 0010     
      6856 1010     
-     6858 0030     
-     685A 0808     
-     685C 0408     
-     685E 0830     
-     6860 0000     
-     6862 2054     
-     6864 0800     
-     6866 0000     
-     6868 007C     
-     686A 7C7C     
-     686C 7C7C     
+     6858 0010     
+     685A 1010     
+     685C 0030     
+     685E 0808     
+     6860 0408     
+     6862 0830     
+     6864 0000     
+     6866 2054     
+     6868 0800     
+     686A 0000     
+     686C 007C     
      686E 7C7C     
+     6870 7C7C     
+     6872 7C7C     
 0088                                                    ; / Harry's Extended Basic GEM 2.9 font 7
 0089               
-0090 6870 00       font3   byte  >00                    ; \ Push font one pixel down
-0091 6871   00             bcopy "FONT14.bin"           ; / Harry's Extended Basic GEM 2.9 font 14
-     6872 0000     
-     6874 0000     
+0090 6874 00       font3   byte  >00                    ; \ Push font one pixel down
+0091 6875   00             bcopy "FONT14.bin"           ; / Harry's Extended Basic GEM 2.9 font 14
      6876 0000     
      6878 0000     
      687A 0000     
@@ -10948,393 +10949,393 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6882 0000     
      6884 0000     
      6886 0000     
-     6888 0010     
-     688A 1010     
-     688C 1010     
-     688E 0010     
-     6890 0028     
-     6892 2828     
-     6894 0000     
-     6896 0000     
-     6898 0028     
-     689A 287C     
-     689C 287C     
-     689E 2828     
-     68A0 0038     
-     68A2 5450     
-     68A4 3814     
-     68A6 5438     
-     68A8 0060     
-     68AA 6408     
-     68AC 1020     
-     68AE 4C0C     
-     68B0 0020     
-     68B2 5050     
-     68B4 2054     
-     68B6 4834     
-     68B8 0008     
-     68BA 0810     
-     68BC 0000     
-     68BE 0000     
-     68C0 0008     
-     68C2 1020     
-     68C4 2020     
-     68C6 1008     
-     68C8 0020     
+     6888 0000     
+     688A 0000     
+     688C 0010     
+     688E 1010     
+     6890 1010     
+     6892 0010     
+     6894 0028     
+     6896 2828     
+     6898 0000     
+     689A 0000     
+     689C 0028     
+     689E 287C     
+     68A0 287C     
+     68A2 2828     
+     68A4 0038     
+     68A6 5450     
+     68A8 3814     
+     68AA 5438     
+     68AC 0060     
+     68AE 6408     
+     68B0 1020     
+     68B2 4C0C     
+     68B4 0020     
+     68B6 5050     
+     68B8 2054     
+     68BA 4834     
+     68BC 0008     
+     68BE 0810     
+     68C0 0000     
+     68C2 0000     
+     68C4 0008     
+     68C6 1020     
+     68C8 2020     
      68CA 1008     
-     68CC 0808     
-     68CE 1020     
-     68D0 0000     
-     68D2 2810     
-     68D4 7C10     
-     68D6 2800     
-     68D8 0000     
-     68DA 1010     
-     68DC 7C10     
-     68DE 1000     
-     68E0 0000     
-     68E2 0000     
-     68E4 0030     
-     68E6 1020     
-     68E8 0000     
-     68EA 0000     
-     68EC 7C00     
+     68CC 0020     
+     68CE 1008     
+     68D0 0808     
+     68D2 1020     
+     68D4 0000     
+     68D6 2810     
+     68D8 7C10     
+     68DA 2800     
+     68DC 0000     
+     68DE 1010     
+     68E0 7C10     
+     68E2 1000     
+     68E4 0000     
+     68E6 0000     
+     68E8 0030     
+     68EA 1020     
+     68EC 0000     
      68EE 0000     
-     68F0 0000     
+     68F0 7C00     
      68F2 0000     
      68F4 0000     
-     68F6 3030     
+     68F6 0000     
      68F8 0000     
-     68FA 0408     
-     68FC 1020     
-     68FE 4000     
-     6900 003C     
-     6902 444C     
-     6904 5464     
-     6906 4478     
-     6908 0010     
-     690A 3010     
-     690C 1010     
-     690E 1038     
-     6910 0038     
-     6912 4404     
-     6914 0810     
-     6916 207C     
-     6918 0038     
-     691A 4404     
-     691C 1804     
-     691E 4438     
-     6920 0008     
-     6922 1828     
-     6924 487C     
-     6926 0808     
-     6928 007C     
-     692A 4078     
-     692C 0404     
-     692E 4438     
-     6930 0018     
-     6932 2040     
-     6934 7844     
-     6936 4438     
-     6938 007C     
-     693A 0408     
-     693C 1020     
-     693E 2020     
-     6940 0038     
-     6942 4444     
-     6944 3844     
-     6946 4438     
-     6948 0038     
-     694A 4444     
-     694C 3C04     
-     694E 0830     
-     6950 0000     
-     6952 3030     
-     6954 0030     
-     6956 3000     
-     6958 0000     
-     695A 3030     
-     695C 0030     
-     695E 1020     
-     6960 0008     
+     68FA 3030     
+     68FC 0000     
+     68FE 0408     
+     6900 1020     
+     6902 4000     
+     6904 003C     
+     6906 444C     
+     6908 5464     
+     690A 4478     
+     690C 0010     
+     690E 3010     
+     6910 1010     
+     6912 1038     
+     6914 0038     
+     6916 4404     
+     6918 0810     
+     691A 207C     
+     691C 0038     
+     691E 4404     
+     6920 1804     
+     6922 4438     
+     6924 0008     
+     6926 1828     
+     6928 487C     
+     692A 0808     
+     692C 007C     
+     692E 4078     
+     6930 0404     
+     6932 4438     
+     6934 0018     
+     6936 2040     
+     6938 7844     
+     693A 4438     
+     693C 007C     
+     693E 0408     
+     6940 1020     
+     6942 2020     
+     6944 0038     
+     6946 4444     
+     6948 3844     
+     694A 4438     
+     694C 0038     
+     694E 4444     
+     6950 3C04     
+     6952 0830     
+     6954 0000     
+     6956 3030     
+     6958 0030     
+     695A 3000     
+     695C 0000     
+     695E 3030     
+     6960 0030     
      6962 1020     
-     6964 4020     
-     6966 1008     
-     6968 0000     
-     696A 007C     
-     696C 007C     
-     696E 0000     
-     6970 0020     
-     6972 1008     
-     6974 0408     
-     6976 1020     
-     6978 0038     
-     697A 4404     
-     697C 0810     
-     697E 0010     
-     6980 0038     
-     6982 445C     
-     6984 545C     
-     6986 4038     
-     6988 0038     
-     698A 4444     
-     698C 7C44     
+     6964 0008     
+     6966 1020     
+     6968 4020     
+     696A 1008     
+     696C 0000     
+     696E 007C     
+     6970 007C     
+     6972 0000     
+     6974 0020     
+     6976 1008     
+     6978 0408     
+     697A 1020     
+     697C 0038     
+     697E 4404     
+     6980 0810     
+     6982 0010     
+     6984 0038     
+     6986 445C     
+     6988 545C     
+     698A 4038     
+     698C 0038     
      698E 4444     
-     6990 0078     
-     6992 2424     
-     6994 3824     
-     6996 2478     
-     6998 0038     
-     699A 4440     
-     699C 4040     
-     699E 4438     
-     69A0 0078     
-     69A2 2424     
-     69A4 2424     
-     69A6 2478     
-     69A8 007C     
-     69AA 4040     
-     69AC 7840     
-     69AE 407C     
-     69B0 007C     
-     69B2 4040     
-     69B4 7840     
+     6990 7C44     
+     6992 4444     
+     6994 0078     
+     6996 2424     
+     6998 3824     
+     699A 2478     
+     699C 0038     
+     699E 4440     
+     69A0 4040     
+     69A2 4438     
+     69A4 0078     
+     69A6 2424     
+     69A8 2424     
+     69AA 2478     
+     69AC 007C     
+     69AE 4040     
+     69B0 7840     
+     69B2 407C     
+     69B4 007C     
      69B6 4040     
-     69B8 003C     
+     69B8 7840     
      69BA 4040     
-     69BC 5C44     
-     69BE 4438     
-     69C0 0044     
-     69C2 4444     
-     69C4 7C44     
+     69BC 003C     
+     69BE 4040     
+     69C0 5C44     
+     69C2 4438     
+     69C4 0044     
      69C6 4444     
-     69C8 0038     
-     69CA 1010     
-     69CC 1010     
-     69CE 1038     
-     69D0 0004     
-     69D2 0404     
-     69D4 0404     
-     69D6 4438     
-     69D8 0044     
-     69DA 4850     
-     69DC 6050     
-     69DE 4844     
-     69E0 0040     
-     69E2 4040     
-     69E4 4040     
-     69E6 407C     
-     69E8 0044     
-     69EA 6C54     
-     69EC 5444     
-     69EE 4444     
-     69F0 0044     
-     69F2 6464     
-     69F4 544C     
-     69F6 4C44     
-     69F8 0038     
-     69FA 4444     
-     69FC 4444     
-     69FE 4438     
-     6A00 0078     
-     6A02 4444     
-     6A04 7840     
-     6A06 4040     
-     6A08 0038     
-     6A0A 4444     
-     6A0C 4454     
-     6A0E 4834     
-     6A10 0078     
-     6A12 4444     
-     6A14 7850     
-     6A16 4844     
-     6A18 0038     
-     6A1A 4440     
-     6A1C 3804     
-     6A1E 4438     
-     6A20 007C     
-     6A22 1010     
-     6A24 1010     
+     69C8 7C44     
+     69CA 4444     
+     69CC 0038     
+     69CE 1010     
+     69D0 1010     
+     69D2 1038     
+     69D4 0004     
+     69D6 0404     
+     69D8 0404     
+     69DA 4438     
+     69DC 0044     
+     69DE 4850     
+     69E0 6050     
+     69E2 4844     
+     69E4 0040     
+     69E6 4040     
+     69E8 4040     
+     69EA 407C     
+     69EC 0044     
+     69EE 6C54     
+     69F0 5444     
+     69F2 4444     
+     69F4 0044     
+     69F6 6464     
+     69F8 544C     
+     69FA 4C44     
+     69FC 0038     
+     69FE 4444     
+     6A00 4444     
+     6A02 4438     
+     6A04 0078     
+     6A06 4444     
+     6A08 7840     
+     6A0A 4040     
+     6A0C 0038     
+     6A0E 4444     
+     6A10 4454     
+     6A12 4834     
+     6A14 0078     
+     6A16 4444     
+     6A18 7850     
+     6A1A 4844     
+     6A1C 0038     
+     6A1E 4440     
+     6A20 3804     
+     6A22 4438     
+     6A24 007C     
      6A26 1010     
-     6A28 0044     
-     6A2A 4444     
-     6A2C 4444     
-     6A2E 4438     
-     6A30 0044     
-     6A32 4444     
-     6A34 2828     
-     6A36 1010     
-     6A38 0044     
-     6A3A 4444     
-     6A3C 5454     
-     6A3E 5428     
-     6A40 0044     
-     6A42 4428     
-     6A44 1028     
-     6A46 4444     
-     6A48 0044     
-     6A4A 4428     
-     6A4C 1010     
-     6A4E 1010     
-     6A50 007C     
-     6A52 0408     
-     6A54 1020     
-     6A56 407C     
-     6A58 0038     
-     6A5A 2020     
-     6A5C 2020     
-     6A5E 2038     
-     6A60 0000     
-     6A62 4020     
-     6A64 1008     
-     6A66 0400     
-     6A68 0038     
-     6A6A 0808     
-     6A6C 0808     
-     6A6E 0838     
-     6A70 0000     
-     6A72 1028     
-     6A74 4400     
-     6A76 0000     
-     6A78 0000     
+     6A28 1010     
+     6A2A 1010     
+     6A2C 0044     
+     6A2E 4444     
+     6A30 4444     
+     6A32 4438     
+     6A34 0044     
+     6A36 4444     
+     6A38 2828     
+     6A3A 1010     
+     6A3C 0044     
+     6A3E 4444     
+     6A40 5454     
+     6A42 5428     
+     6A44 0044     
+     6A46 4428     
+     6A48 1028     
+     6A4A 4444     
+     6A4C 0044     
+     6A4E 4428     
+     6A50 1010     
+     6A52 1010     
+     6A54 007C     
+     6A56 0408     
+     6A58 1020     
+     6A5A 407C     
+     6A5C 0038     
+     6A5E 2020     
+     6A60 2020     
+     6A62 2038     
+     6A64 0000     
+     6A66 4020     
+     6A68 1008     
+     6A6A 0400     
+     6A6C 0038     
+     6A6E 0808     
+     6A70 0808     
+     6A72 0838     
+     6A74 0000     
+     6A76 1028     
+     6A78 4400     
      6A7A 0000     
      6A7C 0000     
-     6A7E 007C     
+     6A7E 0000     
      6A80 0000     
-     6A82 2010     
-     6A84 0800     
-     6A86 0000     
-     6A88 0000     
-     6A8A 0038     
-     6A8C 043C     
-     6A8E 443C     
-     6A90 0040     
-     6A92 4078     
-     6A94 4444     
-     6A96 4478     
-     6A98 0000     
-     6A9A 003C     
-     6A9C 4040     
-     6A9E 403C     
-     6AA0 0004     
-     6AA2 043C     
-     6AA4 4444     
-     6AA6 443C     
-     6AA8 0000     
-     6AAA 0038     
-     6AAC 447C     
-     6AAE 403C     
-     6AB0 0018     
-     6AB2 2420     
-     6AB4 7820     
-     6AB6 2020     
-     6AB8 0000     
-     6ABA 003C     
-     6ABC 443C     
-     6ABE 0438     
-     6AC0 0040     
-     6AC2 4078     
-     6AC4 4444     
-     6AC6 4444     
-     6AC8 0010     
-     6ACA 0030     
-     6ACC 1010     
-     6ACE 1038     
-     6AD0 0008     
-     6AD2 0008     
-     6AD4 0808     
-     6AD6 4830     
-     6AD8 0040     
-     6ADA 4044     
-     6ADC 4870     
-     6ADE 4844     
-     6AE0 0030     
-     6AE2 1010     
-     6AE4 1010     
-     6AE6 1038     
-     6AE8 0000     
-     6AEA 0068     
-     6AEC 5454     
-     6AEE 5454     
-     6AF0 0000     
-     6AF2 0058     
-     6AF4 6444     
-     6AF6 4444     
-     6AF8 0000     
-     6AFA 0038     
-     6AFC 4444     
-     6AFE 4438     
-     6B00 0000     
-     6B02 0078     
-     6B04 4478     
-     6B06 4040     
-     6B08 0000     
-     6B0A 003C     
-     6B0C 443C     
-     6B0E 0404     
-     6B10 0000     
-     6B12 0058     
-     6B14 6440     
-     6B16 4040     
-     6B18 0000     
-     6B1A 003C     
-     6B1C 4038     
-     6B1E 0478     
-     6B20 0020     
-     6B22 2078     
-     6B24 2020     
-     6B26 2418     
-     6B28 0000     
-     6B2A 0044     
-     6B2C 4444     
-     6B2E 443C     
-     6B30 0000     
-     6B32 0044     
-     6B34 4428     
-     6B36 2810     
-     6B38 0000     
-     6B3A 0044     
-     6B3C 4454     
-     6B3E 5428     
-     6B40 0000     
-     6B42 0044     
-     6B44 2810     
-     6B46 2844     
-     6B48 0000     
-     6B4A 0044     
-     6B4C 443C     
-     6B4E 0438     
-     6B50 0000     
-     6B52 007C     
-     6B54 0810     
-     6B56 207C     
-     6B58 0018     
-     6B5A 2020     
-     6B5C 4020     
-     6B5E 2018     
-     6B60 0010     
-     6B62 1010     
+     6A82 007C     
+     6A84 0000     
+     6A86 2010     
+     6A88 0800     
+     6A8A 0000     
+     6A8C 0000     
+     6A8E 0038     
+     6A90 043C     
+     6A92 443C     
+     6A94 0040     
+     6A96 4078     
+     6A98 4444     
+     6A9A 4478     
+     6A9C 0000     
+     6A9E 003C     
+     6AA0 4040     
+     6AA2 403C     
+     6AA4 0004     
+     6AA6 043C     
+     6AA8 4444     
+     6AAA 443C     
+     6AAC 0000     
+     6AAE 0038     
+     6AB0 447C     
+     6AB2 403C     
+     6AB4 0018     
+     6AB6 2420     
+     6AB8 7820     
+     6ABA 2020     
+     6ABC 0000     
+     6ABE 003C     
+     6AC0 443C     
+     6AC2 0438     
+     6AC4 0040     
+     6AC6 4078     
+     6AC8 4444     
+     6ACA 4444     
+     6ACC 0010     
+     6ACE 0030     
+     6AD0 1010     
+     6AD2 1038     
+     6AD4 0008     
+     6AD6 0008     
+     6AD8 0808     
+     6ADA 4830     
+     6ADC 0040     
+     6ADE 4044     
+     6AE0 4870     
+     6AE2 4844     
+     6AE4 0030     
+     6AE6 1010     
+     6AE8 1010     
+     6AEA 1038     
+     6AEC 0000     
+     6AEE 0068     
+     6AF0 5454     
+     6AF2 5454     
+     6AF4 0000     
+     6AF6 0058     
+     6AF8 6444     
+     6AFA 4444     
+     6AFC 0000     
+     6AFE 0038     
+     6B00 4444     
+     6B02 4438     
+     6B04 0000     
+     6B06 0078     
+     6B08 4478     
+     6B0A 4040     
+     6B0C 0000     
+     6B0E 003C     
+     6B10 443C     
+     6B12 0404     
+     6B14 0000     
+     6B16 0058     
+     6B18 6440     
+     6B1A 4040     
+     6B1C 0000     
+     6B1E 003C     
+     6B20 4038     
+     6B22 0478     
+     6B24 0020     
+     6B26 2078     
+     6B28 2020     
+     6B2A 2418     
+     6B2C 0000     
+     6B2E 0044     
+     6B30 4444     
+     6B32 443C     
+     6B34 0000     
+     6B36 0044     
+     6B38 4428     
+     6B3A 2810     
+     6B3C 0000     
+     6B3E 0044     
+     6B40 4454     
+     6B42 5428     
+     6B44 0000     
+     6B46 0044     
+     6B48 2810     
+     6B4A 2844     
+     6B4C 0000     
+     6B4E 0044     
+     6B50 443C     
+     6B52 0438     
+     6B54 0000     
+     6B56 007C     
+     6B58 0810     
+     6B5A 207C     
+     6B5C 0018     
+     6B5E 2020     
+     6B60 4020     
+     6B62 2018     
      6B64 0010     
      6B66 1010     
-     6B68 0030     
-     6B6A 0808     
-     6B6C 0408     
-     6B6E 0830     
-     6B70 0000     
-     6B72 0020     
-     6B74 5408     
-     6B76 0000     
-     6B78 007C     
-     6B7A 7C7C     
-     6B7C 7C7C     
+     6B68 0010     
+     6B6A 1010     
+     6B6C 0030     
+     6B6E 0808     
+     6B70 0408     
+     6B72 0830     
+     6B74 0000     
+     6B76 0020     
+     6B78 5408     
+     6B7A 0000     
+     6B7C 007C     
      6B7E 7C7C     
-     6B80 00       
+     6B80 7C7C     
+     6B82 7C7C     
+     6B84 00       
 0092               
 0093               font4   aorg  font3 + 784            ; \
-0094 6B80 00               byte  >00                    ; | Push font one pixel down
-0095 6B81   00             bcopy "FONT40.bin"           ; / Harry's Extended Basic GEM 2.9 font 40
-     6B82 0000     
-     6B84 0000     
+0094 6B84 00               byte  >00                    ; | Push font one pixel down
+0095 6B85   00             bcopy "FONT40.bin"           ; / Harry's Extended Basic GEM 2.9 font 40
      6B86 0000     
      6B88 0000     
      6B8A 0000     
@@ -11344,392 +11345,392 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6B92 0000     
      6B94 0000     
      6B96 0000     
-     6B98 0018     
-     6B9A 1818     
-     6B9C 1010     
-     6B9E 0010     
-     6BA0 0028     
-     6BA2 2800     
-     6BA4 0000     
-     6BA6 0000     
-     6BA8 0008     
-     6BAA 287C     
-     6BAC 287C     
-     6BAE 2820     
-     6BB0 0010     
-     6BB2 3C50     
-     6BB4 3814     
-     6BB6 7810     
-     6BB8 0020     
-     6BBA 5428     
-     6BBC 1028     
-     6BBE 5408     
-     6BC0 0030     
-     6BC2 2830     
-     6BC4 5448     
-     6BC6 4834     
-     6BC8 0010     
-     6BCA 1000     
-     6BCC 0000     
-     6BCE 0000     
-     6BD0 0008     
-     6BD2 1020     
-     6BD4 2020     
-     6BD6 1008     
-     6BD8 0020     
+     6B98 0000     
+     6B9A 0000     
+     6B9C 0018     
+     6B9E 1818     
+     6BA0 1010     
+     6BA2 0010     
+     6BA4 0028     
+     6BA6 2800     
+     6BA8 0000     
+     6BAA 0000     
+     6BAC 0008     
+     6BAE 287C     
+     6BB0 287C     
+     6BB2 2820     
+     6BB4 0010     
+     6BB6 3C50     
+     6BB8 3814     
+     6BBA 7810     
+     6BBC 0020     
+     6BBE 5428     
+     6BC0 1028     
+     6BC2 5408     
+     6BC4 0030     
+     6BC6 2830     
+     6BC8 5448     
+     6BCA 4834     
+     6BCC 0010     
+     6BCE 1000     
+     6BD0 0000     
+     6BD2 0000     
+     6BD4 0008     
+     6BD6 1020     
+     6BD8 2020     
      6BDA 1008     
-     6BDC 0808     
-     6BDE 1020     
-     6BE0 0010     
-     6BE2 5438     
-     6BE4 1038     
-     6BE6 5410     
-     6BE8 0000     
-     6BEA 1010     
-     6BEC 7C10     
-     6BEE 1000     
-     6BF0 0000     
-     6BF2 0000     
-     6BF4 0030     
-     6BF6 1020     
-     6BF8 0000     
-     6BFA 0000     
-     6BFC 7C00     
+     6BDC 0020     
+     6BDE 1008     
+     6BE0 0808     
+     6BE2 1020     
+     6BE4 0010     
+     6BE6 5438     
+     6BE8 1038     
+     6BEA 5410     
+     6BEC 0000     
+     6BEE 1010     
+     6BF0 7C10     
+     6BF2 1000     
+     6BF4 0000     
+     6BF6 0000     
+     6BF8 0030     
+     6BFA 1020     
+     6BFC 0000     
      6BFE 0000     
-     6C00 0000     
+     6C00 7C00     
      6C02 0000     
      6C04 0000     
-     6C06 3030     
+     6C06 0000     
      6C08 0000     
-     6C0A 0808     
-     6C0C 1010     
-     6C0E 2020     
-     6C10 0000     
-     6C12 3048     
-     6C14 4848     
-     6C16 4830     
-     6C18 0000     
-     6C1A 1030     
-     6C1C 1010     
-     6C1E 1010     
-     6C20 0000     
-     6C22 3048     
-     6C24 1020     
-     6C26 4078     
-     6C28 0000     
-     6C2A 3048     
-     6C2C 1008     
-     6C2E 1060     
-     6C30 0000     
-     6C32 1030     
-     6C34 5078     
-     6C36 1010     
-     6C38 0000     
-     6C3A 7840     
-     6C3C 7008     
-     6C3E 1060     
-     6C40 0000     
-     6C42 1820     
-     6C44 3048     
-     6C46 4830     
-     6C48 0000     
-     6C4A 7808     
-     6C4C 1010     
-     6C4E 2020     
-     6C50 0000     
-     6C52 3048     
-     6C54 3048     
-     6C56 4830     
-     6C58 0000     
-     6C5A 3048     
-     6C5C 4830     
-     6C5E 1060     
-     6C60 0030     
-     6C62 3000     
+     6C0A 3030     
+     6C0C 0000     
+     6C0E 0808     
+     6C10 1010     
+     6C12 2020     
+     6C14 0000     
+     6C16 3048     
+     6C18 4848     
+     6C1A 4830     
+     6C1C 0000     
+     6C1E 1030     
+     6C20 1010     
+     6C22 1010     
+     6C24 0000     
+     6C26 3048     
+     6C28 1020     
+     6C2A 4078     
+     6C2C 0000     
+     6C2E 3048     
+     6C30 1008     
+     6C32 1060     
+     6C34 0000     
+     6C36 1030     
+     6C38 5078     
+     6C3A 1010     
+     6C3C 0000     
+     6C3E 7840     
+     6C40 7008     
+     6C42 1060     
+     6C44 0000     
+     6C46 1820     
+     6C48 3048     
+     6C4A 4830     
+     6C4C 0000     
+     6C4E 7808     
+     6C50 1010     
+     6C52 2020     
+     6C54 0000     
+     6C56 3048     
+     6C58 3048     
+     6C5A 4830     
+     6C5C 0000     
+     6C5E 3048     
+     6C60 4830     
+     6C62 1060     
      6C64 0030     
      6C66 3000     
      6C68 0030     
      6C6A 3000     
-     6C6C 3030     
-     6C6E 1020     
-     6C70 0008     
+     6C6C 0030     
+     6C6E 3000     
+     6C70 3030     
      6C72 1020     
-     6C74 4020     
-     6C76 1008     
-     6C78 0000     
-     6C7A 007C     
-     6C7C 007C     
-     6C7E 0000     
-     6C80 0040     
-     6C82 2010     
-     6C84 0810     
-     6C86 2040     
-     6C88 0038     
-     6C8A 4444     
-     6C8C 0810     
-     6C8E 0010     
-     6C90 0038     
-     6C92 445C     
-     6C94 545C     
-     6C96 4038     
-     6C98 000C     
-     6C9A 1424     
-     6C9C 247C     
-     6C9E 4444     
-     6CA0 0078     
-     6CA2 0448     
-     6CA4 7048     
-     6CA6 4478     
-     6CA8 0018     
-     6CAA 2440     
-     6CAC 4040     
-     6CAE 4438     
-     6CB0 0070     
-     6CB2 0844     
-     6CB4 4444     
-     6CB6 4478     
-     6CB8 007C     
-     6CBA 407C     
-     6CBC 4040     
+     6C74 0008     
+     6C76 1020     
+     6C78 4020     
+     6C7A 1008     
+     6C7C 0000     
+     6C7E 007C     
+     6C80 007C     
+     6C82 0000     
+     6C84 0040     
+     6C86 2010     
+     6C88 0810     
+     6C8A 2040     
+     6C8C 0038     
+     6C8E 4444     
+     6C90 0810     
+     6C92 0010     
+     6C94 0038     
+     6C96 445C     
+     6C98 545C     
+     6C9A 4038     
+     6C9C 000C     
+     6C9E 1424     
+     6CA0 247C     
+     6CA2 4444     
+     6CA4 0078     
+     6CA6 0448     
+     6CA8 7048     
+     6CAA 4478     
+     6CAC 0018     
+     6CAE 2440     
+     6CB0 4040     
+     6CB2 4438     
+     6CB4 0070     
+     6CB6 0844     
+     6CB8 4444     
+     6CBA 4478     
+     6CBC 007C     
      6CBE 407C     
-     6CC0 007C     
+     6CC0 4040     
      6CC2 407C     
-     6CC4 4040     
-     6CC6 4040     
-     6CC8 001C     
-     6CCA 2020     
-     6CCC 4C44     
-     6CCE 443C     
-     6CD0 0044     
-     6CD2 447C     
-     6CD4 4444     
-     6CD6 4448     
-     6CD8 0010     
-     6CDA 1010     
-     6CDC 1010     
+     6CC4 007C     
+     6CC6 407C     
+     6CC8 4040     
+     6CCA 4040     
+     6CCC 001C     
+     6CCE 2020     
+     6CD0 4C44     
+     6CD2 443C     
+     6CD4 0044     
+     6CD6 447C     
+     6CD8 4444     
+     6CDA 4448     
+     6CDC 0010     
      6CDE 1010     
-     6CE0 0008     
-     6CE2 0808     
-     6CE4 0808     
-     6CE6 1060     
-     6CE8 0044     
-     6CEA 4870     
-     6CEC 4848     
-     6CEE 4444     
-     6CF0 0020     
-     6CF2 2020     
-     6CF4 2020     
-     6CF6 2478     
-     6CF8 0028     
-     6CFA 2854     
-     6CFC 5444     
-     6CFE 4448     
-     6D00 0044     
-     6D02 6454     
-     6D04 4C44     
-     6D06 4444     
-     6D08 0038     
+     6CE0 1010     
+     6CE2 1010     
+     6CE4 0008     
+     6CE6 0808     
+     6CE8 0808     
+     6CEA 1060     
+     6CEC 0044     
+     6CEE 4870     
+     6CF0 4848     
+     6CF2 4444     
+     6CF4 0020     
+     6CF6 2020     
+     6CF8 2020     
+     6CFA 2478     
+     6CFC 0028     
+     6CFE 2854     
+     6D00 5444     
+     6D02 4448     
+     6D04 0044     
+     6D06 6454     
+     6D08 4C44     
      6D0A 4444     
-     6D0C 4444     
-     6D0E 4438     
-     6D10 0078     
-     6D12 4448     
-     6D14 5040     
-     6D16 4040     
-     6D18 0038     
-     6D1A 4444     
-     6D1C 4454     
-     6D1E 4834     
-     6D20 0078     
-     6D22 4448     
-     6D24 5048     
-     6D26 4844     
-     6D28 003C     
-     6D2A 4020     
-     6D2C 1008     
-     6D2E 4438     
-     6D30 0038     
-     6D32 5410     
-     6D34 1010     
-     6D36 1010     
-     6D38 0024     
-     6D3A 2424     
-     6D3C 4444     
-     6D3E 443C     
-     6D40 0044     
-     6D42 4444     
-     6D44 2424     
-     6D46 140C     
-     6D48 0044     
-     6D4A 4454     
-     6D4C 5454     
-     6D4E 2828     
-     6D50 0044     
-     6D52 2428     
-     6D54 1028     
-     6D56 4844     
-     6D58 0044     
-     6D5A 4424     
-     6D5C 2810     
-     6D5E 1010     
-     6D60 003C     
-     6D62 0408     
-     6D64 1020     
-     6D66 407C     
-     6D68 0038     
-     6D6A 2020     
-     6D6C 2020     
-     6D6E 2038     
-     6D70 0000     
-     6D72 4020     
-     6D74 1008     
-     6D76 0400     
-     6D78 0038     
-     6D7A 0808     
-     6D7C 0808     
-     6D7E 0838     
-     6D80 0000     
-     6D82 1028     
-     6D84 4400     
-     6D86 0000     
-     6D88 0000     
+     6D0C 0038     
+     6D0E 4444     
+     6D10 4444     
+     6D12 4438     
+     6D14 0078     
+     6D16 4448     
+     6D18 5040     
+     6D1A 4040     
+     6D1C 0038     
+     6D1E 4444     
+     6D20 4454     
+     6D22 4834     
+     6D24 0078     
+     6D26 4448     
+     6D28 5048     
+     6D2A 4844     
+     6D2C 003C     
+     6D2E 4020     
+     6D30 1008     
+     6D32 4438     
+     6D34 0038     
+     6D36 5410     
+     6D38 1010     
+     6D3A 1010     
+     6D3C 0024     
+     6D3E 2424     
+     6D40 4444     
+     6D42 443C     
+     6D44 0044     
+     6D46 4444     
+     6D48 2424     
+     6D4A 140C     
+     6D4C 0044     
+     6D4E 4454     
+     6D50 5454     
+     6D52 2828     
+     6D54 0044     
+     6D56 2428     
+     6D58 1028     
+     6D5A 4844     
+     6D5C 0044     
+     6D5E 4424     
+     6D60 2810     
+     6D62 1010     
+     6D64 003C     
+     6D66 0408     
+     6D68 1020     
+     6D6A 407C     
+     6D6C 0038     
+     6D6E 2020     
+     6D70 2020     
+     6D72 2038     
+     6D74 0000     
+     6D76 4020     
+     6D78 1008     
+     6D7A 0400     
+     6D7C 0038     
+     6D7E 0808     
+     6D80 0808     
+     6D82 0838     
+     6D84 0000     
+     6D86 1028     
+     6D88 4400     
      6D8A 0000     
      6D8C 0000     
-     6D8E 0054     
+     6D8E 0000     
      6D90 0000     
-     6D92 2010     
-     6D94 0800     
-     6D96 0000     
-     6D98 0000     
-     6D9A 0030     
-     6D9C 0838     
-     6D9E 4838     
-     6DA0 0040     
-     6DA2 4058     
-     6DA4 6848     
-     6DA6 5060     
-     6DA8 0000     
-     6DAA 0030     
-     6DAC 4840     
-     6DAE 4830     
-     6DB0 0008     
-     6DB2 0818     
-     6DB4 2848     
-     6DB6 4838     
-     6DB8 0000     
-     6DBA 0030     
-     6DBC 4878     
-     6DBE 4038     
-     6DC0 0018     
-     6DC2 2020     
-     6DC4 7820     
+     6D92 0054     
+     6D94 0000     
+     6D96 2010     
+     6D98 0800     
+     6D9A 0000     
+     6D9C 0000     
+     6D9E 0030     
+     6DA0 0838     
+     6DA2 4838     
+     6DA4 0040     
+     6DA6 4058     
+     6DA8 6848     
+     6DAA 5060     
+     6DAC 0000     
+     6DAE 0030     
+     6DB0 4840     
+     6DB2 4830     
+     6DB4 0008     
+     6DB6 0818     
+     6DB8 2848     
+     6DBA 4838     
+     6DBC 0000     
+     6DBE 0030     
+     6DC0 4878     
+     6DC2 4038     
+     6DC4 0018     
      6DC6 2020     
-     6DC8 0000     
-     6DCA 3848     
-     6DCC 4838     
-     6DCE 0870     
-     6DD0 0040     
-     6DD2 4070     
-     6DD4 4848     
-     6DD6 4848     
-     6DD8 0000     
-     6DDA 2000     
-     6DDC 2020     
-     6DDE 2020     
-     6DE0 0000     
-     6DE2 1000     
-     6DE4 1010     
-     6DE6 2040     
-     6DE8 0040     
-     6DEA 4048     
-     6DEC 4850     
-     6DEE 7048     
-     6DF0 0020     
-     6DF2 2020     
-     6DF4 2020     
-     6DF6 2030     
-     6DF8 0000     
-     6DFA 0068     
-     6DFC 5454     
-     6DFE 5454     
-     6E00 0000     
-     6E02 0060     
-     6E04 5048     
-     6E06 4848     
-     6E08 0000     
-     6E0A 0030     
-     6E0C 4848     
-     6E0E 4830     
-     6E10 0000     
-     6E12 0070     
-     6E14 4848     
-     6E16 7040     
-     6E18 0000     
-     6E1A 0038     
-     6E1C 4848     
-     6E1E 3808     
-     6E20 0000     
-     6E22 0058     
-     6E24 6040     
-     6E26 4040     
-     6E28 0000     
-     6E2A 0038     
-     6E2C 4030     
-     6E2E 0870     
-     6E30 0020     
-     6E32 2078     
-     6E34 2020     
-     6E36 2018     
-     6E38 0000     
-     6E3A 0048     
-     6E3C 4848     
-     6E3E 4838     
-     6E40 0000     
-     6E42 0048     
-     6E44 4828     
-     6E46 2810     
-     6E48 0000     
-     6E4A 0054     
-     6E4C 5454     
-     6E4E 2C24     
-     6E50 0000     
-     6E52 0048     
-     6E54 2830     
-     6E56 5048     
-     6E58 0000     
-     6E5A 0048     
-     6E5C 4830     
-     6E5E 1060     
-     6E60 0000     
-     6E62 0078     
-     6E64 1020     
-     6E66 4078     
-     6E68 0008     
-     6E6A 1010     
-     6E6C 2010     
-     6E6E 1008     
-     6E70 0010     
-     6E72 1010     
+     6DC8 7820     
+     6DCA 2020     
+     6DCC 0000     
+     6DCE 3848     
+     6DD0 4838     
+     6DD2 0870     
+     6DD4 0040     
+     6DD6 4070     
+     6DD8 4848     
+     6DDA 4848     
+     6DDC 0000     
+     6DDE 2000     
+     6DE0 2020     
+     6DE2 2020     
+     6DE4 0000     
+     6DE6 1000     
+     6DE8 1010     
+     6DEA 2040     
+     6DEC 0040     
+     6DEE 4048     
+     6DF0 4850     
+     6DF2 7048     
+     6DF4 0020     
+     6DF6 2020     
+     6DF8 2020     
+     6DFA 2030     
+     6DFC 0000     
+     6DFE 0068     
+     6E00 5454     
+     6E02 5454     
+     6E04 0000     
+     6E06 0060     
+     6E08 5048     
+     6E0A 4848     
+     6E0C 0000     
+     6E0E 0030     
+     6E10 4848     
+     6E12 4830     
+     6E14 0000     
+     6E16 0070     
+     6E18 4848     
+     6E1A 7040     
+     6E1C 0000     
+     6E1E 0038     
+     6E20 4848     
+     6E22 3808     
+     6E24 0000     
+     6E26 0058     
+     6E28 6040     
+     6E2A 4040     
+     6E2C 0000     
+     6E2E 0038     
+     6E30 4030     
+     6E32 0870     
+     6E34 0020     
+     6E36 2078     
+     6E38 2020     
+     6E3A 2018     
+     6E3C 0000     
+     6E3E 0048     
+     6E40 4848     
+     6E42 4838     
+     6E44 0000     
+     6E46 0048     
+     6E48 4828     
+     6E4A 2810     
+     6E4C 0000     
+     6E4E 0054     
+     6E50 5454     
+     6E52 2C24     
+     6E54 0000     
+     6E56 0048     
+     6E58 2830     
+     6E5A 5048     
+     6E5C 0000     
+     6E5E 0048     
+     6E60 4830     
+     6E62 1060     
+     6E64 0000     
+     6E66 0078     
+     6E68 1020     
+     6E6A 4078     
+     6E6C 0008     
+     6E6E 1010     
+     6E70 2010     
+     6E72 1008     
      6E74 0010     
      6E76 1010     
-     6E78 0020     
+     6E78 0010     
      6E7A 1010     
-     6E7C 0810     
-     6E7E 1020     
-     6E80 0000     
-     6E82 0020     
-     6E84 5408     
-     6E86 0000     
-     6E88 007C     
-     6E8A 7C7C     
-     6E8C 7C7C     
+     6E7C 0020     
+     6E7E 1010     
+     6E80 0810     
+     6E82 1020     
+     6E84 0000     
+     6E86 0020     
+     6E88 5408     
+     6E8A 0000     
+     6E8C 007C     
      6E8E 7C7C     
-     6E90 00       
+     6E90 7C7C     
+     6E92 7C7C     
+     6E94 00       
 0096               
 0097               font5   aorg  font4 + 784            ; \
-0098 6E90 0000             bcopy "FONT60.bin"           ; / Harry's Extended Basic GEM 2.9 font 60
-     6E92 0000     
-     6E94 0000     
+0098 6E94 0000             bcopy "FONT60.bin"           ; / Harry's Extended Basic GEM 2.9 font 60
      6E96 0000     
      6E98 0000     
      6E9A 0000     
@@ -11739,386 +11740,388 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6EA2 0000     
      6EA4 0000     
      6EA6 0000     
-     6EA8 0010     
-     6EAA 1010     
-     6EAC 1818     
-     6EAE 0018     
-     6EB0 0028     
-     6EB2 2828     
-     6EB4 0000     
-     6EB6 0000     
-     6EB8 0028     
-     6EBA 287C     
-     6EBC 287C     
-     6EBE 2828     
-     6EC0 0038     
-     6EC2 5450     
-     6EC4 3814     
-     6EC6 5438     
-     6EC8 0060     
-     6ECA 6408     
-     6ECC 1020     
-     6ECE 4C0C     
-     6ED0 0020     
-     6ED2 5050     
-     6ED4 2054     
-     6ED6 4834     
-     6ED8 0008     
-     6EDA 0810     
-     6EDC 0000     
-     6EDE 0000     
-     6EE0 0008     
-     6EE2 1020     
-     6EE4 2020     
-     6EE6 1008     
-     6EE8 0020     
+     6EA8 0000     
+     6EAA 0000     
+     6EAC 0010     
+     6EAE 1010     
+     6EB0 1818     
+     6EB2 0018     
+     6EB4 0028     
+     6EB6 2828     
+     6EB8 0000     
+     6EBA 0000     
+     6EBC 0028     
+     6EBE 287C     
+     6EC0 287C     
+     6EC2 2828     
+     6EC4 0038     
+     6EC6 5450     
+     6EC8 3814     
+     6ECA 5438     
+     6ECC 0060     
+     6ECE 6408     
+     6ED0 1020     
+     6ED2 4C0C     
+     6ED4 0020     
+     6ED6 5050     
+     6ED8 2054     
+     6EDA 4834     
+     6EDC 0008     
+     6EDE 0810     
+     6EE0 0000     
+     6EE2 0000     
+     6EE4 0008     
+     6EE6 1020     
+     6EE8 2020     
      6EEA 1008     
-     6EEC 0808     
-     6EEE 1020     
-     6EF0 0000     
-     6EF2 2810     
-     6EF4 7C10     
-     6EF6 2800     
-     6EF8 0000     
-     6EFA 1010     
-     6EFC 7C10     
-     6EFE 1000     
-     6F00 0000     
-     6F02 0000     
-     6F04 0030     
-     6F06 1020     
-     6F08 0000     
-     6F0A 0000     
-     6F0C 7C00     
+     6EEC 0020     
+     6EEE 1008     
+     6EF0 0808     
+     6EF2 1020     
+     6EF4 0000     
+     6EF6 2810     
+     6EF8 7C10     
+     6EFA 2800     
+     6EFC 0000     
+     6EFE 1010     
+     6F00 7C10     
+     6F02 1000     
+     6F04 0000     
+     6F06 0000     
+     6F08 0030     
+     6F0A 1020     
+     6F0C 0000     
      6F0E 0000     
-     6F10 0000     
+     6F10 7C00     
      6F12 0000     
      6F14 0000     
-     6F16 3030     
+     6F16 0000     
      6F18 0000     
-     6F1A 0408     
-     6F1C 1020     
-     6F1E 4000     
-     6F20 0038     
-     6F22 4444     
-     6F24 4646     
-     6F26 463C     
-     6F28 0010     
-     6F2A 3010     
-     6F2C 1818     
-     6F2E 183C     
-     6F30 0038     
-     6F32 4404     
-     6F34 0C18     
-     6F36 307E     
-     6F38 0038     
-     6F3A 4404     
-     6F3C 1C06     
-     6F3E 463C     
-     6F40 0008     
-     6F42 1828     
-     6F44 4C7E     
-     6F46 0C0C     
-     6F48 007C     
-     6F4A 4078     
-     6F4C 0606     
-     6F4E 463C     
-     6F50 0018     
-     6F52 2040     
-     6F54 7C46     
-     6F56 463C     
-     6F58 007C     
-     6F5A 0408     
-     6F5C 1830     
-     6F5E 3030     
-     6F60 0038     
-     6F62 4444     
-     6F64 3C46     
-     6F66 463C     
-     6F68 0038     
-     6F6A 4444     
-     6F6C 3E06     
-     6F6E 0C38     
-     6F70 0000     
-     6F72 3030     
-     6F74 0038     
-     6F76 3800     
-     6F78 0000     
-     6F7A 3030     
-     6F7C 0038     
-     6F7E 1830     
-     6F80 0008     
-     6F82 1020     
-     6F84 6030     
-     6F86 180C     
-     6F88 0000     
-     6F8A 007C     
-     6F8C 007E     
-     6F8E 0000     
-     6F90 0020     
-     6F92 1008     
-     6F94 060C     
-     6F96 1830     
-     6F98 0038     
-     6F9A 4404     
-     6F9C 0C18     
-     6F9E 0018     
-     6FA0 0038     
-     6FA2 445C     
-     6FA4 545C     
-     6FA6 4038     
-     6FA8 0038     
-     6FAA 4444     
-     6FAC 7E46     
-     6FAE 4646     
-     6FB0 0078     
-     6FB2 2424     
-     6FB4 3C26     
-     6FB6 267C     
-     6FB8 0038     
-     6FBA 4440     
-     6FBC 6060     
-     6FBE 463C     
-     6FC0 0078     
-     6FC2 2424     
-     6FC4 2626     
-     6FC6 267C     
-     6FC8 007C     
-     6FCA 4040     
-     6FCC 7C60     
-     6FCE 607E     
-     6FD0 007C     
-     6FD2 4040     
-     6FD4 7C60     
-     6FD6 6060     
-     6FD8 003C     
-     6FDA 4040     
-     6FDC 5E46     
-     6FDE 463C     
-     6FE0 0044     
-     6FE2 4444     
-     6FE4 7E46     
-     6FE6 4646     
-     6FE8 0038     
-     6FEA 1010     
-     6FEC 1818     
-     6FEE 183C     
-     6FF0 0004     
-     6FF2 0404     
-     6FF4 0606     
-     6FF6 463C     
-     6FF8 0044     
-     6FFA 4850     
-     6FFC 7058     
-     6FFE 4C46     
-     7000 0040     
-     7002 4040     
-     7004 6060     
-     7006 607E     
-     7008 0044     
-     700A 6C54     
-     700C 5646     
-     700E 4646     
-     7010 0044     
-     7012 6464     
-     7014 564E     
-     7016 4E46     
-     7018 007C     
-     701A 4444     
-     701C 4646     
-     701E 467E     
-     7020 0078     
-     7022 4444     
-     7024 7C60     
-     7026 6060     
-     7028 0038     
-     702A 4444     
-     702C 4656     
-     702E 4C36     
-     7030 0078     
-     7032 4444     
-     7034 7C58     
-     7036 4C46     
-     7038 0038     
-     703A 4440     
-     703C 3C06     
-     703E 463C     
-     7040 007C     
-     7042 1010     
-     7044 1818     
-     7046 1818     
-     7048 0044     
-     704A 4444     
-     704C 4646     
-     704E 463C     
-     7050 0044     
-     7052 4444     
-     7054 2C2C     
-     7056 1818     
-     7058 0044     
-     705A 4444     
-     705C 5656     
-     705E 562C     
-     7060 0044     
-     7062 4428     
-     7064 182C     
-     7066 4646     
-     7068 0044     
-     706A 4428     
-     706C 1818     
-     706E 1818     
-     7070 007C     
-     7072 0408     
-     7074 1830     
-     7076 607E     
-     7078 0038     
-     707A 2020     
-     707C 2020     
-     707E 2038     
-     7080 0000     
-     7082 4020     
-     7084 1008     
-     7086 0400     
-     7088 0038     
-     708A 0808     
-     708C 0808     
-     708E 0838     
-     7090 0000     
-     7092 1028     
-     7094 4400     
-     7096 0000     
-     7098 0000     
+     6F1A 3030     
+     6F1C 0000     
+     6F1E 0408     
+     6F20 1020     
+     6F22 4000     
+     6F24 0038     
+     6F26 4444     
+     6F28 4646     
+     6F2A 463C     
+     6F2C 0010     
+     6F2E 3010     
+     6F30 1818     
+     6F32 183C     
+     6F34 0038     
+     6F36 4404     
+     6F38 0C18     
+     6F3A 307E     
+     6F3C 0038     
+     6F3E 4404     
+     6F40 1C06     
+     6F42 463C     
+     6F44 0008     
+     6F46 1828     
+     6F48 4C7E     
+     6F4A 0C0C     
+     6F4C 007C     
+     6F4E 4078     
+     6F50 0606     
+     6F52 463C     
+     6F54 0018     
+     6F56 2040     
+     6F58 7C46     
+     6F5A 463C     
+     6F5C 007C     
+     6F5E 0408     
+     6F60 1830     
+     6F62 3030     
+     6F64 0038     
+     6F66 4444     
+     6F68 3C46     
+     6F6A 463C     
+     6F6C 0038     
+     6F6E 4444     
+     6F70 3E06     
+     6F72 0C38     
+     6F74 0000     
+     6F76 3030     
+     6F78 0038     
+     6F7A 3800     
+     6F7C 0000     
+     6F7E 3030     
+     6F80 0038     
+     6F82 1830     
+     6F84 0008     
+     6F86 1020     
+     6F88 6030     
+     6F8A 180C     
+     6F8C 0000     
+     6F8E 007C     
+     6F90 007E     
+     6F92 0000     
+     6F94 0020     
+     6F96 1008     
+     6F98 060C     
+     6F9A 1830     
+     6F9C 0038     
+     6F9E 4404     
+     6FA0 0C18     
+     6FA2 0018     
+     6FA4 0038     
+     6FA6 445C     
+     6FA8 545C     
+     6FAA 4038     
+     6FAC 0038     
+     6FAE 4444     
+     6FB0 7E46     
+     6FB2 4646     
+     6FB4 0078     
+     6FB6 2424     
+     6FB8 3C26     
+     6FBA 267C     
+     6FBC 0038     
+     6FBE 4440     
+     6FC0 6060     
+     6FC2 463C     
+     6FC4 0078     
+     6FC6 2424     
+     6FC8 2626     
+     6FCA 267C     
+     6FCC 007C     
+     6FCE 4040     
+     6FD0 7C60     
+     6FD2 607E     
+     6FD4 007C     
+     6FD6 4040     
+     6FD8 7C60     
+     6FDA 6060     
+     6FDC 003C     
+     6FDE 4040     
+     6FE0 5E46     
+     6FE2 463C     
+     6FE4 0044     
+     6FE6 4444     
+     6FE8 7E46     
+     6FEA 4646     
+     6FEC 0038     
+     6FEE 1010     
+     6FF0 1818     
+     6FF2 183C     
+     6FF4 0004     
+     6FF6 0404     
+     6FF8 0606     
+     6FFA 463C     
+     6FFC 0044     
+     6FFE 4850     
+     7000 7058     
+     7002 4C46     
+     7004 0040     
+     7006 4040     
+     7008 6060     
+     700A 607E     
+     700C 0044     
+     700E 6C54     
+     7010 5646     
+     7012 4646     
+     7014 0044     
+     7016 6464     
+     7018 564E     
+     701A 4E46     
+     701C 007C     
+     701E 4444     
+     7020 4646     
+     7022 467E     
+     7024 0078     
+     7026 4444     
+     7028 7C60     
+     702A 6060     
+     702C 0038     
+     702E 4444     
+     7030 4656     
+     7032 4C36     
+     7034 0078     
+     7036 4444     
+     7038 7C58     
+     703A 4C46     
+     703C 0038     
+     703E 4440     
+     7040 3C06     
+     7042 463C     
+     7044 007C     
+     7046 1010     
+     7048 1818     
+     704A 1818     
+     704C 0044     
+     704E 4444     
+     7050 4646     
+     7052 463C     
+     7054 0044     
+     7056 4444     
+     7058 2C2C     
+     705A 1818     
+     705C 0044     
+     705E 4444     
+     7060 5656     
+     7062 562C     
+     7064 0044     
+     7066 4428     
+     7068 182C     
+     706A 4646     
+     706C 0044     
+     706E 4428     
+     7070 1818     
+     7072 1818     
+     7074 007C     
+     7076 0408     
+     7078 1830     
+     707A 607E     
+     707C 0038     
+     707E 2020     
+     7080 2020     
+     7082 2038     
+     7084 0000     
+     7086 4020     
+     7088 1008     
+     708A 0400     
+     708C 0038     
+     708E 0808     
+     7090 0808     
+     7092 0838     
+     7094 0000     
+     7096 1028     
+     7098 4400     
      709A 0000     
      709C 0000     
-     709E 007C     
+     709E 0000     
      70A0 0000     
-     70A2 2010     
-     70A4 0800     
-     70A6 0000     
-     70A8 0000     
-     70AA 0038     
-     70AC 447E     
-     70AE 4646     
-     70B0 0000     
-     70B2 0078     
-     70B4 243C     
-     70B6 267C     
-     70B8 0000     
-     70BA 003C     
-     70BC 4060     
-     70BE 603E     
-     70C0 0000     
-     70C2 0078     
-     70C4 2426     
-     70C6 267C     
-     70C8 0000     
-     70CA 007C     
-     70CC 407C     
-     70CE 607E     
-     70D0 0000     
-     70D2 007C     
-     70D4 407C     
-     70D6 6060     
-     70D8 0000     
-     70DA 003C     
-     70DC 405E     
-     70DE 463C     
-     70E0 0000     
-     70E2 0044     
-     70E4 447E     
-     70E6 4646     
-     70E8 0000     
-     70EA 0038     
-     70EC 1018     
-     70EE 183C     
-     70F0 0000     
-     70F2 0008     
-     70F4 080C     
-     70F6 4C38     
-     70F8 0000     
-     70FA 0024     
-     70FC 2838     
-     70FE 2C26     
-     7100 0000     
-     7102 0040     
-     7104 4060     
-     7106 607E     
-     7108 0000     
-     710A 0044     
-     710C 6C56     
-     710E 4646     
-     7110 0000     
-     7112 0044     
-     7114 6456     
-     7116 4E46     
-     7118 0000     
-     711A 007C     
-     711C 4446     
-     711E 467E     
-     7120 0000     
-     7122 0078     
-     7124 447C     
-     7126 6060     
-     7128 0000     
-     712A 0038     
-     712C 4456     
-     712E 4C36     
-     7130 0000     
-     7132 0078     
-     7134 447C     
-     7136 4C46     
-     7138 0000     
-     713A 003C     
-     713C 403C     
-     713E 067C     
-     7140 0000     
-     7142 007C     
-     7144 1018     
-     7146 1818     
-     7148 0000     
-     714A 0044     
-     714C 4446     
-     714E 463C     
-     7150 0000     
-     7152 0044     
-     7154 442C     
-     7156 2C18     
-     7158 0000     
-     715A 0044     
-     715C 4456     
-     715E 562C     
-     7160 0000     
-     7162 0044     
-     7164 2818     
-     7166 2C46     
-     7168 0000     
-     716A 0044     
-     716C 2818     
-     716E 1818     
-     7170 0000     
-     7172 007C     
-     7174 0818     
-     7176 307E     
-     7178 0018     
-     717A 2020     
-     717C 4020     
-     717E 2018     
-     7180 0010     
-     7182 1010     
+     70A2 007C     
+     70A4 0000     
+     70A6 2010     
+     70A8 0800     
+     70AA 0000     
+     70AC 0000     
+     70AE 0038     
+     70B0 447E     
+     70B2 4646     
+     70B4 0000     
+     70B6 0078     
+     70B8 243C     
+     70BA 267C     
+     70BC 0000     
+     70BE 003C     
+     70C0 4060     
+     70C2 603E     
+     70C4 0000     
+     70C6 0078     
+     70C8 2426     
+     70CA 267C     
+     70CC 0000     
+     70CE 007C     
+     70D0 407C     
+     70D2 607E     
+     70D4 0000     
+     70D6 007C     
+     70D8 407C     
+     70DA 6060     
+     70DC 0000     
+     70DE 003C     
+     70E0 405E     
+     70E2 463C     
+     70E4 0000     
+     70E6 0044     
+     70E8 447E     
+     70EA 4646     
+     70EC 0000     
+     70EE 0038     
+     70F0 1018     
+     70F2 183C     
+     70F4 0000     
+     70F6 0008     
+     70F8 080C     
+     70FA 4C38     
+     70FC 0000     
+     70FE 0024     
+     7100 2838     
+     7102 2C26     
+     7104 0000     
+     7106 0040     
+     7108 4060     
+     710A 607E     
+     710C 0000     
+     710E 0044     
+     7110 6C56     
+     7112 4646     
+     7114 0000     
+     7116 0044     
+     7118 6456     
+     711A 4E46     
+     711C 0000     
+     711E 007C     
+     7120 4446     
+     7122 467E     
+     7124 0000     
+     7126 0078     
+     7128 447C     
+     712A 6060     
+     712C 0000     
+     712E 0038     
+     7130 4456     
+     7132 4C36     
+     7134 0000     
+     7136 0078     
+     7138 447C     
+     713A 4C46     
+     713C 0000     
+     713E 003C     
+     7140 403C     
+     7142 067C     
+     7144 0000     
+     7146 007C     
+     7148 1018     
+     714A 1818     
+     714C 0000     
+     714E 0044     
+     7150 4446     
+     7152 463C     
+     7154 0000     
+     7156 0044     
+     7158 442C     
+     715A 2C18     
+     715C 0000     
+     715E 0044     
+     7160 4456     
+     7162 562C     
+     7164 0000     
+     7166 0044     
+     7168 2818     
+     716A 2C46     
+     716C 0000     
+     716E 0044     
+     7170 2818     
+     7172 1818     
+     7174 0000     
+     7176 007C     
+     7178 0818     
+     717A 307E     
+     717C 0018     
+     717E 2020     
+     7180 4020     
+     7182 2018     
      7184 0010     
      7186 1010     
-     7188 0030     
-     718A 0808     
-     718C 0408     
-     718E 0830     
-     7190 0000     
-     7192 2054     
-     7194 0800     
-     7196 0000     
-     7198 007C     
-     719A 7C7C     
-     719C 7C7C     
+     7188 0010     
+     718A 1010     
+     718C 0030     
+     718E 0808     
+     7190 0408     
+     7192 0830     
+     7194 0000     
+     7196 2054     
+     7198 0800     
+     719A 0000     
+     719C 007C     
      719E 7C7C     
+     71A0 7C7C     
+     71A2 7C7C     
 0099                       ;-----------------------------------------------------------------------
 0100                       ; Bank full check
 0101                       ;-----------------------------------------------------------------------
@@ -12164,7 +12167,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014               
 0015 7FC0 604A     vec.1   data  vdp.dump.patterns     ; Dump sprite/character patterns to VDP
 0016 7FC2 6066     vec.2   data  vdp.dump.font         ; Dump font to VDP
-0017 7FC4 6090     vec.3   data  tv.set.font           ; Set current font
+0017 7FC4 6094     vec.3   data  tv.set.font           ; Set current font
 0018 7FC6 2026     vec.4   data  cpu.crash             ;
 0019 7FC8 2026     vec.5   data  cpu.crash             ;
 0020 7FCA 2026     vec.6   data  cpu.crash             ;
@@ -12209,9 +12212,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0124      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
 0125      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 
-    ALPHALOCK........... >61C8 :     
+    ALPHALOCK........... >61CC :     
     ANYKEY.............. >200A :     
-    ARROW............... >6230 :     
+    ARROW............... >6234 :     
     AT.................. >26C6 :     
     BANK0.RAM........... >6800 :     
     BANK0.ROM........... >6000 :     
@@ -12382,8 +12385,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYMZ............... >2532 :     
     CPYODD.............. >2534 :     
     CPYV2M.............. >24B8 :     
-    CURSOR.............. >6228 :     
-    CURSORS............. >6148 :     
+    CURSOR.............. >622C :     
+    CURSORS............. >614C :     
     DEBUG............... >0000 :     
     DEF.CLIP.FNAME...... >3D0B :     
     DEF.CLIP.FNAME.B.... >3D15 :     
@@ -12577,11 +12580,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FNOPT7.............. >800C :     
     FNOPT8.............. >8012 :     
     FNTADR.............. >1100 :     
-    FONT1............... >6250 :     
-    FONT2............... >6560 :     
-    FONT3............... >6870 :     
-    FONT4............... >6B80 :     
-    FONT5............... >6E90 :     
+    FONT1............... >6254 :     
+    FONT2............... >6564 :     
+    FONT3............... >6874 :     
+    FONT4............... >6B84 :     
+    FONT5............... >6E94 :     
     GRAPH1.............. >21F2 :     
     GRMRA............... >9802 :     
     GRMRD............... >9800 :     
@@ -12592,8 +12595,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     HCHAR2.............. >27F6 :     
     HCHARX.............. >27D8 :     
     HEAP.TOP............ >F000 :     
-    HEART............... >6240 :     
-    HLINE............... >6238 :     
+    HEART............... >6244 :     
+    HLINE............... >623C :     
     HOOKOK.............. >2E08 :     
     ID.DIALOG.APPEND.... >000E :     
     ID.DIALOG.BASIC..... >006B :     
@@ -12845,10 +12848,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    LOW.DIGITS.......... >61E8 :     
-    MAGIC.CHECK......... >6136 :     
-    MAGIC.CLEAR......... >6124 :     
-    MAGIC.SET........... >6112 :     
+    LOW.DIGITS.......... >61EC :     
+    MAGIC.CHECK......... >613A :     
+    MAGIC.CLEAR......... >6128 :     
+    MAGIC.SET........... >6116 :     
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
@@ -12856,10 +12859,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.SET.BOOT... >60EE :     
-    MEM.SAMS.SET.LEGACY. >60DC :     
-    MEM.SAMS.SET.STEVIE. >6100 :     
-    MEM.SAMS.SETUP.STEVIE >60CA :     
+    MEM.SAMS.SET.BOOT... >60F2 :     
+    MEM.SAMS.SET.LEGACY. >60E0 :     
+    MEM.SAMS.SET.STEVIE. >6104 :     
+    MEM.SAMS.SETUP.STEVIE >60CE :     
     MKHEX............... >2918 :     
     MKHEX1.............. >2930 :     
     MKHEX1.DIGIT09...... >2946 :     
@@ -12909,9 +12912,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PARM7............... >A012 :     
     PARM8............... >A014 :     
     PARM9............... >A016 :     
-    PATTERNS............ >6160 :     
-    PATTERNS.BOX........ >6178 :     
-    PATTERNS.CR......... >61B8 :     
+    PATTERNS............ >6164 :     
+    PATTERNS.BOX........ >617C :     
+    PATTERNS.CR......... >61BC :     
     PCTADR.............. >0FC0 :     
     POPR0............... >2230 :     
     POPR1............... >222E :     
@@ -13222,10 +13225,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.SAMS.D000........ >A20A :     
     TV.SAMS.E000........ >A20C :     
     TV.SAMS.F000........ >A20E :     
-    TV.SET.FONT......... >6090 :     
-    TV.SET.FONT.EXIT.... >60C2 :     
-    TV.SET.FONT.PTR..... >60AE :     
-    TV.SET.FONT.VDPDUMP. >60BE :     
+    TV.SET.FONT......... >6094 :     
+    TV.SET.FONT.EXIT.... >60C6 :     
+    TV.SET.FONT.PTR..... >60B2 :     
+    TV.SET.FONT.VDPDUMP. >60C2 :     
     TV.SP2.CONF......... >A22E :     
     TV.SP2.STACK........ >A230 :     
     TV.TABS.TABLE.LR.... >38D6 :     
@@ -13308,7 +13311,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     UINT16.UNPACKED..... >A02C :     
     UP.................. >26D4 :     
     VDP.DUMP.FONT....... >6066 :     
-    VDP.DUMP.FONT.EXIT.. >6086 :     
+    VDP.DUMP.FONT.EXIT.. >608A :     
     VDP.DUMP.PATTERNS... >604A :     
     VDP.DUMP.PATTERNS.EXIT >6062 :     
     VDP.FB.TOPROW.SIT... >0050 :     
@@ -13362,7 +13365,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VEC.7............... >7FCC :     
     VEC.8............... >7FCE :     
     VEC.9............... >7FD0 :     
-    VERTLINE............ >61D8 :     
+    VERTLINE............ >61DC :     
     VGETB............... >22E2 :     
     VIDTA1.............. >2314 :     
     VIDTAB.............. >22F8 :     

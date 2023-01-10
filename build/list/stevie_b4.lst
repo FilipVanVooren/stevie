@@ -21,12 +21,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019               * File: stevie_b4.asm
 0020               *
 0021               * Bank 4 "Janine"
-0022               * Framebuffer methods delegated from bank 1
+0022               * Framebuffer methods
 0023               ********************************************************************************
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230108-2112460
+0002               * BUILD: 230110-2019090
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options

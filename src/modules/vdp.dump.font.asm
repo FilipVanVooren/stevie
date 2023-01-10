@@ -31,9 +31,10 @@ vdp.dump.font:
         ;-------------------------------------------------------
         ; Dump from ROM to VDP PDT
         ;-------------------------------------------------------
-        li    tmp0,fntadr - 16      ; VDP destination
+        li    tmp0,fntadr           ; VDP destination
         mov   @tv.font.ptr,tmp1     ; Get pointer to font in ROM/RAM
-        li    tmp2,784              ; Size of font dump
+        ai    tmp1,16               ; Skip definitions for ASCII 30 + ASCII 31
+        li    tmp2,784 - 16         ; Bytes to dump
 
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination

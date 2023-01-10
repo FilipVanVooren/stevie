@@ -204,7 +204,7 @@ txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 txt.head.clipdev   byte 24,1,1
                    text ' Configure clipboard '
                    byte 1
-txt.hint.clipdev   stri 'Give device and filename prefix of clipboard file.'
+txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
 txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
 
 

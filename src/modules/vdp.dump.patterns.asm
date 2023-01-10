@@ -32,7 +32,8 @@ vdp.dump.patterns:
         ; Dump character patterns from ROM to VDP PDT
         ;-------------------------------------------------------
         bl    @cpym2v
-              data >1008,patterns,31*8
+              data >1008,patterns,32*8
+                                    ; Start with ASCII >01
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -163,7 +163,7 @@ tibasic.heart.open:
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Remarks
 * none
@@ -177,10 +177,6 @@ tibasic.hearts.tat:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
         ;-------------------------------------------------------
         ; Get background color for hearts in TAT
         ;-------------------------------------------------------
@@ -192,36 +188,45 @@ tibasic.hearts.tat:
         andi  tmp1,>000f            ; Only keep background
         ori   tmp1,>0060            ; Set foreground color to red
 
-
         mov   @cmdb.vdptop,tmp0     ; \ 2nd row in CMDB, column 11
         ai    tmp0,91               ; /
-        mov   tmp0,tmp4             ; Backup TAT position
-        mov   tmp1,tmp3             ; Backup color combination
+
+        li    tmp2,5                ; Set loop counter
         ;-------------------------------------------------------
         ; Dump colors for 5 hearts if in TI Basic dialog (TAT)
         ;-------------------------------------------------------
 tibasic.hearts.tat.loop:
-        mov   tmp4,tmp0             ; Get VDP address in TAT
-        mov   tmp3,tmp1             ; Get VDP byte to write
-        li    tmp2,2                ; Number of bytes to fill
+        ;-------------------------------------------------------
+        ; Dump color for single heart
+        ;-------------------------------------------------------
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+
+        li    tmp2,2                ; 2 bytes 
 
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
 
-        ai    tmp4,4                ; Next heart in TAT
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        ;-------------------------------------------------------
+        ; Next iteration
+        ;-------------------------------------------------------
+        ai    tmp0,4                ; Next heart in TAT     
+        dec   tmp2                  ; Next iteration
 
-        mov   @cmdb.vdptop,tmp1     ; \ 2nd row in CMDB, column X
-        ai    tmp0,111              ; /
-        c     tmp4,tmp1
-        jle   tibasic.hearts.tat.loop
+        jne   tibasic.hearts.tat.loop
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 tibasic.hearts.tat.exit:
-        mov   *stack+,tmp4          ; Pop tmp4
-        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
