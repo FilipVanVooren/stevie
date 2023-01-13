@@ -154,7 +154,7 @@ tv.colorscheme.entries   equ 10 ; Entries in table
 tv.colorscheme.table:
         ;                             ; #
         ;      ABCD  EFGH  IJKL  MNOP ; -
-        data  >f417,>f171,>1b1f,>71b1 ; 1  White on blue with cyan touch
+        data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch
         data  >a11a,>f0ff,>1f1a,>f1ff ; 2  Dark yellow on black
         data  >2112,>f0ff,>1f12,>f1f6 ; 3  Dark green on black
         data  >f41f,>1e11,>1a17,>1e11 ; 4  White on blue

@@ -31,13 +31,21 @@ fm.browse.fname.suffix:
         ;------------------------------------------------------
         movb  *tmp0,tmp1            ; Get length of current filename
         srl   tmp1,8                ; MSB to LSB
-
         a     tmp1,tmp0             ; Move to last character
-        clr   tmp1
+
+        ;------------------------------------------------------
+        ; Get character in filename
+        ;------------------------------------------------------
+fm.browse.fname.suffix.getchar:
         movb  *tmp0,tmp1            ; Get character
         srl   tmp1,8                ; MSB to LSB
         jeq   fm.browse.fname.suffix.exit
                                     ; Exit early if empty filename
+        ;------------------------------------------------------
+        ; Back-off if white space character found
+        ;------------------------------------------------------ 
+        ci    tmp1,32               ; ASCII 32 (space)  ?
+        jeq   fm.browse.fname.backoff
         ;------------------------------------------------------
         ; Check mode (increase/decrease) character ASCII value
         ;------------------------------------------------------        
@@ -48,7 +56,7 @@ fm.browse.fname.suffix:
         ; Increase ASCII value last character in filename
         ;------------------------------------------------------
 fm.browse.fname.suffix.inc:
-        ci    tmp1,48               ; ASCI  48 (char 0) ?
+        ci    tmp1,48               ; ASCII 48 (char 0) ?
         jlt   fm.browse.fname.suffix.inc.crash
         ci    tmp1,57               ; ASCII 57 (char 9) ?
         jlt   !                     ; Next character
@@ -64,6 +72,20 @@ fm.browse.fname.suffix.inc:
 fm.browse.fname.suffix.inc.crash:        
         mov   r11,@>ffce            ; \ Save caller address   
         bl    @cpu.crash            ; / Crash and halt system     
+        ;------------------------------------------------------
+        ; Back to previous character
+        ;------------------------------------------------------
+fm.browse.fname.backoff:
+        c     tmp0,@parm1           ; Already at 1st character?
+        jeq   fm.browse.fname.backoff.crash
+        dec   tmp0                  ; Back off to previous character
+        jmp   fm.browse.fname.suffix.getchar
+        ;------------------------------------------------------
+        ; Backoff assert
+        ;------------------------------------------------------
+fm.browse.fname.backoff.crash:        
+        mov   r11,@>ffce            ; \ Save caller address   
+        bl    @cpu.crash            ; / Crash and halt system    
         ;------------------------------------------------------
         ; Increase ASCII value last character in filename
         ;------------------------------------------------------

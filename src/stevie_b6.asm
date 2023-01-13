@@ -82,7 +82,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Fonts
         ;-----------------------------------------------------------------------        
-font1   bcopy "FONTX.bin"            ; Stevie >1.4A default font
+font1   bcopy "FONTX.bin"            ; Default font as of Stevie 1.4A
 
 font2   bcopy "FONT7.bin"            ; \ Default font (Stevie 1.0 - 1.3Q)
                                      ; / Harry's Extended Basic GEM 2.9 font 7
