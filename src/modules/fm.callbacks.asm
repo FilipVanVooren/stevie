@@ -142,20 +142,7 @@ fm.loadsave.cb.indicator1.filename:
               byte pane.botrow,11   ; Cursor YX position
 
         mov   @parm1,tmp1           ; Get pointer to file descriptor
-        bl    @xutst0               ; Display device/filename
-        ;------------------------------------------------------
-        ; Display fast mode
-        ;------------------------------------------------------
-        abs   @fh.offsetopcode
-        jeq   fm.loadsave.cb.indicator1.exit
-
-        bl    @hchar
-              byte 0,52,32,20       
-              data EOL              ; Erase any previous message
-              
-        bl    @putat
-              byte 0,52             ; Position cursor
-              data txt.fastmode     ; Display "FastMode"       
+        bl    @xutst0               ; Display device/filename  
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -204,7 +191,7 @@ fm.loadsave.cb.indicator2.loadsave:
 fm.loadsave.cb.indicator2.topline:
         mov   @fb.topline,@parm1    ; Line to start with, other operations       
         ;------------------------------------------------------
-        ; Refresh framebuffer if first page processed
+        ; Refresh framebuffer if 1st page processed, runs once
         ;------------------------------------------------------     
 fm.loadsave.cb.indicator2.refresh:
         bl    @fb.refresh           ; Refresh frame buffer
@@ -215,6 +202,19 @@ fm.loadsave.cb.indicator2.refresh:
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
                                     ; /
+        ;------------------------------------------------------
+        ; Display fast mode
+        ;------------------------------------------------------
+        abs   @fh.offsetopcode
+        jeq   fm.loadsave.cb.indicator2.kb
+
+        bl    @hchar
+              byte 0,52,32,20       
+              data EOL              ; Erase any previous message
+              
+        bl    @putat
+              byte 0,52             ; Position cursor
+              data txt.fastmode     ; Display "FastMode"      
         ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------

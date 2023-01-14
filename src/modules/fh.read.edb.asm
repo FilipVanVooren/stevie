@@ -40,6 +40,10 @@ fh.file.read.edb:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+
+        dect  stack
+        mov   @fh.offsetopcode,*stack
+                                    ; Push FastMode IO status          
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
@@ -163,7 +167,7 @@ fh.file.read.edb.load1:
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.read.edb.pabheader:        
+fh.file.read.edb.pabheader:
         bl    @cpym2v
               data fh.vpab,fh.file.pab.header,9
                                     ; Copy PAB header to VDP
@@ -183,6 +187,7 @@ fh.file.read.edb.pabheader:
         ;------------------------------------------------------
         ; Open file
         ;------------------------------------------------------
+fh.file.read.edb.open:
         bl    @file.open            ; Open file
               data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
               data io.seq.inp.dis.var
@@ -190,13 +195,27 @@ fh.file.read.edb.pabheader:
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.edb.check_setpage
-        
+                                    ; No error, continue processing file (1a)
+        ;------------------------------------------------------
+        ; File error. Check FastMode IO on unsupported device
+        ;------------------------------------------------------
+        abs   @fh.offsetopcode      ; FastMode IO on ?
+        jeq   fh.file.read.edb.err  ; Is off, do not retry open
+        clr   @fh.offsetopcode      ; Turn FastMode IO off
+        ;------------------------------------------------------
+        ; File error while FastMode IO is on, retry
+        ;------------------------------------------------------
+        jmp   fh.file.read.edb.open ; Retry
+        ;------------------------------------------------------
+        ; Need to error out, no retry possible.
+        ;------------------------------------------------------
+fh.file.read.edb.err:
         b     @fh.file.read.edb.error  
-                                    ; Yes, IO error occured
+                                    ; IO error occured
         ;------------------------------------------------------
         ; 1a: Check if SAMS page needs to be increased
         ;------------------------------------------------------ 
-fh.file.read.edb.check_setpage:        
+fh.file.read.edb.check_setpage:
         mov   @edb.next_free.ptr,tmp0
                                     ;--------------------------
                                     ; Assert
@@ -484,6 +503,9 @@ fh.file.read.edb.exit:
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
 
+
+        mov   *stack+,@fh.offsetopcode
+                                    ; Pop @fh.offsetopcode                                
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
