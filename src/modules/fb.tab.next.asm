@@ -54,8 +54,9 @@ fb.tab.next.loop:
         ;-------------------------------------------------------
         mov   tmp1,tmp2             ; Set length of row
         li    tmp1,32               ; Replacement character = ASCII 32
-        bl    @fb.null2char         ; \ Replace any null characters with space
-                                    ; | i  tmp1 = Replacement character
+        
+        bl    @fb.null2char         ; Replace any null characters with space
+                                    ; \ i  tmp1 = Replacement character
                                     ; / i  tmp2 = Length of row
 
         mov   tmp2,tmp1             ; Restore tmp1
@@ -70,6 +71,14 @@ fb.tab.next.loop:
         mov   *stack+,tmp0          ; Pop tmp0
 
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
 
         seto  @fb.row.dirty         ; Current row dirty in frame buffer
         seto  @fb.dirty             ; Frame buffer dirty

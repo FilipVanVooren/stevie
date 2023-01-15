@@ -47,9 +47,18 @@ fb.null2char.crash:
 fb.null2char.init:
         mov   tmp1,tmp3             ; Get character to write
         sla   tmp3,8                ; LSB to MSB
-
         clr   @fb.column
-        bl    @fb.calc_pointer      ; Beginning of row
+
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         mov   @fb.current,tmp0      ; Get position
         ;-------------------------------------------------------
         ; Loop over characters in line

@@ -80,14 +80,23 @@ tib.uncrunch:
 
         clr   @parm1                ; Goto line 1
 
-        bl    @fb.refresh           ; \ Refresh frame buffer
-                                    ; | i  @parm1 = Line to start with
+        bl    @fb.refresh           ; Refresh frame buffer
+                                    ; \ i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
 
         clr   @fb.row               ; Frame buffer line 0
         clr   @fb.column            ; Frame buffer column 0
         clr   @wyx                  ; Position VDP cursor
+
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
 
         bl    @edb.line.getlength2  ; \ Get length current line
                                     ; | i  @fb.row        = Row in frame buffer

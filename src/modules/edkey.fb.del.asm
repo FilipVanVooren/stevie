@@ -6,7 +6,16 @@
 *---------------------------------------------------------------
 edkey.action.del_char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+        
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
         ;-------------------------------------------------------
         ; Assert 1 - Empty line
         ;-------------------------------------------------------
@@ -99,7 +108,17 @@ edkey.action.del_char.exit:
 *---------------------------------------------------------------
 edkey.action.del_eol:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.del_eol.exit
                                     ; Exit if empty line
@@ -140,6 +159,15 @@ edkey.action.del_line:
         ; Get current line in editor buffer
         ;-------------------------------------------------------
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         clr   @fb.row.dirty         ; Discard current line
 
         mov   @fb.topline,@parm1    ; \

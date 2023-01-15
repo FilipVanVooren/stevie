@@ -29,22 +29,37 @@ fb.insert.line:
         ; Initialisation
         ;-------------------------------------------------------
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-        clr   tmp1                  ; Offset current line
+        clr   tmp1                  ; Offset is current line
+
         mov   @parm1,tmp0           ; Insert on current line or following line?
         jeq   !                     ; Current line
-        inc   tmp1                  ; Following line
+        inc   tmp1                  ; Offset is Following line
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
 !       c     @fb.row.dirty,@w$ffff
         jne   fb.insert.line.insert
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+        bl    @edb.line.pack.fb     ; Pack current line in framebuffer
+                                    ; \ i  @fb.top      = Address top row in FB
+                                    ; | i  @fb.row      = Current row in FB
+                                    ; | i  @fb.column   = Current column in FB
+                                    ; / i  @fb.colsline = Columns per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Insert entry in index
         ;-------------------------------------------------------
 fb.insert.line.insert:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         mov   @fb.topline,@parm1
         a     @fb.row,@parm1        ; Line number to insert
         a     tmp1,@parm1           ; Add optional offset (for following line)
@@ -61,8 +76,7 @@ fb.insert.line.insert:
         ;-------------------------------------------------------
 fb.insert.line.m1:
         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-        jeq   fb.insert.line.m2
-                                    ; Yes, skip to M2 check
+        jeq   fb.insert.line.m2     ; Yes, skip to M2 check
 
         c     @parm1,@edb.block.m1
         jgt   fb.insert.line.m2

@@ -11,7 +11,16 @@ edkey.action.ins_char.ws:
         mov   tmp0,@parm1
 edkey.action.ins_char:
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+        
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
         ;-------------------------------------------------------
         ; Check 1 - Empty line
         ;-------------------------------------------------------

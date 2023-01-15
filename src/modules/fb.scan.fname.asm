@@ -42,8 +42,15 @@ fb.scan.fname.copy:
                                     ; Clear filename in buffer
 
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
-                                    ; returns pointer in @fb.current
-
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+                                    
         ; Register usage in following code
         ; 
         ; tmp0 = Pointer to first character in framebuffer line

@@ -78,7 +78,17 @@ edkey.action.newline.rest:
         mov   tmp0,@fb.column
         bl    @xsetx                ; Set Column=tmp0 (VDP cursor)
         bl    @edb.line.getlength2  ; Get length of new row length
+
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         seto  @fb.dirty             ; Trigger screen refresh
         ;-------------------------------------------------------
         ; Exit
@@ -142,6 +152,15 @@ edkey.action.char.insert:
         ;-------------------------------------------------------
 edkey.action.char.overwrite:
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+                                    
         mov   @fb.current,tmp0      ; Get pointer
 
         movb  @parm1,*tmp0          ; Store character in editor buffer

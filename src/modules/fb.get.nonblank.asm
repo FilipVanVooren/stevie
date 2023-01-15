@@ -18,7 +18,17 @@ fb.get.nonblank:
         ; Prepare for scanning
         ;------------------------------------------------------
         clr   @fb.column
-        bl    @fb.calc_pointer
+        
+        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
+
         bl    @edb.line.getlength2  ; Get length current line
         mov   @fb.row.length,tmp2   ; Set loop counter
         jeq   fb.get.nonblank.nomatch

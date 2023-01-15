@@ -61,6 +61,14 @@ fb.tab.prev.loop:
         mov   *stack+,tmp0          ; Pop tmp0
 
         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.topline  = Top line in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; |                  (offset 0..@fb.scrrows)
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; | i   @fb.colsline = Columns per line FB 
+                                    ; | 
+                                    ; / o   @fb.current  = Updated pointer
 
         seto  @fb.row.dirty         ; Current row dirty in frame buffer
         seto  @fb.dirty             ; Frame buffer dirty
