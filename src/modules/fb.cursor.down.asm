@@ -32,7 +32,13 @@ fb.cursor.down:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   fb.cursor.down.move
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+                                    
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Move cursor

@@ -76,9 +76,14 @@ edkey.action.goto:
 
         dect  stack
         mov   @parm1,*stack         ; Push parm1
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-        mov   *stack+,@parm1        ; Pop parm1
 
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
+        mov   *stack+,@parm1        ; Pop parm1
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page

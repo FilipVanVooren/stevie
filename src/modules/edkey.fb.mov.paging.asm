@@ -11,7 +11,13 @@ edkey.action.ppage:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.ppage.sanity
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Assert
@@ -60,7 +66,13 @@ edkey.action.npage:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.npage.sanity
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+                                    
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Assert

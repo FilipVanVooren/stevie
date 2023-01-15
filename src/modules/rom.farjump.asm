@@ -5,7 +5,7 @@
 * rom.farjump - Jump to routine in specified bank
 ***************************************************************
 *  bl   @rom.farjump
-*       data p0,p1
+*       data p0,p1,p2
 *--------------------------------------------------------------
 *  p0 = Write address of target ROM bank
 *  p1 = Vector address with target address to jump to
@@ -16,11 +16,30 @@
 *  tmp0 = Write address of target ROM bank
 *  tmp1 = Vector address with target address to jump to
 *  tmp2 = Write address of source ROM bank
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+*  Remarks
+*  r11 gets pushed/popped from farjump stack, not from normal
+*  value stack.
 ********|*****|*********************|**************************
 rom.farjump:
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        ;------------------------------------------------------
+        ; Parameters
+        ;------------------------------------------------------
         mov   *r11+,tmp0            ; P0
         mov   *r11+,tmp1            ; P1
         mov   *r11+,tmp2            ; P2
+        jmp   xrom.farjump.push_return
         ;------------------------------------------------------
         ; Push registers to value stack (but not r11!)
         ;------------------------------------------------------
@@ -36,6 +55,7 @@ xrom.farjump:
         ;------------------------------------------------------
         ; Push to farjump return stack
         ;------------------------------------------------------
+xrom.farjump.push_return:
         ci    tmp0,>6000            ; Invalid bank write address?
         jlt   rom.farjump.bankswitch.failed1
                                     ; Crash if bogus value in bank write address
@@ -149,5 +169,10 @@ rom.farjump.exit:
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp0          ; Pop tmp0
+        ;
+        ; Attention! 
+        ; r11 was popped from farjump stack, not from value stack!
+        ; See rom.farjump.return
+        ;        
         b     *r11                  ; Return to caller

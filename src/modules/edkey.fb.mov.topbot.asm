@@ -10,7 +10,13 @@ edkey.action.top:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.top.refresh
+        
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page
@@ -32,7 +38,13 @@ edkey.action.topscr:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.topscr.refresh
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
 edkey.action.topscr.refresh:        
         mov   @fb.topline,@parm1    ; Set to top line in frame buffer
@@ -50,7 +62,13 @@ edkey.action.bot:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.bot.refresh
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Refresh page
@@ -85,7 +103,13 @@ edkey.action.botscr:
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.botscr.cursor
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Position cursor

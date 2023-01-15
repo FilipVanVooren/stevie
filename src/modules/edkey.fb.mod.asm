@@ -12,7 +12,13 @@ edkey.action.enter:
         c     @fb.row.dirty,@w$ffff
         jne   edkey.action.enter.newline
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
         ; Insert a new line if insert mode is on
@@ -27,6 +33,7 @@ edkey.action.enter.newline:
                                     ; Autoinsert off, skip insert
 
         seto  @parm1                ; Insert line on following line
+        
         bl    @fb.insert.line       ; Insert a new line
                                     ; \  i  @parm1 = current/following line
                                     ; /

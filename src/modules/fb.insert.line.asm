@@ -39,6 +39,7 @@ fb.insert.line:
         ;-------------------------------------------------------
 !       c     @fb.row.dirty,@w$ffff
         jne   fb.insert.line.insert
+
         bl    @edb.line.pack.fb     ; Pack current line in framebuffer
                                     ; \ i  @fb.top      = Address top row in FB
                                     ; | i  @fb.row      = Current row in FB
@@ -113,4 +114,4 @@ fb.insert.line.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        b     *r11                  ; Return to caller

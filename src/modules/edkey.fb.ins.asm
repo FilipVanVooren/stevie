@@ -43,12 +43,17 @@ edkey.actions.ins.char.empty_line:
         ;-------------------------------------------------------
         dect  Stack
         mov   @parm1,*stack         ; Save character to add
-
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-        clr   @fb.row.dirty         ; Current row no longer dirty
 
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
+        clr   @fb.row.dirty         ; Current row no longer dirty        
         seto  @parm1                ; Insert on following line
+
         bl    @fb.insert.line       ; Insert empty line
                                     ; \ i  @parm1 = 0 for insert current line
                                     ; /            >0 for insert following line
@@ -123,7 +128,10 @@ edkey.action.ins_char.exit:
 *---------------------------------------------------------------
 edkey.action.ins_line:
         clr   @parm1                ; Insert new line on curren line
-        bl    @fb.insert.line       ; Insert new line
+        
+        bl    @fb.insert.line       ; Insert empty line
+                                    ; \ i  @parm1 = 0 for insert current line
+                                    ; /            >0 for insert following line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -137,7 +145,10 @@ edkey.action.ins_line.exit:
 *---------------------------------------------------------------
 edkey.action.ins_line_after:
         seto  @parm1                ; Insert new line on following line
-        bl    @fb.insert.line       ; Insert new line
+
+        bl    @fb.insert.line       ; Insert empty line
+                                    ; \ i  @parm1 = 0 for insert current line
+                                    ; /            >0 for insert following line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
