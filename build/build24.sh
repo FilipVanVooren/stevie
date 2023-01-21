@@ -22,7 +22,7 @@ include+="../src/assets/"
 log "Building stevie (24x80) version"
 export workdir="$workdir"
 export include="$include"
-export xas99_options="-D full_f18a_support=0"
+export xas99_options="-D vdpmode=2480"
 bash assemble.sh $banks
 
 # Concatenate banks to binary

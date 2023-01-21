@@ -34,49 +34,13 @@ kickstart.resume          equ  >6038   ; Resume Stevie session
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
-
-
-
-*--------------------------------------------------------------
-* classic99 and JS99er emulators are mutually exclusive.
-* At the time of writing JS99er has full F18a compatibility.
-*
-* If build target is the JS99er emulator or an F18a equiped TI-99/4a
-* then set the 'full_f18a_support' equate to 1.
-*
-* When targetting the classic99 emulator then set the
-* 'full_f18a_support' equate to 0.
-* This will build the trimmed down version with 24x80 resolution.
-*--------------------------------------------------------------
 debug                     equ  0       ; Turn on debugging mode
-; full_f18a_support       equ  1       ; 30 rows mode with sprite cursor
-; full_f18a_support       equ  0       ; 24 rows mode with char cursor
-
-*--------------------------------------------------------------
-* JS99er F18a 30x80, no FG99 advanced mode
-*--------------------------------------------------------------
-  .ifeq full_f18a_support, 1
-device.f18a               equ  1       ; F18a GPU
-device.9938               equ  0       ; 9938 GPU
-device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
-  .endif
-
-
-
-*--------------------------------------------------------------
-* Classic99 F18a 24x80, no FG99 advanced mode
-*--------------------------------------------------------------
-  .ifeq full_f18a_support, 0
-device.f18a               equ  0       ; F18a GPU
-device.9938               equ  1       ; 9938 GPU
-device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
-skip_vdp_f18a_support     equ  1       ; Turn off f18a GPU check
-  .endif
-
 
 
 *--------------------------------------------------------------
 * ROM layout
 *--------------------------------------------------------------
 bankx.crash.showbank      equ  >7f50   ; Show ROM bank in CPU crash screen
+bankx.vdptab              equ  >7f60   ; VDP mode tables
 bankx.vectab              equ  >7fc0   ; Start address of vector table
+device.fg99.mode.adv      equ  0       ; FG99 advanced mode off

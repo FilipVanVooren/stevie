@@ -12,7 +12,10 @@ binary="bin/stevie.bin"
 # Directories
 workdir="/workspace/stevie/src"
 include="../../spectra2/src/equates,../../spectra2/src/modules,"
-include+="../../spectra2/src,../src/modules/,../src,.buildinfo"
+include+="../../spectra2/src,../src/modules/,../src,../build/.buildinfo"
+
+export xas99_options="-D vdpmode=3080"
+
 
 # Call xas99 wrapper
 if [[ "$1" =~ ^[0-9]+$ ]]; then

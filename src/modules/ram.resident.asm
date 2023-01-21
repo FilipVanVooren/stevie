@@ -39,7 +39,7 @@
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
-    .ifeq device.f18a,1
+    .ifdef spritecursor
         copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
         copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
     .else

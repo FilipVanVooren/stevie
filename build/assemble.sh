@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091,SC2086,SC2181
+#shellcheck disable=SC1091,SC2086,SC2181
 
 source helper.sh
 

@@ -24,8 +24,9 @@
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
-        copy  "equates.asm"         ; Equates Stevie configuration
-        copy  "equates.c99.asm"     ; Equates related to classic99 emulator
+        copy  "equates.f18a.asm"    ; F18a VDP configuration
+        copy  "equates.asm"         ; Stevie main configuration
+        copy  "equates.c99.asm"     ; Classic99 emulator configuration
         copy  "equates.keys.asm"    ; Equates for keyboard mapping
 
 ***************************************************************
@@ -153,15 +154,9 @@ main:
 
 cpu.crash.showbank.bankstr:
         stri 'ROM#0'
-*--------------------------------------------------------------
-* Video mode configuration
-*--------------------------------------------------------------
-spfclr  equ   >f4                   ; Foreground/Background color for font.
-spfbck  equ   >04                   ; Screen background color.
-spvmod  equ   stevie.80x30          ; Video mode.   See VIDTAB for details.
-spfont  equ   nofont                ; Font to load. See LDFONT for details.
-colrow  equ   80                    ; Columns per row
-pctadr  equ   >0fc0                 ; VDP color table base
-fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table
-sprpdt  equ   >2800                 ; VDP sprite pattern table
+
+
+        ;-----------------------------------------------------------------------
+        ; Table for VDP modes
+        ;-----------------------------------------------------------------------
+        copy  "data.vdpmodes.asm"   ; Table for VDP modes

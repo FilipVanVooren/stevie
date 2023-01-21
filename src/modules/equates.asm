@@ -41,38 +41,10 @@
 *     6000-633f               7   Cartridge header
 *     6040-7fbf               7   SP2 library in cartridge space
 *     7fc0-7fff      64       7   Vector table (32 vectors)
-*
-*
-*
-* VDP RAM F18a (0000-47ff)
-*
-*     Mem range   Bytes    Hex    Purpose
-*     =========   =====   =====   =================================
-*     0000-095f    2400   >0960   PNT: Pattern Name Table
-*     0960-09af      80   >0050   FIO: File record buffer (DIS/VAR 80)
-*     0fc0-0fff                   PCT: Color Table (not used in 80 cols mode)
-*     1000-17ff    2048   >0800   PDT: Pattern Descriptor Table
-*     1800-215f    2400   >0960   TAT: Tile Attribute Table
-*                                      (Position based colors F18a, 80 colums)
-*     2180                        SAT: Sprite Attribute Table
-*                                      (Cursor in F18a, 80 cols mode)
-*     2800                        SPT: Sprite Pattern Table
-*                                      (Cursor in F18a, 80 columns, 2K boundary)
 *===============================================================================
 
 
-*--------------------------------------------------------------
-* Graphics mode selection
-*--------------------------------------------------------------
-  .ifeq device.f18a,1
 
-pane.botrow               equ  29      ; Bottom row on screen
-
-  .else
-
-pane.botrow               equ  23      ; Bottom row on screen
-
-  .endif
 *--------------------------------------------------------------
 * Stevie Dialog / Pane specific equates
 *--------------------------------------------------------------
@@ -417,7 +389,7 @@ edb.size          equ  4096            ; Editor buffer size
 * Frame buffer & uncrunch area        @>d000-dcff  (3584 bytes)
 *--------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (2400 char)
-fb.size           equ  80*30           ; Frame buffer size
+fb.size           equ  80*48           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
 *--------------------------------------------------------------
@@ -445,11 +417,5 @@ fh.fopmode.writefile      equ  2       ; Save file from memory to disk
 cmdb.rows                 equ  5       ; Number of rows in CMDB pane
 rom0_kscan_out            equ  keycode1; Where to store value of key pressed
 
-vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
-vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
-vdp.sit.base              equ  >0000   ; VDP SIT base address
-vdp.sit.size              equ  (pane.botrow + 1) * 80
-                                       ; VDP SIT size 80 columns, 24/30 rows
-vdp.tat.base              equ  >1800   ; VDP TAT base address
 tv.colorize.reset         equ  >9900   ; Colorization off
 tv.1timeonly              equ  254     ; One-time only flag indicator

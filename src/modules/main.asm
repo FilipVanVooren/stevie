@@ -114,7 +114,7 @@ main.continue:
         li    tmp0,timers           ; \ Set pointer to timers table
         mov   tmp0,@wtitab          ; /
 
-      .ifeq device.f18a,1
+      .ifdef  spritecursor
 
         bl    @mkslot
               data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
