@@ -1,7 +1,7 @@
-* FILE......: equates.f18a.60x80.asm
+* FILE......: equates.f18a.6080.asm
 * Purpose...: F18a 60x80 mode (js99er emulation only)
 
-  .ifeq vdpmode, 6080
+  .ifeq vdpmode, 6081
 
 *===============================================================================
 * VDP RAM F18a (0000-47ff)
@@ -23,14 +23,20 @@
 *--------------------------------------------------------------
 * Video mode configuration (stevie) - Graphics mode 30x80
 *--------------------------------------------------------------
-pane.botrow               equ  59      ; Bottom row on screen
-
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
-vdp.sit.size              equ  (pane.botrow + 1) * 80
-                                       ; VDP SIT size 80 columns, 24/30 rows
+vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 60 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
+
+
+*--------------------------------------------------------------
+* Video mode configuration (stevie)
+*--------------------------------------------------------------
+pane.botrow               equ  59      ; Bottom row on screen
+colrow                    equ  80      ; Columns per row
+device.f18a               equ  1       ; F18a GPU
+spritecursor              equ  0       ; Use chars for cursor
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)
@@ -38,12 +44,11 @@ vdp.tat.base              equ  >1800   ; VDP TAT base address
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-spfont  equ   nofont                ; Font to load. See LDFONT for details.
+spfont  equ   0                     ; Font to load. See LDFONT for details.
 colrow  equ   80                    ; Columns per row
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table
 sprpdt  equ   >2800                 ; VDP sprite pattern table
-
 
   .endif

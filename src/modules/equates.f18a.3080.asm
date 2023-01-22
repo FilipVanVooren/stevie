@@ -1,5 +1,5 @@
-* FILE......: equates.f18a.30x80.asm
-* Purpose...: F18a 30x80 mode
+* FILE......: equates.f18a.3080.asm
+* Purpose...: F18a 30x80 mode (with sprite cursor/rulers)
 
   .ifeq vdpmode, 3080
 
@@ -26,7 +26,7 @@
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
-vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 24/30 rows
+vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 
 *--------------------------------------------------------------

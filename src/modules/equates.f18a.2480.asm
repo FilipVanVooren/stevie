@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.24x80.asm
+* FILE......: equates.f18a.2480.asm
 * Purpose...: F18a 24x80 mode
 
   .ifeq vdpmode, 2480
@@ -23,16 +23,19 @@
 *--------------------------------------------------------------
 * Video mode configuration (stevie) - Graphics mode 24x80
 *--------------------------------------------------------------
-pane.botrow               equ  23      ; Bottom row on screen
-colrow                    equ  80      ; Columns per row
-
 vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
-vdp.sit.size              equ  (pane.botrow + 1) * 80
-                                       ; VDP SIT size 80 columns, 24/30 rows
+vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 24 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
 
+*--------------------------------------------------------------
+* Video mode configuration (stevie)
+*--------------------------------------------------------------
+pane.botrow               equ  23      ; Bottom row on screen
+colrow                    equ  80      ; Columns per row
+device.f18a               equ  1       ; F18a GPU
+spritecursor              equ  1       ; Use sprites for cursor and ruler
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)
@@ -40,7 +43,7 @@ vdp.tat.base              equ  >1800   ; VDP TAT base address
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-spfont  equ   nofont                ; Font to load. See LDFONT for details.
+spfont  equ   0                     ; Font to load. See LDFONT for details.
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   >1100                 ; VDP font start address (in PDT range)
 sprsat  equ   >2180                 ; VDP sprite attribute table

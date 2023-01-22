@@ -67,7 +67,7 @@ pane.cursor.blink:
                                     ; | i  p1 = Byte to write
                                     ; / i  p2 = Number of bytes to write
 
-      .ifdef spritecursor
+      .ifeq spritecursor,1
 
         bl    @mkslot
               data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position

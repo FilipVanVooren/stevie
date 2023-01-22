@@ -41,7 +41,7 @@ main.continue:
 
         bl    @f18unl               ; Unlock the F18a
 
-        .ifeq device.f18a,1
+        .ifge vdpmode, 3080
 
         bl    @putvr                ; Turn on 30 rows mode.
               data >3140            ; F18a VR49 (>31), bit 40
@@ -114,7 +114,7 @@ main.continue:
         li    tmp0,timers           ; \ Set pointer to timers table
         mov   tmp0,@wtitab          ; /
 
-      .ifdef  spritecursor
+      .ifeq  spritecursor,1
 
         bl    @mkslot
               data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
