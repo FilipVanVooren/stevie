@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.asm
+* FILE......: equates.vdp.asm
 * Purpose...: F18a VDP configuration
 
 ***************************** F18a 24x80 ***************************************

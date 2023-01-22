@@ -24,7 +24,7 @@
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
-        copy  "equates.f18a.asm"    ; F18a VDP configuration
+        copy  "equates.vdp.asm"     ; VDP configuration (F18a/9938/...)
         copy  "equates.asm"         ; Stevie main configuration
         copy  "equates.c99.asm"     ; Classic99 emulator configuration
         copy  "equates.keys.asm"    ; Equates for keyboard mapping

@@ -27,7 +27,7 @@
         ;-----------------------------------------------------------------------
         ; Equates
         ;-----------------------------------------------------------------------    
-        copy  "equates.f18a.asm"    ; F18a configuration
+        copy  "equates.vdp.asm"     ; VDP configuration (F18a/9938/...)
         copy  "equates.asm"         ; Stevie main configuration
         copy  "equates.c99.asm"     ; Classic99 emulator configuration
         copy  "equates.keys.asm"    ; Equates for keyboard mapping

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230121-1651300
+0002               * BUILD: 230122-1549020
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -106,9 +106,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024      680C     bank6.ram                 equ  >680c   ; Jenifer
 0025      680E     bank7.ram                 equ  >680e   ; Jonas
                    < stevie_b3.asm
-0027                       copy  "equates.f18a.asm"    ; F18a VDP configuration
-     **** ****     > equates.f18a.asm
-0001               * FILE......: equates.f18a.asm
+0027                       copy  "equates.vdp.asm"     ; VDP configuration (F18a/9938/...)
+     **** ****     > equates.vdp.asm
+0001               * FILE......: equates.vdp.asm
 0002               * Purpose...: F18a VDP configuration
 0003               
 0004               ***************************** F18a 24x80 ***************************************
@@ -168,7 +168,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
 0052      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0053               
-                   < equates.f18a.asm
+                   < equates.vdp.asm
 0013               
 0014               ***************************** F18a 60x80 ***************************************
                    < stevie_b3.asm
@@ -855,12 +855,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0057 6028 0E53                 stri 'STEVIE 1.4C-24'
+0057 6028 0E53                 stri 'STEVIE 1.4D-24'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
-     6032 3443     
+     6032 3444     
      6034 2D32     
      6036 34       
                    < stevie_b3.asm
@@ -14040,12 +14040,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0014 73B2 2053                 text ' Stevie 1.4C-24'
+0014 73B2 2053                 text ' Stevie 1.4D-24'
      73B4 7465     
      73B6 7669     
      73B8 6520     
      73BA 312E     
-     73BC 3443     
+     73BC 3444     
      73BE 2D32     
      73C0 34       
 0015                           even
@@ -14693,13 +14693,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7822 3A20     
 0131                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7824 3233                        text '230121-1651300'
+0001 7824 3233                        text '230122-1549020'
      7826 3031     
-     7828 3231     
+     7828 3232     
      782A 2D31     
-     782C 3635     
-     782E 3133     
-     7830 3030     
+     782C 3534     
+     782E 3930     
+     7830 3230     
                    < data.dialogs.asm
 0132 7832 202F                        text ' / Stevie (c)2018-2023 Filip Van Vooren'
      7834 2053     
