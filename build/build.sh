@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091,SC2086,SC2181
 
 ################################################################################
-# Build stevie in F18a 30x80 mode, without sprite support
-# Main purpose is building a binary for classic99, that lacks full f18a support.
+# Stevie Cartridge Binary Builder
+# Author: Filip van Vooren
+#
+#
+# Always run shellcheck 
 ################################################################################
+# shellcheck disable=SC1091,SC2086,SC2181
+
+
 set -e
 source helper.sh
 
@@ -36,24 +41,6 @@ setbin() {
           return          
           ;;
 
-        # F18a 48x80 sprite cursor/ruler
-        4880)
-          binary="stevie48.bin"
-          return          
-          ;;
-
-        # F18a 48x80 characer cursor
-        4881)
-          binary="stevie48.bin"
-          return          
-          ;;
-
-        # F18a 60x80 sprite cursor/ruler
-        6080)
-          binary="stevie60.bin"
-          return          
-          ;;
-
         # F18a 60x80 character cursor
         6081)
           binary="stevie60.bin"
@@ -66,7 +53,6 @@ setbin() {
           ;;
    esac
 }
-
 
 # Constants
 IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"

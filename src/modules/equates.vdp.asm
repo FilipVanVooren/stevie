@@ -22,6 +22,6 @@
   .endif
 
 ***************************** F18a 60x80 ***************************************
-  .ifeq vdpmode, 6080
-    copy 'equates.f18a.6080.asm'        ; Sprite cursor/rulers
+  .ifeq vdpmode, 6081
+    copy 'equates.f18a.6081.asm'        ; Character cursor
   .endif

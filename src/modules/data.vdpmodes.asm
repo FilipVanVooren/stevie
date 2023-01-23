@@ -1,7 +1,11 @@
 * FILE......: data.vdp.modes.asm
-* Purpose...: VDP modes
+* Purpose...: VDP modes tables
 
             aorg bankx.vdptab
+
+; ====================================================================
+; Keep the tables in sequence, or change offsets in equates.f18a.*.asm
+; ====================================================================
 
 ***************************************************************
 * Textmode (80 columns, 30 rows) - F18A
@@ -31,7 +35,7 @@ stevie.80x30:
 
 
 ***************************************************************
-* Textmode (80 columns, 30 rows) - F18A
+* Textmode (80 columns, 60 rows) - F18A
 *--------------------------------------------------------------
 *
 * ; VDP#0 Control bits
@@ -46,15 +50,15 @@ stevie.80x30:
 * ;      bit 5=0: reserved
 * ;      bit 6=0: 8x8 sprites
 * ;      bit 7=0: Sprite magnification (1x)
-* ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-* ; VDP#3 PCT (Pattern color table)      at >0FC0  (>3F * >040)
-* ; VDP#4 PDT (Pattern descriptor table) at >1000  (>02 * >800)
-* ; VDP#5 SAT (sprite attribute list)    at >2180  (>43 * >080)
-* ; VDP#6 SPT (Sprite pattern table)     at >2800  (>05 * >800)
+* ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >12c0)
+* ; VDP#3 PCT (Pattern color table)      at >0FC0  (>3F * >040) - not used!
+* ; VDP#4 PDT (Pattern descriptor table) at >3000  (>06 * >800)
+* ; VDP#5 SAT (sprite attribute list)    at >3A00  (>74 * >080)
+* ; VDP#6 SPT (Sprite pattern table)     at >3800  (>07 * >800)
 * ; VDP#7 Set foreground/background color
 ***************************************************************
 stevie.80x60:
-        byte  >04,>f0,>00,>3f,>06,>43,>05,SPFCLR,0,80
+        byte  >04,>f0,>00,>3f,>06,>74,>07,SPFCLR,0,80
 
 
 

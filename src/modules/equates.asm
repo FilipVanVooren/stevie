@@ -272,8 +272,6 @@ fh.temp3          equ  fh.struct +100  ; Temporary variable 3
 fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
 fh.membuffer      equ  fh.struct +104  ; 80 bytes file memory buffer
 fh.free           equ  fh.struct +184  ; End of structure
-fh.vrecbuf        equ  >0960           ; VDP address record buffer
-fh.vpab           equ  >0a60           ; VDP address PAB
 *--------------------------------------------------------------
 * File handle structure for generic   @>a400-a4ff   (256 bytes)
 * Overload file handle structure
