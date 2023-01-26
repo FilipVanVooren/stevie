@@ -7,13 +7,31 @@
 ***************************************************************
 
 txt.stevie:
-        .ifeq full_f18a_support,1
+        .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
             text '  Stevie 1.4D  '
             even
-        .else
+        .endif
+
+        .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
+            text ' Stevie 1.4D*  '     
+            even
+        .endif
+
+        .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
             text ' Stevie 1.4D-24'
             even
         .endif
+
+        .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
+            text ' Stevie 1.4D-24*'  
+            even
+        .endif
+
+        .ifeq vdpmode, 6081
+            text ' Stevie 1.4D-60'
+            even
+        .endif
+
 
 txt.keys.default1  stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  F5-Fastmode IO'
                    even
