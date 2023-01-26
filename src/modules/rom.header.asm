@@ -51,8 +51,22 @@ rom.program2:
         data  kickstart.resume      ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        .ifeq full_f18a_support,1
+        .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
             stri 'STEVIE 1.4D'
-        .else
+        .endif
+
+        .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
+            stri 'STEVIE 1.4D*'     
+        .endif
+
+        .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
             stri 'STEVIE 1.4D-24'
+        .endif
+
+        .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
+            stri 'STEVIE 1.4D-24*'  
+        .endif
+
+        .ifeq vdpmode, 6081
+            stri 'STEVIE 1.4D-60'
         .endif

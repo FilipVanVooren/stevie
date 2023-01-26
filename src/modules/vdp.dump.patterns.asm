@@ -26,7 +26,7 @@ vdp.dump.patterns:
         ;-------------------------------------------------------
         ; Dump sprite patterns from ROM to VDP SDT
         ;-------------------------------------------------------
-        .ifeq spritcursor,1
+        .ifeq spritecursor,1
 
         bl    @cpym2v
               data sprpdt,cursors,3*8
