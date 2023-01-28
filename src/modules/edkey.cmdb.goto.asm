@@ -39,14 +39,30 @@ edkey.action.cmdb.goto:
         jeq   edkey.action.cmdb.goto.exit
                                     ; Yes, exit
         ;-------------------------------------------------------        
-        ; Goto line
+        ; Prepare for goto
         ;-------------------------------------------------------
-edkey.action.cmdb.goto.line:
+edkey.action.cmdb.goto.prepare:
         dect  stack
         mov   @outparm1,*stack      ; Push @outparm1
 
         bl    @cmdb.dialog.close    ; Close dialog
+        ;-------------------------------------------------------
+        ; Crunch current row if dirty 
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   edkey.action.cmdb.goto.line
 
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
+                                    ; \ i   @fb.top      = Address top row in FB
+                                    ; | i   @fb.row      = Current row in FB
+                                    ; | i   @fb.column   = Current column in FB
+                                    ; / i   @fb.colsline = Cols per line in FB
+
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Goto line
+        ;-------------------------------------------------------
+edkey.action.cmdb.goto.line:        
         mov   *stack+,@parm1        ; Pop @outparm1 as @parm1
         dec   @parm1                ; Base 0 offset in editor buffer
 
