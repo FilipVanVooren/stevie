@@ -1,11 +1,11 @@
-* FILE......: dialog.clipdev.asm
-* Purpose...: Dialog "Configure clipboard device"
+* FILE......: dialog.cfg.clip.asm
+* Purpose...: Dialog "Configure clipboard"
 
 ***************************************************************
-* dialog.clipdev
-* Open Dialog "Configure clipboard device"
+* dialog.cfg.clip
+* Open Dialog "Configure clipboard"
 ***************************************************************
-* bl @dialog.clipdevice
+* bl @dialog.cfg.clip
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.clipdev:
+dialog.cfg.clip:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -26,7 +26,7 @@ dialog.clipdev:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.clipdev
+        li    tmp0,id.dialog.cfg.clip
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.clipdev
@@ -59,7 +59,7 @@ dialog.clipdev:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.clipdevice.exit:
+dialog.cfg.clip.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

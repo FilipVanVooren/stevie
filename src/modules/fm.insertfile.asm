@@ -1,4 +1,4 @@
-* FILE......: fm.insert.asm
+* FILE......: fm.insertfile.asm
 * Purpose...: File Manager - Insert (or append) file into editor buffer
 
 ***************************************************************

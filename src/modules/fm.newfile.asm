@@ -1,4 +1,4 @@
-* FILE......: fm.new.asm
+* FILE......: fm.newfile.asm
 * Purpose...: File Manager - New file in editor buffer
 
 ***************************************************************

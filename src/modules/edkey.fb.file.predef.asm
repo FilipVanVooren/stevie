@@ -11,6 +11,6 @@
 * none
 ********|*****|*********************|**************************
 edkey.action.fb.load.mastcat:
-        li    tmp0,def.mastercat
+        li    tmp0,def.mastcat
         mov   tmp0,@parm1
         b     @edkey.action.fb.load.file

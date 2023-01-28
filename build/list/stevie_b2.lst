@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230128-1842310
+0002               * BUILD: 230128-1949040
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -244,7 +244,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0060      000E     id.dialog.append          equ  14      ; "Append file"
 0061      000F     id.dialog.print           equ  15      ; "Print file"
 0062      0010     id.dialog.printblock      equ  16      ; "Print block"
-0063      0011     id.dialog.clipdev         equ  17      ; "Configure clipboard"
+0063      0011     id.dialog.cfg.clip        equ  17      ; "Configure clipboard"
 0064      0013     id.dialog.goto            equ  19      ; "Goto"
 0065               ;-----------------------------------------------------------------
 0066               ;   Dialog ID's >= 100 indicate that command prompt should be
@@ -258,7 +258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0074      0069     id.dialog.file            equ  105     ; "File"
 0075      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
 0076      006B     id.dialog.basic           equ  107     ; "TI Basic"
-0077      006C     id.dialog.config          equ  108     ; "Configure"
+0077      006C     id.dialog.cfg             equ  108     ; "Configure"
 0078      006D     id.dialog.editor          equ  109     ; "Configure editor"
 0079      006E     id.dialog.font            equ  110     ; "Configure font"
 0080      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
@@ -9468,7 +9468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3D48 5253     
      3D4A 3233     
      3D4C 32       
-0012 3D4D   0C     def.mastercat       stri 'TIPI.MASTCAT'
+0012 3D4D   0C     def.mastcat         stri 'TIPI.MASTCAT'
      3D4E 5449     
      3D50 5049     
      3D52 2E4D     
@@ -11051,9 +11051,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0254 66AA C2F9  30         mov   *stack+,r11           ; Pop R11
 0255 66AC 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0078                       copy  "fm.load.asm"         ; Load DV80 file into editor buffer
-     **** ****     > fm.load.asm
-0001               * FILE......: fm.load.asm
+0078                       copy  "fm.loadfile.asm"     ; Load DV80 file into editor buffer
+     **** ****     > fm.loadfile.asm
+0001               * FILE......: fm.loadfile.asm
 0002               * Purpose...: File Manager - Load file into editor buffer
 0003               
 0004               ***************************************************************
@@ -11262,9 +11262,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0160 678A C2F9  30         mov   *stack+,r11           ; Pop R11
 0161 678C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0079                       copy  "fm.insert.asm"       ; Insert DV80 file into editor buffer
-     **** ****     > fm.insert.asm
-0001               * FILE......: fm.insert.asm
+0079                       copy  "fm.insertfile.asm"   ; Insert DV80 file into editor buffer
+     **** ****     > fm.insertfile.asm
+0001               * FILE......: fm.insertfile.asm
 0002               * Purpose...: File Manager - Insert (or append) file into editor buffer
 0003               
 0004               ***************************************************************
@@ -11379,9 +11379,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089 6804 C2F9  30         mov   *stack+,r11           ; Pop R11
 0090 6806 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0080                       copy  "fm.save.asm"         ; Save DV80 file from editor buffer
-     **** ****     > fm.save.asm
-0001               * FILE......: fm.save.asm
+0080                       copy  "fm.savefile.asm"     ; Save DV80 file from editor buffer
+     **** ****     > fm.savefile.asm
+0001               * FILE......: fm.savefile.asm
 0002               * Purpose...: File Manager - Save file from editor buffer
 0003               
 0004               ***************************************************************
@@ -11509,9 +11509,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0098 6882 C2F9  30         mov   *stack+,r11           ; Pop R11
 0099 6884 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0081                       copy  "fm.new.asm"          ; New DV80 file in editor buffer
-     **** ****     > fm.new.asm
-0001               * FILE......: fm.new.asm
+0081                       copy  "fm.newfile.asm"      ; New DV80 file in editor buffer
+     **** ****     > fm.newfile.asm
+0001               * FILE......: fm.newfile.asm
 0002               * Purpose...: File Manager - New file in editor buffer
 0003               
 0004               ***************************************************************
@@ -13221,7 +13221,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEF.CLIP.FNAME.B.... >3D09 :     
     DEF.CLIP.FNAME.C.... >3D13 :     
     DEF.DEVICES......... >3D1D :     
-    DEF.MASTERCAT....... >3D4D :     
+    DEF.MASTCAT......... >3D4D :     
     DEF.PRINTER.FNAME... >3CF8 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
@@ -13540,9 +13540,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
     ID.DIALOG.CARTRIDGE. >006A :     
+    ID.DIALOG.CFG....... >006C :     
+    ID.DIALOG.CFG.CLIP.. >0011 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
-    ID.DIALOG.CLIPDEV... >0011 :     
-    ID.DIALOG.CONFIG.... >006C :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
     ID.DIALOG.FONT...... >006E :     

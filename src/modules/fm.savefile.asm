@@ -1,4 +1,4 @@
-* FILE......: fm.save.asm
+* FILE......: fm.savefile.asm
 * Purpose...: File Manager - Save file from editor buffer
 
 ***************************************************************

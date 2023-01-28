@@ -288,15 +288,15 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Configure
         ;-------------------------------------------------------
-        byte  key.uc.c, id.dialog.config
+        byte  key.uc.c, id.dialog.cfg
         data  dialog.clipdev
         
-        byte  key.uc.f, id.dialog.config
+        byte  key.uc.f, id.dialog.cfg
         data  dialog.font        
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
-        byte  key.enter, id.dialog.clipdev
+        byte  key.enter, id.dialog.cfg.clip
         data  edkey.action.cmdb.clipdev.configure
         ;-------------------------------------------------------
         ; Dialog: Configure font

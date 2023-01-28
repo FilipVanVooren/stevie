@@ -1,4 +1,4 @@
-* FILE......: fm.load.asm
+* FILE......: fm.loadfile.asm
 * Purpose...: File Manager - Load file into editor buffer
 
 ***************************************************************

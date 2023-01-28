@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230128-1842310
+0002               * BUILD: 230128-1949040
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -244,7 +244,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0060      000E     id.dialog.append          equ  14      ; "Append file"
 0061      000F     id.dialog.print           equ  15      ; "Print file"
 0062      0010     id.dialog.printblock      equ  16      ; "Print block"
-0063      0011     id.dialog.clipdev         equ  17      ; "Configure clipboard"
+0063      0011     id.dialog.cfg.clip        equ  17      ; "Configure clipboard"
 0064      0013     id.dialog.goto            equ  19      ; "Goto"
 0065               ;-----------------------------------------------------------------
 0066               ;   Dialog ID's >= 100 indicate that command prompt should be
@@ -258,7 +258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0074      0069     id.dialog.file            equ  105     ; "File"
 0075      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
 0076      006B     id.dialog.basic           equ  107     ; "TI Basic"
-0077      006C     id.dialog.config          equ  108     ; "Configure"
+0077      006C     id.dialog.cfg             equ  108     ; "Configure"
 0078      006D     id.dialog.editor          equ  109     ; "Configure editor"
 0079      006E     id.dialog.font            equ  110     ; "Configure font"
 0080      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
@@ -9559,7 +9559,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7E08 5253     
      7E0A 3233     
      7E0C 32       
-0012 7E0D   0C     def.mastercat       stri 'TIPI.MASTCAT'
+0012 7E0D   0C     def.mastcat         stri 'TIPI.MASTCAT'
      7E0E 5449     
      7E10 5049     
      7E12 2E4D     
@@ -10014,7 +10014,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEF.CLIP.FNAME.B.... >3D09 :     
     DEF.CLIP.FNAME.C.... >3D13 :     
     DEF.DEVICES......... >3D1D :     
-    DEF.MASTERCAT....... >3D4D :     
+    DEF.MASTCAT......... >3D4D :     
     DEF.PRINTER.FNAME... >3CF8 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
@@ -10216,9 +10216,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
     ID.DIALOG.CARTRIDGE. >006A :     
+    ID.DIALOG.CFG....... >006C :     
+    ID.DIALOG.CFG.CLIP.. >0011 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
-    ID.DIALOG.CLIPDEV... >0011 :     
-    ID.DIALOG.CONFIG.... >006C :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
     ID.DIALOG.FONT...... >006E :     

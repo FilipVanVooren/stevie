@@ -1,11 +1,11 @@
-* FILE......: dialog.config.asm
+* FILE......: dialog.cfg.asm
 * Purpose...: Dialog "Configure"
 
 ***************************************************************
-* dialog.config
+* dialog.cfg
 * Open Dialog "Configure"
 ***************************************************************
-* bl @dialog.config
+* bl @dialog.cfg
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.config:
+dialog.cfg:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -26,7 +26,7 @@ dialog.config:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.config
+        li    tmp0,id.dialog.cfg
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.config
@@ -48,7 +48,7 @@ dialog.config:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.config.exit:
+dialog.cfg.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
