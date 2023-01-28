@@ -107,12 +107,12 @@ main:
         copy  "edkey.cmdb.mov.asm"          ; Actions for movement keys
         copy  "edkey.cmdb.mod.asm"          ; Actions for modifier keys
         copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
+        copy  "edkey.cmdb.cfg.clip.asm"     ; Configure clipboard
         copy  "edkey.cmdb.file.new.asm"     ; New file
         copy  "edkey.cmdb.file.load.asm"    ; Open file
         copy  "edkey.cmdb.file.insert.asm"  ; Insert file
         copy  "edkey.cmdb.file.append.asm"  ; Append file
         copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
-        copy  "edkey.cmdb.file.clipdev.asm" ; Configure clipboard device
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions

@@ -40,6 +40,8 @@ edkey.action.cmdb.load.file:
         li    tmp0,heap.top         ; Pass filename as parm1
         mov   tmp0,@parm1           ; (1st line in heap)
 
+        clr   @edb.special.file     ; Reset special file flag
+
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; /            device/filename string

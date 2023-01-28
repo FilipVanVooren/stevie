@@ -201,6 +201,9 @@ keymap_actions.cmdb:
         byte  key.uc.f, id.dialog.menu
         data  dialog.file
 
+        byte  key.uc.b, id.dialog.menu
+        data  dialog.basic
+
         byte  key.uc.c, id.dialog.menu
         data  dialog.cartridge
 
@@ -297,7 +300,7 @@ keymap_actions.cmdb:
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.cfg.clip
-        data  edkey.action.cmdb.clipdev.configure
+        data  edkey.action.cmdb.cfg.clip
         ;-------------------------------------------------------
         ; Dialog: Configure font
         ;-------------------------------------------------------
@@ -345,9 +348,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Cartridge
         ;-------------------------------------------------------
-        byte  key.uc.b, id.dialog.cartridge
-        data  dialog.basic
-
         byte  key.uc.f, id.dialog.cartridge
         data  fg99.run.fcmd
 

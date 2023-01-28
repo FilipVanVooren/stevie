@@ -45,7 +45,7 @@ tv.init:
               data def.printer.fname,tv.printer.fname,7
 
         bl    @cpym2m
-              data def.clip.fname,tv.clip.fname,10
+              data def.clip.fname.a,tv.clip.fname,10
 
         clr   @edb.autoinsert       ; Set AutoInsert off by default
         ;-------------------------------------------------------

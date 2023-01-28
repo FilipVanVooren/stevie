@@ -429,6 +429,9 @@ fm.loadsave.cb.fioerr.load:
               data txt.ioerr.load
               data tv.error.msg
               data 30               ; Error message
+
+        clr   @edb.special.file     ; Handle as normal file.
+
         jmp   fm.loadsave.cb.fioerr.addmsg
         ;------------------------------------------------------        
         ; Failed saving file

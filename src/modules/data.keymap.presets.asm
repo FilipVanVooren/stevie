@@ -8,7 +8,7 @@ cmdb.cmd.preset.data:
         ;-------------------------------------------------------
         ; Dialog "Configure clipboard device"
         ;-------------------------------------------------------
-        data  id.dialog.cfg.clip,key.ctrl.a,def.clip.fname
+        data  id.dialog.cfg.clip,key.ctrl.a,def.clip.fname.a
         data  id.dialog.cfg.clip,key.ctrl.b,def.clip.fname.b
         data  id.dialog.cfg.clip,key.ctrl.c,def.clip.fname.C
         ;------------------------------------------------------

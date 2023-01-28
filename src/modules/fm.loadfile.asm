@@ -34,7 +34,6 @@ fm.loadfile:
 
         seto  @outparm1             ; \ 
         jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
-
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------

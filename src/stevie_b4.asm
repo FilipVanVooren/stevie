@@ -19,7 +19,7 @@
 * File: stevie_b4.asm
 *
 * Bank 4 "Janine"
-* Framebuffer methods
+* Frame Buffer methods
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options

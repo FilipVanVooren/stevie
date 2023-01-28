@@ -157,8 +157,8 @@ txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
 
-txt.info.menu      stri 'File   Cartridge   Configure   Shortcuts   Help   Quit'
-pos.info.menu      byte 0,7,20,31,43,50,>ff
+txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Quit'
+pos.info.menu      byte 0,7,15,27,39,49,56,>ff
 txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
 
@@ -183,8 +183,8 @@ txt.head.cartridge byte 14,1,1
                    byte 1
 
 
-txt.info.cartridge stri 'TI Basic / XB-GEM / RXB / FCMD / fbForth'
-pos.info.cartridge byte 3,11,20,26,36,>ff
+txt.info.cartridge stri 'XB-GEM   RXB   FCMD   fbForth'
+pos.info.cartridge byte 0,9,15,22,>ff
 txt.hint.cartridg2 stri ' '
 txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared SD card required (except for TI Basic)'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
@@ -206,10 +206,10 @@ txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 
 
 ;--------------------------------------------------------------
-; Dialog "Configure"
+; Dialog "Options"
 ;--------------------------------------------------------------
-txt.head.config    byte 14,1,1
-                   text ' Configure '
+txt.head.config    byte 12,1,1
+                   text ' Options '
                    byte 1
 
 txt.info.config    stri 'Clipboard   Font'

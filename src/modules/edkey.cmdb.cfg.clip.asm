@@ -1,10 +1,10 @@
-* FILE......: edkey.cmdb.fíle.clipdev.asm
-* Purpose...: Configure clipboard device
+* FILE......: edkey.cmdb.cfg.clip.asm
+* Purpose...: Configure clipboard
 
 *---------------------------------------------------------------
-* Configure clipboard device
+* Configure clipboard
 *---------------------------------------------------------------
-edkey.action.cmdb.clipdev.configure:
+edkey.action.cmdb.cfg.clip:
         ;-------------------------------------------------------
         ; Configure
         ;-------------------------------------------------------
@@ -23,7 +23,7 @@ edkey.action.cmdb.clipdev.configure:
                                     ; \ i  @parm1 = Pointer to error message
                                     ; /
 
-        jmp   edkey.action.cmdb.clipdev.configure.exit
+        jmp   edkey.action.cmdb.cfg.clip.exit
         ;-------------------------------------------------------
         ; Set clipboard device and filename
         ;-------------------------------------------------------
@@ -37,7 +37,7 @@ edkey.action.cmdb.clipdev.configure:
         ;-------------------------------------------------------
         ; Show message 
         ;------------------------------------------------------- 
-edkey.action.cmdb.clipdev.configure.message:
+edkey.action.cmdb.cfg.clip.message:
         bl    @hchar
               byte 0,52,32,20       
               data EOL              ; Erase any previous message
@@ -56,5 +56,5 @@ edkey.action.cmdb.clipdev.configure.message:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.clipdev.configure.exit:
+edkey.action.cmdb.cfg.clip.exit:
         b    @edkey.action.top      ; Goto 1st line in editor buffer 

@@ -90,7 +90,6 @@ clip5                     equ  >3500   ; '5'
 * Keyboard flags in Stevie
 *--------------------------------------------------------------
 kbf.kbclear               equ  >0001   ;  Keyboard buffer cleared / @w$0001
-
 *--------------------------------------------------------------
 * File work mode
 *--------------------------------------------------------------
@@ -102,6 +101,12 @@ id.file.saveblock         equ  5       ; Save block to file
 id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
 id.file.printblock        equ  8       ; Print block
+*--------------------------------------------------------------
+* Special file indicator
+*--------------------------------------------------------------
+id.special.normal         equ  0       ; Normal file
+id.special.mastcat        equ  1       ; Master catalog
+id.special.readonly       equ  2       ; Read-only file
 *--------------------------------------------------------------
 * Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
 *--------------------------------------------------------------
@@ -299,10 +304,12 @@ edb.filetype.ptr  equ  edb.struct + 22 ; Pointer to length-prefixed string
                                        ; with current file type.
 edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 26 ; Highest SAMS page in use
-
-edb.filename      equ  edb.struct + 28 ; 80 characters inline buffer reserved
+edb.fb.topline.bk equ  edb.struct + 28 ; Backup of @fb.topline before opening
+                                       ; other file when in master catalog.
+edb.special.file  equ  edb.struct + 30 ; Special file in editor buffer                                    
+edb.filename      equ  edb.struct + 32 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
-edb.free          equ  edb.struct + 108; End of structure
+edb.free          equ  edb.struct + 112; End of structure
 *--------------------------------------------------------------
 * Index structure                     @>a600-a6ff   (256 bytes)
 *--------------------------------------------------------------

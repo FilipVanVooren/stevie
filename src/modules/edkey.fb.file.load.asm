@@ -37,21 +37,48 @@ edkey.action.fb.load.file:
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
 !       mov   @edb.dirty,tmp0
-        jeq   edkey.action.fb.load.file.doit
+        jeq   edkey.action.fb.load.check.mastcat
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     @dialog.unsaved       ; Show dialog and exit
         ;-------------------------------------------------------
+        ; Special handling Master Catalog
+        ;-------------------------------------------------------
+edkey.action.fb.load.check.mastcat:
+        mov   @edb.special.file,tmp0   ; \ Master catalog previously open?
+        ci    tmp0,id.special.mastcat  ; / 
+
+        jne   edkey.action.fb.load.loadfile
+                                    ; No, just load file
+
+        mov   @fb.topline,@edb.fb.topline.bk
+                                    ; Yes, first save current line position
+        ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.fb.load.file.doit:
+edkey.action.fb.load.loadfile:        
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; /            device/filename string
         ;-------------------------------------------------------
-        ; Exit
+        ; Special handling master catalog
+        ;-------------------------------------------------------
+        mov   @edb.special.file,tmp0
+                                    ; Special file?
+        
+        ci    tmp0,id.special.mastcat
+        jne   edkey.action.fb.load.file.exit
+        ;-------------------------------------------------------
+        ; Goto line in file and exit
+        ;-------------------------------------------------------
+        mov   @edb.fb.topline.bk,@parm1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11        
+        b     @edkey.fb.goto.toprow ; Goto specifed line in editor buffer
+        ;-------------------------------------------------------
+        ; Goto top of file and exit
         ;-------------------------------------------------------
 edkey.action.fb.load.file.exit:
         mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
+        mov   *stack+,r11           ; Pop R11        
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
