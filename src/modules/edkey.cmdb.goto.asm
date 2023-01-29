@@ -68,9 +68,11 @@ edkey.action.cmdb.goto.line:
 
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
 
-        b     @edkey.fb.goto.toprow ; Position cursor and exit
-                                    ; \ i  @parm1 = Line in editor buffer
-                                    ; /
+        clr   @parm2                ; No row offset in frame buffer
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        

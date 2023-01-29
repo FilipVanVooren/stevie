@@ -25,9 +25,11 @@ edkey.action.top.refresh:
         clr   @parm1                ; Set to 1st line in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
+        clr   @parm2                ; No row offset in frame buffer
 
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
 
 *---------------------------------------------------------------
 * Goto top of screen
@@ -46,12 +48,16 @@ edkey.action.topscr:
                                     ; / i   @fb.colsline = Cols per line in FB
 
         clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Refresh screen
+        ;-------------------------------------------------------
 edkey.action.topscr.refresh:        
         mov   @fb.topline,@parm1    ; Set to top line in frame buffer
+        clr   @parm2                ; No row offset in frame buffer
+
         b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
-
-
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
 
 *---------------------------------------------------------------
 * Goto bottom of file
@@ -82,8 +88,12 @@ edkey.action.bot.refresh:
         mov   tmp0,@parm1           ; Set to last page in editor buffer
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
+        clr   @parm2                ; No row offset in frame buffer
+
         b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
+
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

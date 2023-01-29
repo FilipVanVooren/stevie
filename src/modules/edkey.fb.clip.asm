@@ -40,5 +40,8 @@ edkey.action.fb.clip.save.exit:
         mov   *stack+,tmp0          ; Pop tmp0
 
         mov   @fb.topline,@parm1    ; Get topline
+        clr   @parm2                ; No row offset in frame buffer
+
         b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer

@@ -1,4 +1,4 @@
-* FILE......: edkey.fb.file.predef.asm
+* FILE......: edkey.fb.file.load.mastcat.asm
 * Purpose...: Load predefined file into editor
 
 ***************************************************************

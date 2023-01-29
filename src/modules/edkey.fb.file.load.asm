@@ -52,10 +52,11 @@ edkey.action.fb.load.check.mastcat:
         ci    tmp0,id.special.mastcat ; / 
 
         jne   edkey.action.fb.load.loadfile
-                                    ; No, just load file
+                                      ; No, just load file
 
         mov   @fb.topline,@edb.bk.fb.topline
-                                    ; Yes, save current line position
+                                      ; Backup @fb.topline
+        mov   @fb.row,@edb.bk.fb.row  ; Backup @fb.row
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
@@ -79,8 +80,13 @@ edkey.action.fb.load.file.exit1:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11 
+
         mov   @edb.bk.fb.topline,@parm1
-        b     @edkey.fb.goto.toprow ; Goto specifed line in editor buffer
+        mov   @edb.bk.fb.row,@parm2
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Goto top of file (TOF) and exit
         ;-------------------------------------------------------

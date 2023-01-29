@@ -119,9 +119,11 @@ edkey.action.block.delete:
                                     ; If yes, exit early
 
         mov   @fb.topline,@parm1
-        b     @edkey.fb.goto.toprow ; Position on top row in frame buffer
-                                    ; \ i  @parm1 = Line to display as top row
-                                    ; /
+        clr   @parm2                ; No row offset in frame buffer
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -161,9 +163,11 @@ edkey.action.block.move:
                                     ; If yes, exit early
 
         mov   @fb.topline,@parm1
-        b     @edkey.fb.goto.toprow ; Position on top row in frame buffer
-                                    ; \ i  @parm1 = Line to display as top row
-                                    ; /
+        clr   @parm2                ; No row offset in frame buffer
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -40,10 +40,11 @@ edkey.action.cmdb.load:
         ci    tmp0,id.special.mastcat ; / 
 
         jne   edkey.action.cmdb.load.file
-                                    ; No, just load file
+                                      ; No, just load file
 
         mov   @fb.topline,@edb.bk.fb.topline
-                                    ; Yes, save current line position
+                                      ; Backup @fb.topline
+        mov   @fb.row,@edb.bk.fb.row  ; Backup @fb.row                                    
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------

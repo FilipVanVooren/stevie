@@ -97,7 +97,8 @@ main:
         copy  "edkey.fb.misc.asm"           ; Miscelanneous actions
         copy  "edkey.fb.file.decinc.asm"    ; Filename increase/decrease suffix
         copy  "edkey.fb.file.load.asm"      ; Load file into editor
-        copy  "edkey.fb.file.predef.asm"    ; Load predefined file into editor
+        copy  "edkey.fb.file.load.mastcat.asm"  
+                                            ; Load master catalog file
         copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
         copy  "edkey.fb.tabs.asm"           ; tab-key related actions
         copy  "edkey.fb.clip.asm"           ; Clipboard actions

@@ -44,8 +44,11 @@ edkey.action.ppage.refresh:
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        jmp   edkey.fb.goto.toprow  ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
+        clr   @parm2                ; No row offset in frame buffer
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -95,8 +98,11 @@ edkey.action.npage.refresh:
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
-        jmp   edkey.fb.goto.toprow  ; \ Position cursor and exit
-                                    ; / i  @parm1 = Line in editor buffer
+        clr   @parm2                ; No row offset in frame buffer
+
+        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

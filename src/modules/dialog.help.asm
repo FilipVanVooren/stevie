@@ -218,7 +218,7 @@ dialog.help.data.page1.right:
         even
         stri 'Fctn 0   ^/   TI Basic'
         even
-        stri 'Ctrl 0   ^0   Open TIPI.MASTCAT'
+        stri 'Ctrl 0   ^0   Load master catalog'
         even
         stri 'Ctrl h   ^h   Help'
         even
