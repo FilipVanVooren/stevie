@@ -304,8 +304,8 @@ edb.filetype.ptr  equ  edb.struct + 22 ; Pointer to length-prefixed string
                                        ; with current file type.
 edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
 edb.sams.hipage   equ  edb.struct + 26 ; Highest SAMS page in use
-edb.fb.topline.bk equ  edb.struct + 28 ; Backup of @fb.topline before opening
-                                       ; other file when in master catalog.
+edb.bk.fb.topline equ  edb.struct + 28 ; Backup of @fb.topline before opening
+                                       ; other file if in master catalog.
 edb.special.file  equ  edb.struct + 30 ; Special file in editor buffer                                    
 edb.filename      equ  edb.struct + 32 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.

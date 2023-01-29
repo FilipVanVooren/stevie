@@ -34,13 +34,24 @@ edkey.action.cmdb.load:
               data cmdb.cmdlen,heap.top,80
                                     ; Copy filename from command line to buffer
         ;-------------------------------------------------------
+        ; Special handling Master Catalog
+        ;-------------------------------------------------------
+        mov   @edb.special.file,tmp0  ; \ Master catalog previously open?
+        ci    tmp0,id.special.mastcat ; / 
+
+        jne   edkey.action.cmdb.load.file
+                                    ; No, just load file
+
+        mov   @fb.topline,@edb.bk.fb.topline
+                                    ; Yes, save current line position
+        ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.cmdb.load.file:
+edkey.action.cmdb.load.file:        
+        clr   @edb.special.file     ; Reset special file flag
+
         li    tmp0,heap.top         ; Pass filename as parm1
         mov   tmp0,@parm1           ; (1st line in heap)
-
-        clr   @edb.special.file     ; Reset special file flag
 
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed

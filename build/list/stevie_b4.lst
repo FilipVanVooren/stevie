@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230128-2227410
+0002               * BUILD: 230129-1940210
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -486,8 +486,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0304                                                      ; with current file type.
 0305      A518     edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
 0306      A51A     edb.sams.hipage   equ  edb.struct + 26 ; Highest SAMS page in use
-0307      A51C     edb.fb.topline.bk equ  edb.struct + 28 ; Backup of @fb.topline before opening
-0308                                                      ; other file when in master catalog.
+0307      A51C     edb.bk.fb.topline equ  edb.struct + 28 ; Backup of @fb.topline before opening
+0308                                                      ; other file if in master catalog.
 0309      A51E     edb.special.file  equ  edb.struct + 30 ; Special file in editor buffer
 0310      A520     edb.filename      equ  edb.struct + 32 ; 80 characters inline buffer reserved
 0311                                                      ; for filename, but not always used.
@@ -6826,14 +6826,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049 3250 C804  38         mov   tmp0,@edb.filetype.ptr
      3252 A516     
 0050               
-0051               
-0052               edb.init.exit:
-0053                       ;------------------------------------------------------
-0054                       ; Exit
-0055                       ;------------------------------------------------------
-0056 3254 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0057 3256 C2F9  30         mov   *stack+,r11           ; Pop r11
-0058 3258 045B  20         b     *r11                  ; Return to caller
+0051               edb.init.exit:
+0052                       ;------------------------------------------------------
+0053                       ; Exit
+0054                       ;------------------------------------------------------
+0055 3254 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0056 3256 C2F9  30         mov   *stack+,r11           ; Pop r11
+0057 3258 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
 0013                       copy  "cmdb.asm"               ; Command buffer
      **** ****     > cmdb.asm
@@ -9398,9 +9397,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3D00 5253     
      3D02 3233     
      3D04 32       
-0012 3D05   0C     def.mastcat         stri 'TIPI.MASTCAT'
-     3D06 5449     
-     3D08 5049     
+0012 3D05   0C     def.mastcat         stri 'DSK1.MASTCAT'
+     3D06 4453     
+     3D08 4B31     
      3D0A 2E4D     
      3D0C 4153     
      3D0E 5443     
@@ -11889,11 +11888,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DSRLNK.SAVPAB....... >A42E :     
     DSRLNK.SAVVER....... >A430 :     
     EDB.AUTOINSERT...... >A50C :     
+    EDB.BK.FB.TOPLINE... >A51C :     
     EDB.BLOCK.M1........ >A50E :     
     EDB.BLOCK.M2........ >A510 :     
     EDB.BLOCK.VAR....... >A512 :     
     EDB.DIRTY........... >A506 :     
-    EDB.FB.TOPLINE.BK... >A51C :     
     EDB.FILENAME........ >A520 :     
     EDB.FILENAME.PTR.... >A514 :     
     EDB.FILETYPE.PTR.... >A516 :     

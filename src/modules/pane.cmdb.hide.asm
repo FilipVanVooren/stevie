@@ -24,6 +24,10 @@ pane.cmdb.hide:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
         ;------------------------------------------------------
         ; Hide command buffer pane
         ;------------------------------------------------------
@@ -80,6 +84,8 @@ pane.cmdb.hide.rest:
         ; Exit
         ;------------------------------------------------------
 pane.cmdb.hide.exit:
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

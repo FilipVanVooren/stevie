@@ -15,7 +15,7 @@
 * outparm1 = >FFFF if editor bufer dirty (does not load file)
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 fm.loadfile:
         dect  stack
@@ -26,7 +26,23 @@ fm.loadfile:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        ;-------------------------------------------------------
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
+        dect  stack
+        mov   @parm4,*stack         ; Push @parm4
+        dect  stack
+        mov   @parm5,*stack         ; Push @parm5
+        dect  stack
+        mov   @parm6,*stack         ; Push @parm6
+        dect  stack
+        mov   @parm7,*stack         ; Push @parm7
+        dect  stack
+        mov   @parm8,*stack         ; Push @parm8
+        ;-------------------------------------------------------        
         ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp1       ; Get dirty flag
@@ -153,6 +169,14 @@ fm.loadfile.clear:
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
+        mov   *stack+,@parm8        ; Pop @parm8
+        mov   *stack+,@parm7        ; Pop @parm7
+        mov   *stack+,@parm6        ; Pop @parm6
+        mov   *stack+,@parm5        ; Pop @parm5
+        mov   *stack+,@parm4        ; Pop @parm4
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0      

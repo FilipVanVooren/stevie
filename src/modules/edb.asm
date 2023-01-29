@@ -48,7 +48,6 @@ edb.init:
         li    tmp0,txt.filetype.none
         mov   tmp0,@edb.filetype.ptr
 
-
 edb.init.exit:
         ;------------------------------------------------------
         ; Exit
