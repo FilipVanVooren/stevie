@@ -17,7 +17,7 @@ edkey.action.fb.load.mastcat:
         li    tmp0,def.mastcat
         mov   tmp0,@parm1
         ;-------------------------------------------------------
-        ; About to load special file of type Master Catalog
+        ; Set special file type to 'Master Catalog'
         ;-------------------------------------------------------
         li    tmp0,id.special.mastcat
         mov   tmp0,@parm2

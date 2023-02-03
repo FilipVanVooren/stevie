@@ -32,7 +32,7 @@ edkey.action.cmdb.load:
 
         bl    @cpym2m
               data cmdb.cmdlen,heap.top,80
-                                    ; Copy filename from command line to buffer
+                                   ; Copy filename from command line to buffer
         ;-------------------------------------------------------
         ; Special handling Master Catalog
         ;-------------------------------------------------------
@@ -40,25 +40,28 @@ edkey.action.cmdb.load:
         ci    tmp0,id.special.mastcat ; / 
 
         jne   edkey.action.cmdb.load.file
-                                      ; No, just load file
+                                   ; No, just load file
 
         mov   @fb.topline,@edb.bk.fb.topline
-                                      ; Backup @fb.topline
-        mov   @fb.row,@edb.bk.fb.row  ; Backup @fb.row                                    
+                                   ; Backup @fb.topline
+        mov   @fb.row,@edb.bk.fb.row 
+                                   ; Backup @fb.row                          
+
+        clr   @edb.dirty           ; No confirmation, always load immediately.
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.cmdb.load.file:        
-        clr   @edb.special.file     ; Reset special file flag
+edkey.action.cmdb.load.file:       
+        clr   @edb.special.file    ; Reset special file flag
 
-        li    tmp0,heap.top         ; Pass filename as parm1
-        mov   tmp0,@parm1           ; (1st line in heap)
+        li    tmp0,heap.top        ; Pass filename as parm1
+        mov   tmp0,@parm1          ; (1st line in heap)
 
-        bl    @fm.loadfile          ; Load DV80 file
-                                    ; \ i  parm1 = Pointer to length-prefixed
-                                    ; /            device/filename string
+        bl    @fm.loadfile         ; Load DV80 file
+                                   ; \ i  parm1 = Pointer to length-prefixed
+                                   ; /            device/filename string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.load.exit:
-        b    @edkey.action.top      ; Goto 1st line in editor buffer 
+        b    @edkey.action.top     ; Goto 1st line in editor buffer 
