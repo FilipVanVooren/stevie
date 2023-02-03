@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230203-1933250
+0002               * BUILD: 230203-2119160
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -73,9 +73,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040               *--------------------------------------------------------------
 0041               * ROM layout
 0042               *--------------------------------------------------------------
-0043      7F50     bankx.crash.showbank      equ  >7f50   ; Show ROM bank in CPU crash screen
-0044      7F60     bankx.vdptab              equ  >7f60   ; VDP mode tables
-0045      7FC0     bankx.vectab              equ  >7fc0   ; Start address of vector table
+0043      7F00     bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
+0044      7F10     bankx.vdptab              equ  >7f10   ; VDP mode tables
+0045      7F40     bankx.vectab              equ  >7f40   ; Vector table
 0046      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
                    < stevie_b0.asm
 0026                       copy  "rom.order.asm"       ; ROM bank ordster "non-inverted"
@@ -166,7 +166,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047               *--------------------------------------------------------------
 0048      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
 0049      0004     spfbck  equ   >04                   ; Screen background color.
-0050      7F60     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0050      7F10     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 0051      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
 0052               
 0053      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
@@ -586,30 +586,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0402               *--------------------------------------------------------------
 0403               * Defaults area                       @>de00-dfff  (3584 bytes)
 0404               *--------------------------------------------------------------
-0405      DE00     tv.printer.fname  equ  >de00           ; Default printer   (80 char)
-0406      DE50     tv.clip.fname     equ  >de50           ; Default clipboard (80 char)
-0407               *--------------------------------------------------------------
-0408               * Command buffer history              @>e000-efff  (4096 bytes)
-0409               *--------------------------------------------------------------
-0410      E000     cmdb.top          equ  >e000           ; Top of command history buffer
-0411      1000     cmdb.size         equ  4096            ; Command buffer size
-0412               *--------------------------------------------------------------
-0413               * Heap                                @>f000-ffff  (4096 bytes)
-0414               *--------------------------------------------------------------
-0415      F000     heap.top          equ  >f000           ; Top of heap
-0416               
+0405      DE00     tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
+0406      DE50     tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
+0407      DEA0     tv.mastcat.fname  equ  >dea0           ; Default master catalog (80 bytes)
+0408               *--------------------------------------------------------------
+0409               * Command buffer history              @>e000-efff  (4096 bytes)
+0410               *--------------------------------------------------------------
+0411      E000     cmdb.top          equ  >e000           ; Top of command history buffer
+0412      1000     cmdb.size         equ  4096            ; Command buffer size
+0413               *--------------------------------------------------------------
+0414               * Heap                                @>f000-ffff  (4096 bytes)
+0415               *--------------------------------------------------------------
+0416      F000     heap.top          equ  >f000           ; Top of heap
 0417               
-0418               *--------------------------------------------------------------
-0419               * Stevie specific equates
-0420               *--------------------------------------------------------------
-0421      0000     fh.fopmode.none           equ  0       ; No file operation in progress
-0422      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-0423      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-0424      0005     cmdb.rows                 equ  5       ; Number of rows in CMDB pane
-0425      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
-0426               
-0427      9900     tv.colorize.reset         equ  >9900   ; Colorization off
-0428      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
+0418               
+0419               *--------------------------------------------------------------
+0420               * Stevie specific equates
+0421               *--------------------------------------------------------------
+0422      0000     fh.fopmode.none           equ  0       ; No file operation in progress
+0423      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
+0424      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+0425      0005     cmdb.rows                 equ  5       ; Number of rows in CMDB pane
+0426      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
+0427               
+0428      9900     tv.colorize.reset         equ  >9900   ; Colorization off
+0429      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
                    < stevie_b0.asm
 0029                       copy  "equates.c99.asm"     ; Classic99 emulator configuration
      **** ****     > equates.c99.asm
@@ -1715,7 +1716,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0222                       ; Kernel takes over
 0223                       ;------------------------------------------------------
 0224 623E 0460  28         b     @cpu.crash.showbank   ; Expected to be included in
-     6240 7F50     
+     6240 7F00     
 0225               
 0226               
 0227 6242 1553     cpu.crash.msg.crashed      stri 'System crashed near >'
@@ -6134,7 +6135,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0368               *--------------------------------------------------------------
 0369 7062 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
      7064 22F8     
-0370 7066 7F60             data  spvmod                ; Equate selected video mode table
+0370 7066 7F10             data  spvmod                ; Equate selected video mode table
 0371 7068 0204  20         li    tmp0,spfont           ; Get font option
      706A 0000     
 0372 706C 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
@@ -7177,7 +7178,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027 73F4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      73F6 2FCA     
 0028 73F8 600E                   data bank7.rom        ; | i  p0 = bank address
-0029 73FA 7FC0                   data bankx.vectab     ; | i  p1 = Vector with target address
+0029 73FA 7F40                   data bankx.vectab     ; | i  p1 = Vector with target address
 0030 73FC 6000                   data bankid           ; / i  p2 = Source ROM bank for return
 0031               
 0032                       ; We never return here. We call @mem.sams.set.legacy (vector1) and
@@ -8486,7 +8487,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               
 0029 7828 06A0  32         bl    @vidtab               ; Load video mode table into VDP
      782A 22F8     
-0030 782C 7F74                   data tibasic.32x24    ; Equate selected video mode table
+0030 782C 7F24                   data tibasic.32x24    ; Equate selected video mode table
 0031               
 0032 782E 06A0  32         bl    @scroff               ; Turn off screen
      7830 2686     
@@ -9687,17 +9688,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               ********|*****|*********************|**************************
 0007               cpu.crash.showbank:
 0008                       aorg  bankx.crash.showbank
-0009 7F50 06A0  32         bl    @putat
-     7F52 2442     
-0010 7F54 0314                   byte 3,20
-0011 7F56 7F5A                   data cpu.crash.showbank.bankstr
-0012 7F58 10FF  14         jmp   $
+0009 7F00 06A0  32         bl    @putat
+     7F02 2442     
+0010 7F04 0314                   byte 3,20
+0011 7F06 7F0A                   data cpu.crash.showbank.bankstr
+0012 7F08 10FF  14         jmp   $
                    < stevie_b0.asm
 0154               
 0155               cpu.crash.showbank.bankstr:
-0156 7F5A 0552             stri 'ROM#0'
-     7F5C 4F4D     
-     7F5E 2330     
+0156 7F0A 0552             stri 'ROM#0'
+     7F0C 4F4D     
+     7F0E 2330     
 0157               
 0158               
 0159                       ;-----------------------------------------------------------------------
@@ -9738,11 +9739,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031               * ; VDP#7 Set foreground/background color
 0032               ***************************************************************
 0033               stevie.80x30:
-0034 7F60 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
-     7F62 003F     
-     7F64 0243     
-     7F66 05F4     
-     7F68 0050     
+0034 7F10 04F0             byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
+     7F12 003F     
+     7F14 0243     
+     7F16 05F4     
+     7F18 0050     
 0035               
 0036               
 0037               ***************************************************************
@@ -9769,11 +9770,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0058               * ; VDP#7 Set foreground/background color
 0059               ***************************************************************
 0060               stevie.80x60:
-0061 7F6A 04F0             byte  >04,>f0,>00,>3f,>06,>74,>07,SPFCLR,0,80
-     7F6C 003F     
-     7F6E 0674     
-     7F70 07F4     
-     7F72 0050     
+0061 7F1A 04F0             byte  >04,>f0,>00,>3f,>06,>74,>07,SPFCLR,0,80
+     7F1C 003F     
+     7F1E 0674     
+     7F20 07F4     
+     7F22 0050     
 0062               
 0063               
 0064               
@@ -9781,11 +9782,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0066               * TI Basic mode (32 columns/24 rows)
 0067               *--------------------------------------------------------------
 0068               tibasic.32x24:
-0069 7F74 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     7F76 000C     
-     7F78 0006     
-     7F7A 0007     
-     7F7C 0020     
+0069 7F24 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     7F26 000C     
+     7F28 0006     
+     7F2A 0007     
+     7F2C 0020     
 0070               *
 0071               * ; VDP#0 Control bits
 0072               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -9815,11 +9816,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0096               * TI Basic mode (32 columns/30 rows) - F18A
 0097               *--------------------------------------------------------------
 0098               tibasic.32x30:
-0099 7F7E 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     7F80 000C     
-     7F82 0006     
-     7F84 0007     
-     7F86 0020     
+0099 7F2E 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     7F30 000C     
+     7F32 0006     
+     7F34 0007     
+     7F36 0020     
 0100               *
 0101               * ; VDP#0 Control bits
 0102               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -9864,9 +9865,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     BANK7.RAM........... >680E :     
     BANK7.ROM........... >600E :     
     BANKID.............. >6000 :     
-    BANKX.CRASH.SHOWBANK >7F50 :     
-    BANKX.VDPTAB........ >7F60 :     
-    BANKX.VECTAB........ >7FC0 :     
+    BANKX.CRASH.SHOWBANK >7F00 :     
+    BANKX.VDPTAB........ >7F10 :     
+    BANKX.VECTAB........ >7F40 :     
     BTIHI............... >8314 :     
     BVDPST.............. >831A :     
     BX.................. >832B :     
@@ -9986,8 +9987,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPU.CRASH.MSG.ST.... >21BA :     
     CPU.CRASH.MSG.WP.... >21B4 :     
     CPU.CRASH.RESET..... >2076 :     
-    CPU.CRASH.SHOWBANK.. >7F50 :     
-    CPU.CRASH.SHOWBANK.BANKSTR >7F5A :     
+    CPU.CRASH.SHOWBANK.. >7F00 :     
+    CPU.CRASH.SHOWBANK.BANKSTR >7F0A :     
     CPU.CRASH.SHOWREG... >20EC :     
     CPU.CRASH.SHOWREG.CONTENT >2142 :     
     CPU.CRASH.SHOWREG.LABEL >20FA :     
@@ -10704,11 +10705,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     SPRITECURSOR........ >0001 :     
     SPRPDT.............. >2800 :     
     SPRSAT.............. >2180 :     
-    SPVMOD.............. >7F60 :     
+    SPVMOD.............. >7F10 :     
     STACK............... >0009 :     
     STARTUP_KEEP_VDPMEMORY >0001 :     
-    STEVIE.80X30........ >7F60 :     
-    STEVIE.80X60........ >7F6A :     
+    STEVIE.80X30........ >7F10 :     
+    STEVIE.80X60........ >7F1A :     
     STRING.GETLENC...... >2A9A :     
     STRING.GETLENC.EXIT. >2AE6 :     
     STRING.GETLENC.LOOP. >2AC8 :     
@@ -10762,8 +10763,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TIB.VAR7............ >A0F8 :     
     TIB.VAR8............ >A0FA :     
     TIB.VAR9............ >A0FC :     
-    TIBASIC.32X24....... >7F74 :     
-    TIBASIC.32X30....... >7F7E :     
+    TIBASIC.32X24....... >7F24 :     
+    TIBASIC.32X30....... >7F2E :     
     TIMERS.............. >A064 :     
     TMDAT............... >2EA0 :     
     TMGR................ >2E04 :     
@@ -10825,6 +10826,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.INIT............. >32E6 :     
     TV.INIT.EXIT........ >3326 :     
     TV.MARKCOLOR........ >A21A :     
+    TV.MASTCAT.FNAME.... >DEA0 :     
     TV.PAD.STRING....... >342C :     
     TV.PAD.STRING.EXIT.. >3498 :     
     TV.PAD.STRING.LOOP.. >3482 :     

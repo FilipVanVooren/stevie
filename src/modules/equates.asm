@@ -402,8 +402,9 @@ fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 *--------------------------------------------------------------
 * Defaults area                       @>de00-dfff  (3584 bytes)
 *--------------------------------------------------------------
-tv.printer.fname  equ  >de00           ; Default printer   (80 char)
-tv.clip.fname     equ  >de50           ; Default clipboard (80 char)
+tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
+tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
+tv.mastcat.fname  equ  >dea0           ; Default master catalog (80 bytes)
 *--------------------------------------------------------------
 * Command buffer history              @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------

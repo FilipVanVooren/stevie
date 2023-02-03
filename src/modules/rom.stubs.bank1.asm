@@ -509,6 +509,17 @@ fm.fastmode.vector:
         data  vec.32
 
 
+**************************************************************
+* Stub for "cmdb.cfg.fname"
+* bank3 vec.33
+********|*****|*********************|**************************
+cmdb.cfg.fname:
+        mov   @cmdb.cfg.fname.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+cmdb.cfg.fname.vector:
+        data  vec.33
+
+
 ***************************************************************
 * Trampoline bank 3 with return
 ********|*****|*********************|**************************

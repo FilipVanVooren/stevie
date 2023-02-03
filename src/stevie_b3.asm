@@ -102,10 +102,11 @@ main:
         copy  "cmdb.cmd.asm"          ; Command line handling
         copy  "cmdb.cmd.set.asm"      ; Set command line to preset value
         copy  "cmdb.cmd.preset.asm"   ; Preset shortcuts in dialogs
+        copy  "cmdb.cfg.fname.asm"    ; Configure filename
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------
-        copy  "fm.fastmode.asm"     ; Toggle fastmode on/off for file operation
+        copy  "fm.fastmode.asm"      ; Toggle fastmode on/off for file operation
         copy  "tib.dialog.helper.asm"
                                     ; Helper functions for TI Basic dialog
         ;-----------------------------------------------------------------------
@@ -121,7 +122,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
-        .ifgt $, >7f4f
+        .ifge $, >7f00
               .error 'Aborted. Bank 3 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
