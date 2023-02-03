@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#shellcheck disable=SC1091,SC2086,SC2181
+# shellcheck disable=SC1091,SC2086,SC2181
 
 source helper.sh
 
@@ -9,7 +9,7 @@ IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 # Variables
 marker="***************************************************************"
 vdate="$(date '+%y%m%d-%H%M%S0')"          # Current date & time format 1
-start="$(date +%s%N | cut -b1-13)"
+start=$EPOCHREALTIME                       # High resolution, bash >5.x required
 
 # Check if xas99.py available
 xas99found="$(which xas99.py)" || true
@@ -85,9 +85,8 @@ for pid in "${pids[@]}"; do
 done
 
 # Write time spend
-now=$(date +%s%N | cut -b1-13)
-dur=$((now-start))
-log "    Time spend: $dur ms"
+dur=$(echo "$EPOCHREALTIME-$start" | bc)
+log "    Time spend: $dur seconds"
 
 # Exit with error if any of the processes returned > 0
 for excode in "${exits[@]}"; do

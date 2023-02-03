@@ -7,10 +7,9 @@ source helper.sh
 # Variables
 image="$1"
 shift
-start="$(date +%s%N | cut -b1-13)"
+start=$EPOCHREALTIME                       # High resolution, bash >5.x required
 
 log "Concatenating binaries to final binary $image"
-
 rm -f "$image"
 
 for bin in "$@";
@@ -29,9 +28,6 @@ do
 done
 
 # Write time spend
-now=$(date +%s%N | cut -b1-13)
-dur=$((now-start))
-log "    Time spend: $dur ms"
-
-
+dur=$(echo "$EPOCHREALTIME-$start" | bc)
+log "    Time spend: $dur seconds"
 log "Concatenation done."
