@@ -1,20 +1,20 @@
-* FILE......: edkey.fb.file.load.mastcat.asm
-* Purpose...: Load predefined file into editor
+* FILE......: edkey.fb.file.load.mc.asm
+* Purpose...: Load Master Catalog into editor
 
 ***************************************************************
-* edkey.action.fb.load.mastcat
+* edkey.action.fb.load.mc
 * Load master catalog into editor
 ***************************************************************
-* b  @edkey.action.fb.load.mastcat
+* b  @edkey.action.fb.load.mc
 *--------------------------------------------------------------
 * INPUT
 * none
 ********|*****|*********************|**************************
-edkey.action.fb.load.mastcat:
+edkey.action.fb.load.mc:
         ;-------------------------------------------------------
         ; Set filename
         ;-------------------------------------------------------
-        li    tmp0,def.mastcat
+        li    tmp0,tv.mc.fname
         mov   tmp0,@parm1
         ;-------------------------------------------------------
         ; Set special file type to 'Master Catalog'

@@ -1,10 +1,10 @@
-* FILE......: edkey.cmdb.cfg.clip.asm
-* Purpose...: Configure clipboard
+* FILE......: edkey.cmdb.cfg.mc.asm
+* Purpose...: Configure Master Catalog
 
 *---------------------------------------------------------------
-* Configure clipboard
+* Configure Master Catalog
 *---------------------------------------------------------------
-edkey.action.cmdb.cfg.clip:
+edkey.action.cmdb.cfg.mc:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -12,10 +12,10 @@ edkey.action.cmdb.cfg.clip:
         ;-------------------------------------------------------
         ; Set filename
         ;-------------------------------------------------------
-        li    tmp0,tv.clip.fname    ; \
-        mov   tmp0,@parm1           ; / Pointer clipboard filename buffer
+        li    tmp0,tv.mc.fname      ; \ 
+        mov   tmp0,@parm1           ; / Pointer Master Catalog filename buffer
 
-        li    tmp0,txt.done.clipdev ; \
+        li    tmp0,txt.done.mc      ; \
         mov   tmp0,@parm2           ; / Message to display when done
         ;-------------------------------------------------------
         ; Set filename
@@ -26,7 +26,7 @@ edkey.action.cmdb.cfg.clip:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.cfg.clip.exit:
+edkey.action.cmdb.cfg.mc.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     @edkey.action.top     ; Goto 1st line in editor buffer 

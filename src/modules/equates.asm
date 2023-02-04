@@ -61,6 +61,7 @@ id.dialog.append          equ  14      ; "Append file"
 id.dialog.print           equ  15      ; "Print file"
 id.dialog.printblock      equ  16      ; "Print block"
 id.dialog.cfg.clip        equ  17      ; "Configure clipboard"
+id.dialog.cfg.mc          equ  18      ; "Configure Master Catalog"
 id.dialog.goto            equ  19      ; "Goto"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
@@ -396,7 +397,7 @@ edb.size          equ  4096            ; Editor buffer size
 * Frame buffer & uncrunch area        @>d000-dcff  (3584 bytes)
 *--------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (2400 char)
-fb.size           equ  80*48           ; Frame buffer size
+fb.size           equ  80*30           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
 *--------------------------------------------------------------
@@ -404,7 +405,7 @@ fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 *--------------------------------------------------------------
 tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
-tv.mastcat.fname  equ  >dea0           ; Default master catalog (80 bytes)
+tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 *--------------------------------------------------------------
 * Command buffer history              @>e000-efff  (4096 bytes)
 *--------------------------------------------------------------

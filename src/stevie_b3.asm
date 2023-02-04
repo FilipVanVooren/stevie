@@ -71,49 +71,49 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files - Dialogs
         ;-----------------------------------------------------------------------
-        copy  "dialog.menu.asm"      ; Dialog "Stevie Menu"
-        copy  "dialog.help.asm"      ; Dialog "Help"
-        copy  "dialog.file.asm"      ; Dialog "File"
-        copy  "dialog.cartridge.asm" ; Dialog "Cartridge"
-        copy  "dialog.load.asm"      ; Dialog "Load file"
-        copy  "dialog.save.asm"      ; Dialog "Save file"
-        copy  "dialog.print.asm"     ; Dialog "Print file"
-        copy  "dialog.append.asm"    ; Dialog "Append file"
-        copy  "dialog.insert.asm"    ; Dialog "Insert file at line"
-        copy  "dialog.cfg.asm"       ; Dialog "Configure"
-        copy  "dialog.cfg.clip.asm"  ; Dialog "Configure clipboard"
-        copy  "dialog.editor.asm"    ; Dialog "Configure editor"
-        copy  "dialog.font.asm"      ; Dialog "Configure font"
-        copy  "dialog.clipboard.asm" ; Dialog "Copy from clipboard"
-        copy  "dialog.unsaved.asm"   ; Dialog "Unsaved changes"
-        copy  "dialog.basic.asm"     ; Dialog "Basic"
-        copy  "dialog.shortcuts.asm" ; Dialog "Shortcuts"
-        copy  "dialog.goto.asm"      ; Dialog "Goto"
+        copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
+        copy  "dialog.help.asm"         ; Dialog "Help"
+        copy  "dialog.file.asm"         ; Dialog "File"
+        copy  "dialog.cartridge.asm"    ; Dialog "Cartridge"
+        copy  "dialog.load.asm"         ; Dialog "Load file"
+        copy  "dialog.save.asm"         ; Dialog "Save file"
+        copy  "dialog.print.asm"        ; Dialog "Print file"
+        copy  "dialog.append.asm"       ; Dialog "Append file"
+        copy  "dialog.insert.asm"       ; Dialog "Insert file at line"
+        copy  "dialog.cfg.asm"          ; Dialog "Configure"
+        copy  "dialog.cfg.clip.asm"     ; Dialog "Configure clipboard"
+        copy  "dialog.cfg.mc.asm"       ; Dialog "Configure Master Catalog"
+        copy  "dialog.editor.asm"       ; Dialog "Configure editor"
+        copy  "dialog.font.asm"         ; Dialog "Configure font"
+        copy  "dialog.clipboard.asm"    ; Dialog "Copy from clipboard"
+        copy  "dialog.unsaved.asm"      ; Dialog "Unsaved changes"
+        copy  "dialog.basic.asm"        ; Dialog "Basic"
+        copy  "dialog.shortcuts.asm"    ; Dialog "Shortcuts"
+        copy  "dialog.goto.asm"         ; Dialog "Goto"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.hint.asm"   ; Show hint in pane
-        copy  "pane.utils.dialog.asm" ; Dialog utility functions        
-        copy  "pane.cmdb.show.asm"    ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"    ; Hide command buffer pane
-        copy  "pane.cmdb.draw.asm"    ; Draw command buffer pane contents
-        copy  "error.display.asm"     ; Show error message
-        copy  "cmdb.refresh.asm"      ; Refresh command buffer contents
-        copy  "cmdb.cmd.asm"          ; Command line handling
-        copy  "cmdb.cmd.set.asm"      ; Set command line to preset value
-        copy  "cmdb.cmd.preset.asm"   ; Preset shortcuts in dialogs
-        copy  "cmdb.cfg.fname.asm"    ; Configure filename
+        copy  "pane.utils.hint.asm"     ; Show hint in pane
+        copy  "pane.utils.dialog.asm"   ; Dialog utility functions        
+        copy  "pane.cmdb.show.asm"      ; Show command buffer pane
+        copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane
+        copy  "pane.cmdb.draw.asm"      ; Draw command buffer pane contents
+        copy  "error.display.asm"       ; Show error message
+        copy  "cmdb.refresh.asm"        ; Refresh command buffer contents
+        copy  "cmdb.cmd.asm"            ; Command line handling
+        copy  "cmdb.cmd.set.asm"        ; Set command line to preset value
+        copy  "cmdb.cmd.preset.asm"     ; Preset shortcuts in dialogs
+        copy  "cmdb.cfg.fname.asm"      ; Configure filename
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------
-        copy  "fm.fastmode.asm"      ; Toggle fastmode on/off for file operation
-        copy  "tib.dialog.helper.asm"
-                                    ; Helper functions for TI Basic dialog
+        copy  "fm.fastmode.asm"         ; Toggle Fastmode IO for file operation
+        copy  "tib.dialog.helper.asm"   ; Helper functions for TI Basic dialog
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank3.asm" ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+        copy  "rom.stubs.bank3.asm"     ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"     ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------

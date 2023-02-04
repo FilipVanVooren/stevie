@@ -212,8 +212,8 @@ txt.head.config    byte 12,1,1
                    text ' Options '
                    byte 1
 
-txt.info.config    stri 'Clipboard   Font'
-pos.info.config    byte 0,12,>ff
+txt.info.config    stri 'Clipboard   Font   Master-Catalog'
+pos.info.config    byte 0,12,19,>ff
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 
 ;--------------------------------------------------------------
@@ -237,6 +237,16 @@ pos.info.font      byte 7,11,15,19,23,>ff
 
 txt.hint.font      stri 'Pick desired font 1-5. Default font is 1.'
 txt.keys.font      stri 'F9-Back  SPACE-Close menu'
+
+
+;--------------------------------------------------------------
+; Dialog "Configure Master Catalog"
+;--------------------------------------------------------------
+txt.head.cfg.mc    byte 29,1,1
+                   text ' Configure Master Catalog '
+                   byte 1
+txt.hint.cfg.mc    stri 'Give device, path and filename of Master Catalog file.'
+txt.keys.cfg.mc    stri 'F9-Back  F3-Clear  ^A=DSK1.MASTCAT  ^B=DSK6.MASTCAT    ^C=TIPI.MASTCAT'
 
 
 ;--------------------------------------------------------------

@@ -27,7 +27,7 @@ session-, SAMS banks are configured as follows:
 
   |  >2000 | >3000 | >a000 | >b000  | >c000  | >d000 | >e000 | >f000 |
   |--------|-------|-------|--------|--------|-------|-------|-------|
-  |   >02  |  >03  |  >0a  | >20-2f | >40-ff |  >0d  |  >0e  |  >0f  |
+  |   >02  |  >03  |  >0a  | >20-2f | >40-ff |  >05  |  >06  |  >07  |
 
   Note that during index reorganization (e.g. when inserting/removing a line),
   sequential index pages are aditionally paged-in at >c000, >d000, >e000, >f000.
@@ -56,7 +56,7 @@ session-, SAMS banks are configured as follows:
 
   |  >2000 | >3000 | >a000 | >b000  | >c000  | >d000 | >e000 | >f000 |
   |--------|-------|-------|--------|--------|-------|-------|-------|
-  |   >02  |  >03  |  >0a  | >20-2f | >40-ff |  >0d  |  >0e  |  >0f  |
+  |   >02  |  >03  |  >0a  | >20-2f | >40-ff |  >05  |  >06  |  >07  |
 
 
 ## External program

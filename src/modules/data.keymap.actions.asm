@@ -151,7 +151,7 @@ keymap_actions.editor:
         data  tibasic
 
         byte  key.ctrl.0, pane.focus.fb
-        data  edkey.action.fb.load.mastcat
+        data  edkey.action.fb.load.mc
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
@@ -295,7 +295,10 @@ keymap_actions.cmdb:
         data  dialog.clipdev
         
         byte  key.uc.f, id.dialog.cfg
-        data  dialog.font        
+        data  dialog.font
+
+        byte  key.uc.m, id.dialog.cfg
+        data  dialog.cfg.mc
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
@@ -318,6 +321,11 @@ keymap_actions.cmdb:
 
         byte  key.num.5, id.dialog.font
         data  edkey.action.cmdb.font5
+        ;-------------------------------------------------------
+        ; Dialog: Configure Master Catalog
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.cfg.mc
+        data  edkey.action.cmdb.cfg.mc
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------

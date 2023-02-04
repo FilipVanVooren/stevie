@@ -318,6 +318,17 @@ dialog.font.vector:
 
 
 ***************************************************************
+* Stub for dialog "Configure Master Catalog"
+* bank3 vec.18
+********|*****|*********************|**************************
+dialog.cfg.mc:
+        mov   @dialog.cfg.mc.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.cfg.mc.vector:
+        data  vec.18
+
+
+***************************************************************
 * Stub for dialog "Main Menu"
 * bank3 vec.30
 ********|*****|*********************|**************************
@@ -364,15 +375,6 @@ _trampoline.bank3:
                                     ; Show dialog in CMDB pane
 
 
-***************************************************************
-* Stub for "error.display"
-* bank3 vec.18
-********|*****|*********************|**************************
-error.display:
-        mov   @error.display.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
-error.display.vector:
-        data  vec.18
 
 
 ***************************************************************
@@ -518,6 +520,18 @@ cmdb.cfg.fname:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cfg.fname.vector:
         data  vec.33
+
+
+***************************************************************
+* Stub for "error.display"
+* bank3 vec.48
+********|*****|*********************|**************************
+error.display:
+        mov   @error.display.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+error.display.vector:
+        data  vec.48
+
 
 
 ***************************************************************

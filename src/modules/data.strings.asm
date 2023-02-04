@@ -55,6 +55,8 @@ txt.done.clipboard stri 'Clipboard saved'
                    even
 txt.done.clipdev   stri 'Clipboard set'
                    even
+txt.done.mc        stri 'Master Catalog set'
+                   even
 txt.autoins.on     stri 'Autoinsert: on'
                    even
 txt.autoins.off    stri 'Autoinsert: off'

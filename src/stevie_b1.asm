@@ -97,8 +97,7 @@ main:
         copy  "edkey.fb.misc.asm"           ; Miscelanneous actions
         copy  "edkey.fb.file.decinc.asm"    ; Filename increase/decrease suffix
         copy  "edkey.fb.file.load.asm"      ; Load file into editor
-        copy  "edkey.fb.file.load.mastcat.asm"  
-                                            ; Load master catalog file
+        copy  "edkey.fb.file.load.mc.asm"   ; Load Master Catalog into editor
         copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
         copy  "edkey.fb.tabs.asm"           ; tab-key related actions
         copy  "edkey.fb.clip.asm"           ; Clipboard actions
@@ -109,6 +108,7 @@ main:
         copy  "edkey.cmdb.mod.asm"          ; Actions for modifier keys
         copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
         copy  "edkey.cmdb.cfg.clip.asm"     ; Configure clipboard
+        copy  "edkey.cmdb.cfg.mc.asm"       ; Configure Master Catalog        
         copy  "edkey.cmdb.file.new.asm"     ; New file
         copy  "edkey.cmdb.file.load.asm"    ; Open file
         copy  "edkey.cmdb.file.insert.asm"  ; Insert file
