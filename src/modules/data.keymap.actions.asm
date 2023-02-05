@@ -356,16 +356,16 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Cartridge
         ;-------------------------------------------------------
-        byte  key.uc.f, id.dialog.cartridge
-        data  fg99.run.fcmd
-
         byte  key.uc.x, id.dialog.cartridge
         data  fg99.run.xbgem
 
         byte  key.uc.r, id.dialog.cartridge
         data  fg99.run.rxb
 
-        byte  key.uc.o, id.dialog.cartridge
+        byte  key.uc.c, id.dialog.cartridge
+        data  fg99.run.fcmd
+
+        byte  key.uc.f, id.dialog.cartridge
         data  fg99.run.fbforth
         ;-------------------------------------------------------
         ; Dialog: Basic
