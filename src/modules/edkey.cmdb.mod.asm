@@ -70,13 +70,10 @@ edkey.action.cmdb.char:
         jgt   edkey.action.cmdb.char.exit
                                     ; Yes, skip
 
-        ci    tmp0,96               ; ASCII 97 'a'
-        jlt   !
-        ai    tmp0,-32              ; Make uppercase
         ;-------------------------------------------------------
         ; Add character
         ;-------------------------------------------------------
-!       mov   tmp0,tmp1             ; \ 
+        mov   tmp0,tmp1             ; \ 
         sla   tmp1,8                ; / Move keycode to MSB 
 
         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)

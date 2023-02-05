@@ -185,8 +185,8 @@ txt.head.cartridge byte 14,1,1
 
 txt.info.cartridge stri 'XB-GEM   RXB   FCMD   fbForth'
 pos.info.cartridge byte 0,9,15,22,>ff
-txt.hint.cartridg2 stri ' '
-txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared SD card required.'
+txt.hint.cartridg2 stri 'Danger zone! FinalGROM with prepared SD card required:'
+txt.hint.cartridge stri 'XB29GEM[C,G].bin  RXB[C,G].bin  FCMD[C,G].bin  FBFORTHC.bin'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 
