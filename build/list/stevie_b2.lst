@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230205-1811490
+0002               * BUILD: 230205-1844400
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -886,12 +886,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0B53                 stri 'STEVIE 1.4F'
+0055 6028 0B53                 stri 'STEVIE 1.4G'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
-     6032 3446     
+     6032 3447     
 0057               
 0061               
 0065               
@@ -12040,8 +12040,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0295                       ;------------------------------------------------------
 0296 6ACC 06A0  32         bl    @hchar
      6ACE 27D2     
-0297 6AD0 1D00                   byte pane.botrow,0,32,75
-     6AD2 204B     
+0297 6AD0 1D00                   byte pane.botrow,0,32,72
+     6AD2 2048     
 0298 6AD4 FFFF                   data EOL              ; Erase indicator in bottom row
 0299               
 0300 6AD6 C820  54         mov   @tv.color,@parm1      ; Set normal color

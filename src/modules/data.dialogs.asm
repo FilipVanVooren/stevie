@@ -8,27 +8,27 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.4F  '
+            text '  Stevie 1.4G  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.4FC  '     
+            text ' Stevie 1.4GC  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.4F-24'
+            text ' Stevie 1.4G-24'
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.4F-24C'  
+            text ' Stevie 1.4G-24C'  
             even
         .endif
 
         .ifeq vdpmode, 6081
-            text ' Stevie 1.4F-60'
+            text ' Stevie 1.4G-60'
             even
         .endif
 
@@ -265,13 +265,13 @@ txt.keys.editor    stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Shortcuts"
 ;--------------------------------------------------------------
-txt.head.shortcuts byte 21,1,1
-                   text ' Editor shortcuts '
+txt.head.shortcuts byte 14,1,1
+                   text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto'
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto   Master-Catalog'
                    even
-pos.info.shortcuts byte 0,9,17,31,34,38,>ff
+pos.info.shortcuts byte 0,9,17,31,34,38,45,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

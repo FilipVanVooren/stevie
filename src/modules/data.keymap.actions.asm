@@ -410,6 +410,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.g, id.dialog.shortcuts
         data  dialog.goto
+
+        byte  key.uc.m, id.dialog.shortcuts
+        data  edkey.action.fb.load.mc              
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------
@@ -465,6 +468,9 @@ keymap_actions.cmdb:
 
         byte  key.ctrl.z, pane.focus.cmdb
         data  pane.action.colorscheme.cycle
+
+        byte  key.ctrl.0, pane.focus.cmdb
+        data  edkey.action.fb.load.mc        
         ;------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
