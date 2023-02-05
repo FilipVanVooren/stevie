@@ -89,6 +89,8 @@ fm.loadfile.clear:
         seto  @parm2                ; Skip marked lines colorization
         clr   @parm3                ; Colorize all panes
 
+        clr   @tv.error.visible     ; No error message/pane
+
         bl    @pane.action.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF

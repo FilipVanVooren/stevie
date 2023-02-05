@@ -26,7 +26,6 @@ fm.loadsave.cb.indicator1:
               byte pane.botrow,0,32,55
               data EOL              ; Clear hint on bottom row
 
-
         dect  stack        
         mov   @parm1,*stack         ; Push @parm1
 

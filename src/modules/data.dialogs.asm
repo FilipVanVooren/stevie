@@ -240,26 +240,13 @@ txt.keys.font      stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------
-; Dialog "Configure Master Catalog"
+; Dialog "Configure Master-Catalog"
 ;--------------------------------------------------------------
 txt.head.cfg.mc    byte 29,1,1
-                   text ' Configure Master Catalog '
+                   text ' Configure Master-Catalog '
                    byte 1
-txt.hint.cfg.mc    stri 'Give device, path and filename of Master Catalog file.'
+txt.hint.cfg.mc    stri 'Give device, path and filename of Master-Catalog file.'
 txt.keys.cfg.mc    stri 'F9-Back  F3-Clear  ^A=DSK1.MASTCAT  ^B=DSK6.MASTCAT    ^C=TIPI.MASTCAT'
-
-
-;--------------------------------------------------------------
-; Dialog "Configure editor"
-;--------------------------------------------------------------
-txt.head.editor    byte 21,1,1
-                   text ' Configure editor '
-                   byte 1
-txt.info.editor    stri 'AutoInsert: Yes/No'
-pos.info.editor    byte 12,16,>ff
-
-txt.hint.editor    stri 'Select editor preferences.'
-txt.keys.editor    stri 'F9-Back  SPACE-Close menu'
 
 
 ;--------------------------------------------------------------

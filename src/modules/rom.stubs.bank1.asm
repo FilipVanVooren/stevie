@@ -285,17 +285,6 @@ dialog.shortcuts.vector:
 
 
 ***************************************************************
-* Stub for dialog "Configure editor"
-* bank3 vec.15
-********|*****|*********************|**************************
-dialog.editor:
-        mov   @dialog.editor.vector,@trmpvector
-        jmp   _trampoline.bank3     ; Show dialog
-dialog.editor.vector:
-        data  vec.15
-
-
-***************************************************************
 * Stub for dialog "Go to line"
 * bank3 vec.16
 ********|*****|*********************|**************************
