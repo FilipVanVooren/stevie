@@ -56,7 +56,7 @@ rom.program2:
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            stri 'STEVIE 1.4F*'     
+            stri 'STEVIE 1.4FC'     
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
@@ -64,7 +64,7 @@ rom.program2:
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            stri 'STEVIE 1.4F-24*'  
+            stri 'STEVIE 1.4F-24C'  
         .endif
 
         .ifeq vdpmode, 6081

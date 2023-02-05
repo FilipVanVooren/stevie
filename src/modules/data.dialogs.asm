@@ -13,7 +13,7 @@ txt.stevie:
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.4F*  '     
+            text ' Stevie 1.4FC  '     
             even
         .endif
 
@@ -23,7 +23,7 @@ txt.stevie:
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.4F-24*'  
+            text ' Stevie 1.4F-24C'  
             even
         .endif
 
@@ -186,7 +186,7 @@ txt.head.cartridge byte 14,1,1
 txt.info.cartridge stri 'XB-GEM   RXB   FCMD   fbForth'
 pos.info.cartridge byte 0,9,15,22,>ff
 txt.hint.cartridg2 stri ' '
-txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared SD card required (except for TI Basic)'
+txt.hint.cartridge stri 'Danger zone! FinalGROM with prepared SD card required.'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 
 

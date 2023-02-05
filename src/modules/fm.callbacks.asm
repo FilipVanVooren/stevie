@@ -294,7 +294,7 @@ fm.loadsave.cb.indicator3:
         ; Restore status line colors
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,50       
+              byte pane.botrow,0,32,75       
               data EOL              ; Erase indicator in bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
