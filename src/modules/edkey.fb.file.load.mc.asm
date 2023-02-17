@@ -25,3 +25,7 @@ edkey.action.fb.load.mc:
         ; Load file
         ;-------------------------------------------------------
         b     @edkey.action.fb.load.file
+                                    ; \ Load file into editor
+                                    ; | i  @parm1 = Pointer to filename string
+                                    ; | i  @parm2 = Type of special file to load
+                                    ; /

@@ -29,10 +29,17 @@ fb.vdpdump:
         ;------------------------------------------------------
         ; Assert
         ;------------------------------------------------------ 
+        .ifeq vdpmode, 6081
+
+        jmp   !
+
+        .else
+
         mov   @parm1,tmp1
-;        ci    tmp1,80*30
-;        jle   ! 
-        jmp !
+        ci    tmp1,80*30
+        jle   ! 
+
+        .endif
         ;------------------------------------------------------
         ; Crash the system
         ;------------------------------------------------------
@@ -56,7 +63,7 @@ fb.vdpdump.calc:
         mov   @fb.top.ptr,tmp1      ; RAM Source address
 
         ci    tmp2,0                ; \ Exit early if nothing to copy
-        jeq   fb.vdpdump.exit       ; / 
+        jeq   fb.vdpdump.exit       ; /         
 
         bl    @xpym2v               ; Copy to VDP
                                     ; \ i  tmp0 = VDP target address

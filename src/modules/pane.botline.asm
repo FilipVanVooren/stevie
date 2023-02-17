@@ -21,8 +21,25 @@ pane.botline:
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
+        ; Show Master Catalog message if on
+        ;------------------------------------------------------
+pane.botline.mc:        
+        mov   @edb.special.file,tmp0
+                                    ; \ 
+                                    ; / Check if special file (0=normal file)
+                                       
+        ci    tmp0,id.special.mastcat 
+                                    ; Is master catalog?
+        jne   pane.botline.shortcuts
+                                    ; No, skip message
+
+        bl    @putat
+              byte pane.botrow-1,0  
+              data txt.msg.mastcat  ; Show Master Catalog message
+        ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
+pane.botline.shortcuts:        
         mov   @edb.block.m2,tmp0    ; \
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /

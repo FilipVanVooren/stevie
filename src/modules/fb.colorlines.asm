@@ -8,7 +8,8 @@
 * bl @fb.colorlines
 *--------------------------------------------------------------
 * INPUT
-* @parm1 = Force refresh if >ffff
+* @parm1       = Force refresh if >ffff (overrides @fb.colorize)
+* @fb.colorize = Colorize frame buffer content if >ffff
 *--------------------------------------------------------------
 * OUTPUT
 * none

@@ -106,9 +106,12 @@ pane.vdpdump.cmdb.draw.content:
 !       mov   @fb.dirty,tmp0        ; Is frame buffer dirty?
         jeq   pane.vdpdump.statlines
                                     ; No, skip update
-        mov   @fb.scrrows,@parm1    ; Number of lines to dump
-                                    
+        ;------------------------------------------------------
+        ; Dump frame buffer to VDP
+        ;------------------------------------------------------                                            
 pane.vdpdump.dump:
+        mov   @fb.scrrows,@parm1    ; Number of lines to dump
+
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
                                     ; /        
@@ -116,9 +119,13 @@ pane.vdpdump.dump:
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------        
         mov   @fb.colorize,tmp0     ; Check if colorization necessary
-        jeq   pane.vdpdump.dumped   ; Skip if flag reset
+        jeq   pane.vdpdump.dumped   ; Skip if flag reset        
 
-        bl    @fb.colorlines        ; Colorize lines M1/M2
+        ; Colorize marked block if set (M1/M2)
+
+        bl    @fb.colorlines        ; Colorize lines
+                                    ; \ i  @parm1       = Force refresh if >ffff
+                                    ; / i  @fb.colorize = Colorize if >ffff
         ;-------------------------------------------------------
         ; Finished with frame buffer
         ;-------------------------------------------------------

@@ -23,6 +23,8 @@ pane.cmdb.hide:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
         mov   @parm2,*stack         ; Push @parm2
@@ -33,13 +35,13 @@ pane.cmdb.hide:
         ;------------------------------------------------------
         mov   @fb.scrrows.max,@fb.scrrows
         ;------------------------------------------------------
-        ; Adjust frame buffer size if error pane visible
+        ; (1) Adjust frame buffer size if error pane visible
         ;------------------------------------------------------
-        mov   @tv.error.visible,@tv.error.visible
+        mov   @tv.error.visible,tmp0
         jeq   !
         dec   @fb.scrrows
         ;------------------------------------------------------
-        ; Clear error/hint & status line
+        ; (2) Clear error/hint & status line
         ;------------------------------------------------------
 !       bl    @hchar
               byte pane.botrow-6,0,32,80*3
@@ -47,13 +49,25 @@ pane.cmdb.hide:
               byte pane.botrow-1,0,32,80*2
               data EOL
         ;------------------------------------------------------
-        ; Adjust frame buffer size if ruler visible
+        ; (3) Adjust frame buffer size if ruler visible
         ;------------------------------------------------------
-        mov   @tv.ruler.visible,@tv.ruler.visible
+        mov   @tv.ruler.visible,tmp0
         jeq   pane.cmdb.hide.rest
         dec   @fb.scrrows
         ;------------------------------------------------------
-        ; Hide command buffer pane (rest)
+        ; (4) Adjust frame buffer size if in master catalog
+        ;------------------------------------------------------
+        mov   @edb.special.file,tmp0
+                                    ; \ 
+                                    ; / Check if special file (0=normal file)
+                                       
+        ci    tmp0,id.special.mastcat 
+                                    ; Is master catalog?
+        jne   pane.cmdb.hide.rest   ; No, skip adjustment
+        
+        dec   @fb.scrrows           ; Need space for message
+        ;------------------------------------------------------
+        ; (5) Hide command buffer pane (rest)
         ;------------------------------------------------------
 pane.cmdb.hide.rest:
         mov   @cmdb.fb.yxsave,@wyx  ; Position cursor in framebuffer
@@ -62,7 +76,7 @@ pane.cmdb.hide.rest:
         seto  @fb.dirty             ; Redraw framebuffer
         clr   @tv.pane.focus        ; Framebuffer has focus!
         ;------------------------------------------------------
-        ; Reload current color scheme
+        ; (6) Reload current color scheme
         ;------------------------------------------------------
         seto  @parm1                ; Do not turn screen off while
                                     ; reloading color scheme
@@ -77,7 +91,7 @@ pane.cmdb.hide.rest:
                                     ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
         ;------------------------------------------------------
-        ; Show cursor again
+        ; (7) Show cursor again
         ;------------------------------------------------------
         bl    @pane.cursor.blink
         ;------------------------------------------------------
@@ -87,5 +101,6 @@ pane.cmdb.hide.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

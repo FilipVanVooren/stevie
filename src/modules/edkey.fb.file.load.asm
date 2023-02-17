@@ -62,8 +62,8 @@ edkey.action.fb.load.check.mastcat:
         ;-------------------------------------------------------
 edkey.action.fb.load.loadfile:        
         bl    @fm.loadfile          ; Load DV80 file
-                                    ; \ i  parm1 = Pointer to length-prefixed
-                                    ; /            device/filename string
+                                    ; \ i  @parm1 = Pointer to length-prefixed
+                                    ; /             device/filename string
         ;-------------------------------------------------------
         ; Handle special files
         ;-------------------------------------------------------

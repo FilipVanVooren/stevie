@@ -242,7 +242,10 @@ pane.action.colorscheme.fbdump:
         jeq   pane.action.colorscheme.cmdbpane
 
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-        bl    @fb.colorlines
+        
+        bl    @fb.colorlines        ; Colorize lines
+                                    ; \ i  @parm1       = Force refresh if >ffff
+                                    ; / i  @fb.colorize = Colorize if >ffff
         ;-------------------------------------------------------
         ; Dump colors for CMDB header line (TAT)
         ;-------------------------------------------------------

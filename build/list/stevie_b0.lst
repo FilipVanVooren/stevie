@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230205-1959290
+0002               * BUILD: 230217-2152240
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -6159,7 +6159,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0385 7082 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      7084 0040     
 0386 7086 0460  28         b     @main                 ; Give control to main program
-     7088 3DF2     
+     7088 3E32     
                    < stevie_b0.asm
 0130                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
@@ -7125,19 +7125,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043                       ;------------------------------------------------------
 0044 73CE 06A0  32         bl    @cpym2m
      73D0 24DA     
-0045 73D2 3D26                   data def.printer.fname,tv.printer.fname,7
+0045 73D2 3D66                   data def.printer.fname,tv.printer.fname,7
      73D4 DE00     
      73D6 0007     
 0046               
 0047 73D8 06A0  32         bl    @cpym2m
      73DA 24DA     
-0048 73DC 3D2D                   data def.clip.fname.a,tv.clip.fname,10
+0048 73DC 3D6D                   data def.clip.fname.a,tv.clip.fname,10
      73DE DE50     
      73E0 000A     
 0049               
 0050 73E2 06A0  32         bl    @cpym2m
      73E4 24DA     
-0051 73E6 3D65                   data def.mc.fname.c,tv.mc.fname,13
+0051 73E6 3DA5                   data def.mc.fname.c,tv.mc.fname,13
      73E8 DEA0     
      73EA 000D     
 0052               
@@ -9409,124 +9409,158 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0128                                  even
 0129      3C4E     txt.filetype.none  equ txt.ws4
 0130               
-0131               
-0132               ;--------------------------------------------------------------
-0133               ; Strings for error line pane
-0134               ;--------------------------------------------------------------
-0135 7D1A 1546     txt.ioerr.load     stri 'Failed loading file: '
-     7D1C 6169     
-     7D1E 6C65     
-     7D20 6420     
-     7D22 6C6F     
-     7D24 6164     
-     7D26 696E     
-     7D28 6720     
-     7D2A 6669     
-     7D2C 6C65     
-     7D2E 3A20     
-0136                                  even
-0137 7D30 1446     txt.ioerr.save     stri 'Failed saving file: '
-     7D32 6169     
-     7D34 6C65     
-     7D36 6420     
-     7D38 7361     
-     7D3A 7669     
-     7D3C 6E67     
-     7D3E 2066     
-     7D40 696C     
-     7D42 653A     
-     7D44 20       
-0138                                  even
-0139 7D46 1B46     txt.ioerr.print    stri 'Failed printing to device: '
-     7D48 6169     
-     7D4A 6C65     
-     7D4C 6420     
-     7D4E 7072     
-     7D50 696E     
-     7D52 7469     
-     7D54 6E67     
-     7D56 2074     
-     7D58 6F20     
-     7D5A 6465     
-     7D5C 7669     
-     7D5E 6365     
-     7D60 3A20     
-0140                                  even
-0141 7D62 164E     txt.io.nofile      stri 'No filename specified.'
-     7D64 6F20     
-     7D66 6669     
-     7D68 6C65     
-     7D6A 6E61     
-     7D6C 6D65     
-     7D6E 2073     
-     7D70 7065     
-     7D72 6369     
-     7D74 6669     
-     7D76 6564     
-     7D78 2E       
-0142                                  even
-0143 7D7A 2D49     txt.memfull.load   stri 'Index full. File too large for editor buffer.'
-     7D7C 6E64     
-     7D7E 6578     
-     7D80 2066     
-     7D82 756C     
-     7D84 6C2E     
-     7D86 2046     
-     7D88 696C     
-     7D8A 6520     
-     7D8C 746F     
-     7D8E 6F20     
-     7D90 6C61     
-     7D92 7267     
-     7D94 6520     
-     7D96 666F     
-     7D98 7220     
-     7D9A 6564     
-     7D9C 6974     
-     7D9E 6F72     
-     7DA0 2062     
-     7DA2 7566     
-     7DA4 6665     
-     7DA6 722E     
-0144                                  even
-0145 7DA8 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
-     7DAA 6F70     
-     7DAC 792F     
-     7DAE 4D6F     
-     7DB0 7665     
-     7DB2 2074     
-     7DB4 6172     
-     7DB6 6765     
-     7DB8 7420     
-     7DBA 6D75     
-     7DBC 7374     
-     7DBE 2062     
-     7DC0 6520     
-     7DC2 6F75     
-     7DC4 7473     
-     7DC6 6964     
-     7DC8 6520     
-     7DCA 4D31     
-     7DCC 2D4D     
-     7DCE 3220     
-     7DD0 7261     
-     7DD2 6E67     
-     7DD4 652E     
-0146                                  even
-0147               
-0148               ;--------------------------------------------------------------
-0149               ; Strings for command buffer
-0150               ;--------------------------------------------------------------
-0151 7DD6 013E     txt.cmdb.prompt    stri '>'
-0152                                  even
-0153 7DD8 0D43     txt.colorscheme    stri 'Color scheme:'
-     7DDA 6F6C     
-     7DDC 6F72     
-     7DDE 2073     
-     7DE0 6368     
-     7DE2 656D     
-     7DE4 653A     
-0154                                  even
+0131 7D1A 3E50     txt.msg.mastcat    stri 'Position cursor on filename in list and press ^O to load file.'
+     7D1C 6F73     
+     7D1E 6974     
+     7D20 696F     
+     7D22 6E20     
+     7D24 6375     
+     7D26 7273     
+     7D28 6F72     
+     7D2A 206F     
+     7D2C 6E20     
+     7D2E 6669     
+     7D30 6C65     
+     7D32 6E61     
+     7D34 6D65     
+     7D36 2069     
+     7D38 6E20     
+     7D3A 6C69     
+     7D3C 7374     
+     7D3E 2061     
+     7D40 6E64     
+     7D42 2070     
+     7D44 7265     
+     7D46 7373     
+     7D48 205E     
+     7D4A 4F20     
+     7D4C 746F     
+     7D4E 206C     
+     7D50 6F61     
+     7D52 6420     
+     7D54 6669     
+     7D56 6C65     
+     7D58 2E       
+0132                                  even
+0133               
+0134               
+0135               ;--------------------------------------------------------------
+0136               ; Strings for error line pane
+0137               ;--------------------------------------------------------------
+0138 7D5A 1546     txt.ioerr.load     stri 'Failed loading file: '
+     7D5C 6169     
+     7D5E 6C65     
+     7D60 6420     
+     7D62 6C6F     
+     7D64 6164     
+     7D66 696E     
+     7D68 6720     
+     7D6A 6669     
+     7D6C 6C65     
+     7D6E 3A20     
+0139                                  even
+0140 7D70 1446     txt.ioerr.save     stri 'Failed saving file: '
+     7D72 6169     
+     7D74 6C65     
+     7D76 6420     
+     7D78 7361     
+     7D7A 7669     
+     7D7C 6E67     
+     7D7E 2066     
+     7D80 696C     
+     7D82 653A     
+     7D84 20       
+0141                                  even
+0142 7D86 1B46     txt.ioerr.print    stri 'Failed printing to device: '
+     7D88 6169     
+     7D8A 6C65     
+     7D8C 6420     
+     7D8E 7072     
+     7D90 696E     
+     7D92 7469     
+     7D94 6E67     
+     7D96 2074     
+     7D98 6F20     
+     7D9A 6465     
+     7D9C 7669     
+     7D9E 6365     
+     7DA0 3A20     
+0143                                  even
+0144 7DA2 164E     txt.io.nofile      stri 'No filename specified.'
+     7DA4 6F20     
+     7DA6 6669     
+     7DA8 6C65     
+     7DAA 6E61     
+     7DAC 6D65     
+     7DAE 2073     
+     7DB0 7065     
+     7DB2 6369     
+     7DB4 6669     
+     7DB6 6564     
+     7DB8 2E       
+0145                                  even
+0146 7DBA 2D49     txt.memfull.load   stri 'Index full. File too large for editor buffer.'
+     7DBC 6E64     
+     7DBE 6578     
+     7DC0 2066     
+     7DC2 756C     
+     7DC4 6C2E     
+     7DC6 2046     
+     7DC8 696C     
+     7DCA 6520     
+     7DCC 746F     
+     7DCE 6F20     
+     7DD0 6C61     
+     7DD2 7267     
+     7DD4 6520     
+     7DD6 666F     
+     7DD8 7220     
+     7DDA 6564     
+     7DDC 6974     
+     7DDE 6F72     
+     7DE0 2062     
+     7DE2 7566     
+     7DE4 6665     
+     7DE6 722E     
+0147                                  even
+0148 7DE8 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
+     7DEA 6F70     
+     7DEC 792F     
+     7DEE 4D6F     
+     7DF0 7665     
+     7DF2 2074     
+     7DF4 6172     
+     7DF6 6765     
+     7DF8 7420     
+     7DFA 6D75     
+     7DFC 7374     
+     7DFE 2062     
+     7E00 6520     
+     7E02 6F75     
+     7E04 7473     
+     7E06 6964     
+     7E08 6520     
+     7E0A 4D31     
+     7E0C 2D4D     
+     7E0E 3220     
+     7E10 7261     
+     7E12 6E67     
+     7E14 652E     
+0149                                  even
+0150               
+0151               ;--------------------------------------------------------------
+0152               ; Strings for command buffer
+0153               ;--------------------------------------------------------------
+0154 7E16 013E     txt.cmdb.prompt    stri '>'
+0155                                  even
+0156 7E18 0D43     txt.colorscheme    stri 'Color scheme:'
+     7E1A 6F6C     
+     7E1C 6F72     
+     7E1E 2073     
+     7E20 6368     
+     7E22 656D     
+     7E24 653A     
+0157                                  even
                    < ram.resident.asm
 0055                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -9536,73 +9570,73 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 7DE6 0650     def.printer.fname   stri 'PI.PIO'
-     7DE8 492E     
-     7DEA 5049     
-     7DEC 4F       
-0008 7DED   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     7DEE 4453     
-     7DF0 4B31     
-     7DF2 2E43     
-     7DF4 4C49     
-     7DF6 50       
-0009 7DF7   09     def.clip.fname.b    stri 'DSK6.CLIP'
-     7DF8 4453     
-     7DFA 4B36     
-     7DFC 2E43     
-     7DFE 4C49     
-     7E00 50       
-0010 7E01   09     def.clip.fname.c    stri 'TIPI.CLIP'
-     7E02 5449     
-     7E04 5049     
-     7E06 2E43     
-     7E08 4C49     
-     7E0A 50       
-0011 7E0B   0C     def.mc.fname.a      stri 'DSK1.MASTCAT'
-     7E0C 4453     
-     7E0E 4B31     
-     7E10 2E4D     
-     7E12 4153     
-     7E14 5443     
-     7E16 4154     
-0012 7E18 0C44     def.mc.fname.b      stri 'DSK6.MASTCAT'
-     7E1A 534B     
-     7E1C 362E     
-     7E1E 4D41     
-     7E20 5354     
-     7E22 4341     
-     7E24 54       
-0013 7E25   0C     def.mc.fname.c      stri 'TIPI.MASTCAT'
-     7E26 5449     
-     7E28 5049     
-     7E2A 2E4D     
-     7E2C 4153     
-     7E2E 5443     
-     7E30 4154     
-0014 7E32 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     7E34 4453     
-     7E36 4B2C     
-     7E38 4844     
-     7E3A 582C     
-     7E3C 4944     
-     7E3E 452C     
-     7E40 5049     
-     7E42 2E2C     
+0007 7E26 0650     def.printer.fname   stri 'PI.PIO'
+     7E28 492E     
+     7E2A 5049     
+     7E2C 4F       
+0008 7E2D   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     7E2E 4453     
+     7E30 4B31     
+     7E32 2E43     
+     7E34 4C49     
+     7E36 50       
+0009 7E37   09     def.clip.fname.b    stri 'DSK6.CLIP'
+     7E38 4453     
+     7E3A 4B36     
+     7E3C 2E43     
+     7E3E 4C49     
+     7E40 50       
+0010 7E41   09     def.clip.fname.c    stri 'TIPI.CLIP'
+     7E42 5449     
      7E44 5049     
-     7E46 4F2C     
-     7E48 5449     
-     7E4A 5049     
-     7E4C 2E2C     
-     7E4E 5244     
-     7E50 2C53     
-     7E52 4353     
-     7E54 2C53     
-     7E56 4444     
-     7E58 2C57     
-     7E5A 4453     
-     7E5C 2C52     
-     7E5E 5332     
-     7E60 3332     
+     7E46 2E43     
+     7E48 4C49     
+     7E4A 50       
+0011 7E4B   0C     def.mc.fname.a      stri 'DSK1.MASTCAT'
+     7E4C 4453     
+     7E4E 4B31     
+     7E50 2E4D     
+     7E52 4153     
+     7E54 5443     
+     7E56 4154     
+0012 7E58 0C44     def.mc.fname.b      stri 'DSK6.MASTCAT'
+     7E5A 534B     
+     7E5C 362E     
+     7E5E 4D41     
+     7E60 5354     
+     7E62 4341     
+     7E64 54       
+0013 7E65   0C     def.mc.fname.c      stri 'TIPI.MASTCAT'
+     7E66 5449     
+     7E68 5049     
+     7E6A 2E4D     
+     7E6C 4153     
+     7E6E 5443     
+     7E70 4154     
+0014 7E72 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     7E74 4453     
+     7E76 4B2C     
+     7E78 4844     
+     7E7A 582C     
+     7E7C 4944     
+     7E7E 452C     
+     7E80 5049     
+     7E82 2E2C     
+     7E84 5049     
+     7E86 4F2C     
+     7E88 5449     
+     7E8A 5049     
+     7E8C 2E2C     
+     7E8E 5244     
+     7E90 2C53     
+     7E92 4353     
+     7E94 2C53     
+     7E96 4444     
+     7E98 2C57     
+     7E9A 4453     
+     7E9C 2C52     
+     7E9E 5332     
+     7EA0 3332     
                    < ram.resident.asm
 0056                       copy  "data.fg99.carts.asm"         ; Cartridge images
      **** ****     > data.fg99.carts.asm
@@ -9617,75 +9651,75 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * Cartridge 'Force Command'
 0010               *--------------------------------------------------------------
 0011               fg99.cart.fcmd:
-0012 7E62 99              byte   >99                   ; \
-0013 7E63   4F            text   'OKFG99'              ; | Send this to reload
-     7E64 4B46     
-     7E66 4739     
-     7E68 39       
-0014 7E69   99            byte   >99                   ; /
-0015 7E6A 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
-     7E6C 4D44     
-     7E6E 47       
-0016 7E6F   00            byte   >00, >00, >00         ; /
-     7E70 0000     
-0017 7E72 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0018 7E74 0000            data   >0000                 ; Start address
+0012 7EA2 99              byte   >99                   ; \
+0013 7EA3   4F            text   'OKFG99'              ; | Send this to reload
+     7EA4 4B46     
+     7EA6 4739     
+     7EA8 39       
+0014 7EA9   99            byte   >99                   ; /
+0015 7EAA 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     7EAC 4D44     
+     7EAE 47       
+0016 7EAF   00            byte   >00, >00, >00         ; /
+     7EB0 0000     
+0017 7EB2 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 7EB4 0000            data   >0000                 ; Start address
 0019                      even
 0020               
 0021               *--------------------------------------------------------------
 0022               * Cartridge 'Extended Basic GEM'
 0023               *--------------------------------------------------------------
 0024               fg99.cart.xbgem:
-0025 7E76 99              byte   >99                   ; \
-0026 7E77   4F            text   'OKFG99'              ; | Send this to reload
-     7E78 4B46     
-     7E7A 4739     
-     7E7C 39       
-0027 7E7D   99            byte   >99                   ; /
-0028 7E7E 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
-     7E80 3239     
-     7E82 4745     
-     7E84 4D47     
+0025 7EB6 99              byte   >99                   ; \
+0026 7EB7   4F            text   'OKFG99'              ; | Send this to reload
+     7EB8 4B46     
+     7EBA 4739     
+     7EBC 39       
+0027 7EBD   99            byte   >99                   ; /
+0028 7EBE 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     7EC0 3239     
+     7EC2 4745     
+     7EC4 4D47     
 0029                      ;                            ; /
-0030 7E86 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0031 7E88 0000            data   >0000                 ; Start address
+0030 7EC6 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 7EC8 0000            data   >0000                 ; Start address
 0032                      even
 0033               
 0034               *--------------------------------------------------------------
 0035               * Cartridge 'Rich Extended Basic'
 0036               *--------------------------------------------------------------
 0037               fg99.cart.rxb:
-0038 7E8A 99              byte   >99                   ; \
-0039 7E8B   4F            text   'OKFG99'              ; | Send this to reload
-     7E8C 4B46     
-     7E8E 4739     
-     7E90 39       
-0040 7E91   99            byte   >99                   ; /
-0041 7E92 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
-     7E94 4247     
-0042 7E96 0000            byte   >00, >00, >00, >00    ; /
-     7E98 0000     
-0043 7E9A 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0044 7E9C 0000            data   >0000                 ; Start address
+0038 7ECA 99              byte   >99                   ; \
+0039 7ECB   4F            text   'OKFG99'              ; | Send this to reload
+     7ECC 4B46     
+     7ECE 4739     
+     7ED0 39       
+0040 7ED1   99            byte   >99                   ; /
+0041 7ED2 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     7ED4 4247     
+0042 7ED6 0000            byte   >00, >00, >00, >00    ; /
+     7ED8 0000     
+0043 7EDA 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 7EDC 0000            data   >0000                 ; Start address
 0045                      even
 0046               
 0047               *--------------------------------------------------------------
 0048               * Cartridge 'fbForth'
 0049               *--------------------------------------------------------------
 0050               fg99.cart.fbforth:
-0051 7E9E 99              byte   >99                   ; \
-0052 7E9F   4F            text   'OKFG99'              ; | Send this to reload
-     7EA0 4B46     
-     7EA2 4739     
-     7EA4 39       
-0053 7EA5   99            byte   >99                   ; /
-0054 7EA6 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
-     7EA8 464F     
-     7EAA 5254     
-     7EAC 4843     
+0051 7EDE 99              byte   >99                   ; \
+0052 7EDF   4F            text   'OKFG99'              ; | Send this to reload
+     7EE0 4B46     
+     7EE2 4739     
+     7EE4 39       
+0053 7EE5   99            byte   >99                   ; /
+0054 7EE6 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     7EE8 464F     
+     7EEA 5254     
+     7EEC 4843     
 0055                      ;                            ; /
-0056 7EAE 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0057 7EB0 0000            data   >0000                 ; Start address
+0056 7EEE 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 7EF0 0000            data   >0000                 ; Start address
 0058                      even
                    < ram.resident.asm
                    < stevie_b0.asm
@@ -9693,16 +9727,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0132                       ; Stevie main entry point
 0133                       ;------------------------------------------------------
 0134               main:
-0135 7EB2 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7EB4 6002     
+0135 7EF2 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7EF4 6002     
 0136               
 0140               
-0141 7EB6 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
-     7EB8 6046     
+0141 7EF6 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+     7EF8 6046     
 0142                       ;------------------------------------------------------
 0143                       ; Memory full check
 0144                       ;------------------------------------------------------
-0148 7EBA 3DFA                   data $                ; Bank 0 ROM size OK.
+0148 7EFA 3E3A                   data $                ; Bank 0 ROM size OK.
 0150                       ;-----------------------------------------------------------------------
 0151                       ; Show ROM bank in CPU crash screen
 0152                       ;-----------------------------------------------------------------------
@@ -10047,14 +10081,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYODD.............. >2534 :     
     CPYV2M.............. >24B8 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3D2D :     
-    DEF.CLIP.FNAME.B.... >3D37 :     
-    DEF.CLIP.FNAME.C.... >3D41 :     
-    DEF.DEVICES......... >3D72 :     
-    DEF.MC.FNAME.A...... >3D4B :     
-    DEF.MC.FNAME.B...... >3D58 :     
-    DEF.MC.FNAME.C...... >3D65 :     
-    DEF.PRINTER.FNAME... >3D26 :     
+    DEF.CLIP.FNAME.A.... >3D6D :     
+    DEF.CLIP.FNAME.B.... >3D77 :     
+    DEF.CLIP.FNAME.C.... >3D81 :     
+    DEF.DEVICES......... >3DB2 :     
+    DEF.MC.FNAME.A...... >3D8B :     
+    DEF.MC.FNAME.B...... >3D98 :     
+    DEF.MC.FNAME.C...... >3DA5 :     
+    DEF.PRINTER.FNAME... >3D66 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DOFILL.............. >2280 :     
@@ -10172,10 +10206,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2DC4 :     
-    FG99.CART.FBFORTH... >3DDE :     
-    FG99.CART.FCMD...... >3DA2 :     
-    FG99.CART.RXB....... >3DCA :     
-    FG99.CART.XBGEM..... >3DB6 :     
+    FG99.CART.FBFORTH... >3E1E :     
+    FG99.CART.FCMD...... >3DE2 :     
+    FG99.CART.RXB....... >3E0A :     
+    FG99.CART.XBGEM..... >3DF6 :     
     FG99.EXIT........... >2DFE :     
     FG99.RUN............ >376E :     
     FG99.SEND.LOOP...... >2DD4 :     
@@ -10511,7 +10545,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
-    MAIN................ >3DF2 :     
+    MAIN................ >3E32 :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
@@ -10900,14 +10934,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.BLOCK.CLIP...... >39A2 :     
     TXT.BLOCK.COPY...... >3964 :     
     TXT.BLOCK.DEL....... >3950 :     
-    TXT.BLOCK.INSIDE.... >3CE8 :     
+    TXT.BLOCK.INSIDE.... >3D28 :     
     TXT.BLOCK.MOVE...... >3976 :     
     TXT.BLOCK.PRINT..... >39BC :     
     TXT.BLOCK.SAVE...... >3988 :     
     TXT.BOTTOM.......... >390A :     
     TXT.CLEARMEM........ >39D0 :     
-    TXT.CMDB.PROMPT..... >3D16 :     
-    TXT.COLORSCHEME..... >3D18 :     
+    TXT.CMDB.PROMPT..... >3D56 :     
+    TXT.COLORSCHEME..... >3D58 :     
     TXT.DELIM........... >3908 :     
     TXT.DONE.APPEND..... >3A06 :     
     TXT.DONE.CLIPBOARD.. >3A5A :     
@@ -10923,10 +10957,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.FILETYPE.DV80... >3B30 :     
     TXT.FILETYPE.NONE... >3C4E :     
     TXT.INSERT.......... >3916 :     
-    TXT.IO.NOFILE....... >3CA2 :     
-    TXT.IOERR.LOAD...... >3C5A :     
-    TXT.IOERR.PRINT..... >3C86 :     
-    TXT.IOERR.SAVE...... >3C70 :     
+    TXT.IO.NOFILE....... >3CE2 :     
+    TXT.IOERR.LOAD...... >3C9A :     
+    TXT.IOERR.PRINT..... >3CC6 :     
+    TXT.IOERR.SAVE...... >3CB0 :     
     TXT.KB.............. >3AD4 :     
     TXT.KEYMARKER....... >3C42 :     
     TXT.KEYS.BASIC1..... >3BBE :     
@@ -10937,7 +10971,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.LOADING......... >3924 :     
     TXT.M1.............. >3B36 :     
     TXT.M2.............. >3B3A :     
-    TXT.MEMFULL.LOAD.... >3CBA :     
+    TXT.MEMFULL.LOAD.... >3CFA :     
+    TXT.MSG.MASTCAT..... >3C5A :     
     TXT.NEWFILE......... >3ADE :     
     TXT.OVRWRITE........ >3910 :     
     TXT.PRINTING........ >393C :     
