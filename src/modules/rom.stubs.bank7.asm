@@ -25,10 +25,10 @@ cmdb.dialog.close:
 
 
 ***************************************************************
-* Stub for "pane.action.colorscheme.load"
+* Stub for "pane.colorscheme.load"
 * bank1 vec.31
 ********|*****|*********************|**************************
-pane.action.colorscheme.load:
+pane.colorscheme.load:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -49,7 +49,7 @@ pane.action.colorscheme.load:
 * Stub for "pane.action.colorscheme.statline"
 * bank1 vec.32
 ********|*****|*********************|**************************
-pane.action.colorscheme.statlines:
+pane.colorscheme.statlines:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

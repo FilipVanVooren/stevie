@@ -31,7 +31,7 @@ fm.newfile:
               data EOL              ; Clear hint on bottom row
 
         mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
@@ -53,7 +53,7 @@ fm.newfile:
               data EOL              ; Clear top row and hint on bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 

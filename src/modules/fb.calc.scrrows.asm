@@ -16,7 +16,7 @@
 * @fb.scrrows = Number of available rows in frame buffer
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* none
 *--------------------------------------------------------------
 * Remarks
 * none
@@ -24,12 +24,11 @@
 fb.calc.scrrows:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @fb.scrrows.max,tmp0  ; Get maximum number of available rows
+        mov   @fb.scrrows.max,@fb.scrrows 
+                                    ; Set maximum number of available rows
         ;------------------------------------------------------
         ; (1) Handle ruler visible on screen
         ;------------------------------------------------------
@@ -41,8 +40,7 @@ fb.calc.scrrows.handle.ruler:
         ; (2) Handle Master Catalog
         ;------------------------------------------------------
 fb.calc.scrrows.handle.mc:
-        mov   @edb.special.file,tmp0 
-        ci    tmp0,id.special.mastcat 
+        c     @edb.special.file,@const.0
         jeq   fb.calc.scrrows.handle.errors
         dec   @fb.scrrows           ; Yes, adjust rows
         ;------------------------------------------------------
@@ -51,11 +49,11 @@ fb.calc.scrrows.handle.mc:
 fb.calc.scrrows.handle.errors:
         abs   @tv.error.visible     ; Error area visible?
         jeq   fb.calc.scrrows.exit
-        dec   @fb.scrrows           ; Yes, adjust rows
+        s     @tv.error.rows,@fb.scrrows
+                                    ; Yes, adjust rows
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 fb.calc.scrrows.exit:
-        mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

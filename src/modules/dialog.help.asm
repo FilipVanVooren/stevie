@@ -73,7 +73,7 @@ dialog.help.content:
                                     ; Clear screen
 
         ;
-        ; Colours are also set in pane.action.colorscheme.load
+        ; Colours are also set in pane.colorscheme.load
         ; but we also set them here to avoid flickering due to
         ; timing delay before function is called.
         ;

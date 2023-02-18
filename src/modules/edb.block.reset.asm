@@ -36,7 +36,7 @@ edb.block.reset:
         clr   @parm2                ; Don't skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
 
-        bl    @pane.action.colorscheme.load
+        bl    @pane.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines
@@ -49,7 +49,7 @@ edb.block.reset:
         ; Remove markers
         ;------------------------------------------------------
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; /         

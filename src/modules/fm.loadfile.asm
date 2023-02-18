@@ -91,7 +91,7 @@ fm.loadfile.clear:
 
         clr   @tv.error.visible     ; No error message/pane
 
-        bl    @pane.action.colorscheme.load
+        bl    @pane.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines

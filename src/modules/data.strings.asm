@@ -112,7 +112,7 @@ txt.ws5            stri '     '
                    even
 txt.filetype.none  equ txt.ws4
 
-txt.msg.mastcat    stri 'Position cursor on filename in list and press ^O to load file.'
+txt.msg.mastcat    stri 'Position cursor on filename in list and press ^O to load file.                 '
                    even
 
 

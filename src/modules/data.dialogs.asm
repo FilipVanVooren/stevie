@@ -8,27 +8,27 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.4G  '
+            text '  Stevie 1.4H  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.4GC  '     
+            text ' Stevie 1.4HC  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.4G-24'
+            text ' Stevie 1.4H-24'
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.4G-24C'  
+            text ' Stevie 1.4H-24C'  
             even
         .endif
 
         .ifeq vdpmode, 6081
-            text ' Stevie 1.4G-60'
+            text ' Stevie 1.4H-60'
             even
         .endif
 

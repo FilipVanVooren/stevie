@@ -80,7 +80,7 @@ pane.vdpdump.cmdb.draw.colorscheme:
         seto  @parm2                ; Skip colorzing marked lines
         seto  @parm3                ; Only colorize CMDB pane
 
-        bl    @pane.action.colorscheme.load
+        bl    @pane.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF
                                     ; | i  @parm2 = Skip colorizing marked lines
@@ -110,7 +110,12 @@ pane.vdpdump.cmdb.draw.content:
         ; Dump frame buffer to VDP
         ;------------------------------------------------------                                            
 pane.vdpdump.dump:
-        mov   @fb.scrrows,@parm1    ; Number of lines to dump
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
+
+        mov   @fb.scrrows,@parm1    ; Number of rows to dump to vdp
 
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump

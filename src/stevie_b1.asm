@@ -133,7 +133,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.colorscheme.asm"  ; Colorscheme handling in panes
+        copy  "pane.colorscheme.cycle.asm"  ; Cycle through color schemes
+        copy  "pane.colorscheme.load.asm"   ; Load color scheme
+        copy  "pane.colorscheme.status.asm" ; Set colors on status lines
         copy  "pane.cursor.asm"             ; Cursor utility functions
         ;-----------------------------------------------------------------------
         ; Screen panes

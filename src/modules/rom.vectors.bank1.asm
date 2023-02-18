@@ -40,8 +40,8 @@ vec.27  data  pane.errline.hide     ;
 vec.28  data  pane.cursor.blink     ;
 vec.29  data  pane.cursor.hide      ;
 vec.30  data  pane.errline.show     ;
-vec.31  data  pane.action.colorscheme.load
-vec.32  data  pane.action.colorscheme.statlines
+vec.31  data  pane.colorscheme.load
+vec.32  data  pane.colorscheme.statlines
 *--------------------------------------------------------------
 * ROM 1: Vectors 33-64
 *--------------------------------------------------------------

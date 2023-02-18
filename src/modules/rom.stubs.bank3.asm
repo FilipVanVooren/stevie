@@ -151,10 +151,10 @@ pane.errline.show:
 
 
 ***************************************************************
-* Stub for "pane.action.colorscheme.load"
+* Stub for "pane.colorscheme.load"
 * bank1 vec.31
 ********|*****|*********************|**************************
-pane.action.colorscheme.load:
+pane.colorscheme.load:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

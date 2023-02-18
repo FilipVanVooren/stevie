@@ -30,7 +30,7 @@ fm.loadsave.cb.indicator1:
         mov   @parm1,*stack         ; Push @parm1
 
         mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
@@ -297,7 +297,7 @@ fm.loadsave.cb.indicator3:
               data EOL              ; Erase indicator in bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 
@@ -494,7 +494,7 @@ fm.loadsave.cb.fioerr.addmsg:
 !       bl    @pane.errline.show    ; Show error line
 
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 
@@ -552,7 +552,7 @@ fm.load.cb.memfull:
         bl    @pane.errline.show    ; Show error line
 
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.action.colorscheme.statlines
+        bl    @pane.colorscheme.statlines
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 

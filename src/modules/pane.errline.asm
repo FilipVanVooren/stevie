@@ -123,9 +123,10 @@ pane.errline.show:
         mov   @outparm1,tmp1        ; \ Display error message
         bl    @xutst0               ; /
         
-        mov   @fb.scrrows.max,tmp0  ; \
-        s     @tv.error.rows,tmp0   ; | Adjust number of rows in frame buffer
-        mov   tmp0,@fb.scrrows      ; / 
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
 
         seto  @tv.error.visible     ; Error line is visible
         ;------------------------------------------------------
@@ -190,8 +191,11 @@ pane.errline.hide.fbcolor:
                                     ; / i  @parm1         = Color combination
 
         clr   @tv.error.visible     ; Error line no longer visible
-        mov   @fb.scrrows.max,@fb.scrrows
-                                    ; Set frame buffer to full size again
+
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

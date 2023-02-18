@@ -136,7 +136,7 @@ keymap_actions.editor:
         data  edkey.action.toggle.ruler
 
         byte  key.ctrl.z, pane.focus.fb
-        data  pane.action.colorscheme.cycle
+        data  pane.colorscheme.cycle
 
         byte  key.ctrl.comma, pane.focus.fb
         data  edkey.action.fb.fname.dec.load
@@ -394,7 +394,7 @@ keymap_actions.cmdb:
         ; Dialog: Shortcuts
         ;-------------------------------------------------------
         byte  key.uc.c, id.dialog.shortcuts
-        data  pane.action.colorscheme.cycle
+        data  pane.colorscheme.cycle
 
         byte  key.uc.r, id.dialog.shortcuts
         data  edkey.action.toggle.ruler
@@ -467,7 +467,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.preset
 
         byte  key.ctrl.z, pane.focus.cmdb
-        data  pane.action.colorscheme.cycle
+        data  pane.colorscheme.cycle
 
         byte  key.ctrl.0, pane.focus.cmdb
         data  edkey.action.fb.load.mc        

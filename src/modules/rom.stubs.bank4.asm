@@ -69,7 +69,7 @@ pane.cursor.blink:
 * Stub for "pane.action.colorscheme.statuslines"
 * bank1 vec.32
 ********|*****|*********************|**************************
-pane.action.colorscheme.statlines
+pane.colorscheme.statlines
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
