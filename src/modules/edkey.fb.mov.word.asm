@@ -64,7 +64,7 @@ edkey.action.pword_done:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.pword.exit:
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB
@@ -156,7 +156,7 @@ edkey.action.nword_done:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.nword.exit:
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB

@@ -41,7 +41,7 @@ fb.scan.fname.copy:
               data cmdb.dflt.fname,>00,80
                                     ; Clear filename in buffer
 
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB

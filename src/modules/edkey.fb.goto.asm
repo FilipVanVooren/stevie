@@ -55,7 +55,7 @@ edkey.fb.goto.line:
         sla   tmp0,8                ; | Position VDP cursor
         mov   tmp0,@wyx             ; /
         
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB

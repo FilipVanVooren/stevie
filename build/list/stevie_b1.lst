@@ -6395,16 +6395,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0039 30E8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0040 30EA 045B  20         b     *r11                  ; Return to caller
                    < ram.resident.asm
-0010                       copy  "fb.calc_pointer.asm"    ; Calculate pointer address frame buffer
-     **** ****     > fb.calc_pointer.asm
-0001               * FILE......: fb.calc_pointer.asm
+0010                       copy  "fb.calc.pointer.asm"    ; Calculate pointer address frame buffer
+     **** ****     > fb.calc.pointer.asm
+0001               * FILE......: fb.calc.pointer.asm
 0002               * Purpose...: Calculate pointer address in frame buffer
 0003               
 0004               ***************************************************************
-0005               * fb.calc_pointer
+0005               * fb.calc.pointer
 0006               * Calculate pointer address in frame buffer
 0007               ***************************************************************
-0008               * bl @fb.calc_pointer
+0008               * bl @fb.calc.pointer
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * @fb.top       = Address of top row in frame buffer
@@ -6422,7 +6422,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0023               * Formula
 0024               * pointer = row * colsline + column + deref(@fb.top.ptr)
 0025               ********|*****|*********************|**************************
-0026               fb.calc_pointer:
+0026               fb.calc.pointer:
 0027 30EC 0649  14         dect  stack
 0028 30EE C64B  30         mov   r11,*stack            ; Save return address
 0029 30F0 0649  14         dect  stack
@@ -6445,7 +6445,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041                       ;------------------------------------------------------
 0042                       ; Exit
 0043                       ;------------------------------------------------------
-0044               fb.calc_pointer.exit:
+0044               fb.calc.pointer.exit:
 0045 310C C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0046 310E C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0047 3110 C2F9  30         mov   *stack+,r11           ; Pop r11
@@ -10285,7 +10285,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0069 62AE 06A0  32         bl    @xsetx                ; Set VDP cursor column position
      62B0 26DE     
 0070               
-0071 62B2 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0071 62B2 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      62B4 30EC     
 0072                                                   ; \ i   @fb.top      = Address top row in FB
 0073                                                   ; | i   @fb.topline  = Top line in FB
@@ -10380,7 +10380,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0064                       ; Exit
 0065                       ;-------------------------------------------------------
 0066               edkey.action.pword.exit:
-0067 6304 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0067 6304 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      6306 30EC     
 0068                                                   ; \ i   @fb.top      = Address top row in FB
 0069                                                   ; | i   @fb.topline  = Top line in FB
@@ -10486,7 +10486,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0156                       ; Exit
 0157                       ;-------------------------------------------------------
 0158               edkey.action.nword.exit:
-0159 6364 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0159 6364 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      6366 30EC     
 0160                                                   ; \ i   @fb.top      = Address top row in FB
 0161                                                   ; | i   @fb.topline  = Top line in FB
@@ -10976,7 +10976,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0148 6516 C804  30         mov   tmp0,@wyx             ;
      6518 832A     
 0149               
-0150 651A 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0150 651A 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      651C 30EC     
 0151                                                   ; \ i   @fb.top      = Address top row in FB
 0152                                                   ; | i   @fb.topline  = Top line in FB
@@ -11074,7 +11074,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056 6568 C804  30         mov   tmp0,@wyx             ; /
      656A 832A     
 0057               
-0058 656C 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0058 656C 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      656E 30EC     
 0059                                                   ; \ i   @fb.top      = Address top row in FB
 0060                                                   ; | i   @fb.topline  = Top line in FB
@@ -11153,7 +11153,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008 65A0 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      65A2 A506     
 0009               
-0010 65A4 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0010 65A4 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      65A6 30EC     
 0011                                                   ; \ i   @fb.top      = Address top row in FB
 0012                                                   ; | i   @fb.topline  = Top line in FB
@@ -11276,7 +11276,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0110 661E 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      6620 A506     
 0111               
-0112 6622 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0112 6622 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      6624 30EC     
 0113                                                   ; \ i   @fb.top      = Address top row in FB
 0114                                                   ; | i   @fb.topline  = Top line in FB
@@ -11335,7 +11335,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0158                       ;-------------------------------------------------------
 0159                       ; Get current line in editor buffer
 0160                       ;-------------------------------------------------------
-0161 6652 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0161 6652 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      6654 30EC     
 0162                                                   ; \ i   @fb.top      = Address top row in FB
 0163                                                   ; | i   @fb.topline  = Top line in FB
@@ -11452,7 +11452,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0013 66BC 0720  34         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
      66BE A506     
 0014               
-0015 66C0 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0015 66C0 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      66C2 30EC     
 0016                                                   ; \ i   @fb.top      = Address top row in FB
 0017                                                   ; | i   @fb.topline  = Top line in FB
@@ -11750,7 +11750,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0087 67EE 06A0  32         bl    @edb.line.getlength2  ; Get length of new row length
      67F0 36E4     
 0088               
-0089 67F2 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0089 67F2 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      67F4 30EC     
 0090                                                   ; \ i   @fb.top      = Address top row in FB
 0091                                                   ; | i   @fb.topline  = Top line in FB
@@ -11835,7 +11835,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0158                       ; Overwrite mode - Write character
 0159                       ;-------------------------------------------------------
 0160               edkey.action.char.overwrite:
-0161 6836 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0161 6836 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      6838 30EC     
 0162                                                   ; \ i   @fb.top      = Address top row in FB
 0163                                                   ; | i   @fb.topline  = Top line in FB
@@ -14172,7 +14172,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041 700E 04E0  34         clr   @fb.column
      7010 A30C     
 0042               
-0043 7012 06A0  32         bl    @fb.calc_pointer      ; Calculate position in frame buffer
+0043 7012 06A0  32         bl    @fb.calc.pointer      ; Calculate position in frame buffer
      7014 30EC     
 0044                                                   ; \ i   @fb.top      = Address top row in FB
 0045                                                   ; | i   @fb.topline  = Top line in FB
@@ -18934,8 +18934,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     F18LCK.............. >2740 :     
     F18RST.............. >27A6 :     
     F18UNL.............. >272A :     
-    FB.CALC_POINTER..... >30EC :     
-    FB.CALC_POINTER.EXIT >310C :     
+    fb.calc.pointer..... >30EC :     
+    fb.calc.pointer.EXIT >310C :     
     FB.COLORIZE......... >A312 :     
     FB.COLORLINES....... >7A98 :     
     FB.COLORLINES.VECTOR >7AA0 :     

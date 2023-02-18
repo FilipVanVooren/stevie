@@ -31,7 +31,7 @@ fb.cursor.home:
         mov   tmp0,@wyx             ; VDP cursor column=0
         clr   @fb.column
         
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB

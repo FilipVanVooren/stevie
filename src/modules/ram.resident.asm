@@ -7,7 +7,7 @@
         copy  "rom.farjump.asm"        ; ROM bankswitch trampoline
         copy  "fb.asm"                 ; Framebuffer
         copy  "fb.row2line.asm"        ; Calculate line in editor buffer
-        copy  "fb.calc_pointer.asm"    ; Calculate pointer address frame buffer
+        copy  "fb.calc.pointer.asm"    ; Calculate pointer address frame buffer
         copy  "idx.asm"                ; Index management
         copy  "edb.asm"                ; Editor Buffer
         copy  "cmdb.asm"               ; Command buffer

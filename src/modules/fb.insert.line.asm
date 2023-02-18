@@ -51,7 +51,7 @@ fb.insert.line:
         ; Insert entry in index
         ;-------------------------------------------------------
 fb.insert.line.insert:
-        bl    @fb.calc_pointer      ; Calculate position in frame buffer
+        bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB
