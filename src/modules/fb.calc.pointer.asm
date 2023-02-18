@@ -1,11 +1,11 @@
-* FILE......: fb.calc_pointer.asm
+* FILE......: fb.calc.pointer.asm
 * Purpose...: Calculate pointer address in frame buffer
 
 ***************************************************************
-* fb.calc_pointer 
+* fb.calc.pointer 
 * Calculate pointer address in frame buffer
 ***************************************************************
-* bl @fb.calc_pointer
+* bl @fb.calc.pointer
 *--------------------------------------------------------------
 * INPUT
 * @fb.top       = Address of top row in frame buffer
@@ -23,7 +23,7 @@
 * Formula
 * pointer = row * colsline + column + deref(@fb.top.ptr)
 ********|*****|*********************|**************************
-fb.calc_pointer:
+fb.calc.pointer:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -41,7 +41,7 @@ fb.calc_pointer:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fb.calc_pointer.exit:
+fb.calc.pointer.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop r11

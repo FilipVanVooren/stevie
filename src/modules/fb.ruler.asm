@@ -26,7 +26,7 @@ fb.ruler.init:
         ; Initialize
         ;-------------------------------------------------------
         bl    @cpym2m
-              data txt.ruler,fb.ruler.sit,80
+              data fb.ruler.txt,fb.ruler.sit,80
                                     ; Copy ruler from ROM to RAM
 
         li    tmp0,fb.ruler.tat
@@ -70,3 +70,26 @@ fb.ruler.init.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+        ;------------------------------------------------------
+        ; Ruler default string
+        ;------------------------------------------------------
+fb.ruler.txt:
+        even
+        text    '.........'
+        byte    18
+        text    '.........'
+        byte    19
+        text    '.........'
+        byte    20
+        text    '.........'
+        byte    21
+        text    '.........'
+        byte    22
+        text    '.........'
+        byte    23
+        text    '.........'
+        byte    24
+        text    '.........'
+        byte    25
+        even

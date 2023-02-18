@@ -95,23 +95,7 @@ txt.keys.block     stri 'F9-Back  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
                    even
 txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
                    even
-txt.ruler          text    '.........'
-                   byte    18
-                   text    '.........'
-                   byte    19
-                   text    '.........'
-                   byte    20
-                   text    '.........'
-                   byte    21
-                   text    '.........'
-                   byte    22
-                   text    '.........'
-                   byte    23
-                   text    '.........'
-                   byte    24
-                   text    '.........'
-                   byte    25
-                   even
+
 txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
 txt.keymarker      byte 1,28

@@ -88,7 +88,7 @@ new.stevie:
 ********|*****|*********************|**************************
         li    r0,reloc.resident     ; Start of code to relocate
         li    r1,>2000
-        li    r2,512                ; Copy 8K (512 * 16 bytes)
+        li    r2,512                ; Copy 8K (320 * 16 bytes)
         ;------------------------------------------------------
         ; Copy memory to destination
         ; r0 = Source CPU address
@@ -127,7 +127,7 @@ reloc.resident:
         ;------------------------------------------------------
         xorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "ram.resident.asm"
+        copy  "rom.resident.asm"    ; Resident modules relocated to RAM
         ;------------------------------------------------------
         ; Stevie main entry point
         ;------------------------------------------------------
@@ -142,7 +142,10 @@ main:
         ;------------------------------------------------------
         ; Memory full check
         ;------------------------------------------------------
-        .ifgt $, >3fff
+        .ifgt $, >3e40              ; >3e40 in low memexp, maps to >7f00 in
+                                    ; cartridge space where rom.crash.asm has
+                                    ; its aorg. So may not go beyond >3e40!
+
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
@@ -154,7 +157,6 @@ main:
 
 cpu.crash.showbank.bankstr:
         stri 'ROM#0'
-
 
         ;-----------------------------------------------------------------------
         ; Table for VDP modes

@@ -1,5 +1,5 @@
-* FILE......: ram.resident.asm
-* Purpose...: Resident modules in LOW MEMEXP callable from all ROM banks.
+* FILE......: rom.resident.asm
+* Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
 
         ;------------------------------------------------------
         ; Low-level modules
@@ -8,6 +8,7 @@
         copy  "fb.asm"                 ; Framebuffer
         copy  "fb.row2line.asm"        ; Calculate line in editor buffer
         copy  "fb.calc.pointer.asm"    ; Calculate pointer address frame buffer
+        copy  "fb.calc.scrrows.asm"    ; Calculate number of rows frame buffer
         copy  "idx.asm"                ; Index management
         copy  "edb.asm"                ; Editor Buffer
         copy  "cmdb.asm"               ; Command buffer
@@ -50,6 +51,7 @@
         ;------------------------------------------------------
         ; Program data
         ;------------------------------------------------------
+        even
         copy  "data.constants.asm"          ; Constants
         copy  "data.strings.asm"            ; Strings
         copy  "data.defaults.asm"           ; Default values (devices, ...)

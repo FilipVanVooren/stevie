@@ -44,7 +44,7 @@ reloc.resident:
         ;------------------------------------------------------
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "ram.resident.asm"
+        copy  "rom.resident.asm"
         ;------------------------------------------------------
         ; Activate bank 1 and branch to >6046
         ;------------------------------------------------------

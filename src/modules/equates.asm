@@ -10,44 +10,19 @@
 *
 *     Mem range   Bytes    BANK   Purpose
 *     =========   =====    ====   ==================================
-*     6000-633f               0   Cartridge header
-*     6040-7fff               0   SP2 library + Stevie library
+*     6000-603f      64       0   Cartridge header
+*     6040-7fff    8128       0   SP2 library + Stevie library
 *                                 relocated to RAM space
 *     ..............................................................
-*     6000-633f               1   Cartridge header
-*     6040-7fbf               1   Stevie program code
-*     7fc0-7fff      64       1   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               2   Cartridge header
-*     6040-7fbf               2   Stevie program code
-*     7fc0-7fff      64       2   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               3   Cartridge header
-*     6040-7fbf               3   Stevie program code
-*     7fc0-7fff      64       3   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               4   Cartridge header
-*     6040-7fbf               4   Stevie program code
-*     7fc0-7fff      64       4   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               5   Cartridge header
-*     6040-7fbf               5   Stevie program code
-*     7fc0-7fff      64       5   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               6   Cartridge header
-*     6040-7fbf               6   Stevie program code
-*     7fc0-7fff      64       6   Vector table (32 vectors)
-*     ..............................................................
-*     6000-633f               7   Cartridge header
-*     6040-7fbf               7   SP2 library in cartridge space
-*     7fc0-7fff      64       7   Vector table (32 vectors)
+*     6000-603f      64     1-7   Cartridge header
+*     6040-7fef    7744     1-7   Stevie program code
+*     7f00-7fff     384     1-7   Vector table (32 vectors)
 *===============================================================================
 
 
-
-*--------------------------------------------------------------
-* Stevie Dialog / Pane specific equates
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Stevie Dialog / Pane specific equates
+;-----------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 ;-----------------------------------------------------------------
@@ -79,21 +54,21 @@ id.dialog.cfg             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
-*--------------------------------------------------------------
-* Suffix characters for clipboards
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Suffix characters for clipboards
+;-----------------------------------------------------------------
 clip1                     equ  >3100   ; '1'
 clip2                     equ  >3200   ; '2'
 clip3                     equ  >3300   ; '3'
 clip4                     equ  >3400   ; '4'
 clip5                     equ  >3500   ; '5'
-*--------------------------------------------------------------
-* Keyboard flags in Stevie
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Keyboard flags in Stevie
+;-----------------------------------------------------------------
 kbf.kbclear               equ  >0001   ;  Keyboard buffer cleared / @w$0001
-*--------------------------------------------------------------
-* File work mode
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; File work mode
+;-----------------------------------------------------------------
 id.file.loadfile          equ  1       ; Load file
 id.file.insertfile        equ  2       ; Insert file
 id.file.appendfile        equ  3       ; Append file
@@ -102,15 +77,15 @@ id.file.saveblock         equ  5       ; Save block to file
 id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
 id.file.printblock        equ  8       ; Print block
-*--------------------------------------------------------------
-* Special file indicator
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Special file indicator
+;-----------------------------------------------------------------
 id.special.normal         equ  0       ; Normal file
 id.special.mastcat        equ  1       ; Master catalog
 id.special.readonly       equ  2       ; Read-only file
-*--------------------------------------------------------------
-* Stevie core 1 RAM                   @>a000-a0ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Stevie core 1 RAM                    @>a000-a0ff   (256 bytes)
+;-----------------------------------------------------------------
 core1.top         equ  >a000           ; Structure begin
 magic.str.w1      equ  core1.top + 0   ; Magic string word 1
 magic.str.w2      equ  core1.top + 2   ; Magic string word 2
@@ -172,15 +147,15 @@ tib.var8          equ  core1.top + 250 ; Temp variable 8
 tib.var9          equ  core1.top + 252 ; Temp variable 9
 tib.var10         equ  core1.top + 254 ; Temp variable 10
 core1.free        equ  core1.top + 256 ; End of structure
-*--------------------------------------------------------------
-* Stevie core 2 RAM                   @>a100-a1ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Stevie core 2 RAM                    @>a100-a1ff   (256 bytes)
+;-----------------------------------------------------------------
 core2.top         equ  >a100           ; Structure begin
 rambuf            equ  core2.top       ; RAM workbuffer
 core2.free        equ  core2.top + 256 ; End of structure
-*--------------------------------------------------------------
-* Stevie Editor shared structures     @>a200-a2ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Stevie Editor shared structures      @>a200-a2ff   (256 bytes)
+;-----------------------------------------------------------------
 tv.top            equ  >a200           ; Structure begin
 tv.sams.2000      equ  tv.top + 0      ; SAMS page in window >2000-2fff
 tv.sams.3000      equ  tv.top + 2      ; SAMS page in window >3000-3fff
@@ -210,9 +185,9 @@ tv.sp2.stack      equ  tv.top + 48     ; Backup of SP2 stack register
 tv.fg99.img.ptr   equ  tv.top + 50     ; Pointer to Final GROM cartridge to load
 tv.error.msg      equ  tv.top + 52     ; Error message (max. 160 characters)
 tv.free           equ  tv.top + 212    ; End of structure
-*--------------------------------------------------------------
-* Frame buffer structure              @>a300-a3ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Frame buffer structure               @>a300-a3ff   (256 bytes)
+;-----------------------------------------------------------------
 fb.struct         equ  >a300           ; Structure begin
 fb.top.ptr        equ  fb.struct       ; Pointer to frame buffer
 fb.current        equ  fb.struct + 2   ; Pointer to current pos. in frame buffer
@@ -235,9 +210,9 @@ fb.scrrows.max    equ  fb.struct + 30  ; Max # of rows on physical screen for fb
 fb.ruler.sit      equ  fb.struct + 32  ; 80 char ruler  (no length-prefix!)
 fb.ruler.tat      equ  fb.struct + 112 ; 80 char colors (no length-prefix!)
 fb.free           equ  fb.struct + 192 ; End of structure
-*--------------------------------------------------------------
-* File handle structure               @>a400-a4ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; File handle structure                @>a400-a4ff   (256 bytes)
+;-----------------------------------------------------------------
 fh.struct         equ  >a400           ; stevie file handling structures
 ;*******************************************************************************
 ; ATTENTION: dsrlnk vars must form a continuous memory block & keep their order!
@@ -278,16 +253,15 @@ fh.temp3          equ  fh.struct +100  ; Temporary variable 3
 fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
 fh.membuffer      equ  fh.struct +104  ; 80 bytes file memory buffer
 fh.free           equ  fh.struct +184  ; End of structure
-*--------------------------------------------------------------
-* File handle structure for generic   @>a400-a4ff   (256 bytes)
-* Overload file handle structure
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; File handle structure for generic    @>a400-a4ff   (256 bytes)
+; Overloads file handle structure
+;-----------------------------------------------------------------
 fh.ftype.init     equ  fh.struct + 90  ; File type/mode (becomes fh.filetype)
 fh.ram.ptr        equ  fh.struct + 92  ; RAM destination address
-
-*--------------------------------------------------------------
-* Editor buffer structure             @>a500-a5ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Editor buffer structure              @>a500-a5ff   (256 bytes)
+;-----------------------------------------------------------------
 edb.struct        equ  >a500           ; Begin structure
 edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
 edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
@@ -313,50 +287,50 @@ edb.special.file  equ  edb.struct + 32 ; Special file in editor buffer
 edb.filename      equ  edb.struct + 34 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
 edb.free          equ  edb.struct + 114; End of structure
-*--------------------------------------------------------------
-* Index structure                     @>a600-a6ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Index structure                      @>a600-a6ff   (256 bytes)
+;-----------------------------------------------------------------
 idx.struct        equ  >a600           ; stevie index structure
 idx.sams.page     equ  idx.struct      ; Current SAMS page
 idx.sams.lopage   equ  idx.struct + 2  ; Lowest SAMS page
 idx.sams.hipage   equ  idx.struct + 4  ; Highest SAMS page
 idx.free          equ  idx.struct + 6  ; End of structure
-*--------------------------------------------------------------
-* Command buffer structure            @>a700-a7ff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Command buffer structure             @>a700-a7ff   (256 bytes)
+;-----------------------------------------------------------------
 cmdb.struct       equ  >a700           ; Command Buffer structure
 cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
-cmdb.visible      equ  cmdb.struct + 2 ; Command buffer visible? (>ffff=visible)
-cmdb.fb.yxsave    equ  cmdb.struct + 4 ; Copy of FB WYX when entering cmdb pane
-cmdb.scrrows      equ  cmdb.struct + 6 ; Current size of CMDB pane (in rows)
-cmdb.default      equ  cmdb.struct + 8 ; Default size of CMDB pane (in rows)
-cmdb.cursor       equ  cmdb.struct + 10; Screen YX of cursor in CMDB pane
-cmdb.yxsave       equ  cmdb.struct + 12; Copy of WYX
-cmdb.vdptop       equ  cmdb.struct + 14; VDP address CMDB pane header line (TAT)
-cmdb.yxtop        equ  cmdb.struct + 16; YX position CMDB pane header line
-cmdb.yxprompt     equ  cmdb.struct + 18; YX position of command buffer prompt
-cmdb.column       equ  cmdb.struct + 20; Current column in command buffer pane
-cmdb.length       equ  cmdb.struct + 22; Length of current row in CMDB
-cmdb.lines        equ  cmdb.struct + 24; Total lines in CMDB
-cmdb.dirty        equ  cmdb.struct + 26; Command buffer dirty (Text changed!)
-cmdb.dialog       equ  cmdb.struct + 28; Dialog identifier
-cmdb.dialog.var   equ  cmdb.struct + 30; Dialog private variable or pointer
-cmdb.panhead      equ  cmdb.struct + 32; Pointer to string pane header
-cmdb.paninfo      equ  cmdb.struct + 34; Pointer to string pane info (1st line)
-cmdb.panhint      equ  cmdb.struct + 36; Pointer to string pane hint (2nd line)
-cmdb.panhint2     equ  cmdb.struct + 38; Pointer to string pane hint (extra)
-cmdb.panmarkers   equ  cmdb.struct + 40; Pointer to key marker list  (3rd line)
-cmdb.pankeys      equ  cmdb.struct + 42; Pointer to string pane keys (stat line)
-cmdb.action.ptr   equ  cmdb.struct + 44; Pointer to function to execute
-cmdb.cmdall       equ  cmdb.struct + 46; Current command including length-byte
-cmdb.cmdlen       equ  cmdb.struct + 46; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct + 47; Current command (80 bytes max.)
-cmdb.panhead.buf  equ  cmdb.struct +128; String buffer for pane header
-cmdb.dflt.fname   equ  cmdb.struct +178; Default for filename
-cmdb.free         equ  cmdb.struct +256; End of structure
-*--------------------------------------------------------------
-* Stevie value stack                  @>a800-a8ff   (256 bytes)
-*--------------------------------------------------------------
+cmdb.visible      equ  cmdb.struct+ 2  ; Command buffer visible? (>ffff=visible)
+cmdb.fb.yxsave    equ  cmdb.struct+ 4  ; Copy of FB WYX when entering cmdb pane
+cmdb.scrrows      equ  cmdb.struct+ 6  ; Current size of CMDB pane (in rows)
+cmdb.default      equ  cmdb.struct+ 8  ; Default size of CMDB pane (in rows)
+cmdb.cursor       equ  cmdb.struct+ 10 ; Screen YX of cursor in CMDB pane
+cmdb.yxsave       equ  cmdb.struct+ 12 ; Copy of WYX
+cmdb.vdptop       equ  cmdb.struct+ 14 ; VDP address CMDB pane header line (TAT)
+cmdb.yxtop        equ  cmdb.struct+ 16 ; YX position CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct+ 18 ; YX position of command buffer prompt
+cmdb.column       equ  cmdb.struct+ 20 ; Current column in command buffer pane
+cmdb.length       equ  cmdb.struct+ 22 ; Length of current row in CMDB
+cmdb.lines        equ  cmdb.struct+ 24 ; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct+ 26 ; Command buffer dirty (Text changed!)
+cmdb.dialog       equ  cmdb.struct+ 28 ; Dialog identifier
+cmdb.dialog.var   equ  cmdb.struct+ 30 ; Dialog private variable or pointer
+cmdb.panhead      equ  cmdb.struct+ 32 ; Pointer to string pane header
+cmdb.paninfo      equ  cmdb.struct+ 34 ; Pointer to string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct+ 36 ; Pointer to string pane hint (2nd line)
+cmdb.panhint2     equ  cmdb.struct+ 38 ; Pointer to string pane hint (extra)
+cmdb.panmarkers   equ  cmdb.struct+ 40 ; Pointer to key marker list  (3rd line)
+cmdb.pankeys      equ  cmdb.struct+ 42 ; Pointer to string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct+ 44 ; Pointer to function to execute
+cmdb.cmdall       equ  cmdb.struct+ 46 ; Current command including length-byte
+cmdb.cmdlen       equ  cmdb.struct+ 46 ; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct+ 47 ; Current command (80 bytes max.)
+cmdb.panhead.buf  equ  cmdb.struct+128 ; String buffer for pane header
+cmdb.dflt.fname   equ  cmdb.struct+178 ; Default for filename
+cmdb.free         equ  cmdb.struct+256 ; End of structure
+;-----------------------------------------------------------------
+; Stevie value stack                   @>a800-a8ff   (256 bytes)
+;-----------------------------------------------------------------
 sp2.stktop        equ  >a900           ; \
                                        ; | The stack grows from high memory
                                        ; | towards low memory.
@@ -364,9 +338,9 @@ sp2.stktop        equ  >a900           ; \
                                        ; | Stack leaking is checked in SP2
                                        ; | user hook "edkey.keyscan.hook"
                                        ; /
-*--------------------------------------------------------------
-* Scratchpad memory work copy         @>ad00-aeff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Scratchpad memory work copy          @>ad00-aeff   (256 bytes)
+;-----------------------------------------------------------------
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm
 
@@ -378,48 +352,46 @@ cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
 
 cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
                                        ; calling TI Basic/External programs
-*--------------------------------------------------------------
-* Farjump return stack                @>af00-afff   (256 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Farjump return stack                 @>af00-afff   (256 bytes)
+;-----------------------------------------------------------------
 fj.bottom         equ  >b000           ; Return stack for trampoline function
                                        ; Grows downwards from high to low.
-*--------------------------------------------------------------
-* Index                               @>b000-bfff  (4096 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Index                                @>b000-bfff  (4096 bytes)
+;-----------------------------------------------------------------
 idx.top           equ  >b000           ; Top of index
 idx.size          equ  4096            ; Index size
-*--------------------------------------------------------------
-* Editor buffer                       @>c000-cfff  (4096 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Editor buffer                        @>c000-cfff  (4096 bytes)
+;-----------------------------------------------------------------
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
-*--------------------------------------------------------------
-* Frame buffer & uncrunch area        @>d000-dcff  (3584 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Frame buffer & uncrunch area         @>d000-dcff  (3584 bytes)
+;-----------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (2400 char)
 fb.size           equ  80*30           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
-*--------------------------------------------------------------
-* Defaults area                       @>de00-dfff  (3584 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Defaults area                        @>de00-dfff  (3584 bytes)
+;-----------------------------------------------------------------
 tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
-*--------------------------------------------------------------
-* Command buffer history              @>e000-efff  (4096 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Command buffer history               @>e000-efff  (4096 bytes)
+;-----------------------------------------------------------------
 cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
-*--------------------------------------------------------------
-* Heap                                @>f000-ffff  (4096 bytes)
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Heap                                 @>f000-ffff  (4096 bytes)
+;-----------------------------------------------------------------
 heap.top          equ  >f000           ; Top of heap
-
-
-*--------------------------------------------------------------
-* Stevie specific equates
-*--------------------------------------------------------------
+;-----------------------------------------------------------------
+; Stevie specific equates
+;-----------------------------------------------------------------
 fh.fopmode.none           equ  0       ; No file operation in progress
 fh.fopmode.readfile       equ  1       ; Read file from disk to memory
 fh.fopmode.writefile      equ  2       ; Save file from memory to disk
