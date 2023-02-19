@@ -140,7 +140,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------
-        copy  "colors.line.set.asm"         ; Set color combination for line
         copy  "pane.topline.asm"            ; Top line
         copy  "pane.errline.asm"            ; Error line
         copy  "pane.botline.asm"            ; Bottom line

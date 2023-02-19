@@ -156,35 +156,36 @@ core2.free        equ  core2.top + 256 ; End of structure
 ;-----------------------------------------------------------------
 ; Stevie Editor shared structures      @>a200-a2ff   (256 bytes)
 ;-----------------------------------------------------------------
-tv.top            equ  >a200           ; Structure begin
-tv.sams.2000      equ  tv.top + 0      ; SAMS page in window >2000-2fff
-tv.sams.3000      equ  tv.top + 2      ; SAMS page in window >3000-3fff
-tv.sams.a000      equ  tv.top + 4      ; SAMS page in window >a000-afff
-tv.sams.b000      equ  tv.top + 6      ; SAMS page in window >b000-bfff
-tv.sams.c000      equ  tv.top + 8      ; SAMS page in window >c000-cfff
-tv.sams.d000      equ  tv.top + 10     ; SAMS page in window >d000-dfff
-tv.sams.e000      equ  tv.top + 12     ; SAMS page in window >e000-efff
-tv.sams.f000      equ  tv.top + 14     ; SAMS page in window >f000-ffff
-tv.ruler.visible  equ  tv.top + 16     ; Show ruler with tab positions
-tv.colorscheme    equ  tv.top + 18     ; Current color scheme (0-xx)
-tv.curshape       equ  tv.top + 20     ; Cursor shape and color (sprite)
-tv.curcolor       equ  tv.top + 22     ; Cursor color1 + color2 (color scheme)
-tv.color          equ  tv.top + 24     ; FG/BG-color framebuffer + status lines
-tv.markcolor      equ  tv.top + 26     ; FG/BG-color marked lines in framebuffer
-tv.busycolor      equ  tv.top + 28     ; FG/BG-color bottom line when busy
-tv.rulercolor     equ  tv.top + 30     ; FG/BG-color ruler line
-tv.cmdb.hcolor    equ  tv.top + 32     ; FG/BG-color command buffer header line
-tv.font.ptr       equ  tv.top + 34     ; Pointer to font (in ROM bank 6 or RAM)
-tv.pane.focus     equ  tv.top + 36     ; Identify pane that has focus
-tv.task.oneshot   equ  tv.top + 38     ; Pointer to one-shot routine
-tv.fj.stackpnt    equ  tv.top + 40     ; Pointer to farjump return stack
-tv.error.visible  equ  tv.top + 42     ; Error pane visible
-tv.error.rows     equ  tv.top + 44     ; Number of rows in error pane
-tv.sp2.conf       equ  tv.top + 46     ; Backup of SP2 config register
-tv.sp2.stack      equ  tv.top + 48     ; Backup of SP2 stack register
-tv.fg99.img.ptr   equ  tv.top + 50     ; Pointer to Final GROM cartridge to load
-tv.error.msg      equ  tv.top + 52     ; Error message (max. 160 characters)
-tv.free           equ  tv.top + 212    ; End of structure
+tv.struct         equ  >a200           ; Structure begin
+tv.sams.3000      equ  tv.struct + 2   ; SAMS page in window >3000-3fff
+tv.sams.2000      equ  tv.struct + 0   ; SAMS page in window >2000-2fff
+tv.sams.a000      equ  tv.struct + 4   ; SAMS page in window >a000-afff
+tv.sams.b000      equ  tv.struct + 6   ; SAMS page in window >b000-bfff
+tv.sams.c000      equ  tv.struct + 8   ; SAMS page in window >c000-cfff
+tv.sams.d000      equ  tv.struct + 10  ; SAMS page in window >d000-dfff
+tv.sams.e000      equ  tv.struct + 12  ; SAMS page in window >e000-efff
+tv.sams.f000      equ  tv.struct + 14  ; SAMS page in window >f000-ffff
+tv.ruler.visible  equ  tv.struct + 16  ; Show ruler with tab positions
+tv.colorscheme    equ  tv.struct + 18  ; Current color scheme (0-xx)
+tv.curshape       equ  tv.struct + 20  ; Cursor shape and color (sprite)
+tv.curcolor       equ  tv.struct + 22  ; Cursor color1 + color2 (color scheme)
+tv.color          equ  tv.struct + 24  ; FG/BG-color framebuffer + status lines
+tv.markcolor      equ  tv.struct + 26  ; FG/BG-color marked lines in framebuffer
+tv.busycolor      equ  tv.struct + 28  ; FG/BG-color bottom line when busy
+tv.rulercolor     equ  tv.struct + 30  ; FG/BG-color ruler line
+tv.cmdb.hcolor    equ  tv.struct + 32  ; FG/BG-color command buffer header line
+tv.font.ptr       equ  tv.struct + 34  ; Pointer to font (in ROM bank 6 or RAM)
+tv.pane.focus     equ  tv.struct + 36  ; Identify pane that has focus
+tv.task.oneshot   equ  tv.struct + 38  ; Pointer to one-shot routine
+tv.fj.stackpnt    equ  tv.struct + 40  ; Pointer to farjump return stack
+tv.error.visible  equ  tv.struct + 42  ; Error pane visible
+tv.error.rows     equ  tv.struct + 44  ; Number of rows in error pane
+tv.sp2.conf       equ  tv.struct + 46  ; Backup of SP2 config register
+tv.sp2.stack      equ  tv.struct + 48  ; Backup of SP2 stack register
+tv.fg99.img.ptr   equ  tv.struct + 50  ; Pointer to Final GROM cartridge to load
+tv.special.msg    equ  tv.struct + 52  ; Pointer to special message above botrow
+tv.error.msg      equ  tv.struct + 54  ; Error message (max. 160 characters)
+tv.free           equ  tv.struct + 214 ; End of structure
 ;-----------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff   (256 bytes)
 ;-----------------------------------------------------------------

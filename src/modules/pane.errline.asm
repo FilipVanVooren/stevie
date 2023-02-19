@@ -40,7 +40,7 @@ pane.errline.drawcolor:
 pane.errline.drawcolor.loop:
         mov   tmp1,@parm2           ; Row on physical screen
 
-        bl    @colors.line.set      ; Load color combination for line
+        bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
 

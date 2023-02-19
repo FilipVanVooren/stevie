@@ -26,7 +26,7 @@ pane.colorscheme.statlines:
         ;------------------------------------------------------
         li    tmp0,pane.botrow
         mov   tmp0,@parm2           ; Last row on screen
-        bl    @colors.line.set      ; Load color combination for line
+        bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;------------------------------------------------------

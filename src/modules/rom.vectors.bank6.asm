@@ -13,8 +13,8 @@ cpu.crash.showbank.bankstr:
         aorg  bankx.vectab
 vec.1   data  vdp.dump.patterns     ; Dump sprite/character patterns to VDP
 vec.2   data  vdp.dump.font         ; Dump font to VDP
-vec.3   data  tv.set.font           ; Set current font
-vec.4   data  cpu.crash             ;
+vec.3   data  vdp.colors.line       ; Set colors for specified line
+vec.4   data  tv.set.font           ; Set current font
 vec.5   data  cpu.crash             ;
 vec.6   data  cpu.crash             ;
 vec.7   data  cpu.crash             ;

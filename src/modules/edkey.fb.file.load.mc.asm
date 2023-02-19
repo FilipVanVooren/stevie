@@ -11,6 +11,10 @@
 * none
 ********|*****|*********************|**************************
 edkey.action.fb.load.mc:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0   
         ;-------------------------------------------------------
         ; Set filename
         ;-------------------------------------------------------
@@ -20,10 +24,18 @@ edkey.action.fb.load.mc:
         ; Set special file type to 'Master Catalog'
         ;-------------------------------------------------------
         li    tmp0,id.special.mastcat
-        mov   tmp0,@parm2
+        mov   tmp0,@parm2           ; Set special file type
+        ;-------------------------------------------------------
+        ; Set special message
+        ;-------------------------------------------------------
+        li    tmp0,txt.msg.mastcat  ; \ Set pointer to special message 
+        mov   tmp0,@tv.special.msg  ; / of Master Catalog        
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+                
         b     @edkey.action.fb.load.file
                                     ; \ Load file into editor
                                     ; | i  @parm1 = Pointer to filename string

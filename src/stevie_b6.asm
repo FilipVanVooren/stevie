@@ -70,6 +70,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "vdp.dump.patterns.asm" ; Dump patterns to VDP
         copy  "vdp.dump.font.asm"     ; Dump font to VDP
+        copy  "vdp.colors.line.asm"   ; Set color combination for line
         copy  "tv.set.font.asm"       ; Set current font
         ;-----------------------------------------------------------------------
         ; Stubs

@@ -11,7 +11,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1
 ********|*****|*********************|**************************
 pane.botline:
         dect  stack
@@ -19,23 +19,37 @@ pane.botline:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
-        ; Show Master Catalog message if on
+        ; Show special message if set
         ;------------------------------------------------------
 pane.botline.mc:        
-        mov   @edb.special.file,tmp0
-                                    ; \ 
-                                    ; / Check if special file (0=normal file)
+        abs   @tv.special.msg       ; \ 
+                                    ; / Check if special message set
                                        
-        ci    tmp0,id.special.mastcat 
-                                    ; Is master catalog?
-        jne   pane.botline.shortcuts
+        jeq   pane.botline.shortcuts
                                     ; No, skip message
 
-        bl    @putat
-              byte pane.botrow-1,0  
-              data txt.msg.mastcat  ; Show Master Catalog message
+        mov   @tv.cmdb.hcolor,@parm1
+                                    ; Get color combination of CMDB header line
+
+        li    tmp0,pane.botrow-1    ; \
+        mov   tmp0,@parm2           ; / Set row on physical screen
+
+        bl    @vdp.colors.line      ; Load color combination for line
+                                    ; \ i  @parm1 = Color combination
+                                    ; / i  @parm2 = Row on physical screen
+
+        mov   @tv.special.msg,tmp1  ; Get pointer to special message
+
+        bl    @at
+              byte pane.botrow-1,0  ; Cursor YX position
+
+        bl    @xutst0               ; Display string
+                                    ; \ i  tmp1 = Pointer to string
+                                    ; / i  @wyx = Cursor position at
         ;------------------------------------------------------
         ; Show block shortcuts if set
         ;------------------------------------------------------
@@ -170,9 +184,9 @@ pane.botline.show_linecol:
         mov   tmp0,@waux1           ; Save in temporary
 
         bl    @mknum                ; Convert unsigned number to string
-              data  waux1,rambuf
-              byte  48              ; ASCII offset
-              byte  32              ; Fill character
+              data  waux1,rambuf    ; \
+              byte  48              ; | ASCII offset
+              byte  32              ; / Fill character
 
         bl    @trimnum              ; Trim number to the left
               data  rambuf,rambuf+5,32
@@ -281,6 +295,7 @@ pane.botline.show_lines_in_buffer:
         ;------------------------------------------------------
 pane.botline.exit:
         mov   *stack+,@wyx          ; Pop cursor position
+        mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return

@@ -46,7 +46,7 @@ fm.loadfile:
         ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp1       ; Get dirty flag
-        jeq   !                     ; Load file if not dirty
+        jeq   !                     ; Load file unless dirty
 
         seto  @outparm1             ; \ 
         jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
@@ -84,8 +84,9 @@ fm.loadfile.clear:
         dect  stack
         mov   @parm3,*stack         ; Push @parm3
 
-        seto  @parm1                ; Do not turn screen off while
-                                    ; reloading color scheme
+        seto  @parm1                ; \ Do not turn screen off while reloading
+                                    ; / color scheme
+
         seto  @parm2                ; Skip marked lines colorization
         clr   @parm3                ; Colorize all panes
 

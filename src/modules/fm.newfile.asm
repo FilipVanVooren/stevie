@@ -43,7 +43,7 @@ fm.newfile:
 * Clear SAMS pages and exit editor
 *--------------------------------------------------------------
         bl    @edb.clear.sams       ; Clear SAMS memory used by editor buffer
-        bl    @tv.reset             ; Reset editor
+        bl    @tv.reset             ; Reset editor        
 *--------------------------------------------------------------
 * Remove message
 *--------------------------------------------------------------
@@ -51,6 +51,8 @@ fm.newfile:
               byte 0,0,32,80
               byte pane.botrow,0,32,50
               data EOL              ; Clear top row and hint on bottom row
+
+        clr   @tv.special.msg       ; Remove any special message
 
         mov   @tv.color,@parm1      ; Set normal color
         bl    @pane.colorscheme.statlines

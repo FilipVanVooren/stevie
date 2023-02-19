@@ -66,10 +66,6 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Include files - Utility functions
-        ;-----------------------------------------------------------------------
-        copy  "colors.line.set.asm" ; Set color combination for line
-        ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
         copy  "fh.read.mem.asm"     ; Read file into memory buffer

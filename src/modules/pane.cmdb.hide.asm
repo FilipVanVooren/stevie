@@ -14,16 +14,20 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* none
+* tmp0, tmp1, tmp2
 *--------------------------------------------------------------
 * Hiding the command buffer automatically passes pane focus
-* to frame buffer.
+* to frame buffer. SP2 can destroy tmp0-tmp2 so save on stack.
 ********|*****|*********************|**************************
 pane.cmdb.hide:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
@@ -70,6 +74,8 @@ pane.cmdb.hide.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,tmp2          ; Pop tmp2        
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

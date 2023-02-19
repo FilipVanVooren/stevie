@@ -3,7 +3,7 @@
 
 ***************************************************************
 * edkey.action.fb.load.file
-* Load file into editor
+* Load file directly into editor (without CMDB "Open File")
 ***************************************************************
 * b  @edkey.action.fb.load.file
 *--------------------------------------------------------------
@@ -21,7 +21,7 @@ edkey.action.fb.load.file:
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-        mov   @parm2,tmp1           ; Backup @parm1
+        mov   @parm2,tmp1           ; Backup @parm2
 
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
@@ -41,22 +41,27 @@ edkey.action.fb.load.file:
         ;------------------------------------------------------
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
-!       mov   @edb.dirty,tmp0
+!       mov   @edb.dirty,tmp0       ; Editor buffer dirty?
         jeq   edkey.action.fb.load.check.mastcat
+                                    ; No, continue processing
         jmp   edkey.action.fb.load.file.exit3
+                                    ; Dirty, exit
         ;-------------------------------------------------------
-        ; Special handling Master Catalog
+        ; Check special handling Master Catalog
         ;-------------------------------------------------------
 edkey.action.fb.load.check.mastcat:
-        mov   @edb.special.file,tmp0  ; \ Master catalog previously open?
-        ci    tmp0,id.special.mastcat ; / 
-
+        mov   @edb.special.file,tmp0                          
+        ci    tmp0,id.special.mastcat 
+                                    ; Master catalog previously open?
         jne   edkey.action.fb.load.loadfile
-                                      ; No, just load file
-
+                                    ; No, just load file
+        ;-------------------------------------------------------
+        ; Master Catalog previously open
+        ;-------------------------------------------------------
         mov   @fb.topline,@edb.bk.fb.topline
-                                      ; Backup @fb.topline
-        mov   @fb.row,@edb.bk.fb.row  ; Backup @fb.row
+                                    ; Backup @fb.topline
+        mov   @fb.row,@edb.bk.fb.row
+                                    ; Backup @fb.row
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
@@ -67,12 +72,14 @@ edkey.action.fb.load.loadfile:
         ;-------------------------------------------------------
         ; Handle special files
         ;-------------------------------------------------------
-        mov   tmp1,@edb.special.file   ; \ Restore @parm2
-                                       ; / Set special file (0=normal file)
+        mov   tmp1,@edb.special.file
+                                    ; \ Restore @parm2
+                                    ; / Set special file (0=normal file)
                                        
-        ci    tmp1,id.special.mastcat  ; Is master catalog?
+        ci    tmp1,id.special.mastcat  
+                                    ; Is master catalog?
         jne   edkey.action.fb.load.file.exit2
-                                       ; No, goto top of file and exit
+                                    ; No, goto top of file and exit
         ;-------------------------------------------------------
         ; Goto line in file and exit
         ;-------------------------------------------------------
@@ -102,5 +109,4 @@ edkey.action.fb.load.file.exit3:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        
-        b     @edkey.action.top     ; Goto 1st line in editor buffer 
         b     @dialog.unsaved       ; Show dialog and exit

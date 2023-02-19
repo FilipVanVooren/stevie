@@ -267,13 +267,13 @@ pane.colorscheme.statline:
 
 
         clr   @parm2                ; Top row on screen
-        bl    @colors.line.set      ; Load color combination for line
+        bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
 
         li    tmp1,pane.botrow
         mov   tmp1,@parm2           ; Bottom row on screen
-        bl    @colors.line.set      ; Load color combination for line
+        bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------
