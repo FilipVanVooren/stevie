@@ -197,6 +197,11 @@ fm.loadsave.cb.indicator2.refresh:
                                     ; \ i  @parm1 = Line to start with
                                     ; /
 
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
+
         mov   @fb.scrrows,@parm1
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump

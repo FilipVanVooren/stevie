@@ -36,9 +36,13 @@ fb.init:
         mov   tmp0,@fb.colsline     ; Columns per row=80
         clr   @fb.vwco              ; Set view window column offset
  
-        li    tmp0,pane.botrow-1    ; Framebuffer
-        mov   tmp0,@fb.scrrows      ; Physical rows on screen for fb
-        mov   tmp0,@fb.scrrows.max  ; Maximum number of physical rows for fb
+        li    tmp0,pane.botrow-1    ; \ Framebuffer 
+        mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
+
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
 
         clr   @tv.pane.focus        ; Frame buffer has focus!
         clr   @fb.colorize          ; Don't colorize M1/M2 lines
