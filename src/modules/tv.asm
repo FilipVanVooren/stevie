@@ -39,7 +39,7 @@ tv.init:
         li    tmp0,fj.bottom
         mov   tmp0,@tv.fj.stackpnt  ; Set pointer to farjump return stack
 
-        clr   @tv.special.msg       ; No special message        
+        clr   @tv.specmsg.ptr       ; No special message        
         ;------------------------------------------------------
         ; Set defaults
         ;------------------------------------------------------

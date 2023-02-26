@@ -112,7 +112,18 @@ tib.run.init.basic1:
               data >06f8,tibasic.patterns,8
                                     ; Copy pattern TI-Basic session ID 1
 
+        bl    @cpym2v
+              data >0320,abc.test,16
+
         jmp   tib.run.init.rest     ; Continue initialisation
+
+abc.test  
+        byte >06
+        byte >c8
+        byte >0b
+        text 'TIPI.HW;BAS'
+        byte 0,0
+
         ;-------------------------------------------------------
         ; New TI Basic session 2
         ;-------------------------------------------------------

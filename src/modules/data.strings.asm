@@ -91,7 +91,7 @@ txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
                    even
 txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
                    even
-txt.keys.block     stri 'F9-Back  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
+txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
                    even
 txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
                    even
@@ -112,8 +112,10 @@ txt.ws5            stri '     '
                    even
 txt.filetype.none  equ txt.ws4
 
-txt.msg.mastcat    stri 'Position cursor on filename in list and press ^O to load file.                 '
+txt.msg.mastcat    stri 'Put cursor on file in list and press ^O to load file.'
                    even
+
+txt.msg.tibasic    stri 'TI Basic mode active.'
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------

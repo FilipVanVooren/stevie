@@ -23,10 +23,10 @@ pane.botline:
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
-        ; Show special message if set
+        ; Prepare for special message
         ;------------------------------------------------------
 pane.botline.mc:        
-        abs   @tv.special.msg       ; \ 
+        abs   @tv.specmsg.ptr       ; \ 
                                     ; / Check if special message set
                                        
         jeq   pane.botline.shortcuts
@@ -42,10 +42,28 @@ pane.botline.mc:
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
 
-        mov   @tv.special.msg,tmp1  ; Get pointer to special message
-
         bl    @at
-              byte pane.botrow-1,0  ; Cursor YX position
+              byte pane.botrow-1,0  ; Cursor YX position                                    
+        ;------------------------------------------------------
+        ; Pad message to 80 characters
+        ;------------------------------------------------------
+        mov   @tv.specmsg.ptr,@parm1
+                                    ; Pointer to length-prefixed string
+        mov   @const.80,@parm2      ; Requested length
+        mov   @const.32,@parm3      ; Fill with white space
+        li    tmp0,rambuf           ; \
+        mov   tmp0,@parm4           ; / Pointer to work buffer
+
+        bl    @tv.pad.string        ; Pad string to specified length
+                                    ; \ i  @parm1 = Pointer to string
+                                    ; | i  @parm2 = Requested length
+                                    ; | i  @parm3 = Fill character
+                                    ; | i  @parm4 = Pointer to buffer with
+                                    ; /             output string
+        ;------------------------------------------------------
+        ; Show special message
+        ;------------------------------------------------------
+        mov   @outparm1,tmp1        ; Pointer to padded string
 
         bl    @xutst0               ; Display string
                                     ; \ i  tmp1 = Pointer to string

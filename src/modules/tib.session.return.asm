@@ -275,12 +275,11 @@ tib.run.return.stevie:
         bl    @putvr                ; Set VDP TAT base address for position
               data >0360            ; based attributes (>40 * >60 = >1800)
 
+        bl    @tibasic.buildstr     ; Build session identifier string
+
         clr   @parm1                ; Screen off while reloading color scheme
         clr   @parm2                ; Don't skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
-
-
-        bl    @tibasic.buildstr     ; Build session identifier string
 
         bl    @pane.colorscheme.load
                                     ; Reload color scheme
@@ -289,6 +288,11 @@ tib.run.return.stevie:
                                     ; |             if >FFFF
                                     ; | i  @parm3 = Only colorize CMDB pane
                                     ; /             if >FFFF
+
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
 
         mov   @tib.autounpk,tmp0    ; AutoUnpack is on?
         jne   tib.run.return.exit   ; Yes, skip keylist

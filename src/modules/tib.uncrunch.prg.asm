@@ -169,10 +169,12 @@ tib.uncrunch.prg.lnt.loop:
         ;------------------------------------------------------
         mov   @tib.var5,tmp0        ; Get pointer to statement
         dec   tmp0                  ; Goto statement length prefix
-
+        
+      .ifeq spritecursor,0
         data  c99_dbg_tmp0          ; \ Print vram address in tmp0 on classic99
         data  >1001                 ; | debugger console.
         data  data.printf.vram.stmt ; /
+      .endif
 
         bl    @_v2sams              ; Get SAMS page mapped to VRAM address
                                     ; \ i  tmp0 = VRAM address
@@ -186,12 +188,13 @@ tib.uncrunch.prg.lnt.loop:
                                     ; |
                                     ; / Example: >f7b3 maps to >37b3.
 
-
         mov   @tib.var4,tmp1
+
+      .ifeq spritecursor,0
         data  c99_dbg_tmp1          ; \ Print line number in tmp1 on classic99
         data  >1001                 ; | debugger console.
         data  data.printf.vram.lnum ; /
-
+      .endif
 
         movb  *tmp0+,tmp1           ; \ Get statement length in bytes
         srl   tmp1,8                ; / MSB to LSB
@@ -295,6 +298,13 @@ tib.uncrnch.prg.copy.statement:
 tib.uncrunch.prg.done:
         seto  @fb.dirty             ; Refresh screen buffer
         seto  @edb.dirty            ; Update screen with editor buffer when done
+       
+        li    tmp0,id.special.basic  ; 
+        mov   tmp0,@edb.special.file ; Set filetype to TI Basic program
+
+        li    tmp0,txt.msg.tibasic
+        mov   tmp0,@tv.specmsg.ptr
+
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

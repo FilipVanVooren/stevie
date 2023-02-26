@@ -77,6 +77,7 @@ isr.exit:
         mov   @rambuf,r7            ; Restore R7
         b     *r11                  ; Return from ISR
 
+blabla  byte  >0d,>0d
 
 
 ***************************************************************
@@ -108,6 +109,13 @@ isr.scan.crunchbuf:
         swpb  r7
         movb  @vdpr,r7              ; Read LSB
         swpb  r7                    ; Restore order
+        ;-------------------------------------------------------
+        ; Scan for BREAK
+        ;-------------------------------------------------------
+isr.scan.break:
+        cb    r7,@data.tk.break     ; BREAK?
+        jne   isr.scan.old          ; No, check if other token
+        b     @tib.run.return       ; Yes, return to Stevie
         ;-------------------------------------------------------
         ; Scan for OLD
         ;-------------------------------------------------------
@@ -157,6 +165,7 @@ isr.scan.exit:
 ***************************************************************
 * Tokens TI Basic commands
 ********|*****|*********************|**************************
+data.tk.break byte >8e              ; BREAK
 data.tk.new   byte >01              ; NEW
 data.tk.old   byte >06              ; OLD
 data.tk.save  byte >08              ; SAVE

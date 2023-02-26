@@ -83,6 +83,7 @@ id.file.printblock        equ  8       ; Print block
 id.special.normal         equ  0       ; Normal file
 id.special.mastcat        equ  1       ; Master catalog
 id.special.readonly       equ  2       ; Read-only file
+id.special.basic          equ  3       ; TI Basic program
 ;-----------------------------------------------------------------
 ; Stevie core 1 RAM                    @>a000-a0ff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -183,7 +184,7 @@ tv.error.rows     equ  tv.struct + 44  ; Number of rows in error pane
 tv.sp2.conf       equ  tv.struct + 46  ; Backup of SP2 config register
 tv.sp2.stack      equ  tv.struct + 48  ; Backup of SP2 stack register
 tv.fg99.img.ptr   equ  tv.struct + 50  ; Pointer to Final GROM cartridge to load
-tv.special.msg    equ  tv.struct + 52  ; Pointer to special message above botrow
+tv.specmsg.ptr    equ  tv.struct + 52  ; Pointer to special message above botrow
 tv.error.msg      equ  tv.struct + 54  ; Error message (max. 160 characters)
 tv.free           equ  tv.struct + 214 ; End of structure
 ;-----------------------------------------------------------------

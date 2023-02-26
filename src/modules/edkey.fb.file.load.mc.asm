@@ -29,7 +29,7 @@ edkey.action.fb.load.mc:
         ; Set special message
         ;-------------------------------------------------------
         li    tmp0,txt.msg.mastcat  ; \ Set pointer to special message 
-        mov   tmp0,@tv.special.msg  ; / of Master Catalog        
+        mov   tmp0,@tv.specmsg.ptr  ; / of Master Catalog        
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------

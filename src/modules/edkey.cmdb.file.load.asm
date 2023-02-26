@@ -57,7 +57,7 @@ edkey.action.cmdb.load:
         ;-------------------------------------------------------
 edkey.action.cmdb.load.file:       
         clr   @edb.special.file     ; Reset special file flag
-        clr   @tv.special.msg       ; Reset special message
+        clr   @tv.specmsg.ptr       ; Reset special message
 
         li    tmp0,heap.top         ; Pass filename as parm1
         mov   tmp0,@parm1           ; (1st line in heap)

@@ -52,7 +52,7 @@ fm.newfile:
               byte pane.botrow,0,32,50
               data EOL              ; Clear top row and hint on bottom row
 
-        clr   @tv.special.msg       ; Remove any special message
+        clr   @tv.specmsg.ptr       ; Remove any special message
 
         mov   @tv.color,@parm1      ; Set normal color
         bl    @pane.colorscheme.statlines
