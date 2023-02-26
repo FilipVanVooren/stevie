@@ -112,16 +112,18 @@ tib.run.init.basic1:
               data >06f8,tibasic.patterns,8
                                     ; Copy pattern TI-Basic session ID 1
 
-        bl    @cpym2v
-              data >0320,abc.test,16
-
         jmp   tib.run.init.rest     ; Continue initialisation
 
 abc.test  
-        byte >06
-        byte >c8
-        byte >0b
-        text 'TIPI.HW;BAS'
+        ;text 'OLD TIPI.HW;BAS'
+        byte >AF,>AC
+        byte >A4,>80     
+        byte >B4,>A9     
+        byte >B0,>A9     
+        byte >8E,>A8     
+        byte >B7,>9B     
+        byte >A2,>A1     
+        byte >B3,>00
         byte 0,0
 
         ;-------------------------------------------------------
@@ -330,7 +332,15 @@ tib.run.resume.vdp:
               data >0000,>b000,16384
                                     ; Restore TI Basic 16K VDP memory from
                                     ; RAM buffer >b000->efff
+        ;-------------------------------------------------------
+        ; Clear crunch buffer (crunched statement from before)
+        ;-------------------------------------------------------
+        bl    @cpym2v
+              data >02e2,abc.test,15 ; OLD TIPI.HW;BAS
 
+        bl    @filv
+              data >0320,0,80       ; \ Clear crunch buffer to remove statement
+                                    ; / used for returning to Stevie before.                                    
         ;-------------------------------------------------------
         ; Restore scratchpad memory
         ;-------------------------------------------------------
@@ -344,7 +354,6 @@ tib.run.resume.scrpad:
                                     ; | scratchpad address >83b4.
                                     ; | Note that >83fc in Stevie scratchpad
                                     ; / has copy of the flag.
-
         ;-------------------------------------------------------
         ; Load legacy SAMS bank layout
         ;-------------------------------------------------------

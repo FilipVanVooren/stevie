@@ -96,6 +96,9 @@ blabla  byte  >0d,>0d
 * >ffd0 - >ffff  TI Basic program filename
 ********|*****|*********************|**************************
 isr.scan.crunchbuf:
+        ;movb  @const.2ef1,@>8362      ; Cursor position
+        mov   @const.2ef1,@>832a      ; Line length
+
         ;-------------------------------------------------------
         ; Read token at VDP >0320
         ;-------------------------------------------------------
@@ -110,10 +113,10 @@ isr.scan.crunchbuf:
         movb  @vdpr,r7              ; Read LSB
         swpb  r7                    ; Restore order
         ;-------------------------------------------------------
-        ; Scan for BREAK
+        ; Scan for END
         ;-------------------------------------------------------
-isr.scan.break:
-        cb    r7,@data.tk.break     ; BREAK?
+isr.scan.end:
+        cb    r7,@data.tk.end       ; END?
         jne   isr.scan.old          ; No, check if other token
         b     @tib.run.return       ; Yes, return to Stevie
         ;-------------------------------------------------------
@@ -165,7 +168,9 @@ isr.scan.exit:
 ***************************************************************
 * Tokens TI Basic commands
 ********|*****|*********************|**************************
-data.tk.break byte >8e              ; BREAK
 data.tk.new   byte >01              ; NEW
 data.tk.old   byte >06              ; OLD
 data.tk.save  byte >08              ; SAVE
+data.tk.end   byte >8b              ; END
+data.tk.break byte >8e              ; BREAK
+const.2ef1    data  >2ef1           ; 2ef1

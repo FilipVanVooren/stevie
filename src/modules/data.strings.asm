@@ -115,7 +115,7 @@ txt.filetype.none  equ txt.ws4
 txt.msg.mastcat    stri 'Put cursor on file in list and press ^O to load file.'
                    even
 
-txt.msg.tibasic    stri 'TI Basic mode active.'
+txt.msg.tibasic    stri 'TI Basic program mode active.'
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------
