@@ -114,18 +114,6 @@ tib.run.init.basic1:
 
         jmp   tib.run.init.rest     ; Continue initialisation
 
-abc.test  
-        ;text 'OLD TIPI.HW;BAS'
-        byte >AF,>AC
-        byte >A4,>80     
-        byte >B4,>A9     
-        byte >B0,>A9     
-        byte >8E,>A8     
-        byte >B7,>9B     
-        byte >A2,>A1     
-        byte >B3,>00
-        byte 0,0
-
         ;-------------------------------------------------------
         ; New TI Basic session 2
         ;-------------------------------------------------------
@@ -335,9 +323,6 @@ tib.run.resume.vdp:
         ;-------------------------------------------------------
         ; Clear crunch buffer (crunched statement from before)
         ;-------------------------------------------------------
-        bl    @cpym2v
-              data >02e2,abc.test,15 ; OLD TIPI.HW;BAS
-
         bl    @filv
               data >0320,0,80       ; \ Clear crunch buffer to remove statement
                                     ; / used for returning to Stevie before.                                    
