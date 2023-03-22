@@ -8,27 +8,27 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.4H  '
+            text '  Stevie 1.5.0  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.4HC  '     
+            text ' Stevie 1.5.0C  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.4H-24'
+            text ' Stevie 1.5.0-24'
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.4H-24C'  
+            text ' Stevie 1.5.0-24C'  
             even
         .endif
 
         .ifeq vdpmode, 6081
-            text ' Stevie 1.4H-60'
+            text ' Stevie 1.5.0-60'
             even
         .endif
 
@@ -59,8 +59,8 @@ txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
 txt.hint.save      stri 'Enter filename of file to save.'
-txt.keys.save2     stri 'F9-Back  F3-Clear  F5-Line term=off  FH-Home  FL-EOL'
-txt.keys.save      stri 'F9-Back  F3-Clear  *F5-Line term=CR (>0c)  FH-Home  FL-EOL'
+txt.keys.save      stri 'F9-Back  F3-Clear  F6-Line term=off  FH-Home  FL-EOL'
+txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=** ($**)  FH-Home  FL-EOL'
 
 
 ;--------------------------------------------------------------

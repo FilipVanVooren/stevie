@@ -39,6 +39,9 @@ edb.init:
         seto  @edb.block.m1         ; Reset block start line
         seto  @edb.block.m2         ; Reset block end line
 
+        mov   @tv.lineterm,@edb.lineterm
+                                    ; Set line termination char from default
+
         li    tmp0,txt.newfile      ; "New file"
         mov   tmp0,@edb.filename.ptr
 

@@ -185,8 +185,9 @@ tv.sp2.conf       equ  tv.struct + 46  ; Backup of SP2 config register
 tv.sp2.stack      equ  tv.struct + 48  ; Backup of SP2 stack register
 tv.fg99.img.ptr   equ  tv.struct + 50  ; Pointer to Final GROM cartridge to load
 tv.specmsg.ptr    equ  tv.struct + 52  ; Pointer to special message above botrow
-tv.error.msg      equ  tv.struct + 54  ; Error message (max. 160 characters)
-tv.free           equ  tv.struct + 214 ; End of structure
+tv.lineterm       equ  tv.struct + 54  ; Default line termination character(s)
+tv.error.msg      equ  tv.struct + 56  ; Error message (max. 160 characters)
+tv.free           equ  tv.struct + 216 ; End of structure
 ;-----------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -285,10 +286,13 @@ edb.bk.fb.topline equ  edb.struct + 28 ; Backup of @fb.topline before opening
                                        ; other file from special file.
 edb.bk.fb.row     equ  edb.struct + 30 ; Backup of @fb.row before opening
                                        ; other file from special file.
-edb.special.file  equ  edb.struct + 32 ; Special file in editor buffer                                    
-edb.filename      equ  edb.struct + 34 ; 80 characters inline buffer reserved
+edb.special.file  equ  edb.struct + 32 ; Special file in editor buffer
+edb.lineterm      equ  edb.struct + 34 ; Line termination character
+                                       ; MSB: Mode on (>ff) or off (>00)
+                                       ; LSB: Line termination character                                    
+edb.filename      equ  edb.struct + 36 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
-edb.free          equ  edb.struct + 114; End of structure
+edb.free          equ  edb.struct + 116; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------

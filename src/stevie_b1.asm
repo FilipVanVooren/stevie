@@ -116,6 +116,7 @@ main:
         copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
+        copy  "edkey.cmdb.lineterm.asm"     ; Toggle line termination mode
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line
