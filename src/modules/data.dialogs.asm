@@ -33,9 +33,9 @@ txt.stevie:
         .endif
 
 
-txt.keys.default1  stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  F5-Fastmode IO'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode IO  FH-Home  FL-EOL'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  *F5-Fastmode IO'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
                    even
 
 ;--------------------------------------------------------------
@@ -59,7 +59,8 @@ txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
 txt.hint.save      stri 'Enter filename of file to save.'
-txt.keys.save      stri 'F9-Back  F3-Clear'
+txt.keys.save2     stri 'F9-Back  F3-Clear  F5-Line term=off  FH-Home  FL-EOL'
+txt.keys.save      stri 'F9-Back  F3-Clear  *F5-Line term=CR (>0c)  FH-Home  FL-EOL'
 
 
 ;--------------------------------------------------------------
@@ -109,7 +110,7 @@ txt.head.print2    byte 16,1,1
                    text ' Print block '
                    byte 1
 txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
-txt.keys.print     stri 'F9-Back  F3-Clear'
+txt.keys.print     stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
 
 
 ;--------------------------------------------------------------
