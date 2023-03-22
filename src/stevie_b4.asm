@@ -19,7 +19,7 @@
 * File: stevie_b4.asm
 *
 * Bank 4 "Janine"
-* Frame Buffer methods
+* Frame Buffer & Panes methods
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
@@ -66,7 +66,7 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Logic for Framebuffer (2)
+        ; Logic for Framebuffer
         ;-----------------------------------------------------------------------
         copy  "fb.cursor.up.asm"    ; Cursor up
         copy  "fb.cursor.down.asm"  ; Cursor down
@@ -83,6 +83,12 @@ main:
         copy  "fb.restore.asm"      ; Restore framebuffer to normal opr.
         copy  "fb.refresh.asm"      ; Refresh framebuffer
         copy  "fb.get.nonblank.asm" ; Get column of first non-blank char
+        ;-----------------------------------------------------------------------
+        ; Screen panes
+        ;-----------------------------------------------------------------------
+        copy  "pane.topline.asm"    ; Top line
+        copy  "pane.botline.asm"    ; Bottom line
+        copy  "pane.errline.asm"    ; Error line        
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

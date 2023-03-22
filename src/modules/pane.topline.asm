@@ -36,7 +36,6 @@ pane.topline.file:
         li    tmp0,rambuf
         mov   tmp0,@parm4           ; Set pointer to buffer for output string
 
-
         bl    @tv.pad.string        ; Pad string to specified length
                                     ; \ i  @parm1 = Pointer to string
                                     ; | i  @parm2 = Requested length

@@ -46,11 +46,11 @@ vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
 * ROM 4: Vectors 33-64
 *--------------------------------------------------------------
-vec.33  data  cpu.crash             ;
-vec.34  data  cpu.crash             ;
-vec.35  data  cpu.crash             ;
-vec.36  data  cpu.crash             ;
-vec.37  data  cpu.crash             ;
+vec.33  data  pane.topline          ; Draw topline
+vec.34  data  pane.botline          ; Draw bottom line
+vec.35  data  pane.errline.show     ; Show error line
+vec.36  data  pane.errline.hide     ; Hide error line
+vec.37  data  pane.errline.drawcolor
 vec.38  data  cpu.crash             ;
 vec.39  data  cpu.crash             ;
 vec.40  data  cpu.crash             ;

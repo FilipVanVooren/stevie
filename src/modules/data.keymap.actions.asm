@@ -335,10 +335,10 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.saveblock
         data  edkey.action.cmdb.save
 
-        byte  key.ctrl.6, id.dialog.save
+        byte  key.fctn.6, id.dialog.save
         data  edkey.action.cmdb.lineterm.toggle
 
-        byte  key.ctrl.6, id.dialog.saveblock
+        byte  key.fctn.6, id.dialog.saveblock
         data  edkey.action.cmdb.lineterm.toggle        
         ;-------------------------------------------------------
         ; Dialog: Print file

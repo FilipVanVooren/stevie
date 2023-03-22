@@ -687,6 +687,61 @@ fb.insert.line.vector:
         data  vec.15
 
 
+**************************************************************
+* Stub for "pane.topline"
+* bank4 vec.33
+********|*****|*********************|**************************
+pane.topline:
+        mov   @pane.topline.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.topline.vector:
+        data  vec.33
+
+
+**************************************************************
+* Stub for "pane.botline"
+* bank4 vec.34
+********|*****|*********************|**************************
+pane.botline:
+        mov   @pane.botline.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.botline.vector:
+        data  vec.34
+
+
+**************************************************************
+* Stub for "pane.errline.show"
+* bank4 vec.35
+********|*****|*********************|**************************
+pane.errline.show:
+        mov   @pane.errline.show.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.errline.show.vector:
+        data  vec.35
+
+
+**************************************************************
+* Stub for "pane.errline.hide"
+* bank4 vec.36
+********|*****|*********************|**************************
+pane.errline.hide:
+        mov   @pane.errline.hide.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.errline.hide.vector:
+        data  vec.36
+
+
+**************************************************************
+* Stub for "pane.errline.drawcolor"
+* bank4 vec.37
+********|*****|*********************|**************************
+pane.errline.drawcolor:
+        mov   @pane.errline.drawcolor.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.errline.drawcolor.vector:
+        data  vec.37
+
+
 ***************************************************************
 * Trampoline bank 4 with return
 ********|*****|*********************|**************************

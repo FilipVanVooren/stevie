@@ -1,4 +1,4 @@
-* FILE......: edkey.cmdb.lineterm.toggle.asm
+* FILE......: edkey.cmdb.lineterm.asm
 * Purpose...: Turn line termination character on/off
 
 *---------------------------------------------------------------

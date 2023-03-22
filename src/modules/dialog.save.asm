@@ -72,14 +72,27 @@ dialog.save.header:
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
         clr   @cmdb.panhint2        ; No extra hint to display
-
-        li    tmp0,txt.keys.save
-        mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
+        ;-------------------------------------------------------
+        ; Line termination on ?
+        ;-------------------------------------------------------
+        mov   @edb.lineterm,tmp0    ; Get line termination mode + char
+        andi  tmp0,>ff00            ; Only interested in MSB
+        jeq   !                     ; Line termination mode is off
+        ;-------------------------------------------------------
+        ; Line termination on
+        ;-------------------------------------------------------
+        li    tmp0,txt.keys.save2
+        jmp   dialog.save.cursorshape
+        ;-------------------------------------------------------
+        ; Line termination off
+        ;-------------------------------------------------------
+!       li    tmp0,txt.keys.save
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
+dialog.save.cursorshape:
+        mov   tmp0,@cmdb.pankeys    ; Save keylist in status line
         bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
         ; Exit
