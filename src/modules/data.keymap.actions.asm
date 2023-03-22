@@ -348,6 +348,12 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.printblock
         data  edkey.action.cmdb.print
+
+        byte  key.fctn.6, id.dialog.print
+        data  edkey.action.cmdb.lineterm.toggle
+
+        byte  key.fctn.6, id.dialog.printblock
+        data  edkey.action.cmdb.lineterm.toggle             
         ;-------------------------------------------------------
         ; Dialog: Unsaved changes
         ;-------------------------------------------------------

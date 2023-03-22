@@ -107,6 +107,7 @@ main:
         ; Dialog toggles
         ;-----------------------------------------------------------------------
         copy  "fm.fastmode.asm"         ; Toggle Fastmode IO for file operation
+        copy  "fm.lineterm.asm"         ; Toggle line termination mode
         copy  "tib.dialog.helper.asm"   ; Helper functions for TI Basic dialog
         ;-----------------------------------------------------------------------
         ; Stubs

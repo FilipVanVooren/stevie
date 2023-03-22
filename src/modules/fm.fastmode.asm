@@ -1,9 +1,9 @@
 * FILE......: fm.fastmode.asm
-* Purpose...: Turn fastmode on/off for file operation
+* Purpose...: Toggle "fast-mode IO" for file operation
 
 ***************************************************************
 * fm.fastmode
-* Turn on fast mode for supported devices
+* Toggle "fast-mode IO" for file operation
 ***************************************************************
 * bl  @fm.fastmode
 *--------------------------------------------------------------

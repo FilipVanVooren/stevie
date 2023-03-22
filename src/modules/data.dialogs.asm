@@ -59,8 +59,8 @@ txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
 txt.hint.save      stri 'Enter filename of file to save.'
-txt.keys.save      stri 'F9-Back  F3-Clear  F6-Line term=off  FH-Home  FL-EOL'
-txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=** ($**)  FH-Home  FL-EOL'
+txt.keys.save1     stri 'F9-Back  F3-Clear  F6-Line term=off  FH-Home  FL-EOL'
+txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 
 
 ;--------------------------------------------------------------
@@ -110,7 +110,8 @@ txt.head.print2    byte 16,1,1
                    text ' Print block '
                    byte 1
 txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
-txt.keys.print     stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+txt.keys.print1    equ  txt.keys.save1
+txt.keys.print2    equ  txt.keys.save2
 
 
 ;--------------------------------------------------------------

@@ -42,12 +42,12 @@ vec.28  data  cmdb.cmd.set          ;
 vec.29  data  dialog.hearts.tat     ; Dump color for hearts in TI-Basic dialog
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
-vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load dialog
+vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
 *--------------------------------------------------------------
 * ROM 3: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
-vec.34  data  cpu.crash             ;
+vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
 vec.35  data  cpu.crash             ;
 vec.36  data  cpu.crash             ;
 vec.37  data  cpu.crash             ;

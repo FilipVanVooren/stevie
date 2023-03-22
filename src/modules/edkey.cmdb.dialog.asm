@@ -68,6 +68,25 @@ edkey.action.cmdb.fastmode.toggle:
 
 
 ***************************************************************
+* edkey.action.cmdb.lineterm.toggle
+* Toggle line termination on/off
+***************************************************************
+* b   @edkey.action.cmdb.lineterm.toggle
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* none
+********|*****|*********************|**************************
+edkey.action.cmdb.lineterm.toggle:
+       bl    @fm.lineterm           ; Toggle line termination mode
+       seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
+       b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
+
+
+***************************************************************
 * edkey.action.cmdb.am.toggle
 * Toggle 'AutoUnpack' on/off
 ***************************************************************

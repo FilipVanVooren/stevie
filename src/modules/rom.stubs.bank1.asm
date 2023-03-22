@@ -510,6 +510,16 @@ cmdb.cfg.fname:
 cmdb.cfg.fname.vector:
         data  vec.33
 
+**************************************************************
+* Stub for "fm.lineterm"
+* bank3 vec.34
+********|*****|*********************|**************************
+fm.lineterm:
+        mov   @fm.lineterm.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+fm.lineterm.vector:
+        data  vec.34
+
 
 ***************************************************************
 * Stub for "error.display"
