@@ -1,5 +1,5 @@
-* FILE......: data.strings.bank3.asm
-* Purpose...: Strings used in Stevie bank 3
+* FILE......: data.dialogs.asm
+* Purpose...: Strings used in dialogs
 
 
 ***************************************************************
@@ -13,29 +13,34 @@ txt.stevie:
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.0C  '     
+            text ' Stevie 1.5.0   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.0-24'
+            text ' Stevie 1.5.0   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.0-24C'  
+            text ' Stevie 1.5.0   '  
             even
         .endif
 
-        .ifeq vdpmode, 6081
-            text ' Stevie 1.5.0-60'
-            even
-        .endif
-
+;--------------------------------------------------------------
+; Default key strings used in multiple dialogs
+;--------------------------------------------------------------
 
 txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode IO  FH-Home  FL-EOL'
                    even
 txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
+                   even
+
+;--------------------------------------------------------------
+; Hint strings used in multiple dialogs
+;--------------------------------------------------------------
+
+txt.hint.lineterm  stri 'Line termination character ='
                    even
 
 ;--------------------------------------------------------------
@@ -134,6 +139,7 @@ txt.info.unsaved   stri 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   stri 'Press F6 or SPACE to proceed. Press ENTER to save file.'
 txt.keys.unsaved   stri 'F9-Back  F6/SPACE-Proceed  ENTER-Save'
 
+
 ;--------------------------------------------------------------
 ; Dialog "Help"
 ;--------------------------------------------------------------
@@ -151,6 +157,7 @@ txt.about.build    byte 60
                    copy "buildstr.asm"
                    text ' / Stevie (c)2018-2023 Filip Van Vooren'
                    even
+
 
 ;--------------------------------------------------------------
 ; Dialog "Main Menu"

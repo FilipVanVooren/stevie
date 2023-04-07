@@ -63,7 +63,7 @@ txt.autoins.off    stri 'Autoinsert: off'
                    even
 txt.fastmode       stri 'Fastmode IO'
                    even
-txt.uncrunching    stri 'Expanding TI Basic line....'
+txt.uncrunching    stri 'Detokenizing TI Basic line....'
                    even
 txt.kb             stri 'kb'
                    even
@@ -116,6 +116,8 @@ txt.msg.mastcat    stri 'Put cursor on file in list and press ^O to load file.'
                    even
 
 txt.msg.tibasic    stri 'TI Basic program mode active.'
+                   even
+
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------

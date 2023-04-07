@@ -43,8 +43,7 @@ fm.lineterm:
         ;-------------------------------------------------------
         ; Line termination mode is on
         ;-------------------------------------------------------
-        li    tmp0,txt.hint.cartridg2  
-                                    ; >>Will be replaced with proper message<<
+        li    tmp0,txt.hint.lineterm
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
 
         li    tmp2,id.dialog.save   ; \

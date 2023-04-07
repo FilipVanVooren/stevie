@@ -11,7 +11,7 @@ cpu.crash.showbank.bankstr:
 * ROM 3: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   data  dialog.help           ; Dialog "About"
+vec.1   data  dialog.help           ; Dialog "Help"
 vec.2   data  dialog.load           ; Dialog "Load file"
 vec.3   data  dialog.save           ; Dialog "Save file"
 vec.4   data  dialog.insert         ; Dialog "Insert file at line ..."

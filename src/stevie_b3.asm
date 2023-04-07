@@ -65,16 +65,12 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Include files - Shared code
-        ;-----------------------------------------------------------------------
-
-        ;-----------------------------------------------------------------------
-        ; Include files - Dialogs
+        ; Dialogs (1)
         ;-----------------------------------------------------------------------
         copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
-        copy  "dialog.help.asm"         ; Dialog "Help"
         copy  "dialog.file.asm"         ; Dialog "File"
         copy  "dialog.cartridge.asm"    ; Dialog "Cartridge"
+        copy  "dialog.help.asm"         ; Dialog "Help"        
         copy  "dialog.load.asm"         ; Dialog "Load file"
         copy  "dialog.save.asm"         ; Dialog "Save file"
         copy  "dialog.print.asm"        ; Dialog "Print file"
@@ -117,7 +113,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.dialogs.asm"        ; Strings used in bank 3
+        copy  "data.dialogs.asm"        ; Dialog strings used in bank 3
         copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
         ;-----------------------------------------------------------------------
         ; Bank full check

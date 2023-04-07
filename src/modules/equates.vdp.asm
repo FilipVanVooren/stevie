@@ -20,8 +20,3 @@
   .ifeq vdpmode, 3081
     copy 'equates.f18a.3081.asm'        ; Character cursor
   .endif
-
-***************************** F18a 60x80 ***************************************
-  .ifeq vdpmode, 6081
-    copy 'equates.f18a.6081.asm'        ; Character cursor
-  .endif
