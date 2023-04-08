@@ -19,7 +19,7 @@
 * File: stevie_b4.asm
 *
 * Bank 4 "Janine"
-* Frame Buffer & Panes methods
+* Delegated Frame Buffer methods & Pane utilities
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "rom.build.asm"       ; Cartridge build options
@@ -68,6 +68,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------
+        copy  "fb.cursor.top.asm"   ; Cursor top of file
+        copy  "fb.cursor.topscr.asm"; Cursor top of screen
         copy  "fb.cursor.up.asm"    ; Cursor up
         copy  "fb.cursor.down.asm"  ; Cursor down
         copy  "fb.cursor.home.asm"  ; Cursor home
@@ -75,6 +77,7 @@ main:
         copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
         copy  "fb.tab.prev.asm"     ; Move cursor to previous tab position
         copy  "fb.tab.next.asm"     ; Move cursor to next tab position
+        copy  "fb.goto.toprow.asm"  ; Refresh FB with top-row and row offset
         copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
         copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
         copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT

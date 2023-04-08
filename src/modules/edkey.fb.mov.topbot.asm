@@ -5,31 +5,10 @@
 * Goto top of file
 *---------------------------------------------------------------
 edkey.action.top:
-        ;-------------------------------------------------------
-        ; Crunch current row if dirty 
-        ;-------------------------------------------------------
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.top.refresh
-        
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-                                    ; \ i   @fb.top      = Address top row in FB
-                                    ; | i   @fb.row      = Current row in FB
-                                    ; | i   @fb.column   = Current column in FB
-                                    ; / i   @fb.colsline = Cols per line in FB
+        bl    @fb.cursor.top        ; Goto top of file
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
-        clr   @fb.row.dirty         ; Current row no longer dirty
-        ;-------------------------------------------------------
-        ; Refresh page
-        ;-------------------------------------------------------
-edkey.action.top.refresh:        
-        clr   @parm1                ; Set to 1st line in editor buffer
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
-
-        clr   @parm2                ; No row offset in frame buffer
-
-        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; | i  @parm1 = Top line in editor buffer
-                                    ; / i  @parm2 = Row offset in frame buffer
 
 *---------------------------------------------------------------
 * Goto top of screen
@@ -98,8 +77,7 @@ edkey.action.bot.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.bot.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
-
+        jmp   edkey.action.botscr   ; Goto bottom of screen
 
 
 *---------------------------------------------------------------

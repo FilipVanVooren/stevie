@@ -698,6 +698,17 @@ fb.insert.line.vector:
 
 
 **************************************************************
+* Stub for "fb.cursor.top"
+* bank4 vec.16
+********|*****|*********************|**************************
+fb.cursor.top:
+        mov   @fb.cursor.top.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.cursor.top.vector:
+        data  vec.16
+
+
+**************************************************************
 * Stub for "pane.topline"
 * bank4 vec.33
 ********|*****|*********************|**************************

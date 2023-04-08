@@ -26,9 +26,9 @@ vec.12  data  fb.cursor.up          ; Move cursor up 1 line
 vec.13  data  fb.cursor.down        ; Move cursor down 1 line
 vec.14  data  fb.cursor.home        ; Move cursor home
 vec.15  data  fb.insert.line        ; Insert a new line
-vec.16  data  cpu.crash             ;
-vec.17  data  cpu.crash             ;
-vec.18  data  cpu.crash             ;
+vec.16  data  fb.cursor.top         ; Move cursor to top of file
+vec.17  data  fb.cursor.topscr      ; Move cursor to top of screen
+vec.18  data  fb.goto.toprow        ; Refresh FB with top-row and row offset
 vec.19  data  cpu.crash             ;
 vec.20  data  cpu.crash             ;
 vec.21  data  cpu.crash             ;

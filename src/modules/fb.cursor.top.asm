@@ -1,12 +1,12 @@
-* FILE......: fb.cursor.home.asm
-* Purpose...: Move cursor home
+* FILE......: fb.cursor.top.asm
+* Purpose...: Move cursor to top of file
 
 
 ***************************************************************
-* fb.cursor.home
-* Move cursor home
+* fb.cursor.top
+* Move cursor to top of file
 ***************************************************************
-* bl @fb.cursor.home
+* bl @fb.cursor.top
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -15,37 +15,39 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* none
 ********|*****|*********************|**************************
-fb.cursor.home:
+fb.cursor.top:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
-        ; Cursor home
+        ; Cursor top
         ;------------------------------------------------------
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
-        mov   @wyx,tmp0
-        andi  tmp0,>ff00            ; Reset cursor X position to 0
-        mov   tmp0,@wyx             ; VDP cursor column=0
-        clr   @fb.column
+        c     @fb.row.dirty,@w$ffff
+        jne   fb.cursor.top.refresh
         
-        bl    @fb.calc.pointer      ; Calculate position in frame buffer
+        bl    @edb.line.pack.fb     ; Copy line to editor buffer
                                     ; \ i   @fb.top      = Address top row in FB
-                                    ; | i   @fb.topline  = Top line in FB
                                     ; | i   @fb.row      = Current row in FB
-                                    ; |                  (offset 0..@fb.scrrows)
                                     ; | i   @fb.column   = Current column in FB
-                                    ; | i   @fb.colsline = Columns per line FB 
-                                    ; | 
-                                    ; / o   @fb.current  = Updated pointer
+                                    ; / i   @fb.colsline = Cols per line in FB
 
-        seto  @fb.status.dirty      ; Trigger refresh of status lines
+        clr   @fb.row.dirty         ; Current row no longer dirty
+        ;-------------------------------------------------------
+        ; Refresh page
+        ;-------------------------------------------------------
+fb.cursor.top.refresh:        
+        clr   @parm1                ; Set to 1st line in editor buffer
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
+
+        clr   @parm2                ; No row offset in frame buffer
+
+        bl    @fb.goto.toprow       ; \ Position cursor and exit
+                                    ; | i  @parm1 = Top line in editor buffer
+                                    ; / i  @parm2 = Row offset in frame buffer
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-fb.cursor.home.exit:
-        mov   *stack+,tmp0          ; Pop tmp0        
+fb.cursor.top.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return        
