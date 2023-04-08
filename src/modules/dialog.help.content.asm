@@ -132,7 +132,7 @@ dialog.help.data.page1.left:
         even        
         stri 'Fctn 7        Next tab position'
         even
-        stri 'Ctrl 7        Previous tab position'
+        stri 'Ctrl 7   ^7   Previous tab position'
         even
         stri 'Fctn v        Screen top'
         even
