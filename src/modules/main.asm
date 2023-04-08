@@ -90,6 +90,8 @@ main.continue:
 
         bl    @tv.init              ; Initialize editor configuration
         bl    @tv.reset             ; Reset editor
+
+        bl    @dialog               ; Setup memory for dialogs stringa
         ;------------------------------------------------------
         ; Load colorscheme amd turn on screen
         ;------------------------------------------------------

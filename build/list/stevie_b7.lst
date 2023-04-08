@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230408-2025200
+0002               * BUILD: 230408-2129100
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -576,18 +576,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0394               ;-----------------------------------------------------------------
 0395               ; Heap                                 @>f000-ffff  (4096 bytes)
 0396               ;-----------------------------------------------------------------
-0397      F000     heap.top          equ  >f000           ; Top of heap
-0398               ;-----------------------------------------------------------------
-0399               ; Stevie specific equates
-0400               ;-----------------------------------------------------------------
-0401      0000     fh.fopmode.none           equ  0       ; No file operation in progress
-0402      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-0403      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-0404      0005     cmdb.rows                 equ  5       ; Number of rows in CMDB pane
-0405      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
-0406               
-0407      9900     tv.colorize.reset         equ  >9900   ; Colorization off
-0408      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
+0397      F000     heap.top          equ  >f000           ; 80 Current filename
+0398      F050     heap.msg1         equ  >f050           ; 80 txt.hint.lineterm (bank3)
+0399               ;-----------------------------------------------------------------
+0400               ; Stevie specific equates
+0401               ;-----------------------------------------------------------------
+0402      0000     fh.fopmode.none           equ  0       ; No file operation in progress
+0403      0001     fh.fopmode.readfile       equ  1       ; Read file from disk to memory
+0404      0002     fh.fopmode.writefile      equ  2       ; Save file from memory to disk
+0405      0005     cmdb.rows                 equ  5       ; Number of rows in CMDB pane
+0406      A028     rom0_kscan_out            equ  keycode1; Where to store value of key pressed
+0407               
+0408      9900     tv.colorize.reset         equ  >9900   ; Colorization off
+0409      00FE     tv.1timeonly              equ  254     ; One-time only flag indicator
                    < stevie_b7.asm
 0029                       copy  "equates.c99.asm"     ; Classic99 emulator configuration
      **** ****     > equates.c99.asm
@@ -14537,6 +14538,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     HCHAR1.............. >27EC :     
     HCHAR2.............. >27F6 :     
     HCHARX.............. >27D8 :     
+    HEAP.MSG1........... >F050 :     
     HEAP.TOP............ >F000 :     
     HOOKOK.............. >2E08 :     
     ID.DIALOG.APPEND.... >000E :     

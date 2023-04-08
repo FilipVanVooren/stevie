@@ -520,6 +520,17 @@ fm.lineterm.vector:
 
 
 ***************************************************************
+* Stub for "dialog"
+* bank3 vec.42
+********|*****|*********************|**************************
+dialog:
+        mov   @dialog.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+dialog.vector:
+        data  vec.42
+
+
+***************************************************************
 * Stub for "error.display"
 * bank3 vec.48
 ********|*****|*********************|**************************

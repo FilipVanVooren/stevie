@@ -55,7 +55,7 @@ vec.38  data  cpu.crash             ;
 vec.39  data  cpu.crash             ;
 vec.40  data  cpu.crash             ;
 vec.41  data  cpu.crash             ;
-vec.42  data  cpu.crash             ;
+vec.42  data  dialog                ; Dialog initialisation code
 vec.43  data  cpu.crash             ;
 vec.44  data  cpu.crash             ;
 vec.45  data  cpu.crash             ;

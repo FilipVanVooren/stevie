@@ -1,5 +1,5 @@
 * basic......: dialog.basic.asm
-* Purpose...: Dialog "Basic"
+* Purpose....: Dialog "Basic"
 
 ***************************************************************
 * dialog.basic

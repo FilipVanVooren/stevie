@@ -40,7 +40,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
 ; Hint strings used in multiple dialogs
 ;--------------------------------------------------------------
 
-txt.hint.lineterm  stri 'Line termination character ='
+txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
 ;--------------------------------------------------------------

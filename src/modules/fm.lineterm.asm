@@ -43,7 +43,7 @@ fm.lineterm:
         ;-------------------------------------------------------
         ; Line termination mode is on
         ;-------------------------------------------------------
-        li    tmp0,txt.hint.lineterm
+        li    tmp0,heap.msg1        ; 
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
 
         li    tmp2,id.dialog.save   ; \

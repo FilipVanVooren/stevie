@@ -67,6 +67,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs (1)
         ;-----------------------------------------------------------------------
+        copy  "dialog.asm"              ; Dialog initialisation code
         copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
         copy  "dialog.file.asm"         ; Dialog "File"
         copy  "dialog.cartridge.asm"    ; Dialog "Cartridge"
