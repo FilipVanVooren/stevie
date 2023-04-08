@@ -1,17 +1,13 @@
 * FILE......: edkey.fb.mov.updown.asm
-* Purpose...: Actions for movement keys in frame buffer pane.
+* Purpose...: Actions for movement keys in frame buffer pane
 
 *---------------------------------------------------------------
 * Cursor up
 *---------------------------------------------------------------
 edkey.action.up: 
         bl    @fb.cursor.up         ; Move cursor up
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-edkey.action.up.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
-
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -19,8 +15,5 @@ edkey.action.up.exit:
 *---------------------------------------------------------------
 edkey.action.down:
         bl    @fb.cursor.down       ; Move cursor down
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-edkey.action.down.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

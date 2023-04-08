@@ -70,6 +70,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "fb.cursor.top.asm"   ; Cursor top of file
         copy  "fb.cursor.topscr.asm"; Cursor top of screen
+        copy  "fb.cursor.bot.asm"   ; Cursor bottom of file        
         copy  "fb.cursor.up.asm"    ; Cursor up
         copy  "fb.cursor.down.asm"  ; Cursor down
         copy  "fb.cursor.home.asm"  ; Cursor home

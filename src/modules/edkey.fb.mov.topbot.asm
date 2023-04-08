@@ -14,70 +14,17 @@ edkey.action.top:
 * Goto top of screen
 *---------------------------------------------------------------
 edkey.action.topscr:
-        ;-------------------------------------------------------
-        ; Crunch current row if dirty 
-        ;-------------------------------------------------------
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.topscr.refresh
-
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-                                    ; \ i   @fb.top      = Address top row in FB
-                                    ; | i   @fb.row      = Current row in FB
-                                    ; | i   @fb.column   = Current column in FB
-                                    ; / i   @fb.colsline = Cols per line in FB
-
-        clr   @fb.row.dirty         ; Current row no longer dirty
-        ;-------------------------------------------------------
-        ; Refresh screen
-        ;-------------------------------------------------------
-edkey.action.topscr.refresh:        
-        mov   @fb.topline,@parm1    ; Set to top line in frame buffer
-        clr   @parm2                ; No row offset in frame buffer
-
-        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; | i  @parm1 = Top line in editor buffer
-                                    ; / i  @parm2 = Row offset in frame buffer
+        bl    @fb.cursor.topscr     ; Goto top of file
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 *---------------------------------------------------------------
 * Goto bottom of file
 *---------------------------------------------------------------
 edkey.action.bot:
-        ;-------------------------------------------------------
-        ; Crunch current row if dirty 
-        ;-------------------------------------------------------
-        c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.bot.refresh
-
-        bl    @edb.line.pack.fb     ; Copy line to editor buffer
-                                    ; \ i   @fb.top      = Address top row in FB
-                                    ; | i   @fb.row      = Current row in FB
-                                    ; | i   @fb.column   = Current column in FB
-                                    ; / i   @fb.colsline = Cols per line in FB
-
-        clr   @fb.row.dirty         ; Current row no longer dirty
-        ;-------------------------------------------------------
-        ; Refresh page
-        ;-------------------------------------------------------
-edkey.action.bot.refresh:        
-        c     @edb.lines,@fb.scrrows                                    
-        jle   edkey.action.bot.exit ; Skip if whole editor buffer on screen
-
-        mov   @edb.lines,tmp0
-        s     @fb.scrrows,tmp0
-        mov   tmp0,@parm1           ; Set to last page in editor buffer
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
-
-        clr   @parm2                ; No row offset in frame buffer
-
-        b     @edkey.fb.goto.toprow ; \ Position cursor and exit
-                                    ; | i  @parm1 = Top line in editor buffer
-                                    ; / i  @parm2 = Row offset in frame buffer
-
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-edkey.action.bot.exit:
-        jmp   edkey.action.botscr   ; Goto bottom of screen
+        bl    @fb.cursor.bot        ; Goto bottom of file
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------

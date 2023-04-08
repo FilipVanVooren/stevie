@@ -11,7 +11,7 @@ cpu.crash.showbank.bankstr:
 * ROM 4: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   data  cpu.crash             ;
+vec.1   data  fb.goto.toprow        ; Refresh FB with top-row and row offset
 vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
 vec.3   data  fb.colorlines         ; Colorize frame buffer content
 vec.4   data  fb.vdpdump            ; Dump frame buffer to VDP SIT
@@ -28,7 +28,7 @@ vec.14  data  fb.cursor.home        ; Move cursor home
 vec.15  data  fb.insert.line        ; Insert a new line
 vec.16  data  fb.cursor.top         ; Move cursor to top of file
 vec.17  data  fb.cursor.topscr      ; Move cursor to top of screen
-vec.18  data  fb.goto.toprow        ; Refresh FB with top-row and row offset
+vec.18  data  fb.cursor.bot         ; Move cursor to bottom of file
 vec.19  data  cpu.crash             ;
 vec.20  data  cpu.crash             ;
 vec.21  data  cpu.crash             ;
