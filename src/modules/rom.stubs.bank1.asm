@@ -727,6 +727,18 @@ fb.cursor.bot:
 fb.cursor.bot.vector:
         data  vec.18
 
+
+***************************************************************
+* Stub for "fb.cursor.botscr"
+* bank4 vec.19
+********|*****|*********************|**************************
+fb.cursor.botscr:
+        mov   @fb.cursor.botscr.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.cursor.botscr.vector:
+        data  vec.19
+
+
 ***************************************************************
 * Stub for "pane.topline"
 * bank4 vec.33

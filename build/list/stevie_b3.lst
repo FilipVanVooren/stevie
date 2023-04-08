@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230408-1950560
+0002               * BUILD: 230408-2025200
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -848,13 +848,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.5.0'
+0055 6028 0C53                 stri 'STEVIE 1.5.1'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 30       
+     6034 31       
 0057               
 0061               
 0065               
@@ -13527,13 +13527,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 6ED2 2020                 text '  Stevie 1.5.0  '
+0011 6ED2 2020                 text '  Stevie 1.5.1  '
      6ED4 5374     
      6ED6 6576     
      6ED8 6965     
      6EDA 2031     
      6EDC 2E35     
-     6EDE 2E30     
+     6EDE 2E31     
      6EE0 2020     
 0012                           even
 0014               
@@ -14247,13 +14247,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      73A6 3A20     
 0157                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 73A8 3233                        text '230408-1950560'
+0001 73A8 3233                        text '230408-2025200'
      73AA 3034     
      73AC 3038     
-     73AE 2D31     
-     73B0 3935     
-     73B2 3035     
-     73B4 3630     
+     73AE 2D32     
+     73B0 3032     
+     73B2 3532     
+     73B4 3030     
                    < data.dialogs.asm
 0158 73B6 202F                        text ' / Stevie (c)2018-2023 Filip Van Vooren'
      73B8 2053     

@@ -86,7 +86,6 @@ main:
         copy  "edkey.fb.mov.leftright.asm"  ; Move left / right / home / end
         copy  "edkey.fb.mov.word.asm"       ; Move previous / next word
         copy  "edkey.fb.mov.hscroll.asm"    ; Scroll left / right
-        copy  "edkey.fb.mov.updown.asm"     ; Move line up / down
         copy  "edkey.fb.mov.paging.asm"     ; Move page up / down
         copy  "edkey.fb.mov.topbot.asm"     ; Move file top / bottom
         copy  "edkey.fb.goto.asm"           ; Goto line in editor buffer

@@ -29,7 +29,7 @@ vec.15  data  fb.insert.line        ; Insert a new line
 vec.16  data  fb.cursor.top         ; Move cursor to top of file
 vec.17  data  fb.cursor.topscr      ; Move cursor to top of screen
 vec.18  data  fb.cursor.bot         ; Move cursor to bottom of file
-vec.19  data  cpu.crash             ;
+vec.19  data  fb.cursor.botscr      ; Move cursor to bottom of screen
 vec.20  data  cpu.crash             ;
 vec.21  data  cpu.crash             ;
 vec.22  data  cpu.crash             ;

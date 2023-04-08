@@ -50,6 +50,8 @@ fb.cursor.bot.refresh:
         bl    @fb.goto.toprow       ; \ Position cursor and exit
                                     ; | i  @parm1 = Top line in editor buffer
                                     ; / i  @parm2 = Row offset in frame buffer
+
+        bl    @fb.cursor.botscr     ; Position cursor at bottom of screen
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
