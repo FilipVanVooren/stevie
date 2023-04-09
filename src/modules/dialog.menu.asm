@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1,tmp2,tmp3,tmp4
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
@@ -23,6 +23,14 @@ dialog.menu:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -40,16 +48,66 @@ dialog.menu:
 
         li    tmp0,txt.hint.menu
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-        clr   @cmdb.panhint2        ; No extra hint to display
+
+        li    tmp0,ram.msg1
+        mov   tmp0,@cmdb.panhint2   ; Show SAMS memory allocation
 
         li    tmp0,txt.keys.menu
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
+        ; Print SAMS pages free
+        ;-------------------------------------------------------
+        li    tmp0,tv.sams.maxpage  ; Calculate number of free pages
+        s     @edb.sams.hipage,tmp0 ;
+
+        mov   tmp0,@rambuf          ; Number of ages free
+
+        clr   @ram.msg1 + 18        ; \ Remove any previous number
+        clr   @ram.msg1 + 20        ; /
+
+        bl    @mknum                ; Convert unsigned number to string
+              data rambuf           ; \ i  p1    = Source
+              data rambuf+2         ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data  rambuf+2,ram.msg1 + 18,32
+
+        movb  @const.0,@ram.msg1 + 18
+                                    ; \ Overwrite length-byte prefix in 
+                                    ; / trimmed number
+        ;-------------------------------------------------------
+        ; Print SAMS pages total
+        ;-------------------------------------------------------
+        li    tmp0,tv.sams.maxpage  ; Max number of SAMS pages supported
+        mov   tmp0,@rambuf          ; Number of pages free
+
+        clr   @ram.msg1 + 44        ; \ Remove any previous number
+        clr   @ram.msg1 + 46        ; /
+
+        bl    @mknum                ; Convert unsigned number to string
+              data rambuf           ; \ i  p1    = Source
+              data rambuf+2         ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data  rambuf+2,ram.msg1 + 44,32
+
+        movb  @const.0,@ram.msg1 + 44
+                                    ; \ Overwrite length-byte prefix in 
+                                    ; / trimmed number
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.menu.exit:
+        mov   *stack+,tmp0          ; Pop tmp4
+        mov   *stack+,tmp0          ; Pop tmp3
+        mov   *stack+,tmp0          ; Pop tmp2
+        mov   *stack+,tmp0          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

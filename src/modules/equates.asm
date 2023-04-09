@@ -392,10 +392,11 @@ tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 ;-----------------------------------------------------------------
-; Heap                                 @>f000-ffff  (4096 bytes)
+; Heap & Strings area                  @>f000-ffff  (4096 bytes)
 ;-----------------------------------------------------------------
 heap.top          equ  >f000           ; 80 Current filename
-heap.msg1         equ  >f050           ; 80 txt.hint.lineterm (bank3) 
+ram.msg1          equ  >f050           ; 48 txt.hint.memstat
+ram.msg2          equ  >f080           ; 80 txt.hint.lineterm
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
@@ -407,3 +408,4 @@ rom0_kscan_out            equ  keycode1; Where to store value of key pressed
 
 tv.colorize.reset         equ  >9900   ; Colorization off
 tv.1timeonly              equ  254     ; One-time only flag indicator
+tv.sams.maxpage           equ  256     ; Max SAMS pages supported

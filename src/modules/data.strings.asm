@@ -1,10 +1,9 @@
 * FILE......: data.strings.asm
-* Purpose...: Stevie Editor - data segment (strings)
+* Purpose...: ROM shared strings
 
 ***************************************************************
 *                       Strings
 ***************************************************************
-
 txt.delim          stri ','
                    even
 txt.bottom         stri '  BOT'
@@ -95,11 +94,10 @@ txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
                    even
 txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
                    even
-
 txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
 txt.keymarker      byte 1,28
-
+                   even
 txt.ws1            stri ' '
                    even
 txt.ws2            stri '  '
