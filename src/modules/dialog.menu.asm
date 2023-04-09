@@ -46,11 +46,10 @@ dialog.menu:
         li    tmp0,pos.info.menu
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
-        li    tmp0,txt.hint.menu
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-
         li    tmp0,ram.msg1
-        mov   tmp0,@cmdb.panhint2   ; Show SAMS memory allocation
+        mov   tmp0,@cmdb.panhint    ; Show SAMS memory allocation
+        
+        clr    @cmdb.panhint2       ; No extra hint to display
 
         li    tmp0,txt.keys.menu
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
@@ -66,6 +65,9 @@ dialog.menu:
 
         clr   @ram.msg1 + 18        ; \ Remove any previous number
         clr   @ram.msg1 + 20        ; /
+
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
 
         bl    @mknum                ; Convert unsigned number to string
               data rambuf           ; \ i  p1    = Source
@@ -87,6 +89,9 @@ dialog.menu:
 
         clr   @ram.msg1 + 44        ; \ Remove any previous number
         clr   @ram.msg1 + 46        ; /
+
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
 
         bl    @mknum                ; Convert unsigned number to string
               data rambuf           ; \ i  p1    = Source
