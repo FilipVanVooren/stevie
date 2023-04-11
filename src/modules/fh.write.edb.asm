@@ -150,10 +150,22 @@ fh.file.write.edb.record:
                                     ; \ i  parm1    = Line to unpack
                                     ; | i  parm2    = Target row in frame buffer
                                     ; | i  parm3    = Column offset
-                                    ; / o  outparm1 = Length of line                                    
-        ;------------------------------------------------------        
-        ; 1b: Copy unpacked line to VDP memory
+                                    ; / o  outparm1 = Length of line
         ;------------------------------------------------------
+        ; 1b: Add line termination character (if mode on)
+        ;------------------------------------------------------
+        mov  @edb.lineterm,tmp0     ; \ Check if line term mode is on
+        srl  tmp0,8                 ; / 
+        jeq  fh.file.write.edb.unpack
+
+        li   tmp0,fb.top            ; \
+        a    @outparm1,tmp0         ; | Add line termination character
+        movb @edb.lineterm+1,*tmp0  ; /    
+        inc  @outparm1              ; Adjust line length
+        ;------------------------------------------------------        
+        ; 1c: Copy unpacked line to VDP memory
+        ;------------------------------------------------------
+fh.file.write.edb.unpack:
         li    tmp0,fh.vrecbuf       ; VDP target address
         li    tmp1,fb.top           ; Top of frame buffer in CPU memory
 
@@ -166,7 +178,7 @@ fh.file.write.edb.record:
                                     ; | i  tmp1 = CPU source address
                                     ; / i  tmp2 = Number of bytes to copy  
         ;------------------------------------------------------        
-        ; 1c: Write file record
+        ; 1d: Write file record
         ;------------------------------------------------------
 !       bl    @file.record.write    ; Write file record
               data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM 
@@ -179,19 +191,19 @@ fh.file.write.edb.record:
         mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
         mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
-        ; 1d: Calculate kilobytes processed
+        ; 1e: Calculate kilobytes processed
         ;------------------------------------------------------
         a     @fh.reclen,@fh.counter
                                     ; Add record length to counter
         mov   @fh.counter,tmp1      ;
         ci    tmp1,1024             ; 1 KB boundary reached ?
         jlt   fh.file.write.edb.check_fioerr
-                                    ; Not yet, goto (1e)
+                                    ; Not yet, goto (1f)
         inc   @fh.kilobytes
         ai    tmp1,-1024            ; Remove KB portion, only keep bytes
         mov   tmp1,@fh.counter      ; Update counter        
         ;------------------------------------------------------
-        ; 1e: Check if a file error occured
+        ; 1f: Check if a file error occured
         ;------------------------------------------------------
 fh.file.write.edb.check_fioerr:     
         mov   @fh.ioresult,tmp2   

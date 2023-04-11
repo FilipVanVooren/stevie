@@ -45,6 +45,35 @@ fm.lineterm:
         ;-------------------------------------------------------
         li    tmp0,ram.msg2         ; 
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
+        ;-------------------------------------------------------
+        ; Print ASCII of line termination character(s)
+        ;-------------------------------------------------------
+        clr   @ram.msg2 + 38        ; \ Remove any previous number
+        clr   @ram.msg2 + 40        ; /
+
+        mov   @edb.lineterm,tmp0    ; Get line termination character
+        andi  tmp0,>00ff            ; Get rid of MSB
+        mov   tmp0,@rambuf          ; Prepare for processing
+
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
+
+        bl    @mknum                ; Convert unsigned number to string
+              data rambuf           ; \ i  p1    = Source
+              data rambuf+2         ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data  rambuf+2,ram.msg2 + 37,32
+
+        movb  @const.0,@ram.msg2 + 37
+                                    ; \ Overwrite length-byte prefix in 
+                                    ; / trimmed number
+        ;-------------------------------------------------------
+        ; Dialog switch
+        ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp1     ; Get ID of current dialog
 
         li    tmp2,id.dialog.save   ; \
         c     tmp1,tmp2             ; |  Save dialog?
