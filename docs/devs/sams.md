@@ -154,6 +154,6 @@ captured by Stevie helper ISR in TI Basic.
 The memory regions ``>2000 - >2fff`` and ``>3000 - >3fff`` contains spectra2  
 modules, Stevie core memory and Stevie resident modules. These memory regions   
 are locked to pages ``>02`` and ``>03``. This is required so that the mapper can
-be turned off and the that resides there can still be executed.
+be turned off and the program/data that resides there can still be executed.
 
 This is important for memory setup when chaining to another FinalGROM cartridge.
