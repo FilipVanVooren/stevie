@@ -1,9 +1,9 @@
 * FILE......: fb.insert.line.asm
-* Purpose...: Insert a new line
+* Purpose...: Insert new line
 
 ***************************************************************
 * fb.insert.line.asm
-* Insert a new line
+* Insert new line
 ***************************************************************
 * bl @fb.insert.line
 *--------------------------------------------------------------

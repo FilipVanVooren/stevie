@@ -146,59 +146,26 @@ edkey.action.char:
         ; Setup
         ;-------------------------------------------------------
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
+        clr   @parm1
         movb  tmp1,@parm1           ; Store character for insert
         mov   @edb.insmode,tmp0     ; Insert mode or overwrite mode?
         jeq   edkey.action.char.overwrite
         ;-------------------------------------------------------
         ; Insert mode
         ;-------------------------------------------------------
-edkey.action.char.insert:
-        b     @edkey.action.ins_char
+        bl    @fb.insert.char       ; Insert character
+                                    ; \ i  @parm1 = MSB character to insert
+                                    ; |             LSB = 0 move cursor right
+                                    ; /             LSB > 0 do not move cursor
+
+        jmp   edkey.action.char.exit 
         ;-------------------------------------------------------
         ; Overwrite mode - Write character
         ;-------------------------------------------------------
 edkey.action.char.overwrite:
-        bl    @fb.calc.pointer      ; Calculate position in frame buffer
-                                    ; \ i   @fb.top      = Address top row in FB
-                                    ; | i   @fb.topline  = Top line in FB
-                                    ; | i   @fb.row      = Current row in FB
-                                    ; |                  (offset 0..@fb.scrrows)
-                                    ; | i   @fb.column   = Current column in FB
-                                    ; | i   @fb.colsline = Columns per line FB 
-                                    ; | 
-                                    ; / o   @fb.current  = Updated pointer
-                                    
-        mov   @fb.current,tmp0      ; Get pointer
-
-        movb  @parm1,*tmp0          ; Store character in editor buffer
-        seto  @fb.row.dirty         ; Current row needs to be crunched/packed
-        seto  @fb.dirty             ; Trigger screen refresh
-        ;-------------------------------------------------------
-        ; Last column on screen reached?
-        ;-------------------------------------------------------
-        mov   @fb.column,tmp1       ; \ Columns are counted from 0 to 79.
-        ci    tmp1,colrow - 1       ; / Last column on screen?
-        jlt   edkey.action.char.overwrite.incx
-                                    ; No, increase X position
-
-        li    tmp1,colrow           ; \
-        mov   tmp1,@fb.row.length   ; / Yes, Set row length and exit.
-        jmp   edkey.action.char.exit
-        ;-------------------------------------------------------
-        ; Increase column
-        ;-------------------------------------------------------
-edkey.action.char.overwrite.incx:
-        inc   @fb.column            ; Column++ in screen buffer
-        inc   @wyx                  ; Column++ VDP cursor
-        ;-------------------------------------------------------
-        ; Update line length in frame buffer
-        ;-------------------------------------------------------
-        c     @fb.column,@fb.row.length
-                                    ; column < line length ?
-        jlt   edkey.action.char.exit
-                                    ; Yes, don't update row length
-        mov   @fb.column,@fb.row.length
-                                    ; Set row length
+        bl    @fb.replace.char      ; Replace (overwrite) character
+                                    ; \ i  @parm1 = MSB character to replace
+                                    ; /                                
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

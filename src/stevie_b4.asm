@@ -74,8 +74,10 @@ main:
         copy  "fb.cursor.botscr.asm"; Cursor bottom of screen        
         copy  "fb.cursor.up.asm"    ; Cursor up
         copy  "fb.cursor.down.asm"  ; Cursor down
-        copy  "fb.cursor.home.asm"  ; Cursor home
+        copy  "fb.cursor.home.asm"  ; Cursor home        
         copy  "fb.insert.line.asm"  ; Insert new line
+        copy  "fb.insert.char.asm"  ; Insert character
+        copy  "fb.replace.char.asm" ; Replace character
         copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
         copy  "fb.tab.prev.asm"     ; Move cursor to previous tab position
         copy  "fb.tab.next.asm"     ; Move cursor to next tab position

@@ -751,6 +751,28 @@ fb.cursor.botscr.vector:
 
 
 ***************************************************************
+* Stub for "fb.insert.char"
+* bank4 vec.20
+********|*****|*********************|**************************
+fb.insert.char:
+        mov   @fb.insert.char.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.insert.char.vector:
+        data  vec.20
+
+
+***************************************************************
+* Stub for "fb.replace.char"
+* bank4 vec.21
+********|*****|*********************|**************************
+fb.replace.char:
+        mov   @fb.replace.char.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.replace.char.vector:
+        data  vec.21
+
+
+***************************************************************
 * Stub for "pane.topline"
 * bank4 vec.33
 ********|*****|*********************|**************************

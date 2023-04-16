@@ -158,6 +158,21 @@ fh.file.write.edb.record:
         srl  tmp0,8                 ; / 
         jeq  fh.file.write.edb.unpack
 
+        mov  @outparm1,tmp0         ; Skip further check if empty line
+        jeq  fh.file.write.edb.lineterm
+        ;------------------------------------------------------
+        ; 1b: Skip if it's already a line termination character
+        ;------------------------------------------------------
+        li   tmp0,fb.top            ; \
+        a    @outparm1,tmp0         ; | Goto last character in line
+        dec  tmp0                   ; / 
+
+        cb   @edb.lineterm+1,*tmp0  ; Is it a line termination character?
+        jeq  fh.file.write.edb.unpack
+        ;------------------------------------------------------        
+        ; 1b: Write line termination character
+        ;------------------------------------------------------
+fh.file.write.edb.lineterm
         li   tmp0,fb.top            ; \
         a    @outparm1,tmp0         ; | Add line termination character
         movb @edb.lineterm+1,*tmp0  ; /    
