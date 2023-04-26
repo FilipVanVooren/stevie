@@ -281,18 +281,19 @@ edb.filename.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
 edb.filetype.ptr  equ  edb.struct + 22 ; Pointer to length-prefixed string
                                        ; with current file type.
 edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
-edb.sams.hipage   equ  edb.struct + 26 ; Highest SAMS page in use
-edb.bk.fb.topline equ  edb.struct + 28 ; Backup of @fb.topline before opening
+edb.sams.lopage   equ  edb.struct + 26 ; Lowest SAMS page in use
+edb.sams.hipage   equ  edb.struct + 28 ; Highest SAMS page in use
+edb.bk.fb.topline equ  edb.struct + 30 ; Backup of @fb.topline before opening
                                        ; other file from special file.
-edb.bk.fb.row     equ  edb.struct + 30 ; Backup of @fb.row before opening
+edb.bk.fb.row     equ  edb.struct + 32 ; Backup of @fb.row before opening
                                        ; other file from special file.
-edb.special.file  equ  edb.struct + 32 ; Special file in editor buffer
-edb.lineterm      equ  edb.struct + 34 ; Line termination character
+edb.special.file  equ  edb.struct + 34 ; Special file in editor buffer
+edb.lineterm      equ  edb.struct + 36 ; Line termination character
                                        ; MSB: Mode on (>ff) or off (>00)
                                        ; LSB: Line termination character                                    
-edb.filename      equ  edb.struct + 36 ; 80 characters inline buffer reserved
+edb.filename      equ  edb.struct + 38 ; 80 characters inline buffer reserved
                                        ; for filename, but not always used.
-edb.free          equ  edb.struct + 116; End of structure
+edb.free          equ  edb.struct + 118; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------

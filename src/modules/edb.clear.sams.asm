@@ -51,8 +51,23 @@ edb.clear.sams.loop:
         mov   *stack+,tmp2          ; Pop tmp2
 
         dec   tmp2 
-        ci    tmp2,>3f              ; First page (>40) reached?
-        jgt   edb.clear.sams.loop   ; No, next iteration
+        c     tmp2,@edb.sams.lopage ; First page reached?
+        jlt   !                     ; Yes, prepare for exit
+        jmp   edb.clear.sams.loop   ; No, next iteration
+        ;------------------------------------------------------
+        ; Reset current page & boundaries
+        ;------------------------------------------------------      
+!       mov   @edb.sams.lopage,tmp0       
+        mov   tmp0,@edb.sams.page      
+        mov   tmp0,@edb.sams.hipage
+        mov   @edb.top.ptr,tmp1
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address
+
+        mov   @edb.sams.hipage,@tv.sams.c000
+                                    ; Sync SAMS window. Important!      
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

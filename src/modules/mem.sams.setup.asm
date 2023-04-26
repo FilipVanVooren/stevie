@@ -23,10 +23,12 @@ mem.sams.setup.stevie:
 
         bl    @sams.layout.copy
               data tv.sams.2000     ; Copy SAMS bank ID to shadow table.
-
+        ;------------------------------------------------------
+        ; Set lowest / highest page in use for editor buffer
+        ;------------------------------------------------------    
         mov   @tv.sams.c000,@edb.sams.page
+        mov   @edb.sams.page,@edb.sams.lopage
         mov   @edb.sams.page,@edb.sams.hipage                  
-                                    ; Track editor buffer SAMS page
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
