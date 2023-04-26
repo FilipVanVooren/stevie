@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230426-2051330
+0002               * BUILD: 230426-2100030
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -9741,17 +9741,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0055 6082 1101  14         jlt   !                     ; Yes, prepare for exit
 0056 6084 10EE  14         jmp   edb.clear.sams.loop   ; No, next iteration
 0057                       ;------------------------------------------------------
-0058                       ; Reset current page & boundaries
+0058                       ; Reset boundaries and current SAMS page
 0059                       ;------------------------------------------------------
-0060 6086 C120  34 !       mov   @edb.sams.lopage,tmp0
+0060 6086 C120  34 !       mov   @edb.sams.lopage,tmp0 ; \
      6088 A51A     
-0061 608A C804  38         mov   tmp0,@edb.sams.page
+0061 608A C804  38         mov   tmp0,@edb.sams.page   ; | Boundaries
      608C A518     
-0062 608E C804  38         mov   tmp0,@edb.sams.hipage
+0062 608E C804  38         mov   tmp0,@edb.sams.hipage ; /
      6090 A51C     
-0063 6092 C160  34         mov   @edb.top.ptr,tmp1
+0063               
+0064 6092 C160  34         mov   @edb.top.ptr,tmp1
      6094 A500     
-0064               
 0065 6096 06A0  32         bl    @xsams.page.set       ; Set SAMS page
      6098 2576     
 0066                                                   ; \ i  tmp0 = SAMS page number

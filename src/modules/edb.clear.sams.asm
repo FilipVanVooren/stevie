@@ -55,13 +55,13 @@ edb.clear.sams.loop:
         jlt   !                     ; Yes, prepare for exit
         jmp   edb.clear.sams.loop   ; No, next iteration
         ;------------------------------------------------------
-        ; Reset current page & boundaries
+        ; Reset boundaries and current SAMS page
         ;------------------------------------------------------      
-!       mov   @edb.sams.lopage,tmp0       
-        mov   tmp0,@edb.sams.page      
-        mov   tmp0,@edb.sams.hipage
-        mov   @edb.top.ptr,tmp1
+!       mov   @edb.sams.lopage,tmp0 ; \
+        mov   tmp0,@edb.sams.page   ; | Boundaries
+        mov   tmp0,@edb.sams.hipage ; / 
 
+        mov   @edb.top.ptr,tmp1
         bl    @xsams.page.set       ; Set SAMS page
                                     ; \ i  tmp0 = SAMS page number
                                     ; / i  tmp1 = Memory address
