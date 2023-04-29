@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.4  '
+            text '  Stevie 1.5.5  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.4   '     
+            text ' Stevie 1.5.5   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.4   '
+            text ' Stevie 1.5.5   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.4   '  
+            text ' Stevie 1.5.5   '  
             even
         .endif
 
@@ -38,7 +38,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
 ;--------------------------------------------------------------
 ; Shared strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.hint.memstat   stri 'SAMS pages free = ...    SAMS pages total = ...'
+txt.hint.memstat   stri 'SAMS pages free: ...   SAMS pages total: ...   VDP: .. rows, .. cols           '
                    even
 
 txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'

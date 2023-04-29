@@ -76,9 +76,9 @@ dialog.menu:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf+2,ram.msg1 + 18,32
+              data  rambuf+2,ram.msg1 + 17,32
 
-        movb  @const.0,@ram.msg1 + 18
+        movb  @const.0,@ram.msg1 + 17
                                     ; \ Overwrite length-byte prefix in 
                                     ; / trimmed number
         ;-------------------------------------------------------
@@ -87,8 +87,7 @@ dialog.menu:
         li    tmp0,tv.sams.maxpage  ; Max number of SAMS pages supported
         mov   tmp0,@rambuf          ; Number of pages free
 
-        clr   @ram.msg1 + 44        ; \ Remove any previous number
-        clr   @ram.msg1 + 46        ; /
+        clr   @ram.msg1 + 42        ; Remove any previous number
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
@@ -100,11 +99,12 @@ dialog.menu:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf+2,ram.msg1 + 44,32
+              data  rambuf+2,ram.msg1 + 41,32
 
-        movb  @const.0,@ram.msg1 + 44
+        movb  @const.0,@ram.msg1 + 41
                                     ; \ Overwrite length-byte prefix in 
                                     ; / trimmed number
+                                    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

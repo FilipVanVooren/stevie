@@ -396,8 +396,8 @@ cmdb.size         equ  4096            ; Command buffer size
 ; Heap & Strings area                  @>f000-ffff  (4096 bytes)
 ;-----------------------------------------------------------------
 heap.top          equ  >f000           ; 80 Current filename
-ram.msg1          equ  >f050           ; 48 txt.hint.memstat
-ram.msg2          equ  >f080           ; 80 txt.hint.lineterm
+ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------

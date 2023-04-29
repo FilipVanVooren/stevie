@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230426-2103340
+0002               * BUILD: 230429-1540440
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "rom.build.asm"       ; Cartridge build options
@@ -579,8 +579,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0396               ; Heap & Strings area                  @>f000-ffff  (4096 bytes)
 0397               ;-----------------------------------------------------------------
 0398      F000     heap.top          equ  >f000           ; 80 Current filename
-0399      F050     ram.msg1          equ  >f050           ; 48 txt.hint.memstat
-0400      F080     ram.msg2          equ  >f080           ; 80 txt.hint.lineterm
+0399      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0400      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 0401               ;-----------------------------------------------------------------
 0402               ; Stevie specific equates
 0403               ;-----------------------------------------------------------------
@@ -856,13 +856,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               
 0061               
 0065               
-0067 6028 0C53                 stri 'STEVIE 1.5.4'
+0067 6028 0C53                 stri 'STEVIE 1.5.5'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 34       
+     6034 35       
                    < stevie_b0.asm
 0042               
 0043               ***************************************************************
@@ -10621,7 +10621,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     R9HB................ >8312 :     
     R9LB................ >8313 :     
     RAM.MSG1............ >F050 :     
-    RAM.MSG2............ >F080 :     
+    RAM.MSG2............ >F0A0 :     
     RAMBUF.............. >A100 :     
     RAMSAT.............. >A056 :     
     RELOC.RESIDENT...... >60C0 :     
