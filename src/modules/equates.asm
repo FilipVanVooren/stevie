@@ -204,7 +204,7 @@ fb.column         equ  fb.struct + 12  ; Current column (0-79) in frame buffer
 fb.colsline       equ  fb.struct + 14  ; Columns per line in frame buffer
 fb.vwco           equ  fb.struct + 16  ; View window column offset (0-xxx)
 fb.colorize       equ  fb.struct + 18  ; M1/M2 colorize refresh required
-fb.curtoggle      equ  fb.struct + 20  ; Cursor shape toggle
+fb.curtoggle      equ  fb.struct + 20  ; Cursor shape toggle (00=on <>00=off)
 fb.yxsave         equ  fb.struct + 22  ; Copy of cursor YX position
 fb.dirty          equ  fb.struct + 24  ; Frame buffer dirty flag
 fb.status.dirty   equ  fb.struct + 26  ; Status line(s) dirty flag

@@ -21,7 +21,7 @@ fb.cursor.home:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        mov   tmp0,*stack           ; Push tmp0        
         ;------------------------------------------------------
         ; Cursor home
         ;------------------------------------------------------
