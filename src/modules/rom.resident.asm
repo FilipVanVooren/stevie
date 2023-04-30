@@ -1,6 +1,10 @@
 * FILE......: rom.resident.asm
 * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
 
+  ; Watch out! Avoid relying on calling code stored in the cartridge ROM area.
+  ; It's easier to directly do farjmp call, and this is what we do.
+  ; Especially for the spectra2 tasks.
+
         ;------------------------------------------------------
         ; Low-level modules
         ;------------------------------------------------------
@@ -44,12 +48,10 @@
         
         copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
         copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
-        copy  "vdp.cursor.sprite.asm"       ; Sprite cursor code     
 
         .else
 
         copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
-        copy  "vdp.cursor.char.asm"         ; Character cursor code
 
         .endif
     
