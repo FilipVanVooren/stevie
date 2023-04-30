@@ -24,7 +24,6 @@ mem.sams.setup.stevie:
         b     *r11                  ; Return to caller
  .endif
 
-
  .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "mem.sams.set.legacy"

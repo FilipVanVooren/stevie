@@ -14,9 +14,9 @@ cpu.crash.showbank.bankstr:
 vec.1   data  vdp.dump.patterns     ; Dump sprite/character patterns to VDP
 vec.2   data  vdp.dump.font         ; Dump font to VDP
 vec.3   data  vdp.colors.line       ; Set colors for specified line
-vec.4   data  tv.set.font           ; Set current font
-vec.5   data  cpu.crash             ;
-vec.6   data  cpu.crash             ;
+vec.4   data  cpu.crash             ;
+vec.5   data  vdp.cursor.char       ; Set cursor shape (character version)
+vec.6   data  vdp.cursor.sprite     ; Set cursor shape (sprite version)
 vec.7   data  cpu.crash             ;
 vec.8   data  cpu.crash             ;
 vec.9   data  cpu.crash             ;
@@ -46,7 +46,7 @@ vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
 * ROM 6: Vectors 33-64
 *--------------------------------------------------------------
-vec.33  data  cpu.crash             ;
+vec.33  data  tv.set.font           ; Set current font
 vec.34  data  cpu.crash             ;
 vec.35  data  cpu.crash             ;
 vec.36  data  cpu.crash             ;

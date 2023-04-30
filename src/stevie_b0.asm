@@ -32,10 +32,14 @@
         copy  "equates.c99.asm"     ; Classic99 emulator configuration
         copy  "equates.keys.asm"    ; Equates for keyboard mapping
 
+
 ***************************************************************
 * BANK 0
 ********|*****|*********************|**************************
-bankid  equ   bank0.rom             ; Set bank identifier to current bank
+bankid  equ   bank1.rom             ; Set bank identifier to bank 1!
+                                    ; We never want to return to bank 0, after
+                                    ; doing trampoline call, from low memexp.
+
         aorg  >6000
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
@@ -121,6 +125,11 @@ new.stevie:
         mov   r0,@>ffce             ; \ Save caller address
         bl    @cpu.crash            ; / Crash and halt system
 
+        ;-----------------------------------------------------------------------
+        ; Stubs
+        ;-----------------------------------------------------------------------
+        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+
 ***************************************************************
 * Code data: Relocated code
 ********|*****|*********************|**************************
@@ -157,11 +166,12 @@ main:
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
         copy  "rom.crash.asm"
-
-cpu.crash.showbank.bankstr:
-        stri 'ROM#0'
-
         ;-----------------------------------------------------------------------
         ; Table for VDP modes
         ;-----------------------------------------------------------------------
         copy  "data.vdpmodes.asm"   ; Table for VDP modes
+        ;-----------------------------------------------------------------------
+        ; Vector table
+        ;-----------------------------------------------------------------------
+        copy  "rom.vectors.bank0.asm"
+                                    ; Vector table bank 0

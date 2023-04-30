@@ -1005,13 +1005,13 @@ vdp.colors.line.vector:
 
 ***************************************************************
 * Stub for "tv.set.font"
-* bank6 vec.4
+* bank6 vec.33
 ********|*****|*********************|**************************
 tv.set.font:
         mov   @tv.set.font.vector,@trmpvector
         jmp   _trampoline.bank6.ret ; Longjump
 tv.set.font.vector:
-        data  vec.4
+        data  vec.33
 
 
 ***************************************************************

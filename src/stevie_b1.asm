@@ -144,7 +144,7 @@ main:
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank1.asm"         ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks > 0
+        copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------

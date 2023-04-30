@@ -130,18 +130,32 @@ rom.farjump.return:
 
         clr   *tmp0+                ; Remove return address of caller from 
                                     ; farjump stack
-
-        ci    r11,>6000
-        jlt   rom.farjump.bankswitch.failed2
+   
+        ;------------------------------------------------------
+        ; Assert on memory source address in cartridge space
+        ;------------------------------------------------------
+rom.farjump.assert.cart:
+        ci    r11,>6000                       
+        jlt   rom.farjump.assert.lowmem
         ci    r11,>7fff
         jgt   rom.farjump.bankswitch.failed2
-        
-        mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
+        jmp   !        
+        ;------------------------------------------------------
+        ; Assert on memory source address in low memory expansion
+        ;------------------------------------------------------
+rom.farjump.assert.lowmem:
+        ci    r11,>2000
+        jlt   rom.farjump.bankswitch.failed2
+        ci    r11,>3fff
+        jgt   rom.farjump.bankswitch.failed2
+        ;------------------------------------------------------
+        ; Update farjump return stack pointer
+        ;------------------------------------------------------
+!       mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
 
         .ifeq device.fg99.mode.adv,1
         jmp   rom.farjump.bankswitch.src.advfg99
         .endif
-
         ;------------------------------------------------------
         ; Bankswitch to source 8K ROM bank 
         ;------------------------------------------------------

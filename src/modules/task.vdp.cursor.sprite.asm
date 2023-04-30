@@ -8,9 +8,12 @@ task.vdp.cursor:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Update cursor shape
+        ; Set cursor shape (sprite version)
         ;------------------------------------------------------
-        bl    @vdp.cursor.sprite    ; Update cursor shape
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank6.rom        ; | i  p0 = bank address
+              data vec.6            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
