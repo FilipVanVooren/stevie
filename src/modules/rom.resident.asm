@@ -34,7 +34,8 @@
         ; Logic for editor buffer
         ;-----------------------------------------------------------------------
         copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
-        copy  "edb.line.getlen.asm"    ; Get line length
+        copy  "edb.line.getlength.asm" ; Get line length
+        copy  "edb.line.getlength2.asm"; Get length of current row
         copy  "edb.hipage.alloc.asm"   ; Check/increase highest SAMS page
         ;-----------------------------------------------------------------------
         ; Utility functions

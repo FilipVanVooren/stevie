@@ -8,7 +8,7 @@
 ***************************************************************
 * bl  @edb.line.mappage
 * 
-* tmp0 = Line number in editor buffer
+* tmp0 = Line number in editor buffer (base 1)
 *--------------------------------------------------------------
 * OUTPUT
 * outparm1 = Pointer to line in editor buffer

@@ -29,7 +29,10 @@ fb.get.nonblank:
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer
 
-        bl    @edb.line.getlength2  ; Get length current line
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
+                                    
         mov   @fb.row.length,tmp2   ; Set loop counter
         jeq   fb.get.nonblank.nomatch
                                     ; Exit if empty line

@@ -84,7 +84,10 @@ edkey.action.newline.rest:
         mov   @outparm1,tmp0
         mov   tmp0,@fb.column
         bl    @xsetx                ; Set Column=tmp0 (VDP cursor)
-        bl    @edb.line.getlength2  ; Get length of new row length
+        
+        bl    @edb.line.getlength2  ; \ Get length current line
+                                    ; | i  @fb.row        = Row in frame buffer
+                                    ; / o  @fb.row.length = Length of row
 
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB

@@ -1,4 +1,4 @@
-* FILE......: edb.line.getlen.asm
+* FILE......: edb.line.getlength.asm
 * Purpose...: Get length of specified line in editor buffer
 
 ***************************************************************
@@ -36,7 +36,7 @@ edb.line.getlength:
         inc   tmp0                  ; /  base 1
 
         c     tmp0,@edb.lines       ; Requested line at BOT?
-        jlt   !                     ; No, continue processing
+        jle   !                     ; No, continue processing
         jmp   edb.line.getlength.null
                                     ; Set length 0 and exit early
         ;------------------------------------------------------
@@ -70,46 +70,4 @@ edb.line.getlength.exit:
         mov   *stack+,tmp1          ; Pop tmp1                
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-
-***************************************************************
-* edb.line.getlength2
-* Get length of current row (as seen from editor buffer side)
-***************************************************************
-*  bl   @edb.line.getlength2
-*--------------------------------------------------------------
-* INPUT
-* @fb.row = Row in frame buffer
-*--------------------------------------------------------------
-* OUTPUT
-* @fb.row.length = Length of row
-*--------------------------------------------------------------
-* Register usage
-* tmp0
-********|*****|*********************|**************************
-edb.line.getlength2:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        ;------------------------------------------------------
-        ; Calculate line in editor buffer
-        ;------------------------------------------------------
-        mov   @fb.topline,tmp0      ; Get top line in frame buffer
-        a     @fb.row,tmp0          ; Get current row in frame buffer        
-        ;------------------------------------------------------
-        ; Get length
-        ;------------------------------------------------------
-        mov   tmp0,@parm1           
-        bl    @edb.line.getlength
-        mov   @outparm1,@fb.row.length
-                                    ; Save row length
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-edb.line.getlength2.exit:
-        mov   *stack+,tmp0          ; Pop tmp0                
-        mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

@@ -48,14 +48,13 @@ edkey.keyscan.hook.clear:
         ori   tmp0,kbf.kbclear      ; | keyboard buffer cleared flag
         mov   tmp0,@kbflags         ; /
         ;------------------------------------------------------
-        ; Keyboard debounce
-        ;------------------------------------------------------
-edkey.keyscan.hook.debounce:
-        nop                         ; No purpose anymore, but branched to
-                                    ; from several subroutines.
-                                    ; Needs to be refactored.
-        ;------------------------------------------------------
         ; Exit keyboard hook
         ;------------------------------------------------------
 edkey.keyscan.hook.exit:
         b     @hookok               ; Return
+
+
+        ;------------------------------------------------------
+        ; Keyboard debounce
+        ;------------------------------------------------------
+edkey.keyscan.hook.debounce  equ  hookok
