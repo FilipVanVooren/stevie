@@ -20,11 +20,11 @@ skip_speech_player        equ  1       ; Skip inclusion of speech player code
 skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
+*--------------------------------------------------------------
+* Skip modules that need to be included in cartridge space
+*--------------------------------------------------------------
 skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
-                                       ; \
-                                       ; | The SAMS support module needs to be
-                                       ; | embedded in the cartridge space, so
-                                       ; / do not load it here.
+skip_sams_size            equ  1       ; Skip SAMS card size check
 
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options

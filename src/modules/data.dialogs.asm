@@ -153,10 +153,10 @@ txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with 
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
-txt.about.build    byte 60
+txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' / Stevie (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.6 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
