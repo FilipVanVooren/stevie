@@ -38,7 +38,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
 ;--------------------------------------------------------------
 ; Shared strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.hint.memstat   stri 'SAMS pages free: ...   SAMS pages total: ...   VDP: .. rows, .. cols           '
+txt.hint.memstat   stri 'SAMS pages free/total: ..../...    VDP: .. rows, 80 cols          '
                    even
 
 txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'

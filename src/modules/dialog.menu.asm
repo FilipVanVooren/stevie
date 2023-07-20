@@ -63,31 +63,26 @@ dialog.menu:
 
         mov   tmp0,@rambuf          ; Number of ages free
 
-        clr   @ram.msg1 + 18        ; \ Remove any previous number
-        clr   @ram.msg1 + 20        ; /
+        clr   @ram.msg1 + 24        ; \ Remove any previous number
+        clr   @ram.msg1 + 26        ; /
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
 
         bl    @mknum                ; Convert unsigned number to string
               data rambuf           ; \ i  p1    = Source
-              data rambuf+2         ; | i  p2    = Destination
+              data ram.msg1+23      ; | i  p2    = Destination
               byte 48               ; | i  p3MSB = ASCII offset
               byte 32               ; / i  p3LSB = Padding character
 
-        bl    @trimnum              ; Trim number to the left
-              data  rambuf+2,ram.msg1 + 17,32
-
-        movb  @const.0,@ram.msg1 + 17
+        movb  @const.0,@ram.msg1 + 23
                                     ; \ Overwrite length-byte prefix in 
                                     ; / trimmed number
         ;-------------------------------------------------------
         ; Print SAMS pages total
         ;-------------------------------------------------------
         li    tmp0,tv.sams.maxpage  ; Max number of SAMS pages supported
-        mov   tmp0,@rambuf          ; Number of pages free
-
-        clr   @ram.msg1 + 42        ; Remove any previous number
+        mov   tmp0,@rambuf          ; Number of pages total
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
@@ -99,11 +94,11 @@ dialog.menu:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf+2,ram.msg1 + 41,32
+              data  rambuf+2,ram.msg1 + 28,32
 
-        movb  @const.0,@ram.msg1 + 41
-                                    ; \ Overwrite length-byte prefix in 
-                                    ; / trimmed number
+        li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
+        movb  tmp0,@ram.msg1 + 28   ; | Overwrite length-byte prefix in 
+                                    ; / trimmed number with slash 
                                     
         ;-------------------------------------------------------
         ; Exit
