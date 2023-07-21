@@ -22,9 +22,9 @@
 * Generate list file with contents of resident modules in
 * LOW MEMEXP >2000 - >3fff
 ********************************************************************************
-        copy  "rom.build.asm"       ; Cartridge build options
+        copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
-        copy  "equates.asm"         ; Equates Stevie configuration
+        copy  "equ.asm"             ; Equates Stevie configuration
         copy  "data.keymap.keys.asm"; Equates for keyboard mapping
 
 ***************************************************************

@@ -1,4 +1,4 @@
-* FILE......: equates.c99.asm
+* FILE......: equ.c99.asm
 * Purpose...: Equates related to classic99
 
 ***************************************************************

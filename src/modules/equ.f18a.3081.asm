@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.3081.asm
+* FILE......: equ.f18a.3081.asm
 * Purpose...: F18a 30x80 mode (no sprite support)
 
   .ifeq vdpmode, 3081

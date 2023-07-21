@@ -4,7 +4,7 @@
             aorg bankx.vdptab
 
 ; ====================================================================
-; Keep the tables in sequence, or change offsets in equates.f18a.*.asm
+; Keep the tables in sequence, or change offsets in equ.f18a.*.asm
 ; ====================================================================
 
 ***************************************************************

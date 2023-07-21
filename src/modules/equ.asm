@@ -1,4 +1,4 @@
-* FILE......: equates.asm
+* FILE......: equ.asm
 * Purpose...: The main equates file for Stevie editor
 
 

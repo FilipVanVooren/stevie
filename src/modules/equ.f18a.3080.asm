@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.3080.asm
+* FILE......: equ.f18a.3080.asm
 * Purpose...: F18a 30x80 mode (with sprite cursor/rulers)
 
   .ifeq vdpmode, 3080

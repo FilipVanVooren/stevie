@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.2480.asm
+* FILE......: equ.f18a.2480.asm
 * Purpose...: F18a 24x80 mode
 
   .ifeq vdpmode, 2480

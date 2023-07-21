@@ -20,7 +20,7 @@
         ; If resume fails, you can only reset the TI-99/4a by turning of
         ; the memory expansion, it's not sufficient to reset the console.
         ;
-        data  rom.program1          ; 6  \ Pointer to program list         >6006
+        data  rom.program2          ; 6  \ Pointer to program list         >6006
                                     ; 7  /
 
         data  >0000                 ; 8  \ Pointer to DSR list             >6008

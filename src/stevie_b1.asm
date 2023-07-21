@@ -22,15 +22,15 @@
 * Editor core
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
-        copy  "rom.build.asm"       ; Cartridge build options
+        copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
         ;-----------------------------------------------------------------------
         ; Equates
         ;-----------------------------------------------------------------------    
-        copy  "equates.vdp.asm"     ; VDP configuration (F18a/9938/...)
-        copy  "equates.asm"         ; Stevie main configuration
-        copy  "equates.c99.asm"     ; Classic99 emulator configuration
-        copy  "equates.keys.asm"    ; Equates for keyboard mapping
+        copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
+        copy  "equ.asm"             ; Stevie main configuration
+        copy  "equ.c99.asm"         ; Classic99 emulator configuration
+        copy  "equ.keys.asm"        ; Equates for keyboard mapping
 
 ***************************************************************
 * BANK 1

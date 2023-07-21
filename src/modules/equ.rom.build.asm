@@ -1,4 +1,4 @@
-* FILE......: rom.build.asm
+* FILE......: equ.rom.build.asm
 * Purpose...: Cartridge build options
 
 *--------------------------------------------------------------

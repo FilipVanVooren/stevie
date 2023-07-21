@@ -1,4 +1,4 @@
-* FILE......: equates.f18a.2481.chr.asm
+* FILE......: equ.f18a.2481.chr.asm
 * Purpose...: F18a 24x80 mode (no sprite support)
 
   .ifeq vdpmode, 2481

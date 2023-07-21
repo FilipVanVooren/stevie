@@ -1,4 +1,4 @@
-* FILE......: equates.tib.asm
+* FILE......: equ.tib.asm
 * Purpose...: Equates for TI Basic session
 
 *--------------------------------------------------------------
