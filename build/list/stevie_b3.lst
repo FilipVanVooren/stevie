@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230721-1630570
+0002               * BUILD: 230721-1639500
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -852,13 +852,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.5.7'
+0055 6028 0C53                 stri 'STEVIE 1.5.8'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 37       
+     6034 38       
 0057               
 0061               
 0065               
@@ -13734,13 +13734,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 6FB8 2020                 text '  Stevie 1.5.7  '
+0011 6FB8 2020                 text '  Stevie 1.5.8  '
      6FBA 5374     
      6FBC 6576     
      6FBE 6965     
      6FC0 2031     
      6FC2 2E35     
-     6FC4 2E37     
+     6FC4 2E38     
      6FC6 2020     
 0012                           even
 0014               
@@ -14500,22 +14500,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      74E8 3A20     
 0158                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 74EA 3233                        text '230721-1630570'
+0001 74EA 3233                        text '230721-1639500'
      74EC 3037     
      74EE 3231     
      74F0 2D31     
      74F2 3633     
-     74F4 3035     
-     74F6 3730     
+     74F4 3935     
+     74F6 3030     
                    < data.dialogs.asm
-0159 74F8 202D                        text ' - Stevie 1.5.7 - (c)2018-2023 Filip Van Vooren'
+0159 74F8 202D                        text ' - Stevie 1.5.8 - (c)2018-2023 Filip Van Vooren'
      74FA 2053     
      74FC 7465     
      74FE 7669     
      7500 6520     
      7502 312E     
      7504 352E     
-     7506 3720     
+     7506 3820     
      7508 2D20     
      750A 2863     
      750C 2932     
