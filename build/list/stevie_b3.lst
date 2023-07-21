@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230721-1639500
+0002               * BUILD: 230721-1838560
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -852,13 +852,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.5.8'
+0055 6028 0C53                 stri 'STEVIE 1.5.9'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 38       
+     6034 39       
 0057               
 0061               
 0065               
@@ -11465,7 +11465,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      674C A722     
 0037               
 0038 674E 0204  20         li    tmp0,pos.info.shortcuts
-     6750 79EE     
+     6750 79F6     
 0039 6752 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      6754 A728     
 0040               
@@ -11473,12 +11473,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6758 A726     
 0042               
 0043 675A 0204  20         li    tmp0,txt.hint.shortcuts
-     675C 79F6     
+     675C 7A00     
 0044 675E C804  38         mov   tmp0,@cmdb.panhint    ; Empty hint
      6760 A724     
 0045               
 0046 6762 0204  20         li    tmp0,txt.keys.shortcuts
-     6764 79F8     
+     6764 7A02     
 0047 6766 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      6768 A72A     
 0048               
@@ -12653,7 +12653,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025 6BD2 C646  30         mov   tmp2,*stack           ; Push tmp2
 0026               
 0027 6BD4 0204  20         li    tmp0,cmdb.cmd.preset.data
-     6BD6 7A12     
+     6BD6 7A1C     
 0028                                                   ; Load table
 0029 6BD8 C1A0  34         mov   @keycode1,tmp2        ; Get keyboard code
      6BDA A028     
@@ -13734,13 +13734,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 6FB8 2020                 text '  Stevie 1.5.8  '
+0011 6FB8 2020                 text '  Stevie 1.5.9  '
      6FBA 5374     
      6FBC 6576     
      6FBE 6965     
      6FC0 2031     
      6FC2 2E35     
-     6FC4 2E38     
+     6FC4 2E39     
      6FC6 2020     
 0012                           even
 0014               
@@ -14500,22 +14500,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      74E8 3A20     
 0158                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 74EA 3233                        text '230721-1639500'
+0001 74EA 3233                        text '230721-1838560'
      74EC 3037     
      74EE 3231     
      74F0 2D31     
-     74F2 3633     
-     74F4 3935     
-     74F6 3030     
+     74F2 3833     
+     74F4 3835     
+     74F6 3630     
                    < data.dialogs.asm
-0159 74F8 202D                        text ' - Stevie 1.5.8 - (c)2018-2023 Filip Van Vooren'
+0159 74F8 202D                        text ' - Stevie 1.5.9 - (c)2018-2023 Filip Van Vooren'
      74FA 2053     
      74FC 7465     
      74FE 7669     
      7500 6520     
      7502 312E     
      7504 352E     
-     7506 3820     
+     7506 3920     
      7508 2D20     
      750A 2863     
      750C 2932     
@@ -15190,58 +15190,63 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      79AE 7320     
 0267 79B0 01                          byte 1
 0268               
-0269 79B1   3B     txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto   Master-Catalog'
-     79B2 436F     
-     79B4 6C6F     
-     79B6 7273     
-     79B8 2020     
-     79BA 2052     
-     79BC 756C     
-     79BE 6572     
-     79C0 2020     
-     79C2 2041     
-     79C4 7574     
-     79C6 6F69     
-     79C8 6E73     
-     79CA 6572     
-     79CC 7420     
-     79CE 2020     
-     79D0 4D31     
-     79D2 2F4D     
-     79D4 3220     
-     79D6 2020     
-     79D8 476F     
-     79DA 746F     
-     79DC 2020     
-     79DE 204D     
-     79E0 6173     
-     79E2 7465     
-     79E4 722D     
-     79E6 4361     
-     79E8 7461     
-     79EA 6C6F     
-     79EC 67       
+0269 79B1   43     txt.info.shortcuts stri 'Catalog   Colors   Ruler   Autoinsert   M1/M2/Goto   Master-Catalog'
+     79B2 4361     
+     79B4 7461     
+     79B6 6C6F     
+     79B8 6720     
+     79BA 2020     
+     79BC 436F     
+     79BE 6C6F     
+     79C0 7273     
+     79C2 2020     
+     79C4 2052     
+     79C6 756C     
+     79C8 6572     
+     79CA 2020     
+     79CC 2041     
+     79CE 7574     
+     79D0 6F69     
+     79D2 6E73     
+     79D4 6572     
+     79D6 7420     
+     79D8 2020     
+     79DA 4D31     
+     79DC 2F4D     
+     79DE 322F     
+     79E0 476F     
+     79E2 746F     
+     79E4 2020     
+     79E6 204D     
+     79E8 6173     
+     79EA 7465     
+     79EC 722D     
+     79EE 4361     
+     79F0 7461     
+     79F2 6C6F     
+     79F4 67       
 0270                                  even
-0271 79EE 0009     pos.info.shortcuts byte 0,9,17,31,34,38,45,>ff
-     79F0 111F     
-     79F2 2226     
-     79F4 2DFF     
+0271 79F6 000B     pos.info.shortcuts byte 0,11,19,27,41,44,46,53,>ff
+     79F8 131B     
+     79FA 292C     
+     79FC 2E35     
+     79FE FF       
 0272                                  even
-0273 79F6 0120     txt.hint.shortcuts stri ' '
+0273 7A00 0120     txt.hint.shortcuts stri ' '
 0274                                  even
-0275 79F8 1946     txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
-     79FA 392D     
-     79FC 4261     
-     79FE 636B     
-     7A00 2020     
-     7A02 5350     
-     7A04 4143     
-     7A06 452D     
-     7A08 436C     
-     7A0A 6F73     
-     7A0C 6520     
-     7A0E 6D65     
-     7A10 6E75     
+0275 7A02 1946     txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
+     7A04 392D     
+     7A06 4261     
+     7A08 636B     
+     7A0A 2020     
+     7A0C 5350     
+     7A0E 4143     
+     7A10 452D     
+     7A12 436C     
+     7A14 6F73     
+     7A16 6520     
+     7A18 6D65     
+     7A1A 6E75     
 0276                                  even
                    < stevie_b3.asm
 0118                       copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
@@ -15256,31 +15261,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008                       ;-------------------------------------------------------
 0009                       ; Dialog "Configure clipboard"
 0010                       ;-------------------------------------------------------
-0011 7A12 0011             data  id.dialog.cfg.clip,key.ctrl.a,def.clip.fname.a
-     7A14 0081     
-     7A16 3D63     
-0012 7A18 0011             data  id.dialog.cfg.clip,key.ctrl.b,def.clip.fname.b
-     7A1A 0082     
-     7A1C 3D6D     
-0013 7A1E 0011             data  id.dialog.cfg.clip,key.ctrl.c,def.clip.fname.C
-     7A20 0083     
-     7A22 3D77     
+0011 7A1C 0011             data  id.dialog.cfg.clip,key.ctrl.a,def.clip.fname.a
+     7A1E 0081     
+     7A20 3D63     
+0012 7A22 0011             data  id.dialog.cfg.clip,key.ctrl.b,def.clip.fname.b
+     7A24 0082     
+     7A26 3D6D     
+0013 7A28 0011             data  id.dialog.cfg.clip,key.ctrl.c,def.clip.fname.C
+     7A2A 0083     
+     7A2C 3D77     
 0014                       ;-------------------------------------------------------
 0015                       ; Dialog "Configure Master Catalog"
 0016                       ;-------------------------------------------------------
-0017 7A24 0012             data  id.dialog.cfg.mc,key.ctrl.a,def.mc.fname.a
-     7A26 0081     
-     7A28 3D81     
-0018 7A2A 0012             data  id.dialog.cfg.mc,key.ctrl.b,def.mc.fname.b
-     7A2C 0082     
-     7A2E 3D8E     
-0019 7A30 0012             data  id.dialog.cfg.mc,key.ctrl.c,def.mc.fname.C
-     7A32 0083     
-     7A34 3D9B     
+0017 7A2E 0012             data  id.dialog.cfg.mc,key.ctrl.a,def.mc.fname.a
+     7A30 0081     
+     7A32 3D81     
+0018 7A34 0012             data  id.dialog.cfg.mc,key.ctrl.b,def.mc.fname.b
+     7A36 0082     
+     7A38 3D8E     
+0019 7A3A 0012             data  id.dialog.cfg.mc,key.ctrl.c,def.mc.fname.C
+     7A3C 0083     
+     7A3E 3D9B     
 0020                       ;------------------------------------------------------
 0021                       ; End of list
 0022                       ;-------------------------------------------------------
-0023 7A36 FFFF             data  EOL                   ; EOL
+0023 7A40 FFFF             data  EOL                   ; EOL
                    < stevie_b3.asm
 0119                       ;-----------------------------------------------------------------------
 0120                       ; Bank full check
@@ -15659,7 +15664,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.CMD.GETLENGTH.. >6B60 :     
     CMDB.CMD.GETLENGTH.EXIT >6B72 :     
     CMDB.CMD.PRESET..... >6BC4 :     
-    CMDB.CMD.PRESET.DATA >7A12 :     
+    CMDB.CMD.PRESET.DATA >7A1C :     
     CMDB.CMD.PRESET.EXIT >6BFC :     
     CMDB.CMD.PRESET.LOOP >6BDC :     
     CMDB.CMD.PRESET.NEXT >6BF0 :     
@@ -16428,7 +16433,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     POS.INFO.FILE....... >75D2 :     
     POS.INFO.FONT....... >78BC :     
     POS.INFO.MENU....... >7574 :     
-    POS.INFO.SHORTCUTS.. >79EE :     
+    POS.INFO.SHORTCUTS.. >79F6 :     
     PREFIX.............. >299A :     
     PUTAT............... >2442 :     
     PUTHEX.............. >299C :     
@@ -16836,7 +16841,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.HINT.MENU....... >757C :     
     TXT.HINT.PRINT...... >72DF :     
     TXT.HINT.SAVE....... >70F4 :     
-    TXT.HINT.SHORTCUTS.. >79F6 :     
+    TXT.HINT.SHORTCUTS.. >7A00 :     
     TXT.HINT.UNSAVED.... >73B2 :     
     TXT.INFO.ABOUT...... >741A :     
     TXT.INFO.BASIC...... >76C2 :     
@@ -16884,7 +16889,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.KEYS.PRINT2..... >7149 :     
     TXT.KEYS.SAVE1...... >7114 :     
     TXT.KEYS.SAVE2...... >7149 :     
-    TXT.KEYS.SHORTCUTS.. >79F8 :     
+    TXT.KEYS.SHORTCUTS.. >7A02 :     
     TXT.KEYS.UNSAVED.... >73EA :     
     TXT.LINES........... >3B0A :     
     TXT.LOADING......... >3952 :     

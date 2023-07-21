@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230721-1639500
+0002               * BUILD: 230721-1838560
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -855,13 +855,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.5.8'
+0055 6028 0C53                 stri 'STEVIE 1.5.9'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 38       
+     6034 39       
 0057               
 0061               
 0065               
@@ -17092,7 +17092,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0405                       ;-------------------------------------------------------
 0406                       ; Dialog: Shortcuts
 0407                       ;-------------------------------------------------------
-0408 7A84 436F             byte  key.uc.c, id.dialog.shortcuts
+0408 7A84 4F6F             byte  key.uc.o, id.dialog.shortcuts
 0409 7A86 7062             data  pane.colorscheme.cycle
 0410               
 0411 7A88 526F             byte  key.uc.r, id.dialog.shortcuts

@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.8  '
+            text '  Stevie 1.5.9  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.8   '     
+            text ' Stevie 1.5.9   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.8   '
+            text ' Stevie 1.5.9   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.8   '  
+            text ' Stevie 1.5.9   '  
             even
         .endif
 
@@ -156,7 +156,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.8 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.9 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
@@ -266,9 +266,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   M1/M2   Goto   Master-Catalog'
+txt.info.shortcuts stri 'Catalog   Colors   Ruler   Autoinsert   M1/M2/Goto   Master-Catalog'
                    even
-pos.info.shortcuts byte 0,9,17,31,34,38,45,>ff
+pos.info.shortcuts byte 0,11,19,27,41,44,46,53,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

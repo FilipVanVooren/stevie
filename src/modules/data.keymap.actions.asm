@@ -405,7 +405,7 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Shortcuts
         ;-------------------------------------------------------
-        byte  key.uc.c, id.dialog.shortcuts
+        byte  key.uc.o, id.dialog.shortcuts
         data  pane.colorscheme.cycle
 
         byte  key.uc.r, id.dialog.shortcuts
