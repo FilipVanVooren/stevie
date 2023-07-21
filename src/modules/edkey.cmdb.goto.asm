@@ -33,12 +33,6 @@ edkey.action.cmdb.goto:
         jeq   edkey.action.cmdb.goto.exit
                                     ; Yes, exit
         ;-------------------------------------------------------        
-        ; Assert - Line number is invalid
-        ;-------------------------------------------------------
-        mov   @outparm1,tmp0
-        jeq   edkey.action.cmdb.goto.exit
-                                    ; Yes, exit
-        ;-------------------------------------------------------        
         ; Prepare for goto
         ;-------------------------------------------------------
 edkey.action.cmdb.goto.prepare:

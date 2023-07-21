@@ -126,7 +126,7 @@ txt.keys.print2    equ  txt.keys.save2
 txt.head.goto      byte 14,1,1
                    text ' Goto line '
                    byte 1
-txt.hint.goto      stri 'Type line number to navigate to and press ENTER.'
+txt.hint.goto      stri 'Type destination line number (or 0 for EOF) and press ENTER.'
 txt.keys.goto      stri 'F9-Back  F3-Clear  ENTER-Goto line'
 
 

@@ -25,15 +25,19 @@ edkey.fb.goto.toprow:
         ;-------------------------------------------------------        
         ; Assert on line
         ;-------------------------------------------------------
-        mov   @parm1,tmp0           ; \ Goto beyond EOF ?
-        c     @edb.lines,tmp0       ; / 
-        jh    !                     ; No, keep on going
+        mov   @parm1,tmp0           ; \ Line number 0?
+        c     @edb.lines,tmp0       ; | Line number beyond EOF ?
+        jh    edkey.fb.goto.offset  ; / No, keep on going
+        ;-------------------------------------------------------        
+        ; Goto EOF
+        ;-------------------------------------------------------        
         mov   @edb.lines,@parm1     ; \ Goto EOF
         dec   @parm1                ; / Base 0
         ;-------------------------------------------------------        
         ; Assert on row offset in frame buffer
-        ;-------------------------------------------------------       
-!       c     @parm2,@fb.scrrows    ; Row offset off page ?
+        ;-------------------------------------------------------
+edkey.fb.goto.offset:               
+        c     @parm2,@fb.scrrows    ; Row offset off page ?
         jlt   edkey.fb.goto.row     ; No, use row offset
         mov   @fb.scrrows,@fb.row   ; Limit row offset
         jmp   edkey.fb.goto.line    ; Goto line
