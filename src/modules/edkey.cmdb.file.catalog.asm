@@ -12,6 +12,8 @@ edkey.action.cmdb.file.catalog:
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------
+        li    tmp0,myfile
+        mov   tmp0,@parm1
         bl    @fm.catalog
         ;-------------------------------------------------------
         ; Exit
@@ -21,3 +23,5 @@ edkey.action.cmdb.file.catalog.exit:
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
+
+        

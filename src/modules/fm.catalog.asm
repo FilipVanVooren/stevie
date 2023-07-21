@@ -66,6 +66,15 @@ fm.catalog:
         li    tmp0,>e000
         mov   tmp0,@parm7           ; Destination RAM memory address
 
+        li    tmp0,fh.file.pab.header.cat
+        mov   tmp0,@parm8           ; PAB Header template for reading catalog        
+
+        li    tmp0,io.rel.inp.int.fix
+        mov   tmp0,@parm9           ; File type/mode for reading catalog
+
+        li    tmp0,myfile
+        mov   tmp0,@parm1
+
         bl    @fh.file.read.mem     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor

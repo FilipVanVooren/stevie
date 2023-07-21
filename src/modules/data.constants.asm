@@ -113,3 +113,7 @@ const.9       data  9               ; 9
 const.10      data  10              ; 10
 const.32      data  32              ; 32
 const.80      data  80              ; 80
+
+
+        even
+myfile stri 'DSK1.'

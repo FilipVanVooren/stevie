@@ -266,9 +266,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Catalog   Colors   Ruler   Autoinsert   M1/M2/Goto   Master-Catalog'
+txt.info.shortcuts stri 'Catalog   Colors   Ruler   Autoinsert   Goto/M1/M2   Master-Catalog'
                    even
-pos.info.shortcuts byte 0,11,19,27,41,44,46,53,>ff
+pos.info.shortcuts byte 0,11,19,27,40,46,49,53,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even
