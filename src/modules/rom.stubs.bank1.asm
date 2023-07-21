@@ -124,6 +124,27 @@ fm.newfile:
 
 
 ***************************************************************
+* Stub for "fm.catalog"
+* bank2 vec.6
+********|*****|*********************|**************************
+fm.catalog:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2.rom        ; | i  p0 = bank address
+              data vec.6            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for dialog "Help"
 * bank3 vec.1
 ********|*****|*********************|**************************

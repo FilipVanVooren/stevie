@@ -1,4 +1,4 @@
-* FILE......: fh.read.edb.asm
+* FILE......: fh.file.read.edb.asm
 * Purpose...: File reader module
 
 ***************************************************************

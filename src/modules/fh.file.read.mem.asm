@@ -1,9 +1,9 @@
-* FILE......: fh.read.mem.asm
-* Purpose...: Read any kind of file into 32K memory region
+* FILE......: fh.file.read.mem.asm
+* Purpose...: Read any kind of file into memory
 
 ***************************************************************
 * fh.file.read.mem
-* Read any kind of file into 32K memory
+* Read any kind of file into memory
 ***************************************************************
 *  bl   @fh.file.read.mem
 *--------------------------------------------------------------
@@ -14,8 +14,8 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
-* parm7 = Destination RAM memory address
-* parm8 = PAB template header in ROM/RAM
+* parm7 = Destination RAM address
+* parm8 = PAB template header address
 * parm9 = File type/mode (in LSB), becomes PAB byte 1
 *
 * Callbacks can be skipped by passing >0000 as pointer.
@@ -28,7 +28,7 @@
 *--------------------------------------------------------------
 * Remarks
 * File content processing expected to be handled in callback.
-* Might replace "fh.read.edb" someday, with SAMS and editor
+* Might replace "fh.file.read.edb" someday, with SAMS and editor
 * buffer handling purely done in callback code.
 ********|*****|*********************|**************************
 fh.file.read.mem:

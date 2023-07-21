@@ -21,7 +21,7 @@ skip_virtual_keyboard     equ  1       ; Skip virtual keyboard scan
 skip_random_generator     equ  1       ; Skip random functions
 skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
-* Skip modules that need to be included in cartridge space
+* Skip (manually included) spectra2 modules from resident RAM
 *--------------------------------------------------------------
 skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 skip_sams_size            equ  1       ; Skip SAMS card size check

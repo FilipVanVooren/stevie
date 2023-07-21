@@ -1,5 +1,5 @@
-* FILE......: fm.callbacks.asm
-* Purpose...: File Manager - Callbacks for file operations
+* FILE......: fm.callbacks.edb.asm
+* Purpose...: File Manager - Callbacks for editor buffer file I/O
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 1"
