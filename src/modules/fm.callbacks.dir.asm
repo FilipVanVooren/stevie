@@ -1,5 +1,5 @@
-* FILE......: fm.callbacks.cat.asm
-* Purpose...: File Manager - Callbacks for file catalog
+* FILE......: fm.callbacks.dir.asm
+* Purpose...: File Manager - Callbacks for drive/directory listing
 
 *---------------------------------------------------------------
 * Callback function "Before open file"
@@ -10,7 +10,7 @@
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
 *---------------------------------------------------------------
-fm.cat.callback1:
+fm.dir.callback1:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -20,7 +20,7 @@ fm.cat.callback1:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.cat.callback1.exit:
+fm.dir.callback1.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
@@ -36,7 +36,7 @@ fm.cat.callback1.exit:
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback2
 *---------------------------------------------------------------
-fm.cat.callback2:
+fm.dir.callback2:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -46,7 +46,7 @@ fm.cat.callback2:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.cat.callback2.exit:
+fm.dir.callback2.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
@@ -62,7 +62,7 @@ fm.cat.callback2.exit:
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback3
 *---------------------------------------------------------------
-fm.cat.callback3:
+fm.dir.callback3:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -72,7 +72,7 @@ fm.cat.callback3:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.cat.callback3.exit:
+fm.dir.callback3.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
@@ -88,7 +88,7 @@ fm.cat.callback3.exit:
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback4
 *---------------------------------------------------------------
-fm.cat.callback4:
+fm.dir.callback4:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -98,7 +98,7 @@ fm.cat.callback4:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.cat.callback4.exit:
+fm.dir.callback4.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
@@ -114,7 +114,7 @@ fm.cat.callback4.exit:
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback5
 *---------------------------------------------------------------
-fm.cat.callback5:
+fm.dir.callback5:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -124,7 +124,7 @@ fm.cat.callback5:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.cat.callback5.exit:
+fm.dir.callback5.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11

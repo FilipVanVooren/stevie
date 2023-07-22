@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230721-2154500
+0002               * BUILD: 230722-1457160
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12428,10 +12428,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0569 6C60 C2F9  30         mov   *stack+,r11           ; Pop R11
 0570 6C62 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0079                       copy  "fm.callbacks.cat.asm"  ; Callbacks for catalog file I/O
-     **** ****     > fm.callbacks.cat.asm
-0001               * FILE......: fm.callbacks.cat.asm
-0002               * Purpose...: File Manager - Callbacks for file catalog
+0079                       copy  "fm.callbacks.dir.asm"  ; Callbacks for drive/directory file I/O
+     **** ****     > fm.callbacks.dir.asm
+0001               * FILE......: fm.callbacks.dir.asm
+0002               * Purpose...: File Manager - Callbacks for drive/directory listing
 0003               
 0004               *---------------------------------------------------------------
 0005               * Callback function "Before open file"
@@ -12442,7 +12442,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010               *---------------------------------------------------------------
 0011               * Registered as pointer in @fh.callback1
 0012               *---------------------------------------------------------------
-0013               fm.cat.callback1:
+0013               fm.dir.callback1:
 0014 6C64 0649  14         dect  stack
 0015 6C66 C64B  30         mov   r11,*stack            ; Save return address
 0016 6C68 0649  14         dect  stack
@@ -12452,7 +12452,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0020                       ;------------------------------------------------------
 0021                       ; Exit
 0022                       ;------------------------------------------------------
-0023               fm.cat.callback1.exit:
+0023               fm.dir.callback1.exit:
 0024 6C70 C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0025 6C72 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0026 6C74 C2F9  30         mov   *stack+,r11           ; Pop R11
@@ -12468,7 +12468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036               *---------------------------------------------------------------
 0037               * Registered as pointer in @fh.callback2
 0038               *---------------------------------------------------------------
-0039               fm.cat.callback2:
+0039               fm.dir.callback2:
 0040 6C78 0649  14         dect  stack
 0041 6C7A C64B  30         mov   r11,*stack            ; Save return address
 0042 6C7C 0649  14         dect  stack
@@ -12478,7 +12478,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049               fm.cat.callback2.exit:
+0049               fm.dir.callback2.exit:
 0050 6C84 C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0051 6C86 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0052 6C88 C2F9  30         mov   *stack+,r11           ; Pop R11
@@ -12494,7 +12494,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0062               *---------------------------------------------------------------
 0063               * Registered as pointer in @fh.callback3
 0064               *---------------------------------------------------------------
-0065               fm.cat.callback3:
+0065               fm.dir.callback3:
 0066 6C8C 0649  14         dect  stack
 0067 6C8E C64B  30         mov   r11,*stack            ; Save return address
 0068 6C90 0649  14         dect  stack
@@ -12504,7 +12504,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0072                       ;------------------------------------------------------
 0073                       ; Exit
 0074                       ;------------------------------------------------------
-0075               fm.cat.callback3.exit:
+0075               fm.dir.callback3.exit:
 0076 6C98 C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0077 6C9A C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0078 6C9C C2F9  30         mov   *stack+,r11           ; Pop R11
@@ -12520,7 +12520,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0088               *---------------------------------------------------------------
 0089               * Registered as pointer in @fh.callback4
 0090               *---------------------------------------------------------------
-0091               fm.cat.callback4:
+0091               fm.dir.callback4:
 0092 6CA0 0649  14         dect  stack
 0093 6CA2 C64B  30         mov   r11,*stack            ; Save return address
 0094 6CA4 0649  14         dect  stack
@@ -12530,7 +12530,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0098                       ;------------------------------------------------------
 0099                       ; Exit
 0100                       ;------------------------------------------------------
-0101               fm.cat.callback4.exit:
+0101               fm.dir.callback4.exit:
 0102 6CAC C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0103 6CAE C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0104 6CB0 C2F9  30         mov   *stack+,r11           ; Pop R11
@@ -12546,7 +12546,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0114               *---------------------------------------------------------------
 0115               * Registered as pointer in @fh.callback5
 0116               *---------------------------------------------------------------
-0117               fm.cat.callback5:
+0117               fm.dir.callback5:
 0118 6CB4 0649  14         dect  stack
 0119 6CB6 C64B  30         mov   r11,*stack            ; Save return address
 0120 6CB8 0649  14         dect  stack
@@ -12556,7 +12556,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0124                       ;------------------------------------------------------
 0125                       ; Exit
 0126                       ;------------------------------------------------------
-0127               fm.cat.callback5.exit:
+0127               fm.dir.callback5.exit:
 0128 6CC0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
 0129 6CC2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0130 6CC4 C2F9  30         mov   *stack+,r11           ; Pop R11
@@ -12712,14 +12712,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0129 6D56 C2F9  30         mov   *stack+,r11           ; Pop R11
 0130 6D58 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0081                       copy  "fm.catalog.asm"        ; File manager drive/directory catalog
-     **** ****     > fm.catalog.asm
-0001               * FILE......: fm.catalog.asm
+0081                       copy  "fm.directory.asm"      ; File manager drive/directory listing
+     **** ****     > fm.directory.asm
+0001               * FILE......: fm.directory.asm
 0002               * Purpose...: File Manager - Catalog drive/directory
 0003               
 0004               
 0005               ***************************************************************
-0006               * fm.catalog
+0006               * fm.directory
 0007               * Catalog drive/directory
 0008               ***************************************************************
 0009               * bl  @fm.catalog
@@ -12734,7 +12734,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               * Register usage
 0019               * tmp0, tmp1, tmp2
 0020               ********|*****|*********************|**************************
-0021               fm.catalog:
+0021               fm.directory:
 0022 6D5A 0649  14         dect  stack
 0023 6D5C C64B  30         mov   r11,*stack            ; Save return address
 0024 6D5E 0649  14         dect  stack
@@ -12771,29 +12771,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047 6D9C C660  46         mov   @parm9,*stack         ; Push @parm9
      6D9E A016     
 0048                       ;-------------------------------------------------------
-0049                       ; Read catalog into memory
+0049                       ; Read drive/directory catalog into memory
 0050                       ;-------------------------------------------------------
-0051 6DA0 0204  20         li    tmp0,fm.cat.callback1 ; Callback function "Before open file"
+0051 6DA0 0204  20         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
      6DA2 6C64     
 0052 6DA4 C804  38         mov   tmp0,@parm2           ; Register callback 1
      6DA6 A008     
 0053               
-0054 6DA8 0204  20         li    tmp0,fm.cat.callback2 ; Callback function "Read line from file"
+0054 6DA8 0204  20         li    tmp0,fm.dir.callback2 ; Callback function "Read line from file"
      6DAA 6C78     
 0055 6DAC C804  38         mov   tmp0,@parm3           ; Register callback 2
      6DAE A00A     
 0056               
-0057 6DB0 0204  20         li    tmp0,fm.cat.callback3 ; Callback function "Close file"
+0057 6DB0 0204  20         li    tmp0,fm.dir.callback3 ; Callback function "Close file"
      6DB2 6C8C     
 0058 6DB4 C804  38         mov   tmp0,@parm4           ; Register callback 3
      6DB6 A00C     
 0059               
-0060 6DB8 0204  20         li    tmp0,fm.cat.callback4 ; Callback function "File I/O error"
+0060 6DB8 0204  20         li    tmp0,fm.dir.callback4 ; Callback function "File I/O error"
      6DBA 6CA0     
 0061 6DBC C804  38         mov   tmp0,@parm5           ; Register callback 4
      6DBE A00E     
 0062               
-0063 6DC0 0204  20         li    tmp0,fm.cat.callback5 ; Callback function "Memory full"
+0063 6DC0 0204  20         li    tmp0,fm.dir.callback5 ; Callback function "Memory full"
      6DC2 6CB4     
 0064 6DC4 C804  38         mov   tmp0,@parm6           ; Register callback 5
      6DC6 A010     
@@ -12840,7 +12840,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0096               *--------------------------------------------------------------
 0097               * Exit
 0098               *--------------------------------------------------------------
-0099               fm.catalog.exit:
+0099               fm.directory.exit:
 0100 6DEC C839  50         mov   *stack+,@parm9        ; Pop @parm9
      6DEE A016     
 0101 6DF0 C839  50         mov   *stack+,@parm8        ; Pop @parm8
@@ -13449,7 +13449,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0016 7F44 6CC8     vec.3   data  fm.browse.fname.suffix
 0017 7F46 6840     vec.4   data  fm.savefile           ;
 0018 7F48 68BE     vec.5   data  fm.newfile            ;
-0019 7F4A 6D5A     vec.6   data  fm.catalog            ;
+0019 7F4A 6D5A     vec.6   data  fm.directory          ;
 0020 7F4C 2026     vec.7   data  cpu.crash             ;
 0021 7F4E 2026     vec.8   data  cpu.crash             ;
 0022 7F50 2026     vec.9   data  cpu.crash             ;
@@ -13996,18 +13996,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FM.BROWSE.FNAME.SUFFIX.INC.ALPHA >6D26 :     
     FM.BROWSE.FNAME.SUFFIX.INC.CRASH >6D08 :     
     FM.BROWSE.FNAME.SUFFIX.STORE >6D4E :     
-    FM.CAT.CALLBACK1.... >6C64 :     
-    FM.CAT.CALLBACK1.EXIT >6C70 :     
-    FM.CAT.CALLBACK2.... >6C78 :     
-    FM.CAT.CALLBACK2.EXIT >6C84 :     
-    FM.CAT.CALLBACK3.... >6C8C :     
-    FM.CAT.CALLBACK3.EXIT >6C98 :     
-    FM.CAT.CALLBACK4.... >6CA0 :     
-    FM.CAT.CALLBACK4.EXIT >6CAC :     
-    FM.CAT.CALLBACK5.... >6CB4 :     
-    FM.CAT.CALLBACK5.EXIT >6CC0 :     
-    FM.CATALOG.......... >6D5A :     
-    FM.CATALOG.EXIT..... >6DEC :     
+    FM.DIR.CALLBACK1.... >6C64 :     
+    FM.DIR.CALLBACK1.EXIT >6C70 :     
+    FM.DIR.CALLBACK2.... >6C78 :     
+    FM.DIR.CALLBACK2.EXIT >6C84 :     
+    FM.DIR.CALLBACK3.... >6C8C :     
+    FM.DIR.CALLBACK3.EXIT >6C98 :     
+    FM.DIR.CALLBACK4.... >6CA0 :     
+    FM.DIR.CALLBACK4.EXIT >6CAC :     
+    FM.DIR.CALLBACK5.... >6CB4 :     
+    FM.DIR.CALLBACK5.EXIT >6CC0 :     
+    FM.DIRECTORY........ >6D5A :     
+    FM.DIRECTORY.EXIT... >6DEC :     
     FM.INSERTFILE....... >67C6 :     
     FM.INSERTFILE.EXIT.. >682A :     
     FM.LOAD.CB.MEMFULL.. >6C30 :     

@@ -406,9 +406,6 @@ keymap_actions.cmdb:
         ; Dialog: Shortcuts
         ;-------------------------------------------------------
         byte  key.uc.c, id.dialog.shortcuts
-        data  edkey.action.cmdb.file.catalog
-
-        byte  key.uc.o, id.dialog.shortcuts
         data  pane.colorscheme.cycle
 
         byte  key.uc.r, id.dialog.shortcuts
@@ -428,6 +425,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.m, id.dialog.shortcuts
         data  edkey.action.fb.load.mc              
+
+        byte  key.uc.d, id.dialog.shortcuts
+        data  edkey.action.cmdb.file.directory
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------

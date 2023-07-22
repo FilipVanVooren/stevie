@@ -1,9 +1,9 @@
-* FILE......: fm.catalog.asm
+* FILE......: fm.directory.asm
 * Purpose...: File Manager - Catalog drive/directory
 
 
 ***************************************************************
-* fm.catalog
+* fm.directory
 * Catalog drive/directory
 ***************************************************************
 * bl  @fm.catalog
@@ -18,7 +18,7 @@
 * Register usage
 * tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
-fm.catalog:
+fm.directory:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -46,21 +46,21 @@ fm.catalog:
         dect  stack
         mov   @parm9,*stack         ; Push @parm9
         ;-------------------------------------------------------
-        ; Read catalog into memory
+        ; Read drive/directory catalog into memory
         ;-------------------------------------------------------
-        li    tmp0,fm.cat.callback1 ; Callback function "Before open file"
+        li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
         mov   tmp0,@parm2           ; Register callback 1
 
-        li    tmp0,fm.cat.callback2 ; Callback function "Read line from file"
+        li    tmp0,fm.dir.callback2 ; Callback function "Read line from file"
         mov   tmp0,@parm3           ; Register callback 2
 
-        li    tmp0,fm.cat.callback3 ; Callback function "Close file"
+        li    tmp0,fm.dir.callback3 ; Callback function "Close file"
         mov   tmp0,@parm4           ; Register callback 3
 
-        li    tmp0,fm.cat.callback4 ; Callback function "File I/O error"
+        li    tmp0,fm.dir.callback4 ; Callback function "File I/O error"
         mov   tmp0,@parm5           ; Register callback 4
 
-        li    tmp0,fm.cat.callback5 ; Callback function "Memory full"
+        li    tmp0,fm.dir.callback5 ; Callback function "Memory full"
         mov   tmp0,@parm6           ; Register callback 5
 
         li    tmp0,>e000
@@ -96,7 +96,7 @@ fm.catalog:
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fm.catalog.exit:
+fm.directory.exit:
         mov   *stack+,@parm9        ; Pop @parm9
         mov   *stack+,@parm8        ; Pop @parm8
         mov   *stack+,@parm7        ; Pop @parm7

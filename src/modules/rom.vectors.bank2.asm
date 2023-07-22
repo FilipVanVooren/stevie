@@ -16,7 +16,7 @@ vec.2   data  fm.insertfile         ;
 vec.3   data  fm.browse.fname.suffix
 vec.4   data  fm.savefile           ;
 vec.5   data  fm.newfile            ;
-vec.6   data  fm.catalog            ;
+vec.6   data  fm.directory          ;
 vec.7   data  cpu.crash             ;
 vec.8   data  cpu.crash             ;
 vec.9   data  cpu.crash             ;

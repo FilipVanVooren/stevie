@@ -76,9 +76,9 @@ main:
         copy  "fm.savefile.asm"       ; Save DV80 file from editor buffer
         copy  "fm.newfile.asm"        ; New DV80 file in editor buffer
         copy  "fm.callbacks.edb.asm"  ; Callbacks for editor buffer file I/O
-        copy  "fm.callbacks.cat.asm"  ; Callbacks for catalog file I/O
+        copy  "fm.callbacks.dir.asm"  ; Callbacks for drive/directory file I/O
         copy  "fm.browse.asm"         ; File manager browse support routines
-        copy  "fm.catalog.asm"        ; File manager drive/directory catalog
+        copy  "fm.directory.asm"      ; File manager drive/directory listing
         copy  "data.pab.tpl.asm"      ; PAB templates
         ;-----------------------------------------------------------------------
         ; Stubs

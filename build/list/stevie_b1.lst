@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230721-2154500
+0002               * BUILD: 230722-1457160
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13419,15 +13419,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0092                                                   ; | i  @parm1 = Top line in editor buffer
 0093                                                   ; / i  @parm2 = Row offset in frame buffer
                    < stevie_b1.asm
-0118                       copy  "edkey.cmdb.file.catalog.asm" ; Catalog drive/directory
-     **** ****     > edkey.cmdb.file.catalog.asm
-0001               * FILE......: edkey.cmdb.fíle.catalog.asm
-0002               * Purpose...: Catalog drive/directory
+0118                       copy  "edkey.cmdb.file.dir.asm"     ; Drive/Directory listing
+     **** ****     > edkey.cmdb.file.dir.asm
+0001               * FILE......: edkey.cmdb.fíle.directory.asm
+0002               * Purpose...: Drive/Directory listing
 0003               
 0004               *---------------------------------------------------------------
-0005               * Catalog drive directory
+0005               * Drive/Directory listing
 0006               *---------------------------------------------------------------
-0007               edkey.action.cmdb.file.catalog:
+0007               edkey.action.cmdb.file.directory:
 0008 6D7E 0649  14         dect  stack
 0009 6D80 C64B  30         mov   r11,*stack            ; Save return address
 0010 6D82 0649  14         dect  stack
@@ -13439,7 +13439,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6D88 3936     
 0016 6D8A C804  38         mov   tmp0,@parm1
      6D8C A006     
-0017 6D8E 06A0  32         bl    @fm.catalog
+0017 6D8E 06A0  32         bl    @fm.directory
      6D90 748A     
 0018                       ;-------------------------------------------------------
 0019                       ; Exit
@@ -15384,10 +15384,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0124               
 0125               
 0126               ***************************************************************
-0127               * Stub for "fm.catalog"
+0127               * Stub for "fm.directory"
 0128               * bank2 vec.6
 0129               ********|*****|*********************|**************************
-0130               fm.catalog:
+0130               fm.directory:
 0131 748A 0649  14         dect  stack
 0132 748C C64B  30         mov   r11,*stack            ; Save return address
 0133                       ;------------------------------------------------------
@@ -17168,28 +17168,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0406                       ; Dialog: Shortcuts
 0407                       ;-------------------------------------------------------
 0408 7AB2 436F             byte  key.uc.c, id.dialog.shortcuts
-0409 7AB4 6D7E             data  edkey.action.cmdb.file.catalog
+0409 7AB4 707E             data  pane.colorscheme.cycle
 0410               
-0411 7AB6 4F6F             byte  key.uc.o, id.dialog.shortcuts
-0412 7AB8 707E             data  pane.colorscheme.cycle
+0411 7AB6 526F             byte  key.uc.r, id.dialog.shortcuts
+0412 7AB8 6718             data  edkey.action.toggle.ruler
 0413               
-0414 7ABA 526F             byte  key.uc.r, id.dialog.shortcuts
-0415 7ABC 6718             data  edkey.action.toggle.ruler
+0414 7ABA 416F             byte  key.uc.a, id.dialog.shortcuts
+0415 7ABC 6E0E             data  edkey.action.cmdb.autoinsert
 0416               
-0417 7ABE 416F             byte  key.uc.a, id.dialog.shortcuts
-0418 7AC0 6E0E             data  edkey.action.cmdb.autoinsert
+0417 7ABE 316F             byte  key.num.1, id.dialog.shortcuts
+0418 7AC0 6876             data  edkey.action.block.m1
 0419               
-0420 7AC2 316F             byte  key.num.1, id.dialog.shortcuts
-0421 7AC4 6876             data  edkey.action.block.m1
+0420 7AC2 326F             byte  key.num.2, id.dialog.shortcuts
+0421 7AC4 687E             data  edkey.action.block.m2
 0422               
-0423 7AC6 326F             byte  key.num.2, id.dialog.shortcuts
-0424 7AC8 687E             data  edkey.action.block.m2
+0423 7AC6 476F             byte  key.uc.g, id.dialog.shortcuts
+0424 7AC8 7540             data  dialog.goto
 0425               
-0426 7ACA 476F             byte  key.uc.g, id.dialog.shortcuts
-0427 7ACC 7540             data  dialog.goto
+0426 7ACA 4D6F             byte  key.uc.m, id.dialog.shortcuts
+0427 7ACC 6846             data  edkey.action.fb.load.mc
 0428               
-0429 7ACE 4D6F             byte  key.uc.m, id.dialog.shortcuts
-0430 7AD0 6846             data  edkey.action.fb.load.mc
+0429 7ACE 446F             byte  key.uc.d, id.dialog.shortcuts
+0430 7AD0 6D7E             data  edkey.action.cmdb.file.directory
 0431                       ;-------------------------------------------------------
 0432                       ; Dialog: Goto
 0433                       ;-------------------------------------------------------
@@ -17935,8 +17935,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDKEY.ACTION.CMDB.CLOSE.DIALOG.EXIT >6E0A :     
     EDKEY.ACTION.CMDB.END >69DA :     
     EDKEY.ACTION.CMDB.FASTMODE.TOGGLE >6DC4 :     
-    EDKEY.ACTION.CMDB.FILE.CATALOG >6D7E :     
     EDKEY.ACTION.CMDB.FILE.CATALOG.EXIT >6D92 :     
+    EDKEY.ACTION.CMDB.FILE.DIRECTORY >6D7E :     
     EDKEY.ACTION.CMDB.FILE.NEW >6AA4 :     
     EDKEY.ACTION.CMDB.FILE.NEW.EXIT >6AC2 :     
     EDKEY.ACTION.CMDB.FONT.EXIT >6EBA :     
@@ -18249,7 +18249,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FILZZ............... >22B4 :     
     FJ.BOTTOM........... >B000 :     
     FM.BROWSE.FNAME.SUFFIX >7454 :     
-    FM.CATALOG.......... >748A :     
+    FM.DIRECTORY........ >748A :     
     FM.FASTMODE......... >75F4 :     
     FM.FASTMODE.VECTOR.. >75FC :     
     FM.INSERTFILE....... >743C :     

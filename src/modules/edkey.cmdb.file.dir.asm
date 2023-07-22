@@ -1,10 +1,10 @@
-* FILE......: edkey.cmdb.fíle.catalog.asm
-* Purpose...: Catalog drive/directory
+* FILE......: edkey.cmdb.fíle.directory.asm
+* Purpose...: Drive/Directory listing
 
 *---------------------------------------------------------------
-* Catalog drive directory
+* Drive/Directory listing
 *---------------------------------------------------------------
-edkey.action.cmdb.file.catalog:
+edkey.action.cmdb.file.directory:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -14,7 +14,7 @@ edkey.action.cmdb.file.catalog:
         ;-------------------------------------------------------
         li    tmp0,myfile
         mov   tmp0,@parm1
-        bl    @fm.catalog
+        bl    @fm.directory
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

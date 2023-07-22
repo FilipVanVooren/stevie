@@ -124,10 +124,10 @@ fm.newfile:
 
 
 ***************************************************************
-* Stub for "fm.catalog"
+* Stub for "fm.directory"
 * bank2 vec.6
 ********|*****|*********************|**************************
-fm.catalog:
+fm.directory:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
