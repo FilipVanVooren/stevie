@@ -212,7 +212,6 @@ fh.file.read.mem.process:
         clr   *tmp1                 ; Clear word before string
         inc   tmp1                  ; Adjust position for length byte string
         movb  @fh.reclen+1,*tmp1+   ; Put line length byte before string
- 
         ;------------------------------------------------------
         ; 3b: Copy line from VDP to CPU editor buffer
         ;------------------------------------------------------

@@ -63,7 +63,7 @@ fm.directory:
         li    tmp0,fm.dir.callback5 ; Callback function "Memory full"
         mov   tmp0,@parm6           ; Register callback 5
 
-        li    tmp0,>e000
+        li    tmp0,rambuf
         mov   tmp0,@parm7           ; Destination RAM memory address
 
         li    tmp0,fh.file.pab.header.cat

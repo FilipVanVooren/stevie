@@ -1,5 +1,5 @@
 * FILE......: data.strings.asm
-* Purpose...: ROM shared strings
+* Purpose...: RAM shared strings
 
 ***************************************************************
 *                       Strings
@@ -35,6 +35,8 @@ txt.block.clip     stri 'Copying to clipboard....'
 txt.block.print    stri 'Printing block....'
                    even
 txt.clearmem       stri 'Clearing memory....'
+                   even
+txt.readdir        stri 'Reading directory..'                   
                    even
 txt.done.load      stri 'Load completed'
                    even
@@ -102,11 +104,7 @@ txt.ws1            stri ' '
                    even
 txt.ws2            stri '  '
                    even
-txt.ws3            stri '   '
-                   even
 txt.ws4            stri '    '
-                   even
-txt.ws5            stri '     '
                    even
 txt.filetype.none  equ txt.ws4
 

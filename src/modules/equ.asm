@@ -254,8 +254,9 @@ fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
 fh.temp3          equ  fh.struct +100  ; Temporary variable 3
 fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
-fh.membuffer      equ  fh.struct +104  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +184  ; End of structure
+fh.dir.rec.ptr    equ  fh.struct +104  ; Pointer to directory record
+fh.membuffer      equ  fh.struct +106  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +186  ; End of structure
 ;-----------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff   (256 bytes)
 ; Overloads file handle structure
@@ -336,7 +337,7 @@ cmdb.panhead.buf  equ  cmdb.struct+128 ; String buffer for pane header
 cmdb.dflt.fname   equ  cmdb.struct+178 ; Default for filename
 cmdb.free         equ  cmdb.struct+256 ; End of structure
 ;-----------------------------------------------------------------
-; Stevie value stack                   @>a800-a8ff   (256 bytes)
+; Stevie value stack                   @>a800-a8ff     (256 bytes)
 ;-----------------------------------------------------------------
 sp2.stktop        equ  >a900           ; \
                                        ; | The stack grows from high memory
@@ -346,7 +347,7 @@ sp2.stktop        equ  >a900           ; \
                                        ; | user hook "edkey.keyscan.hook"
                                        ; /
 ;-----------------------------------------------------------------
-; Scratchpad memory work copy          @>ad00-aeff   (256 bytes)
+; Scratchpad memory work copy          @>ad00-aeff     (256 bytes)
 ;-----------------------------------------------------------------
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm
@@ -360,40 +361,40 @@ cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
 cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
                                        ; calling TI Basic/External programs
 ;-----------------------------------------------------------------
-; Farjump return stack                 @>af00-afff   (256 bytes)
+; Farjump return stack                 @>af00-afff     (256 bytes)
 ;-----------------------------------------------------------------
 fj.bottom         equ  >b000           ; Return stack for trampoline function
                                        ; Grows downwards from high to low.
 ;-----------------------------------------------------------------
-; Index                                @>b000-bfff  (4096 bytes)
+; Index                                @>b000-bfff    (4096 bytes)
 ;-----------------------------------------------------------------
 idx.top           equ  >b000           ; Top of index
 idx.size          equ  4096            ; Index size
 ;-----------------------------------------------------------------
-; Editor buffer                        @>c000-cfff  (4096 bytes)
+; Editor buffer                        @>c000-cfff    (4096 bytes)
 ;-----------------------------------------------------------------
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 ;-----------------------------------------------------------------
-; Frame buffer & uncrunch area         @>d000-dcff  (3584 bytes)
+; Frame buffer & uncrunch area         @>d000-dcff    (3584 bytes)
 ;-----------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (2400 char)
 fb.size           equ  80*30           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
 ;-----------------------------------------------------------------
-; Defaults area                        @>de00-dfff  (3584 bytes)
+; Defaults area                        @>de00-dfff     (512 bytes)
 ;-----------------------------------------------------------------
 tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 ;-----------------------------------------------------------------
-; Command buffer history               @>e000-efff  (4096 bytes)
+; Command buffer history               @>e000-efff    (4096 bytes)
 ;-----------------------------------------------------------------
 cmdb.top          equ  >e000           ; Top of command history buffer
 cmdb.size         equ  4096            ; Command buffer size
 ;-----------------------------------------------------------------
-; Heap & Strings area                  @>f000-ffff  (4096 bytes)
+; Heap & Strings area                  @>f000-ffff    (4096 bytes)
 ;-----------------------------------------------------------------
 heap.top          equ  >f000           ; 80 Current filename
 ram.msg1          equ  >f050           ; 80 txt.hint.memstat
