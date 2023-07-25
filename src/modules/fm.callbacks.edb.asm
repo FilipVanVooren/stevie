@@ -22,20 +22,8 @@ fm.loadsave.cb.indicator1:
         ;------------------------------------------------------
         ; Check file operation mode
         ;------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow,0,32,55
-              data EOL              ; Clear hint on bottom row
-
-        dect  stack        
-        mov   @parm1,*stack         ; Push @parm1
-
-        mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status line
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
-
-        mov   *stack+,@parm1        ; Pop @parm1
+        bl    @pane.botline.busy.on ; \ Put busy indicator on
+                                    ; /
 
         mov   @fh.fopmode,tmp0      ; Check file operation mode
         ci    tmp0,fh.fopmode.writefile
@@ -297,15 +285,8 @@ fm.loadsave.cb.indicator3:
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow,0,32,72
-              data EOL              ; Erase indicator in bottom row
-
-        mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status lines
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
+        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
+                                      ; /
         ;------------------------------------------------------
         ; Only show updated KB if loading/saving full file
         ;------------------------------------------------------
@@ -497,12 +478,11 @@ fm.loadsave.cb.fioerr.addmsg:
         ; Display I/O error message
         ;------------------------------------------------------
 !       bl    @pane.errline.show    ; Show error line
-
-        mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status lines
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
+        ;------------------------------------------------------
+        ; Restore status line colors
+        ;------------------------------------------------------
+        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
+                                      ; /
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------          
@@ -523,8 +503,6 @@ fm.loadsave.cb.fioerr.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-
-
 
 
 *---------------------------------------------------------------
@@ -556,11 +534,11 @@ fm.load.cb.memfull:
         ;------------------------------------------------------
         bl    @pane.errline.show    ; Show error line
 
-        mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status lines
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
+        ;------------------------------------------------------
+        ; Restore status line colors
+        ;------------------------------------------------------
+        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
+                                      ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
