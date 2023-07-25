@@ -26,15 +26,8 @@ fm.newfile:
 *--------------------------------------------------------------
 * Put message
 *--------------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow,0,32,50
-              data EOL              ; Clear hint on bottom row
-
-        mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status line
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
+        bl    @pane.botline.busy.on ; \ Put busy indicator on
+                                    ; /
 
         bl    @putat
               byte pane.botrow,0
@@ -49,16 +42,12 @@ fm.newfile:
 *--------------------------------------------------------------
         bl    @hchar
               byte 0,0,32,80
-              byte pane.botrow,0,32,50
               data EOL              ; Clear top row and hint on bottom row
 
         clr   @tv.specmsg.ptr       ; Remove any special message
 
-        mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
-                                    ; Set color combination for status lines
-                                    ; \ i  @parm1 = Color combination
-                                    ; / 
+        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
+                                      ; /        
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
