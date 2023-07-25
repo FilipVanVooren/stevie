@@ -93,10 +93,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------
-        copy  "pane.topline.asm"    ; Top line
-        copy  "pane.botline.asm"    ; Bottom line
-        copy  "pane.errline.asm"    ; Error line        
-        copy  "pane.utils.hint.asm" ; Show hint in pane
+        copy  "pane.topline.asm"      ; Top line
+        copy  "pane.botline.asm"      ; Bottom line
+        copy  "pane.botline.busy.asm" ; Bottom line busy indicator        
+        copy  "pane.errline.asm"      ; Error line        
+        copy  "pane.utils.hint.asm"   ; Show hint in pane
         ;-----------------------------------------------------------------------
         ; Dialogs (2)
         ;-----------------------------------------------------------------------                

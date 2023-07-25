@@ -51,8 +51,8 @@ vec.34  data  pane.botline          ; Draw bottom line
 vec.35  data  pane.errline.show     ; Show error line
 vec.36  data  pane.errline.hide     ; Hide error line
 vec.37  data  pane.errline.drawcolor
-vec.38  data  cpu.crash             ;
-vec.39  data  cpu.crash             ;
+vec.38  data  pane.botline.busy.on  ; Turn on busy indicator on bottom line
+vec.39  data  pane.botline.busy.off ; Turn off busy indicator on bottom line
 vec.40  data  cpu.crash             ;
 vec.41  data  cpu.crash             ;
 vec.42  data  cpu.crash             ;

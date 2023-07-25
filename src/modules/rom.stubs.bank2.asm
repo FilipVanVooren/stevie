@@ -110,6 +110,48 @@ pane.colorscheme.statlines
 
 
 ***************************************************************
+* Stub for "pane.botline.busyline.on"
+* bank4 vec.38
+********|*****|*********************|**************************
+pane.botline.busy.on:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.38           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "pane.botline.busy.off"
+* bank4 vec.39
+********|*****|*********************|**************************
+pane.botline.busy.off:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.39           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for "edb.clear.sams"
 * bank5 vec.1
 ********|*****|*********************|**************************
