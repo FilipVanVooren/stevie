@@ -220,7 +220,7 @@ fh.struct         equ  >a400           ; stevie file handling structures
 ;*******************************************************************************
 ; ATTENTION: dsrlnk vars must form a continuous memory block & keep their order!
 ;*******************************************************************************
-dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+dsrlnk.dsrlws     equ  fh.struct       ; dsrlnk workspace 32 bytes
 dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
 dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
 dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call

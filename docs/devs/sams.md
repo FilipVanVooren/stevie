@@ -29,9 +29,9 @@ session-, SAMS banks are configured as follows:
   |--------|-------|-------|--------|--------|-------|-------|-------|
   |   >02  |  >03  |  >0a  | >20-2f | >40-ff |  >05  |  >06  |  >07  |
 
-  Note that during index reorganization (e.g. when inserting/removing a line),
+  During index reorganization (e.g. when inserting/removing a line),
   sequential index pages are aditionally paged-in at >c000, >d000, >e000, >f000.
-  That is to form a continuous index region at >b000 to >ffff.
+  This forms a continuous index region at >b000 to >ffff.
 
   For details see stevie module ``/modules/idx.asm``
 
@@ -61,7 +61,7 @@ session-, SAMS banks are configured as follows:
 
 ## External program
 
-Before calling an external program or if returning from an external program,
+Before calling an external program or when returning from an external program,
 SAMS banks are configured as follows:
 
 * banks 30-33 are paged-in for storing or retrieving a copy of the 16K of VDP
@@ -117,8 +117,8 @@ if few TI Basic sessions get dumped.
 
 ### Scratchpad dumps in SAMS page >ff
 
-The scratchpads of the 5 TI Basic sessions are always dumped to the page >ff,
-but to different memory ranges within that page.
+The scratchpads of the 5 TI Basic sessions are always dumped to page >ff,
+each in a specific memory range within that page.
 
 | Address      | Scratchpad dumps     |
 |--------------|----------------------|
@@ -132,9 +132,9 @@ but to different memory ranges within that page.
 
 ### Auxiliary stuff in SAMS page >ff
 
-Each of the TI Basic sessions dump some auxiliary stuff to the page >ff,
-but to different memory ranges within that page, e.g. TI Basic program file name
-captured by Stevie helper ISR in TI Basic.
+Each of the TI Basic sessions dump some auxiliary stuff to page >ff,
+each in a specific memory range within that page, e.g. 
+TI Basic program file name captured by Stevie helper ISR in TI Basic.
 
 | Address      | Auxiliary memory     |
 |--------------|----------------------|
@@ -145,7 +145,7 @@ captured by Stevie helper ISR in TI Basic.
 | >fa00 - faff | TI Basic session 5   |
 
 
-## Locked pages >02 and >03
+## Locked pages
 
 |  >2000 | >3000 | 
 |--------|-------|
@@ -155,5 +155,4 @@ The memory regions ``>2000 - >2fff`` and ``>3000 - >3fff`` contains spectra2
 modules, Stevie core memory and Stevie resident modules. These memory regions   
 are locked to pages ``>02`` and ``>03``. This is required so that the mapper can
 be turned off and the program/data that resides there can still be executed.
-
 This is important for memory setup when chaining to another FinalGROM cartridge.
