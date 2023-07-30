@@ -152,10 +152,10 @@ pane.botline.busy.off:
 
 
 ***************************************************************
-* Stub for "dialog.fbrowser"
+* Stub for "pane.filebrowser"
 * bank4 vec.66
 ********|*****|*********************|**************************
-dialog.fbrowser:
+pane.filebrowser:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

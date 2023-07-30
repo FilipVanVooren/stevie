@@ -47,10 +47,7 @@ dialog.file:
 
         bl    @pane.cursor.hide     ; Hide cursor
 
-        li    tmp0,myfile
-        mov   tmp0,@parm1
-        bl    @fm.directory
-
+        bl    @pane.filebrowser        ; Show file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -207,7 +207,7 @@ fm.dir.callback3:
         bl    @pane.botline.busy.off ; \ Put busyline indicator off
                                      ; /
 
-        bl    @dialog.fbrowser      ; Browse files
+        bl    @pane.filebrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -1,10 +1,10 @@
-* FILE......: dialog.fbrowser.asm
+* FILE......: pane.filebrowser.asm
 * Purpose...: File browser in dialog pane
 
 *---------------------------------------------------------------
 * File browser
 *---------------------------------------------------------------
-* bl   @dialog.fbrowser
+* bl   @pane.filebrowser
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -12,7 +12,7 @@
 * Register usage
 * tmp0, tmp1
 ********|*****|*********************|**************************
-dialog.fbrowser:
+pane.filebrowser:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -48,7 +48,7 @@ dialog.fbrowser:
                                     ; |           prefixed string in list
                                     ; / i  tmp2 = Number of strings to display
 
-dialog.fbrowser.exit:
+pane.filebrowser.exit:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -235,6 +235,21 @@ dialog.help.content:
 
 
 ***************************************************************
-
-; TODO Include _trampoline.bank1.ret
-; TODO Refactor stubs for using _trampoline.bank1.ret
+* Stub for "pane.filebrowser"
+* bank4 vec.66
+********|*****|*********************|**************************
+pane.filebrowser:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.66           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
