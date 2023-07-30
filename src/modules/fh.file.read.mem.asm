@@ -235,7 +235,7 @@ fh.file.read.mem.display:
         ; 5a: Prepare for next record
         ;------------------------------------------------------
 fh.file.read.mem.next:
-        inc   @fh.line              ; lines++
+        inc   @fh.line              ; lines/records++
         ;------------------------------------------------------
         ; 5c: Next record
         ;------------------------------------------------------

@@ -145,25 +145,28 @@ fm.dir.callback2:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
+        ; Skip if volume name
+        ;------------------------------------------------------
+        mov   @fh.records,tmp0      ; \
+        ci    tmp0,1                ; | Skip volume name
+        jeq   fm.dir.callback2.exit ; / 
+        ;------------------------------------------------------
         ; Prepare for copy
         ;------------------------------------------------------
-        li    tmp0,rambuf           ; Source address
+        li    tmp0,rambuf+2         ; Source address
         mov   @fh.dir.rec.ptr,tmp1  ; Destination address
 
-        mov   @rambuf,tmp2          ; \ Get record size
-        mov   tmp2,@fh.reclen       ; /
+        movb  @rambuf+2,tmp2        ; Get string length 
+        srl   tmp2,8                ; MSB to LSB
+        inc   tmp2                  ; Include prefixed length-byte    
+        a     tmp2,@fh.dir.rec.ptr  ; Adjust pointer for next filename
         ;------------------------------------------------------
-        ; Copy catalog record to final destination
+        ; Copy filename to final destination
         ;------------------------------------------------------
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy        
-        ;------------------------------------------------------
-        ; Update stats
-        ;------------------------------------------------------
-        inc   @fh.records
-        a     @fh.reclen,@fh.dir.rec.ptr
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -203,6 +206,21 @@ fm.dir.callback3:
         ;------------------------------------------------------
         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
                                       ; /
+
+        ;------------------------------------------------------
+        ; Display left column
+        ;------------------------------------------------------
+        bl    @at                   ; Set cursor position
+              byte 1,69             ; Y=1, X=69
+
+        li    tmp1,>e000
+        li    tmp2,7
+        bl    @putlst               ; Loop over string list and display
+                                    ; \ i  @wyx = Cursor position
+                                    ; | i  tmp1 = Pointer to first length-
+                                    ; |           prefixed string in list
+                                    ; / i  tmp2 = Number of strings to display
+
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

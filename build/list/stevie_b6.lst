@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230725-1311240
+0002               * BUILD: 230729-1549450
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -402,7 +402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0220               ;*******************************************************************************
 0221               ; ATTENTION: dsrlnk vars must form a continuous memory block & keep their order!
 0222               ;*******************************************************************************
-0223      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+0223      A400     dsrlnk.dsrlws     equ  fh.struct       ; dsrlnk workspace 32 bytes
 0224      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
 0225      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
 0226      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230725-1311240
+0002               * BUILD: 230729-1549450
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -402,7 +402,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0220               ;*******************************************************************************
 0221               ; ATTENTION: dsrlnk vars must form a continuous memory block & keep their order!
 0222               ;*******************************************************************************
-0223      A400     dsrlnk.dsrlws     equ  fh.struct       ; Address of dsrlnk workspace 32 bytes
+0223      A400     dsrlnk.dsrlws     equ  fh.struct       ; dsrlnk workspace 32 bytes
 0224      A420     dsrlnk.namsto     equ  fh.struct + 32  ; 8-byte RAM buf for holding device name
 0225      A428     dsrlnk.sav8a      equ  fh.struct + 40  ; Save parm (8 or A) after "blwp @dsrlnk"
 0226      A42A     dsrlnk.savcru     equ  fh.struct + 42  ; CRU address of device in prev. DSR call
@@ -14524,13 +14524,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      74E8 3A20     
 0158                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 74EA 3233                        text '230725-1311240'
+0001 74EA 3233                        text '230729-1549450'
      74EC 3037     
-     74EE 3235     
+     74EE 3239     
      74F0 2D31     
-     74F2 3331     
-     74F4 3132     
-     74F6 3430     
+     74F2 3534     
+     74F4 3934     
+     74F6 3530     
                    < data.dialogs.asm
 0159 74F8 202D                        text ' - Stevie 1.5.9 - (c)2018-2023 Filip Van Vooren'
      74FA 2053     
