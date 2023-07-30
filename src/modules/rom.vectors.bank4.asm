@@ -82,7 +82,7 @@ vec.64  data  cpu.crash             ;
 * ROM 4: Vectors 65-96
 *--------------------------------------------------------------
 vec.65  data  dialog.help.content   ; Content for Help dialog
-vec.66  data  cpu.crash             ;
+vec.66  data  dialog.fbrowser       ; File browser
 vec.67  data  cpu.crash             ;
 vec.68  data  cpu.crash             ;
 vec.69  data  cpu.crash             ;

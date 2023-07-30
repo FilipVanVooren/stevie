@@ -152,6 +152,27 @@ pane.botline.busy.off:
 
 
 ***************************************************************
+* Stub for "dialog.fbrowser"
+* bank4 vec.66
+********|*****|*********************|**************************
+dialog.fbrowser:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.66           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for "edb.clear.sams"
 * bank5 vec.1
 ********|*****|*********************|**************************
@@ -210,5 +231,27 @@ vdp.colors.line:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "tv.reset"
+* bank7 vec.23
+********|*****|*********************|**************************
+tv.reset:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call routine in specified bank
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.23           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+tv.reset.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller

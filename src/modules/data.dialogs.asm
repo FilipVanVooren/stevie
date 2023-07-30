@@ -179,8 +179,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Insert/Append   Save   Print'
-pos.info.file      byte 0,6,13,20,29,36,>ff
+txt.info.file      stri 'New   Open   Insert/Append   Save   Print   Directory'
+pos.info.file      byte 0,6,13,20,29,36,44,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 
@@ -266,9 +266,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto/M1/M2   Master-Catalog   Directory'
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto/M1/M2   Master-Catalog'
                    even
-pos.info.shortcuts byte 0,9,17,30,36,39,43,60,>ff
+pos.info.shortcuts byte 0,9,17,30,36,39,43,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

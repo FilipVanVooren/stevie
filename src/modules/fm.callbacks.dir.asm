@@ -204,23 +204,10 @@ fm.dir.callback3:
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
-        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-                                      ; /
+        bl    @pane.botline.busy.off ; \ Put busyline indicator off
+                                     ; /
 
-        ;------------------------------------------------------
-        ; Display left column
-        ;------------------------------------------------------
-        bl    @at                   ; Set cursor position
-              byte 1,69             ; Y=1, X=69
-
-        li    tmp1,>e000
-        li    tmp2,7
-        bl    @putlst               ; Loop over string list and display
-                                    ; \ i  @wyx = Cursor position
-                                    ; | i  tmp1 = Pointer to first length-
-                                    ; |           prefixed string in list
-                                    ; / i  tmp2 = Number of strings to display
-
+        bl    @dialog.fbrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

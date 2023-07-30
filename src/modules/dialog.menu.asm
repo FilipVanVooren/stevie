@@ -94,7 +94,7 @@ dialog.menu:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf+2,ram.msg1 + 28,32
+              data rambuf+2,ram.msg1 + 28,32
 
         li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
         movb  tmp0,@ram.msg1 + 28   ; | Overwrite length-byte prefix in 

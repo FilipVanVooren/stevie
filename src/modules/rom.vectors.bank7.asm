@@ -33,7 +33,7 @@ vec.19  data  cpu.crash             ;
 vec.20  data  magic.set             ;
 vec.21  data  magic.clear           ;
 vec.22  data  magic.check           ;
-vec.23  data  cpu.crash             ;
+vec.23  data  tv.reset              ;
 vec.24  data  cpu.crash             ;
 vec.25  data  cpu.crash             ;
 vec.26  data  cpu.crash             ;

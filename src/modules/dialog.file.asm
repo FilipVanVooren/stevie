@@ -46,6 +46,11 @@ dialog.file:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.hide     ; Hide cursor
+
+        li    tmp0,myfile
+        mov   tmp0,@parm1
+        bl    @fm.directory
+
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

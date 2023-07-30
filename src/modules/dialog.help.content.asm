@@ -31,7 +31,7 @@ dialog.help.content:
         ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - 480
+              data vdp.fb.toprow.sit,32,vdp.sit.size - 640
                                     ; Clear screen
 
         ;
@@ -43,7 +43,7 @@ dialog.help.content:
         li    tmp0,vdp.fb.toprow.tat
         mov   @tv.color,tmp1        ; Get color for framebuffer
         srl   tmp1,8                ; Right justify
-        li    tmp2,vdp.sit.size - 480
+        li    tmp2,vdp.sit.size - 640
                                     ; Prepare for loading color attributes
 
         bl    @xfilv                ; \ Fill VDP memory
@@ -61,6 +61,8 @@ dialog.help.content:
 
         mov   @cmdb.dialog.var,tmp3 ; Get Page index
 
+        clr   tmp0                  ; Single-column list
+
         mov   @dialog.help.data.pages(tmp3),tmp1
                                     ; Pointer to list of strings
         mov   @dialog.help.data.pages+2(tmp3),tmp2
@@ -68,6 +70,9 @@ dialog.help.content:
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
+                                    ; | i  tmp0 = Cutover row and column offset
+                                    ; |           for next column, >0000 for
+                                    ; |           single column list
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; / i  tmp2 = Number of strings to display
@@ -80,6 +85,8 @@ dialog.help.content:
 
         mov   @cmdb.dialog.var,tmp3 ; Get Page index
 
+        clr   tmp0                  ; Single-column list
+
         mov   @dialog.help.data.pages+4(tmp3),tmp1
                                     ; Pointer to list of strings
         mov   @dialog.help.data.pages+6(tmp3),tmp2
@@ -87,6 +94,9 @@ dialog.help.content:
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
+                                    ; | i  tmp0 = Cutover row and column offset
+                                    ; |           for next column, >0000 for
+                                    ; |           single column list
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; / i  tmp2 = Number of strings to display
@@ -114,125 +124,75 @@ dialog.help.data.pages:
 
 dialog.help.data.page1.left:
         stri ' '
-        even
         byte    38
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Cursor '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-        even
         stri 'Fctn s/d/e/x  Left, Right, Up, Down'
-        even
         stri 'Fctn h/l      Home, End of line'
-        even
         stri 'Fctn j/k      Previous word, Next word'
-        even        
         stri 'Fctn 4   ^x   Page down'
-        even
         stri 'Fctn 6   ^e   Page up'
-        even        
         stri 'Fctn 7        Next tab position'
-        even
         stri 'Ctrl 7   ^7   Previous tab position'
-        even
         stri 'Fctn v        Screen top'
-        even
         stri 'Fctn b        Screen bottom'
-        even
         stri 'Ctrl v   ^v   File top'
-        even
         stri 'Ctrl b   ^b   File bottom'
-        even
         stri 'Ctrl g   ^g   Goto line'
 
 
 dialog.help.data.page1.right:
         stri '                                 (1/2)'
-        even
         stri ' '
-        even
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-        even
         stri 'Ctrl a   ^a   Append file'
-        even
         stri 'Ctrl i   ^i   Insert file at line'
-        even
         stri 'Ctrl c   ^c   Copy clipboard to line'
-        even
         stri 'Ctrl o   ^o   Open file'
-        even
         stri 'Ctrl p   ^p   Print file'
-        even
         stri 'Ctrl s   ^s   Save file'
-        even
         stri 'Ctrl ,   ^,   Load previous file'
-        even
         stri 'Ctrl .   ^.   Load next file'
-        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
-        even
         stri 'Fctn +   ^q   Quit'
-        even
         stri 'Fctn 0   ^/   TI Basic'
-        even
         stri 'Ctrl 0   ^0   Load master catalog'
-        even
         stri 'Ctrl h   ^h   Help'
-        even
         stri 'Ctrl r   ^r   Toggle ruler'
-        even
         stri 'Ctrl u   ^u   Shortcuts menu'
-        even
         stri 'Ctrl z   ^z   Cycle color schemes'
-        even
 
 dialog.help.data.page2.left:
         stri ' '
-        even
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Modifiers '
         byte    1,1,1,1,1,1,1,1,1,1,1
-        even
         stri 'Fctn 1        Delete character'
-        even
         stri 'Fctn 2        Insert character'
-        even
         stri 'Fctn 3        Delete line'
-        even
         stri 'Ctrl l   ^l   Delete end of line'
-        even
         stri 'Fctn 8        Insert line'
-        even
         stri 'Fctn .        Insert/Overwrite'
-        even
 
 dialog.help.data.page2.right:
         stri '                                 (2/2)'
-        even
         stri ' '
-        even
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
         byte    1,1,1,1,1,1,1,1,1,1,1
-        even
         stri 'Ctrl SPACE    Set M1/M2 marker'
-        even
         stri 'Ctrl d   ^d   Delete block'
-        even
         stri 'Ctrl c   ^c   Copy block'
-        even
         stri 'Ctrl g   ^g   Goto line'
-        even
         stri 'Ctrl m   ^m   Move block'
-        even
         stri 'Ctrl s   ^s   Save block to file'
-        even
         stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
-        even

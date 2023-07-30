@@ -241,6 +241,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
+
+        byte  key.uc.d, id.dialog.file
+        data  edkey.action.cmdb.file.directory        
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
@@ -425,9 +428,6 @@ keymap_actions.cmdb:
 
         byte  key.uc.m, id.dialog.shortcuts
         data  edkey.action.fb.load.mc              
-
-        byte  key.uc.d, id.dialog.shortcuts
-        data  edkey.action.cmdb.file.directory
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------

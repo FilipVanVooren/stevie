@@ -19,7 +19,6 @@
         copy  "errpane.asm"            ; Error pane
         copy  "tv.asm"                 ; Main editor configuration
         copy  "tv.quit.asm"            ; Exit Stevie and return to monitor
-        copy  "tv.reset.asm"           ; Reset editor (clear buffers)
         copy  "tv.uint16.pack.asm"     ; Pack string to 16bit unsigned integer
         copy  "tv.uint16.unpack.asm"   ; Unpack 16bit unsigned integer to string
         copy  "tv.pad.string.asm"      ; Pad string to specified length
