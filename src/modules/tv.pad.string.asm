@@ -18,7 +18,13 @@
 * @outparm1 = Pointer to padded string
 *--------------------------------------------------------------
 * Register usage
-* none
+* tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+* Remarks
+* Routine must reside in RAM when @parm1 refers to string in 
+* ROM bank. If you store this routine in a ROM bank, it can
+* only reference strings in the same bank or strings in RAM.
+* It cannot reference strings in other ROM banks.
 ***************************************************************        
 tv.pad.string:
         dect  stack

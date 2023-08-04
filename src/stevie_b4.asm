@@ -92,7 +92,7 @@ main:
         copy  "fb.get.nonblank.asm" ; Get column of first non-blank char
         ;-----------------------------------------------------------------------
         ; Screen panes
-        ;-----------------------------------------------------------------------
+        ;-----------------------------------------------------------------------        
         copy  "pane.topline.asm"      ; Top line
         copy  "pane.botline.asm"      ; Bottom line
         copy  "pane.botline.busy.asm" ; Bottom line busy indicator        

@@ -27,7 +27,7 @@ pane.filebrowser:
                                     ; Clear screen
 
         bl    @at                   ; Set cursor position
-              byte 1,0              ; Y=1, X=0
+              byte 1,2              ; Y=1, X=2
 
         li    tmp1,>e000
         mov   @fh.records,tmp2
