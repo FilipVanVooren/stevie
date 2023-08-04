@@ -8,39 +8,39 @@
         ;------------------------------------------------------
         ; Low-level modules
         ;------------------------------------------------------
-        copy  "rom.farjump.asm"        ; ROM bankswitch trampoline
-        copy  "fb.asm"                 ; Framebuffer
-        copy  "fb.row2line.asm"        ; Calculate line in editor buffer
-        copy  "fb.calc.pointer.asm"    ; Calculate pointer address frame buffer
-        copy  "fb.calc.scrrows.asm"    ; Calculate number of rows frame buffer
-        copy  "idx.asm"                ; Index management
-        copy  "edb.asm"                ; Editor Buffer
-        copy  "cmdb.asm"               ; Command buffer
-        copy  "errpane.asm"            ; Error pane
-        copy  "tv.asm"                 ; Main editor configuration
-        copy  "tv.quit.asm"            ; Exit Stevie and return to monitor
-        copy  "tv.uint16.pack.asm"     ; Pack string to 16bit unsigned integer
-        copy  "tv.uint16.unpack.asm"   ; Unpack 16bit unsigned integer to string
-        copy  "tv.pad.string.asm"      ; Pad string to specified length
+        copy  "rom.farjump.asm"      ; ROM bankswitch trampoline
+        copy  "fb.asm"               ; Framebuffer
+        copy  "fb.row2line.asm"      ; Calculate line in editor buffer
+        copy  "fb.calc.pointer.asm"  ; Calculate pointer address frame buffer
+        copy  "fb.calc.scrrows.asm"  ; Calculate number of rows frame buffer
+        copy  "idx.asm"              ; Index management
+        copy  "edb.asm"              ; Editor Buffer
+        copy  "cmdb.asm"             ; Command buffer
+        copy  "errpane.asm"          ; Error pane
+        copy  "tv.asm"               ; Main editor configuration
+        copy  "tv.quit.asm"          ; Exit Stevie and return to monitor
+        copy  "tv.uint16.pack.asm"   ; Pack string to 16bit unsigned integer
+        copy  "tv.uint16.unpack.asm" ; Unpack 16bit unsigned integer to string
+        copy  "tv.pad.string.asm"    ; Pad string to specified length
         ;-----------------------------------------------------------------------
         ; Logic for Index management
         ;-----------------------------------------------------------------------
-        copy  "idx.update.asm"         ; Index management - Update entry
-        copy  "idx.pointer.asm"        ; Index management - Get pointer to line
-        copy  "idx.delete.asm"         ; Index management - delete slot
-        copy  "idx.insert.asm"         ; Index management - insert slot
+        copy  "idx.update.asm"       ; Index management - Update entry
+        copy  "idx.pointer.asm"      ; Index management - Get pointer to line
+        copy  "idx.delete.asm"       ; Index management - delete slot
+        copy  "idx.insert.asm"       ; Index management - insert slot
         ;-----------------------------------------------------------------------
         ; Logic for editor buffer
         ;-----------------------------------------------------------------------
-        copy  "edb.line.mappage.asm"   ; Activate edbuf SAMS page for line
-        copy  "edb.line.getlength.asm" ; Get line length
-        copy  "edb.line.getlength2.asm"; Get length of current row
-        copy  "edb.hipage.alloc.asm"   ; Check/increase highest SAMS page
+        copy  "edb.line.mappage.asm"    ; Activate edbuf SAMS page for line
+        copy  "edb.line.getlength.asm"  ; Get line length
+        copy  "edb.line.getlength2.asm" ; Get length of current row
+        copy  "edb.hipage.alloc.asm"    ; Check/increase highest SAMS page
         ;-----------------------------------------------------------------------
         ; Utility functions
         ;-----------------------------------------------------------------------
-        copy  "pane.topline.clearmsg.asm"   ; Remove overlay msg in top line
-        copy  "fg99.run.asm"                ; Run FinalGROM cartridge image                                       
+        copy  "pane.topline.clearmsg.asm" ; Remove overlay msg in top line
+        copy  "fg99.run.asm"              ; Run FinalGROM cartridge image                                       
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
