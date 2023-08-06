@@ -99,8 +99,9 @@ fm.dir.callback1:
         ;------------------------------------------------------
         clr   @fh.offsetopcode      ; Allow all devices (copy to VDP)
         clr   @fh.records           ; Reset record count
+        clr   @cat.filecount        ; Reset number of files
 
-        li    tmp0,>e000            ; \ Set RAM destination address 
+        li    tmp0,cat.fnlist       ; \ Set RAM destination address 
         mov   tmp0,@fh.dir.rec.ptr  ; / for storing directory entries
         ;------------------------------------------------------
         ; Show reading directory message
@@ -145,17 +146,33 @@ fm.dir.callback2:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;------------------------------------------------------
-        ; Skip if volume name
+        ; Check if volume name
         ;------------------------------------------------------
         mov   @fh.records,tmp0      ; \
-        ci    tmp0,1                ; | Skip volume name
-        jeq   fm.dir.callback2.exit ; / 
+        ci    tmp0,1                ; | Handle volume name
+        jne   fm.dir.callback2.prep ; / 
         ;------------------------------------------------------
-        ; Prepare for copy
+        ; Handle volume name
         ;------------------------------------------------------
         li    tmp0,rambuf+2         ; Source address
+        li    tmp1,cat.volname      ; Destination address
+        movb  @rambuf+2,tmp2        ; Get string length 
+        srl   tmp2,8                ; MSB to LSB
+        inc   tmp2                  ; Include prefixed length-byte
+        ;------------------------------------------------------
+        ; Copy volume name to final destination
+        ;------------------------------------------------------
+        bl    @xpym2m               ; Copy memory block
+                                    ; \ i  tmp0 = source
+                                    ; | i  tmp1 = destination
+                                    ; / i  tmp2 = bytes to copy        
+        jmp  fm.dir.callback2.exit  ; Exit
+        ;------------------------------------------------------
+        ; Prepare for filename copy
+        ;------------------------------------------------------
+fm.dir.callback2.prep:        
+        li    tmp0,rambuf+2         ; Source address
         mov   @fh.dir.rec.ptr,tmp1  ; Destination address
-
         movb  @rambuf+2,tmp2        ; Get string length 
         srl   tmp2,8                ; MSB to LSB
         inc   tmp2                  ; Include prefixed length-byte    
@@ -167,6 +184,7 @@ fm.dir.callback2:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy        
+        inc   @cat.filecount
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

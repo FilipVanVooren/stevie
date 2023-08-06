@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 230806-1614120
+0002               * BUILD: 230806-2011470
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -570,27 +570,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0389      DE50     tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 0390      DEA0     tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 0391               ;-----------------------------------------------------------------
-0392               ; Command buffer history               @>e000-efff    (4096 bytes)
+0392               ; Directory file catalog               @>e000-efff    (4096 bytes)
 0393               ;-----------------------------------------------------------------
-0394      E000     cmdb.top          equ  >e000           ; Top of command history buffer
-0395      1000     cmdb.size         equ  4096            ; Command buffer size
-0396               ;-----------------------------------------------------------------
-0397               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
-0398               ;-----------------------------------------------------------------
-0399      F000     heap.top          equ  >f000           ; 80 Current filename
-0400      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0401      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
-0402               ;-----------------------------------------------------------------
-0403               ; Stevie specific equates
-0404               ;-----------------------------------------------------------------
-0405      0000     fh.fopmode.none           equ  0         ; No file operation in progress
-0406      0001     fh.fopmode.readfile       equ  1         ; Read file from disk to memory
-0407      0002     fh.fopmode.writefile      equ  2         ; Save file from memory to disk
-0408      0006     cmdb.rows                 equ  6         ; Number of rows in CMDB pane
-0409      A028     rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
-0410      9900     tv.colorize.reset         equ  >9900     ; Colorization off
-0411      00FE     tv.1timeonly              equ  254       ; One-time only flag indicator
-0412      0100     tv.sams.maxpage           equ  256       ; Max SAMS pages supported
+0394      E000     cat.top           equ  >e000           ; Top of file catalog
+0395      E000     cat.filecount     equ  cat.top
+0396      E002     cat.volname       equ  cat.top + 2     ; Volume name
+0397      E00D     cat.fnlist        equ  cat.top + 13    ; Catalog filename list
+0398      E575     cat.fslist        equ  cat.top + >575  ; Catalog filesize list
+0399      0F00     cat.size          equ  3840            ; Catalog total size
+0400               
+0401      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
+0402      0100     cmdb.size         equ  256             ; Command buffer size
+0403               ;-----------------------------------------------------------------
+0404               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+0405               ;-----------------------------------------------------------------
+0406      F000     heap.top          equ  >f000           ; 80 Current filename
+0407      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0408      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0409               ;-----------------------------------------------------------------
+0410               ; Stevie specific equates
+0411               ;-----------------------------------------------------------------
+0412      0000     fh.fopmode.none           equ  0         ; No file operation in progress
+0413      0001     fh.fopmode.readfile       equ  1         ; Read file from disk to memory
+0414      0002     fh.fopmode.writefile      equ  2         ; Save file from memory to disk
+0415      0006     cmdb.rows                 equ  6         ; Number of rows in CMDB pane
+0416      A028     rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
+0417      9900     tv.colorize.reset         equ  >9900     ; Colorization off
+0418      00FE     tv.1timeonly              equ  254       ; One-time only flag indicator
+0419      0100     tv.sams.maxpage           equ  256       ; Max SAMS pages supported
                    < stevie_b3.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -7030,7 +7037,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029                       ; Initialize
 0030                       ;------------------------------------------------------
 0031 3308 0204  20         li    tmp0,cmdb.top         ; \ Set pointer to command buffer
-     330A E000     
+     330A EF00     
 0032 330C C804  38         mov   tmp0,@cmdb.top.ptr    ; /
      330E A700     
 0033               
@@ -7070,9 +7077,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054                       ;------------------------------------------------------
 0055 3346 06A0  32         bl    @film
      3348 2236     
-0056 334A E000                   data  cmdb.top,>00,cmdb.size
+0056 334A EF00                   data  cmdb.top,>00,cmdb.size
      334C 0000     
-     334E 1000     
+     334E 0100     
 0057                                                   ; Clear it all the way
 0058                       ;------------------------------------------------------
 0059                       ; Exit
@@ -8939,9 +8946,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0116               
 0117               
 0118                       even
-0119 3976 0544     myfile stri 'DSK6.'
+0119 3976 0544     myfile stri 'DSK1.'
      3978 534B     
-     397A 362E     
+     397A 312E     
                    < rom.resident.asm
 0064                       copy  "data.strings.asm"            ; Strings
      **** ****     > data.strings.asm
@@ -14625,13 +14632,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7512 3A20     
 0158                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7514 3233                        text '230806-1614120'
+0001 7514 3233                        text '230806-2011470'
      7516 3038     
      7518 3036     
-     751A 2D31     
-     751C 3631     
-     751E 3431     
-     7520 3230     
+     751A 2D32     
+     751C 3031     
+     751E 3134     
+     7520 3730     
                    < data.dialogs.asm
 0159 7522 202D                        text ' - Stevie 1.5.10 - (c)2018-2023 Filip Van Vooren'
      7524 2053     
@@ -15774,6 +15781,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
+    CAT.FILECOUNT....... >E000 :     
+    CAT.FNLIST.......... >E00D :     
+    CAT.FSLIST.......... >E575 :     
+    CAT.SIZE............ >0F00 :     
+    CAT.TOP............. >E000 :     
+    CAT.VOLNAME......... >E002 :     
     CLHOOK.............. >2F2C :     
     CLIP1............... >3100 :     
     CLIP2............... >3200 :     
@@ -15823,9 +15836,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.REFRESH.EXIT... >6B24 :     
     CMDB.ROWS........... >0006 :     
     CMDB.SCRROWS........ >A706 :     
-    CMDB.SIZE........... >1000 :     
+    CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
-    CMDB.TOP............ >E000 :     
+    CMDB.TOP............ >EF00 :     
     CMDB.TOP.PTR........ >A700 :     
     CMDB.VDPTOP......... >A70E :     
     CMDB.VISIBLE........ >A702 :     

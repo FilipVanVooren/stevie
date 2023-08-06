@@ -116,4 +116,4 @@ const.80      data  80              ; 80
 
 
         even
-myfile stri 'DSK6.'
+myfile stri 'DSK1.'

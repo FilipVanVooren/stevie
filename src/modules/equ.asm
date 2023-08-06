@@ -389,10 +389,17 @@ tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 ;-----------------------------------------------------------------
-; Command buffer history               @>e000-efff    (4096 bytes)
+; Directory file catalog               @>e000-efff    (4096 bytes)
 ;-----------------------------------------------------------------
-cmdb.top          equ  >e000           ; Top of command history buffer
-cmdb.size         equ  4096            ; Command buffer size
+cat.top           equ  >e000           ; Top of file catalog
+cat.filecount     equ  cat.top
+cat.volname       equ  cat.top + 2     ; Volume name
+cat.fnlist        equ  cat.top + 13    ; Catalog filename list
+cat.fslist        equ  cat.top + >575  ; Catalog filesize list
+cat.size          equ  3840            ; Catalog total size
+
+cmdb.top          equ  >ef00           ; Top of command history buffer
+cmdb.size         equ  256             ; Command buffer size
 ;-----------------------------------------------------------------
 ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
 ;-----------------------------------------------------------------

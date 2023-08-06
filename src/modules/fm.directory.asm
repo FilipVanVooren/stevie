@@ -45,6 +45,13 @@ fm.directory:
         mov   @parm8,*stack         ; Push @parm8     
         dect  stack
         mov   @parm9,*stack         ; Push @parm9
+
+        ;------------------------------------------------------
+        ; Clear catalog space
+        ;------------------------------------------------------
+        bl    @film
+              data cat.top,>00,cat.size
+                                    ; Clear it all the way
         ;-------------------------------------------------------
         ; Read drive/directory catalog into memory
         ;-------------------------------------------------------
