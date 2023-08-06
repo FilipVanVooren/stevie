@@ -83,8 +83,9 @@ Check there for free memory ranges, because most structures do not use full
 |            | >df00-dfff |   256 |   FREE                                     |
 |            |            |       |                                            |
 | >e000-efff |     #06    |  4096 | Directory file catalog (max. 127 files)    |
-| >e000-efff | >e000-e574 |  1398 |   length-prefixed file names (127*11)      |
-| >e000-efff | >e575-e574 |  1398 |   length-prefixed file names (127*11)      |
+|            | >e000-e001 |     2 |   Variables, volume name                   |
+| >e000-efff | >e00e-e574 |  1398 |   length-prefixed file names list (127*11) |
+| >e000-efff | >e575-e5ff |  1398 |   File size list (127*2)                   |
 |            |            |       |                                            |
 | >f000-ffff |     #07    |  4096 | Heap                                       |
 

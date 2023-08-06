@@ -394,8 +394,8 @@ tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top
 cat.volname       equ  cat.top + 2     ; Volume name
-cat.fnlist        equ  cat.top + 13    ; Catalog filename list
-cat.fslist        equ  cat.top + >575  ; Catalog filesize list
+cat.fnlist        equ  cat.top + 14    ; Catalog filename list (127*11)
+cat.fslist        equ  cat.top + >575  ; Catalog filesize list (127*2)
 cat.size          equ  3840            ; Catalog total size
 
 cmdb.top          equ  >ef00           ; Top of command history buffer

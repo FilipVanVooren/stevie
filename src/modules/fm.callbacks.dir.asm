@@ -225,6 +225,10 @@ fm.dir.callback3:
         bl    @pane.botline.busy.off ; \ Put busyline indicator off
                                      ; /
 
+        dec   @cat.filecount        ; \ One-time adjustment because  
+                                    ; | catalog reads beyond EOF.
+                                    ; /                                     
+
         bl    @pane.filebrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit
