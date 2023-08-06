@@ -36,7 +36,7 @@ txt.block.print    stri 'Printing block....'
                    even
 txt.clearmem       stri 'Clearing memory....'
                    even
-txt.readdir        stri 'Reading directory..'                   
+txt.readdir        stri 'Reading directory....'                   
                    even
 txt.done.load      stri 'Load completed'
                    even

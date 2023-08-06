@@ -1,5 +1,5 @@
 * FILE......: rom.vectors.bank0.asm
-* Purpose...: Bank 0 vectors for trampoline function
+* Purpose...: Bank 0 "dummy" vectors for trampoline function
 
 *--------------------------------------------------------------
 * ROM identification string for CPU crash

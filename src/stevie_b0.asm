@@ -19,7 +19,7 @@
 * File: stevie_b0.asm
 *
 * Bank 0 "Jill"
-* Setup resident SP2/Stevie modules and start SP2 kernel
+* Setup resident Spectra2 modules + low-level stevie modules, start kernel.
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -154,10 +154,7 @@ main:
         ;------------------------------------------------------
         ; Memory full check
         ;------------------------------------------------------
-        .ifgt $, >3e40              ; >3e40 in low memexp, maps to >7f00 in
-                                    ; cartridge space where rom.crash.asm has
-                                    ; its aorg. So may not go beyond >3e40!
-
+        .ifge $, >4000              ; 8K limit (>2000 & >3000) reached?
               .error '***** Aborted. Bank 0 cartridge program too large!'
         .else
               data $                ; Bank 0 ROM size OK.
@@ -165,7 +162,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------
-        copy  "rom.crash.asm"
+cpu.crash.showbank  equ  bankx.crash.showbank
         ;-----------------------------------------------------------------------
         ; Table for VDP modes
         ;-----------------------------------------------------------------------

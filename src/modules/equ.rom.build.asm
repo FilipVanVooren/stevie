@@ -7,7 +7,6 @@
 skip_rom_bankswitch       equ  1       ; Skip support for ROM bankswitching
 skip_grom_cpu_copy        equ  1       ; Skip GROM to CPU copy functions
 skip_grom_vram_copy       equ  1       ; Skip GROM to VDP vram copy functions
-skip_vdp_vchar            equ  1       ; Skip vchar, xvchar
 skip_vdp_boxes            equ  1       ; Skip filbox, putbox
 skip_vdp_bitmap           equ  1       ; Skip bitmap functions
 skip_vdp_viewport         equ  1       ; Skip viewport functions

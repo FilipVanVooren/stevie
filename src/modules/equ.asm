@@ -402,12 +402,11 @@ ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
-fh.fopmode.none           equ  0       ; No file operation in progress
-fh.fopmode.readfile       equ  1       ; Read file from disk to memory
-fh.fopmode.writefile      equ  2       ; Save file from memory to disk
-cmdb.rows                 equ  5       ; Number of rows in CMDB pane
-rom0_kscan_out            equ  keycode1; Where to store value of key pressed
-
-tv.colorize.reset         equ  >9900   ; Colorization off
-tv.1timeonly              equ  254     ; One-time only flag indicator
-tv.sams.maxpage           equ  256     ; Max SAMS pages supported
+fh.fopmode.none           equ  0         ; No file operation in progress
+fh.fopmode.readfile       equ  1         ; Read file from disk to memory
+fh.fopmode.writefile      equ  2         ; Save file from memory to disk
+cmdb.rows                 equ  6         ; Number of rows in CMDB pane
+rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
+tv.colorize.reset         equ  >9900     ; Colorization off
+tv.1timeonly              equ  254       ; One-time only flag indicator
+tv.sams.maxpage           equ  256       ; Max SAMS pages supported

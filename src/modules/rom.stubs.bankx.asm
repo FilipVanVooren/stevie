@@ -1,10 +1,11 @@
 * FILE......: rom.stubs.bankx.asm
-* Purpose...: Stubs to include in all banks > 0
+* Purpose...: Stubs to include in all banks (with exceptions)
 
 
- .ifne bankid,bank1.rom
+ .ifgt bankid,bank1.rom
 ***************************************************************
 * Stub for "mem.sams.setup.stevie"
+* Exclude: bank0, bank1
 * bank1 vec.1
 ********|*****|*********************|**************************
 mem.sams.setup.stevie:
@@ -24,7 +25,10 @@ mem.sams.setup.stevie:
         b     *r11                  ; Return to caller
  .endif
 
+ 
+ .ifgt bankid,bank0.rom
  .ifne bankid,bank7.rom
+
 ***************************************************************
 * Stub for "mem.sams.set.legacy"
 * bank7 vec.1
@@ -44,12 +48,11 @@ mem.sams.set.legacy:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
- .endif
+ 
 
-
- .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "mem.sams.set.boot"
+* Exclude: bank0, bank7
 * bank7 vec.2
 ********|*****|*********************|**************************
 mem.sams.set.boot:
@@ -67,10 +70,8 @@ mem.sams.set.boot:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
- .endif
 
 
- .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "mem.sams.set.stevie"
 * bank7 vec.3
@@ -90,10 +91,8 @@ mem.sams.set.stevie:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
- .endif
 
 
- .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "magic.set"
 * bank7 vec.20
@@ -113,10 +112,8 @@ magic.set:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
- .endif
 
 
- .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "magic.clear"
 * bank7 vec.21
@@ -136,10 +133,8 @@ magic.clear:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
- .endif
 
 
- .ifne bankid,bank7.rom
 ***************************************************************
 * Stub for "magic.check"
 * bank7 vec.22
@@ -159,4 +154,6 @@ magic.check:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+ .endif
  .endif
