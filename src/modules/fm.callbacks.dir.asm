@@ -27,20 +27,20 @@
 *   
 *    hex   01234567
 *    0008  ABLSSSSS     
-*    0010  SSSSSS1F     
-*    0018  FFFFFFF2
-*    0020  FFFFFFFF
-*    0028  3FFFFFFF
-*    0030  F.......
-*    0038  ........
+*    0010  SSSSSS1E     
+*    0018  MMMMMMM2
+*    0020  EMMMMMMM
+*    0028  3EMMMMMM
+*    0030  M.......
 *    
 *    A=>00 \ Record size 38 bytes (>26) or 146 bytes (>92).
 *    B=>26 / Note: only 146 bytes if device supports timestamps.
-*    L=>0a String length (max. >0A)
+*    L=>xx String length (max. >0A)
 *    S=>xx String ASCII char (filename)
 *    
-*    1=>08 Float 1 size 
-*    F=>xx Float 8 bytes
+*    1=>08 Float size     1 byte
+*    E=>xx Float exponent 1 byte
+*    M=>xx Float mantissa 7 bytes
 *    	1 - Record type:
 *    		0 = Volume label
 *    		1 = File type Display/Fixed
@@ -145,6 +145,10 @@ fm.dir.callback2:
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2        
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Check if volume name
         ;------------------------------------------------------
@@ -184,11 +188,75 @@ fm.dir.callback2.prep:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy        
+        ;------------------------------------------------------
+        ; Filetype handling
+        ;------------------------------------------------------        
+fm.dir.callback2.filetype:
+        movb  @rambuf+2,tmp0        ; Get string length again
+        srl   tmp0,8                ; MSB to LSB
+        ai    tmp0,rambuf+3         ; Add base, skip record size & length byte
+        movb  *tmp0,tmp1            ; Get Float size byte
+        inc   tmp0                  ; Skip float size byte
+        mov   tmp0,tmp3             ; Take snapshot of position in rambuf        
+        swpb  tmp1                  ; Make some space for float exponent byte
+        movb  *tmp0+,tmp1           ; Get float exponent byte
+        swpb  tmp1                  ; Turn in right order again
+        clr   tmp2
+        movb  *tmp0+,tmp2           ; Get float 1st Mantissa byte (=Filetype!)
+
+        abs   tmp2                  ; Ignore file write-protection flag        
+        li    tmp0,cat.ftlist       ; \ 
+        a     @cat.filecount,tmp0   ; | Store file type in filetype list 
+        movb  tmp2,*tmp0            ; /
+
+        mov   tmp3,tmp0             ; Restore snapshot position
+        srl   tmp1,8                ; Get float size
+        a     tmp1,tmp0             ; Skip filetype float        
+        ;------------------------------------------------------
+        ; File size handling
+        ;------------------------------------------------------                
+fm.dir.callback2.filesize:        
+        movb  *tmp0,tmp1            ; Get Float size byte
+        inc   tmp0                  ; Skip float size byte
+        mov   tmp0,tmp3             ; Take snapshot of position in rambuf        
+        swpb  tmp1                  ; Make some space for float exponent byte
+        movb  *tmp0+,tmp1           ; Get float exponent byte
+        swpb  tmp1                  ; Turn in right order again
+        clr   tmp2
+        movb  *tmp0+,tmp2           ; Get float 1st Mantissa byte (=recsize!)
+
+        li    tmp0,cat.fslist       ; \ 
+        a     @cat.filecount,tmp0   ; | Store record size in record size list 
+        movb  tmp2,*tmp0            ; /
+
+        mov   tmp3,tmp0             ; Restore snapshot position
+        srl   tmp1,8                ; Get float size
+        a     tmp1,tmp0             ; Skip filesize float              
+        ;------------------------------------------------------
+        ; Record size handling
+        ;------------------------------------------------------                
+fm.dir.callback2.recsize:        
+        movb  *tmp0,tmp1            ; Get Float size byte
+        inc   tmp0                  ; Skip float size byte
+        swpb  tmp1                  ; Make some space for float exponent byte
+        movb  *tmp0+,tmp1           ; Get float exponent byte
+        swpb  tmp1                  ; Turn in right order again
+        clr   tmp2
+        movb  *tmp0+,tmp2           ; Get float 1st Mantissa byte (=recsize!)
+
+        li    tmp0,cat.rslist       ; \ 
+        a     @cat.filecount,tmp0   ; | Store record size in record size list 
+        movb  tmp2,*tmp0            ; /
+        ;------------------------------------------------------
+        ; Prepare for exit
+        ;------------------------------------------------------
         inc   @cat.filecount
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fm.dir.callback2.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
