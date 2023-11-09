@@ -292,11 +292,19 @@ fm.dir.callback3:
         ;------------------------------------------------------
         bl    @pane.botline.busy.off ; \ Put busyline indicator off
                                      ; /
-
+        ;------------------------------------------------------
+        ; Prepare for displaying filenames
+        ;------------------------------------------------------
         dec   @cat.filecount        ; \ One-time adjustment because  
                                     ; | catalog reads beyond EOF.
                                     ; /                                     
 
+        clr   @cat.page              ; Page 1 (base 0 offset)
+        li    tmp0,cat.fnlist        ; Get filename list
+        mov   tmp0,@cat.1stpage1.ptr ; Set pointer 1st filename page 1 catalog
+        clr   @cat.1stpage2.ptr      ; Clear pointer 1st filename page 2 catalog
+        clr   @cat.1stpage3.ptr      ; Clear pointer 1st filename page 3 catalog        
+        clr   @cat.1stpage4.ptr      ; Clear pointer 1st filename page 4 catalog
         bl    @pane.filebrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit

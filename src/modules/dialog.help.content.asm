@@ -99,7 +99,11 @@ dialog.help.content:
                                     ; |           single column list
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
-                                    ; / i  tmp2 = Number of strings to display
+                                    ; | i  tmp2 = Number of strings to display
+                                    ; |
+                                    ; | o  @waux1 = Pointer to next entry  
+                                    ; |             in list after displaying
+                                    ; /             (tmp2) entries                                    
 
         ;------------------------------------------------------
         ; Exit

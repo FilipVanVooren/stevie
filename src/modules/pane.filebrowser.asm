@@ -83,17 +83,16 @@ pane.filebrowser.nofiles:
         ;------------------------------------------------------
         ; Prepare for displaying filenames
         ;------------------------------------------------------
-        li    tmp0,cat.fnlist       ; Get filename list
-        mov   tmp0,@cat.1stpage.ptr ; Save pointer
+        mov   @cat.page,tmp0                   ; Get current page index catalog
+        sla   tmp0,1                           ; Make it an offset
+        mov   @cat.1stpage1.ptr(tmp0),tmp1     ; Get filename list
         ;------------------------------------------------------
         ; Show filenames
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
               byte 1,1              ; Y=1, X=1
 
-        mov   @cat.1stpage.ptr,tmp1 ; Pointer to 1st filename to dispay in list
         mov   @cat.filecount,tmp2   ; Number of filenames to display
-        li    tmp2,64
 
         mov   @fb.scrrows,tmp0      ; \ Determine cutover row for filename
         s     @cmdb.scrrows,tmp0    ; | column list and store in MSB of tmp0
@@ -108,7 +107,16 @@ pane.filebrowser.nofiles:
                                     ; |           single column list
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
-                                    ; / i  tmp2 = Number of strings to display
+                                    ; | i  tmp2 = Number of strings to display
+                                    ; |
+                                    ; | o  @waux1 = Pointer to next entry  
+                                    ; |             in list after displaying
+                                    ; /             (tmp2) entries
+
+        mov   @cat.page,tmp0                 ; Get current page index catalog
+        inc   tmp0                           ; Next page
+        sla   tmp0,1                         ; Make it an offset
+        mov   @waux1,@cat.1stpage1.ptr(tmp0) ; Save pointer 
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
