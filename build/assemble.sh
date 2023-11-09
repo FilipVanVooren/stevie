@@ -124,8 +124,8 @@ if [ "${#cid}" -gt 0 ]; then
 fi
 
 # Write time spend
-dur=$(echo "$EPOCHREALTIME-$start" | bc)
-log "    Time spend: $dur seconds"
+dur=$(echo "scale=1; ($EPOCHREALTIME-$start)*1000/1" | bc)
+log "    Time spend: $dur ms"
 
 # Exit with error if any of the processes returned > 0
 for excode in "${exits[@]}"; do
