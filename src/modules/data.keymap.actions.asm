@@ -243,7 +243,16 @@ keymap_actions.cmdb:
         data  dialog.print
 
         byte  key.uc.d, id.dialog.file
-        data  edkey.action.cmdb.file.directory        
+        data  edkey.action.cmdb.file.directory
+
+        byte  key.num.1, id.dialog.file
+        data  edkey.action.filebrowser.1
+
+        byte  key.num.2, id.dialog.file
+        data  edkey.action.filebrowser.2
+
+        byte  key.num.3, id.dialog.file
+        data  edkey.action.filebrowser.3
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------

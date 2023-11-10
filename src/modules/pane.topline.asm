@@ -47,7 +47,7 @@ pane.topline.file:
         bl    @xutst0               ; /        
 
         bl    @hchar
-              byte 0,75,32,5        ; Remove any left-over junk on top line
+              byte 0,70,32,10       ; Remove any left-over junk on top line
               data eol    
         ;------------------------------------------------------
         ; Check if M1/M2 markers need to be shown

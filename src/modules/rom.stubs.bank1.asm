@@ -849,6 +849,17 @@ pane.errline.drawcolor.vector:
 
 
 ***************************************************************
+* Stub for "pane.filebrowser"
+* bank4 vec.66
+********|*****|*********************|**************************
+pane.filebrowser:
+        mov   @pane.filebrowser.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.filebrowser.vector:
+        data  vec.66
+
+
+***************************************************************
 * Trampoline bank 4 with return
 ********|*****|*********************|**************************
 _trampoline.bank4.ret:
