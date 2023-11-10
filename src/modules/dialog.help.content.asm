@@ -147,7 +147,7 @@ dialog.help.data.page1.left:
 
 
 dialog.help.data.page1.right:
-        stri '                                 (1/2)'
+        stri '                                   1/2'
         stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -187,7 +187,7 @@ dialog.help.data.page2.left:
         stri 'Fctn .        Insert/Overwrite'
 
 dialog.help.data.page2.right:
-        stri '                                 (2/2)'
+        stri '                                   2/2'
         stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1

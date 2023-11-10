@@ -100,7 +100,6 @@ pane.filebrowser.lines:
         ori   tmp0,20               ; Set offset for new column in filename list
 
         sla   tmp2,2                ; Multiply by 4 (because 4 columns per page)
-        ;mov   @cat.filecount,tmp2   ; Number of filenames to display
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position

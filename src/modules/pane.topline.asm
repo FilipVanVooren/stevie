@@ -44,7 +44,11 @@ pane.topline.file:
                                     ; /             output string        
       
         mov   @outparm1,tmp1        ; \ Display padded filename
-        bl    @xutst0               ; /   
+        bl    @xutst0               ; /        
+
+        bl    @hchar
+              byte 0,75,32,5        ; Remove any left-over junk on top line
+              data eol    
         ;------------------------------------------------------
         ; Check if M1/M2 markers need to be shown
         ;------------------------------------------------------

@@ -22,6 +22,10 @@ fm.loadsave.cb.indicator1:
         ;------------------------------------------------------
         ; Check file operation mode
         ;------------------------------------------------------
+        bl    @hchar
+              byte 0,75,32,5        ; Remove any left-over junk on top line
+              data eol    
+
         bl    @pane.botline.busy.on ; \ Put busy indicator on
                                     ; /
 
