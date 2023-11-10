@@ -69,6 +69,7 @@ pane.filebrowser.nofiles:
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------
+pane.filebrowser.lines:        
         bl    @vchar
               byte 1,19                        ; Starting position YX  
               byte >10                         ; Vertical line char
@@ -92,13 +93,14 @@ pane.filebrowser.nofiles:
         bl    @at                   ; Set cursor position
               byte 1,1              ; Y=1, X=1
 
-        mov   @cat.filecount,tmp2   ; Number of filenames to display
-
         mov   @fb.scrrows,tmp0      ; \ Determine cutover row for filename
-        s     @cmdb.scrrows,tmp0    ; | column list and store in MSB of tmp0
+        s     @cmdb.scrrows,tmp0    ; | column list and store in MSB of tmp0.
+        mov   tmp0,tmp2             ; | Also use for calculating files per page.
         sla   tmp0,8                ; /
-
         ori   tmp0,20               ; Set offset for new column in filename list
+
+        sla   tmp2,2                ; Multiply by 4 (because 4 columns per page)
+        ;mov   @cat.filecount,tmp2   ; Number of filenames to display
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -117,6 +119,49 @@ pane.filebrowser.nofiles:
         inc   tmp0                           ; Next page
         sla   tmp0,1                         ; Make it an offset
         mov   @waux1,@cat.1stpage1.ptr(tmp0) ; Save pointer 
+
+        ;-------------------------------------------------------
+        ; Show catalog page number (part 1)
+        ;-------------------------------------------------------
+        bl    @mknum                ; Convert unsigned number to string
+              data cat.page         ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 49               ; | i  p3MSB = ASCII offset (Base 1!)
+              byte 32               ; / i  p3LSB = Padding character        
+
+        bl    @trimnum              ; Trim number to the left
+              data rambuf,rambuf + 5,32
+
+        bl    @putat
+              byte 0,77
+              data rambuf+5         ; Display page number
+
+        bl    @putat
+              byte 0,78
+              data txt.slash        ; Display slash separater
+        ;-------------------------------------------------------
+        ; Show catalog page number (part 2)
+        ;-------------------------------------------------------
+pane.filebrowser.check.page3:        
+        mov   @cat.1stpage3.ptr,tmp0
+        jeq   pane.filebrowser.check.page2
+        bl    @putat
+              byte 0,79
+              data txt.3            ; Display 3
+        jmp   pane.filebrowser.exit
+
+pane.filebrowser.check.page2:       
+        mov   @cat.1stpage2.ptr,tmp0
+        jeq   pane.filebrowser.check.page1
+        bl    @putat
+              byte 0,79
+              data txt.2            ; Display 2
+        jmp   pane.filebrowser.exit
+
+pane.filebrowser.check.page1:
+        bl    @putat
+              byte 0,79
+              data txt.1            ; Display 1        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -127,6 +172,8 @@ pane.filebrowser.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-
-txt.volume:
-        stri  'Volume:            Files:      Device: '
+txt.volume:       stri  'Volume:            Files:      Device: '
+txt.slash:        stri  '/'
+txt.1:            stri  '1'
+txt.2:            stri  '2'
+txt.3:            stri  '3'
