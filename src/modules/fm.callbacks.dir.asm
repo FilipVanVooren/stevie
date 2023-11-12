@@ -100,6 +100,8 @@ fm.dir.callback1:
         clr   @fh.offsetopcode      ; Allow all devices (copy to VDP)
         clr   @fh.records           ; Reset record count
         clr   @cat.filecount        ; Reset number of files
+        clr   @cat.page             ; \ Reset page counters
+        clr   @cat.maxpage          ; /
 
         li    tmp0,cat.fnlist       ; \ Set RAM destination address 
         mov   tmp0,@fh.dir.rec.ptr  ; / for storing directory entries
@@ -292,6 +294,8 @@ fm.dir.callback3:
         ;------------------------------------------------------
         bl    @pane.botline.busy.off ; \ Put busyline indicator off
                                      ; /
+
+        seto  @cmdb.dirty           ; Command buffer dirty (text changed!)                                     
         ;------------------------------------------------------
         ; Prepare for displaying filenames
         ;------------------------------------------------------
@@ -305,6 +309,7 @@ fm.dir.callback3:
         clr   @cat.1stpage2.ptr      ; Clear pointer 1st filename page 2 catalog
         clr   @cat.1stpage3.ptr      ; Clear pointer 1st filename page 3 catalog        
         clr   @cat.1stpage4.ptr      ; Clear pointer 1st filename page 4 catalog
+
         bl    @pane.filebrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit

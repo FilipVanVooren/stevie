@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231110-2156480
+0002               * BUILD: 231112-2032340
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -578,38 +578,39 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0394      E000     cat.top           equ  >e000           ; Top of file catalog
 0395      E000     cat.filecount     equ  cat.top         ; Total files in catalog
 0396      E002     cat.page          equ  cat.top + 2     ; Current page in catalog
-0397      E004     cat.1stpage1.ptr  equ  cat.top + 4     ; Pointer to 1st file on page 1 catalog
-0398      E006     cat.1stpage2.ptr  equ  cat.top + 6     ; Pointer to 1st file on page 2 catalog
-0399      E008     cat.1stpage3.ptr  equ  cat.top + 8     ; Pointer to 1st file on page 3 catalog
-0400      E00A     cat.1stpage4.ptr  equ  cat.top + 10    ; Pointer to 1st file on page 4 catalog
-0401      E00C     cat.volname       equ  cat.top + 12    ; Volume name
-0402      E018     cat.fnlist        equ  cat.top + 24    ; Filename list (127*11)
-0403      E58E     cat.ftlist        equ  cat.top + 1422  ; Filetype list (127)
-0404      E60E     cat.fslist        equ  cat.top + 1550  ; Filesize size (127)
-0405      E68E     cat.rslist        equ  cat.top + 1678  ; Record size list (127)
-0406      0F00     cat.size          equ  3840            ; Catalog total size
-0407               ;-----------------------------------------------------------------
-0408               ; Command buffer                       ; @>ef00-efff   (256 bytes)
-0409               ;-----------------------------------------------------------------
-0410      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
-0411      0100     cmdb.size         equ  256             ; Command buffer size
-0412               ;-----------------------------------------------------------------
-0413               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
-0414               ;-----------------------------------------------------------------
-0415      F000     heap.top          equ  >f000           ; 80 Current filename
-0416      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0417      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
-0418               ;-----------------------------------------------------------------
-0419               ; Stevie specific equates
-0420               ;-----------------------------------------------------------------
-0421      0000     fh.fopmode.none           equ  0         ; No file operation in progress
-0422      0001     fh.fopmode.readfile       equ  1         ; Read file from disk to memory
-0423      0002     fh.fopmode.writefile      equ  2         ; Save file from memory to disk
-0424      0006     cmdb.rows                 equ  6         ; Number of rows in CMDB pane
-0425      A028     rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
-0426      9900     tv.colorize.reset         equ  >9900     ; Colorization off
-0427      00FE     tv.1timeonly              equ  254       ; One-time only flag indicator
-0428      0100     tv.sams.maxpage           equ  256       ; Max SAMS pages supported
+0397      E004     cat.maxpage       equ  cat.top + 4     ; Maximum page in catalog
+0398      E006     cat.1stpage1.ptr  equ  cat.top + 6     ; Pointer to 1st file on page 1 catalog
+0399      E008     cat.1stpage2.ptr  equ  cat.top + 8     ; Pointer to 1st file on page 2 catalog
+0400      E00A     cat.1stpage3.ptr  equ  cat.top + 10     ; Pointer to 1st file on page 3 catalog
+0401      E00C     cat.1stpage4.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 4 catalog
+0402      E00E     cat.volname       equ  cat.top + 14    ; Volume name
+0403      E01A     cat.fnlist        equ  cat.top + 26    ; Filename list (127*11)
+0404      E590     cat.ftlist        equ  cat.top + 1424  ; Filetype list (127)
+0405      E610     cat.fslist        equ  cat.top + 1552  ; Filesize size (127)
+0406      E690     cat.rslist        equ  cat.top + 1680  ; Record size list (127)
+0407      0F00     cat.size          equ  3840            ; Catalog total size
+0408               ;-----------------------------------------------------------------
+0409               ; Command buffer                       ; @>ef00-efff   (256 bytes)
+0410               ;-----------------------------------------------------------------
+0411      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
+0412      0100     cmdb.size         equ  256             ; Command buffer size
+0413               ;-----------------------------------------------------------------
+0414               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+0415               ;-----------------------------------------------------------------
+0416      F000     heap.top          equ  >f000           ; 80 Current filename
+0417      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0418      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0419               ;-----------------------------------------------------------------
+0420               ; Stevie specific equates
+0421               ;-----------------------------------------------------------------
+0422      0000     fh.fopmode.none           equ  0         ; No file operation in progress
+0423      0001     fh.fopmode.readfile       equ  1         ; Read file from disk to memory
+0424      0002     fh.fopmode.writefile      equ  2         ; Save file from memory to disk
+0425      0006     cmdb.rows                 equ  6         ; Number of rows in CMDB pane
+0426      A028     rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
+0427      9900     tv.colorize.reset         equ  >9900     ; Colorization off
+0428      00FE     tv.1timeonly              equ  254       ; One-time only flag indicator
+0429      0100     tv.sams.maxpage           equ  256       ; Max SAMS pages supported
                    < stevie_b0.asm
 0032                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -874,13 +875,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.11'
+0055 6028 0D53                 stri 'STEVIE 1.5.12'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3131     
+     6034 3132     
 0057               
 0061               
 0065               
@@ -2646,83 +2647,84 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0532               * tmp2 = Number of strings to display
 0533               *--------------------------------------------------------------
 0534               * OUTPUT
-0535               * @waux1 = Pointer to next entry in list after display
-0536               *--------------------------------------------------------------
-0537               * Register usage
-0538               * tmp0, tmp1, tmp2, tmp3
-0539               ********|*****|*********************|**************************
-0540               putlst:
-0541 6576 0649  14         dect  stack
-0542 6578 C64B  30         mov   r11,*stack            ; Save return address
-0543                       ;------------------------------------------------------
-0544                       ; Prepare
-0545                       ;------------------------------------------------------
-0546 657A C220  30         mov   @wyx,tmp4             ; Backup @wyx position
+0535               * @waux1 = Pointer to next entry in list after display.
+0536               *          Only set if tmp2 < entries in list
+0537               *--------------------------------------------------------------
+0538               * Register usage
+0539               * tmp0, tmp1, tmp2, tmp3
+0540               ********|*****|*********************|**************************
+0541               putlst:
+0542 6576 0649  14         dect  stack
+0543 6578 C64B  30         mov   r11,*stack            ; Save return address
+0544                       ;------------------------------------------------------
+0545                       ; Prepare
+0546                       ;------------------------------------------------------
+0547 657A C220  30         mov   @wyx,tmp4             ; Backup @wyx position
      657C 832A     
-0547                       ;------------------------------------------------------
-0548                       ; Dump strings to VDP
-0549                       ;------------------------------------------------------
-0550               putlst.loop:
-0551 657E D1D5  26         movb  *tmp1,tmp3            ; Get string length byte
-0552 6580 0987  32         srl   tmp3,8                ; Right align
-0553 6582 1324  14         jeq   putlst.exit           ; Exit early if 0-byte string length
-0554               
-0555 6584 0649  14         dect  stack
-0556 6586 C644  30         mov   tmp0,*stack           ; Push tmp0
-0557 6588 0649  14         dect  stack
-0558 658A C645  30         mov   tmp1,*stack           ; Push tmp1
-0559 658C 0649  14         dect  stack
-0560 658E C646  30         mov   tmp2,*stack           ; Push tmp2
-0561 6590 0649  14         dect  stack
-0562 6592 C647  30         mov   tmp3,*stack           ; Push tmp3
-0563 6594 0649  14         dect  stack
-0564 6596 C648  30         mov   tmp4,*stack           ; Push tmp4
-0565               
-0566 6598 06A0  32         bl    @xutst0               ; Display string
+0548                       ;------------------------------------------------------
+0549                       ; Dump strings to VDP
+0550                       ;------------------------------------------------------
+0551               putlst.loop:
+0552 657E D1D5  26         movb  *tmp1,tmp3            ; Get string length byte
+0553 6580 0987  32         srl   tmp3,8                ; Right align
+0554 6582 1324  14         jeq   putlst.exit           ; Exit early if 0-byte string length
+0555               
+0556 6584 0649  14         dect  stack
+0557 6586 C644  30         mov   tmp0,*stack           ; Push tmp0
+0558 6588 0649  14         dect  stack
+0559 658A C645  30         mov   tmp1,*stack           ; Push tmp1
+0560 658C 0649  14         dect  stack
+0561 658E C646  30         mov   tmp2,*stack           ; Push tmp2
+0562 6590 0649  14         dect  stack
+0563 6592 C647  30         mov   tmp3,*stack           ; Push tmp3
+0564 6594 0649  14         dect  stack
+0565 6596 C648  30         mov   tmp4,*stack           ; Push tmp4
+0566               
+0567 6598 06A0  32         bl    @xutst0               ; Display string
      659A 2420     
-0567                                                   ; \ i  tmp1 = Pointer to string
-0568                                                   ; / i  @wyx = Cursor position at
-0569               
-0570 659C C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0571 659E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0572 65A0 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0573 65A2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0574 65A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0575                       ;------------------------------------------------------
-0576                       ; Next column?
-0577                       ;------------------------------------------------------
-0578 65A6 C104  18         mov   tmp0,tmp0             ; \ Single column list?
-0579 65A8 1309  14         jeq   !                     ; / Yes, skip next column handling
-0580               
-0581 65AA 9120  30         cb    @wyx,tmp0             ; Cutover row reached?
+0568                                                   ; \ i  tmp1 = Pointer to string
+0569                                                   ; / i  @wyx = Cursor position at
+0570               
+0571 659C C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0572 659E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0573 65A0 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0574 65A2 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0575 65A4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0576                       ;------------------------------------------------------
+0577                       ; Next column?
+0578                       ;------------------------------------------------------
+0579 65A6 C104  18         mov   tmp0,tmp0             ; \ Single column list?
+0580 65A8 1309  14         jeq   !                     ; / Yes, skip next column handling
+0581               
+0582 65AA 9120  30         cb    @wyx,tmp0             ; Cutover row reached?
      65AC 832A     
-0582 65AE 1106  14         jlt   !                     ; Not yet, move down
-0583               
-0584 65B0 D808  30         movb  tmp4,@wyx             ; Restore Y-position
+0583 65AE 1106  14         jlt   !                     ; Not yet, move down
+0584               
+0585 65B0 D808  30         movb  tmp4,@wyx             ; Restore Y-position
      65B2 832A     
-0585 65B4 B820  42         ab    @tmp0lb,@wyx+1        ; Add column offset
+0586 65B4 B820  42         ab    @tmp0lb,@wyx+1        ; Add column offset
      65B6 8309     
      65B8 832B     
-0586               
-0587 65BA 1002  14         jmp   putlst.next           ; Next iteration
-0588 65BC 06A0  32 !       bl    @down                 ; Move cursor down
+0587               
+0588 65BA 1002  14         jmp   putlst.next           ; Next iteration
+0589 65BC 06A0  32 !       bl    @down                 ; Move cursor down
      65BE 26EA     
-0589                       ;------------------------------------------------------
-0590                       ; Prepare for next iteration
-0591                       ;------------------------------------------------------
-0592               putlst.next:
-0593 65C0 A147  18         a     tmp3,tmp1             ; Add string length to pointer
-0594 65C2 0585  14         inc   tmp1                  ; Consider length byte
-0595 65C4 0606  14         dec   tmp2
-0596 65C6 15DB  14         jgt   putlst.loop           ; Display next entry in list
-0597 65C8 C805  30         mov   tmp1,@waux1           ; Save pointer to next entry in list
+0590                       ;------------------------------------------------------
+0591                       ; Prepare for next iteration
+0592                       ;------------------------------------------------------
+0593               putlst.next:
+0594 65C0 A147  18         a     tmp3,tmp1             ; Add string length to pointer
+0595 65C2 0585  14         inc   tmp1                  ; Consider length byte
+0596 65C4 0606  14         dec   tmp2
+0597 65C6 15DB  14         jgt   putlst.loop           ; Display next entry in list
+0598 65C8 C805  30         mov   tmp1,@waux1           ; Save pointer to next entry in list
      65CA 833C     
-0598                       ;------------------------------------------------------
-0599                       ; Exit
-0600                       ;------------------------------------------------------
-0601               putlst.exit:
-0602 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
-0603 65CE 045B  20         b     *r11                  ; Return
+0599                       ;------------------------------------------------------
+0600                       ; Exit
+0601                       ;------------------------------------------------------
+0602               putlst.exit:
+0603 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
+0604 65CE 045B  20         b     *r11                  ; Return
                    < runlib.asm
 0097               
 0099                       copy  "copy_cpu_vram.asm"        ; CPU to VRAM copy functions
@@ -10352,19 +10354,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
-    CAT.1STPAGE1.PTR.... >E004 :     
-    CAT.1STPAGE2.PTR.... >E006 :     
-    CAT.1STPAGE3.PTR.... >E008 :     
-    CAT.1STPAGE4.PTR.... >E00A :     
+    CAT.1STPAGE1.PTR.... >E006 :     
+    CAT.1STPAGE2.PTR.... >E008 :     
+    CAT.1STPAGE3.PTR.... >E00A :     
+    CAT.1STPAGE4.PTR.... >E00C :     
     CAT.FILECOUNT....... >E000 :     
-    CAT.FNLIST.......... >E018 :     
-    CAT.FSLIST.......... >E60E :     
-    CAT.FTLIST.......... >E58E :     
+    CAT.FNLIST.......... >E01A :     
+    CAT.FSLIST.......... >E610 :     
+    CAT.FTLIST.......... >E590 :     
+    CAT.MAXPAGE......... >E004 :     
     CAT.PAGE............ >E002 :     
-    CAT.RSLIST.......... >E68E :     
+    CAT.RSLIST.......... >E690 :     
     CAT.SIZE............ >0F00 :     
     CAT.TOP............. >E000 :     
-    CAT.VOLNAME......... >E00C :     
+    CAT.VOLNAME......... >E00E :     
     CLHOOK.............. >2F30 :     
     CLIP1............... >3100 :     
     CLIP2............... >3200 :     

@@ -7,7 +7,7 @@
 * bl   @pane.filebrowser
 *--------------------------------------------------------------- 
 * INPUT
-* none
+* @cat.page = Page in catalog to display (base 0())
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1
@@ -24,15 +24,18 @@ pane.filebrowser:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
+        mov   @cat.filecount,tmp0   ; Get number of files
+        jeq   pane.filebrowser.exit ; Exit if nothing to display
+
+        c     @cat.page,@cat.maxpage ; Exit if highest page in catalog
+        jgt   pane.filebrowser.exit  ; already reached
+        ;------------------------------------------------------
+        ; Show volume name, no files, device path
+        ;------------------------------------------------------
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - 640
                                     ; Clear screen
 
-        mov   @cat.filecount,tmp0   ; Get number of files
-        jeq   pane.filebrowser.exit ; Exit if nothing to display
-        ;------------------------------------------------------
-        ; Show volume name, no files, device path
-        ;------------------------------------------------------
         bl    @putat
               byte 0,0
               data txt.volume       ; Display "Volume: ...."   
@@ -87,6 +90,7 @@ pane.filebrowser.lines:
         mov   @cat.page,tmp0                   ; Get current page index catalog
         sla   tmp0,1                           ; Make it an offset
         mov   @cat.1stpage1.ptr(tmp0),tmp1     ; Get filename list
+        jeq   pane.filebrowser.catpage         ; Skip on empty list
         ;------------------------------------------------------
         ; Show filenames
         ;------------------------------------------------------
@@ -101,6 +105,11 @@ pane.filebrowser.lines:
 
         sla   tmp2,2                ; Multiply by 4 (because 4 columns per page)
 
+        clr   @waux1                ; \ Set null pointer
+                                    ; | Note: putlst only sets @waux1 if 
+                                    ; |       tmp2 < entries in list
+                                    ; /
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -114,14 +123,44 @@ pane.filebrowser.lines:
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
 
-        mov   @cat.page,tmp0                 ; Get current page index catalog
-        inc   tmp0                           ; Next page
-        sla   tmp0,1                         ; Make it an offset
-        mov   @waux1,@cat.1stpage1.ptr(tmp0) ; Save pointer 
+        mov   @waux1,tmp0                    ; Get Pointer
+        mov   *tmp0,tmp1                     ; Get content at pointer
+        jeq   pane.filebrowser.catpage       ; Skip if end of list reached
 
+        mov   @cat.page,tmp1                 ; Get current page index catalog
+        inc   tmp1                           ; Next page
+        sla   tmp1,1                         ; Make it an offset
+        mov   tmp0,@cat.1stpage1.ptr(tmp1)   ; Save pointer 
         ;-------------------------------------------------------
-        ; Show catalog page number (part 1)
+        ; Catalog page number (part 2)
         ;-------------------------------------------------------
+pane.filebrowser.catpage:        
+        mov   @cat.1stpage3.ptr,tmp0
+        jeq   pane.filebrowser.check.page2
+        li    tmp0,2                         ; \ Page 3 (base 0)
+        mov   tmp0,@cat.maxpage              ; / 
+        jmp   pane.filebrowser.showpage
+
+pane.filebrowser.check.page2:       
+        mov   @cat.1stpage2.ptr,tmp0
+        jeq   pane.filebrowser.check.page1
+        li    tmp0,1                         ; \ Page 2 (base 0)
+        mov   tmp0,@cat.maxpage              ; / 
+        jmp   pane.filebrowser.showpage
+
+pane.filebrowser.check.page1:
+        clr   @cat.maxpage
+
+pane.filebrowser.showpage:
+        bl    @putnum
+              byte 0,75             ; Show max page number
+              data cat.maxpage,rambuf
+              byte 49,32
+
+        bl    @putat
+              byte 0,78
+              data txt.slash        ; Display slash separater
+
         bl    @mknum                ; Convert unsigned number to string
               data cat.page         ; \ i  p1    = Source
               data rambuf           ; | i  p2    = Destination
@@ -134,37 +173,11 @@ pane.filebrowser.lines:
         bl    @putat
               byte 0,77
               data rambuf+5         ; Display page number
-
-        bl    @putat
-              byte 0,78
-              data txt.slash        ; Display slash separater
-        ;-------------------------------------------------------
-        ; Show catalog page number (part 2)
-        ;-------------------------------------------------------
-pane.filebrowser.check.page3:        
-        mov   @cat.1stpage3.ptr,tmp0
-        jeq   pane.filebrowser.check.page2
-        bl    @putat
-              byte 0,79
-              data txt.3            ; Display 3
-        jmp   pane.filebrowser.exit
-
-pane.filebrowser.check.page2:       
-        mov   @cat.1stpage2.ptr,tmp0
-        jeq   pane.filebrowser.check.page1
-        bl    @putat
-              byte 0,79
-              data txt.2            ; Display 2
-        jmp   pane.filebrowser.exit
-
-pane.filebrowser.check.page1:
-        bl    @putat
-              byte 0,79
-              data txt.1            ; Display 1        
+ 
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.filebrowser.exit:        
+pane.filebrowser.exit:                
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
@@ -173,6 +186,3 @@ pane.filebrowser.exit:
 
 txt.volume:       stri  'Volume:            Files:      Device: '
 txt.slash:        stri  '/'
-txt.1:            stri  '1'
-txt.2:            stri  '2'
-txt.3:            stri  '3'

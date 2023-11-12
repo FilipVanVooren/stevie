@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.11  '
+            text '  Stevie 1.5.12  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.11   '     
+            text ' Stevie 1.5.12   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.11   '
+            text ' Stevie 1.5.12   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.11   '  
+            text ' Stevie 1.5.12   '  
             even
         .endif
 
@@ -156,7 +156,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.11 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.12 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
@@ -183,6 +183,7 @@ txt.info.file      stri 'New   Open   Insert/Append   Save   Print   Directory'
 pos.info.file      byte 0,6,13,20,29,36,44,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
+txt.keys.file2     stri 'F9-Back  SPACE-Close menu  1/2/3-Filelist'
 
 
 ;--------------------------------------------------------------

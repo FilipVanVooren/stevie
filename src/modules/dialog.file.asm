@@ -42,12 +42,18 @@ dialog.file:
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
         clr   @cmdb.panhint2        ; No extra hint to display
 
+        mov   @cat.maxpage,tmp0
+        jgt   dialog.file.keylist2
         li    tmp0,txt.keys.file
+        jmp   dialog.file.display
+dialog.file.keylist2:        
+        li    tmp0,txt.keys.file2
+dialog.file.display:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.hide     ; Hide cursor
 
-        bl    @pane.filebrowser        ; Show file browser
+        bl    @pane.filebrowser     ; Show file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -394,15 +394,16 @@ tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
 cat.page          equ  cat.top + 2     ; Current page in catalog
-cat.1stpage1.ptr  equ  cat.top + 4     ; Pointer to 1st file on page 1 catalog
-cat.1stpage2.ptr  equ  cat.top + 6     ; Pointer to 1st file on page 2 catalog
-cat.1stpage3.ptr  equ  cat.top + 8     ; Pointer to 1st file on page 3 catalog
-cat.1stpage4.ptr  equ  cat.top + 10    ; Pointer to 1st file on page 4 catalog
-cat.volname       equ  cat.top + 12    ; Volume name
-cat.fnlist        equ  cat.top + 24    ; Filename list (127*11) 
-cat.ftlist        equ  cat.top + 1422  ; Filetype list (127)
-cat.fslist        equ  cat.top + 1550  ; Filesize size (127)
-cat.rslist        equ  cat.top + 1678  ; Record size list (127)
+cat.maxpage       equ  cat.top + 4     ; Maximum page in catalog
+cat.1stpage1.ptr  equ  cat.top + 6     ; Pointer to 1st file on page 1 catalog
+cat.1stpage2.ptr  equ  cat.top + 8     ; Pointer to 1st file on page 2 catalog
+cat.1stpage3.ptr  equ  cat.top + 10     ; Pointer to 1st file on page 3 catalog
+cat.1stpage4.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 4 catalog
+cat.volname       equ  cat.top + 14    ; Volume name
+cat.fnlist        equ  cat.top + 26    ; Filename list (127*11) 
+cat.ftlist        equ  cat.top + 1424  ; Filetype list (127)
+cat.fslist        equ  cat.top + 1552  ; Filesize size (127)
+cat.rslist        equ  cat.top + 1680  ; Record size list (127)
 cat.size          equ  3840            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Command buffer                       ; @>ef00-efff   (256 bytes)
