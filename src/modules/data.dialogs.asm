@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.12  '
+            text '  Stevie 1.5.13  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.12   '     
+            text ' Stevie 1.5.13   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.12   '
+            text ' Stevie 1.5.13   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.12   '  
+            text ' Stevie 1.5.13   '  
             even
         .endif
 
@@ -44,6 +44,7 @@ txt.hint.memstat   stri 'SAMS pages free/total: ..../...    VDP: .. rows, 80 col
 txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
+
 ;--------------------------------------------------------------
 ; Dialog "Load file"
 ;--------------------------------------------------------------
@@ -54,6 +55,7 @@ txt.hint.load      stri 'Enter filename of file to open.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
+
 
 ;--------------------------------------------------------------
 ; Dialog "Save file"
@@ -92,6 +94,19 @@ txt.hint.insert    stri 'Enter filename of file to insert at current line.'
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
 
+
+;--------------------------------------------------------------
+; Dialog "Read directory"
+;--------------------------------------------------------------
+txt.head.dir       byte 19,1,1
+                   text ' Read directory '
+                   byte 1
+txt.hint.dir2      stri 'Enter device name including path of directory to read.'
+txt.hint.dir       stri 'Examples: DSK1, TIPI.SRC.DIR1'
+
+txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+txt.keys.dir2      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^1/2/3=Filelist'
+                   even
 
 ;--------------------------------------------------------------
 ; Dialog "Copy clipboard"
@@ -156,7 +171,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.12 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.13 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
@@ -179,8 +194,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Insert/Append   Save   Print   Directory'
-pos.info.file      byte 0,6,13,20,29,36,44,>ff
+txt.info.file      stri 'New   Open   Save   Dir   Insert   Append   Print'
+pos.info.file      byte 0,6,13,20,26,35,44,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 txt.keys.file2     stri 'F9-Back  SPACE-Close menu  1/2/3-Filelist'

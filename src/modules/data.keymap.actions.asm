@@ -227,23 +227,14 @@ keymap_actions.cmdb:
         byte  key.uc.n, id.dialog.file
         data  edkey.action.cmdb.file.new
 
-        byte  key.uc.s, id.dialog.file
-        data  dialog.save
-
         byte  key.uc.o, id.dialog.file
         data  dialog.load
 
-        byte  key.uc.i, id.dialog.file
-        data  dialog.insert
-
-        byte  key.uc.a, id.dialog.file
-        data  dialog.append
-
-        byte  key.uc.p, id.dialog.file
-        data  dialog.print
+        byte  key.uc.s, id.dialog.file
+        data  dialog.save
 
         byte  key.uc.d, id.dialog.file
-        data  edkey.action.cmdb.file.directory
+        data  dialog.dir
 
         byte  key.num.1, id.dialog.file
         data  edkey.action.filebrowser.1
@@ -253,6 +244,15 @@ keymap_actions.cmdb:
 
         byte  key.num.3, id.dialog.file
         data  edkey.action.filebrowser.3
+
+        byte  key.uc.i, id.dialog.file
+        data  dialog.insert
+
+        byte  key.uc.a, id.dialog.file
+        data  dialog.append
+
+        byte  key.uc.p, id.dialog.file
+        data  dialog.print
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
@@ -300,6 +300,20 @@ keymap_actions.cmdb:
 
         byte  key.num.5, id.dialog.clipboard
         data  edkey.action.cmdb.clip.5
+        ;-------------------------------------------------------
+        ; Dialog: Dir
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.dir        
+        data  edkey.action.cmdb.file.directory
+
+        byte  key.ctrl.1, id.dialog.dir
+        data  edkey.action.filebrowser.1
+
+        byte  key.ctrl.2, id.dialog.dir
+        data  edkey.action.filebrowser.2
+
+        byte  key.ctrl.3, id.dialog.dir
+        data  edkey.action.filebrowser.3        
         ;-------------------------------------------------------
         ; Dialog: Configure
         ;-------------------------------------------------------

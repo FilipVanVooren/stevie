@@ -9,8 +9,7 @@
 * bl  @fm.catalog
 *--------------------------------------------------------------
 * INPUT
-* parm1  = Pointer to length-prefixed string containing both 
-*          device and filename
+* parm1  = Pointer to length-prefixed string containing device.
 *--------------------------------------------------------------- 
 * OUTPUT
 * NONE

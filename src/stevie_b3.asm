@@ -77,6 +77,7 @@ main:
         copy  "dialog.print.asm"        ; Dialog "Print file"
         copy  "dialog.append.asm"       ; Dialog "Append file"
         copy  "dialog.insert.asm"       ; Dialog "Insert file at line"
+        copy  "dialog.dir.asm"          ; Dialog "Dir"
         copy  "dialog.cfg.asm"          ; Dialog "Configure"
         copy  "dialog.cfg.clip.asm"     ; Dialog "Configure clipboard"
         copy  "dialog.cfg.mc.asm"       ; Dialog "Configure Master Catalog"

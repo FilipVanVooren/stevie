@@ -306,6 +306,16 @@ dialog.shortcuts.vector:
 
 
 ***************************************************************
+* Stub for dialog "Dir"
+* bank3 vec.15
+********|*****|*********************|**************************
+dialog.dir:
+        mov   @dialog.dir.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.dir.vector:
+        data  vec.15
+
+***************************************************************
 * Stub for dialog "Go to line"
 * bank3 vec.16
 ********|*****|*********************|**************************
