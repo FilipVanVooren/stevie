@@ -79,7 +79,6 @@ main:
         copy  "fm.callbacks.dir.asm"  ; Callbacks for drive/directory file I/O
         copy  "fm.browse.asm"         ; File manager browse support routines
         copy  "fm.directory.asm"      ; File manager drive/directory listing
-        copy  "data.pab.tpl.asm"      ; PAB templates
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -88,7 +87,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-                                    ; Not applicable
+        copy  "data.pab.tpl.asm"    ; PAB templates        
+        copy  "data.devices.asm"    ; Device names
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

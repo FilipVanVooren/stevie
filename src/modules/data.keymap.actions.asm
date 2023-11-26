@@ -236,15 +236,6 @@ keymap_actions.cmdb:
         byte  key.uc.d, id.dialog.file
         data  dialog.dir
 
-        byte  key.num.1, id.dialog.file
-        data  edkey.action.filebrowser.1
-
-        byte  key.num.2, id.dialog.file
-        data  edkey.action.filebrowser.2
-
-        byte  key.num.3, id.dialog.file
-        data  edkey.action.filebrowser.3
-
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
 
@@ -494,6 +485,60 @@ keymap_actions.cmdb:
 
         byte  key.fctn.plus, pane.focus.cmdb
         data  edkey.action.quit
+
+        byte  key.ctrl.1, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.1
+
+        byte  key.ctrl.2, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.2
+
+        byte  key.ctrl.3, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.3
+
+        byte  key.ctrl.4, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.4
+
+        byte  key.ctrl.5, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.5
+
+        byte  key.ctrl.6, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.6
+
+        byte  key.ctrl.7, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.7
+
+        byte  key.ctrl.8, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.8
+
+        byte  key.ctrl.9, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.9
+
+        byte  key.ctrl.a, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.a
+
+        byte  key.ctrl.b, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.b
+
+        byte  key.ctrl.c, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.c
+
+        byte  key.ctrl.d, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.d
+
+        byte  key.ctrl.e, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.e
+
+        byte  key.ctrl.f, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.f
+
+        byte  key.ctrl.e, pane.focus.cmdb
+        data  edkey.action.filebrowser.1
+
+        byte  key.num.2, pane.focus.cmdb
+        data  edkey.action.filebrowser.2
+
+        byte  key.ctrl.x, pane.focus.cmdb
+        data  edkey.action.filebrowser.3
 
         byte  key.ctrl.a, pane.focus.cmdb
         data  edkey.action.cmdb.preset

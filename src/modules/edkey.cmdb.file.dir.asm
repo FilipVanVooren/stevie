@@ -2,6 +2,68 @@
 * Purpose...: Drive/Directory listing
 
 *---------------------------------------------------------------
+* Drive/Directory presets
+*---------------------------------------------------------------
+edkey.action.cmdb.file.directory.1
+        clr   @parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.2
+        mov   @const.1,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.3
+        mov   @const.2,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.4
+        mov   @const.3,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.5
+        mov   @const.4,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.6
+        mov   @const.5,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.7
+        mov   @const.6,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.8
+        mov   @const.7,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.9
+        mov   @const.8,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.a
+        mov   @const.9,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.b
+        mov   @const.10,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.c
+        mov   @const.11,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.d
+        mov   @const.12,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.e
+        mov   @const.13,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.f
+        mov   @const.14,@parm2
+
+*---------------------------------------------------------------
 * Drive/Directory listing
 *---------------------------------------------------------------
 edkey.action.cmdb.file.directory:
@@ -12,8 +74,7 @@ edkey.action.cmdb.file.directory:
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------
-        li    tmp0,myfile
-        mov   tmp0,@parm1
+        clr   @parm1
         bl    @fm.directory
         ;-------------------------------------------------------
         ; Exit

@@ -9,7 +9,9 @@
 * bl  @fm.catalog
 *--------------------------------------------------------------
 * INPUT
-* parm1  = Pointer to length-prefixed string containing device.
+* parm1  = Pointer to length-prefixed string containing device
+*          or >0000 if using parm2.
+* parm2  = Index in device list (ignored if parm1 set)
 *--------------------------------------------------------------- 
 * OUTPUT
 * NONE
@@ -44,7 +46,6 @@ fm.directory:
         mov   @parm8,*stack         ; Push @parm8     
         dect  stack
         mov   @parm9,*stack         ; Push @parm9
-
         ;------------------------------------------------------
         ; Clear catalog space
         ;------------------------------------------------------
@@ -52,8 +53,19 @@ fm.directory:
               data cat.top,>00,cat.size
                                     ; Clear it all the way
         ;-------------------------------------------------------
+        ; Process parameters
+        ;-------------------------------------------------------
+        mov   @parm1,tmp0           ; Use parameter 2?
+        jne   fm.directory.read     ; No, skip
+
+        mov   @parm2,tmp0           ; Get index
+        sla   tmp0,1                ; Word align
+        mov   @device.list(tmp0),@parm1
+                                    ; Set device string
+        ;-------------------------------------------------------
         ; Read drive/directory catalog into memory
         ;-------------------------------------------------------
+fm.directory.read:        
         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
         mov   tmp0,@parm2           ; Register callback 1
 
@@ -77,9 +89,6 @@ fm.directory:
 
         li    tmp0,io.rel.inp.int.fix
         mov   tmp0,@parm9           ; File type/mode for reading catalog
-
-        li    tmp0,myfile
-        mov   tmp0,@parm1
 
         bl    @fh.file.read.mem     ; Read file into editor buffer
                                     ; \ i  @parm1 = Pointer to length prefixed 

@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.13  '
+            text '  Stevie 1.5.14  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.13   '     
+            text ' Stevie 1.5.14   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.13   '
+            text ' Stevie 1.5.14   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.13   '  
+            text ' Stevie 1.5.14   '  
             even
         .endif
 
@@ -105,7 +105,7 @@ txt.hint.dir2      stri 'Enter device name including path of directory to read.'
 txt.hint.dir       stri 'Examples: DSK1, TIPI.SRC.DIR1'
 
 txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
-txt.keys.dir2      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^1/2/3=Filelist'
+txt.keys.dir2      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  1-3=Page'
                    even
 
 ;--------------------------------------------------------------
@@ -168,10 +168,10 @@ txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with 
 txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
-txt.about.build    byte 68
+txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.13 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.14 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
@@ -185,7 +185,7 @@ txt.head.menu      byte 14,1,1
 txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Quit'
 pos.info.menu      byte 0,7,15,27,39,49,56,>ff
 txt.hint.menu      stri ''
-txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
+txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu  ^1-F=DSK1-DSKF'
 
 ;--------------------------------------------------------------
 ; Dialog "File"
@@ -197,8 +197,8 @@ txt.head.file      byte 9,1,1
 txt.info.file      stri 'New   Open   Save   Dir   Insert   Append   Print'
 pos.info.file      byte 0,6,13,20,26,35,44,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back  SPACE-Close menu'
-txt.keys.file2     stri 'F9-Back  SPACE-Close menu  1/2/3-Filelist'
+txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-F=DSK1-DSKF'
+txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-F=DSK1-DSKF'
 
 
 ;--------------------------------------------------------------

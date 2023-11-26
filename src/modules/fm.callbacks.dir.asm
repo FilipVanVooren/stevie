@@ -100,6 +100,8 @@ fm.dir.callback1:
         clr   @fh.offsetopcode      ; Allow all devices (copy to VDP)
         clr   @fh.records           ; Reset record count
         clr   @cat.filecount        ; Reset number of files
+        clr   @cat.fpicker.idx      ; Reset index of file picker
+        clr   @cat.fselect.idx      ; Reset index of file prev/next
         clr   @cat.page             ; \ Reset page counters
         clr   @cat.maxpage          ; /
 
@@ -154,9 +156,9 @@ fm.dir.callback2:
         ;------------------------------------------------------
         ; Check if volume name
         ;------------------------------------------------------
-        mov   @fh.records,tmp0      ; \
-        ci    tmp0,1                ; | Handle volume name
-        jne   fm.dir.callback2.prep ; / 
+        mov   @fh.records,tmp0           ; \
+        ci    tmp0,1                     ; | Skip to fileindex if it's
+        jne   fm.dir.callback2.fileindex ; / not the volume name
         ;------------------------------------------------------
         ; Handle volume name
         ;------------------------------------------------------
@@ -174,11 +176,19 @@ fm.dir.callback2:
                                     ; / i  tmp2 = bytes to copy        
         jmp  fm.dir.callback2.exit  ; Exit
         ;------------------------------------------------------
+        ; File index handling
+        ;------------------------------------------------------ 
+fm.dir.callback2.fileindex:        
+        mov   @fh.records,tmp0        ; Get counter
+        dect  tmp0                    ; Remove volume offset and we're base 0
+        sla   tmp0,1                  ; Word align
+        mov   @fh.dir.rec.ptr,tmp1    ; Get filename pointer        
+        mov   tmp1,@cat.ptrlist(tmp0) ; Save pointer in pointer list
+        ;------------------------------------------------------
         ; Prepare for filename copy
         ;------------------------------------------------------
 fm.dir.callback2.prep:        
         li    tmp0,rambuf+2         ; Source address
-        mov   @fh.dir.rec.ptr,tmp1  ; Destination address
         movb  @rambuf+2,tmp2        ; Get string length 
         srl   tmp2,8                ; MSB to LSB
         inc   tmp2                  ; Include prefixed length-byte    
@@ -190,6 +200,7 @@ fm.dir.callback2.prep:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy        
+
         ;------------------------------------------------------
         ; Filetype handling
         ;------------------------------------------------------        

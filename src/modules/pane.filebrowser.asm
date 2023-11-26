@@ -66,9 +66,9 @@ pane.filebrowser.nofiles:
               byte 0,26
               data rambuf + 5       ; Display number of files
 
-        bl    @putat
-              byte 0,39
-              data myfile           ; Show device path
+        ;bl    @putat
+        ;      byte 0,39
+        ;      data myfile           ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------

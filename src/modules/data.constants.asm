@@ -110,10 +110,11 @@ const.6       data  6               ; 6
 const.7       data  7               ; 7
 const.8       equ   w$0008          ; 8
 const.9       data  9               ; 9
-const.10      data  10              ; 10
+const.10      data  10              ; 10 ; A
+const.11      data  11              ; 11 ; B
+const.12      data  12              ; 12 ; C
+const.13      data  13              ; 13 ; D
+const.14      data  14              ; 14 ; E
+const.15      data  15              ; 15 ; F
 const.32      data  32              ; 32
 const.80      data  80              ; 80
-
-
-        even
-myfile stri 'DSK1.'

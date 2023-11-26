@@ -389,23 +389,28 @@ fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
+tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 ;-----------------------------------------------------------------
 ; Directory/File catalog               @>e000-efff    (4096 bytes)
 ;-----------------------------------------------------------------
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
-cat.page          equ  cat.top + 2     ; Current page in catalog
-cat.maxpage       equ  cat.top + 4     ; Maximum page in catalog
-cat.1stpage1.ptr  equ  cat.top + 6     ; Pointer to 1st file on page 1 catalog
-cat.1stpage2.ptr  equ  cat.top + 8     ; Pointer to 1st file on page 2 catalog
-cat.1stpage3.ptr  equ  cat.top + 10     ; Pointer to 1st file on page 3 catalog
-cat.1stpage4.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 4 catalog
-cat.volname       equ  cat.top + 14    ; Volume name
-cat.fnlist        equ  cat.top + 26    ; Filename list (127*11) 
-cat.ftlist        equ  cat.top + 1424  ; Filetype list (127)
-cat.fslist        equ  cat.top + 1552  ; Filesize size (127)
-cat.rslist        equ  cat.top + 1680  ; Record size list (127)
-cat.size          equ  3840            ; Catalog total size
+cat.fpicker.idx   equ  cat.top + 2     ; File picker index into cat.ptrlist
+cat.fselect.idx   equ  cat.top + 4     ; File prev/next index into cat.ptrlist
+cat.page          equ  cat.top + 6     ; Current page in catalog
+cat.maxpage       equ  cat.top + 8     ; Maximum page in catalog
+cat.1stpage1.ptr  equ  cat.top + 10    ; Pointer to 1st file on page 1 catalog
+cat.1stpage2.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 2 catalog
+cat.1stpage3.ptr  equ  cat.top + 14    ; Pointer to 1st file on page 3 catalog
+cat.1stpage4.ptr  equ  cat.top + 16    ; Pointer to 1st file on page 4 catalog
+cat.volname       equ  cat.top + 18    ; Volume name
+cat.fnlist        equ  cat.top + 30    ; Filename list (127*11) 
+cat.ptrlist       equ  cat.top + 1428  ; Filename pointer list (127*2)
+cat.ftlist        equ  cat.top + 1682  ; Filetype list (128)
+cat.fslist        equ  cat.top + 1810  ; Filesize size (128)
+cat.rslist        equ  cat.top + 1938  ; Record size list (128)
+cat.device        equ  cat.top + 2066  ; Current device name (80)
+cat.size          equ  2146            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Command buffer                       ; @>ef00-efff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -420,11 +425,11 @@ ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
-fh.fopmode.none           equ  0         ; No file operation in progress
-fh.fopmode.readfile       equ  1         ; Read file from disk to memory
-fh.fopmode.writefile      equ  2         ; Save file from memory to disk
-cmdb.rows                 equ  6         ; Number of rows in CMDB pane
-rom0_kscan_out            equ  keycode1  ; Where to store value of key pressed
-tv.colorize.reset         equ  >9900     ; Colorization off
-tv.1timeonly              equ  254       ; One-time only flag indicator
-tv.sams.maxpage           equ  256       ; Max SAMS pages supported
+fh.fopmode.none           equ  0        ; No file operation in progress
+fh.fopmode.readfile       equ  1        ; Read file from disk to memory
+fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+cmdb.rows                 equ  6        ; Number of rows in CMDB pane
+rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
+tv.colorize.reset         equ  >9900    ; Colorization off
+tv.1timeonly              equ  254      ; One-time only flag indicator
+tv.sams.maxpage           equ  256      ; Max SAMS pages supported
