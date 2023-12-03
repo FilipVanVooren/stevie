@@ -171,7 +171,6 @@ fm.directory.fsloop:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
-
         ;-------------------------------------------------------
         ; Prepare for next file
         ;-------------------------------------------------------
