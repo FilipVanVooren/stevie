@@ -145,7 +145,6 @@ fm.directory.fsloop:
         mov   @cat.var1,tmp0        ; Get pointer to filesize list        
         movb  *tmp0,tmp1            ; Get file size
         srl   tmp1,8                ; MSB to LSB
-        dec   tmp1                  ; Adjust
         mov   tmp1,@cat.var4        ; Save word aligned file size
         inc   @cat.var1             ; Advance pointer
         ;-------------------------------------------------------
@@ -156,28 +155,23 @@ fm.directory.fsloop:
               data  rambuf          ; | i  p2    = Destination
               byte  48              ; | i  p3MSB = ASCII offset
               byte  32              ; / i  p3LSB = Padding character
-
-        bl    @trimnum              ; Trim number, remove leading spaces
-              data  rambuf          ; \ i  p1 = Source
-              data  rambuf+5        ; | i  p2 = Destination
-              data  32              ; / i  p3 = Padding character to look for
         ;-------------------------------------------------------
         ; Copy number tring to destination in file size list
         ;-------------------------------------------------------        
-        li    tmp0,rambuf+5         ; Memory source address
-
+        li    tmp0,rambuf+2         ; Memory source address
         mov   @cat.var2,tmp1        ; Memory destination address
+        li    tmp2,>0300            ; \ Length of number
+        movb  tmp2,*tmp1+           ; / Set length byte prefix at destination
 
-        movb  @rambuf+5,tmp2        ; \ Get number of bytes to copy
-        srl   tmp2,8                ; | MSB to LSB
-        inc   tmp2                  ; / Include length byte
-
+        li    tmp2,3                ; Number of bytes to copy                                
         a     tmp2,@cat.var2        ; Advance pointer in filesize string list
+        inc   @cat.var2             ; Include length byte
         
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
-                                    ; / i  tmp2 = bytes to copy        
+                                    ; / i  tmp2 = bytes to copy
+
         ;-------------------------------------------------------
         ; Prepare for next file
         ;-------------------------------------------------------
