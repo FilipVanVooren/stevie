@@ -239,7 +239,7 @@ fm.dir.callback2.filesize:
         movb  *tmp0+,tmp2           ; Get float 1st Mantissa byte (=recsize!)
 
         li    tmp0,cat.fslist       ; \ 
-        a     @cat.filecount,tmp0   ; | Store record size in record size list 
+        a     @cat.filecount,tmp0   ; | Store record size in filesize list 
         movb  tmp2,*tmp0            ; /
 
         mov   tmp3,tmp0             ; Restore snapshot position
@@ -320,8 +320,6 @@ fm.dir.callback3:
         clr   @cat.1stpage2.ptr      ; Clear pointer 1st filename page 2 catalog
         clr   @cat.1stpage3.ptr      ; Clear pointer 1st filename page 3 catalog        
         clr   @cat.1stpage4.ptr      ; Clear pointer 1st filename page 4 catalog
-
-        bl    @pane.filebrowser      ; Browse files
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

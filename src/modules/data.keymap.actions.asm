@@ -531,14 +531,14 @@ keymap_actions.cmdb:
         byte  key.ctrl.f, pane.focus.cmdb
         data  edkey.action.cmdb.file.directory.f
 
-        byte  key.ctrl.e, pane.focus.cmdb
-        data  edkey.action.filebrowser.1
+        ;byte  key.ctrl.e, pane.focus.cmdb
+        ;data  edkey.action.filebrowser.1
 
-        byte  key.num.2, pane.focus.cmdb
-        data  edkey.action.filebrowser.2
+        ;byte  key.num.2, pane.focus.cmdb
+        ;data  edkey.action.filebrowser.2
 
-        byte  key.ctrl.x, pane.focus.cmdb
-        data  edkey.action.filebrowser.3
+        ;byte  key.ctrl.x, pane.focus.cmdb
+        ;data  edkey.action.filebrowser.3
 
         byte  key.ctrl.a, pane.focus.cmdb
         data  edkey.action.cmdb.preset

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231126-2012110
+0002               * BUILD: 231203-2049190
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -570,7 +570,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0391      DEA0     tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 0392      DF20     tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 0393               ;-----------------------------------------------------------------
-0394               ; Directory/File catalog               @>e000-efff    (4096 bytes)
+0394               ; Directory/File catalog               @>e000-eeff    (3840 bytes)
 0395               ;-----------------------------------------------------------------
 0396      E000     cat.top           equ  >e000           ; Top of file catalog
 0397      E000     cat.filecount     equ  cat.top         ; Total files in catalog
@@ -582,36 +582,52 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0403      E00C     cat.1stpage2.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 2 catalog
 0404      E00E     cat.1stpage3.ptr  equ  cat.top + 14    ; Pointer to 1st file on page 3 catalog
 0405      E010     cat.1stpage4.ptr  equ  cat.top + 16    ; Pointer to 1st file on page 4 catalog
-0406      E012     cat.volname       equ  cat.top + 18    ; Volume name
-0407      E01E     cat.fnlist        equ  cat.top + 30    ; Filename list (127*11)
-0408      E594     cat.ptrlist       equ  cat.top + 1428  ; Filename pointer list (127*2)
-0409      E692     cat.ftlist        equ  cat.top + 1682  ; Filetype list (128)
-0410      E712     cat.fslist        equ  cat.top + 1810  ; Filesize size (128)
-0411      E792     cat.rslist        equ  cat.top + 1938  ; Record size list (128)
-0412      E812     cat.device        equ  cat.top + 2066  ; Current device name (80)
-0413      0862     cat.size          equ  2146            ; Catalog total size
-0414               ;-----------------------------------------------------------------
-0415               ; Command buffer                       ; @>ef00-efff   (256 bytes)
-0416               ;-----------------------------------------------------------------
-0417      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
-0418      0100     cmdb.size         equ  256             ; Command buffer size
-0419               ;-----------------------------------------------------------------
-0420               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+0406               ;-----------------------------------------------------------------
+0407               ; Directory/File catalog pointers and numbers
+0408               ;-----------------------------------------------------------------
+0409      E12C     cat.var1          equ  cat.top + 300   ; Temp variable 1
+0410      E12E     cat.var2          equ  cat.top + 302   ; Temp variable 2
+0411      E130     cat.var3          equ  cat.top + 304   ; Temp variable 3
+0412      E132     cat.var4          equ  cat.top + 306   ; Temp variable 4
+0413      E134     cat.var5          equ  cat.top + 308   ; Temp variable 5
+0414      E136     cat.var6          equ  cat.top + 310   ; Temp variable 6
+0415      E138     cat.var7          equ  cat.top + 312   ; Temp variable 7
+0416      E13A     cat.var8          equ  cat.top + 314   ; Temp variable 8
+0417      E13C     cat.ptrlist       equ  cat.top + 316   ; Pointer list to filenames (254=127*2)
+0418      E23A     cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
+0419      E2BA     cat.fslist        equ  cat.top + 698   ; Filesize size (128)
+0420      E33A     cat.rslist        equ  cat.top + 826   ; Record size list (128)
 0421               ;-----------------------------------------------------------------
-0422      F000     heap.top          equ  >f000           ; 80 Current filename
-0423      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0424      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
-0425               ;-----------------------------------------------------------------
-0426               ; Stevie specific equates
-0427               ;-----------------------------------------------------------------
-0428      0000     fh.fopmode.none           equ  0        ; No file operation in progress
-0429      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
-0430      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
-0431      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
-0432      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
-0433      9900     tv.colorize.reset         equ  >9900    ; Colorization off
-0434      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
-0435      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
+0422               ; Directory/File catalog strings (always length bytes included)
+0423               ;-----------------------------------------------------------------
+0424      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
+0425      E3C6     cat.device        equ  cat.top + 966   ; Current device name (80)
+0426      E416     cat.typelist      equ  cat.top + 1046  ; Filetype list (762=127*6)
+0427      E710     cat.sizelist      equ  cat.top + 1808  ; Filesize list (508=127*4)
+0428      E90C     cat.fnlist        equ  cat.top + 2316  ; Filename list (1524=127*12)
+0429      0F00     cat.size          equ  3840            ; Catalog total size
+0430               ;-----------------------------------------------------------------
+0431               ; Command buffer                       ; @>ef00-efff   (256 bytes)
+0432               ;-----------------------------------------------------------------
+0433      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
+0434      0100     cmdb.size         equ  256             ; Command buffer size
+0435               ;-----------------------------------------------------------------
+0436               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+0437               ;-----------------------------------------------------------------
+0438      F000     heap.top          equ  >f000           ; 80 Current filename
+0439      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0440      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0441               ;-----------------------------------------------------------------
+0442               ; Stevie specific equates
+0443               ;-----------------------------------------------------------------
+0444      0000     fh.fopmode.none           equ  0        ; No file operation in progress
+0445      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
+0446      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+0447      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
+0448      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
+0449      9900     tv.colorize.reset         equ  >9900    ; Colorization off
+0450      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
+0451      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
                    < stevie_b3.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -14856,13 +14872,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7630 20       
 0173                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7631   32                        text '231126-2012110'
+0001 7631   32                        text '231203-2049190'
      7632 3331     
-     7634 3132     
-     7636 362D     
+     7634 3230     
+     7636 332D     
      7638 3230     
-     763A 3132     
-     763C 3131     
+     763A 3439     
+     763C 3139     
      763E 30       
                    < data.dialogs.asm
 0174 763F   20                        text ' - Stevie 1.5.14 - (c)2018-2023 Filip Van Vooren'
@@ -16046,20 +16062,30 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.1STPAGE2.PTR.... >E00C :     
     CAT.1STPAGE3.PTR.... >E00E :     
     CAT.1STPAGE4.PTR.... >E010 :     
-    CAT.DEVICE.......... >E812 :     
+    CAT.DEVICE.......... >E3C6 :     
     CAT.FILECOUNT....... >E000 :     
-    CAT.FNLIST.......... >E01E :     
+    CAT.FNLIST.......... >E90C :     
     CAT.FPICKER.IDX..... >E002 :     
     CAT.FSELECT.IDX..... >E004 :     
-    CAT.FSLIST.......... >E712 :     
-    CAT.FTLIST.......... >E692 :     
+    CAT.FSLIST.......... >E2BA :     
+    CAT.FTLIST.......... >E23A :     
     CAT.MAXPAGE......... >E008 :     
     CAT.PAGE............ >E006 :     
-    CAT.PTRLIST......... >E594 :     
-    CAT.RSLIST.......... >E792 :     
-    CAT.SIZE............ >0862 :     
+    CAT.PTRLIST......... >E13C :     
+    CAT.RSLIST.......... >E33A :     
+    CAT.SIZE............ >0F00 :     
+    CAT.SIZELIST........ >E710 :     
     CAT.TOP............. >E000 :     
-    CAT.VOLNAME......... >E012 :     
+    CAT.TYPELIST........ >E416 :     
+    CAT.VAR1............ >E12C :     
+    CAT.VAR2............ >E12E :     
+    CAT.VAR3............ >E130 :     
+    CAT.VAR4............ >E132 :     
+    CAT.VAR5............ >E134 :     
+    CAT.VAR6............ >E136 :     
+    CAT.VAR7............ >E138 :     
+    CAT.VAR8............ >E13A :     
+    CAT.VOLNAME......... >E3BA :     
     CLHOOK.............. >2F30 :     
     CLIP1............... >3100 :     
     CLIP2............... >3200 :     

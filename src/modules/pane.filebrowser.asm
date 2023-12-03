@@ -7,7 +7,7 @@
 * bl   @pane.filebrowser
 *--------------------------------------------------------------- 
 * INPUT
-* @cat.page = Page in catalog to display (base 0())
+* @cat.page = Page in catalog to display (base 0)
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1
@@ -24,14 +24,21 @@ pane.filebrowser:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @cat.filecount,tmp0   ; Get number of files
-        jeq   pane.filebrowser.exit ; Exit if nothing to display
+        mov   @cat.filecount,tmp0          ; Get number of files
+        jeq   pane.filebrowser.early.exit  ; Exit if nothing to display
 
-        c     @cat.page,@cat.maxpage ; Exit if highest page in catalog
-        jgt   pane.filebrowser.exit  ; already reached
+        c     @cat.page,@cat.maxpage       ; Exit if highest page in catalog
+        jgt   pane.filebrowser.early.exit  ; already reached
+        jmp   pane.filebrowser.volume      ; Skip early exit
+        ;------------------------------------------------------
+        ; Early exit
+        ;------------------------------------------------------
+pane.filebrowser.early.exit:
+        b     @pane.filebrowser.exit ; Exit filebrowser
         ;------------------------------------------------------
         ; Show volume name, no files, device path
         ;------------------------------------------------------
+pane.filebrowser.volume:        
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - 640
                                     ; Clear screen
@@ -47,7 +54,7 @@ pane.filebrowser:
               byte 0,8
               data cat.volname      ; Display volume name
         ;-------------------------------------------------------
-        ; Show number of files, device path
+        ; Show number of files
         ;-------------------------------------------------------
 pane.filebrowser.nofiles:        
         andi  config,>7fff          ; Do not print number
@@ -65,10 +72,16 @@ pane.filebrowser.nofiles:
         bl    @putat
               byte 0,26
               data rambuf + 5       ; Display number of files
+        ;------------------------------------------------------
+        ; Show device path
+        ;------------------------------------------------------
+pane.filebrowser.devicepath:
+        mov   @cat.device,tmp0        ; Device path set?
+        jeq   pane.filebrowser.lines  ; No, skip display
 
-        ;bl    @putat
-        ;      byte 0,39
-        ;      data myfile           ; Show device path
+        bl    @putat
+              byte 0,39
+              data cat.device       ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------
@@ -92,7 +105,10 @@ pane.filebrowser.lines:
         mov   @cat.1stpage1.ptr(tmp0),tmp1     ; Get filename list
         jeq   pane.filebrowser.catpage         ; Skip on empty list
         ;------------------------------------------------------
-        ; Show filenames
+        ; Show Catalog
+        ;------------------------------------------------------
+        ; @cat.var1 = Cutover row and column offset
+        ; @cat.var2 = Files per page to display
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
               byte 1,1              ; Y=1, X=1
@@ -102,13 +118,40 @@ pane.filebrowser.lines:
         mov   tmp0,tmp2             ; | Also use for calculating files per page.
         sla   tmp0,8                ; /
         ori   tmp0,20               ; Set offset for new column in filename list
+        mov   tmp0,@cat.var1        ; Save cutover row and offset
 
         sla   tmp2,2                ; Multiply by 4 (because 4 columns per page)
+        mov   tmp2,@cat.var2        ; Save files per page to display
 
         clr   @waux1                ; \ Set null pointer
                                     ; | Note: putlst only sets @waux1 if 
                                     ; |       tmp2 < entries in list
                                     ; /
+        ;------------------------------------------------------
+        ; Show filenames
+        ;------------------------------------------------------
+        bl    @putlst               ; Loop over string list and display
+                                    ; \ i  @wyx = Cursor position
+                                    ; | i  tmp0 = Cutover row and column offset
+                                    ; |           for next column, >0000 for
+                                    ; |           single column list
+                                    ; | i  tmp1 = Pointer to first length-
+                                    ; |           prefixed string in list
+                                    ; | i  tmp2 = Number of strings to display
+                                    ; |
+                                    ; | o  @waux1 = Pointer to next entry  
+                                    ; |             in list after displaying
+                                    ; /             (tmp2) entries
+
+        ;------------------------------------------------------
+        ; Show filesize list
+        ;------------------------------------------------------
+        bl    @at                   ; Set cursor position
+              byte 1,15             ; Y=1, X=15
+
+        mov   @cat.var1,tmp0        ; Get cutover row and column offset
+        li    tmp1,cat.sizelist     ; Get Pointer to filesize list
+        mov   @cat.var2,tmp2        ; Get number of files to display
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -123,6 +166,9 @@ pane.filebrowser.lines:
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
 
+        ;------------------------------------------------------
+        ; FIX BELOW CODE, BELONGS TO SHOW FILENAMES, CONSIDER FILESIZE DISPLAY
+        ;------------------------------------------------------
         mov   @waux1,tmp0                    ; Get Pointer
         mov   *tmp0,tmp1                     ; Get content at pointer
         jeq   pane.filebrowser.catpage       ; Skip if end of list reached

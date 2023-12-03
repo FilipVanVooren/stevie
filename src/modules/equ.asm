@@ -391,7 +391,7 @@ tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
 tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
 tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 ;-----------------------------------------------------------------
-; Directory/File catalog               @>e000-efff    (4096 bytes)
+; Directory/File catalog               @>e000-eeff    (3840 bytes)
 ;-----------------------------------------------------------------
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
@@ -403,14 +403,30 @@ cat.1stpage1.ptr  equ  cat.top + 10    ; Pointer to 1st file on page 1 catalog
 cat.1stpage2.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 2 catalog
 cat.1stpage3.ptr  equ  cat.top + 14    ; Pointer to 1st file on page 3 catalog
 cat.1stpage4.ptr  equ  cat.top + 16    ; Pointer to 1st file on page 4 catalog
-cat.volname       equ  cat.top + 18    ; Volume name
-cat.fnlist        equ  cat.top + 30    ; Filename list (127*11) 
-cat.ptrlist       equ  cat.top + 1428  ; Filename pointer list (127*2)
-cat.ftlist        equ  cat.top + 1682  ; Filetype list (128)
-cat.fslist        equ  cat.top + 1810  ; Filesize size (128)
-cat.rslist        equ  cat.top + 1938  ; Record size list (128)
-cat.device        equ  cat.top + 2066  ; Current device name (80)
-cat.size          equ  2146            ; Catalog total size
+;-----------------------------------------------------------------
+; Directory/File catalog pointers and numbers
+;-----------------------------------------------------------------
+cat.var1          equ  cat.top + 300   ; Temp variable 1
+cat.var2          equ  cat.top + 302   ; Temp variable 2
+cat.var3          equ  cat.top + 304   ; Temp variable 3
+cat.var4          equ  cat.top + 306   ; Temp variable 4
+cat.var5          equ  cat.top + 308   ; Temp variable 5
+cat.var6          equ  cat.top + 310   ; Temp variable 6
+cat.var7          equ  cat.top + 312   ; Temp variable 7
+cat.var8          equ  cat.top + 314   ; Temp variable 8
+cat.ptrlist       equ  cat.top + 316   ; Pointer list to filenames (254=127*2)
+cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
+cat.fslist        equ  cat.top + 698   ; Filesize size (128)
+cat.rslist        equ  cat.top + 826   ; Record size list (128)
+;-----------------------------------------------------------------
+; Directory/File catalog strings (always length bytes included)
+;-----------------------------------------------------------------
+cat.volname       equ  cat.top + 954   ; Volume name (12)
+cat.device        equ  cat.top + 966   ; Current device name (80)
+cat.typelist      equ  cat.top + 1046  ; Filetype list (762=127*6)
+cat.sizelist      equ  cat.top + 1808  ; Filesize list (508=127*4)
+cat.fnlist        equ  cat.top + 2316  ; Filename list (1524=127*12) 
+cat.size          equ  3840            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Command buffer                       ; @>ef00-efff   (256 bytes)
 ;-----------------------------------------------------------------
