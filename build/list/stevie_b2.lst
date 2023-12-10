@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231203-2113370
+0002               * BUILD: 231210-1847070
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13310,48 +13310,47 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0171                                                   ; \ i  tmp0 = source
 0172                                                   ; | i  tmp1 = destination
 0173                                                   ; / i  tmp2 = bytes to copy
-0174               
-0175                       ;-------------------------------------------------------
-0176                       ; Prepare for next file
-0177                       ;-------------------------------------------------------
-0178 6F30 0620  34         dec   @cat.var3             ; Adjust file counter
+0174                       ;-------------------------------------------------------
+0175                       ; Prepare for next file
+0176                       ;-------------------------------------------------------
+0177 6F30 0620  34         dec   @cat.var3             ; Adjust file counter
      6F32 E130     
-0179 6F34 15E1  14         jgt   fm.directory.fsloop   ; Next file
-0180               *--------------------------------------------------------------
-0181               * Show filebrowser
-0182               *--------------------------------------------------------------
-0183               fm.directory.browser:
-0184 6F36 06A0  32         bl    @pane.filebrowser      ; Browse files
+0178 6F34 15E1  14         jgt   fm.directory.fsloop   ; Next file
+0179               *--------------------------------------------------------------
+0180               * Show filebrowser
+0181               *--------------------------------------------------------------
+0182               fm.directory.browser:
+0183 6F36 06A0  32         bl    @pane.filebrowser      ; Browse files
      6F38 6FE8     
-0185               
-0186               *--------------------------------------------------------------
-0187               * Exit
-0188               *--------------------------------------------------------------
-0189               fm.directory.exit:
-0190 6F3A C839  50         mov   *stack+,@parm9        ; Pop @parm9
+0184               
+0185               *--------------------------------------------------------------
+0186               * Exit
+0187               *--------------------------------------------------------------
+0188               fm.directory.exit:
+0189 6F3A C839  50         mov   *stack+,@parm9        ; Pop @parm9
      6F3C A016     
-0191 6F3E C839  50         mov   *stack+,@parm8        ; Pop @parm8
+0190 6F3E C839  50         mov   *stack+,@parm8        ; Pop @parm8
      6F40 A014     
-0192 6F42 C839  50         mov   *stack+,@parm7        ; Pop @parm7
+0191 6F42 C839  50         mov   *stack+,@parm7        ; Pop @parm7
      6F44 A012     
-0193 6F46 C839  50         mov   *stack+,@parm6        ; Pop @parm6
+0192 6F46 C839  50         mov   *stack+,@parm6        ; Pop @parm6
      6F48 A010     
-0194 6F4A C839  50         mov   *stack+,@parm5        ; Pop @parm5
+0193 6F4A C839  50         mov   *stack+,@parm5        ; Pop @parm5
      6F4C A00E     
-0195 6F4E C839  50         mov   *stack+,@parm4        ; Pop @parm4
+0194 6F4E C839  50         mov   *stack+,@parm4        ; Pop @parm4
      6F50 A00C     
-0196 6F52 C839  50         mov   *stack+,@parm3        ; Pop @parm3
+0195 6F52 C839  50         mov   *stack+,@parm3        ; Pop @parm3
      6F54 A00A     
-0197 6F56 C839  50         mov   *stack+,@parm2        ; Pop @parm2
+0196 6F56 C839  50         mov   *stack+,@parm2        ; Pop @parm2
      6F58 A008     
-0198 6F5A C839  50         mov   *stack+,@parm1        ; Pop @parm1
+0197 6F5A C839  50         mov   *stack+,@parm1        ; Pop @parm1
      6F5C A006     
-0199 6F5E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0200 6F60 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0201 6F62 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0202 6F64 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0203 6F66 C2F9  30         mov   *stack+,r11           ; Pop R11
-0204 6F68 045B  20         b     *r11                  ; Return to caller
+0198 6F5E C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0199 6F60 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0200 6F62 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0201 6F64 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0202 6F66 C2F9  30         mov   *stack+,r11           ; Pop R11
+0203 6F68 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Stubs

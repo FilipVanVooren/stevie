@@ -47,8 +47,9 @@ pane.filebrowser.volume:
               byte 0,0
               data txt.volume       ; Display "Volume: ...."   
 
-        mov   @cat.volname,tmp0        ; Volume name set?
-        jeq   pane.filebrowser.nofiles ; No, skip
+        mov   @cat.volname,tmp0     ; Volume name set?
+        jeq   pane.filebrowser.nofiles 
+                                    ; No, skip
                                     
         bl    @putat
               byte 0,8
@@ -76,7 +77,7 @@ pane.filebrowser.nofiles:
         ; Show device path
         ;------------------------------------------------------
 pane.filebrowser.devicepath:
-        mov   @cat.device,tmp0        ; Device path set?
+        mov   @cat.device,tmp0      ; Device path set?
         jeq   pane.filebrowser.lines  ; No, skip display
 
         bl    @putat
@@ -87,16 +88,42 @@ pane.filebrowser.devicepath:
         ;------------------------------------------------------
 pane.filebrowser.lines:        
         bl    @vchar
-              byte 1,19                        ; Starting position YX  
+              byte 1,26                        ; Starting position YX  
               byte >10                         ; Vertical line char
               byte pane.botrow - cmdb.rows - 1 ; Y-repeat
-              byte 1,39                        ; Starting position YX  
+              byte 1,54                        ; Starting position YX  
               byte >10                         ; Vertical line char
               byte pane.botrow - cmdb.rows - 1 ; Y-repeat
-              byte 1,59                        ; Starting position YX  
-              byte >10                         ; Vertical line char
-              byte pane.botrow - cmdb.rows - 1 ; Y-repeat              
               data EOL
+        ;------------------------------------------------------
+        ; Show column headers
+        ;------------------------------------------------------              
+pane.filebrowser.headers:
+        bl    @putat
+              byte 1,1
+              data txt.header       ; Column 1
+
+        bl    @putat
+              byte 1,29
+              data txt.header       ; Column 2
+
+        bl    @putat              
+              byte 1,57
+              data txt.header       ; Column 3
+********|*****|*********************|**************************
+        bl    @hchar                ; Show horizontal lines 
+              byte 2,1,45,11        ; Name
+              byte 2,14,45,4        ; Type
+              byte 2,20,45,4        ; Size
+
+              byte 2,29,45,11       ; Name
+              byte 2,42,45,4        ; Type
+              byte 2,48,45,4        ; Size
+
+              byte 2,57,45,11       ; Name
+              byte 2,70,45,4        ; Type
+              byte 2,76,45,4        ; Size
+              data eol                         
         ;------------------------------------------------------
         ; Prepare for displaying filenames
         ;------------------------------------------------------
@@ -111,16 +138,19 @@ pane.filebrowser.lines:
         ; @cat.var2 = Files per page to display
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
-              byte 1,1              ; Y=1, X=1
+              byte 3,1              ; Y=3, X=1
 
         mov   @fb.scrrows,tmp0      ; \ Determine cutover row for filename
         s     @cmdb.scrrows,tmp0    ; | column list and store in MSB of tmp0.
         mov   tmp0,tmp2             ; | Also use for calculating files per page.
         sla   tmp0,8                ; /
-        ori   tmp0,20               ; Set offset for new column in filename list
+        ori   tmp0,28               ; Set offset for new column in filename list
         mov   tmp0,@cat.var1        ; Save cutover row and offset
 
-        sla   tmp2,2                ; Multiply by 4 (because 4 columns per page)
+        dect  tmp2                  ; Take header lines into account
+        mov   tmp2,tmp3             ; \
+        a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
+        a     tmp3,tmp2             ; / 
         mov   tmp2,@cat.var2        ; Save files per page to display
 
         clr   @waux1                ; \ Set null pointer
@@ -138,16 +168,14 @@ pane.filebrowser.lines:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; | i  tmp2 = Number of strings to display
-                                    ; |
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
-
         ;------------------------------------------------------
         ; Show filesize list
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
-              byte 1,15             ; Y=1, X=15
+              byte 3,21             ; Y=3, X=21
 
         mov   @cat.var1,tmp0        ; Get cutover row and column offset
         li    tmp1,cat.sizelist     ; Get Pointer to filesize list
@@ -161,11 +189,9 @@ pane.filebrowser.lines:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; | i  tmp2 = Number of strings to display
-                                    ; |
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
-
         ;------------------------------------------------------
         ; FIX BELOW CODE, BELONGS TO SHOW FILENAMES, CONSIDER FILESIZE DISPLAY
         ;------------------------------------------------------
@@ -232,3 +258,4 @@ pane.filebrowser.exit:
 
 txt.volume:       stri  'Volume:            Files:      Device: '
 txt.slash:        stri  '/'
+txt.header:       stri  'Name         Type  Size'
