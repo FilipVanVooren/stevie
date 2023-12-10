@@ -150,6 +150,7 @@ fm.directory.fsloop:
         ;-------------------------------------------------------
         ; Convert unsigned number to string and trim
         ;-------------------------------------------------------
+        szc   @wbit0,config         ; Do not show number after conversion
         bl    @mknum                ; Convert unsigned number to string
               data  cat.var4        ; \ i  p1    = Source
               data  rambuf          ; | i  p2    = Destination
@@ -194,43 +195,13 @@ fm.directory.fsloop:
         ; @cat.var1 = Pointer to filetype list
         ; @cat.var2 = Pointer to filetype string list
         ; @cat.var3 = Loop counter
-        ; @cat.var4 = File size (word)
         ;-------------------------------------------------------
 fm.directory.ftloop:
-        mov   @cat.var1,tmp0        ; Get pointer to filetype list        
-        movb  *tmp0,tmp1            ; Get file size
-        srl   tmp1,8                ; MSB to LSB
-        mov   tmp1,@cat.var4        ; Save word aligned file size
-        inc   @cat.var1             ; Advance pointer
-        ;-------------------------------------------------------
-        ; Convert unsigned number to string and trim
-        ;-------------------------------------------------------
-        bl    @mknum                ; Convert unsigned number to string
-              data  cat.var4        ; \ i  p1    = Source
-              data  rambuf          ; | i  p2    = Destination
-              byte  48              ; | i  p3MSB = ASCII offset
-              byte  32              ; / i  p3LSB = Padding character
-        ;-------------------------------------------------------
-        ; Copy number string to destination in file size list
-        ;-------------------------------------------------------        
-        li    tmp0,rambuf+2         ; Memory source address
-        mov   @cat.var2,tmp1        ; Memory destination address
-        li    tmp2,>0300            ; \ Length of number
-        movb  tmp2,*tmp1+           ; / Set length byte prefix at destination
-
-        li    tmp2,3                ; Number of bytes to copy                                
-        a     tmp2,@cat.var2        ; Advance pointer in filesize string list
-        inc   @cat.var2             ; Include length byte
-        
-        bl    @xpym2m               ; Copy memory block
-                                    ; \ i  tmp0 = source
-                                    ; | i  tmp1 = destination
-                                    ; / i  tmp2 = bytes to copy
         ;-------------------------------------------------------
         ; Prepare for next file
         ;-------------------------------------------------------
         dec   @cat.var3             ; Adjust file counter
-        jgt   fm.directory.fsloop   ; Next file
+        jgt   fm.directory.ftloop   ; Next file
 
 *--------------------------------------------------------------
 * Show filebrowser

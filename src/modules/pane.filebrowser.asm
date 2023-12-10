@@ -112,17 +112,17 @@ pane.filebrowser.headers:
               data txt.header       ; Column 3
 ********|*****|*********************|**************************
         bl    @hchar                ; Show horizontal lines 
-              byte 2,1,45,11        ; Name
-              byte 2,14,45,4        ; Type
-              byte 2,20,45,4        ; Size
+              byte 2,1,1,11         ; Name
+              byte 2,14,1,4         ; Type
+              byte 2,20,1,4         ; Size
 
-              byte 2,29,45,11       ; Name
-              byte 2,42,45,4        ; Type
-              byte 2,48,45,4        ; Size
+              byte 2,29,1,11        ; Name
+              byte 2,42,1,4         ; Type
+              byte 2,48,1,4         ; Size
 
-              byte 2,57,45,11       ; Name
-              byte 2,70,45,4        ; Type
-              byte 2,76,45,4        ; Size
+              byte 2,57,1,11        ; Name
+              byte 2,70,1,4         ; Type
+              byte 2,76,1,4         ; Size
               data eol                         
         ;------------------------------------------------------
         ; Prepare for displaying filenames
