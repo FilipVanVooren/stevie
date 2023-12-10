@@ -6,7 +6,7 @@
 * fm.directory
 * Catalog drive/directory
 ***************************************************************
-* bl  @fm.catalog
+* bl  @fm.directory
 *--------------------------------------------------------------
 * INPUT
 * parm1  = Pointer to length-prefixed string containing device
@@ -52,8 +52,9 @@ fm.directory:
         ; Clear catalog space
         ;------------------------------------------------------
         bl    @film
-              data cat.top,>00,cat.size
-                                    ; Clear it all the way
+              data cat.top,>00,cat.size - 80
+                                    ; Clear catalog area except current device
+                                    ; @cat.device (is at end of memory area)
         ;-------------------------------------------------------
         ; Process parameters
         ;-------------------------------------------------------
@@ -182,7 +183,7 @@ fm.directory.fsloop:
         ; Generate string list with file types
         ;-------------------------------------------------------
         li    tmp0,cat.ftlist       ; Set pointer to filetype list
-        li    tmp1,cat.sizelist     ; Set pointer to filetype string list
+        li    tmp1,cat.typelist     ; Set pointer to filetype string list
         mov   @cat.filecount,tmp2   ; Number of files to process
         jeq   fm.directory.browser  ; Skip to browser if no files to process
 

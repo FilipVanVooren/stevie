@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231210-1915320
+0002               * BUILD: 231210-2008170
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -606,10 +606,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0422               ; Directory/File catalog strings (always length bytes included)
 0423               ;-----------------------------------------------------------------
 0424      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
-0425      E3C6     cat.device        equ  cat.top + 966   ; Current device name (80)
-0426      E416     cat.typelist      equ  cat.top + 1046  ; Filetype list (762=127*6)
-0427      E710     cat.sizelist      equ  cat.top + 1808  ; Filesize list (508=127*4)
-0428      E90C     cat.fnlist        equ  cat.top + 2316  ; Filename list (1524=127*12)
+0425      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
+0426      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
+0427      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12)
+0428      EEB0     cat.device        equ  cat.top + 3760  ; Current device name (80)
 0429      0F00     cat.size          equ  3840            ; Catalog total size
 0430               ;-----------------------------------------------------------------
 0431               ; Command buffer                       ; @>ef00-efff   (256 bytes)
@@ -10379,9 +10379,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.1STPAGE2.PTR.... >E00C :     
     CAT.1STPAGE3.PTR.... >E00E :     
     CAT.1STPAGE4.PTR.... >E010 :     
-    CAT.DEVICE.......... >E3C6 :     
+    CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
-    CAT.FNLIST.......... >E90C :     
+    CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
     CAT.FSELECT.IDX..... >E004 :     
     CAT.FSLIST.......... >E2BA :     
@@ -10391,9 +10391,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
     CAT.SIZE............ >0F00 :     
-    CAT.SIZELIST........ >E710 :     
+    CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TYPELIST........ >E416 :     
+    CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     
     CAT.VAR3............ >E130 :     

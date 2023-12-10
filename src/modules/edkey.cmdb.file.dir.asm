@@ -4,65 +4,89 @@
 *---------------------------------------------------------------
 * Drive/Directory presets
 *---------------------------------------------------------------
-edkey.action.cmdb.file.directory.1
+edkey.action.cmdb.file.directory.1:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         clr   @parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.2
+edkey.action.cmdb.file.directory.2:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.1,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.3
+edkey.action.cmdb.file.directory.3:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.2,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.4
+edkey.action.cmdb.file.directory.4:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.3,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.5
+edkey.action.cmdb.file.directory.5:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.4,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.6
+edkey.action.cmdb.file.directory.6:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.5,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.7
+edkey.action.cmdb.file.directory.7:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.6,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.8
+edkey.action.cmdb.file.directory.8:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.7,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.9
+edkey.action.cmdb.file.directory.9:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.8,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.a
+edkey.action.cmdb.file.directory.a:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.9,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.b
+edkey.action.cmdb.file.directory.b:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.10,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.c
+edkey.action.cmdb.file.directory.c:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.11,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.d
+edkey.action.cmdb.file.directory.d:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.12,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.e
+edkey.action.cmdb.file.directory.e:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.13,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.f
+edkey.action.cmdb.file.directory.f:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.14,@parm2
+        jmp   edkey.action.cmdb.file.directory
 
+
+edkey.action.cmdb.file.directory.device:
+        bl    @cpym2m
+              data cmdb.cmdall,cat.device,80
+                                    ; Copy filename from command line to buffer
+        li    tmp0,cat.device
+        mov   tmp0,@parm1
+        clr   @parm2
 *---------------------------------------------------------------
 * Drive/Directory listing
 *---------------------------------------------------------------
@@ -74,8 +98,12 @@ edkey.action.cmdb.file.directory:
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------
-        clr   @parm1
-        bl    @fm.directory
+        bl    @fm.directory         ; Read device directory
+                                    ; \ @parm1 = Pointer to length-prefixed 
+                                    ; |          string containing device
+                                    ; |          or >0000 if using parm2
+                                    ; | @parm2 = Index in device list
+                                    ; /          (ignored if parm1 set)                                    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

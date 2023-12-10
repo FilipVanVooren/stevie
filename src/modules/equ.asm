@@ -422,10 +422,10 @@ cat.rslist        equ  cat.top + 826   ; Record size list (128)
 ; Directory/File catalog strings (always length bytes included)
 ;-----------------------------------------------------------------
 cat.volname       equ  cat.top + 954   ; Volume name (12)
-cat.device        equ  cat.top + 966   ; Current device name (80)
-cat.typelist      equ  cat.top + 1046  ; Filetype list (762=127*6)
-cat.sizelist      equ  cat.top + 1808  ; Filesize list (508=127*4)
-cat.fnlist        equ  cat.top + 2316  ; Filename list (1524=127*12) 
+cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
+cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
+cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12) 
+cat.device        equ  cat.top + 3760  ; Current device name (80)
 cat.size          equ  3840            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Command buffer                       ; @>ef00-efff   (256 bytes)

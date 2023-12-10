@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231210-1915320
+0002               * BUILD: 231210-2008170
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -603,10 +603,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0422               ; Directory/File catalog strings (always length bytes included)
 0423               ;-----------------------------------------------------------------
 0424      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
-0425      E3C6     cat.device        equ  cat.top + 966   ; Current device name (80)
-0426      E416     cat.typelist      equ  cat.top + 1046  ; Filetype list (762=127*6)
-0427      E710     cat.sizelist      equ  cat.top + 1808  ; Filesize list (508=127*4)
-0428      E90C     cat.fnlist        equ  cat.top + 2316  ; Filename list (1524=127*12)
+0425      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
+0426      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
+0427      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12)
+0428      EEB0     cat.device        equ  cat.top + 3760  ; Current device name (80)
 0429      0F00     cat.size          equ  3840            ; Catalog total size
 0430               ;-----------------------------------------------------------------
 0431               ; Command buffer                       ; @>ef00-efff   (256 bytes)
@@ -12596,7 +12596,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6C40 E008     
 0107               
 0108 6C42 0204  20         li    tmp0,cat.fnlist       ; \ Set RAM destination address
-     6C44 E90C     
+     6C44 E8BC     
 0109 6C46 C804  38         mov   tmp0,@fh.dir.rec.ptr  ; / for storing directory entries
      6C48 A468     
 0110                       ;------------------------------------------------------
@@ -12836,7 +12836,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0317 6D40 04E0  34         clr   @cat.page              ; Page 1 (base 0 offset)
      6D42 E006     
 0318 6D44 0204  20         li    tmp0,cat.fnlist        ; Get filename list
-     6D46 E90C     
+     6D46 E8BC     
 0319 6D48 C804  38         mov   tmp0,@cat.1stpage1.ptr ; Set pointer 1st filename page 1 catalog
      6D4A E00A     
 0320 6D4C 04E0  34         clr   @cat.1stpage2.ptr      ; Clear pointer 1st filename page 2 catalog
@@ -13094,7 +13094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               * fm.directory
 0007               * Catalog drive/directory
 0008               ***************************************************************
-0009               * bl  @fm.catalog
+0009               * bl  @fm.directory
 0010               *--------------------------------------------------------------
 0011               * INPUT
 0012               * parm1  = Pointer to length-prefixed string containing device
@@ -13150,244 +13150,245 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0053                       ;------------------------------------------------------
 0054 6E6C 06A0  32         bl    @film
      6E6E 2236     
-0055 6E70 E000                   data cat.top,>00,cat.size
+0055 6E70 E000                   data cat.top,>00,cat.size - 80
      6E72 0000     
-     6E74 0F00     
-0056                                                   ; Clear it all the way
-0057                       ;-------------------------------------------------------
-0058                       ; Process parameters
-0059                       ;-------------------------------------------------------
-0060 6E76 C120  34         mov   @parm1,tmp0           ; Use parameter 2?
+     6E74 0EB0     
+0056                                                   ; Clear catalog area except current device
+0057                                                   ; @cat.device (is at end of memory area)
+0058                       ;-------------------------------------------------------
+0059                       ; Process parameters
+0060                       ;-------------------------------------------------------
+0061 6E76 C120  34         mov   @parm1,tmp0           ; Use parameter 2?
      6E78 A006     
-0061 6E7A 1606  14         jne   fm.directory.read     ; No, skip
-0062               
-0063 6E7C C120  34         mov   @parm2,tmp0           ; Get index
+0062 6E7A 1606  14         jne   fm.directory.read     ; No, skip
+0063               
+0064 6E7C C120  34         mov   @parm2,tmp0           ; Get index
      6E7E A008     
-0064 6E80 0A14  18         sla   tmp0,1                ; Word align
-0065 6E82 C824  54         mov   @device.list(tmp0),@parm1
+0065 6E80 0A14  18         sla   tmp0,1                ; Word align
+0066 6E82 C824  54         mov   @device.list(tmp0),@parm1
      6E84 714C     
      6E86 A006     
-0066                                                   ; Set device string
-0067                       ;-------------------------------------------------------
-0068                       ; Read drive/directory catalog into memory
-0069                       ;-------------------------------------------------------
-0070               fm.directory.read:
-0071 6E88 0204  20         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
+0067                                                   ; Set device string
+0068                       ;-------------------------------------------------------
+0069                       ; Read drive/directory catalog into memory
+0070                       ;-------------------------------------------------------
+0071               fm.directory.read:
+0072 6E88 0204  20         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
      6E8A 6C1E     
-0072 6E8C C804  38         mov   tmp0,@parm2           ; Register callback 1
+0073 6E8C C804  38         mov   tmp0,@parm2           ; Register callback 1
      6E8E A008     
-0073               
-0074 6E90 0204  20         li    tmp0,fm.dir.callback2 ; Callback function "Read line from file"
+0074               
+0075 6E90 0204  20         li    tmp0,fm.dir.callback2 ; Callback function "Read line from file"
      6E92 6C5C     
-0075 6E94 C804  38         mov   tmp0,@parm3           ; Register callback 2
+0076 6E94 C804  38         mov   tmp0,@parm3           ; Register callback 2
      6E96 A00A     
-0076               
-0077 6E98 0204  20         li    tmp0,fm.dir.callback3 ; Callback function "Close file"
+0077               
+0078 6E98 0204  20         li    tmp0,fm.dir.callback3 ; Callback function "Close file"
      6E9A 6D28     
-0078 6E9C C804  38         mov   tmp0,@parm4           ; Register callback 3
+0079 6E9C C804  38         mov   tmp0,@parm4           ; Register callback 3
      6E9E A00C     
-0079               
-0080 6EA0 0204  20         li    tmp0,fm.dir.callback4 ; Callback function "File I/O error"
+0080               
+0081 6EA0 0204  20         li    tmp0,fm.dir.callback4 ; Callback function "File I/O error"
      6EA2 6D60     
-0081 6EA4 C804  38         mov   tmp0,@parm5           ; Register callback 4
+0082 6EA4 C804  38         mov   tmp0,@parm5           ; Register callback 4
      6EA6 A00E     
-0082               
-0083 6EA8 0204  20         li    tmp0,fm.dir.callback5 ; Callback function "Memory full"
+0083               
+0084 6EA8 0204  20         li    tmp0,fm.dir.callback5 ; Callback function "Memory full"
      6EAA 6D78     
-0084 6EAC C804  38         mov   tmp0,@parm6           ; Register callback 5
+0085 6EAC C804  38         mov   tmp0,@parm6           ; Register callback 5
      6EAE A010     
-0085               
-0086 6EB0 0204  20         li    tmp0,rambuf
+0086               
+0087 6EB0 0204  20         li    tmp0,rambuf
      6EB2 A100     
-0087 6EB4 C804  38         mov   tmp0,@parm7           ; Destination RAM memory address
+0088 6EB4 C804  38         mov   tmp0,@parm7           ; Destination RAM memory address
      6EB6 A012     
-0088               
-0089 6EB8 0204  20         li    tmp0,fh.file.pab.header.cat
+0089               
+0090 6EB8 0204  20         li    tmp0,fh.file.pab.header.cat
      6EBA 70E4     
-0090 6EBC C804  38         mov   tmp0,@parm8           ; PAB Header template for reading catalog
+0091 6EBC C804  38         mov   tmp0,@parm8           ; PAB Header template for reading catalog
      6EBE A014     
-0091               
-0092 6EC0 0204  20         li    tmp0,io.rel.inp.int.fix
+0092               
+0093 6EC0 0204  20         li    tmp0,io.rel.inp.int.fix
      6EC2 000D     
-0093 6EC4 C804  38         mov   tmp0,@parm9           ; File type/mode for reading catalog
+0094 6EC4 C804  38         mov   tmp0,@parm9           ; File type/mode for reading catalog
      6EC6 A016     
-0094               
-0095 6EC8 C120  34         mov   @parm1,tmp0           ; Get device name
+0095               
+0096 6EC8 C120  34         mov   @parm1,tmp0           ; Get device name
      6ECA A006     
-0096 6ECC 0205  20         li    tmp1,cat.device
-     6ECE E3C6     
-0097               
-0098 6ED0 D194  26         movb  *tmp0,tmp2            ; \ Get number of bytes to copy
-0099 6ED2 0986  32         srl   tmp2,8                ; | including length byte itself.
-0100 6ED4 0586  14         inc   tmp2                  ; /
-0101               
-0102 6ED6 06A0  32         bl    @xpym2m               ; Copy memory block
+0097 6ECC 0205  20         li    tmp1,cat.device
+     6ECE EEB0     
+0098               
+0099 6ED0 D194  26         movb  *tmp0,tmp2            ; \ Get number of bytes to copy
+0100 6ED2 0986  32         srl   tmp2,8                ; | including length byte itself.
+0101 6ED4 0586  14         inc   tmp2                  ; /
+0102               
+0103 6ED6 06A0  32         bl    @xpym2m               ; Copy memory block
      6ED8 24FE     
-0103                                                   ; \ i  tmp0 = source
-0104                                                   ; | i  tmp1 = destination
-0105                                                   ; / i  tmp2 = bytes to copy
-0106               
-0107 6EDA 06A0  32         bl    @fh.file.read.mem     ; Read file into memory
+0104                                                   ; \ i  tmp0 = source
+0105                                                   ; | i  tmp1 = destination
+0106                                                   ; / i  tmp2 = bytes to copy
+0107               
+0108 6EDA 06A0  32         bl    @fh.file.read.mem     ; Read file into memory
      6EDC 604A     
-0108                                                   ; \ i  @parm1 = Pointer to length prefixed
-0109                                                   ; |             file descriptor
-0110                                                   ; | i  @parm2 = Pointer to callback
-0111                                                   ; |             "Before Open file"
-0112                                                   ; | i  @parm3 = Pointer to callback
-0113                                                   ; |             "Read line from file"
-0114                                                   ; | i  @parm4 = Pointer to callback
-0115                                                   ; |             "Close file"
-0116                                                   ; | i  @parm5 = Pointer to callback
-0117                                                   ; |             "File I/O error"
-0118                                                   ; | i  @parm6 = Pointer to callback
-0119                                                   ; |             "Memory full error"
-0120                                                   ; | i  @parm7 = Destination RAM address
-0121                                                   ; | i  @parm8 = PAB template address in
-0122                                                   ; |             ROM/RAM
-0123                                                   ; | i  @parm9 = File type/mode (in LSB),
-0124                                                   ; /             becomes PAB byte 1
-0125                       ;-------------------------------------------------------
-0126                       ; Generate string list with filesizes
-0127                       ;-------------------------------------------------------
-0128 6EDE 0204  20         li    tmp0,cat.fslist       ; Set pointer to filesize list
+0109                                                   ; \ i  @parm1 = Pointer to length prefixed
+0110                                                   ; |             file descriptor
+0111                                                   ; | i  @parm2 = Pointer to callback
+0112                                                   ; |             "Before Open file"
+0113                                                   ; | i  @parm3 = Pointer to callback
+0114                                                   ; |             "Read line from file"
+0115                                                   ; | i  @parm4 = Pointer to callback
+0116                                                   ; |             "Close file"
+0117                                                   ; | i  @parm5 = Pointer to callback
+0118                                                   ; |             "File I/O error"
+0119                                                   ; | i  @parm6 = Pointer to callback
+0120                                                   ; |             "Memory full error"
+0121                                                   ; | i  @parm7 = Destination RAM address
+0122                                                   ; | i  @parm8 = PAB template address in
+0123                                                   ; |             ROM/RAM
+0124                                                   ; | i  @parm9 = File type/mode (in LSB),
+0125                                                   ; /             becomes PAB byte 1
+0126                       ;-------------------------------------------------------
+0127                       ; Generate string list with filesizes
+0128                       ;-------------------------------------------------------
+0129 6EDE 0204  20         li    tmp0,cat.fslist       ; Set pointer to filesize list
      6EE0 E2BA     
-0129 6EE2 0205  20         li    tmp1,cat.sizelist     ; Set pointer to filesize string list
-     6EE4 E710     
-0130 6EE6 C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
+0130 6EE2 0205  20         li    tmp1,cat.sizelist     ; Set pointer to filesize string list
+     6EE4 E6C0     
+0131 6EE6 C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
      6EE8 E000     
-0131 6EEA 1337  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
-0132               
-0133 6EEC C804  38         mov   tmp0,@cat.var1        ; Save pointer to filesize list
+0132 6EEA 1337  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
+0133               
+0134 6EEC C804  38         mov   tmp0,@cat.var1        ; Save pointer to filesize list
      6EEE E12C     
-0134 6EF0 C805  38         mov   tmp1,@cat.var2        ; Save pointer to filesize string list
+0135 6EF0 C805  38         mov   tmp1,@cat.var2        ; Save pointer to filesize string list
      6EF2 E12E     
-0135 6EF4 C806  38         mov   tmp2,@cat.var3        ; Set loop counter
+0136 6EF4 C806  38         mov   tmp2,@cat.var3        ; Set loop counter
      6EF6 E130     
-0136                       ;-------------------------------------------------------
-0137                       ; Loop over files
-0138                       ;-------------------------------------------------------
-0139                       ; @cat.var1 = Pointer to filesize list
-0140                       ; @cat.var2 = Pointer to filesize string list
-0141                       ; @cat.var3 = Loop counter
-0142                       ; @cat.var4 = File size (word)
-0143                       ;-------------------------------------------------------
-0144               fm.directory.fsloop:
-0145 6EF8 C120  34         mov   @cat.var1,tmp0        ; Get pointer to filesize list
+0137                       ;-------------------------------------------------------
+0138                       ; Loop over files
+0139                       ;-------------------------------------------------------
+0140                       ; @cat.var1 = Pointer to filesize list
+0141                       ; @cat.var2 = Pointer to filesize string list
+0142                       ; @cat.var3 = Loop counter
+0143                       ; @cat.var4 = File size (word)
+0144                       ;-------------------------------------------------------
+0145               fm.directory.fsloop:
+0146 6EF8 C120  34         mov   @cat.var1,tmp0        ; Get pointer to filesize list
      6EFA E12C     
-0146 6EFC D154  26         movb  *tmp0,tmp1            ; Get file size
-0147 6EFE 0985  32         srl   tmp1,8                ; MSB to LSB
-0148 6F00 C805  38         mov   tmp1,@cat.var4        ; Save word aligned file size
+0147 6EFC D154  26         movb  *tmp0,tmp1            ; Get file size
+0148 6EFE 0985  32         srl   tmp1,8                ; MSB to LSB
+0149 6F00 C805  38         mov   tmp1,@cat.var4        ; Save word aligned file size
      6F02 E132     
-0149 6F04 05A0  34         inc   @cat.var1             ; Advance pointer
+0150 6F04 05A0  34         inc   @cat.var1             ; Advance pointer
      6F06 E12C     
-0150                       ;-------------------------------------------------------
-0151                       ; Convert unsigned number to string and trim
-0152                       ;-------------------------------------------------------
-0153 6F08 40A0  34         szc   @wbit0,config         ; Do not show number after conversion
+0151                       ;-------------------------------------------------------
+0152                       ; Convert unsigned number to string and trim
+0153                       ;-------------------------------------------------------
+0154 6F08 40A0  34         szc   @wbit0,config         ; Do not show number after conversion
      6F0A 2020     
-0154 6F0C 06A0  32         bl    @mknum                ; Convert unsigned number to string
+0155 6F0C 06A0  32         bl    @mknum                ; Convert unsigned number to string
      6F0E 2A14     
-0155 6F10 E132                   data  cat.var4        ; \ i  p1    = Source
-0156 6F12 A100                   data  rambuf          ; | i  p2    = Destination
-0157 6F14 30                     byte  48              ; | i  p3MSB = ASCII offset
-0158 6F15   20                   byte  32              ; / i  p3LSB = Padding character
-0159                       ;-------------------------------------------------------
-0160                       ; Copy number string to destination in file size list
-0161                       ;-------------------------------------------------------
-0162 6F16 0204  20         li    tmp0,rambuf+2         ; Memory source address
+0156 6F10 E132                   data  cat.var4        ; \ i  p1    = Source
+0157 6F12 A100                   data  rambuf          ; | i  p2    = Destination
+0158 6F14 30                     byte  48              ; | i  p3MSB = ASCII offset
+0159 6F15   20                   byte  32              ; / i  p3LSB = Padding character
+0160                       ;-------------------------------------------------------
+0161                       ; Copy number string to destination in file size list
+0162                       ;-------------------------------------------------------
+0163 6F16 0204  20         li    tmp0,rambuf+2         ; Memory source address
      6F18 A102     
-0163 6F1A C160  34         mov   @cat.var2,tmp1        ; Memory destination address
+0164 6F1A C160  34         mov   @cat.var2,tmp1        ; Memory destination address
      6F1C E12E     
-0164 6F1E 0206  20         li    tmp2,>0300            ; \ Length of number
+0165 6F1E 0206  20         li    tmp2,>0300            ; \ Length of number
      6F20 0300     
-0165 6F22 DD46  32         movb  tmp2,*tmp1+           ; / Set length byte prefix at destination
-0166               
-0167 6F24 0206  20         li    tmp2,3                ; Number of bytes to copy
+0166 6F22 DD46  32         movb  tmp2,*tmp1+           ; / Set length byte prefix at destination
+0167               
+0168 6F24 0206  20         li    tmp2,3                ; Number of bytes to copy
      6F26 0003     
-0168 6F28 A806  38         a     tmp2,@cat.var2        ; Advance pointer in filesize string list
+0169 6F28 A806  38         a     tmp2,@cat.var2        ; Advance pointer in filesize string list
      6F2A E12E     
-0169 6F2C 05A0  34         inc   @cat.var2             ; Include length byte
+0170 6F2C 05A0  34         inc   @cat.var2             ; Include length byte
      6F2E E12E     
-0170               
-0171 6F30 06A0  32         bl    @xpym2m               ; Copy memory block
+0171               
+0172 6F30 06A0  32         bl    @xpym2m               ; Copy memory block
      6F32 24FE     
-0172                                                   ; \ i  tmp0 = source
-0173                                                   ; | i  tmp1 = destination
-0174                                                   ; / i  tmp2 = bytes to copy
-0175                       ;-------------------------------------------------------
-0176                       ; Prepare for next file
-0177                       ;-------------------------------------------------------
-0178 6F34 0620  34         dec   @cat.var3             ; Adjust file counter
+0173                                                   ; \ i  tmp0 = source
+0174                                                   ; | i  tmp1 = destination
+0175                                                   ; / i  tmp2 = bytes to copy
+0176                       ;-------------------------------------------------------
+0177                       ; Prepare for next file
+0178                       ;-------------------------------------------------------
+0179 6F34 0620  34         dec   @cat.var3             ; Adjust file counter
      6F36 E130     
-0179 6F38 15DF  14         jgt   fm.directory.fsloop   ; Next file
-0180               
-0181                       ;-------------------------------------------------------
-0182                       ; Generate string list with file types
-0183                       ;-------------------------------------------------------
-0184 6F3A 0204  20         li    tmp0,cat.ftlist       ; Set pointer to filetype list
+0180 6F38 15DF  14         jgt   fm.directory.fsloop   ; Next file
+0181               
+0182                       ;-------------------------------------------------------
+0183                       ; Generate string list with file types
+0184                       ;-------------------------------------------------------
+0185 6F3A 0204  20         li    tmp0,cat.ftlist       ; Set pointer to filetype list
      6F3C E23A     
-0185 6F3E 0205  20         li    tmp1,cat.sizelist     ; Set pointer to filetype string list
-     6F40 E710     
-0186 6F42 C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
+0186 6F3E 0205  20         li    tmp1,cat.typelist     ; Set pointer to filetype string list
+     6F40 E3C6     
+0187 6F42 C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
      6F44 E000     
-0187 6F46 1309  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
-0188               
-0189 6F48 C804  38         mov   tmp0,@cat.var1        ; Save pointer to filetype list
+0188 6F46 1309  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
+0189               
+0190 6F48 C804  38         mov   tmp0,@cat.var1        ; Save pointer to filetype list
      6F4A E12C     
-0190 6F4C C805  38         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
+0191 6F4C C805  38         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
      6F4E E12E     
-0191 6F50 C806  38         mov   tmp2,@cat.var3        ; Set loop counter
+0192 6F50 C806  38         mov   tmp2,@cat.var3        ; Set loop counter
      6F52 E130     
-0192                       ;-------------------------------------------------------
-0193                       ; Loop over files
-0194                       ;-------------------------------------------------------
-0195                       ; @cat.var1 = Pointer to filetype list
-0196                       ; @cat.var2 = Pointer to filetype string list
-0197                       ; @cat.var3 = Loop counter
-0198                       ;-------------------------------------------------------
-0199               fm.directory.ftloop:
-0200                       ;-------------------------------------------------------
-0201                       ; Prepare for next file
-0202                       ;-------------------------------------------------------
-0203 6F54 0620  34         dec   @cat.var3             ; Adjust file counter
+0193                       ;-------------------------------------------------------
+0194                       ; Loop over files
+0195                       ;-------------------------------------------------------
+0196                       ; @cat.var1 = Pointer to filetype list
+0197                       ; @cat.var2 = Pointer to filetype string list
+0198                       ; @cat.var3 = Loop counter
+0199                       ;-------------------------------------------------------
+0200               fm.directory.ftloop:
+0201                       ;-------------------------------------------------------
+0202                       ; Prepare for next file
+0203                       ;-------------------------------------------------------
+0204 6F54 0620  34         dec   @cat.var3             ; Adjust file counter
      6F56 E130     
-0204 6F58 15FD  14         jgt   fm.directory.ftloop   ; Next file
-0205               
-0206               *--------------------------------------------------------------
-0207               * Show filebrowser
-0208               *--------------------------------------------------------------
-0209               fm.directory.browser:
-0210 6F5A 06A0  32         bl    @pane.filebrowser     ; Browse files
+0205 6F58 15FD  14         jgt   fm.directory.ftloop   ; Next file
+0206               
+0207               *--------------------------------------------------------------
+0208               * Show filebrowser
+0209               *--------------------------------------------------------------
+0210               fm.directory.browser:
+0211 6F5A 06A0  32         bl    @pane.filebrowser     ; Browse files
      6F5C 700C     
-0211               
-0212               *--------------------------------------------------------------
-0213               * Exit
-0214               *--------------------------------------------------------------
-0215               fm.directory.exit:
-0216 6F5E C839  50         mov   *stack+,@parm9        ; Pop @parm9
+0212               
+0213               *--------------------------------------------------------------
+0214               * Exit
+0215               *--------------------------------------------------------------
+0216               fm.directory.exit:
+0217 6F5E C839  50         mov   *stack+,@parm9        ; Pop @parm9
      6F60 A016     
-0217 6F62 C839  50         mov   *stack+,@parm8        ; Pop @parm8
+0218 6F62 C839  50         mov   *stack+,@parm8        ; Pop @parm8
      6F64 A014     
-0218 6F66 C839  50         mov   *stack+,@parm7        ; Pop @parm7
+0219 6F66 C839  50         mov   *stack+,@parm7        ; Pop @parm7
      6F68 A012     
-0219 6F6A C839  50         mov   *stack+,@parm6        ; Pop @parm6
+0220 6F6A C839  50         mov   *stack+,@parm6        ; Pop @parm6
      6F6C A010     
-0220 6F6E C839  50         mov   *stack+,@parm5        ; Pop @parm5
+0221 6F6E C839  50         mov   *stack+,@parm5        ; Pop @parm5
      6F70 A00E     
-0221 6F72 C839  50         mov   *stack+,@parm4        ; Pop @parm4
+0222 6F72 C839  50         mov   *stack+,@parm4        ; Pop @parm4
      6F74 A00C     
-0222 6F76 C839  50         mov   *stack+,@parm3        ; Pop @parm3
+0223 6F76 C839  50         mov   *stack+,@parm3        ; Pop @parm3
      6F78 A00A     
-0223 6F7A C839  50         mov   *stack+,@parm2        ; Pop @parm2
+0224 6F7A C839  50         mov   *stack+,@parm2        ; Pop @parm2
      6F7C A008     
-0224 6F7E C839  50         mov   *stack+,@parm1        ; Pop @parm1
+0225 6F7E C839  50         mov   *stack+,@parm1        ; Pop @parm1
      6F80 A006     
-0225 6F82 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0226 6F84 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0227 6F86 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0228 6F88 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0229 6F8A C2F9  30         mov   *stack+,r11           ; Pop R11
-0230 6F8C 045B  20         b     *r11                  ; Return to caller
+0226 6F82 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0227 6F84 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0228 6F86 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0229 6F88 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0230 6F8A C2F9  30         mov   *stack+,r11           ; Pop R11
+0231 6F8C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
 0082                       ;-----------------------------------------------------------------------
 0083                       ; Stubs
@@ -14319,9 +14320,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.1STPAGE2.PTR.... >E00C :     
     CAT.1STPAGE3.PTR.... >E00E :     
     CAT.1STPAGE4.PTR.... >E010 :     
-    CAT.DEVICE.......... >E3C6 :     
+    CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
-    CAT.FNLIST.......... >E90C :     
+    CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
     CAT.FSELECT.IDX..... >E004 :     
     CAT.FSLIST.......... >E2BA :     
@@ -14331,9 +14332,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
     CAT.SIZE............ >0F00 :     
-    CAT.SIZELIST........ >E710 :     
+    CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TYPELIST........ >E416 :     
+    CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     
     CAT.VAR3............ >E130 :     

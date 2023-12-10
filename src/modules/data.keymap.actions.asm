@@ -295,7 +295,7 @@ keymap_actions.cmdb:
         ; Dialog: Dir
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.dir        
-        data  edkey.action.cmdb.file.directory
+        data  edkey.action.cmdb.file.directory.device
 
         byte  key.ctrl.1, id.dialog.dir
         data  edkey.action.filebrowser.1
