@@ -904,7 +904,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.15'
+0055 6028 0D53                 stri 'STEVIE 1.5.16'
      602A 5445     
      602C 5649     
      602E 4520     
