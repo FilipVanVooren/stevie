@@ -30,9 +30,9 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-Fastmode IO  FH-Home  FL-EOL'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=DIR DSK1-9  ^E/X=Prev/Next'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-Fastmode IO  FH-Home  FL-EOL'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=DIR DSK1-9  ^E/X=Prev/Next'
                    even
 
 ;--------------------------------------------------------------
@@ -184,7 +184,8 @@ txt.head.menu      byte 14,1,1
 txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Quit'
 pos.info.menu      byte 0,7,15,27,39,49,56,>ff
 txt.hint.menu      stri ''
-txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu  ^1-F=DSK1-DSKF'
+txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
+txt.keys.menu2     stri 'F9-Close menu  SPACE-Close menu'
 
 ;--------------------------------------------------------------
 ; Dialog "File"
@@ -196,8 +197,8 @@ txt.head.file      byte 9,1,1
 txt.info.file      stri 'New   Open   Save   Dir   Insert   Append   Print'
 pos.info.file      byte 0,6,13,20,26,35,44,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-F=DSK1-DSKF'
-txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-F=DSK1-DSKF'
+txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-9=DIR DSK1-DSK9'
+txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-9=DIR DSK1-DSK9  ^E/X=Prev/Next Page'
 
 
 ;--------------------------------------------------------------

@@ -7,7 +7,7 @@
 * bl   @pane.filebrowser
 *--------------------------------------------------------------- 
 * INPUT
-* @cat.page = Page in catalog to display (base 0)
+* @cat.fpicker.idx = 1st file to show in file browser
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1
@@ -143,6 +143,7 @@ pane.filebrowser.headers:
         a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
         a     tmp3,tmp2             ; / 
         mov   tmp2,@cat.var2        ; Save files per page to display
+        mov   tmp2,@cat.nofilespage ; Backup. Used for navigation.
 
         clr   @waux1                ; \ Set null pointer
                                     ; | Note: putlst only sets @waux1 if 

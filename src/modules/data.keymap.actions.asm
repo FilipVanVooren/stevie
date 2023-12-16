@@ -504,32 +504,11 @@ keymap_actions.cmdb:
         byte  key.ctrl.9, pane.focus.cmdb
         data  edkey.action.cmdb.file.directory.9
 
-        byte  key.ctrl.a, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.a
-
-        byte  key.ctrl.b, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.b
-
-        byte  key.ctrl.c, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.c
-
-        byte  key.ctrl.d, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.d
-
         byte  key.ctrl.e, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.e
+        data  edkey.action.filebrowser.prev
 
-        byte  key.ctrl.f, pane.focus.cmdb
-        data  edkey.action.cmdb.file.directory.f
-
-        ;byte  key.ctrl.e, pane.focus.cmdb
-        ;data  edkey.action.filebrowser.1
-
-        ;byte  key.num.2, pane.focus.cmdb
-        ;data  edkey.action.filebrowser.2
-
-        ;byte  key.ctrl.x, pane.focus.cmdb
-        ;data  edkey.action.filebrowser.3
+        byte  key.ctrl.x, pane.focus.cmdb
+        data  edkey.action.filebrowser.next
 
         byte  key.ctrl.a, pane.focus.cmdb
         data  edkey.action.cmdb.preset

@@ -112,3 +112,62 @@ edkey.action.cmdb.file.catalog.exit:
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
+
+edkey.action.filebrowser.prev:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;-------------------------------------------------------
+        ; Check page boundaries
+        ;-------------------------------------------------------
+        c     @cat.fpicker.idx,@cat.nofilespage
+        jgt   edkey.action.filebrowser.prev.page
+
+        clr   @cat.fpicker.idx      ; Top of list
+        jmp   edkey.action.filebrowser.prev.show
+        ;-------------------------------------------------------
+        ; Previous page
+        ;-------------------------------------------------------
+edkey.action.filebrowser.prev.page:        
+        s     @cat.nofilespage,@cat.fpicker.idx
+        ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+edkey.action.filebrowser.prev.show:
+        bl    @pane.filebrowser
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.filebrowser.prev.exit:
+        mov   *stack+,r11           ; Pop R11        
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
+
+
+edkey.action.filebrowser.next:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;-------------------------------------------------------
+        ; Check page boundaries
+        ;-------------------------------------------------------
+        c     @cat.filecount,@cat.fpicker.idx
+        jgt   edkey.action.filebrowser.next.page
+
+        clr   @cat.fpicker.idx      ; Top of list
+        jmp   edkey.action.filebrowser.next.show
+        ;-------------------------------------------------------
+        ; Next page
+        ;-------------------------------------------------------
+edkey.action.filebrowser.next.page:        
+        a     @cat.nofilespage,@cat.fpicker.idx
+        ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+edkey.action.filebrowser.next.show:
+        bl    @pane.filebrowser
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.filebrowser.next.exit:
+        mov   *stack+,r11           ; Pop R11        
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

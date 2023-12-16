@@ -396,7 +396,7 @@ tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
 cat.fpicker.idx   equ  cat.top + 2     ; File picker number current entry
-cat.free0         equ  cat.top + 4     ; Free
+cat.nofilespage   equ  cat.top + 4     ; Number of files per page
 cat.free1         equ  cat.top + 6     ; Free
 cat.free2         equ  cat.top + 8     ; Free
 cat.free3         equ  cat.top + 10    ; Free
