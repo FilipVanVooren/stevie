@@ -40,15 +40,7 @@ dialog.dir:
 
         li    tmp0,txt.hint.dir2        
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
-
-        mov   @cat.maxpage,tmp0
-        jgt   dialog.dir.keylist2
-
         li    tmp0,txt.keys.dir     ; Key list
-        jmp   dialog.dir.display
-
-dialog.dir.keylist2:        
-        li    tmp0,txt.keys.dir2
 
 dialog.dir.display:
         mov   tmp0,@cmdb.pankeys    ; Show keylist in status line

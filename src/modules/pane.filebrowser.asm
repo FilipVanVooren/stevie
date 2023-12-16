@@ -24,17 +24,8 @@ pane.filebrowser:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @cat.filecount,tmp0          ; Get number of files
-        jeq   pane.filebrowser.early.exit  ; Exit if nothing to display
-
-        c     @cat.page,@cat.maxpage       ; Exit if highest page in catalog
-        jgt   pane.filebrowser.early.exit  ; already reached
-        jmp   pane.filebrowser.volume      ; Skip early exit
-        ;------------------------------------------------------
-        ; Early exit
-        ;------------------------------------------------------
-pane.filebrowser.early.exit:
-        b     @pane.filebrowser.exit ; Exit filebrowser
+        mov   @cat.filecount,tmp0   ; Get number of files
+        jeq   pane.filebrowser.exit ; Exit if nothing to display
         ;------------------------------------------------------
         ; Show volume name, no files, device path
         ;------------------------------------------------------
@@ -77,12 +68,12 @@ pane.filebrowser.nofiles:
         ; Show device path
         ;------------------------------------------------------
 pane.filebrowser.devicepath:
-        mov   @cat.device,tmp0      ; Device path set?
+        mov   @cat.device,tmp0        ; Device path set?
         jeq   pane.filebrowser.lines  ; No, skip display
 
         bl    @putat
               byte 0,39
-              data cat.device       ; Show device path
+              data cat.device         ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------
@@ -126,11 +117,11 @@ pane.filebrowser.headers:
               data eol                         
         ;------------------------------------------------------
         ; Prepare for displaying filenames
-        ;------------------------------------------------------
-        mov   @cat.page,tmp0                   ; Get current page index catalog
-        sla   tmp0,1                           ; Make it an offset
-        mov   @cat.1stpage1.ptr(tmp0),tmp1     ; Get filename list
-        jeq   pane.filebrowser.catpage         ; Skip on empty list
+        ;------------------------------------------------------        
+        mov   @cat.fpicker.idx,tmp0   ; Get current index
+        sla   tmp0,1                  ; Make it an offset
+        mov   @cat.ptrlist(tmp0),tmp1 ; Get filename list
+        jeq   pane.filebrowser.exit   ; Skip on empty list
         ;------------------------------------------------------
         ; Show Catalog
         ;------------------------------------------------------
@@ -172,13 +163,17 @@ pane.filebrowser.headers:
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
         ;------------------------------------------------------
-        ; Show filesize list
+        ; Prepare for displaying filesize list
         ;------------------------------------------------------
         bl    @at                   ; Set cursor position
               byte 3,21             ; Y=3, X=21
 
+        mov   @cat.fpicker.idx,tmp0  ; Get current index
+        sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
+        li    tmp1,cat.sizelist      ; Set base
+        a     tmp0,tmp1              ; Add offset
+
         mov   @cat.var1,tmp0        ; Get cutover row and column offset
-        li    tmp1,cat.sizelist     ; Get Pointer to filesize list
         mov   @cat.var2,tmp2        ; Get number of files to display
 
         bl    @putlst               ; Loop over string list and display
@@ -191,61 +186,7 @@ pane.filebrowser.headers:
                                     ; | i  tmp2 = Number of strings to display
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
-                                    ; /             (tmp2) entries
-        ;------------------------------------------------------
-        ; FIX BELOW CODE, BELONGS TO SHOW FILENAMES, CONSIDER FILESIZE DISPLAY
-        ;------------------------------------------------------
-        mov   @waux1,tmp0                    ; Get Pointer
-        mov   *tmp0,tmp1                     ; Get content at pointer
-        jeq   pane.filebrowser.catpage       ; Skip if end of list reached
-
-        mov   @cat.page,tmp1                 ; Get current page index catalog
-        inc   tmp1                           ; Next page
-        sla   tmp1,1                         ; Make it an offset
-        mov   tmp0,@cat.1stpage1.ptr(tmp1)   ; Save pointer 
-        ;-------------------------------------------------------
-        ; Catalog page number (part 2)
-        ;-------------------------------------------------------
-pane.filebrowser.catpage:        
-        mov   @cat.1stpage3.ptr,tmp0
-        jeq   pane.filebrowser.check.page2
-        li    tmp0,2                         ; \ Page 3 (base 0)
-        mov   tmp0,@cat.maxpage              ; / 
-        jmp   pane.filebrowser.showpage
-
-pane.filebrowser.check.page2:       
-        mov   @cat.1stpage2.ptr,tmp0
-        jeq   pane.filebrowser.check.page1
-        li    tmp0,1                         ; \ Page 2 (base 0)
-        mov   tmp0,@cat.maxpage              ; / 
-        jmp   pane.filebrowser.showpage
-
-pane.filebrowser.check.page1:
-        clr   @cat.maxpage
-
-pane.filebrowser.showpage:
-        bl    @putnum
-              byte 0,75             ; Show max page number
-              data cat.maxpage,rambuf
-              byte 49,32
-
-        bl    @putat
-              byte 0,78
-              data txt.slash        ; Display slash separater
-
-        bl    @mknum                ; Convert unsigned number to string
-              data cat.page         ; \ i  p1    = Source
-              data rambuf           ; | i  p2    = Destination
-              byte 49               ; | i  p3MSB = ASCII offset (Base 1!)
-              byte 32               ; / i  p3LSB = Padding character        
-
-        bl    @trimnum              ; Trim number to the left
-              data rambuf,rambuf + 5,32
-
-        bl    @putat
-              byte 0,77
-              data rambuf+5         ; Display page number
- 
+                                    ; /             (tmp2) entries 
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

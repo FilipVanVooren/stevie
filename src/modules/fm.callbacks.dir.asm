@@ -100,10 +100,7 @@ fm.dir.callback1:
         clr   @fh.offsetopcode      ; Allow all devices (copy to VDP)
         clr   @fh.records           ; Reset record count
         clr   @cat.filecount        ; Reset number of files
-        clr   @cat.fpicker.idx      ; Reset index of file picker
-        clr   @cat.fselect.idx      ; Reset index of file prev/next
-        clr   @cat.page             ; \ Reset page counters
-        clr   @cat.maxpage          ; /
+        clr   @cat.fpicker.idx      ; Reset current file in list
 
         li    tmp0,cat.fnlist       ; \ Set RAM destination address 
         mov   tmp0,@fh.dir.rec.ptr  ; / for storing directory entries
@@ -313,13 +310,6 @@ fm.dir.callback3:
         dec   @cat.filecount        ; \ One-time adjustment because  
                                     ; | catalog reads beyond EOF.
                                     ; /                                     
-
-        clr   @cat.page              ; Page 1 (base 0 offset)
-        li    tmp0,cat.fnlist        ; Get filename list
-        mov   tmp0,@cat.1stpage1.ptr ; Set pointer 1st filename page 1 catalog
-        clr   @cat.1stpage2.ptr      ; Clear pointer 1st filename page 2 catalog
-        clr   @cat.1stpage3.ptr      ; Clear pointer 1st filename page 3 catalog        
-        clr   @cat.1stpage4.ptr      ; Clear pointer 1st filename page 4 catalog
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

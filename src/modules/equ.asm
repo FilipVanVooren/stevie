@@ -395,14 +395,14 @@ tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 ;-----------------------------------------------------------------
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
-cat.fpicker.idx   equ  cat.top + 2     ; File picker index into cat.ptrlist
-cat.fselect.idx   equ  cat.top + 4     ; File prev/next index into cat.ptrlist
-cat.page          equ  cat.top + 6     ; Current page in catalog
-cat.maxpage       equ  cat.top + 8     ; Maximum page in catalog
-cat.1stpage1.ptr  equ  cat.top + 10    ; Pointer to 1st file on page 1 catalog
-cat.1stpage2.ptr  equ  cat.top + 12    ; Pointer to 1st file on page 2 catalog
-cat.1stpage3.ptr  equ  cat.top + 14    ; Pointer to 1st file on page 3 catalog
-cat.1stpage4.ptr  equ  cat.top + 16    ; Pointer to 1st file on page 4 catalog
+cat.fpicker.idx   equ  cat.top + 2     ; File picker number current entry
+cat.free0         equ  cat.top + 4     ; Free
+cat.free1         equ  cat.top + 6     ; Free
+cat.free2         equ  cat.top + 8     ; Free
+cat.free3         equ  cat.top + 10    ; Free
+cat.free4         equ  cat.top + 12    ; Free
+cat.free5         equ  cat.top + 14    ; Free
+cat.free6         equ  cat.top + 16    ; Free
 ;-----------------------------------------------------------------
 ; Directory/File catalog pointers and numbers
 ;-----------------------------------------------------------------

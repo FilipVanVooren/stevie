@@ -105,7 +105,6 @@ txt.hint.dir2      stri 'Enter device name including path of directory to read.'
 txt.hint.dir       stri 'Examples: DSK1, TIPI.SRC.DIR1'
 
 txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
-txt.keys.dir2      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  1-3=Page'
                    even
 
 ;--------------------------------------------------------------

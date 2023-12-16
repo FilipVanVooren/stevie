@@ -295,16 +295,7 @@ keymap_actions.cmdb:
         ; Dialog: Dir
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.dir        
-        data  edkey.action.cmdb.file.directory.device
-
-        byte  key.ctrl.1, id.dialog.dir
-        data  edkey.action.filebrowser.1
-
-        byte  key.ctrl.2, id.dialog.dir
-        data  edkey.action.filebrowser.2
-
-        byte  key.ctrl.3, id.dialog.dir
-        data  edkey.action.filebrowser.3        
+        data  edkey.action.cmdb.file.directory.device 
         ;-------------------------------------------------------
         ; Dialog: Configure
         ;-------------------------------------------------------
