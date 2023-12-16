@@ -78,10 +78,10 @@ dialog.load.keylist:
         ; Set filename (1) 
         ;-------------------------------------------------------
 dialog.load.set.filename1:
-        li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
+        li    tmp0,cat.device       ; Get pointer to catalog device name
         mov   *tmp0,tmp1            ; Anything set?
         jeq   dialog.load.set.filename2
-                                    ; No default filename to set, check previous
+                                    ; No device set
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
@@ -114,6 +114,10 @@ dialog.load.cursor:
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
+        ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+        bl    @pane.filebrowser     ; Show file browser                                    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

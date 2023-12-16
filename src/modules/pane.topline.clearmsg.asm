@@ -26,7 +26,7 @@ pane.topline.oneshot.clearmsg:
         ; Clear message
         ;-------------------------------------------------------      
         bl    @hchar
-              byte 0,52,32,18
+              byte 0,50,32,20
               data EOL              ; Clear message
 
         clr   @tv.task.oneshot      ; Reset oneshot task        

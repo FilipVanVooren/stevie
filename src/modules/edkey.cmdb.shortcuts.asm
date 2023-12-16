@@ -6,7 +6,7 @@
 *---------------------------------------------------------------
 edkey.action.cmdb.autoinsert:
         bl    @hchar
-              byte 0,52,32,20
+              byte 0,50,32,20
               data EOL              ; Erase any previous message
 
         inv   @edb.autoinsert       ; Toggle AutoInsert mode

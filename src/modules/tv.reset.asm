@@ -34,7 +34,7 @@ tv.reset:
         ; Remove markers and shortcuts
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,52,32,18       ; Remove markers
+              byte 0,50,32,20       ; Remove markers
               byte pane.botrow,0,32,51
               data eol              ; Remove block shortcuts
         ;-------------------------------------------------------

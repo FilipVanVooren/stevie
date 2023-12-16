@@ -41,9 +41,26 @@ dialog.dir:
         li    tmp0,txt.hint.dir2        
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
         li    tmp0,txt.keys.dir     ; Key list
-
-dialog.dir.display:
+        ;-------------------------------------------------------
+        ; Show dialog
+        ;-------------------------------------------------------
+dialog.dir.keylist:
         mov   tmp0,@cmdb.pankeys    ; Show keylist in status line
+        ;-------------------------------------------------------
+        ; Set filename (1) 
+        ;-------------------------------------------------------
+dialog.dir.set.filename1:
+        li    tmp0,cat.device       ; Get pointer to catalog device name
+        mov   *tmp0,tmp1            ; Anything set?
+        jeq   dialog.dir.browser    ; No device set
+
+        mov   tmp0,@parm1           ; Get pointer to string
+        bl    @cmdb.cmd.set         ; Set command value
+                                    ; \ i  @parm1 = Pointer to string w. preset
+        ;-------------------------------------------------------
+        ; Show File browser
+        ;-------------------------------------------------------
+dialog.dir.browser:        
         bl    @pane.filebrowser     ; Show file browser
         ;-------------------------------------------------------
         ; Set cursor shape

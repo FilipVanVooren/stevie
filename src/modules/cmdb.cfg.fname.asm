@@ -68,7 +68,7 @@ cmdb.cfg.fname:
         ;------------------------------------------------------- 
 cmdb.cfg.fname.message:
         bl    @hchar
-              byte 0,52,32,20       
+              byte 0,50,32,20       
               data EOL              ; Erase any previous message
               
         li    tmp0,52               ; y=0, x=52
