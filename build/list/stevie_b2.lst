@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231217-1837250
+0002               * BUILD: 231217-2000260
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11288,9 +11288,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      66D4 A506     
 0049 66D6 1303  14         jeq   !                     ; Load file unless dirty
 0050               
-0051 66D8 0720  34         seto  @outparm1             ; \
+0051 66D8 0720  34         seto  @outparm1             ; \ Editor buffer dirty, set flag
      66DA A018     
-0052 66DC 105F  14         jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early
+0052 66DC 105F  14         jmp   fm.loadfile.exit      ; / and exit early
 0053                       ;-------------------------------------------------------
 0054                       ; Clear VDP screen buffer
 0055                       ;-------------------------------------------------------

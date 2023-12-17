@@ -101,7 +101,7 @@ txt.keys.insert2   equ txt.keys.default2
 txt.head.dir       byte 19,1,1
                    text ' Read directory '
                    byte 1
-txt.hint.dir2      stri 'Enter device name and path of directory to read. Last character must be "."'
+txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
 txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'

@@ -9,25 +9,26 @@ edkey.action.cmdb.load:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0       
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Load file
+        ; Exit early if last character is '.'
         ;-------------------------------------------------------
-        bl    @pane.cmdb.hide       ; Hide CMDB pane
-
-        bl    @cmdb.cmd.getlength   ; Get length of current command
-        mov   @outparm1,tmp0        ; Length == 0 ?
-        jne   !                     ; No, prepare for load
+        movb  @cmdb.cmdlen,tmp0     ; Get length-byte prefix of filename
+        srl   tmp0,8                ; MSB to LSB
+        ai    tmp0,cmdb.cmdall      ; Add pointer base address to offset   
+        movb  *tmp0,tmp0            ; Get character into MSB
+        srl   tmp0,8                ; MSB to LSB
+        ci    tmp0,46               ; Is it a '.' ?
+        jeq   edkey.action.cmdb.load.exit
+                                    ; No filename specified
         ;-------------------------------------------------------
-        ; No filename specified
-        ;-------------------------------------------------------    
-        li    tmp0,txt.io.nofile    ; \
-        mov   tmp0,@parm1           ; / Error message
+        ; Check filename length
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.getlength            ; Get length of current command
 
-        bl    @error.display        ; Show error message
-                                    ; \ i  @parm1 = Pointer to error message
-                                    ; /
-
-        jmp   edkey.action.cmdb.load.exit
+        mov   @outparm1,tmp0                 ; Length == 0 ?
+        jeq   edkey.action.cmdb.load.exit    ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -37,6 +38,8 @@ edkey.action.cmdb.load:
         bl    @cpym2m
               data cmdb.cmdlen,heap.top,80
                                     ; Copy filename from command line to buffer
+
+        bl    @pane.cmdb.hide       ; Hide CMDB pane
         ;-------------------------------------------------------
         ; Special handling Master Catalog
         ;-------------------------------------------------------
@@ -69,6 +72,7 @@ edkey.action.cmdb.load.file:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.load.exit:
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.action.top     ; Goto 1st line in editor buffer 

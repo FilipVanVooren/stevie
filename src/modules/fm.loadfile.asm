@@ -48,8 +48,8 @@ fm.loadfile:
         mov   @edb.dirty,tmp1       ; Get dirty flag
         jeq   !                     ; Load file unless dirty
 
-        seto  @outparm1             ; \ 
-        jmp   fm.loadfile.exit      ; / Editor buffer dirty, exit early 
+        seto  @outparm1             ; \ Editor buffer dirty, set flag
+        jmp   fm.loadfile.exit      ; / and exit early 
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
