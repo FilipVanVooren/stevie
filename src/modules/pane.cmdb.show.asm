@@ -67,7 +67,7 @@ pane.cmdb.show.rest:
                                     ; / i  tmp1 = Byte to write (LSB)
 
 pane.cmdb.show.hidechar.done:
-        mov   @cmdb.fb.yxsave,@wyx  ; Restore YX position
+        mov   @cmdb.fb.yxsave,@wyx  ; Restore YX position  
   .endif
         ;------------------------------------------------------
         ; Show command buffer pane
@@ -78,12 +78,23 @@ pane.cmdb.show.hidechar.done:
 
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
-
-        ai    tmp0,>0100
+        ;------------------------------------------------------
+        ; Determine initial cursor position
+        ;------------------------------------------------------
+        ai    tmp0,>0100            ; Skip row
         mov   tmp0,@cmdb.yxprompt   ; Screen position of prompt in cmdb pane
-        inc   tmp0
+
+        movb  @cmdb.cmdlen,tmp1     ; \ 
+        srl   tmp1,8                ; | Put cursor at end of command string
+        a     tmp1,tmp0             ; /
+        mov   tmp1,@cmdb.column     ; Set column position (must match cursor X)
+
+        inc   tmp0                  ; Skip ">" character
         mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
 
+        ;------------------------------------------------------
+        ; Show pane
+        ;------------------------------------------------------
         seto  @cmdb.visible         ; Show pane
 
         li    tmp0,tv.1timeonly     ; \ Set CMDB dirty flag (trigger redraw),

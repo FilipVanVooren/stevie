@@ -191,14 +191,14 @@ pane.colorscheme.cmdbpane:
         ; Dump colors for CMDB Stevie logo (TAT)
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; Get VDP start address
-        ai    tmp0,64               ; Add offset for logo
+        ai    tmp0,63               ; Add offset for logo
         mov   @tv.cmdb.hcolor,tmp1  ;
         movb  @tv.cmdb.hcolor+1,tmp1
                                     ; Copy same value into MSB
         srl   tmp1,4                ;
         andi  tmp1,>00ff            ; Only keep LSB
 
-        li    tmp2,16               ; Number of bytes to fill
+        li    tmp2,17               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill

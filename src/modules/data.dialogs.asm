@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.16  '
+            text ' Stevie 1.5.1630 '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.16   '     
+            text ' Stevie 1.5.163C '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.16   '
+            text ' Stevie 1.5.1624 '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.16   '  
+            text ' Stevie 1.5.162C '  
             even
         .endif
 
@@ -38,7 +38,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=DIR 
 ;--------------------------------------------------------------
 ; Shared strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.hint.memstat   stri 'SAMS pages free/total: ..../...    VDP: .. rows, 80 cols          '
+txt.hint.memstat   stri 'SAMS free/total: ..../...'
                    even
 
 txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
@@ -101,8 +101,8 @@ txt.keys.insert2   equ txt.keys.default2
 txt.head.dir       byte 19,1,1
                    text ' Read directory '
                    byte 1
-txt.hint.dir2      stri 'Enter device name including path of directory to read.'
-txt.hint.dir       stri 'Examples: DSK1, TIPI.SRC.DIR1'
+txt.hint.dir2      stri 'Enter device name and path of directory to read. Last character must be "."'
+txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
 txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
                    even
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.16 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.16/30 - (c)2018-2023 Filip Van Vooren'
                    even
 
 

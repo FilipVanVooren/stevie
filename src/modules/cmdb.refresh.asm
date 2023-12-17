@@ -33,8 +33,7 @@ cmdb.refresh:
         ; Dump Command buffer content
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,@wyx   ; Screen position of command line prompt
-
-        inc   @wyx                  ; X +1 for prompt
+        inc   @wyx                  ; Skip '>' character
 
         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.
                                     ; \ i  @wyx = Cursor position
@@ -52,7 +51,7 @@ cmdb.refresh:
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,@wyx
         bl    @putstr
-              data txt.cmdb.prompt
+              data txt.cmdb.prompt  ; Draw prompt
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -61,23 +61,20 @@ dialog.menu:
         li    tmp0,tv.sams.maxpage  ; Calculate number of free pages
         s     @edb.sams.hipage,tmp0 ;
 
-        mov   tmp0,@rambuf          ; Number of ages free
-
-        clr   @ram.msg1 + 24        ; \ Remove any previous number
-        clr   @ram.msg1 + 26        ; /
+        mov   tmp0,@rambuf          ; Number of ;ages free
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
 
         bl    @mknum                ; Convert unsigned number to string
               data rambuf           ; \ i  p1    = Source
-              data ram.msg1+23      ; | i  p2    = Destination
+              data ram.msg1+16      ; | i  p2    = Destination
               byte 48               ; | i  p3MSB = ASCII offset
               byte 32               ; / i  p3LSB = Padding character
 
-        movb  @const.0,@ram.msg1 + 23
-                                    ; \ Overwrite length-byte prefix in 
-                                    ; / trimmed number
+        li    tmp0,>3a00            ; \ MSB = ASCII 58 (hex 3a) colon character
+        movb  tmp0,@ram.msg1 + 16   ; | Overwrite length-byte prefix in 
+                                    ; / number with colon
         ;-------------------------------------------------------
         ; Print SAMS pages total
         ;-------------------------------------------------------
@@ -94,10 +91,10 @@ dialog.menu:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data rambuf+2,ram.msg1 + 28,32
+              data rambuf+2,ram.msg1 + 21,32
 
         li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
-        movb  tmp0,@ram.msg1 + 28   ; | Overwrite length-byte prefix in 
+        movb  tmp0,@ram.msg1 + 21   ; | Overwrite length-byte prefix in 
                                     ; / trimmed number with slash 
                                     
         ;-------------------------------------------------------

@@ -59,16 +59,29 @@ fm.directory:
         ; Process parameters
         ;-------------------------------------------------------
         mov   @parm1,tmp0           ; Use parameter 2?
-        jne   fm.directory.read     ; No, skip
+        jne   fm.directory.checkdot ; No, skip
 
         mov   @parm2,tmp0           ; Get index
         sla   tmp0,1                ; Word align
         mov   @device.list(tmp0),@parm1
                                     ; Set device string
         ;-------------------------------------------------------
+        ; Check if last character in device name is '.'
+        ;-------------------------------------------------------
+fm.directory.checkdot:
+        mov   @parm1,tmp0           ; Get pointer to device name
+        movb  *tmp0,tmp1            ; \ Get length byte
+        srl   tmp1,8                ; / 
+        a     tmp1,tmp0             ; Add length to pointer base
+        movb  *tmp0,tmp0            ; Get byte at pointer
+        srl   tmp0,8                ; MSB to LSB
+        ci    tmp0,46               ; We have a dot
+        jeq   fm.directory.read     ; Read device catalog
+        jmp   fm.directory.exit     ; No dot, exit early
+        ;-------------------------------------------------------
         ; Read drive/directory catalog into memory
         ;-------------------------------------------------------
-fm.directory.read:        
+fm.directory.read:
         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
         mov   tmp0,@parm2           ; Register callback 1
 

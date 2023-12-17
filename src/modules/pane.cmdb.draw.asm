@@ -46,7 +46,7 @@ pane.cmdb.draw:
                                     ; /             output string
 
         bl    @cpym2m
-              data txt.stevie,rambuf+65,20
+              data txt.stevie,rambuf+64,23
                                     ;
                                     ; Add Stevie banner
                                     ;
@@ -204,7 +204,6 @@ pane.cmdb.draw.hearts:
         mov   @cmdb.dialog,tmp0
         ci    tmp0,id.dialog.basic  ; TI Basic dialog active?
         jne   pane.cmdb.draw.exit   ; No, so exit early
-
 
         li    tmp0,11               ; 1st Heart after string "Session: 1"
         mov   tmp0,@parm1           ; Set parameter

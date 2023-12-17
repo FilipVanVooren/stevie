@@ -25,7 +25,7 @@ pane.botline.busy.on:
         ; Show busyline indicator
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,55
+              byte pane.botrow,0,32,78
               data EOL              ; Clear hint on bottom row
 
         mov   @tv.busycolor,@parm1  ; Get busy color
