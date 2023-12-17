@@ -9,8 +9,6 @@ edkey.action.cmdb.load:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0       
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
         ; Exit early if last character is '.'
         ;-------------------------------------------------------
@@ -72,7 +70,6 @@ edkey.action.cmdb.load.file:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.cmdb.load.exit:
-        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.action.top     ; Goto 1st line in editor buffer 
