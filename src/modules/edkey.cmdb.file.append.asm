@@ -10,24 +10,22 @@ edkey.action.cmdb.append:
         dect  stack
         mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
-        ; Append file after last line in editor buffer
+        ; Exit early if last character is '.'
         ;-------------------------------------------------------
-        bl    @pane.cmdb.hide       ; Hide CMDB pane
-
-        bl    @cmdb.cmd.getlength   ; Get length of current command
-        mov   @outparm1,tmp0        ; Length == 0 ?
-        jne   !                     ; No, prepare for load
+        movb  @cmdb.cmdlen,tmp0     ; Get length-byte prefix of filename
+        srl   tmp0,8                ; MSB to LSB
+        ai    tmp0,cmdb.cmdall      ; Add pointer base address to offset   
+        movb  *tmp0,tmp0            ; Get character into MSB
+        srl   tmp0,8                ; MSB to LSB
+        ci    tmp0,46               ; Is it a '.' ?
+        jeq   edkey.action.cmdb.append.exit
+                                    ; No filename specified
         ;-------------------------------------------------------
-        ; No filename specified
-        ;-------------------------------------------------------    
-        li    tmp0,txt.io.nofile    ; \
-        mov   tmp0,@parm1           ; / Error message
-
-        bl    @error.display        ; Show error message
-                                    ; \ i  @parm1 = Pointer to error message
-                                    ; /
-
-        jmp   edkey.action.cmdb.append.exit
+        ; Check filename length
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.getlength            ; Get length of current command
+        mov   @outparm1,tmp0                 ; Length == 0 ?
+        jeq   edkey.action.cmdb.append.exit  ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -37,6 +35,8 @@ edkey.action.cmdb.append:
         bl    @cpym2m
               data cmdb.cmdall,heap.top,80
                                     ; Copy filename from command line to buffer
+
+        bl    @pane.cmdb.hide       ; Hide CMDB pane                                    
         ;-------------------------------------------------------
         ; Pass filename as parm1
         ;-------------------------------------------------------

@@ -24,7 +24,6 @@ edkey.action.cmdb.load:
         ; Check filename length
         ;-------------------------------------------------------
         bl    @cmdb.cmd.getlength            ; Get length of current command
-
         mov   @outparm1,tmp0                 ; Length == 0 ?
         jeq   edkey.action.cmdb.load.exit    ; Yes, exit early
         ;-------------------------------------------------------

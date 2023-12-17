@@ -79,6 +79,10 @@ dialog.append.cursor:
         mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+        bl    @pane.filebrowser     ; Show file browser                                             
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.append.exit:
