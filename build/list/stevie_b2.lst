@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231223-2119390
+0002               * BUILD: 231223-2128230
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12934,11 +12934,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0015                       ;------------------------------------------------------
 0016                       ; Previous filename in catalog filename list
 0017                       ;------------------------------------------------------
-0018 6D74 C120  34         mov   @cat.fpicker.idx,tmp0
-     6D76 E002     
+0018 6D74 C120  34         mov   @cat.shortcut.idx,tmp0
+     6D76 E00A     
 0019 6D78 1302  14         jeq   fm.browse.fname.prev.exit ; First file in catalog reached
-0020 6D7A 05A0  34         inc   @cat.fpicker.idx          ; Previous file in catalog
-     6D7C E002     
+0020 6D7A 0620  34         dec   @cat.shortcut.idx         ; Previous file in catalog
+     6D7C E00A     
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
@@ -12962,13 +12962,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041                       ;------------------------------------------------------
 0042                       ; Next filename in catalog filename list
 0043                       ;------------------------------------------------------
-0044 6D88 8820  50         c     @cat.fpicker.idx,@cat.filecount
-     6D8A E002     
+0044 6D88 8820  50         c     @cat.shortcut.idx,@cat.filecount
+     6D8A E00A     
      6D8C E000     
 0045 6D8E 1101  14         jlt   !
 0046 6D90 1002  14         jmp   fm.browse.fname.next.exit   ; Last file reached
-0047 6D92 05A0  34 !       inc   @cat.fpicker.idx            ; Next file in catalog
-     6D94 E002     
+0047 6D92 05A0  34 !       inc   @cat.shortcut.idx           ; Next file in catalog
+     6D94 E00A     
 0048                       ;------------------------------------------------------
 0049                       ; Exit
 0050                       ;------------------------------------------------------

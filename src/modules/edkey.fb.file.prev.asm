@@ -36,6 +36,10 @@ edkey.action.fb.file.prev:
 edkey.action.fb.file.prev.loadfile:        
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
+        mov   @cat.shortcut.idx,tmp0 ; Get index 
+        sla   tmp0,1                 ; Word align
+        mov   @cat.ptrlist(tmp0),@parm1
+
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; /            device/filename string        

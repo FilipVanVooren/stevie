@@ -15,9 +15,9 @@ fm.browse.fname.prev:
         ;------------------------------------------------------
         ; Previous filename in catalog filename list
         ;------------------------------------------------------
-        mov   @cat.fpicker.idx,tmp0
+        mov   @cat.shortcut.idx,tmp0
         jeq   fm.browse.fname.prev.exit ; First file in catalog reached
-        inc   @cat.fpicker.idx          ; Previous file in catalog
+        dec   @cat.shortcut.idx         ; Previous file in catalog
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -41,10 +41,10 @@ fm.browse.fname.next:
         ;------------------------------------------------------
         ; Next filename in catalog filename list
         ;------------------------------------------------------
-        c     @cat.fpicker.idx,@cat.filecount
+        c     @cat.shortcut.idx,@cat.filecount
         jlt   !
         jmp   fm.browse.fname.next.exit   ; Last file reached
-!       inc   @cat.fpicker.idx            ; Next file in catalog
+!       inc   @cat.shortcut.idx           ; Next file in catalog
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
