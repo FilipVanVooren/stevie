@@ -24,8 +24,9 @@ pane.filebrowser:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @cat.filecount,tmp0   ; Get number of files
-        jeq   pane.filebrowser.exit ; Exit if nothing to display
+        mov   @cat.filecount,tmp0     ; Get number of files
+        jne   pane.filebrowser.volume ; \
+        b     @pane.filebrowser.exit  ; / Exit if nothing to display
         ;------------------------------------------------------
         ; Show volume name, no files, device path
         ;------------------------------------------------------
@@ -101,7 +102,7 @@ pane.filebrowser.headers:
         bl    @putat              
               byte 1,57
               data txt.header       ; Column 3
-********|*****|*********************|**************************
+
         bl    @hchar                ; Show horizontal lines 
               byte 2,1,1,11         ; Name
               byte 2,14,1,4         ; Type
@@ -144,14 +145,53 @@ pane.filebrowser.headers:
         a     tmp3,tmp2             ; / 
         mov   tmp2,@cat.var2        ; Save files per page to display
         mov   tmp2,@cat.nofilespage ; Backup. Used for navigation.
+        ;------------------------------------------------------
+        ; Prepare for calculations
+        ;------------------------------------------------------
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack        
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2       
+        ;------------------------------------------------------
+        ; Calc number of pages
+        ;------------------------------------------------------
+        mov   @cat.nofilespage,tmp0 ; \ Files per page
+        clr   tmp1                  ; | hi-word 32 bit
+        mov   @cat.filecount,tmp2   ; | lo-word 32 bit register (total files)
+        div   tmp0,tmp1             ; | Get total pages
+        mov   tmp1,@cat.totalpages  ; / Store total pages in memory
 
+        ci    tmp2,0                ; Remainder of division > 0
+        jeq   !                     ; No, continue
+        inc   @cat.totalpages       ; Yes, files on page
+        ;------------------------------------------------------
+        ; Calc current page
+        ;------------------------------------------------------
+!       clr   tmp1                   ; \ hi-word 32 bit
+        mov   @cat.fpicker.idx,tmp2  ; | lo-word 32 bit register (current idx)
+        div   tmp0,tmp1              ; | Get current page
+        jno   pane.filebrowser.divok ; / Store if normal division
+        clr   tmp1                   ; We're on 1st page (base 0 offset)
+pane.filebrowser.divok:
+        inc   tmp1                   ; Consider base 1 offset        
+        mov   tmp1,@cat.currentpage  ; Store current page in memory
+        ;------------------------------------------------------
+        ; Calculations done
+        ;------------------------------------------------------
+pane.filebrowser.calcdone:        
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        ;------------------------------------------------------
+        ; Show filenames
+        ;------------------------------------------------------
         clr   @waux1                ; \ Set null pointer
                                     ; | Note: putlst only sets @waux1 if 
                                     ; |       tmp2 < entries in list
                                     ; /
-        ;------------------------------------------------------
-        ; Show filenames
-        ;------------------------------------------------------
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset

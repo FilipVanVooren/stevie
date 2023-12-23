@@ -119,21 +119,15 @@ edkey.action.filebrowser.prev:
         ;-------------------------------------------------------
         ; Check page boundaries
         ;-------------------------------------------------------
-        c     @cat.fpicker.idx,@cat.nofilespage
-        jgt   edkey.action.filebrowser.prev.page
-
-        clr   @cat.fpicker.idx      ; Top of list
-        jmp   edkey.action.filebrowser.prev.show
+        mov   @cat.currentpage,tmp0
+        ci    tmp0,1                
+        jeq   edkey.action.filebrowser.prev.exit
         ;-------------------------------------------------------
         ; Previous page
         ;-------------------------------------------------------
 edkey.action.filebrowser.prev.page:        
         s     @cat.nofilespage,@cat.fpicker.idx
-        ;-------------------------------------------------------
-        ; Show file browser
-        ;-------------------------------------------------------
-edkey.action.filebrowser.prev.show:
-        bl    @pane.filebrowser
+        bl    @pane.filebrowser     ; Show filebrowser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -149,21 +143,13 @@ edkey.action.filebrowser.next:
         ;-------------------------------------------------------
         ; Check page boundaries
         ;-------------------------------------------------------
-        c     @cat.filecount,@cat.fpicker.idx
-        jgt   edkey.action.filebrowser.next.page
-
-        clr   @cat.fpicker.idx      ; Top of list
-        jmp   edkey.action.filebrowser.next.show
+        c     @cat.currentpage,@cat.totalpages
+        jeq   edkey.action.filebrowser.next.exit
         ;-------------------------------------------------------
         ; Next page
         ;-------------------------------------------------------
-edkey.action.filebrowser.next.page:        
         a     @cat.nofilespage,@cat.fpicker.idx
-        ;-------------------------------------------------------
-        ; Show file browser
-        ;-------------------------------------------------------
-edkey.action.filebrowser.next.show:
-        bl    @pane.filebrowser
+        bl    @pane.filebrowser     ; Show filebrowser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

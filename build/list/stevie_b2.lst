@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231217-2024420
+0002               * BUILD: 231223-1821520
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -576,10 +576,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0395               ;-----------------------------------------------------------------
 0396      E000     cat.top           equ  >e000           ; Top of file catalog
 0397      E000     cat.filecount     equ  cat.top         ; Total files in catalog
-0398      E002     cat.fpicker.idx   equ  cat.top + 2     ; File picker number current entry
+0398      E002     cat.fpicker.idx   equ  cat.top + 2     ; cat.fpicker.idx
 0399      E004     cat.nofilespage   equ  cat.top + 4     ; Number of files per page
-0400      E006     cat.free1         equ  cat.top + 6     ; Free
-0401      E008     cat.free2         equ  cat.top + 8     ; Free
+0400      E006     cat.currentpage   equ  cat.top + 6     ; Current page
+0401      E008     cat.totalpages    equ  cat.top + 8     ; Total number of pages
 0402      E00A     cat.free3         equ  cat.top + 10    ; Free
 0403      E00C     cat.free4         equ  cat.top + 12    ; Free
 0404      E00E     cat.free5         equ  cat.top + 14    ; Free
@@ -904,13 +904,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0F53                 stri 'STEVIE 1.5.1630'
+0055 6028 0F53                 stri 'STEVIE 1.5.1730'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3136     
+     6034 3137     
      6036 3330     
 0057               
 0061               
@@ -14313,12 +14313,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
+    CAT.CURRENTPAGE..... >E006 :     
     CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
     CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE1........... >E006 :     
-    CAT.FREE2........... >E008 :     
     CAT.FREE3........... >E00A :     
     CAT.FREE4........... >E00C :     
     CAT.FREE5........... >E00E :     
@@ -14331,6 +14330,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
+    CAT.TOTALPAGES...... >E008 :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     
