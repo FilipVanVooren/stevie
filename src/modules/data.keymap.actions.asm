@@ -139,10 +139,10 @@ keymap_actions.editor:
         data  pane.colorscheme.cycle
 
         byte  key.ctrl.comma, pane.focus.fb
-        data  edkey.action.fb.fname.dec.load
+        data  edkey.action.fb.file.prev
 
         byte  key.ctrl.dot, pane.focus.fb
-        data  edkey.action.fb.fname.inc.load
+        data  edkey.action.fb.file.next
 
         byte  key.ctrl.slash, pane.focus.fb
         data  dialog.basic

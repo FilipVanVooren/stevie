@@ -13,15 +13,15 @@ cpu.crash.showbank.bankstr:
         aorg  bankx.vectab
 vec.1   data  fm.loadfile           ;
 vec.2   data  fm.insertfile         ;
-vec.3   data  fm.browse.fname.suffix
+vec.3   data  cpu.crash             ;
 vec.4   data  fm.savefile           ;
 vec.5   data  fm.newfile            ;
 vec.6   data  fm.directory          ;
 vec.7   data  cpu.crash             ;
 vec.8   data  cpu.crash             ;
 vec.9   data  cpu.crash             ;
-vec.10  data  cpu.crash             ;
-vec.11  data  cpu.crash             ;
+vec.10  data  fm.browse.fname.prev  ;
+vec.11  data  fm.browse.fname.next  ;
 vec.12  data  cpu.crash             ;
 vec.13  data  cpu.crash             ;
 vec.14  data  cpu.crash             ;

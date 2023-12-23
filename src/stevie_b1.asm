@@ -94,7 +94,8 @@ main:
         copy  "edkey.fb.mod.asm"            ; Actions for modifier keys
         copy  "edkey.fb.ruler.asm"          ; Toggle ruler on/off
         copy  "edkey.fb.misc.asm"           ; Miscelanneous actions
-        copy  "edkey.fb.file.decinc.asm"    ; Filename increase/decrease suffix
+        copy  "edkey.fb.file.prev.asm"      ; Previous file in catalog file list
+        copy  "edkey.fb.file.next.asm"      ; Next file in catalog file list
         copy  "edkey.fb.file.load.asm"      ; Load file into editor
         copy  "edkey.fb.file.load.mc.asm"   ; Load Master Catalog into editor
         copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...

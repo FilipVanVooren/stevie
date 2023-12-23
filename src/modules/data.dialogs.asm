@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text ' Stevie 1.5.1730 '
+            text '  Stevie 1.5.18  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text ' Stevie 1.5.173C '     
+            text '  Stevie 1.5.18  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text ' Stevie 1.5.1724 '
+            text '  Stevie 1.5.18  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text ' Stevie 1.5.172C '  
+            text '  Stevie 1.5.18  '  
             even
         .endif
 
@@ -104,7 +104,7 @@ txt.head.dir       byte 19,1,1
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
-txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^E/X=Prev/Next Page'
                    even
 
 ;--------------------------------------------------------------
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.17/30 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.18 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
