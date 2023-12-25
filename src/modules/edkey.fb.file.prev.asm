@@ -19,6 +19,10 @@ edkey.action.fb.file.prev:
         ; Adjust filename
         ;------------------------------------------------------
         bl    @fm.browse.fname.prev ; Previous file in catalog filename list
+        mov   @outparm1,tmp0        ; Skipped flag set?
+        jne   edkey.action.fb.file.prev.exit
+                                    ; Yes, exit early
+
 
         li    tmp0,edkey.action.fb.file.prev
         mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
@@ -27,7 +31,7 @@ edkey.action.fb.file.prev:
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
         mov   @edb.dirty,tmp0
-        jeq   !
+        jeq   edkey.action.fb.file.prev.loadfile
         mov   *stack+,tmp0          ; Pop tmp0         
         b     @dialog.unsaved       ; Show dialog and exit
         ;------------------------------------------------------
@@ -36,9 +40,8 @@ edkey.action.fb.file.prev:
 edkey.action.fb.file.prev.loadfile:        
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
-        mov   @cat.shortcut.idx,tmp0 ; Get index 
-        sla   tmp0,1                 ; Word align
-        mov   @cat.ptrlist(tmp0),@parm1
+        li    tmp0,cat.fullfname    ; \ Get pointer to string with combined
+        mov   tmp0,@parm1           ; / device and filename
 
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  parm1 = Pointer to length-prefixed

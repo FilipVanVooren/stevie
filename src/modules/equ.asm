@@ -403,6 +403,7 @@ cat.shortcut.idx  equ  cat.top + 10    ; Current file prev/next shortcut key
 cat.free4         equ  cat.top + 12    ; Free
 cat.free5         equ  cat.top + 14    ; Free
 cat.free6         equ  cat.top + 16    ; Free
+cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
 ;-----------------------------------------------------------------
 ; Directory/File catalog pointers and numbers
 ;-----------------------------------------------------------------
@@ -419,13 +420,13 @@ cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
 cat.fslist        equ  cat.top + 698   ; Filesize size (128)
 cat.rslist        equ  cat.top + 826   ; Record size list (128)
 ;-----------------------------------------------------------------
-; Directory/File catalog strings (always length bytes included)
+; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------
 cat.volname       equ  cat.top + 954   ; Volume name (12)
 cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
 cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
 cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12) 
-cat.device        equ  cat.top + 3760  ; Current device name (80)
+cat.device        equ  cat.top + 3760  ; Current device name string (80)
 cat.size          equ  3840            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Command buffer                       ; @>ef00-efff   (256 bytes)

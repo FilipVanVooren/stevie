@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231223-2128230
+0002               * BUILD: 231225-1848350
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -584,52 +584,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0403      E00C     cat.free4         equ  cat.top + 12    ; Free
 0404      E00E     cat.free5         equ  cat.top + 14    ; Free
 0405      E010     cat.free6         equ  cat.top + 16    ; Free
-0406               ;-----------------------------------------------------------------
-0407               ; Directory/File catalog pointers and numbers
-0408               ;-----------------------------------------------------------------
-0409      E12C     cat.var1          equ  cat.top + 300   ; Temp variable 1
-0410      E12E     cat.var2          equ  cat.top + 302   ; Temp variable 2
-0411      E130     cat.var3          equ  cat.top + 304   ; Temp variable 3
-0412      E132     cat.var4          equ  cat.top + 306   ; Temp variable 4
-0413      E134     cat.var5          equ  cat.top + 308   ; Temp variable 5
-0414      E136     cat.var6          equ  cat.top + 310   ; Temp variable 6
-0415      E138     cat.var7          equ  cat.top + 312   ; Temp variable 7
-0416      E13A     cat.var8          equ  cat.top + 314   ; Temp variable 8
-0417      E13C     cat.ptrlist       equ  cat.top + 316   ; Pointer list to filenames (254=127*2)
-0418      E23A     cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
-0419      E2BA     cat.fslist        equ  cat.top + 698   ; Filesize size (128)
-0420      E33A     cat.rslist        equ  cat.top + 826   ; Record size list (128)
-0421               ;-----------------------------------------------------------------
-0422               ; Directory/File catalog strings (always length bytes included)
-0423               ;-----------------------------------------------------------------
-0424      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
-0425      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
-0426      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
-0427      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12)
-0428      EEB0     cat.device        equ  cat.top + 3760  ; Current device name (80)
-0429      0F00     cat.size          equ  3840            ; Catalog total size
-0430               ;-----------------------------------------------------------------
-0431               ; Command buffer                       ; @>ef00-efff   (256 bytes)
-0432               ;-----------------------------------------------------------------
-0433      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
-0434      0100     cmdb.size         equ  256             ; Command buffer size
-0435               ;-----------------------------------------------------------------
-0436               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
-0437               ;-----------------------------------------------------------------
-0438      F000     heap.top          equ  >f000           ; 80 Current filename
-0439      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0440      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
-0441               ;-----------------------------------------------------------------
-0442               ; Stevie specific equates
-0443               ;-----------------------------------------------------------------
-0444      0000     fh.fopmode.none           equ  0        ; No file operation in progress
-0445      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
-0446      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
-0447      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
-0448      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
-0449      9900     tv.colorize.reset         equ  >9900    ; Colorization off
-0450      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
-0451      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
+0406      E012     cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
+0407               ;-----------------------------------------------------------------
+0408               ; Directory/File catalog pointers and numbers
+0409               ;-----------------------------------------------------------------
+0410      E12C     cat.var1          equ  cat.top + 300   ; Temp variable 1
+0411      E12E     cat.var2          equ  cat.top + 302   ; Temp variable 2
+0412      E130     cat.var3          equ  cat.top + 304   ; Temp variable 3
+0413      E132     cat.var4          equ  cat.top + 306   ; Temp variable 4
+0414      E134     cat.var5          equ  cat.top + 308   ; Temp variable 5
+0415      E136     cat.var6          equ  cat.top + 310   ; Temp variable 6
+0416      E138     cat.var7          equ  cat.top + 312   ; Temp variable 7
+0417      E13A     cat.var8          equ  cat.top + 314   ; Temp variable 8
+0418      E13C     cat.ptrlist       equ  cat.top + 316   ; Pointer list to filenames (254=127*2)
+0419      E23A     cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
+0420      E2BA     cat.fslist        equ  cat.top + 698   ; Filesize size (128)
+0421      E33A     cat.rslist        equ  cat.top + 826   ; Record size list (128)
+0422               ;-----------------------------------------------------------------
+0423               ; Directory/File catalog strings (always length byte included)
+0424               ;-----------------------------------------------------------------
+0425      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
+0426      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype list (762=127*6)
+0427      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize list (508=127*4)
+0428      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename list (1524=127*12)
+0429      EEB0     cat.device        equ  cat.top + 3760  ; Current device name string (80)
+0430      0F00     cat.size          equ  3840            ; Catalog total size
+0431               ;-----------------------------------------------------------------
+0432               ; Command buffer                       ; @>ef00-efff   (256 bytes)
+0433               ;-----------------------------------------------------------------
+0434      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
+0435      0100     cmdb.size         equ  256             ; Command buffer size
+0436               ;-----------------------------------------------------------------
+0437               ; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+0438               ;-----------------------------------------------------------------
+0439      F000     heap.top          equ  >f000           ; 80 Current filename
+0440      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0441      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0442               ;-----------------------------------------------------------------
+0443               ; Stevie specific equates
+0444               ;-----------------------------------------------------------------
+0445      0000     fh.fopmode.none           equ  0        ; No file operation in progress
+0446      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
+0447      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+0448      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
+0449      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
+0450      9900     tv.colorize.reset         equ  >9900    ; Colorization off
+0451      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
+0452      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
                    < stevie_b7.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -14394,6 +14395,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.FREE6........... >E010 :     
     CAT.FSLIST.......... >E2BA :     
     CAT.FTLIST.......... >E23A :     
+    CAT.FULLFNAME....... >E012 :     
     CAT.NOFILESPAGE..... >E004 :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
