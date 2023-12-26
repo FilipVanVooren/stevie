@@ -328,10 +328,10 @@ dialog.shortcuts.vector:
 * Stub for dialog "Dir"
 * bank3 vec.15
 ********|*****|*********************|**************************
-dialog.dir:
-        mov   @dialog.dir.vector,@trmpvector
+dialog.cat:
+        mov   @dialog.cat.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.dir.vector:
+dialog.cat.vector:
         data  vec.15
 
 ***************************************************************

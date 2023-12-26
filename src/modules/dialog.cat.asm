@@ -1,11 +1,11 @@
-* dir......: dialog.dir.asm
-* Purpose...: Dialog "Dir"
+* dir......: dialog.cat.asm
+* Purpose...: Dialog "Catalog drive/directory"
 
 ***************************************************************
-* dialog.dir
+* dialog.cat
 * Open Dialog "Dir"
 ***************************************************************
-* bl @dialog.dir
+* bl @dialog.cat
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.dir:
+dialog.cat:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -26,7 +26,7 @@ dialog.dir:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.dir
+        li    tmp0,id.dialog.cat
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.dir
@@ -44,15 +44,15 @@ dialog.dir:
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
-dialog.dir.keylist:
+dialog.cat.keylist:
         mov   tmp0,@cmdb.pankeys    ; Show keylist in status line
         ;-------------------------------------------------------
         ; Set filename (1) 
         ;-------------------------------------------------------
-dialog.dir.set.filename1:
+dialog.cat.set.filename1:
         li    tmp0,cat.device       ; Get pointer to catalog device name
         mov   *tmp0,tmp1            ; Anything set?
-        jeq   dialog.dir.browser    ; No device set
+        jeq   dialog.cat.browser    ; No device set
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
@@ -60,19 +60,19 @@ dialog.dir.set.filename1:
         ;-------------------------------------------------------
         ; Show File browser
         ;-------------------------------------------------------
-dialog.dir.browser:        
+dialog.cat.browser:        
         bl    @pane.filebrowser     ; Show file browser
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-dialog.dir.cursor:
+dialog.cat.cursor:
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.dir.exit:
+dialog.cat.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

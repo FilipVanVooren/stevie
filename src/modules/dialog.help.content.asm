@@ -159,8 +159,8 @@ dialog.help.data.page1.right:
         stri 'Ctrl o   ^o   Open file'
         stri 'Ctrl p   ^p   Print file'
         stri 'Ctrl s   ^s   Save file'
-        stri 'Ctrl ,   ^,   Load previous file'
-        stri 'Ctrl .   ^.   Load next file'
+        stri 'Ctrl ,   ^,   Load prev file (catalog)'
+        stri 'Ctrl .   ^.   Load next file (catalog)'
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '

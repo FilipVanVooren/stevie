@@ -30,9 +30,9 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=DIR DSK1-9  ^E/X=Prev/Next'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^E/X=CAT page-/+'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=DIR DSK1-9  ^E/X=Prev/Next'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^E/X=CAT page-/+'
                    even
 
 ;--------------------------------------------------------------
@@ -51,7 +51,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      stri 'Enter filename of file to open.'
+txt.hint.load      stri 'Enter filename of file to open or pick file from catalog with FCTN-E/X keys.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
@@ -96,15 +96,15 @@ txt.keys.insert2   equ txt.keys.default2
 
 
 ;--------------------------------------------------------------
-; Dialog "Read directory"
+; Dialog "Catalog drive/directory"
 ;--------------------------------------------------------------
-txt.head.dir       byte 19,1,1
-                   text ' Read directory '
+txt.head.dir       byte 28,1,1
+                   text ' Catalog drive/directory '
                    byte 1
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
-txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^E/X=Prev/Next Page'
+txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^E/X=CAT page-/+'
                    even
 
 ;--------------------------------------------------------------
@@ -194,11 +194,11 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Save   Dir   Insert   Append   Print'
-pos.info.file      byte 0,6,13,20,26,35,44,>ff
+txt.info.file      stri 'New   Open   Save   Catalog   Insert   Append   Print'
+pos.info.file      byte 0,6,13,20,30,39,48,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-9=DIR DSK1-DSK9'
-txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-9=DIR DSK1-DSK9  ^E/X=Prev/Next Page'
+txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9'
+txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9  ^E/X=Page-/Page+'
 
 
 ;--------------------------------------------------------------

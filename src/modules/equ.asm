@@ -38,7 +38,7 @@ id.dialog.printblock      equ  16      ; "Print block"
 id.dialog.cfg.clip        equ  17      ; "Configure clipboard"
 id.dialog.cfg.mc          equ  18      ; "Configure Master Catalog"
 id.dialog.goto            equ  19      ; "Goto"
-id.dialog.dir             equ  20      ; "Dir"
+id.dialog.cat             equ  20      ; "Catalog drive/directory"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.

@@ -233,8 +233,8 @@ keymap_actions.cmdb:
         byte  key.uc.s, id.dialog.file
         data  dialog.save
 
-        byte  key.uc.d, id.dialog.file
-        data  dialog.dir
+        byte  key.uc.c, id.dialog.file
+        data  dialog.cat
 
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
@@ -252,6 +252,12 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.load
         data  edkey.action.cmdb.load
+
+        byte  key.fctn.e, id.dialog.load
+        data  edkey.action.cmdb.file.prev
+
+        byte  key.fctn.x, id.dialog.load
+        data  edkey.action.cmdb.file.next
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
@@ -260,6 +266,12 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.insert
+
+        byte  key.fctn.e, id.dialog.insert
+        data  edkey.action.cmdb.file.prev
+
+        byte  key.fctn.x, id.dialog.insert
+        data  edkey.action.cmdb.file.next
         ;-------------------------------------------------------
         ; Dialog: Append file
         ;-------------------------------------------------------
@@ -268,6 +280,12 @@ keymap_actions.cmdb:
 
         byte  key.enter, id.dialog.append
         data  edkey.action.cmdb.append
+
+        byte  key.fctn.e, id.dialog.append
+        data  edkey.action.cmdb.file.prev
+
+        byte  key.fctn.x, id.dialog.append
+        data  edkey.action.cmdb.file.next        
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------
@@ -292,9 +310,9 @@ keymap_actions.cmdb:
         byte  key.num.5, id.dialog.clipboard
         data  edkey.action.cmdb.clip.5
         ;-------------------------------------------------------
-        ; Dialog: Dir
+        ; Dialog: Catalog drive/directory
         ;-------------------------------------------------------
-        byte  key.enter, id.dialog.dir        
+        byte  key.enter, id.dialog.cat        
         data  edkey.action.cmdb.file.directory.device 
         ;-------------------------------------------------------
         ; Dialog: Configure

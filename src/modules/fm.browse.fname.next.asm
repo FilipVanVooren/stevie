@@ -25,10 +25,12 @@ fm.browse.fname.next:
         ;------------------------------------------------------
         ; Next filename in catalog filename list
         ;------------------------------------------------------
-        mov   @cat.shortcut.idx,tmp0
-        c     tmp0,@cat.filecount
-        jeq   fm.browse.fname.next.skip  ; Skip if last file in catalog reached
-        inc   @cat.shortcut.idx          ; Next file in catalog
+        mov   @cat.shortcut.idx,tmp0     ; \ Get current file index 
+        inc   tmp0                       ; / Base 1
+        c     tmp0,@cat.filecount        ; Last file reached ?
+        jlt   !                          ; No, continue
+        jmp   fm.browse.fname.next.skip  ; Yes, exit early
+!       inc   @cat.shortcut.idx          ; Next file in catalog
 
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name

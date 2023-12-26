@@ -117,10 +117,13 @@ main:
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
         copy  "edkey.cmdb.file.dir.asm"     ; Drive/Directory listing
+        copy  "edkey.cmdb.file.prev.asm"    ; Pick previous file in catalog
+        copy  "edkey.cmdb.file.next.asm"    ; Pick next file in catalog
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
+
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
