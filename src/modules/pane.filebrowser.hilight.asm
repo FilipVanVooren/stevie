@@ -30,17 +30,28 @@ pane.filebrowser.hilight:
         ;------------------------------------------------------
         ; Determine offset on current page
         ;------------------------------------------------------
-!       mov   @cat.fpicker.idx,tmp0 ; Get index
-        mov   @cat.currentpage,tmp1 ; Get current page
-        mpy   @cat.nofilespage,tmp1 ; \ Calculate offset on current page
-                                    ; / result is in 32bit word (tmp2)
-        s     tmp2,tmp0             ; Get offset on current page
+!       mov   @cat.shortcut.idx,tmp0 ; Get index
+        mov   @cat.currentpage,tmp1  ; Get current page
+        ci    tmp1,1                 ; On 1st page?
+
+        jeq   pane.filebrowser.hilight.rowcol
+                                     ; Yes, skip page calculation
+
+        mpy   @cat.nofilespage,tmp1  ; \ Calculate offset on current page
+                                     ; / result is in 32bit word (tmp2)
+        s     tmp2,tmp0              ; Get offset on current page
         ;------------------------------------------------------
-        ; Calculate row/column based on offset on current page
+        ; Calculate column/row offset based on offset on current page
         ;------------------------------------------------------
-        mov   tmp0,tmp1
-        clr   tmp0
-        div   @cat.norowscol,tmp0
+pane.filebrowser.hilight.rowcol:        
+        mov   tmp0,tmp1              ; Get index in filename list in LSW
+        clr   tmp0                   ; Clear MSW
+        div   @cat.norowscol,tmp0    ; \ Do division on 32 bit word.
+                                     ; / tmp0 is column, tmp1 is row offset
+        movb  @tmp0lb,@tmp1hb        ; Combine column & row in single word                                   
+        mov   @cat.hilit.colrow,@cat.hilit.colrow2 
+                                     ; Backup current column & row 
+        mov   tmp1,@cat.hilit.colrow ; Save new column & row
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

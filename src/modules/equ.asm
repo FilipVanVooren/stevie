@@ -396,8 +396,8 @@ tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
 cat.fpicker.idx   equ  cat.top + 2     ; File picker index in catalog
-cat.fpicker.yx    equ  cat.top + 4     ; File picker current YX coordinates
-cat.fpicker.yx2   equ  cat.top + 6     ; File picker previous YX coordinates
+cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
+cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
 cat.nofilespage   equ  cat.top + 8     ; Number of files per page
 cat.currentpage   equ  cat.top + 10    ; Current page
 cat.totalpages    equ  cat.top + 12    ; Total number of pages
