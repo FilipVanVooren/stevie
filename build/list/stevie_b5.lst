@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231226-1910200
+0002               * BUILD: 231226-2104220
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -577,13 +577,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0396      E000     cat.top           equ  >e000           ; Top of file catalog
 0397      E000     cat.filecount     equ  cat.top         ; Total files in catalog
 0398      E002     cat.fpicker.idx   equ  cat.top + 2     ; File picker index in catalog
-0399      E004     cat.nofilespage   equ  cat.top + 4     ; Number of files per page
-0400      E006     cat.currentpage   equ  cat.top + 6     ; Current page
-0401      E008     cat.totalpages    equ  cat.top + 8     ; Total number of pages
-0402      E00A     cat.shortcut.idx  equ  cat.top + 10    ; Current file prev/next shortcut key
-0403      E00C     cat.free4         equ  cat.top + 12    ; Free
-0404      E00E     cat.free5         equ  cat.top + 14    ; Free
-0405      E010     cat.free6         equ  cat.top + 16    ; Free
+0399      E004     cat.fpicker.yx    equ  cat.top + 4     ; File picker current YX coordinates
+0400      E006     cat.fpicker.yx2   equ  cat.top + 6     ; File picker previous YX coordinates
+0401      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
+0402      E00A     cat.currentpage   equ  cat.top + 10    ; Current page
+0403      E00C     cat.totalpages    equ  cat.top + 12    ; Total number of pages
+0404      E00E     cat.shortcut.idx  equ  cat.top + 14    ; Current file prev/next shortcut key
+0405      E010     cat.norowscol     equ  cat.top + 16    ; Number of rows per column
 0406      E012     cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
 0407               ;-----------------------------------------------------------------
 0408               ; Directory/File catalog pointers and numbers
@@ -11701,25 +11701,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
-    CAT.CURRENTPAGE..... >E006 :     
+    CAT.CURRENTPAGE..... >E00A :     
     CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
     CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE4........... >E00C :     
-    CAT.FREE5........... >E00E :     
-    CAT.FREE6........... >E010 :     
+    CAT.FPICKER.YX...... >E004 :     
+    CAT.FPICKER.YX2..... >E006 :     
     CAT.FSLIST.......... >E2BA :     
     CAT.FTLIST.......... >E23A :     
     CAT.FULLFNAME....... >E012 :     
-    CAT.NOFILESPAGE..... >E004 :     
+    CAT.NOFILESPAGE..... >E008 :     
+    CAT.NOROWSCOL....... >E010 :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
-    CAT.SHORTCUT.IDX.... >E00A :     
+    CAT.SHORTCUT.IDX.... >E00E :     
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E008 :     
+    CAT.TOTALPAGES...... >E00C :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     

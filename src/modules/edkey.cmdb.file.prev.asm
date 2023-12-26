@@ -19,13 +19,16 @@ edkey.action.cmdb.file.prev:
         ; Adjust filename
         ;------------------------------------------------------
         bl    @fm.browse.fname.prev ; Previous file in catalog filename list
+
         mov   @outparm1,tmp0        ; Skipped flag set?
         jne   edkey.action.cmdb.file.prev.exit
                                     ; Yes, exit early
+
+        bl    @pane.filebrowser.hilight                                    
         ;------------------------------------------------------
         ; Previous file
         ;------------------------------------------------------
-edkey.action.cmdb.file.prev.setfile:        
+edkey.action.cmdb.file.prev.setfile:
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
                                     ; Copy filename from command line to buffer

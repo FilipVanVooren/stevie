@@ -232,31 +232,9 @@ fb.scan.fname:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
-***************************************************************
-* Stub for "dialog.help.content"
-* bank4 vec.65
-********|*****|*********************|**************************
-dialog.help.content:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 4
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.65           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
 ***************************************************************
 * Stub for "pane.filebrowser"
-* bank4 vec.66
+* bank4 vec.50
 ********|*****|*********************|**************************
 pane.filebrowser:
         dect  stack
@@ -266,7 +244,27 @@ pane.filebrowser:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
-              data vec.66           ; | i  p1 = Vector with target address
+              data vec.50           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+***************************************************************
+* Stub for "dialog.help.content"
+* bank4 vec.64
+********|*****|*********************|**************************
+dialog.help.content:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.64           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

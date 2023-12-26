@@ -63,8 +63,8 @@ vec.46  data  cpu.crash             ;
 vec.47  data  cpu.crash             ;
 vec.48  data  cpu.crash             ;
 vec.49  data  cpu.crash             ;
-vec.50  data  cpu.crash             ;
-vec.51  data  cpu.crash             ;
+vec.50  data  pane.filebrowser      ; File browser
+vec.51  data  pane.filebrowser.hilight
 vec.52  data  cpu.crash             ;
 vec.53  data  cpu.crash             ;
 vec.54  data  cpu.crash             ;
@@ -77,12 +77,12 @@ vec.60  data  cpu.crash             ;
 vec.61  data  cpu.crash             ;
 vec.62  data  cpu.crash             ;
 vec.63  data  cpu.crash             ;
-vec.64  data  cpu.crash             ;
+vec.64  data  dialog.help.content   ; Content for Help dialog
 *--------------------------------------------------------------
 * ROM 4: Vectors 65-96
 *--------------------------------------------------------------
-vec.65  data  dialog.help.content   ; Content for Help dialog
-vec.66  data  pane.filebrowser       ; File browser
+vec.65  data  cpu.crash             ;
+vec.66  data  cpu.crash             ;
 vec.67  data  cpu.crash             ;
 vec.68  data  cpu.crash             ;
 vec.69  data  cpu.crash             ;

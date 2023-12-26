@@ -101,8 +101,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs (2)
         ;-----------------------------------------------------------------------                
-        copy  "dialog.help.content.asm" ; Draw help dialog content
-        copy  "pane.filebrowser.asm"     ; File browser
+        copy  "dialog.help.content.asm"      ; Draw help dialog content
+        copy  "pane.filebrowser.asm"         ; File browser
+        copy  "pane.filebrowser.hilight.asm" ; Highlight entry in filename list
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

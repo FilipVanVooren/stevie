@@ -879,13 +879,24 @@ pane.errline.drawcolor.vector:
 
 ***************************************************************
 * Stub for "pane.filebrowser"
-* bank4 vec.66
+* bank4 vec.50
 ********|*****|*********************|**************************
 pane.filebrowser:
         mov   @pane.filebrowser.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.filebrowser.vector:
-        data  vec.66
+        data  vec.50
+
+
+***************************************************************
+* Stub for "pane.filebrowser.hilight"
+* bank4 vec.51
+********|*****|*********************|**************************
+pane.filebrowser.hilight:
+        mov   @pane.filebrowser.hilight.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.filebrowser.hilight.vector:
+        data  vec.51
 
 
 ***************************************************************

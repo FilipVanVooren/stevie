@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231226-1910200
+0002               * BUILD: 231226-2104220
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -577,13 +577,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0396      E000     cat.top           equ  >e000           ; Top of file catalog
 0397      E000     cat.filecount     equ  cat.top         ; Total files in catalog
 0398      E002     cat.fpicker.idx   equ  cat.top + 2     ; File picker index in catalog
-0399      E004     cat.nofilespage   equ  cat.top + 4     ; Number of files per page
-0400      E006     cat.currentpage   equ  cat.top + 6     ; Current page
-0401      E008     cat.totalpages    equ  cat.top + 8     ; Total number of pages
-0402      E00A     cat.shortcut.idx  equ  cat.top + 10    ; Current file prev/next shortcut key
-0403      E00C     cat.free4         equ  cat.top + 12    ; Free
-0404      E00E     cat.free5         equ  cat.top + 14    ; Free
-0405      E010     cat.free6         equ  cat.top + 16    ; Free
+0399      E004     cat.fpicker.yx    equ  cat.top + 4     ; File picker current YX coordinates
+0400      E006     cat.fpicker.yx2   equ  cat.top + 6     ; File picker previous YX coordinates
+0401      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
+0402      E00A     cat.currentpage   equ  cat.top + 10    ; Current page
+0403      E00C     cat.totalpages    equ  cat.top + 12    ; Total number of pages
+0404      E00E     cat.shortcut.idx  equ  cat.top + 14    ; Current file prev/next shortcut key
+0405      E010     cat.norowscol     equ  cat.top + 16    ; Number of rows per column
 0406      E012     cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
 0407               ;-----------------------------------------------------------------
 0408               ; Directory/File catalog pointers and numbers
@@ -12978,7 +12978,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0050                       ; Get pointer from filename list in catalog
 0051                       ;------------------------------------------------------
 0052 6D9E C120  34         mov   @cat.shortcut.idx,tmp0  ; Get index
-     6DA0 E00A     
+     6DA0 E00E     
 0053 6DA2 0A14  18         sla   tmp0,1                  ; Word align
 0054 6DA4 C124  34         mov   @cat.ptrlist(tmp0),tmp0 ; Get pointer
      6DA6 E13C     
@@ -13049,10 +13049,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026                       ; Previous filename in catalog filename list
 0027                       ;------------------------------------------------------
 0028 6DD8 C120  34         mov   @cat.shortcut.idx,tmp0
-     6DDA E00A     
+     6DDA E00E     
 0029 6DDC 1309  14         jeq   fm.browse.fname.prev.exit  ; Skip if first file in catalog reached
 0030 6DDE 0620  34         dec   @cat.shortcut.idx          ; Previous file in catalog
-     6DE0 E00A     
+     6DE0 E00E     
 0031               
 0032 6DE2 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6DE4 6D6C     
@@ -13110,14 +13110,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026                       ; Next filename in catalog filename list
 0027                       ;------------------------------------------------------
 0028 6DFE C120  34         mov   @cat.shortcut.idx,tmp0     ; \ Get current file index
-     6E00 E00A     
+     6E00 E00E     
 0029 6E02 0584  14         inc   tmp0                       ; / Base 1
 0030 6E04 8804  34         c     tmp0,@cat.filecount        ; Last file reached ?
      6E06 E000     
 0031 6E08 1101  14         jlt   !                          ; No, continue
 0032 6E0A 1007  14         jmp   fm.browse.fname.next.skip  ; Yes, exit early
 0033 6E0C 05A0  34 !       inc   @cat.shortcut.idx          ; Next file in catalog
-     6E0E E00A     
+     6E0E E00E     
 0034               
 0035 6E10 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6E12 6D6C     
@@ -13641,7 +13641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0153               
 0154               ***************************************************************
 0155               * Stub for "pane.filebrowser"
-0156               * bank4 vec.66
+0156               * bank4 vec.50
 0157               ********|*****|*********************|**************************
 0158               pane.filebrowser:
 0159 7028 0649  14         dect  stack
@@ -13652,7 +13652,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0164 702C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      702E 3038     
 0165 7030 6008                   data bank4.rom        ; | i  p0 = bank address
-0166 7032 7FC2                   data vec.66           ; | i  p1 = Vector with target address
+0166 7032 7FA2                   data vec.50           ; | i  p1 = Vector with target address
 0167 7034 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0168                       ;------------------------------------------------------
 0169                       ; Exit
@@ -14400,25 +14400,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
-    CAT.CURRENTPAGE..... >E006 :     
+    CAT.CURRENTPAGE..... >E00A :     
     CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
     CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE4........... >E00C :     
-    CAT.FREE5........... >E00E :     
-    CAT.FREE6........... >E010 :     
+    CAT.FPICKER.YX...... >E004 :     
+    CAT.FPICKER.YX2..... >E006 :     
     CAT.FSLIST.......... >E2BA :     
     CAT.FTLIST.......... >E23A :     
     CAT.FULLFNAME....... >E012 :     
-    CAT.NOFILESPAGE..... >E004 :     
+    CAT.NOFILESPAGE..... >E008 :     
+    CAT.NOROWSCOL....... >E010 :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
-    CAT.SHORTCUT.IDX.... >E00A :     
+    CAT.SHORTCUT.IDX.... >E00E :     
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E008 :     
+    CAT.TOTALPAGES...... >E00C :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     

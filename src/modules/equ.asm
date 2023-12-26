@@ -396,13 +396,13 @@ tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
 cat.top           equ  >e000           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
 cat.fpicker.idx   equ  cat.top + 2     ; File picker index in catalog
-cat.nofilespage   equ  cat.top + 4     ; Number of files per page
-cat.currentpage   equ  cat.top + 6     ; Current page
-cat.totalpages    equ  cat.top + 8     ; Total number of pages
-cat.shortcut.idx  equ  cat.top + 10    ; Current file prev/next shortcut key
-cat.free4         equ  cat.top + 12    ; Free
-cat.free5         equ  cat.top + 14    ; Free
-cat.free6         equ  cat.top + 16    ; Free
+cat.fpicker.yx    equ  cat.top + 4     ; File picker current YX coordinates
+cat.fpicker.yx2   equ  cat.top + 6     ; File picker previous YX coordinates
+cat.nofilespage   equ  cat.top + 8     ; Number of files per page
+cat.currentpage   equ  cat.top + 10    ; Current page
+cat.totalpages    equ  cat.top + 12    ; Total number of pages
+cat.shortcut.idx  equ  cat.top + 14    ; Current file prev/next shortcut key
+cat.norowscol     equ  cat.top + 16    ; Number of rows per column
 cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
 ;-----------------------------------------------------------------
 ; Directory/File catalog pointers and numbers

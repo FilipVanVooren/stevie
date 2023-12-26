@@ -153,7 +153,7 @@ pane.botline.busy.off:
 
 ***************************************************************
 * Stub for "pane.filebrowser"
-* bank4 vec.66
+* bank4 vec.50
 ********|*****|*********************|**************************
 pane.filebrowser:
         dect  stack
@@ -163,7 +163,7 @@ pane.filebrowser:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
-              data vec.66           ; | i  p1 = Vector with target address
+              data vec.50           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

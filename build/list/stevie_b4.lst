@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231226-1910200
+0002               * BUILD: 231226-2104220
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -577,13 +577,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0396      E000     cat.top           equ  >e000           ; Top of file catalog
 0397      E000     cat.filecount     equ  cat.top         ; Total files in catalog
 0398      E002     cat.fpicker.idx   equ  cat.top + 2     ; File picker index in catalog
-0399      E004     cat.nofilespage   equ  cat.top + 4     ; Number of files per page
-0400      E006     cat.currentpage   equ  cat.top + 6     ; Current page
-0401      E008     cat.totalpages    equ  cat.top + 8     ; Total number of pages
-0402      E00A     cat.shortcut.idx  equ  cat.top + 10    ; Current file prev/next shortcut key
-0403      E00C     cat.free4         equ  cat.top + 12    ; Free
-0404      E00E     cat.free5         equ  cat.top + 14    ; Free
-0405      E010     cat.free6         equ  cat.top + 16    ; Free
+0399      E004     cat.fpicker.yx    equ  cat.top + 4     ; File picker current YX coordinates
+0400      E006     cat.fpicker.yx2   equ  cat.top + 6     ; File picker previous YX coordinates
+0401      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
+0402      E00A     cat.currentpage   equ  cat.top + 10    ; Current page
+0403      E00C     cat.totalpages    equ  cat.top + 12    ; Total number of pages
+0404      E00E     cat.shortcut.idx  equ  cat.top + 14    ; Current file prev/next shortcut key
+0405      E010     cat.norowscol     equ  cat.top + 16    ; Number of rows per column
 0406      E012     cat.fullfname     equ  cat.top + 18    ; Device & filename string (80)
 0407               ;-----------------------------------------------------------------
 0408               ; Directory/File catalog pointers and numbers
@@ -9829,7 +9829,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027 6054 1604  14         jne   fb.cursor.top.refresh
 0028               
 0029 6056 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6058 749C     
+     6058 74D8     
 0030                                                   ; \ i   @fb.top      = Address top row in FB
 0031                                                   ; | i   @fb.row      = Current row in FB
 0032                                                   ; | i   @fb.column   = Current column in FB
@@ -9893,7 +9893,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027 607C 1604  14         jne   fb.cursor.topscr.refresh
 0028               
 0029 607E 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6080 749C     
+     6080 74D8     
 0030                                                   ; \ i   @fb.top      = Address top row in FB
 0031                                                   ; | i   @fb.row      = Current row in FB
 0032                                                   ; | i   @fb.column   = Current column in FB
@@ -9955,7 +9955,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027 60A2 1604  14         jne   fb.cursor.bot.refresh
 0028               
 0029 60A4 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     60A6 749C     
+     60A6 74D8     
 0030                                                   ; \ i   @fb.top      = Address top row in FB
 0031                                                   ; | i   @fb.row      = Current row in FB
 0032                                                   ; | i   @fb.column   = Current column in FB
@@ -10033,7 +10033,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029 60E2 1604  14         jne   fb.cursor.botscr.cursor
 0030               
 0031 60E4 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     60E6 749C     
+     60E6 74D8     
 0032                                                   ; \ i   @fb.top      = Address top row in FB
 0033                                                   ; | i   @fb.row      = Current row in FB
 0034                                                   ; | i   @fb.column   = Current column in FB
@@ -10133,7 +10133,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028 6132 1604  14         jne   fb.cursor.up.cursor
 0029               
 0030 6134 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6136 749C     
+     6136 74D8     
 0031                                                   ; \ i   @fb.top      = Address top row in FB
 0032                                                   ; | i   @fb.row      = Current row in FB
 0033                                                   ; | i   @fb.column   = Current column in FB
@@ -10260,7 +10260,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034 6198 1604  14         jne   fb.cursor.down.move
 0035               
 0036 619A 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     619C 749C     
+     619C 74D8     
 0037                                                   ; \ i   @fb.top      = Address top row in FB
 0038                                                   ; | i   @fb.row      = Current row in FB
 0039                                                   ; | i   @fb.column   = Current column in FB
@@ -10469,7 +10469,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041 6244 1604  14         jne   fb.insert.line.insert
 0042               
 0043 6246 06A0  32         bl    @edb.line.pack.fb     ; Pack current line in framebuffer
-     6248 749C     
+     6248 74D8     
 0044                                                   ; \ i  @fb.top      = Address top row in FB
 0045                                                   ; | i  @fb.row      = Current row in FB
 0046                                                   ; | i  @fb.column   = Current column in FB
@@ -10658,7 +10658,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6300 A506     
 0071               
 0072 6302 06A0  32         bl    @edb.line.pack.fb     ; Copy line to editor buffer
-     6304 749C     
+     6304 74D8     
 0073                                                   ; \ i   @fb.top      = Address top row in FB
 0074                                                   ; | i   @fb.row      = Current row in FB
 0075                                                   ; | i   @fb.column   = Current column in FB
@@ -11998,7 +11998,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      67FA A218     
      67FC A006     
 0042 67FE 06A0  32         bl    @pane.colorscheme.statlines
-     6800 74D2     
+     6800 750E     
 0043                                                   ; Set color combination for status lines
 0044                                                   ; \ i  @parm1 = Color combination
 0045                                                   ; /
@@ -12009,7 +12009,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6804 A31A     
 0050               
 0051 6806 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6808 74C0     
+     6808 74FC     
 0052                       ;------------------------------------------------------
 0053                       ; Exit
 0054                       ;------------------------------------------------------
@@ -12075,7 +12075,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      683E A00A     
 0043               
 0044 6840 06A0  32         bl    @edb.line.unpack.fb   ; Unpack line from editor buffer
-     6842 74AE     
+     6842 74EA     
 0045                                                   ; \ i  parm1    = Line to unpack
 0046                                                   ; | i  parm2    = Target row in frame buffer
 0047                                                   ; | i  parm3    = Column offset
@@ -12429,7 +12429,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      69AE A008     
 0040               
 0041 69B0 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
-     69B2 74E4     
+     69B2 7520     
 0042                                                   ; \ i  @parm1 = Color combination
 0043                                                   ; / i  @parm2 = Row on physical screen
 0044               
@@ -12829,7 +12829,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6B78 A21C     
      6B7A A006     
 0032 6B7C 06A0  32         bl    @pane.colorscheme.statlines
-     6B7E 74D2     
+     6B7E 750E     
 0033                                                   ; Set color combination for status line
 0034                                                   ; \ i  @parm1 = Color combination
 0035                                                   ; /
@@ -12877,7 +12877,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6B9E A218     
      6BA0 A006     
 0073 6BA2 06A0  32         bl    @pane.colorscheme.statlines
-     6BA4 74D2     
+     6BA4 750E     
 0074                                                   ; Set color combination for status lines
 0075                                                   ; \ i  @parm1 = Color combination
 0076                                                   ; /
@@ -12938,7 +12938,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6BCA A008     
 0042               
 0043 6BCC 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
-     6BCE 74E4     
+     6BCE 7520     
 0044                                                   ; \ i  @parm1 = Color combination
 0045                                                   ; / i  @parm2 = Row on physical screen
 0046               
@@ -13255,7 +13255,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0101                       ;-----------------------------------------------------------------------
 0102                       ; Dialogs (2)
 0103                       ;-----------------------------------------------------------------------
-0104                       copy  "dialog.help.content.asm" ; Draw help dialog content
+0104                       copy  "dialog.help.content.asm"      ; Draw help dialog content
      **** ****     > dialog.help.content.asm
 0001               * FILE......: dialog.help.content.asm
 0002               * Purpose...: Content for Help dialog
@@ -14163,7 +14163,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      72FA 2031     
      72FC 2D33     
                    < stevie_b4.asm
-0105                       copy  "pane.filebrowser.asm"     ; File browser
+0105                       copy  "pane.filebrowser.asm"         ; File browser
      **** ****     > pane.filebrowser.asm
 0001               * FILE......: pane.filebrowser.asm
 0002               * Purpose...: File browser in dialog pane
@@ -14177,7 +14177,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010               * @cat.fpicker.idx = 1st file to show in file browser
 0011               *--------------------------------------------------------------
 0012               * Register usage
-0013               * tmp0, tmp1
+0013               * tmp0, tmp1, tmp2
 0014               ********|*****|*********************|**************************
 0015               pane.filebrowser:
 0016 72FE 0649  14         dect  stack
@@ -14195,7 +14195,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7310 E000     
 0028 7312 1602  14         jne   pane.filebrowser.volume ; \
 0029 7314 0460  28         b     @pane.filebrowser.exit  ; / Exit if nothing to display
-     7316 7450     
+     7316 7454     
 0030                       ;------------------------------------------------------
 0031                       ; Show volume name, no files, device path
 0032                       ;------------------------------------------------------
@@ -14210,7 +14210,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038 7322 06A0  32         bl    @putat
      7324 2442     
 0039 7326 0000                   byte 0,0
-0040 7328 745A                   data txt.volume       ; Display "Volume: ...."
+0040 7328 745E                   data txt.volume       ; Display "Volume: ...."
 0041               
 0042 732A C120  34         mov   @cat.volname,tmp0     ; Volume name set?
      732C E3BA     
@@ -14278,17 +14278,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0094 7374 06A0  32         bl    @putat
      7376 2442     
 0095 7378 0101                   byte 1,1
-0096 737A 7484                   data txt.header       ; Column 1
+0096 737A 7488                   data txt.header       ; Column 1
 0097               
 0098 737C 06A0  32         bl    @putat
      737E 2442     
 0099 7380 011D                   byte 1,29
-0100 7382 7484                   data txt.header       ; Column 2
+0100 7382 7488                   data txt.header       ; Column 2
 0101               
 0102 7384 06A0  32         bl    @putat
      7386 2442     
 0103 7388 0139                   byte 1,57
-0104 738A 7484                   data txt.header       ; Column 3
+0104 738A 7488                   data txt.header       ; Column 3
 0105               
 0106 738C 06A0  32         bl    @hchar                ; Show horizontal lines
      738E 27F0     
@@ -14321,7 +14321,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0123 73BA 0A14  18         sla   tmp0,1                  ; Make it an offset
 0124 73BC C164  34         mov   @cat.ptrlist(tmp0),tmp1 ; Get filename list
      73BE E13C     
-0125 73C0 1347  14         jeq   pane.filebrowser.exit   ; Skip on empty list
+0125 73C0 1349  14         jeq   pane.filebrowser.exit   ; Skip on empty list
 0126                       ;------------------------------------------------------
 0127                       ; Show Catalog
 0128                       ;------------------------------------------------------
@@ -14344,159 +14344,222 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      73DA E12C     
 0141               
 0142 73DC 0646  14         dect  tmp2                  ; Take header lines into account
-0143 73DE C1C6  18         mov   tmp2,tmp3             ; \
-0144 73E0 A187  18         a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
-0145 73E2 A187  18         a     tmp3,tmp2             ; /
-0146 73E4 C806  38         mov   tmp2,@cat.var2        ; Save files per page to display
-     73E6 E12E     
-0147 73E8 C806  38         mov   tmp2,@cat.nofilespage ; Backup. Used for navigation.
-     73EA E004     
-0148                       ;------------------------------------------------------
-0149                       ; Prepare for calculations
+0143 73DE C806  38         mov   tmp2,@cat.norowscol   ; Save number of rows per column
+     73E0 E010     
+0144               
+0145 73E2 C1C6  18         mov   tmp2,tmp3             ; \
+0146 73E4 A187  18         a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
+0147 73E6 A187  18         a     tmp3,tmp2             ; /
+0148 73E8 C806  38         mov   tmp2,@cat.var2        ; Save files per page to display
+     73EA E12E     
+0149 73EC C806  38         mov   tmp2,@cat.nofilespage ; Backup. Used for navigation.
+     73EE E008     
 0150                       ;------------------------------------------------------
-0151 73EC 0649  14         dect  stack
-0152 73EE C644  30         mov   tmp0,*stack           ; Push tmp0
+0151                       ; Prepare for calculations
+0152                       ;------------------------------------------------------
 0153 73F0 0649  14         dect  stack
-0154 73F2 C645  30         mov   tmp1,*stack           ; Push tmp1
+0154 73F2 C644  30         mov   tmp0,*stack           ; Push tmp0
 0155 73F4 0649  14         dect  stack
-0156 73F6 C646  30         mov   tmp2,*stack           ; Push tmp2
-0157                       ;------------------------------------------------------
-0158                       ; Calc number of pages
+0156 73F6 C645  30         mov   tmp1,*stack           ; Push tmp1
+0157 73F8 0649  14         dect  stack
+0158 73FA C646  30         mov   tmp2,*stack           ; Push tmp2
 0159                       ;------------------------------------------------------
-0160 73F8 C120  34         mov   @cat.nofilespage,tmp0 ; \ Files per page
-     73FA E004     
-0161 73FC 04C5  14         clr   tmp1                  ; | hi-word 32 bit
-0162 73FE C1A0  34         mov   @cat.filecount,tmp2   ; | lo-word 32 bit register (total files)
-     7400 E000     
-0163 7402 3D44 128         div   tmp0,tmp1             ; | Get total pages
-0164 7404 C805  38         mov   tmp1,@cat.totalpages  ; / Store total pages in memory
-     7406 E008     
-0165               
-0166 7408 0286  22         ci    tmp2,0                ; Remainder of division > 0
-     740A 0000     
-0167 740C 1302  14         jeq   !                     ; No, continue
-0168 740E 05A0  34         inc   @cat.totalpages       ; Yes, files on page
-     7410 E008     
-0169                       ;------------------------------------------------------
-0170                       ; Calc current page
+0160                       ; Calc number of pages
+0161                       ;------------------------------------------------------
+0162 73FC C120  34         mov   @cat.nofilespage,tmp0 ; \ Files per page
+     73FE E008     
+0163 7400 04C5  14         clr   tmp1                  ; | hi-word 32 bit
+0164 7402 C1A0  34         mov   @cat.filecount,tmp2   ; | lo-word 32 bit register (total files)
+     7404 E000     
+0165 7406 3D44 128         div   tmp0,tmp1             ; | Get total pages
+0166 7408 C805  38         mov   tmp1,@cat.totalpages  ; / Store total pages in memory
+     740A E00C     
+0167               
+0168 740C 0286  22         ci    tmp2,0                ; Remainder of division > 0
+     740E 0000     
+0169 7410 1302  14         jeq   !                     ; No, continue
+0170 7412 05A0  34         inc   @cat.totalpages       ; Yes, there are files on the page
+     7414 E00C     
 0171                       ;------------------------------------------------------
-0172 7412 04C5  14 !       clr   tmp1                   ; \ hi-word 32 bit
-0173 7414 C1A0  34         mov   @cat.fpicker.idx,tmp2  ; | lo-word 32 bit register (current idx)
-     7416 E002     
-0174 7418 3D44 128         div   tmp0,tmp1              ; | Get current page
-0175 741A 1901  14         jno   pane.filebrowser.divok ; / Store if normal division
-0176 741C 04C5  14         clr   tmp1                   ; We're on 1st page (base 0 offset)
-0177               pane.filebrowser.divok:
-0178 741E 0585  14         inc   tmp1                   ; Consider base 1 offset
-0179 7420 C805  38         mov   tmp1,@cat.currentpage  ; Store current page in memory
-     7422 E006     
-0180                       ;------------------------------------------------------
-0181                       ; Calculations done
+0172                       ; Calc current page
+0173                       ;------------------------------------------------------
+0174 7416 04C5  14 !       clr   tmp1                   ; \ hi-word 32 bit
+0175 7418 C1A0  34         mov   @cat.fpicker.idx,tmp2  ; | lo-word 32 bit register (current idx)
+     741A E002     
+0176 741C 3D44 128         div   tmp0,tmp1              ; | Get current page
+0177 741E 1901  14         jno   pane.filebrowser.divok ; / Store if normal division
+0178 7420 04C5  14         clr   tmp1                   ; We're on 1st page (base 0 offset)
+0179               pane.filebrowser.divok:
+0180 7422 0585  14         inc   tmp1                   ; Consider base 1 offset
+0181 7424 C805  38         mov   tmp1,@cat.currentpage  ; Store current page in memory
+     7426 E00A     
 0182                       ;------------------------------------------------------
-0183               pane.filebrowser.calcdone:
-0184 7424 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0185 7426 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0186 7428 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0187                       ;------------------------------------------------------
-0188                       ; Show filenames
+0183                       ; Calculations done
+0184                       ;------------------------------------------------------
+0185               pane.filebrowser.calcdone:
+0186 7428 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0187 742A C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0188 742C C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0189                       ;------------------------------------------------------
-0190 742A 04E0  26         clr   @waux1                ; \ Set null pointer
-     742C 833C     
-0191                                                   ; | Note: putlst only sets @waux1 if
-0192                                                   ; |       tmp2 < entries in list
-0193                                                   ; /
-0194               
-0195 742E 06A0  32         bl    @putlst               ; Loop over string list and display
-     7430 244A     
-0196                                                   ; \ i  @wyx = Cursor position
-0197                                                   ; | i  tmp0 = Cutover row and column offset
-0198                                                   ; |           for next column, >0000 for
-0199                                                   ; |           single column list
-0200                                                   ; | i  tmp1 = Pointer to first length-
-0201                                                   ; |           prefixed string in list
-0202                                                   ; | i  tmp2 = Number of strings to display
-0203                                                   ; | o  @waux1 = Pointer to next entry
-0204                                                   ; |             in list after displaying
-0205                                                   ; /             (tmp2) entries
-0206                       ;------------------------------------------------------
-0207                       ; Prepare for displaying filesize list
+0190                       ; Show filenames
+0191                       ;------------------------------------------------------
+0192 742E 04E0  26         clr   @waux1                ; \ Set null pointer
+     7430 833C     
+0193                                                   ; | Note: putlst only sets @waux1 if
+0194                                                   ; |       tmp2 < entries in list
+0195                                                   ; /
+0196               
+0197 7432 06A0  32         bl    @putlst               ; Loop over string list and display
+     7434 244A     
+0198                                                   ; \ i  @wyx = Cursor position
+0199                                                   ; | i  tmp0 = Cutover row and column offset
+0200                                                   ; |           for next column, >0000 for
+0201                                                   ; |           single column list
+0202                                                   ; | i  tmp1 = Pointer to first length-
+0203                                                   ; |           prefixed string in list
+0204                                                   ; | i  tmp2 = Number of strings to display
+0205                                                   ; | o  @waux1 = Pointer to next entry
+0206                                                   ; |             in list after displaying
+0207                                                   ; /             (tmp2) entries
 0208                       ;------------------------------------------------------
-0209 7432 06A0  32         bl    @at                   ; Set cursor position
-     7434 26E4     
-0210 7436 0315                   byte 3,21             ; Y=3, X=21
-0211               
-0212 7438 C120  34         mov   @cat.fpicker.idx,tmp0  ; Get current index
-     743A E002     
-0213 743C 0A24  20         sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
-0214 743E 0205  20         li    tmp1,cat.sizelist      ; Set base
-     7440 E6C0     
-0215 7442 A144  18         a     tmp0,tmp1              ; Add offset
-0216               
-0217 7444 C120  34         mov   @cat.var1,tmp0        ; Get cutover row and column offset
-     7446 E12C     
-0218 7448 C1A0  34         mov   @cat.var2,tmp2        ; Get number of files to display
-     744A E12E     
-0219               
-0220 744C 06A0  32         bl    @putlst               ; Loop over string list and display
-     744E 244A     
-0221                                                   ; \ i  @wyx = Cursor position
-0222                                                   ; | i  tmp0 = Cutover row and column offset
-0223                                                   ; |           for next column, >0000 for
-0224                                                   ; |           single column list
-0225                                                   ; | i  tmp1 = Pointer to first length-
-0226                                                   ; |           prefixed string in list
-0227                                                   ; | i  tmp2 = Number of strings to display
-0228                                                   ; | o  @waux1 = Pointer to next entry
-0229                                                   ; |             in list after displaying
-0230                                                   ; /             (tmp2) entries
-0231                       ;------------------------------------------------------
-0232                       ; Exit
+0209                       ; Prepare for displaying filesize list
+0210                       ;------------------------------------------------------
+0211 7436 06A0  32         bl    @at                   ; Set cursor position
+     7438 26E4     
+0212 743A 0315                   byte 3,21             ; Y=3, X=21
+0213               
+0214 743C C120  34         mov   @cat.fpicker.idx,tmp0  ; Get current index
+     743E E002     
+0215 7440 0A24  20         sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
+0216 7442 0205  20         li    tmp1,cat.sizelist      ; Set base
+     7444 E6C0     
+0217 7446 A144  18         a     tmp0,tmp1              ; Add offset
+0218               
+0219 7448 C120  34         mov   @cat.var1,tmp0        ; Get cutover row and column offset
+     744A E12C     
+0220 744C C1A0  34         mov   @cat.var2,tmp2        ; Get number of files to display
+     744E E12E     
+0221               
+0222 7450 06A0  32         bl    @putlst               ; Loop over string list and display
+     7452 244A     
+0223                                                   ; \ i  @wyx = Cursor position
+0224                                                   ; | i  tmp0 = Cutover row and column offset
+0225                                                   ; |           for next column, >0000 for
+0226                                                   ; |           single column list
+0227                                                   ; | i  tmp1 = Pointer to first length-
+0228                                                   ; |           prefixed string in list
+0229                                                   ; | i  tmp2 = Number of strings to display
+0230                                                   ; | o  @waux1 = Pointer to next entry
+0231                                                   ; |             in list after displaying
+0232                                                   ; /             (tmp2) entries
 0233                       ;------------------------------------------------------
-0234               pane.filebrowser.exit:
-0235 7450 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0236 7452 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0237 7454 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0238 7456 C2F9  30         mov   *stack+,r11           ; Pop R11
-0239 7458 045B  20         b     *r11                  ; Return to caller
-0240               
-0241 745A 2756     txt.volume:       stri  'Volume:            Files:      Device: '
-     745C 6F6C     
-     745E 756D     
-     7460 653A     
-     7462 2020     
-     7464 2020     
+0234                       ; Exit
+0235                       ;------------------------------------------------------
+0236               pane.filebrowser.exit:
+0237 7454 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0238 7456 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0239 7458 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0240 745A C2F9  30         mov   *stack+,r11           ; Pop R11
+0241 745C 045B  20         b     *r11                  ; Return to caller
+0242               
+0243 745E 2756     txt.volume:       stri  'Volume:            Files:      Device: '
+     7460 6F6C     
+     7462 756D     
+     7464 653A     
      7466 2020     
      7468 2020     
      746A 2020     
      746C 2020     
-     746E 4669     
-     7470 6C65     
-     7472 733A     
-     7474 2020     
-     7476 2020     
+     746E 2020     
+     7470 2020     
+     7472 4669     
+     7474 6C65     
+     7476 733A     
      7478 2020     
-     747A 4465     
-     747C 7669     
-     747E 6365     
-     7480 3A20     
-0242 7482 012F     txt.slash:        stri  '/'
-0243 7484 174E     txt.header:       stri  'Name         Type  Size'
-     7486 616D     
-     7488 6520     
-     748A 2020     
-     748C 2020     
+     747A 2020     
+     747C 2020     
+     747E 4465     
+     7480 7669     
+     7482 6365     
+     7484 3A20     
+0244 7486 012F     txt.slash:        stri  '/'
+0245 7488 174E     txt.header:       stri  'Name         Type  Size'
+     748A 616D     
+     748C 6520     
      748E 2020     
      7490 2020     
-     7492 5479     
-     7494 7065     
-     7496 2020     
-     7498 5369     
-     749A 7A65     
+     7492 2020     
+     7494 2020     
+     7496 5479     
+     7498 7065     
+     749A 2020     
+     749C 5369     
+     749E 7A65     
                    < stevie_b4.asm
-0106                       ;-----------------------------------------------------------------------
-0107                       ; Stubs
-0108                       ;-----------------------------------------------------------------------
-0109                       copy  "rom.stubs.bank4.asm" ; Bank specific stubs
+0106                       copy  "pane.filebrowser.hilight.asm" ; Highlight entry in filename list
+     **** ****     > pane.filebrowser.hilight.asm
+0001               * FILE......: pane.filebrowser.hlight.asm
+0002               * Purpose...: File browser. Highlight current File in list
+0003               
+0004               *---------------------------------------------------------------
+0005               * File browser
+0006               *---------------------------------------------------------------
+0007               * bl   @pane.filebrowser.hlight
+0008               *---------------------------------------------------------------
+0009               * INPUT
+0010               * @cat.fpicker.idx = 1st file to show in file browser
+0011               *--------------------------------------------------------------
+0012               * Register usage
+0013               * tmp0, tmp1, tmp2
+0014               ********|*****|*********************|**************************
+0015               pane.filebrowser.hilight:
+0016 74A0 0649  14         dect  stack
+0017 74A2 C64B  30         mov   r11,*stack            ; Save return address
+0018 74A4 0649  14         dect  stack
+0019 74A6 C644  30         mov   tmp0,*stack           ; Push tmp0
+0020 74A8 0649  14         dect  stack
+0021 74AA C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 74AC 0649  14         dect  stack
+0023 74AE C646  30         mov   tmp2,*stack           ; Push tmp2
+0024                       ;------------------------------------------------------
+0025                       ; Initialisation
+0026                       ;------------------------------------------------------
+0027 74B0 C120  34         mov   @cat.filecount,tmp0           ; Get number of files
+     74B2 E000     
+0028 74B4 1601  14         jne   !                             ; \
+0029 74B6 100B  14         jmp   pane.filebrowser.hilight.exit ; / Exit if nothing to display
+0030                       ;------------------------------------------------------
+0031                       ; Determine offset on current page
+0032                       ;------------------------------------------------------
+0033 74B8 C120  34 !       mov   @cat.fpicker.idx,tmp0 ; Get index
+     74BA E002     
+0034 74BC C160  34         mov   @cat.currentpage,tmp1 ; Get current page
+     74BE E00A     
+0035 74C0 3960  74         mpy   @cat.nofilespage,tmp1 ; \ Calculate offset on current page
+     74C2 E008     
+0036                                                   ; / result is in 32bit word (tmp2)
+0037 74C4 6106  18         s     tmp2,tmp0             ; Get offset on current page
+0038                       ;------------------------------------------------------
+0039                       ; Calculate row/column based on offset on current page
+0040                       ;------------------------------------------------------
+0041 74C6 C144  18         mov   tmp0,tmp1
+0042 74C8 04C4  14         clr   tmp0
+0043 74CA 3D20 144         div   @cat.norowscol,tmp0
+     74CC E010     
+0044                       ;------------------------------------------------------
+0045                       ; Exit
+0046                       ;------------------------------------------------------
+0047               pane.filebrowser.hilight.exit:
+0048 74CE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0049 74D0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0050 74D2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0051 74D4 C2F9  30         mov   *stack+,r11           ; Pop R11
+0052 74D6 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b4.asm
+0107                       ;-----------------------------------------------------------------------
+0108                       ; Stubs
+0109                       ;-----------------------------------------------------------------------
+0110                       copy  "rom.stubs.bank4.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bank4.asm
 0001               * FILE......: rom.stubs.bank4.asm
 0002               * Purpose...: Bank 4 stubs for functions in other banks
@@ -14507,21 +14570,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               * bank1 vec.10
 0008               ********|*****|*********************|**************************
 0009               edb.line.pack.fb:
-0010 749C 0649  14         dect  stack
-0011 749E C64B  30         mov   r11,*stack            ; Save return address
+0010 74D8 0649  14         dect  stack
+0011 74DA C64B  30         mov   r11,*stack            ; Save return address
 0012                       ;------------------------------------------------------
 0013                       ; Call function in bank 1
 0014                       ;------------------------------------------------------
-0015 74A0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74A2 3038     
-0016 74A4 6002                   data bank1.rom        ; | i  p0 = bank address
-0017 74A6 7F52                   data vec.10           ; | i  p1 = Vector with target address
-0018 74A8 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0015 74DC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     74DE 3038     
+0016 74E0 6002                   data bank1.rom        ; | i  p0 = bank address
+0017 74E2 7F52                   data vec.10           ; | i  p1 = Vector with target address
+0018 74E4 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0019                       ;------------------------------------------------------
 0020                       ; Exit
 0021                       ;------------------------------------------------------
-0022 74AA C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 74AC 045B  20         b     *r11                  ; Return to caller
+0022 74E6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 74E8 045B  20         b     *r11                  ; Return to caller
 0024               
 0025               
 0026               ***************************************************************
@@ -14529,21 +14592,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               * bank1 vec.11
 0029               ********|*****|*********************|**************************
 0030               edb.line.unpack.fb:
-0031 74AE 0649  14         dect  stack
-0032 74B0 C64B  30         mov   r11,*stack            ; Save return address
+0031 74EA 0649  14         dect  stack
+0032 74EC C64B  30         mov   r11,*stack            ; Save return address
 0033                       ;------------------------------------------------------
 0034                       ; Call function in bank 1
 0035                       ;------------------------------------------------------
-0036 74B2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74B4 3038     
-0037 74B6 6002                   data bank1.rom        ; | i  p0 = bank address
-0038 74B8 7F54                   data vec.11           ; | i  p1 = Vector with target address
-0039 74BA 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 74EE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     74F0 3038     
+0037 74F2 6002                   data bank1.rom        ; | i  p0 = bank address
+0038 74F4 7F54                   data vec.11           ; | i  p1 = Vector with target address
+0039 74F6 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Exit
 0042                       ;------------------------------------------------------
-0043 74BC C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 74BE 045B  20         b     *r11                  ; Return to caller
+0043 74F8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 74FA 045B  20         b     *r11                  ; Return to caller
 0045               
 0046               
 0047               ***************************************************************
@@ -14551,21 +14614,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049               * bank1 vec.28
 0050               ********|*****|*********************|**************************
 0051               pane.cursor.blink:
-0052 74C0 0649  14         dect  stack
-0053 74C2 C64B  30         mov   r11,*stack            ; Save return address
+0052 74FC 0649  14         dect  stack
+0053 74FE C64B  30         mov   r11,*stack            ; Save return address
 0054                       ;------------------------------------------------------
 0055                       ; Call function in bank 1
 0056                       ;------------------------------------------------------
-0057 74C4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74C6 3038     
-0058 74C8 6002                   data bank1.rom        ; | i  p0 = bank address
-0059 74CA 7F76                   data vec.28           ; | i  p1 = Vector with target address
-0060 74CC 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0057 7500 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7502 3038     
+0058 7504 6002                   data bank1.rom        ; | i  p0 = bank address
+0059 7506 7F76                   data vec.28           ; | i  p1 = Vector with target address
+0060 7508 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0061                       ;------------------------------------------------------
 0062                       ; Exit
 0063                       ;------------------------------------------------------
-0064 74CE C2F9  30         mov   *stack+,r11           ; Pop r11
-0065 74D0 045B  20         b     *r11                  ; Return to caller
+0064 750A C2F9  30         mov   *stack+,r11           ; Pop r11
+0065 750C 045B  20         b     *r11                  ; Return to caller
 0066               
 0067               
 0068               ***************************************************************
@@ -14573,21 +14636,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0070               * bank1 vec.32
 0071               ********|*****|*********************|**************************
 0072               pane.colorscheme.statlines
-0073 74D2 0649  14         dect  stack
-0074 74D4 C64B  30         mov   r11,*stack            ; Save return address
+0073 750E 0649  14         dect  stack
+0074 7510 C64B  30         mov   r11,*stack            ; Save return address
 0075                       ;------------------------------------------------------
 0076                       ; Call function in bank 1
 0077                       ;------------------------------------------------------
-0078 74D6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74D8 3038     
-0079 74DA 6002                   data bank1.rom        ; | i  p0 = bank address
-0080 74DC 7F7E                   data vec.32           ; | i  p1 = Vector with target address
-0081 74DE 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0078 7512 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7514 3038     
+0079 7516 6002                   data bank1.rom        ; | i  p0 = bank address
+0080 7518 7F7E                   data vec.32           ; | i  p1 = Vector with target address
+0081 751A 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0082                       ;------------------------------------------------------
 0083                       ; Exit
 0084                       ;------------------------------------------------------
-0085 74E0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0086 74E2 045B  20         b     *r11                  ; Return to caller
+0085 751C C2F9  30         mov   *stack+,r11           ; Pop r11
+0086 751E 045B  20         b     *r11                  ; Return to caller
 0087               
 0088               
 0089               ***************************************************************
@@ -14595,23 +14658,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0091               * bank6 vec.3
 0092               ********|*****|*********************|**************************
 0093               vdp.colors.line:
-0094 74E4 0649  14         dect  stack
-0095 74E6 C64B  30         mov   r11,*stack            ; Save return address
+0094 7520 0649  14         dect  stack
+0095 7522 C64B  30         mov   r11,*stack            ; Save return address
 0096                       ;------------------------------------------------------
 0097                       ; Call function in bank 6
 0098                       ;------------------------------------------------------
-0099 74E8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74EA 3038     
-0100 74EC 600C                   data bank6.rom        ; | i  p0 = bank address
-0101 74EE 7F44                   data vec.3            ; | i  p1 = Vector with target address
-0102 74F0 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0099 7524 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7526 3038     
+0100 7528 600C                   data bank6.rom        ; | i  p0 = bank address
+0101 752A 7F44                   data vec.3            ; | i  p1 = Vector with target address
+0102 752C 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0103                       ;------------------------------------------------------
 0104                       ; Exit
 0105                       ;------------------------------------------------------
-0106 74F2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0107 74F4 045B  20         b     *r11                  ; Return to caller
+0106 752E C2F9  30         mov   *stack+,r11           ; Pop r11
+0107 7530 045B  20         b     *r11                  ; Return to caller
                    < stevie_b4.asm
-0110                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+0111                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -14623,21 +14686,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 74F6 0649  14         dect  stack
-0013 74F8 C64B  30         mov   r11,*stack            ; Save return address
+0012 7532 0649  14         dect  stack
+0013 7534 C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 74FA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     74FC 3038     
-0018 74FE 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 7500 7F40                   data vec.1            ; | i  p1 = Vector with target address
-0020 7502 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 7536 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7538 3038     
+0018 753A 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 753C 7F40                   data vec.1            ; | i  p1 = Vector with target address
+0020 753E 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 7504 C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 7506 045B  20         b     *r11                  ; Return to caller
+0024 7540 C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 7542 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -14646,21 +14709,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 7508 0649  14         dect  stack
-0038 750A C64B  30         mov   r11,*stack            ; Save return address
+0037 7544 0649  14         dect  stack
+0038 7546 C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 750C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     750E 3038     
-0043 7510 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 7512 7F40                   data vec.1            ; | i  p1 = Vector with target address
-0045 7514 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 7548 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     754A 3038     
+0043 754C 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 754E 7F40                   data vec.1            ; | i  p1 = Vector with target address
+0045 7550 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 7516 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 7518 045B  20         b     *r11                  ; Return to caller
+0049 7552 C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 7554 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -14669,21 +14732,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 751A 0649  14         dect  stack
-0060 751C C64B  30         mov   r11,*stack            ; Save return address
+0059 7556 0649  14         dect  stack
+0060 7558 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 751E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7520 3038     
-0065 7522 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 7524 7F42                   data vec.2            ; | i  p1 = Vector with target address
-0067 7526 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 755A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     755C 3038     
+0065 755E 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 7560 7F42                   data vec.2            ; | i  p1 = Vector with target address
+0067 7562 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 7528 C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 752A 045B  20         b     *r11                  ; Return to caller
+0071 7564 C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 7566 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -14691,21 +14754,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 752C 0649  14         dect  stack
-0081 752E C64B  30         mov   r11,*stack            ; Save return address
+0080 7568 0649  14         dect  stack
+0081 756A C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 7530 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7532 3038     
-0086 7534 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 7536 7F44                   data vec.3            ; | i  p1 = Vector with target address
-0088 7538 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 756C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     756E 3038     
+0086 7570 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 7572 7F44                   data vec.3            ; | i  p1 = Vector with target address
+0088 7574 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 753A C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 753C 045B  20         b     *r11                  ; Return to caller
+0092 7576 C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 7578 045B  20         b     *r11                  ; Return to caller
 0094               
 0095               
 0096               ***************************************************************
@@ -14713,21 +14776,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0098               * bank7 vec.20
 0099               ********|*****|*********************|**************************
 0100               magic.set:
-0101 753E 0649  14         dect  stack
-0102 7540 C64B  30         mov   r11,*stack            ; Save return address
+0101 757A 0649  14         dect  stack
+0102 757C C64B  30         mov   r11,*stack            ; Save return address
 0103                       ;------------------------------------------------------
 0104                       ; Dump VDP patterns
 0105                       ;------------------------------------------------------
-0106 7542 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7544 3038     
-0107 7546 600E                   data bank7.rom        ; | i  p0 = bank address
-0108 7548 7F66                   data vec.20           ; | i  p1 = Vector with target address
-0109 754A 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0106 757E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7580 3038     
+0107 7582 600E                   data bank7.rom        ; | i  p0 = bank address
+0108 7584 7F66                   data vec.20           ; | i  p1 = Vector with target address
+0109 7586 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0110                       ;------------------------------------------------------
 0111                       ; Exit
 0112                       ;------------------------------------------------------
-0113 754C C2F9  30         mov   *stack+,r11           ; Pop r11
-0114 754E 045B  20         b     *r11                  ; Return to caller
+0113 7588 C2F9  30         mov   *stack+,r11           ; Pop r11
+0114 758A 045B  20         b     *r11                  ; Return to caller
 0115               
 0116               
 0117               ***************************************************************
@@ -14735,21 +14798,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0119               * bank7 vec.21
 0120               ********|*****|*********************|**************************
 0121               magic.clear:
-0122 7550 0649  14         dect  stack
-0123 7552 C64B  30         mov   r11,*stack            ; Save return address
+0122 758C 0649  14         dect  stack
+0123 758E C64B  30         mov   r11,*stack            ; Save return address
 0124                       ;------------------------------------------------------
 0125                       ; Dump VDP patterns
 0126                       ;------------------------------------------------------
-0127 7554 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7556 3038     
-0128 7558 600E                   data bank7.rom        ; | i  p0 = bank address
-0129 755A 7F68                   data vec.21           ; | i  p1 = Vector with target address
-0130 755C 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0127 7590 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7592 3038     
+0128 7594 600E                   data bank7.rom        ; | i  p0 = bank address
+0129 7596 7F68                   data vec.21           ; | i  p1 = Vector with target address
+0130 7598 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0131                       ;------------------------------------------------------
 0132                       ; Exit
 0133                       ;------------------------------------------------------
-0134 755E C2F9  30         mov   *stack+,r11           ; Pop r11
-0135 7560 045B  20         b     *r11                  ; Return to caller
+0134 759A C2F9  30         mov   *stack+,r11           ; Pop r11
+0135 759C 045B  20         b     *r11                  ; Return to caller
 0136               
 0137               
 0138               ***************************************************************
@@ -14757,34 +14820,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0140               * bank7 vec.22
 0141               ********|*****|*********************|**************************
 0142               magic.check:
-0143 7562 0649  14         dect  stack
-0144 7564 C64B  30         mov   r11,*stack            ; Save return address
+0143 759E 0649  14         dect  stack
+0144 75A0 C64B  30         mov   r11,*stack            ; Save return address
 0145                       ;------------------------------------------------------
 0146                       ; Dump VDP patterns
 0147                       ;------------------------------------------------------
-0148 7566 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7568 3038     
-0149 756A 600E                   data bank7.rom        ; | i  p0 = bank address
-0150 756C 7F6A                   data vec.22           ; | i  p1 = Vector with target address
-0151 756E 6008                   data bankid           ; / i  p2 = Source ROM bank for return
+0148 75A2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     75A4 3038     
+0149 75A6 600E                   data bank7.rom        ; | i  p0 = bank address
+0150 75A8 7F6A                   data vec.22           ; | i  p1 = Vector with target address
+0151 75AA 6008                   data bankid           ; / i  p2 = Source ROM bank for return
 0152                       ;------------------------------------------------------
 0153                       ; Exit
 0154                       ;------------------------------------------------------
-0155 7570 C2F9  30         mov   *stack+,r11           ; Pop r11
-0156 7572 045B  20         b     *r11                  ; Return to caller
+0155 75AC C2F9  30         mov   *stack+,r11           ; Pop r11
+0156 75AE 045B  20         b     *r11                  ; Return to caller
 0157               
                    < stevie_b4.asm
-0111                       ;-----------------------------------------------------------------------
-0112                       ; Program data
-0113                       ;-----------------------------------------------------------------------
-0114                       ;
-0115                       ;-----------------------------------------------------------------------
-0116                       ; Bank full check
-0117                       ;-----------------------------------------------------------------------
-0121                       ;-----------------------------------------------------------------------
-0122                       ; Show ROM bank in CPU crash screen
-0123                       ;-----------------------------------------------------------------------
-0124                       copy  "rom.crash.asm"
+0112                       ;-----------------------------------------------------------------------
+0113                       ; Program data
+0114                       ;-----------------------------------------------------------------------
+0115                       ;
+0116                       ;-----------------------------------------------------------------------
+0117                       ; Bank full check
+0118                       ;-----------------------------------------------------------------------
+0122                       ;-----------------------------------------------------------------------
+0123                       ; Show ROM bank in CPU crash screen
+0124                       ;-----------------------------------------------------------------------
+0125                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -14800,10 +14863,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7F06 7F38                   data cpu.crash.showbank.bankstr
 0012 7F08 10FF  14         jmp   $
                    < stevie_b4.asm
-0125                       ;-----------------------------------------------------------------------
-0126                       ; Table for VDP modes
-0127                       ;-----------------------------------------------------------------------
-0128                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0126                       ;-----------------------------------------------------------------------
+0127                       ; Table for VDP modes
+0128                       ;-----------------------------------------------------------------------
+0129                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -14944,10 +15007,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0121               * ; mode. You also need to unlock the F18a and set VR49 (>31) to
 0122               * ; value >40.
                    < stevie_b4.asm
-0129                       ;-----------------------------------------------------------------------
-0130                       ; Vector table
-0131                       ;-----------------------------------------------------------------------
-0132                       copy  "rom.vectors.bank4.asm"
+0130                       ;-----------------------------------------------------------------------
+0131                       ; Vector table
+0132                       ;-----------------------------------------------------------------------
+0133                       copy  "rom.vectors.bank4.asm"
      **** ****     > rom.vectors.bank4.asm
 0001               * FILE......: rom.vectors.bank4.asm
 0002               * Purpose...: Bank 4 vectors for trampoline function
@@ -15016,8 +15079,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0063 7F9C 2026     vec.47  data  cpu.crash             ;
 0064 7F9E 2026     vec.48  data  cpu.crash             ;
 0065 7FA0 2026     vec.49  data  cpu.crash             ;
-0066 7FA2 2026     vec.50  data  cpu.crash             ;
-0067 7FA4 2026     vec.51  data  cpu.crash             ;
+0066 7FA2 72FE     vec.50  data  pane.filebrowser      ; File browser
+0067 7FA4 74A0     vec.51  data  pane.filebrowser.hilight
 0068 7FA6 2026     vec.52  data  cpu.crash             ;
 0069 7FA8 2026     vec.53  data  cpu.crash             ;
 0070 7FAA 2026     vec.54  data  cpu.crash             ;
@@ -15030,12 +15093,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077 7FB8 2026     vec.61  data  cpu.crash             ;
 0078 7FBA 2026     vec.62  data  cpu.crash             ;
 0079 7FBC 2026     vec.63  data  cpu.crash             ;
-0080 7FBE 2026     vec.64  data  cpu.crash             ;
+0080 7FBE 6CD8     vec.64  data  dialog.help.content   ; Content for Help dialog
 0081               *--------------------------------------------------------------
 0082               * ROM 4: Vectors 65-96
 0083               *--------------------------------------------------------------
-0084 7FC0 6CD8     vec.65  data  dialog.help.content   ; Content for Help dialog
-0085 7FC2 72FE     vec.66  data  pane.filebrowser       ; File browser
+0084 7FC0 2026     vec.65  data  cpu.crash             ;
+0085 7FC2 2026     vec.66  data  cpu.crash             ;
 0086 7FC4 2026     vec.67  data  cpu.crash             ;
 0087 7FC6 2026     vec.68  data  cpu.crash             ;
 0088 7FC8 2026     vec.69  data  cpu.crash             ;
@@ -15067,7 +15130,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0114 7FFC 2026     vec.95  data  cpu.crash             ;
 0115 7FFE 2026     vec.96  data  cpu.crash             ;
                    < stevie_b4.asm
-0133                                                   ; Vector table bank 4
+0134                                                   ; Vector table bank 4
 
     ANYKEY.............. >200A :     
     AT.................. >26E4 :     
@@ -15138,25 +15201,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_OVRD............ >0111 :     
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
-    CAT.CURRENTPAGE..... >E006 :     
+    CAT.CURRENTPAGE..... >E00A :     
     CAT.DEVICE.......... >EEB0 :     
     CAT.FILECOUNT....... >E000 :     
     CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE4........... >E00C :     
-    CAT.FREE5........... >E00E :     
-    CAT.FREE6........... >E010 :     
+    CAT.FPICKER.YX...... >E004 :     
+    CAT.FPICKER.YX2..... >E006 :     
     CAT.FSLIST.......... >E2BA :     
     CAT.FTLIST.......... >E23A :     
     CAT.FULLFNAME....... >E012 :     
-    CAT.NOFILESPAGE..... >E004 :     
+    CAT.NOFILESPAGE..... >E008 :     
+    CAT.NOROWSCOL....... >E010 :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
-    CAT.SHORTCUT.IDX.... >E00A :     
+    CAT.SHORTCUT.IDX.... >E00E :     
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E008 :     
+    CAT.TOTALPAGES...... >E00C :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     
@@ -15354,8 +15417,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.LINE.MAPPAGE.... >36DE :     
     EDB.LINE.MAPPAGE.EXIT >3720 :     
     EDB.LINE.MAPPAGE.LOOKUP >36F8 :     
-    EDB.LINE.PACK.FB.... >749C :     
-    EDB.LINE.UNPACK.FB.. >74AE :     
+    EDB.LINE.PACK.FB.... >74D8 :     
+    EDB.LINE.UNPACK.FB.. >74EA :     
     EDB.LINES........... >A504 :     
     EDB.LINETERM........ >A524 :     
     EDB.NEXT_FREE.PTR... >A508 :     
@@ -15852,9 +15915,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    MAGIC.CHECK......... >7562 :     
-    MAGIC.CLEAR......... >7550 :     
-    MAGIC.SET........... >753E :     
+    MAGIC.CHECK......... >759E :     
+    MAGIC.CLEAR......... >758C :     
+    MAGIC.SET........... >757A :     
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
@@ -15862,10 +15925,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.SET.BOOT... >751A :     
-    MEM.SAMS.SET.LEGACY. >7508 :     
-    MEM.SAMS.SET.STEVIE. >752C :     
-    MEM.SAMS.SETUP.STEVIE >74F6 :     
+    MEM.SAMS.SET.BOOT... >7556 :     
+    MEM.SAMS.SET.LEGACY. >7544 :     
+    MEM.SAMS.SET.STEVIE. >7568 :     
+    MEM.SAMS.SETUP.STEVIE >7532 :     
     MKHEX............... >2986 :     
     MKHEX1.............. >299E :     
     MKHEX1.DIGIT09...... >29B4 :     
@@ -15924,8 +15987,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.BOTLINE.SHOW_MODE.INSERT >6A2C :     
     PANE.BOTLINE.SHOW_MODE.INSERT.NOAUTO >6A3C :     
     PANE.BOTROW......... >001D :     
-    PANE.COLORSCHEME.STATLINES >74D2 :     
-    PANE.CURSOR.BLINK... >74C0 :     
+    PANE.COLORSCHEME.STATLINES >750E :     
+    PANE.CURSOR.BLINK... >74FC :     
     PANE.ERRLINE.DRAWCOLOR >6BAE :     
     PANE.ERRLINE.DRAWCOLOR.EXIT >6BD6 :     
     PANE.ERRLINE.DRAWCOLOR.LOOP >6BC8 :     
@@ -15935,11 +15998,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.ERRLINE.SHOW... >6BE0 :     
     PANE.ERRLINE.SHOW.EXIT >6C32 :     
     PANE.FILEBROWSER.... >72FE :     
-    PANE.FILEBROWSER.CALCDONE >7424 :     
+    PANE.FILEBROWSER.CALCDONE >7428 :     
     PANE.FILEBROWSER.DEVICEPATH >7358 :     
-    PANE.FILEBROWSER.DIVOK >741E :     
-    PANE.FILEBROWSER.EXIT >7450 :     
+    PANE.FILEBROWSER.DIVOK >7422 :     
+    PANE.FILEBROWSER.EXIT >7454 :     
     PANE.FILEBROWSER.HEADERS >7374 :     
+    PANE.FILEBROWSER.HILIGHT >74A0 :     
+    PANE.FILEBROWSER.HILIGHT.EXIT >74CE :     
     PANE.FILEBROWSER.LINES >7366 :     
     PANE.FILEBROWSER.NOFILES >7338 :     
     PANE.FILEBROWSER.VOLUME >7318 :     
@@ -16327,7 +16392,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.FASTMODE........ >3B3E :     
     TXT.FILETYPE.DV80... >3BC6 :     
     TXT.FILETYPE.NONE... >3C90 :     
-    TXT.HEADER.......... >7484 :     
+    TXT.HEADER.......... >7488 :     
     TXT.INSERT.......... >3992 :     
     TXT.IO.NOFILE....... >3D32 :     
     TXT.IOERR.LOAD...... >3CEA :     
@@ -16351,7 +16416,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.PRINTING........ >39B8 :     
     TXT.READDIR......... >3A60 :     
     TXT.SAVING.......... >39AC :     
-    TXT.SLASH........... >7482 :     
+    TXT.SLASH........... >7486 :     
     TXT.STAR............ >399E :     
     TXT.TIB1............ >3B80 :     
     TXT.TIB2............ >3B8E :     
@@ -16360,7 +16425,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.TIB5............ >3BB8 :     
     TXT.UNCRUNCHING..... >3B4A :     
     TXT.VERTLINE........ >3C86 :     
-    TXT.VOLUME.......... >745A :     
+    TXT.VOLUME.......... >745E :     
     TXT.WS1............. >3C8A :     
     TXT.WS2............. >3C8C :     
     TXT.WS4............. >3C90 :     
@@ -16371,7 +16436,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VCHAR1.............. >281E :     
     VCHAR2.............. >282C :     
     VCHAR3.............. >2844 :     
-    VDP.COLORS.LINE..... >74E4 :     
+    VDP.COLORS.LINE..... >7520 :     
     VDP.FB.TOPROW.SIT... >0050 :     
     VDP.FB.TOPROW.TAT... >1850 :     
     VDP.PDT.BASE........ >1000 :     

@@ -22,6 +22,8 @@ edkey.action.cmdb.file.next:
         mov   @outparm1,tmp0        ; Skipped flag set?
         jne   edkey.action.cmdb.file.next.exit
                                     ; Yes, exit early
+
+        bl    @pane.filebrowser.hilight                                                                        
         ;------------------------------------------------------
         ; Next file
         ;------------------------------------------------------

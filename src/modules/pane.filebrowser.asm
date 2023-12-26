@@ -10,7 +10,7 @@
 * @cat.fpicker.idx = 1st file to show in file browser
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 pane.filebrowser:
         dect  stack
@@ -140,6 +140,8 @@ pane.filebrowser.headers:
         mov   tmp0,@cat.var1        ; Save cutover row and offset
 
         dect  tmp2                  ; Take header lines into account
+        mov   tmp2,@cat.norowscol   ; Save number of rows per column
+        
         mov   tmp2,tmp3             ; \
         a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
         a     tmp3,tmp2             ; / 
@@ -165,7 +167,7 @@ pane.filebrowser.headers:
 
         ci    tmp2,0                ; Remainder of division > 0
         jeq   !                     ; No, continue
-        inc   @cat.totalpages       ; Yes, files on page
+        inc   @cat.totalpages       ; Yes, there are files on the page
         ;------------------------------------------------------
         ; Calc current page
         ;------------------------------------------------------
