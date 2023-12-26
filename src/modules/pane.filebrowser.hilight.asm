@@ -35,8 +35,8 @@ pane.filebrowser.hilight:
         jlt   pane.filebrowser.hilight.rowcol
                                      ; Yes, skip page calculation
 
-        mov   tmp0,tmp1
-        clr   tmp0
+        mov   tmp0,tmp1              ; \ Prepare for division.
+        clr   tmp0                   ; / MSW=0, LSW=index value
         div   @cat.nofilespage,tmp0  ; \ Calculate offset on current page
                                      ; / tmp0 = page number, tmp1 = offset
         mov   tmp1,tmp0              ; Get offset on current page
