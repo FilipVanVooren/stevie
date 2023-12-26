@@ -221,8 +221,15 @@ fm.directory.ftloop:
 * Show filebrowser
 *--------------------------------------------------------------        
 fm.directory.browser:
-        bl    @pane.filebrowser     ; Browse files
+        bl    @fm.browse.fname.set  ; Create string with device & filename
+                                    ; \ i  @cat.device = Current device name
+                                    ; | i  @cat.shortcut.idx = Index in catalog 
+                                    ; |        filename pointerlist
+                                    ; | 
+                                    ; | o  @cat.fullfname = Combined string with
+                                    ; /        device & filename        
 
+        bl    @pane.filebrowser     ; Browse files
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

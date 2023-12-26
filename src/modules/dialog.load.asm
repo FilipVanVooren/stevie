@@ -78,11 +78,15 @@ dialog.load.keylist:
         ; Set filename (1) 
         ;-------------------------------------------------------
 dialog.load.set.filename1:
-        li    tmp0,cat.device       ; Get pointer to catalog device name
-        mov   *tmp0,tmp1            ; Anything set?
-        jeq   dialog.load.set.filename2
-                                    ; No device set
+        bl    @fm.browse.fname.set  ; Create string with device & filename
+                                    ; \ i  @cat.device = Current device name
+                                    ; | i  @cat.shortcut.idx = Index in catalog 
+                                    ; |        filename pointerlist
+                                    ; | 
+                                    ; | o  @cat.fullfname = Combined string with
+                                    ; /        device & filename
 
+        li    tmp0,cat.fullfname
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset

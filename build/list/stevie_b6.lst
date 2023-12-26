@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231225-2045140
+0002               * BUILD: 231226-1910200
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -111,10 +111,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, 9938, ...)
 0003               
 0004               ***************************** F18a 24x80 ***************************************
-0006                   copy 'equ.f18a.2480.asm'        ; Sprite cursor/rulers
-     **** ****     > equ.f18a.2480.asm
-0001               * FILE......: equ.f18a.2480.asm
-0002               * Purpose...: F18a 24x80 mode
+0008               
+0009               ***************************** F18a 24x80 ***************************************
+0013               
+0014               ***************************** F18a 30x80 ***************************************
+0016                   copy 'equ.f18a.3080.asm'        ; Sprite cursor/rulers
+     **** ****     > equ.f18a.3080.asm
+0001               * FILE......: equ.f18a.3080.asm
+0002               * Purpose...: F18a 30x80 mode (with sprite cursor/rulers)
 0003               
 0005               
 0006               *===============================================================================
@@ -135,12 +139,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0021               *===============================================================================
 0022               
 0023               *--------------------------------------------------------------
-0024               * Video mode configuration (stevie) - Graphics mode 24x80
+0024               * Video mode configuration (stevie) - Graphics mode 30x80
 0025               *--------------------------------------------------------------
 0026      0050     vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
 0027      1850     vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 0028      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0029      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 24 rows
+0029      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
 0030      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
 0031      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
 0032      1000     vdp.pdt.base              equ  >1000   ; VDP PDT base address
@@ -148,30 +152,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034               *--------------------------------------------------------------
 0035               * Video mode configuration (stevie)
 0036               *--------------------------------------------------------------
-0037      0017     pane.botrow               equ  23      ; Bottom row on screen
+0037      001D     pane.botrow               equ  29      ; Bottom row on screen
 0038      0050     colrow                    equ  80      ; Columns per row
 0039      0960     fh.vrecbuf                equ  >0960   ; VDP address record buffer
 0040      0A60     fh.vpab                   equ  >0a60   ; VDP address PAB
 0041      0001     device.f18a               equ  1       ; F18a on
 0042      0001     spritecursor              equ  1       ; Use sprites for cursor and ruler
 0043               
-0044               *--------------------------------------------------------------
-0045               * Video mode configuration (spectra2)
-0046               *--------------------------------------------------------------
-0047      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0048      0004     spfbck  equ   >04                   ; Screen background color.
-0049      7F10     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-0050      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
-0051      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0052      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0053      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0054      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
-0055               
+0044               
+0045               *--------------------------------------------------------------
+0046               * Video mode configuration (spectra2)
+0047               *--------------------------------------------------------------
+0048      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0049      0004     spfbck  equ   >04                   ; Screen background color.
+0050      7F10     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0051      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
+0052               
+0053      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0054      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0055      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0056      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0057               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a 24x80 ***************************************
-0013               
-0014               ***************************** F18a 30x80 ***************************************
 0018               
 0019               ***************************** F18a 30x80 ***************************************
                    < stevie_b6.asm
@@ -903,15 +905,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0057               
-0061               
-0063 6028 0D53                 stri 'STEVIE 1.5.19'
+0055 6028 0D53                 stri 'STEVIE 1.5.19'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
      6034 3139     
+0057               
+0061               
 0065               
                    < stevie_b6.asm
 0040               
@@ -6462,7 +6464,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3112 A310     
 0038               
 0039 3114 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     3116 0016     
+     3116 001C     
 0040 3118 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      311A A31E     
 0041               
@@ -7110,7 +7112,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 3334 0204  20         li    tmp0,pane.botrow      ; \
-     3336 0017     
+     3336 001D     
 0047 3338 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      333A A706     
 0048 333C 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -13603,7 +13605,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >001D :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >37D6 :     
@@ -14050,7 +14052,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1850 :     
     VDP.PDT.BASE........ >1000 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >0960 :     
     VDP.TAT.BASE........ >1800 :     
     VDP.TAT.SIZE........ >0960 :     
     VDPA................ >8C02 :     
