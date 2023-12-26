@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231226-2140320
+0002               * BUILD: 231226-2152480
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -14531,44 +14531,44 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                       ;------------------------------------------------------
 0033 74B8 C120  34 !       mov   @cat.shortcut.idx,tmp0 ; Get index
      74BA E00E     
-0034 74BC C160  34         mov   @cat.currentpage,tmp1  ; Get current page
-     74BE E00A     
-0035 74C0 0285  22         ci    tmp1,1                 ; On 1st page?
-     74C2 0001     
-0036 74C4 1303  14         jeq   pane.filebrowser.hilight.rowcol
-0037                                                    ; Yes, skip page calculation
-0038               
-0039 74C6 3960  74         mpy   @cat.nofilespage,tmp1  ; \ Calculate offset on current page
+0034 74BC 8804  34         c     tmp0,@cat.nofilespage  ; Are we on 1st page?
+     74BE E008     
+0035 74C0 1105  14         jlt   pane.filebrowser.hilight.rowcol
+0036                                                    ; Yes, skip page calculation
+0037               
+0038 74C2 C144  18         mov   tmp0,tmp1
+0039 74C4 04C4  14         clr   tmp0
+0040 74C6 3D20 144         div   @cat.nofilespage,tmp0  ; \ Calculate offset on current page
      74C8 E008     
-0040                                                    ; / result is in 32bit word (tmp2)
-0041 74CA 6106  18         s     tmp2,tmp0              ; Get offset on current page
-0042                       ;------------------------------------------------------
-0043                       ; Calculate column/row offset based on offset on current page
-0044                       ;------------------------------------------------------
-0045               pane.filebrowser.hilight.rowcol:
-0046 74CC C144  18         mov   tmp0,tmp1              ; Get index in filename list in LSW
-0047 74CE 04C4  14         clr   tmp0                   ; Clear MSW
-0048 74D0 3D20 144         div   @cat.norowscol,tmp0    ; \ Do division on 32 bit word.
+0041                                                    ; / tmp0 = page number, tmp1 = offset
+0042 74CA C105  18         mov   tmp1,tmp0              ; Get offset on current page
+0043                       ;------------------------------------------------------
+0044                       ; Calculate column/row offset based on offset on current page
+0045                       ;------------------------------------------------------
+0046               pane.filebrowser.hilight.rowcol:
+0047 74CC C144  18         mov   tmp0,tmp1              ; Get index in filename list in LSW
+0048 74CE 04C4  14         clr   tmp0                   ; Clear MSW
+0049 74D0 3D20 144         div   @cat.norowscol,tmp0    ; \ Do division on 32 bit word.
      74D2 E010     
-0049                                                    ; / tmp0 is column, tmp1 is row offset
-0050 74D4 D820  42         movb  @tmp0lb,@tmp1hb        ; Combine column & row in single word
+0050                                                    ; / tmp0 is column, tmp1 is row offset
+0051 74D4 D820  42         movb  @tmp0lb,@tmp1hb        ; Combine column & row in single word
      74D6 8309     
      74D8 830A     
-0051 74DA C820  54         mov   @cat.hilit.colrow,@cat.hilit.colrow2
+0052 74DA C820  54         mov   @cat.hilit.colrow,@cat.hilit.colrow2
      74DC E004     
      74DE E006     
-0052                                                    ; Backup current column & row
-0053 74E0 C805  38         mov   tmp1,@cat.hilit.colrow ; Save new column & row
+0053                                                    ; Backup current column & row
+0054 74E0 C805  38         mov   tmp1,@cat.hilit.colrow ; Save new column & row
      74E2 E004     
-0054                       ;------------------------------------------------------
-0055                       ; Exit
-0056                       ;------------------------------------------------------
-0057               pane.filebrowser.hilight.exit:
-0058 74E4 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0059 74E6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0060 74E8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0061 74EA C2F9  30         mov   *stack+,r11           ; Pop R11
-0062 74EC 045B  20         b     *r11                  ; Return to caller
+0055                       ;------------------------------------------------------
+0056                       ; Exit
+0057                       ;------------------------------------------------------
+0058               pane.filebrowser.hilight.exit:
+0059 74E4 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0060 74E6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0061 74E8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0062 74EA C2F9  30         mov   *stack+,r11           ; Pop R11
+0063 74EC 045B  20         b     *r11                  ; Return to caller
                    < stevie_b4.asm
 0107                       ;-----------------------------------------------------------------------
 0108                       ; Stubs

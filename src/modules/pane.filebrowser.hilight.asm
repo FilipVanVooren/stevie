@@ -31,15 +31,15 @@ pane.filebrowser.hilight:
         ; Determine offset on current page
         ;------------------------------------------------------
 !       mov   @cat.shortcut.idx,tmp0 ; Get index
-        mov   @cat.currentpage,tmp1  ; Get current page
-        ci    tmp1,1                 ; On 1st page?
-
-        jeq   pane.filebrowser.hilight.rowcol
+        c     tmp0,@cat.nofilespage  ; Are we on 1st page?
+        jlt   pane.filebrowser.hilight.rowcol
                                      ; Yes, skip page calculation
 
-        mpy   @cat.nofilespage,tmp1  ; \ Calculate offset on current page
-                                     ; / result is in 32bit word (tmp2)
-        s     tmp2,tmp0              ; Get offset on current page
+        mov   tmp0,tmp1
+        clr   tmp0
+        div   @cat.nofilespage,tmp0  ; \ Calculate offset on current page
+                                     ; / tmp0 = page number, tmp1 = offset
+        mov   tmp1,tmp0              ; Get offset on current page
         ;------------------------------------------------------
         ; Calculate column/row offset based on offset on current page
         ;------------------------------------------------------
