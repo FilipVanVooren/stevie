@@ -177,8 +177,9 @@ pane.filebrowser.headers:
         jno   pane.filebrowser.divok ; / Store if normal division
         clr   tmp1                   ; We're on 1st page (base 0 offset)
 pane.filebrowser.divok:
-        inc   tmp1                   ; Consider base 1 offset        
-        mov   tmp1,@cat.currentpage  ; Store current page in memory
+        inc   tmp1                               ; Consider base 1 offset      
+        mov   @cat.currentpage,@cat.previouspage ; Backup current page
+        mov   tmp1,@cat.currentpage              ; Store current page in memory
         ;------------------------------------------------------
         ; Calculations done
         ;------------------------------------------------------
@@ -194,6 +195,8 @@ pane.filebrowser.calcdone:
                                     ; |       tmp2 < entries in list
                                     ; /
 
+        li    tmp3,11
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -202,6 +205,8 @@ pane.filebrowser.calcdone:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; | i  tmp2 = Number of strings to display
+                                    ; | i  tmp3 = String padding length
+                                    ; |
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
@@ -219,6 +224,9 @@ pane.filebrowser.calcdone:
         mov   @cat.var1,tmp0        ; Get cutover row and column offset
         mov   @cat.var2,tmp2        ; Get number of files to display
 
+
+        clr   tmp3                  ; No string padding
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -227,6 +235,8 @@ pane.filebrowser.calcdone:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; | i  tmp2 = Number of strings to display
+                                    ; | i  tmp3 = String padding length
+                                    ; |                                             
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries 

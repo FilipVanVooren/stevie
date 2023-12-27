@@ -108,7 +108,7 @@ txt.ws4            stri '    '
                    even
 txt.filetype.none  equ txt.ws4
 
-txt.msg.mastcat    stri 'Put cursor on file in list and press ^O to load file.'
+txt.msg.mastcat    stri ''
                    even
 
 txt.msg.tibasic    stri 'TI Basic program mode active.'
@@ -125,7 +125,7 @@ txt.ioerr.print    stri 'Failed printing to device: '
                    even
 txt.io.nofile      stri 'No filename specified.'
                    even
-txt.memfull.load   stri 'Index full. File too large for editor buffer.'
+txt.memfull.load   stri 'Index full. File too large.'
                    even
 txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
                    even
@@ -137,3 +137,5 @@ txt.cmdb.prompt    stri '>'
                    even
 txt.colorscheme    stri 'Color scheme:'
                    even
+
+; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.

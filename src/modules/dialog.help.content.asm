@@ -68,6 +68,8 @@ dialog.help.content:
         mov   @dialog.help.data.pages+2(tmp3),tmp2
                                     ; Number of strings to display
 
+        clr   tmp3                  ; No string padding                                    
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -75,8 +77,13 @@ dialog.help.content:
                                     ; |           single column list
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
-                                    ; / i  tmp2 = Number of strings to display
-
+                                    ; | i  tmp2 = Number of strings to display
+                                    ; | i  tmp3 = String padding length
+                                    ; |
+                                    ; | o  @waux1 = Pointer to next entry  
+                                    ; |             in list after displaying
+                                    ; /             (tmp2) entries                                    
+                                    
         ;------------------------------------------------------
         ; Display right column
         ;------------------------------------------------------
@@ -92,6 +99,8 @@ dialog.help.content:
         mov   @dialog.help.data.pages+6(tmp3),tmp2
                                     ; Number of strings to display
 
+        clr   tmp3                  ; No string padding
+
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -100,6 +109,7 @@ dialog.help.content:
                                     ; | i  tmp1 = Pointer to first length-
                                     ; |           prefixed string in list
                                     ; | i  tmp2 = Number of strings to display
+                                    ; | i  tmp3 = String padding length
                                     ; |
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying

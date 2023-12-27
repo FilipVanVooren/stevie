@@ -39,6 +39,9 @@ pane.filebrowser.hilight:
         clr   tmp0                   ; / MSW=0, LSW=index value
         div   @cat.nofilespage,tmp0  ; \ Calculate offset on current page
                                      ; / tmp0 = page number, tmp1 = offset
+
+        mov   @cat.currentpage,@cat.previouspage
+        mov   tmp0,@cat.currentpage
         mov   tmp1,tmp0              ; Get offset on current page
         ;------------------------------------------------------
         ; Calculate column/row offset based on offset on current page
@@ -53,6 +56,50 @@ pane.filebrowser.hilight.rowcol:
                                      ; Backup current column & row 
         mov   tmp1,@cat.hilit.colrow ; Save new column & row
         ;------------------------------------------------------
+        ; Remove previous file marker
+        ;------------------------------------------------------
+pane.filebrowser.hilight.remove:                
+        mov   @cat.hilit.colrow2,tmp0            ; Get column/row offsets
+        jeq   pane.filebrowser.hilight.draw.page ; Not set, skip remove marker
+
+        srl   tmp0,8                 ; MSB to LSB. Column value in LSB
+        li    tmp1,28                ; Offset next column
+        mpy   tmp0,tmp1              ; tmp2 = col*28
+        sla   tmp2,8                 ; LSB to MSB
+
+        movb  @cat.hilit.colrow2+1,@tmp2lb ; Get row into tmp2 LSB
+        swpb  tmp2                         ; Column/row to YX
+        ai    tmp2,>0300                   ; Add offset
+
+        mov   tmp2,@wyx              ; Set cursor position
+        bl    @putstr                ; Put string 
+              data nomarker          ; Remove marker
+        ;------------------------------------------------------
+        ; Refresh filelist when moved to other page
+        ;------------------------------------------------------
+pane.filebrowser.hilight.draw.page:
+        c     @cat.currentpage,@cat.previouspage
+        jeq   pane.filebrowser.hilight.draw.marker
+        mov   @cat.shortcut.idx,@cat.fpicker.idx 
+        bl    @pane.filebrowser
+        ;------------------------------------------------------
+        ; Draw file marker
+        ;------------------------------------------------------
+pane.filebrowser.hilight.draw.marker:
+        mov   @cat.hilit.colrow,tmp0
+        srl   tmp0,8                 ; MSB to LSB. Column value in LSB
+        li    tmp1,28                ; Offset next column
+        mpy   tmp0,tmp1              ; tmp2 = col*28
+        sla   tmp2,8                 ; LSB to MSB
+
+        movb  @cat.hilit.colrow+1,@tmp2lb ; Get row into tmp2 LSB
+        swpb  tmp2                        ; Column/row to YX
+        ai    tmp2,>0300                  ; Add offset
+
+        mov   tmp2,@wyx
+        bl    @putstr
+              data txt.cmdb.prompt   ; Marker
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 pane.filebrowser.hilight.exit:                
@@ -61,3 +108,6 @@ pane.filebrowser.hilight.exit:
         mov   *stack+,tmp0          ; Pop tmp0        
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
+
+nomarker  stri  ' '
+       
