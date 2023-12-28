@@ -45,7 +45,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
 txt.hint.filepicker:
-                   stri 'Use FCTN-E/X to move up/down. Use CTRL-E/X for paging in catalog.'
+                   stri 'Use FCTN-E/X to move up/down or ^E/X for prev/next page in catalog.'
                    even
 
 ;--------------------------------------------------------------

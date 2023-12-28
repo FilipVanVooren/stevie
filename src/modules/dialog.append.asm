@@ -42,7 +42,9 @@ dialog.append.setup:
 
         li    tmp0,txt.hint.append
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-        clr   @cmdb.panhint2        ; No extra hint to display
+        
+        li    tmp0,txt.hint.filepicker
+        mov   tmp0,@cmdb.panhint2   ; Show extra hint
 
         abs   @fh.offsetopcode      ; FastMode is off ?
         jeq   !
