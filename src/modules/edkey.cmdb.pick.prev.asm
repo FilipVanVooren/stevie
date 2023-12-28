@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Pick previous file from catalog
 *---------------------------------------------------------------
-* b   @edkey.action.cmdb.file.prev
+* b   @edkey.action.cmdb.pick.prev
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -12,7 +12,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.file.prev:
+edkey.action.cmdb.pick.prev:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
@@ -21,14 +21,14 @@ edkey.action.cmdb.file.prev:
         bl    @fm.browse.fname.prev ; Previous file in catalog filename list
 
         mov   @outparm1,tmp0        ; Skipped flag set?
-        jne   edkey.action.cmdb.file.prev.exit
+        jne   edkey.action.cmdb.pick.prev.exit
                                     ; Yes, exit early
 
         bl    @pane.filebrowser.hilight                                    
         ;------------------------------------------------------
         ; Previous file
         ;------------------------------------------------------
-edkey.action.cmdb.file.prev.setfile:
+edkey.action.cmdb.pick.prev.setfile:
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
                                     ; Copy filename from command line to buffer
@@ -46,7 +46,7 @@ edkey.action.cmdb.file.prev.setfile:
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------
-edkey.action.cmdb.file.prev.exit:
+edkey.action.cmdb.pick.prev.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

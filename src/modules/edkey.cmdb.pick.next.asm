@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Pick next file from catalog
 *---------------------------------------------------------------
-* b   @edkey.action.cmdb.file.next
+* b   @edkey.action.cmdb.pick.next
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -12,7 +12,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.file.next:
+edkey.action.cmdb.pick.next:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
@@ -20,14 +20,14 @@ edkey.action.cmdb.file.next:
         ;------------------------------------------------------
         bl    @fm.browse.fname.next ; Next file in catalog filename list
         mov   @outparm1,tmp0        ; Skipped flag set?
-        jne   edkey.action.cmdb.file.next.exit
+        jne   edkey.action.cmdb.pick.next.exit
                                     ; Yes, exit early
 
         bl    @pane.filebrowser.hilight                                                                        
         ;------------------------------------------------------
         ; Next file
         ;------------------------------------------------------
-edkey.action.cmdb.file.next.setfile:        
+edkey.action.cmdb.pick.next.setfile:        
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
                                     ; Copy filename from command line to buffer
@@ -45,7 +45,7 @@ edkey.action.cmdb.file.next.setfile:
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------
-edkey.action.cmdb.file.next.exit:
+edkey.action.cmdb.pick.next.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
