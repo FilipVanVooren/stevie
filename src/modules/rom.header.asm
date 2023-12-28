@@ -52,17 +52,17 @@ rom.program2:
                                     ; 15 /
 
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            stri 'STEVIE 1.5.19'
+            stri 'STEVIE 1.5.20'
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            stri 'STEVIE 1.5.19'     
+            stri 'STEVIE 1.5.20'     
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            stri 'STEVIE 1.5.19'
+            stri 'STEVIE 1.5.20'
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            stri 'STEVIE 1.5.19'                   
+            stri 'STEVIE 1.5.20'                   
         .endif

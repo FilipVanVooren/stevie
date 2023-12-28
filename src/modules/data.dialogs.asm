@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.19  '
+            text '  Stevie 1.5.20  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.19  '     
+            text '  Stevie 1.5.20  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.19  '
+            text '  Stevie 1.5.20  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.19  '  
+            text '  Stevie 1.5.20  '  
             even
         .endif
 
@@ -51,7 +51,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      stri 'Enter filename or pick file from catalog with FCTN-E/X keys.'
+txt.hint.load      stri 'Enter filename of file to load or pick file from catalog. Use FCTN-E/X keys.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
@@ -77,7 +77,7 @@ txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Enter filename.'
+txt.hint.append    stri 'Enter filename of file to append or pick file from catalog. Use FCTN-E/X keys.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -89,7 +89,7 @@ txt.keys.append2   equ txt.keys.default2
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    stri 'Enter filename.'
+txt.hint.insert    stri 'Enter filename of file to insert or pick file from catalog. Use FCTN-E/X keys.'
 
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.19 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.20 - (c)2018-2023 Filip Van Vooren'
                    even
 
 

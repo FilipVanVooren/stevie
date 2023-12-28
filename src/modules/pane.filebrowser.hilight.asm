@@ -73,14 +73,6 @@ pane.filebrowser.hilight.remove:
         bl    @putstr                ; Put string 
               data nomarker          ; Remove marker
         ;------------------------------------------------------
-        ; Refresh filelist when moved to other page
-        ;------------------------------------------------------
-pane.filebrowser.hilight.draw.page:
-        c     @cat.currentpage,@cat.previouspage
-        jeq   pane.filebrowser.hilight.draw.marker
-        mov   @cat.shortcut.idx,@cat.fpicker.idx 
-        bl    @pane.filebrowser
-        ;------------------------------------------------------
         ; Draw file marker
         ;------------------------------------------------------
 pane.filebrowser.hilight.draw.marker:

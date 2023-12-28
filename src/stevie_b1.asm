@@ -123,7 +123,10 @@ main:
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
-
+        copy  "edkey.cmdb.filebrowser.prev.asm"
+                                            ; Previous page in filebrowser
+        copy  "edkey.cmdb.filebrowser.next.asm"
+                                            ; Next page in filebrowser
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer

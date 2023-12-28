@@ -29,16 +29,17 @@ pane.focus.cmdb           equ  1       ; Command buffer pane has focus
 ;   Dialog ID's
 ;-----------------------------------------------------------------
 id.dialog.load            equ  10      ; "Load file"
-id.dialog.save            equ  11      ; "Save file"
-id.dialog.saveblock       equ  12      ; "Save block to file"
-id.dialog.insert          equ  13      ; "Insert file"
-id.dialog.append          equ  14      ; "Append file"
-id.dialog.print           equ  15      ; "Print file"
-id.dialog.printblock      equ  16      ; "Print block"
-id.dialog.cfg.clip        equ  17      ; "Configure clipboard"
-id.dialog.cfg.mc          equ  18      ; "Configure Master Catalog"
-id.dialog.goto            equ  19      ; "Goto"
-id.dialog.cat             equ  20      ; "Catalog drive/directory"
+id.dialog.insert          equ  11      ; "Insert file"
+id.dialog.append          equ  12      ; "Append file"
+id.dialog.run             equ  13      ; "Run file"
+id.dialog.save            equ  14      ; "Save file"
+id.dialog.saveblock       equ  15      ; "Save block to file"
+id.dialog.print           equ  16      ; "Print file"
+id.dialog.printblock      equ  17      ; "Print block"
+id.dialog.cfg.clip        equ  18      ; "Configure clipboard"
+id.dialog.cfg.mc          equ  19      ; "Configure Master Catalog"
+id.dialog.goto            equ  20      ; "Goto"
+id.dialog.cat             equ  21      ; "Catalog drive/directory"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.

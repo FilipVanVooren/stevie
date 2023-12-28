@@ -241,6 +241,21 @@ pane.filebrowser.calcdone:
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries 
         ;------------------------------------------------------
+        ; Show filename marker in supported dialogs
+        ;------------------------------------------------------
+        mov   @cmdb.dialog,tmp0     ; Get current dialog ID
+
+        ci    tmp0,id.dialog.load   ; \ First supported dialog
+        jlt   pane.filebrowser.exit ; / Not in supported dialog range. Skip 
+
+        ci    tmp0,id.dialog.run    ; \ Last supported dialog
+        jgt   pane.filebrowser.exit ; / Not in supported dialog range. Skip
+
+        bl    @pane.filebrowser.hilight
+                                    ; Show filename marker
+                                    ; \ @i @cat.fpicker.idx = 1st file to show 
+                                    ; /                       in file browser
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 pane.filebrowser.exit:                
