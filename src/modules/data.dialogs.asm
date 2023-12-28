@@ -51,7 +51,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      stri 'Enter filename of file to open or pick file from catalog with FCTN-E/X keys.'
+txt.hint.load      stri 'Enter filename or pick file from catalog with FCTN-E/X keys.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
@@ -66,7 +66,7 @@ txt.head.save      byte 14,1,1
 txt.head.save2     byte 22,1,1
                    text ' Save block to file '
                    byte 1
-txt.hint.save      stri 'Enter filename of file to save.'
+txt.hint.save      stri 'Enter filename.'
 txt.keys.save1     stri 'F9-Back  F3-Clear  F6-Line term=off  FH-Home  FL-EOL'
 txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 
@@ -77,7 +77,7 @@ txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Enter filename of file to append at end of current file.'
+txt.hint.append    stri 'Enter filename.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -89,7 +89,7 @@ txt.keys.append2   equ txt.keys.default2
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    stri 'Enter filename of file to insert at current line.'
+txt.hint.insert    stri 'Enter filename.'
 
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2

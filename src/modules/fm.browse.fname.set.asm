@@ -39,6 +39,9 @@ fm.browse.fname.set:
         li    tmp1,cat.fullfname        
         movb  @cat.device,tmp2      ; Get length byte of device name
         srl   tmp2,8                ; MSB to LSB
+        jeq   fm.browse.fname.set.exit
+                                    ; Exit early if no device set
+
         inc   tmp2                  ; Include length-byte prefix
         mov   tmp2,@cat.var1        ; Backup value
 

@@ -121,7 +121,12 @@ dialog.load.cursor:
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------
-        bl    @pane.filebrowser     ; Show file browser                                    
+        bl    @pane.filebrowser     ; Show file browser
+
+        bl    @pane.filebrowser.hilight
+                                    ; Show filename marker
+                                    ; \ @i @cat.fpicker.idx = 1st file to show 
+                                    ; /                       in file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -7,7 +7,7 @@
 * bl   @pane.filebrowser.hlight
 *--------------------------------------------------------------- 
 * INPUT
-* @cat.fpicker.idx = 1st file to show in file browser
+* none
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2
@@ -59,13 +59,11 @@ pane.filebrowser.hilight.rowcol:
         ; Remove previous file marker
         ;------------------------------------------------------
 pane.filebrowser.hilight.remove:                
-        mov   @cat.hilit.colrow2,tmp0            ; Get column/row offsets
-        jeq   pane.filebrowser.hilight.draw.page ; Not set, skip remove marker
-
-        srl   tmp0,8                 ; MSB to LSB. Column value in LSB
-        li    tmp1,28                ; Offset next column
-        mpy   tmp0,tmp1              ; tmp2 = col*28
-        sla   tmp2,8                 ; LSB to MSB
+        mov   @cat.hilit.colrow2,tmp0 ; Get column/row offsets
+        srl   tmp0,8                  ; MSB to LSB. Column value in LSB
+        li    tmp1,28                 ; Offset next column
+        mpy   tmp0,tmp1               ; tmp2 = col*28
+        sla   tmp2,8                  ; LSB to MSB
 
         movb  @cat.hilit.colrow2+1,@tmp2lb ; Get row into tmp2 LSB
         swpb  tmp2                         ; Column/row to YX
