@@ -34,7 +34,7 @@ fm.browse.fname.prev:
 
         dec   tmp0                  ; Previous file in catalog                                    
         ;------------------------------------------------------
-        ; Do division
+        ; Do division for page/offset calculation
         ;------------------------------------------------------
         mov   tmp0,tmp1             ; \ Prepare for division.
         clr   tmp0                  ; / MSW=0, LSW=index value
