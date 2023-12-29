@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231229-1544230
+0002               * BUILD: 231229-1600110
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -908,13 +908,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               
 0061               
 0065               
-0067 6028 0D53                 stri 'STEVIE 1.5.20'
+0067 6028 0D53                 stri 'STEVIE 1.5.21'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3230     
+     6034 3231     
                    < stevie_b2.asm
 0040               
 0041               ***************************************************************
@@ -12937,7 +12937,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034               
 0035 6DE8 0604  14         dec   tmp0                  ; Previous file in catalog
 0036                       ;------------------------------------------------------
-0037                       ; Do division
+0037                       ; Do division for page/offset calculation
 0038                       ;------------------------------------------------------
 0039 6DEA C144  18         mov   tmp0,tmp1             ; \ Prepare for division.
 0040 6DEC 04C4  14         clr   tmp0                  ; / MSW=0, LSW=index value
@@ -12946,75 +12946,74 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042                                                   ; / tmp0 = page number, tmp1 = offset
 0043 6DF2 1901  14         jno   fm.browse.fname.prev.divok
 0044                                                   ; No overflow, continue
-0045               
-0046 6DF4 1010  14         jmp   fm.browse.fname.prev.set
-0047                                                   ; Overflow, just set filename
-0048                       ;------------------------------------------------------
-0049                       ; Division ok, now do page check
-0050                       ;------------------------------------------------------
-0051               fm.browse.fname.prev.divok:
-0052 6DF6 0584  14         inc   tmp0                      ; Base 1
-0053 6DF8 8804  34         c     tmp0,@cat.currentpage     ; Stay on page?
+0045 6DF4 1010  14         jmp   fm.browse.fname.prev.set
+0046                                                   ; Overflow, just set filename
+0047                       ;------------------------------------------------------
+0048                       ; Division ok, now do page check
+0049                       ;------------------------------------------------------
+0050               fm.browse.fname.prev.divok:
+0051 6DF6 0584  14         inc   tmp0                      ; Base 1
+0052 6DF8 8804  34         c     tmp0,@cat.currentpage     ; Stay on page?
      6DFA E00A     
-0054 6DFC 130C  14         jeq   fm.browse.fname.prev.set  ; Yes, skip paging
-0055                       ;------------------------------------------------------
-0056                       ; Previous page and filename in catalog
-0057                       ;------------------------------------------------------
-0058               fm.browse.fname.prev.page:
-0059 6DFE 0620  34         dec   @cat.currentpage      ; Previous page
+0053 6DFC 130C  14         jeq   fm.browse.fname.prev.set  ; Yes, skip paging
+0054                       ;------------------------------------------------------
+0055                       ; Previous page and filename in catalog
+0056                       ;------------------------------------------------------
+0057               fm.browse.fname.prev.page:
+0058 6DFE 0620  34         dec   @cat.currentpage      ; Previous page
      6E00 E00A     
-0060 6E02 0620  34         dec   @cat.shortcut.idx     ; Previous file in catalog
+0059 6E02 0620  34         dec   @cat.shortcut.idx     ; Previous file in catalog
      6E04 E010     
-0061               
-0062 6E06 6820  54         s     @cat.nofilespage,@cat.fpicker.idx
+0060               
+0061 6E06 6820  54         s     @cat.nofilespage,@cat.fpicker.idx
      6E08 E008     
      6E0A E002     
-0063                                                   ; Calculate 1st filename on page
-0064               
-0065 6E0C 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
+0062                                                   ; Calculate 1st filename on page
+0063               
+0064 6E0C 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
      6E0E 7094     
-0066               
-0067 6E10 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+0065               
+0066 6E10 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6E12 6D6C     
-0068                                                   ; \ i  @cat.device = Current device name
-0069                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0070                                                   ; |        filename pointerlist
-0071                                                   ; |
-0072                                                   ; | o  @cat.fullfname = Combined string with
-0073                                                   ; /        device & filename
-0074               
-0075 6E14 1007  14         jmp   fm.browse.fname.prev.exit
-0076                       ;------------------------------------------------------
-0077                       ; Previous filename in catalog
-0078                       ;------------------------------------------------------
-0079               fm.browse.fname.prev.set:
-0080 6E16 0620  34         dec   @cat.shortcut.idx     ; Previous file in catalog
+0067                                                   ; \ i  @cat.device = Current device name
+0068                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0069                                                   ; |        filename pointerlist
+0070                                                   ; |
+0071                                                   ; | o  @cat.fullfname = Combined string with
+0072                                                   ; /        device & filename
+0073               
+0074 6E14 1007  14         jmp   fm.browse.fname.prev.exit
+0075                       ;------------------------------------------------------
+0076                       ; Previous filename in catalog
+0077                       ;------------------------------------------------------
+0078               fm.browse.fname.prev.set:
+0079 6E16 0620  34         dec   @cat.shortcut.idx     ; Previous file in catalog
      6E18 E010     
-0081               
-0082 6E1A 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+0080               
+0081 6E1A 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6E1C 6D6C     
-0083                                                   ; \ i  @cat.device = Current device name
-0084                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0085                                                   ; |        filename pointerlist
-0086                                                   ; |
-0087                                                   ; | o  @cat.fullfname = Combined string with
-0088                                                   ; /        device & filename
-0089               
-0090 6E1E 1002  14         jmp   fm.browse.fname.prev.exit
-0091                       ;------------------------------------------------------
-0092                       ; Skip previous file
-0093                       ;------------------------------------------------------
-0094               fm.browse.fname.prev.skip:
-0095 6E20 0720  34         seto  @outparm1             ; Set skipped flag
+0082                                                   ; \ i  @cat.device = Current device name
+0083                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0084                                                   ; |        filename pointerlist
+0085                                                   ; |
+0086                                                   ; | o  @cat.fullfname = Combined string with
+0087                                                   ; /        device & filename
+0088               
+0089 6E1E 1002  14         jmp   fm.browse.fname.prev.exit
+0090                       ;------------------------------------------------------
+0091                       ; Skip previous file
+0092                       ;------------------------------------------------------
+0093               fm.browse.fname.prev.skip:
+0094 6E20 0720  34         seto  @outparm1             ; Set skipped flag
      6E22 A018     
-0096                       ;------------------------------------------------------
-0097                       ; Exit
-0098                       ;------------------------------------------------------
-0099               fm.browse.fname.prev.exit:
-0100 6E24 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0101 6E26 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0102 6E28 C2F9  30         mov   *stack+,r11           ; Pop R11
-0103 6E2A 045B  20         b     *r11                  ; Return to caller
+0095                       ;------------------------------------------------------
+0096                       ; Exit
+0097                       ;------------------------------------------------------
+0098               fm.browse.fname.prev.exit:
+0099 6E24 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0100 6E26 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0101 6E28 C2F9  30         mov   *stack+,r11           ; Pop R11
+0102 6E2A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
 0082                       copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
      **** ****     > fm.browse.fname.next.asm
@@ -13069,77 +13068,76 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                                                   ; / tmp0 = page number, tmp1 = offset
 0046 6E54 1901  14         jno   fm.browse.fname.next.divok
 0047                                                   ; No overflow, continue
-0048               
-0049 6E56 1011  14         jmp   fm.browse.fname.next.set
-0050                                                   ; Overflow, just set filename
-0051                       ;------------------------------------------------------
-0052                       ; Division ok, now do page check
-0053                       ;------------------------------------------------------
-0054               fm.browse.fname.next.divok:
-0055 6E58 0584  14         inc   tmp0                      ; Base 1
-0056 6E5A 8804  34         c     tmp0,@cat.currentpage     ; Stay on page?
+0048 6E56 1011  14         jmp   fm.browse.fname.next.set
+0049                                                   ; Overflow, just set filename
+0050                       ;------------------------------------------------------
+0051                       ; Division ok, now do page check
+0052                       ;------------------------------------------------------
+0053               fm.browse.fname.next.divok:
+0054 6E58 0584  14         inc   tmp0                      ; Base 1
+0055 6E5A 8804  34         c     tmp0,@cat.currentpage     ; Stay on page?
      6E5C E00A     
-0057 6E5E 130D  14         jeq   fm.browse.fname.next.set  ; Yes, skip paging
-0058                       ;------------------------------------------------------
-0059                       ; Next page and filename in catalog
-0060                       ;------------------------------------------------------
-0061               fm.browse.fname.next.page:
-0062 6E60 05A0  34         inc   @cat.currentpage      ; Next page
+0056 6E5E 130D  14         jeq   fm.browse.fname.next.set  ; Yes, skip paging
+0057                       ;------------------------------------------------------
+0058                       ; Next page and filename in catalog
+0059                       ;------------------------------------------------------
+0060               fm.browse.fname.next.page:
+0061 6E60 05A0  34         inc   @cat.currentpage      ; Next page
      6E62 E00A     
-0063               
-0064 6E64 A820  54         a     @cat.nofilespage,@cat.fpicker.idx
+0062               
+0063 6E64 A820  54         a     @cat.nofilespage,@cat.fpicker.idx
      6E66 E008     
      6E68 E002     
-0065                                                   ; Calculate 1st filename on page
-0066               
-0067 6E6A C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
+0064                                                   ; Calculate 1st filename on page
+0065               
+0066 6E6A C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
      6E6C E002     
      6E6E E010     
-0068               
-0069 6E70 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
+0067               
+0068 6E70 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
      6E72 7094     
-0070               
-0071 6E74 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+0069               
+0070 6E74 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6E76 6D6C     
-0072                                                   ; \ i  @cat.device = Current device name
-0073                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0074                                                   ; |        filename pointerlist
-0075                                                   ; |
-0076                                                   ; | o  @cat.fullfname = Combined string with
-0077                                                   ; /        device & filename
-0078               
-0079 6E78 1007  14         jmp   fm.browse.fname.next.exit
-0080                       ;------------------------------------------------------
-0081                       ; Next filename in catalog
-0082                       ;------------------------------------------------------
-0083               fm.browse.fname.next.set:
-0084 6E7A 05A0  34         inc   @cat.shortcut.idx     ; Next file in catalog
+0071                                                   ; \ i  @cat.device = Current device name
+0072                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0073                                                   ; |        filename pointerlist
+0074                                                   ; |
+0075                                                   ; | o  @cat.fullfname = Combined string with
+0076                                                   ; /        device & filename
+0077               
+0078 6E78 1007  14         jmp   fm.browse.fname.next.exit
+0079                       ;------------------------------------------------------
+0080                       ; Next filename in catalog
+0081                       ;------------------------------------------------------
+0082               fm.browse.fname.next.set:
+0083 6E7A 05A0  34         inc   @cat.shortcut.idx     ; Next file in catalog
      6E7C E010     
-0085               
-0086 6E7E 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+0084               
+0085 6E7E 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      6E80 6D6C     
-0087                                                   ; \ i  @cat.device = Current device name
-0088                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0089                                                   ; |        filename pointerlist
-0090                                                   ; |
-0091                                                   ; | o  @cat.fullfname = Combined string with
-0092                                                   ; /        device & filename
-0093               
-0094 6E82 1002  14         jmp   fm.browse.fname.next.exit
-0095                       ;------------------------------------------------------
-0096                       ; Skip next file
-0097                       ;------------------------------------------------------
-0098               fm.browse.fname.next.skip:
-0099 6E84 0720  34         seto  @outparm1             ; Set skipped flag
+0086                                                   ; \ i  @cat.device = Current device name
+0087                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0088                                                   ; |        filename pointerlist
+0089                                                   ; |
+0090                                                   ; | o  @cat.fullfname = Combined string with
+0091                                                   ; /        device & filename
+0092               
+0093 6E82 1002  14         jmp   fm.browse.fname.next.exit
+0094                       ;------------------------------------------------------
+0095                       ; Skip next file
+0096                       ;------------------------------------------------------
+0097               fm.browse.fname.next.skip:
+0098 6E84 0720  34         seto  @outparm1             ; Set skipped flag
      6E86 A018     
-0100                       ;------------------------------------------------------
-0101                       ; Exit
-0102                       ;------------------------------------------------------
-0103               fm.browse.fname.next.exit:
-0104 6E88 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0105 6E8A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0106 6E8C C2F9  30         mov   *stack+,r11           ; Pop R11
-0107 6E8E 045B  20         b     *r11                  ; Return to caller
+0099                       ;------------------------------------------------------
+0100                       ; Exit
+0101                       ;------------------------------------------------------
+0102               fm.browse.fname.next.exit:
+0103 6E88 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0104 6E8A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0105 6E8C C2F9  30         mov   *stack+,r11           ; Pop R11
+0106 6E8E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
 0083                       copy  "fm.directory.asm"         ; File manager drive/directory listing
      **** ****     > fm.directory.asm

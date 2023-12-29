@@ -42,7 +42,6 @@ fm.browse.fname.prev:
                                     ; / tmp0 = page number, tmp1 = offset
         jno   fm.browse.fname.prev.divok
                                     ; No overflow, continue
-
         jmp   fm.browse.fname.prev.set
                                     ; Overflow, just set filename
         ;------------------------------------------------------

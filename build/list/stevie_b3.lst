@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231229-1544230
+0002               * BUILD: 231229-1600110
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -894,13 +894,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               
 0061               
 0065               
-0067 6028 0D53                 stri 'STEVIE 1.5.20'
+0067 6028 0D53                 stri 'STEVIE 1.5.21'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3230     
+     6034 3231     
                    < stevie_b3.asm
 0039               
 0040               ***************************************************************
@@ -13971,14 +13971,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014               
 0019               
 0024               
-0026 709C 2020                 text '  Stevie 1.5.20  '
+0026 709C 2020                 text '  Stevie 1.5.21  '
      709E 5374     
      70A0 6576     
      70A2 6965     
      70A4 2031     
      70A6 2E35     
      70A8 2E32     
-     70AA 3020     
+     70AA 3120     
      70AC 20       
 0027                           even
 0029               
@@ -14889,16 +14889,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76DE 20       
 0175                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 76DF   32                        text '231229-1544230'
+0001 76DF   32                        text '231229-1600110'
      76E0 3331     
      76E2 3232     
      76E4 392D     
-     76E6 3135     
-     76E8 3434     
-     76EA 3233     
+     76E6 3136     
+     76E8 3030     
+     76EA 3131     
      76EC 30       
                    < data.dialogs.asm
-0176 76ED   20                        text ' - Stevie 1.5.20 - (c)2018-2023 Filip Van Vooren'
+0176 76ED   20                        text ' - Stevie 1.5.21 - (c)2018-2023 Filip Van Vooren'
      76EE 2D20     
      76F0 5374     
      76F2 6576     
@@ -14906,7 +14906,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76F6 2031     
      76F8 2E35     
      76FA 2E32     
-     76FC 3020     
+     76FC 3120     
      76FE 2D20     
      7700 2863     
      7702 2932     
