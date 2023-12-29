@@ -23,7 +23,6 @@ edkey.action.fb.file.prev:
         jne   edkey.action.fb.file.prev.exit
                                     ; Yes, exit early
 
-
         li    tmp0,edkey.action.fb.file.prev
         mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
                                     ; in "Unsaved changes" dialog

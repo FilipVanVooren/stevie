@@ -224,7 +224,6 @@ pane.filebrowser.calcdone:
         mov   @cat.var1,tmp0        ; Get cutover row and column offset
         mov   @cat.var2,tmp2        ; Get number of files to display
 
-
         clr   tmp3                  ; No string padding
 
         bl    @putlst               ; Loop over string list and display
@@ -243,6 +242,7 @@ pane.filebrowser.calcdone:
         ;------------------------------------------------------
         ; Show filename marker in supported dialogs
         ;------------------------------------------------------
+pane.filebrowser.marker:
         mov   @cmdb.dialog,tmp0     ; Get current dialog ID
 
         ci    tmp0,id.dialog.load   ; \ First supported dialog

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231228-2228100
+0002               * BUILD: 231229-1532300
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -583,8 +583,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0401      E006     cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
 0402      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
 0403      E00A     cat.currentpage   equ  cat.top + 10    ; Current page
-0404      E00C     cat.previouspage  equ  cat.top + 12    ; Previous page
-0405      E00E     cat.totalpages    equ  cat.top + 14    ; Total number of pages
+0404      E00C     cat.totalpages    equ  cat.top + 12    ; Total number of pages
+0405      E00E     cat.previouspage  equ  cat.top + 14    ; Previous page
 0406      E010     cat.shortcut.idx  equ  cat.top + 16    ; Index in catalog(current entry on page)
 0407      E012     cat.norowscol     equ  cat.top + 18    ; Number of rows per column
 0408      E014     cat.fullfname     equ  cat.top + 20    ; Device & filename string (80)
@@ -9731,9 +9731,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0064                       ;------------------------------------------------------
 0065 6074 06A0  32         bl    @film
      6076 2236     
-0066 6078 A000                   data >a000,00,20000   ; Clear a000-eedf
+0066 6078 A000                   data >a000,00,>4f00   ; Clear a000-eeef
      607A 0000     
-     607C 4E20     
+     607C 4F00     
 0067                       ;------------------------------------------------------
 0068                       ; Setup cursor, screen, etc.
 0069                       ;------------------------------------------------------
@@ -11698,43 +11698,42 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0023 6778 1612  14         jne   edkey.action.fb.file.prev.exit
 0024                                                   ; Yes, exit early
 0025               
-0026               
-0027 677A 0204  20         li    tmp0,edkey.action.fb.file.prev
+0026 677A 0204  20         li    tmp0,edkey.action.fb.file.prev
      677C 676C     
-0028 677E C804  38         mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
+0027 677E C804  38         mov   tmp0,@cmdb.action.ptr ; Set deferred action to run if proceeding
      6780 A72C     
-0029                                                   ; in "Unsaved changes" dialog
-0030                       ;------------------------------------------------------
-0031                       ; Show dialog "Unsaved changed" if editor buffer dirty
-0032                       ;------------------------------------------------------
-0033 6782 C120  34         mov   @edb.dirty,tmp0
+0028                                                   ; in "Unsaved changes" dialog
+0029                       ;------------------------------------------------------
+0030                       ; Show dialog "Unsaved changed" if editor buffer dirty
+0031                       ;------------------------------------------------------
+0032 6782 C120  34         mov   @edb.dirty,tmp0
      6784 A506     
-0034 6786 1303  14         jeq   edkey.action.fb.file.prev.loadfile
-0035 6788 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0036 678A 0460  28         b     @dialog.unsaved       ; Show dialog and exit
+0033 6786 1303  14         jeq   edkey.action.fb.file.prev.loadfile
+0034 6788 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0035 678A 0460  28         b     @dialog.unsaved       ; Show dialog and exit
      678C 7704     
-0037                       ;------------------------------------------------------
-0038                       ; Load file
-0039                       ;------------------------------------------------------
-0040               edkey.action.fb.file.prev.loadfile:
-0041 678E 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
+0036                       ;------------------------------------------------------
+0037                       ; Load file
+0038                       ;------------------------------------------------------
+0039               edkey.action.fb.file.prev.loadfile:
+0040 678E 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
      6790 77BC     
-0042               
-0043 6792 0204  20         li    tmp0,cat.fullfname    ; \ Get pointer to string with combined
+0041               
+0042 6792 0204  20         li    tmp0,cat.fullfname    ; \ Get pointer to string with combined
      6794 E014     
-0044 6796 C804  38         mov   tmp0,@parm1           ; / device and filename
+0043 6796 C804  38         mov   tmp0,@parm1           ; / device and filename
      6798 A006     
-0045               
-0046 679A 06A0  32         bl    @fm.loadfile          ; Load DV80 file
+0044               
+0045 679A 06A0  32         bl    @fm.loadfile          ; Load DV80 file
      679C 760A     
-0047                                                   ; \ i  parm1 = Pointer to length-prefixed
-0048                                                   ; /            device/filename string
-0049                       ;------------------------------------------------------
-0050                       ; Exit
-0051                       ;------------------------------------------------------
-0052               edkey.action.fb.file.prev.exit
-0053 679E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0054 67A0 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
+0046                                                   ; \ i  parm1 = Pointer to length-prefixed
+0047                                                   ; /            device/filename string
+0048                       ;------------------------------------------------------
+0049                       ; Exit
+0050                       ;------------------------------------------------------
+0051               edkey.action.fb.file.prev.exit
+0052 679E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0053 67A0 0460  28         b    @edkey.action.top      ; Goto 1st line in editor buffer
      67A2 6458     
                    < stevie_b1.asm
 0098                       copy  "edkey.fb.file.next.asm"      ; Next file in catalog file list
@@ -14118,7 +14117,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012 7020 1603  14         jne   edkey.action.filebrowser.prev.page
 0013 7022 04E0  34         clr   @cat.fpicker.idx
      7024 E002     
-0014 7026 1003  14         jmp   edkey.action.filebrowser.prev.page.display
+0014 7026 1008  14         jmp   edkey.action.filebrowser.prev.page.display
 0015                       ;-------------------------------------------------------
 0016                       ; Previous page
 0017                       ;-------------------------------------------------------
@@ -14127,26 +14126,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      702A E008     
      702C E002     
 0020                                                   ; Calculate 1st filename on page
-0021                       ;-------------------------------------------------------
-0022                       ; Display page
-0023                       ;-------------------------------------------------------
-0024               edkey.action.filebrowser.prev.page.display:
-0025 702E C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
+0021               
+0022 702E C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
      7030 E002     
      7032 E010     
-0026                                                   ; Make it same for highlighter
-0027               
-0028 7034 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
-     7036 76A2     
-0029                                                   ; \ i  @cat.device = Current device name
-0030                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0031                                                   ; |        filename pointerlist
-0032                                                   ; |
-0033                                                   ; | o  @cat.fullfname = Combined string with
-0034                                                   ; /        device & filename
-0035               
-0036 7038 06A0  32         bl    @pane.filebrowser     ; Show filebrowser
-     703A 794A     
+0023                                                   ; Make it same for highlighter
+0024               
+0025 7034 06A0  32         bl    @pane.filebrowser     ; Show filebrowser
+     7036 794A     
+0026                       ;-------------------------------------------------------
+0027                       ; Display page
+0028                       ;-------------------------------------------------------
+0029               edkey.action.filebrowser.prev.page.display:
+0030 7038 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+     703A 76A2     
+0031                                                   ; \ i  @cat.device = Current device name
+0032                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0033                                                   ; |        filename pointerlist
+0034                                                   ; |
+0035                                                   ; | o  @cat.fullfname = Combined string with
+0036                                                   ; /        device & filename
 0037               
 0038 703C 06A0  32         bl    @cpym2m
      703E 253A     
@@ -14194,12 +14193,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011                       ;-------------------------------------------------------
 0012 706A 8820  50         c     @cat.currentpage,@cat.totalpages
      706C E00A     
-     706E E00E     
+     706E E00C     
 0013 7070 1104  14         jlt   edkey.action.filebrowser.next.page
 0014 7072 C820  54         mov   @cat.totalpages,@cat.currentpage
-     7074 E00E     
+     7074 E00C     
      7076 E00A     
-0015 7078 1003  14         jmp   edkey.action.filebrowser.next.page.display
+0015 7078 1008  14         jmp   edkey.action.filebrowser.next.page.display
 0016                       ;-------------------------------------------------------
 0017                       ; Next page
 0018                       ;-------------------------------------------------------
@@ -14208,26 +14207,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      707C E008     
      707E E002     
 0021                                                   ; Calculate 1st filename on page
-0022                       ;-------------------------------------------------------
-0023                       ; Display page
-0024                       ;-------------------------------------------------------
-0025               edkey.action.filebrowser.next.page.display:
-0026 7080 C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
+0022               
+0023 7080 C820  54         mov   @cat.fpicker.idx,@cat.shortcut.idx
      7082 E002     
      7084 E010     
-0027                                                   ; Make it same for highlighter
-0028               
-0029 7086 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
-     7088 76A2     
-0030                                                   ; \ i  @cat.device = Current device name
-0031                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0032                                                   ; |        filename pointerlist
-0033                                                   ; |
-0034                                                   ; | o  @cat.fullfname = Combined string with
-0035                                                   ; /        device & filename
-0036               
-0037 708A 06A0  32         bl    @pane.filebrowser     ; Show filebrowser
-     708C 794A     
+0024                                                   ; Make it same for highlighter
+0025               
+0026 7086 06A0  32         bl    @pane.filebrowser     ; Show filebrowser
+     7088 794A     
+0027                       ;-------------------------------------------------------
+0028                       ; Display page
+0029                       ;-------------------------------------------------------
+0030               edkey.action.filebrowser.next.page.display:
+0031 708A 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+     708C 76A2     
+0032                                                   ; \ i  @cat.device = Current device name
+0033                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0034                                                   ; |        filename pointerlist
+0035                                                   ; |
+0036                                                   ; | o  @cat.fullfname = Combined string with
+0037                                                   ; /        device & filename
 0038               
 0039 708E 06A0  32         bl    @cpym2m
      7090 253A     
@@ -18187,14 +18186,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.HILIT.COLROW2... >E006 :     
     CAT.NOFILESPAGE..... >E008 :     
     CAT.NOROWSCOL....... >E012 :     
-    CAT.PREVIOUSPAGE.... >E00C :     
+    CAT.PREVIOUSPAGE.... >E00E :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
     CAT.SHORTCUT.IDX.... >E010 :     
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E00E :     
+    CAT.TOTALPAGES...... >E00C :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     
@@ -18642,11 +18641,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDKEY.ACTION.FILEBROWSER.NEXT >7062 :     
     EDKEY.ACTION.FILEBROWSER.NEXT.EXIT >70AE :     
     EDKEY.ACTION.FILEBROWSER.NEXT.PAGE >707A :     
-    EDKEY.ACTION.FILEBROWSER.NEXT.PAGE.DISPLAY >7080 :     
+    EDKEY.ACTION.FILEBROWSER.NEXT.PAGE.DISPLAY >708A :     
     EDKEY.ACTION.FILEBROWSER.PREV >7014 :     
     EDKEY.ACTION.FILEBROWSER.PREV.EXIT >705C :     
     EDKEY.ACTION.FILEBROWSER.PREV.PAGE >7028 :     
-    EDKEY.ACTION.FILEBROWSER.PREV.PAGE.DISPLAY >702E :     
+    EDKEY.ACTION.FILEBROWSER.PREV.PAGE.DISPLAY >7038 :     
     EDKEY.ACTION.GOTO... >64DA :     
     EDKEY.ACTION.GOTO.REFRESH >64F4 :     
     EDKEY.ACTION.HOME... >628E :     

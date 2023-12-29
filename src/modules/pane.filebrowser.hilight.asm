@@ -39,9 +39,18 @@ pane.filebrowser.hilight:
         clr   tmp0                   ; / MSW=0, LSW=index value
         div   @cat.nofilespage,tmp0  ; \ Calculate offset on current page
                                      ; / tmp0 = page number, tmp1 = offset
-
+        jno   pane.filebrowser.hilight.divok
+        ;------------------------------------------------------
+        ; Crash and burn
+        ;------------------------------------------------------
+        mov   r11,@>ffce            ; \ Save caller address        
+        bl    @cpu.crash            ; / Crash and halt system                                        
+        ;------------------------------------------------------
+        ; Division ok
+        ;------------------------------------------------------
+pane.filebrowser.hilight.divok:        
         mov   @cat.currentpage,@cat.previouspage
-        mov   tmp0,@cat.currentpage
+        inc   tmp0                   ; Base 1
         mov   tmp1,tmp0              ; Get offset on current page
         ;------------------------------------------------------
         ; Calculate column/row offset based on offset on current page

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231228-2228100
+0002               * BUILD: 231229-1532300
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -580,8 +580,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0401      E006     cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
 0402      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
 0403      E00A     cat.currentpage   equ  cat.top + 10    ; Current page
-0404      E00C     cat.previouspage  equ  cat.top + 12    ; Previous page
-0405      E00E     cat.totalpages    equ  cat.top + 14    ; Total number of pages
+0404      E00C     cat.totalpages    equ  cat.top + 12    ; Total number of pages
+0405      E00E     cat.previouspage  equ  cat.top + 14    ; Previous page
 0406      E010     cat.shortcut.idx  equ  cat.top + 16    ; Index in catalog(current entry on page)
 0407      E012     cat.norowscol     equ  cat.top + 18    ; Number of rows per column
 0408      E014     cat.fullfname     equ  cat.top + 20    ; Device & filename string (80)
@@ -12816,14 +12816,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.HILIT.COLROW2... >E006 :     
     CAT.NOFILESPAGE..... >E008 :     
     CAT.NOROWSCOL....... >E012 :     
-    CAT.PREVIOUSPAGE.... >E00C :     
+    CAT.PREVIOUSPAGE.... >E00E :     
     CAT.PTRLIST......... >E13C :     
     CAT.RSLIST.......... >E33A :     
     CAT.SHORTCUT.IDX.... >E010 :     
     CAT.SIZE............ >0F00 :     
     CAT.SIZELIST........ >E6C0 :     
     CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E00E :     
+    CAT.TOTALPAGES...... >E00C :     
     CAT.TYPELIST........ >E3C6 :     
     CAT.VAR1............ >E12C :     
     CAT.VAR2............ >E12E :     

@@ -63,7 +63,7 @@ main.continue:
         ; Initialize high memory expansion
         ;------------------------------------------------------
         bl    @film
-              data >a000,00,20000   ; Clear a000-eedf
+              data >a000,00,>4f00   ; Clear a000-eeef
         ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------

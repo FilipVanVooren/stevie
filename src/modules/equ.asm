@@ -401,8 +401,8 @@ cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
 cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
 cat.nofilespage   equ  cat.top + 8     ; Number of files per page
 cat.currentpage   equ  cat.top + 10    ; Current page
-cat.previouspage  equ  cat.top + 12    ; Previous page
-cat.totalpages    equ  cat.top + 14    ; Total number of pages
+cat.totalpages    equ  cat.top + 12    ; Total number of pages
+cat.previouspage  equ  cat.top + 14    ; Previous page
 cat.shortcut.idx  equ  cat.top + 16    ; Index in catalog(current entry on page)
 cat.norowscol     equ  cat.top + 18    ; Number of rows per column
 cat.fullfname     equ  cat.top + 20    ; Device & filename string (80)

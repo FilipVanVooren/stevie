@@ -18,13 +18,15 @@ edkey.action.filebrowser.prev:
 edkey.action.filebrowser.prev.page:        
         s     @cat.nofilespage,@cat.fpicker.idx
                                     ; Calculate 1st filename on page
+
+        mov   @cat.fpicker.idx,@cat.shortcut.idx
+                                    ; Make it same for highlighter
+
+        bl    @pane.filebrowser     ; Show filebrowser                                    
         ;-------------------------------------------------------
         ; Display page
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.page.display:                
-        mov   @cat.fpicker.idx,@cat.shortcut.idx
-                                    ; Make it same for highlighter
-                                    
+edkey.action.filebrowser.prev.page.display:                                                    
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
@@ -32,8 +34,6 @@ edkey.action.filebrowser.prev.page.display:
                                     ; | 
                                     ; | o  @cat.fullfname = Combined string with
                                     ; /        device & filename
-
-        bl    @pane.filebrowser     ; Show filebrowser
 
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
