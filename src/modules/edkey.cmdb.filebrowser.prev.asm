@@ -11,7 +11,7 @@ edkey.action.filebrowser.prev:
         ci    tmp0,1                
         jne   edkey.action.filebrowser.prev.page
         clr   @cat.fpicker.idx
-        jmp   edkey.action.filebrowser.prev.page.display
+        jmp   edkey.action.filebrowser.prev.checkdialog
         ;-------------------------------------------------------
         ; Previous page
         ;-------------------------------------------------------
@@ -22,11 +22,24 @@ edkey.action.filebrowser.prev.page:
         mov   @cat.fpicker.idx,@cat.shortcut.idx
                                     ; Make it same for highlighter
 
-        bl    @pane.filebrowser     ; Show filebrowser                                    
+        bl    @pane.filebrowser     ; Show filebrowser
         ;-------------------------------------------------------
-        ; Display page
+        ; Check if on supported dialog for filename display
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.page.display:                                                    
+edkey.action.filebrowser.prev.checkdialog:
+        mov   @cmdb.dialog,tmp0     ; Get current dialog ID
+
+        ci    tmp0,id.dialog.load   ; \ First supported dialog
+        jlt   edkey.action.filebrowser.prev.exit
+                                    ; / Not in supported dialog range. Skip 
+
+        ci    tmp0,id.dialog.run    ; \ Last supported dialog
+        jgt   edkey.action.filebrowser.prev.exit
+                                    ; / Not in supported dialog range. Skip
+        ;-------------------------------------------------------
+        ; Display device and filename
+        ;-------------------------------------------------------
+edkey.action.filebrowser.prev.page.display:
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
