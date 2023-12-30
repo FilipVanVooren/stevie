@@ -49,6 +49,9 @@ fm.browse.fname.set:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
+
+        mov   @cat.filecount,tmp0      ; \ Do not append filename if
+        jeq   fm.browse.fname.set.exit ; / catalog is empty anyway.
         ;------------------------------------------------------
         ; Get pointer from filename list in catalog
         ;------------------------------------------------------
