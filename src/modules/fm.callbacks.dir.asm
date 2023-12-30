@@ -309,7 +309,30 @@ fm.dir.callback3:
         ;------------------------------------------------------
         dec   @cat.filecount        ; \ One-time adjustment because  
                                     ; | catalog reads beyond EOF.
-                                    ; /                                     
+                                    ; /
+
+        ; Depending on the device DSR used (emulators, real HW)
+        ; we might or might not get in this callback when there
+        ; are no files. So we double check in both the callbacks
+        ; fh.callback3 (File close) and fh.callback4 (File I/O error)
+
+        mov   @cat.filecount,tmp0   ; How many files read?
+        jgt   fm.dir.callback4.exit ; Have some, so no error please        
+        ;-------------------------------------------------------
+        ; Show message 'No Device/Disk/Path'
+        ;-------------------------------------------------------
+        bl    @putat
+              byte 0,52
+              data txt.nodisk       ; No Device/Disk/Path
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing overlay message
+        ;-------------------------------------------------------
+        li    tmp0,pane.topline.oneshot.clearmsg
+        mov   tmp0,@tv.task.oneshot
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay                                    
+
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -347,8 +370,30 @@ fm.dir.callback4:
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
-        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-                                      ; /
+        bl    @pane.botline.busy.off
+                                    ; Put busyline indicator off
+
+        ; Depending on the device DSR used (emulators, real HW)
+        ; we might or might not get in this callback when there
+        ; are no files. So we double check in both the callbacks
+        ; fh.callback3 (File close) and fh.callback4 (File I/O error)
+
+        mov   @cat.filecount,tmp0   ; How many files read?
+        jgt   fm.dir.callback4.exit ; Have some, so no error please        
+        ;-------------------------------------------------------
+        ; Show message 'No Device/Disk/Path'
+        ;-------------------------------------------------------
+        bl    @putat
+              byte 0,52
+              data txt.nodisk       ; No Device/Disk/Path
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing overlay message
+        ;-------------------------------------------------------
+        li    tmp0,pane.topline.oneshot.clearmsg
+        mov   tmp0,@tv.task.oneshot
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay                                    
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

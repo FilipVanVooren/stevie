@@ -28,7 +28,7 @@ txt.block.copy     stri 'Copying block....'
                    even
 txt.block.move     stri 'Moving block....'
                    even
-txt.block.save     stri 'Saving block to file....'
+txt.block.save     stri 'Saving block....'
                    even
 txt.block.clip     stri 'Copying to clipboard....'
                    even
@@ -36,7 +36,7 @@ txt.block.print    stri 'Printing block....'
                    even
 txt.clearmem       stri 'Clearing memory....'
                    even
-txt.readdir        stri 'Reading directory....'                   
+txt.readdir        stri 'Reading catalog....'                   
                    even
 txt.done.load      stri 'Load completed'
                    even
@@ -56,7 +56,7 @@ txt.done.clipboard stri 'Clipboard saved'
                    even
 txt.done.clipdev   stri 'Clipboard set'
                    even
-txt.done.mc        stri 'Master Catalog set'
+txt.done.mc        stri 'MC set'
                    even
 txt.autoins.on     stri 'Autoinsert: on'
                    even
@@ -64,7 +64,9 @@ txt.autoins.off    stri 'Autoinsert: off'
                    even
 txt.fastmode       stri 'Fastmode IO'
                    even
-txt.uncrunching    stri 'Detokenizing TI Basic line....'
+txt.nodisk         stri 'No Device/Disk/Path'
+                   even
+txt.uncrunching    stri 'Uncrunching TI Basic line....'
                    even
 txt.kb             stri 'kb'
                    even
@@ -129,7 +131,6 @@ txt.memfull.load   stri 'Index full. File too large.'
                    even
 txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
                    even
-
 ;--------------------------------------------------------------
 ; Strings for command buffer
 ;--------------------------------------------------------------
