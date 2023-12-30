@@ -42,26 +42,10 @@ edkey.action.fb.load.file:
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
 !       mov   @edb.dirty,tmp0       ; Editor buffer dirty?
-        jeq   edkey.action.fb.load.check.mastcat
+        jeq   edkey.action.fb.load.loadfile
                                     ; No, continue processing
         jmp   edkey.action.fb.load.file.exit3
                                     ; Dirty, exit
-        ;-------------------------------------------------------
-        ; Check special handling Master Catalog
-        ;-------------------------------------------------------
-edkey.action.fb.load.check.mastcat:
-        mov   @edb.special.file,tmp0                          
-        ci    tmp0,id.special.mastcat 
-                                    ; Master catalog previously open?
-        jne   edkey.action.fb.load.loadfile
-                                    ; No, just load file
-        ;-------------------------------------------------------
-        ; Master Catalog previously open
-        ;-------------------------------------------------------
-        mov   @fb.topline,@edb.bk.fb.topline
-                                    ; Backup @fb.topline
-        mov   @fb.row,@edb.bk.fb.row
-                                    ; Backup @fb.row
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
@@ -72,14 +56,8 @@ edkey.action.fb.load.loadfile:
         ;-------------------------------------------------------
         ; Handle special files
         ;-------------------------------------------------------
-        mov   tmp1,@edb.special.file
-                                    ; \ Restore @parm2
-                                    ; / Set special file (0=normal file)
-                                       
-        ci    tmp1,id.special.mastcat  
-                                    ; Is master catalog?
-        jne   edkey.action.fb.load.file.exit2
-                                    ; No, goto top of file and exit
+        jmp   edkey.action.fb.load.file.exit2
+                                    ; Skip goto line
         ;-------------------------------------------------------
         ; Goto line in file and exit
         ;-------------------------------------------------------

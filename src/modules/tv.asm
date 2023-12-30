@@ -49,9 +49,6 @@ tv.init:
         bl    @cpym2m
               data def.clip.fname.a,tv.clip.fname,10
 
-        bl    @cpym2m
-              data def.mc.fname.c,tv.mc.fname,13
-
         clr   @edb.autoinsert       ; Set AutoInsert off by default
 
         li    tmp0,13               ; \

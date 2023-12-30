@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.21  '
+            text '  Stevie 1.5.22  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.21  '     
+            text '  Stevie 1.5.22  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.21  '
+            text '  Stevie 1.5.22  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.21  '  
+            text '  Stevie 1.5.22  '  
             even
         .endif
 
@@ -173,7 +173,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.21 - (c)2018-2023 Filip Van Vooren'
+                   text ' - Stevie 1.5.22 - (c)2018-2023 Filip Van Vooren'
                    even
 
 
@@ -233,7 +233,6 @@ txt.hint.basic     stri 'Pick session 1-5. Press F9 (or type END) in TI Basic to
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE=Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 
-
 ;--------------------------------------------------------------
 ; Dialog "Options"
 ;--------------------------------------------------------------
@@ -241,8 +240,8 @@ txt.head.config    byte 12,1,1
                    text ' Options '
                    byte 1
 
-txt.info.config    stri 'Clipboard   Font   Master-Catalog'
-pos.info.config    byte 0,12,19,>ff
+txt.info.config    stri 'Clipboard   Font'
+pos.info.config    byte 0,12,>ff
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 
 ;--------------------------------------------------------------
@@ -253,7 +252,6 @@ txt.head.clipdev   byte 24,1,1
                    byte 1
 txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
 txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.CLIP'
-
 
 ;--------------------------------------------------------------
 ; Dialog "Configure font"
@@ -267,17 +265,6 @@ pos.info.font      byte 7,11,15,19,23,>ff
 txt.hint.font      stri 'Pick desired font 1-5. Default font is 1.'
 txt.keys.font      stri 'F9-Back  SPACE-Close menu'
 
-
-;--------------------------------------------------------------
-; Dialog "Configure Master-Catalog"
-;--------------------------------------------------------------
-txt.head.cfg.mc    byte 29,1,1
-                   text ' Configure Master-Catalog '
-                   byte 1
-txt.hint.cfg.mc    stri 'Give device, path and filename of Master-Catalog file.'
-txt.keys.cfg.mc    stri 'F9-Back  F3-Clear  ^A=DSK1.MASTCAT  ^B=DSK6.MASTCAT    ^C=TIPI.MASTCAT'
-
-
 ;--------------------------------------------------------------
 ; Dialog "Shortcuts"
 ;--------------------------------------------------------------
@@ -285,9 +272,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto/M1/M2   Master-Catalog'
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto   M1-M2'
                    even
-pos.info.shortcuts byte 0,9,17,30,36,39,43,>ff
+pos.info.shortcuts byte 0,9,17,30,38,41,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

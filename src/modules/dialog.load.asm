@@ -26,12 +26,6 @@ dialog.load:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Don't show dialog "Unsaved changes" if Master Catalog
-        ;-------------------------------------------------------
-        mov   @edb.special.file,tmp0 
-        ci    tmp0,id.special.mastcat
-        jeq   dialog.load.setup     ; Master Catalog, skip dialog
-        ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp0       ; Editor dirty?

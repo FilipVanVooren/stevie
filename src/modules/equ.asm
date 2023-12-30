@@ -37,7 +37,6 @@ id.dialog.saveblock       equ  15      ; "Save block to file"
 id.dialog.print           equ  16      ; "Print file"
 id.dialog.printblock      equ  17      ; "Print block"
 id.dialog.cfg.clip        equ  18      ; "Configure clipboard"
-id.dialog.cfg.mc          equ  19      ; "Configure Master Catalog"
 id.dialog.goto            equ  20      ; "Goto"
 id.dialog.cat             equ  21      ; "Catalog drive/directory"
 ;-----------------------------------------------------------------
@@ -83,7 +82,6 @@ id.file.printblock        equ  8       ; Print block
 ; Special file indicator
 ;-----------------------------------------------------------------
 id.special.normal         equ  0       ; Normal file
-id.special.mastcat        equ  1       ; Master catalog
 id.special.readonly       equ  2       ; Read-only file
 id.special.basic          equ  3       ; TI Basic program
 ;-----------------------------------------------------------------
@@ -389,8 +387,7 @@ fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 ;-----------------------------------------------------------------
 tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
 tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
-tv.mc.fname       equ  >dea0           ; Default Master Catalog (80 bytes)
-tv.cat.fname      equ  >df20           ; Default catalog device (80 bytes)
+tv.cat.fname      equ  >dea0           ; Default catalog device (80 bytes)
 ;-----------------------------------------------------------------
 ; Directory/File catalog               @>e000-eeff    (3840 bytes)
 ;-----------------------------------------------------------------

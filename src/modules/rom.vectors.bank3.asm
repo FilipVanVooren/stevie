@@ -28,7 +28,7 @@ vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  dialog.cat            ; Dialog "Dir"
 vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  dialog.font           ; Dialog "Configure font"
-vec.18  data  dialog.cfg.mc         ; Dialog "Configure master catalog"
+vec.18  data  cpu.crash             ;
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane

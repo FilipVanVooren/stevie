@@ -80,7 +80,6 @@ main:
         copy  "dialog.cat.asm"          ; Dialog "Dir"
         copy  "dialog.cfg.asm"          ; Dialog "Configure"
         copy  "dialog.cfg.clip.asm"     ; Dialog "Configure clipboard"
-        copy  "dialog.cfg.mc.asm"       ; Dialog "Configure Master Catalog"
         copy  "dialog.font.asm"         ; Dialog "Configure font"
         copy  "dialog.clipboard.asm"    ; Dialog "Copy from clipboard"
         copy  "dialog.unsaved.asm"      ; Dialog "Unsaved changes"

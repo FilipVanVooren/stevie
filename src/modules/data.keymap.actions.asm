@@ -149,9 +149,6 @@ keymap_actions.editor:
 
         byte  key.fctn.0, pane.focus.fb
         data  tibasic
-
-        byte  key.ctrl.0, pane.focus.fb
-        data  edkey.action.fb.load.mc
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
@@ -322,9 +319,6 @@ keymap_actions.cmdb:
         
         byte  key.uc.f, id.dialog.cfg
         data  dialog.font
-
-        byte  key.uc.m, id.dialog.cfg
-        data  dialog.cfg.mc
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
@@ -347,11 +341,6 @@ keymap_actions.cmdb:
 
         byte  key.num.5, id.dialog.font
         data  edkey.action.cmdb.font5
-        ;-------------------------------------------------------
-        ; Dialog: Configure Master Catalog
-        ;-------------------------------------------------------
-        byte  key.enter, id.dialog.cfg.mc
-        data  edkey.action.cmdb.cfg.mc
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------
@@ -447,10 +436,7 @@ keymap_actions.cmdb:
         data  edkey.action.block.m2
 
         byte  key.uc.g, id.dialog.shortcuts
-        data  dialog.goto
-
-        byte  key.uc.m, id.dialog.shortcuts
-        data  edkey.action.fb.load.mc              
+        data  dialog.goto             
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------
@@ -538,10 +524,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.preset
 
         byte  key.ctrl.z, pane.focus.cmdb
-        data  pane.colorscheme.cycle
-
-        byte  key.ctrl.0, pane.focus.cmdb
-        data  edkey.action.fb.load.mc        
+        data  pane.colorscheme.cycle   
         ;------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

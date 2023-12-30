@@ -177,7 +177,6 @@ dialog.help.data.page1.right:
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         stri 'Fctn +   ^q   Quit'
         stri 'Fctn 0   ^/   TI Basic'
-        stri 'Ctrl 0   ^0   Load master catalog'
         stri 'Ctrl h   ^h   Help'
         stri 'Ctrl r   ^r   Toggle ruler'
         stri 'Ctrl u   ^u   Shortcuts menu'

@@ -56,8 +56,6 @@ txt.done.clipboard stri 'Clipboard saved'
                    even
 txt.done.clipdev   stri 'Clipboard set'
                    even
-txt.done.mc        stri 'MC set'
-                   even
 txt.autoins.on     stri 'Autoinsert: on'
                    even
 txt.autoins.off    stri 'Autoinsert: off'
@@ -110,10 +108,7 @@ txt.ws4            stri '    '
                    even
 txt.filetype.none  equ txt.ws4
 
-txt.msg.mastcat    stri ''
-                   even
-
-txt.msg.tibasic    stri 'TI Basic program mode active.'
+txt.msg.tibasic    stri 'TI Basic mode active.'
                    even
 
 ;--------------------------------------------------------------

@@ -377,17 +377,6 @@ dialog.font.vector:
 
 
 ***************************************************************
-* Stub for dialog "Configure Master Catalog"
-* bank3 vec.18
-********|*****|*********************|**************************
-dialog.cfg.mc:
-        mov   @dialog.cfg.mc.vector,@trmpvector
-        jmp   _trampoline.bank3     ; Show dialog
-dialog.cfg.mc.vector:
-        data  vec.18
-
-
-***************************************************************
 * Stub for dialog "Main Menu"
 * bank3 vec.30
 ********|*****|*********************|**************************

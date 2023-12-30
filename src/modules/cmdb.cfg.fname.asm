@@ -3,7 +3,7 @@
 
 ***************************************************************
 * cmdb.cfg.fname
-* Configure filename for clipboard, master catalog, ...
+* Configure filename for clipboard, ...
 ***************************************************************
 * bl  @cmdb.cfg.fname
 *--------------------------------------------------------------

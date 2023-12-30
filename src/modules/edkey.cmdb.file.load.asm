@@ -38,21 +38,6 @@ edkey.action.cmdb.load:
 
         bl    @pane.cmdb.hide       ; Hide CMDB pane
         ;-------------------------------------------------------
-        ; Special handling Master Catalog
-        ;-------------------------------------------------------
-        mov   @edb.special.file,tmp0  ; \ Master catalog previously open?
-        ci    tmp0,id.special.mastcat ; / 
-
-        jne   edkey.action.cmdb.load.file
-                                    ; No, just load file
-
-        mov   @fb.topline,@edb.bk.fb.topline
-                                    ; Backup @fb.topline
-        mov   @fb.row,@edb.bk.fb.row 
-                                    ; Backup @fb.row                          
-
-        clr   @edb.dirty            ; No confirmation, always load immediately.
-        ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
 edkey.action.cmdb.load.file:       
