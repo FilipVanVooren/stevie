@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231229-1611070
+0002               * BUILD: 231230-1849140
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -9844,9 +9844,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                       ;-------------------------------------------------------
 0033 605A 06A0  32         bl    @cpym2m
      605C 253A     
-0034 605E 711A                   data txt.hint.memstat,ram.msg1,25
+0034 605E 711A                   data txt.hint.memstat,ram.msg1,23
      6060 F050     
-     6062 0019     
+     6062 0017     
 0035               
 0036 6064 06A0  32         bl    @cpym2m
      6066 253A     
@@ -9944,7 +9944,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0062 60CC 6120  34         s     @edb.sams.hipage,tmp0 ;
      60CE A51C     
 0063               
-0064 60D0 C804  38         mov   tmp0,@rambuf          ; Number of ;ages free
+0064 60D0 C804  38         mov   tmp0,@rambuf          ; Number of pages free
      60D2 A100     
 0065               
 0066 60D4 0242  22         andi  config,>7fff          ; Do not print number
@@ -9993,18 +9993,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0097 610E D804  38         movb  tmp0,@ram.msg1 + 21   ; | Overwrite length-byte prefix in
      6110 F065     
 0098                                                   ; / trimmed number with slash
-0099               
-0100                       ;-------------------------------------------------------
-0101                       ; Exit
-0102                       ;-------------------------------------------------------
-0103               dialog.menu.exit:
-0104 6112 C139  30         mov   *stack+,tmp0          ; Pop tmp4
-0105 6114 C139  30         mov   *stack+,tmp0          ; Pop tmp3
-0106 6116 C139  30         mov   *stack+,tmp0          ; Pop tmp2
-0107 6118 C139  30         mov   *stack+,tmp0          ; Pop tmp1
-0108 611A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0109 611C C2F9  30         mov   *stack+,r11           ; Pop R11
-0110 611E 045B  20         b     *r11                  ; Return to caller
+0099                       ;-------------------------------------------------------
+0100                       ; Exit
+0101                       ;-------------------------------------------------------
+0102               dialog.menu.exit:
+0103 6112 C139  30         mov   *stack+,tmp0          ; Pop tmp4
+0104 6114 C139  30         mov   *stack+,tmp0          ; Pop tmp3
+0105 6116 C139  30         mov   *stack+,tmp0          ; Pop tmp2
+0106 6118 C139  30         mov   *stack+,tmp0          ; Pop tmp1
+0107 611A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0108 611C C2F9  30         mov   *stack+,r11           ; Pop R11
+0109 611E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
 0072                       copy  "dialog.file.asm"         ; Dialog "File"
      **** ****     > dialog.file.asm
@@ -14180,7 +14179,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ;--------------------------------------------------------------
 0039               ; Shared strings used in multiple dialogs
 0040               ;--------------------------------------------------------------
-0041 711A 1953     txt.hint.memstat   stri 'SAMS free/total: ..../...'
+0041 711A 1853     txt.hint.memstat   stri 'SAMS free/total: .../...'
      711C 414D     
      711E 5320     
      7120 6672     
@@ -14190,9 +14189,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7128 616C     
      712A 3A20     
      712C 2E2E     
-     712E 2E2E     
-     7130 2F2E     
-     7132 2E2E     
+     712E 2E2F     
+     7130 2E2E     
+     7132 2E       
 0042                                  even
 0043               
 0044 7134 294C     txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
@@ -15002,13 +15001,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76B2 20       
 0175                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 76B3   32                        text '231229-1611070'
+0001 76B3   32                        text '231230-1849140'
      76B4 3331     
-     76B6 3232     
-     76B8 392D     
-     76BA 3136     
-     76BC 3131     
-     76BE 3037     
+     76B6 3233     
+     76B8 302D     
+     76BA 3138     
+     76BC 3439     
+     76BE 3134     
      76C0 30       
                    < data.dialogs.asm
 0176 76C1   20                        text ' - Stevie 1.5.21 - (c)2018-2023 Filip Van Vooren'

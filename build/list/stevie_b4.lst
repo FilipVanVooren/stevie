@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231229-1611070
+0002               * BUILD: 231230-1849140
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -14227,22 +14227,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       ;------------------------------------------------------
 0025                       ; Initialisation
 0026                       ;------------------------------------------------------
-0027 7312 C120  34         mov   @cat.filecount,tmp0     ; Get number of files
-     7314 E000     
-0028 7316 1602  14         jne   pane.filebrowser.volume ; \
-0029 7318 0460  28         b     @pane.filebrowser.exit  ; / Exit if nothing to display
-     731A 7478     
-0030                       ;------------------------------------------------------
-0031                       ; Show volume name, no files, device path
-0032                       ;------------------------------------------------------
-0033               pane.filebrowser.volume:
-0034 731C 06A0  32         bl    @filv
-     731E 228E     
-0035 7320 0050                   data vdp.fb.toprow.sit,32,vdp.sit.size - 640
-     7322 0020     
-     7324 06E0     
-0036                                                   ; Clear screen
-0037               
+0027 7312 06A0  32         bl    @filv
+     7314 228E     
+0028 7316 0050                   data vdp.fb.toprow.sit,32,vdp.sit.size - 640
+     7318 0020     
+     731A 06E0     
+0029                                                   ; Clear screen
+0030               
+0031 731C C120  34         mov   @cat.filecount,tmp0     ; Get number of files
+     731E E000     
+0032 7320 1602  14         jne   pane.filebrowser.volume ; \
+0033 7322 0460  28         b     @pane.filebrowser.exit  ; / Exit if nothing to display
+     7324 7478     
+0034                       ;------------------------------------------------------
+0035                       ; Show volume name, no files, device path
+0036                       ;------------------------------------------------------
+0037               pane.filebrowser.volume
 0038 7326 06A0  32         bl    @putat
      7328 2442     
 0039 732A 0000                   byte 0,0
@@ -16166,7 +16166,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.FILEBROWSER.LINES >736A :     
     PANE.FILEBROWSER.MARKER >7464 :     
     PANE.FILEBROWSER.NOFILES >733C :     
-    PANE.FILEBROWSER.VOLUME >731C :     
+    PANE.FILEBROWSER.VOLUME >7326 :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.SHOW_HINT...... >6CC4 :     

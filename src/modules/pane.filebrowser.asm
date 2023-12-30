@@ -24,17 +24,17 @@ pane.filebrowser:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
+        bl    @filv
+              data vdp.fb.toprow.sit,32,vdp.sit.size - 640
+                                    ; Clear screen
+
         mov   @cat.filecount,tmp0     ; Get number of files
         jne   pane.filebrowser.volume ; \
         b     @pane.filebrowser.exit  ; / Exit if nothing to display
         ;------------------------------------------------------
         ; Show volume name, no files, device path
         ;------------------------------------------------------
-pane.filebrowser.volume:        
-        bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - 640
-                                    ; Clear screen
-
+pane.filebrowser.volume
         bl    @putat
               byte 0,0
               data txt.volume       ; Display "Volume: ...."   

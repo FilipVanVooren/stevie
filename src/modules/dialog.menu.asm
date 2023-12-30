@@ -61,7 +61,7 @@ dialog.menu:
         li    tmp0,tv.sams.maxpage  ; Calculate number of free pages
         s     @edb.sams.hipage,tmp0 ;
 
-        mov   tmp0,@rambuf          ; Number of ;ages free
+        mov   tmp0,@rambuf          ; Number of pages free
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
@@ -95,8 +95,7 @@ dialog.menu:
 
         li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
         movb  tmp0,@ram.msg1 + 21   ; | Overwrite length-byte prefix in 
-                                    ; / trimmed number with slash 
-                                    
+                                    ; / trimmed number with slash                                     
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

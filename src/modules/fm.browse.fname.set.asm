@@ -61,6 +61,8 @@ fm.browse.fname.set:
 
         movb  *tmp0+,tmp2           ; Get length-byte and skip
         srl   tmp2,8                ; MSB to LSB
+        jeq   fm.browse.fname.set.exit 
+                                    ; Exit early if no filename set
         ;------------------------------------------------------
         ; Append filename to device name
         ;------------------------------------------------------        

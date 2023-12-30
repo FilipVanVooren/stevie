@@ -38,7 +38,7 @@ txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT 
 ;--------------------------------------------------------------
 ; Shared strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.hint.memstat   stri 'SAMS free/total: ..../...'
+txt.hint.memstat   stri 'SAMS free/total: .../...'
                    even
 
 txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
