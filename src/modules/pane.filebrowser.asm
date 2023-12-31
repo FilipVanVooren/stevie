@@ -20,7 +20,9 @@ pane.filebrowser:
         dect  stack        
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
-        mov   tmp2,*stack           ; Push tmp2        
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor position                
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
@@ -258,7 +260,8 @@ pane.filebrowser.marker:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.filebrowser.exit:                
+pane.filebrowser.exit:
+        mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        

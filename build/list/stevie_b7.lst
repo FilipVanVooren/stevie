@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 231231-1620390
+0002               * BUILD: 231231-1651340
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -903,13 +903,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.22'
+0055 6028 0D53                 stri 'STEVIE 1.5.23'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3232     
+     6034 3233     
 0057               
 0061               
 0065               
@@ -8592,8 +8592,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ;-------------------------------------------------------
 0028 3818 06A0  32         bl    @hchar
      381A 2832     
-0029 381C 0032                   byte 0,50,32,25
-     381E 2019     
+0029 381C 0032                   byte 0,50,32,30
+     381E 201E     
 0030 3820 FFFF                   data EOL              ; Clear message
 0031               
 0032 3822 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task
