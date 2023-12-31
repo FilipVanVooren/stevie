@@ -20,7 +20,9 @@ pane.filebrowser.hilight:
         dect  stack        
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
-        mov   tmp2,*stack           ; Push tmp2        
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   @wyx,*stack           ; Push cursor position        
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
@@ -101,7 +103,8 @@ pane.filebrowser.hilight.draw.marker:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.filebrowser.hilight.exit:                
+pane.filebrowser.hilight.exit:
+        mov   *stack+,@wyx          ; Pop cursor position                
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0        
