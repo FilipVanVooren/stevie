@@ -3,7 +3,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0001               ********************************************************************************
 0002               *   Stevie
 0003               *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-0004               *   Copyright (C) 2018-2023 / Filip van Vooren
+0004               *   Copyright (C) 2018-2024 / Filip van Vooren
 0005               *
 0006               *   This program is free software: you can redistribute it and/or modify
 0007               *   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240101-1905440
+0002               * BUILD: 240101-2011460
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -890,13 +890,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.23'
+0055 6028 0D53                 stri 'STEVIE 1.5.24'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3233     
+     6034 3234     
 0057               
 0061               
 0065               
@@ -13944,14 +13944,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 7016 2020                 text '  Stevie 1.5.23  '
+0011 7016 2020                 text '  Stevie 1.5.24  '
      7018 5374     
      701A 6576     
      701C 6965     
      701E 2031     
      7020 2E35     
      7022 2E32     
-     7024 3320     
+     7024 3420     
      7026 20       
 0012                           even
 0014               
@@ -14865,16 +14865,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7658 20       
 0175                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7659   32                        text '240101-1905440'
+0001 7659   32                        text '240101-2011460'
      765A 3430     
      765C 3130     
      765E 312D     
-     7660 3139     
-     7662 3035     
-     7664 3434     
+     7660 3230     
+     7662 3131     
+     7664 3436     
      7666 30       
                    < data.dialogs.asm
-0176 7667   20                        text ' - Stevie 1.5.23 - (c)2018-2023 Filip Van Vooren'
+0176 7667   20                        text ' - Stevie 1.5.24 - (c)2018-2024 Filip Van Vooren'
      7668 2D20     
      766A 5374     
      766C 6576     
@@ -14882,14 +14882,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7670 2031     
      7672 2E35     
      7674 2E32     
-     7676 3320     
+     7676 3420     
      7678 2D20     
      767A 2863     
      767C 2932     
      767E 3031     
      7680 382D     
      7682 3230     
-     7684 3233     
+     7684 3234     
      7686 2046     
      7688 696C     
      768A 6970     

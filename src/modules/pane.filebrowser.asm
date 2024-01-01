@@ -300,6 +300,6 @@ pane.filebrowser.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-txt.volume:       stri  'Volume:            Files:      Device: '
-txt.slash:        stri  '/'
-txt.header:       stri  'Name         Type  Size'
+txt.volume    stri  'Volume:            Files:      Device: '
+txt.slash     stri  '/'
+txt.header    stri  'Name         Type  Size'

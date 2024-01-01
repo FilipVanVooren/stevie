@@ -3,7 +3,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0001               ********************************************************************************
 0002               *   Stevie
 0003               *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-0004               *   Copyright (C) 2018-2023 / Filip van Vooren
+0004               *   Copyright (C) 2018-2024 / Filip van Vooren
 0005               *
 0006               *   This program is free software: you can redistribute it and/or modify
 0007               *   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240101-1905440
+0002               * BUILD: 240101-2011460
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -893,13 +893,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.23'
+0055 6028 0D53                 stri 'STEVIE 1.5.24'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3233     
+     6034 3234     
 0057               
 0061               
 0065               

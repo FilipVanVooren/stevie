@@ -142,9 +142,10 @@ fm.directory.read:
         li    tmp0,cat.fslist       ; Set pointer to filesize list
         li    tmp1,cat.sizelist     ; Set pointer to filesize string list
         mov   @cat.filecount,tmp2   ; Number of files to process
-        jeq   fm.directory.browser  ; Skip to browser if no files to process
+        jne   !                     ; Have files to process, continue
+        b     @fm.directory.browser ; Skip to browser, no files to process
 
-        mov   tmp0,@cat.var1        ; Save pointer to filesize list
+!       mov   tmp0,@cat.var1        ; Save pointer to filesize list
         mov   tmp1,@cat.var2        ; Save pointer to filesize string list
         mov   tmp2,@cat.var3        ; Set loop counter
         ;-------------------------------------------------------
@@ -266,6 +267,9 @@ fm.directory.ftloop.recsize:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
 
         bl    @mknum                ; Convert unsigned number to string
               data cat.var5         ; \ i  p1    = Source

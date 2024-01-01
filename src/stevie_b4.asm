@@ -1,7 +1,7 @@
 ********************************************************************************
 *   Stevie
 *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-*   Copyright (C) 2018-2023 / Filip van Vooren
+*   Copyright (C) 2018-2024 / Filip van Vooren
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
