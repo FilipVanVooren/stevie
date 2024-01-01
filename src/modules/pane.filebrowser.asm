@@ -106,17 +106,9 @@ pane.filebrowser.headers:
               data txt.header       ; Column 3
 
         bl    @hchar                ; Show horizontal lines 
-              byte 2,1,1,11         ; Name
-              byte 2,14,1,4         ; Type
-              byte 2,20,1,4         ; Size
-
-              byte 2,29,1,11        ; Name
-              byte 2,42,1,4         ; Type
-              byte 2,48,1,4         ; Size
-
-              byte 2,57,1,11        ; Name
-              byte 2,70,1,4         ; Type
-              byte 2,76,1,4         ; Size
+              byte 2,1,1,23         ; Column 1
+              byte 2,29,1,23        ; Column 2
+              byte 2,57,1,23        ; Column 3
               data eol                         
         ;------------------------------------------------------
         ; Prepare for displaying filenames
@@ -218,7 +210,7 @@ pane.filebrowser.show.fnlist:
         ;------------------------------------------------------                                    
 pane.filebrowser.show.typelist:
         bl    @at                   ; Set cursor position
-              byte 3,14             ; Y=3, X=14
+              byte 3,13             ; Y=3, X=13
 
         mov   @cat.fpicker.idx,tmp0  ; Get current index
         sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
@@ -302,4 +294,4 @@ pane.filebrowser.exit:
 
 txt.volume    stri  'Volume:            Files:      Device: '
 txt.slash     stri  '/'
-txt.header    stri  'Name         Type  Size'
+txt.header    stri  'Name        Type   Size'
