@@ -179,7 +179,7 @@ txt.about.build    byte 69
 
 ;--------------------------------------------------------------
 ; Dialog "Main Menu"
-;------------------------------------------------------f--------
+;--------------------------------------------------------------
 txt.head.menu      byte 14,1,1
                    text ' Main Menu '
                    byte 1
@@ -197,8 +197,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Save   Catalog   Insert   Append   Print'
-pos.info.file      byte 0,6,13,20,30,39,48,>ff
+txt.info.file      stri 'New   Open   Save   Insert   Append   Catalog   Print'
+pos.info.file      byte 0,6,13,20,29,38,48,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9'
 txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9  ^E/X=Page-/Page+'

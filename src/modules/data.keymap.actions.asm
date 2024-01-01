@@ -230,14 +230,14 @@ keymap_actions.cmdb:
         byte  key.uc.s, id.dialog.file
         data  dialog.save
 
-        byte  key.uc.c, id.dialog.file
-        data  dialog.cat
-
         byte  key.uc.i, id.dialog.file
         data  dialog.insert
 
         byte  key.uc.a, id.dialog.file
         data  dialog.append
+
+        byte  key.uc.c, id.dialog.file
+        data  dialog.cat
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
