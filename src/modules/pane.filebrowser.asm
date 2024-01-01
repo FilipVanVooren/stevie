@@ -192,12 +192,13 @@ pane.filebrowser.calcdone:
         ;------------------------------------------------------
         ; Show filenames
         ;------------------------------------------------------
+pane.filebrowser.show.fnlist:
         clr   @waux1                ; \ Set null pointer
                                     ; | Note: putlst only sets @waux1 if 
                                     ; |       tmp2 < entries in list
                                     ; /
 
-        li    tmp3,11
+        li    tmp3,11               ; Set string padding length
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -213,8 +214,39 @@ pane.filebrowser.calcdone:
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries
         ;------------------------------------------------------
-        ; Prepare for displaying filesize list
+        ; Show filetypes list
+        ;------------------------------------------------------                                    
+pane.filebrowser.show.typelist:
+        bl    @at                   ; Set cursor position
+              byte 3,14             ; Y=3, X=14
+
+        mov   @cat.fpicker.idx,tmp0  ; Get current index
+        sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
+        li    tmp1,cat.typelist      ; Set base
+        a     tmp0,tmp1              ; Add offset
+
+        mov   @cat.var1,tmp0        ; Get cutover row and column offset
+        mov   @cat.var2,tmp2        ; Get number of files to display
+
+        clr   tmp3                  ; No string padding
+
+        bl    @putlst               ; Loop over string list and display
+                                    ; \ i  @wyx = Cursor position
+                                    ; | i  tmp0 = Cutover row and column offset
+                                    ; |           for next column, >0000 for
+                                    ; |           single column list
+                                    ; | i  tmp1 = Pointer to first length-
+                                    ; |           prefixed string in list
+                                    ; | i  tmp2 = Number of strings to display
+                                    ; | i  tmp3 = String padding length
+                                    ; |                                             
+                                    ; | o  @waux1 = Pointer to next entry  
+                                    ; |             in list after displaying
+                                    ; /             (tmp2) entries 
         ;------------------------------------------------------
+        ; Show filesize list
+        ;------------------------------------------------------
+pane.filebrowser.show.sizelist:        
         bl    @at                   ; Set cursor position
               byte 3,21             ; Y=3, X=21
 

@@ -77,9 +77,9 @@ fm.directory.checkdot:
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; We have a dot
         jeq   fm.directory.read     ; Read device catalog
-        jmp   fm.directory.exit     ; No dot, exit early
+        b     @fm.directory.exit    ; No dot, exit early
         ;-------------------------------------------------------
-        ; Read drive/directory catalog into memory
+        ; (1) Read drive/directory catalog into memory
         ;-------------------------------------------------------
 fm.directory.read:
         li    tmp0,fm.dir.callback1 ; Callback function "Before open file"
@@ -137,7 +137,7 @@ fm.directory.read:
                                     ; | i  @parm9 = File type/mode (in LSB), 
                                     ; /             becomes PAB byte 1
         ;-------------------------------------------------------
-        ; Generate string list with filesizes
+        ; (2) Generate string list with filesizes
         ;-------------------------------------------------------
         li    tmp0,cat.fslist       ; Set pointer to filesize list
         li    tmp1,cat.sizelist     ; Set pointer to filesize string list
@@ -193,7 +193,7 @@ fm.directory.fsloop:
         jgt   fm.directory.fsloop   ; Next file
 
         ;-------------------------------------------------------
-        ; Generate string list with file types
+        ; (3) Generate string list with file types
         ;-------------------------------------------------------
         li    tmp0,cat.ftlist       ; Set pointer to filetype list
         li    tmp1,cat.typelist     ; Set pointer to filetype string list
@@ -203,17 +203,97 @@ fm.directory.fsloop:
         mov   tmp0,@cat.var1        ; Save pointer to filetype list
         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
         mov   tmp2,@cat.var3        ; Set loop counter
+        li    tmp3,cat.rslist       ; Set pointer to recordsize list
+        mov   tmp3,@cat.var4        ; Pointer to recordsize lista
+
+        li    tmp2,>2020            ; Whitespace
+        li    tmp3,>0500            ; Fixed length prefix byte in MSB        
         ;-------------------------------------------------------
         ; Loop over files
         ;-------------------------------------------------------
         ; @cat.var1 = Pointer to filetype list
         ; @cat.var2 = Pointer to filetype string list
         ; @cat.var3 = Loop counter
+        ; @cat.var4 = Pointer to recordsize list
         ;-------------------------------------------------------
 fm.directory.ftloop:
+        mov   @cat.var1,tmp0        ; \
+        movb  *tmp0,tmp0            ; / Get filetype byte
+
+        abs   tmp0                  ; Ignore write-protection
+                
+        srl   tmp0,6                ; \ MSB to LSB and multiply by 4
+                                    ; | Each filetype string is 4 bytes
+                                    ; / (1 length byte) + 3 text bytes
+        ;-------------------------------------------------------
+        ; Get filetype string and set length prefix
+        ;-------------------------------------------------------
+        mov   @cat.var2,tmp1                 ; Pointer to filetype string list
+        mov   @txt.filetypes(tmp0),*tmp1     ; Write length prefix byte & char 1
+        movb  tmp3,*tmp1                     ; Overwrite length prefix byte 
+        inct  tmp1                           ; Skip 2 bytes
+        mov   @txt.filetypes+2(tmp0),*tmp1+  ; Write char 2-3
+
+        mov   tmp2,*tmp1                     ; Fill char 4-5 with whitespace
+        ;-------------------------------------------------------
+        ; Only set record length for filetype 1-4 (DF,DV,IF,IV)
+        ;-------------------------------------------------------
+        ci    tmp0,0                         ; Offset = ftype0 ?
+        jeq   fm.directory.ftloop.prepnext   ; Yes, skip
+        ci    tmp0,16                        ; Offset > ftype4 ?
+        jgt   fm.directory.ftloop.prepnext   ; Yes, skip
+        jmp   fm.directory.ftloop.recsize    ; Build record size string
+        ;-------------------------------------------------------
+        ; Build recordsize string
+        ;-------------------------------------------------------
+fm.directory.ftloop.prepnext:
+        inct  tmp1                           ; Skip char 4-5        
+        jmp   fm.directory.ftloop.next       ; Next iteration
+        ;-------------------------------------------------------
+        ; Build recordsize string
+        ;-------------------------------------------------------
+fm.directory.ftloop.recsize:        
+        mov   @cat.var4,tmp0                 ; Get pointer to record size
+        movb  *tmp0,tmp0                     ; Get record size
+        srl   tmp0,8                         ; MSB to LSB
+        mov   tmp0,@cat.var5                 ; Set record size
+
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+
+        bl    @mknum                ; Convert unsigned number to string
+              data cat.var5         ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number string
+              data rambuf           ; \ i  p1 = Source
+              data rambuf + 5       ; | i  p2 = Destination
+              data 32               ; / i  p3 = Padding character to scan
+
+        mov   *stack+,tmp3          ; Pop tmp3        
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0     
+
+        dec   tmp1                  ; Backoff to 3rd character (whitespace)
+        movb  @rambuf+6,*tmp1+      ; Record size. Character 1
+        movb  @rambuf+7,*tmp1+      ; Record size. Character 2
+        movb  @rambuf+8,*tmp1+      ; Record size. Character 3
         ;-------------------------------------------------------
         ; Prepare for next file
         ;-------------------------------------------------------
+fm.directory.ftloop.next:
+        mov   tmp1,@cat.var2        ; Save pointer address for next string
+        inc   @cat.var1             ; Next filetype byte
+        inc   @cat.var4             ; Next recordsize byte
         dec   @cat.var3             ; Adjust file counter
         jgt   fm.directory.ftloop   ; Next file
 *--------------------------------------------------------------
@@ -248,3 +328,13 @@ fm.directory.exit:
         mov   *stack+,tmp0          ; Pop tmp0      
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
+
+
+txt.ftype0    stri 'VOL'
+txt.ftype1    stri 'DF '
+txt.ftype2    stri 'DV '
+txt.ftype3    stri 'IF '
+txt.ftype4    stri 'IV '
+txt.ftype5    stri 'PRG'
+txt.ftype6    stri 'DIR'
+txt.filetypes equ  txt.ftype0
