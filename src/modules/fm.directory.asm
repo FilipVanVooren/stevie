@@ -196,11 +196,10 @@ fm.directory.fsloop:
         ;-------------------------------------------------------
         ; (3) Generate string list with file types
         ;-------------------------------------------------------
+fm.directory.ftlist:
         li    tmp0,cat.ftlist       ; Set pointer to filetype list
         li    tmp1,cat.typelist     ; Set pointer to filetype string list
         mov   @cat.filecount,tmp2   ; Number of files to process
-        jeq   fm.directory.browser  ; Skip to browser if no files to process
-
         mov   tmp0,@cat.var1        ; Save pointer to filetype list
         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
         mov   tmp2,@cat.var3        ; Set loop counter
@@ -245,7 +244,7 @@ fm.directory.ftloop:
         jgt   fm.directory.ftloop.prepnext   ; Yes, skip
         jmp   fm.directory.ftloop.recsize    ; Build record size string
         ;-------------------------------------------------------
-        ; Build recordsize string
+        ; Skip record size for other filetypes
         ;-------------------------------------------------------
 fm.directory.ftloop.prepnext:
         inct  tmp1                           ; Skip char 4-5        
@@ -254,10 +253,10 @@ fm.directory.ftloop.prepnext:
         ; Build recordsize string
         ;-------------------------------------------------------
 fm.directory.ftloop.recsize:        
-        mov   @cat.var4,tmp0                 ; Get pointer to record size
-        movb  *tmp0,tmp0                     ; Get record size
-        srl   tmp0,8                         ; MSB to LSB
-        mov   tmp0,@cat.var5                 ; Set record size
+        mov   @cat.var4,tmp0        ; Get pointer to record size
+        movb  *tmp0,tmp0            ; Get record size
+        srl   tmp0,8                ; MSB to LSB
+        mov   tmp0,@cat.var5        ; Set record size
 
         dect  stack
         mov   tmp0,*stack           ; Push tmp0

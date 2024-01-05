@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240101-2113350
+0002               * BUILD: 240105-1623440
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13567,198 +13567,199 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0196                       ;-------------------------------------------------------
 0197                       ; (3) Generate string list with file types
 0198                       ;-------------------------------------------------------
-0199 7004 0204  20         li    tmp0,cat.ftlist       ; Set pointer to filetype list
+0199               fm.directory.ftlist:
+0200 7004 0204  20         li    tmp0,cat.ftlist       ; Set pointer to filetype list
      7006 E23A     
-0200 7008 0205  20         li    tmp1,cat.typelist     ; Set pointer to filetype string list
+0201 7008 0205  20         li    tmp1,cat.typelist     ; Set pointer to filetype string list
      700A E3C6     
-0201 700C C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
+0202 700C C1A0  34         mov   @cat.filecount,tmp2   ; Number of files to process
      700E E000     
-0202 7010 1353  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
-0203               
-0204 7012 C804  38         mov   tmp0,@cat.var1        ; Save pointer to filetype list
+0203 7010 1353  14         jeq   fm.directory.browser  ; Skip to browser if no files to process
+0204               
+0205 7012 C804  38         mov   tmp0,@cat.var1        ; Save pointer to filetype list
      7014 E12C     
-0205 7016 C805  38         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
+0206 7016 C805  38         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
      7018 E12E     
-0206 701A C806  38         mov   tmp2,@cat.var3        ; Set loop counter
+0207 701A C806  38         mov   tmp2,@cat.var3        ; Set loop counter
      701C E130     
-0207 701E 0207  20         li    tmp3,cat.rslist       ; Set pointer to recordsize list
+0208 701E 0207  20         li    tmp3,cat.rslist       ; Set pointer to recordsize list
      7020 E33A     
-0208 7022 C807  38         mov   tmp3,@cat.var4        ; Pointer to recordsize lista
+0209 7022 C807  38         mov   tmp3,@cat.var4        ; Pointer to recordsize lista
      7024 E132     
-0209               
-0210 7026 0206  20         li    tmp2,>2020            ; Whitespace
+0210               
+0211 7026 0206  20         li    tmp2,>2020            ; Whitespace
      7028 2020     
-0211 702A 0207  20         li    tmp3,>0500            ; Fixed length prefix byte in MSB
+0212 702A 0207  20         li    tmp3,>0500            ; Fixed length prefix byte in MSB
      702C 0500     
-0212                       ;-------------------------------------------------------
-0213                       ; Loop over files
-0214                       ;-------------------------------------------------------
-0215                       ; @cat.var1 = Pointer to filetype list
-0216                       ; @cat.var2 = Pointer to filetype string list
-0217                       ; @cat.var3 = Loop counter
-0218                       ; @cat.var4 = Pointer to recordsize list
-0219                       ;-------------------------------------------------------
-0220               fm.directory.ftloop:
-0221 702E C120  34         mov   @cat.var1,tmp0        ; \
+0213                       ;-------------------------------------------------------
+0214                       ; Loop over files
+0215                       ;-------------------------------------------------------
+0216                       ; @cat.var1 = Pointer to filetype list
+0217                       ; @cat.var2 = Pointer to filetype string list
+0218                       ; @cat.var3 = Loop counter
+0219                       ; @cat.var4 = Pointer to recordsize list
+0220                       ;-------------------------------------------------------
+0221               fm.directory.ftloop:
+0222 702E C120  34         mov   @cat.var1,tmp0        ; \
      7030 E12C     
-0222 7032 D114  26         movb  *tmp0,tmp0            ; / Get filetype byte
-0223               
-0224 7034 0744  18         abs   tmp0                  ; Ignore write-protection
-0225               
-0226 7036 0964  28         srl   tmp0,6                ; \ MSB to LSB and multiply by 4
-0227                                                   ; | Each filetype string is 4 bytes
-0228                                                   ; / (1 length byte) + 3 text bytes
-0229                       ;-------------------------------------------------------
-0230                       ; Get filetype string and set length prefix
-0231                       ;-------------------------------------------------------
-0232 7038 C160  34         mov   @cat.var2,tmp1                 ; Pointer to filetype string list
+0223 7032 D114  26         movb  *tmp0,tmp0            ; / Get filetype byte
+0224               
+0225 7034 0744  18         abs   tmp0                  ; Ignore write-protection
+0226               
+0227 7036 0964  28         srl   tmp0,6                ; \ MSB to LSB and multiply by 4
+0228                                                   ; | Each filetype string is 4 bytes
+0229                                                   ; / (1 length byte) + 3 text bytes
+0230                       ;-------------------------------------------------------
+0231                       ; Get filetype string and set length prefix
+0232                       ;-------------------------------------------------------
+0233 7038 C160  34         mov   @cat.var2,tmp1                 ; Pointer to filetype string list
      703A E12E     
-0233 703C C564  46         mov   @txt.filetypes(tmp0),*tmp1     ; Write length prefix byte & char 1
+0234 703C C564  46         mov   @txt.filetypes(tmp0),*tmp1     ; Write length prefix byte & char 1
      703E 70F0     
-0234 7040 D547  30         movb  tmp3,*tmp1                     ; Overwrite length prefix byte
-0235 7042 05C5  14         inct  tmp1                           ; Skip 2 bytes
-0236 7044 CD64  50         mov   @txt.filetypes+2(tmp0),*tmp1+  ; Write char 2-3
+0235 7040 D547  30         movb  tmp3,*tmp1                     ; Overwrite length prefix byte
+0236 7042 05C5  14         inct  tmp1                           ; Skip 2 bytes
+0237 7044 CD64  50         mov   @txt.filetypes+2(tmp0),*tmp1+  ; Write char 2-3
      7046 70F2     
-0237               
-0238 7048 C546  30         mov   tmp2,*tmp1                     ; Fill char 4-5 with whitespace
-0239                       ;-------------------------------------------------------
-0240                       ; Only set record length for filetype 1-4 (DF,DV,IF,IV)
-0241                       ;-------------------------------------------------------
-0242 704A 0284  22         ci    tmp0,0                         ; Offset = ftype0 ?
+0238               
+0239 7048 C546  30         mov   tmp2,*tmp1                     ; Fill char 4-5 with whitespace
+0240                       ;-------------------------------------------------------
+0241                       ; Only set record length for filetype 1-4 (DF,DV,IF,IV)
+0242                       ;-------------------------------------------------------
+0243 704A 0284  22         ci    tmp0,0                         ; Offset = ftype0 ?
      704C 0000     
-0243 704E 1304  14         jeq   fm.directory.ftloop.prepnext   ; Yes, skip
-0244 7050 0284  22         ci    tmp0,16                        ; Offset > ftype4 ?
+0244 704E 1304  14         jeq   fm.directory.ftloop.prepnext   ; Yes, skip
+0245 7050 0284  22         ci    tmp0,16                        ; Offset > ftype4 ?
      7052 0010     
-0245 7054 1501  14         jgt   fm.directory.ftloop.prepnext   ; Yes, skip
-0246 7056 1002  14         jmp   fm.directory.ftloop.recsize    ; Build record size string
-0247                       ;-------------------------------------------------------
-0248                       ; Build recordsize string
-0249                       ;-------------------------------------------------------
-0250               fm.directory.ftloop.prepnext:
-0251 7058 05C5  14         inct  tmp1                           ; Skip char 4-5
-0252 705A 1025  14         jmp   fm.directory.ftloop.next       ; Next iteration
-0253                       ;-------------------------------------------------------
-0254                       ; Build recordsize string
-0255                       ;-------------------------------------------------------
-0256               fm.directory.ftloop.recsize:
-0257 705C C120  34         mov   @cat.var4,tmp0                 ; Get pointer to record size
+0246 7054 1501  14         jgt   fm.directory.ftloop.prepnext   ; Yes, skip
+0247 7056 1002  14         jmp   fm.directory.ftloop.recsize    ; Build record size string
+0248                       ;-------------------------------------------------------
+0249                       ; Skip record size for other filetypes
+0250                       ;-------------------------------------------------------
+0251               fm.directory.ftloop.prepnext:
+0252 7058 05C5  14         inct  tmp1                           ; Skip char 4-5
+0253 705A 1025  14         jmp   fm.directory.ftloop.next       ; Next iteration
+0254                       ;-------------------------------------------------------
+0255                       ; Build recordsize string
+0256                       ;-------------------------------------------------------
+0257               fm.directory.ftloop.recsize:
+0258 705C C120  34         mov   @cat.var4,tmp0                 ; Get pointer to record size
      705E E132     
-0258 7060 D114  26         movb  *tmp0,tmp0                     ; Get record size
-0259 7062 0984  32         srl   tmp0,8                         ; MSB to LSB
-0260 7064 C804  38         mov   tmp0,@cat.var5                 ; Set record size
+0259 7060 D114  26         movb  *tmp0,tmp0                     ; Get record size
+0260 7062 0984  32         srl   tmp0,8                         ; MSB to LSB
+0261 7064 C804  38         mov   tmp0,@cat.var5                 ; Set record size
      7066 E134     
-0261               
-0262 7068 0649  14         dect  stack
-0263 706A C644  30         mov   tmp0,*stack           ; Push tmp0
-0264 706C 0649  14         dect  stack
-0265 706E C645  30         mov   tmp1,*stack           ; Push tmp1
-0266 7070 0649  14         dect  stack
-0267 7072 C646  30         mov   tmp2,*stack           ; Push tmp2
-0268 7074 0649  14         dect  stack
-0269 7076 C647  30         mov   tmp3,*stack           ; Push tmp3
-0270               
-0271 7078 0242  22         andi  config,>7fff          ; Do not print number
+0262               
+0263 7068 0649  14         dect  stack
+0264 706A C644  30         mov   tmp0,*stack           ; Push tmp0
+0265 706C 0649  14         dect  stack
+0266 706E C645  30         mov   tmp1,*stack           ; Push tmp1
+0267 7070 0649  14         dect  stack
+0268 7072 C646  30         mov   tmp2,*stack           ; Push tmp2
+0269 7074 0649  14         dect  stack
+0270 7076 C647  30         mov   tmp3,*stack           ; Push tmp3
+0271               
+0272 7078 0242  22         andi  config,>7fff          ; Do not print number
      707A 7FFF     
-0272                                                   ; (Reset bit 0 in config register)
-0273               
-0274 707C 06A0  32         bl    @mknum                ; Convert unsigned number to string
+0273                                                   ; (Reset bit 0 in config register)
+0274               
+0275 707C 06A0  32         bl    @mknum                ; Convert unsigned number to string
      707E 2A56     
-0275 7080 E134                   data cat.var5         ; \ i  p1    = Source
-0276 7082 A100                   data rambuf           ; | i  p2    = Destination
-0277 7084 30                     byte 48               ; | i  p3MSB = ASCII offset
-0278 7085   20                   byte 32               ; / i  p3LSB = Padding character
-0279               
-0280 7086 06A0  32         bl    @trimnum              ; Trim number string
+0276 7080 E134                   data cat.var5         ; \ i  p1    = Source
+0277 7082 A100                   data rambuf           ; | i  p2    = Destination
+0278 7084 30                     byte 48               ; | i  p3MSB = ASCII offset
+0279 7085   20                   byte 32               ; / i  p3LSB = Padding character
+0280               
+0281 7086 06A0  32         bl    @trimnum              ; Trim number string
      7088 2AAE     
-0281 708A A100                   data rambuf           ; \ i  p1 = Source
-0282 708C A105                   data rambuf + 5       ; | i  p2 = Destination
-0283 708E 0020                   data 32               ; / i  p3 = Padding character to scan
-0284               
-0285 7090 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0286 7092 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0287 7094 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0288 7096 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0289               
-0290 7098 0605  14         dec   tmp1                  ; Backoff to 3rd character (whitespace)
-0291 709A DD60  48         movb  @rambuf+6,*tmp1+      ; Record size. Character 1
+0282 708A A100                   data rambuf           ; \ i  p1 = Source
+0283 708C A105                   data rambuf + 5       ; | i  p2 = Destination
+0284 708E 0020                   data 32               ; / i  p3 = Padding character to scan
+0285               
+0286 7090 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0287 7092 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0288 7094 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0289 7096 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0290               
+0291 7098 0605  14         dec   tmp1                  ; Backoff to 3rd character (whitespace)
+0292 709A DD60  48         movb  @rambuf+6,*tmp1+      ; Record size. Character 1
      709C A106     
-0292 709E DD60  48         movb  @rambuf+7,*tmp1+      ; Record size. Character 2
+0293 709E DD60  48         movb  @rambuf+7,*tmp1+      ; Record size. Character 2
      70A0 A107     
-0293 70A2 DD60  48         movb  @rambuf+8,*tmp1+      ; Record size. Character 3
+0294 70A2 DD60  48         movb  @rambuf+8,*tmp1+      ; Record size. Character 3
      70A4 A108     
-0294                       ;-------------------------------------------------------
-0295                       ; Prepare for next file
-0296                       ;-------------------------------------------------------
-0297               fm.directory.ftloop.next:
-0298 70A6 C805  38         mov   tmp1,@cat.var2        ; Save pointer address for next string
+0295                       ;-------------------------------------------------------
+0296                       ; Prepare for next file
+0297                       ;-------------------------------------------------------
+0298               fm.directory.ftloop.next:
+0299 70A6 C805  38         mov   tmp1,@cat.var2        ; Save pointer address for next string
      70A8 E12E     
-0299 70AA 05A0  34         inc   @cat.var1             ; Next filetype byte
+0300 70AA 05A0  34         inc   @cat.var1             ; Next filetype byte
      70AC E12C     
-0300 70AE 05A0  34         inc   @cat.var4             ; Next recordsize byte
+0301 70AE 05A0  34         inc   @cat.var4             ; Next recordsize byte
      70B0 E132     
-0301 70B2 0620  34         dec   @cat.var3             ; Adjust file counter
+0302 70B2 0620  34         dec   @cat.var3             ; Adjust file counter
      70B4 E130     
-0302 70B6 15BB  14         jgt   fm.directory.ftloop   ; Next file
-0303               *--------------------------------------------------------------
-0304               * Show filebrowser
-0305               *--------------------------------------------------------------
-0306               fm.directory.browser:
-0307 70B8 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+0303 70B6 15BB  14         jgt   fm.directory.ftloop   ; Next file
+0304               *--------------------------------------------------------------
+0305               * Show filebrowser
+0306               *--------------------------------------------------------------
+0307               fm.directory.browser:
+0308 70B8 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      70BA 6DA4     
-0308                                                   ; \ i  @cat.device = Current device name
-0309                                                   ; | i  @cat.shortcut.idx = Index in catalog
-0310                                                   ; |        filename pointerlist
-0311                                                   ; |
-0312                                                   ; | o  @cat.fullfname = Combined string with
-0313                                                   ; /        device & filename
-0314               
-0315 70BC 06A0  32         bl    @pane.filebrowser     ; Browse files
+0309                                                   ; \ i  @cat.device = Current device name
+0310                                                   ; | i  @cat.shortcut.idx = Index in catalog
+0311                                                   ; |        filename pointerlist
+0312                                                   ; |
+0313                                                   ; | o  @cat.fullfname = Combined string with
+0314                                                   ; /        device & filename
+0315               
+0316 70BC 06A0  32         bl    @pane.filebrowser     ; Browse files
      70BE 718A     
-0316               *--------------------------------------------------------------
-0317               * Exit
-0318               *--------------------------------------------------------------
-0319               fm.directory.exit:
-0320 70C0 C839  50         mov   *stack+,@parm9        ; Pop @parm9
+0317               *--------------------------------------------------------------
+0318               * Exit
+0319               *--------------------------------------------------------------
+0320               fm.directory.exit:
+0321 70C0 C839  50         mov   *stack+,@parm9        ; Pop @parm9
      70C2 A016     
-0321 70C4 C839  50         mov   *stack+,@parm8        ; Pop @parm8
+0322 70C4 C839  50         mov   *stack+,@parm8        ; Pop @parm8
      70C6 A014     
-0322 70C8 C839  50         mov   *stack+,@parm7        ; Pop @parm7
+0323 70C8 C839  50         mov   *stack+,@parm7        ; Pop @parm7
      70CA A012     
-0323 70CC C839  50         mov   *stack+,@parm6        ; Pop @parm6
+0324 70CC C839  50         mov   *stack+,@parm6        ; Pop @parm6
      70CE A010     
-0324 70D0 C839  50         mov   *stack+,@parm5        ; Pop @parm5
+0325 70D0 C839  50         mov   *stack+,@parm5        ; Pop @parm5
      70D2 A00E     
-0325 70D4 C839  50         mov   *stack+,@parm4        ; Pop @parm4
+0326 70D4 C839  50         mov   *stack+,@parm4        ; Pop @parm4
      70D6 A00C     
-0326 70D8 C839  50         mov   *stack+,@parm3        ; Pop @parm3
+0327 70D8 C839  50         mov   *stack+,@parm3        ; Pop @parm3
      70DA A00A     
-0327 70DC C839  50         mov   *stack+,@parm2        ; Pop @parm2
+0328 70DC C839  50         mov   *stack+,@parm2        ; Pop @parm2
      70DE A008     
-0328 70E0 C839  50         mov   *stack+,@parm1        ; Pop @parm1
+0329 70E0 C839  50         mov   *stack+,@parm1        ; Pop @parm1
      70E2 A006     
-0329 70E4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0330 70E6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0331 70E8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0332 70EA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0333 70EC C2F9  30         mov   *stack+,r11           ; Pop R11
-0334 70EE 045B  20         b     *r11                  ; Return to caller
-0335               
+0330 70E4 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0331 70E6 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0332 70E8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0333 70EA C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0334 70EC C2F9  30         mov   *stack+,r11           ; Pop R11
+0335 70EE 045B  20         b     *r11                  ; Return to caller
 0336               
-0337 70F0 0356     txt.ftype0    stri 'VOL'
+0337               
+0338 70F0 0356     txt.ftype0    stri 'VOL'
      70F2 4F4C     
-0338 70F4 0344     txt.ftype1    stri 'DF '
+0339 70F4 0344     txt.ftype1    stri 'DF '
      70F6 4620     
-0339 70F8 0344     txt.ftype2    stri 'DV '
+0340 70F8 0344     txt.ftype2    stri 'DV '
      70FA 5620     
-0340 70FC 0349     txt.ftype3    stri 'IF '
+0341 70FC 0349     txt.ftype3    stri 'IF '
      70FE 4620     
-0341 7100 0349     txt.ftype4    stri 'IV '
+0342 7100 0349     txt.ftype4    stri 'IV '
      7102 5620     
-0342 7104 0350     txt.ftype5    stri 'PRG'
+0343 7104 0350     txt.ftype5    stri 'PRG'
      7106 5247     
-0343 7108 0344     txt.ftype6    stri 'DIR'
+0344 7108 0344     txt.ftype6    stri 'DIR'
      710A 4952     
-0344      70F0     txt.filetypes equ  txt.ftype0
+0345      70F0     txt.filetypes equ  txt.ftype0
                    < stevie_b2.asm
 0084                       ;-----------------------------------------------------------------------
 0085                       ; Stubs
@@ -15135,6 +15136,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FM.DIRECTORY.CHECKDOT >6F36 :     
     FM.DIRECTORY.EXIT... >70C0 :     
     FM.DIRECTORY.FSLOOP. >6FC2 :     
+    FM.DIRECTORY.FTLIST. >7004 :     
     FM.DIRECTORY.FTLOOP. >702E :     
     FM.DIRECTORY.FTLOOP.NEXT >70A6 :     
     FM.DIRECTORY.FTLOOP.PREPNEXT >7058 :     
