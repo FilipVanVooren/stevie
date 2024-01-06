@@ -192,7 +192,6 @@ fm.directory.fsloop:
         ;-------------------------------------------------------
         dec   @cat.var3             ; Adjust file counter
         jgt   fm.directory.fsloop   ; Next file
-
         ;-------------------------------------------------------
         ; (3) Generate string list with file types
         ;-------------------------------------------------------
@@ -215,16 +214,19 @@ fm.directory.ftlist:
         ; @cat.var2 = Pointer to filetype string list
         ; @cat.var3 = Loop counter
         ; @cat.var4 = Pointer to recordsize list
+        ; @cat.var5 = Record size (word)
+        ; @cat.var6 = Filetype byte (word)
         ;-------------------------------------------------------
 fm.directory.ftloop:
         mov   @cat.var1,tmp0        ; \
         movb  *tmp0,tmp0            ; / Get filetype byte
-
         abs   tmp0                  ; Ignore write-protection
-                
-        srl   tmp0,6                ; \ MSB to LSB and multiply by 4
-                                    ; | Each filetype string is 4 bytes
-                                    ; / (1 length byte) + 3 text bytes
+        srl   tmp0,8                ; MSB to LSB
+        mov   tmp0,@cat.var6        ; Save word aligned filetype byte
+
+        sla   tmp0,2                ; \ Multiply by 4.
+                                    ; | Each filetype string is 6 bytes
+                                    ; / (1 length byte) + 5 text bytes
         ;-------------------------------------------------------
         ; Get filetype string and set length prefix
         ;-------------------------------------------------------
@@ -233,14 +235,13 @@ fm.directory.ftloop:
         movb  tmp3,*tmp1                     ; Overwrite length prefix byte 
         inct  tmp1                           ; Skip 2 bytes
         mov   @txt.filetypes+2(tmp0),*tmp1+  ; Write char 2-3
-
         mov   tmp2,*tmp1                     ; Fill char 4-5 with whitespace
         ;-------------------------------------------------------
         ; Only set record length for filetype 1-4 (DF,DV,IF,IV)
         ;-------------------------------------------------------
-        ci    tmp0,0                         ; Offset = ftype0 ?
-        jeq   fm.directory.ftloop.prepnext   ; Yes, skip
-        ci    tmp0,16                        ; Offset > ftype4 ?
+        mov   @cat.var6,tmp0                 ; Get filetype byte
+        jeq   fm.directory.ftloop.prepnext   ; Offset = ftype0 ? Yes, skip
+        ci    tmp0,4                         ; Offset > ftype4 ?
         jgt   fm.directory.ftloop.prepnext   ; Yes, skip
         jmp   fm.directory.ftloop.recsize    ; Build record size string
         ;-------------------------------------------------------
@@ -257,6 +258,11 @@ fm.directory.ftloop.recsize:
         movb  *tmp0,tmp0            ; Get record size
         srl   tmp0,8                ; MSB to LSB
         mov   tmp0,@cat.var5        ; Set record size
+
+ ;       data  c99_dbg_tmp0          ; \ Print file type record size in tmp0 
+ ;       data  >1001                 ; | in classic99 debugger console.
+ ;       data  data.printf.recsize   ; | Needs debug opcodes enabled in 
+ ;                                   ; / classic99.ini file. See c99 manual.
 
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
@@ -276,9 +282,12 @@ fm.directory.ftloop.recsize:
               byte 48               ; | i  p3MSB = ASCII offset
               byte 32               ; / i  p3LSB = Padding character
 
+        clr   @rambuf+6             ; Clear bytes 7-8 in ram buffer
+        clr   @rambuf+8             ; Clear bytes 9-10 in ram buffer
+
         bl    @trimnum              ; Trim number string
               data rambuf           ; \ i  p1 = Source
-              data rambuf + 5       ; | i  p2 = Destination
+              data rambuf + 6       ; | i  p2 = Destination
               data 32               ; / i  p3 = Padding character to scan
 
         mov   *stack+,tmp3          ; Pop tmp3        
@@ -287,9 +296,9 @@ fm.directory.ftloop.recsize:
         mov   *stack+,tmp0          ; Pop tmp0     
 
         dec   tmp1                  ; Backoff to 3rd character (whitespace)
-        movb  @rambuf+6,*tmp1+      ; Record size. Character 1
-        movb  @rambuf+7,*tmp1+      ; Record size. Character 2
-        movb  @rambuf+8,*tmp1+      ; Record size. Character 3
+        movb  @rambuf+7,*tmp1+      ; Record size. Character 1
+        movb  @rambuf+8,*tmp1+      ; Record size. Character 2
+        movb  @rambuf+9,*tmp1+      ; Record size. Character 3
         ;-------------------------------------------------------
         ; Prepare for next file
         ;-------------------------------------------------------
@@ -341,3 +350,7 @@ txt.ftype4    stri 'IV '
 txt.ftype5    stri 'PRG'
 txt.ftype6    stri 'DIR'
 txt.filetypes equ  txt.ftype0
+
+data.printf.recsize:
+       text   'Catalog. File type record size: %u'
+       byte   0

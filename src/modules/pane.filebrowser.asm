@@ -212,11 +212,12 @@ pane.filebrowser.show.typelist:
         bl    @at                   ; Set cursor position
               byte 3,13             ; Y=3, X=13
 
-        mov   @cat.fpicker.idx,tmp0  ; Get current index
-        sla   tmp0,2                 ; Calculate slot offset (1 entry=4 bytes)
-        li    tmp1,cat.typelist      ; Set base
-        a     tmp0,tmp1              ; Add offset
-
+        mov   @cat.fpicker.idx,tmp0 ; Get current index
+        li    tmp1,6                ; 6 bytes per entry
+        mpy   tmp0,tmp1             ; Calculate offset. Result is in tmp1:tmp2
+        mov   tmp2,tmp1             ; Move result to tmp1
+        li    tmp0,cat.typelist     ; \ 
+        a     tmp0,tmp1             ; / Add base
         mov   @cat.var1,tmp0        ; Get cutover row and column offset
         mov   @cat.var2,tmp2        ; Get number of files to display
 

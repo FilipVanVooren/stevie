@@ -137,7 +137,7 @@ fm.dir.callback1.exit:
 * Registered as pointer in @fh.callback2
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0, tmp1, tmp2, tmp3, tmp4
 ********|*****|*********************|**************************
 fm.dir.callback2:
         dect  stack
@@ -150,6 +150,8 @@ fm.dir.callback2:
         mov   tmp2,*stack           ; Push tmp2        
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   tmp4,*stack           ; Push tmp4        
         ;------------------------------------------------------
         ; Check if volume name
         ;------------------------------------------------------
@@ -246,17 +248,52 @@ fm.dir.callback2.filesize:
         ; Record size handling
         ;------------------------------------------------------                
 fm.dir.callback2.recsize:        
-        movb  *tmp0,tmp1            ; Get Float size byte
-        inc   tmp0                  ; Skip float size byte
+        movb  *tmp0+,tmp1           ; Get Float size byte
         swpb  tmp1                  ; Make some space for float exponent byte
         movb  *tmp0+,tmp1           ; Get float exponent byte
-        swpb  tmp1                  ; Turn in right order again
-        clr   tmp2
-        movb  *tmp0+,tmp2           ; Get float 1st Mantissa byte (=recsize!)
+        srl   tmp1,8                ; MSB to LSB
+
+        movb  *tmp0+,tmp2           ; Get float mantissa byte
+        srl   tmp2,8                ; MSB to LSB
+        ;------------------------------------------------------
+        ; Turn radix 100 floating point into hex number
+        ;------------------------------------------------------        
+        ai    tmp1,-64              ; Subtract radix 100 exponent bias >40        
+        jgt   fm.dir.callback2.recsize.radix100.part1
+                                    ; Handle 1st byte if exponent > 1
+
+        mov   tmp2,tmp1             ; No multiplication needed
+        jmp   fm.dir.callback2.recsize.store
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 1) if exp>1
+        ;------------------------------------------------------        
+fm.dir.callback2.recsize.radix100.part1:
+        li    tmp4,100              ; \ Multiply 1st byte mantissa by 100
+        mpy   tmp4,tmp2             ; | Result is in 32 bit register tmp2:tmp3
+        mov   tmp3,tmp2             ; / Move LSW to MSW
+        dec   tmp1                  ; Decrement exponent
+        jgt   fm.dir.callback2.recsize.radix100.part1
+                                    ; Next iteration if exponent > 0
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 2) if exp>1, otherwise (byte 1)
+        ;------------------------------------------------------   
+fm.dir.callback2.recsize.radix100.part2:
+        movb  *tmp0+,tmp1           ; Get float mantissa byte
+        srl   tmp1,8                ; MSB to LSB
+        a     tmp2,tmp1             ; Add previous result
+        ;------------------------------------------------------
+        ; Store record size in list
+        ;------------------------------------------------------   
+fm.dir.callback2.recsize.store:
+ ;       data  c99_dbg_tmp1          ; \ Print file type record size in tmp0 
+ ;       data  >1001                 ; | in classic99 debugger console.
+ ;       data  data.printf.recsize   ; | Needs debug opcodes enabled in 
+ ;                                   ; / classic99.ini file. See c99 manual.
 
         li    tmp0,cat.rslist       ; \ 
         a     @cat.filecount,tmp0   ; | Store record size in record size list 
-        movb  tmp2,*tmp0            ; /
+        sla   tmp1,8                ; | LSB to MSB
+        movb  tmp1,*tmp0            ; /
         ;------------------------------------------------------
         ; Prepare for exit
         ;------------------------------------------------------
@@ -265,6 +302,7 @@ fm.dir.callback2.recsize:
         ; Exit
         ;------------------------------------------------------
 fm.dir.callback2.exit:
+        mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
