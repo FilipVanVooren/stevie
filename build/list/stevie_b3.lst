@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240114-1916030
+0002               * BUILD: 240114-1924440
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -891,13 +891,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0D53                 stri 'STEVIE 1.5.25'
+0055 6028 0D53                 stri 'STEVIE 1.5.26'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3235     
+     6034 3236     
 0057               
 0061               
 0065               
@@ -13945,14 +13945,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 7016 2020                 text '  Stevie 1.5.25  '
+0011 7016 2020                 text '  Stevie 1.5.26  '
      7018 5374     
      701A 6576     
      701C 6965     
      701E 2031     
      7020 2E35     
      7022 2E32     
-     7024 3520     
+     7024 3620     
      7026 20       
 0012                           even
 0014               
@@ -14866,16 +14866,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7658 20       
 0175                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7659   32                        text '240114-1916030'
+0001 7659   32                        text '240114-1924440'
      765A 3430     
      765C 3131     
      765E 342D     
      7660 3139     
-     7662 3136     
-     7664 3033     
+     7662 3234     
+     7664 3434     
      7666 30       
                    < data.dialogs.asm
-0176 7667   20                        text ' - Stevie 1.5.25 - (c)2018-2024 Filip Van Vooren'
+0176 7667   20                        text ' - Stevie 1.5.26 - (c)2018-2024 Filip Van Vooren'
      7668 2D20     
      766A 5374     
      766C 6576     
@@ -14883,7 +14883,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7670 2031     
      7672 2E35     
      7674 2E32     
-     7676 3520     
+     7676 3620     
      7678 2D20     
      767A 2863     
      767C 2932     
