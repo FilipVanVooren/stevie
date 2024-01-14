@@ -158,10 +158,9 @@ fm.directory.read:
         ;-------------------------------------------------------
 fm.directory.fsloop:
         mov   @cat.var1,tmp0        ; Get pointer to filesize list        
-        movb  *tmp0,tmp1            ; Get file size
-        srl   tmp1,8                ; MSB to LSB
+        mov   *tmp0,tmp1            ; Get file size
         mov   tmp1,@cat.var4        ; Save word aligned file size
-        inc   @cat.var1             ; Advance pointer
+        inct  @cat.var1             ; Advance pointer
         ;-------------------------------------------------------
         ; Convert unsigned number to string and trim
         ;-------------------------------------------------------

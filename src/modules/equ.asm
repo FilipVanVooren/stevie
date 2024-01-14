@@ -406,18 +406,19 @@ cat.fullfname     equ  cat.top + 20    ; Device & filename string (80)
 ;-----------------------------------------------------------------
 ; Directory/File catalog pointers and numbers
 ;-----------------------------------------------------------------
-cat.var1          equ  cat.top + 300   ; Temp variable 1
-cat.var2          equ  cat.top + 302   ; Temp variable 2
-cat.var3          equ  cat.top + 304   ; Temp variable 3
-cat.var4          equ  cat.top + 306   ; Temp variable 4
-cat.var5          equ  cat.top + 308   ; Temp variable 5
-cat.var6          equ  cat.top + 310   ; Temp variable 6
-cat.var7          equ  cat.top + 312   ; Temp variable 7
-cat.var8          equ  cat.top + 314   ; Temp variable 8
-cat.ptrlist       equ  cat.top + 316   ; Pointer list to filenames (254=127*2)
-cat.ftlist        equ  cat.top + 570   ; Filetype list (128)
-cat.fslist        equ  cat.top + 698   ; Filesize size (128)
-cat.rslist        equ  cat.top + 826   ; Record size list (128)
+cat.var1          equ  cat.top + 100   ; Temp variable 1
+cat.var2          equ  cat.top + 102   ; Temp variable 2
+cat.var3          equ  cat.top + 104   ; Temp variable 3
+cat.var4          equ  cat.top + 106   ; Temp variable 4
+cat.var5          equ  cat.top + 108   ; Temp variable 5
+cat.var6          equ  cat.top + 110   ; Temp variable 6
+cat.var7          equ  cat.top + 112   ; Temp variable 7
+cat.var8          equ  cat.top + 114   ; Temp variable 8
+cat.ptrlist       equ  cat.top + 116   ; Pointer list to filenames (254=127*2)
+cat.ftlist        equ  cat.top + 370   ; Filetype list (128)
+cat.fslist        equ  cat.top + 498   ; Filesize size (256)
+cat.rslist        equ  cat.top + 754   ; Record size list (128)
+cat.free1         equ  cat.top + 882   ; **free** up to 954
 ;-----------------------------------------------------------------
 ; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------

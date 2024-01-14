@@ -275,15 +275,15 @@ fm.dir.callback2.filesize.radix100.part2:
         ; Store filesize size in list
         ;------------------------------------------------------   
 fm.dir.callback2.filesize.store:
- ;       data  c99_dbg_tmp1          ; \ Print file type record size in tmp0 
+ ;       data  c99_dbg_tmp1          ; \ Print file size in tmp0 
  ;       data  >1001                 ; | in classic99 debugger console.
  ;       data  data.printf.recsize   ; | Needs debug opcodes enabled in 
  ;                                   ; / classic99.ini file. See c99 manual.
 
-        li    tmp0,cat.fslist       ; \ 
-        a     @cat.filecount,tmp0   ; | Store size in filesize list
-        sla   tmp1,8                ; | LSB to MSB         
-        movb  tmp1,*tmp0            ; /
+        mov   @cat.filecount,tmp0   ; Get file index
+        sla   tmp0,1                ; Word align
+        ai    tmp0,cat.fslist       ; Add base address
+        mov   tmp1,*tmp0            ; Store size (word) in filesize list
 
         mov   *stack+,tmp0          ; Pop tmp0 
                                     ; Restore snapshot position (float size)
