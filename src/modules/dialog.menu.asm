@@ -95,7 +95,14 @@ dialog.menu:
 
         li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
         movb  tmp0,@ram.msg1 + 21   ; | Overwrite length-byte prefix in 
-                                    ; / trimmed number with slash                                     
+                                    ; / trimmed number with slash
+        ;------------------------------------------------------
+        ; Remove filepicker color bar
+        ;------------------------------------------------------
+        bl    @pane.filebrowser.colbar.remove
+                                    ; Remove filepicker color bar
+                                    ; i \  @cat.barpos = YX position color bar
+                                    ;   /                                                             
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

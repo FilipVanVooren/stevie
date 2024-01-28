@@ -418,7 +418,8 @@ cat.ptrlist       equ  cat.top + 116   ; Pointer list to filenames (254=127*2)
 cat.ftlist        equ  cat.top + 370   ; Filetype list (128)
 cat.fslist        equ  cat.top + 498   ; Filesize size (256)
 cat.rslist        equ  cat.top + 754   ; Record size list (128)
-cat.free1         equ  cat.top + 882   ; **free** up to 954
+cat.barpos        equ  cat.top + 882   ; Color bar YX position (backup)
+cat.free1         equ  cat.top + 884   ; **free** up to 954
 ;-----------------------------------------------------------------
 ; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------

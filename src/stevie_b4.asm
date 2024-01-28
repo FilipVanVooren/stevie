@@ -99,11 +99,12 @@ main:
         copy  "pane.errline.asm"      ; Error line        
         copy  "pane.utils.hint.asm"   ; Show hint in pane
         ;-----------------------------------------------------------------------
-        ; Dialogs (2)
+        ; Dialogs & filebrowser
         ;-----------------------------------------------------------------------                
         copy  "dialog.help.content.asm"      ; Draw help dialog content
         copy  "pane.filebrowser.asm"         ; File browser
         copy  "pane.filebrowser.hilight.asm" ; Highlight entry in filename list
+        copy  "pane.filebrowser.colbar.asm"  ; Draw color bar in file browser
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

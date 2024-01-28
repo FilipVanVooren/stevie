@@ -26,7 +26,8 @@ pane.filebrowser.hilight:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------
-        mov   @cat.filecount,tmp0           ; Get number of files
+        mov   @cat.filecount,tmp0   ; Get number of files
+
         jne   !                             ; \
         jmp   pane.filebrowser.hilight.exit ; / Exit if nothing to display
         ;------------------------------------------------------
@@ -52,54 +53,74 @@ pane.filebrowser.hilight:
         ;------------------------------------------------------
 pane.filebrowser.hilight.divok:        
         mov   @cat.currentpage,@cat.previouspage
-        inc   tmp0                   ; Base 1
-        mov   tmp1,tmp0              ; Get offset on current page
+        inc   tmp0                  ; Base 1
+        mov   tmp1,tmp0             ; Get offset on current page
         ;------------------------------------------------------
         ; Calculate column/row offset based on offset on current page
         ;------------------------------------------------------
 pane.filebrowser.hilight.rowcol:        
-        mov   tmp0,tmp1              ; Get index in filename list in LSW
-        clr   tmp0                   ; Clear MSW
-        div   @cat.norowscol,tmp0    ; \ Do division on 32 bit word.
-                                     ; / tmp0 is column, tmp1 is row offset
-        movb  @tmp0lb,@tmp1hb        ; Combine column & row in single word                                   
+        mov   tmp0,tmp1             ; Get index in filename list in LSW
+        clr   tmp0                  ; Clear MSW
+        div   @cat.norowscol,tmp0   ; \ Do division on 32 bit word.
+                                    ; / tmp0 is column, tmp1 is row offset
+        movb  @tmp0lb,@tmp1hb       ; Combine column & row in single word                                   
         mov   @cat.hilit.colrow,@cat.hilit.colrow2 
-                                     ; Backup current column & row 
-        mov   tmp1,@cat.hilit.colrow ; Save new column & row
+                                    ; Backup current column & row 
+        mov   tmp1,@cat.hilit.colrow 
+                                    ; Save new column & row
         ;------------------------------------------------------
         ; Remove previous file marker
         ;------------------------------------------------------
 pane.filebrowser.hilight.remove:                
-        mov   @cat.hilit.colrow2,tmp0 ; Get column/row offsets
-        srl   tmp0,8                  ; MSB to LSB. Column value in LSB
-        li    tmp1,28                 ; Offset next column
-        mpy   tmp0,tmp1               ; tmp2 = col*28
-        sla   tmp2,8                  ; LSB to MSB
+        mov   @cat.hilit.colrow2,tmp0
+                                    ; Get column/row offsets
+        srl   tmp0,8                ; MSB to LSB. Column value in LSB
+        li    tmp1,28               ; Offset next column
+        mpy   tmp0,tmp1             ; tmp2 = col*28
+        sla   tmp2,8                ; LSB to MSB
 
-        movb  @cat.hilit.colrow2+1,@tmp2lb ; Get row into tmp2 LSB
-        swpb  tmp2                         ; Column/row to YX
-        ai    tmp2,>0300                   ; Add offset
-
-        mov   tmp2,@wyx              ; Set cursor position
-        bl    @putstr                ; Put string 
-              data nomarker          ; Remove marker
+        movb  @cat.hilit.colrow2+1,@tmp2lb 
+                                    ; Get row into tmp2 LSB
+        swpb  tmp2                  ; Column/row to YX
+        ai    tmp2,>0300            ; Add offset
+        mov   tmp2,@wyx             ; Set cursor position
+        ;------------------------------------------------------
+        ; Remove filepicker color bar
+        ;------------------------------------------------------
+        bl    @pane.filebrowser.colbar.remove
+                                    ; Remove filepicker color bar
+                                    ; i \  @cat.barpos = YX position color bar
+                                    ;   /
         ;------------------------------------------------------
         ; Draw file marker
         ;------------------------------------------------------
 pane.filebrowser.hilight.draw.marker:
         mov   @cat.hilit.colrow,tmp0
-        srl   tmp0,8                 ; MSB to LSB. Column value in LSB
-        li    tmp1,28                ; Offset next column
-        mpy   tmp0,tmp1              ; tmp2 = col*28
-        sla   tmp2,8                 ; LSB to MSB
+        srl   tmp0,8                ; MSB to LSB. Column value in LSB
+        li    tmp1,28               ; Offset next column
+        mpy   tmp0,tmp1             ; tmp2 = col*28
+        sla   tmp2,8                ; LSB to MSB
 
-        movb  @cat.hilit.colrow+1,@tmp2lb ; Get row into tmp2 LSB
-        swpb  tmp2                        ; Column/row to YX
-        ai    tmp2,>0300                  ; Add offset
+        movb  @cat.hilit.colrow+1,@tmp2lb 
+                                    ; Get row into tmp2 LSB
+        swpb  tmp2                  ; Column/row to YX
+        ai    tmp2,>0300            ; Add offset
+        mov   tmp2,@wyx             ; Set cursor position        
+        ;------------------------------------------------------
+        ; Set background color
+        ;------------------------------------------------------
+        mov   @wyx,@cat.barpos      ; Save cursor position
 
-        mov   tmp2,@wyx
+        mov   @tv.color,tmp0        ; Get color combination (only LSB counts)
+        bl    @pane.filebrowser.colbar
+                                    ; Draw column bar 
+                                    ; i \  tmp0 = color combination
+                                    ; i /  @wyx = Cursor position
+                                    
         bl    @putstr
-              data txt.cmdb.prompt   ; Marker
+              data txt.cmdb.prompt  ; Draw marker
+                                    ; \ i @wyx   = Cursor position
+                                    ; / i @parm1 = String to display
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

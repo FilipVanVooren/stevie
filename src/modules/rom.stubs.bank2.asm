@@ -171,6 +171,45 @@ pane.filebrowser:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
+***************************************************************
+* Stub for "pane.filebrowser.colbar"
+* bank4 vec.52
+********|*****|*********************|**************************
+pane.filebrowser.colbar:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.52           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+***************************************************************
+* Stub for "pane.filebrowser.colbar.exit"
+* bank4 vec.53
+********|*****|*********************|**************************
+pane.filebrowser.colbar.remove:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.53           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 ***************************************************************
 * Stub for "edb.clear.sams"

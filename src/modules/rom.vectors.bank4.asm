@@ -65,8 +65,8 @@ vec.48  data  cpu.crash             ;
 vec.49  data  cpu.crash             ;
 vec.50  data  pane.filebrowser      ; File browser
 vec.51  data  pane.filebrowser.hilight
-vec.52  data  cpu.crash             ;
-vec.53  data  cpu.crash             ;
+vec.52  data  pane.filebrowser.colbar
+vec.53  data  pane.filebrowser.colbar.remove
 vec.54  data  cpu.crash             ;
 vec.55  data  cpu.crash             ;
 vec.56  data  cpu.crash             ;

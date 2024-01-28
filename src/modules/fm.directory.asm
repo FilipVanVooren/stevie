@@ -55,6 +55,13 @@ fm.directory:
               data cat.top,>00,cat.size - 80
                                     ; Clear catalog area except current device
                                     ; @cat.device (is at end of memory area)
+        ;------------------------------------------------------
+        ; Remove filepicker color bar
+        ;------------------------------------------------------
+        bl    @pane.filebrowser.colbar.remove
+                                    ; Remove filepicker color bar
+                                    ; i \  @cat.barpos = YX position color bar
+                                    ;   /                                
         ;-------------------------------------------------------
         ; Process parameters
         ;-------------------------------------------------------
