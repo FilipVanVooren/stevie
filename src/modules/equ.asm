@@ -397,29 +397,31 @@ cat.fpicker.idx   equ  cat.top + 2     ; Index in catalog (1st entry on page)
 cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
 cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
 cat.nofilespage   equ  cat.top + 8     ; Number of files per page
-cat.currentpage   equ  cat.top + 10    ; Current page
-cat.totalpages    equ  cat.top + 12    ; Total number of pages
-cat.previouspage  equ  cat.top + 14    ; Previous page
-cat.shortcut.idx  equ  cat.top + 16    ; Index in catalog(current entry on page)
-cat.norowscol     equ  cat.top + 18    ; Number of rows per column
-cat.fullfname     equ  cat.top + 20    ; Device & filename string (80)
+cat.nofilescol    equ  cat.top + 10    ; Number of files per column
+cat.currentpage   equ  cat.top + 12    ; Current page
+cat.totalpages    equ  cat.top + 14    ; Total number of pages
+cat.previouspage  equ  cat.top + 16    ; Previous page
+cat.shortcut.idx  equ  cat.top + 18    ; Index in catalog(current entry on page)
+cat.norowscol     equ  cat.top + 20    ; Number of rows per column
+cat.fullfname     equ  cat.top + 22    ; Device & filename string (80)
 ;-----------------------------------------------------------------
 ; Directory/File catalog pointers and numbers
 ;-----------------------------------------------------------------
-cat.var1          equ  cat.top + 100   ; Temp variable 1
-cat.var2          equ  cat.top + 102   ; Temp variable 2
-cat.var3          equ  cat.top + 104   ; Temp variable 3
-cat.var4          equ  cat.top + 106   ; Temp variable 4
-cat.var5          equ  cat.top + 108   ; Temp variable 5
-cat.var6          equ  cat.top + 110   ; Temp variable 6
-cat.var7          equ  cat.top + 112   ; Temp variable 7
-cat.var8          equ  cat.top + 114   ; Temp variable 8
-cat.ptrlist       equ  cat.top + 116   ; Pointer list to filenames (254=127*2)
-cat.ftlist        equ  cat.top + 370   ; Filetype list (128)
-cat.fslist        equ  cat.top + 498   ; Filesize size (256)
-cat.rslist        equ  cat.top + 754   ; Record size list (128)
-cat.barpos        equ  cat.top + 882   ; Color bar YX position (backup)
-cat.free1         equ  cat.top + 884   ; **free** up to 954
+cat.var1          equ  cat.top + 102   ; Temp variable 1
+cat.var2          equ  cat.top + 104   ; Temp variable 2
+cat.var3          equ  cat.top + 106   ; Temp variable 3
+cat.var4          equ  cat.top + 108   ; Temp variable 4
+cat.var5          equ  cat.top + 110   ; Temp variable 5
+cat.var6          equ  cat.top + 112   ; Temp variable 6
+cat.var7          equ  cat.top + 114   ; Temp variable 7
+cat.var8          equ  cat.top + 116   ; Temp variable 8
+cat.ptrlist       equ  cat.top + 118   ; Pointer list to filenames (254=127*2)
+cat.ftlist        equ  cat.top + 372   ; Filetype list (128)
+cat.fslist        equ  cat.top + 500   ; Filesize size (256)
+cat.rslist        equ  cat.top + 756   ; Record size list (128)
+cat.barpos        equ  cat.top + 884   ; Color bar YX position (backup)
+cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
+cat.free1         equ  cat.top + 888   ; **free** up to 954
 ;-----------------------------------------------------------------
 ; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------

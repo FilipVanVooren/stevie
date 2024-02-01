@@ -140,7 +140,7 @@ pane.filebrowser.headers:
         a     tmp3,tmp2             ; | tmp2 = tmp2 * 3
         a     tmp3,tmp2             ; / 
         mov   tmp2,@cat.var2        ; Save files per page to display
-        mov   tmp2,@cat.nofilespage ; Backup. Used for navigation.
+        mov   tmp2,@cat.nofilespage ; For later use
         ;------------------------------------------------------
         ; Prepare for calculations
         ;------------------------------------------------------
@@ -150,6 +150,14 @@ pane.filebrowser.headers:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2       
+        ;------------------------------------------------------
+        ; Calc files per column
+        ;------------------------------------------------------
+        li    tmp0,3
+        clr   tmp1                  ; | hi-word 32 bit        
+        mov   @cat.nofilespage,tmp2 ; \ Files per page
+        div   tmp0,tmp1             ; / Get files per column       
+        mov   tmp1,@cat.nofilescol  ; Store files per column in memory                
         ;------------------------------------------------------
         ; Calc number of pages
         ;------------------------------------------------------

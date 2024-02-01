@@ -7,7 +7,7 @@
 * bl   @pane.filebrowser.hlight
 *--------------------------------------------------------------- 
 * INPUT
-* none
+* @cat.shortcut.idx = Index in filename list
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2
@@ -97,6 +97,7 @@ pane.filebrowser.hilight.remove:
 pane.filebrowser.hilight.draw.marker:
         mov   @cat.hilit.colrow,tmp0
         srl   tmp0,8                ; MSB to LSB. Column value in LSB
+        mov   tmp0,@cat.barcol      ; Save column value
         li    tmp1,28               ; Offset next column
         mpy   tmp0,tmp1             ; tmp2 = col*28
         sla   tmp2,8                ; LSB to MSB

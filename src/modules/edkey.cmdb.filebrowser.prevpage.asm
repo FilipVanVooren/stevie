@@ -1,7 +1,7 @@
-* FILE......: edkey.cmdb.filebrowser.prev.asm
+* FILE......: edkey.cmdb.filebrowser.prevpage.asm
 * Purpose...: Previous page in filebrowser
 
-edkey.action.filebrowser.prev:
+edkey.action.filebrowser.prevpage:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
@@ -9,13 +9,13 @@ edkey.action.filebrowser.prev:
         ;-------------------------------------------------------
         mov   @cat.currentpage,tmp0
         ci    tmp0,1                
-        jne   edkey.action.filebrowser.prev.page
+        jne   edkey.action.filebrowser.prevpage.page
         clr   @cat.fpicker.idx
-        jmp   edkey.action.filebrowser.prev.checkdialog
+        jmp   edkey.action.filebrowser.prevpage.checkdialog
         ;-------------------------------------------------------
         ; Previous page
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.page:        
+edkey.action.filebrowser.prevpage.page:        
         s     @cat.nofilespage,@cat.fpicker.idx
                                     ; Calculate 1st filename on page
 
@@ -26,20 +26,20 @@ edkey.action.filebrowser.prev.page:
         ;-------------------------------------------------------
         ; Check if on supported dialog for filename display
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.checkdialog:
+edkey.action.filebrowser.prevpage.checkdialog:
         mov   @cmdb.dialog,tmp0     ; Get current dialog ID
 
         ci    tmp0,id.dialog.load   ; \ First supported dialog
-        jlt   edkey.action.filebrowser.prev.exit
+        jlt   edkey.action.filebrowser.prevpage.exit
                                     ; / Not in supported dialog range. Skip 
 
         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-        jgt   edkey.action.filebrowser.prev.exit
+        jgt   edkey.action.filebrowser.prevpage.exit
                                     ; / Not in supported dialog range. Skip
         ;-------------------------------------------------------
         ; Display device and filename
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.page.display:
+edkey.action.filebrowser.prevpage.page.display:
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
@@ -65,7 +65,7 @@ edkey.action.filebrowser.prev.page.display:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.filebrowser.prev.exit:
+edkey.action.filebrowser.prevpage.exit:
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

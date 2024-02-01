@@ -121,9 +121,13 @@ main:
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
-        copy  "edkey.cmdb.filebrowser.prev.asm"
+        copy  "edkey.cmdb.filebrowser.prevcol.asm"
+                                            ; Previous column in filebrowser
+        copy  "edkey.cmdb.filebrowser.nextcol.asm"
+                                            ; Next column in filebrowser
+        copy  "edkey.cmdb.filebrowser.prevpage.asm"
                                             ; Previous page in filebrowser
-        copy  "edkey.cmdb.filebrowser.next.asm"
+        copy  "edkey.cmdb.filebrowser.nextpage.asm"
                                             ; Next page in filebrowser
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------

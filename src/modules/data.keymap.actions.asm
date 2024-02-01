@@ -508,11 +508,17 @@ keymap_actions.cmdb:
         byte  key.ctrl.9, pane.focus.cmdb
         data  edkey.action.cmdb.file.directory.9
 
+        byte  key.ctrl.s, pane.focus.cmdb
+        data  edkey.action.filebrowser.prevcol
+
+        byte  key.ctrl.d, pane.focus.cmdb
+        data  edkey.action.filebrowser.nextcol
+
         byte  key.ctrl.e, pane.focus.cmdb
-        data  edkey.action.filebrowser.prev
+        data  edkey.action.filebrowser.prevpage
 
         byte  key.ctrl.x, pane.focus.cmdb
-        data  edkey.action.filebrowser.next
+        data  edkey.action.filebrowser.nextpage
 
         byte  key.ctrl.a, pane.focus.cmdb
         data  edkey.action.cmdb.preset

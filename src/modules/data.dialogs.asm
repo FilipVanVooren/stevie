@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.27  '
+            text '  Stevie 1.5.28  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.27  '     
+            text '  Stevie 1.5.28  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.27  '
+            text '  Stevie 1.5.28  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.27  '  
+            text '  Stevie 1.5.28  '  
             even
         .endif
 
@@ -45,7 +45,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
 txt.hint.filepicker:
-                   stri 'Use FCTN-E/X to move up/down or ^E/X for prev/next page in catalog.'
+                   stri 'FCTN-E/X for up/down, ^E/X for prev/next page, ^S/D for prev/next column'
                    even
 
 ;--------------------------------------------------------------
@@ -173,7 +173,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.27 - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.5.28 - (c)2018-2024 Filip Van Vooren'
                    even
 
 
