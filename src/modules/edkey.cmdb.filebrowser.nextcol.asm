@@ -19,7 +19,7 @@ edkey.action.filebrowser.nextcol:
         mov   @cat.shortcut.idx,tmp0
         a     @cat.nofilescol,tmp0
         c     tmp0,@cat.filecount
-        jlt  edkey.action.filebrowser.nextcol.page
+        jlt   edkey.action.filebrowser.nextcol.page
                                     ; Not passed end of file list. Display
         jmp   edkey.action.filebrowser.nextcol.exit
                                     ; Passed end of file list. Skip
