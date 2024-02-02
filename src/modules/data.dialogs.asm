@@ -30,9 +30,9 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^E/X=Page-/+'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^SPACE-UpDir'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^E/X=Page-/+'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^SPACE-UpDir'
                    even
 
 ;--------------------------------------------------------------
@@ -107,7 +107,7 @@ txt.head.dir       byte 28,1,1
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
-txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^E/X=CAT page-/+'
+txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^SPACE-UpDir' 
                    even
 
 ;--------------------------------------------------------------
@@ -119,8 +119,8 @@ txt.head.clipboard byte 27,1,1
 txt.info.clipboard stri 'Clipboard [1-5]?'
 txt.hint.clipboard stri 'Press 1 to 5 to copy clipboard, press F7 to configure.'
 
-txt.keys.clipboard  stri 'F9-Back  F5-Fastmode  F7-Configure'
-txt.keys.clipboard2 stri 'F9-Back  *F5-Fastmode  F7-Configure'
+txt.keys.clipboard  stri 'F9-Back  F5-FMIO  F7-Configure'
+txt.keys.clipboard2 stri 'F9-Back  *F5-FMIO  F7-Configure'
 
 
 ;--------------------------------------------------------------
