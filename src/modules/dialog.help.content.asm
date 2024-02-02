@@ -132,7 +132,7 @@ dialog.help.content.exit:
 dialog.help.data.pages:
         data  dialog.help.data.page1.left,14
         data  dialog.help.data.page1.right,18
-        data  dialog.help.data.page2.left,8
+        data  dialog.help.data.page2.left,16
         data  dialog.help.data.page2.right,10
 
 
@@ -194,6 +194,17 @@ dialog.help.data.page2.left:
         stri 'Ctrl l   ^l   Delete end of line'
         stri 'Fctn 8        Insert line'
         stri 'Fctn .        Insert/Overwrite'
+        stri ' '
+        byte    35
+        byte    1,1,1,1,1,1
+        text    ' File picker (catalog) '
+        byte    1,1,1,1,1,1
+        stri 'Ctrl e   ^e   Previous page'
+        stri 'Ctrl x   ^x   Next page'
+        stri 'Ctrl s   ^s   Previous column'
+        stri 'Ctrl d   ^d   Next column'
+        stri 'Fctn e/x      Up/Down'
+        stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
 
 dialog.help.data.page2.right:
         stri '                                   2/2'
