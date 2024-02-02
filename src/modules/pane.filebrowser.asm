@@ -94,7 +94,7 @@ pane.filebrowser.lines:
         ;------------------------------------------------------              
 pane.filebrowser.headers:
         bl    @putat
-              byte 1,1
+              byte 1,0
               data txt.header       ; Column 1
 
         bl    @putat
@@ -303,4 +303,4 @@ pane.filebrowser.exit:
 
 txt.volume    stri  'Volume:            Files:      Device: '
 txt.slash     stri  '/'
-txt.header    stri  'Name        Type   Size'
+txt.header    stri  ' Name        Type   Size'
