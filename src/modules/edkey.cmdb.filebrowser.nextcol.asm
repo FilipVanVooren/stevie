@@ -14,6 +14,14 @@ edkey.action.filebrowser.nextcol:
         jeq   edkey.action.filebrowser.prevcol.exit
                                     ; Already at last column. Skip
         ;-------------------------------------------------------
+        ; Check if passing end of file list
+        ;-------------------------------------------------------
+        mov   @cat.shortcut.idx,tmp0
+        a     @cat.nofilescol,tmp0
+        c     tmp0,@cat.filecount
+        jgt   edkey.action.filebrowser.nextcol.exit
+                                    ; Passed end of file list. Skip
+        ;-------------------------------------------------------
         ; Next column
         ;-------------------------------------------------------
 edkey.action.filebrowser.nextcol.page:        
