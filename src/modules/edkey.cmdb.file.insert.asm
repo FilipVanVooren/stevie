@@ -18,11 +18,25 @@ edkey.action.cmdb.insert:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jeq   edkey.action.cmdb.insert.exit
-                                    ; No filename specified        
+        jne   edkey.action.cmdb.insert.checklen
+                                    ; No, check filename length
+        ;-------------------------------------------------------
+        ; Read directory and exit
+        ;-------------------------------------------------------
+        li    tmp0,cmdb.cmdall      ; \ Pass filename as parm1
+        mov   tmp0,@parm1           ; /
+
+        bl    @fm.directory         ; Read device directory
+                                    ; \ @parm1 = Pointer to length-prefixed 
+                                    ; |          string containing device
+                                    ; |          or >0000 if using parm2
+                                    ; | @parm2 = Index in device list
+                                    ; /          (ignored if parm1 set)
+        jmp   edkey.action.cmdb.insert.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
+edkey.action.cmdb.insert.checklen:        
         bl    @cmdb.cmd.getlength              ; Get length of current command
         mov   @outparm1,tmp0                   ; Length == 0 ?
         jeq   edkey.action.cmdb.insert.exit    ; Yes, exit early

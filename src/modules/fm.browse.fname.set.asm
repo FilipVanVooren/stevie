@@ -76,11 +76,29 @@ fm.browse.fname.set:
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
         ;------------------------------------------------------
-        ; Adjust string length-byte prefix to include device and filename
-        ;------------------------------------------------------        
+        ; Adjust length-byte prefix to include device+filename
+        ;------------------------------------------------------
         mov   @cat.var1,tmp0        ; Get filename length
         sla   tmp0,8                ; LSB to MSB
         a     tmp0,@cat.fullfname   ; Set length-byte prefix
+        ;------------------------------------------------------
+        ; Add final dot '.' to filename if it's a directory
+        ;------------------------------------------------------
+        mov   @cat.shortcut.idx,tmp0   ; Get index 
+        movb  @cat.ftlist(tmp0),tmp0   ; Get file type
+        srl   tmp0,8                   ; MSB to LSB
+        ci    tmp0,6                   ; Is it a directory?
+        jne   fm.browse.fname.set.exit ; Exit if not a directory
+
+        movb  @cat.fullfname,tmp0      ; Get length-byte
+        srl   tmp0,8                   ; MSB to LSB
+        inc   tmp0                     ; Increase string length
+        swpb  tmp0                     ; LSB to MSB
+        movb  tmp0,@cat.fullfname      ; Set length-byte
+        srl   tmp0,8                   ; MSB to LSB
+        ai    tmp0,cat.fullfname       ; Add base to offset
+        li    tmp1,>2e00               ; \ Dot character in MSB
+        movb  tmp1,*tmp0               ; / Add dot to the end
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

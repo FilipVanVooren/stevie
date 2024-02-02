@@ -10,7 +10,7 @@ edkey.action.cmdb.load:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0       
         ;-------------------------------------------------------
-        ; Exit early if last character is '.'
+        ; Read directory if last character is '.'
         ;-------------------------------------------------------
         movb  @cmdb.cmdlen,tmp0     ; Get length-byte prefix of filename
         srl   tmp0,8                ; MSB to LSB
@@ -18,11 +18,25 @@ edkey.action.cmdb.load:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jeq   edkey.action.cmdb.load.exit
-                                    ; No filename specified
+        jne   edkey.action.cmdb.load.checklen
+                                    ; No, check filename length
+        ;-------------------------------------------------------
+        ; Read directory and exit
+        ;-------------------------------------------------------
+        li    tmp0,cmdb.cmdall      ; \ Pass filename as parm1
+        mov   tmp0,@parm1           ; /
+
+        bl    @fm.directory         ; Read device directory
+                                    ; \ @parm1 = Pointer to length-prefixed 
+                                    ; |          string containing device
+                                    ; |          or >0000 if using parm2
+                                    ; | @parm2 = Index in device list
+                                    ; /          (ignored if parm1 set)
+        jmp   edkey.action.cmdb.load.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
+edkey.action.cmdb.load.checklen:        
         bl    @cmdb.cmd.getlength            ; Get length of current command
         mov   @outparm1,tmp0                 ; Length == 0 ?
         jeq   edkey.action.cmdb.load.exit    ; Yes, exit early

@@ -56,12 +56,26 @@ fm.directory:
                                     ; Clear catalog area except current device
                                     ; @cat.device (is at end of memory area)
         ;------------------------------------------------------
-        ; Remove filepicker color bar
+        ; Remove filepicker color bar and old files from screen
         ;------------------------------------------------------
         bl    @pane.filebrowser.colbar.remove
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
                                     ;   /                                
+
+        bl    @filv
+              data 80,32,(pane.botrow - cmdb.rows - 1) * 80
+                                    ; Clear files list on screen
+
+        li    tmp0,vdp.tat.base + 80
+        mov   @tv.color,tmp1        ; \ Get color combination (only MSB counts)
+        swpb  tmp1                  ; /        
+        li    tmp2,(pane.botrow - cmdb.rows - 1) * 80
+
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill    
         ;-------------------------------------------------------
         ; Process parameters
         ;-------------------------------------------------------
@@ -318,6 +332,7 @@ fm.directory.ftloop.next:
 * Show filebrowser
 *--------------------------------------------------------------        
 fm.directory.browser:
+        clr   @cat.shortcut.idx     ; 1st file/dir in list
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 

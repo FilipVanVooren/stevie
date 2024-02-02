@@ -103,7 +103,7 @@ edkey.action.cmdb.file.directory:
                                     ; |          string containing device
                                     ; |          or >0000 if using parm2
                                     ; | @parm2 = Index in device list
-                                    ; /          (ignored if parm1 set)                                    
+                                    ; /          (ignored if parm1 set)
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

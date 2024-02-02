@@ -74,6 +74,10 @@ pane.filebrowser.devicepath:
         mov   @cat.device,tmp0        ; Device path set?
         jeq   pane.filebrowser.lines  ; No, skip display
 
+        bl    @hchar
+              byte 0,30,32,50
+              data EOL                ; Clear device path
+
         bl    @putat
               byte 0,30
               data cat.device         ; Show device path
@@ -116,13 +120,15 @@ pane.filebrowser.headers:
         mov   @cat.fpicker.idx,tmp0   ; Get current index
         sla   tmp0,1                  ; Make it an offset
         mov   @cat.ptrlist(tmp0),tmp1 ; Get filename list
-        jeq   pane.filebrowser.exit   ; Skip on empty list
+        jne   pane.filebrowser.show   ; Show filenames if list not empty
+        b     @pane.filebrowser.exit  ; Skip on empty list
         ;------------------------------------------------------
         ; Show Catalog
         ;------------------------------------------------------
         ; @cat.var1 = Cutover row and column offset
         ; @cat.var2 = Files per page to display
         ;------------------------------------------------------
+pane.filebrowser.show:        
         bl    @at                   ; Set cursor position
               byte 3,1              ; Y=3, X=1
 
@@ -290,6 +296,20 @@ pane.filebrowser.marker:
                                     ; Show filename marker
                                     ; \ @i @cat.fpicker.idx = 1st file to show 
                                     ; /                       in file browser
+        bl    @cpym2m
+              data cat.fullfname,cmdb.cmdall,80
+                                    ; Copy filename from command line to buffer
+        ;---------------------------------------------------------------
+        ; Set filename in CMDB pane
+        ;---------------------------------------------------------------
+        movb  @cmdb.cmdlen,tmp0     ; Get length byte of current command
+        srl   tmp0,8                ; Right justify
+        mov   tmp0,@cmdb.column     ; Save column position
+        inc   tmp0                  ; One time adjustment command prompt        
+        swpb  tmp0                  ; LSB TO MSB
+        movb  tmp0,@cmdb.cursor+1   ; Set cursor position        
+
+        seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)                                        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
