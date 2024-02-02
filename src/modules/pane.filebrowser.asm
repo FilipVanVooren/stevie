@@ -34,7 +34,7 @@ pane.filebrowser:
         jne   pane.filebrowser.volume ; \
         b     @pane.filebrowser.exit  ; / Exit if nothing to display
         ;------------------------------------------------------
-        ; Show volume name, no files, device path
+        ; Show volume name, number of files, device path
         ;------------------------------------------------------
 pane.filebrowser.volume
         bl    @putat
@@ -94,7 +94,7 @@ pane.filebrowser.lines:
         ;------------------------------------------------------              
 pane.filebrowser.headers:
         bl    @putat
-              byte 1,0
+              byte 1,1
               data txt.header       ; Column 1
 
         bl    @putat
@@ -303,4 +303,4 @@ pane.filebrowser.exit:
 
 txt.volume    stri  'Volume:            #    Path: '
 txt.slash     stri  '/'
-txt.header    stri  ' Name        Type   Size'
+txt.header    stri  'Name        Type   Size'

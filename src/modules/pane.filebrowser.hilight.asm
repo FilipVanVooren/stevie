@@ -72,6 +72,14 @@ pane.filebrowser.hilight.rowcol:
         ; Remove previous file marker
         ;------------------------------------------------------
 pane.filebrowser.hilight.remove:                
+        ;------------------------------------------------------
+        ; Remove filepicker color bar
+        ;------------------------------------------------------
+        bl    @pane.filebrowser.colbar.remove
+                                    ; Remove filepicker color bar
+                                    ; i \  @cat.barpos = YX position color bar
+                                    ;   /
+
         mov   @cat.hilit.colrow2,tmp0
                                     ; Get column/row offsets
         srl   tmp0,8                ; MSB to LSB. Column value in LSB
@@ -84,13 +92,6 @@ pane.filebrowser.hilight.remove:
         swpb  tmp2                  ; Column/row to YX
         ai    tmp2,>0300            ; Add offset
         mov   tmp2,@wyx             ; Set cursor position
-        ;------------------------------------------------------
-        ; Remove filepicker color bar
-        ;------------------------------------------------------
-        bl    @pane.filebrowser.colbar.remove
-                                    ; Remove filepicker color bar
-                                    ; i \  @cat.barpos = YX position color bar
-                                    ;   /
         ;------------------------------------------------------
         ; Draw file marker
         ;------------------------------------------------------
