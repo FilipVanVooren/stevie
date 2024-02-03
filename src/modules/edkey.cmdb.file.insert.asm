@@ -10,7 +10,7 @@ edkey.action.cmdb.insert:
         dect  stack
         mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
-        ; Exit early if last character is '.'
+        ; Read directory if last character is '.'
         ;-------------------------------------------------------
         movb  @cmdb.cmdlen,tmp0     ; Get length-byte prefix of filename
         srl   tmp0,8                ; MSB to LSB

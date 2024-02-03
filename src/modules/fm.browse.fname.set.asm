@@ -15,7 +15,7 @@
 * @cat.fullfname = Combined string with device & filename
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
 fm.browse.fname.set:
         dect  stack

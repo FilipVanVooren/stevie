@@ -15,7 +15,7 @@
 * @cat.outparm1  = >FFFF if skipped, >0000 on normal exit
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0, tmp1
 ********|*****|*********************|**************************
 fm.browse.fname.next:
         dect  stack

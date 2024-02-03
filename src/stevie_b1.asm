@@ -117,6 +117,7 @@ main:
         copy  "edkey.cmdb.file.dir.asm"     ; Drive/Directory listing
         copy  "edkey.cmdb.pick.prev.asm"    ; Pick previous file in catalog
         copy  "edkey.cmdb.pick.next.asm"    ; Pick next file in catalog
+        copy  "edkey.cmdb.updir.asm"        ; Go up one directory level
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
         copy  "edkey.cmdb.goto.asm"         ; Goto line

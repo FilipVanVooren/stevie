@@ -133,7 +133,7 @@ dialog.help.data.pages:
         data  dialog.help.data.page1.left,14
         data  dialog.help.data.page1.right,18
         data  dialog.help.data.page2.left,16
-        data  dialog.help.data.page2.right,10
+        data  dialog.help.data.page2.right,15
 
 
 dialog.help.data.page1.left:
@@ -220,3 +220,8 @@ dialog.help.data.page2.right:
         stri 'Ctrl m   ^m   Move block'
         stri 'Ctrl s   ^s   Save block to file'
         stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
+        byte    35
+        byte    1,1,1,1,1,1
+        text    ' File picker (catalog) '
+        byte    1,1,1,1,1,1
+        stri 'SPACE         Parent directory'        

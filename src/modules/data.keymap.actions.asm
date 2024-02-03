@@ -255,6 +255,9 @@ keymap_actions.cmdb:
 
         byte  key.fctn.x, id.dialog.load
         data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.load
+        data  edkey.action.cmdb.updir
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
@@ -269,6 +272,9 @@ keymap_actions.cmdb:
 
         byte  key.fctn.x, id.dialog.insert
         data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.insert
+        data  edkey.action.cmdb.updir        
         ;-------------------------------------------------------
         ; Dialog: Append file
         ;-------------------------------------------------------
@@ -282,7 +288,10 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.pick.prev
 
         byte  key.fctn.x, id.dialog.append
-        data  edkey.action.cmdb.pick.next        
+        data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.append
+        data  edkey.action.cmdb.updir                
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------
@@ -311,6 +320,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.cat        
         data  edkey.action.cmdb.file.directory.device 
+
+        byte  key.space, id.dialog.cat
+        data  edkey.action.cmdb.updir        
         ;-------------------------------------------------------
         ; Dialog: Configure
         ;-------------------------------------------------------

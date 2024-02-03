@@ -80,6 +80,7 @@ main:
         copy  "fm.browse.fname.set.asm"  ; Create string with device/filename
         copy  "fm.browse.fname.prev.asm" ; Pick prev filename in filename list
         copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
+        copy  "fm.browse.updir.asm"      ; Directory up
         copy  "fm.directory.asm"         ; File manager drive/directory listing
         ;-----------------------------------------------------------------------
         ; Stubs

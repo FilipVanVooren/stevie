@@ -23,7 +23,7 @@ vec.9   data  cpu.crash             ;
 vec.10  data  fm.browse.fname.prev  ;
 vec.11  data  fm.browse.fname.next  ;
 vec.12  data  fm.browse.fname.set   ;
-vec.13  data  cpu.crash             ;
+vec.13  data  fm.browse.updir       ;
 vec.14  data  cpu.crash             ;
 vec.15  data  cpu.crash             ;
 vec.16  data  cpu.crash             ;

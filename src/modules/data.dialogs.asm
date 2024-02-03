@@ -8,31 +8,31 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.30  '
+            text '  Stevie 1.5.31  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.30  '     
+            text '  Stevie 1.5.31  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.30  '
+            text '  Stevie 1.5.31  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.30  '  
+            text '  Stevie 1.5.31  '  
             even
         .endif
 
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^SPACE-UpDir'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  SPACE-UpDir'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  ^SPACE-UpDir'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  SPACE-UpDir'
                    even
 
 ;--------------------------------------------------------------
@@ -107,7 +107,7 @@ txt.head.dir       byte 28,1,1
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
-txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  ^SPACE-UpDir' 
+txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  SPACE-UpDir' 
                    even
 
 ;--------------------------------------------------------------
@@ -173,7 +173,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.30 - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.5.31 - (c)2018-2024 Filip Van Vooren'
                    even
 
 
@@ -230,7 +230,7 @@ txt.info.basic     stri 'Session:  1   2   3   4   5  '
 pos.info.basic     byte 10,14,18,22,26,>ff
 txt.hint.basic2    stri 'Press SPACE to get TI Basic program. Session: Current=',>02,>03,' Visited=',>1d,>1e
 txt.hint.basic     stri 'Pick session 1-5. Press F9 (or type END) in TI Basic to return here.'
-txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE=Unpack program'
+txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 
 ;--------------------------------------------------------------
