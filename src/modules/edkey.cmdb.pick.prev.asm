@@ -31,7 +31,7 @@ edkey.action.cmdb.pick.prev:
 edkey.action.cmdb.pick.prev.setfile:
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
-                                    ; Copy filename from command line to buffer
+                                    ; Copy full filename to command line
         ;---------------------------------------------------------------
         ; Cursor end of line
         ;---------------------------------------------------------------

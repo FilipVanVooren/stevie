@@ -37,7 +37,29 @@ edkey.action.cmdb.updir:
                                     ; |          string containing device
                                     ; |          or >0000 if using parm2
                                     ; | @parm2 = Index in device list
-                                    ; /          (ignored if parm1 set)        
+                                    ; /          (ignored if parm1 set)
+        ;-------------------------------------------------------
+        ; Update command line with device path if catalog dialog
+        ;-------------------------------------------------------
+        li    tmp0,id.dialog.cat    ;
+        c     @cmdb.dialog,tmp0     ; Is catalog dialog active?
+        jne   edkey.action.cmdb.updir.exit
+                                    ; No, exit
+
+        bl    @cpym2m
+              data cat.device,cmdb.cmdall,80
+                                    ; Copy device path to command line
+
+        seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)        
+        ;-------------------------------------------------------
+        ; Cursor end of line
+        ;-------------------------------------------------------
+        movb  @cmdb.cmdlen,tmp0     ; Get length byte of current command
+        srl   tmp0,8                ; Right justify
+        mov   tmp0,@cmdb.column     ; Save column position
+        inc   tmp0                  ; One time adjustment command prompt        
+        swpb  tmp0                  ; LSB TO MSB
+        movb  tmp0,@cmdb.cursor+1   ; Set cursor position        
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------

@@ -30,7 +30,7 @@ edkey.action.cmdb.pick.next:
 edkey.action.cmdb.pick.next.setfile:        
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
-                                    ; Copy filename from command line to buffer
+                                    ; Copy full filename to command line
         ;---------------------------------------------------------------
         ; Cursor end of line
         ;---------------------------------------------------------------
@@ -40,7 +40,6 @@ edkey.action.cmdb.pick.next.setfile:
         inc   tmp0                  ; One time adjustment command prompt        
         swpb  tmp0                  ; LSB TO MSB
         movb  tmp0,@cmdb.cursor+1   ; Set cursor position        
-
         seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)        
         ;------------------------------------------------------        
         ; Exit

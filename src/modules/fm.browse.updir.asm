@@ -65,9 +65,23 @@ fm.browse.updir.loop1.cont:
         ;------------------------------------------------------        
         mov   @cat.var1,tmp1        ; Get position of 2nd dot
         ai    tmp1,-cat.device      ; Calculate length of device name/path
+        mov   tmp1,@cat.var2        ; Backup length of device name/path
         sla   tmp1,8                ; LSB to MSB
         movb  tmp1,@cat.device      ; Set new length
         seto  @outparm1             ; Set success flag
+        ;------------------------------------------------------
+        ; Clear rest of device name/path
+        ;------------------------------------------------------
+        mov   @cat.var1,tmp0        ; Address in memory
+        inc   tmp0                  ; Skip 2nd dot
+        clr   tmp1                  ; Fill with nulls
+        li    tmp2,80
+        s     @cat.var2,tmp2        ; Limit to 80 characters
+
+        bl    @xfilm                ; \ Fill memory
+                                    ; | i  tmp0 = Memory start address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Number of bytes to fill
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
