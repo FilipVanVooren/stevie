@@ -318,11 +318,20 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Catalog drive/directory
         ;-------------------------------------------------------
-        byte  key.enter, id.dialog.cat        
-        data  edkey.action.cmdb.file.directory.device 
+        byte  key.enter, id.dialog.cat
+        data  edkey.action.cmdb.load
+
+        byte  key.fctn.e, id.dialog.cat
+        data  edkey.action.cmdb.pick.prev
+
+        byte  key.fctn.x, id.dialog.cat
+        data  edkey.action.cmdb.pick.next
 
         byte  key.space, id.dialog.cat
-        data  edkey.action.cmdb.updir        
+        data  edkey.action.cmdb.updir
+
+        byte  key.enter, id.dialog.cat        
+        data  edkey.action.cmdb.file.directory.device 
         ;-------------------------------------------------------
         ; Dialog: Configure
         ;-------------------------------------------------------

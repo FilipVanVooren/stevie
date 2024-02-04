@@ -41,17 +41,10 @@ dialog.file:
         li    tmp0,txt.hint.file
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
         clr   @cmdb.panhint2        ; No extra hint to display
-
-        mov    @cat.filecount,tmp0
-        jeq    dialog.file.nofilebrowser
-        li     tmp0,txt.keys.file2
-        jmp    dialog.file.keylist  ; Navigation keys
-dialog.file.nofilebrowser:        
-        li    tmp0,txt.keys.file    ; No navigation keys
 dialog.file.keylist:
+        li    tmp0,txt.keys.file    ; No navigation keys
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         bl    @pane.cursor.hide     ; Hide cursor
-        bl    @pane.filebrowser     ; Show file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240203-2202080
+0002               * BUILD: 240204-1550510
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -210,14 +210,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031      000A     id.dialog.load            equ  10      ; "Load file"
 0032      000B     id.dialog.insert          equ  11      ; "Insert file"
 0033      000C     id.dialog.append          equ  12      ; "Append file"
-0034      000D     id.dialog.run             equ  13      ; "Run file"
-0035      000E     id.dialog.save            equ  14      ; "Save file"
-0036      000F     id.dialog.saveblock       equ  15      ; "Save block to file"
-0037      0010     id.dialog.print           equ  16      ; "Print file"
-0038      0011     id.dialog.printblock      equ  17      ; "Print block"
-0039      0012     id.dialog.cfg.clip        equ  18      ; "Configure clipboard"
-0040      0014     id.dialog.goto            equ  20      ; "Goto"
-0041      0015     id.dialog.cat             equ  21      ; "Catalog drive/directory"
+0034      000D     id.dialog.cat             equ  13      ; "Catalog"
+0035      000E     id.dialog.run             equ  14      ; "Run file"
+0036      000F     id.dialog.save            equ  15      ; "Save file"
+0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
+0038      0011     id.dialog.print           equ  17      ; "Print file"
+0039      0012     id.dialog.printblock      equ  18      ; "Print block"
+0040      0013     id.dialog.cfg.clip        equ  19      ; "Configure clipboard"
+0041      0014     id.dialog.goto            equ  20      ; "Goto"
 0042               ;-----------------------------------------------------------------
 0043               ;   Dialog ID's >= 100 indicate that command prompt should be
 0044               ;   hidden and no characters added to CMDB keyboard buffer.
@@ -909,13 +909,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               
 0061               
 0065               
-0067 6028 0D53                 stri 'STEVIE 1.5.31'
+0067 6028 0D53                 stri 'STEVIE 1.5.32'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3331     
+     6034 3332     
                    < stevie_b6.asm
 0040               
 0041               ***************************************************************
@@ -13134,9 +13134,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
     ID.DIALOG.CARTRIDGE. >006A :     
-    ID.DIALOG.CAT....... >0015 :     
+    ID.DIALOG.CAT....... >000D :     
     ID.DIALOG.CFG....... >006C :     
-    ID.DIALOG.CFG.CLIP.. >0012 :     
+    ID.DIALOG.CFG.CLIP.. >0013 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
@@ -13146,11 +13146,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.INSERT.... >000B :     
     ID.DIALOG.LOAD...... >000A :     
     ID.DIALOG.MENU...... >0064 :     
-    ID.DIALOG.PRINT..... >0010 :     
-    ID.DIALOG.PRINTBLOCK >0011 :     
-    ID.DIALOG.RUN....... >000D :     
-    ID.DIALOG.SAVE...... >000E :     
-    ID.DIALOG.SAVEBLOCK. >000F :     
+    ID.DIALOG.PRINT..... >0011 :     
+    ID.DIALOG.PRINTBLOCK >0012 :     
+    ID.DIALOG.RUN....... >000E :     
+    ID.DIALOG.SAVE...... >000F :     
+    ID.DIALOG.SAVEBLOCK. >0010 :     
     ID.DIALOG.SHORTCUTS. >006F :     
     ID.DIALOG.UNSAVED... >0065 :     
     ID.FILE.APPENDFILE.. >0003 :     

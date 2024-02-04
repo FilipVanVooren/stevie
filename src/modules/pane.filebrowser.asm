@@ -76,11 +76,11 @@ pane.filebrowser.devicepath:
 
         bl    @hchar
               byte 0,30,32,50
-              data EOL                ; Clear device path
+              data EOL              ; Clear device path
 
         bl    @putat
               byte 0,30
-              data cat.device         ; Show device path
+              data cat.device       ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------

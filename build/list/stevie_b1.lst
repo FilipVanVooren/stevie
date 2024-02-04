@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240203-2202080
+0002               * BUILD: 240204-1550510
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -213,14 +213,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031      000A     id.dialog.load            equ  10      ; "Load file"
 0032      000B     id.dialog.insert          equ  11      ; "Insert file"
 0033      000C     id.dialog.append          equ  12      ; "Append file"
-0034      000D     id.dialog.run             equ  13      ; "Run file"
-0035      000E     id.dialog.save            equ  14      ; "Save file"
-0036      000F     id.dialog.saveblock       equ  15      ; "Save block to file"
-0037      0010     id.dialog.print           equ  16      ; "Print file"
-0038      0011     id.dialog.printblock      equ  17      ; "Print block"
-0039      0012     id.dialog.cfg.clip        equ  18      ; "Configure clipboard"
-0040      0014     id.dialog.goto            equ  20      ; "Goto"
-0041      0015     id.dialog.cat             equ  21      ; "Catalog drive/directory"
+0034      000D     id.dialog.cat             equ  13      ; "Catalog"
+0035      000E     id.dialog.run             equ  14      ; "Run file"
+0036      000F     id.dialog.save            equ  15      ; "Save file"
+0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
+0038      0011     id.dialog.print           equ  17      ; "Print file"
+0039      0012     id.dialog.printblock      equ  18      ; "Print block"
+0040      0013     id.dialog.cfg.clip        equ  19      ; "Configure clipboard"
+0041      0014     id.dialog.goto            equ  20      ; "Goto"
 0042               ;-----------------------------------------------------------------
 0043               ;   Dialog ID's >= 100 indicate that command prompt should be
 0044               ;   hidden and no characters added to CMDB keyboard buffer.
@@ -898,13 +898,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               
 0061               
 0065               
-0067 6028 0D53                 stri 'STEVIE 1.5.31'
+0067 6028 0D53                 stri 'STEVIE 1.5.32'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 352E     
-     6034 3331     
+     6034 3332     
                    < stevie_b1.asm
 0042               
 0043               ***************************************************************
@@ -13612,7 +13612,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042                       ; Update command line with device path if catalog dialog
 0043                       ;-------------------------------------------------------
 0044 6EB4 0204  20         li    tmp0,id.dialog.cat    ;
-     6EB6 0015     
+     6EB6 000D     
 0045 6EB8 8120  34         c     @cmdb.dialog,tmp0     ; Is catalog dialog active?
      6EBA A71C     
 0046 6EBC 1610  14         jne   edkey.action.cmdb.updir.exit
@@ -14094,7 +14094,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; / Not in supported dialog range. Skip
 0033               
 0034 702A 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     702C 000D     
+     702C 000E     
 0035 702E 1512  14         jgt   edkey.action.filebrowser.prevcol.exit
 0036                                                   ; / Not in supported dialog range. Skip
 0037                       ;-------------------------------------------------------
@@ -14199,7 +14199,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043                                                   ; / Not in supported dialog range. Skip
 0044               
 0045 7092 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     7094 000D     
+     7094 000E     
 0046 7096 1512  14         jgt   edkey.action.filebrowser.nextcol.exit
 0047                                                   ; / Not in supported dialog range. Skip
 0048                       ;-------------------------------------------------------
@@ -14295,7 +14295,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034                                                   ; / Not in supported dialog range. Skip
 0035               
 0036 70F2 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     70F4 000D     
+     70F4 000E     
 0037 70F6 1512  14         jgt   edkey.action.filebrowser.prevpage.exit
 0038                                                   ; / Not in supported dialog range. Skip
 0039                       ;-------------------------------------------------------
@@ -14392,7 +14392,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0035                                                   ; / Not in supported dialog range. Skip
 0036               
 0037 7154 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     7156 000D     
+     7156 000E     
 0038 7158 1512  14         jgt   edkey.action.filebrowser.nextpage.exit
 0039                                                   ; / Not in supported dialog range. Skip
 0040                       ;-------------------------------------------------------
@@ -17773,235 +17773,244 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0318                       ;-------------------------------------------------------
 0319                       ; Dialog: Catalog drive/directory
 0320                       ;-------------------------------------------------------
-0321 7D76 0D15             byte  key.enter, id.dialog.cat
-0322 7D78 6DFC             data  edkey.action.cmdb.file.directory.device
+0321 7D76 0D0D             byte  key.enter, id.dialog.cat
+0322 7D78 6A74             data  edkey.action.cmdb.load
 0323               
-0324 7D7A 2015             byte  key.space, id.dialog.cat
-0325 7D7C 6E96             data  edkey.action.cmdb.updir
-0326                       ;-------------------------------------------------------
-0327                       ; Dialog: Configure
-0328                       ;-------------------------------------------------------
-0329 7D7E 436C             byte  key.uc.c, id.dialog.cfg
-0330 7D80 77FE             data  dialog.clipdev
-0331               
-0332 7D82 466C             byte  key.uc.f, id.dialog.cfg
-0333 7D84 784E             data  dialog.font
-0334                       ;-------------------------------------------------------
-0335                       ; Dialog: Configure clipboard
-0336                       ;-------------------------------------------------------
-0337 7D86 0D12             byte  key.enter, id.dialog.cfg.clip
-0338 7D88 6A2A             data  edkey.action.cmdb.cfg.clip
-0339                       ;-------------------------------------------------------
-0340                       ; Dialog: Configure font
-0341                       ;-------------------------------------------------------
-0342 7D8A 316E             byte  key.num.1, id.dialog.font
-0343 7D8C 6FE0             data  edkey.action.cmdb.font1
-0344               
-0345 7D8E 326E             byte  key.num.2, id.dialog.font
-0346 7D90 6FE4             data  edkey.action.cmdb.font2
-0347               
-0348 7D92 336E             byte  key.num.3, id.dialog.font
-0349 7D94 6FEA             data  edkey.action.cmdb.font3
-0350               
-0351 7D96 346E             byte  key.num.4, id.dialog.font
-0352 7D98 6FF0             data  edkey.action.cmdb.font4
+0324 7D7A 0B0D             byte  key.fctn.e, id.dialog.cat
+0325 7D7C 6E26             data  edkey.action.cmdb.pick.prev
+0326               
+0327 7D7E 0A0D             byte  key.fctn.x, id.dialog.cat
+0328 7D80 6E5E             data  edkey.action.cmdb.pick.next
+0329               
+0330 7D82 200D             byte  key.space, id.dialog.cat
+0331 7D84 6E96             data  edkey.action.cmdb.updir
+0332               
+0333 7D86 0D0D             byte  key.enter, id.dialog.cat
+0334 7D88 6DFC             data  edkey.action.cmdb.file.directory.device
+0335                       ;-------------------------------------------------------
+0336                       ; Dialog: Configure
+0337                       ;-------------------------------------------------------
+0338 7D8A 436C             byte  key.uc.c, id.dialog.cfg
+0339 7D8C 77FE             data  dialog.clipdev
+0340               
+0341 7D8E 466C             byte  key.uc.f, id.dialog.cfg
+0342 7D90 784E             data  dialog.font
+0343                       ;-------------------------------------------------------
+0344                       ; Dialog: Configure clipboard
+0345                       ;-------------------------------------------------------
+0346 7D92 0D13             byte  key.enter, id.dialog.cfg.clip
+0347 7D94 6A2A             data  edkey.action.cmdb.cfg.clip
+0348                       ;-------------------------------------------------------
+0349                       ; Dialog: Configure font
+0350                       ;-------------------------------------------------------
+0351 7D96 316E             byte  key.num.1, id.dialog.font
+0352 7D98 6FE0             data  edkey.action.cmdb.font1
 0353               
-0354 7D9A 356E             byte  key.num.5, id.dialog.font
-0355 7D9C 6FF6             data  edkey.action.cmdb.font5
-0356                       ;-------------------------------------------------------
-0357                       ; Dialog: Save file
-0358                       ;-------------------------------------------------------
-0359 7D9E 0D0E             byte  key.enter, id.dialog.save
-0360 7DA0 6C4A             data  edkey.action.cmdb.save
-0361               
-0362 7DA2 0D0F             byte  key.enter, id.dialog.saveblock
-0363 7DA4 6C4A             data  edkey.action.cmdb.save
-0364               
-0365 7DA6 0C0E             byte  key.fctn.6, id.dialog.save
-0366 7DA8 6F1A             data  edkey.action.cmdb.lineterm.toggle
-0367               
-0368 7DAA 0C0F             byte  key.fctn.6, id.dialog.saveblock
-0369 7DAC 6F1A             data  edkey.action.cmdb.lineterm.toggle
-0370                       ;-------------------------------------------------------
-0371                       ; Dialog: Print file
-0372                       ;-------------------------------------------------------
-0373 7DAE 0D10             byte  key.enter, id.dialog.print
-0374 7DB0 6CCA             data  edkey.action.cmdb.print
-0375               
-0376 7DB2 0D11             byte  key.enter, id.dialog.printblock
-0377 7DB4 6CCA             data  edkey.action.cmdb.print
-0378               
-0379 7DB6 0C10             byte  key.fctn.6, id.dialog.print
-0380 7DB8 6F1A             data  edkey.action.cmdb.lineterm.toggle
-0381               
-0382 7DBA 0C11             byte  key.fctn.6, id.dialog.printblock
-0383 7DBC 6F1A             data  edkey.action.cmdb.lineterm.toggle
-0384                       ;-------------------------------------------------------
-0385                       ; Dialog: Unsaved changes
-0386                       ;-------------------------------------------------------
-0387 7DBE 0C65             byte  key.fctn.6, id.dialog.unsaved
-0388 7DC0 6EE4             data  edkey.action.cmdb.proceed
-0389               
-0390 7DC2 2065             byte  key.space, id.dialog.unsaved
-0391 7DC4 6EE4             data  edkey.action.cmdb.proceed
-0392               
-0393 7DC6 0D65             byte  key.enter, id.dialog.unsaved
-0394 7DC8 77BE             data  dialog.save
+0354 7D9A 326E             byte  key.num.2, id.dialog.font
+0355 7D9C 6FE4             data  edkey.action.cmdb.font2
+0356               
+0357 7D9E 336E             byte  key.num.3, id.dialog.font
+0358 7DA0 6FEA             data  edkey.action.cmdb.font3
+0359               
+0360 7DA2 346E             byte  key.num.4, id.dialog.font
+0361 7DA4 6FF0             data  edkey.action.cmdb.font4
+0362               
+0363 7DA6 356E             byte  key.num.5, id.dialog.font
+0364 7DA8 6FF6             data  edkey.action.cmdb.font5
+0365                       ;-------------------------------------------------------
+0366                       ; Dialog: Save file
+0367                       ;-------------------------------------------------------
+0368 7DAA 0D0F             byte  key.enter, id.dialog.save
+0369 7DAC 6C4A             data  edkey.action.cmdb.save
+0370               
+0371 7DAE 0D10             byte  key.enter, id.dialog.saveblock
+0372 7DB0 6C4A             data  edkey.action.cmdb.save
+0373               
+0374 7DB2 0C0F             byte  key.fctn.6, id.dialog.save
+0375 7DB4 6F1A             data  edkey.action.cmdb.lineterm.toggle
+0376               
+0377 7DB6 0C10             byte  key.fctn.6, id.dialog.saveblock
+0378 7DB8 6F1A             data  edkey.action.cmdb.lineterm.toggle
+0379                       ;-------------------------------------------------------
+0380                       ; Dialog: Print file
+0381                       ;-------------------------------------------------------
+0382 7DBA 0D11             byte  key.enter, id.dialog.print
+0383 7DBC 6CCA             data  edkey.action.cmdb.print
+0384               
+0385 7DBE 0D12             byte  key.enter, id.dialog.printblock
+0386 7DC0 6CCA             data  edkey.action.cmdb.print
+0387               
+0388 7DC2 0C11             byte  key.fctn.6, id.dialog.print
+0389 7DC4 6F1A             data  edkey.action.cmdb.lineterm.toggle
+0390               
+0391 7DC6 0C12             byte  key.fctn.6, id.dialog.printblock
+0392 7DC8 6F1A             data  edkey.action.cmdb.lineterm.toggle
+0393                       ;-------------------------------------------------------
+0394                       ; Dialog: Unsaved changes
 0395                       ;-------------------------------------------------------
-0396                       ; Dialog: Cartridge
-0397                       ;-------------------------------------------------------
-0398 7DCA 586A             byte  key.uc.x, id.dialog.cartridge
-0399 7DCC 7B6C             data  fg99.run.xbgem
-0400               
-0401 7DCE 526A             byte  key.uc.r, id.dialog.cartridge
-0402 7DD0 7B76             data  fg99.run.rxb
-0403               
-0404 7DD2 436A             byte  key.uc.c, id.dialog.cartridge
-0405 7DD4 7B80             data  fg99.run.fcmd
-0406               
-0407 7DD6 466A             byte  key.uc.f, id.dialog.cartridge
-0408 7DD8 7B8A             data  fg99.run.fbforth
-0409                       ;-------------------------------------------------------
-0410                       ; Dialog: Basic
-0411                       ;-------------------------------------------------------
-0412 7DDA 316B             byte  key.num.1, id.dialog.basic
-0413 7DDC 7AEE             data  tibasic1
-0414               
-0415 7DDE 326B             byte  key.num.2, id.dialog.basic
-0416 7DE0 7AF6             data  tibasic2
-0417               
-0418 7DE2 336B             byte  key.num.3, id.dialog.basic
-0419 7DE4 7AFE             data  tibasic3
-0420               
-0421 7DE6 346B             byte  key.num.4, id.dialog.basic
-0422 7DE8 7B06             data  tibasic4
+0396 7DCA 0C65             byte  key.fctn.6, id.dialog.unsaved
+0397 7DCC 6EE4             data  edkey.action.cmdb.proceed
+0398               
+0399 7DCE 2065             byte  key.space, id.dialog.unsaved
+0400 7DD0 6EE4             data  edkey.action.cmdb.proceed
+0401               
+0402 7DD2 0D65             byte  key.enter, id.dialog.unsaved
+0403 7DD4 77BE             data  dialog.save
+0404                       ;-------------------------------------------------------
+0405                       ; Dialog: Cartridge
+0406                       ;-------------------------------------------------------
+0407 7DD6 586A             byte  key.uc.x, id.dialog.cartridge
+0408 7DD8 7B6C             data  fg99.run.xbgem
+0409               
+0410 7DDA 526A             byte  key.uc.r, id.dialog.cartridge
+0411 7DDC 7B76             data  fg99.run.rxb
+0412               
+0413 7DDE 436A             byte  key.uc.c, id.dialog.cartridge
+0414 7DE0 7B80             data  fg99.run.fcmd
+0415               
+0416 7DE2 466A             byte  key.uc.f, id.dialog.cartridge
+0417 7DE4 7B8A             data  fg99.run.fbforth
+0418                       ;-------------------------------------------------------
+0419                       ; Dialog: Basic
+0420                       ;-------------------------------------------------------
+0421 7DE6 316B             byte  key.num.1, id.dialog.basic
+0422 7DE8 7AEE             data  tibasic1
 0423               
-0424 7DEA 356B             byte  key.num.5, id.dialog.basic
-0425 7DEC 7B0E             data  tibasic5
+0424 7DEA 326B             byte  key.num.2, id.dialog.basic
+0425 7DEC 7AF6             data  tibasic2
 0426               
-0427 7DEE 0E6B             byte  key.fctn.5, id.dialog.basic
-0428 7DF0 6F26             data  edkey.action.cmdb.am.toggle
+0427 7DEE 336B             byte  key.num.3, id.dialog.basic
+0428 7DF0 7AFE             data  tibasic3
 0429               
-0430 7DF2 206B             byte  key.space, id.dialog.basic
-0431 7DF4 7B40             data  tibasic.uncrunch
-0432                       ;-------------------------------------------------------
-0433                       ; Dialog: Shortcuts
-0434                       ;-------------------------------------------------------
-0435 7DF6 436F             byte  key.uc.c, id.dialog.shortcuts
-0436 7DF8 7346             data  pane.colorscheme.cycle
-0437               
-0438 7DFA 526F             byte  key.uc.r, id.dialog.shortcuts
-0439 7DFC 670E             data  edkey.action.toggle.ruler
-0440               
-0441 7DFE 416F             byte  key.uc.a, id.dialog.shortcuts
-0442 7E00 6F58             data  edkey.action.cmdb.autoinsert
-0443               
-0444 7E02 316F             byte  key.num.1, id.dialog.shortcuts
-0445 7E04 6844             data  edkey.action.block.m1
+0430 7DF2 346B             byte  key.num.4, id.dialog.basic
+0431 7DF4 7B06             data  tibasic4
+0432               
+0433 7DF6 356B             byte  key.num.5, id.dialog.basic
+0434 7DF8 7B0E             data  tibasic5
+0435               
+0436 7DFA 0E6B             byte  key.fctn.5, id.dialog.basic
+0437 7DFC 6F26             data  edkey.action.cmdb.am.toggle
+0438               
+0439 7DFE 206B             byte  key.space, id.dialog.basic
+0440 7E00 7B40             data  tibasic.uncrunch
+0441                       ;-------------------------------------------------------
+0442                       ; Dialog: Shortcuts
+0443                       ;-------------------------------------------------------
+0444 7E02 436F             byte  key.uc.c, id.dialog.shortcuts
+0445 7E04 7346             data  pane.colorscheme.cycle
 0446               
-0447 7E06 326F             byte  key.num.2, id.dialog.shortcuts
-0448 7E08 684C             data  edkey.action.block.m2
+0447 7E06 526F             byte  key.uc.r, id.dialog.shortcuts
+0448 7E08 670E             data  edkey.action.toggle.ruler
 0449               
-0450 7E0A 476F             byte  key.uc.g, id.dialog.shortcuts
-0451 7E0C 7844             data  dialog.goto
-0452                       ;-------------------------------------------------------
-0453                       ; Dialog: Goto
-0454                       ;-------------------------------------------------------
-0455 7E0E 0D14             byte  key.enter, id.dialog.goto
-0456 7E10 6F90             data  edkey.action.cmdb.goto
-0457                       ;-------------------------------------------------------
-0458                       ; Dialog: Help
-0459                       ;-------------------------------------------------------
-0460 7E12 2068             byte  key.space, id.dialog.help
-0461 7E14 7796             data  dialog.help.next
-0462               
-0463 7E16 0F68             byte  key.fctn.9, id.dialog.help
-0464 7E18 6F3A             data  edkey.action.cmdb.close.about
-0465               
-0466 7E1A 0D68             byte  key.enter, id.dialog.help
-0467 7E1C 6F3A             data  edkey.action.cmdb.close.about
+0450 7E0A 416F             byte  key.uc.a, id.dialog.shortcuts
+0451 7E0C 6F58             data  edkey.action.cmdb.autoinsert
+0452               
+0453 7E0E 316F             byte  key.num.1, id.dialog.shortcuts
+0454 7E10 6844             data  edkey.action.block.m1
+0455               
+0456 7E12 326F             byte  key.num.2, id.dialog.shortcuts
+0457 7E14 684C             data  edkey.action.block.m2
+0458               
+0459 7E16 476F             byte  key.uc.g, id.dialog.shortcuts
+0460 7E18 7844             data  dialog.goto
+0461                       ;-------------------------------------------------------
+0462                       ; Dialog: Goto
+0463                       ;-------------------------------------------------------
+0464 7E1A 0D14             byte  key.enter, id.dialog.goto
+0465 7E1C 6F90             data  edkey.action.cmdb.goto
+0466                       ;-------------------------------------------------------
+0467                       ; Dialog: Help
 0468                       ;-------------------------------------------------------
-0469                       ; Movement keys
-0470                       ;-------------------------------------------------------
-0471 7E1E 0801             byte  key.fctn.s, pane.focus.cmdb
-0472 7E20 696A             data  edkey.action.cmdb.left
-0473               
-0474 7E22 0901             byte  key.fctn.d, pane.focus.cmdb
-0475 7E24 697C             data  edkey.action.cmdb.right
-0476               
-0477 7E26 BF01             byte  key.fctn.h, pane.focus.cmdb
-0478 7E28 6994             data  edkey.action.cmdb.home
-0479               
-0480 7E2A C201             byte  key.fctn.l, pane.focus.cmdb
-0481 7E2C 69A8             data  edkey.action.cmdb.end
-0482                       ;-------------------------------------------------------
-0483                       ; Modifier keys
-0484                       ;-------------------------------------------------------
-0485 7E2E 0701             byte  key.fctn.3, pane.focus.cmdb
-0486 7E30 69BE             data  edkey.action.cmdb.clear
-0487                       ;-------------------------------------------------------
-0488                       ; Other action keys
-0489                       ;-------------------------------------------------------
-0490 7E32 0F01             byte  key.fctn.9, pane.focus.cmdb
-0491 7E34 7858             data  dialog.menu
-0492               
-0493 7E36 0501             byte  key.fctn.plus, pane.focus.cmdb
-0494 7E38 674E             data  edkey.action.quit
-0495               
-0496 7E3A B101             byte  key.ctrl.1, pane.focus.cmdb
-0497 7E3C 6D4A             data  edkey.action.cmdb.file.directory.1
-0498               
-0499 7E3E B201             byte  key.ctrl.2, pane.focus.cmdb
-0500 7E40 6D54             data  edkey.action.cmdb.file.directory.2
+0469 7E1E 2068             byte  key.space, id.dialog.help
+0470 7E20 7796             data  dialog.help.next
+0471               
+0472 7E22 0F68             byte  key.fctn.9, id.dialog.help
+0473 7E24 6F3A             data  edkey.action.cmdb.close.about
+0474               
+0475 7E26 0D68             byte  key.enter, id.dialog.help
+0476 7E28 6F3A             data  edkey.action.cmdb.close.about
+0477                       ;-------------------------------------------------------
+0478                       ; Movement keys
+0479                       ;-------------------------------------------------------
+0480 7E2A 0801             byte  key.fctn.s, pane.focus.cmdb
+0481 7E2C 696A             data  edkey.action.cmdb.left
+0482               
+0483 7E2E 0901             byte  key.fctn.d, pane.focus.cmdb
+0484 7E30 697C             data  edkey.action.cmdb.right
+0485               
+0486 7E32 BF01             byte  key.fctn.h, pane.focus.cmdb
+0487 7E34 6994             data  edkey.action.cmdb.home
+0488               
+0489 7E36 C201             byte  key.fctn.l, pane.focus.cmdb
+0490 7E38 69A8             data  edkey.action.cmdb.end
+0491                       ;-------------------------------------------------------
+0492                       ; Modifier keys
+0493                       ;-------------------------------------------------------
+0494 7E3A 0701             byte  key.fctn.3, pane.focus.cmdb
+0495 7E3C 69BE             data  edkey.action.cmdb.clear
+0496                       ;-------------------------------------------------------
+0497                       ; Other action keys
+0498                       ;-------------------------------------------------------
+0499 7E3E 0F01             byte  key.fctn.9, pane.focus.cmdb
+0500 7E40 7858             data  dialog.menu
 0501               
-0502 7E42 B301             byte  key.ctrl.3, pane.focus.cmdb
-0503 7E44 6D60             data  edkey.action.cmdb.file.directory.3
+0502 7E42 0501             byte  key.fctn.plus, pane.focus.cmdb
+0503 7E44 674E             data  edkey.action.quit
 0504               
-0505 7E46 B401             byte  key.ctrl.4, pane.focus.cmdb
-0506 7E48 6D6C             data  edkey.action.cmdb.file.directory.4
+0505 7E46 B101             byte  key.ctrl.1, pane.focus.cmdb
+0506 7E48 6D4A             data  edkey.action.cmdb.file.directory.1
 0507               
-0508 7E4A B501             byte  key.ctrl.5, pane.focus.cmdb
-0509 7E4C 6D78             data  edkey.action.cmdb.file.directory.5
+0508 7E4A B201             byte  key.ctrl.2, pane.focus.cmdb
+0509 7E4C 6D54             data  edkey.action.cmdb.file.directory.2
 0510               
-0511 7E4E B601             byte  key.ctrl.6, pane.focus.cmdb
-0512 7E50 6D84             data  edkey.action.cmdb.file.directory.6
+0511 7E4E B301             byte  key.ctrl.3, pane.focus.cmdb
+0512 7E50 6D60             data  edkey.action.cmdb.file.directory.3
 0513               
-0514 7E52 B701             byte  key.ctrl.7, pane.focus.cmdb
-0515 7E54 6D90             data  edkey.action.cmdb.file.directory.7
+0514 7E52 B401             byte  key.ctrl.4, pane.focus.cmdb
+0515 7E54 6D6C             data  edkey.action.cmdb.file.directory.4
 0516               
-0517 7E56 9E01             byte  key.ctrl.8, pane.focus.cmdb
-0518 7E58 6D9C             data  edkey.action.cmdb.file.directory.8
+0517 7E56 B501             byte  key.ctrl.5, pane.focus.cmdb
+0518 7E58 6D78             data  edkey.action.cmdb.file.directory.5
 0519               
-0520 7E5A 9F01             byte  key.ctrl.9, pane.focus.cmdb
-0521 7E5C 6DA8             data  edkey.action.cmdb.file.directory.9
+0520 7E5A B601             byte  key.ctrl.6, pane.focus.cmdb
+0521 7E5C 6D84             data  edkey.action.cmdb.file.directory.6
 0522               
-0523 7E5E 9301             byte  key.ctrl.s, pane.focus.cmdb
-0524 7E60 7008             data  edkey.action.filebrowser.prevcol
+0523 7E5E B701             byte  key.ctrl.7, pane.focus.cmdb
+0524 7E60 6D90             data  edkey.action.cmdb.file.directory.7
 0525               
-0526 7E62 8401             byte  key.ctrl.d, pane.focus.cmdb
-0527 7E64 705C             data  edkey.action.filebrowser.nextcol
+0526 7E62 9E01             byte  key.ctrl.8, pane.focus.cmdb
+0527 7E64 6D9C             data  edkey.action.cmdb.file.directory.8
 0528               
-0529 7E66 8501             byte  key.ctrl.e, pane.focus.cmdb
-0530 7E68 70C4             data  edkey.action.filebrowser.prevpage
+0529 7E66 9F01             byte  key.ctrl.9, pane.focus.cmdb
+0530 7E68 6DA8             data  edkey.action.cmdb.file.directory.9
 0531               
-0532 7E6A 9801             byte  key.ctrl.x, pane.focus.cmdb
-0533 7E6C 7122             data  edkey.action.filebrowser.nextpage
+0532 7E6A 9301             byte  key.ctrl.s, pane.focus.cmdb
+0533 7E6C 7008             data  edkey.action.filebrowser.prevcol
 0534               
-0535 7E6E 8101             byte  key.ctrl.a, pane.focus.cmdb
-0536 7E70 6F32             data  edkey.action.cmdb.preset
+0535 7E6E 8401             byte  key.ctrl.d, pane.focus.cmdb
+0536 7E70 705C             data  edkey.action.filebrowser.nextcol
 0537               
-0538 7E72 8201             byte  key.ctrl.b, pane.focus.cmdb
-0539 7E74 6F32             data  edkey.action.cmdb.preset
+0538 7E72 8501             byte  key.ctrl.e, pane.focus.cmdb
+0539 7E74 70C4             data  edkey.action.filebrowser.prevpage
 0540               
-0541 7E76 8301             byte  key.ctrl.c, pane.focus.cmdb
-0542 7E78 6F32             data  edkey.action.cmdb.preset
+0541 7E76 9801             byte  key.ctrl.x, pane.focus.cmdb
+0542 7E78 7122             data  edkey.action.filebrowser.nextpage
 0543               
-0544 7E7A 9A01             byte  key.ctrl.z, pane.focus.cmdb
-0545 7E7C 7346             data  pane.colorscheme.cycle
-0546                       ;------------------------------------------------------
-0547                       ; End of list
-0548                       ;-------------------------------------------------------
-0549 7E7E FFFF             data  EOL                           ; EOL
+0544 7E7A 8101             byte  key.ctrl.a, pane.focus.cmdb
+0545 7E7C 6F32             data  edkey.action.cmdb.preset
+0546               
+0547 7E7E 8201             byte  key.ctrl.b, pane.focus.cmdb
+0548 7E80 6F32             data  edkey.action.cmdb.preset
+0549               
+0550 7E82 8301             byte  key.ctrl.c, pane.focus.cmdb
+0551 7E84 6F32             data  edkey.action.cmdb.preset
+0552               
+0553 7E86 9A01             byte  key.ctrl.z, pane.focus.cmdb
+0554 7E88 7346             data  pane.colorscheme.cycle
+0555                       ;------------------------------------------------------
+0556                       ; End of list
+0557                       ;-------------------------------------------------------
+0558 7E8A FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
 0163                       ;-----------------------------------------------------------------------
 0164                       ; Bank full check
@@ -19118,9 +19127,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
     ID.DIALOG.CARTRIDGE. >006A :     
-    ID.DIALOG.CAT....... >0015 :     
+    ID.DIALOG.CAT....... >000D :     
     ID.DIALOG.CFG....... >006C :     
-    ID.DIALOG.CFG.CLIP.. >0012 :     
+    ID.DIALOG.CFG.CLIP.. >0013 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
@@ -19130,11 +19139,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.INSERT.... >000B :     
     ID.DIALOG.LOAD...... >000A :     
     ID.DIALOG.MENU...... >0064 :     
-    ID.DIALOG.PRINT..... >0010 :     
-    ID.DIALOG.PRINTBLOCK >0011 :     
-    ID.DIALOG.RUN....... >000D :     
-    ID.DIALOG.SAVE...... >000E :     
-    ID.DIALOG.SAVEBLOCK. >000F :     
+    ID.DIALOG.PRINT..... >0011 :     
+    ID.DIALOG.PRINTBLOCK >0012 :     
+    ID.DIALOG.RUN....... >000E :     
+    ID.DIALOG.SAVE...... >000F :     
+    ID.DIALOG.SAVEBLOCK. >0010 :     
     ID.DIALOG.SHORTCUTS. >006F :     
     ID.DIALOG.UNSAVED... >0065 :     
     ID.FILE.APPENDFILE.. >0003 :     

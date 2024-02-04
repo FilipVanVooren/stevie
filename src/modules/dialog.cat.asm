@@ -52,16 +52,11 @@ dialog.cat.keylist:
 dialog.cat.set.filename1:
         li    tmp0,cat.device       ; Get pointer to catalog device name
         mov   *tmp0,tmp1            ; Anything set?
-        jeq   dialog.cat.browser    ; No device set
+        jeq   dialog.cat.cursor     ; No device set
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
-        ;-------------------------------------------------------
-        ; Show File browser
-        ;-------------------------------------------------------
-dialog.cat.browser:        
-        bl    @pane.filebrowser     ; Show file browser
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
@@ -69,6 +64,10 @@ dialog.cat.cursor:
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color        
+        ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+        bl    @pane.filebrowser     ; Show file browser                                    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

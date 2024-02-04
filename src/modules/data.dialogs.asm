@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.31  '
+            text '  Stevie 1.5.32  '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.31  '     
+            text '  Stevie 1.5.32  '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.31  '
+            text '  Stevie 1.5.32  '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.31  '  
+            text '  Stevie 1.5.32  '  
             even
         .endif
 
@@ -54,7 +54,8 @@ txt.hint.filepicker:
 txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
-txt.hint.load      stri 'Enter filename of file to load or pick file from catalog.'
+txt.hint.load      equ  txt.hint.filepicker
+txt.hint.load2     stri 'Enter filename of file to load or pick file from catalog.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
@@ -80,7 +81,8 @@ txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
-txt.hint.append    stri 'Enter filename of file to append or pick file from catalog.'
+txt.hint.append    equ  txt.hint.filepicker                   
+txt.hint.append2   stri 'Enter filename of file to append or pick file from catalog.'
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -92,7 +94,8 @@ txt.keys.append2   equ txt.keys.default2
 txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
-txt.hint.insert    stri 'Enter filename of file to insert or pick file from catalog.'
+txt.hint.insert    equ  txt.hint.filepicker
+txt.hint.insert2   stri 'Enter filename of file to insert or pick file from catalog.'
 
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
@@ -101,14 +104,14 @@ txt.keys.insert2   equ txt.keys.default2
 ;--------------------------------------------------------------
 ; Dialog "Catalog drive/directory"
 ;--------------------------------------------------------------
-txt.head.dir       byte 28,1,1
-                   text ' Catalog drive/directory '
+txt.head.dir       byte 12,1,1
+                   text ' Catalog '
                    byte 1
+txt.hint.dir       equ  txt.hint.filepicker
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
-txt.hint.dir       stri 'Examples: DSK1.  TIPI.DIR1.   IDE1.'
 
-txt.keys.dir       stri 'F9-Back  F3-Clear  FH-Home  FL-EOL  SPACE-UpDir' 
-                   even
+txt.keys.dir       equ txt.keys.default1
+txt.keys.dir2      equ txt.keys.default2
 
 ;--------------------------------------------------------------
 ; Dialog "Copy clipboard"
@@ -173,7 +176,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.31 - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.5.32 - (c)2018-2024 Filip Van Vooren'
                    even
 
 
@@ -200,9 +203,7 @@ txt.head.file      byte 9,1,1
 txt.info.file      stri 'New   Open   Save   Insert   Append   Catalog   Print'
 pos.info.file      byte 0,6,13,20,29,38,48,>ff
 txt.hint.file      stri ' '
-txt.keys.file      stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9'
-txt.keys.file2     stri 'F9-Back  SPACE-Close menu  ^1-9=CAT DSK1-9  ^E/X=Page-/Page+'
-
+txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 
 ;--------------------------------------------------------------
 ; Dialog "Cartridge"
