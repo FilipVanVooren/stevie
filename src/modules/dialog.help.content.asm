@@ -168,6 +168,7 @@ dialog.help.data.page1.right:
         stri 'Ctrl c   ^c   Copy clipboard to line'
         stri 'Ctrl o   ^o   Open file'
         stri 'Ctrl p   ^p   Print file'
+        stri 'Ctrl r   ^p   Run program image (EA5)'        
         stri 'Ctrl s   ^s   Save file'
         stri 'Ctrl ,   ^,   Load previous file'
         stri 'Ctrl .   ^.   Load next file'
@@ -178,7 +179,6 @@ dialog.help.data.page1.right:
         stri 'Fctn +   ^q   Quit'
         stri 'Fctn 0   ^/   TI Basic'
         stri 'Ctrl h   ^h   Help'
-        stri 'Ctrl r   ^r   Toggle ruler'
         stri 'Ctrl u   ^u   Shortcuts menu'
         stri 'Ctrl z   ^z   Cycle color schemes'
 

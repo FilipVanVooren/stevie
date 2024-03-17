@@ -394,6 +394,16 @@ dialog.font:
 dialog.font.vector:
         data  vec.17
 
+***************************************************************
+* Stub for dialog "Run"
+* bank3 vec.18
+********|*****|*********************|**************************
+dialog.run:
+        mov   @dialog.run.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.run.vector:
+        data  vec.18
+
 
 ***************************************************************
 * Stub for dialog "Main Menu"

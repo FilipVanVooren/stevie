@@ -132,9 +132,6 @@ keymap_actions.editor:
         byte  key.ctrl.q, pane.focus.fb
         data  edkey.action.quit
 
-        byte  key.ctrl.r, pane.focus.fb
-        data  edkey.action.toggle.ruler
-
         byte  key.ctrl.z, pane.focus.fb
         data  pane.colorscheme.cycle
 
@@ -175,6 +172,9 @@ keymap_actions.editor:
 
         byte  key.ctrl.p, pane.focus.fb
         data  dialog.print
+
+        byte  key.ctrl.r, pane.focus.fb
+        data  dialog.run
 
         ;
         ; FCTN-9 has multiple purposes, if block mode is on
@@ -241,6 +241,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.p, id.dialog.file
         data  dialog.print
+
+        byte  key.uc.r, id.dialog.file
+        data  dialog.run
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
@@ -292,6 +295,23 @@ keymap_actions.cmdb:
 
         byte  key.space, id.dialog.append
         data  edkey.action.cmdb.updir                
+        ;-------------------------------------------------------
+        ; Dialog: Run program image
+        ;-------------------------------------------------------
+        byte  key.fctn.5, id.dialog.run
+        data  edkey.action.cmdb.fastmode.toggle
+
+        byte  key.enter, id.dialog.run
+        data  edkey.action.cmdb.append
+
+        byte  key.fctn.e, id.dialog.run
+        data  edkey.action.cmdb.pick.prev
+
+        byte  key.fctn.x, id.dialog.run
+        data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.run
+        data  edkey.action.cmdb.updir                        
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------

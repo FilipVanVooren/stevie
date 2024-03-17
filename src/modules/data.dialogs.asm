@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.5.32  '
+            text '  Stevie 1.6.0   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.5.32  '     
+            text '  Stevie 1.6.0   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.5.32  '
+            text '  Stevie 1.6.0   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.5.32  '  
+            text '  Stevie 1.6.0   '  
             even
         .endif
 
@@ -55,10 +55,23 @@ txt.head.load      byte 14,1,1
                    text ' Open file '
                    byte 1
 txt.hint.load      equ  txt.hint.filepicker
-txt.hint.load2     stri 'Enter filename of file to load or pick file from catalog.'
+txt.hint.load2     stri 'Enter filename or pick file from catalog.'
 
 txt.keys.load      equ txt.keys.default1
 txt.keys.load2     equ txt.keys.default2
+
+
+;--------------------------------------------------------------
+; Dialog "run file"
+;--------------------------------------------------------------
+txt.head.run       byte 28,1,1
+                   text ' Run program image (EA5) '
+                   byte 1
+txt.hint.run       equ  txt.hint.filepicker
+txt.hint.run2      stri 'Enter filename or pick file from catalog.'
+
+txt.keys.run       equ txt.keys.default1
+txt.keys.run2      equ txt.keys.default2
 
 
 ;--------------------------------------------------------------
@@ -82,7 +95,7 @@ txt.head.append    byte 16,1,1
                    text ' Append file '
                    byte 1
 txt.hint.append    equ  txt.hint.filepicker                   
-txt.hint.append2   stri 'Enter filename of file to append or pick file from catalog.'
+txt.hint.append2   equ  txt.hint.load2
 
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
@@ -95,14 +108,14 @@ txt.head.insert    byte 24,1,1
                    text ' Insert file at line '
                    byte 1
 txt.hint.insert    equ  txt.hint.filepicker
-txt.hint.insert2   stri 'Enter filename of file to insert or pick file from catalog.'
+txt.hint.insert2   equ  txt.hint.load2
 
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
 
 
 ;--------------------------------------------------------------
-; Dialog "Catalog drive/directory"
+; Dialog "Catalog"
 ;--------------------------------------------------------------
 txt.head.dir       byte 12,1,1
                    text ' Catalog '
@@ -176,7 +189,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.5.32 - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.6.0  - (c)2018-2024 Filip Van Vooren'
                    even
 
 
@@ -200,8 +213,8 @@ txt.head.file      byte 9,1,1
                    text ' File '
                    byte 1
 
-txt.info.file      stri 'New   Open   Save   Insert   Append   Catalog   Print'
-pos.info.file      byte 0,6,13,20,29,38,48,>ff
+txt.info.file      stri 'New   Open   Run   Save   Insert   Append   Catalog   Print'
+pos.info.file      byte 0,6,13,19,26,35,44,54,>ff
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 

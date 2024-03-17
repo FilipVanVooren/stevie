@@ -25,10 +25,10 @@ vec.11  data  dialog.append         ; Dialog "Append file"
 vec.12  data  dialog.cartridge      ; Dialog "Cartridge"
 vec.13  data  dialog.basic          ; Dialog "TI Basic"
 vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
-vec.15  data  dialog.cat            ; Dialog "Dir"
+vec.15  data  dialog.cat            ; Dialog "Catalog"
 vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  dialog.font           ; Dialog "Configure font"
-vec.18  data  cpu.crash             ;
+vec.18  data  dialog.run            ; Dialog "Run file"
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane
