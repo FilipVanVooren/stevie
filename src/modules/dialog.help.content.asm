@@ -133,7 +133,7 @@ dialog.help.data.pages:
         data  dialog.help.data.page1.left,14
         data  dialog.help.data.page1.right,18
         data  dialog.help.data.page2.left,16
-        data  dialog.help.data.page2.right,15
+        data  dialog.help.data.page2.right,12
 
 
 dialog.help.data.page1.left:
@@ -157,7 +157,7 @@ dialog.help.data.page1.left:
 
 
 dialog.help.data.page1.right:
-        stri '                                   1/2'
+        stri '                              Page 1/2'
         stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -168,7 +168,7 @@ dialog.help.data.page1.right:
         stri 'Ctrl c   ^c   Copy clipboard to line'
         stri 'Ctrl o   ^o   Open file'
         stri 'Ctrl p   ^p   Print file'
-        stri 'Ctrl r   ^p   Run program image (EA5)'        
+        stri 'Ctrl r   ^r   Run program image (EA5)'        
         stri 'Ctrl s   ^s   Save file'
         stri 'Ctrl ,   ^,   Load previous file'
         stri 'Ctrl .   ^.   Load next file'
@@ -207,7 +207,7 @@ dialog.help.data.page2.left:
         stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
 
 dialog.help.data.page2.right:
-        stri '                                   2/2'
+        stri '                              Page 2/2'
         stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
