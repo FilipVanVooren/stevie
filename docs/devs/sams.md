@@ -112,7 +112,7 @@ if few TI Basic sessions get dumped.
 | TI Basic 1 | fb-fe | xx-xx | ff         |
 | TI Basic 2 | f6-f9 | xx-xx | ff         |
 | TI Basic 3 | f1-f4 | xx-xx | ff         |
-| **FREE*    | ec-ef | xx-xx | ff         |
+| **FREE**   | ec-ef | xx-xx | ff         |
 | **FREE**   | e7-ea | xx-xx | ff         |
 
 ### Scratchpad dumps in SAMS page >ff
