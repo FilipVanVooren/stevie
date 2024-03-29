@@ -117,7 +117,7 @@ if few TI Basic sessions get dumped.
 
 ### Scratchpad dumps in SAMS page >ff
 
-The scratchpads of the 5 TI Basic sessions are always dumped to page >ff,
+The scratchpads of the 3 TI Basic sessions are always dumped to page >ff,
 each in a specific memory range within that page.
 
 | Address      | Scratchpad dumps     |
@@ -141,8 +141,8 @@ TI Basic program file name captured by Stevie helper ISR in TI Basic.
 | >f600 - f6ff | TI Basic session 1   |
 | >f700 - f7ff | TI Basic session 2   |
 | >f800 - f8ff | TI Basic session 3   |
-| >f900 - f9ff | TI Basic session 4   |
-| >fa00 - faff | TI Basic session 5   |
+| >f900 - f9ff | **free**             |
+| >fa00 - faff | **free**             |
 
 
 ## Locked pages

@@ -2,7 +2,7 @@
 
 For each of the 256 bytes ranges, there are structures defined in equ.asm    
 Check there for free memory ranges, because most structures do not use full    
-256 bytes range. F irst free address has equate <struct>.free  
+256 bytes range. First free address has equate <struct>.free
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
 | ---------- | ---------- | ----: | -------------------------------------------|
