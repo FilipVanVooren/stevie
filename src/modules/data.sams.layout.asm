@@ -131,24 +131,17 @@ mem.sams.layout.basic3:
 
 ***************************************************************
 * SAMS page layout table 
-* Backup TI Basic session 4 VRAM, scratchpad + auxiliary
+* Run EA5 program image
 *--------------------------------------------------------------
-mem.sams.layout.basic4:
-        data  >0200                 ; . >2000-2fff
-        data  >0300                 ; . >3000-3fff
-        data  >0400                 ; . >a000-afff
-        data  >ef00                 ; \ >b000-efff
-        data  >f000                 ; |
-        data  >f100                 ; | 16K VDP dump
-        data  >f200                 ; /
-        data  >ff00                 ; . >f000-ffff
+mem.sams.layout.ea5pgm:
+        equ   mem.sams.layout.legacy
 
 
 ***************************************************************
 * SAMS page layout table 
-* Backup TI Basic session 5 VRAM, scratchpad + auxiliary
+* FREE
 *--------------------------------------------------------------
-mem.sams.layout.basic5:
+mem.sams.layout.free2:
         data  >0200                 ; . >2000-2fff
         data  >0300                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff

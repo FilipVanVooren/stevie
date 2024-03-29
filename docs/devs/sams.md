@@ -97,7 +97,7 @@ powering on the SAMS card.
 The 16K VRAM, 32K memory expansion and scratchpad memory used by a TI Basic
 session is dumped to SAMS upon exit from the TI Basic session.
 The idea behind being that a dumped TI Basic session can be resumed later.
-There is space reserved for dumping up to 5 parallel TI Basic sessions.
+There is space reserved for dumping up to 3 parallel TI Basic sessions.
 
 The SAMS pages used for storing each dump are hardcoded and defined in the file
 'data.sams.layout.sams'. Note that the dumps are stored in reversed order at the

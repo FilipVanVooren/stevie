@@ -85,10 +85,6 @@ tib.run:
         jeq   tib.run.init.basic2
         ci    tmp0,3
         jeq   tib.run.init.basic3
-        ci    tmp0,4
-        jeq   tib.run.init.basic4
-        ci    tmp0,5
-        jeq   tib.run.init.basic5
         ;-------------------------------------------------------
         ; Assert, should never get here
         ;-------------------------------------------------------
@@ -149,42 +145,6 @@ tib.run.init.basic3:
         bl    @cpym2v
               data >06f8,tibasic.patterns+16,8
                                     ; Copy pattern TI-Basic session ID 3
-
-        jmp   tib.run.init.rest     ; Continue initialisation
-        ;-------------------------------------------------------
-        ; New TI Basic session 4
-        ;-------------------------------------------------------
-tib.run.init.basic4:
-        mov   @tib.status4,tmp1     ; Resume TI Basic session?
-        jgt   tib.run.resume.basic4 ; yes, do resume
-
-        ori   tmp1,1                ; \
-        mov   tmp1,@tib.status4     ; / Set resume flag for next run
-
-        bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
-                                    ; / for TI Basic session 4
-
-        bl    @cpym2v
-              data >06f8,tibasic.patterns+24,8
-                                    ; Copy pattern TI-Basic session ID 4
-
-        jmp   tib.run.init.rest     ; Continue initialisation
-        ;-------------------------------------------------------
-        ; New TI Basic session 5
-        ;-------------------------------------------------------
-tib.run.init.basic5:
-        mov   @tib.status5,tmp1     ; Resume TI Basic session?
-        jgt   tib.run.resume.basic5 ; yes, do resume
-
-        ori   tmp1,1                ; \
-        mov   tmp1,@tib.status5     ; / Set resume flag for next run
-
-        bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
-                                    ; / for TI Basic session 5
-
-        bl    @cpym2v
-              data >06f8,tibasic.patterns+32,8
-                                    ; Copy pattern TI-Basic session ID 5
 
         jmp   tib.run.init.rest     ; Continue initialisation
         ;-------------------------------------------------------
@@ -283,26 +243,6 @@ tib.run.resume.basic3:
               data >f300,>f000,256  ; / address @cpu.scrpad.target
 
         jmp   tib.run.resume.part2  ; Continue resume
-        ;-------------------------------------------------------
-        ; Resume TI-Basic session 4
-        ;-------------------------------------------------------
-tib.run.resume.basic4:
-        bl    @mem.sams.set.basic4  ; \ Load SAMS page layout (from cart space)
-                                    ; / for TI Basic session 4
-
-        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
-              data >f400,>f000,256  ; / address @cpu.scrpad.target
-
-        jmp   tib.run.resume.part2  ; Continue resume
-        ;-------------------------------------------------------
-        ; Resume TI-Basic session 5
-        ;-------------------------------------------------------
-tib.run.resume.basic5:
-        bl    @mem.sams.set.basic5  ; \ Load SAMS page layout (from cart space)
-                                    ; / for TI Basic session 5
-
-        bl    @cpym2m               ; \ Copy TI Basic scratchpad to fixed memory
-              data >f500,>f000,256  ; / address @cpu.scrpad.target
         ;-------------------------------------------------------
         ; Resume TI-Basic session (part 2)
         ;-------------------------------------------------------
