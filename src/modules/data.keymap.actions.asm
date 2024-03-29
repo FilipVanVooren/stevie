@@ -447,12 +447,6 @@ keymap_actions.cmdb:
         byte  key.num.3, id.dialog.basic
         data  tibasic3
 
-        byte  key.num.4, id.dialog.basic
-        data  tibasic4
-
-        byte  key.num.5, id.dialog.basic
-        data  tibasic5
-
         byte  key.fctn.5, id.dialog.basic
         data  edkey.action.cmdb.am.toggle
 

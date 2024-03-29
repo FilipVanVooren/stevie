@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.6.0   '
+            text '  Stevie 1.6.1   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.6.0   '     
+            text '  Stevie 1.6.1   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.6.0   '
+            text '  Stevie 1.6.1   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.6.0   '  
+            text '  Stevie 1.6.1   '  
             even
         .endif
 
@@ -45,7 +45,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
 txt.hint.filepicker:
-                   stri 'FCTN-E/X for up/down, ^E/X for prev/next page, ^S/D for prev/next column'
+                   stri 'FE/X-up/down  ^E/X-prev/next page  ^S/D-prev/next column'
                    even
 
 ;--------------------------------------------------------------
@@ -189,7 +189,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.6.0  - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.6.1  - (c)2018-2024 Filip Van Vooren'
                    even
 
 
@@ -240,10 +240,10 @@ txt.head.basic     byte 13,1,1
                    text ' TI Basic '
                    byte 1
 
-txt.info.basic     stri 'Session:  1   2   3   4   5  '
-pos.info.basic     byte 10,14,18,22,26,>ff
-txt.hint.basic2    stri 'Press SPACE to get TI Basic program. Session: Current=',>02,>03,' Visited=',>1d,>1e
-txt.hint.basic     stri 'Pick session 1-5. Press F9 (or type END) in TI Basic to return here.'
+txt.info.basic     stri 'Session:  1   2   3  '
+pos.info.basic     byte 10,14,18,>ff
+txt.hint.basic2    stri 'Press SPACE to retrieve TI Basic program. Session: Current=',>02,>03,' Visited=',>1d,>1e
+txt.hint.basic     stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 

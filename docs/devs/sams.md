@@ -112,8 +112,8 @@ if few TI Basic sessions get dumped.
 | TI Basic 1 | fb-fe | xx-xx | ff         |
 | TI Basic 2 | f6-f9 | xx-xx | ff         |
 | TI Basic 3 | f1-f4 | xx-xx | ff         |
-| TI Basic 4 | ec-ef | xx-xx | ff         |
-| TI Basic 5 | e7-ea | xx-xx | ff         |
+| **FREE*    | ec-ef | xx-xx | ff         |
+| **FREE**   | e7-ea | xx-xx | ff         |
 
 ### Scratchpad dumps in SAMS page >ff
 
@@ -126,8 +126,8 @@ each in a specific memory range within that page.
 | >f100 - f1ff | TI Basic session 1   |
 | >f200 - f2ff | TI Basic session 2   |
 | >f300 - f3ff | TI Basic session 3   |
-| >f400 - f4ff | TI Basic session 4   |
-| >f500 - f5ff | TI Basic session 5   |
+| >f400 - f4ff | **FREE**             |
+| >f500 - f5ff | **FREE**             |
 
 
 ### Auxiliary stuff in SAMS page >ff

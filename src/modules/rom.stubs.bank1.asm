@@ -1157,12 +1157,6 @@ tibasic2:
         jmp   tibasic
 tibasic3:
         mov   @const.3,@tib.session
-        jmp   tibasic
-tibasic4:
-        mov   @const.4,@tib.session
-        jmp   tibasic
-tibasic5:
-        mov   @const.5,@tib.session
 tibasic:
         dect  stack
         mov   r11,*stack            ; Save return address
