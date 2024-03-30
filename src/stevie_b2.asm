@@ -71,10 +71,12 @@ main:
         copy  "fh.file.read.mem.asm"     ; Read file into memory
         copy  "fh.file.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.file.write.edb.asm"    ; Write editor buffer to file
+        copy  "fh.file.load.bin.asm"     ; Load binary image into memory
         copy  "fm.loadfile.asm"          ; Load DV80 file into editor buffer
         copy  "fm.insertfile.asm"        ; Insert DV80 file into editor buffer
         copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
         copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
+        copy  "fm.run.ea5.asm"           ; Run EA5 program image        
         copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
         copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
         copy  "fm.browse.fname.set.asm"  ; Create string with device/filename

@@ -37,6 +37,25 @@ fh.file.pab.header:
         ;------------------------------------------------------
         ; File descriptor part (variable length)
         ;------------------------------------------------------        
-        ; byte  12                  ;  9    - File descriptor length
+        ; byte  64                  ;  9    - File descriptor length
+        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
+                                    ;         (Device + '.' + File name)          
+
+
+***************************************************************
+* PAB for loading binary image
+********|*****|*********************|**************************
+        even                        ; Must always start on even address!!
+fh.file.pab.header.binimage:
+        byte  io.op.load            ;  0    - LOAD BINARY
+        byte  00                    ;  1    - Not used
+        data  >1380                 ;  2-3  - Buffer location in VDP memory
+        data  >0000                 ;  4-5  - Not used in load operation
+        data  8448                  ;  6-7  - Maximum number of bytes to load
+        byte  00                    ;  8    - Not used
+        ;------------------------------------------------------
+        ; File descriptor part (variable length)
+        ;------------------------------------------------------        
+        ; byte  64                  ;  9    - File descriptor length
         ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
                                     ;         (Device + '.' + File name)          

@@ -13,7 +13,7 @@ cpu.crash.showbank.bankstr:
         aorg  bankx.vectab
 vec.1   data  fm.loadfile           ;
 vec.2   data  fm.insertfile         ;
-vec.3   data  cpu.crash             ;
+vec.3   data  fm.run.ea5            ;
 vec.4   data  fm.savefile           ;
 vec.5   data  fm.newfile            ;
 vec.6   data  fm.directory          ;

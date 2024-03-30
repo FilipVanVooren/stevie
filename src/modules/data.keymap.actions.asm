@@ -296,13 +296,13 @@ keymap_actions.cmdb:
         byte  key.space, id.dialog.append
         data  edkey.action.cmdb.updir                
         ;-------------------------------------------------------
-        ; Dialog: Run program image
+        ; Dialog: Run program image (EA5)
         ;-------------------------------------------------------
         byte  key.fctn.5, id.dialog.run
         data  edkey.action.cmdb.fastmode.toggle
 
         byte  key.enter, id.dialog.run
-        data  edkey.action.cmdb.append
+        data  edkey.action.cmdb.file.run
 
         byte  key.fctn.e, id.dialog.run
         data  edkey.action.cmdb.pick.prev
@@ -452,6 +452,11 @@ keymap_actions.cmdb:
 
         byte  key.space, id.dialog.basic
         data  tibasic.uncrunch
+        ;-------------------------------------------------------
+        ; Dialog: Run program image (EA5)
+        ;-------------------------------------------------------        
+        byte  key.enter, id.dialog.run
+        data  edkey.action.cmdb.file.run
         ;-------------------------------------------------------
         ; Dialog: Shortcuts
         ;-------------------------------------------------------

@@ -39,14 +39,13 @@ pane.filebrowser:
 pane.filebrowser.volume
         bl    @putat
               byte 0,0
-              data txt.volume       ; Display "Volume: ...."   
+              data txt.volume       ; Display "Volume:...."   
 
         mov   @cat.volname,tmp0     ; Volume name set?
         jeq   pane.filebrowser.nofiles 
-                                    ; No, skip
-                                    
+                                    ; No, skip                                    
         bl    @putat
-              byte 0,8
+              byte 0,7
               data cat.volname      ; Display volume name
         ;-------------------------------------------------------
         ; Show number of files
@@ -65,7 +64,7 @@ pane.filebrowser.nofiles:
               data rambuf,rambuf + 5,32
 
         bl    @putat
-              byte 0,20
+              byte 0,21
               data rambuf + 5       ; Display number of files
         ;------------------------------------------------------
         ; Show device path
@@ -75,11 +74,11 @@ pane.filebrowser.devicepath:
         jeq   pane.filebrowser.lines  ; No, skip display
 
         bl    @hchar
-              byte 0,30,32,50
+              byte 0,25,32,55
               data EOL              ; Clear device path
 
         bl    @putat
-              byte 0,30
+              byte 0,25
               data cat.device       ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
@@ -321,6 +320,6 @@ pane.filebrowser.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-txt.volume    stri  'Volume:            #    Path: '
+txt.volume    stri  'Volume:            F:'
 txt.slash     stri  '/'
 txt.header    stri  'Name        Type   Size'

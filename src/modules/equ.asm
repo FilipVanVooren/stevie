@@ -232,7 +232,8 @@ dsrlnk.flgptr     equ  fh.struct + 52  ; Pointer to VDP PAB byte 1 (flag byte)
 fh.pab.ptr        equ  fh.struct + 54  ; Pointer to VDP PAB, for level 3 FIO
 fh.pabstat        equ  fh.struct + 56  ; Copy of VDP PAB status byte
 fh.ioresult       equ  fh.struct + 58  ; DSRLNK IO-status after file operation
-fh.records        equ  fh.struct + 60  ; File records counter
+fh.records        equ  fh.struct + 60  ; \ File records counter
+fh.segments       equ  fh.struct + 60  ; / Program image segments counter
 fh.reclen         equ  fh.struct + 62  ; Current record length
 fh.kilobytes      equ  fh.struct + 64  ; Kilobytes processed (read/written)
 fh.counter        equ  fh.struct + 66  ; Counter used in stevie file operations

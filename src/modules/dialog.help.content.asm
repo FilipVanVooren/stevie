@@ -130,7 +130,7 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,14
+        data  dialog.help.data.page1.left,16
         data  dialog.help.data.page1.right,18
         data  dialog.help.data.page2.left,16
         data  dialog.help.data.page2.right,12
@@ -146,12 +146,14 @@ dialog.help.data.page1.left:
         stri 'Fctn h/l      Home, End of line'
         stri 'Fctn j/k      Previous word, Next word'
         stri 'Fctn 4   ^x   Page down'
+        stri 'Fctn 5        move view window right'
+        stri 'Ctrl 5   ^5   move view window left'
         stri 'Fctn 6   ^e   Page up'
+        stri 'Fctn 7        Next tab'        
         stri 'Ctrl 7   ^7   Prev tab'        
-        stri 'Fctn 7        Next tab'
         stri 'Fctn v        Screen top'
+        stri 'Ctrl v   ^v   File top'        
         stri 'Fctn b        Screen bottom'
-        stri 'Ctrl v   ^v   File top'
         stri 'Ctrl b   ^b   File bottom'
         stri 'Ctrl g   ^g   Goto line'
 
