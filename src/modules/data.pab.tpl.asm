@@ -49,9 +49,9 @@ fh.file.pab.header:
 fh.file.pab.header.binimage:
         byte  io.op.load            ;  0    - LOAD BINARY
         byte  00                    ;  1    - Not used
-        data  >1380                 ;  2-3  - Buffer location in VDP memory
+        data  >2190                 ;  2-3  - Buffer location in VDP memory
         data  >0000                 ;  4-5  - Not used in load operation
-        data  8448                  ;  6-7  - Maximum number of bytes to load
+        data  8220                  ;  6-7  - Maximum number of bytes to load
         byte  00                    ;  8    - Not used
         ;------------------------------------------------------
         ; File descriptor part (variable length)

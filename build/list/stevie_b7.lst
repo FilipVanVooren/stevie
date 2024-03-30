@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240330-2035200
+0002               * BUILD: 240330-2116210
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -146,7 +146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
 0029      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
 0030      1800     vdp.tat.base              equ  >1800   ; VDP TAT base address
-0031      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
+0031      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 30 rows
 0032      1000     vdp.pdt.base              equ  >1000   ; VDP PDT base address
 0033               
 0034               *--------------------------------------------------------------
@@ -154,25 +154,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036               *--------------------------------------------------------------
 0037      001D     pane.botrow               equ  29      ; Bottom row on screen
 0038      0050     colrow                    equ  80      ; Columns per row
-0039      0960     fh.vrecbuf                equ  >0960   ; VDP address record buffer
-0040      0A60     fh.vpab                   equ  >0a60   ; VDP address PAB
-0041      0001     device.f18a               equ  1       ; F18a on
-0042      0001     spritecursor              equ  1       ; Use sprites for cursor and ruler
-0043               
-0044               
-0045               *--------------------------------------------------------------
-0046               * Video mode configuration (spectra2)
-0047               *--------------------------------------------------------------
-0048      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0049      0004     spfbck  equ   >04                   ; Screen background color.
-0050      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-0051      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
-0052               
-0053      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0054      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-0055      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
-0056      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
-0057               
+0039      0001     device.f18a               equ  1       ; F18a on
+0040      0001     spritecursor              equ  1       ; Use sprites for cursor and ruler
+0041               
+0042               *--------------------------------------------------------------
+0043               * VDP memory setup for file handling
+0044               *--------------------------------------------------------------
+0045      0960     fh.vrecbuf                equ  >0960   ; VDP address record buffer
+0046      0A60     fh.vpab                   equ  >0a60   ; VDP address PAB
+0047               
+0048               *--------------------------------------------------------------
+0049               * Video mode configuration (spectra2)
+0050               *--------------------------------------------------------------
+0051      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0052      0004     spfbck  equ   >04                   ; Screen background color.
+0053      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0054      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
+0055               
+0056      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0057      1100     fntadr  equ   >1100                 ; VDP font start address (in PDT range)
+0058      2180     sprsat  equ   >2180                 ; VDP sprite attribute table
+0059      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0060               
                    < equ.vdp.asm
 0018               
 0019               ***************************** F18a 30x80 ***************************************

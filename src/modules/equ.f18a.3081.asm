@@ -36,11 +36,14 @@ vdp.pdt.base              equ  >1000   ; VDP PDT base address
 *--------------------------------------------------------------
 pane.botrow               equ  29      ; Bottom row on screen
 colrow                    equ  80      ; Columns per row
-fh.vrecbuf                equ  >0960   ; VDP address record buffer
-fh.vpab                   equ  >0a60   ; VDP address PAB
 device.f18a               equ  1       ; F18a on
 spritecursor              equ  0       ; Use char for cursor
 
+*--------------------------------------------------------------
+* VDP memory setup for file handling
+*--------------------------------------------------------------
+fh.vrecbuf                equ  >0960   ; VDP address record buffer
+fh.vpab                   equ  >0a60   ; VDP address PAB
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)

@@ -28,7 +28,7 @@ vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
 vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
 vdp.tat.base              equ  >1800   ; VDP TAT base address
-vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
+vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 30 rows
 vdp.pdt.base              equ  >1000   ; VDP PDT base address
 
 *--------------------------------------------------------------
@@ -36,11 +36,14 @@ vdp.pdt.base              equ  >1000   ; VDP PDT base address
 *--------------------------------------------------------------
 pane.botrow               equ  29      ; Bottom row on screen
 colrow                    equ  80      ; Columns per row
-fh.vrecbuf                equ  >0960   ; VDP address record buffer
-fh.vpab                   equ  >0a60   ; VDP address PAB
 device.f18a               equ  1       ; F18a on
 spritecursor              equ  1       ; Use sprites for cursor and ruler
 
+*--------------------------------------------------------------
+* VDP memory setup for file handling
+*--------------------------------------------------------------
+fh.vrecbuf                equ  >0960   ; VDP address record buffer
+fh.vpab                   equ  >0a60   ; VDP address PAB
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)
