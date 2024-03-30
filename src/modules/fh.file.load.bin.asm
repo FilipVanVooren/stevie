@@ -64,6 +64,7 @@ fh.file.load.bin:
 
         li    tmp0,fh.file.pab.header.binimage
         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
+        
         clr   @fh.ftype.init        ; File type/mode (in LSB)
         ;------------------------------------------------------
         ; Loading file in destination memory

@@ -427,9 +427,6 @@ keymap_actions.cmdb:
         byte  key.uc.x, id.dialog.cartridge
         data  fg99.run.xbgem
 
-        byte  key.uc.r, id.dialog.cartridge
-        data  fg99.run.rxb
-
         byte  key.uc.c, id.dialog.cartridge
         data  fg99.run.fcmd
 

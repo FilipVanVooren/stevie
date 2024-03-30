@@ -1266,11 +1266,6 @@ fg99.run.xbgem:
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
         jmp   fg99.run.stub
 
-fg99.run.rxb:
-        li    tmp0,fg99.cart.rxb    ; Load Rich Extended Basic
-        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
-        jmp   fg99.run.stub
-
 fg99.run.fcmd:
         li    tmp0,fg99.cart.fcmd   ; Load Force Command
         mov   tmp0,@tv.fg99.img.ptr ; Set pointer

@@ -93,7 +93,7 @@ main.continue:
 
         bl    @dialog               ; Setup memory for dialogs stringa
         ;------------------------------------------------------
-        ; Load colorscheme amd turn on screen
+        ; Load colorscheme and turn on screen
         ;------------------------------------------------------
         clr   @parm1                ; Screen off while reloading color scheme
         clr   @parm2                ; Don't skip colorizing marked lines
