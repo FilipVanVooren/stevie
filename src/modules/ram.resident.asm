@@ -1,4 +1,4 @@
-* FILE......: rom.resident.asm
+* FILE......: ram.resident.asm
 * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
 
   ; Watch out! Avoid relying on calling code stored in the cartridge ROM area.

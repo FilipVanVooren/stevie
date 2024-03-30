@@ -139,7 +139,7 @@ reloc.resident:
         ;------------------------------------------------------
         xorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "rom.resident.asm"    ; Resident modules relocated to RAM
+        copy  "ram.resident.asm"    ; Resident modules relocated to RAM
         ;------------------------------------------------------
         ; Stevie main entry point
         ;------------------------------------------------------

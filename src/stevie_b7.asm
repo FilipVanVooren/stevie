@@ -51,7 +51,7 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
-        copy  "rom.resident.asm"
+        copy  "ram.resident.asm"
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
