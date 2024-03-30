@@ -22,7 +22,7 @@
 * tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------
 * Remarks
-* Load binary file into memory
+* None
 ********|*****|*********************|**************************
 fh.file.load.bin:
         dect  stack
