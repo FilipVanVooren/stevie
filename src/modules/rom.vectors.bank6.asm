@@ -78,38 +78,3 @@ vec.61  data  cpu.crash             ;
 vec.62  data  cpu.crash             ;
 vec.63  data  cpu.crash             ;
 vec.64  data  cpu.crash             ;
-*--------------------------------------------------------------
-* ROM 6: Vectors 65-96
-*--------------------------------------------------------------
-vec.65  data  cpu.crash             ;
-vec.66  data  cpu.crash             ;
-vec.67  data  cpu.crash             ;
-vec.68  data  cpu.crash             ;
-vec.69  data  cpu.crash             ;
-vec.70  data  cpu.crash             ;
-vec.71  data  cpu.crash             ;
-vec.72  data  cpu.crash             ;
-vec.73  data  cpu.crash             ;
-vec.74  data  cpu.crash             ;
-vec.75  data  cpu.crash             ;
-vec.76  data  cpu.crash             ;
-vec.77  data  cpu.crash             ;
-vec.78  data  cpu.crash             ;
-vec.79  data  cpu.crash             ;
-vec.80  data  cpu.crash             ;
-vec.81  data  cpu.crash             ;
-vec.82  data  cpu.crash             ;
-vec.83  data  cpu.crash             ;
-vec.84  data  cpu.crash             ;
-vec.85  data  cpu.crash             ;
-vec.86  data  cpu.crash             ;
-vec.87  data  cpu.crash             ;
-vec.88  data  cpu.crash             ;
-vec.89  data  cpu.crash             ;
-vec.90  data  cpu.crash             ;
-vec.91  data  cpu.crash             ;
-vec.92  data  cpu.crash             ;
-vec.93  data  cpu.crash             ;
-vec.94  data  cpu.crash             ;
-vec.95  data  cpu.crash             ;
-vec.96  data  cpu.crash             ;

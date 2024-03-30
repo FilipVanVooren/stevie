@@ -39,7 +39,7 @@ debug                     equ  0       ; Turn on debugging mode
 *--------------------------------------------------------------
 * ROM layout
 *--------------------------------------------------------------
-bankx.crash.showbank      equ  >7f00   ; Show ROM bank in CPU crash screen
-bankx.vdptab              equ  >7f10   ; VDP mode tables
-bankx.vectab              equ  >7f40   ; Vector table
+bankx.vdptab              equ  >7f50   ; VDP mode tables
+bankx.vectab              equ  >7f70   ; Vector table
+bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
 device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
