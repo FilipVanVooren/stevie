@@ -11,12 +11,7 @@
 * parm1 = Pointer to length-prefixed filename descriptor
 * parm2 = Pointer to callback function "Before loading image"
 * parm3 = Pointer to callback function "Binary image loaded"
-* parm4 = Not used
-* parm5 = Pointer to callback function "File I/O error"
-* parm6 = Pointer to callback function "Memory full"
-* parm7 = Destination RAM address
-* parm8 = Not used
-* parm9 = Not used
+* parm4 = Pointer to callback function "File I/O error"
 *
 * Callbacks can be skipped by passing >0000 as pointer.
 *--------------------------------------------------------------
@@ -27,7 +22,7 @@
 * tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------
 * Remarks
-* Load EA5 program image into memory
+* Load binary file into memory
 ********|*****|*********************|**************************
 fh.file.load.bin:
         dect  stack
@@ -43,8 +38,6 @@ fh.file.load.bin:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
-        clr   @fh.records           ; Reset records counter
-        clr   @fh.counter           ; Clear internal counter
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents                           
         ;------------------------------------------------------
@@ -57,10 +50,7 @@ fh.file.load.bin:
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
         mov   @parm2,@fh.callback1  ; Callback function "Before loading image"
         mov   @parm3,@fh.callback2  ; Callback function "Binary image loaded"
-        clr   @fh.callback3         ; Callback function "Close file". Not used
-        mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
-        mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
-        mov   @parm7,@fh.ram.ptr    ; Set pointer to RAM destination
+        mov   @parm4,@fh.callback3  ; Callback function "File I/O error"
 
         li    tmp0,fh.file.pab.header.binimage
         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
@@ -93,29 +83,11 @@ fh.file.load.bin.assert2
 
 fh.file.load.bin.assert3:
         mov   @fh.callback3,tmp0
-        jeq   fh.file.load.bin.assert4
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.bin.crsh ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.bin.crsh ; Yes, crash!
-
-fh.file.load.bin.assert4:         
-        mov   @fh.callback4,tmp0
-        jeq   fh.file.load.bin.assert5
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.bin.crsh ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.bin.crsh ; Yes, crash!
-
-fh.file.load.bin.assert5:
-        mov   @fh.callback5,tmp0
         jeq   fh.file.load.bin.load1
         ci    tmp0,>6000            ; Insane address ?
         jlt   fh.file.load.bin.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.load.bin.crsh ; Yes, crash!
-
-        jmp   fh.file.load.bin.load1 ; All checks passed, continue
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
@@ -123,7 +95,7 @@ fh.file.load.bin.crsh:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
-        ; Callback "Before load binary image from file"
+        ; Callback "Before load binary image"
         ;------------------------------------------------------
 fh.file.load.bin.load1:        
         mov   @fh.callback1,tmp0
@@ -206,9 +178,9 @@ fh.file.load.bin.vdp2cpu:
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                                                            
         ;------------------------------------------------------
-        ; Step 5: Callback "Read image segment from file"
+        ; Step 5: Callback "Binary file loaded"
         ;------------------------------------------------------
-fh.file.load.bin.display:
+fh.file.load.bin.callback2:
         mov   @fh.callback2,tmp0    ; Get pointer to callback
         jeq   fh.file.load.bin.error
                                     ; Skip callback        
@@ -224,7 +196,7 @@ fh.file.load.bin.error:
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
-        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
+        mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
         jeq   fh.file.load.bin.exit 
                                     ; Skip callback
         bl    *tmp0                 ; Run callback function  

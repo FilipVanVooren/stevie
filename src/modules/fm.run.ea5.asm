@@ -34,10 +34,6 @@ fm.run.ea5:
         mov   @parm3,*stack         ; Push @parm3
         dect  stack
         mov   @parm4,*stack         ; Push @parm4
-        dect  stack
-        mov   @parm5,*stack         ; Push @parm5
-        dect  stack
-        mov   @parm6,*stack         ; Push @parm6
         ;-------------------------------------------------------        
         ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
@@ -52,30 +48,22 @@ fm.run.ea5:
 !       clr   @parm2                ; Skip callback 1
         clr   @parm3                ; Skip callback 2
         clr   @parm4                ; Skip callback 3
-        clr   @parm5                ; Skip callback 4
-        clr   @parm6                ; Skip callback 5
 
         bl    @fh.file.load.bin     ; Load binary image into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
                                     ; | i  @parm2 = Pointer to callback
-                                    ; |             "Before Open file"
+                                    ; |             "Before load binary file"
                                     ; | i  @parm3 = Pointer to callback
-                                    ; |             "Read line from file"
-                                    ; | i  @parm4 = Pointer to callback
-                                    ; |             "Close file"
-                                    ; | i  @parm5 = Pointer to callback 
-                                    ; |             "File I/O error"
-                                    ; | i  @parm6 = Pointer to callback
-                                    ; /             "Memory full error"
+                                    ; |             "Binary file loaded"
+                                    ; | i  @parm4 = Pointer to callback 
+                                    ; /             "File I/O error"
 
         clr   @outparm1             ; Reset                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fm.run.ea5.exit:
-        mov   *stack+,@parm6        ; Pop @parm6
-        mov   *stack+,@parm5        ; Pop @parm5
         mov   *stack+,@parm4        ; Pop @parm4
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
