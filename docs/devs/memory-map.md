@@ -1,11 +1,13 @@
 # Memory map
 
+## CPU RAM
+
 For each of the 256 bytes ranges, there are structures defined in equ.asm    
 Check there for free memory ranges, because most structures do not use full    
 256 bytes range. First free address has equate <struct>.free
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
-| ---------- | ---------- | ----: | -------------------------------------------|
+| ---------- | ---------- | ----- | -------------------------------------------|
 | >2000-2fff |    #02     |  4096 | Resident spectra2 and Stevie modules       |
 |            |            |       |                                            |
 | >3000-3fff |    #03     |  4096 | Resident spectra2 and Stevie modules       |
@@ -93,7 +95,7 @@ Check there for free memory ranges, because most structures do not use full
 # Memory layout when activating TI Basic
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
-| ---------- | ---------- | ----: | -------------------------------------------|
+| ---------- | ---------- | ----- | -------------------------------------------|
 | >b000-bfff |     #04    |  4096 | TI Basic VDP buffer                        |
 |            |            |       |                                            |
 | >c000-cfff |     #05    |  4096 | TI Basic VDP buffer                        |
@@ -109,3 +111,34 @@ Check there for free memory ranges, because most structures do not use full
 |            |            |       |                                            |
 
 Other memory ranges same as regular memory map.
+
+## VDP RAM
+
+### F18a 30x80 mode with sprites (cursor)
+
+| Address    | VDP# | Value/Base | Purpose                  |
+|------------|------|------------|--------------------------|
+| >0000-095f | #02  | >00 * >960 | Pattern name table       |
+| >0960-09af |      |            | Record buffer            |
+| >0a00-0a10 | #05  | >14 * >080 | Sprite attribute list    |
+| >0a60-0aaf |      |            | PAB definition           |
+| >0ab0-0aff |      |            | **FREE**                 |
+| >0b10-0fff |      |            | **FREE**                 |
+| >1000-195f | #03  | >40 * >040 | Pattern color table      |
+| >2800      | #06  | >05 * >800 | Sprite pattern table     |
+| >3800-39ff | #04  | >07 * >800 | Pattern descriptor table |
+
+- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >1000.
+- 
+
+
+
+### F18a 24x80 mode without sprites
+
+| Address | VDP Reg# | Value/Base | Purpose                  |
+|---------|----------|------------|--------------------------|
+| >0000   | #02      | >00 * >960 | Pattern name table       |
+| >0300   | #03      | >0c * >040 | Pattern color table      |
+| >0000   | #04      | >00 * >800 | Pattern descriptor table |
+| >0300   | #05      | >06 * >080 | Sprite attribute list    |
+| >0000   | #06      | >00 * >800 | Sprite pattern table     |

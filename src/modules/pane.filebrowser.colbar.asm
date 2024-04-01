@@ -33,7 +33,7 @@ pane.filebrowser.colbar:
                                     ; / o  tmp0 = VDP target address
 
         inc   tmp0                  ; Skip marker
-        ai    tmp0,vdp.tat.base - vdp.sit.base
+        ai    tmp0,vdp.tat.base
                                     ; Add offset for TAT
         li    tmp2,23               ; 23 bytes to fill
 

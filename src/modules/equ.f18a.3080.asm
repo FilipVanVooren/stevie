@@ -23,13 +23,14 @@
 *--------------------------------------------------------------
 * Video mode configuration (stevie) - Graphics mode 30x80
 *--------------------------------------------------------------
-vdp.fb.toprow.sit         equ  >0050   ; VDP SIT address of 1st Framebuffer row
-vdp.fb.toprow.tat         equ  >1850   ; VDP TAT address of 1st Framebuffer row
 vdp.sit.base              equ  >0000   ; VDP SIT base address
 vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
-vdp.tat.base              equ  >1800   ; VDP TAT base address
+vdp.tat.base              equ  >1000   ; VDP TAT base address
 vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 30 rows
-vdp.pdt.base              equ  >1000   ; VDP PDT base address
+vdp.pdt.base              equ  >3800   ; VDP PDT base address
+
+vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
+vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
 
 *--------------------------------------------------------------
 * Video mode configuration (stevie)
@@ -52,10 +53,10 @@ spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 spfont  equ   0                     ; Font to load. See LDFONT for details.
-
-pctadr  equ   >0fc0                 ; VDP color table base
-fntadr  equ   >1100                 ; VDP font start address (in PDT range)
-sprsat  equ   >2180                 ; VDP sprite attribute table
+pctadr  equ   >0fc0                 ; \ VDP color table base. 
+                                    ; / Not used in F18a 80 columns mode
+fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+sprsat  equ   >0a00                 ; VDP sprite attribute table
 sprpdt  equ   >2800                 ; VDP sprite pattern table
 
   .endif

@@ -24,14 +24,17 @@
 * ;      bit 6=0: 8x8 sprites
 * ;      bit 7=0: Sprite magnification (1x)
 * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-* ; VDP#3 PCT (Pattern color table)      at >0FC0  (>3F * >040)
-* ; VDP#4 PDT (Pattern descriptor table) at >1000  (>02 * >800)
-* ; VDP#5 SAT (sprite attribute list)    at >2180  (>43 * >080)
+* ; VDP#3 PCT (Pattern color table)      at >1000  (>40 * >040)
+* ; VDP#4 PDT (Pattern descriptor table) at >3800  (>07 * >800)
+* ; VDP#5 SAT (sprite attribute list)    at >0A00  (>14 * >080)
 * ; VDP#6 SPT (Sprite pattern table)     at >2800  (>05 * >800)
 * ; VDP#7 Set foreground/background color
 ***************************************************************
 stevie.80x30:
-        byte  >04,>f0,>00,>3f,>02,>43,>05,SPFCLR,0,80
+        byte  >04,>f0,>00,>40,>07,>14,>05,SPFCLR,0,80
+        ; 
+        ; VDP#3 (pattern color table) gets overwritten to >40 (>40 * >040) for
+        ; F18a position based color table in main.asm at >1000
 
 
 ***************************************************************
@@ -52,7 +55,7 @@ tibasic.32x24:
 * ;      bit 5=0: reserved
 * ;      bit 6=1: 16x16 sprites
 * ;      bit 7=0: Sprite magnification (1x)
-* ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >400)
+* ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
 * ; VDP#3 PCT (Pattern color table)      at >0300  (>0C * >040)
 * ; VDP#4 PDT (Pattern descriptor table) at >0000  (>00 * >800)
 * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)

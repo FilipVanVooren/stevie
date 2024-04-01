@@ -50,15 +50,14 @@ main.continue:
 
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
-
-        BL    @putvr                ; Set VDP TAT base address for position
-              data >0360            ; based attributes (>40 * >60 = >1800)
         ;------------------------------------------------------
-        ; Clear screen (VDP SIT)
+        ; Clear VDP memory >0000 - >0fff
         ;------------------------------------------------------
         bl    @filv
-              data >0000,32,vdp.sit.size
-                                    ; Clear screen
+              data >0000,32,>0960   ; Clear screen area
+
+        bl    @filv
+              data >0960,00,>06a0   ; Clear area for record buffer + PAB, etc.
         ;------------------------------------------------------
         ; Initialize high memory expansion
         ;------------------------------------------------------
