@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240401-2055480
+0002               * BUILD: 240401-2101470
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -8899,10 +8899,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012                                                   ; YX, initial shape and color
 0013 3926 0000             data  >0000,>8201           ; Cursor
      3928 8201     
-0014 392A 0000             data  >0000,>0001           ; Current line indicator     <
-     392C 0001     
-0015 392E 0820             data  >0820,>0001           ; Current column indicator   v
-     3930 0001     
+0014 392A 0000             data  >0000,>8301           ; Current line indicator     <
+     392C 8301     
+0015 392E 0820             data  >0820,>8401           ; Current column indicator   v
+     3930 8401     
 0016               nosprite:
 0017 3932 D000             data  >d000                 ; End-of-Sprites list
 0018               
@@ -14997,13 +14997,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      764E 3A20     
 0191                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7650 3234                        text '240401-2055480'
+0001 7650 3234                        text '240401-2101470'
      7652 3034     
      7654 3031     
      7656 2D32     
-     7658 3035     
-     765A 3534     
-     765C 3830     
+     7658 3130     
+     765A 3134     
+     765C 3730     
                    < data.dialogs.asm
 0192 765E 202D                        text ' - Stevie 1.6.2  - (c)2018-2024 Filip Van Vooren'
      7660 2053     
