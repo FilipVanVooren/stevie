@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240401-2048080
+0002               * BUILD: 240401-2055480
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -144,22 +144,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026               *--------------------------------------------------------------
 0027               * VDP memory setup for file handling
 0028               *--------------------------------------------------------------
-0029      1960     fh.vrecbuf                equ  >1960   ; VDP address record buffer
-0030      0960     fh.vpab                   equ  >0960   ; VDP address PAB
-0031               
-0032               *--------------------------------------------------------------
-0033               * Video mode configuration (spectra2)
-0034               *--------------------------------------------------------------
-0035      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0036      0004     spfbck  equ   >04                   ; Screen background color.
-0037      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-0038      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
-0039      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
-0040                                                   ; / Not used in F18a 80 columns mode
-0041      3900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-0042      3480     sprsat  equ   >3480                 ; VDP sprite attribute table
-0043      3800     sprpdt  equ   >3800                 ; VDP sprite pattern table
-0044               
+0029      12E0     fh.vrecbuf                equ  >12e0   ; VDP address record buffer
+0030      12E0     fh.filebuf                equ  >12e0   ; VDP address binary file buffer
+0031      0960     fh.vpab                   equ  >0960   ; VDP address PAB
+0032               
+0033               *--------------------------------------------------------------
+0034               * Video mode configuration (spectra2)
+0035               *--------------------------------------------------------------
+0036      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0037      0004     spfbck  equ   >04                   ; Screen background color.
+0038      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0039      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
+0040      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
+0041                                                   ; / Not used in F18a 80 columns mode
+0042      3900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+0043      3480     sprsat  equ   >3480                 ; VDP sprite attribute table
+0044      3800     sprpdt  equ   >3800                 ; VDP sprite pattern table
+0045               
                    < equ.vdp.asm
 0018               
 0019               ***************************** F18a 30x80 ***************************************
@@ -13118,6 +13119,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.CALLBACK5........ >A458 :     
     FH.COUNTER.......... >A442 :     
     FH.DIR.REC.PTR...... >A468 :     
+    FH.FILEBUF.......... >12E0 :     
     FH.FILETYPE......... >A44C :     
     FH.FNAME.PTR........ >A444 :     
     FH.FOPMODE.......... >A44A :     
@@ -13146,7 +13148,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.TEMP2............ >A462 :     
     FH.TEMP3............ >A464 :     
     FH.VPAB............. >0960 :     
-    FH.VRECBUF.......... >1960 :     
+    FH.VRECBUF.......... >12E0 :     
     FH.WORKMODE......... >A45A :     
     FIL.EXIT............ >228C :     
     FIL16B.............. >2276 :     

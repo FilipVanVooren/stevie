@@ -26,7 +26,8 @@ spritecursor              equ  0       ; Use char for cursor
 *--------------------------------------------------------------
 * VDP memory setup for file handling
 *--------------------------------------------------------------
-fh.vrecbuf                equ  >1960   ; VDP address record buffer
+fh.vrecbuf                equ  >12e0   ; VDP address record buffer
+fh.filebuf                equ  >12e0   ; VDP address binary file buffer
 fh.vpab                   equ  >0960   ; VDP address PAB
 
 *--------------------------------------------------------------

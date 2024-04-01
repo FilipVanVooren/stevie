@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240401-2048080
+0002               * BUILD: 240401-2055480
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -144,22 +144,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026               *--------------------------------------------------------------
 0027               * VDP memory setup for file handling
 0028               *--------------------------------------------------------------
-0029      1960     fh.vrecbuf                equ  >1960   ; VDP address record buffer
-0030      0960     fh.vpab                   equ  >0960   ; VDP address PAB
-0031               
-0032               *--------------------------------------------------------------
-0033               * Video mode configuration (spectra2)
-0034               *--------------------------------------------------------------
-0035      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0036      0004     spfbck  equ   >04                   ; Screen background color.
-0037      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-0038      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
-0039      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
-0040                                                   ; / Not used in F18a 80 columns mode
-0041      3900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-0042      3480     sprsat  equ   >3480                 ; VDP sprite attribute table
-0043      3800     sprpdt  equ   >3800                 ; VDP sprite pattern table
-0044               
+0029      12E0     fh.vrecbuf                equ  >12e0   ; VDP address record buffer
+0030      12E0     fh.filebuf                equ  >12e0   ; VDP address binary file buffer
+0031      0960     fh.vpab                   equ  >0960   ; VDP address PAB
+0032               
+0033               *--------------------------------------------------------------
+0034               * Video mode configuration (spectra2)
+0035               *--------------------------------------------------------------
+0036      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0037      0004     spfbck  equ   >04                   ; Screen background color.
+0038      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0039      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
+0040      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
+0041                                                   ; / Not used in F18a 80 columns mode
+0042      3900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+0043      3480     sprsat  equ   >3480                 ; VDP sprite attribute table
+0044      3800     sprpdt  equ   >3800                 ; VDP sprite pattern table
+0045               
                    < equ.vdp.asm
 0018               
 0019               ***************************** F18a 30x80 ***************************************
@@ -10067,7 +10068,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0204                       ;------------------------------------------------------
 0205               fh.file.read.mem.process:
 0206 6180 0204  20         li    tmp0,fh.vrecbuf       ; VDP source address
-     6182 1960     
+     6182 12E0     
 0207 6184 C160  34         mov   @fh.ram.ptr,tmp1      ; RAM target address
      6186 A45C     
 0208 6188 C1A0  34         mov   @fh.reclen,tmp2       ; Number of bytes to copy
@@ -10620,7 +10621,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0334                       ;------------------------------------------------------
 0335               fh.file.read.edb.process_line:
 0336 63EC 0204  20         li    tmp0,fh.vrecbuf       ; VDP source address
-     63EE 1960     
+     63EE 12E0     
 0337 63F0 C160  34         mov   @edb.next_free.ptr,tmp1
      63F2 A508     
 0338                                                   ; RAM target in editor buffer
@@ -11097,7 +11098,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0182                       ;------------------------------------------------------
 0183               fh.file.write.edb.unpack:
 0184 6600 0204  20         li    tmp0,fh.vrecbuf       ; VDP target address
-     6602 1960     
+     6602 12E0     
 0185 6604 0205  20         li    tmp1,fb.top           ; Top of frame buffer in CPU memory
      6606 D000     
 0186               
@@ -11439,7 +11440,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0163                       ;------------------------------------------------------
 0164               fh.file.load.bin.process:
 0165 677A 0204  20         li    tmp0,fh.vrecbuf       ; VDP source address
-     677C 1960     
+     677C 12E0     
 0166 677E C160  34         mov   @fh.ram.ptr,tmp1      ; RAM target address
      6780 A45C     
 0167 6782 C1A0  34         mov   @fh.reclen,tmp2       ; Number of bytes to copy
@@ -14929,7 +14930,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               fh.file.pab.header.cat:
 0010 754E 00               byte  io.op.open            ;  0    - OPEN
 0011 754F   0D             byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
-0012 7550 1960             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0012 7550 12E0             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
 0013 7552 00               byte  00                    ;  4    - Record length (unset, DSR control)
 0014 7553   00             byte  00                    ;  5    - Character count
 0015 7554 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
@@ -14949,7 +14950,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029               fh.file.pab.header:
 0030 7558 00               byte  io.op.open            ;  0    - OPEN
 0031 7559   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
-0032 755A 1960             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0032 755A 12E0             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
 0033 755C 50               byte  80                    ;  4    - Record length (80 chars max)
 0034 755D   00             byte  00                    ;  5    - Character count
 0035 755E 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
@@ -14969,7 +14970,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049               fh.file.pab.header.binimage:
 0050 7562 05               byte  io.op.load            ;  0    - LOAD BINARY
 0051 7563   00             byte  00                    ;  1    - Not used
-0052 7564 2190             data  >2190                 ;  2-3  - Buffer location in VDP memory
+0052 7564 12E0             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
 0053 7566 0000             data  >0000                 ;  4-5  - Not used in load operation
 0054 7568 201C             data  8220                  ;  6-7  - Maximum number of bytes to load
 0055 756A 00               byte  00                    ;  8    - Not used
@@ -15701,6 +15702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.FILE.WRITE.EDB.RECORD >65B8 :     
     FH.FILE.WRITE.EDB.SAVE1 >6588 :     
     FH.FILE.WRITE.EDB.UNPACK >6600 :     
+    FH.FILEBUF.......... >12E0 :     
     FH.FILETYPE......... >A44C :     
     FH.FNAME.PTR........ >A444 :     
     FH.FOPMODE.......... >A44A :     
@@ -15729,7 +15731,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.TEMP2............ >A462 :     
     FH.TEMP3............ >A464 :     
     FH.VPAB............. >0960 :     
-    FH.VRECBUF.......... >1960 :     
+    FH.VRECBUF.......... >12E0 :     
     FH.WORKMODE......... >A45A :     
     FIL.EXIT............ >228C :     
     FIL16B.............. >2276 :     
