@@ -52,7 +52,7 @@ dialog.help.content:
                                     ; / i  tmp2 = Number of bytes to fill
 
         bl    @filv
-              data sprsat,>d0,32    ; Turn off sprites
+              data sprsat,>d0,12    ; Turn off sprites
         ;------------------------------------------------------
         ; Display left column
         ;------------------------------------------------------

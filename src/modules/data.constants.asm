@@ -10,9 +10,9 @@
 *--------------------------------------------------------------
 romsat:
                                     ; YX, initial shape and color
-        data  >0000,>0001           ; Cursor
-        data  >0000,>0101           ; Current line indicator     <
-        data  >0820,>0201           ; Current column indicator   v
+        data  >0000,>8201           ; Cursor
+        data  >0000,>0001           ; Current line indicator     <
+        data  >0820,>0001           ; Current column indicator   v
 nosprite:
         data  >d000                 ; End-of-Sprites list
 

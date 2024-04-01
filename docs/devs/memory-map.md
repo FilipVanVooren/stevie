@@ -92,7 +92,7 @@ Check there for free memory ranges, because most structures do not use full
 | >f000-ffff |     #07    |  4096 | Heap                                       |
 
 
-# Memory layout when activating TI Basic
+### Memory layout when activating TI Basic
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
 | ---------- | ---------- | ----- | -------------------------------------------|
@@ -114,31 +114,36 @@ Other memory ranges same as regular memory map.
 
 ## VDP RAM
 
-### F18a 30x80 mode with sprites (cursor)
+### F18a 30x80 mode with sprites (cursor, ruler)
 
-| Address    | VDP# | Value/Base | Purpose                  |
-|------------|------|------------|--------------------------|
-| >0000-095f | #02  | >00 * >960 | Pattern name table       |
-| >0960-09af |      |            | Record buffer            |
-| >0a00-0a10 | #05  | >14 * >080 | Sprite attribute list    |
-| >0a60-0aaf |      |            | PAB definition           |
-| >0ab0-0aff |      |            | **FREE**                 |
-| >0b10-0fff |      |            | **FREE**                 |
-| >1000-195f | #03  | >40 * >040 | Pattern color table      |
-| >2800      | #06  | >05 * >800 | Sprite pattern table     |
-| >3800-39ff | #04  | >07 * >800 | Pattern descriptor table |
+| Address    | Size | VDP# | Value/Base | Purpose                  |
+|------------|------|------|------------|--------------------------|
+| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
+| >0960-097f |  160 |      |            | PAB definition           |
+| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
+| >12e0-347f | 8608 |      |            | Record/File buffer       |
+| >3480-37ff |   16 | #05  | >69 * >080 | Sprite attribute table   |
+| >3800-39ff | 2048 | #04  | >07 * >800 | Pattern descriptor table |
+| >3800      |      | #06  | >07 * >800 | Sprite pattern table     |
+| >4000-47ff | 2048 |      |            | F18a extended memory     |
+
 
 - Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >1000.
-- 
-
-
+- Sprite attribute table >3c00-3c0f is overlayed with pattern descriptor 
+  table >3800-39ff.
+- Sprite pattern table is overlayed with pattern descriptor table. 
+  Cursor patterns are dumped to >3c00
+  
 
 ### F18a 24x80 mode without sprites
 
-| Address | VDP Reg# | Value/Base | Purpose                  |
-|---------|----------|------------|--------------------------|
-| >0000   | #02      | >00 * >960 | Pattern name table       |
-| >0300   | #03      | >0c * >040 | Pattern color table      |
-| >0000   | #04      | >00 * >800 | Pattern descriptor table |
-| >0300   | #05      | >06 * >080 | Sprite attribute list    |
-| >0000   | #06      | >00 * >800 | Sprite pattern table     |
+| Address    | Size | VDP# | Value/Base | Purpose                  |
+|------------|------|------|------------|--------------------------|
+| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
+| >0960-097f |  160 |      |            | PAB definition           |
+| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
+| >12e0-37ff | 9504 |      |            | Record/File buffer       |
+| >3800-39ff | 2048 | #04  | >07 * >800 | Pattern descriptor table |
+| >4000-47ff | 2048 |      |            | F18a extended memory     |
+
+- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >1000.

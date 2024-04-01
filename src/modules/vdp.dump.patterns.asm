@@ -29,14 +29,14 @@ vdp.dump.patterns:
         .ifeq spritecursor,1
 
         bl    @cpym2v
-              data sprpdt,cursors,3*8
+              data sprpdt + >0410,cursors,3*8
               
         .endif
         ;-------------------------------------------------------
         ; Dump character patterns from ROM to VDP PDT
         ;-------------------------------------------------------
         bl    @cpym2v
-              data vdp.pdt.base+8,patterns,32*8
+              data vdp.pdt.base+8,patterns,30*8
                                     ; Start with ASCII >01
         ;-------------------------------------------------------
         ; Exit

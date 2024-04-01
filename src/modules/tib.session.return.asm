@@ -272,9 +272,6 @@ tib.run.return.stevie:
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
 
-        bl    @putvr                ; Set VDP TAT base address for position
-              data >0360            ; based attributes (>40 * >60 = >1800)
-
         bl    @tibasic.buildstr     ; Build session identifier string
 
         clr   @parm1                ; Screen off while reloading color scheme
