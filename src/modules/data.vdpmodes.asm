@@ -25,13 +25,13 @@
 * ;      bit 7=0: Sprite magnification (1x)
 * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
 * ; VDP#3 PCT (Pattern color table)      at >0980  (>26 * >040)
-* ; VDP#4 PDT (Pattern descriptor table) at >3800  (>07 * >800)
-* ; VDP#5 SAT (sprite attribute table)   at >3480  (>69 * >080)
-* ; VDP#6 SPT (Sprite pattern table)     at >3800  (>07 * >800)
+* ; VDP#4 PDT (Pattern descriptor table) at >1800  (>03 * >800)
+* ; VDP#5 SAT (sprite attribute table)   at >1300  (>26 * >080)
+* ; VDP#6 SPT (Sprite pattern table)     at >1800  (>03 * >800)
 * ; VDP#7 Set foreground/background color
 ***************************************************************
 stevie.80x30:
-        byte  >04,>f0,>00,>26,>07,>69,>07,SPFCLR,0,80
+        byte  >04,>f0,>00,>26,>03,>26,>03,SPFCLR,0,80
 
 ***************************************************************
 * TI Basic mode (32 columns/24 rows)

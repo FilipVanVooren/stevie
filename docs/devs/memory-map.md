@@ -121,18 +121,18 @@ Other memory ranges same as regular memory map.
 | >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
 | >0960-097f |  160 |      |            | PAB definition           |
 | >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >12e0-347f | 8608 |      |            | Record/File buffer       |
-| >3480-37ff |   16 | #05  | >69 * >080 | Sprite attribute table   |
-| >3800-39ff | 2048 | #04  | >07 * >800 | Pattern descriptor table |
-| >3800      |      | #06  | >07 * >800 | Sprite pattern table     |
+| >12e0-12ff |   16 |      |            | **FREE**                 |
+| >1300-13ff |  256 | #05  | >26 * >080 | Sprite attribute table   |
+| >1400-17ff | 1024 |      |            | **FREE**                 |
+| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
+| >1800-19ff |      | #06  | >03 * >800 | Sprite pattern table     |
+| >2000-3fff | 8192 |      |            | Record/File buffer       |
 | >4000-47ff | 2048 |      |            | F18a extended memory     |
 
 
-- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >1000.
-- Sprite attribute table >3c00-3c0f is overlayed with pattern descriptor 
-  table >3800-39ff.
+- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >0980.
 - Sprite pattern table is overlayed with pattern descriptor table. 
-  Cursor patterns are dumped to >3c00
+  Cursor patterns are dumped to >1c00
   
 
 ### F18a 24x80 mode without sprites

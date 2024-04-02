@@ -26,8 +26,8 @@ spritecursor              equ  0       ; Use chars for cursor
 *--------------------------------------------------------------
 * VDP memory setup for file handling
 *--------------------------------------------------------------
-fh.vrecbuf                equ  >12e0   ; VDP address record buffer
-fh.filebuf                equ  >12e0   ; VDP address binary file buffer
+fh.vrecbuf                equ  >2000   ; VDP address record buffer
+fh.filebuf                equ  >2000   ; VDP address binary file buffer
 fh.vpab                   equ  >0960   ; VDP address PAB
 
 *--------------------------------------------------------------
@@ -39,7 +39,7 @@ spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 spfont  equ   0                     ; Font to load. See LDFONT for details.
 pctadr  equ   >0fc0                 ; VDP color table base
 fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-sprsat  equ   >3480                 ; VDP sprite attribute table
-sprpdt  equ   >3800                 ; VDP sprite pattern table
+sprsat  equ   >1300                 ; VDP sprite attribute table
+sprpdt  equ   >1800                 ; VDP sprite pattern table
 
   .endif
