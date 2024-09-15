@@ -157,6 +157,7 @@ fm.directory.read:
                                     ; |             ROM/RAM 
                                     ; | i  @parm9 = File type/mode (in LSB), 
                                     ; /             becomes PAB byte 1
+
         ;-------------------------------------------------------
         ; (2) Generate string list with filesizes
         ;-------------------------------------------------------

@@ -253,7 +253,7 @@ fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
 fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
-fh.temp3          equ  fh.struct +100  ; Temporary variable 3
+fh.temp3          equ  fh.struct +100  ; Temporary variable 3 (circuit-breaker)
 fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
 fh.dir.rec.ptr    equ  fh.struct +104  ; Pointer to directory record
 fh.membuffer      equ  fh.struct +106  ; 80 bytes file memory buffer

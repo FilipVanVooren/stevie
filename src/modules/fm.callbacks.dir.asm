@@ -163,18 +163,28 @@ fm.dir.callback2:
         ;------------------------------------------------------
         mov   @fh.records,tmp0           ; \
         ci    tmp0,1                     ; | Skip to fileindex if it's
-        jne   fm.dir.callback2.fileindex ; / not the volume name
+        jeq   fm.dir.callback2.volname   ; / not the volume name
+        ;------------------------------------------------------
+        ; Sanity check: 127 files per directory only
+        ;------------------------------------------------------
+        ci    tmp0,128 
+        jlt   fm.dir.callback2.fileindex
+        seto  @fh.temp3             ; Set circuit-breaker flag                                   
+        jmp   fm.dir.callback2.exit ; Exit callback without crashing       
         ;------------------------------------------------------
         ; Handle volume name
         ;------------------------------------------------------
+fm.dir.callback2.volname:        
         li    tmp0,rambuf+2         ; Source address
         li    tmp1,cat.volname      ; Destination address
         movb  @rambuf+2,tmp2        ; Get string length 
-        srl   tmp2,8                ; MSB to LSB
-        inc   tmp2                  ; Include prefixed length-byte
+        srl   tmp2,8                ; MSB to LSB        
+        jgt   !                     ; Only copy volume name if set
+        jmp  fm.dir.callback2.exit  ; Exit
         ;------------------------------------------------------
         ; Copy volume name to final destination
         ;------------------------------------------------------
+!       inc   tmp2                  ; Include prefixed length-byte
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
@@ -196,11 +206,19 @@ fm.dir.callback2.prep:
         li    tmp0,rambuf+2         ; Source address
         movb  @rambuf+2,tmp2        ; Get string length 
         srl   tmp2,8                ; MSB to LSB
-        inc   tmp2                  ; Include prefixed length-byte    
-        a     tmp2,@fh.dir.rec.ptr  ; Adjust pointer for next filename
+        jgt   fm.dir.callback2.prep.fncopy        
+        ;------------------------------------------------------
+        ; Empty filename handling
+        ;------------------------------------------------------
+        seto  @fh.temp3             ; \ Empty filename, set circuit-breaker flag        
+                                    ; / This is the last line to process.
+        jmp   fm.dir.callback2.filetype                    
         ;------------------------------------------------------
         ; Copy filename to final destination
         ;------------------------------------------------------
+fm.dir.callback2.prep.fncopy
+        inc   tmp2                  ; Include prefixed length-byte    
+        a     tmp2,@fh.dir.rec.ptr  ; Adjust pointer for next filename
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination

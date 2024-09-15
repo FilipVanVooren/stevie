@@ -10,7 +10,7 @@ fh.file.pab.header.cat:
         byte  io.op.open            ;  0    - OPEN
         byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
         data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-        byte  00                    ;  4    - Record length (unset, DSR control)
+        byte  38                    ;  4    - Record length (unset, DSR control)
         byte  00                    ;  5    - Character count
         data  >0000                 ;  6-7  - Seek record (only for fixed recs)
         byte  >00                   ;  8    - Screen offset (cassette DSR only)

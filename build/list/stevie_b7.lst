@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 240402-2012000
+0002               * BUILD: 240915-2123500
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -111,19 +111,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, 9938, ...)
 0003               
 0004               ***************************** F18a 24x80 ***************************************
-0006                   copy 'equ.f18a.2480.asm'        ; Sprite cursor/rulers
-     **** ****     > equ.f18a.2480.asm
-0001               * FILE......: equ.f18a.2480.asm
-0002               * Purpose...: F18a 24x80 mode
+0008               
+0009               ***************************** F18a 24x80 ***************************************
+0013               
+0014               ***************************** F18a 30x80 ***************************************
+0016                   copy 'equ.f18a.3080.asm'        ; Sprite cursor/rulers
+     **** ****     > equ.f18a.3080.asm
+0001               * FILE......: equ.f18a.3080.asm
+0002               * Purpose...: F18a 30x80 mode (with sprite cursor/rulers)
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 24x80
+0007               * Video mode configuration (stevie) - Graphics mode 30x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 24 rows
+0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
 0011      0980     vdp.tat.base              equ  >0980   ; VDP TAT base address
-0012      0780     vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 24 rows
+0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 30 rows
 0013      1800     vdp.pdt.base              equ  >1800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -132,7 +136,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      0017     pane.botrow               equ  23      ; Bottom row on screen
+0021      001D     pane.botrow               equ  29      ; Bottom row on screen
 0022      0050     colrow                    equ  80      ; Columns per row
 0023      0001     device.f18a               equ  1       ; F18a on
 0024      0001     spritecursor              equ  1       ; Use sprites for cursor and ruler
@@ -151,16 +155,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037      0004     spfbck  equ   >04                   ; Screen background color.
 0038      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 0039      0000     spfont  equ   0                     ; Font to load. See LDFONT for details.
-0040      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
-0041      1900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-0042      1300     sprsat  equ   >1300                 ; VDP sprite attribute table
-0043      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
-0044               
+0040      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
+0041                                                   ; / Not used in F18a 80 columns mode
+0042      1900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+0043      1300     sprsat  equ   >1300                 ; VDP sprite attribute table
+0044      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
+0045               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a 24x80 ***************************************
-0013               
-0014               ***************************** F18a 30x80 ***************************************
 0018               
 0019               ***************************** F18a 30x80 ***************************************
                    < stevie_b7.asm
@@ -421,7 +422,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0253      A45E     fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 0254      A460     fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 0255      A462     fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
-0256      A464     fh.temp3          equ  fh.struct +100  ; Temporary variable 3
+0256      A464     fh.temp3          equ  fh.struct +100  ; Temporary variable 3 (circuit-breaker)
 0257      A466     fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
 0258      A468     fh.dir.rec.ptr    equ  fh.struct +104  ; Pointer to directory record
 0259      A46A     fh.membuffer      equ  fh.struct +106  ; 80 bytes file memory buffer
@@ -895,15 +896,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0057               
-0061               
-0063 6028 0C53                 stri 'STEVIE 1.6.2'
+0055 6028 0C53                 stri 'STEVIE 1.6.3'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 362E     
-     6034 32       
+     6034 33       
+0057               
+0061               
 0065               
                    < stevie_b7.asm
 0039               
@@ -6540,7 +6541,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      315E A310     
 0038               
 0039 3160 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     3162 0016     
+     3162 001C     
 0040 3164 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      3166 A31E     
 0041               
@@ -7188,7 +7189,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 3380 0204  20         li    tmp0,pane.botrow      ; \
-     3382 0017     
+     3382 001D     
 0047 3384 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      3386 A706     
 0048 3388 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -10352,7 +10353,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      61A6 2832     
 0037 61A8 0032                   byte 0,50,32,20       ; Remove markers
      61AA 2014     
-0038 61AC 1700                   byte pane.botrow,0,32,51
+0038 61AC 1D00                   byte pane.botrow,0,32,51
      61AE 2033     
 0039 61B0 FFFF                   data eol              ; Remove block shortcuts
 0040                       ;-------------------------------------------------------
@@ -11580,13 +11581,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049               
 0050 6678 06A0  32         bl    @hchar
      667A 2832     
-0051 667C 1700                   byte pane.botrow,0,32,55
+0051 667C 1D00                   byte pane.botrow,0,32,55
      667E 2037     
 0052 6680 FFFF                   data eol              ; Remove shortcuts
 0053               
 0054 6682 06A0  32         bl    @putat
      6684 2442     
-0055 6686 1700                   byte pane.botrow,0
+0055 6686 1D00                   byte pane.botrow,0
 0056 6688 3B82                   data txt.uncrunching  ; Show expansion message
 0057                       ;------------------------------------------------------
 0058                       ; Prepare for uncrunching
@@ -12057,7 +12058,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0136               
 0137 681C 06A0  32         bl    @at
      681E 2726     
-0138 6820 171C                   byte pane.botrow,28   ; Position cursor
+0138 6820 1D1C                   byte pane.botrow,28   ; Position cursor
 0139               
 0140 6822 06A0  32         bl    @trimnum              ; Trim line number and move to uncrunch area
      6824 2AAE     
@@ -14833,7 +14834,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >001D :     
     PANE.COLORSCHEME.LOAD >6B72 :     
     PANE.COLORSCHEME.STATLINES >6B84 :     
     PANE.FOCUS.CMDB..... >0001 :     
@@ -15560,9 +15561,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >09D0 :     
     VDP.PDT.BASE........ >1800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >0960 :     
     VDP.TAT.BASE........ >0980 :     
-    VDP.TAT.SIZE........ >0780 :     
+    VDP.TAT.SIZE........ >0960 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     

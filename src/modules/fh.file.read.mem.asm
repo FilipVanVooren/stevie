@@ -28,6 +28,9 @@
 *--------------------------------------------------------------
 * Remarks
 * File content processing expected to be handled in callback.
+* It is possible to stop further reading from file by setting the 
+* circuit-breaker flag "fh.temp3" from within the callback in @parm3
+*
 * Might replace "fh.file.read.edb" someday, with SAMS and editor
 * buffer handling purely done in callback code.
 ********|*****|*********************|**************************
@@ -69,8 +72,8 @@ fh.file.read.mem:
         ; Loading file in destination memory
         ;------------------------------------------------------
 fh.file.read.mem.newfile:
-        seto  @fh.temp1             ; Set flag "load file"
-        clr   @fh.temp3             ; Not used
+        seto  @fh.temp1             ; Set "load file" flag
+        clr   @fh.temp3             ; Reset "circuit breaker" flag
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
@@ -176,7 +179,7 @@ fh.file.read.mem.record:
         inc   @fh.records           ; Update counter        
         clr   @fh.reclen            ; Reset record length
         ;------------------------------------------------------
-        ; 2b: Read file record
+        ; 2a: Read file record
         ;------------------------------------------------------
 !       bl    @file.record.read     ; Read file record
               data fh.vpab          ; \ i  p0 file  = Address of PAB in VDP RAM 
@@ -190,7 +193,7 @@ fh.file.read.mem.record:
         mov   tmp1,@fh.reclen       ; Save bytes read
         mov   tmp2,@fh.ioresult     ; Save status register contents
         ;------------------------------------------------------
-        ; 2d: Check if a file error occured
+        ; 2b: Check if a file error occured
         ;------------------------------------------------------
 fh.file.read.mem.check_fioerr:     
         mov   @fh.ioresult,tmp2   
@@ -235,11 +238,12 @@ fh.file.read.mem.display:
         ; 5a: Prepare for next record
         ;------------------------------------------------------
 fh.file.read.mem.next:
+        mov   @fh.temp3,tmp0        ; Get circuit-breaker flag
+        jne   fh.file.read.mem.eof  ; Treat EOF if circuit-breaker set
+        ;------------------------------------------------------
+        ; 5b: Next record
+        ;------------------------------------------------------
         inc   @fh.line              ; lines/records++
-        ;------------------------------------------------------
-        ; 5c: Next record
-        ;------------------------------------------------------
-fh.file.read.mem.next.do_it:
         b     @fh.file.read.mem.record
                                     ; Next record
         ;------------------------------------------------------

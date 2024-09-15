@@ -173,7 +173,7 @@ fh.file.load.bin.vdp2cpu:
         ; Executed for devices that need their disk buffer in VDP memory
         ; (TI Disk Controller, tipi, nanopeb, ...).
         ; 
-        ;bl    @xpyv2m               ; Copy memory block from VDP to CPU
+        bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                                                            
