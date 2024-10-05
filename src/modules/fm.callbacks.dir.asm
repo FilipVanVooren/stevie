@@ -149,7 +149,7 @@ fm.dir.callback2:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        mov   tmp0,*stack           ; Push tmp0W
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
@@ -169,7 +169,7 @@ fm.dir.callback2:
         ;------------------------------------------------------
         ci    tmp0,128 
         jlt   fm.dir.callback2.fileindex
-        seto  @fh.temp3             ; Set circuit-breaker flag                                   
+        seto  @fh.circbreaker       ; Set circuit-breaker flag                                   
         jmp   fm.dir.callback2.exit ; Exit callback without crashing       
         ;------------------------------------------------------
         ; Handle volume name
@@ -210,7 +210,7 @@ fm.dir.callback2.prep:
         ;------------------------------------------------------
         ; Empty filename handling
         ;------------------------------------------------------
-        seto  @fh.temp3             ; \ Empty filename, set circuit-breaker flag        
+        seto  @fh.circbreaker       ; \ Empty filename, set circuit-breaker flag        
                                     ; / This is the last line to process.
         jmp   fm.dir.callback2.filetype                    
         ;------------------------------------------------------

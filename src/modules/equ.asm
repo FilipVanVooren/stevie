@@ -253,11 +253,12 @@ fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
 fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
-fh.temp3          equ  fh.struct +100  ; Temporary variable 3 (circuit-breaker)
+fh.temp3          equ  fh.struct +100  ; Temporary variable 3
 fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
 fh.dir.rec.ptr    equ  fh.struct +104  ; Pointer to directory record
-fh.membuffer      equ  fh.struct +106  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +186  ; End of structure
+fh.circbreaker    equ  fh.struct +106  ; Circuit breaker. Halt file operation
+fh.membuffer      equ  fh.struct +108  ; 80 bytes file memory buffer
+fh.free           equ  fh.struct +188  ; End of structure
 ;-----------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff   (256 bytes)
 ; Overloads file handle structure

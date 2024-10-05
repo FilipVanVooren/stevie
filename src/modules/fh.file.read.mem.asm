@@ -28,8 +28,8 @@
 *--------------------------------------------------------------
 * Remarks
 * File content processing expected to be handled in callback.
-* It is possible to stop further reading from file by setting the 
-* circuit-breaker flag "fh.temp3" from within the callback in @parm3
+* It is possible to stop further processing file by setting the 
+* circuit-breaker flag "fh.circbreaker" from within the callback in @parm3
 *
 * Might replace "fh.file.read.edb" someday, with SAMS and editor
 * buffer handling purely done in callback code.
@@ -73,7 +73,7 @@ fh.file.read.mem:
         ;------------------------------------------------------
 fh.file.read.mem.newfile:
         seto  @fh.temp1             ; Set "load file" flag
-        clr   @fh.temp3             ; Reset "circuit breaker" flag
+        clr   @fh.circbreaker       ; Reset "circuit breaker" flag
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
@@ -238,7 +238,7 @@ fh.file.read.mem.display:
         ; 5a: Prepare for next record
         ;------------------------------------------------------
 fh.file.read.mem.next:
-        mov   @fh.temp3,tmp0        ; Get circuit-breaker flag
+        mov   @fh.circbreaker,tmp0  ; Get circuit-breaker flag
         jne   fh.file.read.mem.eof  ; Treat EOF if circuit-breaker set
         ;------------------------------------------------------
         ; 5b: Next record
