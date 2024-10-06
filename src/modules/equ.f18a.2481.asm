@@ -28,7 +28,7 @@ spritecursor              equ  0       ; Use chars for cursor
 *--------------------------------------------------------------
 fh.vrecbuf                equ  >2000   ; VDP address record buffer
 fh.filebuf                equ  >2000   ; VDP address binary file buffer
-fh.vpab                   equ  >0960   ; VDP address PAB
+fh.vpab                   equ  >1400   ; VDP address PAB
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)

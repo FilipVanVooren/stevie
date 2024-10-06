@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241005-1635560
+0002               * BUILD: 241006-1839430
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -146,7 +146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               *--------------------------------------------------------------
 0029      2000     fh.vrecbuf                equ  >2000   ; VDP address record buffer
 0030      2000     fh.filebuf                equ  >2000   ; VDP address binary file buffer
-0031      0960     fh.vpab                   equ  >0960   ; VDP address PAB
+0031      1400     fh.vpab                   equ  >1400   ; VDP address PAB
 0032               
 0033               *--------------------------------------------------------------
 0034               * Video mode configuration (spectra2)
@@ -9982,7 +9982,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0138                       ;------------------------------------------------------
 0139               fh.file.read.mem.pabheader:
 0140 6120 0204  20         li    tmp0,fh.vpab          ; VDP destination
-     6122 0960     
+     6122 1400     
 0141 6124 C160  34         mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
      6126 A466     
 0142 6128 0206  20         li    tmp2,9                ; 9 bytes to copy
@@ -9997,7 +9997,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0149                       ; Append file descriptor to PAB header in VDP
 0150                       ;------------------------------------------------------
 0151 6130 0204  20         li    tmp0,fh.vpab + 9      ; VDP destination
-     6132 0969     
+     6132 1409     
 0152 6134 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
      6136 A444     
 0153 6138 D195  26         movb  *tmp1,tmp2            ; Get file descriptor length
@@ -10013,7 +10013,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0162                       ; Open file
 0163                       ;------------------------------------------------------
 0164 6142 0200  20         li    r0,fh.vpab            ; Address of PAB in VRAM
-     6144 0960     
+     6144 1400     
 0165 6146 C060  34         mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
      6148 A45A     
 0166               
@@ -10041,7 +10041,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0183                       ;------------------------------------------------------
 0184 6160 06A0  32 !       bl    @file.record.read     ; Read file record
      6162 2DEC     
-0185 6164 0960                   data fh.vpab          ; \ i  p0 file  = Address of PAB in VDP RAM
+0185 6164 1400                   data fh.vpab          ; \ i  p0 file  = Address of PAB in VDP RAM
 0186                                                   ; |           (without +9 offset!)
 0187                                                   ; | o  tmp0 = Status byte
 0188                                                   ; | o  tmp1 = Bytes read
@@ -10135,7 +10135,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0259                       ;------------------------------------------------------
 0260 61BA 06A0  32         bl    @file.close           ; Close file
      61BC 2DE0     
-0261 61BE 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0261 61BE 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0262                                                   ; /
 0263                       ;------------------------------------------------------
 0264                       ; Callback "File I/O error"
@@ -10151,7 +10151,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0273               fh.file.read.mem.eof:
 0274 61CA 06A0  32         bl    @file.close           ; Close file
      61CC 2DE0     
-0275 61CE 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0275 61CE 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0276                                                   ; /
 0277                       ;------------------------------------------------------
 0278                       ; Callback "Close file"
@@ -10411,7 +10411,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0170               fh.file.read.edb.pabheader:
 0171 6302 06A0  32         bl    @cpym2v
      6304 24E6     
-0172 6306 0960                   data fh.vpab,fh.file.pab.header,9
+0172 6306 1400                   data fh.vpab,fh.file.pab.header,9
      6308 757A     
      630A 0009     
 0173                                                   ; Copy PAB header to VDP
@@ -10419,7 +10419,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0175                       ; Append file descriptor to PAB header in VDP
 0176                       ;------------------------------------------------------
 0177 630C 0204  20         li    tmp0,fh.vpab + 9      ; VDP destination
-     630E 0969     
+     630E 1409     
 0178 6310 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
      6312 A444     
 0179 6314 D195  26         movb  *tmp1,tmp2            ; Get file descriptor length
@@ -10437,7 +10437,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0190               fh.file.read.edb.open:
 0191 631E 06A0  32         bl    @file.open            ; Open file
      6320 2DBC     
-0192 6322 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0192 6322 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0193 6324 0014                   data io.seq.inp.dis.var
 0194                                                   ; / i  p1 = File type/mode
 0195               
@@ -10537,7 +10537,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6380 A508     
 0269 6382 05C5  14         inct  tmp1
 0270 6384 0204  20         li    tmp0,fh.vpab + 2
-     6386 0962     
+     6386 1402     
 0271               
 0272 6388 0264  22         ori   tmp0,>4000            ; Prepare VDP address for write
      638A 4000     
@@ -10556,7 +10556,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0283                       ;------------------------------------------------------
 0284 639E 06A0  32 !       bl    @file.record.read     ; Read file record
      63A0 2DEC     
-0285 63A2 0960                   data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM
+0285 63A2 1400                   data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM
 0286                                                   ; |           (without +9 offset!)
 0287                                                   ; | o  tmp0 = Status byte
 0288                                                   ; | o  tmp1 = Bytes read
@@ -10747,7 +10747,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0428                       ;------------------------------------------------------
 0429 6466 06A0  32         bl    @file.close           ; Close file
      6468 2DE0     
-0430 646A 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0430 646A 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0431                                                   ; /
 0432               
 0433 646C 06A0  32         bl    @mem.sams.setup.stevie
@@ -10783,7 +10783,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0458                       ;------------------------------------------------------
 0459 648A 06A0  32         bl    @file.close           ; Close file
      648C 2DE0     
-0460 648E 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0460 648E 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0461                                                   ; /
 0462               
 0463 6490 06A0  32         bl    @mem.sams.setup.stevie
@@ -10803,7 +10803,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0475               fh.file.read.edb.eof:
 0476 649E 06A0  32         bl    @file.close           ; Close file
      64A0 2DE0     
-0477 64A2 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0477 64A2 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0478                                                   ; /
 0479               
 0480 64A4 06A0  32         bl    @mem.sams.setup.stevie
@@ -11005,7 +11005,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0107               fh.file.write.edb.pabheader:
 0108 6594 06A0  32         bl    @cpym2v
      6596 24E6     
-0109 6598 0960                   data fh.vpab,fh.file.pab.header,9
+0109 6598 1400                   data fh.vpab,fh.file.pab.header,9
      659A 757A     
      659C 0009     
 0110                                                   ; Copy PAB header to VDP
@@ -11013,7 +11013,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0112                       ; Append file descriptor to PAB header in VDP
 0113                       ;------------------------------------------------------
 0114 659E 0204  20         li    tmp0,fh.vpab + 9      ; VDP destination
-     65A0 0969     
+     65A0 1409     
 0115 65A2 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
      65A4 A444     
 0116 65A6 D195  26         movb  *tmp1,tmp2            ; Get file descriptor length
@@ -11030,7 +11030,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0126                       ;------------------------------------------------------
 0127 65B0 06A0  32         bl    @file.open            ; Open file
      65B2 2DBC     
-0128 65B4 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0128 65B4 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0129 65B6 0012                   data io.seq.out.dis.var
 0130                                                   ; / i  p1 = File type/mode
 0131               
@@ -11124,7 +11124,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0197                       ;------------------------------------------------------
 0198 661C 06A0  32 !       bl    @file.record.write    ; Write file record
      661E 2DF8     
-0199 6620 0960                   data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM
+0199 6620 1400                   data fh.vpab          ; \ i  p0   = Address of PAB in VDP RAM
 0200                                                   ; |           (without +9 offset!)
 0201                                                   ; | o  tmp0 = Status byte
 0202                                                   ; | o  tmp1 = ?????
@@ -11192,7 +11192,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0249                       ;------------------------------------------------------
 0250 6666 06A0  32         bl    @file.close           ; Close file
      6668 2DE0     
-0251 666A 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0251 666A 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0252                       ;------------------------------------------------------
 0253                       ; Callback "File I/O error"
 0254                       ;------------------------------------------------------
@@ -11206,7 +11206,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0261               fh.file.write.edb.done:
 0262 6674 06A0  32         bl    @file.close           ; Close file
      6676 2DE0     
-0263 6678 0960                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+0263 6678 1400                   data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
 0264                       ;------------------------------------------------------
 0265                       ; Callback "Close file"
 0266                       ;------------------------------------------------------
@@ -11372,7 +11372,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0107                       ;------------------------------------------------------
 0108               fh.file.load.bin.pabheader:
 0109 672E 0204  20         li    tmp0,fh.vpab          ; VDP destination
-     6730 0960     
+     6730 1400     
 0110 6732 C160  34         mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
      6734 A466     
 0111 6736 0206  20         li    tmp2,9                ; 9 bytes to copy
@@ -11387,7 +11387,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0118                       ; Append file descriptor to PAB header in VDP
 0119                       ;------------------------------------------------------
 0120 673E 0204  20         li    tmp0,fh.vpab + 9      ; VDP destination
-     6740 0969     
+     6740 1409     
 0121 6742 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
      6744 A444     
 0122 6746 D195  26         movb  *tmp1,tmp2            ; Get file descriptor length
@@ -11403,7 +11403,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0131                       ; Load binary image
 0132                       ;------------------------------------------------------
 0133 6750 0200  20         li    r0,fh.vpab            ; Address of PAB in VRAM
-     6752 0960     
+     6752 1400     
 0134 6754 C060  34         mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
      6756 A45A     
 0135               
@@ -15759,7 +15759,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.TEMP1............ >A460 :     
     FH.TEMP2............ >A462 :     
     FH.TEMP3............ >A464 :     
-    FH.VPAB............. >0960 :     
+    FH.VPAB............. >1400 :     
     FH.VRECBUF.......... >2000 :     
     FH.WORKMODE......... >A45A :     
     FIL.EXIT............ >228C :     

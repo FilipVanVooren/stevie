@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241005-1635560
+0002               * BUILD: 241006-1839430
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -146,7 +146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               *--------------------------------------------------------------
 0029      2000     fh.vrecbuf                equ  >2000   ; VDP address record buffer
 0030      2000     fh.filebuf                equ  >2000   ; VDP address binary file buffer
-0031      0960     fh.vpab                   equ  >0960   ; VDP address PAB
+0031      1400     fh.vpab                   equ  >1400   ; VDP address PAB
 0032               
 0033               *--------------------------------------------------------------
 0034               * Video mode configuration (spectra2)
@@ -14998,13 +14998,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      764E 3A20     
 0191                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7650 3234                        text '241005-1635560'
+0001 7650 3234                        text '241006-1839430'
      7652 3130     
-     7654 3035     
+     7654 3036     
      7656 2D31     
-     7658 3633     
-     765A 3535     
-     765C 3630     
+     7658 3833     
+     765A 3934     
+     765C 3330     
                    < data.dialogs.asm
 0192 765E 202D                        text ' - Stevie 1.6.3  - (c)2018-2024 Filip Van Vooren'
      7660 2053     
@@ -16347,7 +16347,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.TEMP1............ >A460 :     
     FH.TEMP2............ >A462 :     
     FH.TEMP3............ >A464 :     
-    FH.VPAB............. >0960 :     
+    FH.VPAB............. >1400 :     
     FH.VRECBUF.......... >2000 :     
     FH.WORKMODE......... >A45A :     
     FIL.EXIT............ >228C :     
