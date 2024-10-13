@@ -122,8 +122,8 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; Ruler visible on screen (TAT)
         ;-------------------------------------------------------
-        mov   @cmdb.vdptop,tmp0     ;
-        ai    tmp0,80               ; VDP start address (frame buffer area)
+        li    tmp0,vdp.fb.toprow.tat
+        ai    tmp0,160              ; Skip 2 top rows
         li    tmp2,(pane.botrow-2)*80
                                     ; Number of bytes to fill
         jmp   pane.colorscheme.checkcmdb

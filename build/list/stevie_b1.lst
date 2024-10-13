@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241006-1839430
+0002               * BUILD: 241013-1810270
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -15445,10 +15445,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0122                       ;-------------------------------------------------------
 0123                       ; Ruler visible on screen (TAT)
 0124                       ;-------------------------------------------------------
-0125 74C6 C120  34         mov   @cmdb.vdptop,tmp0     ;
-     74C8 A70E     
-0126 74CA 0224  22         ai    tmp0,80               ; VDP start address (frame buffer area)
-     74CC 0050     
+0125 74C6 0204  20         li    tmp0,vdp.fb.toprow.tat
+     74C8 09D0     
+0126 74CA 0224  22         ai    tmp0,160              ; Skip 2 top rows
+     74CC 00A0     
 0127 74CE 0206  20         li    tmp2,(pane.botrow-2)*80
      74D0 0870     
 0128                                                   ; Number of bytes to fill

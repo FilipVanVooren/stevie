@@ -123,7 +123,8 @@ Other memory ranges same as regular memory map.
 | >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
 | >12e0-12ff |   16 |      |            | **FREE**                 |
 | >1300-13ff |  256 | #05  | >26 * >080 | Sprite attribute table   |
-| >1400-17ff | 1024 |      |            | **FREE**                 |
+| >1400-144f |   80 |      |            | PAB                      |
+| >1450-17ff |  944 |      |            | **FREE**                 |
 | >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
 | >1800-19ff |      | #06  | >03 * >800 | Sprite pattern table     |
 | >2000-3fff | 8192 |      |            | Record/File buffer       |
