@@ -29,14 +29,28 @@ pane.filebrowser:
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - 640
                                     ; Clear screen
+        ;------------------------------------------------------
+        ; Prepare for displaying top row
+        ;------------------------------------------------------
+        mov   @cat.filecount,tmp0      ; Get number of files
+        jne   pane.filebrowser.noruler ; \
+        b     @pane.filebrowser.exit   ; / Exit if nothing to display
+        ;------------------------------------------------------
+        ; Reset ruler color on 2nd row
+        ;------------------------------------------------------
+pane.filebrowser.noruler:
+        mov   @tv.ruler.visible,tmp0  ; \ Skip if ruler is off
+        jeq   pane.filebrowser.volume ; /
 
-        mov   @cat.filecount,tmp0     ; Get number of files
-        jne   pane.filebrowser.volume ; \
-        b     @pane.filebrowser.exit  ; / Exit if nothing to display
+        li    tmp0,vdp.fb.toprow.tat  ; \ i  tmp0 = source address
+        mov   @tv.color,tmp1
+        srl   tmp1,8
+        li    tmp2,80                 ; / i  tmp2 = Number of bytes to fill
+        bl    @xfilv                  ; Fill bytes in VDP memory
         ;------------------------------------------------------
         ; Show volume name, number of files, device path
         ;------------------------------------------------------
-pane.filebrowser.volume
+pane.filebrowser.volume:
         bl    @putat
               byte 0,0
               data txt.volume       ; Display "Volume:...."   
