@@ -133,7 +133,7 @@ fh.file.load.bin.pabheader:
         li    r0,fh.vpab            ; Address of PAB in VRAM
         mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
 
-        bl    @xfile.load           ; Read binary image (register version)
+        ;bl    @xfile.load           ; Read binary image (register version)
                                     ; \ i  r0 = Address of PAB in VRAM
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read
