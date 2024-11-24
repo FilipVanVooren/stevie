@@ -23,8 +23,6 @@ tib.run.return.mon:
         li    r12,>1e00             ; \ Enable SAMS mapper again
         sbo   1                     ; | We stil have the SAMS banks layout
                                     ; / mem.sams.layout.external
-
-        jmp   !                     ; DISABLED RESUME FUNCTION
         ;------------------------------------------------------
         ; Check magic string (inline version, no SP2 present!)
         ;------------------------------------------------------
