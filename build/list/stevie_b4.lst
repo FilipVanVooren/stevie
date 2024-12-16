@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241216-1938360
+0002               * BUILD: 241216-2022010
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12286,8 +12286,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      68EC A514     
      68EE A006     
 0031                                                   ; Get string to display
-0032 68F0 0204  20         li    tmp0,47
-     68F2 002F     
+0032 68F0 0204  20         li    tmp0,50
+     68F2 0032     
 0033 68F4 C804  38         mov   tmp0,@parm2           ; Set requested length
      68F6 A008     
 0034 68F8 0204  20         li    tmp0,32

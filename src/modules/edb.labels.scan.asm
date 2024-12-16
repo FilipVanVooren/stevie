@@ -15,6 +15,15 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0
+*--------------------------------------------------------------
+* Memory usage
+*
+* 1. Using some memory locations foreseen for file I/O.
+*    Is ok, because we know we're not saving/reading file while
+*    scanning editor buffer in memory.
+*
+* 2. Using framebuffer as work buffer for label scan.
+*    Enable reuse of existing unpack to framebuffer function.
 ********|*****|*********************|**************************
 edb.labels.scan
         dect  stack
@@ -35,19 +44,19 @@ edb.labels.scan
         
         bl    @putat
               byte pane.botrow,0
-              data txt.labelscan    ; Display "Scanning labels..."        
+              data txt.labelscan    ; Show "Scanning labels in source code..."        
         ;------------------------------------------------------        
         ; Loop over lines in editor buffer
         ;------------------------------------------------------
         clr   @fh.records           ; Current line
 edb.labels.scan.line
         ;------------------------------------------------------
-        ; Unpack line to ram buffer
+        ; Unpack current line to frame buffer
         ;------------------------------------------------------
 edb.labels.scan.unpack_line:
-        mov   @fh.records,@parm1    ; Unpack current line
-        clr   @parm2
-        clr   @parm3
+        mov   @fh.records,@parm1    ; Unpack current line to frame buffer
+        clr   @parm2                ; Top row
+        clr   @parm3                ; No column offset
 
         bl    @edb.line.unpack      ; Unpack line from editor buffer
                                     ; \ i  parm1    = Line to unpack
@@ -57,7 +66,7 @@ edb.labels.scan.unpack_line:
         ;------------------------------------------------------
         ; Update line counter
         ;------------------------------------------------------
-        inc   @fh.records           
+        inc   @fh.records           ; Increase line counter
 
         bl    @putnum
               byte pane.botrow,72   ; Show lines processed
@@ -65,6 +74,20 @@ edb.labels.scan.unpack_line:
 
         c     @fh.records,@edb.lines ; All lines scanned ?                                
         jne   edb.labels.scan.line   ; Not yet, next line
+        ;------------------------------------------------------
+        ; restore 1st line in frame buffer before exit
+        ;------------------------------------------------------
+        mov   @fb.topline,@parm1    ; Line to restore in frame buffer
+        clr   @parm2                ; Top row
+        clr   @parm3                ; No column offset
+
+        bl    @edb.line.unpack      ; Unpack line from editor buffer
+                                    ; \ i  @parm1   = Line to unpack
+                                    ; | i  @parm2   = Target row in frame buffer
+                                    ; | i  @parm3   = Column offset
+                                    ; / o  @outparm1 = Length of line                
+                                    
+        seto  @fb.dirty             ; Trigger frame buffer refresh
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
