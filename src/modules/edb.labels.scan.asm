@@ -3,7 +3,7 @@
 
 ***************************************************************
 * edb.labels.scan
-* Scan source code in editor buffer for labels
+* Scan labels in source code currently in editor buffer
 ***************************************************************
 *  bl   @edb.labels.scan
 *--------------------------------------------------------------
@@ -28,9 +28,43 @@ edb.labels.scan
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------        
-        ; Initialize
-        ;------------------------------------------------------     
-        bl    @cpu.crash            ; Should never get here        
+        ; Show busy indicator
+        ;------------------------------------------------------ 
+        bl    @pane.botline.busy.on ; \ Put busy indicator on
+                                    ; /            
+        
+        bl    @putat
+              byte pane.botrow,0
+              data txt.labelscan    ; Display "Scanning labels..."        
+        ;------------------------------------------------------        
+        ; Loop over lines in editor buffer
+        ;------------------------------------------------------
+        clr   @fh.records           ; Current line
+edb.labels.scan.line
+        ;------------------------------------------------------
+        ; Unpack line to ram buffer
+        ;------------------------------------------------------
+edb.labels.scan.unpack_line:
+        mov   @fh.records,@parm1    ; Unpack current line
+        clr   @parm2
+        clr   @parm3
+
+        bl    @edb.line.unpack      ; Unpack line from editor buffer
+                                    ; \ i  parm1    = Line to unpack
+                                    ; | i  parm2    = Target row in frame buffer
+                                    ; | i  parm3    = Column offset
+                                    ; / o  outparm1 = Length of line
+        ;------------------------------------------------------
+        ; Update line counter
+        ;------------------------------------------------------
+        inc   @fh.records           
+
+        bl    @putnum
+              byte pane.botrow,72   ; Show lines processed
+              data fh.records,rambuf,>3020
+
+        c     @fh.records,@edb.lines ; All lines scanned ?                                
+        jne   edb.labels.scan.line   ; Not yet, next line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

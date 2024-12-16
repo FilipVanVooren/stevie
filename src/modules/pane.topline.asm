@@ -29,7 +29,7 @@ pane.topline.file:
 
         mov   @edb.filename.ptr,@parm1  
                                     ; Get string to display
-        li    tmp0,47
+        li    tmp0,50
         mov   tmp0,@parm2           ; Set requested length
         li    tmp0,32
         mov   tmp0,@parm3           ; Set character to fill

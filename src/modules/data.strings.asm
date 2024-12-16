@@ -22,6 +22,8 @@ txt.saving         stri 'Saving....'
                    even
 txt.printing       stri 'Printing file.....'
                    even
+txt.labelscan      stri 'Scanning labels in source code...'
+                   even
 txt.block.del      stri 'Deleting block....'
                    even
 txt.block.copy     stri 'Copying block....'
@@ -110,7 +112,7 @@ txt.filetype.none  equ txt.ws4
 
 txt.msg.tibasic    stri 'TI Basic mode active.'
                    even
-
+            
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241216-1905180
+0002               * BUILD: 241216-1938360
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -7106,7 +7106,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043                                                   ; Set line termination char from default
 0044               
 0045 332E 0204  20         li    tmp0,txt.newfile      ; "New file"
-     3330 3BAA     
+     3330 3BCC     
 0046 3332 C804  38         mov   tmp0,@edb.filename.ptr
      3334 A514     
 0047               
@@ -7116,7 +7116,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      333C A45C     
 0050               
 0051 333E 0204  20         li    tmp0,txt.filetype.none
-     3340 3CC6     
+     3340 3CE8     
 0052 3342 C804  38         mov   tmp0,@edb.filetype.ptr
      3344 A516     
 0053               
@@ -7327,13 +7327,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                       ;------------------------------------------------------
 0046 3404 06A0  32         bl    @cpym2m
      3406 253A     
-0047 3408 3D9C                   data def.printer.fname,tv.printer.fname,7
+0047 3408 3DBE                   data def.printer.fname,tv.printer.fname,7
      340A DE00     
      340C 0007     
 0048               
 0049 340E 06A0  32         bl    @cpym2m
      3410 253A     
-0050 3412 3DA3                   data def.clip.fname.a,tv.clip.fname,10
+0050 3412 3DC5                   data def.clip.fname.a,tv.clip.fname,10
      3414 DE50     
      3416 000A     
 0051               
@@ -9120,522 +9120,540 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3A0A 2E2E     
      3A0C 2E       
 0024                                  even
-0025 3A0E 1244     txt.block.del      stri 'Deleting block....'
-     3A10 656C     
-     3A12 6574     
+0025 3A0E 2153     txt.labelscan      stri 'Scanning labels in source code...'
+     3A10 6361     
+     3A12 6E6E     
      3A14 696E     
      3A16 6720     
-     3A18 626C     
-     3A1A 6F63     
-     3A1C 6B2E     
-     3A1E 2E2E     
-     3A20 2E       
+     3A18 6C61     
+     3A1A 6265     
+     3A1C 6C73     
+     3A1E 2069     
+     3A20 6E20     
+     3A22 736F     
+     3A24 7572     
+     3A26 6365     
+     3A28 2063     
+     3A2A 6F64     
+     3A2C 652E     
+     3A2E 2E2E     
 0026                                  even
-0027 3A22 1143     txt.block.copy     stri 'Copying block....'
-     3A24 6F70     
-     3A26 7969     
-     3A28 6E67     
-     3A2A 2062     
-     3A2C 6C6F     
-     3A2E 636B     
-     3A30 2E2E     
-     3A32 2E2E     
+0027 3A30 1244     txt.block.del      stri 'Deleting block....'
+     3A32 656C     
+     3A34 6574     
+     3A36 696E     
+     3A38 6720     
+     3A3A 626C     
+     3A3C 6F63     
+     3A3E 6B2E     
+     3A40 2E2E     
+     3A42 2E       
 0028                                  even
-0029 3A34 104D     txt.block.move     stri 'Moving block....'
-     3A36 6F76     
-     3A38 696E     
-     3A3A 6720     
-     3A3C 626C     
-     3A3E 6F63     
-     3A40 6B2E     
-     3A42 2E2E     
-     3A44 2E       
-0030                                  even
-0031 3A46 1053     txt.block.save     stri 'Saving block....'
-     3A48 6176     
-     3A4A 696E     
-     3A4C 6720     
-     3A4E 626C     
-     3A50 6F63     
-     3A52 6B2E     
+0029 3A44 1143     txt.block.copy     stri 'Copying block....'
+     3A46 6F70     
+     3A48 7969     
+     3A4A 6E67     
+     3A4C 2062     
+     3A4E 6C6F     
+     3A50 636B     
+     3A52 2E2E     
      3A54 2E2E     
-     3A56 2E       
+0030                                  even
+0031 3A56 104D     txt.block.move     stri 'Moving block....'
+     3A58 6F76     
+     3A5A 696E     
+     3A5C 6720     
+     3A5E 626C     
+     3A60 6F63     
+     3A62 6B2E     
+     3A64 2E2E     
+     3A66 2E       
 0032                                  even
-0033 3A58 1843     txt.block.clip     stri 'Copying to clipboard....'
-     3A5A 6F70     
-     3A5C 7969     
-     3A5E 6E67     
-     3A60 2074     
-     3A62 6F20     
-     3A64 636C     
-     3A66 6970     
-     3A68 626F     
-     3A6A 6172     
-     3A6C 642E     
-     3A6E 2E2E     
-     3A70 2E       
+0033 3A68 1053     txt.block.save     stri 'Saving block....'
+     3A6A 6176     
+     3A6C 696E     
+     3A6E 6720     
+     3A70 626C     
+     3A72 6F63     
+     3A74 6B2E     
+     3A76 2E2E     
+     3A78 2E       
 0034                                  even
-0035 3A72 1250     txt.block.print    stri 'Printing block....'
-     3A74 7269     
-     3A76 6E74     
-     3A78 696E     
-     3A7A 6720     
-     3A7C 626C     
-     3A7E 6F63     
-     3A80 6B2E     
-     3A82 2E2E     
-     3A84 2E       
+0035 3A7A 1843     txt.block.clip     stri 'Copying to clipboard....'
+     3A7C 6F70     
+     3A7E 7969     
+     3A80 6E67     
+     3A82 2074     
+     3A84 6F20     
+     3A86 636C     
+     3A88 6970     
+     3A8A 626F     
+     3A8C 6172     
+     3A8E 642E     
+     3A90 2E2E     
+     3A92 2E       
 0036                                  even
-0037 3A86 1343     txt.clearmem       stri 'Clearing memory....'
-     3A88 6C65     
-     3A8A 6172     
-     3A8C 696E     
-     3A8E 6720     
-     3A90 6D65     
-     3A92 6D6F     
-     3A94 7279     
-     3A96 2E2E     
-     3A98 2E2E     
+0037 3A94 1250     txt.block.print    stri 'Printing block....'
+     3A96 7269     
+     3A98 6E74     
+     3A9A 696E     
+     3A9C 6720     
+     3A9E 626C     
+     3AA0 6F63     
+     3AA2 6B2E     
+     3AA4 2E2E     
+     3AA6 2E       
 0038                                  even
-0039 3A9A 1352     txt.readdir        stri 'Reading catalog....'
-     3A9C 6561     
-     3A9E 6469     
-     3AA0 6E67     
-     3AA2 2063     
-     3AA4 6174     
-     3AA6 616C     
-     3AA8 6F67     
-     3AAA 2E2E     
-     3AAC 2E2E     
+0039 3AA8 1343     txt.clearmem       stri 'Clearing memory....'
+     3AAA 6C65     
+     3AAC 6172     
+     3AAE 696E     
+     3AB0 6720     
+     3AB2 6D65     
+     3AB4 6D6F     
+     3AB6 7279     
+     3AB8 2E2E     
+     3ABA 2E2E     
 0040                                  even
-0041 3AAE 0E4C     txt.done.load      stri 'Load completed'
-     3AB0 6F61     
-     3AB2 6420     
-     3AB4 636F     
-     3AB6 6D70     
-     3AB8 6C65     
-     3ABA 7465     
-     3ABC 64       
+0041 3ABC 1352     txt.readdir        stri 'Reading catalog....'
+     3ABE 6561     
+     3AC0 6469     
+     3AC2 6E67     
+     3AC4 2063     
+     3AC6 6174     
+     3AC8 616C     
+     3ACA 6F67     
+     3ACC 2E2E     
+     3ACE 2E2E     
 0042                                  even
-0043 3ABE 1049     txt.done.insert    stri 'Insert completed'
-     3AC0 6E73     
-     3AC2 6572     
-     3AC4 7420     
-     3AC6 636F     
-     3AC8 6D70     
-     3ACA 6C65     
-     3ACC 7465     
-     3ACE 64       
+0043 3AD0 0E4C     txt.done.load      stri 'Load completed'
+     3AD2 6F61     
+     3AD4 6420     
+     3AD6 636F     
+     3AD8 6D70     
+     3ADA 6C65     
+     3ADC 7465     
+     3ADE 64       
 0044                                  even
-0045 3AD0 1041     txt.done.append    stri 'Append completed'
-     3AD2 7070     
-     3AD4 656E     
-     3AD6 6420     
-     3AD8 636F     
-     3ADA 6D70     
-     3ADC 6C65     
-     3ADE 7465     
-     3AE0 64       
-0046                                  even
-0047 3AE2 0E53     txt.done.save      stri 'Save completed'
-     3AE4 6176     
-     3AE6 6520     
+0045 3AE0 1049     txt.done.insert    stri 'Insert completed'
+     3AE2 6E73     
+     3AE4 6572     
+     3AE6 7420     
      3AE8 636F     
      3AEA 6D70     
      3AEC 6C65     
      3AEE 7465     
      3AF0 64       
+0046                                  even
+0047 3AF2 1041     txt.done.append    stri 'Append completed'
+     3AF4 7070     
+     3AF6 656E     
+     3AF8 6420     
+     3AFA 636F     
+     3AFC 6D70     
+     3AFE 6C65     
+     3B00 7465     
+     3B02 64       
 0048                                  even
-0049 3AF2 0E43     txt.done.copy      stri 'Copy completed'
-     3AF4 6F70     
-     3AF6 7920     
-     3AF8 636F     
-     3AFA 6D70     
-     3AFC 6C65     
-     3AFE 7465     
-     3B00 64       
+0049 3B04 0E53     txt.done.save      stri 'Save completed'
+     3B06 6176     
+     3B08 6520     
+     3B0A 636F     
+     3B0C 6D70     
+     3B0E 6C65     
+     3B10 7465     
+     3B12 64       
 0050                                  even
-0051 3B02 0F50     txt.done.print     stri 'Print completed'
-     3B04 7269     
-     3B06 6E74     
-     3B08 2063     
-     3B0A 6F6D     
-     3B0C 706C     
-     3B0E 6574     
-     3B10 6564     
-0052                                  even
-0053 3B12 1044     txt.done.delete    stri 'Delete completed'
-     3B14 656C     
-     3B16 6574     
-     3B18 6520     
+0051 3B14 0E43     txt.done.copy      stri 'Copy completed'
+     3B16 6F70     
+     3B18 7920     
      3B1A 636F     
      3B1C 6D70     
      3B1E 6C65     
      3B20 7465     
      3B22 64       
-0054                                  even
-0055 3B24 0F43     txt.done.clipboard stri 'Clipboard saved'
-     3B26 6C69     
-     3B28 7062     
-     3B2A 6F61     
-     3B2C 7264     
-     3B2E 2073     
-     3B30 6176     
+0052                                  even
+0053 3B24 0F50     txt.done.print     stri 'Print completed'
+     3B26 7269     
+     3B28 6E74     
+     3B2A 2063     
+     3B2C 6F6D     
+     3B2E 706C     
+     3B30 6574     
      3B32 6564     
+0054                                  even
+0055 3B34 1044     txt.done.delete    stri 'Delete completed'
+     3B36 656C     
+     3B38 6574     
+     3B3A 6520     
+     3B3C 636F     
+     3B3E 6D70     
+     3B40 6C65     
+     3B42 7465     
+     3B44 64       
 0056                                  even
-0057 3B34 0D43     txt.done.clipdev   stri 'Clipboard set'
-     3B36 6C69     
-     3B38 7062     
-     3B3A 6F61     
-     3B3C 7264     
-     3B3E 2073     
-     3B40 6574     
+0057 3B46 0F43     txt.done.clipboard stri 'Clipboard saved'
+     3B48 6C69     
+     3B4A 7062     
+     3B4C 6F61     
+     3B4E 7264     
+     3B50 2073     
+     3B52 6176     
+     3B54 6564     
 0058                                  even
-0059 3B42 0E41     txt.autoins.on     stri 'Autoinsert: on'
-     3B44 7574     
-     3B46 6F69     
-     3B48 6E73     
-     3B4A 6572     
-     3B4C 743A     
-     3B4E 206F     
-     3B50 6E       
+0059 3B56 0D43     txt.done.clipdev   stri 'Clipboard set'
+     3B58 6C69     
+     3B5A 7062     
+     3B5C 6F61     
+     3B5E 7264     
+     3B60 2073     
+     3B62 6574     
 0060                                  even
-0061 3B52 0F41     txt.autoins.off    stri 'Autoinsert: off'
-     3B54 7574     
-     3B56 6F69     
-     3B58 6E73     
-     3B5A 6572     
-     3B5C 743A     
-     3B5E 206F     
-     3B60 6666     
+0061 3B64 0E41     txt.autoins.on     stri 'Autoinsert: on'
+     3B66 7574     
+     3B68 6F69     
+     3B6A 6E73     
+     3B6C 6572     
+     3B6E 743A     
+     3B70 206F     
+     3B72 6E       
 0062                                  even
-0063 3B62 0B46     txt.fastmode       stri 'Fastmode IO'
-     3B64 6173     
-     3B66 746D     
-     3B68 6F64     
-     3B6A 6520     
-     3B6C 494F     
+0063 3B74 0F41     txt.autoins.off    stri 'Autoinsert: off'
+     3B76 7574     
+     3B78 6F69     
+     3B7A 6E73     
+     3B7C 6572     
+     3B7E 743A     
+     3B80 206F     
+     3B82 6666     
 0064                                  even
-0065 3B6E 134E     txt.nodisk         stri 'No Device/Disk/Path'
-     3B70 6F20     
-     3B72 4465     
-     3B74 7669     
-     3B76 6365     
-     3B78 2F44     
-     3B7A 6973     
-     3B7C 6B2F     
-     3B7E 5061     
-     3B80 7468     
+0065 3B84 0B46     txt.fastmode       stri 'Fastmode IO'
+     3B86 6173     
+     3B88 746D     
+     3B8A 6F64     
+     3B8C 6520     
+     3B8E 494F     
 0066                                  even
-0067 3B82 1D55     txt.uncrunching    stri 'Uncrunching TI Basic line....'
-     3B84 6E63     
-     3B86 7275     
-     3B88 6E63     
-     3B8A 6869     
-     3B8C 6E67     
-     3B8E 2054     
-     3B90 4920     
-     3B92 4261     
-     3B94 7369     
-     3B96 6320     
-     3B98 6C69     
-     3B9A 6E65     
-     3B9C 2E2E     
-     3B9E 2E2E     
+0067 3B90 134E     txt.nodisk         stri 'No Device/Disk/Path'
+     3B92 6F20     
+     3B94 4465     
+     3B96 7669     
+     3B98 6365     
+     3B9A 2F44     
+     3B9C 6973     
+     3B9E 6B2F     
+     3BA0 5061     
+     3BA2 7468     
 0068                                  even
-0069 3BA0 026B     txt.kb             stri 'kb'
-     3BA2 62       
+0069 3BA4 1D55     txt.uncrunching    stri 'Uncrunching TI Basic line....'
+     3BA6 6E63     
+     3BA8 7275     
+     3BAA 6E63     
+     3BAC 6869     
+     3BAE 6E67     
+     3BB0 2054     
+     3BB2 4920     
+     3BB4 4261     
+     3BB6 7369     
+     3BB8 6320     
+     3BBA 6C69     
+     3BBC 6E65     
+     3BBE 2E2E     
+     3BC0 2E2E     
 0070                                  even
-0071 3BA4 054C     txt.lines          stri 'Lines'
-     3BA6 696E     
-     3BA8 6573     
+0071 3BC2 026B     txt.kb             stri 'kb'
+     3BC4 62       
 0072                                  even
-0073 3BAA 0A5B     txt.newfile        stri '[New file]'
-     3BAC 4E65     
-     3BAE 7720     
-     3BB0 6669     
-     3BB2 6C65     
-     3BB4 5D       
+0073 3BC6 054C     txt.lines          stri 'Lines'
+     3BC8 696E     
+     3BCA 6573     
 0074                                  even
-0075 3BB6 0D5B     txt.tib1           stri '[TI Basic #1]'
-     3BB8 5449     
-     3BBA 2042     
-     3BBC 6173     
-     3BBE 6963     
-     3BC0 2023     
-     3BC2 315D     
+0075 3BCC 0A5B     txt.newfile        stri '[New file]'
+     3BCE 4E65     
+     3BD0 7720     
+     3BD2 6669     
+     3BD4 6C65     
+     3BD6 5D       
 0076                                  even
-0077 3BC4 0D5B     txt.tib2           stri '[TI Basic #2]'
-     3BC6 5449     
-     3BC8 2042     
-     3BCA 6173     
-     3BCC 6963     
-     3BCE 2023     
-     3BD0 325D     
+0077 3BD8 0D5B     txt.tib1           stri '[TI Basic #1]'
+     3BDA 5449     
+     3BDC 2042     
+     3BDE 6173     
+     3BE0 6963     
+     3BE2 2023     
+     3BE4 315D     
 0078                                  even
-0079 3BD2 0D5B     txt.tib3           stri '[TI Basic #3]'
-     3BD4 5449     
-     3BD6 2042     
-     3BD8 6173     
-     3BDA 6963     
-     3BDC 2023     
-     3BDE 335D     
+0079 3BE6 0D5B     txt.tib2           stri '[TI Basic #2]'
+     3BE8 5449     
+     3BEA 2042     
+     3BEC 6173     
+     3BEE 6963     
+     3BF0 2023     
+     3BF2 325D     
 0080                                  even
-0081 3BE0 0D5B     txt.tib4           stri '[TI Basic #4]'
-     3BE2 5449     
-     3BE4 2042     
-     3BE6 6173     
-     3BE8 6963     
-     3BEA 2023     
-     3BEC 345D     
+0081 3BF4 0D5B     txt.tib3           stri '[TI Basic #3]'
+     3BF6 5449     
+     3BF8 2042     
+     3BFA 6173     
+     3BFC 6963     
+     3BFE 2023     
+     3C00 335D     
 0082                                  even
-0083 3BEE 0D5B     txt.tib5           stri '[TI Basic #5]'
-     3BF0 5449     
-     3BF2 2042     
-     3BF4 6173     
-     3BF6 6963     
-     3BF8 2023     
-     3BFA 355D     
+0083 3C02 0D5B     txt.tib4           stri '[TI Basic #4]'
+     3C04 5449     
+     3C06 2042     
+     3C08 6173     
+     3C0A 6963     
+     3C0C 2023     
+     3C0E 345D     
 0084                                  even
-0085 3BFC 0444     txt.filetype.dv80  stri 'DV80'
-     3BFE 5638     
-     3C00 30       
+0085 3C10 0D5B     txt.tib5           stri '[TI Basic #5]'
+     3C12 5449     
+     3C14 2042     
+     3C16 6173     
+     3C18 6963     
+     3C1A 2023     
+     3C1C 355D     
 0086                                  even
-0087 3C02 034D     txt.m1             stri 'M1='
-     3C04 313D     
+0087 3C1E 0444     txt.filetype.dv80  stri 'DV80'
+     3C20 5638     
+     3C22 30       
 0088                                  even
-0089 3C06 034D     txt.m2             stri 'M2='
-     3C08 323D     
+0089 3C24 034D     txt.m1             stri 'M1='
+     3C26 313D     
 0090                                  even
-0091 3C0A 1E46     txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
-     3C0C 392D     
-     3C0E 4D65     
-     3C10 6E75     
-     3C12 2020     
-     3C14 5E48     
-     3C16 2D48     
-     3C18 656C     
-     3C1A 7020     
-     3C1C 205E     
-     3C1E 552D     
-     3C20 5368     
-     3C22 6F72     
-     3C24 7463     
-     3C26 7574     
-     3C28 73       
+0091 3C28 034D     txt.m2             stri 'M2='
+     3C2A 323D     
 0092                                  even
-0093 3C2A 2946     txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
-     3C2C 392D     
-     3C2E 4D65     
-     3C30 6E75     
-     3C32 2020     
-     3C34 5E48     
-     3C36 2D48     
-     3C38 656C     
-     3C3A 7020     
-     3C3C 205E     
-     3C3E 552D     
-     3C40 5368     
-     3C42 6F72     
-     3C44 7463     
-     3C46 7574     
-     3C48 7320     
-     3C4A 2046     
-     3C4C 302D     
-     3C4E 4261     
-     3C50 7369     
-     3C52 6323     
+0093 3C2C 1E46     txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
+     3C2E 392D     
+     3C30 4D65     
+     3C32 6E75     
+     3C34 2020     
+     3C36 5E48     
+     3C38 2D48     
+     3C3A 656C     
+     3C3C 7020     
+     3C3E 205E     
+     3C40 552D     
+     3C42 5368     
+     3C44 6F72     
+     3C46 7463     
+     3C48 7574     
+     3C4A 73       
 0094                                  even
-0095 3C54 3446     txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
-     3C56 392D     
-     3C58 4578     
-     3C5A 6974     
-     3C5C 2020     
-     3C5E 5E43     
-     3C60 6F70     
-     3C62 7920     
-     3C64 5E4D     
-     3C66 6F76     
-     3C68 6520     
-     3C6A 5E44     
-     3C6C 656C     
-     3C6E 205E     
-     3C70 5361     
-     3C72 7665     
-     3C74 205E     
-     3C76 5072     
-     3C78 696E     
-     3C7A 7420     
-     3C7C 5E5B     
-     3C7E 312D     
-     3C80 335D     
-     3C82 436C     
-     3C84 6970     
-     3C86 6272     
-     3C88 64       
+0095 3C4C 2946     txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
+     3C4E 392D     
+     3C50 4D65     
+     3C52 6E75     
+     3C54 2020     
+     3C56 5E48     
+     3C58 2D48     
+     3C5A 656C     
+     3C5C 7020     
+     3C5E 205E     
+     3C60 552D     
+     3C62 5368     
+     3C64 6F72     
+     3C66 7463     
+     3C68 7574     
+     3C6A 7320     
+     3C6C 2046     
+     3C6E 302D     
+     3C70 4261     
+     3C72 7369     
+     3C74 6323     
 0096                                  even
-0097 3C8A 2C46     txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
-     3C8C 392D     
-     3C8E 4261     
-     3C90 636B     
-     3C92 2020     
-     3C94 4635     
-     3C96 2D41     
-     3C98 7574     
-     3C9A 6F55     
-     3C9C 6E70     
-     3C9E 6163     
-     3CA0 6B20     
-     3CA2 2053     
-     3CA4 5041     
-     3CA6 4345     
-     3CA8 2D55     
-     3CAA 6E70     
-     3CAC 6163     
-     3CAE 6B20     
-     3CB0 7072     
-     3CB2 6F67     
-     3CB4 7261     
-     3CB6 6D       
+0097 3C76 3446     txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
+     3C78 392D     
+     3C7A 4578     
+     3C7C 6974     
+     3C7E 2020     
+     3C80 5E43     
+     3C82 6F70     
+     3C84 7920     
+     3C86 5E4D     
+     3C88 6F76     
+     3C8A 6520     
+     3C8C 5E44     
+     3C8E 656C     
+     3C90 205E     
+     3C92 5361     
+     3C94 7665     
+     3C96 205E     
+     3C98 5072     
+     3C9A 696E     
+     3C9C 7420     
+     3C9E 5E5B     
+     3CA0 312D     
+     3CA2 335D     
+     3CA4 436C     
+     3CA6 6970     
+     3CA8 6272     
+     3CAA 64       
 0098                                  even
-0099 3CB8 020E     txt.alpha.down     data >020e,>0f00
-     3CBA 0F00     
-0100 3CBC 0110     txt.vertline       data >0110
-0101 3CBE 011C     txt.keymarker      byte 1,28
-0102                                  even
-0103 3CC0 0120     txt.ws1            stri ' '
+0099 3CAC 2C46     txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
+     3CAE 392D     
+     3CB0 4261     
+     3CB2 636B     
+     3CB4 2020     
+     3CB6 4635     
+     3CB8 2D41     
+     3CBA 7574     
+     3CBC 6F55     
+     3CBE 6E70     
+     3CC0 6163     
+     3CC2 6B20     
+     3CC4 2053     
+     3CC6 5041     
+     3CC8 4345     
+     3CCA 2D55     
+     3CCC 6E70     
+     3CCE 6163     
+     3CD0 6B20     
+     3CD2 7072     
+     3CD4 6F67     
+     3CD6 7261     
+     3CD8 6D       
+0100                                  even
+0101 3CDA 020E     txt.alpha.down     data >020e,>0f00
+     3CDC 0F00     
+0102 3CDE 0110     txt.vertline       data >0110
+0103 3CE0 011C     txt.keymarker      byte 1,28
 0104                                  even
-0105 3CC2 0220     txt.ws2            stri '  '
-     3CC4 20       
+0105 3CE2 0120     txt.ws1            stri ' '
 0106                                  even
-0107 3CC6 0420     txt.ws4            stri '    '
-     3CC8 2020     
-     3CCA 20       
+0107 3CE4 0220     txt.ws2            stri '  '
+     3CE6 20       
 0108                                  even
-0109      3CC6     txt.filetype.none  equ txt.ws4
-0110               
-0111 3CCC 1554     txt.msg.tibasic    stri 'TI Basic mode active.'
-     3CCE 4920     
-     3CD0 4261     
-     3CD2 7369     
-     3CD4 6320     
-     3CD6 6D6F     
-     3CD8 6465     
-     3CDA 2061     
-     3CDC 6374     
-     3CDE 6976     
-     3CE0 652E     
-0112                                  even
-0113               
-0114               ;--------------------------------------------------------------
-0115               ; Strings for error line pane
+0109 3CE8 0420     txt.ws4            stri '    '
+     3CEA 2020     
+     3CEC 20       
+0110                                  even
+0111      3CE8     txt.filetype.none  equ txt.ws4
+0112               
+0113 3CEE 1554     txt.msg.tibasic    stri 'TI Basic mode active.'
+     3CF0 4920     
+     3CF2 4261     
+     3CF4 7369     
+     3CF6 6320     
+     3CF8 6D6F     
+     3CFA 6465     
+     3CFC 2061     
+     3CFE 6374     
+     3D00 6976     
+     3D02 652E     
+0114                                  even
+0115               
 0116               ;--------------------------------------------------------------
-0117 3CE2 1546     txt.ioerr.load     stri 'Failed loading file: '
-     3CE4 6169     
-     3CE6 6C65     
-     3CE8 6420     
-     3CEA 6C6F     
-     3CEC 6164     
-     3CEE 696E     
-     3CF0 6720     
-     3CF2 6669     
-     3CF4 6C65     
-     3CF6 3A20     
-0118                                  even
-0119 3CF8 1446     txt.ioerr.save     stri 'Failed saving file: '
-     3CFA 6169     
-     3CFC 6C65     
-     3CFE 6420     
-     3D00 7361     
-     3D02 7669     
-     3D04 6E67     
-     3D06 2066     
-     3D08 696C     
-     3D0A 653A     
-     3D0C 20       
+0117               ; Strings for error line pane
+0118               ;--------------------------------------------------------------
+0119 3D04 1546     txt.ioerr.load     stri 'Failed loading file: '
+     3D06 6169     
+     3D08 6C65     
+     3D0A 6420     
+     3D0C 6C6F     
+     3D0E 6164     
+     3D10 696E     
+     3D12 6720     
+     3D14 6669     
+     3D16 6C65     
+     3D18 3A20     
 0120                                  even
-0121 3D0E 1B46     txt.ioerr.print    stri 'Failed printing to device: '
-     3D10 6169     
-     3D12 6C65     
-     3D14 6420     
-     3D16 7072     
-     3D18 696E     
-     3D1A 7469     
-     3D1C 6E67     
-     3D1E 2074     
-     3D20 6F20     
-     3D22 6465     
+0121 3D1A 1446     txt.ioerr.save     stri 'Failed saving file: '
+     3D1C 6169     
+     3D1E 6C65     
+     3D20 6420     
+     3D22 7361     
      3D24 7669     
-     3D26 6365     
-     3D28 3A20     
+     3D26 6E67     
+     3D28 2066     
+     3D2A 696C     
+     3D2C 653A     
+     3D2E 20       
 0122                                  even
-0123 3D2A 164E     txt.io.nofile      stri 'No filename specified.'
-     3D2C 6F20     
-     3D2E 6669     
-     3D30 6C65     
-     3D32 6E61     
-     3D34 6D65     
-     3D36 2073     
-     3D38 7065     
-     3D3A 6369     
-     3D3C 6669     
-     3D3E 6564     
-     3D40 2E       
+0123 3D30 1B46     txt.ioerr.print    stri 'Failed printing to device: '
+     3D32 6169     
+     3D34 6C65     
+     3D36 6420     
+     3D38 7072     
+     3D3A 696E     
+     3D3C 7469     
+     3D3E 6E67     
+     3D40 2074     
+     3D42 6F20     
+     3D44 6465     
+     3D46 7669     
+     3D48 6365     
+     3D4A 3A20     
 0124                                  even
-0125 3D42 1B49     txt.memfull.load   stri 'Index full. File too large.'
-     3D44 6E64     
-     3D46 6578     
-     3D48 2066     
-     3D4A 756C     
-     3D4C 6C2E     
-     3D4E 2046     
-     3D50 696C     
-     3D52 6520     
-     3D54 746F     
-     3D56 6F20     
-     3D58 6C61     
-     3D5A 7267     
-     3D5C 652E     
+0125 3D4C 164E     txt.io.nofile      stri 'No filename specified.'
+     3D4E 6F20     
+     3D50 6669     
+     3D52 6C65     
+     3D54 6E61     
+     3D56 6D65     
+     3D58 2073     
+     3D5A 7065     
+     3D5C 6369     
+     3D5E 6669     
+     3D60 6564     
+     3D62 2E       
 0126                                  even
-0127 3D5E 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
-     3D60 6F70     
-     3D62 792F     
-     3D64 4D6F     
-     3D66 7665     
-     3D68 2074     
-     3D6A 6172     
-     3D6C 6765     
-     3D6E 7420     
-     3D70 6D75     
-     3D72 7374     
-     3D74 2062     
-     3D76 6520     
-     3D78 6F75     
-     3D7A 7473     
-     3D7C 6964     
-     3D7E 6520     
-     3D80 4D31     
-     3D82 2D4D     
-     3D84 3220     
-     3D86 7261     
-     3D88 6E67     
-     3D8A 652E     
+0127 3D64 1B49     txt.memfull.load   stri 'Index full. File too large.'
+     3D66 6E64     
+     3D68 6578     
+     3D6A 2066     
+     3D6C 756C     
+     3D6E 6C2E     
+     3D70 2046     
+     3D72 696C     
+     3D74 6520     
+     3D76 746F     
+     3D78 6F20     
+     3D7A 6C61     
+     3D7C 7267     
+     3D7E 652E     
 0128                                  even
-0129               ;--------------------------------------------------------------
-0130               ; Strings for command buffer
+0129 3D80 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
+     3D82 6F70     
+     3D84 792F     
+     3D86 4D6F     
+     3D88 7665     
+     3D8A 2074     
+     3D8C 6172     
+     3D8E 6765     
+     3D90 7420     
+     3D92 6D75     
+     3D94 7374     
+     3D96 2062     
+     3D98 6520     
+     3D9A 6F75     
+     3D9C 7473     
+     3D9E 6964     
+     3DA0 6520     
+     3DA2 4D31     
+     3DA4 2D4D     
+     3DA6 3220     
+     3DA8 7261     
+     3DAA 6E67     
+     3DAC 652E     
+0130                                  even
 0131               ;--------------------------------------------------------------
-0132 3D8C 013E     txt.cmdb.prompt    stri '>'
-0133                                  even
-0134 3D8E 0D43     txt.colorscheme    stri 'Color scheme:'
-     3D90 6F6C     
-     3D92 6F72     
-     3D94 2073     
-     3D96 6368     
-     3D98 656D     
-     3D9A 653A     
+0132               ; Strings for command buffer
+0133               ;--------------------------------------------------------------
+0134 3DAE 013E     txt.cmdb.prompt    stri '>'
 0135                                  even
-0136               
-0137               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
+0136 3DB0 0D43     txt.colorscheme    stri 'Color scheme:'
+     3DB2 6F6C     
+     3DB4 6F72     
+     3DB6 2073     
+     3DB8 6368     
+     3DBA 656D     
+     3DBC 653A     
+0137                                  even
+0138               
+0139               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
                    < ram.resident.asm
 0065                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -9645,53 +9663,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 3D9C 0650     def.printer.fname   stri 'PI.PIO'
-     3D9E 492E     
-     3DA0 5049     
-     3DA2 4F       
-0008 3DA3   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     3DA4 4453     
-     3DA6 4B31     
-     3DA8 2E43     
-     3DAA 4C49     
-     3DAC 50       
-0009 3DAD   09     def.clip.fname.b    stri 'DSK6.CLIP'
-     3DAE 4453     
-     3DB0 4B36     
-     3DB2 2E43     
-     3DB4 4C49     
-     3DB6 50       
-0010 3DB7   09     def.clip.fname.c    stri 'TIPI.CLIP'
-     3DB8 5449     
-     3DBA 5049     
-     3DBC 2E43     
-     3DBE 4C49     
-     3DC0 50       
-0011 3DC1   2F     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     3DC2 2C44     
-     3DC4 534B     
-     3DC6 2C48     
-     3DC8 4458     
-     3DCA 2C49     
-     3DCC 4445     
-     3DCE 2C50     
-     3DD0 492E     
-     3DD2 2C50     
-     3DD4 494F     
-     3DD6 2C54     
-     3DD8 4950     
-     3DDA 492E     
-     3DDC 2C52     
-     3DDE 442C     
-     3DE0 5343     
-     3DE2 532C     
-     3DE4 5344     
-     3DE6 442C     
-     3DE8 5744     
-     3DEA 532C     
-     3DEC 5253     
-     3DEE 3233     
-     3DF0 32       
+0007 3DBE 0650     def.printer.fname   stri 'PI.PIO'
+     3DC0 492E     
+     3DC2 5049     
+     3DC4 4F       
+0008 3DC5   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     3DC6 4453     
+     3DC8 4B31     
+     3DCA 2E43     
+     3DCC 4C49     
+     3DCE 50       
+0009 3DCF   09     def.clip.fname.b    stri 'DSK6.CLIP'
+     3DD0 4453     
+     3DD2 4B36     
+     3DD4 2E43     
+     3DD6 4C49     
+     3DD8 50       
+0010 3DD9   09     def.clip.fname.c    stri 'TIPI.CLIP'
+     3DDA 5449     
+     3DDC 5049     
+     3DDE 2E43     
+     3DE0 4C49     
+     3DE2 50       
+0011 3DE3   2F     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3DE4 2C44     
+     3DE6 534B     
+     3DE8 2C48     
+     3DEA 4458     
+     3DEC 2C49     
+     3DEE 4445     
+     3DF0 2C50     
+     3DF2 492E     
+     3DF4 2C50     
+     3DF6 494F     
+     3DF8 2C54     
+     3DFA 4950     
+     3DFC 492E     
+     3DFE 2C52     
+     3E00 442C     
+     3E02 5343     
+     3E04 532C     
+     3E06 5344     
+     3E08 442C     
+     3E0A 5744     
+     3E0C 532C     
+     3E0E 5253     
+     3E10 3233     
+     3E12 32       
                    < ram.resident.asm
 0066                       copy  "data.fg99.carts.asm"         ; Cartridge images
      **** ****     > data.fg99.carts.asm
@@ -9706,87 +9724,87 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * Cartridge 'Force Command'
 0010               *--------------------------------------------------------------
 0011               fg99.cart.fcmd:
-0012 3DF2 99              byte   >99                   ; \
-0013 3DF3   4F            text   'OKFG99'              ; | Send this to reload
-     3DF4 4B46     
-     3DF6 4739     
-     3DF8 39       
-0014 3DF9   99            byte   >99                   ; /
-0015 3DFA 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
-     3DFC 4D44     
-     3DFE 47       
-0016 3DFF   00            byte   >00, >00, >00         ; /
-     3E00 0000     
-0017 3E02 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0018 3E04 0000            data   >0000                 ; Start address
+0012 3E14 99              byte   >99                   ; \
+0013 3E15   4F            text   'OKFG99'              ; | Send this to reload
+     3E16 4B46     
+     3E18 4739     
+     3E1A 39       
+0014 3E1B   99            byte   >99                   ; /
+0015 3E1C 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3E1E 4D44     
+     3E20 47       
+0016 3E21   00            byte   >00, >00, >00         ; /
+     3E22 0000     
+0017 3E24 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3E26 0000            data   >0000                 ; Start address
 0019                      even
 0020               
 0021               *--------------------------------------------------------------
 0022               * Cartridge 'Extended Basic GEM'
 0023               *--------------------------------------------------------------
 0024               fg99.cart.xbgem:
-0025 3E06 99              byte   >99                   ; \
-0026 3E07   4F            text   'OKFG99'              ; | Send this to reload
-     3E08 4B46     
-     3E0A 4739     
-     3E0C 39       
-0027 3E0D   99            byte   >99                   ; /
-0028 3E0E 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
-     3E10 3239     
-     3E12 4745     
-     3E14 4D47     
+0025 3E28 99              byte   >99                   ; \
+0026 3E29   4F            text   'OKFG99'              ; | Send this to reload
+     3E2A 4B46     
+     3E2C 4739     
+     3E2E 39       
+0027 3E2F   99            byte   >99                   ; /
+0028 3E30 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3E32 3239     
+     3E34 4745     
+     3E36 4D47     
 0029                      ;                            ; /
-0030 3E16 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0031 3E18 0000            data   >0000                 ; Start address
+0030 3E38 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3E3A 0000            data   >0000                 ; Start address
 0032                      even
 0033               
 0034               *--------------------------------------------------------------
 0035               * Cartridge 'Rich Extended Basic'
 0036               *--------------------------------------------------------------
 0037               fg99.cart.rxb:
-0038 3E1A 99              byte   >99                   ; \
-0039 3E1B   4F            text   'OKFG99'              ; | Send this to reload
-     3E1C 4B46     
-     3E1E 4739     
-     3E20 39       
-0040 3E21   99            byte   >99                   ; /
-0041 3E22 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
-     3E24 4247     
-0042 3E26 0000            byte   >00, >00, >00, >00    ; /
-     3E28 0000     
-0043 3E2A 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0044 3E2C 0000            data   >0000                 ; Start address
+0038 3E3C 99              byte   >99                   ; \
+0039 3E3D   4F            text   'OKFG99'              ; | Send this to reload
+     3E3E 4B46     
+     3E40 4739     
+     3E42 39       
+0040 3E43   99            byte   >99                   ; /
+0041 3E44 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3E46 4247     
+0042 3E48 0000            byte   >00, >00, >00, >00    ; /
+     3E4A 0000     
+0043 3E4C 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3E4E 0000            data   >0000                 ; Start address
 0045                      even
 0046               
 0047               *--------------------------------------------------------------
 0048               * Cartridge 'fbForth'
 0049               *--------------------------------------------------------------
 0050               fg99.cart.fbforth:
-0051 3E2E 99              byte   >99                   ; \
-0052 3E2F   4F            text   'OKFG99'              ; | Send this to reload
-     3E30 4B46     
-     3E32 4739     
-     3E34 39       
-0053 3E35   99            byte   >99                   ; /
-0054 3E36 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
-     3E38 464F     
-     3E3A 5254     
-     3E3C 4843     
+0051 3E50 99              byte   >99                   ; \
+0052 3E51   4F            text   'OKFG99'              ; | Send this to reload
+     3E52 4B46     
+     3E54 4739     
+     3E56 39       
+0053 3E57   99            byte   >99                   ; /
+0054 3E58 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     3E5A 464F     
+     3E5C 5254     
+     3E5E 4843     
 0055                      ;                            ; /
-0056 3E3E 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0057 3E40 0000            data   >0000                 ; Start address
+0056 3E60 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3E62 0000            data   >0000                 ; Start address
 0058                      even
                    < ram.resident.asm
                    < stevie_b4.asm
 0052                       ;------------------------------------------------------
 0053                       ; Activate bank 1 and branch to  >6036
 0054                       ;------------------------------------------------------
-0055 3E42 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3E44 6002     
+0055 3E64 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3E66 6002     
 0056               
 0060               
-0061 3E46 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3E48 6046     
+0061 3E68 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3E6A 6046     
 0062               ***************************************************************
 0063               * Step 3: Include main editor modules
 0064               ********|*****|*********************|**************************
@@ -11780,7 +11798,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0074 6732 0585  14         inc   tmp1                  ; Skip length byte, will be set later
 0075               
 0076 6734 0207  20         li    tmp3,def.devices      ; Get string with valid devices
-     6736 3DC1     
+     6736 3DE3     
 0077 6738 C217  26         mov   *tmp3,tmp4            ; \ Get length byte, skipping
 0078 673A 0988  32         srl   tmp4,8                ; / 1st following character
 0079 673C A207  18         a     tmp3,tmp4             ; Calc end address of valid devices
@@ -12321,7 +12339,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0067 6932 06A0  32         bl    @putat
      6934 2442     
 0068 6936 0034                   byte 0,52
-0069 6938 3C02                   data txt.m1           ; Show M1 marker message
+0069 6938 3C24                   data txt.m1           ; Show M1 marker message
 0070               
 0071 693A C820  54         mov   @edb.block.m1,@parm1
      693C A50E     
@@ -12352,7 +12370,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089 695E 06A0  32         bl    @putat
      6960 2442     
 0090 6962 003E                   byte 0,62
-0091 6964 3C06                   data txt.m2           ; Show M2 marker message
+0091 6964 3C28                   data txt.m2           ; Show M2 marker message
 0092               
 0093 6966 C820  54         mov   @edb.block.m2,@parm1
      6968 A510     
@@ -12485,7 +12503,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0080 69E8 06A0  32         bl    @putat
      69EA 2442     
 0081 69EC 1D00                   byte pane.botrow,0
-0082 69EE 3C54                   data txt.keys.block   ; Show block shortcuts
+0082 69EE 3C76                   data txt.keys.block   ; Show block shortcuts
 0083               
 0084 69F0 1015  14         jmp   pane.botline.show_mode
 0085                       ;------------------------------------------------------
@@ -12501,7 +12519,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0094 69F8 06A0  32         bl    @putat
      69FA 2442     
 0095 69FC 1D00                   byte pane.botrow,0
-0096 69FE 3C2A                   data txt.keys.defaultb
+0096 69FE 3C4C                   data txt.keys.defaultb
 0097                                                   ; Show defaults + TI Basic
 0098               
 0099 6A00 C120  34         mov   @tib.session,tmp0     ; Get Session ID
@@ -12524,7 +12542,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0112 6A14 06A0  32 !       bl    @putat
      6A16 2442     
 0113 6A18 1D00                   byte pane.botrow,0
-0114 6A1A 3C0A                   data txt.keys.default ; Show default keys
+0114 6A1A 3C2C                   data txt.keys.default ; Show default keys
 0115                       ;------------------------------------------------------
 0116                       ; Show text editing mode
 0117                       ;------------------------------------------------------
@@ -12585,7 +12603,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0165 6A54 06A0  32         bl    @putat
      6A56 2442     
 0166 6A58 1D3A                   byte pane.botrow,58
-0167 6A5A 3CC0                   data txt.ws1          ; Single white space
+0167 6A5A 3CE2                   data txt.ws1          ; Single white space
 0168                       ;------------------------------------------------------
 0169                       ; Show "line,column"
 0170                       ;------------------------------------------------------
@@ -14939,7 +14957,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0121               
 0122 76EA 06A0  32         bl    @putstr
      76EC 241E     
-0123 76EE 3D8C                   data txt.cmdb.prompt  ; Draw marker
+0123 76EE 3DAE                   data txt.cmdb.prompt  ; Draw marker
 0124                                                   ; \ i @wyx   = Cursor position
 0125                                                   ; / i @parm1 = String to display
 0126                       ;------------------------------------------------------
@@ -15765,11 +15783,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYODD.............. >2594 :     
     CPYV2M.............. >2518 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3DA3 :     
-    DEF.CLIP.FNAME.B.... >3DAD :     
-    DEF.CLIP.FNAME.C.... >3DB7 :     
-    DEF.DEVICES......... >3DC1 :     
-    DEF.PRINTER.FNAME... >3D9C :     
+    DEF.CLIP.FNAME.A.... >3DC5 :     
+    DEF.CLIP.FNAME.B.... >3DCF :     
+    DEF.CLIP.FNAME.C.... >3DD9 :     
+    DEF.DEVICES......... >3DE3 :     
+    DEF.PRINTER.FNAME... >3DBE :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DIALOG.HELP.CONTENT. >6CD8 :     
@@ -15997,10 +16015,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2E7E :     
-    FG99.CART.FBFORTH... >3E2E :     
-    FG99.CART.FCMD...... >3DF2 :     
-    FG99.CART.RXB....... >3E1A :     
-    FG99.CART.XBGEM..... >3E06 :     
+    FG99.CART.FBFORTH... >3E50 :     
+    FG99.CART.FCMD...... >3E14 :     
+    FG99.CART.RXB....... >3E3C :     
+    FG99.CART.XBGEM..... >3E28 :     
     FG99.EXIT........... >2EB8 :     
     FG99.RUN............ >3838 :     
     FG99.SEND.LOOP...... >2E8E :     
@@ -16801,71 +16819,72 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.UINT16.UNPACK.EXIT >34FA :     
     TX4024.............. >21FC :     
     TX8024.............. >2206 :     
-    TXT.ALPHA.DOWN...... >3CB8 :     
-    TXT.AUTOINS.OFF..... >3B52 :     
-    TXT.AUTOINS.ON...... >3B42 :     
+    TXT.ALPHA.DOWN...... >3CDA :     
+    TXT.AUTOINS.OFF..... >3B74 :     
+    TXT.AUTOINS.ON...... >3B64 :     
     TXT.AUTOINSERT...... >39DA :     
-    TXT.BLOCK.CLIP...... >3A58 :     
-    TXT.BLOCK.COPY...... >3A22 :     
-    TXT.BLOCK.DEL....... >3A0E :     
-    TXT.BLOCK.INSIDE.... >3D5E :     
-    TXT.BLOCK.MOVE...... >3A34 :     
-    TXT.BLOCK.PRINT..... >3A72 :     
-    TXT.BLOCK.SAVE...... >3A46 :     
+    TXT.BLOCK.CLIP...... >3A7A :     
+    TXT.BLOCK.COPY...... >3A44 :     
+    TXT.BLOCK.DEL....... >3A30 :     
+    TXT.BLOCK.INSIDE.... >3D80 :     
+    TXT.BLOCK.MOVE...... >3A56 :     
+    TXT.BLOCK.PRINT..... >3A94 :     
+    TXT.BLOCK.SAVE...... >3A68 :     
     TXT.BOTTOM.......... >39C8 :     
-    TXT.CLEARMEM........ >3A86 :     
-    TXT.CMDB.PROMPT..... >3D8C :     
-    TXT.COLORSCHEME..... >3D8E :     
+    TXT.CLEARMEM........ >3AA8 :     
+    TXT.CMDB.PROMPT..... >3DAE :     
+    TXT.COLORSCHEME..... >3DB0 :     
     TXT.DELIM........... >39C6 :     
-    TXT.DONE.APPEND..... >3AD0 :     
-    TXT.DONE.CLIPBOARD.. >3B24 :     
-    TXT.DONE.CLIPDEV.... >3B34 :     
-    TXT.DONE.COPY....... >3AF2 :     
-    TXT.DONE.DELETE..... >3B12 :     
-    TXT.DONE.INSERT..... >3ABE :     
-    TXT.DONE.LOAD....... >3AAE :     
-    TXT.DONE.PRINT...... >3B02 :     
-    TXT.DONE.SAVE....... >3AE2 :     
-    TXT.FASTMODE........ >3B62 :     
-    TXT.FILETYPE.DV80... >3BFC :     
-    TXT.FILETYPE.NONE... >3CC6 :     
+    TXT.DONE.APPEND..... >3AF2 :     
+    TXT.DONE.CLIPBOARD.. >3B46 :     
+    TXT.DONE.CLIPDEV.... >3B56 :     
+    TXT.DONE.COPY....... >3B14 :     
+    TXT.DONE.DELETE..... >3B34 :     
+    TXT.DONE.INSERT..... >3AE0 :     
+    TXT.DONE.LOAD....... >3AD0 :     
+    TXT.DONE.PRINT...... >3B24 :     
+    TXT.DONE.SAVE....... >3B04 :     
+    TXT.FASTMODE........ >3B84 :     
+    TXT.FILETYPE.DV80... >3C1E :     
+    TXT.FILETYPE.NONE... >3CE8 :     
     TXT.HEADER.......... >7624 :     
     TXT.INSERT.......... >39D4 :     
-    TXT.IO.NOFILE....... >3D2A :     
-    TXT.IOERR.LOAD...... >3CE2 :     
-    TXT.IOERR.PRINT..... >3D0E :     
-    TXT.IOERR.SAVE...... >3CF8 :     
-    TXT.KB.............. >3BA0 :     
-    TXT.KEYMARKER....... >3CBE :     
-    TXT.KEYS.BASIC1..... >3C8A :     
-    TXT.KEYS.BLOCK...... >3C54 :     
-    TXT.KEYS.DEFAULT.... >3C0A :     
-    TXT.KEYS.DEFAULTB... >3C2A :     
-    TXT.LINES........... >3BA4 :     
+    TXT.IO.NOFILE....... >3D4C :     
+    TXT.IOERR.LOAD...... >3D04 :     
+    TXT.IOERR.PRINT..... >3D30 :     
+    TXT.IOERR.SAVE...... >3D1A :     
+    TXT.KB.............. >3BC2 :     
+    TXT.KEYMARKER....... >3CE0 :     
+    TXT.KEYS.BASIC1..... >3CAC :     
+    TXT.KEYS.BLOCK...... >3C76 :     
+    TXT.KEYS.DEFAULT.... >3C2C :     
+    TXT.KEYS.DEFAULTB... >3C4C :     
+    TXT.LABELSCAN....... >3A0E :     
+    TXT.LINES........... >3BC6 :     
     TXT.LOADING......... >39E2 :     
-    TXT.M1.............. >3C02 :     
-    TXT.M2.............. >3C06 :     
-    TXT.MEMFULL.LOAD.... >3D42 :     
-    TXT.MSG.TIBASIC..... >3CCC :     
-    TXT.NEWFILE......... >3BAA :     
-    TXT.NODISK.......... >3B6E :     
+    TXT.M1.............. >3C24 :     
+    TXT.M2.............. >3C28 :     
+    TXT.MEMFULL.LOAD.... >3D64 :     
+    TXT.MSG.TIBASIC..... >3CEE :     
+    TXT.NEWFILE......... >3BCC :     
+    TXT.NODISK.......... >3B90 :     
     TXT.OVRWRITE........ >39CE :     
     TXT.PRINTING........ >39FA :     
-    TXT.READDIR......... >3A9A :     
+    TXT.READDIR......... >3ABC :     
     TXT.SAVING.......... >39EE :     
     TXT.SLASH........... >7622 :     
     TXT.STAR............ >39E0 :     
-    TXT.TIB1............ >3BB6 :     
-    TXT.TIB2............ >3BC4 :     
-    TXT.TIB3............ >3BD2 :     
-    TXT.TIB4............ >3BE0 :     
-    TXT.TIB5............ >3BEE :     
-    TXT.UNCRUNCHING..... >3B82 :     
-    TXT.VERTLINE........ >3CBC :     
+    TXT.TIB1............ >3BD8 :     
+    TXT.TIB2............ >3BE6 :     
+    TXT.TIB3............ >3BF4 :     
+    TXT.TIB4............ >3C02 :     
+    TXT.TIB5............ >3C10 :     
+    TXT.UNCRUNCHING..... >3BA4 :     
+    TXT.VERTLINE........ >3CDE :     
     TXT.VOLUME.......... >7608 :     
-    TXT.WS1............. >3CC0 :     
-    TXT.WS2............. >3CC2 :     
-    TXT.WS4............. >3CC6 :     
+    TXT.WS1............. >3CE2 :     
+    TXT.WS2............. >3CE4 :     
+    TXT.WS4............. >3CE8 :     
     UINT16.PACKED....... >A032 :     
     UINT16.UNPACKED..... >A02C :     
     UP.................. >2734 :     
