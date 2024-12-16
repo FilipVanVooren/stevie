@@ -55,6 +55,7 @@ id.dialog.cfg             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
+id.dialog.labels          equ  112     ; "Labels"
 ;-----------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-----------------------------------------------------------------

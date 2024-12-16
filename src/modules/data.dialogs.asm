@@ -286,11 +286,28 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto   M1-M2'
+txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto   M1-M2   Labels'
                    even
-pos.info.shortcuts byte 0,9,17,30,38,41,>ff
+pos.info.shortcuts byte 0,9,17,30,38,41,45,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even
 txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
+                   even
+
+
+;--------------------------------------------------------------
+; Dialog "Labels"
+;--------------------------------------------------------------
+txt.head.labels    byte 11,1,1
+                   text ' Labels '
+                   byte 1
+
+txt.info.labels    stri 'Refresh'
+                   even
+pos.info.labels    byte 0,>ff
+                   even
+txt.hint.labels    stri ' '
+                   even
+txt.keys.labels    stri 'F9-Back  SPACE-Close menu'
                    even

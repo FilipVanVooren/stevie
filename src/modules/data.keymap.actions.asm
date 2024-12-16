@@ -473,12 +473,20 @@ keymap_actions.cmdb:
         data  edkey.action.block.m2
 
         byte  key.uc.g, id.dialog.shortcuts
-        data  dialog.goto             
+        data  dialog.goto
+
+        byte  key.uc.l, id.dialog.shortcuts
+        data  dialog.labels
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.goto
         data  edkey.action.cmdb.goto
+        ;-------------------------------------------------------
+        ; Dialog: Labels
+        ;-------------------------------------------------------
+        byte  key.uc.r, id.dialog.labels
+        data  edkey.action.cmdb.labels.refresh        
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------

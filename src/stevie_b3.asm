@@ -87,6 +87,7 @@ main:
         copy  "dialog.basic.asm"        ; Dialog "Basic"
         copy  "dialog.shortcuts.asm"    ; Dialog "Shortcuts"
         copy  "dialog.goto.asm"         ; Dialog "Goto"
+        copy  "dialog.labels.asm"       ; Dialog "Labels"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------

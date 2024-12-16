@@ -19,7 +19,7 @@
 * File: stevie_b2.asm
 *
 * Bank 2 "Jacky"
-* File load/save operations
+* File load/save operations, labels
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -84,6 +84,7 @@ main:
         copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
         copy  "fm.browse.updir.asm"      ; Directory up
         copy  "fm.directory.asm"         ; File manager drive/directory listing
+        copy  "edb.labels.scan.asm"      ; Scan labels in editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

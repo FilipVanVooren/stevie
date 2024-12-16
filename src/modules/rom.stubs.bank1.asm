@@ -224,6 +224,27 @@ fm.browse.updir:
         b     *r11                  ; Return to caller
 
 ***************************************************************
+* Stub for "edb.labels.scan"
+* bank2 vec.20
+********|*****|*********************|**************************
+edb.labels.scan:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2.rom        ; | i  p0 = bank address
+              data vec.20           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for dialog "Help"
 * bank3 vec.1
 ********|*****|*********************|**************************
@@ -424,6 +445,16 @@ dialog.run:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.run.vector:
         data  vec.18
+
+***************************************************************
+* Stub for dialog "Labels"
+* bank3 vec.43
+********|*****|*********************|**************************
+dialog.labels:
+        mov   @dialog.labels.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.labels.vector:
+        data  vec.43
 
 
 ***************************************************************

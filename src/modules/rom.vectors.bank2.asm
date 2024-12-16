@@ -30,7 +30,7 @@ vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cpu.crash             ;
 vec.19  data  cpu.crash             ;
-vec.20  data  cpu.crash             ;
+vec.20  data  edb.labels.scan       ;
 vec.21  data  cpu.crash             ;
 vec.22  data  cpu.crash             ;
 vec.23  data  cpu.crash             ;
