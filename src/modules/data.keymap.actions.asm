@@ -156,7 +156,7 @@ keymap_actions.editor:
         data  dialog.help
 
         byte  key.ctrl.f, pane.focus.fb
-        data  dialog.file
+        data  dialog.find
 
         byte  key.ctrl.i, pane.focus.fb
         data  dialog.insert
@@ -472,21 +472,22 @@ keymap_actions.cmdb:
         byte  key.num.2, id.dialog.shortcuts
         data  edkey.action.block.m2
 
+        byte  key.uc.f, id.dialog.shortcuts
+        data  dialog.find
+
         byte  key.uc.g, id.dialog.shortcuts
         data  dialog.goto
 
-        byte  key.uc.l, id.dialog.shortcuts
-        data  dialog.labels
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.goto
         data  edkey.action.cmdb.goto
         ;-------------------------------------------------------
-        ; Dialog: Labels
+        ; Dialog: find
         ;-------------------------------------------------------
-        byte  key.uc.r, id.dialog.labels
-        data  edkey.action.cmdb.labels.refresh        
+        byte  key.enter, id.dialog.find
+        data  edkey.action.cmdb.find.refresh
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------

@@ -286,28 +286,26 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Ruler   Autoinsert   Goto   M1-M2   Labels'
+txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   Autoinsert   M1-M2'
                    even
-pos.info.shortcuts byte 0,9,17,30,38,41,45,>ff
+pos.info.shortcuts byte 0,9,16,23,31,45,48,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even
 txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
                    even
 
-
 ;--------------------------------------------------------------
-; Dialog "Labels"
+; Dialog "Find"
 ;--------------------------------------------------------------
-txt.head.labels    byte 11,1,1
-                   text ' Labels '
+txt.head.find      byte 9,1,1
+                   text ' Find '
                    byte 1
-
-txt.info.labels    stri 'Refresh'
+txt.hint.find      stri 'Press F5 to toggle case-insensitive searching on or off.'
+                   even                   
+txt.hint.find2     stri 'Enter search string.'
                    even
-pos.info.labels    byte 0,>ff
+txt.keys.find      stri 'F9-Back  F3-Clear  F5-Exact match=off  FH-Home  FL-EOL'
                    even
-txt.hint.labels    stri ' '
-                   even
-txt.keys.labels    stri 'F9-Back  SPACE-Close menu'
+txt.keys.find2      stri 'F9-Back  F3-Clear  F5-Exact match=on  FH-Home  FL-EOL'
                    even

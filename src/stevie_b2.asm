@@ -84,7 +84,7 @@ main:
         copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
         copy  "fm.browse.updir.asm"      ; Directory up
         copy  "fm.directory.asm"         ; File manager drive/directory listing
-        copy  "edb.labels.scan.asm"      ; Scan labels in editor buffer
+        copy  "edb.find.scan.asm"        ; Scan text in editor buffer
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

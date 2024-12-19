@@ -224,10 +224,10 @@ fm.browse.updir:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "edb.labels.scan"
+* Stub for "edb.find.scan"
 * bank2 vec.20
 ********|*****|*********************|**************************
-edb.labels.scan:
+edb.find.scan:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -447,13 +447,13 @@ dialog.run.vector:
         data  vec.18
 
 ***************************************************************
-* Stub for dialog "Labels"
+* Stub for dialog "Find"
 * bank3 vec.43
 ********|*****|*********************|**************************
-dialog.labels:
-        mov   @dialog.labels.vector,@trmpvector
+dialog.find:
+        mov   @dialog.find.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.labels.vector:
+dialog.find.vector:
         data  vec.43
 
 

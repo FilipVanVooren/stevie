@@ -18,7 +18,7 @@ edkey.action.cmdb.proceed:
         ; Intialisation
         ;-------------------------------------------------------
         clr   @edb.dirty            ; Clear editor buffer dirty flag
-        bl    @pane.cursor.blink    ; Show cursor again
+        bl    @pane.cursor.blink    ; Show cursor
         bl    @cmdb.cmd.clear       ; Clear current command
         mov   @cmdb.action.ptr,tmp0 ; Get pointer to keyboard action
         ;-------------------------------------------------------

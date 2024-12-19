@@ -131,8 +131,7 @@ main:
                                             ; Previous page in filebrowser
         copy  "edkey.cmdb.filebrowser.nextpage.asm"
                                             ; Next page in filebrowser
-        copy  "edkey.cmdb.labels.refresh.asm" 
-                                            ; Refresh source code labels index
+        copy  "edkey.cmdb.find.refresh.asm" ; Refresh search results index
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer

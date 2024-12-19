@@ -2,17 +2,17 @@
 * Purpose...: Actions for miscelanneous keys in command buffer pane.
 
 *---------------------------------------------------------------
-* Refresh labels index in source code
+* Refresh index with search results
 ********|*****|*********************|**************************
-edkey.action.cmdb.labels.refresh:
+edkey.action.cmdb.find.refresh:
         ;-------------------------------------------------------
-        ; Hide pane
+        ; Search string in editor buffer
         ;-------------------------------------------------------
-        bl    @edb.labels.scan      ; Refresh index of source code labels
-        bl    @pane.cmdb.hide       ; Hide command buffer pane
+        bl    @edb.find.scan        ; Refresh index with search results
+        bl    @pane.cmdb.show
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.labels.refresh.exit:
+edkey.action.cmdb.find.refresh.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

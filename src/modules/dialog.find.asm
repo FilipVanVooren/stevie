@@ -1,11 +1,11 @@
-* FILE......: dialog.labels.asm
-* Purpose...: Dialog "labels"
+* FILE......: dialog.find.asm
+* Purpose...: Dialog "Find"
 
 ***************************************************************
-* dialog.labels
-* Dialog "labels"
+* dialog.find
+* Dialog "Find"
 ***************************************************************
-* bl @dialog.labels
+* bl @dialog.find
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,39 +18,38 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.labels:
+dialog.find:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
         ; Setup dialog
-        ;-------------------------------------------------------
-        li    tmp0,id.dialog.labels
+        ;-------------------------------------------------------        
+        li    tmp0,id.dialog.find
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.labels
+        li    tmp0,txt.head.find
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.info.labels
-        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
-
-        li    tmp0,pos.info.labels
-        mov   tmp0,@cmdb.panmarkers ; Show letter markers
-
+        clr   @cmdb.paninfo         ; No info message
+        clr   @cmdb.panmarkers      ; No letter markers
         clr   @cmdb.panhint2        ; No extra hint to display
 
-        li    tmp0,txt.hint.labels
-        mov   tmp0,@cmdb.panhint    ; Empty hint
+        li    tmp0,txt.hint.find
+        mov   tmp0,@cmdb.panhint    ; Show 'Enter search string.'
 
-        li    tmp0,txt.keys.labels
+        li    tmp0,txt.hint.find2
+        mov   tmp0,@cmdb.panhint2   ; Show toggle
+
+        li    tmp0,txt.keys.find
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
-        bl    @pane.cursor.hide     ; Hide cursor
+        bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.labels.exit:
+dialog.find.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

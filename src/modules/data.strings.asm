@@ -22,7 +22,7 @@ txt.saving         stri 'Saving....'
                    even
 txt.printing       stri 'Printing file.....'
                    even
-txt.labelscan      stri 'Scanning labels in source code...'
+txt.searching      stri 'Searching...'
                    even
 txt.block.del      stri 'Deleting block....'
                    even

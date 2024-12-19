@@ -39,6 +39,7 @@ id.dialog.print           equ  17      ; "Print file"
 id.dialog.printblock      equ  18      ; "Print block"
 id.dialog.cfg.clip        equ  19      ; "Configure clipboard"
 id.dialog.goto            equ  20      ; "Goto"
+id.dialog.find            equ  30      ; "Find"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -55,7 +56,6 @@ id.dialog.cfg             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
-id.dialog.labels          equ  112     ; "Labels"
 ;-----------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-----------------------------------------------------------------
@@ -269,35 +269,42 @@ fh.ram.ptr        equ  fh.struct + 92  ; RAM destination address
 ;-----------------------------------------------------------------
 ; Editor buffer structure              @>a500-a5ff   (256 bytes)
 ;-----------------------------------------------------------------
-edb.struct        equ  >a500           ; Begin structure
-edb.top.ptr       equ  edb.struct      ; Pointer to editor buffer
-edb.index.ptr     equ  edb.struct + 2  ; Pointer to index
-edb.lines         equ  edb.struct + 4  ; Total lines in editor buffer - 1
-edb.dirty         equ  edb.struct + 6  ; Editor buffer dirty (Text changed!)
-edb.next_free.ptr equ  edb.struct + 8  ; Pointer to next free line
-edb.insmode       equ  edb.struct + 10 ; Insert mode (>ffff = insert)
-edb.autoinsert    equ  edb.struct + 12 ; Auto-insert on ENTER flag (>ffff = on)
-edb.block.m1      equ  edb.struct + 14 ; Block start line marker (>ffff = unset)
-edb.block.m2      equ  edb.struct + 16 ; Block end line marker   (>ffff = unset)
-edb.block.var     equ  edb.struct + 18 ; Local var used in block operation
-edb.filename.ptr  equ  edb.struct + 20 ; Pointer to length-prefixed string
-                                       ; with current filename.
-edb.filetype.ptr  equ  edb.struct + 22 ; Pointer to length-prefixed string
-                                       ; with current file type.
-edb.sams.page     equ  edb.struct + 24 ; Current SAMS page
-edb.sams.lopage   equ  edb.struct + 26 ; Lowest SAMS page in use
-edb.sams.hipage   equ  edb.struct + 28 ; Highest SAMS page in use
-edb.bk.fb.topline equ  edb.struct + 30 ; Backup of @fb.topline before opening
-                                       ; other file from special file.
-edb.bk.fb.row     equ  edb.struct + 32 ; Backup of @fb.row before opening
-                                       ; other file from special file.
-edb.special.file  equ  edb.struct + 34 ; Special file in editor buffer
-edb.lineterm      equ  edb.struct + 36 ; Line termination character
-                                       ; MSB: Mode on (>ff) or off (>00)
-                                       ; LSB: Line termination character                                    
-edb.filename      equ  edb.struct + 38 ; 80 characters inline buffer reserved
-                                       ; for filename, but not always used.
-edb.free          equ  edb.struct + 118; End of structure
+edb.struct        equ  >a500            ; Begin structure
+edb.top.ptr       equ  edb.struct       ; Pointer to editor buffer
+edb.index.ptr     equ  edb.struct + 2   ; Pointer to index
+edb.lines         equ  edb.struct + 4   ; Total lines in editor buffer - 1
+edb.dirty         equ  edb.struct + 6   ; Editor buffer dirty (Text changed!)
+edb.next_free.ptr equ  edb.struct + 8   ; Pointer to next free line
+edb.insmode       equ  edb.struct + 10  ; Insert mode (>ffff=insert)
+edb.autoinsert    equ  edb.struct + 12  ; Auto-insert on ENTER flag (>ffff=on)
+edb.block.m1      equ  edb.struct + 14  ; Block start line marker (>ffff=unset)
+edb.block.m2      equ  edb.struct + 16  ; Block end line marker (>ffff=unset)
+edb.block.var     equ  edb.struct + 18  ; Local var used in block operation
+edb.filename.ptr  equ  edb.struct + 20  ; Pointer to length-prefixed string
+                                        ; with current filename.
+edb.filetype.ptr  equ  edb.struct + 22  ; Pointer to length-prefixed string
+                                        ; with current file type.
+edb.sams.page     equ  edb.struct + 24  ; Current SAMS page
+edb.sams.lopage   equ  edb.struct + 26  ; Lowest SAMS page in use
+edb.sams.hipage   equ  edb.struct + 28  ; Highest SAMS page in use
+edb.bk.fb.topline equ  edb.struct + 30  ; Backup of @fb.topline before opening
+                                        ; other file from special file.
+edb.bk.fb.row     equ  edb.struct + 32  ; Backup of @fb.row before opening
+                                        ; other file from special file.
+edb.special.file  equ  edb.struct + 34  ; Special file in editor buffer
+edb.lineterm      equ  edb.struct + 36  ; Line termination character
+                                        ; MSB: Mode on (>ff) or off (>00)
+                                        ; LSB: Line termination character                                    
+edb.filename      equ  edb.struct + 38  ; 80 characters inline buffer reserved
+                                        ; for filename, but not always used.
+edb.srch.str      equ  edb.struct + 118 ; 80 characters search string buffer
+edb.srch.strlen   equ  edb.struct + 198 ; Length of search string
+edb.srch.startln  equ  edb.struct + 200 ; Start line in editor buffer for search
+edb.srch.endln    equ  edb.struct + 202 ; End line in editor buffer for search
+edb.srch.worklen  equ  edb.struct + 204 ; Length of unpacked line in work buffer
+edb.srch.matches  equ  edb.struct + 206 ; Number of search hits
+edb.srch.res.ptr  equ  edb.struct + 208 ; Pointer to search results
+edb.free          equ  edb.struct + 210 ; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -309,36 +316,36 @@ idx.free          equ  idx.struct + 6  ; End of structure
 ;-----------------------------------------------------------------
 ; Command buffer structure             @>a700-a7ff   (256 bytes)
 ;-----------------------------------------------------------------
-cmdb.struct       equ  >a700           ; Command Buffer structure
-cmdb.top.ptr      equ  cmdb.struct     ; Pointer to command buffer (history)
-cmdb.visible      equ  cmdb.struct+ 2  ; Command buffer visible? (>ffff=visible)
-cmdb.fb.yxsave    equ  cmdb.struct+ 4  ; Copy of FB WYX when entering cmdb pane
-cmdb.scrrows      equ  cmdb.struct+ 6  ; Current size of CMDB pane (in rows)
-cmdb.default      equ  cmdb.struct+ 8  ; Default size of CMDB pane (in rows)
-cmdb.cursor       equ  cmdb.struct+ 10 ; Screen YX of cursor in CMDB pane
-cmdb.yxsave       equ  cmdb.struct+ 12 ; Copy of WYX
-cmdb.vdptop       equ  cmdb.struct+ 14 ; VDP address CMDB pane header line (TAT)
-cmdb.yxtop        equ  cmdb.struct+ 16 ; YX position CMDB pane header line
-cmdb.yxprompt     equ  cmdb.struct+ 18 ; YX position of command buffer prompt
-cmdb.column       equ  cmdb.struct+ 20 ; Current column in command buffer pane
-cmdb.length       equ  cmdb.struct+ 22 ; Length of current row in CMDB
-cmdb.lines        equ  cmdb.struct+ 24 ; Total lines in CMDB
-cmdb.dirty        equ  cmdb.struct+ 26 ; Command buffer dirty (Text changed!)
-cmdb.dialog       equ  cmdb.struct+ 28 ; Dialog identifier
-cmdb.dialog.var   equ  cmdb.struct+ 30 ; Dialog private variable or pointer
-cmdb.panhead      equ  cmdb.struct+ 32 ; Pointer to string pane header
-cmdb.paninfo      equ  cmdb.struct+ 34 ; Pointer to string pane info (1st line)
-cmdb.panhint      equ  cmdb.struct+ 36 ; Pointer to string pane hint (2nd line)
-cmdb.panhint2     equ  cmdb.struct+ 38 ; Pointer to string pane hint (extra)
-cmdb.panmarkers   equ  cmdb.struct+ 40 ; Pointer to key marker list  (3rd line)
-cmdb.pankeys      equ  cmdb.struct+ 42 ; Pointer to string pane keys (stat line)
-cmdb.action.ptr   equ  cmdb.struct+ 44 ; Pointer to function to execute
-cmdb.cmdall       equ  cmdb.struct+ 46 ; Current command including length-byte
-cmdb.cmdlen       equ  cmdb.struct+ 46 ; Length of current command (MSB byte!)
-cmdb.cmd          equ  cmdb.struct+ 47 ; Current command (80 bytes max.)
-cmdb.panhead.buf  equ  cmdb.struct+128 ; String buffer for pane header
-cmdb.dflt.fname   equ  cmdb.struct+178 ; Default for filename
-cmdb.free         equ  cmdb.struct+256 ; End of structure
+cmdb.struct       equ  >a700             ; Command Buffer structure
+cmdb.top.ptr      equ  cmdb.struct       ; Pointer to command buffer (history)
+cmdb.visible      equ  cmdb.struct + 2   ; Command buffer visible? (>ffff=yes)
+cmdb.fb.yxsave    equ  cmdb.struct + 4   ; Copy of FB WYX if entering cmdb pane
+cmdb.scrrows      equ  cmdb.struct + 6   ; Current size of CMDB pane (in rows)
+cmdb.default      equ  cmdb.struct + 8   ; Default size of CMDB pane (in rows)
+cmdb.cursor       equ  cmdb.struct + 10  ; Screen YX of cursor in CMDB pane
+cmdb.yxsave       equ  cmdb.struct + 12  ; Copy of WYX
+cmdb.vdptop       equ  cmdb.struct + 14  ; VDP addr CMDB pane header line (TAT)
+cmdb.yxtop        equ  cmdb.struct + 16  ; YX pos CMDB pane header line
+cmdb.yxprompt     equ  cmdb.struct + 18  ; YX pos of command buffer prompt
+cmdb.column       equ  cmdb.struct + 20  ; Current column in command buffer pane
+cmdb.length       equ  cmdb.struct + 22  ; Length of current row in CMDB
+cmdb.lines        equ  cmdb.struct + 24  ; Total lines in CMDB
+cmdb.dirty        equ  cmdb.struct + 26  ; Command buffer dirty (Text changed!)
+cmdb.dialog       equ  cmdb.struct + 28  ; Dialog identifier
+cmdb.dialog.var   equ  cmdb.struct + 30  ; Dialog private variable or pointer
+cmdb.panhead      equ  cmdb.struct + 32  ; Pointer string pane header
+cmdb.paninfo      equ  cmdb.struct + 34  ; Pointer string pane info (1st line)
+cmdb.panhint      equ  cmdb.struct + 36  ; Pointer string pane hint (2nd line)
+cmdb.panhint2     equ  cmdb.struct + 38  ; Pointer string pane hint (extra)
+cmdb.panmarkers   equ  cmdb.struct + 40  ; Pointer key marker list  (3rd line)
+cmdb.pankeys      equ  cmdb.struct + 42  ; Pointer string pane keys (stat line)
+cmdb.action.ptr   equ  cmdb.struct + 44  ; Pointer function to execute
+cmdb.cmdall       equ  cmdb.struct + 46  ; Current command including length-byte
+cmdb.cmdlen       equ  cmdb.struct + 46  ; Length of current command (MSB byte!)
+cmdb.cmd          equ  cmdb.struct + 47  ; Current command (80 bytes max.)
+cmdb.panhead.buf  equ  cmdb.struct + 128 ; String buffer for pane header
+cmdb.dflt.fname   equ  cmdb.struct + 178 ; Default for filename
+cmdb.free         equ  cmdb.struct + 256 ; End of structure
 ;-----------------------------------------------------------------
 ; Stevie value stack                   @>a800-a8ff     (256 bytes)
 ;-----------------------------------------------------------------
