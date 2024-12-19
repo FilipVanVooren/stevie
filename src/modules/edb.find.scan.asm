@@ -46,9 +46,18 @@ edb.find.scan
         clr   @edb.srch.startln     ; 1st line to search
         mov   @edb.lines,@edb.srch.endln
                                     ; Last line to search                
+
+        c     @edb.block.m1,@w$ffff  ; Marker M1 unset?
+        jeq   edb.find.scan.showbusy ; Unset skip block marker
+        ;------------------------------------------------------        
+        ; Use block markers M1-M2 as search range
+        ;------------------------------------------------------
+        mov   @edb.block.m1,@edb.srch.startln
+        mov   @edb.block.m2,@edb.srch.endln
         ;------------------------------------------------------        
         ; Show busy indicator
-        ;------------------------------------------------------ 
+        ;------------------------------------------------------
+edb.find.scan.showbusy:         
         bl    @pane.botline.busy.on ; \ Put busy indicator on
                                     ; /            
         
