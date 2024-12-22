@@ -303,7 +303,10 @@ edb.srch.startln  equ  edb.struct + 200 ; Start line in editor buffer for search
 edb.srch.endln    equ  edb.struct + 202 ; End line in editor buffer for search
 edb.srch.worklen  equ  edb.struct + 204 ; Length of unpacked line in work buffer
 edb.srch.matches  equ  edb.struct + 206 ; Number of search hits
-edb.srch.res.ptr  equ  edb.struct + 208 ; Pointer to search results
+edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer to top of rows search index
+edb.srch.offset   equ  edb.struct + 210 ; Offset into current index entry
+
+
 edb.free          equ  edb.struct + 210 ; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
@@ -447,11 +450,16 @@ cat.size          equ  3840            ; Catalog total size
 cmdb.top          equ  >ef00           ; Top of command history buffer
 cmdb.size         equ  256             ; Command buffer size
 ;-----------------------------------------------------------------
-; Heap & Strings area                  @>f000-ffff    (4096 bytes)
+; Heap & Strings area                  @>f000-f0ff     (256 bytes)
 ;-----------------------------------------------------------------
 heap.top          equ  >f000           ; 80 Current filename
 ram.msg1          equ  >f050           ; 80 txt.hint.memstat
 ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+;-----------------------------------------------------------------
+; Search results index                 @>f100-ffff    (4096 bytes)
+;-----------------------------------------------------------------
+edb.srch.idx.top  equ  >f100           ; Search match index
+edb.srch.idx.size equ  2000            ; Size of search match index
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
