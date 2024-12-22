@@ -303,11 +303,11 @@ edb.srch.startln  equ  edb.struct + 200 ; Start line in editor buffer for search
 edb.srch.endln    equ  edb.struct + 202 ; End line in editor buffer for search
 edb.srch.worklen  equ  edb.struct + 204 ; Length of unpacked line in work buffer
 edb.srch.matches  equ  edb.struct + 206 ; Number of search hits
-edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer to top of rows search index
-edb.srch.offset   equ  edb.struct + 210 ; Offset into current index entry
-
-
-edb.free          equ  edb.struct + 210 ; End of structure
+edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer entry in rows search index
+edb.srch.col.ptr  equ  edb.struct + 210 ; Pointer entry in cols search index
+edb.srch.offset   equ  edb.struct + 212 ; Offset into current row index entry
+edb.srch.matchcol equ  edb.struct + 214 ; Column of search match in current row
+edb.free          equ  edb.struct + 216 ; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -456,10 +456,15 @@ heap.top          equ  >f000           ; 80 Current filename
 ram.msg1          equ  >f050           ; 80 txt.hint.memstat
 ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 ;-----------------------------------------------------------------
-; Search results index                 @>f100-ffff    (4096 bytes)
+; Search results index for rows        @>f100-f8ff    (2048 bytes)
 ;-----------------------------------------------------------------
-edb.srch.idx.top  equ  >f100           ; Search match index
-edb.srch.idx.size equ  2000            ; Size of search match index
+edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
+edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
+;-----------------------------------------------------------------
+; Search results index for columns     @>f900-fcff    (1024 bytes)
+;-----------------------------------------------------------------
+edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
+edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------

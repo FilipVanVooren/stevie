@@ -13,7 +13,7 @@
 * NONE
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0, tmp1, tmp2, tmp3, tmp4, r1
 *--------------------------------------------------------------
 * Memory usage
 *
@@ -23,6 +23,14 @@
 *
 * 2. Using framebuffer as work buffer for unpacking line before 
 *    scan. Enable reuse of existing unpack to framebuffer func.
+*
+* Register usage
+* tmp0 = Pointer to current character in search string
+* tmp1 = Pointer to current character in unpacked line in framebuffer
+* tmp2 = Loop counter for character in unpacked line (=line length at start)
+* tmp3 = Matching character counter
+* tmp4 = Character counter in unpacked line
+* r1   = Additional temp variable
 ********|*****|*********************|**************************
 edb.find.scan
         dect  stack
@@ -37,24 +45,31 @@ edb.find.scan
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
         mov   tmp4,*stack           ; Push tmp4        
+        dect  stack
+        mov   r1,*stack             ; Push r1
         ;------------------------------------------------------        
         ; Initialisation
         ;------------------------------------------------------ 
         bl    @cpym2m
               data cmdb.cmdall,edb.srch.str,80
-                                    ; Set search string
+                                    ; Set search string to input value
 
         bl    @film
-              data edb.srch.idx.top,>ff,2000
-                                    ; Clear search results index
+              data edb.srch.idx.rtop,>ff,edb.srch.idx.rsize
+                                    ; Clear search results index for rows
+                                    ; Using >ff as "unset" value
+
+        bl    @film
+              data edb.srch.idx.ctop,>ff,edb.srch.idx.csize
+                                    ; Clear search results index for columns
                                     ; Using >ff as "unset" value
 
         movb  @cmdb.cmdlen,tmp0     ; \ Get length of search string
         srl   tmp0,8                ; | MSB to LSB
         mov   tmp0,@edb.srch.strlen ; / Save search string length
 
+        clr   @edb.srch.offset      ; Reset offset into search results row index
         clr   @edb.srch.matches     ; Reset matches counter
-        clr   @edb.srch.offset      ; Reset offset into search results index
         clr   @edb.srch.startln     ; 1st line to search
         mov   @edb.lines,@edb.srch.endln
                                     ; Last line to search                
@@ -79,13 +94,8 @@ edb.find.scan.showbusy:
 
         mov   @edb.srch.startln,@fh.records           
                                     ; Counter current line
-        ;------------------------------------------------------        
-        ; Loop over lines in editor buffer
         ;------------------------------------------------------
-edb.find.scan.edbuffer:
-        clr   tmp4                  ; Reset offset into search results index
-        ;------------------------------------------------------
-        ; Unpack current line to framebuffer
+        ; Loop over lines in editor buffer, Unpack current line
         ;------------------------------------------------------
 edb.find.scan.unpack_line:
         mov   @fh.records,@parm1    ; Unpack current line to framebuffer
@@ -110,41 +120,57 @@ edb.find.scan.unpack_line:
         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
         mov   @fb.top.ptr,tmp1       ; Destination for compare (unpacked line)
         mov   tmp2,@edb.srch.worklen ; Length of unpacked line
-        clr   tmp3                   ; Character match counter
+        clr   tmp3                   ; Reset character match counter
+        clr   tmp4                   ; Reset character counter
+        clr   @edb.srch.matchcol     ; Update start column of possible match
         ;------------------------------------------------------
         ; Loop over characters in unpacked line and compare
         ;------------------------------------------------------
 edb.find.scan.compare:
-        cb    *tmp0+,*tmp1+          ; Compare characters in MSB
+        cb    *tmp0+,*tmp1+         ; Compare characters in MSB
         jne   edb.find.scan.compare.nomatch
-                                     ; Characters do not match. Next try.
+                                    ; Characters do not match. Next try.
         ;------------------------------------------------------
         ; Character matches
         ;------------------------------------------------------        
         inc   tmp3                  ; Update character match counter
+        inc   tmp4                  ; Update character counter
         c     tmp3,@edb.srch.strlen ; Last character in search string?
         jne   edb.find.scan.compare.nextchar
                                     ; Not yet, prepare for scanning next char
         ;------------------------------------------------------
-        ; Search string found
+        ; Search string found. Update search results index (rows + cols)
         ;------------------------------------------------------
-        mov   @edb.srch.offset,tmp4 
-        mov   @fh.records,@edb.srch.idx.top(tmp4)
-                                    ; Save line number in search results index
-        inct  @edb.srch.offset      ; Next index entry
-        inc   @edb.srch.matches     ; Update search string match counter
+        mov   @edb.srch.offset,r1   ; Restore offset in row index
+        mov   @fh.records,@edb.srch.idx.rtop(r1)
+                                    ; \ Save linenumber to search results
+                                    ; | index for rows
+        inct  @edb.srch.offset      ; / Next entry in search results row index
+
+        mov   @edb.srch.matches,r1 ; \ Restore offset in column index
+                                   ; / Using matches as byte offset in index
+        movb  @edb.srch.matchcol+1,@edb.srch.idx.ctop(r1)
+                                    ; \ Save column (LSB) to search results
+                                    ; | index for columns
+        inc   @edb.srch.matches     ; / Update search string match counter
+
         li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
         jmp   edb.find.scan.compare.nextchar
         ;------------------------------------------------------
         ; Search string not found. Next try on remaining chars on line
         ;------------------------------------------------------
 edb.find.scan.compare.nomatch        
-        li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
+        li    tmp0,edb.srch.str + 1   ; Reset source for compare (skip len byte)
+        clr   tmp3                    ; Reset character match counter
+        inc   tmp4                    ; Update character counter
+        mov   tmp4,@edb.srch.matchcol ; \ Update start column of possible match
+                                      ; | Start column is updated only if there
+                                      ; / is NO matching character.
         ;------------------------------------------------------
         ; Prepare for processing next character
         ;------------------------------------------------------        
 edb.find.scan.compare.nextchar:
-        dec   tmp2                  ; Update character counter
+        dec   tmp2                  ; Update loop counter
         jgt   edb.find.scan.compare ; Line not completely scanned
         ;------------------------------------------------------
         ; Prepare for processing Next line
@@ -177,12 +203,13 @@ edb.find.scan.done:
                                     
         seto  @fb.dirty             ; Trigger frame buffer refresh
 
-        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-                                      ; /
+        bl    @pane.botline.busy.off ; \ Put busyline indicator off
+                                     ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 edb.find.scan.exit:
+        mov   *stack+,r1            ; Pop r1
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

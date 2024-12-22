@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241222-1848030
+0002               * BUILD: 241222-2119190
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -472,11 +472,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0303      A5CA     edb.srch.endln    equ  edb.struct + 202 ; End line in editor buffer for search
 0304      A5CC     edb.srch.worklen  equ  edb.struct + 204 ; Length of unpacked line in work buffer
 0305      A5CE     edb.srch.matches  equ  edb.struct + 206 ; Number of search hits
-0306      A5D0     edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer to top of rows search index
-0307      A5D2     edb.srch.offset   equ  edb.struct + 210 ; Offset into current index entry
-0308               
-0309               
-0310      A5D2     edb.free          equ  edb.struct + 210 ; End of structure
+0306      A5D0     edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer entry in rows search index
+0307      A5D2     edb.srch.col.ptr  equ  edb.struct + 210 ; Pointer entry in cols search index
+0308      A5D4     edb.srch.offset   equ  edb.struct + 212 ; Offset into current index entry
+0309      A5D6     edb.srch.matchcol equ  edb.struct + 214 ; Column of search match in current row
+0310      A5D8     edb.free          equ  edb.struct + 216 ; End of structure
 0311               ;-----------------------------------------------------------------
 0312               ; Index structure                      @>a600-a6ff   (256 bytes)
 0313               ;-----------------------------------------------------------------
@@ -625,21 +625,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0456      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
 0457      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
 0458               ;-----------------------------------------------------------------
-0459               ; Search results index                 @>f100-ffff    (4096 bytes)
+0459               ; Search results index for rows        @>f100-f8ff    (2048 bytes)
 0460               ;-----------------------------------------------------------------
-0461      F100     edb.srch.idx.top  equ  >f100           ; Search match index
-0462      07D0     edb.srch.idx.size equ  2000            ; Size of search match index
+0461      F100     edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
+0462      0800     edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
 0463               ;-----------------------------------------------------------------
-0464               ; Stevie specific equates
+0464               ; Search results index for columns     @>f900-fcff    (1024 bytes)
 0465               ;-----------------------------------------------------------------
-0466      0000     fh.fopmode.none           equ  0        ; No file operation in progress
-0467      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
-0468      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
-0469      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
-0470      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
-0471      9900     tv.colorize.reset         equ  >9900    ; Colorization off
-0472      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
-0473      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
+0466      F900     edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
+0467      0400     edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
+0468               ;-----------------------------------------------------------------
+0469               ; Stevie specific equates
+0470               ;-----------------------------------------------------------------
+0471      0000     fh.fopmode.none           equ  0        ; No file operation in progress
+0472      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
+0473      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+0474      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
+0475      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
+0476      9900     tv.colorize.reset         equ  >9900    ; Colorization off
+0477      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
+0478      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
                    < stevie_b6.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -13049,7 +13054,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.FILENAME........ >A526 :     
     EDB.FILENAME.PTR.... >A514 :     
     EDB.FILETYPE.PTR.... >A516 :     
-    EDB.FREE............ >A5D2 :     
+    EDB.FREE............ >A5D8 :     
     EDB.HIPAGE.ALLOC.... >37D2 :     
     EDB.HIPAGE.ALLOC.CHECK_SETPAGE >37DE :     
     EDB.HIPAGE.ALLOC.CRASH >3808 :     
@@ -13075,11 +13080,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.SAMS.PAGE....... >A518 :     
     EDB.SIZE............ >1000 :     
     EDB.SPECIAL.FILE.... >A522 :     
+    EDB.SRCH.COL.PTR.... >A5D2 :     
     EDB.SRCH.ENDLN...... >A5CA :     
-    EDB.SRCH.IDX.SIZE... >07D0 :     
-    EDB.SRCH.IDX.TOP.... >F100 :     
+    EDB.SRCH.IDX.CSIZE.. >0400 :     
+    EDB.SRCH.IDX.CTOP... >F900 :     
+    EDB.SRCH.IDX.RSIZE.. >0800 :     
+    EDB.SRCH.IDX.RTOP... >F100 :     
+    EDB.SRCH.MATCHCOL... >A5D6 :     
     EDB.SRCH.MATCHES.... >A5CE :     
-    EDB.SRCH.OFFSET..... >A5D2 :     
+    EDB.SRCH.OFFSET..... >A5D4 :     
     EDB.SRCH.ROW.PTR.... >A5D0 :     
     EDB.SRCH.STARTLN.... >A5C8 :     
     EDB.SRCH.STR........ >A576 :     
