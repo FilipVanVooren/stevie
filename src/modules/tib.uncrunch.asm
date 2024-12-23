@@ -112,4 +112,4 @@ tib.uncrunch.exit:
 
 
 data.filename.ptr:
-        data  txt.newfile,txt.tib1,txt.tib2,txt.tib3,txt.tib4,txt.tib5
+        data  txt.newfile,txt.tib1,txt.tib2,txt.tib3

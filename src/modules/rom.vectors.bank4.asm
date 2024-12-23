@@ -32,8 +32,8 @@ vec.18  data  fb.cursor.bot         ; Move cursor to bottom of file
 vec.19  data  fb.cursor.botscr      ; Move cursor to bottom of screen
 vec.20  data  fb.insert.char        ; Insert character
 vec.21  data  fb.replace.char       ; Replace character
-vec.22  data  cpu.crash             ;
-vec.23  data  cpu.crash             ;
+vec.22  data  fb.goto.prevmatch     ; Goto previous search match
+vec.23  data  fb.goto.nextmatch     ; Goto next search match
 vec.24  data  cpu.crash             ;
 vec.25  data  cpu.crash             ;
 vec.26  data  cpu.crash             ;
@@ -53,7 +53,7 @@ vec.36  data  pane.errline.hide     ; Hide error line
 vec.37  data  pane.errline.drawcolor
 vec.38  data  pane.botline.busy.on  ; Turn on busy indicator on bottom line
 vec.39  data  pane.botline.busy.off ; Turn off busy indicator on bottom line
-vec.40  data  cpu.crash             ;
+vec.40  data  pane.colorscheme.cycle;
 vec.41  data  cpu.crash             ;
 vec.42  data  cpu.crash             ;
 vec.43  data  cpu.crash             ;

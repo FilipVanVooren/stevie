@@ -20,7 +20,7 @@ txt.loading        stri 'Loading...'
                    even
 txt.saving         stri 'Saving....'
                    even
-txt.printing       stri 'Printing file.....'
+txt.printing       stri 'Printing....'
                    even
 txt.searching      stri 'Searching...'
                    even
@@ -80,20 +80,21 @@ txt.tib2           stri '[TI Basic #2]'
                    even
 txt.tib3           stri '[TI Basic #3]'
                    even
-txt.tib4           stri '[TI Basic #4]'
-                   even
-txt.tib5           stri '[TI Basic #5]'
-                   even
 txt.filetype.dv80  stri 'DV80'
                    even
 txt.m1             stri 'M1='
                    even
 txt.m2             stri 'M2='
                    even
-txt.keys.default   stri 'F9-Menu  ^H-Help  ^U-Shortcuts'
+txt.keys.default   stri 'F9-Menu  ^H-Help'
                    even
-txt.keys.defaultb  stri 'F9-Menu  ^H-Help  ^U-Shortcuts  F0-Basic#'
+txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#'
                    even
+txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^0^1-Matches'
+                   even
+txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^0^1-Matches'
+                   even
+
 txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
                    even
 txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'

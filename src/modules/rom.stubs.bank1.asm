@@ -709,7 +709,7 @@ _trampoline.bank3.ret:
 ********|*****|*********************|**************************
 fb.ruler.init:
         mov   @fb.ruler.init.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.ruler.init.vector:
         data  vec.2
 
@@ -720,7 +720,7 @@ fb.ruler.init.vector:
 ********|*****|*********************|**************************
 fb.colorlines:
         mov   @fb.colorlines.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.colorlines.vector:
         data  vec.3
 
@@ -731,7 +731,7 @@ fb.colorlines.vector:
 ********|*****|*********************|**************************
 fb.vdpdump:
         mov   @fb.vdpdump.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.vdpdump.vector:
         data  vec.4
 
@@ -913,6 +913,28 @@ fb.replace.char.vector:
 
 
 ***************************************************************
+* Stub for "fb.goto.prevmatch"
+* bank4 vec.22
+********|*****|*********************|**************************
+fb.goto.prevmatch:
+        mov   @fb.goto.prevmatch.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.goto.prevmatch.vector:
+        data  vec.22
+
+
+***************************************************************
+* Stub for "fb.goto.nextmatch"
+* bank4 vec.23
+********|*****|*********************|**************************
+fb.goto.nextmatch:
+        mov   @fb.goto.nextmatch.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+fb.goto.nextmatch.vector:
+        data  vec.23
+
+
+***************************************************************
 * Stub for "pane.topline"
 * bank4 vec.33
 ********|*****|*********************|**************************
@@ -965,6 +987,17 @@ pane.errline.drawcolor:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.errline.drawcolor.vector:
         data  vec.37
+
+
+***************************************************************
+* Stub for "pane.colorscheme.cycle"
+* bank4 vec.40
+********|*****|*********************|**************************
+pane.colorscheme.cycle:
+        mov   @pane.colorscheme.cycle.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.colorscheme.cycle.vector:
+        data  vec.40
 
 
 ***************************************************************

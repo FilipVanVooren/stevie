@@ -57,7 +57,7 @@ vec.40  data  cpu.crash             ;
 vec.41  data  cpu.crash             ;
 vec.42  data  dialog                ; Dialog initialisation code
 vec.43  data  dialog.find           ; Dialog "Find"
-vec.44  data  dialog.find.browse    ; Dialog "Find - Search results"
+vec.44  data  cpu.crash             ;
 vec.45  data  cpu.crash             ;
 vec.46  data  cpu.crash             ; 
 vec.47  data  cpu.crash             ;

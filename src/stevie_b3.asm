@@ -88,7 +88,6 @@ main:
         copy  "dialog.shortcuts.asm"    ; Dialog "Shortcuts"
         copy  "dialog.goto.asm"         ; Dialog "Goto"
         copy  "dialog.find.asm"         ; Dialog "Find"
-        copy  "dialog.find.browse.asm"  ; Dialog "Find - Search results"
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------

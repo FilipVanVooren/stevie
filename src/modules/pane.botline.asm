@@ -83,19 +83,39 @@ pane.botline.shortcuts:
 
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
-        ; Show default message
+        ; Active TI Basic session?
         ;------------------------------------------------------
 pane.botline.show_keys:
         mov   @tib.session,tmp0     ; Active TI Basic session?
-        jeq   !
+        jeq   pane.botline.show_keys.default
+                                    ; No show default keys only
         ;------------------------------------------------------
-        ; Show TI Basic session ID
+        ; Show search matches?
         ;------------------------------------------------------
+        abs   @edb.srch.matches     ; Do we have any search matches?
+        jeq   pane.botline.show_keys.defaultb
+                                    ; No, show TI Basic session
+        ;------------------------------------------------------
+        ; Default Keys, TI Basic Session ID, Search matches
+        ;------------------------------------------------------
+pane.botline.show_keys.defaultd:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.keys.defaultd
+                                    ; Show defaults + TI Basic + Matches
+        jmp   pane.botline.show_keys.setbasic
+        ;------------------------------------------------------
+        ; Default Keys, TI Basic Session ID
+        ;------------------------------------------------------
+pane.botline.show_keys.defaultb
         bl    @putat
               byte pane.botrow,0
               data txt.keys.defaultb
                                     ; Show defaults + TI Basic
-
+        ;------------------------------------------------------
+        ; Add TI Basic session ID to string
+        ;------------------------------------------------------
+pane.botline.show_keys.setbasic:
         mov   @tib.session,tmp0     ; Get Session ID
         ai    tmp0,>0130            ; \ Turn into string with
                                     ; | length-byte prefix and
@@ -104,14 +124,29 @@ pane.botline.show_keys:
         mov   tmp0,@rambuf          ; Copy to ram buffer for display
 
         bl    @putat                ; \
-              byte pane.botrow,41   ; | Display session-ID string
-              data rambuf           ; / Y=bottom row, X=41
+              byte pane.botrow,27   ; | Display session-ID string
+              data rambuf           ; / Y=bottom row, X=27
+
+        jmp   pane.botline.show_mode
         ;------------------------------------------------------
         ; Show default keys
         ;------------------------------------------------------
+pane.botline.show_keys.default:
+        abs   @edb.srch.matches     ; Do we have any search matches?
+        jeq   !                     ; No, show default keys
+        ;------------------------------------------------------
+        ; Default keys, Search matches
+        ;------------------------------------------------------
+        bl    @putat
+              byte pane.botrow,0
+              data txt.keys.defaultc  ; Show default keys, including search keys
+        jmp   pane.botline.show_mode
+        ;------------------------------------------------------
+        ; Default keys
+        ;------------------------------------------------------
 !       bl    @putat
               byte pane.botrow,0
-              data txt.keys.default ; Show default keys
+              data txt.keys.default ; Show default keys only
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------

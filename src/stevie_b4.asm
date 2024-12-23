@@ -68,28 +68,30 @@ main:
         ;-----------------------------------------------------------------------
         ; Logic for Framebuffer
         ;-----------------------------------------------------------------------
-        copy  "fb.cursor.top.asm"   ; Cursor top of file
-        copy  "fb.cursor.topscr.asm"; Cursor top of screen
-        copy  "fb.cursor.bot.asm"   ; Cursor bottom of file        
-        copy  "fb.cursor.botscr.asm"; Cursor bottom of screen        
-        copy  "fb.cursor.up.asm"    ; Cursor up
-        copy  "fb.cursor.down.asm"  ; Cursor down
-        copy  "fb.cursor.home.asm"  ; Cursor home        
-        copy  "fb.insert.line.asm"  ; Insert new line
-        copy  "fb.insert.char.asm"  ; Insert character
-        copy  "fb.replace.char.asm" ; Replace character
-        copy  "fb.null2char.asm"    ; Replace null characters in framebuffer row
-        copy  "fb.tab.prev.asm"     ; Move cursor to previous tab position
-        copy  "fb.tab.next.asm"     ; Move cursor to next tab position
-        copy  "fb.goto.toprow.asm"  ; Refresh FB with top-row and row offset
-        copy  "fb.ruler.asm"        ; Setup ruler with tab positions in memory
-        copy  "fb.colorlines.asm"   ; Colorize lines in framebuffer
-        copy  "fb.vdpdump.asm"      ; Dump framebuffer to VDP SIT
-        copy  "fb.scan.fname.asm"   ; Scan line for device & filename
-        copy  "fb.hscroll.asm"      ; Horizontal scroll frame buffer
-        copy  "fb.restore.asm"      ; Restore framebuffer to normal opr.
-        copy  "fb.refresh.asm"      ; Refresh framebuffer
-        copy  "fb.get.nonblank.asm" ; Get column of first non-blank char
+        copy  "fb.cursor.top.asm"     ; Cursor top of file
+        copy  "fb.cursor.topscr.asm"  ; Cursor top of screen
+        copy  "fb.cursor.bot.asm"     ; Cursor bottom of file        
+        copy  "fb.cursor.botscr.asm"  ; Cursor bottom of screen        
+        copy  "fb.cursor.up.asm"      ; Cursor up
+        copy  "fb.cursor.down.asm"    ; Cursor down
+        copy  "fb.cursor.home.asm"    ; Cursor home        
+        copy  "fb.insert.line.asm"    ; Insert new line
+        copy  "fb.insert.char.asm"    ; Insert character
+        copy  "fb.replace.char.asm"   ; Replace character
+        copy  "fb.null2char.asm"      ; Replace null characters in framebuf row
+        copy  "fb.tab.prev.asm"       ; Move cursor to previous tab position
+        copy  "fb.tab.next.asm"       ; Move cursor to next tab position
+        copy  "fb.goto.toprow.asm"    ; Refresh FB with top-row and row offset
+        copy  "fb.goto.nextmatch.asm" ; Goto next search match
+        copy  "fb.goto.prevmatch.asm" ; Goto previous search match
+        copy  "fb.ruler.asm"          ; Setup ruler with tab positions in memory
+        copy  "fb.colorlines.asm"     ; Colorize lines in framebuffer
+        copy  "fb.vdpdump.asm"        ; Dump framebuffer to VDP SIT
+        copy  "fb.scan.fname.asm"     ; Scan line for device & filename
+        copy  "fb.hscroll.asm"        ; Horizontal scroll frame buffer
+        copy  "fb.restore.asm"        ; Restore framebuffer to normal opr.
+        copy  "fb.refresh.asm"        ; Refresh framebuffer
+        copy  "fb.get.nonblank.asm"   ; Get column of first non-blank char
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------        
@@ -98,6 +100,10 @@ main:
         copy  "pane.botline.busy.asm" ; Bottom line busy indicator        
         copy  "pane.errline.asm"      ; Error line        
         copy  "pane.utils.hint.asm"   ; Show hint in pane
+        ;-----------------------------------------------------------------------
+        ; Screen pane utilities
+        ;-----------------------------------------------------------------------
+        copy  "pane.colorscheme.cycle.asm"   ; Cycle through color schemes        
         ;-----------------------------------------------------------------------
         ; Dialogs & filebrowser
         ;-----------------------------------------------------------------------                

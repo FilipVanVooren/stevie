@@ -14,7 +14,6 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2, tmp3, tmp4, r1
-*--------------------------------------------------------------
 ********|*****|*********************|**************************
 edb.find.init:
         dect  stack
@@ -80,17 +79,31 @@ edb.find.search:
         ;-------------------------------------------------------
         ; Initialisation
         ;-------------------------------------------------------
-        bl    @pane.cursor.hide     ; Hide cursor
+        bl    @putat
+              byte 0,64
+              data txt.find.matches ; Show 'Matches:'
 
-        bl    @hchar                ; Clear hints/messages in dialog pane
-              byte pane.botrow-3,0,32,80*3
-              data EOL              
+        bl    @pane.cmdb.hide       ; Hide CMDB pane
+
+        seto  @fb.dirty             ; Refresh frame buffer
+        mov   @fb.topline,@parm1
+        bl    @fb.refresh           ; \ Refresh frame buffer
+                                    ; | i  @parm1 = Line to start with
+                                    ; /             (becomes @fb.topline)
+
+        bl    @fb.calc.scrrows      ; Calculate number of rows 
+                                    ; \ i  @tv.ruler.visible = Ruler visible
+                                    ; | i  @edb.special.file = Special file flag
+                                    ; / i  @tv.error.visible = Error visible
+
+        mov   @fb.scrrows,@parm1
+        bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
+                                    ; \ i  @parm1 = number of lines to dump
+                                    ; /                                    
         ;-------------------------------------------------------
         ; Perform search operation
         ;-------------------------------------------------------
         bl    @edb.find.scan        ; Perform search operation
-        bl    @dialog.find.browse   ; Load dialog "Find - Search results"
-        bl    @pane.cmdb.show       ; Show dialog
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
@@ -101,3 +114,6 @@ edb.find.search.exit:
         mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller     
+
+txt.find.matches  stri 'Matches:'
+                  even

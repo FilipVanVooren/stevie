@@ -307,21 +307,5 @@ txt.hint.find2     stri 'Enter search string.'
                    even
 txt.keys.find      stri 'F9-Back  F3-Clear  F5-Exact match=off  FH-Home  FL-EOL'
                    even
-txt.keys.find2      stri 'F9-Back  F3-Clear  F5-Exact match=on  FH-Home  FL-EOL'
+txt.keys.find2     stri 'F9-Back  F3-Clear  F5-Exact match=on  FH-Home  FL-EOL'
                    even
-
-
-;--------------------------------------------------------------
-; Dialog "Find - Search results"
-;--------------------------------------------------------------
-txt.head.find.browse   byte 24,1,1
-                       text ' Find: Search results '
-                       byte 1
-txt.hint.find.browse   stri 'Go for it'
-                       even                   
-txt.hint.find.browse2  stri 'Enter search string.'
-                       even
-txt.keys.find.browse   stri 'F9-Back  .=Previous match >=Next match'
-                       even
-txt.keys.find.browse2  stri 'F9-Back  .=Previous match >=Next match'
-                       even

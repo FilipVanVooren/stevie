@@ -140,6 +140,10 @@ edb.find.scan.compare:
                                     ; | index for columns
         inc   @edb.srch.matches     ; / Update search string match counter
 
+        bl    @putnum
+              byte 0,72  ; Show number of matches
+              data edb.srch.matches,rambuf,>3020
+
         li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
         jmp   edb.find.scan.compare.nextchar
         ;------------------------------------------------------
