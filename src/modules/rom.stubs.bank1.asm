@@ -224,10 +224,10 @@ fm.browse.updir:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "edb.find.scan"
-* bank2 vec.20
+* Stub for "edb.find.search"
+* bank2 vec.21
 ********|*****|*********************|**************************
-edb.find.scan:
+edb.find.search:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -235,7 +235,7 @@ edb.find.scan:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data vec.21           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

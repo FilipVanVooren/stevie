@@ -56,6 +56,7 @@ id.dialog.cfg             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
+id.dialog.find.browse     equ  120     ; "Find - Search results"
 ;-----------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-----------------------------------------------------------------
@@ -370,7 +371,6 @@ cpu.scrpad.tgt    equ  >f000           ; \ Fixed memory location used for
                                        ; /
 
 cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
-
 cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
                                        ; calling TI Basic/External programs
 ;-----------------------------------------------------------------

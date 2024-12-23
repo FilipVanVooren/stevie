@@ -44,6 +44,25 @@ fb.vdpdump:
         b     *r11                  ; Return to caller
 
 
+***************************************************************
+* Stub for "pane.cursor.hide"
+* bank1 vec.29
+********|*****|*********************|**************************
+pane.cursor.hide:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 1
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank1.rom        ; | i  p0 = bank address
+              data vec.29           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -101,6 +120,48 @@ pane.colorscheme.statlines
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
               data vec.32           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "pane.cmdb.show"
+* bank3 vec.20
+********|*****|*********************|**************************
+pane.cmdb.show:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 3
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data vec.20           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for dialog "Find - Search results"
+* bank3 vec.44
+********|*****|*********************|**************************
+dialog.find.browse:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 3
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data vec.44           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

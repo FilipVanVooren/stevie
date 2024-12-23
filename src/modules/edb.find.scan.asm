@@ -50,29 +50,15 @@ edb.find.scan
         ;------------------------------------------------------        
         ; Initialisation
         ;------------------------------------------------------ 
+        bl    @edb.find.init        ; Initialize memory for find functionality
+
         bl    @cpym2m
               data cmdb.cmdall,edb.srch.str,80
                                     ; Set search string to input value
 
-        bl    @film
-              data edb.srch.idx.rtop,>ff,edb.srch.idx.rsize
-                                    ; Clear search results index for rows
-                                    ; Using >ff as "unset" value
-
-        bl    @film
-              data edb.srch.idx.ctop,>ff,edb.srch.idx.csize
-                                    ; Clear search results index for columns
-                                    ; Using >ff as "unset" value
-
         movb  @cmdb.cmdlen,tmp0     ; \ Get length of search string
         srl   tmp0,8                ; | MSB to LSB
         mov   tmp0,@edb.srch.strlen ; / Save search string length
-
-        clr   @edb.srch.offset      ; Reset offset into search results row index
-        clr   @edb.srch.matches     ; Reset matches counter
-        clr   @edb.srch.startln     ; 1st line to search
-        mov   @edb.lines,@edb.srch.endln
-                                    ; Last line to search                
 
         c     @edb.block.m1,@w$ffff  ; Marker M1 unset?
         jeq   edb.find.scan.showbusy ; Unset skip block marker

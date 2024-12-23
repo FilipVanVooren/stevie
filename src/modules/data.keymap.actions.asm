@@ -487,7 +487,7 @@ keymap_actions.cmdb:
         ; Dialog: find
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.find
-        data  edkey.action.cmdb.find.refresh
+        data  edkey.action.cmdb.find.search
         ;-------------------------------------------------------
         ; Dialog: Help
         ;-------------------------------------------------------
