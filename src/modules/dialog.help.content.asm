@@ -130,14 +130,13 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,16
-        data  dialog.help.data.page1.right,18
+        data  dialog.help.data.page1.left,14
+        data  dialog.help.data.page1.right,15
         data  dialog.help.data.page2.left,16
-        data  dialog.help.data.page2.right,12
+        data  dialog.help.data.page2.right,15
 
 
 dialog.help.data.page1.left:
-        stri ' '
         byte    38
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Cursor '
@@ -155,11 +154,12 @@ dialog.help.data.page1.left:
         stri 'Ctrl v   ^v   File top'        
         stri 'Fctn b        Screen bottom'
         stri 'Ctrl b   ^b   File bottom'
-        stri 'Ctrl g   ^g   Goto line'
-
 
 dialog.help.data.page1.right:
         stri '                              Page 1/2'
+        stri 'Ctrl g   ^g   Goto line'        
+        stri 'Ctrl ,   ^,   Goto previous match'
+        stri 'Ctrl .   ^.   Goto next match'
         stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -174,18 +174,9 @@ dialog.help.data.page1.right:
         stri 'Ctrl s   ^s   Save file'
         stri 'Ctrl ,   ^,   Load previous file'
         stri 'Ctrl .   ^.   Load next file'
-        byte    35
-        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
-        text    ' Others '
-        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
-        stri 'Fctn +   ^q   Quit'
-        stri 'Fctn 0   ^/   TI Basic'
-        stri 'Ctrl h   ^h   Help'
-        stri 'Ctrl u   ^u   Shortcuts menu'
-        stri 'Ctrl z   ^z   Cycle color schemes'
+
 
 dialog.help.data.page2.left:
-        stri ' '
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Modifiers '
@@ -207,10 +198,10 @@ dialog.help.data.page2.left:
         stri 'Ctrl d   ^d   Next column'
         stri 'Fctn e/x      Up/Down'
         stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
+        stri 'SPACE         Parent directory'
 
 dialog.help.data.page2.right:
         stri '                              Page 2/2'
-        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
@@ -222,8 +213,13 @@ dialog.help.data.page2.right:
         stri 'Ctrl m   ^m   Move block'
         stri 'Ctrl s   ^s   Save block to file'
         stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
+        stri ' '
         byte    35
-        byte    1,1,1,1,1,1
-        text    ' File picker (catalog) '
-        byte    1,1,1,1,1,1
-        stri 'SPACE         Parent directory'        
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1
+        text    ' Others '
+        byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        stri 'Fctn +   ^q   Quit'
+        stri 'Fctn 0   ^/   TI Basic'
+        stri 'Ctrl h   ^h   Help'
+        stri 'Ctrl u   ^u   Shortcuts menu'
+        stri 'Ctrl z   ^z   Cycle color schemes'        

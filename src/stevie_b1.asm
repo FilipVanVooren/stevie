@@ -100,6 +100,7 @@ main:
         copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
         copy  "edkey.fb.tabs.asm"           ; tab-key related actions
         copy  "edkey.fb.clip.asm"           ; Clipboard actions
+        copy  "edkey.fb.mov.match.asm"      ; Goto search matches
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer
         ;-----------------------------------------------------------------------

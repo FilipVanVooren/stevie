@@ -27,6 +27,7 @@ tv.reset:
         ;------------------------------------------------------
         bl    @cmdb.init            ; Initialize command buffer
         bl    @edb.init             ; Initialize editor buffer
+        bl    @edb.find.init        ; Intitialize search buffer
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
         bl    @errpane.init         ; Initialize error pane

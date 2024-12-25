@@ -36,6 +36,7 @@ edb.find.init:
 
         clr   @edb.srch.offset      ; Reset offset into search results row index
         clr   @edb.srch.matches     ; Reset matches counter
+        clr   @edb.srch.curmatch    ; Reset current match
         clr   @edb.srch.startln     ; 1st line to search
         mov   @edb.lines,@edb.srch.endln
                                     ; Last line to search
@@ -80,8 +81,8 @@ edb.find.search:
         ; Initialisation
         ;-------------------------------------------------------
         bl    @putat
-              byte 0,64
-              data txt.find.matches ; Show 'Matches:'
+              byte 0,67
+              data txt.find.hits    ; Show 'Hits:'
 
         bl    @pane.cmdb.hide       ; Hide CMDB pane
 
@@ -115,5 +116,5 @@ edb.find.search.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller     
 
-txt.find.matches  stri 'Matches:'
-                  even
+txt.find.hits stri 'Hits:'
+              even

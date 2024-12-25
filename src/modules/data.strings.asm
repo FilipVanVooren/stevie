@@ -90,9 +90,9 @@ txt.keys.default   stri 'F9-Menu  ^H-Help'
                    even
 txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#'
                    even
-txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^0^1-Matches'
+txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next'
                    even
-txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^0^1-Matches'
+txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next'
                    even
 
 txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'

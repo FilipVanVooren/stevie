@@ -303,12 +303,13 @@ edb.srch.strlen   equ  edb.struct + 198 ; Length of search string
 edb.srch.startln  equ  edb.struct + 200 ; Start line in editor buffer for search
 edb.srch.endln    equ  edb.struct + 202 ; End line in editor buffer for search
 edb.srch.worklen  equ  edb.struct + 204 ; Length of unpacked line in work buffer
-edb.srch.matches  equ  edb.struct + 206 ; Number of search hits
-edb.srch.row.ptr  equ  edb.struct + 208 ; Pointer entry in rows search index
-edb.srch.col.ptr  equ  edb.struct + 210 ; Pointer entry in cols search index
-edb.srch.offset   equ  edb.struct + 212 ; Offset into current row index entry
-edb.srch.matchcol equ  edb.struct + 214 ; Column of search match in current row
-edb.free          equ  edb.struct + 216 ; End of structure
+edb.srch.matches  equ  edb.struct + 206 ; Number of search matches
+edb.srch.curmatch equ  edb.struct + 208 ; Current index entry in search matches
+edb.srch.row.ptr  equ  edb.struct + 210 ; Pointer entry in rows search index
+edb.srch.col.ptr  equ  edb.struct + 212 ; Pointer entry in cols search index
+edb.srch.offset   equ  edb.struct + 214 ; Offset into current row index entry
+edb.srch.matchcol equ  edb.struct + 216 ; Column of search match in current row
+edb.free          equ  edb.struct + 218 ; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------

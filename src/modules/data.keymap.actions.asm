@@ -70,6 +70,12 @@ keymap_actions.editor:
 
         byte  key.ctrl.b, pane.focus.fb
         data  edkey.action.bot
+
+        byte  key.ctrl.comma, pane.focus.fb
+        data  edkey.action.goto.pmatch
+
+        byte  key.ctrl.dot, pane.focus.fb
+        data  edkey.action.goto.nmatch
         ;-------------------------------------------------------
         ; Modifier keys - Delete
         ;-------------------------------------------------------
@@ -134,12 +140,6 @@ keymap_actions.editor:
 
         byte  key.ctrl.z, pane.focus.fb
         data  pane.colorscheme.cycle
-
-        byte  key.ctrl.comma, pane.focus.fb
-        data  edkey.action.fb.file.prev
-
-        byte  key.ctrl.dot, pane.focus.fb
-        data  edkey.action.fb.file.next
 
         byte  key.ctrl.slash, pane.focus.fb
         data  dialog.basic
