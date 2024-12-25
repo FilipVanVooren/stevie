@@ -141,7 +141,7 @@ edb.find.scan.compare:
         inc   @edb.srch.matches     ; / Update search string match counter
 
         bl    @putnum
-              byte 0,72  ; Show number of matches
+              byte 0,72             ; Show number of matches
               data edb.srch.matches,rambuf,>3020
 
         li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
@@ -166,12 +166,22 @@ edb.find.scan.compare.nextchar:
         ; Prepare for processing Next line
         ;------------------------------------------------------
 edb.find.scan.nextline:        
-        inc   @fh.records           ; Increase line counter
+        inc   @fh.records             ; Increase line counter
+        abs   @fh.records             ; \  Display line counter
+        jop   edb.find.scan.showline  ; /  update sporadically
 
+        jmp   edb.find.scan.checkcomplete
+        ;------------------------------------------------------
+        ; Show line counter
+        ;------------------------------------------------------
+edb.find.scan.showline:
         bl    @putnum
               byte pane.botrow,72   ; Show lines processed
               data fh.records,rambuf,>3020
-
+        ;------------------------------------------------------
+        ; Check if scan is complete
+        ;------------------------------------------------------
+edb.find.scan.checkcomplete:
         c     @fh.records,@edb.srch.endln
                                     ; All lines scanned ?                                
 

@@ -116,5 +116,5 @@ edb.find.search.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller     
 
-txt.find.hits stri 'Hits:'
+txt.find.hits stri 'Hits:    0'
               even
