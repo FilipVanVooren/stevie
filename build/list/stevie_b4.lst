@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241226-2021410
+0002               * BUILD: 241226-2034410
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -9096,9 +9096,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                       Strings
 0006               ***************************************************************
-0007 39C6 012C     txt.delim          stri ','
+0007 39C6 012F     txt.slash          stri '/'
 0008                                  even
-0009 39C8 012F     txt.slash          stri '/'
+0009 39C8 013A     txt.colon          stri ':'
 0010                                  even
 0011 39CA 0520     txt.bottom         stri '  BOT'
      39CC 2042     
@@ -13032,7 +13032,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0225 6BAC 06A0  32         bl    @putat
      6BAE 2442     
 0226 6BB0 1D47                   byte  pane.botrow,71
-0227 6BB2 39C6                   data  txt.delim
+0227 6BB2 39C8                   data  txt.colon
 0228                       ;------------------------------------------------------
 0229                       ; Show column
 0230                       ;------------------------------------------------------
@@ -17342,8 +17342,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.BOTTOM.......... >39CA :     
     TXT.CLEARMEM........ >3A90 :     
     TXT.CMDB.PROMPT..... >3E0A :     
+    TXT.COLON........... >39C8 :     
     TXT.COLORSCHEME..... >3E0C :     
-    TXT.DELIM........... >39C6 :     
     TXT.DONE.APPEND..... >3ADA :     
     TXT.DONE.CLIPBOARD.. >3B2E :     
     TXT.DONE.CLIPDEV.... >3B3E :     
@@ -17383,7 +17383,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.READDIR......... >3AA4 :     
     TXT.SAVING.......... >39F0 :     
     TXT.SEARCHING....... >3A0A :     
-    TXT.SLASH........... >39C8 :     
+    TXT.SLASH........... >39C6 :     
     TXT.STAR............ >39E2 :     
     TXT.TIB1............ >3BC0 :     
     TXT.TIB2............ >3BCE :     

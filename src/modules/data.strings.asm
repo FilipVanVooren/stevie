@@ -4,9 +4,9 @@
 ***************************************************************
 *                       Strings
 ***************************************************************
-txt.delim          stri ','
-                   even
 txt.slash          stri '/'
+                   even
+txt.colon          stri ':'                   
                    even
 txt.bottom         stri '  BOT'
                    even
