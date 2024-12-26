@@ -137,7 +137,7 @@ pane.topline.searchhits:
         movb  tmp0,@rambuf + 5      ; | Overwrite length-byte prefix in 
                                     ; / trimmed number with slash              
         ;------------------------------------------------------
-        ; Display XX/YY 
+        ; Display current hit/total hits
         ;------------------------------------------------------
         li    tmp0,>0a00            ; \
         movb  tmp0,@rambuf          ; / Set length prefix byte
@@ -151,6 +151,10 @@ pane.topline.searchhits:
         ; Display total number of lines in file
         ;------------------------------------------------------
 pane.topline.total:
+        bl    @putat
+              byte 0,68
+              data txt.ws2          ; Remove any junk characters
+
         mov   @edb.lines,@waux1
 
         bl    @putnum
