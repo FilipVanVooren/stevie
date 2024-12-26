@@ -143,8 +143,14 @@ edb.find.scan.compare:
         bl    @putnum
               byte 0,74             ; Show number of matches
               data edb.srch.matches,rambuf,>3020
+        ;------------------------------------------------------
+        ; Check if match buffer is full
+        ;------------------------------------------------------
+        li    tmp0,1000              ; \ Exit if 1000 matches reached
+        c     @edb.srch.matches,tmp0 ; / 
+        jeq   edb.find.scan.done     ; Buffer is full, halt the scan
 
-        li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
+        li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
         jmp   edb.find.scan.compare.nextchar
         ;------------------------------------------------------
         ; Search string not found. Next try on remaining chars on line
@@ -170,7 +176,7 @@ edb.find.scan.nextline:
         abs   @fh.records             ; \  Display line counter
         jop   edb.find.scan.showline  ; /  update sporadically
 
-        jmp   edb.find.scan.checkcomplete
+        jmp   edb.find.scan.checkcomplete        
         ;------------------------------------------------------
         ; Show line counter
         ;------------------------------------------------------
