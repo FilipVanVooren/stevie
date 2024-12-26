@@ -10,7 +10,7 @@
 * bl @fb.goto.nextmatch
 *--------------------------------------------------------------
 * INPUT
-* @parm1  = Line in editor buffer to display as top row (goto)
+* none
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -34,9 +34,10 @@ fb.goto.nextmatch:
         mov   @edb.srch.matches,tmp0  ; \ 
         dec   tmp0                    ; | Already at last entry?
         c     @edb.srch.curmatch,tmp0 ; / 
-        jeq   fg.goto.nextmatch.first ; Yes, goto first match
+        jlt   !                       ; Not yet, keep going
+        jmp   fg.goto.nextmatch.first ; Yes, show first entry
 
-        inc   @edb.srch.curmatch      ; Next entry        
+!       inc   @edb.srch.curmatch      ; Next entry        
         jmp   fg.goto.nextmatch.goto  ; No, show next match
         ;-------------------------------------------------------
         ; First match

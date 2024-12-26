@@ -6,6 +6,14 @@
 ********|*****|*********************|**************************
 edkey.action.cmdb.find.search:
         bl    @edb.find.search      ; Perform search operation
+        abs   @edb.srch.matches     ; Any search matches found?
+        jgt   edkey.action.cmdb.find.search.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; No search matches, jump to 1st line in file
+        ;-------------------------------------------------------
+        clr   @parm1                ; 1st line in file
+        b     @edkey.action.goto    ; Goto specified line        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

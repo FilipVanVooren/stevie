@@ -10,7 +10,7 @@
 * bl @fb.goto.prevmatch
 *--------------------------------------------------------------
 * INPUT
-* @parm1  = Line in editor buffer to display as top row (goto)
+* none
 *--------------------------------------------------------------
 * OUTPUT
 * none

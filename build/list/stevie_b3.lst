@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241226-1948050
+0002               * BUILD: 241226-2021410
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -8612,8 +8612,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ;-------------------------------------------------------
 0028 3822 06A0  32         bl    @hchar
      3824 2832     
-0029 3826 0032                   byte 0,50,32,30
-     3828 201E     
+0029 3826 0032                   byte 0,50,32,24
+     3828 2018     
 0030 382A FFFF                   data EOL              ; Clear message
 0031               
 0032 382C 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task
@@ -15157,13 +15157,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7694 3A20     
 0191                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7696 3234                        text '241226-1948050'
+0001 7696 3234                        text '241226-2021410'
      7698 3132     
      769A 3236     
-     769C 2D31     
-     769E 3934     
-     76A0 3830     
-     76A2 3530     
+     769C 2D32     
+     769E 3032     
+     76A0 3134     
+     76A2 3130     
                    < data.dialogs.asm
 0192 76A4 202D                        text ' - Stevie 1.6.7  - (c)2018-2024 Filip Van Vooren'
      76A6 2053     

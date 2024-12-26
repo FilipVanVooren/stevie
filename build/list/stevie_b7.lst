@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241226-1948050
+0002               * BUILD: 241226-2021410
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -8631,8 +8631,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ;-------------------------------------------------------
 0028 3822 06A0  32         bl    @hchar
      3824 2832     
-0029 3826 0032                   byte 0,50,32,30
-     3828 201E     
+0029 3826 0032                   byte 0,50,32,24
+     3828 2018     
 0030 382A FFFF                   data EOL              ; Clear message
 0031               
 0032 382C 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task

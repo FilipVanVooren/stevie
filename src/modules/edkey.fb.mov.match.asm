@@ -2,7 +2,7 @@
 * Purpose...: Actions for moving to search matches in frame buffer pane.
 
 *---------------------------------------------------------------
-* Cursor on previous match (or goto previous file)
+* Cursor on previous match
 *---------------------------------------------------------------
 edkey.action.goto.pmatch:
         abs   @edb.srch.matches            ; Any search matches?
@@ -12,10 +12,10 @@ edkey.action.goto.pmatch:
 
 
 *---------------------------------------------------------------
-* Cursor on next match (or goto next file)
+* Cursor on next match
 *---------------------------------------------------------------
 edkey.action.goto.nmatch:
         abs   @edb.srch.matches            ; Any search matches?
-        jeq   !                            ; No, exit early
+        jeq   !                            ; No, goto line 1
         bl    @fb.goto.nextmatch           ; Goto next match
 !       b     @edkey.keyscan.hook.debounce ; Back to editor main

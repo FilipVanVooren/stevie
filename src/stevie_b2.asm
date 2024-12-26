@@ -85,7 +85,8 @@ main:
         copy  "fm.browse.updir.asm"      ; Directory up
         copy  "fm.directory.asm"         ; File manager drive/directory listing
         copy  "edb.find.asm"             ; Initialize for find function
-        copy  "edb.find.scan.asm"        ; Find functionality
+        copy  "edb.find.search.asm"      ; Find functionality
+        copy  "edb.find.scan.asm"        ; Scan editor buffer for matches
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
