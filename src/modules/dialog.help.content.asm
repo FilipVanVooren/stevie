@@ -131,7 +131,7 @@ dialog.help.content.exit:
 
 dialog.help.data.pages:
         data  dialog.help.data.page1.left,14
-        data  dialog.help.data.page1.right,15
+        data  dialog.help.data.page1.right,13
         data  dialog.help.data.page2.left,16
         data  dialog.help.data.page2.right,15
 
@@ -156,7 +156,7 @@ dialog.help.data.page1.left:
         stri 'Ctrl b   ^b   File bottom'
 
 dialog.help.data.page1.right:
-        stri '                              Page 1/2'
+        stri '                            Page 1/2  '
         stri 'Ctrl g   ^g   Goto line'        
         stri 'Ctrl ,   ^,   Goto previous match'
         stri 'Ctrl .   ^.   Goto next match'
@@ -172,9 +172,6 @@ dialog.help.data.page1.right:
         stri 'Ctrl p   ^p   Print file'
         stri 'Ctrl r   ^r   Run program image (EA5)'        
         stri 'Ctrl s   ^s   Save file'
-        stri 'Ctrl ,   ^,   Load previous file'
-        stri 'Ctrl .   ^.   Load next file'
-
 
 dialog.help.data.page2.left:
         byte    35
@@ -201,7 +198,7 @@ dialog.help.data.page2.left:
         stri 'SPACE         Parent directory'
 
 dialog.help.data.page2.right:
-        stri '                              Page 2/2'
+        stri '                            Page 2/2  '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
@@ -219,7 +216,8 @@ dialog.help.data.page2.right:
         text    ' Others '
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1
         stri 'Fctn +   ^q   Quit'
-        stri 'Fctn 0   ^/   TI Basic'
+        stri 'Fctn 0        TI Basic session'
+        stri 'Ctrl 0   ^0   TI Basic submenu'
         stri 'Ctrl h   ^h   Help'
         stri 'Ctrl u   ^u   Shortcuts menu'
         stri 'Ctrl z   ^z   Cycle color schemes'        

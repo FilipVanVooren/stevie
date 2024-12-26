@@ -157,7 +157,7 @@ pane.botline.show_mode:
         ; Overwrite mode
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,54
+              byte  pane.botrow,61
               data  txt.ovrwrite
         jmp   pane.botline.show_dirty
         ;------------------------------------------------------
@@ -170,7 +170,7 @@ pane.botline.show_mode.insert:
         ; Auto-Insert
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,54
+              byte  pane.botrow,61
               data  txt.autoinsert
         jmp   pane.botline.show_dirty
         ;------------------------------------------------------
@@ -178,7 +178,7 @@ pane.botline.show_mode.insert:
         ;------------------------------------------------------
 pane.botline.show_mode.insert.noauto:
         bl    @putat
-              byte  pane.botrow,54
+              byte  pane.botrow,61
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
@@ -190,7 +190,7 @@ pane.botline.show_dirty:
         ; Show "*" 
         ;------------------------------------------------------        
         bl    @putat
-              byte pane.botrow,58
+              byte pane.botrow,65
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------
@@ -198,7 +198,7 @@ pane.botline.show_dirty:
         ;------------------------------------------------------        
 pane.botline.nochange:        
         bl    @putat
-              byte pane.botrow,58
+              byte pane.botrow,65
               data txt.ws1          ; Single white space      
         ;------------------------------------------------------
         ; Show "line,column"
@@ -215,15 +215,15 @@ pane.botline.show_linecol:
         ; Show line
         ;------------------------------------------------------
         bl    @putnum
-              byte  pane.botrow,59  ; YX
+              byte  pane.botrow,66  ; YX
               data  outparm1,rambuf
               byte  48              ; ASCII offset
               byte  32              ; Padding character
         ;------------------------------------------------------
-        ; Show comma
+        ; Show delimiter
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,64
+              byte  pane.botrow,71
               data  txt.delim
         ;------------------------------------------------------
         ; Show column
@@ -237,14 +237,14 @@ pane.botline.show_linecol:
         mov   tmp0,@waux1           ; Save in temporary
 
         bl    @mknum                ; Convert unsigned number to string
-              data  waux1,rambuf    ; \
-              byte  48              ; | ASCII offset
-              byte  32              ; / Fill character
+              data waux1,rambuf     ; \
+              byte 48               ; | ASCII offset
+              byte 32               ; / Fill character
 
         bl    @trimnum              ; Trim number to the left
-              data  rambuf,rambuf+5,32
+              data rambuf,rambuf+5,32
 
-        li    tmp0,>0600            ; "Fix" number length to clear junk chars
+        li    tmp0,>0500            ; "Fix" number length to clear junk chars
         movb  tmp0,@rambuf+5        ; Set length byte
 
         ;------------------------------------------------------
@@ -317,32 +317,8 @@ pane.botline.show_line.rest:
         ;------------------------------------------------------
 pane.botline.show_linecol.colstring:
         bl    @putat
-              byte pane.botrow,65
-              data rambuf+5         ; Show string
-        ;------------------------------------------------------
-        ; Show lines in buffer unless on last line in file
-        ;------------------------------------------------------
-        mov   @fb.row,@parm1
-        bl    @fb.row2line
-        c     @edb.lines,@outparm1
-        jne   pane.botline.show_lines_in_buffer
-
-        bl    @putat
               byte pane.botrow,72
-              data txt.bottom
-
-        jmp   pane.botline.exit
-        ;------------------------------------------------------
-        ; Show lines in buffer
-        ;------------------------------------------------------
-pane.botline.show_lines_in_buffer:
-        mov   @edb.lines,@waux1
-
-        bl    @putnum
-              byte pane.botrow,72   ; YX
-              data waux1,rambuf
-              byte 48
-              byte 32
+              data rambuf+5         ; Show string
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

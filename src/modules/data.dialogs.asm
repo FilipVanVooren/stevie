@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.6.6   '
+            text '  Stevie 1.6.7   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.6.6   '     
+            text '  Stevie 1.6.7   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.6.6   '
+            text '  Stevie 1.6.7   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.6.6   '  
+            text '  Stevie 1.6.7   '  
             even
         .endif
 
@@ -189,7 +189,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.6.6  - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.6.7  - (c)2018-2024 Filip Van Vooren'
                    even
 
 
@@ -254,8 +254,8 @@ txt.head.config    byte 12,1,1
                    text ' Options '
                    byte 1
 
-txt.info.config    stri 'Clipboard   Font'
-pos.info.config    byte 0,12,>ff
+txt.info.config    stri 'Autoinsert   Clipboard   Font'
+pos.info.config    byte 0,13,25,>ff
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 
 ;--------------------------------------------------------------
@@ -286,9 +286,9 @@ txt.head.shortcuts byte 14,1,1
                    text ' Shortcuts '
                    byte 1
 
-txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   Autoinsert   M1-M2'
+txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   M1-M2'
                    even
-pos.info.shortcuts byte 0,9,16,23,31,45,48,>ff
+pos.info.shortcuts byte 0,9,16,23,31,34,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even
@@ -301,7 +301,7 @@ txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
 txt.head.find      byte 9,1,1
                    text ' Find '
                    byte 1
-txt.hint.find      stri 'Press F5 to toggle case-insensitive searching on or off.'
+txt.hint.find      stri 'Press F5 to toggle case-sensitive search on/off.'
                    even                   
 txt.hint.find2     stri 'Enter search string.'
                    even

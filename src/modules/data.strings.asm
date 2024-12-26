@@ -6,6 +6,8 @@
 ***************************************************************
 txt.delim          stri ','
                    even
+txt.slash          stri '/'
+                   even
 txt.bottom         stri '  BOT'
                    even
 txt.ovrwrite       stri 'OVR '
@@ -86,16 +88,16 @@ txt.m1             stri 'M1='
                    even
 txt.m2             stri 'M2='
                    even
-txt.keys.default   stri 'F9-Menu  ^H-Help'
+txt.keys.default   stri 'F9-Menu  ^H-Help                                       '
                    even
-txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#'
+txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#                            '
                    even
-txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next'
+txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
                    even
-txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next'
+txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Stop'
                    even
 
-txt.keys.block     stri 'F9-Exit  ^Copy ^Move ^Del ^Save ^Print ^[1-3]Clipbrd'
+txt.keys.block     stri 'F9-Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3=Clipboard'
                    even
 txt.keys.basic1    stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
                    even
@@ -112,8 +114,7 @@ txt.ws4            stri '    '
 txt.filetype.none  equ txt.ws4
 
 txt.msg.tibasic    stri 'TI Basic mode active.'
-                   even
-            
+                   even            
 ;--------------------------------------------------------------
 ; Strings for error line pane
 ;--------------------------------------------------------------

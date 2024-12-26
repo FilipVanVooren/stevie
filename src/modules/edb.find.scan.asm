@@ -141,7 +141,7 @@ edb.find.scan.compare:
         inc   @edb.srch.matches     ; / Update search string match counter
 
         bl    @putnum
-              byte 0,72             ; Show number of matches
+              byte 0,74             ; Show number of matches
               data edb.srch.matches,rambuf,>3020
 
         li    tmp0,edb.srch.str + 1 ; Reset source for compare (skip len byte)
@@ -176,7 +176,7 @@ edb.find.scan.nextline:
         ;------------------------------------------------------
 edb.find.scan.showline:
         bl    @putnum
-              byte pane.botrow,72   ; Show lines processed
+              byte pane.botrow,74   ; Show lines processed
               data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Check if scan is complete

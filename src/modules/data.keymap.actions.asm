@@ -141,11 +141,14 @@ keymap_actions.editor:
         byte  key.ctrl.z, pane.focus.fb
         data  pane.colorscheme.cycle
 
-        byte  key.ctrl.slash, pane.focus.fb
-        data  dialog.basic
-
         byte  key.fctn.0, pane.focus.fb
         data  tibasic
+
+        byte  key.ctrl.0, pane.focus.fb
+        data  dialog.basic
+
+        byte  key.ctrl.slash, pane.focus.fb
+        data  edkey.action.find.reset
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------
@@ -353,17 +356,20 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.cat        
         data  edkey.action.cmdb.file.directory.device 
         ;-------------------------------------------------------
-        ; Dialog: Configure
+        ; Dialog: Options
         ;-------------------------------------------------------
-        byte  key.uc.c, id.dialog.cfg
+        byte  key.uc.a, id.dialog.opt
+        data  edkey.action.cmdb.autoinsert
+
+        byte  key.uc.c, id.dialog.opt
         data  dialog.clipdev
         
-        byte  key.uc.f, id.dialog.cfg
+        byte  key.uc.f, id.dialog.opt
         data  dialog.font
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------
-        byte  key.enter, id.dialog.cfg.clip
+        byte  key.enter, id.dialog.opt.clip
         data  edkey.action.cmdb.cfg.clip
         ;-------------------------------------------------------
         ; Dialog: Configure font
@@ -462,9 +468,6 @@ keymap_actions.cmdb:
 
         byte  key.uc.r, id.dialog.shortcuts
         data  edkey.action.toggle.ruler
-
-        byte  key.uc.a, id.dialog.shortcuts
-        data  edkey.action.cmdb.autoinsert
 
         byte  key.num.1, id.dialog.shortcuts
         data  edkey.action.block.m1

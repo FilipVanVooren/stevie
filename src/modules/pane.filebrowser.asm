@@ -335,5 +335,4 @@ pane.filebrowser.exit:
         b     *r11                  ; Return to caller
 
 txt.volume    stri  'Volume:            F:    '
-txt.slash     stri  '/'
 txt.header    stri  'Name        Type   Size'

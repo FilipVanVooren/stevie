@@ -45,22 +45,18 @@ pane.topline.file:
       
         mov   @outparm1,tmp1        ; \ Display padded filename
         bl    @xutst0               ; /        
-
-        bl    @hchar
-              byte 0,50,32,30       ; Remove any left-over junk on top line
-              data eol    
         ;------------------------------------------------------
         ; Check if M1/M2 markers need to be shown
         ;------------------------------------------------------
 pane.topline.showmarkers:        
-        mov   @edb.block.m1,tmp0    ; \  
-        ci    tmp0,>ffff            ; | Exit early if M1 unset (>ffff)
-        jeq   pane.topline.exit     ; /
+        mov   @edb.block.m1,tmp0      ; \  
+        ci    tmp0,>ffff              ; | Skip early if M1 unset (>ffff)
+        jeq   pane.topline.searchhits ; /
 
-        mov   @tv.task.oneshot,tmp0 ; \
+        mov   @tv.task.oneshot,tmp0   ; \
         ci    tmp0,pane.topline.oneshot.clearmsg
-                                    ; | Exit early if overlay message visible
-        jeq   pane.topline.exit     ; / 
+                                      ; | Skip early if overlay message visible
+        jeq   pane.topline.searchhits ; / 
         ;------------------------------------------------------
         ; Show M1 marker
         ;------------------------------------------------------
@@ -82,12 +78,12 @@ pane.topline.showmarkers:
         ;------------------------------------------------------
         ; Show M2 marker
         ;------------------------------------------------------
-        mov   @edb.block.m2,tmp0    ; \  
-        ci    tmp0,>ffff            ; | Exit early if M2 unset (>ffff)
-        jeq   pane.topline.exit     ; /
+        mov   @edb.block.m2,tmp0      ; \  
+        ci    tmp0,>ffff              ; | Skip early if M2 unset (>ffff)
+        jeq   pane.topline.searchhits ; /
 
         bl    @putat
-              byte 0,62
+              byte 0,61
               data txt.m2           ; Show M2 marker message
 
         mov   @edb.block.m2,@parm1
@@ -99,8 +95,69 @@ pane.topline.showmarkers:
         movb  tmp0,@uint16.unpacked ; Set string length to 5 (padding)
 
         bl    @putat
-              byte 0,65
+              byte 0,64
               data uint16.unpacked  ; Show M2 value
+        ;------------------------------------------------------
+        ; Show search hits counter
+        ;------------------------------------------------------
+pane.topline.searchhits:
+        abs   @edb.srch.matches     ; Any search hits?
+        jeq   pane.topline.total    ; No, skip to next display element
+        ;------------------------------------------------------
+        ; Add current hit number
+        ;------------------------------------------------------
+        bl    @film                 
+              data rambuf,>00,18    ; Clear ram buffer 
+
+        mov   @edb.srch.curmatch,@waux1 
+                                    ; \ Turn matches into base 1
+        inc   @waux1                ; / 
+
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
+
+        bl    @mknum                ; Convert unsigned number to string
+              data waux1            ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character 
+        ;------------------------------------------------------
+        ; Add total hits
+        ;------------------------------------------------------
+        bl    @mknum                ; Convert unsigned number to string
+              data edb.srch.matches ; \ i  p1    = Source
+              data rambuf + 12      ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data rambuf+12,rambuf+5,32
+
+        li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
+        movb  tmp0,@rambuf + 5      ; | Overwrite length-byte prefix in 
+                                    ; / trimmed number with slash              
+        ;------------------------------------------------------
+        ; Display XX/YY 
+        ;------------------------------------------------------
+        li    tmp0,>0a00            ; \
+        movb  tmp0,@rambuf          ; / Set length prefix byte
+
+        bl    @putat
+              byte 0,70
+              data rambuf           ; Display string
+
+        jmp   pane.topline.exit
+        ;------------------------------------------------------
+        ; Display total number of lines in file
+        ;------------------------------------------------------
+pane.topline.total:
+        mov   @edb.lines,@waux1
+
+        bl    @putnum
+              byte 0,74             ; YX
+              data waux1,rambuf
+              byte 48
+              byte 32        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

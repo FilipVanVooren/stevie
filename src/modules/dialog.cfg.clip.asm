@@ -26,7 +26,7 @@ dialog.cfg.clip:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.cfg.clip
+        li    tmp0,id.dialog.opt.clip
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.clipdev

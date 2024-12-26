@@ -6,11 +6,9 @@
 *---------------------------------------------------------------
 edkey.action.goto.pmatch:
         abs   @edb.srch.matches            ; Any search matches?
-        jeq   edkey.action.goto.prevfile   ; No, goto previous file
+        jeq   !                            ; No, exit early
         bl    @fb.goto.prevmatch           ; Goto previous match 
 !       b     @edkey.keyscan.hook.debounce ; Back to editor main
-edkey.action.goto.prevfile:
-        b     @edkey.action.fb.file.prev   ; Goto previous file
 
 
 *---------------------------------------------------------------
@@ -18,8 +16,6 @@ edkey.action.goto.prevfile:
 *---------------------------------------------------------------
 edkey.action.goto.nmatch:
         abs   @edb.srch.matches            ; Any search matches?
-        jeq   edkey.action.goto.nextfile   ; No, goto next file
+        jeq   !                            ; No, exit early
         bl    @fb.goto.nextmatch           ; Goto next match
 !       b     @edkey.keyscan.hook.debounce ; Back to editor main
-edkey.action.goto.nextfile:
-        b     @edkey.action.fb.file.prev   ; Goto next file

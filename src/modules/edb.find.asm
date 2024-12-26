@@ -81,7 +81,7 @@ edb.find.search:
         ; Initialisation
         ;-------------------------------------------------------
         bl    @putat
-              byte 0,67
+              byte 0,69
               data txt.find.hits    ; Show 'Hits:'
 
         bl    @pane.cmdb.hide       ; Hide CMDB pane
@@ -105,6 +105,14 @@ edb.find.search:
         ; Perform search operation
         ;-------------------------------------------------------
         bl    @edb.find.scan        ; Perform search operation
+        ;-------------------------------------------------------
+        ; Show 1st search result
+        ;-------------------------------------------------------
+        bl    @hchar
+              byte 0,69,32,22
+              data eol              ; Remove "Hits: ....."
+
+        bl    @fb.goto.nextmatch    ; Goto next match              
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      

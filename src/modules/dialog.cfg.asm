@@ -26,7 +26,7 @@ dialog.cfg:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.cfg
+        li    tmp0,id.dialog.opt
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.config

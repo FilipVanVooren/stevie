@@ -66,7 +66,7 @@ pane.botline.busy.off:
         ; Hide busyline indicator
         ;------------------------------------------------------
         bl    @hchar
-              byte pane.botrow,0,32,72
+              byte pane.botrow,0,32,78
               data EOL              ; Erase indicator in bottom row
 
         mov   @tv.color,@parm1      ; Set normal color

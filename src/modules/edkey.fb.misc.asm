@@ -26,3 +26,18 @@ edkey.action.copyblock_or_clipboard:
         b     @edkey.action.block.copy
                                     ; Copy code block
 !       b     @dialog.clipboard     ; Open "Insert from clipboard" dialog
+
+
+*---------------------------------------------------------------
+* Reset results of find operation
+*---------------------------------------------------------------
+edkey.action.find.reset:
+        bl    @edb.find.init        ; Reset search results
+        seto  @fb.dirty             ; Frame buffer dirty        
+        seto  @fb.status.dirty      ; Trigger status lines update
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.find.reset.exit:
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main        
