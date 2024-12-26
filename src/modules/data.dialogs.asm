@@ -305,7 +305,5 @@ txt.hint.find      stri 'Press F5 to toggle case-sensitive search on/off.'
                    even                   
 txt.hint.find2     stri 'Enter search string.'
                    even
-txt.keys.find      stri 'F9-Back  F3-Clear  F5-Exact match=off  FH-Home  FL-EOL'
-                   even
-txt.keys.find2     stri 'F9-Back  F3-Clear  F5-Exact match=on  FH-Home  FL-EOL'
+txt.keys.find      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
                    even
