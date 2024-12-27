@@ -78,7 +78,7 @@ pane.filebrowser.nofiles:
               data rambuf,rambuf + 5,32
 
         bl    @putat
-              byte 0,21
+              byte 0,25
               data rambuf + 5       ; Display number of files
         ;------------------------------------------------------
         ; Show device path
@@ -88,11 +88,11 @@ pane.filebrowser.devicepath:
         jeq   pane.filebrowser.lines  ; No, skip display
 
         bl    @hchar
-              byte 0,25,32,55
+              byte 0,30,32,50
               data EOL              ; Clear device path
 
         bl    @putat
-              byte 0,25
+              byte 0,30
               data cat.device       ; Show device path
         ;------------------------------------------------------
         ; Draw vertical lines
@@ -334,5 +334,5 @@ pane.filebrowser.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-txt.volume    stri  'Volume:            F:    '
+txt.volume    stri  'Volume:            Files:'
 txt.header    stri  'Name        Type   Size'

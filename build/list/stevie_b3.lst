@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241227-1619080
+0002               * BUILD: 241227-1927030
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -906,13 +906,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.6.7'
+0055 6028 0C53                 stri 'STEVIE 1.6.8'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 362E     
-     6034 37       
+     6034 38       
 0057               
 0061               
 0065               
@@ -14327,13 +14327,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 7128 2020                 text '  Stevie 1.6.7   '
+0011 7128 2020                 text '  Stevie 1.6.8   '
      712A 5374     
      712C 6576     
      712E 6965     
      7130 2031     
      7132 2E36     
-     7134 2E37     
+     7134 2E38     
      7136 2020     
      7138 20       
 0012                           even
@@ -15162,22 +15162,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76AA 3A20     
 0191                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 76AC 3234                        text '241227-1619080'
+0001 76AC 3234                        text '241227-1927030'
      76AE 3132     
      76B0 3237     
      76B2 2D31     
-     76B4 3631     
-     76B6 3930     
-     76B8 3830     
+     76B4 3932     
+     76B6 3730     
+     76B8 3330     
                    < data.dialogs.asm
-0192 76BA 202D                        text ' - Stevie 1.6.7  - (c)2018-2025 Filip Van Vooren'
+0192 76BA 202D                        text ' - Stevie 1.6.8  - (c)2018-2025 Filip Van Vooren'
      76BC 2053     
      76BE 7465     
      76C0 7669     
      76C2 6520     
      76C4 312E     
      76C6 362E     
-     76C8 3720     
+     76C8 3820     
      76CA 202D     
      76CC 2028     
      76CE 6329     

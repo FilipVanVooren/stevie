@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241227-1619080
+0002               * BUILD: 241227-1927030
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -920,13 +920,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.6.7'
+0055 6028 0C53                 stri 'STEVIE 1.6.8'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 362E     
-     6034 37       
+     6034 38       
 0057               
 0061               
 0065               
@@ -14906,7 +14906,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079               
 0080 75FA 06A0  32         bl    @putat
      75FC 2442     
-0081 75FE 0015                   byte 0,21
+0081 75FE 0019                   byte 0,25
 0082 7600 A105                   data rambuf + 5       ; Display number of files
 0083                       ;------------------------------------------------------
 0084                       ; Show device path
@@ -14918,13 +14918,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089               
 0090 7608 06A0  32         bl    @hchar
      760A 2832     
-0091 760C 0019                   byte 0,25,32,55
-     760E 2037     
+0091 760C 001E                   byte 0,30,32,50
+     760E 2032     
 0092 7610 FFFF                   data EOL              ; Clear device path
 0093               
 0094 7612 06A0  32         bl    @putat
      7614 2442     
-0095 7616 0019                   byte 0,25
+0095 7616 001E                   byte 0,30
 0096 7618 EEB0                   data cat.device       ; Show device path
 0097                       ;------------------------------------------------------
 0098                       ; Draw vertical lines
@@ -15225,7 +15225,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0334 7774 C2F9  30         mov   *stack+,r11           ; Pop R11
 0335 7776 045B  20         b     *r11                  ; Return to caller
 0336               
-0337 7778 1956     txt.volume    stri  'Volume:            F:    '
+0337 7778 1956     txt.volume    stri  'Volume:            Files:'
      777A 6F6C     
      777C 756D     
      777E 653A     
@@ -15235,9 +15235,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7786 2020     
      7788 2020     
      778A 2020     
-     778C 463A     
-     778E 2020     
-     7790 2020     
+     778C 4669     
+     778E 6C65     
+     7790 733A     
 0338 7792 174E     txt.header    stri  'Name        Type   Size'
      7794 616D     
      7796 6520     
