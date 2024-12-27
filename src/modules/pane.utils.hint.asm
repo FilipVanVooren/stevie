@@ -72,38 +72,3 @@ pane.show_hintx.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-
-
-
-***************************************************************
-* pane.show_hint
-* Show hint message (data parameter version)
-***************************************************************
-* bl  @pane.show_hint
-*     data p1,p2
-*--------------------------------------------------------------
-* INPUT
-* p1 = Cursor YX position
-* p2 = Pointer to Length-prefixed string
-*--------------------------------------------------------------
-* OUTPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* none
-********|*****|*********************|**************************
-pane.show_hint:
-        mov   *r11+,@parm1          ; Get parameter 1
-        mov   *r11+,@parm2          ; Get parameter 2
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;-------------------------------------------------------
-        ; Display pane hint
-        ;-------------------------------------------------------
-        bl    @pane.show_hintx      ; Display pane hint
-        ;-------------------------------------------------------
-        ; Exit
-        ;-------------------------------------------------------
-pane.show_hint.exit:
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
