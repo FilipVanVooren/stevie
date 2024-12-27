@@ -126,7 +126,7 @@ txt.ioerr.print    stri 'Failed printing to device: '
                    even
 txt.io.nofile      stri 'No filename specified.'
                    even
-txt.memfull.load   stri 'Index full. File too large.'
+txt.memfull.load   stri 'Index full.'
                    even
 txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
                    even

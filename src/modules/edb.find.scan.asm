@@ -60,8 +60,11 @@ edb.find.scan
         srl   tmp0,8                ; | MSB to LSB
         mov   tmp0,@edb.srch.strlen ; / Save search string length
 
-        c     @edb.block.m1,@w$ffff  ; Marker M1 unset?
-        jeq   edb.find.scan.showbusy ; Unset skip block marker
+        jgt   !                     ; Continue if length search stirng > 0
+        b     @edb.find.scan.exit   ; Exit early on empty search string
+
+!       c     @edb.block.m1,@w$ffff   ; Marker M1 unset?
+        jeq   edb.find.scan.showbusy  ; Unset skip block marker
         ;------------------------------------------------------        
         ; Use block markers M1-M2 as search range
         ;------------------------------------------------------
@@ -133,8 +136,8 @@ edb.find.scan.compare:
                                     ; | index for rows
         inct  @edb.srch.offset      ; / Next entry in search results row index
 
-        mov   @edb.srch.matches,r1 ; \ Restore offset in column index
-                                   ; / Using matches as byte offset in index
+        mov   @edb.srch.matches,r1  ; \ Restore offset in column index
+                                    ; / Using matches as byte offset in index
         movb  @edb.srch.matchcol+1,@edb.srch.idx.ctop(r1)
                                     ; \ Save column (LSB) to search results
                                     ; | index for columns
@@ -148,10 +151,17 @@ edb.find.scan.compare:
         ;------------------------------------------------------
         li    tmp0,1000              ; \ Exit if 1000 matches reached
         c     @edb.srch.matches,tmp0 ; / 
-        jeq   edb.find.scan.done     ; Buffer is full, halt the scan
+        jeq   edb.find.scan.bufffull ; Buffer is full, halt the scan
 
         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
         jmp   edb.find.scan.compare.nextchar
+        ;------------------------------------------------------
+        ; Buffer is full
+        ;------------------------------------------------------
+edb.find.scan.bufffull:
+        li   tmp0,txt.memfull.load  ; \ Set 'index full' message
+        mov  tmp0,@waux1            ; / 
+        jmp  edb.find.scan.done     ; We're done
         ;------------------------------------------------------
         ; Search string not found. Next try on remaining chars on line
         ;------------------------------------------------------
@@ -193,6 +203,9 @@ edb.find.scan.checkcomplete:
 
         jne   edb.find.scan.unpack_line
                                     ; Not yet, process next line
+
+        li   tmp0,txt.done.search   ; \ 
+        mov  tmp0,@waux1            ; / Set Search completed message
         ;------------------------------------------------------
         ; Scan completed. Restore 1st line in framebuffer
         ;------------------------------------------------------
@@ -212,6 +225,29 @@ edb.find.scan.done:
         bl    @pane.botline.busy.off ; \ Put busyline indicator off
                                      ; /
         ;------------------------------------------------------
+        ; Scan completed. Display final message (set in @waux1)
+        ;------------------------------------------------------ 
+        bl    @hchar
+              byte 0,50,32,20       
+              data EOL              ; Erase any previous message
+              
+        bl    @at
+              byte 0,52             ; Position cursor
+
+        mov   @waux1,tmp1           ; Message to display
+
+        bl    @xutst0               ; Display string
+                                    ; \ i  tmp1 = Pointer to string
+                                    ; / i  @wyx = Cursor position at
+        ;-------------------------------------------------------
+        ; Setup one shot task for removing overlay message
+        ;-------------------------------------------------------          
+        li    tmp0,pane.topline.oneshot.clearmsg
+        mov   tmp0,@tv.task.oneshot 
+
+        bl    @rsslot               ; \ Reset loop counter slot 3
+              data 3                ; / for getting consistent delay        
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------      
 edb.find.scan.exit:
@@ -223,3 +259,6 @@ edb.find.scan.exit:
         mov   *stack+,tmp0          ; Pop tmp0                
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller        
+
+txt.done.search    stri 'Search completed'
+                   even

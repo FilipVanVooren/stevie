@@ -151,15 +151,15 @@ pane.topline.searchhits:
         ; Display total number of lines in file
         ;------------------------------------------------------
 pane.topline.total:
-        bl    @putat
-              byte 0,68
-              data txt.ws2          ; Remove any junk characters
+        bl    @hchar
+              byte 0,68,32,6
+              data EOL              ; Remove any junk characters
 
-        mov   @edb.lines,@waux1
+        mov   @edb.lines,@waux1     ; Get total lines
 
         bl    @putnum
               byte 0,74             ; YX
-              data waux1,rambuf
+              data waux1,rambuf     ; Display total lines
               byte 48
               byte 32        
         ;------------------------------------------------------

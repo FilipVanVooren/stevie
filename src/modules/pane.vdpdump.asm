@@ -38,7 +38,7 @@ pane.vdpdump.alpha_lock:
         ;------------------------------------------------------
         bl    @putat
               byte pane.botrow,78
-              data txt.ws4
+              data txt.ws2
         jmp   pane.vdpdump.cmdb.check
         ;------------------------------------------------------
         ; AlPHA-Lock is down

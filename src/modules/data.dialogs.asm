@@ -189,7 +189,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.6.7  - (c)2018-2024 Filip Van Vooren'
+                   text ' - Stevie 1.6.7  - (c)2018-2025 Filip Van Vooren'
                    even
 
 

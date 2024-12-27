@@ -1,10 +1,14 @@
 # Memory map
 
-## CPU RAM
+## CPU RAM (SAMS MEMEXP 32K)
 
-For each of the 256 bytes ranges, there are structures defined in equ.asm    
+For each of the 256 bytes ranges, there are structures defined in ``equ.asm``.  
 Check there for free memory ranges, because most structures do not use full    
 256 bytes range. First free address has equate <struct>.free
+
+Note regarding column "SAMS/Addr.":
+- The format ``>`` means MEMEXP memory range in hex.
+- The format ``#`` means the SAMS page number in hex.
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
 | ---------- | ---------- | ----- | -------------------------------------------|
@@ -37,23 +41,24 @@ Check there for free memory ranges, because most structures do not use full
 |            | >a300-a31f |    32 |   Variables, pointers, flags, ...          |
 |            | >a320-a36f |    80 |   Ruler ascii chars                        |
 |            | >a370-a3bf |    80 |   Ruler color attributes                   |
-|            | >a3c0-a3ff |    64 |   FREE                                     |
+|            | >a3c0-a3ff |       |   FREE                                     |
 |            |            |       |                                            |
 | >a400-a4ff |    #0a     |   256 | File handle structure                      |
 |            | >a400-a41f |    32 |   dsrlnk workspace                         |
 |            | >a420-a435 |    32 |   dsrlnk variables, pointers, flags, ...   |
 |            | >a436-a469 |    30 |   Variables, pointers, flags, ...          |
 |            | >a46a-a4b9 |    80 |   Memory buffer for file handle            |
-|            | >a4ba-a4ff |    72 |   FREE                                     |
+|            | >a4ba-a4ff |       |   FREE                                     |
 |            |            |       |                                            |
 | >a500-a5ff |     #0a    |   256 | Editor buffer structure                    |
 |            | >a500-a525 |    38 |   Variables, pointers, flags, ...          |
 |            | >a526-a575 |    80 |   Buffer for filename                      |
-|            | >a576-a5ff |   138 |   FREE                                     |
+|            | >a576-a5d9 |   100 |   Search string buffer, pointers, counters |
+|            | >a5da-a5ff |       |   FREE                                     |
 |            |            |       |                                            |
 | >a600-a6ff |     #0a    |   256 | Index structure                            |
 |            | >a600-a605 |     6 |   SAMS page counters                       |
-|            | >a606-a6ff |   250 |   FREE                                     |
+|            | >a606-a6ff |       |   FREE                                     |
 |            |            |       |                                            |
 | >a700-a7ff |     #0a    |   256 | Command buffer structure                   |
 |            | >a700-a72d |    46 |   Variables, pointers, flags, ...          |
@@ -90,12 +95,15 @@ Check there for free memory ranges, because most structures do not use full
 | >e000-efff | >e575-e5ff |  1398 |   File size list (127*2)                   |
 |            |            |       |                                            |
 | >f000-ffff |     #07    |  4096 | Heap, Strings area, Search results index   |
-|            | >f000-f0ff |   256 | Heap & Strings area                        |
-|            | >f100-f8ff |  2048 | Search match index for rows                |
-|            | >f900-fcff |  1024 | Search match index for columns             |
+|            | >f000-f0ff |   256 |   Heap & Strings area                      |
+|            | >f100-f8ff |  2048 |   Search results index (rows)              |
+|            | >f900-fcff |  1024 |   Search results index (columns)           |
+|            | >fe00-ffff |  1024 |   FREE                                     |
 
 
 ### Memory layout when activating TI Basic
+
+Note: Other memory ranges are the same as the regular memory map.
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
 | ---------- | ---------- | ----- | -------------------------------------------|
@@ -111,9 +119,8 @@ Check there for free memory ranges, because most structures do not use full
 |            | >f000-f95f |  2400 |   Stevie VDP screen buffer copy 80x30      |
 |            | >f960-f97f |    32 |   TI Basic scratchpad memory               |
 |            | >f980-ffff |  1664 |   FREE                                     |
-|            |            |       |                                            |
 
-Other memory ranges same as regular memory map.
+
 
 ## VDP RAM
 

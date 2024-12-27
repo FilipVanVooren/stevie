@@ -3,7 +3,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0001               ********************************************************************************
 0002               *   Stevie
 0003               *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-0004               *   Copyright (C) 2018-2024 / Filip van Vooren
+0004               *   Copyright (C) 2018-2025 / Filip van Vooren
 0005               *
 0006               *   This program is free software: you can redistribute it and/or modify
 0007               *   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241226-2113500
+0002               * BUILD: 241227-1619080
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -7334,13 +7334,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                       ;------------------------------------------------------
 0046 3404 06A0  32         bl    @cpym2m
      3406 253A     
-0047 3408 3E1A                   data def.printer.fname,tv.printer.fname,7
+0047 3408 3E0A                   data def.printer.fname,tv.printer.fname,7
      340A DE00     
      340C 0007     
 0048               
 0049 340E 06A0  32         bl    @cpym2m
      3410 253A     
-0050 3412 3E21                   data def.clip.fname.a,tv.clip.fname,10
+0050 3412 3E11                   data def.clip.fname.a,tv.clip.fname,10
      3414 DE50     
      3416 000A     
 0051               
@@ -8612,8 +8612,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ;-------------------------------------------------------
 0028 3822 06A0  32         bl    @hchar
      3824 2832     
-0029 3826 0032                   byte 0,50,32,24
-     3828 2018     
+0029 3826 0032                   byte 0,50,32,22
+     3828 2016     
 0030 382A FFFF                   data EOL              ; Clear message
 0031               
 0032 382C 04E0  34         clr   @tv.task.oneshot      ; Reset oneshot task
@@ -9654,57 +9654,49 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3DBC 6564     
      3DBE 2E       
 0128                                  even
-0129 3DC0 1B49     txt.memfull.load   stri 'Index full. File too large.'
+0129 3DC0 0B49     txt.memfull.load   stri 'Index full.'
      3DC2 6E64     
      3DC4 6578     
      3DC6 2066     
      3DC8 756C     
      3DCA 6C2E     
-     3DCC 2046     
-     3DCE 696C     
-     3DD0 6520     
-     3DD2 746F     
-     3DD4 6F20     
-     3DD6 6C61     
-     3DD8 7267     
-     3DDA 652E     
 0130                                  even
-0131 3DDC 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
-     3DDE 6F70     
-     3DE0 792F     
-     3DE2 4D6F     
-     3DE4 7665     
-     3DE6 2074     
-     3DE8 6172     
-     3DEA 6765     
-     3DEC 7420     
-     3DEE 6D75     
-     3DF0 7374     
-     3DF2 2062     
-     3DF4 6520     
-     3DF6 6F75     
-     3DF8 7473     
-     3DFA 6964     
-     3DFC 6520     
-     3DFE 4D31     
-     3E00 2D4D     
-     3E02 3220     
-     3E04 7261     
-     3E06 6E67     
-     3E08 652E     
+0131 3DCC 2D43     txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
+     3DCE 6F70     
+     3DD0 792F     
+     3DD2 4D6F     
+     3DD4 7665     
+     3DD6 2074     
+     3DD8 6172     
+     3DDA 6765     
+     3DDC 7420     
+     3DDE 6D75     
+     3DE0 7374     
+     3DE2 2062     
+     3DE4 6520     
+     3DE6 6F75     
+     3DE8 7473     
+     3DEA 6964     
+     3DEC 6520     
+     3DEE 4D31     
+     3DF0 2D4D     
+     3DF2 3220     
+     3DF4 7261     
+     3DF6 6E67     
+     3DF8 652E     
 0132                                  even
 0133               ;--------------------------------------------------------------
 0134               ; Strings for command buffer
 0135               ;--------------------------------------------------------------
-0136 3E0A 013E     txt.cmdb.prompt    stri '>'
+0136 3DFA 013E     txt.cmdb.prompt    stri '>'
 0137                                  even
-0138 3E0C 0D43     txt.colorscheme    stri 'Color scheme:'
-     3E0E 6F6C     
-     3E10 6F72     
-     3E12 2073     
-     3E14 6368     
-     3E16 656D     
-     3E18 653A     
+0138 3DFC 0D43     txt.colorscheme    stri 'Color scheme:'
+     3DFE 6F6C     
+     3E00 6F72     
+     3E02 2073     
+     3E04 6368     
+     3E06 656D     
+     3E08 653A     
 0139                                  even
 0140               
 0141               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
@@ -9717,53 +9709,53 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 3E1A 0650     def.printer.fname   stri 'PI.PIO'
-     3E1C 492E     
-     3E1E 5049     
-     3E20 4F       
-0008 3E21   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     3E22 4453     
-     3E24 4B31     
-     3E26 2E43     
-     3E28 4C49     
-     3E2A 50       
-0009 3E2B   09     def.clip.fname.b    stri 'DSK6.CLIP'
-     3E2C 4453     
-     3E2E 4B36     
-     3E30 2E43     
-     3E32 4C49     
-     3E34 50       
-0010 3E35   09     def.clip.fname.c    stri 'TIPI.CLIP'
-     3E36 5449     
-     3E38 5049     
-     3E3A 2E43     
-     3E3C 4C49     
-     3E3E 50       
-0011 3E3F   2F     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     3E40 2C44     
-     3E42 534B     
-     3E44 2C48     
-     3E46 4458     
-     3E48 2C49     
-     3E4A 4445     
-     3E4C 2C50     
-     3E4E 492E     
-     3E50 2C50     
-     3E52 494F     
-     3E54 2C54     
-     3E56 4950     
-     3E58 492E     
-     3E5A 2C52     
-     3E5C 442C     
-     3E5E 5343     
-     3E60 532C     
-     3E62 5344     
-     3E64 442C     
-     3E66 5744     
-     3E68 532C     
-     3E6A 5253     
-     3E6C 3233     
-     3E6E 32       
+0007 3E0A 0650     def.printer.fname   stri 'PI.PIO'
+     3E0C 492E     
+     3E0E 5049     
+     3E10 4F       
+0008 3E11   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     3E12 4453     
+     3E14 4B31     
+     3E16 2E43     
+     3E18 4C49     
+     3E1A 50       
+0009 3E1B   09     def.clip.fname.b    stri 'DSK6.CLIP'
+     3E1C 4453     
+     3E1E 4B36     
+     3E20 2E43     
+     3E22 4C49     
+     3E24 50       
+0010 3E25   09     def.clip.fname.c    stri 'TIPI.CLIP'
+     3E26 5449     
+     3E28 5049     
+     3E2A 2E43     
+     3E2C 4C49     
+     3E2E 50       
+0011 3E2F   2F     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3E30 2C44     
+     3E32 534B     
+     3E34 2C48     
+     3E36 4458     
+     3E38 2C49     
+     3E3A 4445     
+     3E3C 2C50     
+     3E3E 492E     
+     3E40 2C50     
+     3E42 494F     
+     3E44 2C54     
+     3E46 4950     
+     3E48 492E     
+     3E4A 2C52     
+     3E4C 442C     
+     3E4E 5343     
+     3E50 532C     
+     3E52 5344     
+     3E54 442C     
+     3E56 5744     
+     3E58 532C     
+     3E5A 5253     
+     3E5C 3233     
+     3E5E 32       
                    < ram.resident.asm
 0066                       copy  "data.fg99.carts.asm"         ; Cartridge images
      **** ****     > data.fg99.carts.asm
@@ -9778,87 +9770,87 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * Cartridge 'Force Command'
 0010               *--------------------------------------------------------------
 0011               fg99.cart.fcmd:
-0012 3E70 99              byte   >99                   ; \
-0013 3E71   4F            text   'OKFG99'              ; | Send this to reload
-     3E72 4B46     
-     3E74 4739     
-     3E76 39       
-0014 3E77   99            byte   >99                   ; /
-0015 3E78 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
-     3E7A 4D44     
-     3E7C 47       
-0016 3E7D   00            byte   >00, >00, >00         ; /
-     3E7E 0000     
-0017 3E80 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0018 3E82 0000            data   >0000                 ; Start address
+0012 3E60 99              byte   >99                   ; \
+0013 3E61   4F            text   'OKFG99'              ; | Send this to reload
+     3E62 4B46     
+     3E64 4739     
+     3E66 39       
+0014 3E67   99            byte   >99                   ; /
+0015 3E68 4643            text   "FCMDG"               ; \ File to load (8 chars, pad with >00)
+     3E6A 4D44     
+     3E6C 47       
+0016 3E6D   00            byte   >00, >00, >00         ; /
+     3E6E 0000     
+0017 3E70 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0018 3E72 0000            data   >0000                 ; Start address
 0019                      even
 0020               
 0021               *--------------------------------------------------------------
 0022               * Cartridge 'Extended Basic GEM'
 0023               *--------------------------------------------------------------
 0024               fg99.cart.xbgem:
-0025 3E84 99              byte   >99                   ; \
-0026 3E85   4F            text   'OKFG99'              ; | Send this to reload
-     3E86 4B46     
-     3E88 4739     
-     3E8A 39       
-0027 3E8B   99            byte   >99                   ; /
-0028 3E8C 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
-     3E8E 3239     
-     3E90 4745     
-     3E92 4D47     
+0025 3E74 99              byte   >99                   ; \
+0026 3E75   4F            text   'OKFG99'              ; | Send this to reload
+     3E76 4B46     
+     3E78 4739     
+     3E7A 39       
+0027 3E7B   99            byte   >99                   ; /
+0028 3E7C 5842            text   "XB29GEMG"            ; \ File to load (8 chars, pad with >00)
+     3E7E 3239     
+     3E80 4745     
+     3E82 4D47     
 0029                      ;                            ; /
-0030 3E94 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0031 3E96 0000            data   >0000                 ; Start address
+0030 3E84 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0031 3E86 0000            data   >0000                 ; Start address
 0032                      even
 0033               
 0034               *--------------------------------------------------------------
 0035               * Cartridge 'Rich Extended Basic'
 0036               *--------------------------------------------------------------
 0037               fg99.cart.rxb:
-0038 3E98 99              byte   >99                   ; \
-0039 3E99   4F            text   'OKFG99'              ; | Send this to reload
-     3E9A 4B46     
-     3E9C 4739     
-     3E9E 39       
-0040 3E9F   99            byte   >99                   ; /
-0041 3EA0 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
-     3EA2 4247     
-0042 3EA4 0000            byte   >00, >00, >00, >00    ; /
-     3EA6 0000     
-0043 3EA8 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0044 3EAA 0000            data   >0000                 ; Start address
+0038 3E88 99              byte   >99                   ; \
+0039 3E89   4F            text   'OKFG99'              ; | Send this to reload
+     3E8A 4B46     
+     3E8C 4739     
+     3E8E 39       
+0040 3E8F   99            byte   >99                   ; /
+0041 3E90 5258            text   "RXBG"                ; \ File to load (8 chars, pad with >00)
+     3E92 4247     
+0042 3E94 0000            byte   >00, >00, >00, >00    ; /
+     3E96 0000     
+0043 3E98 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0044 3E9A 0000            data   >0000                 ; Start address
 0045                      even
 0046               
 0047               *--------------------------------------------------------------
 0048               * Cartridge 'fbForth'
 0049               *--------------------------------------------------------------
 0050               fg99.cart.fbforth:
-0051 3EAC 99              byte   >99                   ; \
-0052 3EAD   4F            text   'OKFG99'              ; | Send this to reload
-     3EAE 4B46     
-     3EB0 4739     
-     3EB2 39       
-0053 3EB3   99            byte   >99                   ; /
-0054 3EB4 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
-     3EB6 464F     
-     3EB8 5254     
-     3EBA 4843     
+0051 3E9C 99              byte   >99                   ; \
+0052 3E9D   4F            text   'OKFG99'              ; | Send this to reload
+     3E9E 4B46     
+     3EA0 4739     
+     3EA2 39       
+0053 3EA3   99            byte   >99                   ; /
+0054 3EA4 4642            text   "FBFORTHC"            ; \ File to load (8 chars, pad with >00)
+     3EA6 464F     
+     3EA8 5254     
+     3EAA 4843     
 0055                      ;                            ; /
-0056 3EBC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
-0057 3EBE 0000            data   >0000                 ; Start address
+0056 3EAC 0000            data   >0000                 ; >0000 for GROM/mixed, >FFFF for ROM only
+0057 3EAE 0000            data   >0000                 ; Start address
 0058                      even
                    < ram.resident.asm
                    < stevie_b3.asm
 0051                       ;------------------------------------------------------
 0052                       ; Activate bank 1 and branch to  >6036
 0053                       ;------------------------------------------------------
-0054 3EC0 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3EC2 6002     
+0054 3EB0 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3EB2 6002     
 0055               
 0059               
-0060 3EC4 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3EC6 6046     
+0060 3EB4 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3EB6 6046     
 0061               ***************************************************************
 0062               * Step 3: Include main editor modules
 0063               ********|*****|*********************|**************************
@@ -12901,7 +12893,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6C1C 832A     
 0053 6C1E 06A0  32         bl    @putstr
      6C20 241E     
-0054 6C22 3E0A                   data txt.cmdb.prompt  ; Draw prompt
+0054 6C22 3DFA                   data txt.cmdb.prompt  ; Draw prompt
 0055                       ;------------------------------------------------------
 0056                       ; Exit
 0057                       ;------------------------------------------------------
@@ -15170,15 +15162,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76AA 3A20     
 0191                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 76AC 3234                        text '241226-2113500'
+0001 76AC 3234                        text '241227-1619080'
      76AE 3132     
-     76B0 3236     
-     76B2 2D32     
-     76B4 3131     
-     76B6 3335     
-     76B8 3030     
+     76B0 3237     
+     76B2 2D31     
+     76B4 3631     
+     76B6 3930     
+     76B8 3830     
                    < data.dialogs.asm
-0192 76BA 202D                        text ' - Stevie 1.6.7  - (c)2018-2024 Filip Van Vooren'
+0192 76BA 202D                        text ' - Stevie 1.6.7  - (c)2018-2025 Filip Van Vooren'
      76BC 2053     
      76BE 7465     
      76C0 7669     
@@ -15193,7 +15185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      76D2 3138     
      76D4 2D32     
      76D6 3032     
-     76D8 3420     
+     76D8 3520     
      76DA 4669     
      76DC 6C69     
      76DE 7020     
@@ -15908,13 +15900,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010                       ;-------------------------------------------------------
 0011 7BAC 0013             data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
      7BAE 0081     
-     7BB0 3E21     
+     7BB0 3E11     
 0012 7BB2 0013             data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
      7BB4 0082     
-     7BB6 3E2B     
+     7BB6 3E1B     
 0013 7BB8 0013             data  id.dialog.opt.clip, key.ctrl.c, def.clip.fname.C
      7BBA 0083     
-     7BBC 3E35     
+     7BBC 3E25     
 0014                       ;-------------------------------------------------------
 0015                       ; End of list
 0016                       ;-------------------------------------------------------
@@ -16335,11 +16327,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYODD.............. >2594 :     
     CPYV2M.............. >2518 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3E21 :     
-    DEF.CLIP.FNAME.B.... >3E2B :     
-    DEF.CLIP.FNAME.C.... >3E35 :     
-    DEF.DEVICES......... >3E3F :     
-    DEF.PRINTER.FNAME... >3E1A :     
+    DEF.CLIP.FNAME.A.... >3E11 :     
+    DEF.CLIP.FNAME.B.... >3E1B :     
+    DEF.CLIP.FNAME.C.... >3E25 :     
+    DEF.DEVICES......... >3E2F :     
+    DEF.PRINTER.FNAME... >3E0A :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DIALOG.............. >604A :     
@@ -16565,10 +16557,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.VWCO............. >A310 :     
     FB.YXSAVE........... >A316 :     
     FG99................ >2E7E :     
-    FG99.CART.FBFORTH... >3EAC :     
-    FG99.CART.FCMD...... >3E70 :     
-    FG99.CART.RXB....... >3E98 :     
-    FG99.CART.XBGEM..... >3E84 :     
+    FG99.CART.FBFORTH... >3E9C :     
+    FG99.CART.FCMD...... >3E60 :     
+    FG99.CART.RXB....... >3E88 :     
+    FG99.CART.XBGEM..... >3E74 :     
     FG99.EXIT........... >2EB8 :     
     FG99.RUN............ >3838 :     
     FG99.SEND.LOOP...... >2E8E :     
@@ -17377,15 +17369,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.BLOCK.CLIP...... >3A62 :     
     TXT.BLOCK.COPY...... >3A2C :     
     TXT.BLOCK.DEL....... >3A18 :     
-    TXT.BLOCK.INSIDE.... >3DDC :     
+    TXT.BLOCK.INSIDE.... >3DCC :     
     TXT.BLOCK.MOVE...... >3A3E :     
     TXT.BLOCK.PRINT..... >3A7C :     
     TXT.BLOCK.SAVE...... >3A50 :     
     TXT.BOTTOM.......... >39CA :     
     TXT.CLEARMEM........ >3A90 :     
-    TXT.CMDB.PROMPT..... >3E0A :     
+    TXT.CMDB.PROMPT..... >3DFA :     
     TXT.COLON........... >39C8 :     
-    TXT.COLORSCHEME..... >3E0C :     
+    TXT.COLORSCHEME..... >3DFC :     
     TXT.DONE.APPEND..... >3ADA :     
     TXT.DONE.CLIPBOARD.. >3B2E :     
     TXT.DONE.CLIPDEV.... >3B3E :     
