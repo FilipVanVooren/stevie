@@ -10,6 +10,7 @@
 * INPUT
 * @parm1 = Cursor YX position
 * @parm2 = Pointer to Length-prefixed string
+* @parm3 = Pad length
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -43,7 +44,7 @@ pane.show_hintx:
         mov   tmp0,tmp2
         mov   tmp0,tmp3             ; Work copy
         neg   tmp2
-        ai    tmp2,80               ; Number of bytes to fill
+        a     @parm3,tmp2           ; Number of bytes to fill
         ;-------------------------------------------------------
         ; ... and clear until end of line
         ;-------------------------------------------------------

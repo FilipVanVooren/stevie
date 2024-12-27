@@ -196,7 +196,7 @@ txt.about.build    byte 69
 ;--------------------------------------------------------------
 ; Dialog "Main Menu"
 ;--------------------------------------------------------------
-txt.head.menu      byte 14,1,1
+txt.head.menu      byte 14,4,1
                    text ' Main Menu '
                    byte 1
 
@@ -209,7 +209,7 @@ txt.keys.menu2     stri 'F9-Close menu  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "File"
 ;--------------------------------------------------------------
-txt.head.file      byte 9,1,1
+txt.head.file      byte 9,4,1
                    text ' File '
                    byte 1
 
@@ -221,7 +221,7 @@ txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Cartridge"
 ;--------------------------------------------------------------
-txt.head.cartridge byte 14,1,1
+txt.head.cartridge byte 14,4,1
                    text ' Cartridge '
                    byte 1
 
@@ -236,7 +236,7 @@ txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "TI Basic"
 ;--------------------------------------------------------------
-txt.head.basic     byte 13,1,1
+txt.head.basic     byte 13,4,1
                    text ' TI Basic '
                    byte 1
 
@@ -250,7 +250,7 @@ txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 ;--------------------------------------------------------------
 ; Dialog "Options"
 ;--------------------------------------------------------------
-txt.head.config    byte 12,1,1
+txt.head.config    byte 12,4,1
                    text ' Options '
                    byte 1
 
@@ -261,7 +261,7 @@ txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Configure clipboard"
 ;--------------------------------------------------------------
-txt.head.clipdev   byte 24,1,1
+txt.head.clipdev   byte 24,4,1
                    text ' Configure clipboard '
                    byte 1
 txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
@@ -270,7 +270,7 @@ txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=DSK2.CLIP  ^C=TIPI.
 ;--------------------------------------------------------------
 ; Dialog "Configure font"
 ;--------------------------------------------------------------
-txt.head.font      byte 19,1,1
+txt.head.font      byte 19,4,1
                    text ' Configure font '
                    byte 1
 txt.info.font      stri 'Font:  1   2   3   4   5'
@@ -282,7 +282,7 @@ txt.keys.font      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Shortcuts"
 ;--------------------------------------------------------------
-txt.head.shortcuts byte 14,1,1
+txt.head.shortcuts byte 14,4,1
                    text ' Shortcuts '
                    byte 1
 
@@ -298,7 +298,7 @@ txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Find"
 ;--------------------------------------------------------------
-txt.head.find      byte 9,1,1
+txt.head.find      byte 9,4,1
                    text ' Find '
                    byte 1
 txt.hint.find      stri 'Press F5 to toggle case-sensitive search on/off.'

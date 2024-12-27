@@ -31,7 +31,7 @@ pane.cmdb.draw:
         ; Command buffer header line
         ;------------------------------------------------------
         mov   @cmdb.panhead,@parm1  ; Get string to display
-        li    tmp0,80
+        li    tmp0,79
         mov   tmp0,@parm2           ; Set requested length
         li    tmp0,1
         mov   tmp0,@parm3           ; Set character to fill
@@ -42,23 +42,33 @@ pane.cmdb.draw:
                                     ; \ i  @parm1 = Pointer to string
                                     ; | i  @parm2 = Requested length
                                     ; | i  @parm3 = Fill character
-                                    ; | i  @parm4 = Pointer to buffer with
-                                    ; /             output string
+                                    ; | i  @parm4 = Pointer to work buffer
+                                    ; / o  @outparm1 = Pointer to padded string
 
-        bl    @cpym2m
-              data txt.stevie,rambuf+64,23
-                                    ;
-                                    ; Add Stevie banner
-                                    ;
-
+        bl    @cpym2m               ; \
+              data txt.stevie       ; |  Add Stevie banner as overlay
+              data rambuf+64        ; | 
+              data 23               ; /
+                                                                        
         mov   @cmdb.yxtop,@wyx      ; \
         mov   @outparm1,tmp1        ; | Display pane header
         bl    @xutst0               ; /
+
+        bl    @vchar
+              byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+              byte 0                           ; X-position         |   LEFT 
+              byte 6                           ; Vertical line char |
+              byte cmdb.rows - 2               ; Y-repeat           /              
+              byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+              byte 79                          ; X-position         |   RIGHT
+              byte 7                           ; Vertical line char |
+              byte cmdb.rows - 2               ; Y-repeat           /
+              data EOL
+
         ;------------------------------------------------------
         ; Check dialog id
         ;------------------------------------------------------
         clr   @waux1                ; Default is show prompt
-
         mov   @cmdb.dialog,tmp0
         ci    tmp0,99               ; \ Hide prompt and no keyboard
         jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 99
@@ -70,7 +80,7 @@ pane.cmdb.draw:
         jeq   pane.cmdb.draw.clear  ; Yes, display normal prompt
 
         mov   @cmdb.paninfo,@parm1  ; Get string to display
-        li    tmp0,80
+        li    tmp0,76
         mov   tmp0,@parm2           ; Set requested length
         li    tmp0,32
         mov   tmp0,@parm3           ; Set character to fill
@@ -85,19 +95,22 @@ pane.cmdb.draw:
                                     ; /             output string
 
         bl    @at
-              byte pane.botrow-5,0  ; Position cursor
+              byte pane.botrow-5,2  ; Position cursor
 
-        mov   @outparm1,tmp1        ; \ Display info message
+        mov   @outparm1,tmp1        ; \ Display info message (=menu row)
         bl    @xutst0               ; /
         ;------------------------------------------------------
         ; Clear lines after prompt in command buffer
         ;------------------------------------------------------
 pane.cmdb.draw.clear:
         bl    @hchar
-              byte pane.botrow-4,0,32,240
-              data EOL              ; Remove key markers
-                                    ; Remove extra pane hint
-                                    ; Remove pane hint
+              byte pane.botrow-4,1,32,78 ; Clear markers
+              byte pane.botrow-3,1,32,78 ; Clear pane hint
+              byte pane.botrow-2,1,32,78 ; Clear extra pane hint
+              byte pane.botrow-1,0,8,1   ; Draw bottom left corner
+              byte pane.botrow-1,1,10,78 ; Draw horizontal line
+              byte pane.botrow-1,79,9,1  ; Draw bottom right corner
+              data EOL                                                                                      
         ;------------------------------------------------------
         ; Show key markers ?
         ;------------------------------------------------------
@@ -112,6 +125,7 @@ pane.cmdb.draw.marker.loop:
         ci    tmp1,>00ff            ; End of list reached?
         jeq   pane.cmdb.draw.hint   ; Yes, exit loop
 
+        inct  tmp1                  ; x = x + 2 
         ori   tmp1,(pane.botrow - 4) * 256
                                     ; y=bottom row - 3, x=(key marker position)
         mov   tmp1,@wyx             ; Set cursor position
@@ -136,13 +150,18 @@ pane.cmdb.draw.hint:
         jeq   pane.cmdb.draw.extrahint
                                     ; No pane hint to display
 
-        li    tmp0,pane.botrow - 1  ; \
-        sla   tmp0,8                ; / Y=bottom row - 1, X=0
-        mov   tmp0,@parm1           ; Set parameter
+        li    tmp0,pane.botrow - 2  ; \
+        sla   tmp0,8                ; | Y=bottom row - 2
+        ori   tmp0,2                ; | X=2
+        mov   tmp0,@parm1           ; / Set parameter
+
+        li    tmp0,76               ; \ Set pad length
+        mov   tmp0,@parm3           ; /         
 
         bl    @pane.show_hintx      ; Display pane hint
-                                    ; \ i  parm1 = Pointer to string with hint
-                                    ; / i  parm2 = YX position
+                                    ; \ i  parm1 = YX position
+                                    ; | i  parm2 = Pointer to string with hint
+                                    ; / i  parm3 = Pad length
         ;------------------------------------------------------
         ; Display extra pane hint in command buffer
         ;------------------------------------------------------
@@ -150,16 +169,21 @@ pane.cmdb.draw.extrahint:
         mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
         jeq   pane.cmdb.draw.keys   ; No extra pane hint to display
 
-        li    tmp0,pane.botrow - 2  ; \
-        sla   tmp0,8                ; / Y=bottom row - 2, X=0
-        mov   tmp0,@parm1           ; Set parameter
+        li    tmp0,pane.botrow - 3  ; \
+        sla   tmp0,8                ; | Y=bottom row - 3
+        ori   tmp0,2                ; | X=2        
+        mov   tmp0,@parm1           ; / Set parameter
         mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
 
+        li    tmp0,76               ; \ Set pad length
+        mov   tmp0,@parm3           ; / 
+
         bl    @pane.show_hintx      ; Display pane hint
-                                    ; \ i  parm1 = Pointer to string with hint
-                                    ; / i  parm2 = YX position
+                                    ; \ i  parm1 = YX position
+                                    ; | i  parm2 = Pointer to string with hint
+                                    ; / i  parm3 = Pad length
         ;------------------------------------------------------
-        ; Display keys in status line
+        ; Display keys in bottom status line
         ;------------------------------------------------------
 pane.cmdb.draw.keys:
         li    tmp0,pane.botrow      ; \
@@ -167,9 +191,13 @@ pane.cmdb.draw.keys:
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.pankeys,@parm2  ; Pane hint to display
 
+        li    tmp0,60               ; \ Set pad length
+        mov   tmp0,@parm3           ; / 
+
         bl    @pane.show_hintx      ; Display pane hint
-                                    ; \ i  parm1 = Pointer to string with hint
-                                    ; / i  parm2 = YX position
+                                    ; \ i  parm1 = YX position
+                                    ; | i  parm2 = Pointer to string with hint
+                                    ; / i  parm3 = Pad length
         ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
@@ -178,9 +206,9 @@ pane.cmdb.draw.keys:
         ;------------------------------------------------------
         ; AlPHA-Lock is up
         ;------------------------------------------------------
-        bl    @hchar
-              byte pane.botrow,78,32,2
-              data eol
+        bl    @putat
+              byte   pane.botrow,78
+              data   txt.ws2
 
         jmp   pane.cmdb.draw.promptcmd
         ;------------------------------------------------------

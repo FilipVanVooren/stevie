@@ -13,18 +13,18 @@ cursors:
 ; Character patterns
 ;--------------------------------------------------------------
 patterns:
-        data  >0000,>0000,>ff00,>0000 ; 01. Single line
+        data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
         data  >367f,>3e1c,>0800,>0000 ; 02. Heart solid (left)
         data  >80c0,>8000,>0000,>0000 ; 03. Heart solid (right)
 
 patterns.box:
-        data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
-        data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
-        data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
-        data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
-        data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
-        data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
-        data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
+        data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
+        data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
+        data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
+        data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
+        data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
+        data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
+        data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
         data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
 
 

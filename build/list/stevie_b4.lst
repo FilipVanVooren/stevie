@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241227-1927030
+0002               * BUILD: 241227-2147020
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13521,116 +13521,117 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010               * INPUT
 0011               * @parm1 = Cursor YX position
 0012               * @parm2 = Pointer to Length-prefixed string
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * none
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0, tmp1, tmp2
-0019               ********|*****|*********************|**************************
-0020               pane.show_hintx:
-0021 6D80 0649  14         dect  stack
-0022 6D82 C64B  30         mov   r11,*stack            ; Save return address
-0023 6D84 0649  14         dect  stack
-0024 6D86 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 6D88 0649  14         dect  stack
-0026 6D8A C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 6D8C 0649  14         dect  stack
-0028 6D8E C646  30         mov   tmp2,*stack           ; Push tmp2
-0029 6D90 0649  14         dect  stack
-0030 6D92 C647  30         mov   tmp3,*stack           ; Push tmp3
-0031                       ;-------------------------------------------------------
-0032                       ; Display string
-0033                       ;-------------------------------------------------------
-0034 6D94 C820  46         mov   @parm1,@wyx           ; Set cursor
+0013               * @parm3 = Pad length
+0014               *--------------------------------------------------------------
+0015               * OUTPUT
+0016               * none
+0017               *--------------------------------------------------------------
+0018               * Register usage
+0019               * tmp0, tmp1, tmp2
+0020               ********|*****|*********************|**************************
+0021               pane.show_hintx:
+0022 6D80 0649  14         dect  stack
+0023 6D82 C64B  30         mov   r11,*stack            ; Save return address
+0024 6D84 0649  14         dect  stack
+0025 6D86 C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 6D88 0649  14         dect  stack
+0027 6D8A C645  30         mov   tmp1,*stack           ; Push tmp1
+0028 6D8C 0649  14         dect  stack
+0029 6D8E C646  30         mov   tmp2,*stack           ; Push tmp2
+0030 6D90 0649  14         dect  stack
+0031 6D92 C647  30         mov   tmp3,*stack           ; Push tmp3
+0032                       ;-------------------------------------------------------
+0033                       ; Display string
+0034                       ;-------------------------------------------------------
+0035 6D94 C820  46         mov   @parm1,@wyx           ; Set cursor
      6D96 A006     
      6D98 832A     
-0035 6D9A C160  34         mov   @parm2,tmp1           ; Get string to display
+0036 6D9A C160  34         mov   @parm2,tmp1           ; Get string to display
      6D9C A008     
-0036 6D9E 06A0  32         bl    @xutst0               ; Display string
+0037 6D9E 06A0  32         bl    @xutst0               ; Display string
      6DA0 2420     
-0037                       ;-------------------------------------------------------
-0038                       ; Get number of bytes to fill ...
-0039                       ;-------------------------------------------------------
-0040 6DA2 C120  34         mov   @parm2,tmp0
+0038                       ;-------------------------------------------------------
+0039                       ; Get number of bytes to fill ...
+0040                       ;-------------------------------------------------------
+0041 6DA2 C120  34         mov   @parm2,tmp0
      6DA4 A008     
-0041 6DA6 D114  26         movb  *tmp0,tmp0            ; Get length byte of hint
-0042 6DA8 0984  32         srl   tmp0,8                ; Right justify
-0043 6DAA C184  18         mov   tmp0,tmp2
-0044 6DAC C1C4  18         mov   tmp0,tmp3             ; Work copy
-0045 6DAE 0506  14         neg   tmp2
-0046 6DB0 0226  22         ai    tmp2,80               ; Number of bytes to fill
-     6DB2 0050     
-0047                       ;-------------------------------------------------------
-0048                       ; ... and clear until end of line
-0049                       ;-------------------------------------------------------
-0050 6DB4 C120  34         mov   @parm1,tmp0           ; \ Restore YX position
+0042 6DA6 D114  26         movb  *tmp0,tmp0            ; Get length byte of hint
+0043 6DA8 0984  32         srl   tmp0,8                ; Right justify
+0044 6DAA C184  18         mov   tmp0,tmp2
+0045 6DAC C1C4  18         mov   tmp0,tmp3             ; Work copy
+0046 6DAE 0506  14         neg   tmp2
+0047 6DB0 A1A0  34         a     @parm3,tmp2           ; Number of bytes to fill
+     6DB2 A00A     
+0048                       ;-------------------------------------------------------
+0049                       ; ... and clear until end of line
+0050                       ;-------------------------------------------------------
+0051 6DB4 C120  34         mov   @parm1,tmp0           ; \ Restore YX position
      6DB6 A006     
-0051 6DB8 A107  18         a     tmp3,tmp0             ; | Adjust X position to end of string
-0052 6DBA C804  30         mov   tmp0,@wyx             ; / Set cursor
+0052 6DB8 A107  18         a     tmp3,tmp0             ; | Adjust X position to end of string
+0053 6DBA C804  30         mov   tmp0,@wyx             ; / Set cursor
      6DBC 832A     
-0053               
-0054 6DBE 06A0  32         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.
+0054               
+0055 6DBE 06A0  32         bl    @yx2pnt               ; Get VDP PNT address for current YX pos.
      6DC0 23FA     
-0055                                                   ; \ i  @wyx = Cursor position
-0056                                                   ; / o  tmp0 = VDP target address
-0057               
-0058 6DC2 0205  20         li    tmp1,32               ; Byte to fill
+0056                                                   ; \ i  @wyx = Cursor position
+0057                                                   ; / o  tmp0 = VDP target address
+0058               
+0059 6DC2 0205  20         li    tmp1,32               ; Byte to fill
      6DC4 0020     
-0059               
-0060 6DC6 06A0  32         bl    @xfilv                ; Clear line
+0060               
+0061 6DC6 06A0  32         bl    @xfilv                ; Clear line
      6DC8 2294     
-0061                                                   ; i \  tmp0 = start address
-0062                                                   ; i |  tmp1 = byte to fill
-0063                                                   ; i /  tmp2 = number of bytes to fill
-0064                       ;-------------------------------------------------------
-0065                       ; Exit
-0066                       ;-------------------------------------------------------
-0067               pane.show_hintx.exit:
-0068 6DCA C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0069 6DCC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0070 6DCE C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0071 6DD0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0072 6DD2 C2F9  30         mov   *stack+,r11           ; Pop R11
-0073 6DD4 045B  20         b     *r11                  ; Return to caller
-0074               
+0062                                                   ; i \  tmp0 = start address
+0063                                                   ; i |  tmp1 = byte to fill
+0064                                                   ; i /  tmp2 = number of bytes to fill
+0065                       ;-------------------------------------------------------
+0066                       ; Exit
+0067                       ;-------------------------------------------------------
+0068               pane.show_hintx.exit:
+0069 6DCA C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0070 6DCC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0071 6DCE C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0072 6DD0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0073 6DD2 C2F9  30         mov   *stack+,r11           ; Pop R11
+0074 6DD4 045B  20         b     *r11                  ; Return to caller
 0075               
 0076               
-0077               ***************************************************************
-0078               * pane.show_hint
-0079               * Show hint message (data parameter version)
-0080               ***************************************************************
-0081               * bl  @pane.show_hint
-0082               *     data p1,p2
-0083               *--------------------------------------------------------------
-0084               * INPUT
-0085               * p1 = Cursor YX position
-0086               * p2 = Pointer to Length-prefixed string
-0087               *--------------------------------------------------------------
-0088               * OUTPUT
-0089               * none
-0090               *--------------------------------------------------------------
-0091               * Register usage
-0092               * none
-0093               ********|*****|*********************|**************************
-0094               pane.show_hint:
-0095 6DD6 C83B  50         mov   *r11+,@parm1          ; Get parameter 1
+0077               
+0078               ***************************************************************
+0079               * pane.show_hint
+0080               * Show hint message (data parameter version)
+0081               ***************************************************************
+0082               * bl  @pane.show_hint
+0083               *     data p1,p2
+0084               *--------------------------------------------------------------
+0085               * INPUT
+0086               * p1 = Cursor YX position
+0087               * p2 = Pointer to Length-prefixed string
+0088               *--------------------------------------------------------------
+0089               * OUTPUT
+0090               * none
+0091               *--------------------------------------------------------------
+0092               * Register usage
+0093               * none
+0094               ********|*****|*********************|**************************
+0095               pane.show_hint:
+0096 6DD6 C83B  50         mov   *r11+,@parm1          ; Get parameter 1
      6DD8 A006     
-0096 6DDA C83B  50         mov   *r11+,@parm2          ; Get parameter 2
+0097 6DDA C83B  50         mov   *r11+,@parm2          ; Get parameter 2
      6DDC A008     
-0097 6DDE 0649  14         dect  stack
-0098 6DE0 C64B  30         mov   r11,*stack            ; Save return address
-0099                       ;-------------------------------------------------------
-0100                       ; Display pane hint
-0101                       ;-------------------------------------------------------
-0102 6DE2 06A0  32         bl    @pane.show_hintx      ; Display pane hint
+0098 6DDE 0649  14         dect  stack
+0099 6DE0 C64B  30         mov   r11,*stack            ; Save return address
+0100                       ;-------------------------------------------------------
+0101                       ; Display pane hint
+0102                       ;-------------------------------------------------------
+0103 6DE2 06A0  32         bl    @pane.show_hintx      ; Display pane hint
      6DE4 6D80     
-0103                       ;-------------------------------------------------------
-0104                       ; Exit
-0105                       ;-------------------------------------------------------
-0106               pane.show_hint.exit:
-0107 6DE6 C2F9  30         mov   *stack+,r11           ; Pop R11
-0108 6DE8 045B  20         b     *r11                  ; Return to caller
+0104                       ;-------------------------------------------------------
+0105                       ; Exit
+0106                       ;-------------------------------------------------------
+0107               pane.show_hint.exit:
+0108 6DE6 C2F9  30         mov   *stack+,r11           ; Pop R11
+0109 6DE8 045B  20         b     *r11                  ; Return to caller
                    < stevie_b4.asm
 0103                       ;-----------------------------------------------------------------------
 0104                       ; Screen pane utilities

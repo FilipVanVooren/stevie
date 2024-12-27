@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241227-1927030
+0002               * BUILD: 241227-2147020
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -10542,7 +10542,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0013               ; Character patterns
 0014               ;--------------------------------------------------------------
 0015               patterns:
-0016 6260 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line
+0016 6260 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
      6262 0000     
      6264 FF00     
      6266 0000     
@@ -10556,34 +10556,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6276 0000     
 0019               
 0020               patterns.box:
-0021 6278 0000             data  >0000,>0000,>ff80,>bfa0 ; 04. Top left corner
+0021 6278 0000             data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
      627A 0000     
      627C FF80     
-     627E BFA0     
-0022 6280 0000             data  >0000,>0000,>fc04,>f414 ; 05. Top right corner
+     627E 8080     
+0022 6280 0000             data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
      6282 0000     
-     6284 FC04     
-     6286 F414     
-0023 6288 A0A0             data  >a0a0,>a0a0,>a0a0,>a0a0 ; 06. Left vertical double line
-     628A A0A0     
-     628C A0A0     
-     628E A0A0     
-0024 6290 1414             data  >1414,>1414,>1414,>1414 ; 07. Right vertical double line
-     6292 1414     
-     6294 1414     
-     6296 1414     
-0025 6298 A0A0             data  >a0a0,>a0a0,>bf80,>ff00 ; 08. Bottom left corner
-     629A A0A0     
-     629C BF80     
+     6284 FF04     
+     6286 FF04     
+0023 6288 8080             data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
+     628A 8080     
+     628C 8080     
+     628E 8080     
+0024 6290 0404             data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
+     6292 0404     
+     6294 0404     
+     6296 0404     
+0025 6298 8080             data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
+     629A 8080     
+     629C 8080     
      629E FF00     
-0026 62A0 1414             data  >1414,>1414,>f404,>fc00 ; 09. Bottom right corner
-     62A2 1414     
-     62A4 F404     
-     62A6 FC00     
-0027 62A8 0000             data  >0000,>c0c0,>c0c0,>0080 ; 10. Double line top left corner
-     62AA C0C0     
-     62AC C0C0     
-     62AE 0080     
+0026 62A0 0404             data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
+     62A2 0404     
+     62A4 0404     
+     62A6 FF00     
+0027 62A8 0000             data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
+     62AA 0000     
+     62AC 0000     
+     62AE FF00     
 0028 62B0 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
      62B2 0F0F     
      62B4 0F0F     

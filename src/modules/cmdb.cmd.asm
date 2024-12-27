@@ -50,10 +50,6 @@ cmdb.cmd.clear.exit:
         b     *r11                  ; Return to caller
 
 
-
-
-
-
 ***************************************************************
 * cmdb.cmdb.getlength
 * Get length of current command
