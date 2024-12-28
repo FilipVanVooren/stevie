@@ -277,19 +277,6 @@ pane.colorscheme.statline:
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
         ;-------------------------------------------------------
-        ; Dump color for hearts in TI Basic dialog (TAT)
-        ;-------------------------------------------------------
-        mov   @cmdb.dialog,tmp1
-        ci    tmp1,id.dialog.basic  ; TI Basic dialog active?
-        jne   pane.colorscheme.ruler
-
-        li    tmp0,11               ; 1st Heart after string "Session: 1"
-        mov   tmp0,@parm1           ; Set parameter
-
-        ; bl    @dialog.hearts.tat    ; Dump colors for hearts
-        ;                             ; \ i  @parm1 = Start column (pos 1st heart)
-        ;                            ; /
-        ;-------------------------------------------------------
         ; Dump colors for ruler if visible (TAT)
         ;-------------------------------------------------------
 pane.colorscheme.ruler:
