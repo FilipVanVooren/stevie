@@ -29,14 +29,15 @@ cmdb.cmd.clear:
         clr   @cmdb.cmdlen          ; Reset length 
         bl    @film                 ; Clear command
               data  cmdb.cmd,>00,80
+
+        clr   @cmdb.column          ; Reset column
         ;------------------------------------------------------
         ; Put cursor at beginning of line
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,tmp0   
         inct  tmp0                  ; Skip ">" prompt
         mov   tmp0,@cmdb.cursor     ; Position cursor
-        andi  tmp0,>00ff
-        mov   tmp0,@cmdb.column        
+
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -113,8 +114,11 @@ cmdb.cmd.cursor_eol:
                                     ; / o   @outparm1 = Length of prompt
 
         mov   @outparm1,tmp0        ; Length of prompt
-        ai    tmp0,3                ; Add offset + cursor after last char
         mov   tmp0,@cmdb.column     ; Save column position
+        ;---------------------------------------------------------------
+        ; Cursor position! Not the same as cmdb column, has offset
+        ;---------------------------------------------------------------                
+        ai    tmp0,3                ; Add offset + cursor after last char
         sla   tmp0,8                ; LSB TO MSB
         movb  tmp0,@cmdb.cursor + 1 ; Set cursor position
         ;------------------------------------------------------

@@ -309,14 +309,12 @@ pane.filebrowser.marker:
                                     ; Show filename marker
                                     ; \ @i @cat.fpicker.idx = 1st file to show 
                                     ; /                       in file browser
-
         ;---------------------------------------------------------------
         ; Set filename in CMDB pane
         ;---------------------------------------------------------------
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
                                     ; Copy filename from command line to buffer
-
 
         bl    @cmdb.refresh_prompt  ; Refresh command line
         bl    @cmdb.cmd.cursor_eol  ; Cursor at end of input

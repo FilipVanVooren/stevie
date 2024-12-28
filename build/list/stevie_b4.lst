@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241228-1950470
+0002               * BUILD: 241228-2023560
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -15258,35 +15258,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0309                                                   ; Show filename marker
 0310                                                   ; \ @i @cat.fpicker.idx = 1st file to show
 0311                                                   ; /                       in file browser
-0312               
-0313                       ;---------------------------------------------------------------
-0314                       ; Set filename in CMDB pane
-0315                       ;---------------------------------------------------------------
-0316 77EA 06A0  32         bl    @cpym2m
+0312                       ;---------------------------------------------------------------
+0313                       ; Set filename in CMDB pane
+0314                       ;---------------------------------------------------------------
+0315 77EA 06A0  32         bl    @cpym2m
      77EC 253A     
-0317 77EE E016                   data cat.fullfname,cmdb.cmdall,80
+0316 77EE E016                   data cat.fullfname,cmdb.cmdall,80
      77F0 A72E     
      77F2 0050     
-0318                                                   ; Copy filename from command line to buffer
-0319               
-0320               
-0321 77F4 06A0  32         bl    @cmdb.refresh_prompt  ; Refresh command line
+0317                                                   ; Copy filename from command line to buffer
+0318               
+0319 77F4 06A0  32         bl    @cmdb.refresh_prompt  ; Refresh command line
      77F6 79D4     
-0322 77F8 06A0  32         bl    @cmdb.cmd.cursor_eol  ; Cursor at end of input
+0320 77F8 06A0  32         bl    @cmdb.cmd.cursor_eol  ; Cursor at end of input
      77FA 79E6     
+0321                       ;------------------------------------------------------
+0322                       ; Exit
 0323                       ;------------------------------------------------------
-0324                       ; Exit
-0325                       ;------------------------------------------------------
-0326               pane.filebrowser.exit:
-0327 77FC C839  42         mov   *stack+,@wyx          ; Pop cursor position
+0324               pane.filebrowser.exit:
+0325 77FC C839  42         mov   *stack+,@wyx          ; Pop cursor position
      77FE 832A     
-0328 7800 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0329 7802 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0330 7804 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0331 7806 C2F9  30         mov   *stack+,r11           ; Pop R11
-0332 7808 045B  20         b     *r11                  ; Return to caller
-0333               
-0334 780A 1956     txt.volume    stri  'Volume:            Files:'
+0326 7800 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0327 7802 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0328 7804 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0329 7806 C2F9  30         mov   *stack+,r11           ; Pop R11
+0330 7808 045B  20         b     *r11                  ; Return to caller
+0331               
+0332 780A 1956     txt.volume    stri  'Volume:            Files:'
      780C 6F6C     
      780E 756D     
      7810 653A     
@@ -15299,7 +15297,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      781E 4669     
      7820 6C65     
      7822 733A     
-0335 7824 174E     txt.header    stri  'Name        Type   Size'
+0333 7824 174E     txt.header    stri  'Name        Type   Size'
      7826 616D     
      7828 6520     
      782A 2020     

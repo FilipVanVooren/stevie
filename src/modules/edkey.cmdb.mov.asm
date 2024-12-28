@@ -10,8 +10,7 @@ edkey.action.cmdb.left:
         ;-------------------------------------------------------
         ; Initialisation
         ;-------------------------------------------------------
-        mov   @cmdb.column,tmp0     ; \ Left boundary (X=3) reached 
-        ci    tmp0,3                ; /
+        mov   @cmdb.column,tmp0     ; \ Left boundary (X=0) reached 
         jeq   !                     ; yes, skip further processing
         ;-------------------------------------------------------
         ; Update cursor position
@@ -39,10 +38,9 @@ edkey.action.cmdb.right:
                                     ; | i   @cmdb.cmd = Pointer to prompt
                                     ; / o   @outparm1 = Length of prompt
 
-        mov   @outparm1,tmp0        ; \
-        inct  tmp0                  ; / Add offset (X+3) 
+        mov   @outparm1,tmp0        ;
         c     @cmdb.column,tmp0     ; Right boundary reached? 
-        jgt   !                     ; column > length line + offset? 
+        jgt   !                     ; yes. exot
         ;-------------------------------------------------------
         ; Update cursor position
         ;-------------------------------------------------------
@@ -62,11 +60,12 @@ edkey.action.cmdb.right:
 edkey.action.cmdb.home:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+
+        clr   @cmdb.column          ; First column        
         ;-------------------------------------------------------
         ; Update cursor position
         ;-------------------------------------------------------
-        li    tmp0,3                ; X=3
-        mov   tmp0,@cmdb.column     ; First column
+        li    tmp0,3                ; X=3 
         movb  @cmdb.cursor,tmp0     ; Get CMDB cursor Y position
         mov   tmp0,@cmdb.cursor     ; Set new YX position for cursor
         ;-------------------------------------------------------

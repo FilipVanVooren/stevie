@@ -32,10 +32,6 @@ edkey.action.cmdb.clear.exit:
                                     ; Reposition cursor
         
 
-
-
-
-
 ***************************************************************
 * edkey.action.cmdb.char
 * Add character to command line

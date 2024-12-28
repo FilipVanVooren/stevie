@@ -85,13 +85,8 @@ pane.cmdb.show.hidechar.done:
         mov   tmp0,@cmdb.yxprompt   ; | Screen position of prompt in cmdb pane
                                     ; / Y=@cmdb.yxtop, X=2
 
-        movb  @cmdb.cmdlen,tmp1     ; \ 
-        srl   tmp1,8                ; | Put cursor at end of command string
-        a     tmp1,tmp0             ; /
-        mov   tmp1,@cmdb.column     ; Set column position (must match cursor X)
-
-        inc   tmp0                  ; Skip ">" character
-        mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
+        mov   tmp0,@cmdb.cursor     ;
+        bl    @cmdb.cmd.cursor_eol  ; Move cursor to end of line
         ;------------------------------------------------------
         ; Show pane
         ;------------------------------------------------------
