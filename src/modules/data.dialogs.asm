@@ -30,9 +30,9 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  SPACE-UpDir'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=DSK1-9'
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=CAT DSK1-9  SPACE-UpDir'
+txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=DSK1-9'
                    even
 
 ;--------------------------------------------------------------
@@ -45,7 +45,7 @@ txt.hint.lineterm  stri 'Line termination character (ASCII) = ....'
                    even
 
 txt.hint.filepicker:
-                   stri 'FE/X-up/down  ^E/X-prev/next page  ^S/D-prev/next column'
+                   stri 'FE/X-up/down  ^E/X-prev/next page  ^S/D-prev/next column  SPACE-UpDir'
                    even
 
 ;--------------------------------------------------------------
