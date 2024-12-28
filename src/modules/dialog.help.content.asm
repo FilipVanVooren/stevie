@@ -130,7 +130,7 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,14
+        data  dialog.help.data.page1.left,16
         data  dialog.help.data.page1.right,13
         data  dialog.help.data.page2.left,16
         data  dialog.help.data.page2.right,15
@@ -151,16 +151,19 @@ dialog.help.data.page1.left:
         stri 'Fctn 7        Next tab'        
         stri 'Ctrl 7   ^7   Prev tab'        
         stri 'Fctn v        Screen top'
-        stri 'Ctrl v   ^v   File top'        
+        stri 'Ctrl v   ^v   File top'
         stri 'Fctn b        Screen bottom'
-        stri 'Ctrl b   ^b   File bottom'
+        stri ''        
+        stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
+        stri 'This is free software, you are welcome to redistribute under certain conditions'
+
 
 dialog.help.data.page1.right:
         stri '                            Page 1/2  '
+        stri 'Ctrl b   ^b   File bottom'
         stri 'Ctrl g   ^g   Goto line'        
         stri 'Ctrl ,   ^,   Goto previous match'
         stri 'Ctrl .   ^.   Goto next match'
-        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
@@ -172,6 +175,7 @@ dialog.help.data.page1.right:
         stri 'Ctrl p   ^p   Print file'
         stri 'Ctrl r   ^r   Run program image (EA5)'        
         stri 'Ctrl s   ^s   Save file'
+        
 
 dialog.help.data.page2.left:
         byte    35

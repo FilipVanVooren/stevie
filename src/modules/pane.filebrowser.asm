@@ -309,20 +309,17 @@ pane.filebrowser.marker:
                                     ; Show filename marker
                                     ; \ @i @cat.fpicker.idx = 1st file to show 
                                     ; /                       in file browser
-        bl    @cpym2m
-              data cat.fullfname,cmdb.cmdall,80
-                                    ; Copy filename from command line to buffer
+
         ;---------------------------------------------------------------
         ; Set filename in CMDB pane
         ;---------------------------------------------------------------
-        movb  @cmdb.cmdlen,tmp0     ; Get length byte of current command
-        srl   tmp0,8                ; Right justify
-        mov   tmp0,@cmdb.column     ; Save column position
-        inc   tmp0                  ; One time adjustment command prompt        
-        swpb  tmp0                  ; LSB TO MSB
-        movb  tmp0,@cmdb.cursor+1   ; Set cursor position        
+        bl    @cpym2m
+              data cat.fullfname,cmdb.cmdall,80
+                                    ; Copy filename from command line to buffer
 
-        seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)                                        
+
+        bl    @cmdb.refresh_prompt  ; Refresh command line
+        bl    @cmdb.cmd.cursor_eol  ; Cursor at end of input
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

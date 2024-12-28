@@ -217,26 +217,12 @@ pane.cmdb.draw.alpha.down:
               byte   pane.botrow,78
               data   txt.alpha.down
         ;------------------------------------------------------
-        ; Command buffer content
+        ; Command line
         ;------------------------------------------------------
 pane.cmdb.draw.promptcmd:
         mov   @waux1,tmp0           ; Flag set?
-        jne   pane.cmdb.draw.hearts ; Yes, so skip refresh
-        bl    @cmdb.refresh_prompt  ; Refresh command buffer content
-        ;------------------------------------------------------
-        ; Set color for hearts in TI-Basic dialog
-        ;------------------------------------------------------
-pane.cmdb.draw.hearts:
-        mov   @cmdb.dialog,tmp0
-        ci    tmp0,id.dialog.basic  ; TI Basic dialog active?
-        jne   pane.cmdb.draw.exit   ; No, so exit early
-
-        li    tmp0,11               ; 1st Heart after string "Session: 1"
-        mov   tmp0,@parm1           ; Set parameter
-
-        ;bl    @dialog.hearts.tat    ; Dump colors for hearts
-        ;                            ; \ i  @parm1 = Start column (pos 1st heart)
-        ;                            ; /
+        jne   pane.cmdb.draw.exit   ; Yes, skip command line
+        bl    @cmdb.refresh_prompt  ; Refresh command line
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

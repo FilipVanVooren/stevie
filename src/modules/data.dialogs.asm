@@ -163,8 +163,8 @@ txt.keys.unsaved   stri 'F9-Back  F6/SPACE-Proceed  ENTER-Save'
 txt.head.about     byte 8,4,1
                    text ' Help '
 txt.info.about     stri ''
-txt.hint.about2    stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
-txt.hint.about     stri 'This is free software, you are welcome to redistribute under certain conditions'
+txt.hint.about2    stri 'Report bugs and feature requests at:'
+txt.hint.about     stri 'https://github.com/FilipVanVooren/stevie'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
 txt.about.build    byte 69
