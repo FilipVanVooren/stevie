@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241228-2045150
+0002               * BUILD: 241228-2048270
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -15443,46 +15443,46 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0206                       ;-------------------------------------------------------
 0207                       ; Dump colors for CMDB pane content (TAT)
 0208                       ;-------------------------------------------------------
-0209 745A C120  34         mov   @cmdb.vdptop,tmp0     ; \
+0209               
+0210 745A C120  34         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All 5 rows
      745C A70E     
-0210 745E 0224  22         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
+0211 745E 0224  22         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
      7460 0050     
-0211 7462 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
+0212 7462 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
      7464 A220     
-0212 7466 0206  20         li    tmp2,5*80             ; Number of bytes to fill
+0213 7466 0206  20         li    tmp2,5*80             ; Number of bytes to fill
      7468 0190     
-0213 746A 06A0  32         bl    @xfilv                ; Fill colors
+0214 746A 06A0  32         bl    @xfilv                ; Fill colors
      746C 2294     
-0214                                                   ; i \  tmp0 = start address
-0215                                                   ; i |  tmp1 = byte to fill
-0216                                                   ; i /  tmp2 = number of bytes to fill
-0217               
-0218 746E C120  34         mov   @cmdb.vdptop,tmp0     ; \
+0215                                                   ; i \  tmp0 = start address
+0216                                                   ; i |  tmp1 = byte to fill
+0217                                                   ; i /  tmp2 = number of bytes to fill
+0218               
+0219 746E C120  34         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 1
      7470 A70E     
-0219 7472 0224  22         ai    tmp0,82               ; / VDP start address (CMDB top line + 3)
+0220 7472 0224  22         ai    tmp0,82               ; / VDP start address (CMDB top line + 1)
      7474 0052     
-0220 7476 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0221 7478 0206  20         li    tmp2,76               ; Number of bytes to fill
+0221 7476 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0222 7478 0206  20         li    tmp2,76               ; Number of bytes to fill
      747A 004C     
-0222 747C 06A0  32         bl    @xfilv                ; Fill colors
+0223 747C 06A0  32         bl    @xfilv                ; Fill colors
      747E 2294     
-0223                                                   ; i \  tmp0 = start address
-0224                                                   ; i |  tmp1 = byte to fill
-0225                                                   ; i /  tmp2 = number of bytes to fill
-0226               
-0227 7480 C120  34         mov   @cmdb.vdptop,tmp0     ; \
+0224                                                   ; i \  tmp0 = start address
+0225                                                   ; i |  tmp1 = byte to fill
+0226                                                   ; i /  tmp2 = number of bytes to fill
+0227               
+0228 7480 C120  34         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
      7482 A70E     
-0228 7484 0224  22         ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
+0229 7484 0224  22         ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
      7486 0142     
-0229 7488 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0230 748A 0206  20         li    tmp2,76               ; Number of bytes to fill
+0230 7488 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0231 748A 0206  20         li    tmp2,76               ; Number of bytes to fill
      748C 004C     
-0231 748E 06A0  32         bl    @xfilv                ; Fill colors
+0232 748E 06A0  32         bl    @xfilv                ; Fill colors
      7490 2294     
-0232                                                   ; i \  tmp0 = start address
-0233                                                   ; i |  tmp1 = byte to fill
-0234                                                   ; i /  tmp2 = number of bytes to fill
-0235               
+0233                                                   ; i \  tmp0 = start address
+0234                                                   ; i |  tmp1 = byte to fill
+0235                                                   ; i /  tmp2 = number of bytes to fill
 0236                       ;-------------------------------------------------------
 0237                       ; Exit early if only CMDB needed to be colorized
 0238                       ;-------------------------------------------------------
