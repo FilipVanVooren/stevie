@@ -286,9 +286,9 @@ pane.colorscheme.statline:
         li    tmp0,11               ; 1st Heart after string "Session: 1"
         mov   tmp0,@parm1           ; Set parameter
 
-        bl    @dialog.hearts.tat    ; Dump colors for hearts
-                                    ; \ i  @parm1 = Start column (pos 1st heart)
-                                    ; /
+        ; bl    @dialog.hearts.tat    ; Dump colors for hearts
+        ;                             ; \ i  @parm1 = Start column (pos 1st heart)
+        ;                            ; /
         ;-------------------------------------------------------
         ; Dump colors for ruler if visible (TAT)
         ;-------------------------------------------------------

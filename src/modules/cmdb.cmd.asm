@@ -37,7 +37,7 @@ cmdb.cmd.clear:
         ; Put cursor at beginning of line
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,tmp0   
-        inc   tmp0                  
+        inc   tmp0                  ; Skip ">" prompt
         mov   tmp0,@cmdb.cursor     ; Position cursor        
         ;------------------------------------------------------
         ; Exit
@@ -84,3 +84,47 @@ cmdb.cmd.getlength:
 cmdb.cmd.getlength.exit:        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* cmdb.cmd.cursor_eol
+* Set cursor at end of line
+***************************************************************
+* bl @cmdb.cmd.cursor_eol
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* OUTPUT
+* @cmdb.cursor = New cursor position
+*--------------------------------------------------------------
+* Register usage
+* none
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.cmd.cursor_eol:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;---------------------------------------------------------------
+        ; Position cursor at end of input line
+        ;---------------------------------------------------------------
+        bl    @cmdb.cmd.getlength   ; \ Get length of command line input
+                                    ; | i   @cmdb.cmd = Pointer to prompt
+                                    ; / o   @outparm1 = Length of prompt
+
+        mov   @outparm1,tmp0        ; Length of prompt
+        ai    tmp0,3                ; Add offset + cursor after last char
+        mov   tmp0,@cmdb.column     ; Save column position
+        sla   tmp0,8                ; LSB TO MSB
+        movb  tmp0,@cmdb.cursor + 1 ; Set cursor position
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+cmdb.cmd.cursor_eol.exit:        
+        mov   *stack+,tmp0          ; Pop tmp0        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller     

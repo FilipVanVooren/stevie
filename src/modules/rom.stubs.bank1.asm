@@ -570,13 +570,13 @@ pane.cmdb.draw.vector:
 
 
 ***************************************************************
-* Stub for "cmdb.refresh"
+* Stub for "cmdb.refresh_prompt"
 * bank3 vec.24
 ********|*****|*********************|**************************
-cmdb.refresh:
-        mov   @cmdb.refresh.vector,@trmpvector
+cmdb.refresh_prompt:
+        mov   @cmdb.refresh_prompt.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-cmdb.refresh.vector:
+cmdb.refresh_prompt.vector:
         data  vec.24
 
 
@@ -624,17 +624,15 @@ cmdb.cmd.set.vector:
         data  vec.28
 
 
-
 ***************************************************************
-* Stub for "dialog.hearts.tat"
+* Stub for "cmdb.cmd.cursor_eol"
 * bank3 vec.29
 ********|*****|*********************|**************************
-dialog.hearts.tat:
-        mov   @dialog.hearts.tat.vector,@trmpvector
+cmdb.cmd.cursor_eol:
+        mov   @cmdb.cmd.cursor_eol.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
-dialog.hearts.tat.vector:
+cmdb.cmd.cursor_eol.vector:
         data  vec.29
-
 
 
 ***************************************************************

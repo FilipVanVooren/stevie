@@ -65,19 +65,28 @@ pane.cmdb.draw:
               byte cmdb.rows - 2               ; Y-repeat           /
               data EOL
 
+        bl    @hchar
+              byte pane.botrow-5,1,32,78 ; Clear message or command line prompt
+              byte pane.botrow-4,1,32,78 ; Clear markers
+              byte pane.botrow-3,1,32,78 ; Clear pane hint
+              byte pane.botrow-2,1,32,78 ; Clear extra pane hint
+              byte pane.botrow-1,0,8,1   ; Draw bottom left corner
+              byte pane.botrow-1,1,10,78 ; Draw horizontal line
+              byte pane.botrow-1,79,9,1  ; Draw bottom right corner
+              data EOL              
         ;------------------------------------------------------
         ; Check dialog id
         ;------------------------------------------------------
         clr   @waux1                ; Default is show prompt
         mov   @cmdb.dialog,tmp0
-        ci    tmp0,99               ; \ Hide prompt and no keyboard
-        jle   pane.cmdb.draw.clear  ; | buffer input if dialog ID > 99
-        seto  @waux1                ; /
+        ci    tmp0,99                ; \ Hide prompt and no keyboard
+        jle   pane.cmdb.draw.markers ; | buffer input if dialog ID > 99
+        seto  @waux1                 ; /
         ;------------------------------------------------------
         ; Show info message instead of prompt
         ;------------------------------------------------------
-        mov   @cmdb.paninfo,tmp1    ; Null pointer?
-        jeq   pane.cmdb.draw.clear  ; Yes, display normal prompt
+        mov   @cmdb.paninfo,tmp1     ; Null pointer?
+        jeq   pane.cmdb.draw.markers ; Yes, skip info message
 
         mov   @cmdb.paninfo,@parm1  ; Get string to display
         li    tmp0,76
@@ -98,24 +107,13 @@ pane.cmdb.draw:
               byte pane.botrow-5,2  ; Position cursor
 
         mov   @outparm1,tmp1        ; \ Display info message (=menu row)
-        bl    @xutst0               ; /
-        ;------------------------------------------------------
-        ; Clear lines after prompt in command buffer
-        ;------------------------------------------------------
-pane.cmdb.draw.clear:
-        bl    @hchar
-              byte pane.botrow-4,1,32,78 ; Clear markers
-              byte pane.botrow-3,1,32,78 ; Clear pane hint
-              byte pane.botrow-2,1,32,78 ; Clear extra pane hint
-              byte pane.botrow-1,0,8,1   ; Draw bottom left corner
-              byte pane.botrow-1,1,10,78 ; Draw horizontal line
-              byte pane.botrow-1,79,9,1  ; Draw bottom right corner
-              data EOL                                                                                      
+        bl    @xutst0               ; /                                                                               
         ;------------------------------------------------------
         ; Show key markers ?
         ;------------------------------------------------------
-        mov   @cmdb.panmarkers,tmp0
-        jeq   pane.cmdb.draw.hint   ; no, skip key markers
+pane.cmdb.draw.markers:
+        mov   @cmdb.panmarkers,tmp0 ; Show markers?
+        jeq   pane.cmdb.draw.hint   ; no, skip
         ;------------------------------------------------------
         ; Loop over key marker list
         ;------------------------------------------------------
@@ -224,7 +222,7 @@ pane.cmdb.draw.alpha.down:
 pane.cmdb.draw.promptcmd:
         mov   @waux1,tmp0           ; Flag set?
         jne   pane.cmdb.draw.hearts ; Yes, so skip refresh
-        bl    @cmdb.refresh         ; Refresh command buffer content
+        bl    @cmdb.refresh_prompt  ; Refresh command buffer content
         ;------------------------------------------------------
         ; Set color for hearts in TI-Basic dialog
         ;------------------------------------------------------
@@ -236,9 +234,9 @@ pane.cmdb.draw.hearts:
         li    tmp0,11               ; 1st Heart after string "Session: 1"
         mov   tmp0,@parm1           ; Set parameter
 
-        bl    @dialog.hearts.tat    ; Dump colors for hearts
-                                    ; \ i  @parm1 = Start column (pos 1st heart)
-                                    ; /
+        ;bl    @dialog.hearts.tat    ; Dump colors for hearts
+        ;                            ; \ i  @parm1 = Start column (pos 1st heart)
+        ;                            ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

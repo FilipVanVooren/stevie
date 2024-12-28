@@ -1,24 +1,25 @@
-* FILE......: cmdb.refresh.asm
+* FILE......: cmdb.refresh_prompt.asm
 * Purpose...: Stevie Editor - Command buffer
 
 ***************************************************************
-* cmdb.refresh
-* Refresh command buffer content
+* cmdb.refresh_prompt
+* Refresh command buffer prompt
 ***************************************************************
-* bl @cmdb.refresh
+* bl @cmdb.refresh_prompt
 *--------------------------------------------------------------
 * INPUT
-* none
+* @cmdb.yxprompt = YX position command line prompt
+* @cmdb.cmd      = Current prompt
 *--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
 * Register usage
-* none
+* tmp0, tmp1, tmp2
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-cmdb.refresh:
+cmdb.refresh_prompt:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -30,6 +31,12 @@ cmdb.refresh:
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
+        ; Show command buffer prompt
+        ;------------------------------------------------------
+        mov   @cmdb.yxprompt,@wyx
+        bl    @putstr
+              data txt.cmdb.prompt  ; Draw prompt ">"        
+        ;------------------------------------------------------
         ; Dump Command buffer content
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,@wyx   ; Screen position of command line prompt
@@ -40,22 +47,16 @@ cmdb.refresh:
                                     ; / o  tmp0 = VDP target address
 
         li    tmp1,cmdb.cmd         ; Address of current command
-        li    tmp2,1*79             ; Command length
+        li    tmp2,1*76             ; Command length
 
         bl    @xpym2v               ; \ Copy CPU memory to VDP memory
                                     ; | i  tmp0 = VDP target address
                                     ; | i  tmp1 = RAM source address
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Show command buffer prompt
-        ;------------------------------------------------------
-        mov   @cmdb.yxprompt,@wyx
-        bl    @putstr
-              data txt.cmdb.prompt  ; Draw prompt
-        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-cmdb.refresh.exit:
+cmdb.refresh_prompt.exit:
         mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

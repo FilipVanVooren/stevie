@@ -81,8 +81,9 @@ pane.cmdb.show.hidechar.done:
         ;------------------------------------------------------
         ; Determine initial cursor position
         ;------------------------------------------------------
-        ai    tmp0,>0100            ; Skip row
-        mov   tmp0,@cmdb.yxprompt   ; Screen position of prompt in cmdb pane
+        ai    tmp0,>0102            ; \ Skip row
+        mov   tmp0,@cmdb.yxprompt   ; | Screen position of prompt in cmdb pane
+                                    ; / Y=@cmdb.yxtop, X=2
 
         movb  @cmdb.cmdlen,tmp1     ; \ 
         srl   tmp1,8                ; | Put cursor at end of command string
@@ -91,7 +92,6 @@ pane.cmdb.show.hidechar.done:
 
         inc   tmp0                  ; Skip ">" character
         mov   tmp0,@cmdb.cursor     ; Screen position of cursor in cmdb pane
-
         ;------------------------------------------------------
         ; Show pane
         ;------------------------------------------------------

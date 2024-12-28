@@ -53,10 +53,9 @@ cmdb.cmd.set:
         ;------------------------------------------------------
         ; Put cursor at beginning of line
         ;------------------------------------------------------
-        mov   @cmdb.yxprompt,tmp0   
-        inc   tmp0                  
+        mov   @cmdb.yxprompt,tmp0   ; Get prompt YX
+        inc   tmp0                  ; Skip ">" character
         mov   tmp0,@cmdb.cursor     ; Position cursor        
-
         seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)
         ;------------------------------------------------------
         ; Exit
