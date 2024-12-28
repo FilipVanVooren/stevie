@@ -208,33 +208,31 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
-                                    ;
-        mov   tmp4,tmp1             ; Get work copy fg/bg color
-        li    tmp2,2*80             ; Number of bytes to fill
-        bl    @xfilv                ; Fill colors
-                                    ; i \  tmp0 = start address
-                                    ; i |  tmp1 = byte to fill
-                                    ; i /  tmp2 = number of bytes to fill
-
-        mov   @cmdb.vdptop,tmp0     ; \
-        ai    tmp0,240              ; / VDP start address (CMDB top line + 3)
-                                    ;
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
-        li    tmp2,1*80             ; Number of bytes to fill
+        li    tmp2,5*80             ; Number of bytes to fill 
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
 
         mov   @cmdb.vdptop,tmp0     ; \
-        ai    tmp0,320              ; / VDP start address (CMDB top line + 4)
-                                    ;
+        ai    tmp0,82               ; / VDP start address (CMDB top line + 3)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
-        li    tmp2,2*80             ; Number of bytes to fill
+        li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
+
+        mov   @cmdb.vdptop,tmp0     ; \
+        ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
+        mov   tmp4,tmp1             ; Get work copy fg/bg color
+        li    tmp2,76               ; Number of bytes to fill
+        bl    @xfilv                ; Fill colors
+                                    ; i \  tmp0 = start address
+                                    ; i |  tmp1 = byte to fill
+                                    ; i /  tmp2 = number of bytes to fill
+
         ;-------------------------------------------------------
         ; Exit early if only CMDB needed to be colorized
         ;-------------------------------------------------------

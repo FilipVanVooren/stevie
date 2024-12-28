@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241228-2037250
+0002               * BUILD: 241228-2045150
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -909,13 +909,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.6.8'
+0055 6028 0C53                 stri 'STEVIE 1.6.9'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 362E     
-     6034 38       
+     6034 39       
 0057               
 0061               
 0065               
@@ -15447,169 +15447,167 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      745C A70E     
 0210 745E 0224  22         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
      7460 0050     
-0211                                                   ;
-0212 7462 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0213 7464 0206  20         li    tmp2,2*80             ; Number of bytes to fill
-     7466 00A0     
-0214 7468 06A0  32         bl    @xfilv                ; Fill colors
-     746A 2294     
-0215                                                   ; i \  tmp0 = start address
-0216                                                   ; i |  tmp1 = byte to fill
-0217                                                   ; i /  tmp2 = number of bytes to fill
-0218               
-0219 746C C120  34         mov   @cmdb.vdptop,tmp0     ; \
-     746E A70E     
-0220 7470 0224  22         ai    tmp0,240              ; / VDP start address (CMDB top line + 3)
-     7472 00F0     
-0221                                                   ;
-0222 7474 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
-     7476 A220     
-0223 7478 0206  20         li    tmp2,1*80             ; Number of bytes to fill
-     747A 0050     
-0224 747C 06A0  32         bl    @xfilv                ; Fill colors
+0211 7462 C160  34         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
+     7464 A220     
+0212 7466 0206  20         li    tmp2,5*80             ; Number of bytes to fill
+     7468 0190     
+0213 746A 06A0  32         bl    @xfilv                ; Fill colors
+     746C 2294     
+0214                                                   ; i \  tmp0 = start address
+0215                                                   ; i |  tmp1 = byte to fill
+0216                                                   ; i /  tmp2 = number of bytes to fill
+0217               
+0218 746E C120  34         mov   @cmdb.vdptop,tmp0     ; \
+     7470 A70E     
+0219 7472 0224  22         ai    tmp0,82               ; / VDP start address (CMDB top line + 3)
+     7474 0052     
+0220 7476 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0221 7478 0206  20         li    tmp2,76               ; Number of bytes to fill
+     747A 004C     
+0222 747C 06A0  32         bl    @xfilv                ; Fill colors
      747E 2294     
-0225                                                   ; i \  tmp0 = start address
-0226                                                   ; i |  tmp1 = byte to fill
-0227                                                   ; i /  tmp2 = number of bytes to fill
-0228               
-0229 7480 C120  34         mov   @cmdb.vdptop,tmp0     ; \
+0223                                                   ; i \  tmp0 = start address
+0224                                                   ; i |  tmp1 = byte to fill
+0225                                                   ; i /  tmp2 = number of bytes to fill
+0226               
+0227 7480 C120  34         mov   @cmdb.vdptop,tmp0     ; \
      7482 A70E     
-0230 7484 0224  22         ai    tmp0,320              ; / VDP start address (CMDB top line + 4)
-     7486 0140     
-0231                                                   ;
-0232 7488 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
-0233 748A 0206  20         li    tmp2,2*80             ; Number of bytes to fill
-     748C 00A0     
-0234 748E 06A0  32         bl    @xfilv                ; Fill colors
+0228 7484 0224  22         ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
+     7486 0142     
+0229 7488 C148  18         mov   tmp4,tmp1             ; Get work copy fg/bg color
+0230 748A 0206  20         li    tmp2,76               ; Number of bytes to fill
+     748C 004C     
+0231 748E 06A0  32         bl    @xfilv                ; Fill colors
      7490 2294     
-0235                                                   ; i \  tmp0 = start address
-0236                                                   ; i |  tmp1 = byte to fill
-0237                                                   ; i /  tmp2 = number of bytes to fill
+0232                                                   ; i \  tmp0 = start address
+0233                                                   ; i |  tmp1 = byte to fill
+0234                                                   ; i /  tmp2 = number of bytes to fill
+0235               
+0236                       ;-------------------------------------------------------
+0237                       ; Exit early if only CMDB needed to be colorized
 0238                       ;-------------------------------------------------------
-0239                       ; Exit early if only CMDB needed to be colorized
-0240                       ;-------------------------------------------------------
-0241 7492 C120  34         mov   @parm3,tmp0
+0239 7492 C120  34         mov   @parm3,tmp0
      7494 A00A     
-0242 7496 0284  22         ci    tmp0,>ffff            ; Only colorize CMDB pane ?
+0240 7496 0284  22         ci    tmp0,>ffff            ; Only colorize CMDB pane ?
      7498 FFFF     
-0243 749A 132F  14         jeq   pane.colorscheme.cursorcolor.cmdb
-0244                                                   ; Yes, shortcut to CMDB cursor color
+0241 749A 132F  14         jeq   pane.colorscheme.cursorcolor.cmdb
+0242                                                   ; Yes, shortcut to CMDB cursor color
+0243                       ;-------------------------------------------------------
+0244                       ; Dump colors for error pane (TAT)
 0245                       ;-------------------------------------------------------
-0246                       ; Dump colors for error pane (TAT)
-0247                       ;-------------------------------------------------------
-0248               pane.colorscheme.errpane:
-0249 749C C120  34         mov   @tv.error.visible,tmp0
+0246               pane.colorscheme.errpane:
+0247 749C C120  34         mov   @tv.error.visible,tmp0
      749E A22A     
-0250 74A0 1306  14         jeq   pane.colorscheme.statline
-0251                                                   ; Skip if error pane is hidden
-0252               
-0253 74A2 0205  20         li    tmp1,>00f6            ; White on dark red
+0248 74A0 1306  14         jeq   pane.colorscheme.statline
+0249                                                   ; Skip if error pane is hidden
+0250               
+0251 74A2 0205  20         li    tmp1,>00f6            ; White on dark red
      74A4 00F6     
-0254 74A6 C805  38         mov   tmp1,@parm1           ; Pass color combination
+0252 74A6 C805  38         mov   tmp1,@parm1           ; Pass color combination
      74A8 A006     
-0255               
-0256 74AA 06A0  32         bl    @pane.errline.drawcolor
+0253               
+0254 74AA 06A0  32         bl    @pane.errline.drawcolor
      74AC 79EE     
-0257                                                   ; Draw color on rows in error pane
-0258                                                   ; \ i  @tv.error.rows = Number of rows
-0259                                                   ; / i  @parm1         = Color combination
+0255                                                   ; Draw color on rows in error pane
+0256                                                   ; \ i  @tv.error.rows = Number of rows
+0257                                                   ; / i  @parm1         = Color combination
+0258                       ;-------------------------------------------------------
+0259                       ; Dump colors for top line and bottom line (TAT)
 0260                       ;-------------------------------------------------------
-0261                       ; Dump colors for top line and bottom line (TAT)
-0262                       ;-------------------------------------------------------
-0263               pane.colorscheme.statline:
-0264 74AE C160  34         mov   @tv.color,tmp1
+0261               pane.colorscheme.statline:
+0262 74AE C160  34         mov   @tv.color,tmp1
      74B0 A218     
-0265 74B2 0245  22         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
+0263 74B2 0245  22         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
      74B4 00FF     
-0266 74B6 C805  38         mov   tmp1,@parm1           ; Set color combination
+0264 74B6 C805  38         mov   tmp1,@parm1           ; Set color combination
      74B8 A006     
-0267               
-0268               
-0269 74BA 04E0  34         clr   @parm2                ; Top row on screen
+0265               
+0266               
+0267 74BA 04E0  34         clr   @parm2                ; Top row on screen
      74BC A008     
-0270 74BE 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
+0268 74BE 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
      74C0 7AA8     
-0271                                                   ; \ i  @parm1 = Color combination
-0272                                                   ; / i  @parm2 = Row on physical screen
-0273               
-0274 74C2 0205  20         li    tmp1,pane.botrow
+0269                                                   ; \ i  @parm1 = Color combination
+0270                                                   ; / i  @parm2 = Row on physical screen
+0271               
+0272 74C2 0205  20         li    tmp1,pane.botrow
      74C4 001D     
-0275 74C6 C805  38         mov   tmp1,@parm2           ; Bottom row on screen
+0273 74C6 C805  38         mov   tmp1,@parm2           ; Bottom row on screen
      74C8 A008     
-0276 74CA 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
+0274 74CA 06A0  32         bl    @vdp.colors.line      ; Load color combination for line
      74CC 7AA8     
-0277                                                   ; \ i  @parm1 = Color combination
-0278                                                   ; / i  @parm2 = Row on physical screen
+0275                                                   ; \ i  @parm1 = Color combination
+0276                                                   ; / i  @parm2 = Row on physical screen
+0277                       ;-------------------------------------------------------
+0278                       ; Dump colors for ruler if visible (TAT)
 0279                       ;-------------------------------------------------------
-0280                       ; Dump colors for ruler if visible (TAT)
-0281                       ;-------------------------------------------------------
-0282               pane.colorscheme.ruler:
-0283 74CE C160  34         mov   @cmdb.dialog,tmp1
+0280               pane.colorscheme.ruler:
+0281 74CE C160  34         mov   @cmdb.dialog,tmp1
      74D0 A71C     
-0284 74D2 0285  22         ci    tmp1,id.dialog.help   ; Help dialog active?
+0282 74D2 0285  22         ci    tmp1,id.dialog.help   ; Help dialog active?
      74D4 0068     
-0285 74D6 130A  14         jeq   pane.colorscheme.cursorcolor
-0286                                                   ; Yes, skip ruler
-0287               
-0288 74D8 C160  34         mov   @tv.ruler.visible,tmp1
+0283 74D6 130A  14         jeq   pane.colorscheme.cursorcolor
+0284                                                   ; Yes, skip ruler
+0285               
+0286 74D8 C160  34         mov   @tv.ruler.visible,tmp1
      74DA A210     
-0289 74DC 1307  14         jeq   pane.colorscheme.cursorcolor
-0290               
-0291 74DE 06A0  32         bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
+0287 74DC 1307  14         jeq   pane.colorscheme.cursorcolor
+0288               
+0289 74DE 06A0  32         bl    @fb.ruler.init        ; Setup ruler with tab-positions in memory
      74E0 78EE     
-0292 74E2 06A0  32         bl    @cpym2v
+0290 74E2 06A0  32         bl    @cpym2v
      74E4 24E6     
-0293 74E6 09D0                   data vdp.fb.toprow.tat
-0294 74E8 A370                   data fb.ruler.tat
-0295 74EA 0050                   data 80               ; Show ruler colors
+0291 74E6 09D0                   data vdp.fb.toprow.tat
+0292 74E8 A370                   data fb.ruler.tat
+0293 74EA 0050                   data 80               ; Show ruler colors
+0294                       ;-------------------------------------------------------
+0295                       ; Dump cursor FG color to sprite table (SAT)
 0296                       ;-------------------------------------------------------
-0297                       ; Dump cursor FG color to sprite table (SAT)
-0298                       ;-------------------------------------------------------
-0299               pane.colorscheme.cursorcolor:
-0300 74EC C220  34         mov   @tv.curcolor,tmp4     ; Get cursor color
+0297               pane.colorscheme.cursorcolor:
+0298 74EC C220  34         mov   @tv.curcolor,tmp4     ; Get cursor color
      74EE A216     
-0301               
-0302 74F0 C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
+0299               
+0300 74F0 C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
      74F2 A224     
-0303 74F4 0284  22         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
+0301 74F4 0284  22         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
      74F6 0000     
-0304 74F8 1304  14         jeq   pane.colorscheme.cursorcolor.fb
-0305                                                   ; Yes, set cursor color
-0306               
-0307               pane.colorscheme.cursorcolor.cmdb:
-0308 74FA 0248  22         andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
+0302 74F8 1304  14         jeq   pane.colorscheme.cursorcolor.fb
+0303                                                   ; Yes, set cursor color
+0304               
+0305               pane.colorscheme.cursorcolor.cmdb:
+0306 74FA 0248  22         andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
      74FC 00F0     
-0309 74FE 0A48  24         sla   tmp4,4                ; Move to MSB
-0310 7500 1003  14         jmp   !
-0311               
-0312               pane.colorscheme.cursorcolor.fb:
-0313 7502 0248  22         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
+0307 74FE 0A48  24         sla   tmp4,4                ; Move to MSB
+0308 7500 1003  14         jmp   !
+0309               
+0310               pane.colorscheme.cursorcolor.fb:
+0311 7502 0248  22         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
      7504 000F     
-0314 7506 0A88  32         sla   tmp4,8                ; Move to MSB
-0315               
-0316 7508 D808  38 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
+0312 7506 0A88  32         sla   tmp4,8                ; Move to MSB
+0313               
+0314 7508 D808  38 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
      750A A059     
-0317 750C D808  38         movb  tmp4,@tv.curshape+1   ; Save cursor color
+0315 750C D808  38         movb  tmp4,@tv.curshape+1   ; Save cursor color
      750E A215     
+0316                       ;-------------------------------------------------------
+0317                       ; Exit
 0318                       ;-------------------------------------------------------
-0319                       ; Exit
-0320                       ;-------------------------------------------------------
-0321               pane.colorscheme.load.exit:
-0322 7510 06A0  32         bl    @scron                ; Turn screen on
+0319               pane.colorscheme.load.exit:
+0320 7510 06A0  32         bl    @scron                ; Turn screen on
      7512 26EE     
-0323 7514 C839  50         mov   *stack+,@parm3        ; Pop @parm3
+0321 7514 C839  50         mov   *stack+,@parm3        ; Pop @parm3
      7516 A00A     
-0324 7518 C839  50         mov   *stack+,@parm2        ; Pop @parm2
+0322 7518 C839  50         mov   *stack+,@parm2        ; Pop @parm2
      751A A008     
-0325 751C C839  50         mov   *stack+,@parm1        ; Pop @parm1
+0323 751C C839  50         mov   *stack+,@parm1        ; Pop @parm1
      751E A006     
-0326 7520 C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0327 7522 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0328 7524 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0329 7526 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0330 7528 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0331 752A C2F9  30         mov   *stack+,r11           ; Pop R11
-0332 752C 045B  20         b     *r11                  ; Return to caller
+0324 7520 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0325 7522 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0326 7524 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0327 7526 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0328 7528 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0329 752A C2F9  30         mov   *stack+,r11           ; Pop R11
+0330 752C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b1.asm
 0148                       copy  "pane.colorscheme.status.asm" ; Set colors on status lines
      **** ****     > pane.colorscheme.status.asm
