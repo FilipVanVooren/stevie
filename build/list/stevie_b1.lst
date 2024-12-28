@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241228-1842500
+0002               * BUILD: 241228-1845080
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12511,8 +12511,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       ;-------------------------------------------------------
 0025 6988 06A0  32         bl    @cmdb.cmd.clear       ; Clear current command
      698A 787A     
-0026 698C 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
-     698E A71A     
+0026 698C 06A0  32         bl    @cmdb.refresh_prompt  ; Draw command line
+     698E 7870     
 0027                       ;-------------------------------------------------------
 0028                       ; Exit
 0029                       ;-------------------------------------------------------
@@ -12584,7 +12584,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0086                                                   ; \ i  @cmdb.cmd = Command string
 0087                                                   ; / o  @outparm1 = Length of command
 0088               
-0089 69C6 C120  34         mov   @outparm1,tmp0        ; Get command line length
+0089 69C6 C120  34         mov   @outparm1,tmp0        ; Get command line
      69C8 A018     
 0090 69CA 0A84  32         sla   tmp0,8                ; Move to MSB
 0091 69CC D804  38         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string

@@ -23,7 +23,7 @@ edkey.action.cmdb.clear:
         ; Clear current command
         ;-------------------------------------------------------
         bl    @cmdb.cmd.clear       ; Clear current command
-        seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
+        bl    @cmdb.refresh_prompt  ; Draw command line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -86,7 +86,7 @@ edkey.action.cmdb.char:
                                     ; \ i  @cmdb.cmd = Command string
                                     ; / o  @outparm1 = Length of command
 
-        mov   @outparm1,tmp0        ; Get command line length 
+        mov   @outparm1,tmp0        ; Get command line 
         sla   tmp0,8                ; Move to MSB 
         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
 
