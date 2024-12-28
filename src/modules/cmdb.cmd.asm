@@ -37,8 +37,10 @@ cmdb.cmd.clear:
         ; Put cursor at beginning of line
         ;------------------------------------------------------
         mov   @cmdb.yxprompt,tmp0   
-        inc   tmp0                  ; Skip ">" prompt
-        mov   tmp0,@cmdb.cursor     ; Position cursor        
+        inct  tmp0                  ; Skip ">" prompt
+        mov   tmp0,@cmdb.cursor     ; Position cursor
+        andi  tmp0,>00ff
+        mov   tmp0,@cmdb.column        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

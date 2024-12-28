@@ -480,7 +480,6 @@ keymap_actions.cmdb:
 
         byte  key.uc.g, id.dialog.shortcuts
         data  dialog.goto
-
         ;-------------------------------------------------------
         ; Dialog: Goto
         ;-------------------------------------------------------

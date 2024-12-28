@@ -34,12 +34,12 @@ vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane
 vec.22  data  pane.cmdb.draw        ; Draw content in command
 vec.23  data  tibasic.buildstr      ; Build TI Basic session identifier string
-vec.24  data  cmdb.refresh_prompt   ; Refresh CMDB prompt field
-vec.25  data  cmdb.cmd.clear        ;
-vec.26  data  cmdb.cmd.getlength    ;
+vec.24  data  cmdb.refresh_prompt   ; Refresh command line
+vec.25  data  cmdb.cmd.clear        ; Clear command line
+vec.26  data  cmdb.cmd.getlength    ; Get length of command line
 vec.27  data  cmdb.cmd.preset       ;
 vec.28  data  cmdb.cmd.set          ;
-vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of line
+vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
 vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load

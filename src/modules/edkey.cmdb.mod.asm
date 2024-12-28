@@ -76,8 +76,6 @@ edkey.action.cmdb.char:
         mov   tmp0,tmp1             ; \ 
         sla   tmp1,8                ; / Move keycode to MSB 
 
-        seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
-
         li    tmp0,cmdb.cmd         ; Get beginning of command
         a     @cmdb.column,tmp0     ; Add current column to command
         movb  tmp1,*tmp0            ; Add character
@@ -87,12 +85,12 @@ edkey.action.cmdb.char:
         bl    @cmdb.cmd.getlength   ; Get length of current command
                                     ; \ i  @cmdb.cmd = Command string
                                     ; / o  @outparm1 = Length of command
-        ;-------------------------------------------------------
-        ; Addjust length
-        ;-------------------------------------------------------
-        mov   @outparm1,tmp0
-        sla   tmp0,8               ; Move to MSB 
-        movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
+
+        mov   @outparm1,tmp0        ; Get command line length 
+        sla   tmp0,8                ; Move to MSB 
+        movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
+
+        bl    @cmdb.refresh_prompt  ; Draw command line
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

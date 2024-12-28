@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241228-1649380
+0002               * BUILD: 241228-1842500
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12569,40 +12569,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0076 69AC C144  18         mov   tmp0,tmp1             ; \
 0077 69AE 0A85  32         sla   tmp1,8                ; / Move keycode to MSB
 0078               
-0079 69B0 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
-     69B2 A71A     
-0080               
-0081 69B4 0204  20         li    tmp0,cmdb.cmd         ; Get beginning of command
-     69B6 A72F     
-0082 69B8 A120  34         a     @cmdb.column,tmp0     ; Add current column to command
-     69BA A714     
-0083 69BC D505  30         movb  tmp1,*tmp0            ; Add character
-0084 69BE 05A0  34         inc   @cmdb.column          ; Next column
-     69C0 A714     
-0085 69C2 05A0  34         inc   @cmdb.cursor          ; Next column cursor
-     69C4 A70A     
-0086               
-0087 69C6 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
-     69C8 7884     
-0088                                                   ; \ i  @cmdb.cmd = Command string
-0089                                                   ; / o  @outparm1 = Length of command
-0090                       ;-------------------------------------------------------
-0091                       ; Addjust length
-0092                       ;-------------------------------------------------------
-0093 69CA C120  34         mov   @outparm1,tmp0
-     69CC A018     
-0094 69CE 0A84  32         sla   tmp0,8               ; Move to MSB
-0095 69D0 D804  38         movb  tmp0,@cmdb.cmdlen    ; Set length-prefix of command line string
-     69D2 A72E     
+0079 69B0 0204  20         li    tmp0,cmdb.cmd         ; Get beginning of command
+     69B2 A72F     
+0080 69B4 A120  34         a     @cmdb.column,tmp0     ; Add current column to command
+     69B6 A714     
+0081 69B8 D505  30         movb  tmp1,*tmp0            ; Add character
+0082 69BA 05A0  34         inc   @cmdb.column          ; Next column
+     69BC A714     
+0083 69BE 05A0  34         inc   @cmdb.cursor          ; Next column cursor
+     69C0 A70A     
+0084               
+0085 69C2 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
+     69C4 7884     
+0086                                                   ; \ i  @cmdb.cmd = Command string
+0087                                                   ; / o  @outparm1 = Length of command
+0088               
+0089 69C6 C120  34         mov   @outparm1,tmp0        ; Get command line length
+     69C8 A018     
+0090 69CA 0A84  32         sla   tmp0,8                ; Move to MSB
+0091 69CC D804  38         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
+     69CE A72E     
+0092               
+0093 69D0 06A0  32         bl    @cmdb.refresh_prompt  ; Draw command line
+     69D2 7870     
+0094                       ;-------------------------------------------------------
+0095                       ; Exit
 0096                       ;-------------------------------------------------------
-0097                       ; Exit
-0098                       ;-------------------------------------------------------
-0099               edkey.action.cmdb.char.exit:
-0100 69D4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0101 69D6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0102 69D8 0460  28         b     @edkey.keyscan.hook.debounce
+0097               edkey.action.cmdb.char.exit:
+0098 69D4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0099 69D6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0100 69D8 0460  28         b     @edkey.keyscan.hook.debounce
      69DA 2EC2     
-0103                                                   ; Back to editor main
+0101                                                   ; Back to editor main
                    < stevie_b1.asm
 0107                       copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
      **** ****     > edkey.cmdb.misc.asm
@@ -18180,110 +18178,109 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0480               
 0481 7E00 476F             byte  key.uc.g, id.dialog.shortcuts
 0482 7E02 77F8             data  dialog.goto
-0483               
-0484                       ;-------------------------------------------------------
-0485                       ; Dialog: Goto
-0486                       ;-------------------------------------------------------
-0487 7E04 0D14             byte  key.enter, id.dialog.goto
-0488 7E06 6F8E             data  edkey.action.cmdb.goto
-0489                       ;-------------------------------------------------------
-0490                       ; Dialog: find
-0491                       ;-------------------------------------------------------
-0492 7E08 0D1E             byte  key.enter, id.dialog.find
-0493 7E0A 714C             data  edkey.action.cmdb.find.search
-0494                       ;-------------------------------------------------------
-0495                       ; Dialog: Help
-0496                       ;-------------------------------------------------------
-0497 7E0C 2068             byte  key.space, id.dialog.help
-0498 7E0E 774A             data  dialog.help.next
-0499               
-0500 7E10 0F68             byte  key.fctn.9, id.dialog.help
-0501 7E12 6F38             data  edkey.action.cmdb.close.about
-0502               
-0503 7E14 0D68             byte  key.enter, id.dialog.help
-0504 7E16 6F38             data  edkey.action.cmdb.close.about
-0505                       ;-------------------------------------------------------
-0506                       ; Movement keys
-0507                       ;-------------------------------------------------------
-0508 7E18 0801             byte  key.fctn.s, pane.focus.cmdb
-0509 7E1A 6934             data  edkey.action.cmdb.left
-0510               
-0511 7E1C 0901             byte  key.fctn.d, pane.focus.cmdb
-0512 7E1E 6946             data  edkey.action.cmdb.right
-0513               
-0514 7E20 BF01             byte  key.fctn.h, pane.focus.cmdb
-0515 7E22 695E             data  edkey.action.cmdb.home
-0516               
-0517 7E24 C201             byte  key.fctn.l, pane.focus.cmdb
-0518 7E26 6972             data  edkey.action.cmdb.end
-0519                       ;-------------------------------------------------------
-0520                       ; Modifier keys
-0521                       ;-------------------------------------------------------
-0522 7E28 0701             byte  key.fctn.3, pane.focus.cmdb
-0523 7E2A 6988             data  edkey.action.cmdb.clear
-0524                       ;-------------------------------------------------------
-0525                       ; Other action keys
-0526                       ;-------------------------------------------------------
-0527 7E2C 0F01             byte  key.fctn.9, pane.focus.cmdb
-0528 7E2E 7820             data  dialog.menu
-0529               
-0530 7E30 0501             byte  key.fctn.plus, pane.focus.cmdb
-0531 7E32 675C             data  edkey.action.quit
-0532               
-0533 7E34 B101             byte  key.ctrl.1, pane.focus.cmdb
-0534 7E36 6D14             data  edkey.action.cmdb.file.directory.1
-0535               
-0536 7E38 B201             byte  key.ctrl.2, pane.focus.cmdb
-0537 7E3A 6D1E             data  edkey.action.cmdb.file.directory.2
-0538               
-0539 7E3C B301             byte  key.ctrl.3, pane.focus.cmdb
-0540 7E3E 6D2A             data  edkey.action.cmdb.file.directory.3
-0541               
-0542 7E40 B401             byte  key.ctrl.4, pane.focus.cmdb
-0543 7E42 6D36             data  edkey.action.cmdb.file.directory.4
-0544               
-0545 7E44 B501             byte  key.ctrl.5, pane.focus.cmdb
-0546 7E46 6D42             data  edkey.action.cmdb.file.directory.5
-0547               
-0548 7E48 B601             byte  key.ctrl.6, pane.focus.cmdb
-0549 7E4A 6D4E             data  edkey.action.cmdb.file.directory.6
-0550               
-0551 7E4C B701             byte  key.ctrl.7, pane.focus.cmdb
-0552 7E4E 6D5A             data  edkey.action.cmdb.file.directory.7
-0553               
-0554 7E50 9E01             byte  key.ctrl.8, pane.focus.cmdb
-0555 7E52 6D66             data  edkey.action.cmdb.file.directory.8
-0556               
-0557 7E54 9F01             byte  key.ctrl.9, pane.focus.cmdb
-0558 7E56 6D72             data  edkey.action.cmdb.file.directory.9
-0559               
-0560 7E58 9301             byte  key.ctrl.s, pane.focus.cmdb
-0561 7E5A 7006             data  edkey.action.filebrowser.prevcol
-0562               
-0563 7E5C 8401             byte  key.ctrl.d, pane.focus.cmdb
-0564 7E5E 704C             data  edkey.action.filebrowser.nextcol
-0565               
-0566 7E60 8501             byte  key.ctrl.e, pane.focus.cmdb
-0567 7E62 70A6             data  edkey.action.filebrowser.prevpage
-0568               
-0569 7E64 9801             byte  key.ctrl.x, pane.focus.cmdb
-0570 7E66 70F6             data  edkey.action.filebrowser.nextpage
-0571               
-0572 7E68 8101             byte  key.ctrl.a, pane.focus.cmdb
-0573 7E6A 6F30             data  edkey.action.cmdb.preset
-0574               
-0575 7E6C 8201             byte  key.ctrl.b, pane.focus.cmdb
-0576 7E6E 6F30             data  edkey.action.cmdb.preset
-0577               
-0578 7E70 8301             byte  key.ctrl.c, pane.focus.cmdb
-0579 7E72 6F30             data  edkey.action.cmdb.preset
-0580               
-0581 7E74 9A01             byte  key.ctrl.z, pane.focus.cmdb
-0582 7E76 7A04             data  pane.colorscheme.cycle
-0583                       ;------------------------------------------------------
-0584                       ; End of list
-0585                       ;-------------------------------------------------------
-0586 7E78 FFFF             data  EOL                           ; EOL
+0483                       ;-------------------------------------------------------
+0484                       ; Dialog: Goto
+0485                       ;-------------------------------------------------------
+0486 7E04 0D14             byte  key.enter, id.dialog.goto
+0487 7E06 6F8E             data  edkey.action.cmdb.goto
+0488                       ;-------------------------------------------------------
+0489                       ; Dialog: find
+0490                       ;-------------------------------------------------------
+0491 7E08 0D1E             byte  key.enter, id.dialog.find
+0492 7E0A 714C             data  edkey.action.cmdb.find.search
+0493                       ;-------------------------------------------------------
+0494                       ; Dialog: Help
+0495                       ;-------------------------------------------------------
+0496 7E0C 2068             byte  key.space, id.dialog.help
+0497 7E0E 774A             data  dialog.help.next
+0498               
+0499 7E10 0F68             byte  key.fctn.9, id.dialog.help
+0500 7E12 6F38             data  edkey.action.cmdb.close.about
+0501               
+0502 7E14 0D68             byte  key.enter, id.dialog.help
+0503 7E16 6F38             data  edkey.action.cmdb.close.about
+0504                       ;-------------------------------------------------------
+0505                       ; Movement keys
+0506                       ;-------------------------------------------------------
+0507 7E18 0801             byte  key.fctn.s, pane.focus.cmdb
+0508 7E1A 6934             data  edkey.action.cmdb.left
+0509               
+0510 7E1C 0901             byte  key.fctn.d, pane.focus.cmdb
+0511 7E1E 6946             data  edkey.action.cmdb.right
+0512               
+0513 7E20 BF01             byte  key.fctn.h, pane.focus.cmdb
+0514 7E22 695E             data  edkey.action.cmdb.home
+0515               
+0516 7E24 C201             byte  key.fctn.l, pane.focus.cmdb
+0517 7E26 6972             data  edkey.action.cmdb.end
+0518                       ;-------------------------------------------------------
+0519                       ; Modifier keys
+0520                       ;-------------------------------------------------------
+0521 7E28 0701             byte  key.fctn.3, pane.focus.cmdb
+0522 7E2A 6988             data  edkey.action.cmdb.clear
+0523                       ;-------------------------------------------------------
+0524                       ; Other action keys
+0525                       ;-------------------------------------------------------
+0526 7E2C 0F01             byte  key.fctn.9, pane.focus.cmdb
+0527 7E2E 7820             data  dialog.menu
+0528               
+0529 7E30 0501             byte  key.fctn.plus, pane.focus.cmdb
+0530 7E32 675C             data  edkey.action.quit
+0531               
+0532 7E34 B101             byte  key.ctrl.1, pane.focus.cmdb
+0533 7E36 6D14             data  edkey.action.cmdb.file.directory.1
+0534               
+0535 7E38 B201             byte  key.ctrl.2, pane.focus.cmdb
+0536 7E3A 6D1E             data  edkey.action.cmdb.file.directory.2
+0537               
+0538 7E3C B301             byte  key.ctrl.3, pane.focus.cmdb
+0539 7E3E 6D2A             data  edkey.action.cmdb.file.directory.3
+0540               
+0541 7E40 B401             byte  key.ctrl.4, pane.focus.cmdb
+0542 7E42 6D36             data  edkey.action.cmdb.file.directory.4
+0543               
+0544 7E44 B501             byte  key.ctrl.5, pane.focus.cmdb
+0545 7E46 6D42             data  edkey.action.cmdb.file.directory.5
+0546               
+0547 7E48 B601             byte  key.ctrl.6, pane.focus.cmdb
+0548 7E4A 6D4E             data  edkey.action.cmdb.file.directory.6
+0549               
+0550 7E4C B701             byte  key.ctrl.7, pane.focus.cmdb
+0551 7E4E 6D5A             data  edkey.action.cmdb.file.directory.7
+0552               
+0553 7E50 9E01             byte  key.ctrl.8, pane.focus.cmdb
+0554 7E52 6D66             data  edkey.action.cmdb.file.directory.8
+0555               
+0556 7E54 9F01             byte  key.ctrl.9, pane.focus.cmdb
+0557 7E56 6D72             data  edkey.action.cmdb.file.directory.9
+0558               
+0559 7E58 9301             byte  key.ctrl.s, pane.focus.cmdb
+0560 7E5A 7006             data  edkey.action.filebrowser.prevcol
+0561               
+0562 7E5C 8401             byte  key.ctrl.d, pane.focus.cmdb
+0563 7E5E 704C             data  edkey.action.filebrowser.nextcol
+0564               
+0565 7E60 8501             byte  key.ctrl.e, pane.focus.cmdb
+0566 7E62 70A6             data  edkey.action.filebrowser.prevpage
+0567               
+0568 7E64 9801             byte  key.ctrl.x, pane.focus.cmdb
+0569 7E66 70F6             data  edkey.action.filebrowser.nextpage
+0570               
+0571 7E68 8101             byte  key.ctrl.a, pane.focus.cmdb
+0572 7E6A 6F30             data  edkey.action.cmdb.preset
+0573               
+0574 7E6C 8201             byte  key.ctrl.b, pane.focus.cmdb
+0575 7E6E 6F30             data  edkey.action.cmdb.preset
+0576               
+0577 7E70 8301             byte  key.ctrl.c, pane.focus.cmdb
+0578 7E72 6F30             data  edkey.action.cmdb.preset
+0579               
+0580 7E74 9A01             byte  key.ctrl.z, pane.focus.cmdb
+0581 7E76 7A04             data  pane.colorscheme.cycle
+0582                       ;------------------------------------------------------
+0583                       ; End of list
+0584                       ;-------------------------------------------------------
+0585 7E78 FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
 0163                       ;-----------------------------------------------------------------------
 0164                       ; Bank full check
