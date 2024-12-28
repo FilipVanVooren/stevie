@@ -3,63 +3,90 @@
 
 *---------------------------------------------------------------
 * Cursor left
-*---------------------------------------------------------------
+********|*****|*********************|**************************
 edkey.action.cmdb.left:
-        mov   @cmdb.column,tmp0
-        jeq   !                     ; column=0 ? Skip further processing
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0       
         ;-------------------------------------------------------
-        ; Update
+        ; Initialisation
+        ;-------------------------------------------------------
+        mov   @cmdb.column,tmp0     ; \ Left boundary (X=3) reached 
+        ci    tmp0,3                ; /
+        jeq   !                     ; yes, skip further processing
+        ;-------------------------------------------------------
+        ; Update cursor position
         ;-------------------------------------------------------
         dec   @cmdb.column          ; Column-- in command buffer
         dec   @cmdb.cursor          ; Column-- CMDB cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @edkey.keyscan.hook.debounce; Back to editor main
+!       mov   *stack+,tmp0          ; Pop tmp0
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
 * Cursor right
-*---------------------------------------------------------------
+********|*****|*********************|**************************
 edkey.action.cmdb.right:
-        bl    @cmdb.cmd.getlength
-        c     @cmdb.column,@outparm1
-        jhe   !                     ; column > length line ? Skip processing
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Update
+        ; Initialisation
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.getlength   ; \ Get length of command line input
+                                    ; | i   @cmdb.cmd = Pointer to prompt
+                                    ; / o   @outparm1 = Length of prompt
+
+        mov   @outparm1,tmp0        ; \
+        inct  tmp0                  ; / Add offset (X+3) 
+        c     @cmdb.column,tmp0     ; Right boundary reached? 
+        jgt   !                     ; column > length line + offset? 
+        ;-------------------------------------------------------
+        ; Update cursor position
         ;-------------------------------------------------------
         inc   @cmdb.column          ; Column++ in command buffer
         inc   @cmdb.cursor          ; Column++ CMDB cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-!       b     @edkey.keyscan.hook.debounce; Back to editor main
-
+!       mov   *stack+,tmp0          ; Pop tmp0
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main
 
 
 *---------------------------------------------------------------
-* Cursor beginning of line
-*---------------------------------------------------------------
+* Cursor home
+********|*****|*********************|**************************
 edkey.action.cmdb.home:
-        clr   tmp0
-        mov   tmp0,@cmdb.column      ; First column
-        inc   tmp0
-        movb  @cmdb.cursor,tmp0      ; Get CMDB cursor position
-        mov   tmp0,@cmdb.cursor      ; Reposition CMDB cursor
-        
-        b     @edkey.keyscan.hook.debounce ; Back to editor main
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Update cursor position
+        ;-------------------------------------------------------
+        li    tmp0,3                ; X=3
+        mov   tmp0,@cmdb.column     ; First column
+        movb  @cmdb.cursor,tmp0     ; Get CMDB cursor Y position
+        mov   tmp0,@cmdb.cursor     ; Set new YX position for cursor
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0        
+        b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main
+
 
 *---------------------------------------------------------------
 * Cursor end of line
-*---------------------------------------------------------------
+********|*****|*********************|**************************
 edkey.action.cmdb.end:
-        movb  @cmdb.cmdlen,tmp0      ; Get length byte of current command
-        srl   tmp0,8                 ; Right justify
-        mov   tmp0,@cmdb.column      ; Save column position
-        inc   tmp0                   ; One time adjustment command prompt        
-        swpb  tmp0                   ; LSB TO MSB
-        movb  tmp0,@cmdb.cursor+1    ; Set cursor position
+        ;-------------------------------------------------------
+        ; Update cursor position
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.cursor_eol  ; Repositon cursor
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        
-        b     @edkey.keyscan.hook.debounce ; Back to editor main
+        b     @edkey.keyscan.hook.debounce 
+                                    ; Back to editor main
