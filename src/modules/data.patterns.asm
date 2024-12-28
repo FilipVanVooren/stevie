@@ -14,8 +14,8 @@ cursors:
 ;--------------------------------------------------------------
 patterns:
         data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
-        data  >367f,>3e1c,>0800,>0000 ; 02. Heart solid (left)
-        data  >80c0,>8000,>0000,>0000 ; 03. Heart solid (right)
+        data  >0000,>0000,>0000,>0000 ; 02. FREE
+        data  >0000,>0000,>0000,>0000 ; 03. FREE
 
 patterns.box:
         data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
@@ -57,5 +57,5 @@ low.digits:                           ; digits 1-4 (18-21)
 cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
 arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
 hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
-heart:  data  >3649,>2214,>0800,>0000 ; 29. Heart open (left)
-        data  >8040,>8000,>0000,>0000 ; 30. Heart open (right)
+        data  >0000,>0000,>0000,>0000 ; 29. FREE
+        data  >0000,>0000,>0000,>0000 ; 30. FREE

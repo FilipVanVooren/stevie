@@ -32,6 +32,9 @@ dialog.basic:
         li    tmp0,txt.head.basic
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
+        li    tmp0,txt.info.basic
+        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
+
         li    tmp0,pos.info.basic
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
 
@@ -66,7 +69,6 @@ dialog.basic.amonly:
         ;-------------------------------------------------------
 dialog.basic.done:
         mov   tmp0,@cmdb.pankeys    ; Save keylist in status line
-        bl    @tibasic.buildstr     ; Build session selection string
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

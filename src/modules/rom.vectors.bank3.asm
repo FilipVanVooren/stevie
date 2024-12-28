@@ -33,7 +33,7 @@ vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane
 vec.22  data  pane.cmdb.draw        ; Draw content in command
-vec.23  data  tibasic.buildstr      ; Build TI Basic session identifier string
+vec.23  data  cpu.crash             ;
 vec.24  data  cmdb.refresh_prompt   ; Refresh command line
 vec.25  data  cmdb.cmd.clear        ; Clear command line
 vec.26  data  cmdb.cmd.getlength    ; Get length of command line

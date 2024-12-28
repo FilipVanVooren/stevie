@@ -215,8 +215,8 @@ txt.head.basic     byte 12,4,1
                    text ' TI Basic '
 txt.info.basic     stri 'Session:  1   2   3  '
 pos.info.basic     byte 10,14,18,>ff
-txt.hint.basic2    stri 'Press SPACE to retrieve TI Basic program. Session: Current=',>02,>03,' Visited=',>1d,>1e
-txt.hint.basic     stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
+txt.hint.basic2    stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
+txt.hint.basic     stri 'Press SPACE to retrieve TI Basic program.'
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
                    even

@@ -272,8 +272,6 @@ tib.run.return.stevie:
         bl    @putvr                ; Turn on position based attributes
               data >3202            ; F18a VR50 (>32), bit 2
 
-        bl    @tibasic.buildstr     ; Build session identifier string
-
         clr   @parm1                ; Screen off while reloading color scheme
         clr   @parm2                ; Don't skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
