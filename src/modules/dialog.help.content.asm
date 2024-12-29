@@ -132,8 +132,8 @@ dialog.help.content.exit:
 dialog.help.data.pages:
         data  dialog.help.data.page1.left,16
         data  dialog.help.data.page1.right,13
-        data  dialog.help.data.page2.left,16
-        data  dialog.help.data.page2.right,15
+        data  dialog.help.data.page2.left,15
+        data  dialog.help.data.page2.right,17
 
 
 dialog.help.data.page1.left:
@@ -188,6 +188,7 @@ dialog.help.data.page2.left:
         stri 'Ctrl l   ^l   Delete end of line'
         stri 'Fctn 8        Insert line'
         stri 'Fctn .        Insert/Overwrite'
+        stri 'Ctrl c   ^c   Copy clipboard'
         stri ' '
         byte    35
         byte    1,1,1,1,1,1
@@ -198,11 +199,12 @@ dialog.help.data.page2.left:
         stri 'Ctrl s   ^s   Previous column'
         stri 'Ctrl d   ^d   Next column'
         stri 'Fctn e/x      Up/Down'
-        stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
-        stri 'SPACE         Parent directory'
 
 dialog.help.data.page2.right:
         stri '                            Page 2/2  '
+        stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
+        stri 'SPACE         Parent directory'
+        stri ''        
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
