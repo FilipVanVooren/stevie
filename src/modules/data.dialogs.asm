@@ -120,10 +120,9 @@ txt.keys.dir2      equ txt.keys.default2
 ;--------------------------------------------------------------
 txt.head.clipboard  byte 26,4,1
                     text ' Copy clipboard to line '
-txt.info.clipboard  stri 'Clipboard [1-5]?'
-txt.hint.clipboard  stri 'Press 1 to 5 to copy clipboard, press F7 to configure.'
-txt.keys.clipboard  stri 'F9-Back  F5-FMIO  F7-Configure'
-txt.keys.clipboard2 stri 'F9-Back  *F5-FMIO  F7-Configure'
+txt.info.clipboard  stri 'Clipboard [1-3]?'
+txt.hint.clipboard  stri 'Press 1 to 3 to copy clipboard file, F7 to configure.'
+txt.keys.clipboard  stri 'F9-Back  F7-Configure'
                     even
 
 ;--------------------------------------------------------------

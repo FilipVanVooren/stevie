@@ -45,10 +45,6 @@ fm.fastmode.off:
         c     tmp1,tmp2
         jeq   fm.fastmode.off.2
 
-        li    tmp2,id.dialog.clipboard
-        c     tmp1,tmp2
-        jeq   fm.fastmode.off.3
-
         li    tmp2,id.dialog.append
         c     tmp1,tmp2
         jeq   fm.fastmode.off.4
@@ -65,9 +61,6 @@ fm.fastmode.off.1:
         jmp   fm.fastmode.keylist
 fm.fastmode.off.2:
         li    tmp0,txt.keys.insert
-        jmp   fm.fastmode.keylist
-fm.fastmode.off.3:
-        li    tmp0,txt.keys.clipboard
         jmp   fm.fastmode.keylist
 fm.fastmode.off.4:
         li    tmp0,txt.keys.append
@@ -87,10 +80,6 @@ fm.fastmode.on:
         c     tmp1,tmp2
         jeq   fm.fastmode.on.2
 
-        li    tmp2,id.dialog.clipboard
-        c     tmp1,tmp2
-        jeq   fm.fastmode.on.3
-
         li    tmp2,id.dialog.append
         c     tmp1,tmp2
         jeq   fm.fastmode.on.4
@@ -107,9 +96,6 @@ fm.fastmode.on.1:
         jmp   fm.fastmode.keylist
 fm.fastmode.on.2:
         li    tmp0,txt.keys.insert2
-        jmp   fm.fastmode.keylist
-fm.fastmode.on.3:
-        li    tmp0,txt.keys.clipboard2
         jmp   fm.fastmode.keylist
 fm.fastmode.on.4:                
         li    tmp0,txt.keys.append2

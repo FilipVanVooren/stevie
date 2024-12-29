@@ -318,9 +318,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.clipboard
-        data  edkey.action.cmdb.fastmode.toggle
-
         byte  key.fctn.7, id.dialog.clipboard
         data  dialog.clipdev
 
