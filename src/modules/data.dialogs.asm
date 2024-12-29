@@ -271,7 +271,7 @@ txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 txt.head.find      byte 8,4,1
                    text ' Find '
-txt.hint.find      stri 'Press F5 to toggle case-sensitive search on/off.'
+txt.hint.find      stri ''
                    even                   
 txt.hint.find2     stri 'Enter search string.'
                    even

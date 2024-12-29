@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241229-1823240
+0002               * BUILD: 241229-1825380
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11971,12 +11971,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6898 A724     
 0045               
 0046 689A 0204  20         li    tmp0,txt.hint.find2
-     689C 7A3A     
+     689C 7A0C     
 0047 689E C804  38         mov   tmp0,@cmdb.panhint2   ; Show toggle
      68A0 A726     
 0048               
 0049 68A2 0204  20         li    tmp0,txt.keys.find
-     68A4 7A50     
+     68A4 7A22     
 0050 68A6 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      68A8 A72A     
 0051               
@@ -13024,7 +13024,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025 6CB8 C646  30         mov   tmp2,*stack           ; Push tmp2
 0026               
 0027 6CBA 0204  20         li    tmp0,cmdb.cmd.preset.data
-     6CBC 7A74     
+     6CBC 7A46     
 0028                                                   ; Load table
 0029 6CBE C1A0  34         mov   @keycode1,tmp2        ; Get keyboard code
      6CC0 A028     
@@ -14881,13 +14881,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      75A4 20       
 0172                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 75A5   32                        text '241229-1823240'
+0001 75A5   32                        text '241229-1825380'
      75A6 3431     
      75A8 3232     
      75AA 392D     
      75AC 3138     
-     75AE 3233     
-     75B0 3234     
+     75AE 3235     
+     75B0 3338     
      75B2 30       
                    < data.dialogs.asm
 0173 75B3   20                        text ' - Stevie 1.6.9  - (c)2018-2025 Filip Van Vooren'
@@ -15518,62 +15518,39 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7A04 4669     
      7A06 6E64     
      7A08 20       
-0274 7A09   30     txt.hint.find      stri 'Press F5 to toggle case-sensitive search on/off.'
-     7A0A 5072     
-     7A0C 6573     
-     7A0E 7320     
-     7A10 4635     
-     7A12 2074     
-     7A14 6F20     
-     7A16 746F     
-     7A18 6767     
-     7A1A 6C65     
-     7A1C 2063     
-     7A1E 6173     
-     7A20 652D     
-     7A22 7365     
-     7A24 6E73     
-     7A26 6974     
-     7A28 6976     
-     7A2A 6520     
-     7A2C 7365     
-     7A2E 6172     
-     7A30 6368     
-     7A32 206F     
-     7A34 6E2F     
-     7A36 6F66     
-     7A38 662E     
+0274 7A09   01     txt.hint.find      stri ''
+     7A0A 00       
 0275                                  even
-0276 7A3A 1445     txt.hint.find2     stri 'Enter search string.'
-     7A3C 6E74     
-     7A3E 6572     
-     7A40 2073     
-     7A42 6561     
-     7A44 7263     
-     7A46 6820     
-     7A48 7374     
-     7A4A 7269     
-     7A4C 6E67     
-     7A4E 2E       
+0276 7A0C 1445     txt.hint.find2     stri 'Enter search string.'
+     7A0E 6E74     
+     7A10 6572     
+     7A12 2073     
+     7A14 6561     
+     7A16 7263     
+     7A18 6820     
+     7A1A 7374     
+     7A1C 7269     
+     7A1E 6E67     
+     7A20 2E       
 0277                                  even
-0278 7A50 2246     txt.keys.find      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
-     7A52 392D     
-     7A54 4261     
-     7A56 636B     
-     7A58 2020     
-     7A5A 4633     
-     7A5C 2D43     
-     7A5E 6C65     
-     7A60 6172     
-     7A62 2020     
-     7A64 4648     
-     7A66 2D48     
-     7A68 6F6D     
-     7A6A 6520     
-     7A6C 2046     
-     7A6E 4C2D     
-     7A70 454F     
-     7A72 4C       
+0278 7A22 2246     txt.keys.find      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+     7A24 392D     
+     7A26 4261     
+     7A28 636B     
+     7A2A 2020     
+     7A2C 4633     
+     7A2E 2D43     
+     7A30 6C65     
+     7A32 6172     
+     7A34 2020     
+     7A36 4648     
+     7A38 2D48     
+     7A3A 6F6D     
+     7A3C 6520     
+     7A3E 2046     
+     7A40 4C2D     
+     7A42 454F     
+     7A44 4C       
 0279                                  even
                    < stevie_b3.asm
 0119                       copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
@@ -15588,16 +15565,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008                       ;-------------------------------------------------------
 0009                       ; Dialog "Configure clipboard"
 0010                       ;-------------------------------------------------------
-0011 7A74 0013             data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
-     7A76 0081     
-     7A78 3DD1     
-0012 7A7A 0013             data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
-     7A7C 0082     
-     7A7E 3DDC     
+0011 7A46 0013             data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
+     7A48 0081     
+     7A4A 3DD1     
+0012 7A4C 0013             data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
+     7A4E 0082     
+     7A50 3DDC     
 0013                       ;-------------------------------------------------------
 0014                       ; End of list
 0015                       ;-------------------------------------------------------
-0016 7A80 FFFF             data  EOL                   ; EOL
+0016 7A52 FFFF             data  EOL                   ; EOL
                    < stevie_b3.asm
 0120                       ;-----------------------------------------------------------------------
 0121                       ; Bank full check
@@ -15906,7 +15883,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.CMD.GETLENGTH.. >6C22 :     
     CMDB.CMD.GETLENGTH.EXIT >6C34 :     
     CMDB.CMD.PRESET..... >6CAA :     
-    CMDB.CMD.PRESET.DATA >7A74 :     
+    CMDB.CMD.PRESET.DATA >7A46 :     
     CMDB.CMD.PRESET.EXIT >6CE6 :     
     CMDB.CMD.PRESET.LOOP >6CC2 :     
     CMDB.CMD.PRESET.NEXT >6CDA :     
@@ -17101,7 +17078,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.HINT.FILE....... >76C8 :     
     TXT.HINT.FILEPICKER. >715C :     
     TXT.HINT.FIND....... >7A09 :     
-    TXT.HINT.FIND2...... >7A3A :     
+    TXT.HINT.FIND2...... >7A0C :     
     TXT.HINT.FONT....... >7964 :     
     TXT.HINT.GOTO....... >7428 :     
     TXT.HINT.INSERT..... >715C :     
@@ -17155,7 +17132,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.KEYS.DIR........ >70A4 :     
     TXT.KEYS.DIR2....... >70DE :     
     TXT.KEYS.FILE....... >76CA :     
-    TXT.KEYS.FIND....... >7A50 :     
+    TXT.KEYS.FIND....... >7A22 :     
     TXT.KEYS.FONT....... >798E :     
     TXT.KEYS.GOTO....... >7465 :     
     TXT.KEYS.INSERT..... >70A4 :     
