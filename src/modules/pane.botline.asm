@@ -103,6 +103,11 @@ pane.botline.show_keys.defaultd:
               byte pane.botrow,0
               data txt.keys.defaultd
                                     ; Show defaults + TI Basic + Matches
+
+        bl    @hchar
+              byte pane.botrow,58,32,6
+              data EOL              ; Remove any leftover junk after key markers              
+
         jmp   pane.botline.show_keys.setbasic
         ;------------------------------------------------------
         ; Default Keys, TI Basic Session ID
@@ -112,6 +117,10 @@ pane.botline.show_keys.defaultb
               byte pane.botrow,0
               data txt.keys.defaultb
                                     ; Show defaults + TI Basic
+
+        bl    @hchar
+              byte pane.botrow,28,32,36
+              data EOL              ; Remove any leftover junk after key markers              
         ;------------------------------------------------------
         ; Add TI Basic session ID to string
         ;------------------------------------------------------
@@ -129,7 +138,7 @@ pane.botline.show_keys.setbasic:
 
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
-        ; Show default keys
+        ; Show default keys?
         ;------------------------------------------------------
 pane.botline.show_keys.default:
         abs   @edb.srch.matches     ; Do we have any search matches?
@@ -143,11 +152,10 @@ pane.botline.show_keys.default:
 
         bl    @hchar
               byte pane.botrow,43,32,21
-              data EOL
-        
+              data EOL              ; Remove any leftover junk after key markers        
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
-        ; Default keys
+        ; Default keys only
         ;------------------------------------------------------
 !       bl    @putat
               byte pane.botrow,0
@@ -155,7 +163,7 @@ pane.botline.show_keys.default:
 
         bl    @hchar
               byte pane.botrow,18,32,42
-              data EOL
+              data EOL              ; Remove any leftover junk after key markers
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
