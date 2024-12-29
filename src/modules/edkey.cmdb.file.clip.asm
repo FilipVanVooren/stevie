@@ -16,13 +16,6 @@ edkey.action.cmdb.clip.3
         li    tmp0,clip3
         jmp   edkey.action.cmdb.clip
 
-edkey.action.cmdb.clip.4
-        li    tmp0,clip4
-        jmp   edkey.action.cmdb.clip
-
-edkey.action.cmdb.clip.5
-        li    tmp0,clip5
-        jmp   edkey.action.cmdb.clip
 
 
 edkey.action.cmdb.clip:

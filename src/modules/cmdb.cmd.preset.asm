@@ -47,6 +47,8 @@ cmdb.cmd.preset.loop:
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
 
+        bl    @cmdb.cmd.cursor_eol  ; Cursor at EOL
+
         jmp   cmdb.cmd.preset.exit  ; Exit
         ;-------------------------------------------------------
         ; Dialog does not match, prepare for next entry

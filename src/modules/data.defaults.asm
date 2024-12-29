@@ -6,6 +6,8 @@
 ********|*****|*********************|**************************
 def.printer.fname   stri 'PI.PIO'
 def.clip.fname.a    stri 'DSK1.CLIP'
-def.clip.fname.b    stri 'DSK6.CLIP'
-def.clip.fname.c    stri 'TIPI.CLIP'
+                    even
+def.clip.fname.b    stri 'TIPI.CLIP'
+                    even
 def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+                    even

@@ -10,7 +10,6 @@ cmdb.cmd.preset.data:
         ;-------------------------------------------------------
         data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
         data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
-        data  id.dialog.opt.clip, key.ctrl.c, def.clip.fname.C
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------

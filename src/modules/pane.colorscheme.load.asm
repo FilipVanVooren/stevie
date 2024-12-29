@@ -310,7 +310,6 @@ pane.colorscheme.cursorcolor.cmdb:
 pane.colorscheme.cursorcolor.fb:
         andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
         sla   tmp4,8                ; Move to MSB
-
 !       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
         movb  tmp4,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------

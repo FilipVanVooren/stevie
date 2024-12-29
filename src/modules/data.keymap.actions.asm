@@ -332,12 +332,6 @@ keymap_actions.cmdb:
 
         byte  key.num.3, id.dialog.clipboard
         data  edkey.action.cmdb.clip.3
-
-        byte  key.num.4, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.4
-
-        byte  key.num.5, id.dialog.clipboard
-        data  edkey.action.cmdb.clip.5
         ;-------------------------------------------------------
         ; Dialog: Catalog drive/directory
         ;-------------------------------------------------------
@@ -572,9 +566,6 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.preset
 
         byte  key.ctrl.b, pane.focus.cmdb
-        data  edkey.action.cmdb.preset
-
-        byte  key.ctrl.c, pane.focus.cmdb
         data  edkey.action.cmdb.preset
 
         byte  key.ctrl.z, pane.focus.cmdb

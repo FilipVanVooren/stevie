@@ -88,9 +88,9 @@ txt.m1             stri 'M1='
                    even
 txt.m2             stri 'M2='
                    even
-txt.keys.default   stri 'F9-Menu  ^H-Help                                       '
+txt.keys.default   stri 'F9-Menu  ^H-Help'
                    even
-txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic#                            '
+txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic# '
                    even
 txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
                    even
@@ -128,7 +128,7 @@ txt.io.nofile      stri 'No filename specified.'
                    even
 txt.memfull.load   stri 'Index full.'
                    even
-txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range.'
+txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range'
                    even
 ;--------------------------------------------------------------
 ; Strings for command buffer

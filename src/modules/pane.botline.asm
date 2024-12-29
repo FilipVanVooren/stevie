@@ -140,6 +140,11 @@ pane.botline.show_keys.default:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.defaultc  ; Show default keys, including search keys
+
+        bl    @hchar
+              byte pane.botrow,43,32,21
+              data EOL
+        
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
         ; Default keys
@@ -147,6 +152,10 @@ pane.botline.show_keys.default:
 !       bl    @putat
               byte pane.botrow,0
               data txt.keys.default ; Show default keys only
+
+        bl    @hchar
+              byte pane.botrow,18,32,42
+              data EOL
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
