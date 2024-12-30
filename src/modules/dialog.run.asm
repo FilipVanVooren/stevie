@@ -45,7 +45,8 @@ dialog.run.setup:
         li    tmp0,txt.head.run
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        clr   @cmdb.paninfo         ; No info message, do input prompt
+        li    tmp0,txt.info.run
+        mov   tmp0,@cmdb.paninfo    ; Message 'Feature not yet available'
         clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.run
@@ -87,19 +88,19 @@ dialog.run.set.filename1:
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
-        jmp   dialog.run.cursor    ; Set cursor shape
+        jmp   dialog.run.cursor     ; Set cursor shape
         ;-------------------------------------------------------
         ; Set filename (2) 
         ;-------------------------------------------------------
 dialog.run.set.filename2:
         li    tmp0,edb.filename     ; Set filename
-        jeq   dialog.run.clearcmd  ; No filename to set
+        jeq   dialog.run.clearcmd   ; No filename to set
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
-        jmp   dialog.run.cursor    ; Set cursor shape
+        jmp   dialog.run.cursor     ; Set cursor shape
         ;------------------------------------------------------
         ; Clear filename
         ;------------------------------------------------------
@@ -111,13 +112,15 @@ dialog.run.clearcmd:
         ; Set cursor shape
         ;-------------------------------------------------------
 dialog.run.cursor:
-        bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2
+        bl      @pane.cursor.hide   ; No cursor at this time
+
+        ; bl    @pane.cursor.blink  ; Show cursor
+        ; mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------
-        bl    @pane.filebrowser     ; Show file browser
+        ; bl    @pane.filebrowser   ; Show file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

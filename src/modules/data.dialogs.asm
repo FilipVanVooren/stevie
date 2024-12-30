@@ -60,10 +60,11 @@ txt.keys.load2     equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
-; Dialog "run file"
+; Dialog "Run program image (EA5)"
 ;--------------------------------------------------------------
 txt.head.run       byte 27,4,1
                    text ' Run program image (EA5) '
+txt.info.run       stri 'Feature not yet available.'
 txt.hint.run       equ  txt.hint.filepicker
 txt.hint.run2      stri 'Enter filename or pick file from catalog.'
 txt.keys.run       equ txt.keys.default1

@@ -31,7 +31,7 @@ dialog.help.content:
         ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,16 * 80
+              data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 160
                                     ; Clear screen
 
         ;

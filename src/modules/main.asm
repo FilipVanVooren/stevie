@@ -32,7 +32,6 @@ main.stevie:
 main.continue:
         ; data  c99_ovrd            ; classic99: Put CPU in overdrive mode
 
-
         ;------------------------------------------------------
         ; Setup F18A VDP
         ;------------------------------------------------------

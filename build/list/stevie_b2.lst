@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241230-1842340
+0002               * BUILD: 241230-1927260
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -201,30 +201,30 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032      000B     id.dialog.insert          equ  11      ; "Insert file"
 0033      000C     id.dialog.append          equ  12      ; "Append file"
 0034      000D     id.dialog.cat             equ  13      ; "Catalog"
-0035      000E     id.dialog.run             equ  14      ; "Run file"
-0036      000F     id.dialog.save            equ  15      ; "Save file"
-0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
-0038      0011     id.dialog.print           equ  17      ; "Print file"
-0039      0012     id.dialog.printblock      equ  18      ; "Print block"
-0040      0013     id.dialog.opt.clip        equ  19      ; "Configure clipboard"
-0041      0014     id.dialog.goto            equ  20      ; "Goto"
-0042      001E     id.dialog.find            equ  30      ; "Find"
-0043               ;-----------------------------------------------------------------
-0044               ;   Dialog ID's >= 100 indicate that command prompt should be
-0045               ;   hidden and no characters added to CMDB keyboard buffer.
-0046               ;-----------------------------------------------------------------
-0047      0064     id.dialog.menu            equ  100     ; "Main Menu"
-0048      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
-0049      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
-0050      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
-0051      0068     id.dialog.help            equ  104     ; "About"
-0052      0069     id.dialog.file            equ  105     ; "File"
-0053      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
-0054      006B     id.dialog.basic           equ  107     ; "TI Basic"
-0055      006C     id.dialog.opt             equ  108     ; "Configure"
-0056      006D     id.dialog.editor          equ  109     ; "Configure editor"
-0057      006E     id.dialog.font            equ  110     ; "Configure font"
-0058      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
+0035      000F     id.dialog.save            equ  15      ; "Save file"
+0036      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
+0037      0011     id.dialog.print           equ  17      ; "Print file"
+0038      0012     id.dialog.printblock      equ  18      ; "Print block"
+0039      0013     id.dialog.opt.clip        equ  19      ; "Configure clipboard"
+0040      0014     id.dialog.goto            equ  20      ; "Goto"
+0041      001E     id.dialog.find            equ  30      ; "Find"
+0042               ;-----------------------------------------------------------------
+0043               ;   Dialog ID's >= 100 indicate that command prompt should be
+0044               ;   hidden and no characters added to CMDB keyboard buffer.
+0045               ;-----------------------------------------------------------------
+0046      0064     id.dialog.menu            equ  100     ; "Main Menu"
+0047      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
+0048      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
+0049      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
+0050      0068     id.dialog.help            equ  104     ; "About"
+0051      0069     id.dialog.file            equ  105     ; "File"
+0052      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
+0053      006B     id.dialog.basic           equ  107     ; "TI Basic"
+0054      006C     id.dialog.opt             equ  108     ; "Configure"
+0055      006D     id.dialog.editor          equ  109     ; "Configure editor"
+0056      006E     id.dialog.font            equ  110     ; "Configure font"
+0057      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
+0058      0072     id.dialog.run             equ  114     ; "Run program image (EA5)"
 0059      0078     id.dialog.find.browse     equ  120     ; "Find - Search results"
 0060               ;-----------------------------------------------------------------
 0061               ; Suffix characters for clipboards
@@ -16578,7 +16578,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.OPT.CLIP.. >0013 :     
     ID.DIALOG.PRINT..... >0011 :     
     ID.DIALOG.PRINTBLOCK >0012 :     
-    ID.DIALOG.RUN....... >000E :     
+    ID.DIALOG.RUN....... >0072 :     
     ID.DIALOG.SAVE...... >000F :     
     ID.DIALOG.SAVEBLOCK. >0010 :     
     ID.DIALOG.SHORTCUTS. >006F :     

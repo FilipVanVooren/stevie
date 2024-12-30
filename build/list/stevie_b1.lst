@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241230-1842340
+0002               * BUILD: 241230-1927260
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -204,30 +204,30 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032      000B     id.dialog.insert          equ  11      ; "Insert file"
 0033      000C     id.dialog.append          equ  12      ; "Append file"
 0034      000D     id.dialog.cat             equ  13      ; "Catalog"
-0035      000E     id.dialog.run             equ  14      ; "Run file"
-0036      000F     id.dialog.save            equ  15      ; "Save file"
-0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
-0038      0011     id.dialog.print           equ  17      ; "Print file"
-0039      0012     id.dialog.printblock      equ  18      ; "Print block"
-0040      0013     id.dialog.opt.clip        equ  19      ; "Configure clipboard"
-0041      0014     id.dialog.goto            equ  20      ; "Goto"
-0042      001E     id.dialog.find            equ  30      ; "Find"
-0043               ;-----------------------------------------------------------------
-0044               ;   Dialog ID's >= 100 indicate that command prompt should be
-0045               ;   hidden and no characters added to CMDB keyboard buffer.
-0046               ;-----------------------------------------------------------------
-0047      0064     id.dialog.menu            equ  100     ; "Main Menu"
-0048      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
-0049      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
-0050      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
-0051      0068     id.dialog.help            equ  104     ; "About"
-0052      0069     id.dialog.file            equ  105     ; "File"
-0053      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
-0054      006B     id.dialog.basic           equ  107     ; "TI Basic"
-0055      006C     id.dialog.opt             equ  108     ; "Configure"
-0056      006D     id.dialog.editor          equ  109     ; "Configure editor"
-0057      006E     id.dialog.font            equ  110     ; "Configure font"
-0058      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
+0035      000F     id.dialog.save            equ  15      ; "Save file"
+0036      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
+0037      0011     id.dialog.print           equ  17      ; "Print file"
+0038      0012     id.dialog.printblock      equ  18      ; "Print block"
+0039      0013     id.dialog.opt.clip        equ  19      ; "Configure clipboard"
+0040      0014     id.dialog.goto            equ  20      ; "Goto"
+0041      001E     id.dialog.find            equ  30      ; "Find"
+0042               ;-----------------------------------------------------------------
+0043               ;   Dialog ID's >= 100 indicate that command prompt should be
+0044               ;   hidden and no characters added to CMDB keyboard buffer.
+0045               ;-----------------------------------------------------------------
+0046      0064     id.dialog.menu            equ  100     ; "Main Menu"
+0047      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
+0048      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
+0049      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
+0050      0068     id.dialog.help            equ  104     ; "About"
+0051      0069     id.dialog.file            equ  105     ; "File"
+0052      006A     id.dialog.cartridge       equ  106     ; "Cartridge"
+0053      006B     id.dialog.basic           equ  107     ; "TI Basic"
+0054      006C     id.dialog.opt             equ  108     ; "Configure"
+0055      006D     id.dialog.editor          equ  109     ; "Configure editor"
+0056      006E     id.dialog.font            equ  110     ; "Configure font"
+0057      006F     id.dialog.shortcuts       equ  111     ; "Shortcuts"
+0058      0072     id.dialog.run             equ  114     ; "Run program image (EA5)"
 0059      0078     id.dialog.find.browse     equ  120     ; "Find - Search results"
 0060               ;-----------------------------------------------------------------
 0061               ; Suffix characters for clipboards
@@ -9864,162 +9864,161 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032               main.continue:
 0033                       ; data  c99_ovrd            ; classic99: Put CPU in overdrive mode
 0034               
-0035               
-0036                       ;------------------------------------------------------
-0037                       ; Setup F18A VDP
-0038                       ;------------------------------------------------------
-0039 6052 06A0  32         bl    @mute                 ; Turn sound generators off
+0035                       ;------------------------------------------------------
+0036                       ; Setup F18A VDP
+0037                       ;------------------------------------------------------
+0038 6052 06A0  32         bl    @mute                 ; Turn sound generators off
      6054 28AA     
-0040 6056 06A0  32         bl    @scroff               ; Turn screen off
+0039 6056 06A0  32         bl    @scroff               ; Turn screen off
      6058 26E6     
-0041               
-0042 605A 06A0  32         bl    @f18unl               ; Unlock the F18a
+0040               
+0041 605A 06A0  32         bl    @f18unl               ; Unlock the F18a
      605C 278A     
-0043               
-0045               
-0046 605E 06A0  32         bl    @putvr                ; Turn on 30 rows mode.
+0042               
+0044               
+0045 605E 06A0  32         bl    @putvr                ; Turn on 30 rows mode.
      6060 2332     
-0047 6062 3140                   data >3140            ; F18a VR49 (>31), bit 40
-0048               
-0050               
-0051 6064 06A0  32         bl    @putvr                ; Turn on position based attributes
+0046 6062 3140                   data >3140            ; F18a VR49 (>31), bit 40
+0047               
+0049               
+0050 6064 06A0  32         bl    @putvr                ; Turn on position based attributes
      6066 2332     
-0052 6068 3202                   data >3202            ; F18a VR50 (>32), bit 2
-0053                       ;------------------------------------------------------
-0054                       ; Clear VDP memory >0000 - >0fff
-0055                       ;------------------------------------------------------
-0056 606A 06A0  32         bl    @filv
+0051 6068 3202                   data >3202            ; F18a VR50 (>32), bit 2
+0052                       ;------------------------------------------------------
+0053                       ; Clear VDP memory >0000 - >0fff
+0054                       ;------------------------------------------------------
+0055 606A 06A0  32         bl    @filv
      606C 228E     
-0057 606E 0000                   data >0000,32,>0960   ; Clear screen area
+0056 606E 0000                   data >0000,32,>0960   ; Clear screen area
      6070 0020     
      6072 0960     
-0058               
-0059 6074 06A0  32         bl    @filv
+0057               
+0058 6074 06A0  32         bl    @filv
      6076 228E     
-0060 6078 0960                   data >0960,00,>06a0   ; Clear area for record buffer + PAB, etc.
+0059 6078 0960                   data >0960,00,>06a0   ; Clear area for record buffer + PAB, etc.
      607A 0000     
      607C 06A0     
-0061                       ;------------------------------------------------------
-0062                       ; Initialize high memory expansion
-0063                       ;------------------------------------------------------
-0064 607E 06A0  32         bl    @film
+0060                       ;------------------------------------------------------
+0061                       ; Initialize high memory expansion
+0062                       ;------------------------------------------------------
+0063 607E 06A0  32         bl    @film
      6080 2236     
-0065 6082 A000                   data >a000,00,>4f00   ; Clear a000-eeef
+0064 6082 A000                   data >a000,00,>4f00   ; Clear a000-eeef
      6084 0000     
      6086 4F00     
-0066                       ;------------------------------------------------------
-0067                       ; Setup cursor, screen, etc.
-0068                       ;------------------------------------------------------
-0069 6088 06A0  32         bl    @smag1x               ; Sprite magnification 1x
+0065                       ;------------------------------------------------------
+0066                       ; Setup cursor, screen, etc.
+0067                       ;------------------------------------------------------
+0068 6088 06A0  32         bl    @smag1x               ; Sprite magnification 1x
      608A 2706     
-0070 608C 06A0  32         bl    @s8x8                 ; Small sprite
+0069 608C 06A0  32         bl    @s8x8                 ; Small sprite
      608E 2716     
-0071               
-0072 6090 06A0  32         bl    @cpym2m
+0070               
+0071 6090 06A0  32         bl    @cpym2m
      6092 253A     
-0073 6094 3926                   data romsat,ramsat,14 ; Load sprite SAT
+0072 6094 3926                   data romsat,ramsat,14 ; Load sprite SAT
      6096 A056     
      6098 000E     
-0074               
-0075 609A C820  54         mov   @romsat+2,@tv.curshape
+0073               
+0074 609A C820  54         mov   @romsat+2,@tv.curshape
      609C 3928     
      609E A214     
-0076                                                   ; Save cursor shape & color
-0077               
-0078 60A0 06A0  32         bl    @vdp.dump.patterns    ; Dump sprite and character patterns to VDP
+0075                                                   ; Save cursor shape & color
+0076               
+0077 60A0 06A0  32         bl    @vdp.dump.patterns    ; Dump sprite and character patterns to VDP
      60A2 7A88     
-0079               
-0080 60A4 04E0  34         clr   @parm1                ; Pick font 0
+0078               
+0079 60A4 04E0  34         clr   @parm1                ; Pick font 0
      60A6 A006     
-0081 60A8 06A0  32         bl    @tv.set.font          ; Set current font (dumps font to VDP)
+0080 60A8 06A0  32         bl    @tv.set.font          ; Set current font (dumps font to VDP)
      60AA 7AA6     
-0082                                                   ; \ i  @parm1       = Font index (0-5)
-0083                                                   ; / o  @tv.font.ptr = Pointer to font
-0084               *--------------------------------------------------------------
-0085               * Initialize
-0086               *--------------------------------------------------------------
-0087 60AC 06A0  32         bl    @mem.sams.setup.stevie
+0081                                                   ; \ i  @parm1       = Font index (0-5)
+0082                                                   ; / o  @tv.font.ptr = Pointer to font
+0083               *--------------------------------------------------------------
+0084               * Initialize
+0085               *--------------------------------------------------------------
+0086 60AC 06A0  32         bl    @mem.sams.setup.stevie
      60AE 6110     
-0088                                                   ; Load SAMS pages for stevie
-0089               
-0090 60B0 06A0  32         bl    @tv.init              ; Initialize editor configuration
+0087                                                   ; Load SAMS pages for stevie
+0088               
+0089 60B0 06A0  32         bl    @tv.init              ; Initialize editor configuration
      60B2 33D8     
-0091 60B4 06A0  32         bl    @tv.reset             ; Reset editor
+0090 60B4 06A0  32         bl    @tv.reset             ; Reset editor
      60B6 7B1E     
-0092               
-0093 60B8 06A0  32         bl    @dialog               ; Setup memory for dialogs stringa
+0091               
+0092 60B8 06A0  32         bl    @dialog               ; Setup memory for dialogs stringa
      60BA 78BC     
-0094                       ;------------------------------------------------------
-0095                       ; Load colorscheme and turn on screen
-0096                       ;------------------------------------------------------
-0097 60BC 04E0  34         clr   @parm1                ; Screen off while reloading color scheme
+0093                       ;------------------------------------------------------
+0094                       ; Load colorscheme and turn on screen
+0095                       ;------------------------------------------------------
+0096 60BC 04E0  34         clr   @parm1                ; Screen off while reloading color scheme
      60BE A006     
-0098 60C0 04E0  34         clr   @parm2                ; Don't skip colorizing marked lines
+0097 60C0 04E0  34         clr   @parm2                ; Don't skip colorizing marked lines
      60C2 A008     
-0099 60C4 04E0  34         clr   @parm3                ; Colorize all panes
+0098 60C4 04E0  34         clr   @parm3                ; Colorize all panes
      60C6 A00A     
-0100               
-0101 60C8 06A0  32         bl    @pane.colorscheme.load
+0099               
+0100 60C8 06A0  32         bl    @pane.colorscheme.load
      60CA 731C     
-0102                                                   ; Reload color scheme
-0103                                                   ; \ i  @parm1 = Skip screen off if >FFFF
-0104                                                   ; | i  @parm2 = Skip colorizing marked lines
-0105                                                   ; |             if >FFFF
-0106                                                   ; | i  @parm3 = Only colorize CMDB pane
-0107                                                   ; /             if >FFFF
-0108               
-0109                       ;-------------------------------------------------------
-0110                       ; Setup editor tasks
-0111                       ;-------------------------------------------------------
-0112 60CC 06A0  32         bl    @at
+0101                                                   ; Reload color scheme
+0102                                                   ; \ i  @parm1 = Skip screen off if >FFFF
+0103                                                   ; | i  @parm2 = Skip colorizing marked lines
+0104                                                   ; |             if >FFFF
+0105                                                   ; | i  @parm3 = Only colorize CMDB pane
+0106                                                   ; /             if >FFFF
+0107               
+0108                       ;-------------------------------------------------------
+0109                       ; Setup editor tasks
+0110                       ;-------------------------------------------------------
+0111 60CC 06A0  32         bl    @at
      60CE 2726     
-0113 60D0 0000                   data  >0000           ; Cursor YX position = >0000
-0114               
-0115 60D2 0204  20         li    tmp0,timers           ; \ Set pointer to timers table
+0112 60D0 0000                   data  >0000           ; Cursor YX position = >0000
+0113               
+0114 60D2 0204  20         li    tmp0,timers           ; \ Set pointer to timers table
      60D4 A064     
-0116 60D6 C804  30         mov   tmp0,@wtitab          ; /
+0115 60D6 C804  30         mov   tmp0,@wtitab          ; /
      60D8 832C     
-0117               
-0119               
-0120 60DA 06A0  32         bl    @mkslot
+0116               
+0118               
+0119 60DA 06A0  32         bl    @mkslot
      60DC 2F86     
-0121 60DE 0002                   data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
+0120 60DE 0002                   data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
      60E0 730E     
-0122 60E2 0102                   data >0102,task.vdp.copy.sat ; Task 1 - Update VDP cursor position
+0121 60E2 0102                   data >0102,task.vdp.copy.sat ; Task 1 - Update VDP cursor position
      60E4 3864     
-0123 60E6 020F                   data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
+0122 60E6 020F                   data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
      60E8 3906     
-0124 60EA 0360                   data >0360,task.oneshot      ; Task 3 - One shot task
+0123 60EA 0360                   data >0360,task.oneshot      ; Task 3 - One shot task
      60EC 391A     
-0125 60EE FFFF                   data eol
-0126               
-0136               
-0137 60F0 0204  20         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
+0124 60EE FFFF                   data eol
+0125               
+0135               
+0136 60F0 0204  20         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
      60F2 0300     
-0138 60F4 C804  30         mov   tmp0,@btihi           ; / Tell Task Scheduler
+0137 60F4 C804  30         mov   tmp0,@btihi           ; / Tell Task Scheduler
      60F6 8314     
-0139                       ;-------------------------------------------------------
-0140                       ; Setup keyboard scanning and start kernel/timers
-0141                       ;-------------------------------------------------------
-0142 60F8 06A0  32         bl    @mkhook
+0138                       ;-------------------------------------------------------
+0139                       ; Setup keyboard scanning and start kernel/timers
+0140                       ;-------------------------------------------------------
+0141 60F8 06A0  32         bl    @mkhook
      60FA 2F72     
-0143 60FC 6134                   data edkey.keyscan.hook
-0144                                                   ; Setup keyboard scanning hook
-0145                       ;-------------------------------------------------------
-0146                       ; Initialisation complete
-0147                       ;-------------------------------------------------------
-0148 60FE 06A0  32         bl    @magic.set            ; Set magic string
+0142 60FC 6134                   data edkey.keyscan.hook
+0143                                                   ; Setup keyboard scanning hook
+0144                       ;-------------------------------------------------------
+0145                       ; Initialisation complete
+0146                       ;-------------------------------------------------------
+0147 60FE 06A0  32         bl    @magic.set            ; Set magic string
      6100 7B90     
-0149               
-0150 6102 0204  20         li    tmp0,>37D7            ; \ Silence classic99 debugger console,
+0148               
+0149 6102 0204  20         li    tmp0,>37D7            ; \ Silence classic99 debugger console,
      6104 37D7     
-0151 6106 C804  30         mov   tmp0,@>8370           ; | otherwise message flood with text
+0150 6106 C804  30         mov   tmp0,@>8370           ; | otherwise message flood with text
      6108 8370     
-0152 610A 04C4  14         clr   tmp0                  ; / "VDP disk buffer header corrupted at PC"
-0153                       ;-------------------------------------------------------
-0154                       ; Start kernel
-0155                       ;-------------------------------------------------------
-0156 610C 0460  28         b     @tmgr                 ; Run kernel and timers
+0151 610A 04C4  14         clr   tmp0                  ; / "VDP disk buffer header corrupted at PC"
+0152                       ;-------------------------------------------------------
+0153                       ; Start kernel
+0154                       ;-------------------------------------------------------
+0155 610C 0460  28         b     @tmgr                 ; Run kernel and timers
      610E 2EBE     
                    < stevie_b1.asm
 0074                       ;-----------------------------------------------------------------------
@@ -14299,7 +14298,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; / Not in supported dialog range. Skip
 0033               
 0034 7022 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     7024 000E     
+     7024 0072     
 0035 7026 150B  14         jgt   edkey.action.filebrowser.prevcol.exit
 0036                                                   ; / Not in supported dialog range. Skip
 0037                       ;-------------------------------------------------------
@@ -14394,7 +14393,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0043                                                   ; / Not in supported dialog range. Skip
 0044               
 0045 707C 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     707E 000E     
+     707E 0072     
 0046 7080 150B  14         jgt   edkey.action.filebrowser.nextcol.exit
 0047                                                   ; / Not in supported dialog range. Skip
 0048                       ;-------------------------------------------------------
@@ -14480,7 +14479,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034                                                   ; / Not in supported dialog range. Skip
 0035               
 0036 70CE 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     70D0 000E     
+     70D0 0072     
 0037 70D2 150B  14         jgt   edkey.action.filebrowser.prevpage.exit
 0038                                                   ; / Not in supported dialog range. Skip
 0039                       ;-------------------------------------------------------
@@ -14567,7 +14566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0035                                                   ; / Not in supported dialog range. Skip
 0036               
 0037 7122 0284  22         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-     7124 000E     
+     7124 0072     
 0038 7126 150B  14         jgt   edkey.action.filebrowser.nextpage.exit
 0039                                                   ; / Not in supported dialog range. Skip
 0040                       ;-------------------------------------------------------
@@ -17954,19 +17953,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0301                       ;-------------------------------------------------------
 0302                       ; Dialog: Run program image (EA5)
 0303                       ;-------------------------------------------------------
-0304 7D1C 0E0E             byte  key.fctn.5, id.dialog.run
+0304 7D1C 0E72             byte  key.fctn.5, id.dialog.run
 0305 7D1E 6F06             data  edkey.action.cmdb.fastmode.toggle
 0306               
-0307 7D20 0D0E             byte  key.enter, id.dialog.run
+0307 7D20 0D72             byte  key.enter, id.dialog.run
 0308 7D22 6DEA             data  edkey.action.cmdb.file.run
 0309               
-0310 7D24 0B0E             byte  key.fctn.e, id.dialog.run
+0310 7D24 0B72             byte  key.fctn.e, id.dialog.run
 0311 7D26 6E46             data  edkey.action.cmdb.pick.prev
 0312               
-0313 7D28 0A0E             byte  key.fctn.x, id.dialog.run
+0313 7D28 0A72             byte  key.fctn.x, id.dialog.run
 0314 7D2A 6E6A             data  edkey.action.cmdb.pick.next
 0315               
-0316 7D2C 200E             byte  key.space, id.dialog.run
+0316 7D2C 2072             byte  key.space, id.dialog.run
 0317 7D2E 6E8E             data  edkey.action.cmdb.updir
 0318                       ;-------------------------------------------------------
 0319                       ; Dialog: Copy clipboard to line ...
@@ -18102,7 +18101,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0449                       ;-------------------------------------------------------
 0450                       ; Dialog: Run program image (EA5)
 0451                       ;-------------------------------------------------------
-0452 7DC4 0D0E             byte  key.enter, id.dialog.run
+0452 7DC4 0D72             byte  key.enter, id.dialog.run
 0453 7DC6 6DEA             data  edkey.action.cmdb.file.run
 0454                       ;-------------------------------------------------------
 0455                       ; Dialog: Shortcuts
@@ -19279,7 +19278,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.OPT.CLIP.. >0013 :     
     ID.DIALOG.PRINT..... >0011 :     
     ID.DIALOG.PRINTBLOCK >0012 :     
-    ID.DIALOG.RUN....... >000E :     
+    ID.DIALOG.RUN....... >0072 :     
     ID.DIALOG.SAVE...... >000F :     
     ID.DIALOG.SAVEBLOCK. >0010 :     
     ID.DIALOG.SHORTCUTS. >006F :     
