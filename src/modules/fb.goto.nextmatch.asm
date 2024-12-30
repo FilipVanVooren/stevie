@@ -80,6 +80,13 @@ fg.goto.nextmatch.goto:
 
         movb  @fb.column+1,@wyx+1   ; Set cursor on column
         ;-------------------------------------------------------
+        ; Refresh colors if block marker M1 is set
+        ;-------------------------------------------------------        
+        mov   @edb.block.m1,tmp0    ; \ Block marker M1 set?
+        ci    tmp0,>ffff            ; /
+        jeq   fb.goto.nextmatch.exit
+        seto  @fb.colorize          ; Color refresh required
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 fb.goto.nextmatch.exit:
