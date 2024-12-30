@@ -37,18 +37,6 @@ main.continue:
         ;------------------------------------------------------
         bl    @mute                 ; Turn sound generators off
         bl    @scroff               ; Turn screen off
-
-        bl    @f18unl               ; Unlock the F18a
-
-        .ifge vdpmode, 3080
-
-        bl    @putvr                ; Turn on 30 rows mode.
-              data >3140            ; F18a VR49 (>31), bit 40
-
-        .endif
-
-        bl    @putvr                ; Turn on position based attributes
-              data >3202            ; F18a VR50 (>32), bit 2
         ;------------------------------------------------------
         ; Clear VDP memory >0000 - >0fff
         ;------------------------------------------------------
@@ -65,6 +53,18 @@ main.continue:
         ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------
+        bl    @f18unl               ; Unlock the F18a
+                
+        .ifge vdpmode, 3080
+
+        bl    @putvr                ; Turn on 30 rows mode.
+              data >3140            ; F18a VR49 (>31), bit 40
+
+        .endif
+
+        bl    @putvr                ; Turn on position based attributes
+              data >3202            ; F18a VR50 (>32), bit 2
+
         bl    @smag1x               ; Sprite magnification 1x
         bl    @s8x8                 ; Small sprite
 
