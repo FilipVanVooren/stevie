@@ -10,8 +10,6 @@ dialog.help:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        bl    @scroff               ; turn screen off
-
         li    tmp0,id.dialog.help
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 

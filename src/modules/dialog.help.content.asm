@@ -31,7 +31,7 @@ dialog.help.content:
         ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - 640
+              data vdp.fb.toprow.sit,32,16 * 80
                                     ; Clear screen
 
         ;
@@ -40,11 +40,10 @@ dialog.help.content:
         ; timing delay before function is called.
         ;
 
-        li    tmp0,vdp.fb.toprow.tat
+        li    tmp0,vdp.fb.toprow.tat + 80
         mov   @tv.color,tmp1        ; Get color for framebuffer
         srl   tmp1,8                ; Right justify
-        li    tmp2,vdp.sit.size - 640
-                                    ; Prepare for loading color attributes
+        li    tmp2,15 * 80          ; Prepare for loading color attributes
 
         bl    @xfilv                ; \ Fill VDP memory
                                     ; | i  tmp0 = Memory start address
