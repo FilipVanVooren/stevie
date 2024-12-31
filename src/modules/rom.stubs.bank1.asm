@@ -1374,3 +1374,15 @@ fg99.run.stub:
 fg99.run.stub.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+strg.module:
+        li   tmp0,'*'*256           ; Cartridge load command
+        clr  @>7ff2                 ; Clear @WAIT_FLAG
+        movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
+!       mov  @>7ff2,tmp0            ; Get @WAIT_FLAG
+        jeq  -!                     ; Not ready yet? Wait
+        ci   tmp0,>0200             ; Wait flag 2?
+        jeq  -!                     ; Wait some more
+        limi 0
+        blwp @0                     ; Reset console

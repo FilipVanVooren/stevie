@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.6.9   '
+            text '  Stevie 1.7.0   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.6.9   '     
+            text '  Stevie 1.7.0   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.6.9   '
+            text '  Stevie 1.7.0   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.6.9   '  
+            text '  Stevie 1.7.0   '  
             even
         .endif
 
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.6.9  - (c)2018-2025 Filip Van Vooren'
+                   text ' - Stevie 1.7.0  - (c)2018-2025 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -201,8 +201,8 @@ txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 txt.head.cartridge byte 13,4,1
                    text ' Cartridge '
-txt.info.cartridge stri 'XB-GEM   FCMD   fbForth'
-pos.info.cartridge byte 0,9,16,>ff
+txt.info.cartridge stri 'XB-GEM   FCMD   fbForth   StrangeCart'
+pos.info.cartridge byte 0,9,16,26,>ff
 txt.hint.cartridg2 stri 'Danger zone! FinalGROM with prepared SD card required:'
 txt.hint.cartridge stri 'XB29GEM[C,G].bin  FCMD[C,G].bin  FBFORTHC.bin'
 txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'

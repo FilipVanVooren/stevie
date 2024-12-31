@@ -429,6 +429,9 @@ keymap_actions.cmdb:
 
         byte  key.uc.f, id.dialog.cartridge
         data  fg99.run.fbforth
+
+        byte  key.uc.s, id.dialog.cartridge
+        data  strg.module
         ;-------------------------------------------------------
         ; Dialog: Basic
         ;-------------------------------------------------------
