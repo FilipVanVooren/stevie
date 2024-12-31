@@ -1378,6 +1378,9 @@ fg99.run.stub.exit:
 
 strg.module:
         li   tmp0,'*'*256           ; Cartridge load command
+        clr  @>77fc                 ; @LIST_VAR
+        clr  @>7fe0                 ; @VDP_DESTA
+
         clr  @>7ff2                 ; Clear @WAIT_FLAG
         movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
 !       mov  @>7ff2,tmp0            ; Get @WAIT_FLAG
