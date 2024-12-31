@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 241231-1647550
+0002               * BUILD: 241231-1654150
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -17511,7 +17511,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7B60 77FC     
 1382 7B62 04E0  34         clr  @>7fe0                 ; @VDP_DESTA
      7B64 7FE0     
-1383               
+1383               strg.module.load:
 1384 7B66 04E0  34         clr  @>7ff2                 ; Clear @WAIT_FLAG
      7B68 7FF2     
 1385 7B6A D804  38         movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
@@ -17521,7 +17521,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 1387 7B72 13FD  14         jeq  -!                     ; Not ready yet? Wait
 1388 7B74 0284  22         ci   tmp0,>0200             ; Wait flag 2?
      7B76 0200     
-1389 7B78 13FA  14         jeq  -!                     ; Wait some more
+1389 7B78 13F6  14         jeq  strg.module.load       ; Wait some more
 1390 7B7A 0300  22         limi 0
      7B7C 0000     
 1391 7B7E 0420  42         blwp @0                     ; Reset console
@@ -19844,6 +19844,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     STARTUP_KEEP_VDPMEMORY >0001 :     
     STEVIE.80X30........ >7F50 :     
     STRG.MODULE......... >7B5A :     
+    STRG.MODULE.LOAD.... >7B66 :     
     STRING.GETLENC...... >2B4A :     
     STRING.GETLENC.EXIT. >2B96 :     
     STRING.GETLENC.LOOP. >2B78 :     
