@@ -22,7 +22,7 @@ vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
 vec.9   data  dialog.cfg.clip       ; Dialog "Configure clipboard"
 vec.10  data  dialog.cfg            ; Dialog "Configure"
 vec.11  data  dialog.append         ; Dialog "Append file"
-vec.12  data  dialog.cartridge      ; Dialog "Cartridge"
+vec.12  data  dialog.cart.type      ; Dialog "Cartridge Type"
 vec.13  data  dialog.basic          ; Dialog "TI Basic"
 vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  dialog.cat            ; Dialog "Catalog"
@@ -58,8 +58,8 @@ vec.41  data  cpu.crash             ;
 vec.42  data  dialog                ; Dialog initialisation code
 vec.43  data  dialog.find           ; Dialog "Find"
 vec.44  data  cpu.crash             ;
-vec.45  data  cpu.crash             ;
-vec.46  data  cpu.crash             ; 
+vec.45  data  dialog.cart.fg99      ; Dialog "FinalGROM 99 Cartridge"
+vec.46  data  cpu.crash             ;
 vec.47  data  cpu.crash             ;
 vec.48  data  error.display         ; Show error message
 vec.49  data  cpu.crash             ;

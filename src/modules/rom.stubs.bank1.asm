@@ -436,6 +436,7 @@ dialog.cat:
 dialog.cat.vector:
         data  vec.15
 
+
 ***************************************************************
 * Stub for dialog "Go to line"
 * bank3 vec.16
@@ -457,6 +458,7 @@ dialog.font:
 dialog.font.vector:
         data  vec.17
 
+
 ***************************************************************
 * Stub for dialog "Run"
 * bank3 vec.18
@@ -466,16 +468,6 @@ dialog.run:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.run.vector:
         data  vec.18
-
-***************************************************************
-* Stub for dialog "Find"
-* bank3 vec.43
-********|*****|*********************|**************************
-dialog.find:
-        mov   @dialog.find.vector,@trmpvector
-        jmp   _trampoline.bank3     ; Show dialog
-dialog.find.vector:
-        data  vec.43
 
 
 ***************************************************************
@@ -503,6 +495,27 @@ dialog.menu:
 dialog.menu.vector:
         data  vec.30
 
+
+***************************************************************
+* Stub for dialog "Find"
+* bank3 vec.43
+********|*****|*********************|**************************
+dialog.find:
+        mov   @dialog.find.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.find.vector:
+        data  vec.43
+
+
+***************************************************************
+* Stub for dialog "FinalGROM 99 Cartridge"
+* bank3 vec.45
+********|*****|*********************|**************************
+dialog.cart.fg99:
+        mov   @dialog.cart.fg99.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.cart.fg99.vector:
+        data  vec.45
 
 
 ***************************************************************
@@ -687,7 +700,7 @@ dialog:
         jmp   _trampoline.bank3.ret ; Longjump
 dialog.vector:
         data  vec.42
-
+        
 
 ***************************************************************
 * Stub for "error.display"
@@ -1342,38 +1355,27 @@ tv.reset.exit:
 
 
 ***************************************************************
-* Stub for "fg99.run"
+* Stub for "cart.fg99.mgr"
+* bank7 vec.24
 ********|*****|*********************|**************************
-fg99.run.xbgem:
-        li    tmp0,fg99.cart.xbgem  ; Load Extended Basic G.E.M
-        mov   tmp0,@tv.fg99.img.ptr ; Set pointer        
-        jmp   fg99.run.stub
-
-fg99.run.fcmd:
-        li    tmp0,fg99.cart.fcmd   ; Load Force Command
-        mov   tmp0,@tv.fg99.img.ptr ; Set pointer
-        jmp   fg99.run.stub
-
-fg99.run.fbforth:
-        li    tmp0,fg99.cart.fbforth ; Load fbForth
-        mov   tmp0,@tv.fg99.img.ptr  ; Set pointer
-        jmp   fg99.run.stub
-
-fg99.run.stub:
+cart.fg99.mgr:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Run FinalGROM cartridge image
+        ; Call routine in specified bank
         ;------------------------------------------------------
-        bl    @fg99.run             ; Run FinalGROM cartridge
-                                    ; \ i @tv.fg99.img.ptr = Pointer to image
-                                    ; /
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.24           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fg99.run.stub.exit:
+cart.fg99.mgr.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
 
 
 strg.module:

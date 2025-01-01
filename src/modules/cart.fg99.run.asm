@@ -1,12 +1,12 @@
-* FILE......: fg99.run.asm
+* FILE......: cart.fg99.run.asm
 * Purpose...: Run FinalGROM cartridge image
 
 
 ***************************************************************
-* fg99.run
+* cart.fg99.run
 * Run FinalGROM cartridge image
 ***************************************************************
-* bl   @fg99.run
+* bl   @cart.fg99.run
 *--------------------------------------------------------------
 * INPUT
 * @tv.fg99.img.ptr = Pointer to cartridge image entry
@@ -19,8 +19,9 @@
 *--------------------------------------------------------------
 * Remarks
 * Based on tib.run
+* Is expected to run from RAM and not from cartridge space.
 ********|*****|*********************|**************************
-fg99.run:
+cart.fg99.run:
         ;-------------------------------------------------------
         ; Put VDP in TI Basic compatible mode (32x24)
         ;-------------------------------------------------------

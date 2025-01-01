@@ -197,16 +197,26 @@ txt.keys.file      stri 'F9-Back  SPACE-Close menu'
                    even
 
 ;--------------------------------------------------------------
-; Dialog "Cartridge"
+; Dialog "Cartridge Type"
 ;--------------------------------------------------------------
-txt.head.cartridge byte 13,4,1
-                   text ' Cartridge '
-txt.info.cartridge stri 'XB-GEM   FCMD   fbForth   StrangeCart'
-pos.info.cartridge byte 0,9,16,26,>ff
-txt.hint.cartridg2 stri 'Danger zone! FinalGROM with prepared SD card required:'
-txt.hint.cartridge stri 'XB29GEM[C,G].bin  FCMD[C,G].bin  FBFORTHC.bin'
-txt.keys.cartridge stri 'F9-Back  SPACE-Close menu'
-                   even
+txt.head.cart.type  byte 13,4,1
+                    text ' Cartridge '
+txt.info.cart.type  stri 'FinalGROM 99   StrangeCart'
+pos.info.cart.type  byte 0,15,>ff
+txt.hint.cart.type2 stri 'Select currently inserted cartridge.'
+txt.hint.cart.type  stri ''
+txt.keys.cart.type  stri 'F9-Back  SPACE-Close menu'
+                    even
+
+;--------------------------------------------------------------
+; Dialog "FinalGROM 99"
+;--------------------------------------------------------------
+txt.head.cart.fg99   byte 16,4,1
+                     text ' FinalGROM 99 '
+txt.hint.cart.fg99   stri 'Enter filename (max. 8 char) without .bin extension.'
+txt.hint.cart.fg992  stri 'Load cartridge from SD card. Image must be in same directory as Stevie.'
+txt.keys.cart.fg99   stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+                     even
 
 ;--------------------------------------------------------------
 ; Dialog "TI Basic"

@@ -19,7 +19,7 @@
 * File: stevie_b7.asm
 *
 * Bank 7 "Jonas"
-* SAMS and TI Basic support routines
+* SAMS, Cartridge and TI Basic support routines
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -89,6 +89,10 @@ main:
         copy  "tib.uncrunch.prg.asm"       ; Uncrunch tokenized program code
         copy  "tib.uncrunch.token.asm"     ; Decode statement token
         copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
+        ;-----------------------------------------------------------------------
+        ; Cartridge manager (FinalGROM 99, StrangeCart)
+        ;-----------------------------------------------------------------------
+        copy  "cart.fg99.mgr.asm"          ; FinalGROM 99
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

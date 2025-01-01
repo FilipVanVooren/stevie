@@ -39,6 +39,7 @@ id.dialog.printblock      equ  18      ; "Print block"
 id.dialog.opt.clip        equ  19      ; "Configure clipboard"
 id.dialog.goto            equ  20      ; "Goto"
 id.dialog.find            equ  30      ; "Find"
+id.dialog.cart.fg99       equ  40      ; "FinalGROM 99 Cartridge"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -49,7 +50,7 @@ id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
 id.dialog.help            equ  104     ; "About"
 id.dialog.file            equ  105     ; "File"
-id.dialog.cartridge       equ  106     ; "Cartridge"
+id.dialog.cart.type       equ  106     ; "Cartridge Type"
 id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.opt             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"

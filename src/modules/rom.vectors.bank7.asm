@@ -34,7 +34,7 @@ vec.20  data  magic.set             ;
 vec.21  data  magic.clear           ;
 vec.22  data  magic.check           ;
 vec.23  data  tv.reset              ;
-vec.24  data  cpu.crash             ;
+vec.24  data  cart.fg99.mgr         ; FinalGROM 99
 vec.25  data  cpu.crash             ;
 vec.26  data  cpu.crash             ;
 vec.27  data  cpu.crash             ;

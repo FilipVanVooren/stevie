@@ -419,19 +419,18 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.unsaved
         data  dialog.save
         ;-------------------------------------------------------
-        ; Dialog: Cartridge
+        ; Dialog: Cartridge Type
         ;-------------------------------------------------------
-        byte  key.uc.x, id.dialog.cartridge
-        data  fg99.run.xbgem
+        byte  key.uc.f, id.dialog.cart.type
+        data  dialog.cart.fg99
 
-        byte  key.uc.c, id.dialog.cartridge
-        data  fg99.run.fcmd
-
-        byte  key.uc.f, id.dialog.cartridge
-        data  fg99.run.fbforth
-
-        byte  key.uc.s, id.dialog.cartridge
+        byte  key.uc.s, id.dialog.cart.type
         data  strg.module
+        ;-------------------------------------------------------
+        ; Dialog: FinalGROM 99
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.cart.fg99
+        data  cart.fg99.mgr
         ;-------------------------------------------------------
         ; Dialog: Basic
         ;-------------------------------------------------------

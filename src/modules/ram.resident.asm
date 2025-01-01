@@ -40,7 +40,7 @@
         ; Utility functions
         ;-----------------------------------------------------------------------
         copy  "pane.topline.clearmsg.asm" ; Remove overlay msg in top line
-        copy  "fg99.run.asm"              ; Run FinalGROM cartridge image                                       
+        copy  "cart.fg99.run.asm"         ; Run FinalGROM cartridge image                                       
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
@@ -63,4 +63,3 @@
         copy  "data.constants.asm"          ; Constants
         copy  "data.strings.asm"            ; Strings
         copy  "data.defaults.asm"           ; Default values (devices, ...)
-        copy  "data.fg99.carts.asm"         ; Cartridge images
