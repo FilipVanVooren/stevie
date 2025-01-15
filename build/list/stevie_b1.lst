@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250101-1924370
+0002               * BUILD: 250115-2004190
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -910,13 +910,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.7.0'
+0055 6028 0C53                 stri 'STEVIE 1.7.1'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 372E     
-     6034 30       
+     6034 31       
 0057               
 0061               
 0065               
@@ -7338,13 +7338,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                       ;------------------------------------------------------
 0046 3404 06A0  32         bl    @cpym2m
      3406 253A     
-0047 3408 3DCA                   data def.printer.fname,tv.printer.fname,7
+0047 3408 3DCE                   data def.printer.fname,tv.printer.fname,7
      340A DE00     
      340C 0007     
 0048               
 0049 340E 06A0  32         bl    @cpym2m
      3410 253A     
-0050 3412 3DD1                   data def.clip.fname.a,tv.clip.fname,10
+0050 3412 3DD5                   data def.clip.fname.a,tv.clip.fname,10
      3414 DE50     
      3416 000A     
 0051               
@@ -9436,7 +9436,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C24 6323     
      3C26 20       
 0094                                  even
-0095 3C28 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
+0095 3C28 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
      3C2A 392D     
      3C2C 4D65     
      3C2E 6E75     
@@ -9456,10 +9456,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C4A 7420     
      3C4C 205E     
      3C4E 2F3D     
-     3C50 5374     
-     3C52 6F70     
+     3C50 446F     
+     3C52 6E65     
 0096                                  even
-0097 3C54 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Stop'
+0097 3C54 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
      3C56 392D     
      3C58 4D65     
      3C5A 6E75     
@@ -9485,8 +9485,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C82 7420     
      3C84 205E     
      3C86 2F3D     
-     3C88 5374     
-     3C8A 6F70     
+     3C88 446F     
+     3C8A 6E65     
 0098                                  even
 0099               
 0100 3C8C 3A46     txt.keys.block     stri 'F9-Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3=Clipboard'
@@ -9671,8 +9671,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3DC6 656D     
      3DC8 653A     
 0139                                  even
-0140               
-0141               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
+0140               ;--------------------------------------------------------------
+0141               ; Strings for command buffer
+0142               ;--------------------------------------------------------------
+0143 3DCA 0102     txt.picker.icon1   byte 1,2
+0144                                  even
+0145 3DCC 0103     txt.picker.icon2   byte 1,3
+0146                                  even
+0147               
+0148               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
                    < ram.resident.asm
 0065                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -9682,59 +9689,59 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 3DCA 0650     def.printer.fname   stri 'PI.PIO'
-     3DCC 492E     
-     3DCE 5049     
-     3DD0 4F       
-0008 3DD1   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     3DD2 4453     
-     3DD4 4B31     
-     3DD6 2E43     
-     3DD8 4C49     
-     3DDA 50       
+0007 3DCE 0650     def.printer.fname   stri 'PI.PIO'
+     3DD0 492E     
+     3DD2 5049     
+     3DD4 4F       
+0008 3DD5   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     3DD6 4453     
+     3DD8 4B31     
+     3DDA 2E43     
+     3DDC 4C49     
+     3DDE 50       
 0009                                   even
-0010 3DDC 0954     def.clip.fname.b    stri 'TIPI.CLIP'
-     3DDE 4950     
-     3DE0 492E     
-     3DE2 434C     
-     3DE4 4950     
+0010 3DE0 0954     def.clip.fname.b    stri 'TIPI.CLIP'
+     3DE2 4950     
+     3DE4 492E     
+     3DE6 434C     
+     3DE8 4950     
 0011                                   even
-0012 3DE6 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     3DE8 4453     
-     3DEA 4B2C     
-     3DEC 4844     
-     3DEE 582C     
-     3DF0 4944     
-     3DF2 452C     
-     3DF4 5049     
-     3DF6 2E2C     
+0012 3DEA 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3DEC 4453     
+     3DEE 4B2C     
+     3DF0 4844     
+     3DF2 582C     
+     3DF4 4944     
+     3DF6 452C     
      3DF8 5049     
-     3DFA 4F2C     
-     3DFC 5449     
-     3DFE 5049     
-     3E00 2E2C     
-     3E02 5244     
-     3E04 2C53     
-     3E06 4353     
+     3DFA 2E2C     
+     3DFC 5049     
+     3DFE 4F2C     
+     3E00 5449     
+     3E02 5049     
+     3E04 2E2C     
+     3E06 5244     
      3E08 2C53     
-     3E0A 4444     
-     3E0C 2C57     
-     3E0E 4453     
-     3E10 2C52     
-     3E12 5332     
-     3E14 3332     
+     3E0A 4353     
+     3E0C 2C53     
+     3E0E 4444     
+     3E10 2C57     
+     3E12 4453     
+     3E14 2C52     
+     3E16 5332     
+     3E18 3332     
 0013                                   even
                    < ram.resident.asm
                    < stevie_b1.asm
 0054                       ;------------------------------------------------------
 0055                       ; Activate bank 1 and branch to  >6036
 0056                       ;------------------------------------------------------
-0057 3E16 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3E18 6002     
+0057 3E1A 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3E1C 6002     
 0058               
 0062               
-0063 3E1A 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3E1C 6046     
+0063 3E1E 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3E20 6046     
 0064               ***************************************************************
 0065               * Step 3: Include main editor modules
 0066               ********|*****|*********************|**************************
@@ -18583,10 +18590,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYODD.............. >2594 :     
     CPYV2M.............. >2518 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3DD1 :     
-    DEF.CLIP.FNAME.B.... >3DDC :     
-    DEF.DEVICES......... >3DE6 :     
-    DEF.PRINTER.FNAME... >3DCA :     
+    DEF.CLIP.FNAME.A.... >3DD5 :     
+    DEF.CLIP.FNAME.B.... >3DE0 :     
+    DEF.DEVICES......... >3DEA :     
+    DEF.PRINTER.FNAME... >3DCE :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DIALOG.............. >78C6 :     
@@ -19971,6 +19978,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.NEWFILE......... >3BB4 :     
     TXT.NODISK.......... >3B78 :     
     TXT.OVRWRITE........ >39D0 :     
+    TXT.PICKER.ICON1.... >3DCA :     
+    TXT.PICKER.ICON2.... >3DCC :     
     TXT.PRINTING........ >39FC :     
     TXT.READDIR......... >3AA4 :     
     TXT.SAVING.......... >39F0 :     

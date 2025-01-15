@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250101-1924370
+0002               * BUILD: 250115-2004190
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -914,13 +914,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.7.0'
+0055 6028 0C53                 stri 'STEVIE 1.7.1'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 372E     
-     6034 30       
+     6034 31       
 0057               
 0061               
 0065               
@@ -6535,7 +6535,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0390 71A8 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      71AA 0040     
 0391 71AC 0460  28         b     @main                 ; Give control to main program
-     71AE 3E16     
+     71AE 3E1A     
                    < stevie_b0.asm
 0142                       copy  "ram.resident.asm"    ; Resident modules relocated to RAM
      **** ****     > ram.resident.asm
@@ -7593,13 +7593,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                       ;------------------------------------------------------
 0046 7530 06A0  32         bl    @cpym2m
      7532 253A     
-0047 7534 3DCA                   data def.printer.fname,tv.printer.fname,7
+0047 7534 3DCE                   data def.printer.fname,tv.printer.fname,7
      7536 DE00     
      7538 0007     
 0048               
 0049 753A 06A0  32         bl    @cpym2m
      753C 253A     
-0050 753E 3DD1                   data def.clip.fname.a,tv.clip.fname,10
+0050 753E 3DD5                   data def.clip.fname.a,tv.clip.fname,10
      7540 DE50     
      7542 000A     
 0051               
@@ -9691,7 +9691,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7D50 6323     
      7D52 20       
 0094                                  even
-0095 7D54 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
+0095 7D54 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
      7D56 392D     
      7D58 4D65     
      7D5A 6E75     
@@ -9711,10 +9711,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7D76 7420     
      7D78 205E     
      7D7A 2F3D     
-     7D7C 5374     
-     7D7E 6F70     
+     7D7C 446F     
+     7D7E 6E65     
 0096                                  even
-0097 7D80 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Stop'
+0097 7D80 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
      7D82 392D     
      7D84 4D65     
      7D86 6E75     
@@ -9740,8 +9740,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7DAE 7420     
      7DB0 205E     
      7DB2 2F3D     
-     7DB4 5374     
-     7DB6 6F70     
+     7DB4 446F     
+     7DB6 6E65     
 0098                                  even
 0099               
 0100 7DB8 3A46     txt.keys.block     stri 'F9-Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3=Clipboard'
@@ -9926,8 +9926,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7EF2 656D     
      7EF4 653A     
 0139                                  even
-0140               
-0141               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
+0140               ;--------------------------------------------------------------
+0141               ; Strings for command buffer
+0142               ;--------------------------------------------------------------
+0143 7EF6 0102     txt.picker.icon1   byte 1,2
+0144                                  even
+0145 7EF8 0103     txt.picker.icon2   byte 1,3
+0146                                  even
+0147               
+0148               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
                    < ram.resident.asm
 0065                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -9937,47 +9944,47 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 7EF6 0650     def.printer.fname   stri 'PI.PIO'
-     7EF8 492E     
-     7EFA 5049     
-     7EFC 4F       
-0008 7EFD   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     7EFE 4453     
-     7F00 4B31     
-     7F02 2E43     
-     7F04 4C49     
-     7F06 50       
+0007 7EFA 0650     def.printer.fname   stri 'PI.PIO'
+     7EFC 492E     
+     7EFE 5049     
+     7F00 4F       
+0008 7F01   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     7F02 4453     
+     7F04 4B31     
+     7F06 2E43     
+     7F08 4C49     
+     7F0A 50       
 0009                                   even
-0010 7F08 0954     def.clip.fname.b    stri 'TIPI.CLIP'
-     7F0A 4950     
-     7F0C 492E     
-     7F0E 434C     
-     7F10 4950     
+0010 7F0C 0954     def.clip.fname.b    stri 'TIPI.CLIP'
+     7F0E 4950     
+     7F10 492E     
+     7F12 434C     
+     7F14 4950     
 0011                                   even
-0012 7F12 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     7F14 4453     
-     7F16 4B2C     
-     7F18 4844     
-     7F1A 582C     
-     7F1C 4944     
-     7F1E 452C     
-     7F20 5049     
-     7F22 2E2C     
+0012 7F16 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     7F18 4453     
+     7F1A 4B2C     
+     7F1C 4844     
+     7F1E 582C     
+     7F20 4944     
+     7F22 452C     
      7F24 5049     
-     7F26 4F2C     
-     7F28 5449     
-     7F2A 5049     
-     7F2C 2E2C     
-     7F2E 5244     
-     7F30 2C53     
-     7F32 4353     
+     7F26 2E2C     
+     7F28 5049     
+     7F2A 4F2C     
+     7F2C 5449     
+     7F2E 5049     
+     7F30 2E2C     
+     7F32 5244     
      7F34 2C53     
-     7F36 4444     
-     7F38 2C57     
-     7F3A 4453     
-     7F3C 2C52     
-     7F3E 5332     
-     7F40 3332     
+     7F36 4353     
+     7F38 2C53     
+     7F3A 4444     
+     7F3C 2C57     
+     7F3E 4453     
+     7F40 2C52     
+     7F42 5332     
+     7F44 3332     
 0013                                   even
                    < ram.resident.asm
                    < stevie_b0.asm
@@ -9985,16 +9992,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0144                       ; Stevie main entry point
 0145                       ;------------------------------------------------------
 0146               main:
-0147 7F42 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7F44 6002     
+0147 7F46 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7F48 6002     
 0148               
 0152               
-0153 7F46 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
-     7F48 6046     
+0153 7F4A 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+     7F4C 6046     
 0154                       ;------------------------------------------------------
 0155                       ; Memory full check
 0156                       ;------------------------------------------------------
-0160 7F4A 3E1E                   data $                ; Bank 0 ROM size OK.
+0160 7F4E 3E22                   data $                ; Bank 0 ROM size OK.
 0162                       ;-----------------------------------------------------------------------
 0163                       ; Show ROM bank in CPU crash screen
 0164                       ;-----------------------------------------------------------------------
@@ -10376,10 +10383,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYODD.............. >2594 :     
     CPYV2M.............. >2518 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3DD1 :     
-    DEF.CLIP.FNAME.B.... >3DDC :     
-    DEF.DEVICES......... >3DE6 :     
-    DEF.PRINTER.FNAME... >3DCA :     
+    DEF.CLIP.FNAME.A.... >3DD5 :     
+    DEF.CLIP.FNAME.B.... >3DE0 :     
+    DEF.DEVICES......... >3DEA :     
+    DEF.PRINTER.FNAME... >3DCE :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DOFILL.............. >2280 :     
@@ -10863,7 +10870,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
-    MAIN................ >3E16 :     
+    MAIN................ >3E1A :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
@@ -11302,6 +11309,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.NEWFILE......... >3BB4 :     
     TXT.NODISK.......... >3B78 :     
     TXT.OVRWRITE........ >39D0 :     
+    TXT.PICKER.ICON1.... >3DCA :     
+    TXT.PICKER.ICON2.... >3DCC :     
     TXT.PRINTING........ >39FC :     
     TXT.READDIR......... >3AA4 :     
     TXT.SAVING.......... >39F0 :     

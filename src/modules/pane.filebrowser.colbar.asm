@@ -90,11 +90,24 @@ pane.filebrowser.colbar.remove:
                                     ; Draw column bar 
                                     ; i \  tmp0 = color combination
                                     ; i /  @wyx = Cursor position
+        ;-------------------------------------------------------
+        ; Remove "[" marker
+        ;-------------------------------------------------------
+        bl    @putstr               ; Put string 
+              data nomarker         ; Remove "[" marker
+        ;------------------------------------------------------
+        ; Calculate "]" marker position
+        ;------------------------------------------------------
+        mov   @cat.barpos,tmp0      ; \ 
+        ai    tmp0,24               ; | Calculate position
+        mov   tmp0,@wyx             ; /
+        ;-------------------------------------------------------
+        ; Remove "]" marker
+        ;-------------------------------------------------------
+        bl    @putstr               ; Put string 
+              data nomarker         ; Remove "[" marker
 
         clr   @cat.barpos           ; Clear color bar position  
-
-        bl    @putstr               ; Put string 
-              data nomarker         ; Remove marker
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

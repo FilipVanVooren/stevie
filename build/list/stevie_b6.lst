@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250101-1924370
+0002               * BUILD: 250115-2004190
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -921,13 +921,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6026 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0052                                                   ; 15 /
 0053               
-0055 6028 0C53                 stri 'STEVIE 1.7.0'
+0055 6028 0C53                 stri 'STEVIE 1.7.1'
      602A 5445     
      602C 5649     
      602E 4520     
      6030 312E     
      6032 372E     
-     6034 30       
+     6034 31       
 0057               
 0061               
 0065               
@@ -7349,13 +7349,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045                       ;------------------------------------------------------
 0046 3404 06A0  32         bl    @cpym2m
      3406 253A     
-0047 3408 3DCA                   data def.printer.fname,tv.printer.fname,7
+0047 3408 3DCE                   data def.printer.fname,tv.printer.fname,7
      340A DE00     
      340C 0007     
 0048               
 0049 340E 06A0  32         bl    @cpym2m
      3410 253A     
-0050 3412 3DD1                   data def.clip.fname.a,tv.clip.fname,10
+0050 3412 3DD5                   data def.clip.fname.a,tv.clip.fname,10
      3414 DE50     
      3416 000A     
 0051               
@@ -9447,7 +9447,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C24 6323     
      3C26 20       
 0094                                  even
-0095 3C28 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
+0095 3C28 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
      3C2A 392D     
      3C2C 4D65     
      3C2E 6E75     
@@ -9467,10 +9467,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C4A 7420     
      3C4C 205E     
      3C4E 2F3D     
-     3C50 5374     
-     3C52 6F70     
+     3C50 446F     
+     3C52 6E65     
 0096                                  even
-0097 3C54 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Stop'
+0097 3C54 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
      3C56 392D     
      3C58 4D65     
      3C5A 6E75     
@@ -9496,8 +9496,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3C82 7420     
      3C84 205E     
      3C86 2F3D     
-     3C88 5374     
-     3C8A 6F70     
+     3C88 446F     
+     3C8A 6E65     
 0098                                  even
 0099               
 0100 3C8C 3A46     txt.keys.block     stri 'F9-Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3=Clipboard'
@@ -9682,8 +9682,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3DC6 656D     
      3DC8 653A     
 0139                                  even
-0140               
-0141               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
+0140               ;--------------------------------------------------------------
+0141               ; Strings for command buffer
+0142               ;--------------------------------------------------------------
+0143 3DCA 0102     txt.picker.icon1   byte 1,2
+0144                                  even
+0145 3DCC 0103     txt.picker.icon2   byte 1,3
+0146                                  even
+0147               
+0148               ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
                    < ram.resident.asm
 0065                       copy  "data.defaults.asm"           ; Default values (devices, ...)
      **** ****     > data.defaults.asm
@@ -9693,59 +9700,59 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               *                     Default values
 0006               ********|*****|*********************|**************************
-0007 3DCA 0650     def.printer.fname   stri 'PI.PIO'
-     3DCC 492E     
-     3DCE 5049     
-     3DD0 4F       
-0008 3DD1   09     def.clip.fname.a    stri 'DSK1.CLIP'
-     3DD2 4453     
-     3DD4 4B31     
-     3DD6 2E43     
-     3DD8 4C49     
-     3DDA 50       
+0007 3DCE 0650     def.printer.fname   stri 'PI.PIO'
+     3DD0 492E     
+     3DD2 5049     
+     3DD4 4F       
+0008 3DD5   09     def.clip.fname.a    stri 'DSK1.CLIP'
+     3DD6 4453     
+     3DD8 4B31     
+     3DDA 2E43     
+     3DDC 4C49     
+     3DDE 50       
 0009                                   even
-0010 3DDC 0954     def.clip.fname.b    stri 'TIPI.CLIP'
-     3DDE 4950     
-     3DE0 492E     
-     3DE2 434C     
-     3DE4 4950     
+0010 3DE0 0954     def.clip.fname.b    stri 'TIPI.CLIP'
+     3DE2 4950     
+     3DE4 492E     
+     3DE6 434C     
+     3DE8 4950     
 0011                                   even
-0012 3DE6 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
-     3DE8 4453     
-     3DEA 4B2C     
-     3DEC 4844     
-     3DEE 582C     
-     3DF0 4944     
-     3DF2 452C     
-     3DF4 5049     
-     3DF6 2E2C     
+0012 3DEA 2F2C     def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
+     3DEC 4453     
+     3DEE 4B2C     
+     3DF0 4844     
+     3DF2 582C     
+     3DF4 4944     
+     3DF6 452C     
      3DF8 5049     
-     3DFA 4F2C     
-     3DFC 5449     
-     3DFE 5049     
-     3E00 2E2C     
-     3E02 5244     
-     3E04 2C53     
-     3E06 4353     
+     3DFA 2E2C     
+     3DFC 5049     
+     3DFE 4F2C     
+     3E00 5449     
+     3E02 5049     
+     3E04 2E2C     
+     3E06 5244     
      3E08 2C53     
-     3E0A 4444     
-     3E0C 2C57     
-     3E0E 4453     
-     3E10 2C52     
-     3E12 5332     
-     3E14 3332     
+     3E0A 4353     
+     3E0C 2C53     
+     3E0E 4444     
+     3E10 2C57     
+     3E12 4453     
+     3E14 2C52     
+     3E16 5332     
+     3E18 3332     
 0013                                   even
                    < ram.resident.asm
                    < stevie_b6.asm
 0052                       ;------------------------------------------------------
 0053                       ; Activate bank 1 and branch to  >6036
 0054                       ;------------------------------------------------------
-0055 3E16 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3E18 6002     
+0055 3E1A 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3E1C 6002     
 0056               
 0060               
-0061 3E1A 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3E1C 6046     
+0061 3E1E 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3E20 6046     
 0062               ***************************************************************
 0063               * Step 3: Include main editor modules
 0064               ********|*****|*********************|**************************
@@ -10427,135 +10434,136 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6262 0000     
      6264 FF00     
      6266 0000     
-0017 6268 0000             data  >0000,>0000,>0000,>0000 ; 02. FREE
-     626A 0000     
-     626C 0000     
-     626E 0000     
-0018 6270 0000             data  >0000,>0000,>0000,>0000 ; 03. FREE
-     6272 0000     
-     6274 0000     
-     6276 0000     
-0019               
-0020               patterns.box:
-0021 6278 0000             data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
+0017                       ;data  >F0F0,>C0C0,>C0C0,>F0F0 ; 02. Marker [
+0018 6268 7070             data  >7070,>C0C0,>C0C0,>7070
+     626A C0C0     
+     626C C0C0     
+     626E 7070     
+0019 6270 3C3C             data  >3C3C,>0C0C,>0C0C,>3C3C ; 03. Marker ]
+     6272 0C0C     
+     6274 0C0C     
+     6276 3C3C     
+0020               
+0021               patterns.box:
+0022 6278 0000             data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
      627A 0000     
      627C FF80     
      627E 8080     
-0022 6280 0000             data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
+0023 6280 0000             data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
      6282 0000     
      6284 FF04     
      6286 FF04     
-0023 6288 8080             data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
+0024 6288 8080             data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
      628A 8080     
      628C 8080     
      628E 8080     
-0024 6290 0404             data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
+0025 6290 0404             data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
      6292 0404     
      6294 0404     
      6296 0404     
-0025 6298 8080             data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
+0026 6298 8080             data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
      629A 8080     
      629C 8080     
      629E FF00     
-0026 62A0 0404             data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
+0027 62A0 0404             data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
      62A2 0404     
      62A4 0404     
      62A6 FF00     
-0027 62A8 0000             data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
+0028 62A8 0000             data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
      62AA 0000     
      62AC 0000     
      62AE FF00     
-0028 62B0 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+0029 62B0 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
      62B2 0F0F     
      62B4 0F0F     
      62B6 0000     
-0029               
 0030               
-0031               patterns.cr:
-0032 62B8 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+0031               
+0032               patterns.cr:
+0033 62B8 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
      62BA 6C48     
      62BC 4800     
      62BE 7C00     
-0033 62C0 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+0034 62C0 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
      62C2 64FC     
      62C4 6020     
      62C6 0000     
-0034               
 0035               
-0036               alphalock:
-0037 62C8 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
+0036               
+0037               alphalock:
+0038 62C8 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
      62CA 8894     
      62CC 9C94     
      62CE C0FF     
-0038 62D0 FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
+0039 62D0 FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
      62D2 4444     
      62D4 4474     
      62D6 0CFC     
-0039               
 0040               
-0041               vertline:
-0042 62D8 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
+0041               
+0042               vertline:
+0043 62D8 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
      62DA 1010     
      62DC 1010     
      62DE 1010     
-0043 62E0 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
+0044 62E0 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
      62E2 0030     
      62E4 3030     
      62E6 3030     
-0044               
 0045               
-0046               low.digits:                           ; digits 1-4 (18-21)
-0047 62E8 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
+0046               
+0047               low.digits:                           ; digits 1-4 (18-21)
+0048 62E8 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
      62EA 0010     
      62EC 3010     
      62EE 1038     
-0048 62F0 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
+0049 62F0 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
      62F2 0038     
      62F4 0838     
      62F6 2038     
-0049 62F8 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
+0050 62F8 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
      62FA 0038     
      62FC 0838     
      62FE 0838     
-0050 6300 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
+0051 6300 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
      6302 0028     
      6304 2838     
      6306 0808     
-0051                                                     ; digits 5-8 (22-25)
-0052 6308 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
+0052                                                     ; digits 5-8 (22-25)
+0053 6308 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
      630A 0038     
      630C 2038     
      630E 0838     
-0053 6310 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
+0054 6310 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
      6312 0038     
      6314 2038     
      6316 2838     
-0054 6318 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
+0055 6318 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
      631A 0038     
      631C 0810     
      631E 2020     
-0055 6320 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
+0056 6320 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
      6322 0038     
      6324 2838     
      6326 2838     
-0056               
-0057 6328 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
+0057               
+0058 6328 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
      632A 7F7F     
      632C 7F7F     
      632E 7F7F     
-0058 6330 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
+0059 6330 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
      6332 0010     
      6334 08FC     
      6336 0810     
-0059 6338 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
+0060 6338 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
      633A 0000     
      633C 0000     
      633E 0000     
-0060 6340 0000             data  >0000,>0000,>0000,>0000 ; 29. FREE
+0061 6340 0000             data  >0000,>0000,>0000,>0000 ; 29. FREE
      6342 0000     
      6344 0000     
      6346 0000     
-0061 6348 0000             data  >0000,>0000,>0000,>0000 ; 30. FREE
+0062 6348 0000             data  >0000,>0000,>0000,>0000 ; 30. FREE
      634A 0000     
      634C 0000     
      634E 0000     
@@ -12938,10 +12946,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CURSOR.............. >6328 :     
     CURSORS............. >6248 :     
     DEBUG............... >0000 :     
-    DEF.CLIP.FNAME.A.... >3DD1 :     
-    DEF.CLIP.FNAME.B.... >3DDC :     
-    DEF.DEVICES......... >3DE6 :     
-    DEF.PRINTER.FNAME... >3DCA :     
+    DEF.CLIP.FNAME.A.... >3DD5 :     
+    DEF.CLIP.FNAME.B.... >3DE0 :     
+    DEF.DEVICES......... >3DEA :     
+    DEF.PRINTER.FNAME... >3DCE :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DOFILL.............. >2280 :     
@@ -13879,6 +13887,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TXT.NEWFILE......... >3BB4 :     
     TXT.NODISK.......... >3B78 :     
     TXT.OVRWRITE........ >39D0 :     
+    TXT.PICKER.ICON1.... >3DCA :     
+    TXT.PICKER.ICON2.... >3DCC :     
     TXT.PRINTING........ >39FC :     
     TXT.READDIR......... >3AA4 :     
     TXT.SAVING.......... >39F0 :     

@@ -93,7 +93,7 @@ pane.filebrowser.hilight.remove:
         ai    tmp2,>0300            ; Add offset
         mov   tmp2,@wyx             ; Set cursor position
         ;------------------------------------------------------
-        ; Draw file marker
+        ; Calculate marker "[" position
         ;------------------------------------------------------
 pane.filebrowser.hilight.draw.marker:
         mov   @cat.hilit.colrow,tmp0
@@ -118,9 +118,24 @@ pane.filebrowser.hilight.draw.marker:
                                     ; Draw column bar 
                                     ; i \  tmp0 = color combination
                                     ; i /  @wyx = Cursor position
-                                    
+        ;------------------------------------------------------
+        ; Draw "[" marker
+        ;------------------------------------------------------
         bl    @putstr
-              data txt.cmdb.prompt  ; Draw marker
+              data txt.picker.icon1 ; Draw marker
+                                    ; \ i @wyx   = Cursor position
+                                    ; / i @parm1 = String to display
+        ;------------------------------------------------------
+        ; Calculate "]" marker position
+        ;------------------------------------------------------
+        mov   @cat.barpos,tmp0      ; \ 
+        ai    tmp0,24               ; | Calculate position
+        mov   tmp0,@wyx             ; /
+        ;------------------------------------------------------
+        ; Draw "]" marker
+        ;------------------------------------------------------
+        bl    @putstr
+              data txt.picker.icon2 ; Draw marker
                                     ; \ i @wyx   = Cursor position
                                     ; / i @parm1 = String to display
         ;------------------------------------------------------

@@ -92,9 +92,9 @@ txt.keys.default   stri 'F9-Menu  ^H-Help'
                    even
 txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic# '
                    even
-txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Stop'
+txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
                    even
-txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Stop'
+txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
                    even
 
 txt.keys.block     stri 'F9-Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3=Clipboard'
@@ -136,6 +136,13 @@ txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range'
 txt.cmdb.prompt    stri '>'
                    even
 txt.colorscheme    stri 'Color scheme:'
+                   even
+;--------------------------------------------------------------
+; Strings for command buffer
+;--------------------------------------------------------------
+txt.picker.icon1   byte 1,2
+                   even
+txt.picker.icon2   byte 1,3
                    even
 
 ; BE CAREFUL HERE. RAM MIGHT BE FULL AND STRINGS CHOPPED OFF. KEEP THEM SHORT.
