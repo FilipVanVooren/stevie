@@ -14,7 +14,7 @@ cursors:
 ;--------------------------------------------------------------
 patterns:
         data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
-        data  >7070,>C0C0,>C0C0,>7070 ; 02. Marker [
+        data  >F0F0,>C0C0,>C0C0,>F0F0 ; 02. Marker [
         data  >3C3C,>0C0C,>0C0C,>3C3C ; 03. Marker ]
         
 patterns.box:
