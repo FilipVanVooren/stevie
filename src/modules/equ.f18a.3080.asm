@@ -36,7 +36,7 @@ fh.vpab                   equ  >1400   ; VDP address PAB
 spfclr  equ   >f4                   ; Foreground/Background color for font.
 spfbck  equ   >04                   ; Screen background color.
 spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-spfont  equ   0                     ; Font to load. See LDFONT for details.
+spfont  equ   >0c                   ; Font to load. See LDFONT for details.
 pctadr  equ   >0fc0                 ; \ VDP color table base. 
                                     ; / Not used in F18a 80 columns mode
 fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)

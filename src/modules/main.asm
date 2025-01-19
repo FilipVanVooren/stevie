@@ -26,8 +26,13 @@
 ********|*****|*********************|**************************
 main.stevie:
         coc   @wbit1,config         ; F18a detected?
-        jeq   main.continue
-        nop                         ; Ignore for now if no f18a detected
+        jeq   main.continue         ; Yes, we're good. Initialize
+        ;------------------------------------------------------
+        ; Show "F18A NOT FOUND" message
+        ;------------------------------------------------------
+        bl    @putstr
+              data txt.nof18a       ; Show message
+        jmp   $                     ; Halt here
 
 main.continue:
         ; data  c99_ovrd            ; classic99: Put CPU in overdrive mode
@@ -153,3 +158,6 @@ main.continue:
         ; Start kernel
         ;-------------------------------------------------------
         b     @tmgr                 ; Run kernel and timers
+
+
+txt.nof18a stri 'NO F18A FOUND. STEVIE CANNOT RUN HERE.'

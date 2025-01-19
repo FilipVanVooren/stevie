@@ -13,14 +13,16 @@
                                     ; 5  /
 
         ; 
-        ; Change to rom.program1 to add the menu option RESET STEVIE MEMORY.
+        ; Change to rom.program1 to add the menu option STEVIE x.x.x RESET MEM"
         ; That option can be used in the case where we jump to TI Basic, but
         ; resuming fails afterwards (e.g. memory overwritten by ext. program).
         ;
         ; If resume fails, you can only reset the TI-99/4a by turning of
         ; the memory expansion, it's not sufficient to reset the console.
         ;
-        data  rom.program2          ; 6  \ Pointer to program list         >6006
+        ; Change to rom.program2 to skip menu option "STEVIE x.x.x RESET MEM"
+        ;
+        data  rom.program1          ; 6  \ Pointer to program list         >6006
                                     ; 7  /
 
         data  >0000                 ; 8  \ Pointer to DSR list             >6008
@@ -39,7 +41,8 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        stri 'RESET STEVIE MEMORY'
+        stri 'STEVIE 1.7.1 MEMRESET'
+        even
 
         ;-----------------------------------------------------------------------
         ; Program list entry

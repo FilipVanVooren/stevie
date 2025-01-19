@@ -71,7 +71,7 @@ tib.run.return.mon.cont:
         ;-------------------------------------------------------
         mov   @tib.session,tmp0     ; Get session ID
         jeq   !
-        ci    tmp0,5
+        ci    tmp0,3
         jgt   !
         ;-------------------------------------------------------
         ; Reset session resume flag (tibasicX.status)
