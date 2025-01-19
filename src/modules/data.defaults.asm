@@ -11,3 +11,5 @@ def.clip.fname.b    stri 'TIPI.CLIP'
                     even
 def.devices         stri ',DSK,HDX,IDE,PI.,PIO,TIPI.,RD,SCS,SDD,WDS,RS232'
                     even
+def.fg99.fname      stri 'FCMDC'
+                    even

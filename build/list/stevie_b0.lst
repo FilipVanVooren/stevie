@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250119-1733540
+0002               * BUILD: 250119-1835130
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -6539,7 +6539,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0390 71A8 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      71AA 0040     
 0391 71AC 0460  28         b     @main                 ; Give control to main program
-     71AE 3E0E     
+     71AE 3E14     
                    < stevie_b0.asm
 0142                       copy  "ram.resident.asm"    ; Resident modules relocated to RAM
      **** ****     > ram.resident.asm
@@ -9987,22 +9987,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7F36 5332     
      7F38 3332     
 0013                                   even
+0014 7F3A 0546     def.fg99.fname      stri 'FCMDC'
+     7F3C 434D     
+     7F3E 4443     
+0015                                   even
                    < ram.resident.asm
                    < stevie_b0.asm
 0143                       ;------------------------------------------------------
 0144                       ; Stevie main entry point
 0145                       ;------------------------------------------------------
 0146               main:
-0147 7F3A 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     7F3C 6002     
+0147 7F40 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     7F42 6002     
 0148               
 0152               
-0153 7F3E 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
-     7F40 6046     
+0153 7F44 0460  28         b     @kickstart.code2      ; Jump to entry routine >6046
+     7F46 6046     
 0154                       ;------------------------------------------------------
 0155                       ; Memory full check
 0156                       ;------------------------------------------------------
-0160 7F42 3E16                   data $                ; Bank 0 ROM size OK.
+0160 7F48 3E1C                   data $                ; Bank 0 ROM size OK.
 0162                       ;-----------------------------------------------------------------------
 0163                       ; Show ROM bank in CPU crash screen
 0164                       ;-----------------------------------------------------------------------
@@ -10387,6 +10391,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEF.CLIP.FNAME.A.... >3DC9 :     
     DEF.CLIP.FNAME.B.... >3DD4 :     
     DEF.DEVICES......... >3DDE :     
+    DEF.FG99.FNAME...... >3E0E :     
     DEF.PRINTER.FNAME... >3DC2 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
@@ -10871,7 +10876,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
-    MAIN................ >3E0E :     
+    MAIN................ >3E14 :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     

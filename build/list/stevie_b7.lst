@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250119-1733540
+0002               * BUILD: 250119-1835130
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -9748,17 +9748,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3E0A 5332     
      3E0C 3332     
 0013                                   even
+0014 3E0E 0546     def.fg99.fname      stri 'FCMDC'
+     3E10 434D     
+     3E12 4443     
+0015                                   even
                    < ram.resident.asm
                    < stevie_b7.asm
 0055                       ;------------------------------------------------------
 0056                       ; Activate bank 1 and branch to  >6036
 0057                       ;------------------------------------------------------
-0058 3E0E 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     3E10 6002     
+0058 3E14 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     3E16 6002     
 0059               
 0063               
-0064 3E12 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     3E14 6046     
+0064 3E18 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     3E1A 6046     
 0065               ***************************************************************
 0066               * Step 3: Include main editor modules
 0067               ********|*****|*********************|**************************
@@ -14385,6 +14389,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEF.CLIP.FNAME.A.... >3DC9 :     
     DEF.CLIP.FNAME.B.... >3DD4 :     
     DEF.DEVICES......... >3DDE :     
+    DEF.FG99.FNAME...... >3E0E :     
     DEF.PRINTER.FNAME... >3DC2 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     

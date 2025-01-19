@@ -54,6 +54,13 @@ dialog.cart.fg99.setup:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.blink    ; Blink cursor
+
+        bl    @cmdb.cmd.clear       ; Clear current command
+        ;-------------------------------------------------------
+        ; Set default cartridge name
+        ;-------------------------------------------------------
+        bl    @cpym2m
+              data def.fg99.fname,cmdb.cmdall,5
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

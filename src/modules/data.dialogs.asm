@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.7.1   '
+            text '  Stevie 1.7.2   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.7.1   '     
+            text '  Stevie 1.7.2   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.7.1   '
+            text '  Stevie 1.7.2   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.7.1   '  
+            text '  Stevie 1.7.2   '  
             even
         .endif
 
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.7.1  - (c)2018-2025 Filip Van Vooren'
+                   text ' - Stevie 1.7.2  - (c)2018-2025 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -213,7 +213,7 @@ txt.keys.cart.type  stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 txt.head.cart.fg99   byte 16,4,1
                      text ' FinalGROM 99 '
-txt.hint.cart.fg99   stri 'Enter filename (max. 8 char) without .bin extension.'
+txt.hint.cart.fg99   stri 'Enter filename without .bin extension (max. 8 char).'
 txt.hint.cart.fg992  stri 'Load cartridge from SD card. Image must be in same directory as Stevie.'
 txt.keys.cart.fg99   stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
                      even
