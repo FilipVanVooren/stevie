@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250119-1835130
+0002               * BUILD: 250119-1957410
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -902,13 +902,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
 0042                                                   ; 15 /
 0043               
-0044 6010 1553             stri 'STEVIE 1.7.1 MEMRESET'
+0044 6010 1553             stri 'STEVIE 1.7.2 MEMRESET'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 372E     
-     601C 3120     
+     601C 3220     
      601E 4D45     
      6020 4D52     
      6022 4553     
@@ -925,13 +925,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054 6028 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0055                                                   ; 15 /
 0056               
-0058 602A 0C53                 stri 'STEVIE 1.7.1'
+0058 602A 0C53                 stri 'STEVIE 1.7.2'
      602C 5445     
      602E 5649     
      6030 4520     
      6032 312E     
      6034 372E     
-     6036 31       
+     6036 32       
 0060               
 0064               
 0068               

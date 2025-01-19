@@ -60,7 +60,7 @@ dialog.cart.fg99.setup:
         ; Set default cartridge name
         ;-------------------------------------------------------
         bl    @cpym2m
-              data def.fg99.fname,cmdb.cmdall,5
+              data def.fg99.fname,cmdb.cmdall,6
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
