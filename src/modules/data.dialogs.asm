@@ -201,8 +201,8 @@ txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 txt.head.cart.type  byte 13,4,1
                     text ' Cartridge '
-txt.info.cart.type  stri 'FinalGROM 99   StrangeCart'
-pos.info.cart.type  byte 0,15,>ff
+txt.info.cart.type  stri 'FinalGROM 99'
+pos.info.cart.type  byte 0,>ff
 txt.hint.cart.type2 stri 'Select currently inserted cartridge.'
 txt.hint.cart.type  stri ''
 txt.keys.cart.type  stri 'F9-Back  SPACE-Close menu'

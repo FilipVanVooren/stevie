@@ -424,8 +424,8 @@ keymap_actions.cmdb:
         byte  key.uc.f, id.dialog.cart.type
         data  dialog.cart.fg99
 
-        byte  key.uc.s, id.dialog.cart.type
-        data  strg.module
+        ; byte  key.uc.s, id.dialog.cart.type
+        ; data  strg.module
         ;-------------------------------------------------------
         ; Dialog: FinalGROM 99
         ;-------------------------------------------------------
