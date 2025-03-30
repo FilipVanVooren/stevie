@@ -77,8 +77,6 @@ isr.exit:
         mov   @rambuf,r7            ; Restore R7
         b     *r11                  ; Return from ISR
 
-blabla  byte  >0d,>0d
-
 
 ***************************************************************
 * isr.scan.crunbuf

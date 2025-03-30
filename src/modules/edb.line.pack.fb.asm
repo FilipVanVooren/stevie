@@ -66,12 +66,6 @@ edb.line.pack.fb.scan:
                                     ; Stop scan if >00 found
         inc   tmp0                  ; Increase string length
         ;------------------------------------------------------
-        ; Check for trailing whitespace
-        ;------------------------------------------------------
-        ci    tmp2,32               ; Was it a space character?
-        jeq   edb.line.pack.fb.check80
-        mov   tmp0,tmp3
-        ;------------------------------------------------------
         ; Not more than 80 characters
         ;------------------------------------------------------
 edb.line.pack.fb.check80:
@@ -85,37 +79,12 @@ edb.line.pack.fb.check80:
 edb.line.pack.fb.crash:
         mov   r11,@>ffce            ; \ Save caller address
         bl    @cpu.crash            ; / Crash and halt system
-        ;------------------------------------------------------
-        ; Check if highest SAMS page needs to be increased
-        ;------------------------------------------------------
 edb.line.pack.fb.check_setpage:
-        c     tmp3,tmp0             ; Trailing whitespace in line?
-        jlt   edb.line.pack.fb.rtrim
-        mov   tmp0,@rambuf+4        ; Save full length of line
-        jmp   !
-edb.line.pack.fb.rtrim:
-        ;------------------------------------------------------
-        ; Remove trailing blanks from line
-        ;------------------------------------------------------
-        mov   tmp3,@rambuf+4        ; Save line length without trailing blanks
-
-        clr   tmp1                  ; tmp1 = Character to fill (>00)
-
-        mov   tmp0,tmp2             ; \
-        s     tmp3,tmp2             ; | tmp2 = Repeat count
-        inc   tmp2                  ; /
-
-        mov   tmp3,tmp0             ; \
-        a     @rambuf+2,tmp0        ; / tmp0 = Start address in CPU memory
-
-edb.line.pack.fb.rtrim.loop:
-        movb  tmp1,*tmp0+
-        dec   tmp2
-        jgt   edb.line.pack.fb.rtrim.loop
         ;------------------------------------------------------
         ; Check and increase highest SAMS page
         ;------------------------------------------------------
-!       bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
+        mov   tmp0,@rambuf+4        ; Save full length of line
+        bl    @edb.hipage.alloc     ; Check and increase highest SAMS page
                                     ; \ i  @edb.next_free.ptr = Pointer to next
                                     ; /                         free line
         ;------------------------------------------------------

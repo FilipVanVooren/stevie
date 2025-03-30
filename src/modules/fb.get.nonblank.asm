@@ -17,7 +17,7 @@ fb.get.nonblank:
         ;------------------------------------------------------
         ; Prepare for scanning
         ;------------------------------------------------------
-        clr   @fb.column
+        clr   @fb.column            ; Start from column 0
         
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB

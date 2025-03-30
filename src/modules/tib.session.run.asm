@@ -108,6 +108,9 @@ tib.run.init.basic1:
               data >06f8,tibasic.patterns,8
                                     ; Copy pattern TI-Basic session ID 1
 
+        bl    @cpym2v
+              data >0320,old.basic.prg,16
+
         jmp   tib.run.init.rest     ; Continue initialisation
 
         ;-------------------------------------------------------
@@ -186,10 +189,10 @@ tib.run.init.rest:
         ;-------------------------------------------------------
         ; Poke some values
         ;-------------------------------------------------------
-        mov   @tibasic.scrpad.83d4,@>83d4
-        mov   @tibasic.scrpad.83fa,@>83fa
-        mov   @tibasic.scrpad.83fc,@>83fc
-        mov   @tibasic.scrpad.83fe,@>83fe
+        mov   @tibasic.scrpad.83d4,@>83d4  ; VDPR1
+        mov   @tibasic.scrpad.83fa,@>83fa  ; GBASE
+        mov   @tibasic.scrpad.83fc,@>83fc  ; FLAGS
+        mov   @tibasic.scrpad.83fe,@>83fe  ; VDP write port
         ;-------------------------------------------------------
         ; Register ISR hook in scratch pad
         ;-------------------------------------------------------
@@ -204,6 +207,7 @@ tib.run.init.rest:
         ; Run TI Basic session in GPL Interpreter
         ;-------------------------------------------------------
         lwpi  >83e0
+        li    r1,>2014
         li    r1,>216f              ; Entrypoint for GPL TI Basic interpreter
         movb  r1,@grmwa             ; \
         swpb  r1                    ; | Set GPL address
@@ -302,15 +306,26 @@ tibasic.resume.load:
         ; Required values for TI Basic scratchpad
         ;-------------------------------------------------------
 tibasic.scrpad.83d4:
-        data  >e000
+        data  >e000                 ; \ 1 byte (>83d4) VDPR1
+                                    ; | VDP R1 contents, used by the key scan
+                                    ; | routine to restore screen after it has
+                                    ; / blanked.
+
 tibasic.scrpad.83fa:
-        data  >9800
+        data  >9800                 ; \ 2 bytes (>83fa) GBASE
+                                    ; | GROM port currently used (>9800)
+                                    ; /
+
 tibasic.scrpad.83fc:
-        data  >0108
+        data  >0100                 ; \ 1 byte (>83fd) FLAGS
+                                    ; | System flags
+                                    ; | bit 6=1, screen is in multi-color mode
+                                    ; / bit 7=1, sound list in VDP else GRAM
+
 tibasic.scrpad.83fe:
-        data  >8c02
-
-
+        data  >8c02                 ; \ 2 bytes (83fe) 
+                                    ; | VDP Write Address port (>8c02)
+                                    ; /
 
 
 ***************************************************************
@@ -322,3 +337,7 @@ tibasic.patterns:
         byte  >00,>7E,>C3,>F3,>C3,>F3,>C3,>7E ; 3
         byte  >00,>7E,>D3,>D3,>C3,>F3,>F3,>7E ; 4
         byte  >00,>7E,>C3,>CF,>C3,>F3,>C3,>7E ; 5
+
+old.basic.prg:
+        byte  >06,>C8,>0B,>44,>53,>4B,>31,>2E
+        byte  >48,>57,>3B,>42,>41,>53,>00,>0F
