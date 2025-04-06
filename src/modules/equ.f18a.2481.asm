@@ -9,8 +9,8 @@
 vdp.sit.base              equ  >0000   ; VDP SIT base address
 vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 24 rows
 vdp.tat.base              equ  >0980   ; VDP TAT base address
-vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
-vdp.pdt.base              equ  >1000   ; VDP PDT base address
+vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 60 rows
+vdp.pdt.base              equ  >1800   ; VDP PDT base address
 
 vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
 vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
