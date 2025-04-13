@@ -130,10 +130,24 @@ pane.cmdb.draw.marker.loop:
 
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
 
         bl    @putstr
               data txt.keymarker    ; Show key marker
+        ;------------------------------------------------------
+        ; Write color to TAT
+        ;------------------------------------------------------
+        bl    @yx2pnt               ; Get VDP PNT address for current YX pos.
+                                    ; \ i  @wyx = Cursor position
+                                    ; / o  tmp0 = VDP target address
 
+        ai    tmp0,vdp.tat.base-80  ; Position above markers
+        mov   @tv.cmdb.hcolor,tmp1  ; Get color combination
+        bl    @xvputb               ; Dump character to VDP
+                                    ; \ i  tmp0 = VDP write address
+                                    ; / i  tmp1 = Byte to write (LSB)
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         ;------------------------------------------------------
         ; Show marker

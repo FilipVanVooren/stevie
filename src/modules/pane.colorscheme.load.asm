@@ -206,7 +206,6 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All 5 rows
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
@@ -233,6 +232,8 @@ pane.colorscheme.cmdbpane:
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
+
+        bl    @pane.cmdb.draw       ; Draw CMDB pane  
         ;-------------------------------------------------------
         ; Exit early if only CMDB needed to be colorized
         ;-------------------------------------------------------
