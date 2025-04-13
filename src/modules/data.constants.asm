@@ -68,18 +68,18 @@ tv.colorscheme.entries  equ 12        ; Entries in table
 tv.colorscheme.table:
         ;                             ; 
         ;      ABCD  EFGH  IJKL  MNOP ; 
-        data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch
+        data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch (1)
         data  >21f0,>21ff,>f112,>21ff ; 2  Dark green on black (minimalistic)
         data  >a11a,>f0ff,>1f1a,>f1ff ; 3  Dark yellow on black
         data  >1e1e,>1e11,>1ee1,>1e11 ; 4  Black on grey (minimalistic)        
-        data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch mono
+        data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch (2)
         data  >1313,>1311,>1331,>1311 ; 6  Black on light green (minimalistic)
         data  >1771,>1011,>0171,>1711 ; 7  Black on cyan        
         data  >2112,>f0ff,>1f12,>f1f6 ; 8  Dark green on black         
         data  >1ff1,>1011,>f1f1,>1f11 ; 9  Black on white
         data  >1af1,>a111,>1f1f,>f11f ; 10 Black on dark yellow
         data  >1919,>1911,>1991,>1911 ; 11 Black on light red (minimalistic)
-        data  >fdf1,>1d11,>fddf,>1d11 ; 12 White on magenta
+        data  >f41f,>f1f1,>1b1f,>7111 ; 12  White on blue with cyan touch (3)
         even
 
 ***************************************************************

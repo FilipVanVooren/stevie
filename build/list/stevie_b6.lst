@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250413-2049450
+0002               * BUILD: 250413-2112080
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -8998,7 +8998,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0068               tv.colorscheme.table:
 0069                       ;                             ;
 0070                       ;      ABCD  EFGH  IJKL  MNOP ;
-0071 3928 F417             data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch
+0071 3928 F417             data  >f417,>f171,>1b1f,>7111 ; 1  White on blue with cyan touch (1)
      392A F171     
      392C 1B1F     
      392E 7111     
@@ -9014,7 +9014,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3942 1E11     
      3944 1EE1     
      3946 1E11     
-0075 3948 F417             data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch mono
+0075 3948 F417             data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch (2)
      394A 7171     
      394C 1B1F     
      394E 7111     
@@ -9042,10 +9042,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      397A 1911     
      397C 1991     
      397E 1911     
-0082 3980 FDF1             data  >fdf1,>1d11,>fddf,>1d11 ; 12 White on magenta
-     3982 1D11     
-     3984 FDDF     
-     3986 1D11     
+0082 3980 F41F             data  >f41f,>f1f1,>1b1f,>7111 ; 12  White on blue with cyan touch (3)
+     3982 F1F1     
+     3984 1B1F     
+     3986 7111     
 0083                       even
 0084               
 0085               ***************************************************************
