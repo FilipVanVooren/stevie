@@ -72,7 +72,7 @@ tv.colorscheme.table:
         data  >21f0,>21ff,>f112,>21ff ; 2  Dark green on black (minimalistic)
         data  >a11a,>f0ff,>1f1a,>f1ff ; 3  Dark yellow on black
         data  >1e1e,>1e11,>1ee1,>1e11 ; 4  Black on grey (minimalistic)        
-        data  >151f,>1511,>1f1f,>1511 ; 5  Black on light blue        
+        data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch mono
         data  >1313,>1311,>1331,>1311 ; 6  Black on light green (minimalistic)
         data  >1771,>1011,>0171,>1711 ; 7  Black on cyan        
         data  >2112,>f0ff,>1f12,>f1f6 ; 8  Dark green on black         

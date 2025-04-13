@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250413-1954160
+0002               * BUILD: 250413-2049450
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -9258,10 +9258,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7A6E 1E11     
      7A70 1EE1     
      7A72 1E11     
-0075 7A74 151F             data  >151f,>1511,>1f1f,>1511 ; 5  Black on light blue
-     7A76 1511     
-     7A78 1F1F     
-     7A7A 1511     
+0075 7A74 F417             data  >f417,>7171,>1b1f,>7111 ; 5  White on blue with cyan touch mono
+     7A76 7171     
+     7A78 1B1F     
+     7A7A 7111     
 0076 7A7C 1313             data  >1313,>1311,>1331,>1311 ; 6  Black on light green (minimalistic)
      7A7E 1311     
      7A80 1331     
