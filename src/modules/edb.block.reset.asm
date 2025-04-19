@@ -49,7 +49,7 @@ edb.block.reset:
         ; Remove markers
         ;------------------------------------------------------
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; /         

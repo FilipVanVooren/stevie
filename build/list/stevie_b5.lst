@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2011520
+0002               * BUILD: 250419-2022100
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -10520,7 +10520,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6362 C820  54         mov   @tv.color,@parm1      ; Set normal color
      6364 A218     
      6366 A006     
-0052 6368 06A0  32         bl    @pane.colorscheme.statlines
+0052 6368 06A0  32         bl    @pane.colorscheme.botline
      636A 6552     
 0053                                                   ; Set color combination for status lines
 0054                                                   ; \ i  @parm1 = Color combination
@@ -10609,7 +10609,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      63AE A21C     
      63B0 A006     
 0059               
-0060 63B2 06A0  32         bl    @pane.colorscheme.statlines
+0060 63B2 06A0  32         bl    @pane.colorscheme.botline
      63B4 6552     
 0061                                                   ; Set color combination for status lines
 0062                                                   ; \ i  @parm1 = Color combination
@@ -10813,7 +10813,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0084 648C C820  54 !       mov   @tv.busycolor,@parm1  ; Get busy color
      648E A21C     
      6490 A006     
-0085 6492 06A0  32         bl    @pane.colorscheme.statlines
+0085 6492 06A0  32         bl    @pane.colorscheme.botline
      6494 6552     
 0086                                                   ; Set color combination for status lines
 0087                                                   ; \ i  @parm1 = Color combination
@@ -10984,7 +10984,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0048               * Stub for "pane.colorscheme.load"
 0049               * bank1 vec.31
 0050               ********|*****|*********************|**************************
-0051               pane.colorscheme.load
+0051               pane.colorscheme.load:
 0052 6540 0649  14         dect  stack
 0053 6542 C64B  30         mov   r11,*stack            ; Save return address
 0054                       ;------------------------------------------------------
@@ -11006,7 +11006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0069               * Stub for "pane.action.colorscheme.statuslines"
 0070               * bank1 vec.32
 0071               ********|*****|*********************|**************************
-0072               pane.colorscheme.statlines
+0072               pane.colorscheme.botline:
 0073 6552 0649  14         dect  stack
 0074 6554 C64B  30         mov   r11,*stack            ; Save return address
 0075                       ;------------------------------------------------------
@@ -12183,8 +12183,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
     PANE.BOTROW......... >001D :     
+    PANE.COLORSCHEME.BOTLINE >6552 :     
     PANE.COLORSCHEME.LOAD >6540 :     
-    PANE.COLORSCHEME.STATLINES >6552 :     
     PANE.ERRLINE.SHOW... >651C :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     

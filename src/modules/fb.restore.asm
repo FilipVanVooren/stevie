@@ -39,7 +39,7 @@ fb.restore:
         ; Color status lines
         ;------------------------------------------------------
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; /

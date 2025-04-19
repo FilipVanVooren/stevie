@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2011520
+0002               * BUILD: 250419-2022100
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -15402,10 +15402,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: Set color combination for status lines
 0003               
 0004               ***************************************************************
-0005               * pane.colorscheme.statlines
+0005               * pane.colorscheme.botline
 0006               * Set color combination for status lines
 0007               ***************************************************************
-0008               * bl @pane.colorscheme.statlines
+0008               * bl @pane.colorscheme.botline
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * @parm1 = Color combination to set
@@ -15416,7 +15416,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0016               * Register usage
 0017               * tmp0
 0018               ********|*****|*********************|**************************
-0019               pane.colorscheme.statlines:
+0019               pane.colorscheme.botline:
 0020 7534 0649  14         dect  stack
 0021 7536 C64B  30         mov   r11,*stack            ; Save return address
 0022 7538 0649  14         dect  stack
@@ -15435,7 +15435,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                       ;------------------------------------------------------
 0033                       ; Exit
 0034                       ;------------------------------------------------------
-0035               pane.colorscheme.statlines.exit:
+0035               pane.colorscheme.botline.exit:
 0036 7548 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0037 754A C2F9  30         mov   *stack+,r11           ; Pop R11
 0038 754C 045B  20         b     *r11                  ; Return to caller
@@ -18350,7 +18350,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041 7FA8 754E     vec.29  data  pane.cursor.hide      ;
 0042 7FAA 79EA     vec.30  data  pane.errline.show     ;
 0043 7FAC 7324     vec.31  data  pane.colorscheme.load
-0044 7FAE 7534     vec.32  data  pane.colorscheme.statlines
+0044 7FAE 7534     vec.32  data  pane.colorscheme.botline
 0045               *--------------------------------------------------------------
 0046               * ROM 1: Vectors 33-64
 0047               *--------------------------------------------------------------
@@ -19554,6 +19554,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.CMDB.HIDE.VECTOR >7868 :     
     PANE.CMDB.SHOW...... >7856 :     
     PANE.CMDB.SHOW.VECTOR >785E :     
+    PANE.COLORSCHEME.BOTLINE >7534 :     
+    PANE.COLORSCHEME.BOTLINE.EXIT >7548 :     
     PANE.COLORSCHEME.CHECKCMDB >73F8 :     
     PANE.COLORSCHEME.CMDBPANE >7428 :     
     PANE.COLORSCHEME.CURSORCOLOR >74F2 :     
@@ -19568,8 +19570,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.COLORSCHEME.LOAD.EXIT >7516 :     
     PANE.COLORSCHEME.RULER >74D4 :     
     PANE.COLORSCHEME.STATLINE >74B4 :     
-    PANE.COLORSCHEME.STATLINES >7534 :     
-    PANE.COLORSCHEME.STATLINES.EXIT >7548 :     
     PANE.CURSOR.BLINK... >756C :     
     PANE.CURSOR.BLINK.EXIT >7588 :     
     PANE.CURSOR.HIDE.... >754E :     

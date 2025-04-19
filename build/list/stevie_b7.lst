@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2011520
+0002               * BUILD: 250419-2022100
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11468,7 +11468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042 6686 C820  54         mov   @tv.busycolor,@parm1  ; Get busy color
      6688 A21C     
      668A A006     
-0043 668C 06A0  32         bl    @pane.colorscheme.statlines
+0043 668C 06A0  32         bl    @pane.colorscheme.botline
      668E 6BFE     
 0044                                                   ; Set color combination for status line
 0045                                                   ; \ i  @parm1 = Color combination
@@ -12876,7 +12876,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049               * Stub for "pane.action.colorscheme.statline"
 0050               * bank1 vec.32
 0051               ********|*****|*********************|**************************
-0052               pane.colorscheme.statlines:
+0052               pane.colorscheme.botline:
 0053 6BFE 0649  14         dect  stack
 0054 6C00 C64B  30         mov   r11,*stack            ; Save return address
 0055                       ;------------------------------------------------------
@@ -14881,8 +14881,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
     PANE.BOTROW......... >001D :     
+    PANE.COLORSCHEME.BOTLINE >6BFE :     
     PANE.COLORSCHEME.LOAD >6BEC :     
-    PANE.COLORSCHEME.STATLINES >6BFE :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >3818 :     

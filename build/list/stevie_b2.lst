@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2011520
+0002               * BUILD: 250419-2022100
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -14963,7 +14963,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0111               * Stub for "pane.action.colorscheme.statuslines"
 0112               * bank1 vec.32
 0113               ********|*****|*********************|**************************
-0114               pane.colorscheme.statlines
+0114               pane.colorscheme.botline
 0115 7662 0649  14         dect  stack
 0116 7664 C64B  30         mov   r11,*stack            ; Save return address
 0117                       ;------------------------------------------------------
@@ -16696,8 +16696,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.BOTROW......... >001D :     
     PANE.CMDB.HIDE...... >7686 :     
     PANE.CMDB.SHOW...... >7674 :     
+    PANE.COLORSCHEME.BOTLINE >7662 :     
     PANE.COLORSCHEME.LOAD >7650 :     
-    PANE.COLORSCHEME.STATLINES >7662 :     
     PANE.CURSOR.HIDE.... >762C :     
     PANE.ERRLINE.SHOW... >763E :     
     PANE.FILEBROWSER.... >76CE :     

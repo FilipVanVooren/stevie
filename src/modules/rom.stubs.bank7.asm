@@ -49,7 +49,7 @@ pane.colorscheme.load:
 * Stub for "pane.action.colorscheme.statline"
 * bank1 vec.32
 ********|*****|*********************|**************************
-pane.colorscheme.statlines:
+pane.colorscheme.botline:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

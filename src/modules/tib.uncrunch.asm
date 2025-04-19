@@ -40,7 +40,7 @@ tib.uncrunch:
         mov   @data.filename.ptr(tmp0),@edb.filename.ptr
 
         mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; /

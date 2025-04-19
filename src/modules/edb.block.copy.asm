@@ -82,7 +82,7 @@ edb.block.copy:
         ; Display message Copy/Move
         ;------------------------------------------------------
 !       mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 

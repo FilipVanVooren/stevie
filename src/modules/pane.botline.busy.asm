@@ -29,7 +29,7 @@ pane.botline.busy.on:
               data EOL              ; Clear hint on bottom row
 
         mov   @tv.busycolor,@parm1  ; Get busy color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
@@ -70,7 +70,7 @@ pane.botline.busy.off:
               data EOL              ; Erase indicator in bottom row
 
         mov   @tv.color,@parm1      ; Set normal color
-        bl    @pane.colorscheme.statlines
+        bl    @pane.colorscheme.botline
                                     ; Set color combination for status lines
                                     ; \ i  @parm1 = Color combination
                                     ; / 
