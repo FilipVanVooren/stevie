@@ -59,7 +59,7 @@ tv.colorscheme.table:
         data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)        
         data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
         data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
-        data  >1e1e,>1e11,>1ee1,>1e11,>1e00 ; 4  Black on grey
+        data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey
         data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
         data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
         data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan        
