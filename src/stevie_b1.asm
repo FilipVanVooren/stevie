@@ -160,6 +160,7 @@ main:
         ; Program data
         ;-----------------------------------------------------------------------
         copy  "data.keymap.actions.asm"     ; Keyboard actions
+        copy  "data.colorstable.asm"        ; Colorscheme data table
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

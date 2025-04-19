@@ -25,6 +25,7 @@
 ;-----------------------------------------------------------------
 pane.focus.fb             equ  0       ; Editor pane has focus
 pane.focus.cmdb           equ  1       ; Command buffer pane has focus
+tv.colorscheme.entries    equ 12       ; Entries in colorscheme table
 ;-----------------------------------------------------------------
 ;   Dialog ID's
 ;-----------------------------------------------------------------

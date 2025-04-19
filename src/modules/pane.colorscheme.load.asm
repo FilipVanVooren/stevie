@@ -46,37 +46,44 @@ pane.colorscheme.load:
         jeq   !                     ; Yes, so skip screen off
         bl    @scroff               ; Turn screen off
         ;-------------------------------------------------------
-        ; Get FG/BG colors framebuffer text
+        ; Calculate index into colorscheme table
         ;-------------------------------------------------------
-!       mov   @tv.colorscheme,tmp0  ; Get color scheme index
-        dec   tmp0                  ; Internally work with base 0
-
-        sla   tmp0,3                ; Offset into color scheme data table
-        ai    tmp0,tv.colorscheme.table
-                                    ; Add base for color scheme data table
+!       mov   @tv.colorscheme,tmp0      ; Get color scheme index
+        dec   tmp0                      ; Internally work with base 0
+        mov   tmp0,tmp1                 ; \
+        sla   tmp0,3                    ; | index = index * 10
+        sla   tmp1,1                    ; | 
+        a     tmp1,tmp0                 ; /
+        ai    tmp0,tv.colorscheme.table ; Add base for color scheme data table                                    
+        ;-------------------------------------------------------
+        ; ABCD) Get FG/BG colors framebuffer text
+        ;-------------------------------------------------------
         mov   *tmp0+,tmp3           ; Get colors ABCD
         mov   tmp3,@tv.color        ; Save colors ABCD
         ;-------------------------------------------------------
-        ; Get and save cursor color
+        ; EFGH) Get and save cursor color
         ;-------------------------------------------------------
         mov   *tmp0,tmp4            ; Get colors EFGH
         andi  tmp4,>00ff            ; Only keep LSB (GH)
         mov   tmp4,@tv.curcolor     ; Save cursor color
         ;-------------------------------------------------------
-        ; Get FG/BG colors framebuffer marked text & CMDB pane
+        ; EFGH) Get FG/BG colors framebuffer marked text & CMDB pane
         ;-------------------------------------------------------
         mov   *tmp0+,tmp4           ; Get colors EFGH again
         andi  tmp4,>ff00            ; Only keep MSB (EF)
         srl   tmp4,8                ; MSB to LSB
-
+        ;-------------------------------------------------------
+        ; IJKL) Get busy and marker colors
+        ;-------------------------------------------------------
         mov   *tmp0+,tmp1           ; Get colors IJKL
         mov   tmp1,tmp2             ; \ Right align IJ and
         srl   tmp2,8                ; | save to @tv.busycolor
-        mov   tmp2,@tv.busycolor    ; /
-
+        mov   tmp2,@tv.busycolor    ; |
         andi  tmp1,>00ff            ; | save KL to @tv.markcolor
         mov   tmp1,@tv.markcolor    ; /
-
+        ;-------------------------------------------------------
+        ; MNOP) Colors CMDB header line
+        ;-------------------------------------------------------
         mov   *tmp0,tmp1            ; Get colors MNOP
         srl   tmp1,8                ; \ Right align MN and
         mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
@@ -87,14 +94,14 @@ pane.colorscheme.load:
         jeq   pane.colorscheme.cmdbpane
                                     ; Yes, shortcut jump to CMDB pane
         ;-------------------------------------------------------
-        ; Get FG color for ruler
+        ; MNOP) Get ruler and line/col counters color
         ;-------------------------------------------------------
         mov   *tmp0,tmp1            ; Get colors MNOP
         andi  tmp1,>000f            ; Only keep P
         sla   tmp1,4                ; Make it a FG/BG combination
         mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
         ;-------------------------------------------------------
-        ; Write sprite color of line and column indicators to SAT
+        ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
         mov   *tmp0,tmp1            ; Get colors MNOP
         andi  tmp1,>00f0            ; Only keep O
@@ -114,7 +121,6 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         mov   @tv.ruler.visible,tmp0
         jeq   pane.colorscheme.fbdump.noruler
-
         mov   @cmdb.dialog,tmp0
         ci    tmp0,id.dialog.help   ; Help dialog active?
         jeq   pane.colorscheme.fbdump.noruler
@@ -204,7 +210,7 @@ pane.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
-        ; Dump colors for CMDB pane content (TAT)
+        ; Row 1-5: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All 5 rows
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
@@ -214,7 +220,9 @@ pane.colorscheme.cmdbpane:
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
-
+        ;-------------------------------------------------------
+        ; Row 1: Dump colors for CMDB pane content (TAT)
+        ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 1
         ai    tmp0,82               ; / VDP start address (CMDB top line + 1)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
@@ -223,7 +231,9 @@ pane.colorscheme.cmdbpane:
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
-
+        ;-------------------------------------------------------
+        ; Row 4: Dump colors for CMDB pane content (TAT)
+        ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
         ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
         mov   tmp4,tmp1             ; Get work copy fg/bg color
