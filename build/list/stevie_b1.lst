@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2006010
+0002               * BUILD: 250419-2011520
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -18083,124 +18083,127 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0574                       ;-------------------------------------------------------
 0575 7E78 FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
-0163                       copy  "data.colorstable.asm"        ; Colorscheme data table
-     **** ****     > data.colorstable.asm
-0001               ***************************************************************
-0002               * Stevie color schemes table
-0003               *--------------------------------------------------------------
-0004               * ;
-0005               * ; Word 0
-0006               * ; A  MSB  high-nibble    Foreground color text line in frame buffer
-0007               * ; B  MSB  low-nibble     Background color text line in frame buffer
-0008               * ; C  LSB  high-nibble    Foreground color top line
-0009               * ; D  LSB  low-nibble     Background color top line
-0010               *
-0011               * ; Word 1
-0012               * ; E  MSB  high-nibble    Foreground color cmdb pane
-0013               * ; F  MSB  low-nibble     Background color cmdb pane
-0014               * ; G  LSB  high-nibble    Cursor foreground color cmdb pane
-0015               * ; H  LSB  low-nibble     Cursor foreground color frame buffer
-0016               * ;
-0017               * ; Word 2
-0018               * ; I  MSB  high-nibble    Foreground color busy top/bottom line
-0019               * ; J  MSB  low-nibble     Background color busy top/bottom line
-0020               * ; K  LSB  high-nibble    Foreground color marked line in frame buffer
-0021               * ; L  LSB  low-nibble     Background color marked line in frame buffer
-0022               *
-0023               * ; Word 3
-0024               * ; M  MSB  high-nibble    Foreground color command buffer header line
-0025               * ; N  MSB  low-nibble     Background color command buffer header line
-0026               * ; O  LSB  high-nibble    Foreground color line+column indicator frame buffer
-0027               * ; P  LSB  low-nibble     Foreground color ruler frame buffer
-0028               *
-0029               * ; Word 4
-0030               * ; Q  MSB  high-nibble    Foreground color bottom line
-0031               * ; R  LSB  low-nibble     Background color bottom line
-0032               * ; S  MSB  high-nibble
-0033               * ; T  LSB  low-nibble
-0034               *
-0035               * ; Colors
-0036               * ; 0  Transparant
-0037               * ; 1  black
-0038               * ; 2  Green
-0039               * ; 3  Light Green
-0040               * ; 4  Blue
-0041               * ; 5  Light Blue
-0042               * ; 6  Dark Red
-0043               * ; 7  Cyan
-0044               * ; 8  Red
-0045               * ; 9  Light Red
-0046               * ; A  Yellow
-0047               * ; B  Light Yellow
-0048               * ; C  Dark Green
-0049               * ; D  Magenta
-0050               * ; E  Grey
-0051               * ; F  White
-0052               *--------------------------------------------------------------
-0053               tv.colorscheme.table:
-0054                       ;      0     2     4     6     8
-0055                       ;      ABCD  EFGH  IJKL  MNOP  QRST ;
-0056 7E7A F417             data  >f417,>f171,>1b1f,>7111,>0000 ; 1  White on blue with cyan (1)
+0163                       copy  "data.colorscheme.asm"        ; Colorscheme data table
+     **** ****     > data.colorscheme.asm
+0001               * FILE......: data.colorscheme.asm
+0002               * Purpose...: Stevie Editor - Color schemes table
+0003               
+0004               ***************************************************************
+0005               * Stevie color schemes table
+0006               *--------------------------------------------------------------
+0007               * ;
+0008               * ; Word 0
+0009               * ; A  MSB  high-nibble    Foreground color text line in frame buffer
+0010               * ; B  MSB  low-nibble     Background color text line in frame buffer
+0011               * ; C  LSB  high-nibble    Foreground color top line
+0012               * ; D  LSB  low-nibble     Background color top line
+0013               *
+0014               * ; Word 1
+0015               * ; E  MSB  high-nibble    Foreground color cmdb pane
+0016               * ; F  MSB  low-nibble     Background color cmdb pane
+0017               * ; G  LSB  high-nibble    Cursor foreground color cmdb pane
+0018               * ; H  LSB  low-nibble     Cursor foreground color frame buffer
+0019               * ;
+0020               * ; Word 2
+0021               * ; I  MSB  high-nibble    Foreground color busy top/bottom line
+0022               * ; J  MSB  low-nibble     Background color busy top/bottom line
+0023               * ; K  LSB  high-nibble    Foreground color marked line in frame buffer
+0024               * ; L  LSB  low-nibble     Background color marked line in frame buffer
+0025               *
+0026               * ; Word 3
+0027               * ; M  MSB  high-nibble    Foreground color command buffer header line
+0028               * ; N  MSB  low-nibble     Background color command buffer header line
+0029               * ; O  LSB  high-nibble    Foreground color line+column indicator frame buffer
+0030               * ; P  LSB  low-nibble     Foreground color ruler frame buffer
+0031               *
+0032               * ; Word 4
+0033               * ; Q  MSB  high-nibble    Foreground color bottom line
+0034               * ; R  LSB  low-nibble     Background color bottom line
+0035               * ; S  MSB  high-nibble
+0036               * ; T  LSB  low-nibble
+0037               *
+0038               * ; Colors
+0039               * ; 0  Transparant
+0040               * ; 1  black
+0041               * ; 2  Green
+0042               * ; 3  Light Green
+0043               * ; 4  Blue
+0044               * ; 5  Light Blue
+0045               * ; 6  Dark Red
+0046               * ; 7  Cyan
+0047               * ; 8  Red
+0048               * ; 9  Light Red
+0049               * ; A  Yellow
+0050               * ; B  Light Yellow
+0051               * ; C  Dark Green
+0052               * ; D  Magenta
+0053               * ; E  Grey
+0054               * ; F  White
+0055               *--------------------------------------------------------------
+0056               tv.colorscheme.table:
+0057                       ;      0     2     4     6     8
+0058                       ;      ABCD  EFGH  IJKL  MNOP  QRST ;
+0059 7E7A F417             data  >f417,>f171,>1b1f,>7111,>0000 ; 1  White on blue with cyan (1)
      7E7C F171     
      7E7E 1B1F     
      7E80 7111     
      7E82 0000     
-0057 7E84 21F0             data  >21f0,>21ff,>f112,>21ff,>0000 ; 2  Dark green on black
+0060 7E84 21F0             data  >21f0,>21ff,>f112,>21ff,>0000 ; 2  Dark green on black
      7E86 21FF     
      7E88 F112     
      7E8A 21FF     
      7E8C 0000     
-0058 7E8E A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>0000 ; 3  Dark yellow on black
+0061 7E8E A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>0000 ; 3  Dark yellow on black
      7E90 F0FF     
      7E92 1F1A     
      7E94 F1FF     
      7E96 0000     
-0059 7E98 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>0000 ; 4  Black on grey
+0062 7E98 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>0000 ; 4  Black on grey
      7E9A 1E11     
      7E9C 1EE1     
      7E9E 1E11     
      7EA0 0000     
-0060 7EA2 F417             data  >f417,>7171,>1b1f,>7111,>0000 ; 5  White on blue with cyan (2)
+0063 7EA2 F417             data  >f417,>7171,>1b1f,>7111,>0000 ; 5  White on blue with cyan (2)
      7EA4 7171     
      7EA6 1B1F     
      7EA8 7111     
      7EAA 0000     
-0061 7EAC 1313             data  >1313,>1311,>1331,>1311,>0000 ; 6  Black on light green
+0064 7EAC 1313             data  >1313,>1311,>1331,>1311,>0000 ; 6  Black on light green
      7EAE 1311     
      7EB0 1331     
      7EB2 1311     
      7EB4 0000     
-0062 7EB6 1771             data  >1771,>1011,>0171,>1711,>0000 ; 7  Black on cyan
+0065 7EB6 1771             data  >1771,>1011,>0171,>1711,>0000 ; 7  Black on cyan
      7EB8 1011     
      7EBA 0171     
      7EBC 1711     
      7EBE 0000     
-0063 7EC0 2112             data  >2112,>f0ff,>1f12,>f1f6,>0000 ; 8  Dark green on black
+0066 7EC0 2112             data  >2112,>f0ff,>1f12,>f1f6,>0000 ; 8  Dark green on black
      7EC2 F0FF     
      7EC4 1F12     
      7EC6 F1F6     
      7EC8 0000     
-0064 7ECA 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>0000 ; 9  Black on white
+0067 7ECA 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>0000 ; 9  Black on white
      7ECC 1011     
      7ECE F1F1     
      7ED0 1F11     
      7ED2 0000     
-0065 7ED4 1AF1             data  >1af1,>a111,>1f1f,>f11f,>0000 ; 10 Black on dark yellow
+0068 7ED4 1AF1             data  >1af1,>a111,>1f1f,>f11f,>0000 ; 10 Black on dark yellow
      7ED6 A111     
      7ED8 1F1F     
      7EDA F11F     
      7EDC 0000     
-0066 7EDE 1919             data  >1919,>1911,>1991,>1911,>0000 ; 11 Black on light red
+0069 7EDE 1919             data  >1919,>1911,>1991,>1911,>0000 ; 11 Black on light red
      7EE0 1911     
      7EE2 1991     
      7EE4 1911     
      7EE6 0000     
-0067 7EE8 F41F             data  >f41f,>f1f1,>1b1f,>7111,>0000 ; 12  White on blue with cyan (3)
+0070 7EE8 F41F             data  >f41f,>f1f1,>1b1f,>7111,>0000 ; 12  White on blue with cyan (3)
      7EEA F1F1     
      7EEC 1B1F     
      7EEE 7111     
      7EF0 0000     
-0068                       even
+0071                       even
                    < stevie_b1.asm
 0164                       ;-----------------------------------------------------------------------
 0165                       ; Bank full check

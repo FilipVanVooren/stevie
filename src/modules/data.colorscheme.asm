@@ -1,4 +1,4 @@
-* FILE......: data.colorstable.asm
+* FILE......: data.colorscheme.asm
 * Purpose...: Stevie Editor - Color schemes table
 
 ***************************************************************
