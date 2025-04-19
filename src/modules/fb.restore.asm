@@ -36,11 +36,11 @@ fb.restore:
                                     ; \ i  @parm1 = Force refresh if >ffff
                                     ; /
         ;------------------------------------------------------
-        ; Color status lines
+        ; Color status bottom line
         ;------------------------------------------------------
-        mov   @tv.color,@parm1      ; Set normal color
+        mov   @tv.botcolor,@parm1   ; Set normal color
         bl    @pane.colorscheme.botline
-                                    ; Set color combination for status lines
+                                    ; Set colors for bottom line
                                     ; \ i  @parm1 = Color combination
                                     ; /
         ;------------------------------------------------------

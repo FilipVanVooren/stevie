@@ -1,9 +1,9 @@
-* FILE......: pane.colorscheme.status.asm
-* Purpose...: Set color combination for status lines
+* FILE......: pane.colorscheme.botline.asm
+* Purpose...: Set color combination for bottom status line
 
 ***************************************************************
 * pane.colorscheme.botline
-* Set color combination for status lines
+* Set color combination for bottom status line
 ***************************************************************
 * bl @pane.colorscheme.botline
 *--------------------------------------------------------------

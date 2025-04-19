@@ -56,16 +56,16 @@
 tv.colorscheme.table:
         ;      0     2     4     6     8
         ;      ABCD  EFGH  IJKL  MNOP  QRST ; 
-        data  >f417,>f171,>1b1f,>7111,>0000 ; 1  White on blue with cyan (1)
-        data  >21f0,>21ff,>f112,>21ff,>0000 ; 2  Dark green on black
-        data  >a11a,>f0ff,>1f1a,>f1ff,>0000 ; 3  Dark yellow on black
-        data  >1e1e,>1e11,>1ee1,>1e11,>0000 ; 4  Black on grey
-        data  >f417,>7171,>1b1f,>7111,>0000 ; 5  White on blue with cyan (2)
-        data  >1313,>1311,>1331,>1311,>0000 ; 6  Black on light green
-        data  >1771,>1011,>0171,>1711,>0000 ; 7  Black on cyan        
-        data  >2112,>f0ff,>1f12,>f1f6,>0000 ; 8  Dark green on black         
-        data  >1ff1,>1011,>f1f1,>1f11,>0000 ; 9  Black on white
-        data  >1af1,>a111,>1f1f,>f11f,>0000 ; 10 Black on dark yellow
-        data  >1919,>1911,>1991,>1911,>0000 ; 11 Black on light red
-        data  >f41f,>f1f1,>1b1f,>7111,>0000 ; 12  White on blue with cyan (3)
+        data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)        
+        data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
+        data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
+        data  >1e1e,>1e11,>1ee1,>1e11,>1e00 ; 4  Black on grey
+        data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
+        data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
+        data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan        
+        data  >2112,>f0ff,>1f12,>f1f6,>1200 ; 8  Dark green on black         
+        data  >1ff1,>1011,>f1f1,>1f11,>f100 ; 9  Black on white
+        data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
+        data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
+        data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
         even

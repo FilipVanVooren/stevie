@@ -174,24 +174,27 @@ tv.ruler.visible  equ  tv.struct + 16  ; Show ruler with tab positions
 tv.colorscheme    equ  tv.struct + 18  ; Current color scheme (0-xx)
 tv.curshape       equ  tv.struct + 20  ; Cursor shape and color (sprite)
 tv.curcolor       equ  tv.struct + 22  ; Cursor color1 + color2 (color scheme)
-tv.color          equ  tv.struct + 24  ; FG/BG-color framebuffer + status lines
-tv.markcolor      equ  tv.struct + 26  ; FG/BG-color marked lines in framebuffer
-tv.busycolor      equ  tv.struct + 28  ; FG/BG-color bottom line when busy
-tv.rulercolor     equ  tv.struct + 30  ; FG/BG-color ruler line
-tv.cmdb.hcolor    equ  tv.struct + 32  ; FG/BG-color command buffer header line
-tv.font.ptr       equ  tv.struct + 34  ; Pointer to font (in ROM bank 6 or RAM)
-tv.pane.focus     equ  tv.struct + 36  ; Identify pane that has focus
-tv.task.oneshot   equ  tv.struct + 38  ; Pointer to one-shot routine
-tv.fj.stackpnt    equ  tv.struct + 40  ; Pointer to farjump return stack
-tv.error.visible  equ  tv.struct + 42  ; Error pane visible
-tv.error.rows     equ  tv.struct + 44  ; Number of rows in error pane
-tv.sp2.conf       equ  tv.struct + 46  ; Backup of SP2 config register
-tv.sp2.stack      equ  tv.struct + 48  ; Backup of SP2 stack register
-tv.fg99.img.ptr   equ  tv.struct + 50  ; Pointer to Final GROM cartridge to load
-tv.specmsg.ptr    equ  tv.struct + 52  ; Pointer to special message above botrow
-tv.lineterm       equ  tv.struct + 54  ; Default line termination character(s)
-tv.error.msg      equ  tv.struct + 56  ; Error message (max. 160 characters)
-tv.free           equ  tv.struct + 216 ; End of structure
+tv.color          equ  tv.struct + 24  ; FG/BG-color framebuffer
+tv.topcolor       equ  tv.struct + 26  ; FG/BG-color top status line
+tv.botcolor       equ  tv.struct + 28  ; FG/BG-color bottom status line
+tv.markcolor      equ  tv.struct + 30  ; FG/BG-color marked lines in framebuffer
+tv.busycolor      equ  tv.struct + 32  ; FG/BG-color bottom line when busy
+tv.rulercolor     equ  tv.struct + 34  ; FG/BG-color ruler line
+tv.cmdb.color     equ  tv.struct + 36  ; FG/BG-color cmdb lines
+tv.cmdb.hcolor    equ  tv.struct + 38  ; FG/BG-color cmdb header line
+tv.font.ptr       equ  tv.struct + 40  ; Pointer to font (in ROM bank 6 or RAM)
+tv.pane.focus     equ  tv.struct + 42  ; Identify pane that has focus
+tv.task.oneshot   equ  tv.struct + 44  ; Pointer to one-shot routine
+tv.fj.stackpnt    equ  tv.struct + 46  ; Pointer to farjump return stack
+tv.error.visible  equ  tv.struct + 48  ; Error pane visible
+tv.error.rows     equ  tv.struct + 50  ; Number of rows in error pane
+tv.sp2.conf       equ  tv.struct + 52  ; Backup of SP2 config register
+tv.sp2.stack      equ  tv.struct + 54  ; Backup of SP2 stack register
+tv.fg99.img.ptr   equ  tv.struct + 56  ; Pointer to Final GROM cartridge to load
+tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
+tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
+tv.error.msg      equ  tv.struct + 62  ; Error message (max. 160 characters)
+tv.free           equ  tv.struct + 222 ; End of structure
 ;-----------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff   (256 bytes)
 ;-----------------------------------------------------------------

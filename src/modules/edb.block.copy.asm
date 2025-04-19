@@ -83,7 +83,7 @@ edb.block.copy:
         ;------------------------------------------------------
 !       mov   @tv.busycolor,@parm1  ; Get busy color
         bl    @pane.colorscheme.botline
-                                    ; Set color combination for status lines
+                                    ; Set colors for bottom line
                                     ; \ i  @parm1 = Color combination
                                     ; / 
 

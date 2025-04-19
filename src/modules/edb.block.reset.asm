@@ -48,9 +48,9 @@ edb.block.reset:
         ;------------------------------------------------------
         ; Remove markers
         ;------------------------------------------------------
-        mov   @tv.color,@parm1      ; Set normal color
+        mov   @tv.botcolor,@parm1   ; Set normal color
         bl    @pane.colorscheme.botline
-                                    ; Set color combination for status lines
+                                    ; Set colors for bottom line
                                     ; \ i  @parm1 = Color combination
                                     ; /         
 

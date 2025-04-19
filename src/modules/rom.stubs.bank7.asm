@@ -46,7 +46,7 @@ pane.colorscheme.load:
 
 
 ***************************************************************
-* Stub for "pane.action.colorscheme.statline"
+* Stub for "pane.colorscheme.botline"
 * bank1 vec.32
 ********|*****|*********************|**************************
 pane.colorscheme.botline:

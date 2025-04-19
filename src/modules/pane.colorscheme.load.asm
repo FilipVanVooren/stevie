@@ -17,7 +17,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3,tmp4
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.colorscheme.load:
         dect  stack
@@ -28,10 +28,6 @@ pane.colorscheme.load:
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4
         dect  stack
         mov   @parm1,*stack         ; Push parm1
         dect  stack
@@ -56,50 +52,57 @@ pane.colorscheme.load:
         a     tmp1,tmp0                 ; /
         ai    tmp0,tv.colorscheme.table ; Add base for color scheme data table                                    
         ;-------------------------------------------------------
-        ; ABCD) Get FG/BG colors framebuffer text
+        ; ABCD) Get FG/BG colors framebuffer and topline
         ;-------------------------------------------------------
-        mov   *tmp0+,tmp3           ; Get colors ABCD
-        mov   tmp3,@tv.color        ; Save colors ABCD
+        mov   *tmp0+,tmp1           ; Get colors ABCD
+        mov   tmp1,@tv.color        ; Save colors ABCD
         ;-------------------------------------------------------
-        ; EFGH) Get and save cursor color
+        ; EFGH) Get cursor color CMDB & framebuffer
         ;-------------------------------------------------------
-        mov   *tmp0,tmp4            ; Get colors EFGH
-        andi  tmp4,>00ff            ; Only keep LSB (GH)
-        mov   tmp4,@tv.curcolor     ; Save cursor color
+        mov   *tmp0,tmp1            ; Get colors EFGH
+        andi  tmp1,>00ff            ; Only keep LSB (GH)
+        mov   tmp1,@tv.curcolor     ; Save cursor color
         ;-------------------------------------------------------
-        ; EFGH) Get FG/BG colors framebuffer marked text & CMDB pane
+        ; EFGH) Get FG/BG color CMDB pane
         ;-------------------------------------------------------
-        mov   *tmp0+,tmp4           ; Get colors EFGH again
-        andi  tmp4,>ff00            ; Only keep MSB (EF)
-        srl   tmp4,8                ; MSB to LSB
+        mov   *tmp0+,tmp1           ; Get colors EFGH again
+        andi  tmp1,>ff00            ; Only keep MSB (EF)
+        srl   tmp1,8                ; MSB to LSB
+        mov   tmp1,@tv.cmdb.color   ; Save CMDB pane color
         ;-------------------------------------------------------
         ; IJKL) Get busy and marker colors
         ;-------------------------------------------------------
-        mov   *tmp0+,tmp1           ; Get colors IJKL
-        mov   tmp1,tmp2             ; \ Right align IJ and
-        srl   tmp2,8                ; | save to @tv.busycolor
-        mov   tmp2,@tv.busycolor    ; |
-        andi  tmp1,>00ff            ; | save KL to @tv.markcolor
+        mov   *tmp0,tmp1            ; Get colors IJKL
+        srl   tmp1,8                ; \ Right align IJ and
+        mov   tmp1,@tv.busycolor    ; / save to @tv.busycolor
+        mov   *tmp0+,tmp1           ; Get colors IJKL again
+        andi  tmp1,>00ff            ; \ save KL to @tv.markcolor
         mov   tmp1,@tv.markcolor    ; /
         ;-------------------------------------------------------
         ; MNOP) Colors CMDB header line
         ;-------------------------------------------------------
         mov   *tmp0,tmp1            ; Get colors MNOP
-        srl   tmp1,8                ; \ Right align MN and
-        mov   tmp1,@tv.cmdb.hcolor  ; / save to @tv.cmdb.hcolor
+        srl   tmp1,8                ; MSB to LSB
+        mov   tmp1,@tv.cmdb.hcolor  ; Save CMDB header color
+        ;-------------------------------------------------------
+        ; MNOP) Get ruler and line/col counters color
+        ;-------------------------------------------------------
+        mov   *tmp0+,tmp1           ; Get colors MNOP again
+        andi  tmp1,>000f            ; Only keep P
+        sla   tmp1,4                ; Make it a FG/BG combination
+        mov   tmp1,@tv.rulercolor   ; Save ruler color
+        ;-------------------------------------------------------
+        ; QRST) Colors bottom line
+        ;-------------------------------------------------------
+        mov   *tmp0+,tmp1           ; Get colors QRST
+        srl   tmp1,8                ; MSB to LSB
+        mov   tmp1,@tv.botcolor     ; Save bottom line color
         ;-------------------------------------------------------
         ; Check if only CMDB needs to be colorized
         ;-------------------------------------------------------
         c     @parm3,@w$ffff        ; Only colorize CMDB pane ?
         jeq   pane.colorscheme.cmdbpane
                                     ; Yes, shortcut jump to CMDB pane
-        ;-------------------------------------------------------
-        ; MNOP) Get ruler and line/col counters color
-        ;-------------------------------------------------------
-        mov   *tmp0,tmp1            ; Get colors MNOP
-        andi  tmp1,>000f            ; Only keep P
-        sla   tmp1,4                ; Make it a FG/BG combination
-        mov   tmp1,@tv.rulercolor   ; Save to @tv.rulercolor
         ;-------------------------------------------------------
         ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
@@ -111,10 +114,9 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
-        mov   tmp3,tmp1             ; Get work copy
-        srl   tmp1,8                ; MSB to LSB (frame buffer colors)
-        ori   tmp1,>0700
-        mov   tmp1,tmp0
+        mov   @tv.color,tmp0        ; Get work copy of colors ABCD
+        srl   tmp0,8                ; MSB to LSB
+        ori   tmp0,>0700            ; VDP register #7
         bl    @putvrx               ; Write VDP register
         ;-------------------------------------------------------
         ; Dump colors for frame buffer pane (TAT)
@@ -133,11 +135,10 @@ pane.colorscheme.load:
         li    tmp2,(pane.botrow-2)*80
                                     ; Number of bytes to fill
         jmp   pane.colorscheme.checkcmdb
-
-pane.colorscheme.fbdump.noruler:
         ;-------------------------------------------------------
         ; No ruler visible on screen (TAT)
         ;-------------------------------------------------------
+pane.colorscheme.fbdump.noruler:
         li    tmp0,vdp.fb.toprow.tat
                                     ; VDP start address (frame buffer area)
         li    tmp2,(pane.botrow-1)*80
@@ -154,9 +155,8 @@ pane.colorscheme.checkcmdb:
         ; Dump colors to VDP (TAT)
         ;-------------------------------------------------------
 pane.colorscheme.fbdump:
-        mov   tmp3,tmp1             ; Get work copy of colors ABCD
+        mov   @tv.color,tmp1        ; Get work copy of colors ABCD
         srl   tmp1,8                ; MSB to LSB (frame buffer colors)
-
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
@@ -168,13 +168,10 @@ pane.colorscheme.fbdump:
         ci    tmp0,id.dialog.help   ; Help dialog active?
         jeq   pane.colorscheme.cmdbpane
                                     ; Yes, skip marked lines
-
         mov   @parm2,tmp0
         ci    tmp0,>ffff            ; Skip colorize flag is on?
         jeq   pane.colorscheme.cmdbpane
-
-        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-        
+        seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
         bl    @fb.colorlines        ; Colorize lines
                                     ; \ i  @parm1       = Force refresh if >ffff
                                     ; / i  @fb.colorize = Colorize if >ffff
@@ -185,7 +182,6 @@ pane.colorscheme.cmdbpane:
         mov   @cmdb.visible,tmp0
         jeq   pane.colorscheme.errpane
                                     ; Skip if CMDB pane is hidden
-
         mov   @cmdb.vdptop,tmp0     ; Get VDP start address
         mov   @tv.cmdb.hcolor,tmp1  ; set color for header line
         li    tmp2,1*64             ; Number of bytes to fill
@@ -203,7 +199,6 @@ pane.colorscheme.cmdbpane:
                                     ; Copy same value into MSB
         srl   tmp1,4                ;
         andi  tmp1,>00ff            ; Only keep LSB
-
         li    tmp2,17               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
@@ -225,7 +220,7 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 1
         ai    tmp0,82               ; / VDP start address (CMDB top line + 1)
-        mov   tmp4,tmp1             ; Get work copy fg/bg color
+        mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
@@ -236,13 +231,12 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
         ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
-        mov   tmp4,tmp1             ; Get work copy fg/bg color
+        mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
-
         bl    @pane.cmdb.draw       ; Draw CMDB pane  
         ;-------------------------------------------------------
         ; Exit early if only CMDB needed to be colorized
@@ -256,32 +250,31 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
 pane.colorscheme.errpane:
         mov   @tv.error.visible,tmp0
-        jeq   pane.colorscheme.statline
+        jeq   pane.colorscheme.topline
                                     ; Skip if error pane is hidden
-
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1           ; Pass color combination
-
         bl    @pane.errline.drawcolor
                                     ; Draw color on rows in error pane
                                     ; \ i  @tv.error.rows = Number of rows
                                     ; / i  @parm1         = Color combination
         ;-------------------------------------------------------
-        ; Dump colors for top line and bottom line (TAT)
+        ; Dump colors for top line (TAT)
         ;-------------------------------------------------------
-pane.colorscheme.statline:
+pane.colorscheme.topline:
         mov   @tv.color,tmp1
         andi  tmp1,>00ff            ; Only keep LSB (status line colors)
         mov   tmp1,@parm1           ; Set color combination
-
-
         clr   @parm2                ; Top row on screen
         bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
-
+        ;-------------------------------------------------------
+        ; Dump colors for bottom line (TAT)
+        ;-------------------------------------------------------
+        mov   @tv.botcolor,@parm1   ; Get color combination
         li    tmp1,pane.botrow
-        mov   tmp1,@parm2           ; Bottom row on screen
+        mov   tmp1,@parm2           ; Bottom row on screen        
         bl    @vdp.colors.line      ; Load color combination for line
                                     ; \ i  @parm1 = Color combination
                                     ; / i  @parm2 = Row on physical screen
@@ -306,23 +299,21 @@ pane.colorscheme.ruler:
         ; Dump cursor FG color to sprite table (SAT)
         ;-------------------------------------------------------
 pane.colorscheme.cursorcolor:
-        mov   @tv.curcolor,tmp4     ; Get cursor color
-
         mov   @tv.pane.focus,tmp0   ; Get pane with focus
         ci    tmp0,pane.focus.fb    ; Frame buffer has focus?
         jeq   pane.colorscheme.cursorcolor.fb
                                     ; Yes, set cursor color
-
 pane.colorscheme.cursorcolor.cmdb:
-        andi  tmp4,>f0              ; Only keep high-nibble -> Word 2 (G)
-        sla   tmp4,4                ; Move to MSB
+        mov   @tv.curcolor,tmp0     ; Get cursor color
+        andi  tmp0,>f0              ; Only keep high-nibble -> Word 2 (G)
+        sla   tmp0,4                ; Move to MSB
         jmp   !
-
 pane.colorscheme.cursorcolor.fb:
-        andi  tmp4,>0f              ; Only keep low-nibble -> Word 2 (H)
-        sla   tmp4,8                ; Move to MSB
-!       movb  tmp4,@ramsat+3        ; Update FG color in sprite table (SAT)
-        movb  tmp4,@tv.curshape+1   ; Save cursor color
+        mov   @tv.curcolor,tmp0     ; Get cursor color
+        andi  tmp0,>0f              ; Only keep low-nibble -> Word 2 (H)
+        sla   tmp0,8                ; Move to MSB
+!       movb  tmp0,@ramsat+3        ; Update FG color in sprite table (SAT)
+        movb  tmp0,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -331,8 +322,6 @@ pane.colorscheme.load.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp4          ; Pop tmp4
-        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
