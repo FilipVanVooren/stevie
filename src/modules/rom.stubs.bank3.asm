@@ -152,17 +152,17 @@ pane.errline.show:
 
 ***************************************************************
 * Stub for "pane.colorscheme.load"
-* bank1 vec.31
+* bank4 vec.41
 ********|*****|*********************|**************************
 pane.colorscheme.load:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 4
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
-              data vec.31           ; | i  p1 = Vector with target address
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.41           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

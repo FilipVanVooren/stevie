@@ -104,6 +104,8 @@ main:
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
         copy  "pane.colorscheme.cycle.asm"   ; Cycle through color schemes        
+        copy  "pane.colorscheme.load.asm"    ; Load color scheme        
+        copy  "pane.colorscheme.botline.asm" ; Set colors for bottom line
         ;-----------------------------------------------------------------------
         ; Dialogs & filebrowser
         ;-----------------------------------------------------------------------                
@@ -114,12 +116,12 @@ main:
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank4.asm" ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+        copy  "rom.stubs.bank4.asm"          ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm"          ; Stubs to include in all banks
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        ;
+        copy  "data.colorscheme.asm"         ; Colorscheme data table
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

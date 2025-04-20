@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2220350
+0002               * BUILD: 250420-1912170
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12855,18 +12855,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026               
 0027               ***************************************************************
 0028               * Stub for "pane.colorscheme.load"
-0029               * bank1 vec.31
+0029               * bank4 vec.41
 0030               ********|*****|*********************|**************************
 0031               pane.colorscheme.load:
 0032 6BEC 0649  14         dect  stack
 0033 6BEE C64B  30         mov   r11,*stack            ; Save return address
 0034                       ;------------------------------------------------------
-0035                       ; Call function in bank 1
+0035                       ; Call function in bank 4
 0036                       ;------------------------------------------------------
 0037 6BF0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6BF2 3084     
-0038 6BF4 6002                   data bank1.rom        ; | i  p0 = bank address
-0039 6BF6 7FAC                   data vec.31           ; | i  p1 = Vector with target address
+0038 6BF4 6008                   data bank4.rom        ; | i  p0 = bank address
+0039 6BF6 7FC0                   data vec.41           ; | i  p1 = Vector with target address
 0040 6BF8 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0041                       ;------------------------------------------------------
 0042                       ; Exit
@@ -12877,7 +12877,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047               
 0048               ***************************************************************
 0049               * Stub for "pane.colorscheme.botline"
-0050               * bank1 vec.32
+0050               * bank4 vec.42
 0051               ********|*****|*********************|**************************
 0052               pane.colorscheme.botline:
 0053 6BFE 0649  14         dect  stack
@@ -12887,8 +12887,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057                       ;------------------------------------------------------
 0058 6C02 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6C04 3084     
-0059 6C06 6002                   data bank1.rom        ; | i  p0 = bank address
-0060 6C08 7FAE                   data vec.32           ; | i  p1 = Vector with target address
+0059 6C06 6008                   data bank4.rom        ; | i  p0 = bank address
+0060 6C08 7FC2                   data vec.42           ; | i  p1 = Vector with target address
 0061 6C0A 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0062                       ;------------------------------------------------------
 0063                       ; Exit

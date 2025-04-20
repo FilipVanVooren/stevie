@@ -66,39 +66,18 @@ pane.cursor.blink:
 
 
 ***************************************************************
-* Stub for "pane.colorscheme.load"
-* bank1 vec.31
+* Stub for "pane.cmdb.draw"
+* bank3 vec.22
 ********|*****|*********************|**************************
-pane.colorscheme.load:
+pane.cmdb.draw:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 3
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank1.rom        ; | i  p0 = bank address
-              data vec.31           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-***************************************************************
-* Stub for "pane.colorscheme.botline"
-* bank1 vec.32
-********|*****|*********************|**************************
-pane.colorscheme.botline:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 1
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
-              data vec.32           ; | i  p1 = Vector with target address
+              data vec.22           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -147,6 +126,7 @@ cmdb.cmd.cursor_eol:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
 
 
 ***************************************************************

@@ -144,8 +144,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.colorscheme.load.asm"    ; Load color scheme
-        copy  "pane.colorscheme.botline.asm" ; Set colors for bottom line
         copy  "pane.cursor.asm"              ; Cursor utility functions
         ;-----------------------------------------------------------------------
         ; Screen panes

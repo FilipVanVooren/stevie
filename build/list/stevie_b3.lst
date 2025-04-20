@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250419-2220350
+0002               * BUILD: 250420-1912170
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13666,18 +13666,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0152               
 0153               ***************************************************************
 0154               * Stub for "pane.colorscheme.load"
-0155               * bank1 vec.31
+0155               * bank4 vec.41
 0156               ********|*****|*********************|**************************
 0157               pane.colorscheme.load:
 0158 6FBA 0649  14         dect  stack
 0159 6FBC C64B  30         mov   r11,*stack            ; Save return address
 0160                       ;------------------------------------------------------
-0161                       ; Call function in bank 1
+0161                       ; Call function in bank 4
 0162                       ;------------------------------------------------------
 0163 6FBE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6FC0 3084     
-0164 6FC2 6002                   data bank1.rom        ; | i  p0 = bank address
-0165 6FC4 7FAC                   data vec.31           ; | i  p1 = Vector with target address
+0164 6FC2 6008                   data bank4.rom        ; | i  p0 = bank address
+0165 6FC4 7FC0                   data vec.41           ; | i  p1 = Vector with target address
 0166 6FC6 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0167                       ;------------------------------------------------------
 0168                       ; Exit
@@ -14794,13 +14794,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      75DE 20       
 0172                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 75DF   32                        text '250419-2220350'
+0001 75DF   32                        text '250420-1912170'
      75E0 3530     
-     75E2 3431     
-     75E4 392D     
-     75E6 3232     
-     75E8 3230     
-     75EA 3335     
+     75E2 3432     
+     75E4 302D     
+     75E6 3139     
+     75E8 3132     
+     75EA 3137     
      75EC 30       
                    < data.dialogs.asm
 0173 75ED   20                        text ' - Stevie 1.7.4  - (c)2018-2025 Filip Van Vooren'

@@ -774,7 +774,7 @@ fb.vdpdump.vector:
 ********|*****|*********************|**************************
 fb.hscroll:
         mov   @fb.hscroll.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.hscroll.vector:
         data  vec.6
 
@@ -1030,6 +1030,17 @@ pane.colorscheme.cycle:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.cycle.vector:
         data  vec.40
+
+
+***************************************************************
+* Stub for "pane.colorscheme.load"
+* bank4 vec.41
+********|*****|*********************|**************************
+pane.colorscheme.load:
+        mov   @pane.colorscheme.load.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.colorscheme.load.vector:
+        data  vec.41
 
 
 ***************************************************************
