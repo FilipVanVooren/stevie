@@ -1240,6 +1240,16 @@ vdp.colors.line:
 vdp.colors.line.vector:
         data  vec.3
 
+***************************************************************
+* Stub for "vdp.cursor.char"
+* bank6 vec.5
+********|*****|*********************|**************************
+vdp.cursor.char:
+        mov   @vdp.cursor.char.vector,@trmpvector
+        jmp   _trampoline.bank6.ret ; Longjump
+vdp.cursor.char.vector:
+        data  vec.5
+
 
 ***************************************************************
 * Stub for "tv.set.font"

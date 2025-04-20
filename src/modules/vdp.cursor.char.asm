@@ -60,20 +60,38 @@ vdp.cursor.char.cmdb.hide:
         ;------------------------------------------------------
         ; Frame buffer has focus, position FB cursor
         ;------------------------------------------------------
-vdp.cursor.char.fb:        
+vdp.cursor.char.fb:
         inv   @fb.curtoggle         ; Flip cursor shape flag
         jeq   vdp.cursor.char.fb.visible
                                     ; Show FB cursor
         ;------------------------------------------------------
-        ; Hide FB cursor
+        ; Hide cursor
         ;------------------------------------------------------
-        seto  @fb.dirty             ; Trigger refresh
+        mov   @fb.row,tmp0          ; Get current row
+        inc   tmp0                  ; Add topline
+        mov   @tv.ruler.visible,tmp1
+        jeq   vdp.cursor.char.fb.hide.dump
+        inc   tmp0                  ; Add rule
+        ;------------------------------------------------------
+        ; Refresh colors on current line
+        ;------------------------------------------------------
+vdp.cursor.char.fb.hide.dump:
+        mov   tmp0,@parm2           ; Set row
+
+        mov   @tv.color,tmp0        ; \
+        srl   tmp0,8                ; | Set color combination
+        mov   tmp0,@parm1           ; / 
+
+        bl    @vdp.colors.line      ; Set color combination for line
+                                    ; @parm1 = Foreground / Background color
+                                    ; @parm2 = Row on physical screen
+
         jmp   vdp.cursor.char.exit
         ;------------------------------------------------------
         ; Show FB cursor
         ;------------------------------------------------------
 vdp.cursor.char.fb.visible:
-        mov   @tv.ruler.visible,tmp0
+        mov   @tv.ruler.visible,tmp1
         jeq   vdp.cursor.char.fb.visible.noruler
         ;------------------------------------------------------
         ; Cursor position adjustment, ruler visible
@@ -90,14 +108,21 @@ vdp.cursor.char.fb.visible.noruler:
         ai    tmp0,>0100            ; Topline adjustment
         mov   tmp0,@wyx             ; Save cursor YX
         ;------------------------------------------------------
-        ; Dump cursor to VDP
+        ; Calculate VDP address
         ;------------------------------------------------------
 vdp.cursor.char.dump:        
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
-
-        li    tmp1,26               ; Cursor character
+        ai    tmp0,vdp.tat.base     ; Add TAT base
+        ;------------------------------------------------------
+        ; Dump cursor color to TAT
+        ;------------------------------------------------------        
+        mov   @tv.curcolor,tmp1     ; Get cursor color
+        mov   tmp1,tmp2             ; \ 
+        andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
+        sla   tmp1,4                ; | Solid cursor FG/BG 
+        soc   tmp2,tmp1             ; /
 
         bl    @xvputb               ; VDP put single byte
                                     ; \ i  tmp0 = VDP write address

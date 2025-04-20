@@ -161,14 +161,23 @@ edkey.action.char:
                                     ; |             LSB = 0 move cursor right
                                     ; /             LSB > 0 do not move cursor
 
-        jmp   edkey.action.char.exit 
+        jmp   edkey.action.char.drawcursor
         ;-------------------------------------------------------
         ; Overwrite mode - Write character
         ;-------------------------------------------------------
 edkey.action.char.overwrite:
         bl    @fb.replace.char      ; Replace (overwrite) character
                                     ; \ i  @parm1 = MSB character to replace
-                                    ; /                                
+                                    ; /        
+        ;-------------------------------------------------------
+        ; Draw cursor color (TAT)
+        ;-------------------------------------------------------
+edkey.action.char.drawcursor:
+      .ifeq  spritecursor,1
+        jmp  edkey.action.char.exit
+      .else        
+        bl    @vdp.cursor.char
+      .endif            
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
