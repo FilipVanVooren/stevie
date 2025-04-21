@@ -100,6 +100,11 @@ edkey.action.newline.rest:
                                     ; / o   @fb.current  = Updated pointer
 
         seto  @fb.dirty             ; Trigger screen refresh
+
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif    
+        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

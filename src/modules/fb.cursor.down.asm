@@ -108,5 +108,9 @@ fb.cursor.down.exit:
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer
 
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif     
+
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return        

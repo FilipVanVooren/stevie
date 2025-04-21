@@ -38,37 +38,8 @@ pane.cmdb.show:
         ; Further processing
         ;------------------------------------------------------
 pane.cmdb.show.rest:
-        nop
-  .ifeq spritecursor,0
-        ;------------------------------------------------------
-        ; Hide character cursor
-        ;------------------------------------------------------
-        ; Only do this if cursor is a character.
-        ; Skip when help dialog is displayed.
-
-        mov   @cmdb.dialog,tmp0     ; Get dialog ID
-        ci    tmp0,id.dialog.help
-        jeq   pane.cmdb.show.hidechar.done
-
-        bl    @yx2pnt               ; Calculate VDP address from @WYX
-                                    ; \ i  @wyx = Cursor position
-                                    ; / o  tmp0 = VDP write address
-
-        movb  @fb.top(tmp0),tmp1    ; Get character underneath cursor
-        srl   tmp1,8                ; Right justify
-
-        mov   @tv.ruler.visible,tmp2
-        jeq   !                     ; Ruler hidden, skip additional offset
-        ai    tmp0,80               ; Offset because of ruler
-!       ai    tmp0,80               ; Offset because of topline
-
-        bl    @xvputb               ; Dump character to VDP
-                                    ; \ i  tmp0 = VDP write address
-                                    ; / i  tmp1 = Byte to write (LSB)
-
-pane.cmdb.show.hidechar.done:
-        mov   @cmdb.fb.yxsave,@wyx  ; Restore YX position  
-  .endif
+        clr   @fb.curtoggle         ; \ Hide cursor in frambuffer
+        bl    @vdp.cursor.fb.tat    ; /
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------

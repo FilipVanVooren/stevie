@@ -41,7 +41,7 @@ rom.program1:
         data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        stri 'STEVIE 1.7.5 MEMRESET'
+        stri 'STEVIE 1.7.6 MEMRESET'
         even
 
         ;-----------------------------------------------------------------------
@@ -55,17 +55,17 @@ rom.program2:
                                     ; 15 /
 
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            stri 'STEVIE 1.7.5'
+            stri 'STEVIE 1.7.6'
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            stri 'STEVIE 1.7.5'     
+            stri 'STEVIE 1.7.6'     
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            stri 'STEVIE 1.7.5'
+            stri 'STEVIE 1.7.6'
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            stri 'STEVIE 1.7.5'                   
+            stri 'STEVIE 1.7.6'                   
         .endif
