@@ -146,8 +146,12 @@ edkey.key.process.action:
         ;-------------------------------------------------------
 edkey.key.process.addbuffer:
         mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
-        jne   !                     ; No, skip frame buffer
-        b     @edkey.action.char    ; Add character to frame buffer
+        jne   !                     ; No, skip frame buffer processing
+        mov   tmp1,tmp0             ; Get keycode
+        bl    @edk.fb.char          ; Add character to frame buffer
+                                    ; \ i  tmp0 = Keycode (MSB)
+                                    ; /
+        jmp   edkey.key.process.exit
         ;-------------------------------------------------------
         ; (11) CMDB buffer
         ;-------------------------------------------------------

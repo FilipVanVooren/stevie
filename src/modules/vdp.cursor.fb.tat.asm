@@ -1,24 +1,23 @@
-* FILE......: vdp.cursor.char.asm
+* FILE......: vdp.cursor.fb.tat.asm
 * Purpose...: Set VDP cursor shape (character version)
 
 ***************************************************************
-* vdp.cursor.char
+* vdp.cursor.fb.tat
 * Set VDP cursor shape (character version)
 ***************************************************************
-* bl @vdp.cursor.char
+* bl @vdp.cursor.fb.tat
 *--------------------------------------------------------------
 * INPUT
-* none
+* @wyx           = New Cursor position
+* @fb.prevcursor = Old cursor position
 *--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2
-*--------------------------------------------------------------
-* Notes
 ********|*****|*********************|**************************
-vdp.cursor.char:
+vdp.cursor.fb.tat:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack        
@@ -30,87 +29,65 @@ vdp.cursor.char:
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
-        ; Get pane with focus
+        ; Get previous cursor position
         ;------------------------------------------------------
-        mov   @tv.pane.focus,tmp0   ; Get pane with focus
-
-        ci    tmp0,pane.focus.fb
-        jeq   vdp.cursor.char.fb    ; Frame buffer has focus
-
-        ci    tmp0,pane.focus.cmdb
-        jeq   vdp.cursor.char.cmdb  ; CMDB buffer has focus
-        ;------------------------------------------------------
-        ; Assert failed. Invalid value
-        ;------------------------------------------------------
-        mov   r11,@>ffce            ; \ Save caller address
-        bl    @cpu.crash            ; / Halt system.
-        ;------------------------------------------------------
-        ; CMDB buffer has focus, position CMDB cursor
-        ;------------------------------------------------------
-vdp.cursor.char.cmdb:
-        mov   @cmdb.cursor,@wyx     ; Position cursor in CMDB pane
-        inv   @fb.curtoggle         ; Flip cursor shape flag
-        jeq   vdp.cursor.char.dump  ; Show CMDB cursor
-        ;------------------------------------------------------
-        ; Hide CMDB cursor
-        ;------------------------------------------------------
-vdp.cursor.char.cmdb.hide:
-        seto  @cmdb.dirty
-        jmp   vdp.cursor.char.exit
-        ;------------------------------------------------------
-        ; Frame buffer has focus, position FB cursor
-        ;------------------------------------------------------
-vdp.cursor.char.fb:
-        inv   @fb.curtoggle         ; Flip cursor shape flag
-        jeq   vdp.cursor.char.fb.visible
-                                    ; Show FB cursor
-        ;------------------------------------------------------
-        ; Hide cursor
-        ;------------------------------------------------------
-        mov   @fb.row,tmp0          ; Get current row
-        inc   tmp0                  ; Add topline
+        mov   @fb.prevcursor,tmp0    ; Get previous cursor position
+        ai    tmp0,>0100             ; Add topline
         mov   @tv.ruler.visible,tmp1
-        jeq   vdp.cursor.char.fb.hide.dump
-        inc   tmp0                  ; Add rule
+        jeq   vdp.cursor.fb.tat.hide ; No ruler visible
+        ai    tmp0,>0100             ; Add ruler line
         ;------------------------------------------------------
-        ; Refresh colors on current line
+        ; Hide cursor on previous position
         ;------------------------------------------------------
-vdp.cursor.char.fb.hide.dump:
-        mov   tmp0,@parm2           ; Set row
+vdp.cursor.fb.tat.hide:
+        dect  stack                 ; \ Push cursor position
+        mov   @wyx,*stack           ; /
+        mov   tmp0,@wyx             ; Set cursor position
 
-        mov   @tv.color,tmp0        ; \
-        srl   tmp0,8                ; | Set color combination
-        mov   tmp0,@parm1           ; / 
+        bl    @yx2pnt               ; Calculate VDP address from @WYX
+                                    ; \ i  @wyx = Cursor position
+                                    ; / o  tmp0 = VDP address
 
-        bl    @vdp.colors.line      ; Set color combination for line
-                                    ; @parm1 = Foreground / Background color
-                                    ; @parm2 = Row on physical screen
+        ai    tmp0,vdp.tat.base     ; Add TAT base
+        mov   @tv.color,tmp1        ; Get text color
+        srl   tmp1,8                ; MSB to LSB
 
-        jmp   vdp.cursor.char.exit
+        bl    @xvputb               ; VDP put single byte
+                                    ; \ i  tmp0 = VDP write address
+                                    ; / i  tmp1 = Byte to write 
+
+        mov   *stack+,@wyx          ; Pop cursor position
+        mov   @wyx,@fb.prevcursor   ; Update cursor position
         ;------------------------------------------------------
-        ; Show FB cursor
+        ; Check if cursor needs to be shown
         ;------------------------------------------------------
-vdp.cursor.char.fb.visible:
-        mov   @tv.ruler.visible,tmp1
-        jeq   vdp.cursor.char.fb.visible.noruler
+        inv   @fb.curtoggle          ; Flip cursor shape flag
+        jeq   vdp.cursor.fb.tat.show ; Show FB cursor
+        jmp   vdp.cursor.fb.tat.exit ; Exit
+        ;------------------------------------------------------
+        ; Show cursor
+        ;------------------------------------------------------
+vdp.cursor.fb.tat.show:
+        mov   @tv.ruler.visible,tmp0
+        jeq   vdp.cursor.fb.tat.show.noruler
         ;------------------------------------------------------
         ; Cursor position adjustment, ruler visible
         ;------------------------------------------------------
         mov   @wyx,tmp0             ; Get cursor YX
         ai    tmp0,>0200            ; Topline + ruler adjustment
         mov   tmp0,@wyx             ; Save cursor YX
-        jmp   vdp.cursor.char.dump
+        jmp   vdp.cursor.fb.tat.dump
         ;------------------------------------------------------
         ; Cursor position adjustment, ruler hidden
         ;------------------------------------------------------
-vdp.cursor.char.fb.visible.noruler:
+vdp.cursor.fb.tat.show.noruler:
         mov   @wyx,tmp0             ; Get cursor YX
         ai    tmp0,>0100            ; Topline adjustment
         mov   tmp0,@wyx             ; Save cursor YX
         ;------------------------------------------------------
         ; Calculate VDP address
         ;------------------------------------------------------
-vdp.cursor.char.dump:        
+vdp.cursor.fb.tat.dump:        
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
@@ -130,7 +107,7 @@ vdp.cursor.char.dump:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-vdp.cursor.char.exit:
+vdp.cursor.fb.tat.exit:
         mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

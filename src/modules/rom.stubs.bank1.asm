@@ -1241,13 +1241,13 @@ vdp.colors.line.vector:
         data  vec.3
 
 ***************************************************************
-* Stub for "vdp.cursor.char"
+* Stub for "vdp.cursor.tat"
 * bank6 vec.5
 ********|*****|*********************|**************************
-vdp.cursor.char:
-        mov   @vdp.cursor.char.vector,@trmpvector
+vdp.cursor.tat:
+        mov   @vdp.cursor.tat.vector,@trmpvector
         jmp   _trampoline.bank6.ret ; Longjump
-vdp.cursor.char.vector:
+vdp.cursor.tat.vector:
         data  vec.5
 
 

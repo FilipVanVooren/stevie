@@ -67,13 +67,15 @@ main:
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; Patterns
-        ;-----------------------------------------------------------------------
-        copy  "vdp.dump.patterns.asm" ; Dump patterns to VDP
-        copy  "vdp.dump.font.asm"     ; Dump font to VDP
-        copy  "vdp.colors.line.asm"   ; Set color combination for line
-        copy  "vdp.cursor.char.asm"   ; VDP cursor handling (character version)
-        copy  "vdp.cursor.sprite.asm" ; VDP cursor handling (sprite version)
-        copy  "tv.set.font.asm"       ; Set current font
+        ;----------------------------- ------------------------------------------
+        copy  "vdp.dump.patterns.asm"   ; Dump patterns to VDP
+        copy  "vdp.dump.font.asm"       ; Dump font to VDP
+        copy  "vdp.colors.line.asm"     ; Set color combination for line
+        copy  "vdp.cursor.tat.asm"      ; VDP cursor handling (tat version)
+        copy  "vdp.cursor.fb.tat.asm"   ; VDP cursor framebuffer
+        copy  "vdp.cursor.cmdb.tat.asm" ; VDP cursor CMDB
+        copy  "vdp.cursor.sprite.asm"   ; VDP cursor handling (sprite version)
+        copy  "tv.set.font.asm"         ; Set current font
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

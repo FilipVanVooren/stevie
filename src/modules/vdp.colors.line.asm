@@ -1,4 +1,4 @@
-* FILE......: vdp.colors.line.set
+* FILE......: vdp.colors.line.asm
 * Purpose...: Set color combination for line
 
 ***************************************************************

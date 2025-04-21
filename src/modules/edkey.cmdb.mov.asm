@@ -17,6 +17,10 @@ edkey.action.cmdb.left:
         ;-------------------------------------------------------
         dec   @cmdb.column          ; Column-- in command buffer
         dec   @cmdb.cursor          ; Column-- CMDB cursor
+
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif         
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -46,6 +50,10 @@ edkey.action.cmdb.right:
         ;-------------------------------------------------------
         inc   @cmdb.column          ; Column++ in command buffer
         inc   @cmdb.cursor          ; Column++ CMDB cursor
+
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -60,14 +68,17 @@ edkey.action.cmdb.right:
 edkey.action.cmdb.home:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-
-        clr   @cmdb.column          ; First column        
         ;-------------------------------------------------------
         ; Update cursor position
         ;-------------------------------------------------------
+        clr   @cmdb.column          ; First column                
         li    tmp0,3                ; X=3 
         movb  @cmdb.cursor,tmp0     ; Get CMDB cursor Y position
         mov   tmp0,@cmdb.cursor     ; Set new YX position for cursor
+
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -84,6 +95,10 @@ edkey.action.cmdb.end:
         ; Update cursor position
         ;-------------------------------------------------------
         bl    @cmdb.cmd.cursor_eol  ; Repositon cursor
+
+      .ifeq  spritecursor,0
+        bl    @vdp.cursor.tat       ; Update cursor
+      .endif        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        

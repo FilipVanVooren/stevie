@@ -107,6 +107,6 @@ fb.cursor.down.exit:
                                     ; | i   @fb.colsline = Columns per line FB 
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer
-                                    
+
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return        

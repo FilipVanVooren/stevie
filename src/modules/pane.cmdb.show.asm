@@ -85,7 +85,8 @@ pane.cmdb.show.hidechar.done:
         mov   tmp0,@cmdb.yxprompt   ; | Screen position of prompt in cmdb pane
                                     ; / Y=@cmdb.yxtop, X=2
 
-        mov   tmp0,@cmdb.cursor     ;
+        mov   tmp0,@cmdb.cursor 
+        mov   tmp0,@cmdb.prevcursor
         bl    @cmdb.cmd.cursor_eol  ; Move cursor to end of line
         ;------------------------------------------------------
         ; Show pane

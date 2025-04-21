@@ -15,7 +15,7 @@ vec.1   data  vdp.dump.patterns     ; Dump sprite/character patterns to VDP
 vec.2   data  vdp.dump.font         ; Dump font to VDP
 vec.3   data  vdp.colors.line       ; Set colors for specified line
 vec.4   data  cpu.crash             ;
-vec.5   data  vdp.cursor.char       ; Set cursor shape (character version)
+vec.5   data  vdp.cursor.tat        ; Set cursor shape (character version)
 vec.6   data  vdp.cursor.sprite     ; Set cursor shape (sprite version)
 vec.7   data  cpu.crash             ;
 vec.8   data  cpu.crash             ;
