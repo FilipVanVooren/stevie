@@ -38,11 +38,9 @@ pane.cmdb.show:
         ; Further processing
         ;------------------------------------------------------
 pane.cmdb.show.rest:
-        clr   @fb.curtoggle         ; \ Hide cursor in frambuffer
-        bl    @vdp.cursor.fb.tat    ; /
         ;------------------------------------------------------
         ; Show command buffer pane
-        ;------------------------------------------------------
+        ;------------------------------------------------------        
         li    tmp0,pane.botrow
         s     @cmdb.scrrows,tmp0
         mov   tmp0,@fb.scrrows      ; Resize framebuffer
@@ -50,9 +48,16 @@ pane.cmdb.show.rest:
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
         ;------------------------------------------------------
+        ; Hide framebuffer cursor
+        ;------------------------------------------------------
+        cb    @fb.prevcursor,@fb.scrrows+1
+        jgt   !
+        clr   @fb.curtoggle         ; \ Hide cursor in frambuffer
+        bl    @vdp.cursor.fb.tat    ; /
+        ;------------------------------------------------------
         ; Determine initial cursor position
         ;------------------------------------------------------
-        ai    tmp0,>0102            ; \ Skip row
+!       ai    tmp0,>0102            ; \ Skip row
         mov   tmp0,@cmdb.yxprompt   ; | Screen position of prompt in cmdb pane
                                     ; / Y=@cmdb.yxtop, X=2
 
