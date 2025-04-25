@@ -21,15 +21,38 @@ pane.topline:
         dect  stack        
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
+        ; Any search matches
+        ;------------------------------------------------------
+        abs   @edb.srch.matches     ; Do we have any search matches?
+        jeq   pane.topline.file     ; No search matches, show current file
+        ;------------------------------------------------------
+        ; Show search string
+        ;------------------------------------------------------
+        bl    @putat
+              byte 0,0
+              data txt.find         ; Show find message
+
+        bl    @at
+              byte 0,6              ; y=0, x=6
+
+        li    tmp0,edb.srch.str     ; Get pointer to search string
+        mov   tmp0,@parm1           ; Show search string
+        li    tmp0,44               ; Set PAD length        
+        jmp   pane.topline.padstr
+        ;------------------------------------------------------
         ; Show current file
         ;------------------------------------------------------ 
 pane.topline.file:        
+        mov   @edb.filename.ptr,@parm1
+                                    ; Get string to display
         bl    @at
               byte 0,0              ; y=0, x=0
 
-        mov   @edb.filename.ptr,@parm1  
-                                    ; Get string to display
-        li    tmp0,50
+        li    tmp0,50               ; Set PAD length              
+        ;------------------------------------------------------
+        ; Show padded string
+        ;------------------------------------------------------
+pane.topline.padstr:
         mov   tmp0,@parm2           ; Set requested length
         li    tmp0,32
         mov   tmp0,@parm3           ; Set character to fill
@@ -41,7 +64,8 @@ pane.topline.file:
                                     ; | i  @parm2 = Requested length
                                     ; | i  @parm3 = Fill character
                                     ; | i  @parm4 = Pointer to buffer with
-                                    ; /             output string        
+                                    ; |             output string        
+                                    ; / o  @outparm1 = Padded string
       
         mov   @outparm1,tmp1        ; \ Display padded filename
         bl    @xutst0               ; /        
@@ -170,3 +194,5 @@ pane.topline.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+txt.find stri  'Find: '             ; Find message

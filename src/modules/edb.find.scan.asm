@@ -81,6 +81,11 @@ edb.find.scan.showbusy:
               byte pane.botrow,0
               data txt.searching    ; Show "Searching..."
 
+        bl    @putat                
+              byte pane.botrow,13
+              data edb.srch.str     ; Show search string
+                                    
+
         mov   @edb.srch.startln,@fh.records           
                                     ; Counter current line
         ;------------------------------------------------------
