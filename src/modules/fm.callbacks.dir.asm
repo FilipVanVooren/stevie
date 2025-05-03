@@ -169,18 +169,18 @@ fm.dir.callback2:
         ;------------------------------------------------------
         ci    tmp0,128 
         jlt   fm.dir.callback2.fileindex
-        seto  @fh.circbreaker       ; Set circuit-breaker flag                                   
-        jmp   fm.dir.callback2.exit ; Exit callback without crashing       
+        seto  @fh.circbreaker        ; Set circuit-breaker flag                                   
+        b     @fm.dir.callback2.exit ; Exit callback without crashing       
         ;------------------------------------------------------
         ; Handle volume name
         ;------------------------------------------------------
 fm.dir.callback2.volname:        
-        li    tmp0,rambuf+2         ; Source address
-        li    tmp1,cat.volname      ; Destination address
-        movb  @rambuf+2,tmp2        ; Get string length 
-        srl   tmp2,8                ; MSB to LSB        
-        jgt   !                     ; Only copy volume name if set
-        jmp  fm.dir.callback2.exit  ; Exit
+        li    tmp0,rambuf+2          ; Source address
+        li    tmp1,cat.volname       ; Destination address
+        movb  @rambuf+2,tmp2         ; Get string length 
+        srl   tmp2,8                 ; MSB to LSB        
+        jgt   !                      ; Only copy volume name if set
+        b     @fm.dir.callback2.exit ; Exit
         ;------------------------------------------------------
         ; Copy volume name to final destination
         ;------------------------------------------------------
@@ -188,7 +188,97 @@ fm.dir.callback2.volname:
         bl    @xpym2m               ; Copy memory block
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
-                                    ; / i  tmp2 = bytes to copy        
+                                    ; / i  tmp2 = bytes to copy
+        ;------------------------------------------------------
+        ; Get volume size
+        ;------------------------------------------------------
+fm.dir.callback2.volsize:
+        li    tmp0,rambuf + >12
+        movb  *tmp0,tmp1            ; Get Float size byte     
+
+        inc   tmp0                  ; Skip float size byte
+        movb  *tmp0+,tmp1           ; Get float exponent byte
+        srl   tmp1,8                ; MSB to LSB
+
+        movb  *tmp0+,tmp2           ; Get float mantissa byte
+        srl   tmp2,8                ; MSB to LSB
+        ;------------------------------------------------------
+        ; Turn radix 100 floating point into hex number
+        ;------------------------------------------------------        
+        ai    tmp1,-64              ; Subtract radix 100 exponent bias >40        
+        jgt   fm.dir.callback2.volsize.radix100.part1
+                                    ; Handle 1st byte if exponent > 1
+
+        mov   tmp2,tmp1             ; No multiplication needed
+        jmp   fm.dir.callback2.volsize.store
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 1) if exp>1
+        ;------------------------------------------------------        
+fm.dir.callback2.volsize.radix100.part1:
+        li    tmp4,100              ; \ Multiply 1st byte mantissa by 100
+        mpy   tmp4,tmp2             ; | Result is in 32 bit register tmp2:tmp3
+        mov   tmp3,tmp2             ; / Move LSW to MSW
+        dec   tmp1                  ; Decrement exponent
+        jgt   fm.dir.callback2.volsize.radix100.part1
+                                    ; Next iteration if exponent > 0
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 2) if exp>1, otherwise (byte 1)
+        ;------------------------------------------------------   
+fm.dir.callback2.volsize.radix100.part2:
+        movb  *tmp0+,tmp1           ; Get float mantissa byte
+        srl   tmp1,8                ; MSB to LSB
+        a     tmp2,tmp1             ; Add previous result
+        ;------------------------------------------------------
+        ; Store volume size
+        ;------------------------------------------------------   
+fm.dir.callback2.volsize.store:
+        mov  tmp1,@cat.volsize      ; Store volume size
+        ;------------------------------------------------------
+        ; Get volume free
+        ;------------------------------------------------------ 
+fm.dir.callback2.volfree:
+        li    tmp0,rambuf + >1b
+        movb  *tmp0,tmp1            ; Get Float size byte
+        inc   tmp0                  ; Skip float size byte
+        movb  *tmp0+,tmp1           ; Get float exponent byte
+        srl   tmp1,8                ; MSB to LSB
+
+        movb  *tmp0+,tmp2           ; Get float mantissa byte
+        srl   tmp2,8                ; MSB to LSB
+        ;------------------------------------------------------
+        ; Turn radix 100 floating point into hex number
+        ;------------------------------------------------------        
+        ai    tmp1,-64              ; Subtract radix 100 exponent bias >40        
+        jgt   fm.dir.callback2.volfree.radix100.part1
+                                    ; Handle 1st byte if exponent > 1
+
+        mov   tmp2,tmp1             ; No multiplication needed
+        jmp   fm.dir.callback2.volfree.store
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 1) if exp>1
+        ;------------------------------------------------------        
+fm.dir.callback2.volfree.radix100.part1:
+        li    tmp4,100              ; \ Multiply 1st byte mantissa by 100
+        mpy   tmp4,tmp2             ; | Result is in 32 bit register tmp2:tmp3
+        mov   tmp3,tmp2             ; / Move LSW to MSW
+        dec   tmp1                  ; Decrement exponent
+        jgt   fm.dir.callback2.volfree.radix100.part1
+                                    ; Next iteration if exponent > 0
+        ;------------------------------------------------------
+        ; Handle mantissa (byte 2) if exp>1, otherwise (byte 1)
+        ;------------------------------------------------------   
+fm.dir.callback2.volfree.radix100.part2:
+        movb  *tmp0+,tmp1           ; Get float mantissa byte
+        srl   tmp1,8                ; MSB to LSB
+        a     tmp2,tmp1             ; Add previous result
+        ;------------------------------------------------------
+        ; Store volume free and volume used
+        ;------------------------------------------------------   
+fm.dir.callback2.volfree.store:
+        mov  tmp1,@cat.volfree      ; Store volume free
+        mov  @cat.volsize,tmp0      ; \
+        s    tmp1,tmp0              ; | Calculate and store volume used
+        mov  tmp0,@cat.volused      ; /
         jmp  fm.dir.callback2.exit  ; Exit
         ;------------------------------------------------------
         ; File index handling

@@ -126,7 +126,9 @@ fm.directory.read:
 
         li    tmp0,io.rel.inp.int.fix
         mov   tmp0,@parm9           ; File type/mode for reading catalog
-
+        ;-------------------------------------------------------
+        ; Setup path
+        ;-------------------------------------------------------
         mov   @parm1,tmp0           ; Get device name
         li    tmp1,cat.device
         
@@ -138,7 +140,9 @@ fm.directory.read:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
-
+        ;-------------------------------------------------------
+        ; Read catalog into memory
+        ;-------------------------------------------------------
         bl    @fh.file.read.mem     ; Read file into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; |             file descriptor
@@ -157,7 +161,6 @@ fm.directory.read:
                                     ; |             ROM/RAM 
                                     ; | i  @parm9 = File type/mode (in LSB), 
                                     ; /             becomes PAB byte 1
-
         ;-------------------------------------------------------
         ; (2) Generate string list with filesizes
         ;-------------------------------------------------------
@@ -224,8 +227,7 @@ fm.directory.ftlist:
         mov   tmp1,@cat.var2        ; Save pointer to filetype string list
         mov   tmp2,@cat.var3        ; Set loop counter
         li    tmp3,cat.rslist       ; Set pointer to recordsize list
-        mov   tmp3,@cat.var4        ; Pointer to recordsize lista
-
+        mov   tmp3,@cat.var4        ; Pointer to recordsize list
         li    tmp2,>2020            ; Whitespace
         li    tmp3,>0500            ; Fixed length prefix byte in MSB        
         ;-------------------------------------------------------
@@ -370,7 +372,7 @@ txt.ftype2    stri 'DV '
 txt.ftype3    stri 'IF '
 txt.ftype4    stri 'IV '
 txt.ftype5    stri 'PRG'
-txt.ftype6    stri 'DIR'
+txt.ftype6    stri 'SUBDIR'
 txt.filetypes equ  txt.ftype0
 
 data.printf.recsize:

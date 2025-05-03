@@ -59,7 +59,7 @@ pane.filebrowser.volume:
         jeq   pane.filebrowser.nofiles 
                                     ; No, skip                                    
         bl    @putat
-              byte 0,7
+              byte 0,8
               data cat.volname      ; Display volume name
         ;-------------------------------------------------------
         ; Show number of files
@@ -78,31 +78,71 @@ pane.filebrowser.nofiles:
               data rambuf,rambuf + 5,32
 
         bl    @putat
-              byte 0,25
+              byte 0,27
               data rambuf + 5       ; Display number of files
-        ;------------------------------------------------------
-        ; Show device path
-        ;------------------------------------------------------
-pane.filebrowser.devicepath:
-        mov   @cat.device,tmp0        ; Device path set?
-        jeq   pane.filebrowser.lines  ; No, skip display
+        ;-------------------------------------------------------
+        ; Show volume size
+        ;-------------------------------------------------------
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
 
-        bl    @hchar
-              byte 0,30,32,50
-              data EOL              ; Clear device path
+        bl    @mknum                ; Convert unsigned number to string
+              data cat.volsize      ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data rambuf,rambuf + 5,32
 
         bl    @putat
-              byte 0,30
-              data cat.device       ; Show device path
+              byte 0,39
+              data rambuf + 5       ; Display volume size
+        ;-------------------------------------------------------
+        ; Show volume free
+        ;-------------------------------------------------------
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
+
+        bl    @mknum                ; Convert unsigned number to string
+              data cat.volfree      ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data rambuf,rambuf + 5,32
+
+        bl    @putat
+              byte 0,52
+              data rambuf + 5       ; Display volume free
+        ;-------------------------------------------------------
+        ; Show volume used
+        ;-------------------------------------------------------
+        andi  config,>7fff          ; Do not print number
+                                    ; (Reset bit 0 in config register)
+
+        bl    @mknum                ; Convert unsigned number to string
+              data cat.volused      ; \ i  p1    = Source
+              data rambuf           ; | i  p2    = Destination
+              byte 48               ; | i  p3MSB = ASCII offset
+              byte 32               ; / i  p3LSB = Padding character
+
+        bl    @trimnum              ; Trim number to the left
+              data rambuf,rambuf + 5,32
+
+        bl    @putat
+              byte 0,65
+              data rambuf + 5       ; Display volume used
         ;------------------------------------------------------
         ; Draw vertical lines
         ;------------------------------------------------------
 pane.filebrowser.lines:        
         bl    @vchar
-              byte 1,26                        ; Starting position YX  
+              byte 1,25                        ; Starting position YX  
               byte >10                         ; Vertical line char
               byte pane.botrow - cmdb.rows - 1 ; Y-repeat
-              byte 1,54                        ; Starting position YX  
+              byte 1,51                        ; Starting position YX  
               byte >10                         ; Vertical line char
               byte pane.botrow - cmdb.rows - 1 ; Y-repeat
               data EOL
@@ -115,17 +155,17 @@ pane.filebrowser.headers:
               data txt.header       ; Column 1
 
         bl    @putat
-              byte 1,29
+              byte 1,27
               data txt.header       ; Column 2
 
         bl    @putat              
-              byte 1,57
+              byte 1,53
               data txt.header       ; Column 3
 
         bl    @hchar                ; Show horizontal lines 
               byte 2,1,1,23         ; Column 1
-              byte 2,29,1,23        ; Column 2
-              byte 2,57,1,23        ; Column 3
+              byte 2,27,1,23        ; Column 2
+              byte 2,53,1,23        ; Column 3
               data eol                         
         ;------------------------------------------------------
         ; Prepare for displaying filenames
@@ -149,7 +189,7 @@ pane.filebrowser.show:
         s     @cmdb.scrrows,tmp0    ; | column list and store in MSB of tmp0.
         mov   tmp0,tmp2             ; | Also use for calculating files per page.
         sla   tmp0,8                ; /
-        ori   tmp0,28               ; Set offset for new column in filename list
+        ori   tmp0,26               ; Set offset for new column in filename list
         mov   tmp0,@cat.var1        ; Save cutover row and offset
 
         dect  tmp2                  ; Take header lines into account
@@ -329,5 +369,5 @@ pane.filebrowser.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-txt.volume    stri  'Volume:            Files:'
+txt.volume    stri  'Volume:             Files:       Size:        Free:        Used:       '
 txt.header    stri  'Name        Type   Size'

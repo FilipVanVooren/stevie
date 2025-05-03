@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250425-2137300
+0002               * BUILD: 250503-1507440
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -612,48 +612,51 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0443      E2F4     cat.rslist        equ  cat.top + 756   ; Record size list (128)
 0444      E374     cat.barpos        equ  cat.top + 884   ; Color bar YX position (backup)
 0445      E376     cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
-0446      E378     cat.free1         equ  cat.top + 888   ; **free** up to 954
-0447               ;-----------------------------------------------------------------
-0448               ; Directory/File catalog strings (always length byte included)
-0449               ;-----------------------------------------------------------------
-0450      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
-0451      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype string list (762=127*6)
-0452      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize string list (508=127*4)
-0453      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename string list (1524=127*12)
-0454      EEB0     cat.device        equ  cat.top + 3760  ; Current device name string (80)
-0455      0F00     cat.size          equ  3840            ; Catalog total size
-0456               ;-----------------------------------------------------------------
-0457               ; Command buffer                       ; @>ef00-efff   (256 bytes)
-0458               ;-----------------------------------------------------------------
-0459      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
-0460      0100     cmdb.size         equ  256             ; Command buffer size
+0446      E378     cat.volsize       equ  cat.top + 888   ; Volume size
+0447      E37A     cat.volused       equ  cat.top + 890   ; Volume used
+0448      E37C     cat.volfree       equ  cat.top + 892   ; Volume free
+0449      E37E     cat.free1         equ  cat.top + 894   ; **free** up to 954
+0450               ;-----------------------------------------------------------------
+0451               ; Directory/File catalog strings (always length byte included)
+0452               ;-----------------------------------------------------------------
+0453      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
+0454      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype string list (762=127*6)
+0455      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize string list (508=127*4)
+0456      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename string list (1524=127*12)
+0457      EEB0     cat.device        equ  cat.top + 3760  ; Current device name string (80)
+0458      0F00     cat.size          equ  3840            ; Catalog total size
+0459               ;-----------------------------------------------------------------
+0460               ; Command buffer                       ; @>ef00-efff   (256 bytes)
 0461               ;-----------------------------------------------------------------
-0462               ; Heap & Strings area                  @>f000-f0ff     (256 bytes)
-0463               ;-----------------------------------------------------------------
-0464      F000     heap.top          equ  >f000           ; 80 Current filename
-0465      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0466      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
-0467               ;-----------------------------------------------------------------
-0468               ; Search results index for rows        @>f100-f8ff    (2048 bytes)
-0469               ;-----------------------------------------------------------------
-0470      F100     edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
-0471      0800     edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
+0462      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
+0463      0100     cmdb.size         equ  256             ; Command buffer size
+0464               ;-----------------------------------------------------------------
+0465               ; Heap & Strings area                  @>f000-f0ff     (256 bytes)
+0466               ;-----------------------------------------------------------------
+0467      F000     heap.top          equ  >f000           ; 80 Current filename
+0468      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0469      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0470               ;-----------------------------------------------------------------
+0471               ; Search results index for rows        @>f100-f8ff    (2048 bytes)
 0472               ;-----------------------------------------------------------------
-0473               ; Search results index for columns     @>f900-fcff    (1024 bytes)
-0474               ;-----------------------------------------------------------------
-0475      F900     edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
-0476      0400     edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
+0473      F100     edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
+0474      0800     edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
+0475               ;-----------------------------------------------------------------
+0476               ; Search results index for columns     @>f900-fcff    (1024 bytes)
 0477               ;-----------------------------------------------------------------
-0478               ; Stevie specific equates
-0479               ;-----------------------------------------------------------------
-0480      0000     fh.fopmode.none           equ  0        ; No file operation in progress
-0481      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
-0482      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
-0483      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
-0484      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
-0485      9900     tv.colorize.reset         equ  >9900    ; Colorization off
-0486      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
-0487      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
+0478      F900     edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
+0479      0400     edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
+0480               ;-----------------------------------------------------------------
+0481               ; Stevie specific equates
+0482               ;-----------------------------------------------------------------
+0483      0000     fh.fopmode.none           equ  0        ; No file operation in progress
+0484      0001     fh.fopmode.readfile       equ  1        ; Read file from disk to memory
+0485      0002     fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+0486      0006     cmdb.rows                 equ  6        ; Number of rows in CMDB pane
+0487      A028     rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
+0488      9900     tv.colorize.reset         equ  >9900    ; Colorization off
+0489      00FE     tv.1timeonly              equ  254      ; One-time only flag indicator
+0490      0100     tv.sams.maxpage           equ  256      ; Max SAMS pages supported
                    < stevie_b5.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -11479,7 +11482,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.FILECOUNT....... >E000 :     
     CAT.FNLIST.......... >E8BC :     
     CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE1........... >E378 :     
+    CAT.FREE1........... >E37E :     
     CAT.FSLIST.......... >E1F4 :     
     CAT.FTLIST.......... >E174 :     
     CAT.FULLFNAME....... >E016 :     
@@ -11505,7 +11508,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CAT.VAR6............ >E070 :     
     CAT.VAR7............ >E072 :     
     CAT.VAR8............ >E074 :     
+    CAT.VOLFREE......... >E37C :     
     CAT.VOLNAME......... >E3BA :     
+    CAT.VOLSIZE......... >E378 :     
+    CAT.VOLUSED......... >E37A :     
     CLHOOK.............. >2F7C :     
     CLIP1............... >3100 :     
     CLIP2............... >3200 :     

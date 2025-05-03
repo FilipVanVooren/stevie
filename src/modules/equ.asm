@@ -443,7 +443,10 @@ cat.fslist        equ  cat.top + 500   ; Filesize size (256)
 cat.rslist        equ  cat.top + 756   ; Record size list (128)
 cat.barpos        equ  cat.top + 884   ; Color bar YX position (backup)
 cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
-cat.free1         equ  cat.top + 888   ; **free** up to 954
+cat.volsize       equ  cat.top + 888   ; Volume size
+cat.volused       equ  cat.top + 890   ; Volume used
+cat.volfree       equ  cat.top + 892   ; Volume free
+cat.free1         equ  cat.top + 894   ; **free** up to 954
 ;-----------------------------------------------------------------
 ; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------
