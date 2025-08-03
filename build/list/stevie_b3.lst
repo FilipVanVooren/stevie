@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250503-1507440
+0002               * BUILD: 250803-1838410
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -898,13 +898,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
 0042                                                   ; 15 /
 0043               
-0044 6010 1553             stri 'STEVIE 1.7.7 MEMRESET'
+0044 6010 1553             stri 'STEVIE 1.7.8 MEMRESET'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 372E     
-     601C 3720     
+     601C 3820     
      601E 4D45     
      6020 4D52     
      6022 4553     
@@ -921,13 +921,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054 6028 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0055                                                   ; 15 /
 0056               
-0058 602A 0C53                 stri 'STEVIE 1.7.7'
+0058 602A 0C53                 stri 'STEVIE 1.7.8'
      602C 5445     
      602E 5649     
      6030 4520     
      6032 312E     
      6034 372E     
-     6036 37       
+     6036 38       
 0060               
 0064               
 0068               
@@ -14070,13 +14070,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 70FE 2020                 text '  Stevie 1.7.7   '
+0011 70FE 2020                 text '  Stevie 1.7.8   '
      7100 5374     
      7102 6576     
      7104 6965     
      7106 2031     
      7108 2E37     
-     710A 2E37     
+     710A 2E38     
      710C 2020     
      710E 20       
 0012                           even
@@ -14832,23 +14832,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7602 20       
 0172                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7603   32                        text '250503-1507440'
+0001 7603   32                        text '250803-1838410'
      7604 3530     
-     7606 3530     
+     7606 3830     
      7608 332D     
-     760A 3135     
-     760C 3037     
-     760E 3434     
+     760A 3138     
+     760C 3338     
+     760E 3431     
      7610 30       
                    < data.dialogs.asm
-0173 7611   20                        text ' - Stevie 1.7.7  - (c)2018-2025 Filip Van Vooren'
+0173 7611   20                        text ' - Stevie 1.7.8  - (c)2018-2025 Filip Van Vooren'
      7612 2D20     
      7614 5374     
      7616 6576     
      7618 6965     
      761A 2031     
      761C 2E37     
-     761E 2E37     
+     761E 2E38     
      7620 2020     
      7622 2D20     
      7624 2863     

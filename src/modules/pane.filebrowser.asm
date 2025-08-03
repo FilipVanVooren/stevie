@@ -27,8 +27,23 @@ pane.filebrowser:
         ; Initialisation
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - 640
-                                    ; Clear screen
+              data vdp.sit.base,32,vdp.sit.size - 560
+                                    ; Clear screen (up to CMDB)
+
+        ;------------------------------------------------------
+        ; Load colorscheme and turn on screen
+        ;------------------------------------------------------
+        clr   @parm1                ; Screen off while reloading color scheme
+        seto  @parm2                ; Skip colorizing marked lines
+        clr   @parm3                ; Colorize all panes
+
+        bl    @pane.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF
+                                    ; | i  @parm3 = Only colorize CMDB pane
+                                    ; /             if >FFFF                                    
         ;------------------------------------------------------
         ; Prepare for displaying top row
         ;------------------------------------------------------
