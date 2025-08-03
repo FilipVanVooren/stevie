@@ -49,44 +49,40 @@ edkey.action.cmdb.file.directory.9:
         mov   @const.8,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.a:
+
+edkey.action.cmdb.file.directory.tipi:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.9,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.tipi:
+edkey.action.cmdb.file.directory.scs1:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.10,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.scs1:
+edkey.action.cmdb.file.directory.scs2:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.11,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.scs2:
+edkey.action.cmdb.file.directory.scs3:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.12,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.scs3:
+edkey.action.cmdb.file.directory.ide1:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.13,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.ide1:
+edkey.action.cmdb.file.directory.ide2:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
         mov   @const.14,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-edkey.action.cmdb.file.directory.ide2:
-        clr   @parm1                ; Skip parameter 1. Will use @device.list
-        mov   @const.15,@parm2
-        jmp   edkey.action.cmdb.file.directory
-
 edkey.action.cmdb.file.directory.ide3:
         clr   @parm1                ; Skip parameter 1. Will use @device.list
-        mov   @const.16,@parm2
+        mov   @const.15,@parm2
         jmp   edkey.action.cmdb.file.directory
 
 
