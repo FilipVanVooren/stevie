@@ -140,6 +140,8 @@ fm.directory.read:
                                     ; \ i  tmp0 = source
                                     ; | i  tmp1 = destination
                                     ; / i  tmp2 = bytes to copy
+
+        bl    @pane.cursor.hide     ; Hide cursor                               
         ;-------------------------------------------------------
         ; Read catalog into memory
         ;-------------------------------------------------------
@@ -344,6 +346,7 @@ fm.directory.browser:
                                     ; | o  @cat.fullfname = Combined string with
                                     ; /        device & filename        
 
+        bl    @pane.cursor.blink    ; Blink cursor again
         bl    @pane.filebrowser     ; Browse files
 *--------------------------------------------------------------
 * Exit

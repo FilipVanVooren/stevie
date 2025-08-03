@@ -162,7 +162,7 @@ pane.botline.show_keys.default:
               data txt.keys.default ; Show default keys only
 
         bl    @hchar
-              byte pane.botrow,18,32,42
+              byte pane.botrow,18,32,60
               data EOL              ; Remove any leftover junk after key markers
         ;------------------------------------------------------
         ; Show text editing mode

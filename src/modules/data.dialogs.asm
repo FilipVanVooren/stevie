@@ -30,9 +30,9 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FMIO  FH-Home  FL-EOL  ^1-9=DSK1-9'
+txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FM  ^0=TIPI  ^1-9=DSK1-9  ^A-C=SCS1-3  ^I-G=IDE1-3  '
                    even
-txt.keys.default2  stri 'F9-Back  F3-Clear  *F5-FMIO  FH-Home  FL-EOL  ^1-9=DSK1-9'
+txt.keys.default2  stri 'F9-Back  F3-Clear *F5-FM  ^0=TIPI  ^1-9=DSK1-9  ^A-C=SCS1-3  ^I-G=IDE1-3  '
                    even
 
 ;--------------------------------------------------------------
@@ -182,7 +182,7 @@ txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help  
 pos.info.menu      byte 0,7,15,27,39,49,56,>ff
 txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
-txt.keys.menu2     stri 'F9-Close menu  SPACE-Close menu'
+txt.keys.menu2     equ  txt.keys.menu
                    even
 
 ;--------------------------------------------------------------
@@ -247,7 +247,7 @@ txt.keys.config    stri 'F9-Back  SPACE-Close menu'
 txt.head.clipdev   byte 23,4,1
                    text ' Configure clipboard '
 txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
-txt.keys.clipdev   stri 'F9-Back  F3-Clear  ^A=DSK1.CLIP  ^B=TIPI.CLIP'
+txt.keys.clipdev   stri 'F9-Back  F3-Clear'
                    even
 
 ;--------------------------------------------------------------

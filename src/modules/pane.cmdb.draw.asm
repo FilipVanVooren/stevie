@@ -203,7 +203,7 @@ pane.cmdb.draw.keys:
         mov   tmp0,@parm1           ; Set parameter
         mov   @cmdb.pankeys,@parm2  ; Pane hint to display
 
-        li    tmp0,60               ; \ Set pad length
+        li    tmp0,78               ; \ Set pad length
         mov   tmp0,@parm3           ; / 
 
         bl    @pane.show_hintx      ; Display pane hint

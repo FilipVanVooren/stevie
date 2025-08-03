@@ -50,5 +50,6 @@ const.12      data  12              ; 12 ; C
 const.13      data  13              ; 13 ; D
 const.14      data  14              ; 14 ; E
 const.15      data  15              ; 15 ; F
+const.16      data  16              ; 16
 const.32      data  32              ; 32
 const.80      data  80              ; 80

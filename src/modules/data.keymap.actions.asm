@@ -522,6 +522,9 @@ keymap_actions.cmdb:
         byte  key.fctn.plus, pane.focus.cmdb
         data  edkey.action.quit
 
+        byte  key.ctrl.0, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.tipi
+
         byte  key.ctrl.1, pane.focus.cmdb
         data  edkey.action.cmdb.file.directory.1
 
@@ -549,6 +552,24 @@ keymap_actions.cmdb:
         byte  key.ctrl.9, pane.focus.cmdb
         data  edkey.action.cmdb.file.directory.9
 
+        byte  key.ctrl.a, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.scs1        
+
+        byte  key.ctrl.b, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.scs2
+
+        byte  key.ctrl.c, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.scs3
+
+        byte  key.ctrl.i, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.ide1        
+
+        byte  key.ctrl.f, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.ide2
+
+        byte  key.ctrl.g, pane.focus.cmdb
+        data  edkey.action.cmdb.file.directory.ide3
+
         byte  key.ctrl.s, pane.focus.cmdb
         data  edkey.action.filebrowser.prevcol
 
@@ -560,12 +581,6 @@ keymap_actions.cmdb:
 
         byte  key.ctrl.x, pane.focus.cmdb
         data  edkey.action.filebrowser.nextpage
-
-        byte  key.ctrl.a, pane.focus.cmdb
-        data  edkey.action.cmdb.preset
-
-        byte  key.ctrl.b, pane.focus.cmdb
-        data  edkey.action.cmdb.preset
 
         byte  key.ctrl.z, pane.focus.cmdb
         data  pane.colorscheme.cycle   
