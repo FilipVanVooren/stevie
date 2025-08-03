@@ -19,31 +19,31 @@ setbin() {
     case "$vdpmode" in
         # F18a 24x80 sprite cursor/ruler
         2480)
-          binary="stv24sc.bin"
+          binary="stevie24s.bin"
           return
           ;;
 
         # F18a 24x80 character cursor
         2481)
-          binary="stv24tc.bin"
+          binary="stevie24t.bin"
           return          
           ;;
 
         # F18a 30x80 sprite cursor/ruler
         3080)
-          binary="stv30sc.bin"
+          binary="stevie30s.bin"
           return          
           ;;
 
         # F18a 30x80 character cursor
         3081)
-          binary="stv30tc.bin"
+          binary="stevie30t.bin"
           return          
           ;;
 
         # F18a 60x80 character cursor
         6081)
-          binary="stv60tc.bin"
+          binary="stevie60t.bin"
           return          
           ;;
 
