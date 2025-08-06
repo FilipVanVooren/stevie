@@ -22,7 +22,7 @@
         ;
         ; Change to rom.program2 to skip menu option "STEVIE x.x.x RESET MEM"
         ;
-        data  rom.program1          ; 6  \ Pointer to program list         >6006
+        data  rom.program2          ; 6  \ Pointer to program list         >6006
                                     ; 7  /
 
         data  >0000                 ; 8  \ Pointer to DSR list             >6008

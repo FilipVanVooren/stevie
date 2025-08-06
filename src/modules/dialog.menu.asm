@@ -55,6 +55,15 @@ dialog.menu:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         bl    @pane.cursor.hide     ; Hide cursor
+
+        dect  stack
+        mov   @wyx,*stack           ; Save cursor position
+
+        bl    @hchar
+              byte 0,18,32,62
+              data eol              ; Remove leftover junk from previous dialog
+
+        mov   *stack+,@wyx          ; Restore cursor position
         ;-------------------------------------------------------
         ; Print SAMS pages free
         ;-------------------------------------------------------
