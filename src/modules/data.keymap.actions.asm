@@ -219,6 +219,12 @@ keymap_actions.cmdb:
         byte  key.uc.q, id.dialog.menu
         data  edkey.action.quit
 
+        byte  key.uc.l, id.dialog.menu
+        data  edkey.action.cmdb.lock
+
+        byte  key.uc.u, id.dialog.menu
+        data  edkey.action.cmdb.unlock
+
         byte  key.fctn.9, id.dialog.menu
         data  edkey.action.cmdb.close.dialog
         ;-------------------------------------------------------

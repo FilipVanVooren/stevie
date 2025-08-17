@@ -31,17 +31,36 @@ dialog.file:
 
         li    tmp0,txt.head.file
         mov   tmp0,@cmdb.panhead    ; Header for dialog
+        ;-------------------------------------------------------
+        ; Editor buffer locked?
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor locked?
+        jeq   !                     ; No, show all options
+        ;-------------------------------------------------------
+        ; Reduced options
+        ;-------------------------------------------------------
+        li    tmp0,txt.info.filelock
+        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
-        li    tmp0,txt.info.file
+        li    tmp0,pos.info.filelock
+        mov   tmp0,@cmdb.panmarkers ; Show letter markers
+        jmp   dialog.file.keylist
+        ;-------------------------------------------------------
+        ; All options
+        ;-------------------------------------------------------
+!       li    tmp0,txt.info.file
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
         li    tmp0,pos.info.file
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-
+        ;-------------------------------------------------------
+        ; Rest of dialog setup
+        ;-------------------------------------------------------
+dialog.file.keylist:
         li    tmp0,txt.hint.file
         mov   tmp0,@cmdb.panhint    ; Hint in bottom line
         clr   @cmdb.panhint2        ; No extra hint to display
-dialog.file.keylist:
+
         li    tmp0,txt.keys.file    ; No navigation keys
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         bl    @pane.cursor.hide     ; Hide cursor

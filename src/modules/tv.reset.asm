@@ -31,6 +31,7 @@ tv.reset:
         bl    @idx.init             ; Initialize index
         bl    @fb.init              ; Initialize framebuffer
         bl    @errpane.init         ; Initialize error pane
+        clr   @edb.locked           ; Clear editor locked flag
         ;------------------------------------------------------
         ; Remove markers and shortcuts
         ;------------------------------------------------------

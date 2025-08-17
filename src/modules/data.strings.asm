@@ -18,6 +18,8 @@ txt.autoinsert     stri 'INS+'
                    even
 txt.star           stri '*'
                    even
+txt.lockicon       byte 1,29
+                   even
 txt.loading        stri 'Loading...'
                    even
 txt.saving         stri 'Saving....'
@@ -59,10 +61,6 @@ txt.done.delete    stri 'Delete completed'
 txt.done.clipboard stri 'Clipboard saved'
                    even
 txt.done.clipdev   stri 'Clipboard set'
-                   even
-txt.autoins.on     stri 'Autoinsert: on'
-                   even
-txt.autoins.off    stri 'Autoinsert: off'
                    even
 txt.fastmode       stri 'Fastmode IO'
                    even

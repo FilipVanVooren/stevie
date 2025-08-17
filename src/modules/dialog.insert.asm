@@ -26,6 +26,11 @@ dialog.insert:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
+        ; Skip dialog if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor locked?
+        jne   dialog.insert.exit    ; yes, skip dialog
+        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
 dialog.insert.setup:

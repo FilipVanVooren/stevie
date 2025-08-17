@@ -32,24 +32,44 @@ key.uc.k      equ >4b               ; K
 key.uc.l      equ >4c               ; L
 key.uc.m      equ >4d               ; M
 key.uc.n      equ >4e               ; N
-key.uc.r      equ >52               ; R
-key.uc.s      equ >53               ; S
 key.uc.o      equ >4f               ; O
 key.uc.p      equ >50               ; P
 key.uc.q      equ >51               ; Q
 key.uc.r      equ >52               ; R
+key.uc.s      equ >53               ; S
+key.uc.t      equ >54               ; T
+key.uc.u      equ >55               ; U
+key.uc.v      equ >56               ; V
+key.uc.w      equ >57               ; W
 key.uc.x      equ >58               ; X
+key.uc.y      equ >59               ; Y
+key.uc.z      equ >5a               ; Z
+key.lc.a      equ >61               ; a
 key.lc.b      equ >a2               ; b
+key.lc.c      equ >a3               ; c
+key.lc.d      equ >a4               ; d
 key.lc.e      equ >a5               ; e
 key.lc.f      equ >a6               ; f
+key.lc.g      equ >a7               ; g
 key.lc.h      equ >a8               ; h
+key.lc.i      equ >a9               ; i
+key.lc.j      equ >aa               ; j
+key.lc.k      equ >ab               ; k
+key.lc.l      equ >ac               ; l
+key.lc.m      equ >ad               ; m
 key.lc.n      equ >6e               ; n
-key.lc.s      equ >73               ; s
 key.lc.o      equ >6f               ; o
 key.lc.p      equ >70               ; p
 key.lc.q      equ >71               ; q
 key.lc.r      equ >72               ; r
+key.lc.s      equ >73               ; s
+key.lc.t      equ >74               ; t
+key.lc.u      equ >75               ; u
+key.lc.v      equ >76               ; v
+key.lc.w      equ >77               ; w
 key.lc.x      equ >78               ; x
+key.lc.y      equ >79               ; y
+key.lc.z      equ >7a               ; z
 *---------------------------------------------------------------
 * Keyboard scancodes - Function keys
 *-------------|---------------------|---------------------------

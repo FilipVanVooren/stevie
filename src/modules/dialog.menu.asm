@@ -40,12 +40,29 @@ dialog.menu:
         li    tmp0,txt.head.menu
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
-        li    tmp0,txt.info.menu
+        mov   @edb.locked,tmp0      ; Is editor locked?
+        jeq   !                     ; yes, no "Unlock" option in menu
+        ;-------------------------------------------------------
+        ; Menu with "Unlock" option
+        ;-------------------------------------------------------
+        li    tmp0,txt.info.menulock
+        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
+
+        li    tmp0,pos.info.menulock
+        mov   tmp0,@cmdb.panmarkers ; Show letter markers
+        jmp   dialog.menu.sams
+        ;-------------------------------------------------------
+        ; Menu without "Unlock" option
+        ;-------------------------------------------------------
+!       li    tmp0,txt.info.menu
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
         li    tmp0,pos.info.menu
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-
+        ;-------------------------------------------------------
+        ; Show SAMS usage
+        ;-------------------------------------------------------
+dialog.menu.sams:
         li    tmp0,ram.msg1
         mov   tmp0,@cmdb.panhint    ; Show SAMS memory allocation
         

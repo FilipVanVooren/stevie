@@ -120,7 +120,7 @@ main:
         copy  "edkey.cmdb.pick.next.asm"    ; Pick next file in catalog
         copy  "edkey.cmdb.updir.asm"        ; Go up one directory level
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
-        copy  "edkey.cmdb.shortcuts.asm"    ; Shortcuts menu actions
+        copy  "edkey.cmdb.autoinsert.asm"   ; Auto insert toggle
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
         copy  "edkey.cmdb.filebrowser.prevcol.asm"
@@ -132,12 +132,17 @@ main:
         copy  "edkey.cmdb.filebrowser.nextpage.asm"
                                             ; Next page in filebrowser
         copy  "edkey.cmdb.find.search.asm"  ; Search operation for find dialog
+        copy  "edkey.cmdb.lock.asm"         ; Lock editor buffer
+        copy  "edkey.cmdb.unlock.asm"       ; Unlock editor buffer
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
         copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
+        copy  "edb.lock.asm"                ; Lock editor buffer
+        copy  "edb.unlock.asm"              ; Unlock editor buffer
+        copy  "edb.autoinsert.toggle.asm"   ; Toggle auto insert mode for buffer
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------

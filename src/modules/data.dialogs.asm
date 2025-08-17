@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.7.8   '
+            text '  Stevie 1.8.0   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.7.8   '     
+            text '  Stevie 1.8.0   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.7.8   '
+            text '  Stevie 1.8.0   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.7.8   '  
+            text '  Stevie 1.8.0   '  
             even
         .endif
 
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.7.8  - (c)2018-2025 Filip Van Vooren'
+                   text ' - Stevie 1.8.0  - (c)2018-2025 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -178,8 +178,12 @@ txt.about.build    byte 69
 ;--------------------------------------------------------------
 txt.head.menu      byte 13,4,1
                    text ' Main Menu '
-txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Quit'
-pos.info.menu      byte 0,7,15,27,39,49,56,>ff
+txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Lock   Quit'
+pos.info.menu      byte 0,7,15,27,39,49,56,63,>ff
+                   even
+txt.info.menulock  stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Unlock   Quit'
+pos.info.menulock  byte 0,7,15,27,39,49,56,65,>ff
+                   even
 txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
 txt.keys.menu2     equ  txt.keys.menu
@@ -192,6 +196,10 @@ txt.head.file      byte 8,4,1
                    text ' File '
 txt.info.file      stri 'New   Open   Run   Save   Insert   Append   Catalog   Print'
 pos.info.file      byte 0,6,13,19,26,35,44,54,>ff
+                   even
+txt.info.filelock  stri 'New   Open   Run   Save   Catalog   Print'
+pos.info.filelock  byte 0,6,13,19,26,36,>ff
+                   even
 txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
                    even
@@ -236,8 +244,12 @@ txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 ;--------------------------------------------------------------
 txt.head.config    byte 11,4,1
                    text ' Options '
-txt.info.config    stri 'Autoinsert   Clipboard   Font'
-pos.info.config    byte 0,13,25,>ff
+txt.info.config    stri 'Auto-Insert   Clipboard   Font'
+pos.info.config    byte 0,14,26,>ff
+                   even
+txt.info.conflock  stri 'Clipboard   Font'
+pos.info.conflock  byte 0,12,>ff
+                   even
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
                    even
 

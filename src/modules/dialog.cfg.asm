@@ -31,16 +31,35 @@ dialog.cfg:
 
         li    tmp0,txt.head.config
         mov   tmp0,@cmdb.panhead    ; Header for dialog
+        ;-------------------------------------------------------
+        ; Editor buffer locked?
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor locked?
+        jeq   !                     ; No, show all options
+        ;-------------------------------------------------------
+        ; Reduced options
+        ;-------------------------------------------------------
+        li    tmp0,txt.info.conflock
+        mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
-        li    tmp0,txt.info.config
+        li    tmp0,pos.info.conflock
+        mov   tmp0,@cmdb.panmarkers ; Show letter markers
+        jmp   dialog.cfg.keylist
+        ;-------------------------------------------------------
+        ; All options
+        ;-------------------------------------------------------
+!       li    tmp0,txt.info.config
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
         li    tmp0,pos.info.config
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-
+        ;-------------------------------------------------------
+        ; Rest of dialog setup
+        ;-------------------------------------------------------
+dialog.cfg.keylist:
         clr   @cmdb.panhint         ; No hint to display
         clr   @cmdb.panhint2        ; No extra hint to display
-
+ 
         li    tmp0,txt.keys.config
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 

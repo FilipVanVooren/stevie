@@ -202,7 +202,7 @@ pane.botline.show_mode.insert.noauto:
         ;------------------------------------------------------        
 pane.botline.show_dirty:
         mov   @edb.dirty,tmp0 
-        jeq   pane.botline.nochange
+        jeq   pane.botline.locked
         ;------------------------------------------------------
         ; Show "*" 
         ;------------------------------------------------------        
@@ -211,12 +211,22 @@ pane.botline.show_dirty:
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------
+        ; Show "L" locked icon 
+        ;------------------------------------------------------
+pane.botline.locked:    
+        mov    @edb.locked,tmp0
+        jeq    pane.botline.nochange
+        bl     @putat
+               byte pane.botrow,65
+               data txt.lockicon    ; Show locked icon
+        jmp    pane.botline.show_linecol
+        ;------------------------------------------------------
         ; Show " " 
         ;------------------------------------------------------        
 pane.botline.nochange:        
         bl    @putat
               byte pane.botrow,65
-              data txt.ws1          ; Single white space      
+              data txt.ws1          ; Single white space
         ;------------------------------------------------------
         ; Show "line,column"
         ;------------------------------------------------------

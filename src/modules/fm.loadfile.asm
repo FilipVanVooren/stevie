@@ -158,6 +158,11 @@ fm.loadfile.clear:
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
                                     ; longer dirty.
+
+        seto  @edb.locked           ; Set editor locked flag to prevent
+                                    ; accidental changes
+
+        clr   @edb.autoinsert       ; Clear auto insert flag
                                     
         li    tmp0,txt.filetype.DV80                                     
         mov   tmp0,@edb.filetype.ptr

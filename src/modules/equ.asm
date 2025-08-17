@@ -261,12 +261,12 @@ fh.kilobytes.prev equ  fh.struct + 92  ; Kilobytes processed (previous)
 fh.line           equ  fh.struct + 94  ; Editor buffer line currently processing
 fh.temp1          equ  fh.struct + 96  ; Temporary variable 1
 fh.temp2          equ  fh.struct + 98  ; Temporary variable 2
-fh.temp3          equ  fh.struct +100  ; Temporary variable 3
-fh.pabtpl.ptr     equ  fh.struct +102  ; Pointer to PAB template in ROM/RAM
-fh.dir.rec.ptr    equ  fh.struct +104  ; Pointer to directory record
-fh.circbreaker    equ  fh.struct +106  ; Circuit breaker. Halt file operation
-fh.membuffer      equ  fh.struct +108  ; 80 bytes file memory buffer
-fh.free           equ  fh.struct +188  ; End of structure
+fh.temp3          equ  fh.struct + 100 ; Temporary variable 3
+fh.pabtpl.ptr     equ  fh.struct + 102 ; Pointer to PAB template in ROM/RAM
+fh.dir.rec.ptr    equ  fh.struct + 104 ; Pointer to directory record
+fh.circbreaker    equ  fh.struct + 106 ; Circuit breaker. Halt file operation
+fh.membuffer      equ  fh.struct + 108 ; 80 bytes file memory buffer
+fh.free           equ  fh.struct + 188 ; End of structure
 ;-----------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff   (256 bytes)
 ; Overloads file handle structure
@@ -315,7 +315,8 @@ edb.srch.row.ptr  equ  edb.struct + 210 ; Pointer entry in rows search index
 edb.srch.col.ptr  equ  edb.struct + 212 ; Pointer entry in cols search index
 edb.srch.offset   equ  edb.struct + 214 ; Offset into current row index entry
 edb.srch.matchcol equ  edb.struct + 216 ; Column of search match in current row
-edb.free          equ  edb.struct + 218 ; End of structure
+edb.locked        equ  edb.struct + 218 ; Editor locked flag (>ffff=locked)
+edb.free          equ  edb.struct + 220 ; End of structure
 ;-----------------------------------------------------------------
 ; Index structure                      @>a600-a6ff   (256 bytes)
 ;-----------------------------------------------------------------
@@ -480,11 +481,11 @@ edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
 ;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
-fh.fopmode.none           equ  0        ; No file operation in progress
-fh.fopmode.readfile       equ  1        ; Read file from disk to memory
-fh.fopmode.writefile      equ  2        ; Save file from memory to disk
-cmdb.rows                 equ  6        ; Number of rows in CMDB pane
-rom0_kscan_out            equ  keycode1 ; Where to store value of key pressed
-tv.colorize.reset         equ  >9900    ; Colorization off
-tv.1timeonly              equ  254      ; One-time only flag indicator
-tv.sams.maxpage           equ  256      ; Max SAMS pages supported
+fh.fopmode.none      equ  0            ; No file operation in progress
+fh.fopmode.readfile  equ  1            ; Read file from disk to memory
+fh.fopmode.writefile equ  2            ; Save file from memory to disk
+cmdb.rows            equ  6            ; Number of rows in CMDB pane
+rom0_kscan_out       equ  keycode1     ; W here to store value of key pressed
+tv.colorize.reset    equ  >9900        ; Colorization off
+tv.1timeonly         equ  254          ; One-time only flag indicator
+tv.sams.maxpage      equ  256          ; Max SAMS pages supported

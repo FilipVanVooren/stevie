@@ -57,5 +57,5 @@ low.digits:                           ; digits 1-4 (18-21)
 cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
 arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
 hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
-        data  >0000,>0000,>0000,>0000 ; 29. FREE
+lock:   data  >0070,>8888,>F8F8,>D8F8 ; 29. Lock
         data  >0000,>0000,>0000,>0000 ; 30. FREE
