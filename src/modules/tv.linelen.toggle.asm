@@ -1,16 +1,15 @@
-* FILE......: edb.autoinsert.asm
-* Purpose...: Toggle auto insert mode for editor buffer
+* FILE......: tv.linelen.toggle.asm
+* Purpose...: Toggle line length display in status line
 
 
 ***************************************************************
-* edb.autoinsert
-* Toggle auto insert mode for editor buffer
+* tv.linelen.toggle
+* Toggle line length display in status line
 ***************************************************************
-*  bl   @edb.autoinsert.toggle
+*  bl   @tv.linelen.toggle
 *--------------------------------------------------------------
 * INPUT
-* @edb.autoinsert = Flag for tracking auto insert mode
-* @edb.locked     = Editor buffer locked flag
+* @tv.show.linelen = Flag for tracking line length display
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -21,43 +20,37 @@
 * Remarks
 * none
 ********|*****|*********************|**************************
-edb.autoinsert.toggle:
+tv.linelen.toggle:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Check if editor buffer is locked
-        ;-------------------------------------------------------
-        mov   @edb.locked,tmp0      ; Is editor locked?
-        jne   edb.autoinsert.toggle.exit   
-                                    ; Yes, exit
-        ;-------------------------------------------------------
-        ; Toggle auto insert mode
+        ; Toggle line length display
         ;-------------------------------------------------------
         bl    @hchar
               byte 0,50,32,20
               data EOL              ; Erase any previous message
 
-        inv   @edb.autoinsert       ; Toggle AutoInsert mode
+        inv   @tv.show.linelen      ; Toggle line length display
         jeq   !
         ;-------------------------------------------------------
-        ; Show message 'AutoInsert on'
+        ; Show message 'LineLength on'
         ;-------------------------------------------------------
         bl    @putat
               byte 0,52
-              data txt.autoins.on   ; AutoInsert on
-        jmp   edb.autoinsert.oneshot
+              data txt.linelen.on   ; LineLength on
+        jmp   tv.linelen.oneshot
         ;-------------------------------------------------------
-        ; Show message 'AutoInsert off'
+        ; Show message 'LineLength off'
         ;-------------------------------------------------------
 !       bl    @putat
               byte 0,52
-              data txt.autoins.off   ; AutoInsert off
+              data txt.linelen.off  ; LineLength off
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------
-edb.autoinsert.oneshot:
+tv.linelen.oneshot:
         li    tmp0,pane.topline.oneshot.clearmsg
         mov   tmp0,@tv.task.oneshot
 
@@ -66,12 +59,12 @@ edb.autoinsert.oneshot:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edb.autoinsert.toggle.exit:
+tv.linelen.toggle.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
 
-txt.autoins.on     stri 'Auto insert: ON'
+txt.linelen.on     stri 'Line Length: ON'
                    even
-txt.autoins.off    stri 'Auto insert: OFF'
+txt.linelen.off    stri 'Line Length: OFF'
                    even

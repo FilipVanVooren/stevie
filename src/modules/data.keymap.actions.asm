@@ -363,6 +363,9 @@ keymap_actions.cmdb:
         
         byte  key.uc.f, id.dialog.opt
         data  dialog.font
+
+        byte  key.uc.l, id.dialog.opt
+        data  edkey.action.cmdb.linelen
         ;-------------------------------------------------------
         ; Dialog: Configure clipboard
         ;-------------------------------------------------------

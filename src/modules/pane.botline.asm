@@ -288,7 +288,12 @@ pane.botline.show_linecol:
 
         li    tmp0,>0500            ; "Fix" number length to clear junk chars
         movb  tmp0,@rambuf+5        ; Set length byte
-
+        ;------------------------------------------------------
+        ; Do not show line length if option is off
+        ;------------------------------------------------------
+        mov   @tv.show.linelen,tmp0 ; Check if line length is to be shown
+        jeq   pane.botline.show_linecol.colstring
+                                    ; No, skip showing line length        
         ;------------------------------------------------------
         ; Decide if row length is to be shown
         ;------------------------------------------------------

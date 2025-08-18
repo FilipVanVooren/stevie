@@ -193,8 +193,9 @@ tv.sp2.stack      equ  tv.struct + 54  ; Backup of SP2 stack register
 tv.fg99.img.ptr   equ  tv.struct + 56  ; Pointer to Final GROM cartridge to load
 tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
 tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
-tv.error.msg      equ  tv.struct + 62  ; Error message (max. 160 characters)
-tv.free           equ  tv.struct + 222 ; End of structure
+tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
+tv.error.msg      equ  tv.struct + 64  ; Error message (max. 160 characters)
+tv.free           equ  tv.struct + 224 ; End of structure
 ;-----------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff   (256 bytes)
 ;-----------------------------------------------------------------

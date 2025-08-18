@@ -11,7 +11,7 @@ cpu.crash.showbank.bankstr:
 *--------------------------------------------------------------        
         aorg  bankx.vectab
 vec.1   data  mem.sams.setup.stevie ;
-vec.2   data  cpu.crash             ;
+vec.2   data  tv.linelen.toggle     ; Toggle line length display
 vec.3   data  cpu.crash             ;
 vec.4   data  cpu.crash             ;
 vec.5   data  cpu.crash             ;

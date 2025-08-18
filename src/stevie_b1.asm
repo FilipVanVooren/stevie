@@ -121,6 +121,7 @@ main:
         copy  "edkey.cmdb.updir.asm"        ; Go up one directory level
         copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
         copy  "edkey.cmdb.autoinsert.asm"   ; Auto insert toggle
+        copy  "edkey.cmdb.linelen.asm"      ; Line length display toggle
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
         copy  "edkey.cmdb.filebrowser.prevcol.asm"
@@ -144,13 +145,17 @@ main:
         copy  "edb.unlock.asm"              ; Unlock editor buffer
         copy  "edb.autoinsert.toggle.asm"   ; Toggle auto insert mode for buffer
         ;-----------------------------------------------------------------------
+        ; Logic for Editor settings
+        ;-----------------------------------------------------------------------
+        copy  "tv.linelen.toggle.asm"       ; Toggle line length display
+        ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
         copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
-        copy  "pane.cursor.asm"              ; Cursor utility functions
+        copy  "pane.cursor.asm"             ; Cursor utility functions
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------
