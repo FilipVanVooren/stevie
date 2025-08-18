@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 250818-1407310
+0002               * BUILD: 250818-1516440
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12722,369 +12722,371 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079                       ;------------------------------------------------------
 0080                       ; Show reduced block shortcuts (editor buffer locked)
 0081                       ;------------------------------------------------------
-0082 6B4C C160  34         mov   @edb.locked,tmp1      ; Is editor buffer locked?
+0082 6B4C C120  34         mov   @edb.locked,tmp0      ; Is editor buffer locked?
      6B4E A5DA     
-0083 6B50 1305  14         jeq   !                     ; No, show all block shortcuts
-0084                       ;------------------------------------------------------
-0085                       ; Show reduced block shortcuts
-0086                       ;------------------------------------------------------
-0087 6B52 06A0  32         bl    @putat
+0083 6B50 1305  14         jeq   pane.botline.shortcuts.all
+0084                                                   ; No, show all block shortcuts
+0085                       ;------------------------------------------------------
+0086                       ; Show reduced block shortcuts
+0087                       ;------------------------------------------------------
+0088 6B52 06A0  32         bl    @putat
      6B54 2442     
-0088 6B56 1D00                   byte pane.botrow,0
-0089 6B58 3C36                   data txt.keys.blocklock ; Show reduced shortcuts
-0090 6B5A 103F  14         jmp   pane.botline.show_mode
-0091                       ;------------------------------------------------------
-0092                       ; Show all block shortcuts
-0093                       ;------------------------------------------------------
-0094 6B5C 06A0  32 !       bl    @putat
+0089 6B56 1D00                   byte pane.botrow,0
+0090 6B58 3C36                   data txt.keys.blocklock ; Show reduced shortcuts
+0091 6B5A 103F  14         jmp   pane.botline.show_mode
+0092                       ;------------------------------------------------------
+0093                       ; Show all block shortcuts
+0094                       ;------------------------------------------------------
+0095               pane.botline.shortcuts.all:
+0096 6B5C 06A0  32         bl    @putat
      6B5E 2442     
-0095 6B60 1D00                   byte pane.botrow,0
-0096 6B62 3BFA                   data txt.keys.block   ; Show block shortcuts
-0097 6B64 103A  14         jmp   pane.botline.show_mode
-0098                       ;------------------------------------------------------
-0099                       ; Active TI Basic session?
+0097 6B60 1D00                   byte pane.botrow,0
+0098 6B62 3BFA                   data txt.keys.block     ; Show block shortcuts
+0099 6B64 103A  14         jmp   pane.botline.show_mode
 0100                       ;------------------------------------------------------
-0101               pane.botline.show_keys:
-0102 6B66 C120  34         mov   @tib.session,tmp0     ; Active TI Basic session?
+0101                       ; Active TI Basic session?
+0102                       ;------------------------------------------------------
+0103               pane.botline.show_keys:
+0104 6B66 C120  34         mov   @tib.session,tmp0     ; Active TI Basic session?
      6B68 A0B4     
-0103 6B6A 1321  14         jeq   pane.botline.show_keys.default
-0104                                                   ; No show default keys only
-0105                       ;------------------------------------------------------
-0106                       ; Show search matches?
+0105 6B6A 1321  14         jeq   pane.botline.show_keys.default
+0106                                                   ; No show default keys only
 0107                       ;------------------------------------------------------
-0108 6B6C 0760  38         abs   @edb.srch.matches     ; Do we have any search matches?
+0108                       ; Show search matches?
+0109                       ;------------------------------------------------------
+0110 6B6C 0760  38         abs   @edb.srch.matches     ; Do we have any search matches?
      6B6E A5CE     
-0109 6B70 130A  14         jeq   pane.botline.show_keys.defaultb
-0110                                                   ; No, show TI Basic session
-0111                       ;------------------------------------------------------
-0112                       ; Default Keys, TI Basic Session ID, Search matches
+0111 6B70 130A  14         jeq   pane.botline.show_keys.defaultb
+0112                                                   ; No, show TI Basic session
 0113                       ;------------------------------------------------------
-0114               pane.botline.show_keys.defaultd:
-0115 6B72 06A0  32         bl    @putat
+0114                       ; Default Keys, TI Basic Session ID, Search matches
+0115                       ;------------------------------------------------------
+0116               pane.botline.show_keys.defaultd:
+0117 6B72 06A0  32         bl    @putat
      6B74 2442     
-0116 6B76 1D00                   byte pane.botrow,0
-0117 6B78 3BC2                   data txt.keys.defaultd
-0118                                                   ; Show defaults + TI Basic + Matches
-0119               
-0120 6B7A 06A0  32         bl    @hchar
+0118 6B76 1D00                   byte pane.botrow,0
+0119 6B78 3BC2                   data txt.keys.defaultd
+0120                                                   ; Show defaults + TI Basic + Matches
+0121               
+0122 6B7A 06A0  32         bl    @hchar
      6B7C 2832     
-0121 6B7E 1D3A                   byte pane.botrow,58,32,6
+0123 6B7E 1D3A                   byte pane.botrow,58,32,6
      6B80 2006     
-0122 6B82 FFFF                   data EOL              ; Remove any leftover junk after key markers
-0123               
-0124 6B84 1009  14         jmp   pane.botline.show_keys.setbasic
-0125                       ;------------------------------------------------------
-0126                       ; Default Keys, TI Basic Session ID
+0124 6B82 FFFF                   data EOL              ; Remove any leftover junk after key markers
+0125               
+0126 6B84 1009  14         jmp   pane.botline.show_keys.setbasic
 0127                       ;------------------------------------------------------
-0128               pane.botline.show_keys.defaultb
-0129 6B86 06A0  32         bl    @putat
+0128                       ; Default Keys, TI Basic Session ID
+0129                       ;------------------------------------------------------
+0130               pane.botline.show_keys.defaultb
+0131 6B86 06A0  32         bl    @putat
      6B88 2442     
-0130 6B8A 1D00                   byte pane.botrow,0
-0131 6B8C 3B78                   data txt.keys.defaultb
-0132                                                   ; Show defaults + TI Basic
-0133               
-0134 6B8E 06A0  32         bl    @hchar
+0132 6B8A 1D00                   byte pane.botrow,0
+0133 6B8C 3B78                   data txt.keys.defaultb
+0134                                                   ; Show defaults + TI Basic
+0135               
+0136 6B8E 06A0  32         bl    @hchar
      6B90 2832     
-0135 6B92 1D1C                   byte pane.botrow,28,32,36
+0137 6B92 1D1C                   byte pane.botrow,28,32,36
      6B94 2024     
-0136 6B96 FFFF                   data EOL              ; Remove any leftover junk after key markers
-0137                       ;------------------------------------------------------
-0138                       ; Add TI Basic session ID to string
+0138 6B96 FFFF                   data EOL              ; Remove any leftover junk after key markers
 0139                       ;------------------------------------------------------
-0140               pane.botline.show_keys.setbasic:
-0141 6B98 C120  34         mov   @tib.session,tmp0     ; Get Session ID
+0140                       ; Add TI Basic session ID to string
+0141                       ;------------------------------------------------------
+0142               pane.botline.show_keys.setbasic:
+0143 6B98 C120  34         mov   @tib.session,tmp0     ; Get Session ID
      6B9A A0B4     
-0142 6B9C 0224  22         ai    tmp0,>0130            ; \ Turn into string with
+0144 6B9C 0224  22         ai    tmp0,>0130            ; \ Turn into string with
      6B9E 0130     
-0143                                                   ; | length-byte prefix and
-0144                                                   ; / ASCII offset 48 (>30)
-0145               
-0146 6BA0 C804  38         mov   tmp0,@rambuf          ; Copy to ram buffer for display
-     6BA2 A100     
+0145                                                   ; | length-byte prefix and
+0146                                                   ; / ASCII offset 48 (>30)
 0147               
-0148 6BA4 06A0  32         bl    @putat                ; \
+0148 6BA0 C804  38         mov   tmp0,@rambuf          ; Copy to ram buffer for display
+     6BA2 A100     
+0149               
+0150 6BA4 06A0  32         bl    @putat                ; \
      6BA6 2442     
-0149 6BA8 1D1B                   byte pane.botrow,27   ; | Display session-ID string
-0150 6BAA A100                   data rambuf           ; / Y=bottom row, X=27
-0151               
-0152 6BAC 1016  14         jmp   pane.botline.show_mode
-0153                       ;------------------------------------------------------
-0154                       ; Show default keys?
+0151 6BA8 1D1B                   byte pane.botrow,27   ; | Display session-ID string
+0152 6BAA A100                   data rambuf           ; / Y=bottom row, X=27
+0153               
+0154 6BAC 1016  14         jmp   pane.botline.show_mode
 0155                       ;------------------------------------------------------
-0156               pane.botline.show_keys.default:
-0157 6BAE 0760  38         abs   @edb.srch.matches     ; Do we have any search matches?
+0156                       ; Show default keys?
+0157                       ;------------------------------------------------------
+0158               pane.botline.show_keys.default:
+0159 6BAE 0760  38         abs   @edb.srch.matches     ; Do we have any search matches?
      6BB0 A5CE     
-0158 6BB2 130A  14         jeq   !                     ; No, show default keys
-0159                       ;------------------------------------------------------
-0160                       ; Default keys, Search matches
+0160 6BB2 130A  14         jeq   !                     ; No, show default keys
 0161                       ;------------------------------------------------------
-0162 6BB4 06A0  32         bl    @putat
+0162                       ; Default keys, Search matches
+0163                       ;------------------------------------------------------
+0164 6BB4 06A0  32         bl    @putat
      6BB6 2442     
-0163 6BB8 1D00                   byte pane.botrow,0
-0164 6BBA 3B96                   data txt.keys.defaultc  ; Show default keys, including search keys
-0165               
-0166 6BBC 06A0  32         bl    @hchar
+0165 6BB8 1D00                   byte pane.botrow,0
+0166 6BBA 3B96                   data txt.keys.defaultc  ; Show default keys, including search keys
+0167               
+0168 6BBC 06A0  32         bl    @hchar
      6BBE 2832     
-0167 6BC0 1D2B                   byte pane.botrow,43,32,21
+0169 6BC0 1D2B                   byte pane.botrow,43,32,21
      6BC2 2015     
-0168 6BC4 FFFF                   data EOL              ; Remove any leftover junk after key markers
-0169 6BC6 1009  14         jmp   pane.botline.show_mode
-0170                       ;------------------------------------------------------
-0171                       ; Default keys only
+0170 6BC4 FFFF                   data EOL              ; Remove any leftover junk after key markers
+0171 6BC6 1009  14         jmp   pane.botline.show_mode
 0172                       ;------------------------------------------------------
-0173 6BC8 06A0  32 !       bl    @putat
+0173                       ; Default keys only
+0174                       ;------------------------------------------------------
+0175 6BC8 06A0  32 !       bl    @putat
      6BCA 2442     
-0174 6BCC 1D00                   byte pane.botrow,0
-0175 6BCE 3B66                   data txt.keys.default ; Show default keys only
-0176               
-0177 6BD0 06A0  32         bl    @hchar
+0176 6BCC 1D00                   byte pane.botrow,0
+0177 6BCE 3B66                   data txt.keys.default ; Show default keys only
+0178               
+0179 6BD0 06A0  32         bl    @hchar
      6BD2 2832     
-0178 6BD4 1D12                   byte pane.botrow,18,32,60
+0180 6BD4 1D12                   byte pane.botrow,18,32,60
      6BD6 203C     
-0179 6BD8 FFFF                   data EOL              ; Remove any leftover junk after key markers
-0180                       ;------------------------------------------------------
-0181                       ; Show text editing mode
+0181 6BD8 FFFF                   data EOL              ; Remove any leftover junk after key markers
 0182                       ;------------------------------------------------------
-0183               pane.botline.show_mode:
-0184 6BDA C120  34         mov   @edb.insmode,tmp0
+0183                       ; Show text editing mode
+0184                       ;------------------------------------------------------
+0185               pane.botline.show_mode:
+0186 6BDA C120  34         mov   @edb.insmode,tmp0
      6BDC A50A     
-0185 6BDE 1605  14         jne   pane.botline.show_mode.insert
-0186                       ;------------------------------------------------------
-0187                       ; Overwrite mode
+0187 6BDE 1605  14         jne   pane.botline.show_mode.insert
 0188                       ;------------------------------------------------------
-0189 6BE0 06A0  32         bl    @putat
+0189                       ; Overwrite mode
+0190                       ;------------------------------------------------------
+0191 6BE0 06A0  32         bl    @putat
      6BE2 2442     
-0190 6BE4 1D3D                   byte  pane.botrow,61
-0191 6BE6 395C                   data  txt.ovrwrite
-0192 6BE8 100C  14         jmp   pane.botline.show_dirty
-0193                       ;------------------------------------------------------
-0194                       ; Insert mode
+0192 6BE4 1D3D                   byte  pane.botrow,61
+0193 6BE6 395C                   data  txt.ovrwrite
+0194 6BE8 100C  14         jmp   pane.botline.show_dirty
 0195                       ;------------------------------------------------------
-0196               pane.botline.show_mode.insert:
-0197 6BEA C120  34         mov   @edb.autoinsert,tmp0
+0196                       ; Insert mode
+0197                       ;------------------------------------------------------
+0198               pane.botline.show_mode.insert:
+0199 6BEA C120  34         mov   @edb.autoinsert,tmp0
      6BEC A50C     
-0198 6BEE 1305  14         jeq   pane.botline.show_mode.insert.noauto
-0199                       ;------------------------------------------------------
-0200                       ; Auto-Insert
+0200 6BEE 1305  14         jeq   pane.botline.show_mode.insert.noauto
 0201                       ;------------------------------------------------------
-0202 6BF0 06A0  32         bl    @putat
+0202                       ; Auto-Insert
+0203                       ;------------------------------------------------------
+0204 6BF0 06A0  32         bl    @putat
      6BF2 2442     
-0203 6BF4 1D3D                   byte  pane.botrow,61
-0204 6BF6 3968                   data  txt.autoinsert
-0205 6BF8 1004  14         jmp   pane.botline.show_dirty
-0206                       ;------------------------------------------------------
-0207                       ; No Auto-Insert
+0205 6BF4 1D3D                   byte  pane.botrow,61
+0206 6BF6 3968                   data  txt.autoinsert
+0207 6BF8 1004  14         jmp   pane.botline.show_dirty
 0208                       ;------------------------------------------------------
-0209               pane.botline.show_mode.insert.noauto:
-0210 6BFA 06A0  32         bl    @putat
+0209                       ; No Auto-Insert
+0210                       ;------------------------------------------------------
+0211               pane.botline.show_mode.insert.noauto:
+0212 6BFA 06A0  32         bl    @putat
      6BFC 2442     
-0211 6BFE 1D3D                   byte  pane.botrow,61
-0212 6C00 3962                   data  txt.insert
-0213                       ;------------------------------------------------------
-0214                       ; Show if text was changed in editor buffer
+0213 6BFE 1D3D                   byte  pane.botrow,61
+0214 6C00 3962                   data  txt.insert
 0215                       ;------------------------------------------------------
-0216               pane.botline.show_dirty:
-0217 6C02 C120  34         mov   @edb.dirty,tmp0
+0216                       ; Show if text was changed in editor buffer
+0217                       ;------------------------------------------------------
+0218               pane.botline.show_dirty:
+0219 6C02 C120  34         mov   @edb.dirty,tmp0
      6C04 A506     
-0218 6C06 1305  14         jeq   pane.botline.locked
-0219                       ;------------------------------------------------------
-0220                       ; Show "*"
+0220 6C06 1305  14         jeq   pane.botline.locked
 0221                       ;------------------------------------------------------
-0222 6C08 06A0  32         bl    @putat
+0222                       ; Show "*"
+0223                       ;------------------------------------------------------
+0224 6C08 06A0  32         bl    @putat
      6C0A 2442     
-0223 6C0C 1D41                   byte pane.botrow,65
-0224 6C0E 396E                   data txt.star
-0225 6C10 100C  14         jmp   pane.botline.show_linecol
-0226                       ;------------------------------------------------------
-0227                       ; Show "L" locked icon
+0225 6C0C 1D41                   byte pane.botrow,65
+0226 6C0E 396E                   data txt.star
+0227 6C10 100C  14         jmp   pane.botline.show_linecol
 0228                       ;------------------------------------------------------
-0229               pane.botline.locked:
-0230 6C12 C120  34         mov    @edb.locked,tmp0
+0229                       ; Show locked icon
+0230                       ;------------------------------------------------------
+0231               pane.botline.locked:
+0232 6C12 C120  34         mov    @edb.locked,tmp0
      6C14 A5DA     
-0231 6C16 1305  14         jeq    pane.botline.nochange
-0232 6C18 06A0  32         bl     @putat
+0233 6C16 1305  14         jeq    pane.botline.nochange
+0234 6C18 06A0  32         bl     @putat
      6C1A 2442     
-0233 6C1C 1D41                    byte pane.botrow,65
-0234 6C1E 3970                    data txt.lockicon    ; Show locked icon
-0235 6C20 1004  14         jmp    pane.botline.show_linecol
-0236                       ;------------------------------------------------------
-0237                       ; Show " "
+0235 6C1C 1D41                    byte pane.botrow,65
+0236 6C1E 3970                    data txt.lockicon    ; Show locked icon
+0237 6C20 1004  14         jmp    pane.botline.show_linecol
 0238                       ;------------------------------------------------------
-0239               pane.botline.nochange:
-0240 6C22 06A0  32         bl    @putat
+0239                       ; Show " "
+0240                       ;------------------------------------------------------
+0241               pane.botline.nochange:
+0242 6C22 06A0  32         bl    @putat
      6C24 2442     
-0241 6C26 1D41                   byte pane.botrow,65
-0242 6C28 3C94                   data txt.ws1          ; Single white space
-0243                       ;------------------------------------------------------
-0244                       ; Show "line,column"
+0243 6C26 1D41                   byte pane.botrow,65
+0244 6C28 3C94                   data txt.ws1          ; Single white space
 0245                       ;------------------------------------------------------
-0246               pane.botline.show_linecol:
-0247 6C2A C820  54         mov   @fb.row,@parm1
+0246                       ; Show "line,column"
+0247                       ;------------------------------------------------------
+0248               pane.botline.show_linecol:
+0249 6C2A C820  54         mov   @fb.row,@parm1
      6C2C A306     
      6C2E A006     
-0248 6C30 06A0  32         bl    @fb.row2line          ; Row to editor line
+0250 6C30 06A0  32         bl    @fb.row2line          ; Row to editor line
      6C32 3184     
-0249                                                   ; \ i @fb.topline = Top line in frame buffer
-0250                                                   ; | i @parm1      = Row in frame buffer
-0251                                                   ; / o @outparm1   = Matching line in EB
-0252               
-0253 6C34 05A0  34         inc   @outparm1             ; Add base 1
+0251                                                   ; \ i @fb.topline = Top line in frame buffer
+0252                                                   ; | i @parm1      = Row in frame buffer
+0253                                                   ; / o @outparm1   = Matching line in EB
+0254               
+0255 6C34 05A0  34         inc   @outparm1             ; Add base 1
      6C36 A018     
-0254                       ;------------------------------------------------------
-0255                       ; Show line
 0256                       ;------------------------------------------------------
-0257 6C38 06A0  32         bl    @putnum
+0257                       ; Show line
+0258                       ;------------------------------------------------------
+0259 6C38 06A0  32         bl    @putnum
      6C3A 2AD4     
-0258 6C3C 1D42                   byte  pane.botrow,66  ; YX
-0259 6C3E A018                   data  outparm1,rambuf
+0260 6C3C 1D42                   byte  pane.botrow,66  ; YX
+0261 6C3E A018                   data  outparm1,rambuf
      6C40 A100     
-0260 6C42 30                     byte  48              ; ASCII offset
-0261 6C43   20                   byte  32              ; Padding character
-0262                       ;------------------------------------------------------
-0263                       ; Show delimiter
+0262 6C42 30                     byte  48              ; ASCII offset
+0263 6C43   20                   byte  32              ; Padding character
 0264                       ;------------------------------------------------------
-0265 6C44 06A0  32         bl    @putat
+0265                       ; Show delimiter
+0266                       ;------------------------------------------------------
+0267 6C44 06A0  32         bl    @putat
      6C46 2442     
-0266 6C48 1D47                   byte  pane.botrow,71
-0267 6C4A 3954                   data  txt.colon
-0268                       ;------------------------------------------------------
-0269                       ; Show column
+0268 6C48 1D47                   byte  pane.botrow,71
+0269 6C4A 3954                   data  txt.colon
 0270                       ;------------------------------------------------------
-0271 6C4C 06A0  32         bl    @film
+0271                       ; Show column
+0272                       ;------------------------------------------------------
+0273 6C4C 06A0  32         bl    @film
      6C4E 2236     
-0272 6C50 A105                   data rambuf+5,32,12   ; Clear work buffer with space character
+0274 6C50 A105                   data rambuf+5,32,12   ; Clear work buffer with space character
      6C52 0020     
      6C54 000C     
-0273               
-0274 6C56 C120  34         mov   @fb.column,tmp0       ; Get column
+0275               
+0276 6C56 C120  34         mov   @fb.column,tmp0       ; Get column
      6C58 A30C     
-0275 6C5A A120  34         a     @fb.vwco,tmp0         ; Add view window column offset
+0277 6C5A A120  34         a     @fb.vwco,tmp0         ; Add view window column offset
      6C5C A310     
-0276 6C5E 0584  14         inc   tmp0                  ; Offset 1
-0277 6C60 C804  30         mov   tmp0,@waux1           ; Save in temporary
+0278 6C5E 0584  14         inc   tmp0                  ; Offset 1
+0279 6C60 C804  30         mov   tmp0,@waux1           ; Save in temporary
      6C62 833C     
-0278               
-0279 6C64 06A0  32         bl    @mknum                ; Convert unsigned number to string
+0280               
+0281 6C64 06A0  32         bl    @mknum                ; Convert unsigned number to string
      6C66 2A56     
-0280 6C68 833C                   data waux1,rambuf     ; \
+0282 6C68 833C                   data waux1,rambuf     ; \
      6C6A A100     
-0281 6C6C 30                     byte 48               ; | ASCII offset
-0282 6C6D   20                   byte 32               ; / Fill character
-0283               
-0284 6C6E 06A0  32         bl    @trimnum              ; Trim number to the left
+0283 6C6C 30                     byte 48               ; | ASCII offset
+0284 6C6D   20                   byte 32               ; / Fill character
+0285               
+0286 6C6E 06A0  32         bl    @trimnum              ; Trim number to the left
      6C70 2AAE     
-0285 6C72 A100                   data rambuf,rambuf+5,32
+0287 6C72 A100                   data rambuf,rambuf+5,32
      6C74 A105     
      6C76 0020     
-0286               
-0287 6C78 0204  20         li    tmp0,>0500            ; "Fix" number length to clear junk chars
+0288               
+0289 6C78 0204  20         li    tmp0,>0500            ; "Fix" number length to clear junk chars
      6C7A 0500     
-0288 6C7C D804  38         movb  tmp0,@rambuf+5        ; Set length byte
+0290 6C7C D804  38         movb  tmp0,@rambuf+5        ; Set length byte
      6C7E A105     
-0289               
-0290                       ;------------------------------------------------------
-0291                       ; Decide if row length is to be shown
+0291               
 0292                       ;------------------------------------------------------
-0293 6C80 C120  34         mov   @fb.column,tmp0       ; \ Base 1 for comparison
+0293                       ; Decide if row length is to be shown
+0294                       ;------------------------------------------------------
+0295 6C80 C120  34         mov   @fb.column,tmp0       ; \ Base 1 for comparison
      6C82 A30C     
-0294 6C84 A120  34         a     @fb.vwco,tmp0         ; | Add view window column offset
+0296 6C84 A120  34         a     @fb.vwco,tmp0         ; | Add view window column offset
      6C86 A310     
-0295 6C88 0584  14         inc   tmp0                  ; /
-0296 6C8A 8804  34         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
+0297 6C88 0584  14         inc   tmp0                  ; /
+0298 6C8A 8804  34         c     tmp0,@fb.row.length   ; Check if cursor on last column on row
      6C8C A308     
-0297 6C8E 1101  14         jlt   pane.botline.show_linecol.linelen
-0298 6C90 102E  14         jmp   pane.botline.show_linecol.colstring
-0299                                                   ; Yes, skip showing row length
-0300                       ;------------------------------------------------------
-0301                       ; Add ',' delimiter and length of line to string
+0299 6C8E 1101  14         jlt   pane.botline.show_linecol.linelen
+0300 6C90 102E  14         jmp   pane.botline.show_linecol.colstring
+0301                                                   ; Yes, skip showing row length
 0302                       ;------------------------------------------------------
-0303               pane.botline.show_linecol.linelen:
-0304 6C92 C120  34         mov   @fb.column,tmp0       ; \
+0303                       ; Add ',' delimiter and length of line to string
+0304                       ;------------------------------------------------------
+0305               pane.botline.show_linecol.linelen:
+0306 6C92 C120  34         mov   @fb.column,tmp0       ; \
      6C94 A30C     
-0305 6C96 A120  34         a     @fb.vwco,tmp0         ; | Add view window column offset
+0307 6C96 A120  34         a     @fb.vwco,tmp0         ; | Add view window column offset
      6C98 A310     
-0306 6C9A 0205  20         li    tmp1,rambuf+7         ; | Determine column position for '/' char
+0308 6C9A 0205  20         li    tmp1,rambuf+7         ; | Determine column position for '/' char
      6C9C A107     
-0307 6C9E 0284  22         ci    tmp0,9                ; | based on number of digits in cursor X
+0309 6C9E 0284  22         ci    tmp0,9                ; | based on number of digits in cursor X
      6CA0 0009     
-0308 6CA2 1101  14         jlt   !                     ; | column.
-0309 6CA4 0585  14         inc   tmp1                  ; /
-0310               
-0311 6CA6 0204  20 !       li    tmp0,>2f00            ; \ ASCII '/'
+0310 6CA2 1101  14         jlt   !                     ; | column.
+0311 6CA4 0585  14         inc   tmp1                  ; /
+0312               
+0313 6CA6 0204  20 !       li    tmp0,>2f00            ; \ ASCII '/'
      6CA8 2F00     
-0312 6CAA DD44  32         movb  tmp0,*tmp1+           ; / Add delimiter to string
-0313               
-0314 6CAC C805  30         mov   tmp1,@waux1           ; Backup position in ram buffer
-     6CAE 833C     
+0314 6CAA DD44  32         movb  tmp0,*tmp1+           ; / Add delimiter to string
 0315               
-0316 6CB0 06A0  32         bl    @mknum
+0316 6CAC C805  30         mov   tmp1,@waux1           ; Backup position in ram buffer
+     6CAE 833C     
+0317               
+0318 6CB0 06A0  32         bl    @mknum
      6CB2 2A56     
-0317 6CB4 A308                   data  fb.row.length,rambuf
+0319 6CB4 A308                   data  fb.row.length,rambuf
      6CB6 A100     
-0318 6CB8 30                     byte  48              ; ASCII offset
-0319 6CB9   20                   byte  32              ; Padding character
-0320               
-0321 6CBA C160  30         mov   @waux1,tmp1           ; Restore position in ram buffer
-     6CBC 833C     
+0320 6CB8 30                     byte  48              ; ASCII offset
+0321 6CB9   20                   byte  32              ; Padding character
 0322               
-0323 6CBE C120  34         mov   @fb.row.length,tmp0   ; \ Get length of line
+0323 6CBA C160  30         mov   @waux1,tmp1           ; Restore position in ram buffer
+     6CBC 833C     
+0324               
+0325 6CBE C120  34         mov   @fb.row.length,tmp0   ; \ Get length of line
      6CC0 A308     
-0324 6CC2 0284  22         ci    tmp0,10               ; /
+0326 6CC2 0284  22         ci    tmp0,10               ; /
      6CC4 000A     
-0325 6CC6 110C  14         jlt   pane.botline.show_line.1digit
-0326                       ;------------------------------------------------------
-0327                       ; Assert
+0327 6CC6 110C  14         jlt   pane.botline.show_line.1digit
 0328                       ;------------------------------------------------------
-0329 6CC8 0284  22         ci    tmp0,99
+0329                       ; Assert
+0330                       ;------------------------------------------------------
+0331 6CC8 0284  22         ci    tmp0,99
      6CCA 0063     
-0330 6CCC 1205  14         jle   pane.botline.show_line.2digits
-0331                       ;------------------------------------------------------
-0332                       ; Show length of line (3 digits)
+0332 6CCC 1205  14         jle   pane.botline.show_line.2digits
 0333                       ;------------------------------------------------------
-0334               pane.botline.show_line.3digits:
-0335 6CCE 0204  20         li    tmp0,rambuf+2
+0334                       ; Show length of line (3 digits)
+0335                       ;------------------------------------------------------
+0336               pane.botline.show_line.3digits:
+0337 6CCE 0204  20         li    tmp0,rambuf+2
      6CD0 A102     
-0336 6CD2 DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
-0337 6CD4 DD74  42         movb  *tmp0+,*tmp1+         ; 2nd digit row length
-0338 6CD6 1006  14         jmp   pane.botline.show_line.rest
-0339                       ;------------------------------------------------------
-0340                       ; Show length of line (2 digits)
+0338 6CD2 DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
+0339 6CD4 DD74  42         movb  *tmp0+,*tmp1+         ; 2nd digit row length
+0340 6CD6 1006  14         jmp   pane.botline.show_line.rest
 0341                       ;------------------------------------------------------
-0342               pane.botline.show_line.2digits:
-0343 6CD8 0204  20         li    tmp0,rambuf+3
+0342                       ; Show length of line (2 digits)
+0343                       ;------------------------------------------------------
+0344               pane.botline.show_line.2digits:
+0345 6CD8 0204  20         li    tmp0,rambuf+3
      6CDA A103     
-0344 6CDC DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
-0345 6CDE 1002  14         jmp   pane.botline.show_line.rest
-0346                       ;------------------------------------------------------
-0347                       ; Show length of line (1 digit)
+0346 6CDC DD74  42         movb  *tmp0+,*tmp1+         ; 1st digit row length
+0347 6CDE 1002  14         jmp   pane.botline.show_line.rest
 0348                       ;------------------------------------------------------
-0349               pane.botline.show_line.1digit:
-0350 6CE0 0204  20         li    tmp0,rambuf+4
+0349                       ; Show length of line (1 digit)
+0350                       ;------------------------------------------------------
+0351               pane.botline.show_line.1digit:
+0352 6CE0 0204  20         li    tmp0,rambuf+4
      6CE2 A104     
-0351               pane.botline.show_line.rest:
-0352 6CE4 DD74  42         movb  *tmp0+,*tmp1+         ; 1st/Next digit row length
-0353 6CE6 DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
+0353               pane.botline.show_line.rest:
+0354 6CE4 DD74  42         movb  *tmp0+,*tmp1+         ; 1st/Next digit row length
+0355 6CE6 DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
      6CE8 A100     
-0354 6CEA DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
+0356 6CEA DD60  48         movb  @rambuf+0,*tmp1+      ; Append a whitespace character
      6CEC A100     
-0355                       ;------------------------------------------------------
-0356                       ; Show column string
 0357                       ;------------------------------------------------------
-0358               pane.botline.show_linecol.colstring:
-0359 6CEE 06A0  32         bl    @putat
+0358                       ; Show column string
+0359                       ;------------------------------------------------------
+0360               pane.botline.show_linecol.colstring:
+0361 6CEE 06A0  32         bl    @putat
      6CF0 2442     
-0360 6CF2 1D48                   byte pane.botrow,72
-0361 6CF4 A105                   data rambuf+5         ; Show string
-0362                       ;------------------------------------------------------
-0363                       ; Exit
+0362 6CF2 1D48                   byte pane.botrow,72
+0363 6CF4 A105                   data rambuf+5         ; Show string
 0364                       ;------------------------------------------------------
-0365               pane.botline.exit:
-0366 6CF6 C839  42         mov   *stack+,@wyx          ; Pop cursor position
+0365                       ; Exit
+0366                       ;------------------------------------------------------
+0367               pane.botline.exit:
+0368 6CF6 C839  42         mov   *stack+,@wyx          ; Pop cursor position
      6CF8 832A     
-0367 6CFA C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0368 6CFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0369 6CFE C2F9  30         mov   *stack+,r11           ; Pop r11
-0370 6D00 045B  20         b     *r11                  ; Return
+0369 6CFA C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0370 6CFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0371 6CFE C2F9  30         mov   *stack+,r11           ; Pop r11
+0372 6D00 045B  20         b     *r11                  ; Return
                    < stevie_b4.asm
 0100                       copy  "pane.botline.busy.asm" ; Bottom line busy indicator
      **** ****     > pane.botline.busy.asm
@@ -17736,6 +17738,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PANE.BOTLINE.MC..... >6B00 :     
     PANE.BOTLINE.NOCHANGE >6C22 :     
     PANE.BOTLINE.SHORTCUTS >6B44 :     
+    PANE.BOTLINE.SHORTCUTS.ALL >6B5C :     
     PANE.BOTLINE.SHOW_DIRTY >6C02 :     
     PANE.BOTLINE.SHOW_KEYS >6B66 :     
     PANE.BOTLINE.SHOW_KEYS.DEFAULT >6BAE :     

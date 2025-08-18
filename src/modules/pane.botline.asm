@@ -79,7 +79,7 @@ pane.botline.shortcuts:
         ;------------------------------------------------------
         ; Show reduced block shortcuts (editor buffer locked)
         ;------------------------------------------------------
-        mov   @edb.locked,tmp1      ; Is editor buffer locked?
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
         jeq   pane.botline.shortcuts.all
                                     ; No, show all block shortcuts
         ;------------------------------------------------------

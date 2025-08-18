@@ -88,8 +88,8 @@ txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 ;--------------------------------------------------------------
 txt.head.append    byte 15,4,1
                    text ' Append file '
-txt.hint.append    equ  txt.hint.filepicker                   
-txt.hint.append2   equ  txt.hint.load2
+txt.hint.append    equ txt.hint.filepicker                   
+txt.hint.append2   equ txt.hint.load2
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
                    even
@@ -99,8 +99,8 @@ txt.keys.append2   equ txt.keys.default2
 ;--------------------------------------------------------------
 txt.head.insert    byte 23,4,1
                    text ' Insert file at line '
-txt.hint.insert    equ  txt.hint.filepicker
-txt.hint.insert2   equ  txt.hint.load2
+txt.hint.insert    equ txt.hint.filepicker
+txt.hint.insert2   equ txt.hint.load2
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
                    even
@@ -244,11 +244,11 @@ txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
 ;--------------------------------------------------------------
 txt.head.config    byte 11,4,1
                    text ' Options '
-txt.info.config    stri 'Auto-Insert   Clipboard   Font'
-pos.info.config    byte 0,14,26,>ff
+txt.info.config    stri 'Auto-Insert   Clipboard   Font   Line-Length'
+pos.info.config    byte 0,14,26,33,>ff
                    even
-txt.info.conflock  stri 'Clipboard   Font'
-pos.info.conflock  byte 0,12,>ff
+txt.info.conflock  stri 'Clipboard   Font   Line-Length'
+pos.info.conflock  byte 0,12,19,>ff
                    even
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
                    even
@@ -279,9 +279,9 @@ txt.keys.font      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 txt.head.shortcuts byte 13,4,1
                    text ' Shortcuts '
-txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   M1-M2'
+txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   M1   M2'
                    even
-pos.info.shortcuts byte 0,9,16,23,31,34,>ff
+pos.info.shortcuts byte 0,9,16,23,32,37,>ff
                    even
 txt.hint.shortcuts stri ' '
                    even

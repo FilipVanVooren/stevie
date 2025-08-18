@@ -9,7 +9,7 @@ edkey.action.block.mark:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -43,7 +43,7 @@ edkey.action.block.reset:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -51,7 +51,15 @@ edkey.action.block.reset:
 ********|*****|*********************|**************************
 edkey.action.block.copy:
         dect  stack
+        mov   r11,*stack            ; Push return address
+        dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Exit early if editor buffer locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.block.copy.exit
+                                    ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
@@ -87,7 +95,8 @@ edkey.action.block.copy:
         ;-------------------------------------------------------
 edkey.action.block.copy.exit:
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        mov   *stack+,r11           ; Pop r11
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 
@@ -96,6 +105,16 @@ edkey.action.block.copy.exit:
 * Delete code block
 ********|*****|*********************|**************************
 edkey.action.block.delete:
+        dect  stack
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Exit early if editor buffer locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.block.delete.exit
+                                    ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
@@ -106,7 +125,6 @@ edkey.action.block.delete:
         ; Delete
         ;-------------------------------------------------------
         bl    @pane.errline.hide    ; Hide error message if visible
-
         clr   @parm1                ; Display message "Deleting block...."
         bl    @edb.block.delete     ; Delete code block
                                     ; \ i  @parm1    = Display message Yes/No
@@ -120,7 +138,11 @@ edkey.action.block.delete:
 
         mov   @fb.topline,@parm1
         clr   @parm2                ; No row offset in frame buffer
-
+        ;-------------------------------------------------------
+        ; Custom exit
+        ;-------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
         b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; | i  @parm1 = Top line in editor buffer
                                     ; / i  @parm2 = Row offset in frame buffer
@@ -128,13 +150,25 @@ edkey.action.block.delete:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.delete.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
 * Move code block
 ********|*****|*********************|**************************
 edkey.action.block.move:
+        dect  stack
+        mov   r11,*stack            ; Push return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Exit early if editor buffer locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.block.move.exit
+                                    ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
@@ -164,7 +198,11 @@ edkey.action.block.move:
 
         mov   @fb.topline,@parm1
         clr   @parm2                ; No row offset in frame buffer
-
+        ;-------------------------------------------------------
+        ; Custom exit
+        ;-------------------------------------------------------
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
         b     @edkey.fb.goto.toprow ; \ Position cursor and exit
                                     ; | i  @parm1 = Top line in editor buffer
                                     ; / i  @parm2 = Row offset in frame buffer
@@ -172,7 +210,9 @@ edkey.action.block.move:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.move.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
@@ -195,4 +235,4 @@ edkey.action.block.goto.m1:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.block.goto.m1.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
