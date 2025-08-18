@@ -5,8 +5,16 @@
 * Delete character
 *---------------------------------------------------------------
 edkey.action.del_char:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.del_char.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; Get current line in editor buffer
+        ;-------------------------------------------------------       
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-        
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
@@ -23,7 +31,6 @@ edkey.action.del_char.sanity1:
         mov   @fb.row.length,tmp2   ; Get line length
         jeq   edkey.action.del_char.exit
                                     ; Exit if empty line
-
         mov   @fb.current,tmp0      ; Get pointer                                    
         ;-------------------------------------------------------
         ; Assert 2 - Already at EOL
@@ -33,7 +40,6 @@ edkey.action.del_char.sanity2:
         dec   tmp3                  ; / tmp3 = line length - 1
         c     @fb.column,tmp3
         jlt   edkey.action.del_char.sanity3
-
         ;------------------------------------------------------
         ; At EOL - clear current character
         ;------------------------------------------------------        
@@ -100,15 +106,23 @@ edkey.action.del_char.save:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_char.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
 * Delete until end of line
 *---------------------------------------------------------------
 edkey.action.del_eol:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.del_eol.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; Get current line in editor buffer
+        ;-------------------------------------------------------  
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
-
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
@@ -148,13 +162,19 @@ edkey.action.del_eol_loop:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_eol.exit:
-        b     @edkey.keyscan.hook.debounce; Back to editor main
+        b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
 *---------------------------------------------------------------
 * Delete current line
 *---------------------------------------------------------------
 edkey.action.del_line:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.del_line.exit2
+                                    ; Yes, exit
         ;-------------------------------------------------------
         ; Get current line in editor buffer
         ;-------------------------------------------------------
@@ -228,4 +248,6 @@ edkey.action.del_line.refresh:
         ; Exit
         ;-------------------------------------------------------
 edkey.action.del_line.exit:
-        b     @edkey.action.home    ; Move cursor to home and return
+        b     @edkey.action.home           ; Move cursor to home and return
+edkey.action.del_line.exit2:
+        b     @edkey.keyscan.hook.debounce ; Back to editor main

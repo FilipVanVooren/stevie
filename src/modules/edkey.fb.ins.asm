@@ -7,6 +7,15 @@
 * @parm1 = high byte has character to insert
 *---------------------------------------------------------------
 edkey.action.ins_char.ws:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.ins_char.ws.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; Insert character
+        ;-------------------------------------------------------
         mov   @edkey.actions.ins.char.ws.data,@parm1
                                     ; White space, freeze cursor
 
@@ -20,12 +29,22 @@ edkey.action.ins_char.ws:
 edkey.action.ins_char.ws.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
-edkey.actions.ins.char.ws.data   data  >20ff
+edkey.actions.ins.char.ws.data:   
+        data  >20ff
 
 *---------------------------------------------------------------
 * Insert new line on current line
 *---------------------------------------------------------------
 edkey.action.ins_line:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.ins_line.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; Insert line
+        ;-------------------------------------------------------
         clr   @parm1                ; Insert new line on curren line
         
         bl    @fb.insert.line       ; Insert empty line
@@ -43,6 +62,15 @@ edkey.action.ins_line.exit:
 * Insert new line on following line
 *---------------------------------------------------------------
 edkey.action.ins_line_after:
+        ;-------------------------------------------------------
+        ; Skip if editor buffer is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0      ; Is editor buffer locked?
+        jne   edkey.action.ins_line_after.exit
+                                    ; Yes, exit
+        ;-------------------------------------------------------
+        ; Insert line on following line
+        ;-------------------------------------------------------
         seto  @parm1                ; Insert new line on following line
 
         bl    @fb.insert.line       ; Insert empty line

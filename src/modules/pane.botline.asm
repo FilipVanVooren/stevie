@@ -76,11 +76,26 @@ pane.botline.shortcuts:
         inc   tmp0                  ; | Skip if M2 unset (>ffff)
                                     ; /
         jeq   pane.botline.show_keys
-
+        ;------------------------------------------------------
+        ; Show reduced block shortcuts (editor buffer locked)
+        ;------------------------------------------------------
+        mov   @edb.locked,tmp1      ; Is editor buffer locked?
+        jeq   pane.botline.shortcuts.all
+                                    ; No, show all block shortcuts
+        ;------------------------------------------------------
+        ; Show reduced block shortcuts
+        ;------------------------------------------------------
         bl    @putat
               byte pane.botrow,0
-              data txt.keys.block   ; Show block shortcuts
-
+              data txt.keys.blocklock ; Show reduced shortcuts
+        jmp   pane.botline.show_mode
+        ;------------------------------------------------------
+        ; Show all block shortcuts
+        ;------------------------------------------------------
+pane.botline.shortcuts.all:
+        bl    @putat
+              byte pane.botrow,0
+              data txt.keys.block     ; Show block shortcuts
         jmp   pane.botline.show_mode
         ;------------------------------------------------------
         ; Active TI Basic session?
@@ -211,7 +226,7 @@ pane.botline.show_dirty:
               data txt.star
         jmp   pane.botline.show_linecol
         ;------------------------------------------------------
-        ; Show "L" locked icon 
+        ; Show locked icon 
         ;------------------------------------------------------
 pane.botline.locked:    
         mov    @edb.locked,tmp0

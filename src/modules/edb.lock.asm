@@ -32,7 +32,7 @@ edb.lock:
         seto  @edb.locked           ; Set lock flag
         clr   @edb.autoinsert       ; Clear auto insert flag
         ;-------------------------------------------------------
-        ; Show message 'Locked editor'
+        ; Show message 'Editor locked'
         ;-------------------------------------------------------
         bl    @putat
               byte 0,52
@@ -54,5 +54,5 @@ edb.lock.exit:
         b     *r11                  ; Return
 
 txt.locked:
-        stri "Locked editor"        ; Text for locked message
+        stri "Editor locked"        ; Text for locked message
         even

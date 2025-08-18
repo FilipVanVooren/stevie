@@ -28,11 +28,11 @@ edb.unlock:
         jeq   edb.unlock.exit       ; No, exit
         clr   @edb.locked           ; Clear lock flag
         ;-------------------------------------------------------
-        ; Show message 'Unlocked'
+        ; Show message 'Editor unlocked'
         ;-------------------------------------------------------
         bl    @putat
               byte 0,52
-              data txt.unlocked     ; Display
+              data txt.unlocked     ; Display message
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------
@@ -50,5 +50,5 @@ edb.unlock.exit:
         b     *r11                  ; Return
 
 txt.unlocked:
-        stri "Unlocked editor"      ; Text for unlocked message
+        stri "Editor unlocked"      ; Text for unlocked message
         even
