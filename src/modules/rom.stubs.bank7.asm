@@ -107,7 +107,27 @@ edb.find.init:
         b     *r11                  ; Return to caller
 
 
+***************************************************************
+* Stub for "dialog.basic"
+* bank3 vec.13
+********|*****|*********************|**************************
+dialog.basic:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 3
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data vec.13           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
+        
 ***************************************************************
 * Stub for "cmdb.cmdb.getlength"
 * bank3 vec.26

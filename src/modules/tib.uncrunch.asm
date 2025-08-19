@@ -29,9 +29,6 @@ tib.uncrunch:
         ;------------------------------------------------------
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
-
-        bl    @fm.newfile           ; \ Clear editor buffer 
-                                    ; / (destroys parm1)
         ;------------------------------------------------------
         ; Determine filename
         ;------------------------------------------------------

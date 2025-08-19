@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            text '  Stevie 1.8.0   '
+            text '  Stevie 1.8.1   '
             even
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.8.0   '     
+            text '  Stevie 1.8.1   '     
             even
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            text '  Stevie 1.8.0   '
+            text '  Stevie 1.8.1   '
             even
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            text '  Stevie 1.8.0   '  
+            text '  Stevie 1.8.1   '  
             even
         .endif
 
@@ -170,7 +170,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.8.0  - (c)2018-2025 Filip Van Vooren'
+                   text ' - Stevie 1.8.1  - (c)2018-2025 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -234,9 +234,10 @@ txt.head.basic     byte 12,4,1
 txt.info.basic     stri 'Session:  1   2   3  '
 pos.info.basic     byte 10,14,18,>ff
 txt.hint.basic2    stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
-txt.hint.basic     stri 'Press SPACE to retrieve TI Basic program.'
+txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
+txt.keys.basic3    stri 'F9-Back'
                    even
 
 ;--------------------------------------------------------------

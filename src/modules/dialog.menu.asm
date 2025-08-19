@@ -63,6 +63,9 @@ dialog.menu:
         ; Show SAMS usage
         ;-------------------------------------------------------
 dialog.menu.sams:
+        bl    @cpym2m
+              data txt.hint.memstat,ram.msg1,23
+
         li    tmp0,ram.msg1
         mov   tmp0,@cmdb.panhint    ; Show SAMS memory allocation
         
@@ -77,7 +80,7 @@ dialog.menu.sams:
         mov   @wyx,*stack           ; Save cursor position
 
         bl    @hchar
-              byte 0,18,32,62
+              byte 0,0,32,80
               data eol              ; Remove leftover junk from previous dialog
 
         mov   *stack+,@wyx          ; Restore cursor position

@@ -74,8 +74,17 @@ tib.uncrunch.prg:
 !       mov   @tib.lnt.top.ptr,tmp0 ; Get top of line number table
         ai    tmp0,-3               ; One time adjustment
         mov   tmp0,@tib.var2        ; Save VRAM address
+        ;------------------------------------------------------
+        ; Set line in editor buffer for unpack operation
+        ;------------------------------------------------------
+        mov   @fb.row,@parm1
+        bl    @fb.row2line          ; Row to editor line
+                                    ; \ i @fb.topline = Top line in frame buffer
+                                    ; | i @parm1      = Row in frame buffer
+                                    ; / o @outparm1   = Matching line in EB
+        mov   @outparm1,@tib.var9   ; Set line in editor buffer for unpack
 
-        clr   @tib.var9             ; 1st line in editor buffer
+        ; clr   @tib.var9             ; 1st line in editor buffer
         mov   @tib.lines,tmp3       ; Set lines to process counter
         ;------------------------------------------------------
         ; Loop over program listing

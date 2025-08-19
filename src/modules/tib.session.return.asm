@@ -265,7 +265,9 @@ tib.run.return.stevie:
               data >3140            ; F18a VR49 (>31), bit 40
 
         .endif
-
+        ;-------------------------------------------------------
+        ; Restore video mode & content
+        ;-------------------------------------------------------
         bl    @vidtab               ; Load video mode table into VDP
               data stevie.80x30     ; Equate selected video mode table
 
@@ -288,14 +290,12 @@ tib.run.return.stevie:
                                     ; \ i  @tv.ruler.visible = Ruler visible
                                     ; | i  @edb.special.file = Special file flag
                                     ; / i  @tv.error.visible = Error visible
-
-        mov   @tib.autounpk,tmp0    ; AutoUnpack is on?
-        jne   tib.run.return.exit   ; Yes, skip keylist
         ;------------------------------------------------------
-        ; Set shortcut list in bottom status line
+        ; Refresh Basic dialog
         ;------------------------------------------------------
-        li    tmp0,txt.keys.basic1
-        mov   tmp0,@cmdb.pankeys    ; Save Keylist in status line
+tib.run.return.refresh:
+        bl    @dialog.basic         ; Refresh Basic dialog content
+        seto  @cmdb.dirty           ; Command buffer dirty (text changed!)   
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
