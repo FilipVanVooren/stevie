@@ -22,11 +22,6 @@ edb.lock:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Sanity check - if already locked, just exit
-        ;-------------------------------------------------------
-        mov   @edb.locked,tmp0      ; Is editor locked?
-        jne   edb.lock.exit         ; Yes, exit
-        ;-------------------------------------------------------
         ; Set lock flag
         ;-------------------------------------------------------
         seto  @edb.locked           ; Set lock flag
@@ -34,9 +29,14 @@ edb.lock:
         ;-------------------------------------------------------
         ; Show message 'Editor locked'
         ;-------------------------------------------------------
+        dect  stack
+        mov   @wyx,*stack           ; Backup current cursor position
+
         bl    @putat
               byte 0,52
-              data txt.locked       ; Display
+              data txt.locked       ; Display lock message
+
+        mov   *stack+,@wyx          ; Restore cursor position              
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------

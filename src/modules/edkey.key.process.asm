@@ -148,7 +148,8 @@ edkey.key.process.addbuffer:
         mov   @tv.pane.focus,tmp0   ; Frame buffer has focus?
         jne   !                     ; No, skip frame buffer processing
         mov   @edb.locked,tmp0      ; Is editor locked?
-        jne   edkey.key.process.exit 
+        jne   edkey.key.process.flash
+                                    ; Yes, flash screen and exit
         mov   tmp1,tmp0             ; Get keycode
         bl    @edk.fb.char          ; Add character to frame buffer
                                     ; \ i  tmp0 = Keycode (MSB)
@@ -185,6 +186,36 @@ edkey.key.process.enter:
         ci    tmp0,key.space        ; SPACE ?
         jne   edkey.key.process.exit
         b     @edkey.action.cmdb.close.dialog
+        ;-------------------------------------------------------
+        ; Flash screen if editor is locked
+        ;-------------------------------------------------------        
+edkey.key.process.flash:
+        clr   @parm1                  ; Screen off
+        clr   @parm2                  ; Marked lines colored
+        clr   @parm3                  ; Color everything
+
+        dect  stack
+        mov   @tv.colorscheme,*stack  ; Backup color theme 
+        mov   @const.13,@tv.colorscheme   
+                                      ; Set color scheme
+
+        bl    @pane.colorscheme.load  ; Load colorschene
+                                      ; \ i  parm1 = Screen on/off
+                                      ; | i  parm2 = Marked lines colored
+                                      ; / i  parm3 = Color everything
+
+        mov   *stack+,@tv.colorscheme ; Restore color theme
+
+        seto  @parm1                  ; Screen on
+        clr   @parm2                  ; Marked lines colored
+        clr   @parm3                  ; Color everything
+
+        bl    @pane.colorscheme.load  ; Load colorschene
+                                      ; \ i  parm1 = Screen on/off
+                                      ; | i  parm2 = Marked lines colored
+                                      ; / i  parm3 = Color everything
+
+        bl    @edb.lock               ; Call lock function to show message again
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

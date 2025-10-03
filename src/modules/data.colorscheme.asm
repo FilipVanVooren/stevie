@@ -68,4 +68,5 @@ tv.colorscheme.table:
         data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
         data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
         data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
+        data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
         even
