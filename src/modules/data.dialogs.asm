@@ -167,10 +167,10 @@ txt.hint.about2    stri 'Report bugs and feature requests at:'
 txt.hint.about     stri 'https://github.com/FilipVanVooren/stevie'
 txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 
-txt.about.build    byte 69
+txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.8.2  - (c)2018-2025 Filip Van Vooren'
+                   text ' - Stevie 1.8.2 - (c)2018-2025 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
