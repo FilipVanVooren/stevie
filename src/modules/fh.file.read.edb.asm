@@ -421,7 +421,7 @@ fh.file.read.edb.next:
 
         mov   @edb.lines,tmp0
         ci    tmp0,10200            ; Maximum line in index reached?
-        jle   fh.file.read.edb.next.do_it
+        jle   fh.file.read.edb.check.interrupt
                                     ; Not yet, next record
         ;------------------------------------------------------
         ; 5b: Index memory full. Close file and exit
@@ -440,10 +440,25 @@ fh.file.read.edb.next:
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.read.edb.exit
         ;------------------------------------------------------
-        ; 5c: Next record
+        ; 5c: Check for keyboard interrupt <FCTN-4>
         ;------------------------------------------------------
-fh.file.read.edb.next.do_it:
-        b     @fh.file.read.edb.check_setpage
+fh.file.read.edb.check.interrupt:
+        bl    @>0020                ; Check keyboard. Destroys r12
+        jne   !                     ; No FCTN-4 pressed
+        ;------------------------------------------------------
+        ; Interrupt occured
+        ;------------------------------------------------------
+        li    tmp0,id.file.interrupt ; \ Set flag "keyboard interrupt" occured
+        mov   tmp0,@fh.workmode      ; /
+
+        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.exit ; Skip callback
+        bl    *tmp0                 ; Run callback function  
+        jmp   fh.file.read.edb.exit
+        ;------------------------------------------------------
+        ; 5d: Next record
+        ;------------------------------------------------------
+!       b     @fh.file.read.edb.check_setpage
                                     ; Next record
         ;------------------------------------------------------
         ; Error handler

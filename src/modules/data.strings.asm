@@ -131,6 +131,8 @@ txt.memfull.load   stri 'Index full.'
                    even
 txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range'
                    even
+txt.ioerr.break    stri 'File operation interrupted by user (break).'
+                   even
 ;--------------------------------------------------------------
 ; Strings for command buffer
 ;--------------------------------------------------------------

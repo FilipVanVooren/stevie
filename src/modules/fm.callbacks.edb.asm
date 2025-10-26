@@ -410,6 +410,8 @@ fm.loadsave.cb.fioerr:
         jeq   fm.loadsave.cb.fioerr.save
         ci    tmp0,id.file.clipblock
         jeq   fm.loadsave.cb.fioerr.save
+        ci    tmp0,id.file.interrupt
+        jeq   fm.loadsave.cb.fioerr.interrupt
         ;------------------------------------------------------
         ; Failed loading file
         ;------------------------------------------------------
@@ -470,7 +472,8 @@ fm.loadsave.cb.fioerr.addmsg:
         ;------------------------------------------------------
         mov   @fh.workmode,tmp0     ; Get working mode
         ci    tmp0,id.file.loadfile
-        jne   !                     ; Only when reading full file
+        jne   fm.loadsave.cb.fioerr.errmsg
+                                    ; Only when reading full file
 
         li    tmp0,txt.newfile      ; New file
         mov   tmp0,@edb.filename.ptr
@@ -481,7 +484,8 @@ fm.loadsave.cb.fioerr.addmsg:
         ;------------------------------------------------------
         ; Display I/O error message
         ;------------------------------------------------------
-!       bl    @pane.errline.show    ; Show error line
+fm.loadsave.cb.fioerr.errmsg:
+        bl    @pane.errline.show    ; Show error line
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
@@ -494,7 +498,17 @@ fm.loadsave.cb.fioerr.addmsg:
         mov   tmp0,@tv.task.oneshot 
 
         bl    @rsslot               ; \ Reset loop counter slot 3
-              data 3                ; / for getting consistent delay            
+              data 3                ; / for getting consistent delay
+        jmp   fm.loadsave.cb.fioerr.exit
+        ;-------------------------------------------------------
+        ; Display I/O interrupted message
+        ;-------------------------------------------------------
+fm.loadsave.cb.fioerr.interrupt:
+        bl    @cpym2m               
+              data txt.ioerr.break
+              data tv.error.msg
+              data 44               ; Error message
+        jmp   fm.loadsave.cb.fioerr.errmsg
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

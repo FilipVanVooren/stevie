@@ -82,6 +82,7 @@ id.file.saveblock         equ  5       ; Save block to file
 id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
 id.file.printblock        equ  8       ; Print block
+id.file.interrupt         equ  >ffff   ; File operation interrupted
 ;-----------------------------------------------------------------
 ; Special file indicator
 ;-----------------------------------------------------------------

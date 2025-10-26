@@ -232,10 +232,28 @@ fh.file.write.edb.check_fioerr:
         ;------------------------------------------------------
 fh.file.write.edb.display:
         mov   @fh.callback2,tmp0    ; Get pointer to "Saving indicator 2"
-        bl    *tmp0                 ; Run callback function                                    
+        bl    *tmp0                 ; Run callback function
         ;------------------------------------------------------
-        ; Step 3: Next record
+        ; Step 3a: Check for keyboard interrupt <FCTN-4>
         ;------------------------------------------------------
+fh.file.write.edb.check.interrupt:
+        bl    @>0020                ; Check keyboard. Destroys r12
+        jne   fh.file.write.edb.nextrecord                     
+                                    ; No FCTN-4 pressed
+        ;------------------------------------------------------
+        ; Interrupt occured
+        ;------------------------------------------------------
+        li    tmp0,id.file.interrupt ; \ Set flag "keyboard interrupt" occured
+        mov   tmp0,@fh.workmode      ; /
+
+        mov   @fh.callback4,tmp0     ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.write.edb.exit ; Skip callback
+        bl    *tmp0                  ; Run callback function  
+        jmp   fh.file.write.edb.exit
+        ;------------------------------------------------------
+        ; Step 3b: Next record
+        ;------------------------------------------------------
+fh.file.write.edb.nextrecord:        
         inc   @fh.records           ; Update counter
         jmp   fh.file.write.edb.record
         ;------------------------------------------------------
