@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251102-1626150
+0002               * BUILD: 251102-1707390
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -93,17 +93,33 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012      600A     bank5.rom                 equ  >600a   ; Jumbo
 0013      600C     bank6.rom                 equ  >600c   ; Jenifer
 0014      600E     bank7.rom                 equ  >600e   ; Jonas
-0015               *--------------------------------------------------------------
-0016               * RAM 4K banks (Only valid in advanced mode FG99)
-0017               *--------------------------------------------------------------
-0018      6800     bank0.ram                 equ  >6800   ; Jill
-0019      6802     bank1.ram                 equ  >6802   ; James
-0020      6804     bank2.ram                 equ  >6804   ; Jacky
-0021      6806     bank3.ram                 equ  >6806   ; John
-0022      6808     bank4.ram                 equ  >6808   ; Janine
-0023      680A     bank5.ram                 equ  >680a   ; Jumbo
-0024      680C     bank6.ram                 equ  >680c   ; Jenifer
-0025      680E     bank7.ram                 equ  >680e   ; Jonas
+0015      6010     bank8.rom                 equ  >6010   ; Q
+0016      6012     bank9.rom                 equ  >6012   ; free
+0017      6014     banka.rom                 equ  >6014   ; free
+0018      6016     bankb.rom                 equ  >6016   ; free
+0019      6018     bankc.rom                 equ  >6018   ; free
+0020      601A     bankd.rom                 equ  >601a   ; free
+0021      601C     banke.rom                 equ  >601c   ; free
+0022      601E     bankf.rom                 equ  >601e   ; free
+0023               *--------------------------------------------------------------
+0024               * RAM 4K banks (Only valid in advanced mode FG99)
+0025               *--------------------------------------------------------------
+0026      6800     bank0.ram                 equ  >6800   ; Jill
+0027      6802     bank1.ram                 equ  >6802   ; James
+0028      6804     bank2.ram                 equ  >6804   ; Jacky
+0029      6806     bank3.ram                 equ  >6806   ; John
+0030      6808     bank4.ram                 equ  >6808   ; Janine
+0031      680A     bank5.ram                 equ  >680a   ; Jumbo
+0032      680C     bank6.ram                 equ  >680c   ; Jenifer
+0033      680E     bank7.ram                 equ  >680e   ; Jonas
+0034      6810     bank8.ram                 equ  >6810   ; Q
+0035      6812     bank9.ram                 equ  >6812   ; free
+0036      6814     banka.ram                 equ  >6814   ; free
+0037      6816     bankb.ram                 equ  >6816   ; free
+0038      6818     bankc.ram                 equ  >6818   ; free
+0039      681A     bankd.ram                 equ  >681a   ; free
+0040      681C     banke.ram                 equ  >681c   ; free
+0041      681E     bankf.ram                 equ  >681e   ; free
                    < stevie_b5.asm
 0027                       copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
      **** ****     > equ.vdp.asm
@@ -11478,6 +11494,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     BANK6.ROM........... >600C :     
     BANK7.RAM........... >680E :     
     BANK7.ROM........... >600E :     
+    BANK8.RAM........... >6810 :     
+    BANK8.ROM........... >6010 :     
+    BANK9.RAM........... >6812 :     
+    BANK9.ROM........... >6012 :     
+    BANKA.RAM........... >6814 :     
+    BANKA.ROM........... >6014 :     
+    BANKB.RAM........... >6816 :     
+    BANKB.ROM........... >6016 :     
+    BANKC.RAM........... >6818 :     
+    BANKC.ROM........... >6018 :     
+    BANKD.RAM........... >681A :     
+    BANKD.ROM........... >601A :     
+    BANKE.RAM........... >681C :     
+    BANKE.ROM........... >601C :     
+    BANKF.RAM........... >681E :     
+    BANKF.ROM........... >601E :     
     BANKID.............. >600A :     
     BANKX.CRASH.SHOWBANK >7FF0 :     
     BANKX.VDPTAB........ >7F50 :     

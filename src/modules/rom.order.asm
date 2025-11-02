@@ -12,6 +12,14 @@ bank4.rom                 equ  >6008   ; Janine
 bank5.rom                 equ  >600a   ; Jumbo
 bank6.rom                 equ  >600c   ; Jenifer
 bank7.rom                 equ  >600e   ; Jonas
+bank8.rom                 equ  >6010   ; Q
+bank9.rom                 equ  >6012   ; free
+banka.rom                 equ  >6014   ; free
+bankb.rom                 equ  >6016   ; free
+bankc.rom                 equ  >6018   ; free
+bankd.rom                 equ  >601a   ; free
+banke.rom                 equ  >601c   ; free
+bankf.rom                 equ  >601e   ; free
 *--------------------------------------------------------------
 * RAM 4K banks (Only valid in advanced mode FG99)
 *--------------------------------------------------------------
@@ -23,3 +31,11 @@ bank4.ram                 equ  >6808   ; Janine
 bank5.ram                 equ  >680a   ; Jumbo
 bank6.ram                 equ  >680c   ; Jenifer
 bank7.ram                 equ  >680e   ; Jonas
+bank8.ram                 equ  >6810   ; Q
+bank9.ram                 equ  >6812   ; free
+banka.ram                 equ  >6814   ; free
+bankb.ram                 equ  >6816   ; free
+bankc.ram                 equ  >6818   ; free
+bankd.ram                 equ  >681a   ; free
+banke.ram                 equ  >681c   ; free
+bankf.ram                 equ  >681e   ; free

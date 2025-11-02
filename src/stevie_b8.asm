@@ -18,8 +18,8 @@
 ********************************************************************************
 * File: stevie_b6.asm
 *
-* Bank 6 "Jenifer"
-* VDP utility functions and fonts
+* Bank 8 "Q"
+* Empty bank for future expansion
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -31,9 +31,9 @@
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
 
 ***************************************************************
-* BANK 6
+* BANK 8
 ********|*****|*********************|**************************
-bankid  equ   bank6.rom             ; Set bank identifier to current bank
+bankid  equ   bank8.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
@@ -66,35 +66,19 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Patterns
-        ;----------------------------- ------------------------------------------
-        copy  "vdp.dump.patterns.asm"   ; Dump patterns to VDP
-        copy  "vdp.dump.font.asm"       ; Dump font to VDP
-        copy  "vdp.colors.line.asm"     ; Set color combination for line
-        copy  "vdp.cursor.tat.asm"      ; VDP cursor handling (tat version)
-        copy  "vdp.cursor.fb.tat.asm"   ; VDP cursor framebuffer
-        copy  "vdp.cursor.cmdb.tat.asm" ; VDP cursor CMDB
-        copy  "vdp.cursor.sprite.asm"   ; VDP cursor handling (sprite version)
-        copy  "tv.set.font.asm"         ; Set current font
-        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank6.asm" ; Bank specific stubs
+        copy  "rom.stubs.bank8.asm" ; Bank specific stubs
         copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.patterns.asm"    ; Pattern definitions sprites & chars        
-        ;-----------------------------------------------------------------------
-        ; Fonts
-        ;-----------------------------------------------------------------------        
-font1   bcopy "FONTX.bin"            ; Default font as of Stevie 1.4A
-font2   bcopy "FONT7.bin"            ; Default font (Stevie 1.0 - 1.3Q)
+        ; copy  "data.bank8.asm"    ; Data for bank 8        
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
-              .error 'Aborted. Bank 6 cartridge program too large!'
+              .error 'Aborted. Bank 8 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
@@ -107,5 +91,5 @@ font2   bcopy "FONT7.bin"            ; Default font (Stevie 1.0 - 1.3Q)
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------
-        copy  "rom.vectors.bank6.asm"
-                                    ; Vector table bank 6
+        copy  "rom.vectors.bank8.asm"
+                                    ; Vector table bank 8
