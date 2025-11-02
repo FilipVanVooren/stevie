@@ -78,7 +78,7 @@ main:
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
-              .error 'Aborted. Bank 8 cartridge program too large!'
+              .error 'Aborted. Bank C cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen

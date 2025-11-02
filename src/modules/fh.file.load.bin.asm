@@ -9,11 +9,6 @@
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed filename descriptor
-* parm2 = Pointer to callback function "Before loading image"
-* parm3 = Pointer to callback function "Binary image loaded"
-* parm4 = Pointer to callback function "File I/O error"
-*
-* Callbacks can be skipped by passing >0000 as pointer.
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -41,16 +36,12 @@ fh.file.load.bin:
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents                           
         ;------------------------------------------------------
-        ; Save parameters / callback functions
+        ; Save parameters
         ;------------------------------------------------------
         li    tmp0,fh.fopmode.readfile
                                     ; Going to read a file
         mov   tmp0,@fh.fopmode      ; Set file operations mode
-
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
-        mov   @parm2,@fh.callback1  ; Callback function "Before loading image"
-        mov   @parm3,@fh.callback2  ; Callback function "Binary image loaded"
-        mov   @parm4,@fh.callback3  ; Callback function "File I/O error"
 
         li    tmp0,fh.file.pab.header.binimage
         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
@@ -62,46 +53,6 @@ fh.file.load.bin:
 fh.file.load.bin.newfile:
         seto  @fh.temp1             ; Set flag "load file"
         clr   @fh.temp3             ; Not used
-        ;------------------------------------------------------
-        ; Asserts
-        ;------------------------------------------------------
-fh.file.load.bin.assert1:        
-        mov   @fh.callback1,tmp0
-        jeq   fh.file.load.bin.assert2
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.bin.crsh ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.bin.crsh ; Yes, crash!
-
-fh.file.load.bin.assert2
-        mov   @fh.callback2,tmp0
-        jeq   fh.file.load.bin.assert3
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.bin.crsh ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.bin.crsh ; Yes, crash!
-
-fh.file.load.bin.assert3:
-        mov   @fh.callback3,tmp0
-        jeq   fh.file.load.bin.load1
-        ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.bin.crsh ; Yes, crash!
-        ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.bin.crsh ; Yes, crash!
-        ;------------------------------------------------------
-        ; Check failed, crash CPU!
-        ;------------------------------------------------------  
-fh.file.load.bin.crsh:                                    
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system        
-        ;------------------------------------------------------
-        ; Callback "Before load binary image"
-        ;------------------------------------------------------
-fh.file.load.bin.load1:        
-        mov   @fh.callback1,tmp0
-        jeq   fh.file.load.bin.pabheader
-                                    ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
@@ -128,10 +79,24 @@ fh.file.load.bin.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Set parameters for loading binary image
+        ; Reset the F18a
+        ;------------------------------------------------------ 
+        bl    @f18rst               ; Reset and lock the F18A
+        bl    @vidtab               ; Load video mode table into VDP
+              data tibasic.32x24    ; Equate selected video mode table
+        bl    @scroff               ; Turn off screen
         ;------------------------------------------------------
-        li    r0,fh.vpab            ; Address of PAB in VRAM
-        mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
+        ; Clear 32K memory expansion range before loading
+        ;------------------------------------------------------        
+        bl    @film
+              data >2000,>00,8192   ; Clear >2000 - >3fff
+        bl    @film
+              data >a000,>00,24576  ; Clear >2000 - >3fff
+        ;------------------------------------------------------
+        ; Clear VDP memory before loading
+        ;------------------------------------------------------ 
+        bl    @filv
+              data >0000,>00,8192   ; Clear VDP memory >0000 - >1fff                                    
         ;------------------------------------------------------
         ; Inline setup memory paging for SAMS
         ;------------------------------------------------------
@@ -159,6 +124,7 @@ fh.file.load.bin.pabheader:
         ;------------------------------------------------------
         ; Load binary image
         ;------------------------------------------------------
+        li    r0,fh.vpab            ; Address of PAB in VRAM
         bl    @xfile.load           ; Read binary image (register version)
                                     ; \ i  r0 = Address of PAB in VRAM
                                     ; | o  tmp0 = Status byte
@@ -166,6 +132,7 @@ fh.file.load.bin.pabheader:
                                     ; | o  tmp2 = Status register contents 
                                     ; /           upon DSRLNK return
 
+        jmp  $
         mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
         mov   tmp1,@fh.reclen       ; Save bytes read
         mov   tmp2,@fh.ioresult     ; Save status register contents
@@ -202,30 +169,7 @@ fh.file.load.bin.vdp2cpu:
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy                                                                            
-        ;------------------------------------------------------
-        ; Step 5: Callback "Binary file loaded"
-        ;------------------------------------------------------
-fh.file.load.bin.callback2:
-        mov   @fh.callback2,tmp0    ; Get pointer to callback
-        jeq   fh.file.load.bin.error
-                                    ; Skip callback        
-        bl    *tmp0                 ; Run callback function                                    
-        ;------------------------------------------------------
-        ; Error handler
-        ;------------------------------------------------------     
-fh.file.load.bin.error:        
-        mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
-        srl   tmp0,8                ; Right align VDP PAB 1 status byte
-        ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.load.bin.exit ; All good. File closed by DSRLNK
-        ;------------------------------------------------------
-        ; Callback "File I/O error"
-        ;------------------------------------------------------
-        mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.load.bin.exit 
-                                    ; Skip callback
-        bl    *tmp0                 ; Run callback function  
+                                    ; / i  tmp2 = Bytes to copy                                                                              
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

@@ -18,8 +18,8 @@
 ********************************************************************************
 * File: stevie_b6.asm
 *
-* Bank F "Q"
-* Empty bank for future expansion
+* Bank F "Sarah"
+* ROM bank with spectra2 library running in ROM address space
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -31,7 +31,7 @@
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
 
 ***************************************************************
-* BANK 8
+* BANK F
 ********|*****|*********************|**************************
 bankid  equ   bankf.rom             ; Set bank identifier to current bank
         aorg  >6000
@@ -44,45 +44,29 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
-* Step 2: Satisfy assembler, must know relocated code
-********|*****|*********************|**************************
-        aorg  >2000                 ; Relocate to >2000
-        copy  "runlib.asm"
-        copy  "ram.resident.asm"
-        ;------------------------------------------------------
-        ; Activate bank 1 and branch to  >6036
-        ;------------------------------------------------------
-        clr   @bank1.rom            ; Activate bank 1 "James" ROM
-
-        .ifeq device.fg99.mode.adv,1
-        clr   @bank1.ram            ; Activate bank 1 "James" RAM
-        .endif
-
-        b     @kickstart.code2      ; Jump to entry routine
-***************************************************************
-* Step 3: Include main editor modules
+* Step 2: Include spectra2 modules (in ROM, not RAM)
 ********|*****|*********************|**************************
 main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Stubs
-        ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bankf.asm" ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+        ; Spectra2 support routines and utilities
+        ;-----------------------------------------------------------------------        
+        copy  "runlib.asm"            ; spectra2 runtime library
+        copy  "fh.file.load.bin.asm"  ; File load routine for spectra2
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        ; copy  "data.bankf.asm"    ; Data for bank f
+        copy  "data.pab.tpl.asm"      ; PAB templates for file access
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
-              .error 'Aborted. Bank 8 cartridge program too large!'
+              .error 'Aborted. Bank F cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------
+        ;-----------------------------------------------------------------------        
         copy  "rom.crash.asm"
         ;-----------------------------------------------------------------------
         ; Table for VDP modes

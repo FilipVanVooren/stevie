@@ -45,20 +45,9 @@ fm.run.ea5:
         ;-------------------------------------------------------
         ; Load EA5 program image into memory
         ;-------------------------------------------------------        
-!       clr   @parm2                ; Skip callback 1
-        clr   @parm3                ; Skip callback 2
-        clr   @parm4                ; Skip callback 3
-
-        bl    @fh.file.load.bin     ; Load binary image into memory
+!       bl    @fh.file.load.bin     ; Load binary image into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
-                                    ; |             file descriptor
-                                    ; | i  @parm2 = Pointer to callback
-                                    ; |             "Before load binary file"
-                                    ; | i  @parm3 = Pointer to callback
-                                    ; |             "Binary file loaded"
-                                    ; | i  @parm4 = Pointer to callback 
-                                    ; /             "File I/O error"
-
+                                    ; /             file descriptor
         clr   @outparm1             ; Reset                                    
 *--------------------------------------------------------------
 * Exit

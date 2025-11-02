@@ -59,6 +59,8 @@ IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 # Banks
 banks="stevie_b0 stevie_b1 stevie_b2 stevie_b3"
 banks+=" stevie_b4 stevie_b5 stevie_b6 stevie_b7"
+banks+=" stevie_b8 stevie_b9 stevie_ba stevie_bb"
+banks+=" stevie_bc stevie_bd stevie_be stevie_bf"
 
 # VDP mode
 vdpmode="$1"
