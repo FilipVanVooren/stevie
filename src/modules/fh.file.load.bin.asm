@@ -128,12 +128,38 @@ fh.file.load.bin.pabheader:
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Load binary image
+        ; Set parameters for loading binary image
         ;------------------------------------------------------
         li    r0,fh.vpab            ; Address of PAB in VRAM
         mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
-
-        ;bl    @xfile.load           ; Read binary image (register version)
+        ;------------------------------------------------------
+        ; Inline setup memory paging for SAMS
+        ;------------------------------------------------------
+        li    r12,>1e00             ; SAMS CRU address
+        sbz   1                     ; Disable SAMS mapper
+        sbo   0                     ; Enable access to SAMS registers
+        li    r0,>0200              ; \ Page 2 in >2000 - >2fff
+        movb  r0,@>4004             ; /
+        li    r0,>0300              ; \ Page 3 in >3000 - >3fff
+        movb  r0,@>4006             ; /
+        li    r0,>0A00              ; \ Page A in >a000 - >afff
+        movb  r0,@>4014             ; /
+        li    r0,>0B00              ; \ Page B in >b000 - >bfff
+        movb  r0,@>4016             ; /
+        li    r0,>0C00              ; \ Page C in >c000 - >bfff
+        movb  r0,@>4018             ; /
+        li    r0,>0D00              ; \ Page D in >d000 - >dfff
+        movb  r0,@>401a             ; /
+        li    r0,>0E00              ; \ Page E in >e000 - >efff
+        movb  r0,@>401c             ; /
+        li    r0,>0F00              ; \ Page F in >f000 - >ffff
+        movb  r0,@>401e             ; /
+        sbz   0                     ; Disable access to SAMS registers
+        sbo   1                     ; Enable SAMS mapper
+        ;------------------------------------------------------
+        ; Load binary image
+        ;------------------------------------------------------
+        bl    @xfile.load           ; Read binary image (register version)
                                     ; \ i  r0 = Address of PAB in VRAM
                                     ; | o  tmp0 = Status byte
                                     ; | o  tmp1 = Bytes read

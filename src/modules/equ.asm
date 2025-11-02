@@ -38,9 +38,10 @@ id.dialog.saveblock       equ  16      ; "Save block to file"
 id.dialog.print           equ  17      ; "Print file"
 id.dialog.printblock      equ  18      ; "Print block"
 id.dialog.opt.clip        equ  19      ; "Configure clipboard"
-id.dialog.goto            equ  20      ; "Goto"
-id.dialog.find            equ  30      ; "Find"
-id.dialog.cart.fg99       equ  40      ; "FinalGROM 99 Cartridge"
+id.dialog.run             equ  20      ; "Run program file"
+id.dialog.goto            equ  30      ; "Goto"
+id.dialog.find            equ  40      ; "Find"
+id.dialog.cart.fg99       equ  50      ; "FinalGROM 99 Cartridge"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
@@ -57,7 +58,6 @@ id.dialog.opt             equ  108     ; "Configure"
 id.dialog.editor          equ  109     ; "Configure editor"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
-id.dialog.run             equ  114     ; "Run program image (EA5)"
 id.dialog.find.browse     equ  120     ; "Find - Search results"
 ;-----------------------------------------------------------------
 ; Suffix characters for clipboards

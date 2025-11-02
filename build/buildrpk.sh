@@ -9,7 +9,6 @@
 ################################################################################
 # shellcheck disable=SC1091,SC2086,SC2181
 
-
 set -e
 source helper.sh
 
@@ -73,6 +72,24 @@ include+="../src/assets/"
 # Set name of output binary
 setbin "$vdpmode"
 
+# Cartridge XML metadata for RPK/ZIP package
+metadata=$(cat << EOF
+<?xml version="1.0" encoding="utf-8"?>
+<romset version="1.0">
+   <resources>
+      <rom id="romimage" file="${binary}"/>
+      <rom id="gromimage" file="phm3055g3.bin"/>
+   </resources>
+   <configuration>
+      <pcb type="gromemu">
+         <socket id="grom_socket" uses="gromimage"/>
+         <socket id="rom_socket" uses="romimage"/>
+      </pcb>
+   </configuration>
+</romset>
+EOF
+)
+
 # Call xas99 wrapper
 log "Building stevie binary for vdp mode $vdpmode"
 export workdir="$workdir"
@@ -87,8 +104,30 @@ else
     log "**** Error **** Error during assembly process. Terminated."
 fi
 
-# Copy final binary to output directory
+# Create RPK package
 if [ -f "bin/$binary" ]; then
-   cp "bin/$binary" /Volumes/FINALGROM
-    log "Final binary copied to /Volumes/FINALGROM/$binary"
+    rpkname="${binary//.bin/.rpk}"
+    metaname="layout.xml"
+    rm -f "bin/$rpkname" "$metaname"
+    log "Creating RPK package $rpkname"
+    echo "$metadata" > "bin/$metaname"
+    zip -q -j "bin/$rpkname" "bin/$binary" "bin/phm3055g3.bin" "bin/$metaname"
+    log "RPK package created: bin/$rpkname"
+    zip -T "bin/$rpkname" 
+    unzip -l "bin/$rpkname" 
+else
+    log "**** Error **** Final binary bin/$binary not found. Cannot create RPK package."
+    exit 1
+fi
+
+
+# Copy final binaries to FINALGROM volume if it exists
+if [ -f "bin/$binary" ]; then
+   if [ -d "/Volumes/FINALGROM" ]; then
+      cp "bin/$binary" /Volumes/FINALGROM/STEVIEC.bin
+      cp "bin/phm3055g3.bin" /Volumes/FINALGROM/STEVIEG.bin
+      log "Final binary copied to /Volumes/FINALGROM/$binary"
+   else
+      log "FINALGROM volume not mounted, skipping copy operation"
+   fi
 fi

@@ -42,12 +42,11 @@ dialog.run.setup:
         li    tmp0,id.dialog.run
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
+        clr   @cmdb.panhint2        ; No info message
+        clr   @cmdb.panmarkers      ; No letter markers
+
         li    tmp0,txt.head.run
         mov   tmp0,@cmdb.panhead    ; Header for dialog
-
-        li    tmp0,txt.info.run
-        mov   tmp0,@cmdb.paninfo    ; Message 'Feature not yet available'
-        clr   @cmdb.panmarkers      ; No key markers
 
         li    tmp0,txt.hint.run
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
@@ -114,13 +113,13 @@ dialog.run.clearcmd:
 dialog.run.cursor:
         bl      @pane.cursor.hide   ; No cursor at this time
 
-        ; bl    @pane.cursor.blink  ; Show cursor
-        ; mov   @tv.curshape,@ramsat+2
+        bl    @pane.cursor.blink  ; Show cursor
+        mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------
-        ; bl    @pane.filebrowser   ; Show file browser
+        bl    @pane.filebrowser   ; Show file browser
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

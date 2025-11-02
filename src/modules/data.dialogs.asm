@@ -268,10 +268,10 @@ txt.keys.clipdev   stri 'F9-Back  F3-Clear'
 ;--------------------------------------------------------------
 txt.head.font      byte 18,4,1
                    text ' Configure font '
-txt.info.font      stri 'Font:  1   2   3   4   5'
-pos.info.font      byte 7,11,15,19,23,>ff
+txt.info.font      stri 'Font:  1   2'
+pos.info.font      byte 7,11,>ff
 
-txt.hint.font      stri 'Pick desired font 1-5. Default font is 1.'
+txt.hint.font      stri 'Pick desired font 1-2.'
 txt.keys.font      stri 'F9-Back  SPACE-Close menu'
                    even
 

@@ -91,8 +91,6 @@ mem.sams.set.legacy.code:
         data  >04e0,bank0.rom       ; Activate bank 0
         data  >0420,>0000           ; blwp @0
 
-
-
 ***************************************************************
 * mem.sams.set.boot
 * Setup SAMS memory banks for stevie startup

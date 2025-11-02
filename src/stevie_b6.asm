@@ -92,16 +92,6 @@ font1   bcopy "FONTX.bin"            ; Default font as of Stevie 1.4A
 
 font2   bcopy "FONT7.bin"            ; \ Default font (Stevie 1.0 - 1.3Q)
                                      ; / Harry's Extended Basic GEM 2.9 font 7
-
-font3   byte  >00                    ; \ Push font one pixel down
-        bcopy "FONT14.bin"           ; / Harry's Extended Basic GEM 2.9 font 14
-
-font4   aorg  font3 + 784            ; \
-        byte  >00                    ; | Push font one pixel down 
-        bcopy "FONT40.bin"           ; / Harry's Extended Basic GEM 2.9 font 40
-
-font5   aorg  font4 + 784            ; \
-        bcopy "FONT60.bin"           ; / Harry's Extended Basic GEM 2.9 font 60
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

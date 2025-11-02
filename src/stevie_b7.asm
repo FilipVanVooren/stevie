@@ -40,10 +40,6 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
-        aorg  >6038
-        clr   @bank7.rom            ; Switch to bank 7 "Jonas"
-        b     @tib.run.return.mon   ; Resume Stevie session?
-
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
