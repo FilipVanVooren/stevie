@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251102-1944100
+0002               * BUILD: 251108-1732280
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options

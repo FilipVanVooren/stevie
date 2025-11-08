@@ -1,11 +1,11 @@
-* FILE......: fh.file.load.bin.asm
+* FILE......: fh.file.load.ea5.asm
 * Purpose...: Load binary image into memory
 
 ***************************************************************
-* fh.file.load.bin
+* fh.file.load.ea5
 * Load binary image into memory
 ***************************************************************
-*  bl   @fh.file.load.bin
+*  bl   @fh.file.load.ea5
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed filename descriptor
@@ -19,7 +19,7 @@
 * Remarks
 * None
 ********|*****|*********************|**************************
-fh.file.load.bin:
+fh.file.load.ea5:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -50,13 +50,13 @@ fh.file.load.bin:
         ;------------------------------------------------------
         ; Loading file in destination memory
         ;------------------------------------------------------
-fh.file.load.bin.newfile:
+fh.file.load.ea5.newfile:
         seto  @fh.temp1             ; Set flag "load file"
         clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.load.bin.pabheader:        
+fh.file.load.ea5.pabheader:        
         li    tmp0,fh.vpab          ; VDP destination
         mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
         li    tmp2,9                ; 9 bytes to copy
@@ -138,30 +138,29 @@ fh.file.load.bin.pabheader:
         mov   tmp2,@fh.ioresult     ; Save status register contents
 
         coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.load.bin.check_fioerr
-        b     @fh.file.load.bin.error  
+        jne   fh.file.load.ea5.check_fioerr
+        jmp   fh.file.load.ea5.error
                                     ; Yes, IO error occured
         ;------------------------------------------------------
         ; Check if a file error occured
         ;------------------------------------------------------
-fh.file.load.bin.check_fioerr:     
+fh.file.load.ea5.check_fioerr:     
         mov   @fh.ioresult,tmp2   
         coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.load.bin.process
+        jne   fh.file.load.ea5.process
                                     ; No, goto (3)
-        b     @fh.file.load.bin.error  
-                                    ; Yes, so handle file error
+        jmp   fh.file.load.ea5.error
         ;------------------------------------------------------
         ; 3: Process segment
         ;------------------------------------------------------
-fh.file.load.bin.process:
+fh.file.load.ea5.process:
         li    tmp0,fh.vrecbuf       ; VDP source address
         mov   @fh.ram.ptr,tmp1      ; RAM target address
         mov   @fh.reclen,tmp2       ; Number of bytes to copy        
         ;------------------------------------------------------
         ; 3b: Copy segment from VDP to CPU memory
         ;------------------------------------------------------
-fh.file.load.bin.vdp2cpu:        
+fh.file.load.ea5.vdp2cpu:        
         ; 
         ; Executed for devices that need their disk buffer in VDP memory
         ; (TI Disk Controller, tipi, nanopeb, ...).
@@ -170,10 +169,16 @@ fh.file.load.bin.vdp2cpu:
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
                                     ; / i  tmp2 = Bytes to copy                                                                              
+        jmp   fh.file.load.ea5.exit
+        ;------------------------------------------------------
+        ; 3bc: Error handling
+        ;------------------------------------------------------
+fh.file.load.ea5.error:
+        bl    @cpu.crash          ; Crash the CPU
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.load.bin.exit:
+fh.file.load.ea5.exit:
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film

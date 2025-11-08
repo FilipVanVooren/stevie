@@ -45,7 +45,7 @@ fm.run.ea5:
         ;-------------------------------------------------------
         ; Load EA5 program image into memory
         ;-------------------------------------------------------        
-!       bl    @fh.file.load.bin     ; Load binary image into memory
+!       bl    @fh.file.load.ea5     ; Load binary image into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; /             file descriptor
         clr   @outparm1             ; Reset                                    

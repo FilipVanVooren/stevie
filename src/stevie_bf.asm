@@ -38,6 +38,9 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
 
+;ws1     equ >2100                  ; Weak EQU value may be redefined in included modules
+
+
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
@@ -48,16 +51,19 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
 ********|*****|*********************|**************************
 main:
         aorg  kickstart.code2       ; >6046
-        bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; Spectra2 support routines and utilities
-        ;-----------------------------------------------------------------------        
-        copy  "runlib.asm"            ; spectra2 runtime library
-        copy  "fh.file.load.bin.asm"  ; File load routine for spectra2
+        ;-----------------------------------------------------------------------   
+        copy "runlib.asm"           ; Spectra2 runtime library
+        ;-----------------------------------------------------------------------
+        ; TI-99/4a commmunity EA5 scratchpad loader
+        ;-----------------------------------------------------------------------
+        copy  "rom.scratchloader.asm" 
+                                    ; EA5 scratchpad loader;
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.pab.tpl.asm"      ; PAB templates for file access
+        ;
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
@@ -66,8 +72,8 @@ main:
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------        
-        copy  "rom.crash.asm"
+        ;-----------------------------------------------------------------------
+        copy  "rom.crash.asm"          
         ;-----------------------------------------------------------------------
         ; Table for VDP modes
         ;-----------------------------------------------------------------------

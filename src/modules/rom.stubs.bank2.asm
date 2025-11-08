@@ -396,10 +396,10 @@ tv.reset.exit:
 
 
 ***************************************************************
-* Stub for "fh.file.load.bin"
+* Stub for "fh.file.load.ea5"
 * bankf vec.1
 ********|*****|*********************|**************************
-fh.file.load.bin:
+fh.file.load.ea5:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -412,6 +412,6 @@ fh.file.load.bin:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fh.file.load.bin.exit:
+fh.file.load.ea5.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
