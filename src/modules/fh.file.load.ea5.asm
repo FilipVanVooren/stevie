@@ -1,9 +1,9 @@
 * FILE......: fh.file.load.ea5.asm
-* Purpose...: Load binary image into memory
+* Purpose...: Load binary file into memory
 
 ***************************************************************
 * fh.file.load.ea5
-* Load binary image into memory
+* Load binary file into memory
 ***************************************************************
 *  bl   @fh.file.load.ea5
 *--------------------------------------------------------------
@@ -30,54 +30,49 @@ fh.file.load.ea5:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3        
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
-        clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
-        clr   @fh.ioresult          ; Clear status register contents                           
-        ;------------------------------------------------------
-        ; Save parameters
-        ;------------------------------------------------------
-        li    tmp0,fh.fopmode.readfile
-                                    ; Going to read a file
-        mov   tmp0,@fh.fopmode      ; Set file operations mode
-        mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
 
-        li    tmp0,fh.file.pab.header.binimage
-        mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
-        
-        clr   @fh.ftype.init        ; File type/mode (in LSB)
-        ;------------------------------------------------------
-        ; Loading file in destination memory
-        ;------------------------------------------------------
-fh.file.load.ea5.newfile:
-        seto  @fh.temp1             ; Set flag "load file"
-        clr   @fh.temp3             ; Not used
-        ;------------------------------------------------------
-        ; Copy PAB header to VDP
-        ;------------------------------------------------------
-fh.file.load.ea5.pabheader:        
-        li    tmp0,fh.vpab          ; VDP destination
-        mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
-        li    tmp2,9                ; 9 bytes to copy
+        ;-------------------------------------------------------
+        ; Load EA5 program image into memory
+        ;-------------------------------------------------------
+        clr   @parm2                ; Clear callback "before loading image"
+        clr   @parm3                ; Clear callback "image loaded"
+        clr   @parm4                ; Clear callback "File I/O error"
 
-        bl    @xpym2v               ; Copy CPU memory to VDP memory
-                                    ; \ i  tmp0 = VDP destination
-                                    ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Number of bytes to copy
-        ;------------------------------------------------------
-        ; Append file descriptor to PAB header in VDP
-        ;------------------------------------------------------
-        li    tmp0,fh.vpab + 9      ; VDP destination        
-        mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
-        movb  *tmp1,tmp2            ; Get file descriptor length
-        srl   tmp2,8                ; Right justify
-        inc   tmp2                  ; Include length byte as well
+        li    tmp0,>2000
+        mov   tmp0,@parm5           ; Set VDP destination address to >2000
 
-        bl    @xpym2v               ; Copy CPU memory to VDP memory
-                                    ; \ i  tmp0 = VDP destination
-                                    ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Number of bytes to copy
+        seto  @parm6                ; Set RAM destination address to skip RAM loading
+
+        li    tmp0,8192
+        mov   tmp0,@parm7           ; Set maxmimum number of bytes to load
+        ;-------------------------------------------------------
+        ; Load EA5 image chunk into memory
+        ;-------------------------------------------------------
+        bl    @fh.file.load.bin     ; Load binary image into memory
+                                    ; \ i  @parm1 = Pointer to length prefixed 
+                                    ; |             file descriptor
+                                    ; | i  @parm2 = Pointer to callback
+                                    ; |             "before loading image"
+                                    ; | i  @parm3 = Pointer to callback
+                                    ; |             "image loaded"
+                                    ; | i  @parm4 = Pointer to callback
+                                    ; |             "File I/O error"
+                                    ; | i  @parm5 = VDP destination address
+                                    ; | i  @parm6 = RAM destination address
+                                    ; |             (>FFFF to skip)
+                                    ; | i  @parm7 = Maximum number of bytes to load
+                                    ; /
+
+        jmp $
         ;------------------------------------------------------
         ; Reset the F18a
         ;------------------------------------------------------ 
@@ -121,69 +116,11 @@ fh.file.load.ea5.pabheader:
         movb  r0,@>401e             ; /
         sbz   0                     ; Disable access to SAMS registers
         sbo   1                     ; Enable SAMS mapper
-        ;------------------------------------------------------
-        ; Load binary image
-        ;------------------------------------------------------
-        li    r0,fh.vpab            ; Address of PAB in VRAM
-        bl    @xfile.load           ; Read binary image (register version)
-                                    ; \ i  r0 = Address of PAB in VRAM
-                                    ; | o  tmp0 = Status byte
-                                    ; | o  tmp1 = Bytes read
-                                    ; | o  tmp2 = Status register contents 
-                                    ; /           upon DSRLNK return
-
-        jmp  $
-        mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
-        mov   tmp1,@fh.reclen       ; Save bytes read
-        mov   tmp2,@fh.ioresult     ; Save status register contents
-
-        coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.load.ea5.check_fioerr
-        jmp   fh.file.load.ea5.error
-                                    ; Yes, IO error occured
-        ;------------------------------------------------------
-        ; Check if a file error occured
-        ;------------------------------------------------------
-fh.file.load.ea5.check_fioerr:     
-        mov   @fh.ioresult,tmp2   
-        coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.load.ea5.process
-                                    ; No, goto (3)
-        jmp   fh.file.load.ea5.error
-        ;------------------------------------------------------
-        ; 3: Process segment
-        ;------------------------------------------------------
-fh.file.load.ea5.process:
-        li    tmp0,fh.vrecbuf       ; VDP source address
-        mov   @fh.ram.ptr,tmp1      ; RAM target address
-        mov   @fh.reclen,tmp2       ; Number of bytes to copy        
-        ;------------------------------------------------------
-        ; 3b: Copy segment from VDP to CPU memory
-        ;------------------------------------------------------
-fh.file.load.ea5.vdp2cpu:        
-        ; 
-        ; Executed for devices that need their disk buffer in VDP memory
-        ; (TI Disk Controller, tipi, nanopeb, ...).
-        ; 
-        bl    @xpyv2m               ; Copy memory block from VDP to CPU
-                                    ; \ i  tmp0 = VDP source address
-                                    ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy                                                                              
-        jmp   fh.file.load.ea5.exit
-        ;------------------------------------------------------
-        ; 3bc: Error handling
-        ;------------------------------------------------------
-fh.file.load.ea5.error:
-        bl    @cpu.crash          ; Crash the CPU
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fh.file.load.ea5.exit:
-        clr   @fh.fopmode           ; Set FOP mode to idle operation
-
-        bl    @film
-              data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

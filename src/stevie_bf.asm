@@ -38,32 +38,45 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header
 
-;ws1     equ >2100                  ; Weak EQU value may be redefined in included modules
-
-
 ***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************
-* Step 2: Include spectra2 modules (in ROM, not RAM)
+* Step 2: Satisfy assembler, must know relocated code
+********|*****|*********************|**************************
+        aorg  >2000                 ; Relocate to >2000
+        copy  "runlib.asm"
+        copy  "ram.resident.asm"
+        ;------------------------------------------------------
+        ; Activate bank 1 and branch to  >6036
+        ;------------------------------------------------------
+        clr   @bank1.rom            ; Activate bank 1 "James" ROM
+
+        .ifeq device.fg99.mode.adv,1
+        clr   @bank1.ram            ; Activate bank 1 "James" RAM
+        .endif
+
+        b     @kickstart.code2      ; Jump to entry routine
+***************************************************************
+* Step 3: Include main editor modules
 ********|*****|*********************|**************************
 main:
         aorg  kickstart.code2       ; >6046
+        bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Spectra2 support routines and utilities
-        ;-----------------------------------------------------------------------   
-        copy "runlib.asm"           ; Spectra2 runtime library
+        ; Stubs
         ;-----------------------------------------------------------------------
-        ; TI-99/4a commmunity EA5 scratchpad loader
+        copy  "rom.stubs.bankf.asm" ; Bank specific stubs
+        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
-        copy  "rom.scratchloader.asm" 
-                                    ; EA5 scratchpad loader;
+        ; Load EA5 program image
+        ;-----------------------------------------------------------------------
+        copy  "fh.file.load.ea5.asm" ; File load EA5 image routine  
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        ;
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

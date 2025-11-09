@@ -27,13 +27,7 @@ fm.run.ea5:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3
-        dect  stack
-        mov   @parm4,*stack         ; Push @parm4
+        mov   @parm1,*stack         ; Push @parm1       
         ;-------------------------------------------------------        
         ; Exit early if editor buffer is dirty
         ;-------------------------------------------------------
@@ -44,18 +38,14 @@ fm.run.ea5:
         jmp   fm.run.ea5.exit       ; / and exit early 
         ;-------------------------------------------------------
         ; Load EA5 program image into memory
-        ;-------------------------------------------------------        
-!       bl    @fh.file.load.ea5     ; Load binary image into memory
+        ;-------------------------------------------------------
+!       bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; /             file descriptor
-        clr   @outparm1             ; Reset                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fm.run.ea5.exit:
-        mov   *stack+,@parm4        ; Pop @parm4
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

@@ -1,19 +1,23 @@
-* FILE......: fh.file.load.prg.asm
-* Purpose...: Load program image into memory
+* FILE......: fh.file.load.bin.asm
+* Purpose...: Load binary file into memory
 
 ***************************************************************
-* fh.file.load.prg
-* Load program image into memory
+* fh.file.load.bin
+* Load binary file into memory
 ***************************************************************
-*  bl   @fh.file.load.prg
+*  bl   @fh.file.load.bin
 *--------------------------------------------------------------
 * INPUT
 * parm1 = Pointer to length-prefixed filename descriptor
 * parm2 = Pointer to callback function "Before loading image"
-* parm3 = Pointer to callback function "Program image loaded"
+* parm3 = Pointer to callback function "Image loaded"
 * parm4 = Pointer to callback function "File I/O error"
+* parm5 = VDP destination address to load file into
+* parm6 = RAM destination address to copy file into
+* parm7 = Maximum number of bytes to load
 *
 * Callbacks can be skipped by passing >0000 as pointer.
+* Copy to RAM can be skipped by passing >FFFF in parm6.
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -24,7 +28,7 @@
 * Remarks
 * None
 ********|*****|*********************|**************************
-fh.file.load.prg:
+fh.file.load.bin:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -35,13 +39,27 @@ fh.file.load.prg:
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
+        dect  stack
+        mov   @parm4,*stack         ; Push @parm4
+        dect  stack
+        mov   @parm5,*stack         ; Push @parm5
+        dect  stack
+        mov   @parm6,*stack         ; Push @parm6
+        dect  stack
+        mov   @parm7,*stack         ; Push @parm7
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
         clr   @fh.ioresult          ; Clear status register contents                           
         ;------------------------------------------------------
-        ; Save parameters / callback functions
+        ; Save parameters
         ;------------------------------------------------------
         li    tmp0,fh.fopmode.readfile
                                     ; Going to read a file
@@ -55,65 +73,94 @@ fh.file.load.prg:
         li    tmp0,fh.file.pab.header.binimage
         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
         
-        clr   @fh.ftype.init        ; File type/mode (in LSB)
+        clr   @fh.ftype.init        ; File type/mode (in LSB)        
         ;------------------------------------------------------
         ; Loading file in destination memory
         ;------------------------------------------------------
-fh.file.load.prg.newfile:
+fh.file.load.bin.newfile:
         seto  @fh.temp1             ; Set flag "load file"
         clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
-fh.file.load.prg.assert1:        
+fh.file.load.bin.assert1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.load.prg.assert2
+        jeq   fh.file.load.bin.assert2
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.prg.crsh ; Yes, crash!
+        jlt   fh.file.load.bin.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.prg.crsh ; Yes, crash!
+        jgt   fh.file.load.bin.crsh ; Yes, crash!
 
-fh.file.load.prg.assert2
+fh.file.load.bin.assert2
         mov   @fh.callback2,tmp0
-        jeq   fh.file.load.prg.assert3
+        jeq   fh.file.load.bin.assert3
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.prg.crsh ; Yes, crash!
+        jlt   fh.file.load.bin.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.prg.crsh ; Yes, crash!
+        jgt   fh.file.load.bin.crsh ; Yes, crash!
 
-fh.file.load.prg.assert3:
+fh.file.load.bin.assert3:
         mov   @fh.callback3,tmp0
-        jeq   fh.file.load.prg.load1
+        jeq   fh.file.load.bin.load1
         ci    tmp0,>6000            ; Insane address ?
-        jlt   fh.file.load.prg.crsh ; Yes, crash!
+        jlt   fh.file.load.bin.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
-        jgt   fh.file.load.prg.crsh ; Yes, crash!
+        jgt   fh.file.load.bin.crsh ; Yes, crash!
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
-fh.file.load.prg.crsh:                                    
+fh.file.load.bin.crsh:                                    
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
         ; Callback "Before load binary image"
         ;------------------------------------------------------
-fh.file.load.prg.load1:        
+fh.file.load.bin.load1:        
         mov   @fh.callback1,tmp0
-        jeq   fh.file.load.prg.pabheader
+        jeq   fh.file.load.bin.pabheader
                                     ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
+        bl    *tmp0                 ; Run callback function
+        ;------------------------------------------------------
+        ; Clear VRAM destination area
+        ;------------------------------------------------------
+        mov   @parm5,tmp0           ; VDP destination address
+        clr   tmp1                  ; Clear byte to write
+        mov   @parm7,tmp2           ; Number of bytes to clear
+        bl    @xfilv                ; Fill VDP memory block
+                                    ; \ i  tmp0 = VDP destination address
+                                    ; | i  tmp1 = Byte to write
+                                    ; / i  tmp2 = Number of bytes to write
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
-fh.file.load.prg.pabheader:        
+fh.file.load.bin.pabheader:        
         li    tmp0,fh.vpab          ; VDP destination
         mov   @fh.pabtpl.ptr,tmp1   ; PAB header source address
         li    tmp2,9                ; 9 bytes to copy
-
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
+        ;------------------------------------------------------
+        ; Set file VRAM destination address in PAB
+        ;------------------------------------------------------
+        li    tmp0,fh.vpab + 2      ; Set pointer to file destination address in PAB
+        li    tmp1,parm5            ; Get pointer to VDP destination address
+        li    tmp2,2                ; 2 bytes to copy
+        bl    @xpym2v               ; Copy CPU memory to VDP memory
+                                    ; \ i  tmp0 = VDP destination        
+                                    ; | i  tmp1 = CPU source
+                                    ; / i  tmp2 = Number of bytes to copy (2)
+        ;------------------------------------------------------
+        ; Set max number of bytes to read in PAB
+        ;------------------------------------------------------
+        li    tmp0,fh.vpab + 6      ; Set pointer to file destination address in PAB
+        li    tmp1,parm7            ; Get max number of bytes to read
+        li    tmp2,2                ; 2 bytes to copy
+        bl    @xpym2v               ; Copy CPU memory to VDP memory
+                                    ; \ i  tmp0 = VDP destination        
+                                    ; | i  tmp1 = CPU source
+                                    ; / i  tmp2 = Number of bytes to copy (2)                                    
         ;------------------------------------------------------
         ; Append file descriptor to PAB header in VDP
         ;------------------------------------------------------
@@ -122,93 +169,84 @@ fh.file.load.prg.pabheader:
         movb  *tmp1,tmp2            ; Get file descriptor length
         srl   tmp2,8                ; Right justify
         inc   tmp2                  ; Include length byte as well
-
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
                                     ; / i  tmp2 = Number of bytes to copy
         ;------------------------------------------------------
-        ; Load program image
+        ; Step 1: Load binary image into VDP memory
         ;------------------------------------------------------
-        li    r0,fh.vpab            ; Address of PAB in VRAM
-        mov   @fh.ftype.init,r1     ; File type/mode (in LSB)
+        bl    @file.load            ; Read binary image
+              data fh.vpab          ; \ i  p1 = Address of PAB in VRAM
+                                    ; /
+        ;------------------------------------------------------
+        ; File error occured?
+        ;------------------------------------------------------ 
+        clr   @fh.reclen            ; Reset bytes read. We do not know
+        clr   @fh.ioresult          ; Reset status register contents
 
-        bl    @xfile.load           ; Read binary image (register version)
-                                    ; \ i  r0 = Address of PAB in VRAM
-                                    ; | o  tmp0 = Status byte
-                                    ; | o  tmp1 = Bytes read
-                                    ; | o  tmp2 = Status register contents 
-                                    ; /           upon DSRLNK return
+        bl    @vgetb                ; Read PAB status byte from VDP
+              data fh.vpab + 1      ; \ i p1   = Address of PAB status byte in VRAM
+                                    ; / o tmp0 = PAB status byte
 
-        mov   tmp0,@fh.pabstat      ; Save VDP PAB status byte
-        mov   tmp1,@fh.reclen       ; Save bytes read
-        mov   tmp2,@fh.ioresult     ; Save status register contents
-
-        coc   @wbit2,tmp2           ; Equal bit set?
-        jne   fh.file.load.prg.check_fioerr
-        b     @fh.file.load.prg.error  
-                                    ; Yes, IO error occured
+        mov   tmp0,@fh.pabstat       ; Save VDP PAB status byte                                           
+        jne   fh.file.load.bin.error ; handle error if not zero
         ;------------------------------------------------------
-        ; Check if a file error occured
+        ; Step 2: Copy loaded data from VDP to RAM if requested
+        ;------------------------------------------------------ 
+fh.file.load.bin.vdp2cpu:        
+        mov   @parm6,tmp1           ; Get RAM destination address
+        ci    tmp1,>ffff            ; >FFFF means "skip copy to RAM"
+        jeq   fh.file.load.bin.success
+                                    ; Skip copy to RAM
         ;------------------------------------------------------
-fh.file.load.prg.check_fioerr:     
-        mov   @fh.ioresult,tmp2   
-        coc   @wbit2,tmp2           ; IO error occured?
-        jne   fh.file.load.prg.process
-                                    ; No, goto (3)
-        b     @fh.file.load.prg.error  
-                                    ; Yes, so handle file error
+        ; Copy binary image from VDP to RAM
         ;------------------------------------------------------
-        ; 3: Process segment
-        ;------------------------------------------------------
-fh.file.load.prg.process:
-        li    tmp0,fh.vrecbuf       ; VDP source address
-        mov   @fh.ram.ptr,tmp1      ; RAM target address
-        mov   @fh.reclen,tmp2       ; Number of bytes to copy        
-        ;------------------------------------------------------
-        ; 3b: Copy segment from VDP to CPU memory
-        ;------------------------------------------------------
-fh.file.load.prg.vdp2cpu:        
-        ; 
-        ; Executed for devices that need their disk buffer in VDP memory
-        ; (TI Disk Controller, tipi, nanopeb, ...).
-        ; 
+        mov   @parm5,tmp0           ; VDP source address
+        mov   @parm6,tmp1           ; RAM target address
+        mov   @parm7,tmp2           ; Number of bytes to copy         
         bl    @xpyv2m               ; Copy memory block from VDP to CPU
                                     ; \ i  tmp0 = VDP source address
                                     ; | i  tmp1 = RAM target address
-                                    ; / i  tmp2 = Bytes to copy                                                                            
+                                    ; / i  tmp2 = Bytes to copy
         ;------------------------------------------------------
-        ; Step 5: Callback "Binary file loaded"
-        ;------------------------------------------------------
-fh.file.load.prg.callback2:
-        mov   @fh.callback2,tmp0    ; Get pointer to callback
-        jeq   fh.file.load.prg.error
-                                    ; Skip callback        
-        bl    *tmp0                 ; Run callback function                                    
+        ; Step 3: Processing complete, call callback
+        ;------------------------------------------------------ 
+fh.file.load.bin.success:
+        mov   @fh.callback2,tmp0    ; Get pointer to Callback "Binary image loaded"
+        jeq   fh.file.load.bin.exit ; Skip callback
+        bl    *tmp0                 ; Run callback function  
+        jmp   fh.file.load.bin.exit ; Exit normally
         ;------------------------------------------------------
         ; Error handler
         ;------------------------------------------------------     
-fh.file.load.prg.error:        
+fh.file.load.bin.error:        
         mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
-        srl   tmp0,8                ; Right align VDP PAB 1 status byte
         ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.load.prg.exit ; All good. File closed by DSRLNK
+        jeq   fh.file.load.bin.exit ; All good. File closed by DSRLNK
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.load.prg.exit 
+        jeq   fh.file.load.bin.exit 
                                     ; Skip callback
         bl    *tmp0                 ; Run callback function  
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.load.prg.exit:
+fh.file.load.bin.exit:
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
 
+        mov   @parm7,*stack+        ; Pop @parm7
+        mov   @parm6,*stack+        ; Pop @parm6
+        mov   @parm5,*stack+        ; Pop @parm5
+        mov   @parm4,*stack+        ; Pop @parm4
+        mov   @parm3,*stack+        ; Pop @parm3
+        mov   @parm2,*stack+        ; Pop @parm2
+        mov   @parm1,*stack+        ; Pop @parm1
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
