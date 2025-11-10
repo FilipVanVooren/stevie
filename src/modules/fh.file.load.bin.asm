@@ -106,6 +106,8 @@ fh.file.load.bin.assert3:
         jlt   fh.file.load.bin.crsh ; Yes, crash!
         ci    tmp0,>7fff            ; Insane address ?
         jgt   fh.file.load.bin.crsh ; Yes, crash!
+
+        jmp   fh.file.load.bin.load1 ; Prepare for loading file
         ;------------------------------------------------------
         ; Check failed, crash CPU!
         ;------------------------------------------------------  
@@ -182,21 +184,20 @@ fh.file.load.bin.pabheader:
         ;------------------------------------------------------
         ; File error occured?
         ;------------------------------------------------------ 
-        clr   @fh.reclen            ; Reset bytes read. We do not know
-        clr   @fh.ioresult          ; Reset status register contents
-
         bl    @vgetb                ; Read PAB status byte from VDP
               data fh.vpab + 1      ; \ i p1   = Address of PAB status byte in VRAM
-                                    ; / o tmp0 = PAB status byte
+                                    ; / o tmp0 = PAB status byte (LSB)
 
-        mov   tmp0,@fh.pabstat       ; Save VDP PAB status byte                                           
-        jne   fh.file.load.bin.error ; handle error if not zero
+        mov   tmp0,@fh.pabstat         ; Save VDP PAB status byte
+        jeq   fh.file.load.bin.vdp2cpu ; No error, proceed
+        ci    tmp0,>000d               ; Ignore?
+        jne   fh.file.load.bin.error   ; handle error if not zero
         ;------------------------------------------------------
         ; Step 2: Copy loaded data from VDP to RAM if requested
         ;------------------------------------------------------ 
 fh.file.load.bin.vdp2cpu:        
         mov   @parm6,tmp1           ; Get RAM destination address
-        ci    tmp1,>ffff            ; >FFFF means "skip copy to RAM"
+        ci    tmp1,>ffff            ; "skip copy to RAM" ?
         jeq   fh.file.load.bin.success
                                     ; Skip copy to RAM
         ;------------------------------------------------------
@@ -218,15 +219,9 @@ fh.file.load.bin.success:
         bl    *tmp0                 ; Run callback function  
         jmp   fh.file.load.bin.exit ; Exit normally
         ;------------------------------------------------------
-        ; Error handler
-        ;------------------------------------------------------     
-fh.file.load.bin.error:        
-        mov   @fh.pabstat,tmp0      ; Get VDP PAB status byte
-        ci    tmp0,io.err.eof       ; EOF reached ?
-        jeq   fh.file.load.bin.exit ; All good. File closed by DSRLNK
-        ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
+fh.file.load.bin.error:        
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
         jeq   fh.file.load.bin.exit 
                                     ; Skip callback

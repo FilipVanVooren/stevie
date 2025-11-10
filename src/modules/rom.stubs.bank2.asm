@@ -393,25 +393,3 @@ tv.reset:
 tv.reset.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
-
-***************************************************************
-* Stub for "fh.file.load.ea5"
-* bankf vec.2
-********|*****|*********************|**************************
-fh.file.load.ea5:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call routine in specified bank
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bankf.rom        ; | i  p0 = bank address
-              data vec.1            ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-fh.file.load.ea5.exit:
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller

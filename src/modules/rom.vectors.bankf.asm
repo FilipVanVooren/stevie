@@ -11,7 +11,7 @@ cpu.crash.showbank.bankstr:
 * ROM F: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   data  fh.file.load.ea5      ; Load EA5 image
+vec.1   data  cpu.crash             ;
 vec.2   data  cpu.crash             ;
 vec.3   data  cpu.crash             ;
 vec.4   data  cpu.crash             ;

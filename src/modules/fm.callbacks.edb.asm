@@ -434,7 +434,7 @@ fm.loadsave.cb.fioerr.save:
               data 30               ; Error message
         jmp   fm.loadsave.cb.fioerr.addmsg
         ;------------------------------------------------------        
-        ; Failed saving file
+        ; Failed printing file
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.print:
         bl    @cpym2m               

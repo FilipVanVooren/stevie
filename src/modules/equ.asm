@@ -267,8 +267,12 @@ fh.temp3          equ  fh.struct + 100 ; Temporary variable 3
 fh.pabtpl.ptr     equ  fh.struct + 102 ; Pointer to PAB template in ROM/RAM
 fh.dir.rec.ptr    equ  fh.struct + 104 ; Pointer to directory record
 fh.circbreaker    equ  fh.struct + 106 ; Circuit breaker. Halt file operation
-fh.membuffer      equ  fh.struct + 108 ; 80 bytes file memory buffer
-fh.free           equ  fh.struct + 188 ; End of structure
+fh.ea5.nextflag   equ  fh.struct + 108 ; Next EA5 image chunk needed
+fh.ea5.vdpsrc     equ  fh.struct + 110 ; VDP source address of EA5 image chunk
+fh.ea5.ramtgt     equ  fh.struct + 112 ; RAM target address for EA5 image chunk
+fh.ea5.size       equ  fh.struct + 114 ; Size of EA5 image chunk
+fh.membuffer      equ  fh.struct + 116 ; 80 bytes file memory buffer
+fh.free           equ  fh.struct + 196 ; End of structure
 ;-----------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff   (256 bytes)
 ; Overloads file handle structure
@@ -486,6 +490,7 @@ edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
 fh.fopmode.none      equ  0            ; No file operation in progress
 fh.fopmode.readfile  equ  1            ; Read file from disk to memory
 fh.fopmode.writefile equ  2            ; Save file from memory to disk
+fh.ea5.vdpbuf        equ  >2000        ; VRAM address for storing EA5 image chunk
 cmdb.rows            equ  6            ; Number of rows in CMDB pane
 rom0_kscan_out       equ  keycode1     ; W here to store value of key pressed
 tv.colorize.reset    equ  >9900        ; Colorization off
