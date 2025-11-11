@@ -149,8 +149,6 @@ main.continue:
         ;-------------------------------------------------------
         ; Initialisation complete
         ;-------------------------------------------------------
-        bl    @magic.set            ; Set magic string
-
         li    tmp0,>37D7            ; \ Silence classic99 debugger console,
         mov   tmp0,@>8370           ; | otherwise message flood with text
         clr   tmp0                  ; / "VDP disk buffer header corrupted at PC"

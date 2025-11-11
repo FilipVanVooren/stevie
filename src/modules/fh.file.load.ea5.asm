@@ -31,11 +31,7 @@ fh.file.load.ea5:
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3        
+        mov   @parm1,*stack         ; Push @parm1    
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------ 
@@ -79,7 +75,7 @@ fh.file.load.ea5.load:
                                     ; |             (>FFFF to skip)
                                     ; | i  @parm7 = Maximum number of bytes to load
                                     ; /
-********|*****|*********************|**************************
+
         bl    @cpyv2m               ; Copy EA5 image chunk header from VDP to RAM
               data fh.ea5.vdpbuf    ; \ i  p1 = Source VDP address
               data rambuf           ; | i  p2 = Destination RAM address
@@ -94,9 +90,28 @@ fh.file.load.ea5.load:
         mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address
         mov   tmp2,@fh.ea5.size     ; Store chunk size
         ;-------------------------------------------------------
-        ; Step 2: Copy loaded EA5 image chunk from VDP to RAM
+        ; Step 2: Copy EA5 image chunk from VRAM to RAM
         ;-------------------------------------------------------
-        ;bl    @xpyv2m               ; Copy EA5 image chunk from VDP to RAM
+        andi  tmp1,>F000            ; Get SAMS destination bank
+        srl   tmp1,4                ; MSB hi-niblle to MSB low-nibble
+        ;-------------------------------------------------------
+        ; Page-in target SAMS banks for EA5 image load
+        ;------------------------------------------------------- 
+        li    r12,>1e00             ; SAMS CRU address
+        sbo   0                     ; Enable access to SAMS registers
+        mov   tmp1,@>4018           ; Set page for >c000 - >cfff
+        ai    tmp1,>0100            ; Next SAMS bank
+        mov   tmp1,@>401A           ; Set page for >d000 - >dfff
+        sbz   0                     ; Disable access to SAMS registers
+        ;-------------------------------------------------------
+        ; Copy chunk from VRAM to RAM
+        ;------------------------------------------------------- 
+        mov   @fh.ea5.ramtgt,tmp1   ; Get RAM target address
+        andi  tmp1,>0FFF            ; Get offset in SAMS window >c000 - >dfff
+        ori   tmp1,>C000            ; Form full SAMS window address
+        
+        li   tmp2,>2000             ; Get number of bytes to copy
+        bl    @xpyv2m               ; Copy EA5 image chunk from VDP to RAM
                                     ; \ i  tmp0  = Source VDP address
                                     ; | i  tmp1  = Destination RAM address
                                     ; | i  tmp2  = Number of bytes to copy
@@ -106,7 +121,7 @@ fh.file.load.ea5.load:
         ;-------------------------------------------------------
         mov   @fh.ea5.nextflag,tmp0 ; \ Additional chunk needed?
         ci    tmp0,>ffff            ; /
-        jne   !
+        jne   !                     ; No all of EA5 image loaded
         ;-------------------------------------------------------
         ; Increment last character of filename
         ;-------------------------------------------------------
@@ -118,53 +133,16 @@ fh.file.load.ea5.load:
         ai    tmp1,>0100            ; Increment last character
         movb  tmp1,*tmp0            ; Store back last character
         jmp   fh.file.load.ea5.parm ; Yes, load next chunk
-
-
-!       jmp $                       ; Halt CPU - all done
-
-        ;------------------------------------------------------
-        ; Reset the F18a
-        ;------------------------------------------------------ 
-        bl    @f18rst               ; Reset and lock the F18A
-        bl    @vidtab               ; Load video mode table into VDP
-              data tibasic.32x24    ; Equate selected video mode table
-        bl    @scroff               ; Turn off screen
-        ;------------------------------------------------------
-        ; Clear 32K memory expansion range before loading
-        ;------------------------------------------------------        
-        bl    @film
-              data >2000,>00,8192   ; Clear >2000 - >3fff
-        bl    @film
-              data >a000,>00,24576  ; Clear >2000 - >3fff
-        ;------------------------------------------------------
-        ; Clear VDP memory before loading
-        ;------------------------------------------------------ 
-        bl    @filv
-              data >0000,>00,8192   ; Clear VDP memory >0000 - >1fff                                    
-        ;------------------------------------------------------
-        ; Inline setup memory paging for SAMS
-        ;------------------------------------------------------
-        li    r12,>1e00             ; SAMS CRU address
-        sbz   1                     ; Disable SAMS mapper
+        ;-------------------------------------------------------
+        ; Step 4: Page-in SAMS banks used in Stevie
+        ;-------------------------------------------------------
+!       li    r12,>1e00             ; SAMS CRU address
         sbo   0                     ; Enable access to SAMS registers
-        li    r0,>0200              ; \ Page 2 in >2000 - >2fff
-        movb  r0,@>4004             ; /
-        li    r0,>0300              ; \ Page 3 in >3000 - >3fff
-        movb  r0,@>4006             ; /
-        li    r0,>0A00              ; \ Page A in >a000 - >afff
-        movb  r0,@>4014             ; /
-        li    r0,>0B00              ; \ Page B in >b000 - >bfff
-        movb  r0,@>4016             ; /
-        li    r0,>0C00              ; \ Page C in >c000 - >bfff
-        movb  r0,@>4018             ; /
-        li    r0,>0D00              ; \ Page D in >d000 - >dfff
-        movb  r0,@>401a             ; /
-        li    r0,>0E00              ; \ Page E in >e000 - >efff
-        movb  r0,@>401c             ; /
-        li    r0,>0F00              ; \ Page F in >f000 - >ffff
-        movb  r0,@>401e             ; /
+        mov   @tv.sams.c000,tmp1    ; Get current SAMS bank at >c000
+        mov   tmp1,@>4018           ; Set page for >c000 - >cfff
+        li    tmp1,5                ; 
+        mov   tmp1,@>401A           ; Set page for >d000 - >dfff
         sbz   0                     ; Disable access to SAMS registers
-        sbo   1                     ; Enable SAMS mapper
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

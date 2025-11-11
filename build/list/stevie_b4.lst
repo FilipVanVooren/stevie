@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251110-2143220
+0002               * BUILD: 251111-2151020
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13766,7 +13766,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0051 6F18 0A15  18         sla   tmp1,1                    ; |
 0052 6F1A A105  18         a     tmp1,tmp0                 ; /
 0053 6F1C 0224  22         ai    tmp0,tv.colorscheme.table ; Add base for color scheme data table
-     6F1E 7E48     
+     6F1E 7E12     
 0054                       ;-------------------------------------------------------
 0055                       ; ABCD) Get FG/BG colors framebuffer and topline
 0056                       ;-------------------------------------------------------
@@ -16538,72 +16538,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0092 7E0E C2F9  30         mov   *stack+,r11           ; Pop r11
 0093 7E10 045B  20         b     *r11                  ; Return to caller
 0094               
-0095               
-0096               ***************************************************************
-0097               * Stub for "magic.set"
-0098               * bank7 vec.20
-0099               ********|*****|*********************|**************************
-0100               magic.set:
-0101 7E12 0649  14         dect  stack
-0102 7E14 C64B  30         mov   r11,*stack            ; Save return address
-0103                       ;------------------------------------------------------
-0104                       ; Dump VDP patterns
-0105                       ;------------------------------------------------------
-0106 7E16 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7E18 3084     
-0107 7E1A 600E                   data bank7.rom        ; | i  p0 = bank address
-0108 7E1C 7F96                   data vec.20           ; | i  p1 = Vector with target address
-0109 7E1E 6008                   data bankid           ; / i  p2 = Source ROM bank for return
-0110                       ;------------------------------------------------------
-0111                       ; Exit
-0112                       ;------------------------------------------------------
-0113 7E20 C2F9  30         mov   *stack+,r11           ; Pop r11
-0114 7E22 045B  20         b     *r11                  ; Return to caller
-0115               
-0116               
-0117               ***************************************************************
-0118               * Stub for "magic.clear"
-0119               * bank7 vec.21
-0120               ********|*****|*********************|**************************
-0121               magic.clear:
-0122 7E24 0649  14         dect  stack
-0123 7E26 C64B  30         mov   r11,*stack            ; Save return address
-0124                       ;------------------------------------------------------
-0125                       ; Dump VDP patterns
-0126                       ;------------------------------------------------------
-0127 7E28 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7E2A 3084     
-0128 7E2C 600E                   data bank7.rom        ; | i  p0 = bank address
-0129 7E2E 7F98                   data vec.21           ; | i  p1 = Vector with target address
-0130 7E30 6008                   data bankid           ; / i  p2 = Source ROM bank for return
-0131                       ;------------------------------------------------------
-0132                       ; Exit
-0133                       ;------------------------------------------------------
-0134 7E32 C2F9  30         mov   *stack+,r11           ; Pop r11
-0135 7E34 045B  20         b     *r11                  ; Return to caller
-0136               
-0137               
-0138               ***************************************************************
-0139               * Stub for "magic.check"
-0140               * bank7 vec.22
-0141               ********|*****|*********************|**************************
-0142               magic.check:
-0143 7E36 0649  14         dect  stack
-0144 7E38 C64B  30         mov   r11,*stack            ; Save return address
-0145                       ;------------------------------------------------------
-0146                       ; Dump VDP patterns
-0147                       ;------------------------------------------------------
-0148 7E3A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7E3C 3084     
-0149 7E3E 600E                   data bank7.rom        ; | i  p0 = bank address
-0150 7E40 7F9A                   data vec.22           ; | i  p1 = Vector with target address
-0151 7E42 6008                   data bankid           ; / i  p2 = Source ROM bank for return
-0152                       ;------------------------------------------------------
-0153                       ; Exit
-0154                       ;------------------------------------------------------
-0155 7E44 C2F9  30         mov   *stack+,r11           ; Pop r11
-0156 7E46 045B  20         b     *r11                  ; Return to caller
-0157               
                    < stevie_b4.asm
 0121                       ;-----------------------------------------------------------------------
 0122                       ; Program data
@@ -16668,71 +16602,71 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056               tv.colorscheme.table:
 0057                       ;      0     2     4     6     8
 0058                       ;      ABCD  EFGH  IJKL  MNOP  QRST ;
-0059 7E48 F41E             data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)
-     7E4A F1F1     
-     7E4C 1B1F     
-     7E4E 7111     
-     7E50 1700     
-0060 7E52 21F0             data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
-     7E54 21FF     
-     7E56 F112     
-     7E58 21FF     
-     7E5A 1C00     
-0061 7E5C A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
-     7E5E F0FF     
-     7E60 1F1A     
-     7E62 F1FF     
-     7E64 1A00     
-0062 7E66 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey
-     7E68 1E11     
-     7E6A 1EE1     
-     7E6C 1E11     
-     7E6E E100     
-0063 7E70 F417             data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
-     7E72 7171     
-     7E74 1B1F     
-     7E76 7111     
-     7E78 1700     
-0064 7E7A 1313             data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
-     7E7C 1311     
-     7E7E 1331     
-     7E80 1311     
-     7E82 1C00     
-0065 7E84 1771             data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan
-     7E86 1011     
-     7E88 0171     
-     7E8A 1711     
-     7E8C 1F00     
-0066 7E8E 2112             data  >2112,>f0ff,>1f12,>f1f6,>1200 ; 8  Dark green on black
-     7E90 F0FF     
-     7E92 1F12     
-     7E94 F1F6     
-     7E96 1200     
-0067 7E98 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>f100 ; 9  Black on white
-     7E9A 1011     
-     7E9C F1F1     
-     7E9E 1F11     
-     7EA0 F100     
-0068 7EA2 1AF1             data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
-     7EA4 A111     
-     7EA6 1F1F     
-     7EA8 F11F     
-     7EAA 1000     
-0069 7EAC 1919             data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
-     7EAE 1911     
-     7EB0 1991     
-     7EB2 1911     
-     7EB4 1600     
-0070 7EB6 F417             data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
-     7EB8 F171     
-     7EBA 1B1F     
-     7EBC 7111     
-     7EBE 1F00     
-0071 7EC0 1919             data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
-     7EC2 1919     
-     7EC4 1919     
-     7EC6 1919     
-     7EC8 1919     
+0059 7E12 F41E             data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)
+     7E14 F1F1     
+     7E16 1B1F     
+     7E18 7111     
+     7E1A 1700     
+0060 7E1C 21F0             data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
+     7E1E 21FF     
+     7E20 F112     
+     7E22 21FF     
+     7E24 1C00     
+0061 7E26 A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
+     7E28 F0FF     
+     7E2A 1F1A     
+     7E2C F1FF     
+     7E2E 1A00     
+0062 7E30 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey
+     7E32 1E11     
+     7E34 1EE1     
+     7E36 1E11     
+     7E38 E100     
+0063 7E3A F417             data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
+     7E3C 7171     
+     7E3E 1B1F     
+     7E40 7111     
+     7E42 1700     
+0064 7E44 1313             data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
+     7E46 1311     
+     7E48 1331     
+     7E4A 1311     
+     7E4C 1C00     
+0065 7E4E 1771             data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan
+     7E50 1011     
+     7E52 0171     
+     7E54 1711     
+     7E56 1F00     
+0066 7E58 2112             data  >2112,>f0ff,>1f12,>f1f6,>1200 ; 8  Dark green on black
+     7E5A F0FF     
+     7E5C 1F12     
+     7E5E F1F6     
+     7E60 1200     
+0067 7E62 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>f100 ; 9  Black on white
+     7E64 1011     
+     7E66 F1F1     
+     7E68 1F11     
+     7E6A F100     
+0068 7E6C 1AF1             data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
+     7E6E A111     
+     7E70 1F1F     
+     7E72 F11F     
+     7E74 1000     
+0069 7E76 1919             data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
+     7E78 1911     
+     7E7A 1991     
+     7E7C 1911     
+     7E7E 1600     
+0070 7E80 F417             data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
+     7E82 F171     
+     7E84 1B1F     
+     7E86 7111     
+     7E88 1F00     
+0071 7E8A 1919             data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
+     7E8C 1919     
+     7E8E 1919     
+     7E90 1919     
+     7E92 1919     
 0072                       even
                    < stevie_b4.asm
 0125                       ;-----------------------------------------------------------------------
@@ -17782,9 +17716,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    MAGIC.CHECK......... >7E36 :     
-    MAGIC.CLEAR......... >7E24 :     
-    MAGIC.SET........... >7E12 :     
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     
@@ -18219,7 +18150,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.COLORIZE.RESET... >9900 :     
     TV.COLORSCHEME...... >A212 :     
     TV.COLORSCHEME.ENTRIES >000C :     
-    TV.COLORSCHEME.TABLE >7E48 :     
+    TV.COLORSCHEME.TABLE >7E12 :     
     TV.CURCOLOR......... >A216 :     
     TV.CURSHAPE......... >A214 :     
     TV.ERROR.MSG........ >A240 :     

@@ -1,5 +1,5 @@
 * FILE......: fm.callbacks.ea5.asm
-* Purpose...: File Manager - Callbacks for editor buffer file I/O
+* Purpose...: File Manager - Callbacks for EA5 image file I/O
 
 *---------------------------------------------------------------
 * Callback function "Show loading indicator 1"

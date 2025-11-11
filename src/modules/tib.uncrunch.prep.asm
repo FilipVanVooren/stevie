@@ -134,7 +134,7 @@ tib.uncrunch.prepare.np:
         ; (5) Get pointer to SAMS page table
         ;------------------------------------------------------
 tib.uncrunch.prepare.5:
-        ; The data tables of the 5 TI basic sessions form a
+        ; The data tables of the 3 TI basic sessions form a
         ; uniform region, we calculate the index of the 1st word in the
         ; specified session.
         mov   @tib.var1,tmp0        ; Get TI Basic session
@@ -143,7 +143,7 @@ tib.uncrunch.prepare.5:
                                     ; | layout (of following TI Basic session)
                                     ; /
 
-        ai    tmp0,mem.sams.layout.basic - 16
+        ai    tmp0,mem.sams.layout.basic1 - 16
                                     ; Add base address for specified session
 
         mov   tmp0,@tib.stab.ptr    ; Save pointer

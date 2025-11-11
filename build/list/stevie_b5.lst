@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251110-2143220
+0002               * BUILD: 251111-2151020
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11225,72 +11225,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0092 65BA C2F9  30         mov   *stack+,r11           ; Pop r11
 0093 65BC 045B  20         b     *r11                  ; Return to caller
 0094               
-0095               
-0096               ***************************************************************
-0097               * Stub for "magic.set"
-0098               * bank7 vec.20
-0099               ********|*****|*********************|**************************
-0100               magic.set:
-0101 65BE 0649  14         dect  stack
-0102 65C0 C64B  30         mov   r11,*stack            ; Save return address
-0103                       ;------------------------------------------------------
-0104                       ; Dump VDP patterns
-0105                       ;------------------------------------------------------
-0106 65C2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     65C4 3084     
-0107 65C6 600E                   data bank7.rom        ; | i  p0 = bank address
-0108 65C8 7F96                   data vec.20           ; | i  p1 = Vector with target address
-0109 65CA 600A                   data bankid           ; / i  p2 = Source ROM bank for return
-0110                       ;------------------------------------------------------
-0111                       ; Exit
-0112                       ;------------------------------------------------------
-0113 65CC C2F9  30         mov   *stack+,r11           ; Pop r11
-0114 65CE 045B  20         b     *r11                  ; Return to caller
-0115               
-0116               
-0117               ***************************************************************
-0118               * Stub for "magic.clear"
-0119               * bank7 vec.21
-0120               ********|*****|*********************|**************************
-0121               magic.clear:
-0122 65D0 0649  14         dect  stack
-0123 65D2 C64B  30         mov   r11,*stack            ; Save return address
-0124                       ;------------------------------------------------------
-0125                       ; Dump VDP patterns
-0126                       ;------------------------------------------------------
-0127 65D4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     65D6 3084     
-0128 65D8 600E                   data bank7.rom        ; | i  p0 = bank address
-0129 65DA 7F98                   data vec.21           ; | i  p1 = Vector with target address
-0130 65DC 600A                   data bankid           ; / i  p2 = Source ROM bank for return
-0131                       ;------------------------------------------------------
-0132                       ; Exit
-0133                       ;------------------------------------------------------
-0134 65DE C2F9  30         mov   *stack+,r11           ; Pop r11
-0135 65E0 045B  20         b     *r11                  ; Return to caller
-0136               
-0137               
-0138               ***************************************************************
-0139               * Stub for "magic.check"
-0140               * bank7 vec.22
-0141               ********|*****|*********************|**************************
-0142               magic.check:
-0143 65E2 0649  14         dect  stack
-0144 65E4 C64B  30         mov   r11,*stack            ; Save return address
-0145                       ;------------------------------------------------------
-0146                       ; Dump VDP patterns
-0147                       ;------------------------------------------------------
-0148 65E6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     65E8 3084     
-0149 65EA 600E                   data bank7.rom        ; | i  p0 = bank address
-0150 65EC 7F9A                   data vec.22           ; | i  p1 = Vector with target address
-0151 65EE 600A                   data bankid           ; / i  p2 = Source ROM bank for return
-0152                       ;------------------------------------------------------
-0153                       ; Exit
-0154                       ;------------------------------------------------------
-0155 65F0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0156 65F2 045B  20         b     *r11                  ; Return to caller
-0157               
                    < stevie_b5.asm
 0084                       ;-----------------------------------------------------------------------
 0085                       ; Program data
@@ -12268,9 +12202,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    MAGIC.CHECK......... >65E2 :     
-    MAGIC.CLEAR......... >65D0 :     
-    MAGIC.SET........... >65BE :     
     MAGIC.STR.W1........ >A000 :     
     MAGIC.STR.W2........ >A002 :     
     MAGIC.STR.W3........ >A004 :     

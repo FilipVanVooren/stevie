@@ -79,9 +79,11 @@ Note regarding column "SAMS/Addr.":
 |            |            |       |                                            |
 | >af00-afff |     #0a    |   256 | Cart bankswitch trampoline return stack    |
 |            |            |       |                                            |
-| >b000-bfff |   #10-1f   |  4096 | Index page, bankswitched in SAMS           |
+| >b000-bfff |   #10-1f   |  4096 | Index page, bankswitched in SAMS /         |
+|            |            |       | EA5 image in RAM, bankswitched in SAMS     |
 |            |            |       |                                            |
-| >c000-cfff |   #30-xx   |  4096 | Editor buffer page, bankswitched in SAMS   |
+| >c000-cfff |   #30-xx   |  4096 | Editor buffer page, bankswitched in SAMS / |
+|            |            |       | EA5 image in RAM, bankswitched in SAMS     |
 |            |            |       |                                            |
 | >d000-dfff |     #05    |  4096 | Frame buffer, uncrunch, default filenames  |
 |            | >d000-d95f |  2400 |   Frame buffer for max. 80x30 rows         |

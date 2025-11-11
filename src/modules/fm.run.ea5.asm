@@ -42,6 +42,8 @@ fm.run.ea5:
 !       bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
                                     ; \ i  @parm1 = Pointer to length prefixed 
                                     ; /             file descriptor
+
+        ;jmp   $
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

@@ -27,14 +27,15 @@
 ;     gets reactivated.
 
 
-
 ***************************************************************
 * SAMS page layout table 
 * Stevie boot order
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >00  >01  >04  >20  >40  >05  >06  >07
 *--------------------------------------------------------------
 mem.sams.layout.boot:
-        data  >0200                 ; >2000-2fff, SAMS page >02
-        data  >0300                 ; >3000-3fff, SAMS page >03
+        data  >0000                 ; >2000-2fff, SAMS page >02
+        data  >0100                 ; >3000-3fff, SAMS page >03
         data  >0400                 ; >a000-afff, SAMS page >04
         data  >2000                 ; >b000-bfff, SAMS page >20
                                     ; \
@@ -54,10 +55,12 @@ mem.sams.layout.boot:
 ***************************************************************
 * SAMS page layout table 
 * Before running external progam
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >00  >01  >04  >10  >11  >12  >13  >07
 *--------------------------------------------------------------
 mem.sams.layout.external:
-        data  >0200                 ; >2000-2fff, SAMS page >00
-        data  >0300                 ; >3000-3fff, SAMS page >01
+        data  >0000                 ; >2000-2fff, SAMS page >00
+        data  >0100                 ; >3000-3fff, SAMS page >01
         data  >0400                 ; >a000-afff, SAMS page >04
 
         data  >1000                 ; >b000-efff, SAMS page >10
@@ -71,6 +74,8 @@ mem.sams.layout.external:
 ***************************************************************
 * SAMS legacy page layout table 
 * While running external program
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >02  >03  >0a  >0b  >0c  >0d  >0e  >0f
 *--------------------------------------------------------------
 mem.sams.layout.legacy:
         data  >0200                 ; >2000-2fff, SAMS page >02
@@ -87,10 +92,12 @@ mem.sams.layout.legacy:
 ***************************************************************
 * SAMS page layout table 
 * Backup TI Basic session 1 VRAM, scratchpad + auxiliary
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >00  >01  >04  >fb  >fc  >fd  >fe  >ff
 *--------------------------------------------------------------
 mem.sams.layout.basic1:
-        data  >0200                 ; . >2000-2fff
-        data  >0300                 ; . >3000-3fff
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >fb00                 ; \ >b000-efff
         data  >fc00                 ; |
@@ -102,10 +109,12 @@ mem.sams.layout.basic1:
 ***************************************************************
 * SAMS page layout table 
 * Backup TI Basic session 2 VRAM, scratchpad + auxiliary
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >00  >01  >04  >f7  >f8  >f9  >fa  >ff
 *--------------------------------------------------------------
 mem.sams.layout.basic2:
-        data  >0200                 ; . >2000-2fff
-        data  >0300                 ; . >3000-3fff
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >f700                 ; \ >b000-efff
         data  >f800                 ; |
@@ -117,10 +126,12 @@ mem.sams.layout.basic2:
 ***************************************************************
 * SAMS page layout table 
 * Backup TI Basic session 3 VRAM, scratchpad + auxiliary
+* Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+* Page:  >00  >01  >04  >f3  >f4  >f5  >f6  >ff
 *--------------------------------------------------------------
 mem.sams.layout.basic3:
-        data  >0200                 ; . >2000-2fff
-        data  >0300                 ; . >3000-3fff
+        data  >0000                 ; . >2000-2fff
+        data  >0100                 ; . >3000-3fff
         data  >0400                 ; . >a000-afff
         data  >f300                 ; \ >b000-efff
         data  >f400                 ; |
@@ -135,21 +146,6 @@ mem.sams.layout.basic3:
 *--------------------------------------------------------------
 mem.sams.layout.ea5pgm:
         equ   mem.sams.layout.legacy
-
-
-***************************************************************
-* SAMS page layout table 
-* FREE
-*--------------------------------------------------------------
-mem.sams.layout.free2:
-        data  >0200                 ; . >2000-2fff
-        data  >0300                 ; . >3000-3fff
-        data  >0400                 ; . >a000-afff
-        data  >eb00                 ; \ >b000-efff
-        data  >ec00                 ; |
-        data  >ed00                 ; | 16K VDP dump
-        data  >ee00                 ; /
-        data  >ff00                 ; . >f000-ffff
 
 
 mem.sams.layout.basic  equ mem.sams.layout.basic1

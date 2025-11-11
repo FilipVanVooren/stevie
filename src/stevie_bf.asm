@@ -46,9 +46,8 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 2: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
-        aorg  >2000                 ; Relocate to >2000
-        copy  "runlib.asm"
-        copy  "ram.resident.asm"
+        copy  "runlib.asm"          ; spectra2 library
+        copy  "rom.farjump.asm"     ; ROM bankswitch trampoline        
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
