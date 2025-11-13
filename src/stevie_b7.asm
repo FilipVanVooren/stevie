@@ -86,6 +86,10 @@ main:
         copy  "tib.uncrunch.token.asm"     ; Decode statement token
         copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
         ;-----------------------------------------------------------------------
+        ; Run Ea5 binary image in memory
+        ;-----------------------------------------------------------------------        
+        copy  "mem.run.ea5.asm"            ; Run previously loaded EA5 binary image
+        ;-----------------------------------------------------------------------
         ; Cartridge manager (FinalGROM 99, StrangeCart)
         ;-----------------------------------------------------------------------
         copy  "cart.fg99.mgr.asm"          ; FinalGROM 99

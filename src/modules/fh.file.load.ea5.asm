@@ -11,7 +11,7 @@
 * parm1 = Pointer to length-prefixed filename descriptor
 *--------------------------------------------------------------
 * OUTPUT
-* none
+* outparm1 = Entry point address of EA5 program image
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2, tmp3
@@ -35,6 +35,8 @@ fh.file.load.ea5:
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------ 
+        clr   @fh.ea5.startaddr     ; Clear EA5 start address
+
         bl    @hchar
               byte 0,70,32,10       ; Remove any left-over junk on top line
               data eol            
@@ -83,11 +85,12 @@ fh.file.load.ea5.load:
         
         mov   @rambuf,@fh.ea5.nextflag
                                     ; Next EA5 image chunk neeeded flag
-        li    tmp0,fh.ea5.vdpbuf+6  ; Get VRAM source address for copy
-        mov   @rambuf+2,tmp1        ; Get RAM destination for copy
-        mov   @rambuf+4,tmp2        ; Get number of bytes to copy
+
+        li    tmp0,fh.ea5.vdpbuf+6  ; Get VRAM source address for copy        
         mov   tmp0,@fh.ea5.vdpsrc   ; Store VDP source address
+        mov   @rambuf+2,tmp1        ; Get RAM destination for copy        
         mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address
+        mov   @rambuf+4,tmp2        ; Get number of bytes to copy        
         mov   tmp2,@fh.ea5.size     ; Store chunk size
         ;-------------------------------------------------------
         ; Step 2: Copy EA5 image chunk from VRAM to RAM
@@ -110,15 +113,22 @@ fh.file.load.ea5.load:
         andi  tmp1,>0FFF            ; Get offset in SAMS window >c000 - >dfff
         ori   tmp1,>C000            ; Form full SAMS window address
         
-        li   tmp2,>2000             ; Get number of bytes to copy
         bl    @xpyv2m               ; Copy EA5 image chunk from VDP to RAM
                                     ; \ i  tmp0  = Source VDP address
                                     ; | i  tmp1  = Destination RAM address
                                     ; | i  tmp2  = Number of bytes to copy
                                     ; /
         ;-------------------------------------------------------
+        ; Set EA5 program start address (if not already set)
+        ;------------------------------------------------------- 
+        mov   @fh.ea5.startaddr,tmp0
+        jne   fh.file.load.ea5.next ; Already set, skip
+        mov   @fh.ea5.ramtgt,@fh.ea5.startaddr
+                                    ; Set start address
+        ;-------------------------------------------------------
         ; Step 3: Prepare for loeading next EA5 image chunk
         ;-------------------------------------------------------
+fh.file.load.ea5.next:        
         mov   @fh.ea5.nextflag,tmp0 ; \ Additional chunk needed?
         ci    tmp0,>ffff            ; /
         jne   !                     ; No all of EA5 image loaded
@@ -145,6 +155,10 @@ fh.file.load.ea5.load:
         swpb  tmp1                  ; LSB to MSB
         mov   tmp1,@>401A           ; Set page for >d000 - >dfff
         sbz   0                     ; Disable access to SAMS registers
+        ;-------------------------------------------------------
+        ; Step 5: Return start address of EA5 program image
+        ;-------------------------------------------------------        
+        mov   @fh.ea5.startaddr,@outparm1
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

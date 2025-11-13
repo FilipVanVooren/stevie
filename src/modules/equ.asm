@@ -271,8 +271,9 @@ fh.ea5.nextflag   equ  fh.struct + 108 ; Next EA5 image chunk needed
 fh.ea5.vdpsrc     equ  fh.struct + 110 ; VDP source address of EA5 image chunk
 fh.ea5.ramtgt     equ  fh.struct + 112 ; RAM target address for EA5 image chunk
 fh.ea5.size       equ  fh.struct + 114 ; Size of EA5 image chunk
-fh.membuffer      equ  fh.struct + 116 ; 80 bytes file memory buffer
-fh.free           equ  fh.struct + 196 ; End of structure
+fh.ea5.startaddr  equ  fh.struct + 116 ; EA5 program start address
+fh.membuffer      equ  fh.struct + 118 ; 80 bytes file memory buffer
+fh.free           equ  fh.struct + 198 ; End of structure
 ;-----------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff   (256 bytes)
 ; Overloads file handle structure
