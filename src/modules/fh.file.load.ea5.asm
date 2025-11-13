@@ -139,8 +139,10 @@ fh.file.load.ea5.load:
 !       li    r12,>1e00             ; SAMS CRU address
         sbo   0                     ; Enable access to SAMS registers
         mov   @tv.sams.c000,tmp1    ; Get current SAMS bank at >c000
+        swpb  tmp1                  ; LSB to MSB
         mov   tmp1,@>4018           ; Set page for >c000 - >cfff
-        li    tmp1,5                ; 
+        mov   @tv.sams.d000,tmp1    ; Get current SAMS bank at >d000
+        swpb  tmp1                  ; LSB to MSB
         mov   tmp1,@>401A           ; Set page for >d000 - >dfff
         sbz   0                     ; Disable access to SAMS registers
 *--------------------------------------------------------------
