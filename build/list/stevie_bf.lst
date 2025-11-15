@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251113-2141570
+0002               * BUILD: 251115-2209030
 0003               ***************************************************************
                    < stevie_bf.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -6700,7 +6700,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009 7FF0 06A0  32         bl    @putat
      7FF2 6486     
 0010 7FF4 0314                   byte 3,20
-0011 7FF6 7F64                   data cpu.crash.showbank.bankstr
+0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_bf.asm
 0085                       ;-----------------------------------------------------------------------
@@ -6775,6 +6775,36 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
 0058               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0059               * ; VDP#7 Set screen background color
+0060               
+0061               
+0062               ***************************************************************
+0063               * Editor/Assembler (32 columns/24 rows)
+0064               *--------------------------------------------------------------
+0065               edasm.32x24:
+0066 7F64 00E2             byte  >00,>e2,>00,>0e,>01,>06,>00,>03,0,32
+     7F66 000E     
+     7F68 0106     
+     7F6A 0003     
+     7F6C 0020     
+0067               *
+0068               * ; VDP#0 Control bits
+0069               * ;      bit 6=0: M3 | Graphics 1 mode
+0070               * ;      bit 7=0: Disable external VDP input
+0071               * ; VDP#1 Control bits
+0072               * ;      bit 0=1: 16K selection
+0073               * ;      bit 1=1: Enable display
+0074               * ;      bit 2=1: Enable VDP interrupt
+0075               * ;      bit 3=0: M1 \ Graphics 1 mode
+0076               * ;      bit 4=0: M2 /
+0077               * ;      bit 5=0: reserved
+0078               * ;      bit 6=1: 16x16 sprites
+0079               * ;      bit 7=0: Sprite magnification (1x)
+0080               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
+0081               * ; VDP#3 PCT (Pattern color table)      at >0380  (>0E * >040)
+0082               * ; VDP#4 PDT (Pattern descriptor table) at >0800  (>01 * >800)
+0083               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
+0084               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
+0085               * ; VDP#7 Set screen background color
                    < stevie_bf.asm
 0089                       ;-----------------------------------------------------------------------
 0090                       ; Vector table
@@ -6788,9 +6818,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0005               * ROM identification string for CPU crash
 0006               *--------------------------------------------------------------
 0007               cpu.crash.showbank.bankstr:
-0008 7F64 0552             stri 'ROM#F'
-     7F66 4F4D     
-     7F68 2346     
+0008 7F6E 0552             stri 'ROM#F'
+     7F70 4F4D     
+     7F72 2346     
 0009               
 0010               *--------------------------------------------------------------
 0011               * ROM F: Vectors 1-32
@@ -7050,7 +7080,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPU.CRASH.MSG.WP.... >61F8 :     
     CPU.CRASH.RESET..... >60BA :     
     CPU.CRASH.SHOWBANK.. >7FF0 :     
-    CPU.CRASH.SHOWBANK.BANKSTR >7F64 :     
+    CPU.CRASH.SHOWBANK.BANKSTR >7F6E :     
     CPU.CRASH.SHOWREG... >6130 :     
     CPU.CRASH.SHOWREG.CONTENT >6186 :     
     CPU.CRASH.SHOWREG.LABEL >613E :     
@@ -7114,6 +7144,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DSRLNK.SAVLEN....... >A432 :     
     DSRLNK.SAVPAB....... >A42E :     
     DSRLNK.SAVVER....... >A430 :     
+    EDASM.32X24......... >7F64 :     
     EDB.AUTOINSERT...... >A50C :     
     EDB.BK.FB.ROW....... >A520 :     
     EDB.BK.FB.TOPLINE... >A51E :     

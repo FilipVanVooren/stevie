@@ -42,10 +42,10 @@ fm.run.ea5:
 !       bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
                                     ; \ i  @parm1    = Pointer to length prefixed 
                                     ; |                file descriptor
-                                    ; / o  @outparm1 = Entry point address
+                                    ; / o  @outparm1 = Entry point in EA5 program
                                     
         bl   @mem.ea5.run           ; Run previously loaded EA5 memory image
-                                    ; \ i  @parm1 = Pointer to start address in RAM
+                                    ; \ i  @parm1 = Entry point in EA5 program
                                     ; / 
 *--------------------------------------------------------------
 * Exit

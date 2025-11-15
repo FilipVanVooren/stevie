@@ -86,12 +86,12 @@ fh.file.load.ea5.load:
         mov   @rambuf,@fh.ea5.nextflag
                                     ; Next EA5 image chunk neeeded flag
 
-        li    tmp0,fh.ea5.vdpbuf+6  ; Get VRAM source address for copy        
+        li    tmp0,fh.ea5.vdpbuf+6  ; Get VRAM source address for copy  
         mov   tmp0,@fh.ea5.vdpsrc   ; Store VDP source address
-        mov   @rambuf+2,tmp1        ; Get RAM destination for copy        
-        mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address
-        mov   @rambuf+4,tmp2        ; Get number of bytes to copy        
+        mov   @rambuf+2,tmp2        ; Get number of bytes to copy        
         mov   tmp2,@fh.ea5.size     ; Store chunk size
+        mov   @rambuf+4,tmp1        ; Get RAM destination for copy        
+        mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address
         ;-------------------------------------------------------
         ; Step 2: Copy EA5 image chunk from VRAM to RAM
         ;-------------------------------------------------------
