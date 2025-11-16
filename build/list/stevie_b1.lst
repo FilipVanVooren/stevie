@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251116-1525550
+0002               * BUILD: 251116-1812440
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -917,68 +917,35 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
 0013                                                   ; 5  /
 0014               
-0015                       ;
-0016                       ; Change to rom.program1 to add the menu option STEVIE x.x.x RESET MEM"
-0017                       ; That option can be used in the case where we jump to TI Basic, but
-0018                       ; resuming fails afterwards (e.g. memory overwritten by ext. program).
-0019                       ;
-0020                       ; If resume fails, you can only reset the TI-99/4a by turning of
-0021                       ; the memory expansion, it's not sufficient to reset the console.
-0022                       ;
-0023                       ; Change to rom.program2 to skip menu option "STEVIE x.x.x RESET MEM"
-0024                       ;
-0025 6006 6026             data  rom.program2          ; 6  \ Pointer to program list         >6006
-0026                                                   ; 7  /
-0027               
-0028 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
-0029                                                   ; 9  /
+0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
+0016                                                   ; 7  /
+0017               
+0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
+0019                                                   ; 9  /
+0020               
+0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
+0022                                                   ; 11 /
+0023               
+0024                       ;-----------------------------------------------------------------------
+0025                       ; Program list entry
+0026                       ;-----------------------------------------------------------------------
+0027               rom.program1:
+0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
+0029                                                   ; 13 / (no more items following)
 0030               
-0031 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
-0032                                                   ; 11 /
+0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
+0032                                                   ; 15 /
 0033               
-0034                       ;-----------------------------------------------------------------------
-0035                       ; Program list entry
-0036                       ;-----------------------------------------------------------------------
-0037               rom.program1:
-0038 600C 6026             data  rom.program2          ; 12 \ Next program list entry         >600c
-0039                                                   ; 13 / (no more items following)
-0040               
-0041 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
-0042                                                   ; 15 /
-0043               
-0044 6010 1553             stri 'STEVIE 1.9.1 MEMRESET'
+0035 6010 0C53                 stri 'STEVIE 1.9.2'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 3120     
-     601E 4D45     
-     6020 4D52     
-     6022 4553     
-     6024 4554     
-0045                       even
-0046               
-0047                       ;-----------------------------------------------------------------------
-0048                       ; Program list entry
-0049                       ;-----------------------------------------------------------------------
-0050               rom.program2:
-0051 6026 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0052                                                   ; 13 / (no more items following)
-0053               
-0054 6028 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
-0055                                                   ; 15 /
-0056               
-0058 602A 0C53                 stri 'STEVIE 1.9.1'
-     602C 5445     
-     602E 5649     
-     6030 4520     
-     6032 312E     
-     6034 392E     
-     6036 31       
-0060               
-0064               
-0068               
+     601C 32       
+0037               
+0041               
+0045               
                    < stevie_b1.asm
 0042               
 0043               ***************************************************************
@@ -19956,7 +19923,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ROM.FARJUMP.EXIT.... >312A :     
     ROM.FARJUMP.RETURN.. >30E8 :     
     ROM.PROGRAM1........ >600C :     
-    ROM.PROGRAM2........ >6026 :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
     ROMSAT.............. >391E :     

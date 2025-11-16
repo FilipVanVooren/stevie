@@ -12,17 +12,7 @@
         data  >0000                 ; 4  \ Pointer to power-up list        >6004
                                     ; 5  /
 
-        ; 
-        ; Change to rom.program1 to add the menu option STEVIE x.x.x RESET MEM"
-        ; That option can be used in the case where we jump to TI Basic, but
-        ; resuming fails afterwards (e.g. memory overwritten by ext. program).
-        ;
-        ; If resume fails, you can only reset the TI-99/4a by turning of
-        ; the memory expansion, it's not sufficient to reset the console.
-        ;
-        ; Change to rom.program2 to skip menu option "STEVIE x.x.x RESET MEM"
-        ;
-        data  rom.program2          ; 6  \ Pointer to program list         >6006
+        data  rom.program1          ; 6  \ Pointer to program list         >6006
                                     ; 7  /
 
         data  >0000                 ; 8  \ Pointer to DSR list             >6008
@@ -35,19 +25,6 @@
         ; Program list entry
         ;-----------------------------------------------------------------------
 rom.program1:
-        data  rom.program2          ; 12 \ Next program list entry         >600c
-                                    ; 13 / (no more items following)
-
-        data  kickstart.code1       ; 14 \ Program address                 >600e
-                                    ; 15 /
-
-        stri 'STEVIE 1.9.1 MEMRESET'
-        even
-
-        ;-----------------------------------------------------------------------
-        ; Program list entry
-        ;-----------------------------------------------------------------------
-rom.program2:
         data  >0000                 ; 12 \ Next program list entry         >600c
                                     ; 13 / (no more items following)
 
@@ -55,17 +32,17 @@ rom.program2:
                                     ; 15 /
 
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            stri 'STEVIE 1.9.1'
+            stri 'STEVIE 1.9.2'
         .endif
 
         .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            stri 'STEVIE 1.9.1'     
+            stri 'STEVIE 1.9.2'     
         .endif
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            stri 'STEVIE 1.9.1'
+            stri 'STEVIE 1.9.2'
         .endif
 
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            stri 'STEVIE 1.9.1'                   
+            stri 'STEVIE 1.9.2'                   
         .endif
