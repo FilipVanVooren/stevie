@@ -187,6 +187,28 @@ pane.cmdb.hide:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
+
+***************************************************************
+* Stub for "fb.cursor.top"
+* bank4 vec.16
+********|*****|*********************|**************************
+fb.cursor.top:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.16           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
 ***************************************************************
 * Stub for "fb.goto.nextmatch"
 * bank4 vec.23

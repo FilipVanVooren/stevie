@@ -142,6 +142,7 @@ fm.load.ea5.cb.fioerr:
         ;------------------------------------------------------
         ; Build I/O error message
         ;------------------------------------------------------
+        bl    @fm.newfile           ; Make sure no file is in memory
         bl    @hchar
               byte pane.botrow,0,32,80
               data EOL              ; Erase loading/saving indicator
@@ -218,7 +219,7 @@ fm.load.ea5.cb.fioerr.interrupt:
         ;------------------------------------------------------
 fm.load.ea5.cb.fioerr.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp3          ; Pop tmp4        
+        mov   *stack+,tmp4          ; Pop tmp4        
         mov   *stack+,tmp3          ; Pop tmp3        
         mov   *stack+,tmp2          ; Pop tmp2        
         mov   *stack+,tmp1          ; Pop tmp1

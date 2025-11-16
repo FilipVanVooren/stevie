@@ -11,7 +11,8 @@
 * parm1 = Pointer to length-prefixed filename descriptor
 *--------------------------------------------------------------
 * OUTPUT
-* outparm1 = Entry point address of EA5 program image
+* outparm1 = Entry point address of EA5 program image or
+*            >FFFF if load failed
 *--------------------------------------------------------------
 * Register usage
 * tmp0, tmp1, tmp2, tmp3
@@ -76,7 +77,12 @@ fh.file.load.ea5.load:
                                     ; | i  @parm6 = RAM destination address
                                     ; |             (>FFFF to skip)
                                     ; | i  @parm7 = Maximum number of bytes to load
+                                    ; | o  @outparm1 = >0000 success, >FFFF failed
                                     ; /
+
+        mov   @outparm1,tmp0        ; \
+        ci    tmp0,>ffff            ; | Exit early if file could not be loaded
+        jeq   fh.file.load.ea5.exit ; /
 
         bl    @cpyv2m               ; Copy EA5 image chunk header from VDP to RAM
               data fh.ea5.vdpbuf    ; \ i  p1 = Source VDP address

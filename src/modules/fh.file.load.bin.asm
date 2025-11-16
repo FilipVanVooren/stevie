@@ -16,6 +16,9 @@
 * parm6 = RAM destination address to copy file into
 * parm7 = Maximum number of bytes to load
 *
+* OUTPUT
+* outparm1 = >0000 load success, >FFFF load failed
+*
 * Callbacks can be skipped by passing >0000 as pointer.
 * Copy to RAM can be skipped by passing >FFFF in parm6.
 *--------------------------------------------------------------
@@ -214,34 +217,35 @@ fh.file.load.bin.vdp2cpu:
         ; Step 3: Processing complete, call callback
         ;------------------------------------------------------ 
 fh.file.load.bin.success:
+        clr  @outparm1              ; Clear binary load failed flag
         mov   @fh.callback2,tmp0    ; Get pointer to Callback "Binary image loaded"
         jeq   fh.file.load.bin.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
+        bl    *tmp0                 ; Run callback function
+        clr  @outparm1              ; Clear binary load failed flag, might be overwritten          
         jmp   fh.file.load.bin.exit ; Exit normally
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
-fh.file.load.bin.error:        
+fh.file.load.bin.error:
+        seto  @outparm1             ; Set binary load failed flag
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.load.bin.exit 
-                                    ; Skip callback
-        bl    *tmp0                 ; Run callback function  
+        jeq   fh.file.load.bin.exit ; Skip callback if not set
+        bl    *tmp0                 ; Run callback function
+        seto  @outparm1             ; Set binary load failed flag, might be overwritten          
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fh.file.load.bin.exit:
-        clr   @fh.fopmode           ; Set FOP mode to idle operation
-
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
 
-        mov   @parm7,*stack+        ; Pop @parm7
-        mov   @parm6,*stack+        ; Pop @parm6
-        mov   @parm5,*stack+        ; Pop @parm5
-        mov   @parm4,*stack+        ; Pop @parm4
-        mov   @parm3,*stack+        ; Pop @parm3
-        mov   @parm2,*stack+        ; Pop @parm2
-        mov   @parm1,*stack+        ; Pop @parm1
+        mov   *stack+,@parm7        ; Pop @parm7
+        mov   *stack+,@parm6        ; Pop @parm6
+        mov   *stack+,@parm5        ; Pop @parm5
+        mov   *stack+,@parm4        ; Pop @parm4
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

@@ -42,12 +42,23 @@ fm.run.ea5:
 !       bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
                                     ; \ i  @parm1    = Pointer to length prefixed 
                                     ; |                file descriptor
-                                    ; / o  @outparm1 = Entrypoint in EA5 program                                    
+                                    ; | o  @outparm1 = Entrypoint in EA5 program
+                                    ; /                or >FFFF if load failed
 
-        mov  @outparm1,@parm1       ; Get entrypoint                
+        mov  @outparm1,tmp0         ; \  
+        ci   tmp0,>ffff             ; | Exit early with error if file load failed
+        jeq  fm.run.ea5.error       ; / 
+        mov  tmp0,@parm1            ; Set entrypoint                
+
         bl   @mem.ea5.run           ; Run previously loaded EA5 memory image
                                     ; \ i  @parm1 = Entrypoint in EA5 program
                                     ; / 
+        jmp  fm.run.ea5.exit
+        ;-------------------------------------------------------
+        ; EA5 program image could not be loaded into memory
+        ;-------------------------------------------------------
+fm.run.ea5.error:
+        bl    @fb.cursor.top        ; Goto top of file
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
