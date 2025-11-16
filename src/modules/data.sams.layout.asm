@@ -88,7 +88,6 @@ mem.sams.layout.legacy:
         data  >0f00                 ; >f000-ffff, SAMS page >0f
 
 
-
 ***************************************************************
 * SAMS page layout table 
 * Backup TI Basic session 1 VRAM, scratchpad + auxiliary

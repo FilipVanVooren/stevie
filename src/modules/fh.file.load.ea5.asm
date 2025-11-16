@@ -88,10 +88,10 @@ fh.file.load.ea5.load:
 
         li    tmp0,fh.ea5.vdpbuf+6  ; Get VRAM source address for copy  
         mov   tmp0,@fh.ea5.vdpsrc   ; Store VDP source address
+        mov   @rambuf+4,tmp1        ; Get RAM destination for copy        
+        mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address        
         mov   @rambuf+2,tmp2        ; Get number of bytes to copy        
         mov   tmp2,@fh.ea5.size     ; Store chunk size
-        mov   @rambuf+4,tmp1        ; Get RAM destination for copy        
-        mov   tmp1,@fh.ea5.ramtgt   ; Store RAM target address
         ;-------------------------------------------------------
         ; Step 2: Copy EA5 image chunk from VRAM to RAM
         ;-------------------------------------------------------
@@ -105,6 +105,8 @@ fh.file.load.ea5.load:
         mov   tmp1,@>4018           ; Set page for >c000 - >cfff
         ai    tmp1,>0100            ; Next SAMS bank
         mov   tmp1,@>401A           ; Set page for >d000 - >dfff
+        ai    tmp1,>0100            ; Next SAMS bank
+        mov   tmp1,@>401C           ; Set page for >e000 - >efff
         sbz   0                     ; Disable access to SAMS registers
         ;-------------------------------------------------------
         ; Copy chunk from VRAM to RAM
@@ -148,12 +150,15 @@ fh.file.load.ea5.next:
         ;-------------------------------------------------------
 !       li    r12,>1e00             ; SAMS CRU address
         sbo   0                     ; Enable access to SAMS registers
-        mov   @tv.sams.c000,tmp1    ; Get current SAMS bank at >c000
+        mov   @tv.sams.c000,tmp1    ; Get current SAMS bank for >c000 - >cfff
         swpb  tmp1                  ; LSB to MSB
-        mov   tmp1,@>4018           ; Set page for >c000 - >cfff
-        mov   @tv.sams.d000,tmp1    ; Get current SAMS bank at >d000
+        mov   tmp1,@>4018           ; Set SAMS bank
+        mov   @tv.sams.d000,tmp1    ; Get current SAMS bank for >d000 - >dfff
         swpb  tmp1                  ; LSB to MSB
-        mov   tmp1,@>401A           ; Set page for >d000 - >dfff
+        mov   tmp1,@>401A           ; Set SAMS bank
+        mov   @tv.sams.e000,tmp1    ; Get current SAMS bank for >e000 - >efff
+        swpb  tmp1                  ; LSB to MSB
+        mov   tmp1,@>401C           ; Set SAMS bank
         sbz   0                     ; Disable access to SAMS registers
         ;-------------------------------------------------------
         ; Step 5: Return start address of EA5 program image

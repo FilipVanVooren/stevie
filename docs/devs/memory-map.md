@@ -3,19 +3,20 @@
 ## CPU RAM (SAMS MEMEXP 32K)
 
 For each of the 256 bytes ranges, there are structures defined in ``equ.asm``.  
-Check there for free memory ranges, because most structures do not use full    
+Check there for free memory ranges, because most structures do not use full
 256 bytes range. First free address has equate <struct>.free
 
 Note regarding column "SAMS/Addr.":
+
 - The format ``>`` means MEMEXP memory range in hex.
 - The format ``#`` means the SAMS page number in hex.
 
 | Address    | SAMS/Addr. | Bytes | Purpose                                    | 
 | ---------- | ---------- | ----- | -------------------------------------------|
 | >2000-2fff |    #02     |  4096 | Resident spectra2 and Stevie modules       |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >3000-3fff |    #03     |  4096 | Resident spectra2 and Stevie modules       |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >a000-a0ff |    #0a     |   256 | Stevie core 1 RAM                          |
 |            | >a006-a017 |    18 |   Input parameters parm1-parm9             |
 |            | >a018-a025 |    14 |   Output parameters outparm1-outparm7      |
@@ -78,51 +79,48 @@ Note regarding column "SAMS/Addr.":
 | >ae00-aeff |     #0a    |   256 | FREE                                       |
 |            |            |       |                                            |
 | >af00-afff |     #0a    |   256 | Cart bankswitch trampoline return stack    |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >b000-bfff |   #10-1f   |  4096 | Index page, bankswitched in SAMS /         |
 |            |            |       | EA5 image in RAM, bankswitched in SAMS     |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >c000-cfff |   #30-xx   |  4096 | Editor buffer page, bankswitched in SAMS / |
 |            |            |       | EA5 image in RAM, bankswitched in SAMS     |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >d000-dfff |     #05    |  4096 | Frame buffer, uncrunch, default filenames  |
 |            | >d000-d95f |  2400 |   Frame buffer for max. 80x30 rows         |
 |            | >d960-dcff |       |   Uncrunched TI Basic statement            |
 |            | >de00-deff |       |   Default filenames                        |
 |            | >df00-dfff |   256 |   FREE                                     |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >e000-efff |     #06    |  4096 | Directory file catalog (max. 127 files)    |
 |            | >e000-e001 |     2 |   Variables, volume name                   |
 | >e000-efff | >e00e-e574 |  1398 |   length-prefixed file names list (127*11) |
 | >e000-efff | >e575-e5ff |  1398 |   File size list (127*2)                   |
-|            |            |       |                                            |
+|------------|------------|-------|--------------------------------------------|
 | >f000-ffff |     #07    |  4096 | Heap, Strings area, Search results index   |
 |            | >f000-f0ff |   256 |   Heap & Strings area                      |
 |            | >f100-f8ff |  2048 |   Search results index (rows)              |
 |            | >f900-fcff |  1024 |   Search results index (columns)           |
 |            | >fe00-ffff |  1024 |   FREE                                     |
 
-
 ### Memory layout when activating TI Basic
 
 Note: Other memory ranges are the same as the regular memory map.
 
-| Address    | SAMS/Addr. | Bytes | Purpose                                    | 
+| Address    | SAMS/Addr. | Bytes | Purpose                                    |
 | ---------- | ---------- | ----- | -------------------------------------------|
-| >b000-bfff |     #04    |  4096 | TI Basic VDP buffer                        |
-|            |            |       |                                            |
-| >c000-cfff |     #05    |  4096 | TI Basic VDP buffer                        |
-|            |            |       |                                            |
-| >d000-dfff |     #06    |  4096 | TI Basic VDP buffer                        |
-|            |            |       |                                            |
-| >e000-efff |     #07    |  4096 | TI Basic VDP buffer                        |
-|            |            |       |                                            |
-| >f000-ffff |     #08    |  4096 | Stevie VDP, scratchpad, ...                |
+| >b000-bfff |     #10    |  4096 | TI Basic VDP buffer                        |
+|------------|------------|-------|--------------------------------------------|
+| >c000-cfff |     #11    |  4096 | TI Basic VDP buffer                        |
+|------------|------------|-------|--------------------------------------------|
+| >d000-dfff |     #12    |  4096 | TI Basic VDP buffer                        |
+|------------|------------|-------|--------------------------------------------|
+| >e000-efff |     #13    |  4096 | TI Basic VDP buffer                        |
+|------------|------------|-------|--------------------------------------------|
+| >f000-ffff |     #07    |  4096 | Stevie VDP, scratchpad, ...                |
 |            | >f000-f95f |  2400 |   Stevie VDP screen buffer copy 80x30      |
 |            | >f960-f97f |    32 |   TI Basic scratchpad memory               |
 |            | >f980-ffff |  1664 |   FREE                                     |
-
-
 
 ## VDP RAM
 
@@ -142,12 +140,10 @@ Note: Other memory ranges are the same as the regular memory map.
 | >2000-3fff | 8192 |      |            | Record/File buffer       |
 | >4000-47ff | 2048 |      |            | F18a extended memory     |
 
-
 - Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >0980.
 - Sprite pattern table is overlayed with pattern descriptor table. 
   Cursor patterns are dumped to >1c00
   
-
 ### F18a 24x80 mode without sprites
 
 | Address    | Size | VDP# | Value/Base | Purpose                  |

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251115-2209030
+0002               * BUILD: 251116-1525550
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -13217,67 +13217,66 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0088 6CB6 0F00             data  >0f00                 ; >f000-ffff, SAMS page >0f
 0089               
 0090               
-0091               
-0092               ***************************************************************
-0093               * SAMS page layout table
-0094               * Backup TI Basic session 1 VRAM, scratchpad + auxiliary
-0095               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
-0096               * Page:  >00  >01  >04  >fb  >fc  >fd  >fe  >ff
-0097               *--------------------------------------------------------------
-0098               mem.sams.layout.basic1:
-0099 6CB8 0000             data  >0000                 ; . >2000-2fff
-0100 6CBA 0100             data  >0100                 ; . >3000-3fff
-0101 6CBC 0400             data  >0400                 ; . >a000-afff
-0102 6CBE FB00             data  >fb00                 ; \ >b000-efff
-0103 6CC0 FC00             data  >fc00                 ; |
-0104 6CC2 FD00             data  >fd00                 ; | 16K VDP dump
-0105 6CC4 FE00             data  >fe00                 ; /
-0106 6CC6 FF00             data  >ff00                 ; . >f000-ffff
+0091               ***************************************************************
+0092               * SAMS page layout table
+0093               * Backup TI Basic session 1 VRAM, scratchpad + auxiliary
+0094               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+0095               * Page:  >00  >01  >04  >fb  >fc  >fd  >fe  >ff
+0096               *--------------------------------------------------------------
+0097               mem.sams.layout.basic1:
+0098 6CB8 0000             data  >0000                 ; . >2000-2fff
+0099 6CBA 0100             data  >0100                 ; . >3000-3fff
+0100 6CBC 0400             data  >0400                 ; . >a000-afff
+0101 6CBE FB00             data  >fb00                 ; \ >b000-efff
+0102 6CC0 FC00             data  >fc00                 ; |
+0103 6CC2 FD00             data  >fd00                 ; | 16K VDP dump
+0104 6CC4 FE00             data  >fe00                 ; /
+0105 6CC6 FF00             data  >ff00                 ; . >f000-ffff
+0106               
 0107               
-0108               
-0109               ***************************************************************
-0110               * SAMS page layout table
-0111               * Backup TI Basic session 2 VRAM, scratchpad + auxiliary
-0112               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
-0113               * Page:  >00  >01  >04  >f7  >f8  >f9  >fa  >ff
-0114               *--------------------------------------------------------------
-0115               mem.sams.layout.basic2:
-0116 6CC8 0000             data  >0000                 ; . >2000-2fff
-0117 6CCA 0100             data  >0100                 ; . >3000-3fff
-0118 6CCC 0400             data  >0400                 ; . >a000-afff
-0119 6CCE F700             data  >f700                 ; \ >b000-efff
-0120 6CD0 F800             data  >f800                 ; |
-0121 6CD2 F900             data  >f900                 ; | 16K VDP dump
-0122 6CD4 FA00             data  >fa00                 ; /
-0123 6CD6 FF00             data  >ff00                 ; . >f000-ffff
+0108               ***************************************************************
+0109               * SAMS page layout table
+0110               * Backup TI Basic session 2 VRAM, scratchpad + auxiliary
+0111               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+0112               * Page:  >00  >01  >04  >f7  >f8  >f9  >fa  >ff
+0113               *--------------------------------------------------------------
+0114               mem.sams.layout.basic2:
+0115 6CC8 0000             data  >0000                 ; . >2000-2fff
+0116 6CCA 0100             data  >0100                 ; . >3000-3fff
+0117 6CCC 0400             data  >0400                 ; . >a000-afff
+0118 6CCE F700             data  >f700                 ; \ >b000-efff
+0119 6CD0 F800             data  >f800                 ; |
+0120 6CD2 F900             data  >f900                 ; | 16K VDP dump
+0121 6CD4 FA00             data  >fa00                 ; /
+0122 6CD6 FF00             data  >ff00                 ; . >f000-ffff
+0123               
 0124               
-0125               
-0126               ***************************************************************
-0127               * SAMS page layout table
-0128               * Backup TI Basic session 3 VRAM, scratchpad + auxiliary
-0129               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
-0130               * Page:  >00  >01  >04  >f3  >f4  >f5  >f6  >ff
-0131               *--------------------------------------------------------------
-0132               mem.sams.layout.basic3:
-0133 6CD8 0000             data  >0000                 ; . >2000-2fff
-0134 6CDA 0100             data  >0100                 ; . >3000-3fff
-0135 6CDC 0400             data  >0400                 ; . >a000-afff
-0136 6CDE F300             data  >f300                 ; \ >b000-efff
-0137 6CE0 F400             data  >f400                 ; |
-0138 6CE2 F500             data  >f500                 ; | 16K VDP dump
-0139 6CE4 F600             data  >f600                 ; /
-0140 6CE6 FF00             data  >ff00                 ; . >f000-ffff
+0125               ***************************************************************
+0126               * SAMS page layout table
+0127               * Backup TI Basic session 3 VRAM, scratchpad + auxiliary
+0128               * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
+0129               * Page:  >00  >01  >04  >f3  >f4  >f5  >f6  >ff
+0130               *--------------------------------------------------------------
+0131               mem.sams.layout.basic3:
+0132 6CD8 0000             data  >0000                 ; . >2000-2fff
+0133 6CDA 0100             data  >0100                 ; . >3000-3fff
+0134 6CDC 0400             data  >0400                 ; . >a000-afff
+0135 6CDE F300             data  >f300                 ; \ >b000-efff
+0136 6CE0 F400             data  >f400                 ; |
+0137 6CE2 F500             data  >f500                 ; | 16K VDP dump
+0138 6CE4 F600             data  >f600                 ; /
+0139 6CE6 FF00             data  >ff00                 ; . >f000-ffff
+0140               
 0141               
-0142               
-0143               ***************************************************************
-0144               * SAMS page layout table
-0145               * Run EA5 program image
-0146               *--------------------------------------------------------------
-0147               mem.sams.layout.ea5pgm:
-0148                       equ   mem.sams.layout.legacy
+0142               ***************************************************************
+0143               * SAMS page layout table
+0144               * Run EA5 program image
+0145               *--------------------------------------------------------------
+0146               mem.sams.layout.ea5pgm:
+0147                       equ   mem.sams.layout.legacy
+0148               
 0149               
-0150               
-0151      6CB8     mem.sams.layout.basic  equ mem.sams.layout.basic1
+0150      6CB8     mem.sams.layout.basic  equ mem.sams.layout.basic1
                    < stevie_b7.asm
 0105                       copy  "data.tib.tokens.asm"        ; TI Basic tokens
      **** ****     > data.tib.tokens.asm
