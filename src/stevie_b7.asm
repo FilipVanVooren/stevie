@@ -67,7 +67,6 @@ main:
         ;-----------------------------------------------------------------------
         ; SAMS support routines and utilities
         ;-----------------------------------------------------------------------
-        copy  "magic.asm"                  ; Magic string handling
         copy  "mem.sams.layout.asm"        ; Setup SAMS banks from cart space
         copy  "tv.reset.asm"               ; Reset editor (clear buffers)
         ;-----------------------------------------------------------------------

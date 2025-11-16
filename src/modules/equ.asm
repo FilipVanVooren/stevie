@@ -93,9 +93,9 @@ id.special.basic          equ  3       ; TI Basic program
 ; Stevie core 1 RAM                    @>a000-a0ff   (256 bytes)
 ;-----------------------------------------------------------------
 core1.top         equ  >a000           ; Structure begin
-magic.str.w1      equ  core1.top + 0   ; Magic string word 1
-magic.str.w2      equ  core1.top + 2   ; Magic string word 2
-magic.str.w3      equ  core1.top + 4   ; Magic string word 3
+free1             equ  core1.top + 0   ; **free**
+free2             equ  core1.top + 2   ; **free**
+free3             equ  core1.top + 4   ; **free**
 parm1             equ  core1.top + 6   ; Function parameter 1
 parm2             equ  core1.top + 8   ; Function parameter 2
 parm3             equ  core1.top + 10  ; Function parameter 3

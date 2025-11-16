@@ -35,9 +35,7 @@ cart.fg99.mgr:
         jeq   cart.fg99.mgr.exit    ; Yes, exit early        
         ;-------------------------------------------------------        
         ; Setup cartridge image
-        ;-------------------------------------------------------
-        bl    @magic.set            ; Set magic string
-        
+        ;-------------------------------------------------------       
         bl    @cpym2m                 ; Copy cartridge template to RAM
               data fg99.cart.template ; \ Source
               data rambuf             ; | Destination

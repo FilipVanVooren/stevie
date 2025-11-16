@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251116-1812440
+0002               * BUILD: 251116-1817510
 0003               ***************************************************************
                    < stevie_b4.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -278,9 +278,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093               ; Stevie core 1 RAM                    @>a000-a0ff   (256 bytes)
 0094               ;-----------------------------------------------------------------
 0095      A000     core1.top         equ  >a000           ; Structure begin
-0096      A000     magic.str.w1      equ  core1.top + 0   ; Magic string word 1
-0097      A002     magic.str.w2      equ  core1.top + 2   ; Magic string word 2
-0098      A004     magic.str.w3      equ  core1.top + 4   ; Magic string word 3
+0096      A000     free1             equ  core1.top + 0   ; **free**
+0097      A002     free2             equ  core1.top + 2   ; **free**
+0098      A004     free3             equ  core1.top + 4   ; **free**
 0099      A006     parm1             equ  core1.top + 6   ; Function parameter 1
 0100      A008     parm2             equ  core1.top + 8   ; Function parameter 2
 0101      A00A     parm3             equ  core1.top + 10  ; Function parameter 3
@@ -17425,6 +17425,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FNOPT7.............. >800C :     
     FNOPT8.............. >8012 :     
     FNTADR.............. >1900 :     
+    FREE1............... >A000 :     
+    FREE2............... >A002 :     
+    FREE3............... >A004 :     
     GRAPH1.............. >21F2 :     
     GRMRA............... >9802 :     
     GRMRD............... >9800 :     
@@ -17716,9 +17719,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    MAGIC.STR.W1........ >A000 :     
-    MAGIC.STR.W2........ >A002 :     
-    MAGIC.STR.W3........ >A004 :     
     MAIN................ >6046 :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
