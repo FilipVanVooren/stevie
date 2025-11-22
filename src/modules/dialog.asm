@@ -30,8 +30,7 @@ dialog:
         ;-------------------------------------------------------
         ; Copy dialog strings to RAM
         ;-------------------------------------------------------
-        bl    @cpym2m
-              data txt.hint.memstat,ram.msg1,23
+
 
         bl    @cpym2m
               data txt.hint.lineterm,ram.msg2,42

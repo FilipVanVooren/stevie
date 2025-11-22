@@ -194,7 +194,7 @@ fh.file.load.bin.pabheader:
         mov   tmp0,@fh.pabstat         ; Save VDP PAB status byte
         jeq   fh.file.load.bin.vdp2cpu ; No error, proceed
         ci    tmp0,>000d               ; Ignore?
-        jne   fh.file.load.bin.error   ; handle error if not zero
+        ;jne   fh.file.load.bin.error   ; handle error if not zero
         ;------------------------------------------------------
         ; Step 2: Copy loaded data from VDP to RAM if requested
         ;------------------------------------------------------ 

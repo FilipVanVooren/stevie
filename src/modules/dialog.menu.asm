@@ -60,16 +60,20 @@ dialog.menu:
         li    tmp0,pos.info.menu
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
         ;-------------------------------------------------------
-        ; Show SAMS usage
+        ; Show Status line (SAMS free, ...)
         ;-------------------------------------------------------
 dialog.menu.sams:
-        bl    @cpym2m
-              data txt.hint.memstat,ram.msg1,23
+        bl    @film
+              data ram.msg1,0,160   ; Clear both status lines
+
+        li    tmp0,>4c00            ; MSB = 76
+        movb  tmp0,@ram.msg1        ; Set line 1 length 
+        movb  tmp0,@ram.msg2        ; Set line 2 length 
 
         li    tmp0,ram.msg1
-        mov   tmp0,@cmdb.panhint    ; Show SAMS memory allocation
-        
-        clr    @cmdb.panhint2       ; No extra hint to display
+        mov   tmp0,@cmdb.panhint    ; Show status line 1
+        li    tmp0,ram.msg2
+        mov   tmp0,@cmdb.panhint2   ; Show status line 2
 
         li    tmp0,txt.keys.menu
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
@@ -92,23 +96,8 @@ dialog.menu.sams:
 
         mov   tmp0,@rambuf          ; Number of pages free
 
-        andi  config,>7fff          ; Do not print number
-                                    ; (Reset bit 0 in config register)
-
-        bl    @mknum                ; Convert unsigned number to string
-              data rambuf           ; \ i  p1    = Source
-              data ram.msg1+16      ; | i  p2    = Destination
-              byte 48               ; | i  p3MSB = ASCII offset
-              byte 32               ; / i  p3LSB = Padding character
-
-        li    tmp0,>3a00            ; \ MSB = ASCII 58 (hex 3a) colon character
-        movb  tmp0,@ram.msg1 + 16   ; | Overwrite length-byte prefix in 
-                                    ; / number with colon
-        ;-------------------------------------------------------
-        ; Print SAMS pages total
-        ;-------------------------------------------------------
-        li    tmp0,tv.sams.maxpage  ; Max number of SAMS pages supported
-        mov   tmp0,@rambuf          ; Number of pages total
+        bl    @cpym2m
+              data txt.hint.sams+1,ram.msg1+1,14
 
         andi  config,>7fff          ; Do not print number
                                     ; (Reset bit 0 in config register)
@@ -120,15 +109,30 @@ dialog.menu.sams:
               byte 32               ; / i  p3LSB = Padding character
 
         bl    @trimnum              ; Trim number to the left
-              data rambuf+2,ram.msg1 + 21,32
+              data rambuf+2,ram.msg1+6,32
 
-        li    tmp0,>2f00            ; \ MSB = ASCII 47 (hex 2f) slash character
-        movb  tmp0,@ram.msg1 + 21   ; | Overwrite length-byte prefix in 
-                                    ; / trimmed number with slash
+        li    tmp0,>2000            ; \ MSB = ASCII 32 (hex 20) space char
+        movb  tmp0,@ram.msg1 + 6    ; | Overwrite length-byte prefix in 
+                                    ; / number with colon
+        ;-------------------------------------------------------
+        ; Show path
+        ;-------------------------------------------------------
+        movb  @cat.device,tmp0      ; Path set?
+        srl   tmp0,8                ; Check length byte
+        jeq   !                     ; Nothing set, skip
+
+        bl    @cpym2m
+              data txt.hint.path+1,ram.msg2+1,5
+
+        bl    @cpym2m
+              data cat.device,ram.msg2+6,60
+
+        li    tmp0,>2000
+        movb  tmp0,@ram.msg2+6                  
         ;------------------------------------------------------
         ; Remove filepicker color bar
         ;------------------------------------------------------
-        bl    @pane.filebrowser.colbar.remove
+!       bl    @pane.filebrowser.colbar.remove
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
                                     ;   /                                                             

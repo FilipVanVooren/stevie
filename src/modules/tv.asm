@@ -49,6 +49,10 @@ tv.init:
         bl    @cpym2m
               data def.clip.fname.a,tv.clip.fname,10
 
+        bl    @cpym2m
+              data def.device,cat.device,6
+
+
         clr   @edb.autoinsert       ; Set AutoInsert off by default
         clr   @tv.show.linelen      ; Show line length off by default
 

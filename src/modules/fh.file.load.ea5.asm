@@ -99,7 +99,7 @@ fh.file.load.ea5.load:
         mov   @rambuf+2,tmp2        ; Get number of bytes to copy        
         mov   tmp2,@fh.ea5.size     ; Store chunk size
         ;-------------------------------------------------------
-        ; Step 2: Copy EA5 image chunk from VRAM to RAM
+        ; Step 3: Copy EA5 image chunk from VRAM to RAM
         ;-------------------------------------------------------
         andi  tmp1,>F000            ; Get SAMS destination bank
         srl   tmp1,4                ; MSB hi-niblle to MSB low-nibble
@@ -134,7 +134,7 @@ fh.file.load.ea5.load:
         mov   @fh.ea5.ramtgt,@fh.ea5.startaddr
                                     ; Set start address
         ;-------------------------------------------------------
-        ; Step 3: Prepare for loeading next EA5 image chunk
+        ; Step 4: Prepare for loeading next EA5 image chunk
         ;-------------------------------------------------------
 fh.file.load.ea5.next:        
         mov   @fh.ea5.nextflag,tmp0 ; \ Additional chunk needed?
@@ -152,7 +152,7 @@ fh.file.load.ea5.next:
         movb  tmp1,*tmp0            ; Store back last character
         jmp   fh.file.load.ea5.parm ; Yes, load next chunk
         ;-------------------------------------------------------
-        ; Step 4: Page-in SAMS banks used in Stevie
+        ; Step 5: Page-in SAMS banks used in Stevie
         ;-------------------------------------------------------
 !       li    r12,>1e00             ; SAMS CRU address
         sbo   0                     ; Enable access to SAMS registers
@@ -167,7 +167,7 @@ fh.file.load.ea5.next:
         mov   tmp1,@>401C           ; Set SAMS bank
         sbz   0                     ; Disable access to SAMS registers
         ;-------------------------------------------------------
-        ; Step 5: Return start address of EA5 program image
+        ; Step 6: Return start address of EA5 program image
         ;-------------------------------------------------------        
         mov   @fh.ea5.startaddr,@outparm1
 *--------------------------------------------------------------

@@ -45,15 +45,15 @@ fm.run.ea5:
                                     ; | o  @outparm1 = Entrypoint in EA5 program
                                     ; /                or >FFFF if load failed
 
-        mov  @outparm1,tmp0         ; \  
-        ci   tmp0,>ffff             ; | Exit early with error if file load failed
-        jeq  fm.run.ea5.error       ; / 
-        mov  tmp0,@parm1            ; Set entrypoint                
+        mov   @outparm1,tmp0        ; \  
+        ci    tmp0,>ffff            ; | Exit early with error if file load failed
+        jeq   fm.run.ea5.error      ; / 
+        mov   tmp0,@parm1           ; Set entrypoint                
 
-        bl   @mem.ea5.run           ; Run previously loaded EA5 memory image
+        bl    @mem.ea5.run          ; Run previously loaded EA5 memory image
                                     ; \ i  @parm1 = Entrypoint in EA5 program
                                     ; / 
-        jmp  fm.run.ea5.exit
+        jmp   fm.run.ea5.exit
         ;-------------------------------------------------------
         ; EA5 program image could not be loaded into memory
         ;-------------------------------------------------------

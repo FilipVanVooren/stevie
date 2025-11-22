@@ -65,11 +65,12 @@ mem.run.ea5:
         mov   @scrpad.monitor + 2,@>8302        
         mov   @scrpad.monitor + 4,@>8304           
         mov   @scrpad.monitor + 6,@>8306        
-        lwpi  >8300                 ; Activate WS in scratchpad
         ;-------------------------------------------------------
         ; Start program
         ;-------------------------------------------------------
-        bl    *r0                   ;
+        lwpi  >8300                 ; Activate WS in scratchpad        
+        limi  2                     ; Enable interrupts
+        bl    *r0                   ; Run!
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
