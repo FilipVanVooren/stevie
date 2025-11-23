@@ -44,7 +44,7 @@ dialog.file:
 
         li    tmp0,pos.info.filelock
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-        jmp   dialog.file.keylist
+        jmp   dialog.file.statlines
         ;-------------------------------------------------------
         ; All options
         ;-------------------------------------------------------
@@ -54,12 +54,15 @@ dialog.file:
         li    tmp0,pos.info.file
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
         ;-------------------------------------------------------
-        ; Rest of dialog setup
+        ; Show Status lines
         ;-------------------------------------------------------
-dialog.file.keylist:
-        li    tmp0,txt.hint.file
-        mov   tmp0,@cmdb.panhint    ; Hint in bottom line
-        clr   @cmdb.panhint2        ; No extra hint to display
+dialog.file.statlines:
+        bl    @pane.cmdb.statlines  ; Show status lines
+                                    ; i \   @cat.device = Pointer to device path 
+                                    ; i |   @tv.sams.maxpage = SAMS pages in system
+                                    ; i |   @tv.sams.hipage = Highest page in use
+                                    ; o |   @ram.msg1 = SAMS free status line
+                                    ; o /   @ram.msg2 = Device path status line
 
         li    tmp0,txt.keys.file    ; No navigation keys
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

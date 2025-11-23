@@ -43,6 +43,10 @@ dialog.unsaved:
         li    tmp0,txt.keys.unsaved
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        bl    @hchar
+              byte pane.botrow-4,2,32,70  
+              data EOL              ; Remove markers
+
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

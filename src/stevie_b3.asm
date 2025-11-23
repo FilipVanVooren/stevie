@@ -96,6 +96,7 @@ main:
         copy  "pane.cmdb.show.asm"      ; Show command buffer pane
         copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane
         copy  "pane.cmdb.draw.asm"      ; Draw command buffer pane contents
+        copy  "pane.cmdb.statlines.asm" ; Show status lines (Device path, SAMS free)
         copy  "error.display.asm"       ; Show error message
         copy  "cmdb.refresh_prompt.asm" ; Refresh command line prompt
         copy  "cmdb.cmd.asm"            ; Command line handling

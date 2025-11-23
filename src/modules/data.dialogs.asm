@@ -203,7 +203,6 @@ pos.info.file      byte 0,6,13,19,26,35,44,54,>ff
 txt.info.filelock  stri 'New   Open   Run   Save   Catalog   Print'
 pos.info.filelock  byte 0,6,13,19,26,36,>ff
                    even
-txt.hint.file      stri ' '
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
                    even
 
