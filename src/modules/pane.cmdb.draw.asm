@@ -70,6 +70,11 @@ pane.cmdb.draw:
               byte cmdb.rows - 2               ; Y-repeat           /
 
               byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+              byte 78                          ; X-position         |   Clear left-over
+              byte 32                          ; Vertical line char |   garbage
+              byte cmdb.rows - 2               ; Y-repeat           /
+
+              byte pane.botrow - cmdb.rows + 1 ; Y-position         \
               byte 79                          ; X-position         |   RIGHT VERT BAR
               byte 7                           ; Vertical line char |
               byte cmdb.rows - 2               ; Y-repeat           /
