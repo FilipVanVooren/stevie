@@ -32,7 +32,19 @@ fh.file.load.ea5:
         dect  stack
         mov   tmp3,*stack           ; Push tmp3
         dect  stack
-        mov   @parm1,*stack         ; Push @parm1    
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3    
+        dect  stack
+        mov   @parm4,*stack         ; Push @parm4    
+        dect  stack        
+        mov   @parm5,*stack         ; Push @parm5
+        dect  stack
+        mov   @parm6,*stack         ; Push @parm6
+        dect  stack
+        mov   @parm7,*stack         ; Push @parm7
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------ 
@@ -174,6 +186,12 @@ fh.file.load.ea5.next:
 * Exit
 *--------------------------------------------------------------
 fh.file.load.ea5.exit:
+        mov   *stack+,@parm7        ; Pop @parm7
+        mov   *stack+,@parm6        ; Pop @parm6
+        mov   *stack+,@parm5        ; Pop @parm5
+        mov   *stack+,@parm4        ; Pop @parm4
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

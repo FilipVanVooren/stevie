@@ -138,11 +138,14 @@ Note: Other memory ranges are the same as the regular memory map.
 | >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
 | >1800-19ff |      | #06  | >03 * >800 | Sprite pattern table     |
 | >2000-3fff | 8192 |      |            | Record/File buffer       |
+| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
 | >4000-47ff | 2048 |      |            | F18a extended memory     |
 
 - Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >0980.
 - Sprite pattern table is overlayed with pattern descriptor table. 
   Cursor patterns are dumped to >1c00
+- File buffer header setup by TI-Disk Controller on startup
+  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
   
 ### F18a 24x80 mode without sprites
 
@@ -151,8 +154,11 @@ Note: Other memory ranges are the same as the regular memory map.
 | >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
 | >0960-097f |  160 |      |            | PAB definition           |
 | >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >12e0-37ff | 9504 |      |            | Record/File buffer       |
-| >3800-39ff | 2048 | #04  | >07 * >800 | Pattern descriptor table |
+| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
+| >2000-3fff | 8192 |      |            | Record/File buffer       |
+| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
 | >4000-47ff | 2048 |      |            | F18a extended memory     |
 
-- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >1000.
+- Using position-based Pattern Color Table of 1920 bytes (24 * 80) at >0980.
+- File buffer header setup by TI-Disk Controller on startup
+  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)

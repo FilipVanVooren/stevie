@@ -128,13 +128,10 @@ fh.file.load.bin.load1:
         ;------------------------------------------------------
         ; Clear VRAM destination area
         ;------------------------------------------------------
-        mov   @parm5,tmp0           ; VDP destination address
-        clr   tmp1                  ; Clear byte to write
-        mov   @parm7,tmp2           ; Number of bytes to clear
-        bl    @xfilv                ; Fill VDP memory block
-                                    ; \ i  tmp0 = VDP destination address
-                                    ; | i  tmp1 = Byte to write
-                                    ; / i  tmp2 = Number of bytes to write
+        bl    @filv                 ; Fill VDP memory block (>2000 - 37d0)
+              data >2000            ; \ i  tmp0 = VDP destination address
+              data 00               ; | i  tmp1 = Byte to write
+              data >17d0            ; / i  tmp2 = Number of bytes to write              
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
