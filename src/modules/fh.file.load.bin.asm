@@ -3,7 +3,7 @@
 
 ***************************************************************
 * fh.file.load.bin
-* Load binary file into memory
+* Load binary file into VDP/CPU memory
 ***************************************************************
 *  bl   @fh.file.load.bin
 *--------------------------------------------------------------
@@ -178,20 +178,29 @@ fh.file.load.bin.pabheader:
         ;------------------------------------------------------
         ; Step 1: Load binary image into VDP memory
         ;------------------------------------------------------
-        bl    @file.load            ; Read binary image
+        bl    @file.load            ; Read binary image to VDP memory
               data fh.vpab          ; \ i  p1 = Address of PAB in VRAM
                                     ; /
         ;------------------------------------------------------
         ; File error occured?
         ;------------------------------------------------------ 
+        coc   @wbit2,tmp2              ; Condition bit set?
+        jne   fh.file.load.bin.vdp2cpu ; No, condition bit clear, proceed
+        ;------------------------------------------------------
+        ; Yes, file error occured, process VDP PAB status byte
+        ;------------------------------------------------------ 
         bl    @vgetb                ; Read PAB status byte from VDP
-              data fh.vpab + 1      ; \ i p1   = Address of PAB status byte in VRAM
+              data fh.vpab + 1      ; \ i p1   = Address PAB status byte in VRAM
                                     ; / o tmp0 = PAB status byte (LSB)
-
-        mov   tmp0,@fh.pabstat         ; Save VDP PAB status byte
-        jeq   fh.file.load.bin.vdp2cpu ; No error, proceed
-        ci    tmp0,>000d               ; Ignore?
-        ;jne   fh.file.load.bin.error   ; handle error if not zero
+        ;------------------------------------------------------
+        ; Get relevant bits from status byte
+        ;------------------------------------------------------ 
+        andi  tmp0,>00e0               ; Mask to LSB, only bits 5-7 relevant
+        srl   tmp0,5                   ; Right justify bits
+        mov   tmp0,@fh.pabstat         ; Save PAB status byte
+        ci    tmp0,io.err.bad_open_attribute 
+        jeq   fh.file.load.bin.vdp2cpu ; Not considered an error, proceed
+        jmp   fh.file.load.bin.error   ; Handle file I/O error
         ;------------------------------------------------------
         ; Step 2: Copy loaded data from VDP to RAM if requested
         ;------------------------------------------------------ 
@@ -214,11 +223,11 @@ fh.file.load.bin.vdp2cpu:
         ; Step 3: Processing complete, call callback
         ;------------------------------------------------------ 
 fh.file.load.bin.success:
-        clr  @outparm1              ; Clear binary load failed flag
+        clr   @outparm1             ; Clear binary load failed flag
         mov   @fh.callback2,tmp0    ; Get pointer to Callback "Binary image loaded"
         jeq   fh.file.load.bin.exit ; Skip callback
         bl    *tmp0                 ; Run callback function
-        clr  @outparm1              ; Clear binary load failed flag, might be overwritten          
+        clr   @outparm1             ; Clear binary load failed flag, might be overwritten          
         jmp   fh.file.load.bin.exit ; Exit normally
         ;------------------------------------------------------
         ; Callback "File I/O error"

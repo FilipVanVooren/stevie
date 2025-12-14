@@ -191,6 +191,17 @@ fm.load.ea5.cb.fioerr.addmsg:
         ;------------------------------------------------------
 fm.load.ea5.cb.fioerr.errmsg:
         bl    @pane.errline.show    ; Show error line
+
+        bl    @putnum               ; Convert unsigned number to string
+              byte pane.botrow-1,12 ; \ i p0  = Cursor position
+              data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
+              data rambuf           ; | i p2  = Pointer to 5 byte string buffer
+              byte 48               ; | i p3H = Offset for ASCII digit 0
+              byte 32               ; / i p3L = Char for replacing leading 0's
+
+        bl    @putat                ; Display "I/O error code:"
+              byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+              data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------

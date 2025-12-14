@@ -2,7 +2,7 @@
 * Purpose...: Dialog "Help"
 
 *---------------------------------------------------------------
-* Show Stevie welcome/about dialog
+* Show Stevie help dialog
 *---------------------------------------------------------------
 dialog.help:
         dect  stack

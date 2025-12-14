@@ -1,7 +1,6 @@
 * FILE......: dialog.help.content.asm
 * Purpose...: Content for Help dialog
 
-
 ***************************************************************
 * dialog.help.content
 * Show content in modal dialog
@@ -33,6 +32,10 @@ dialog.help.content:
         bl    @filv
               data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 160
                                     ; Clear screen
+
+        bl    @hchar
+              byte pane.botrow - 4,2,32,76
+              data EOL              ; Fill with space characters
 
         ;
         ; Colours are also set in pane.colorscheme.load

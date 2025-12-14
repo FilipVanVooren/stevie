@@ -166,7 +166,8 @@ fh.file.read.mem.pabheader:
 
         bl    @xfile.open           ; Open file (register version)
                                     ; \ i  r0 = Address of PAB in VRAM
-                                    ; / i  r1 = File type/mode (in lSB)
+                                    ; | i  r1 = File type/mode (in lSB)
+                                    ; / o  tmp2 LSB = Status register contents
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.mem.record        
