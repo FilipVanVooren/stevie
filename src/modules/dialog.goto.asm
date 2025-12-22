@@ -37,7 +37,8 @@ dialog.goto:
 
         li    tmp0,txt.hint.goto
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-        clr   @cmdb.panhint2        ; No extra hint to display
+        li    tmp0,txt.ws1
+        mov   tmp0,@cmdb.panhint2   ; Display empty hint
 
         li    tmp0,txt.keys.goto
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line

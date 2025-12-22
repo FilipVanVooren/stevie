@@ -48,9 +48,10 @@ fm.run.ea5:
  
         bl    @scroff               ; Turn off screen
 
-        li    tmp0,vdp.fb.toprow.sit
-                                    ; VDP target address (2nd row on screen!)
+        li    tmp0,vdp.fb.toprow.sit - 80
+                                    ; VDP target address (1nd row on screen!)
         li    tmp1,32               ; Character to fill
+        ai    tmp2,80               ; Consider 1st row        
         bl    @xfilv                ; Fill VDP memory
                                     ; \ i  tmp0 = VDP target address
                                     ; | i  tmp1 = Byte to fill
