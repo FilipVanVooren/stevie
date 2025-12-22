@@ -100,7 +100,7 @@ fh.file.write.crash:
         ;------------------------------------------------------
 fh.file.write.edb.save1:        
         mov   @fh.callback1,tmp0
-        bl    *tmp0                 ; Run callback function                                    
+        bl    *tmp0                 ; Run callback function                                       
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------

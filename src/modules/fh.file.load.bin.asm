@@ -131,7 +131,11 @@ fh.file.load.bin.load1:
         bl    @filv                 ; Fill VDP memory block (>2000 - 37d0)
               data >2000            ; \ i  tmp0 = VDP destination address
               data 00               ; | i  tmp1 = Byte to write
-              data >17d0            ; / i  tmp2 = Number of bytes to write              
+              data >17d0            ; / i  tmp2 = Number of bytes to write 
+        ;------------------------------------------------------
+        ; Setup VDP memory same as after TI monitor start
+        ;------------------------------------------------------        
+        bl    @file.vmem            ; Setup VDP memory ranges
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------

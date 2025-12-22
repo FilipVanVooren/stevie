@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251214-2045020
+0002               * BUILD: 251222-1658340
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -933,13 +933,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0035 6010 0C53                 stri 'STEVIE 1.9.3'
+0035 6010 0C53                 stri 'STEVIE 1.9.4'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 33       
+     601C 34       
 0037               
 0041               
 0045               
@@ -967,7 +967,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008               *                                  for
 0009               *              the Texas Instruments TI-99/4A Home Computer
 0010               *
-0011               *                      2010-2023 by Filip Van Vooren
+0011               *                      2010-2026 by Filip Van Vooren
 0012               *
 0013               *              https://github.com/FilipVanVooren/spectra2.git
 0014               *******************************************************************************
@@ -14378,13 +14378,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 7216 2020                 text '  Stevie 1.9.3   '
+0011 7216 2020                 text '  Stevie 1.9.4   '
      7218 5374     
      721A 6576     
      721C 6965     
      721E 2031     
      7220 2E39     
-     7222 2E33     
+     7222 2E34     
      7224 2020     
      7226 20       
 0012                           even
@@ -15158,23 +15158,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      773A 20       
 0175                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 773B   32                        text '251214-2045020'
+0001 773B   32                        text '251222-1658340'
      773C 3531     
-     773E 3231     
-     7740 342D     
-     7742 3230     
-     7744 3435     
-     7746 3032     
+     773E 3232     
+     7740 322D     
+     7742 3136     
+     7744 3538     
+     7746 3334     
      7748 30       
                    < data.dialogs.asm
-0176 7749   20                        text ' - Stevie 1.9.3 - (c)2018-2025 Filip Van Vooren'
+0176 7749   20                        text ' - Stevie 1.9.4 - (c)2018-2025 Filip Van Vooren'
      774A 2D20     
      774C 5374     
      774E 6576     
      7750 6965     
      7752 2031     
      7754 2E39     
-     7756 2E33     
+     7756 2E34     
      7758 202D     
      775A 2028     
      775C 6329     

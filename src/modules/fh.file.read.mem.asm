@@ -132,7 +132,11 @@ fh.file.read.mem.load1:
         mov   @fh.callback1,tmp0
         jeq   fh.file.read.mem.pabheader
                                     ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
+        bl    *tmp0                 ; Run callback function
+        ;------------------------------------------------------
+        ; Setup VDP memory same as after TI monitor start
+        ;------------------------------------------------------        
+        bl    @file.vmem            ; Setup VDP memory ranges
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------

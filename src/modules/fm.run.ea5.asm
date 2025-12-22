@@ -37,9 +37,61 @@ fm.run.ea5:
         seto  @outparm1             ; \ Editor buffer dirty, set flag
         jmp   fm.run.ea5.exit       ; / and exit early 
         ;-------------------------------------------------------
+        ; Clear VDP screen buffer
+        ;-------------------------------------------------------
+!       bl    @filv
+              data sprsat,>0000,16  ; Turn off sprites (cursor)
+
+        mov   @fb.scrrows.max,tmp1
+        mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
+                                    ; 16 bit part is in tmp2!
+ 
+        bl    @scroff               ; Turn off screen
+
+        li    tmp0,vdp.fb.toprow.sit
+                                    ; VDP target address (2nd row on screen!)
+        li    tmp1,32               ; Character to fill
+        bl    @xfilv                ; Fill VDP memory
+                                    ; \ i  tmp0 = VDP target address
+                                    ; | i  tmp1 = Byte to fill
+                                    ; / i  tmp2 = Bytes to copy
+        ;-------------------------------------------------------
+        ; Reload colorscheme
+        ;-------------------------------------------------------
+        dect  stack
+        mov   @parm1,*stack         ; Push @parm1
+        dect  stack
+        mov   @parm2,*stack         ; Push @parm2
+        dect  stack
+        mov   @parm3,*stack         ; Push @parm3
+
+        seto  @parm1                ; \ Do not turn screen off while reloading
+                                    ; / color scheme
+
+        seto  @parm2                ; Skip marked lines colorization
+        clr   @parm3                ; Colorize all panes
+
+        clr   @tv.error.visible     ; No error message/pane
+
+        bl    @pane.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
+
+        mov   *stack+,@parm3        ; Pop @parm3
+        mov   *stack+,@parm2        ; Pop @parm2
+        mov   *stack+,@parm1        ; Pop @parm1
+        ;-------------------------------------------------------
+        ; Reset editor
+        ;-------------------------------------------------------
+        bl    @tv.reset             ; Reset editor       
+        ;-------------------------------------------------------
         ; Load EA5 program image into memory
         ;-------------------------------------------------------
-!       bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
+        bl    @fh.file.load.ea5     ; Load EA5 binary image into memory
                                     ; \ i  @parm1    = Pointer to length prefixed 
                                     ; |                file descriptor
                                     ; | o  @outparm1 = Entrypoint in EA5 program

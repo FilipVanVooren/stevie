@@ -68,6 +68,7 @@ main:
         ;-----------------------------------------------------------------------
         ; File handling
         ;-----------------------------------------------------------------------
+        copy  "fio_memprep.asm"          ; Spectra2 file memory prepare
         copy  "fh.file.read.mem.asm"     ; Read file into memory
         copy  "fh.file.read.edb.asm"     ; Read file to editor buffer
         copy  "fh.file.write.edb.asm"    ; Write editor buffer to file

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251214-2045020
+0002               * BUILD: 251222-1658340
 0003               ***************************************************************
                    < stevie_bd.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -947,13 +947,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0035 6010 0C53                 stri 'STEVIE 1.9.3'
+0035 6010 0C53                 stri 'STEVIE 1.9.4'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 33       
+     601C 34       
 0037               
 0041               
 0045               
@@ -981,7 +981,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008               *                                  for
 0009               *              the Texas Instruments TI-99/4A Home Computer
 0010               *
-0011               *                      2010-2023 by Filip Van Vooren
+0011               *                      2010-2026 by Filip Van Vooren
 0012               *
 0013               *              https://github.com/FilipVanVooren/spectra2.git
 0014               *******************************************************************************

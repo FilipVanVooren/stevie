@@ -163,7 +163,7 @@ fh.file.read.edb.load1:
         mov   @fh.callback1,tmp0
         jeq   fh.file.read.edb.pabheader
                                     ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
+        bl    *tmp0                 ; Run callback function
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
