@@ -158,4 +158,4 @@ main.continue:
         b     @tmgr                 ; Run kernel and timers
 
 
-txt.nof18a stri 'NO F18A FOUND. STEVIE CANNOT RUN HERE.'
+txt.nof18a stri 'NO F18A OR PICO9918 FOUND. CANNOT RUN.'

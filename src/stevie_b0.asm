@@ -39,7 +39,6 @@
 bankid  equ   bank1.rom             ; Set bank identifier to bank 1!
                                     ; We never want to return to bank 0, after
                                     ; doing trampoline call, from low memexp.
-
         aorg  >6000
         save  >6000,>8000           ; Save bank
         copy  "rom.header.asm"      ; Include cartridge header

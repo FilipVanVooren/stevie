@@ -24,7 +24,7 @@ skip_cpu_crc16            equ  1       ; Skip CPU memory CRC-16 calculation
 *--------------------------------------------------------------
 skip_sams_layout          equ  1       ; Skip SAMS memory layout routine
 skip_sams_size            equ  1       ; Skip SAMS card size check
-
+skip_fio_memprep          equ  1       ; Skip VDP memory setup for file I/O
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
@@ -34,8 +34,6 @@ kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 debug                     equ  0       ; Turn on debugging mode
-
-
 *--------------------------------------------------------------
 * ROM layout
 *--------------------------------------------------------------
