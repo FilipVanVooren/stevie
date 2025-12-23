@@ -175,8 +175,10 @@ fh.file.read.mem.pabheader:
                                     
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.mem.record        
+                                    ; No, proceed to read records
+
         b     @fh.file.read.mem.error  
-                                    ; Yes, IO error occured
+                                    ; Yes, IO error occured                                    
         ;------------------------------------------------------
         ; Step 2: Read file record
         ;------------------------------------------------------

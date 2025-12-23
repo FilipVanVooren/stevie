@@ -451,6 +451,10 @@ fh.file.read.edb.check.interrupt:
         li    tmp0,id.file.interrupt ; \ Set flag "keyboard interrupt" occured
         mov   tmp0,@fh.workmode      ; /
 
+        bl    @file.close           ; Close file
+              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
+                                    ; /        
+
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
         jeq   fh.file.read.edb.exit ; Skip callback
         bl    *tmp0                 ; Run callback function  

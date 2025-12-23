@@ -486,10 +486,25 @@ fm.loadsave.cb.fioerr.addmsg:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.errmsg:
         bl    @pane.errline.show    ; Show error line
+
+        li    tmp0,id.file.interrupt ; \ Flag "keyboard interrupt" set?
+        c     @fh.workmode,tmp0      ; /
+        jeq   !                      ; Yes, skip error code display
+
+        bl    @putnum               ; Convert unsigned number to string
+              byte pane.botrow-1,12 ; \ i p0  = Cursor position
+              data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
+              data rambuf           ; | i p2  = Pointer to 5 byte string buffer
+              byte 48               ; | i p3H = Offset for ASCII digit 0
+              byte 32               ; / i p3L = Char for replacing leading 0's
+
+        bl    @putat                ; Display "I/O error code:"
+              byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+              data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
         ;------------------------------------------------------
         ; Restore status line colors
-        ;------------------------------------------------------
-        bl    @pane.botline.busy.off  ; \ Put busyline indicator off
+        ;------------------------------------------------------      
+!       bl    @pane.botline.busy.off  ; \ Put busyline indicator off
                                       ; /
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
