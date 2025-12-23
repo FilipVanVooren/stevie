@@ -68,10 +68,12 @@ fh.file.load.ea5.parm:
 
         li    tmp0,fh.ea5.vdpbuf    ; \ Set VDP destination address
         mov   tmp0,@parm5           ; / 
-        seto  @parm6                ; Skip VRAM to RAM copy (>FFFF)
 
-        li    tmp0,8192
-        mov   tmp0,@parm7           ; Set maxmimum number of bytes to load
+        seto  @parm6                ; Skip VRAM to RAM copy (>FFFF)
+                                    ; We're going to manually copy in chunks
+
+        li    tmp0,8196             ; \ Set maxmimum number of bytes to load
+        mov   tmp0,@parm7           ; / 
         ;-------------------------------------------------------
         ; Step 2: Load EA5 image chunk into memory
         ;-------------------------------------------------------
@@ -88,15 +90,15 @@ fh.file.load.ea5.load:
                                     ; | i  @parm5 = VDP destination address
                                     ; | i  @parm6 = RAM destination address
                                     ; |             (>FFFF to skip)
-                                    ; | i  @parm7 = Maximum number of bytes to load
-                                    ; | o  @outparm1 = >0000 success, >FFFF failed
+                                    ; | i  @parm7 = Max number of bytes to load
+                                    ; | o  @outparm1 = >0000 ok, >FFFF failed
                                     ; /
 
         mov   @outparm1,tmp0        ; \
         ci    tmp0,>ffff            ; | Exit early if file could not be loaded
         jeq   fh.file.load.ea5.exit ; /
 
-        bl    @cpyv2m               ; Copy EA5 image chunk header from VDP to RAM
+        bl    @cpyv2m               ; Copy EA5 image chunk head from VDP to RAM
               data fh.ea5.vdpbuf    ; \ i  p1 = Source VDP address
               data rambuf           ; | i  p2 = Destination RAM address
               data 6                ; / i  p3 = Number of bytes to copy

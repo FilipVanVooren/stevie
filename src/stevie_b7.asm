@@ -87,7 +87,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Run Ea5 binary image in memory
         ;-----------------------------------------------------------------------        
-        copy  "mem.run.ea5.asm"            ; Run previously loaded EA5 binary image
+        copy  "mem.run.ea5.asm"            ; Run loaded EA5 binary image
         ;-----------------------------------------------------------------------
         ; Cartridge manager (FinalGROM 99, StrangeCart)
         ;-----------------------------------------------------------------------
@@ -102,6 +102,7 @@ main:
         ;-----------------------------------------------------------------------
         copy  "data.sams.layout.asm"       ; SAMS bank layout for multi-purpose
         copy  "data.tib.tokens.asm"        ; TI Basic tokens
+        copy  "data.patterns.ea5.asm"      ; Some patterns
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------
@@ -120,8 +121,8 @@ main:
         ;-----------------------------------------------------------------------
         ; Table for VDP modes
         ;-----------------------------------------------------------------------
-        copy  "data.vdpmodes.asm"   ; Table for VDP modes        
+        copy  "data.vdpmodes.asm"          ; Table for VDP modes
         ;-----------------------------------------------------------------------
         ; Vector table
         ;-----------------------------------------------------------------------
-        copy  "rom.vectors.bank7.asm"    ; Vector table bank 7
+        copy  "rom.vectors.bank7.asm"      ; Vector table bank 7
