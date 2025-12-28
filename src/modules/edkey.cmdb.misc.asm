@@ -24,8 +24,4 @@ edkey.action.cmdb.hide:
         ;-------------------------------------------------------
 edkey.action.cmdb.toggle.exit:
         b     @edkey.keyscan.hook.debounce; Back to editor main
-
-
-
-
         

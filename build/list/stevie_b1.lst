@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251223-2213550
+0002               * BUILD: 251228-1833250
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12772,10 +12772,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026 6ADC 0460  28         b     @edkey.keyscan.hook.debounce; Back to editor main
      6ADE 2EF2     
 0027               
-0028               
-0029               
-0030               
-0031               
                    < stevie_b1.asm
 0109                       copy  "edkey.cmdb.cfg.clip.asm"     ; Configure clipboard
      **** ****     > edkey.cmdb.cfg.clip.asm

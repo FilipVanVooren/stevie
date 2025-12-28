@@ -39,7 +39,7 @@ pane.filebrowser.colbar:
         ;------------------------------------------------------
         ; Set color of "[]" maker
         ;------------------------------------------------------
-        li    tmp1,>00b0            ; Yellow
+        mov   tmp3,tmp1
         bl    @xvputb               ; Write single byte to VDP
                                     ; i \  tmp0 = Destination VFP address
                                     ; i /  tmp1 = byte to write
@@ -60,7 +60,7 @@ pane.filebrowser.colbar:
         ;------------------------------------------------------
         mov   @waux1,tmp0           ; Restore TAT position
         ai    tmp0,24               ; End marker
-        li    tmp1,>00b0            ; Yellow
+        mov   tmp3,tmp1             ; Restore color combination
         bl    @xvputb               ; Write single byte to VDP
                                     ; i \  tmp0 = Destination VFP address
                                     ; i /  tmp1 = byte to write
