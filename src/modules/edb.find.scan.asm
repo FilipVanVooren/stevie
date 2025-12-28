@@ -60,7 +60,7 @@ edb.find.scan
         srl   tmp0,8                ; | MSB to LSB
         mov   tmp0,@edb.srch.strlen ; / Save search string length
 
-        jgt   !                     ; Continue if length search stirng > 0
+        jgt   !                     ; Continue if length search string > 0
         b     @edb.find.scan.exit   ; Exit early on empty search string
 
 !       c     @edb.block.m1,@w$ffff   ; Marker M1 unset?
@@ -200,6 +200,18 @@ edb.find.scan.showline:
               byte pane.botrow,74   ; Show lines processed
               data fh.records,rambuf,>3020
         ;------------------------------------------------------
+        ; Check for keyboard interrupt <FCTN-4>
+        ;------------------------------------------------------
+        bl    @>0020                ; Check keyboard. Destroys r12
+        jne   edb.find.scan.checkcomplete
+                                    ; No FCTN-4 pressed
+        ;------------------------------------------------------
+        ; Interrupt occured
+        ;------------------------------------------------------
+        li    tmp0,txt.abort.search ; \ 
+        mov   tmp0,@waux1           ; / Set Search aborted message
+        jmp   edb.find.scan.done    ; Exit scan
+        ;------------------------------------------------------
         ; Check if scan is complete
         ;------------------------------------------------------
 edb.find.scan.checkcomplete:
@@ -210,7 +222,7 @@ edb.find.scan.checkcomplete:
                                     ; Not yet, process next line
 
         li   tmp0,txt.done.search   ; \ 
-        mov  tmp0,@waux1            ; / Set Search completed message
+        mov  tmp0,@waux1            ; / Set Search completed message        
         ;------------------------------------------------------
         ; Scan completed. Restore 1st line in framebuffer
         ;------------------------------------------------------
@@ -265,5 +277,7 @@ edb.find.scan.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller        
 
+txt.abort.search   stri 'Search aborted'
+                   even
 txt.done.search    stri 'Search completed'
                    even

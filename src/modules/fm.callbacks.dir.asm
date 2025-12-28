@@ -82,7 +82,7 @@
 * fm.dir.callback1
 * Callback function "Before open file"
 ***************************************************************
-* bl  @fm.dir.callback2
+* bl  @fm.dir.callback1
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -100,6 +100,12 @@ fm.dir.callback1:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
         ;------------------------------------------------------
         ; Prepare for reading directory
         ;------------------------------------------------------
@@ -118,11 +124,21 @@ fm.dir.callback1:
 
         bl    @putat
               byte pane.botrow,0
-              data txt.readdir      ; Display "Reading directory...."
+              data txt.readdir      ; Display "Reading catalog..."
+
+        bl    @at
+              byte pane.botrow,19   ; Set cursor YX position
+
+        mov   @fh.fname.ptr,tmp1    ; Get pointer to device/directory name
+        bl    @xutst0               ; \ Display length-prefixed string
+                                    ; / tmp1 = pointer to length-prefixed string
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fm.dir.callback1.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

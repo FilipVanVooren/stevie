@@ -38,11 +38,11 @@ txt.block.save     stri 'Saving block....'
                    even
 txt.block.clip     stri 'Copying to clipboard....'
                    even
-txt.block.print    stri 'Printing block....'
+txt.block.print    stri 'Printing block...'
                    even
-txt.clearmem       stri 'Clearing memory....'
+txt.clearmem       stri 'Clearing memory...'
                    even
-txt.readdir        stri 'Reading catalog....'                   
+txt.readdir        stri 'Reading catalog...'                   
                    even
 txt.done.load      stri 'Load completed'
                    even
@@ -131,7 +131,7 @@ txt.memfull.load   stri 'Index full.'
                    even
 txt.block.inside   stri 'Copy/Move target must be outside M1-M2 range'
                    even
-txt.ioerr.break    stri 'File operation interrupted by user (break).'
+txt.ioerr.break    stri 'File operation aborted by user (break).'
                    even
 txt.ioerr.code     stri 'I/O error code:'
                    even                
