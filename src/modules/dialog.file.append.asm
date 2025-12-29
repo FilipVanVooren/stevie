@@ -1,9 +1,9 @@
-* FILE......: dialog.append.asm
-* Purpose...: Dialog "Append DV80 file"
+* FILE......: dialog.file.append.asm
+* Purpose...: Dialog "Append file"
 
 ***************************************************************
 * dialog.append
-* Open Dialog for inserting DV 80 file
+* Open Dialog "Append file"
 ***************************************************************
 * bl @dialog.append
 *--------------------------------------------------------------

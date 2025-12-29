@@ -1,9 +1,9 @@
-* FILE......: dialog.insert.asm
-* Purpose...: Dialog "Insert DV80 file"
+* FILE......: dialog.file.insert.asm
+* Purpose...: Dialog "Insert file"
 
 ***************************************************************
 * dialog.insert
-* Open Dialog for inserting DV 80 file
+* Dialog "Insert file"
 ***************************************************************
 * bl @dialog.insert
 *--------------------------------------------------------------

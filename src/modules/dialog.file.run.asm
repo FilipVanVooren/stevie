@@ -1,9 +1,9 @@
-* FILE......: dialog.run.asm
+* FILE......: dialog.file.run.asm
 * Purpose...: Dialog "Run program image (EA5)"
 
 ***************************************************************
 * dialog.run
-* Open Dialog for running program image (EA5)
+* Dialog "Run program image (EA5)"
 ***************************************************************
 * bl @dialog.run
 *--------------------------------------------------------------

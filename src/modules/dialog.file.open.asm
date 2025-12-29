@@ -1,9 +1,9 @@
-* FILE......: dialog.open.asm
+* FILE......: dialog.file.open.asm
 * Purpose...: Dialog "Open File"
 
 ***************************************************************
 * dialog.open
-* Open Dialog for loading DV 80 file
+* Dialog "Open file"
 ***************************************************************
 * bl @dialog.open
 *--------------------------------------------------------------

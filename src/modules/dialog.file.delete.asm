@@ -1,9 +1,9 @@
-* FILE......: dialog.delete.asm
+* FILE......: dialog.file.delete.asm
 * Purpose...: Dialog "Delete File"
 
 ***************************************************************
 * dialog.delete
-* Delete Dialog for removing file
+* Delete "Delete file"
 ***************************************************************
 * bl @dialog.delete
 *--------------------------------------------------------------

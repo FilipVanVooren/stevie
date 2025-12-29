@@ -508,6 +508,16 @@ dialog.find.vector:
 
 
 ***************************************************************
+* Stub for dialog "Delete File"
+* bank3 vec.44
+********|*****|*********************|**************************
+dialog.delete:
+        mov   @dialog.delete.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.delete.vector:
+        data  vec.44
+
+***************************************************************
 * Stub for dialog "FinalGROM 99 Cartridge"
 * bank3 vec.45
 ********|*****|*********************|**************************

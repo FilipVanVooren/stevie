@@ -245,6 +245,9 @@ keymap_actions.cmdb:
         byte  key.uc.a, id.dialog.file
         data  dialog.append
 
+        byte  key.uc.d, id.dialog.file
+        data  dialog.delete
+
         byte  key.uc.c, id.dialog.file
         data  dialog.cat
 
@@ -407,6 +410,20 @@ keymap_actions.cmdb:
 
         byte  key.fctn.6, id.dialog.printblock
         data  edkey.action.cmdb.lineterm.toggle             
+        ;-------------------------------------------------------
+        ; Dialog: Delete file
+        ;-------------------------------------------------------
+        byte  key.enter, id.dialog.delete
+        data  edkey.action.cmdb.load
+
+        byte  key.fctn.e, id.dialog.delete
+        data  edkey.action.cmdb.pick.prev
+
+        byte  key.fctn.x, id.dialog.delete
+        data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.delete
+        data  edkey.action.cmdb.updir
         ;-------------------------------------------------------
         ; Dialog: Unsaved changes
         ;-------------------------------------------------------

@@ -1,9 +1,9 @@
-* FILE......: dialog.save.asm
-* Purpose...: Dialog "Save DV80 file"
+* FILE......: dialog.file.save.asm
+* Purpose...: Dialog "Save file"
 
 ***************************************************************
 * dialog.save
-* Dialog "Save"
+* Dialog "Save file"
 ***************************************************************
 * bl @dialog.save
 *--------------------------------------------------------------

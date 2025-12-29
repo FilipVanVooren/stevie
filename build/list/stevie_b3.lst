@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251229-1944200
+0002               * BUILD: 251229-2014190
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -10233,14 +10233,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036 6208 C2F9  30         mov   *stack+,r11           ; Pop r11
 0037 620A 045B  20         b     *r11                  ; Return
                    < stevie_b3.asm
-0076                       copy  "dialog.open.asm"         ; Dialog "Open file"
-     **** ****     > dialog.open.asm
-0001               * FILE......: dialog.open.asm
+0076                       copy  "dialog.file.open.asm"    ; Dialog "Open file"
+     **** ****     > dialog.file.open.asm
+0001               * FILE......: dialog.file.open.asm
 0002               * Purpose...: Dialog "Open File"
 0003               
 0004               ***************************************************************
 0005               * dialog.open
-0006               * Open Dialog for loading DV 80 file
+0006               * Dialog "Open file"
 0007               ***************************************************************
 0008               * bl @dialog.open
 0009               *--------------------------------------------------------------
@@ -10396,14 +10396,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0127 62A6 C2F9  30         mov   *stack+,r11           ; Pop R11
 0128 62A8 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0077                       copy  "dialog.save.asm"         ; Dialog "Save file"
-     **** ****     > dialog.save.asm
-0001               * FILE......: dialog.save.asm
-0002               * Purpose...: Dialog "Save DV80 file"
+0077                       copy  "dialog.file.save.asm"    ; Dialog "Save file"
+     **** ****     > dialog.file.save.asm
+0001               * FILE......: dialog.file.save.asm
+0002               * Purpose...: Dialog "Save file"
 0003               
 0004               ***************************************************************
 0005               * dialog.save
-0006               * Dialog "Save"
+0006               * Dialog "Save file"
 0007               ***************************************************************
 0008               * bl @dialog.save
 0009               *--------------------------------------------------------------
@@ -10532,151 +10532,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0102 6332 C2F9  30         mov   *stack+,r11           ; Pop R11
 0103 6334 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0078                       copy  "dialog.print.asm"        ; Dialog "Print file"
-     **** ****     > dialog.print.asm
-0001               * FILE......: dialog.print.asm
-0002               * Purpose...: Dialog "Print file"
-0003               
-0004               ***************************************************************
-0005               * dialog.print
-0006               * Dialog "Print"
-0007               ***************************************************************
-0008               * bl @dialog.print
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * none
-0012               *--------------------------------------------------------------
-0013               * OUTPUT
-0014               * none
-0015               *--------------------------------------------------------------
-0016               * Register usage
-0017               * tmp0
-0018               *--------------------------------------------------------------
-0019               * Notes
-0020               ********|*****|*********************|**************************
-0021               dialog.print:
-0022 6336 0649  14         dect  stack
-0023 6338 C64B  30         mov   r11,*stack            ; Save return address
-0024 633A 0649  14         dect  stack
-0025 633C C644  30         mov   tmp0,*stack           ; Push tmp0
-0026                       ;-------------------------------------------------------
-0027                       ; Crunch current row if dirty
-0028                       ;-------------------------------------------------------
-0029 633E 8820  50         c     @fb.row.dirty,@w$ffff
-     6340 A30A     
-     6342 2022     
-0030 6344 1604  14         jne   !                     ; Skip crunching if clean
-0031 6346 06A0  32         bl    @edb.line.pack        ; Copy line to editor buffer
-     6348 712E     
-0032 634A 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
-     634C A30A     
-0033                       ;-------------------------------------------------------
-0034                       ; Setup dialog
-0035                       ;-------------------------------------------------------
-0036 634E 8820  50 !       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-     6350 A510     
-     6352 2022     
-0037 6354 1307  14         jeq   dialog.print.default  ; Yes, so show default dialog
-0038                       ;-------------------------------------------------------
-0039                       ; Setup dialog title
-0040                       ;-------------------------------------------------------
-0041 6356 0204  20         li    tmp0,id.dialog.printblock
-     6358 0012     
-0042 635A C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     635C A720     
-0043 635E 0204  20         li    tmp0,txt.head.print2  ; Title "Print block to file"
-     6360 74F7     
-0044               
-0045 6362 1006  14         jmp   dialog.print.header
-0046                       ;-------------------------------------------------------
-0047                       ; Default dialog
-0048                       ;-------------------------------------------------------
-0049               dialog.print.default:
-0050 6364 0204  20         li    tmp0,id.dialog.print
-     6366 0011     
-0051 6368 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     636A A720     
-0052 636C 0204  20         li    tmp0,txt.head.print   ; Title "Print file"
-     636E 74E8     
-0053                       ;-------------------------------------------------------
-0054                       ; Setup header
-0055                       ;-------------------------------------------------------
-0056               dialog.print.header:
-0057 6370 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     6372 A724     
-0058               
-0059 6374 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     6376 A726     
-0060 6378 04E0  34         clr   @cmdb.panmarkers      ; No key markers
-     637A A72C     
-0061               
-0062 637C 0204  20         li    tmp0,txt.hint.print
-     637E 7507     
-0063 6380 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     6382 A728     
-0064 6384 04E0  34         clr   @cmdb.panhint2        ; No extra hint to display
-     6386 A72A     
-0065               
-0066 6388 0204  20         li    tmp0,txt.keys.save1
-     638A 7445     
-0067 638C C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     638E A72E     
-0068               
-0069 6390 04E0  34         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
-     6392 A44E     
-0070                       ;-------------------------------------------------------
-0071                       ; Line termination on ?
-0072                       ;-------------------------------------------------------
-0073 6394 C120  34         mov   @edb.lineterm,tmp0    ; Get line termination mode + char
-     6396 A524     
-0074 6398 0244  22         andi  tmp0,>ff00            ; Only interested in MSB
-     639A FF00     
-0075 639C 1303  14         jeq   !                     ; Line termination mode is off
-0076                       ;-------------------------------------------------------
-0077                       ; Line termination on
-0078                       ;-------------------------------------------------------
-0079 639E 0204  20         li    tmp0,txt.keys.save2
-     63A0 747A     
-0080 63A2 1002  14         jmp   dialog.print.cmdline
-0081                       ;-------------------------------------------------------
-0082                       ; Line termination off
-0083                       ;-------------------------------------------------------
-0084 63A4 0204  20 !       li    tmp0,txt.keys.save1
-     63A6 7445     
-0085                       ;-------------------------------------------------------
-0086                       ; Set command line
-0087                       ;-------------------------------------------------------
-0088               dialog.print.cmdline:
-0089 63A8 0204  20         li    tmp0,tv.printer.fname ; Set printer name
-     63AA DE00     
-0090 63AC C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     63AE A006     
-0091               
-0092 63B0 06A0  32         bl    @cmdb.cmd.set         ; Set command value
-     63B2 6EB2     
-0093                                                   ; \ i  @parm1 = Pointer to string w. preset
-0094                                                   ; /
-0095                       ;-------------------------------------------------------
-0096                       ; Set cursor shape
-0097                       ;-------------------------------------------------------
-0098 63B4 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     63B6 7176     
-0099                       ;-------------------------------------------------------
-0100                       ; Exit
-0101                       ;-------------------------------------------------------
-0102               dialog.print.exit:
-0103 63B8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0104 63BA C2F9  30         mov   *stack+,r11           ; Pop R11
-0105 63BC 045B  20         b     *r11                  ; Return to caller
-                   < stevie_b3.asm
-0079                       copy  "dialog.append.asm"       ; Dialog "Append file"
-     **** ****     > dialog.append.asm
-0001               * FILE......: dialog.append.asm
-0002               * Purpose...: Dialog "Append DV80 file"
+0078                       copy  "dialog.file.append.asm"  ; Dialog "Append file"
+     **** ****     > dialog.file.append.asm
+0001               * FILE......: dialog.file.append.asm
+0002               * Purpose...: Dialog "Append file"
 0003               
 0004               ***************************************************************
 0005               * dialog.append
-0006               * Open Dialog for inserting DV 80 file
+0006               * Open Dialog "Append file"
 0007               ***************************************************************
 0008               * bl @dialog.append
 0009               *--------------------------------------------------------------
@@ -10692,116 +10555,116 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.append:
-0022 63BE 0649  14         dect  stack
-0023 63C0 C64B  30         mov   r11,*stack            ; Save return address
-0024 63C2 0649  14         dect  stack
-0025 63C4 C644  30         mov   tmp0,*stack           ; Push tmp0
-0026 63C6 0649  14         dect  stack
-0027 63C8 C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 6336 0649  14         dect  stack
+0023 6338 C64B  30         mov   r11,*stack            ; Save return address
+0024 633A 0649  14         dect  stack
+0025 633C C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 633E 0649  14         dect  stack
+0027 6340 C645  30         mov   tmp1,*stack           ; Push tmp1
 0028                       ;-------------------------------------------------------
 0029                       ; Skip dialog if editor buffer is locked
 0030                       ;-------------------------------------------------------
-0031 63CA C120  34         mov   @edb.locked,tmp0      ; Is editor locked?
-     63CC A5DA     
-0032 63CE 162F  14         jne   dialog.append.exit    ; yes, skip dialog
+0031 6342 C120  34         mov   @edb.locked,tmp0      ; Is editor locked?
+     6344 A5DA     
+0032 6346 162F  14         jne   dialog.append.exit    ; yes, skip dialog
 0033                       ;-------------------------------------------------------
 0034                       ; Setup dialog
 0035                       ;-------------------------------------------------------
 0036               dialog.append.setup:
-0037 63D0 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
-     63D2 71D0     
+0037 6348 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
+     634A 71D0     
 0038               
-0039 63D4 0204  20         li    tmp0,id.dialog.append
-     63D6 000C     
-0040 63D8 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     63DA A720     
+0039 634C 0204  20         li    tmp0,id.dialog.append
+     634E 000C     
+0040 6350 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     6352 A720     
 0041               
-0042 63DC 0204  20         li    tmp0,txt.head.append
-     63DE 74B0     
-0043 63E0 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     63E2 A724     
+0042 6354 0204  20         li    tmp0,txt.head.append
+     6356 74B0     
+0043 6358 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     635A A724     
 0044               
-0045 63E4 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     63E6 A726     
-0046 63E8 04E0  34         clr   @cmdb.panmarkers      ; No key markers
-     63EA A72C     
+0045 635C 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     635E A726     
+0046 6360 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+     6362 A72C     
 0047               
-0048 63EC 0204  20         li    tmp0,txt.hint.append
-     63EE 7392     
-0049 63F0 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     63F2 A728     
+0048 6364 0204  20         li    tmp0,txt.hint.append
+     6366 7392     
+0049 6368 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     636A A728     
 0050               
-0051 63F4 0204  20         li    tmp0,txt.hint.append2
-     63F6 73E6     
-0052 63F8 C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-     63FA A72A     
+0051 636C 0204  20         li    tmp0,txt.hint.append2
+     636E 73E6     
+0052 6370 C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
+     6372 A72A     
 0053               
-0054 63FC 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
-     63FE A44E     
-0055 6400 1303  14         jeq   !
+0054 6374 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
+     6376 A44E     
+0055 6378 1303  14         jeq   !
 0056                       ;-------------------------------------------------------
 0057                       ; Show that FastMode is on
 0058                       ;-------------------------------------------------------
-0059 6402 0204  20         li    tmp0,txt.keys.insert  ; Highlight FastMode
-     6404 72BA     
-0060 6406 1002  14         jmp   dialog.append.keylist
+0059 637A 0204  20         li    tmp0,txt.keys.insert  ; Highlight FastMode
+     637C 72BA     
+0060 637E 1002  14         jmp   dialog.append.keylist
 0061                       ;-------------------------------------------------------
 0062                       ; Show that FastMode is off
 0063                       ;-------------------------------------------------------
-0064 6408 0204  20 !       li    tmp0,txt.keys.insert
-     640A 72BA     
+0064 6380 0204  20 !       li    tmp0,txt.keys.insert
+     6382 72BA     
 0065                       ;-------------------------------------------------------
 0066                       ; Show dialog
 0067                       ;-------------------------------------------------------
 0068               dialog.append.keylist:
-0069 640C C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     640E A72E     
+0069 6384 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     6386 A72E     
 0070                       ;-------------------------------------------------------
 0071                       ; Set command line
 0072                       ;-------------------------------------------------------
-0073 6410 0204  20         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
-     6412 A7B6     
-0074 6414 C154  26         mov   *tmp0,tmp1            ; Anything set?
-0075 6416 1304  14         jeq   dialog.append.cursor  ; No default filename, skip
+0073 6388 0204  20         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
+     638A A7B6     
+0074 638C C154  26         mov   *tmp0,tmp1            ; Anything set?
+0075 638E 1304  14         jeq   dialog.append.cursor  ; No default filename, skip
 0076               
-0077 6418 C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     641A A006     
-0078 641C 06A0  32         bl    @cmdb.cmd.set         ; Set command value
-     641E 6EB2     
+0077 6390 C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     6392 A006     
+0078 6394 06A0  32         bl    @cmdb.cmd.set         ; Set command value
+     6396 6EB2     
 0079                                                   ; \ i  @parm1 = Pointer to string w. preset
 0080                                                   ; /
 0081                       ;-------------------------------------------------------
 0082                       ; Set cursor shape
 0083                       ;-------------------------------------------------------
 0084               dialog.append.cursor:
-0085 6420 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6422 7176     
-0086 6424 C820  54         mov   @tv.curshape,@ramsat+2
-     6426 A214     
-     6428 A058     
+0085 6398 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     639A 7176     
+0086 639C C820  54         mov   @tv.curshape,@ramsat+2
+     639E A214     
+     63A0 A058     
 0087                                                   ; Get cursor shape and color
 0088                       ;-------------------------------------------------------
 0089                       ; Show file browser
 0090                       ;-------------------------------------------------------
-0091 642A 06A0  32         bl    @pane.filebrowser     ; Show file browser
-     642C 71F4     
+0091 63A2 06A0  32         bl    @pane.filebrowser     ; Show file browser
+     63A4 71F4     
 0092                       ;-------------------------------------------------------
 0093                       ; Exit
 0094                       ;-------------------------------------------------------
 0095               dialog.append.exit:
-0096 642E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0097 6430 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0098 6432 C2F9  30         mov   *stack+,r11           ; Pop R11
-0099 6434 045B  20         b     *r11                  ; Return to caller
+0096 63A6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0097 63A8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0098 63AA C2F9  30         mov   *stack+,r11           ; Pop R11
+0099 63AC 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0080                       copy  "dialog.insert.asm"       ; Dialog "Insert file at line"
-     **** ****     > dialog.insert.asm
-0001               * FILE......: dialog.insert.asm
-0002               * Purpose...: Dialog "Insert DV80 file"
+0079                       copy  "dialog.file.insert.asm"  ; Dialog "Insert file at line"
+     **** ****     > dialog.file.insert.asm
+0001               * FILE......: dialog.file.insert.asm
+0002               * Purpose...: Dialog "Insert file"
 0003               
 0004               ***************************************************************
 0005               * dialog.insert
-0006               * Open Dialog for inserting DV 80 file
+0006               * Dialog "Insert file"
 0007               ***************************************************************
 0008               * bl @dialog.insert
 0009               *--------------------------------------------------------------
@@ -10817,166 +10680,166 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.insert:
-0022 6436 0649  14         dect  stack
-0023 6438 C64B  30         mov   r11,*stack            ; Save return address
-0024 643A 0649  14         dect  stack
-0025 643C C644  30         mov   tmp0,*stack           ; Push tmp0
-0026 643E 0649  14         dect  stack
-0027 6440 C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 63AE 0649  14         dect  stack
+0023 63B0 C64B  30         mov   r11,*stack            ; Save return address
+0024 63B2 0649  14         dect  stack
+0025 63B4 C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 63B6 0649  14         dect  stack
+0027 63B8 C645  30         mov   tmp1,*stack           ; Push tmp1
 0028                       ;-------------------------------------------------------
 0029                       ; Skip dialog if editor buffer is locked
 0030                       ;-------------------------------------------------------
-0031 6442 C120  34         mov   @edb.locked,tmp0      ; Is editor locked?
-     6444 A5DA     
-0032 6446 164F  14         jne   dialog.insert.exit    ; yes, skip dialog
+0031 63BA C120  34         mov   @edb.locked,tmp0      ; Is editor locked?
+     63BC A5DA     
+0032 63BE 164F  14         jne   dialog.insert.exit    ; yes, skip dialog
 0033                       ;-------------------------------------------------------
 0034                       ; Setup dialog
 0035                       ;-------------------------------------------------------
 0036               dialog.insert.setup:
-0037 6448 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
-     644A 71D0     
+0037 63C0 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
+     63C2 71D0     
 0038               
-0039 644C 0204  20         li    tmp0,id.dialog.insert
-     644E 000B     
-0040 6450 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     6452 A720     
+0039 63C4 0204  20         li    tmp0,id.dialog.insert
+     63C6 000B     
+0040 63C8 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     63CA A720     
 0041                       ;------------------------------------------------------
 0042                       ; Include line number in pane header
 0043                       ;------------------------------------------------------
-0044 6454 06A0  32         bl    @film
-     6456 2236     
-0045 6458 A784                   data cmdb.panhead.buf,>00,50
-     645A 0000     
-     645C 0032     
+0044 63CC 06A0  32         bl    @film
+     63CE 2236     
+0045 63D0 A784                   data cmdb.panhead.buf,>00,50
+     63D2 0000     
+     63D4 0032     
 0046                                                   ; Clear pane header buffer
 0047               
-0048 645E 06A0  32         bl    @cpym2m
-     6460 253A     
-0049 6462 74C0                   data txt.head.insert,cmdb.panhead.buf,25
-     6464 A784     
-     6466 0019     
+0048 63D6 06A0  32         bl    @cpym2m
+     63D8 253A     
+0049 63DA 74C0                   data txt.head.insert,cmdb.panhead.buf,25
+     63DC A784     
+     63DE 0019     
 0050               
-0051 6468 C820  54         mov   @fb.row,@parm1        ; Get row at cursor
-     646A A306     
-     646C A006     
-0052 646E 06A0  32         bl    @fb.row2line          ; Row to editor line
-     6470 31BE     
+0051 63E0 C820  54         mov   @fb.row,@parm1        ; Get row at cursor
+     63E2 A306     
+     63E4 A006     
+0052 63E6 06A0  32         bl    @fb.row2line          ; Row to editor line
+     63E8 31BE     
 0053                                                   ; \ i @fb.topline = Top line in frame buffer
 0054                                                   ; | i @parm1      = Row in frame buffer
 0055                                                   ; / o @outparm1   = Matching line in EB
 0056               
-0057 6472 05E0  34         inct  @outparm1             ; \ Add base 1 and insert at line
-     6474 A018     
+0057 63EA 05E0  34         inct  @outparm1             ; \ Add base 1 and insert at line
+     63EC A018     
 0058                                                   ; / following cursor, not line at cursor.
 0059               
-0060 6476 06A0  32         bl    @mknum                ; Convert integer to string
-     6478 2A56     
-0061 647A A018                   data  outparm1        ; \ i  p0 = Pointer to 16 bit unsigned int
-0062 647C A100                   data  rambuf          ; | i  p1 = Pointer to 5 byte string buffer
-0063 647E 30                     byte  48              ; | i  p2 = MSB offset for ASCII digit
-0064 647F   30                   byte  48              ; / i  p2 = LSB char for replacing leading 0
+0060 63EE 06A0  32         bl    @mknum                ; Convert integer to string
+     63F0 2A56     
+0061 63F2 A018                   data  outparm1        ; \ i  p0 = Pointer to 16 bit unsigned int
+0062 63F4 A100                   data  rambuf          ; | i  p1 = Pointer to 5 byte string buffer
+0063 63F6 30                     byte  48              ; | i  p2 = MSB offset for ASCII digit
+0064 63F7   30                   byte  48              ; / i  p2 = LSB char for replacing leading 0
 0065               
-0066 6480 06A0  32         bl    @cpym2m
-     6482 253A     
-0067 6484 A100                   data rambuf,cmdb.panhead.buf + 24,5
-     6486 A79C     
-     6488 0005     
+0066 63F8 06A0  32         bl    @cpym2m
+     63FA 253A     
+0067 63FC A100                   data rambuf,cmdb.panhead.buf + 24,5
+     63FE A79C     
+     6400 0005     
 0068                                                   ; Add line number to buffer
 0069               
-0070 648A 0204  20         li    tmp0,29
-     648C 001D     
-0071 648E 0A84  32         sla   tmp0,8
-0072 6490 D804  38         movb  tmp0,@cmdb.panhead.buf ; Set length byte
-     6492 A784     
+0070 6402 0204  20         li    tmp0,29
+     6404 001D     
+0071 6406 0A84  32         sla   tmp0,8
+0072 6408 D804  38         movb  tmp0,@cmdb.panhead.buf ; Set length byte
+     640A A784     
 0073               
-0074 6494 0204  20         li    tmp0,cmdb.panhead.buf
-     6496 A784     
-0075 6498 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     649A A724     
+0074 640C 0204  20         li    tmp0,cmdb.panhead.buf
+     640E A784     
+0075 6410 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     6412 A724     
 0076                       ;------------------------------------------------------
 0077                       ; Other panel strings
 0078                       ;------------------------------------------------------
-0079 649C 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     649E A726     
-0080 64A0 04E0  34         clr   @cmdb.panmarkers      ; No key markers
-     64A2 A72C     
+0079 6414 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     6416 A726     
+0080 6418 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+     641A A72C     
 0081               
-0082 64A4 0204  20         li    tmp0,txt.hint.insert
-     64A6 7392     
-0083 64A8 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     64AA A728     
+0082 641C 0204  20         li    tmp0,txt.hint.insert
+     641E 7392     
+0083 6420 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     6422 A728     
 0084               
-0085 64AC 0204  20         li    tmp0,txt.hint.insert2
-     64AE 73E6     
-0086 64B0 C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-     64B2 A72A     
+0085 6424 0204  20         li    tmp0,txt.hint.insert2
+     6426 73E6     
+0086 6428 C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
+     642A A72A     
 0087               
-0088 64B4 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
-     64B6 A44E     
-0089 64B8 1303  14         jeq   !
+0088 642C 0760  38         abs   @fh.offsetopcode      ; FastMode is off ?
+     642E A44E     
+0089 6430 1303  14         jeq   !
 0090                       ;-------------------------------------------------------
 0091                       ; Show that FastMode is on
 0092                       ;-------------------------------------------------------
-0093 64BA 0204  20         li    tmp0,txt.keys.insert  ; Highlight FastMode
-     64BC 72BA     
-0094 64BE 1002  14         jmp   dialog.insert.keylist
+0093 6432 0204  20         li    tmp0,txt.keys.insert  ; Highlight FastMode
+     6434 72BA     
+0094 6436 1002  14         jmp   dialog.insert.keylist
 0095                       ;-------------------------------------------------------
 0096                       ; Show that FastMode is off
 0097                       ;-------------------------------------------------------
-0098 64C0 0204  20 !       li    tmp0,txt.keys.insert
-     64C2 72BA     
+0098 6438 0204  20 !       li    tmp0,txt.keys.insert
+     643A 72BA     
 0099                       ;-------------------------------------------------------
 0100                       ; Show dialog
 0101                       ;-------------------------------------------------------
 0102               dialog.insert.keylist:
-0103 64C4 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     64C6 A72E     
+0103 643C C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     643E A72E     
 0104                       ;-------------------------------------------------------
 0105                       ; Set command line
 0106                       ;-------------------------------------------------------
-0107 64C8 0204  20         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
-     64CA A7B6     
-0108 64CC C154  26         mov   *tmp0,tmp1            ; Anything set?
-0109 64CE 1304  14         jeq   dialog.insert.cursor  ; No default filename, skip
+0107 6440 0204  20         li    tmp0,cmdb.dflt.fname  ; Get pointer to default filename
+     6442 A7B6     
+0108 6444 C154  26         mov   *tmp0,tmp1            ; Anything set?
+0109 6446 1304  14         jeq   dialog.insert.cursor  ; No default filename, skip
 0110               
-0111 64D0 C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     64D2 A006     
-0112 64D4 06A0  32         bl    @cmdb.cmd.set         ; Set command value
-     64D6 6EB2     
+0111 6448 C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     644A A006     
+0112 644C 06A0  32         bl    @cmdb.cmd.set         ; Set command value
+     644E 6EB2     
 0113                                                   ; \ i  @parm1 = Pointer to string w. preset
 0114                                                   ; /
 0115                       ;-------------------------------------------------------
 0116                       ; Set cursor shape
 0117                       ;-------------------------------------------------------
 0118               dialog.insert.cursor:
-0119 64D8 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     64DA 7176     
-0120 64DC C820  54         mov   @tv.curshape,@ramsat+2
-     64DE A214     
-     64E0 A058     
+0119 6450 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     6452 7176     
+0120 6454 C820  54         mov   @tv.curshape,@ramsat+2
+     6456 A214     
+     6458 A058     
 0121                                                   ; Get cursor shape and color
 0122                       ;-------------------------------------------------------
 0123                       ; Show file browser
 0124                       ;-------------------------------------------------------
-0125 64E2 06A0  32         bl    @pane.filebrowser     ; Show file browser
-     64E4 71F4     
+0125 645A 06A0  32         bl    @pane.filebrowser     ; Show file browser
+     645C 71F4     
 0126                       ;-------------------------------------------------------
 0127                       ; Exit
 0128                       ;-------------------------------------------------------
 0129               dialog.insert.exit:
-0130 64E6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0131 64E8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0132 64EA C2F9  30         mov   *stack+,r11           ; Pop R11
-0133 64EC 045B  20         b     *r11                  ; Return to caller
+0130 645E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0131 6460 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0132 6462 C2F9  30         mov   *stack+,r11           ; Pop R11
+0133 6464 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0081                       copy  "dialog.delete.asm"       ; Dialog "Delete file"
-     **** ****     > dialog.delete.asm
-0001               * FILE......: dialog.delete.asm
+0080                       copy  "dialog.file.delete.asm"  ; Dialog "Delete file"
+     **** ****     > dialog.file.delete.asm
+0001               * FILE......: dialog.file.delete.asm
 0002               * Purpose...: Dialog "Delete File"
 0003               
 0004               ***************************************************************
 0005               * dialog.delete
-0006               * Delete Dialog for removing file
+0006               * Delete "Delete file"
 0007               ***************************************************************
 0008               * bl @dialog.delete
 0009               *--------------------------------------------------------------
@@ -10992,65 +10855,65 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019               * Notes
 0020               ********|*****|*********************|**************************
 0021               dialog.delete:
-0022 64EE 0649  14         dect  stack
-0023 64F0 C64B  30         mov   r11,*stack            ; Save return address
-0024 64F2 0649  14         dect  stack
-0025 64F4 C644  30         mov   tmp0,*stack           ; Push tmp0
-0026 64F6 0649  14         dect  stack
-0027 64F8 C645  30         mov   tmp1,*stack           ; Push tmp1
+0022 6466 0649  14         dect  stack
+0023 6468 C64B  30         mov   r11,*stack            ; Save return address
+0024 646A 0649  14         dect  stack
+0025 646C C644  30         mov   tmp0,*stack           ; Push tmp0
+0026 646E 0649  14         dect  stack
+0027 6470 C645  30         mov   tmp1,*stack           ; Push tmp1
 0028                       ;-------------------------------------------------------
 0029                       ; Show dialog "Unsaved changes" if editor buffer dirty
 0030                       ;-------------------------------------------------------
-0031 64FA C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
-     64FC A506     
-0032 64FE 1303  14         jeq   dialog.delete.setup   ; No, skip "Unsaved changes"
+0031 6472 C120  34         mov   @edb.dirty,tmp0       ; Editor dirty?
+     6474 A506     
+0032 6476 1303  14         jeq   dialog.delete.setup   ; No, skip "Unsaved changes"
 0033               
-0034 6500 06A0  32         bl    @dialog.unsaved       ; Show dialog
-     6502 67F4     
-0035 6504 1037  14         jmp   dialog.delete.exit    ; Exit early
+0034 6478 06A0  32         bl    @dialog.unsaved       ; Show dialog
+     647A 67F4     
+0035 647C 1037  14         jmp   dialog.delete.exit    ; Exit early
 0036                       ;-------------------------------------------------------
 0037                       ; Setup dialog
 0038                       ;-------------------------------------------------------
 0039               dialog.delete.setup:
-0040 6506 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
-     6508 71D0     
+0040 647E 06A0  32         bl    @fb.scan.fname        ; Get possible device/filename
+     6480 71D0     
 0041               
-0042 650A 0204  20         li    tmp0,id.dialog.delete
-     650C 0013     
-0043 650E C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
-     6510 A720     
+0042 6482 0204  20         li    tmp0,id.dialog.delete
+     6484 0013     
+0043 6486 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     6488 A720     
 0044               
-0045 6512 0204  20         li    tmp0,txt.head.delete
-     6514 74D8     
-0046 6516 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
-     6518 A724     
+0045 648A 0204  20         li    tmp0,txt.head.delete
+     648C 74D8     
+0046 648E C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     6490 A724     
 0047               
-0048 651A 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
-     651C A726     
-0049 651E 04E0  34         clr   @cmdb.panmarkers      ; No key markers
-     6520 A72C     
+0048 6492 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     6494 A726     
+0049 6496 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+     6498 A72C     
 0050               
-0051 6522 0204  20         li    tmp0,txt.hint.delete
-     6524 7392     
-0052 6526 C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-     6528 A728     
+0051 649A 0204  20         li    tmp0,txt.hint.delete
+     649C 7392     
+0052 649E C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     64A0 A728     
 0053               
-0054 652A 0204  20         li    tmp0,txt.hint.delete2
-     652C 73E6     
-0055 652E C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-     6530 A72A     
+0054 64A2 0204  20         li    tmp0,txt.hint.delete2
+     64A4 73E6     
+0055 64A6 C804  38         mov   tmp0,@cmdb.panhint2   ; Show extra hint
+     64A8 A72A     
 0056                       ;-------------------------------------------------------
 0057                       ; Show dialog
 0058                       ;-------------------------------------------------------
 0059               dialog.delete.keylist:
-0060 6532 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-     6534 A72E     
+0060 64AA C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     64AC A72E     
 0061                       ;-------------------------------------------------------
 0062                       ; Set filename (1)
 0063                       ;-------------------------------------------------------
 0064               dialog.delete.set.filename1:
-0065 6536 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
-     6538 71BE     
+0065 64AE 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
+     64B0 71BE     
 0066                                                   ; \ i  @cat.device = Current device name
 0067                                                   ; | i  @cat.shortcut.idx = Index in catalog
 0068                                                   ; |        filename pointerlist
@@ -11058,73 +10921,210 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0070                                                   ; | o  @cat.fullfname = Combined string with
 0071                                                   ; /        device & filename
 0072               
-0073 653A 0204  20         li    tmp0,cat.fullfname
-     653C E016     
-0074 653E C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     6540 A006     
-0075 6542 06A0  32         bl    @cmdb.cmd.set         ; Set command value
-     6544 6EB2     
+0073 64B2 0204  20         li    tmp0,cat.fullfname
+     64B4 E016     
+0074 64B6 C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     64B8 A006     
+0075 64BA 06A0  32         bl    @cmdb.cmd.set         ; Set command value
+     64BC 6EB2     
 0076                                                   ; \ i  @parm1 = Pointer to string w. preset
 0077                                                   ; /
-0078 6546 100F  14         jmp   dialog.delete.cursor  ; Set cursor shape
+0078 64BE 100F  14         jmp   dialog.delete.cursor  ; Set cursor shape
 0079                       ;-------------------------------------------------------
 0080                       ; Set filename (2)
 0081                       ;-------------------------------------------------------
 0082               dialog.delete.set.filename2:
-0083 6548 0204  20         li    tmp0,edb.filename      ; Set filename
-     654A A526     
-0084 654C 1305  14         jeq   dialog.delete.clearcmd ; No filename to set
+0083 64C0 0204  20         li    tmp0,edb.filename      ; Set filename
+     64C2 A526     
+0084 64C4 1305  14         jeq   dialog.delete.clearcmd ; No filename to set
 0085               
-0086 654E C804  38         mov   tmp0,@parm1           ; Get pointer to string
-     6550 A006     
-0087 6552 06A0  32         bl    @cmdb.cmd.set         ; Set command value
-     6554 6EB2     
+0086 64C6 C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     64C8 A006     
+0087 64CA 06A0  32         bl    @cmdb.cmd.set         ; Set command value
+     64CC 6EB2     
 0088                                                   ; \ i  @parm1 = Pointer to string w. preset
 0089                                                   ; /
-0090 6556 1007  14         jmp   dialog.delete.cursor  ; Set cursor shape
+0090 64CE 1007  14         jmp   dialog.delete.cursor  ; Set cursor shape
 0091                       ;------------------------------------------------------
 0092                       ; Clear filename
 0093                       ;------------------------------------------------------
 0094               dialog.delete.clearcmd:
-0095 6558 04E0  34         clr   @cmdb.cmdlen          ; Reset length
-     655A A732     
-0096 655C 06A0  32         bl    @film                 ; Clear command
-     655E 2236     
-0097 6560 A733                   data  cmdb.cmd,>00,80
-     6562 0000     
-     6564 0050     
+0095 64D0 04E0  34         clr   @cmdb.cmdlen          ; Reset length
+     64D2 A732     
+0096 64D4 06A0  32         bl    @film                 ; Clear command
+     64D6 2236     
+0097 64D8 A733                   data  cmdb.cmd,>00,80
+     64DA 0000     
+     64DC 0050     
 0098                       ;-------------------------------------------------------
 0099                       ; Set cursor shape
 0100                       ;-------------------------------------------------------
 0101               dialog.delete.cursor:
-0102 6566 06A0  32         bl    @pane.cursor.blink    ; Show cursor
-     6568 7176     
-0103 656A C820  54         mov   @tv.curshape,@ramsat+2
-     656C A214     
-     656E A058     
+0102 64DE 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     64E0 7176     
+0103 64E2 C820  54         mov   @tv.curshape,@ramsat+2
+     64E4 A214     
+     64E6 A058     
 0104                                                   ; Get cursor shape and color
 0105                       ;-------------------------------------------------------
 0106                       ; Show file browser
 0107                       ;-------------------------------------------------------
-0108 6570 06A0  32         bl    @pane.filebrowser     ; Show file browser
-     6572 71F4     
+0108 64E8 06A0  32         bl    @pane.filebrowser     ; Show file browser
+     64EA 71F4     
 0109                       ;-------------------------------------------------------
 0110                       ; Exit
 0111                       ;-------------------------------------------------------
 0112               dialog.delete.exit:
-0113 6574 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0114 6576 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0115 6578 C2F9  30         mov   *stack+,r11           ; Pop R11
-0116 657A 045B  20         b     *r11                  ; Return to caller
+0113 64EC C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0114 64EE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0115 64F0 C2F9  30         mov   *stack+,r11           ; Pop R11
+0116 64F2 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0082                       copy  "dialog.run.asm"          ; Dialog "Run program image (EA5)"
-     **** ****     > dialog.run.asm
-0001               * FILE......: dialog.run.asm
+0081                       copy  "dialog.file.print.asm"   ; Dialog "Print file"
+     **** ****     > dialog.file.print.asm
+0001               * FILE......: dialog.file.print.asm
+0002               * Purpose...: Dialog "Print file"
+0003               
+0004               ***************************************************************
+0005               * dialog.print
+0006               * Dialog "Print file"
+0007               ***************************************************************
+0008               * bl @dialog.print
+0009               *--------------------------------------------------------------
+0010               * INPUT
+0011               * none
+0012               *--------------------------------------------------------------
+0013               * OUTPUT
+0014               * none
+0015               *--------------------------------------------------------------
+0016               * Register usage
+0017               * tmp0
+0018               *--------------------------------------------------------------
+0019               * Notes
+0020               ********|*****|*********************|**************************
+0021               dialog.print:
+0022 64F4 0649  14         dect  stack
+0023 64F6 C64B  30         mov   r11,*stack            ; Save return address
+0024 64F8 0649  14         dect  stack
+0025 64FA C644  30         mov   tmp0,*stack           ; Push tmp0
+0026                       ;-------------------------------------------------------
+0027                       ; Crunch current row if dirty
+0028                       ;-------------------------------------------------------
+0029 64FC 8820  50         c     @fb.row.dirty,@w$ffff
+     64FE A30A     
+     6500 2022     
+0030 6502 1604  14         jne   !                     ; Skip crunching if clean
+0031 6504 06A0  32         bl    @edb.line.pack        ; Copy line to editor buffer
+     6506 712E     
+0032 6508 04E0  34         clr   @fb.row.dirty         ; Current row no longer dirty
+     650A A30A     
+0033                       ;-------------------------------------------------------
+0034                       ; Setup dialog
+0035                       ;-------------------------------------------------------
+0036 650C 8820  50 !       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+     650E A510     
+     6510 2022     
+0037 6512 1307  14         jeq   dialog.print.default  ; Yes, so show default dialog
+0038                       ;-------------------------------------------------------
+0039                       ; Setup dialog title
+0040                       ;-------------------------------------------------------
+0041 6514 0204  20         li    tmp0,id.dialog.printblock
+     6516 0012     
+0042 6518 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     651A A720     
+0043 651C 0204  20         li    tmp0,txt.head.print2  ; Title "Print block to file"
+     651E 74F7     
+0044               
+0045 6520 1006  14         jmp   dialog.print.header
+0046                       ;-------------------------------------------------------
+0047                       ; Default dialog
+0048                       ;-------------------------------------------------------
+0049               dialog.print.default:
+0050 6522 0204  20         li    tmp0,id.dialog.print
+     6524 0011     
+0051 6526 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
+     6528 A720     
+0052 652A 0204  20         li    tmp0,txt.head.print   ; Title "Print file"
+     652C 74E8     
+0053                       ;-------------------------------------------------------
+0054                       ; Setup header
+0055                       ;-------------------------------------------------------
+0056               dialog.print.header:
+0057 652E C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
+     6530 A724     
+0058               
+0059 6532 04E0  34         clr   @cmdb.paninfo         ; No info message, do input prompt
+     6534 A726     
+0060 6536 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+     6538 A72C     
+0061               
+0062 653A 0204  20         li    tmp0,txt.hint.print
+     653C 7507     
+0063 653E C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
+     6540 A728     
+0064 6542 04E0  34         clr   @cmdb.panhint2        ; No extra hint to display
+     6544 A72A     
+0065               
+0066 6546 0204  20         li    tmp0,txt.keys.save1
+     6548 7445     
+0067 654A C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+     654C A72E     
+0068               
+0069 654E 04E0  34         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
+     6550 A44E     
+0070                       ;-------------------------------------------------------
+0071                       ; Line termination on ?
+0072                       ;-------------------------------------------------------
+0073 6552 C120  34         mov   @edb.lineterm,tmp0    ; Get line termination mode + char
+     6554 A524     
+0074 6556 0244  22         andi  tmp0,>ff00            ; Only interested in MSB
+     6558 FF00     
+0075 655A 1303  14         jeq   !                     ; Line termination mode is off
+0076                       ;-------------------------------------------------------
+0077                       ; Line termination on
+0078                       ;-------------------------------------------------------
+0079 655C 0204  20         li    tmp0,txt.keys.save2
+     655E 747A     
+0080 6560 1002  14         jmp   dialog.print.cmdline
+0081                       ;-------------------------------------------------------
+0082                       ; Line termination off
+0083                       ;-------------------------------------------------------
+0084 6562 0204  20 !       li    tmp0,txt.keys.save1
+     6564 7445     
+0085                       ;-------------------------------------------------------
+0086                       ; Set command line
+0087                       ;-------------------------------------------------------
+0088               dialog.print.cmdline:
+0089 6566 0204  20         li    tmp0,tv.printer.fname ; Set printer name
+     6568 DE00     
+0090 656A C804  38         mov   tmp0,@parm1           ; Get pointer to string
+     656C A006     
+0091               
+0092 656E 06A0  32         bl    @cmdb.cmd.set         ; Set command value
+     6570 6EB2     
+0093                                                   ; \ i  @parm1 = Pointer to string w. preset
+0094                                                   ; /
+0095                       ;-------------------------------------------------------
+0096                       ; Set cursor shape
+0097                       ;-------------------------------------------------------
+0098 6572 06A0  32         bl    @pane.cursor.blink    ; Show cursor
+     6574 7176     
+0099                       ;-------------------------------------------------------
+0100                       ; Exit
+0101                       ;-------------------------------------------------------
+0102               dialog.print.exit:
+0103 6576 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0104 6578 C2F9  30         mov   *stack+,r11           ; Pop R11
+0105 657A 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b3.asm
+0082                       copy  "dialog.file.run.asm"     ; Dialog "Run program image (EA5)"
+     **** ****     > dialog.file.run.asm
+0001               * FILE......: dialog.file.run.asm
 0002               * Purpose...: Dialog "Run program image (EA5)"
 0003               
 0004               ***************************************************************
 0005               * dialog.run
-0006               * Open Dialog for running program image (EA5)
+0006               * Dialog "Run program image (EA5)"
 0007               ***************************************************************
 0008               * bl @dialog.run
 0009               *--------------------------------------------------------------
@@ -11283,14 +11283,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0129 661A C2F9  30         mov   *stack+,r11           ; Pop R11
 0130 661C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0083                       copy  "dialog.cat.asm"          ; Dialog "Catalog"
-     **** ****     > dialog.cat.asm
-0001               * dir......: dialog.cat.asm
-0002               * Purpose...: Dialog "Catalog drive/directory"
+0083                       copy  "dialog.file.catalog.asm" ; Dialog "Catalog"
+     **** ****     > dialog.file.catalog.asm
+0001               * FILE......: dialog.file.catalog.asm
+0002               * Purpose...: Dialog "Catalog"
 0003               
 0004               ***************************************************************
 0005               * dialog.cat
-0006               * Open Dialog "Dir"
+0006               * Open Dialog "Catalog"
 0007               ***************************************************************
 0008               * bl @dialog.cat
 0009               *--------------------------------------------------------------
@@ -15346,13 +15346,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      77DC 20       
 0189                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 77DD   32                        text '251229-1944200'
+0001 77DD   32                        text '251229-2014190'
      77DE 3531     
      77E0 3232     
      77E2 392D     
-     77E4 3139     
-     77E6 3434     
-     77E8 3230     
+     77E4 3230     
+     77E6 3134     
+     77E8 3139     
      77EA 30       
                    < data.dialogs.asm
 0190 77EB   20                        text ' - Stevie 1.9.5 - (c)2018-2026 Filip Van Vooren'
@@ -16326,14 +16326,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014 7F70 61CC     vec.1   data  dialog.help           ; Dialog "Help"
 0015 7F72 620C     vec.2   data  dialog.open           ; Dialog "Open file"
 0016 7F74 62AA     vec.3   data  dialog.save           ; Dialog "Save file"
-0017 7F76 6436     vec.4   data  dialog.insert         ; Dialog "Insert file at line ..."
-0018 7F78 6336     vec.5   data  dialog.print          ; Dialog "Print file"
+0017 7F76 63AE     vec.4   data  dialog.insert         ; Dialog "Insert file at line ..."
+0018 7F78 64F4     vec.5   data  dialog.print          ; Dialog "Print file"
 0019 7F7A 60D4     vec.6   data  dialog.file           ; Dialog "File"
 0020 7F7C 67F4     vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
 0021 7F7E 6766     vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
 0022 7F80 66D4     vec.9   data  dialog.cfg.clip       ; Dialog "Configure clipboard"
 0023 7F82 667A     vec.10  data  dialog.cfg            ; Dialog "Configure"
-0024 7F84 63BE     vec.11  data  dialog.append         ; Dialog "Append file"
+0024 7F84 6336     vec.11  data  dialog.append         ; Dialog "Append file"
 0025 7F86 612A     vec.12  data  dialog.cart.type      ; Dialog "Cartridge Type"
 0026 7F88 6840     vec.13  data  dialog.basic          ; Dialog "TI Basic"
 0027 7F8A 690E     vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
@@ -16369,7 +16369,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057 7FC0 2026     vec.41  data  cpu.crash             ;
 0058 7FC2 604A     vec.42  data  dialog                ; Dialog initialisation code
 0059 7FC4 69AA     vec.43  data  dialog.find           ; Dialog "Find"
-0060 7FC6 64EE     vec.44  data  dialog.delete         ; Dialog "Delete file"
+0060 7FC6 6466     vec.44  data  dialog.delete         ; Dialog "Delete file"
 0061 7FC8 6170     vec.45  data  dialog.cart.fg99      ; Dialog "FinalGROM 99 Cartridge"
 0062 7FCA 2026     vec.46  data  cpu.crash             ;
 0063 7FCC 2026     vec.47  data  cpu.crash             ;
@@ -16657,11 +16657,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
     DIALOG.............. >604A :     
-    DIALOG.APPEND....... >63BE :     
-    DIALOG.APPEND.CURSOR >6420 :     
-    DIALOG.APPEND.EXIT.. >642E :     
-    DIALOG.APPEND.KEYLIST >640C :     
-    DIALOG.APPEND.SETUP. >63D0 :     
+    DIALOG.APPEND....... >6336 :     
+    DIALOG.APPEND.CURSOR >6398 :     
+    DIALOG.APPEND.EXIT.. >63A6 :     
+    DIALOG.APPEND.KEYLIST >6384 :     
+    DIALOG.APPEND.SETUP. >6348 :     
     DIALOG.BASIC........ >6840 :     
     DIALOG.BASIC.AMONLY. >68FC :     
     DIALOG.BASIC.AUTOUNPK >68E4 :     
@@ -16686,14 +16686,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.CLIPBOARD.EXIT >67EE :     
     DIALOG.CLIPBOARD.KEYLIST >67E6 :     
     DIALOG.CLIPBOARD.SETUP >676E :     
-    DIALOG.DELETE....... >64EE :     
-    DIALOG.DELETE.CLEARCMD >6558 :     
-    DIALOG.DELETE.CURSOR >6566 :     
-    DIALOG.DELETE.EXIT.. >6574 :     
-    DIALOG.DELETE.KEYLIST >6532 :     
-    DIALOG.DELETE.SET.FILENAME1 >6536 :     
-    DIALOG.DELETE.SET.FILENAME2 >6548 :     
-    DIALOG.DELETE.SETUP. >6506 :     
+    DIALOG.DELETE....... >6466 :     
+    DIALOG.DELETE.CLEARCMD >64D0 :     
+    DIALOG.DELETE.CURSOR >64DE :     
+    DIALOG.DELETE.EXIT.. >64EC :     
+    DIALOG.DELETE.KEYLIST >64AA :     
+    DIALOG.DELETE.SET.FILENAME1 >64AE :     
+    DIALOG.DELETE.SET.FILENAME2 >64C0 :     
+    DIALOG.DELETE.SETUP. >647E :     
     DIALOG.EXIT......... >6064 :     
     DIALOG.FILE......... >60D4 :     
     DIALOG.FILE.EXIT.... >6124 :     
@@ -16710,11 +16710,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.HELP......... >61CC :     
     DIALOG.HELP.CONTENT. >723C :     
     DIALOG.HELP.EXIT.... >6208 :     
-    DIALOG.INSERT....... >6436 :     
-    DIALOG.INSERT.CURSOR >64D8 :     
-    DIALOG.INSERT.EXIT.. >64E6 :     
-    DIALOG.INSERT.KEYLIST >64C4 :     
-    DIALOG.INSERT.SETUP. >6448 :     
+    DIALOG.INSERT....... >63AE :     
+    DIALOG.INSERT.CURSOR >6450 :     
+    DIALOG.INSERT.EXIT.. >645E :     
+    DIALOG.INSERT.KEYLIST >643C :     
+    DIALOG.INSERT.SETUP. >63C0 :     
     DIALOG.MENU......... >606E :     
     DIALOG.MENU.EXIT.... >60C6 :     
     DIALOG.MENU.STATLINES >60BE :     
@@ -16726,11 +16726,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.OPEN.SET.FILENAME1 >6264 :     
     DIALOG.OPEN.SET.FILENAME2 >6276 :     
     DIALOG.OPEN.SETUP... >6224 :     
-    DIALOG.PRINT........ >6336 :     
-    DIALOG.PRINT.CMDLINE >63A8 :     
-    DIALOG.PRINT.DEFAULT >6364 :     
-    DIALOG.PRINT.EXIT... >63B8 :     
-    DIALOG.PRINT.HEADER. >6370 :     
+    DIALOG.PRINT........ >64F4 :     
+    DIALOG.PRINT.CMDLINE >6566 :     
+    DIALOG.PRINT.DEFAULT >6522 :     
+    DIALOG.PRINT.EXIT... >6576 :     
+    DIALOG.PRINT.HEADER. >652E :     
     DIALOG.RUN.......... >657C :     
     DIALOG.RUN.CLEARCMD. >65F6 :     
     DIALOG.RUN.CURSOR... >6604 :     

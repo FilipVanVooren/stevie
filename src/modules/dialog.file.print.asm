@@ -1,9 +1,9 @@
-* FILE......: dialog.print.asm
+* FILE......: dialog.file.print.asm
 * Purpose...: Dialog "Print file"
 
 ***************************************************************
 * dialog.print
-* Dialog "Print"
+* Dialog "Print file"
 ***************************************************************
 * bl @dialog.print
 *--------------------------------------------------------------

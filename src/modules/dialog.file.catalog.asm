@@ -1,9 +1,9 @@
-* dir......: dialog.cat.asm
-* Purpose...: Dialog "Catalog drive/directory"
+* FILE......: dialog.file.catalog.asm
+* Purpose...: Dialog "Catalog"
 
 ***************************************************************
 * dialog.cat
-* Open Dialog "Dir"
+* Open Dialog "Catalog"
 ***************************************************************
 * bl @dialog.cat
 *--------------------------------------------------------------
