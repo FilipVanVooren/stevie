@@ -85,7 +85,6 @@ edkey.action.cmdb.file.directory.ide3:
         mov   @const.15,@parm2
         jmp   edkey.action.cmdb.file.directory
 
-
 edkey.action.cmdb.file.directory.device:
         bl    @cpym2m
               data cmdb.cmdall,cat.device,80
@@ -93,6 +92,7 @@ edkey.action.cmdb.file.directory.device:
         li    tmp0,cat.device
         mov   tmp0,@parm1
         clr   @parm2
+
 *---------------------------------------------------------------
 * Drive/Directory listing
 *---------------------------------------------------------------
@@ -101,6 +101,13 @@ edkey.action.cmdb.file.directory:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        ;-------------------------------------------------------
+        ; Skip if not in file dialog mode
+        ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp0     ; Get current dialog ID
+        ci    tmp0,30               ; in file dialog range?
+        jgt   edkey.action.cmdb.file.catalog.exit 
+                                    ; No, exit
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------

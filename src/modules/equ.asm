@@ -35,14 +35,17 @@ id.dialog.append          equ  12      ; "Append file"
 id.dialog.cat             equ  13      ; "Catalog"
 id.dialog.save            equ  15      ; "Save file"
 id.dialog.saveblock       equ  16      ; "Save block to file"
-id.dialog.print           equ  17      ; "Print file"
-id.dialog.printblock      equ  18      ; "Print block"
 id.dialog.delete          equ  19      ; "Delete file"
 id.dialog.opt.clip        equ  20      ; "Configure clipboard"
 id.dialog.run             equ  30      ; "Run program file"
-id.dialog.goto            equ  40      ; "Goto"
-id.dialog.find            equ  50      ; "Find"
-id.dialog.cart.fg99       equ  60      ; "FinalGROM 99 Cartridge"
+;-----------------------------------------------------------------
+;   Dialog ID's > 30 means file catalog is unsupported
+;-----------------------------------------------------------------
+id.dialog.print           equ  40      ; "Print file"
+id.dialog.printblock      equ  50      ; "Print block"
+id.dialog.goto            equ  60      ; "Goto"
+id.dialog.find            equ  70      ; "Find"
+id.dialog.cart.fg99       equ  80      ; "FinalGROM 99 Cartridge"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
