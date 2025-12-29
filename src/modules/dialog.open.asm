@@ -1,11 +1,11 @@
-* FILE......: dialog.load.asm
-* Purpose...: Dialog "Load DV80 file"
+* FILE......: dialog.open.asm
+* Purpose...: Dialog "Open File"
 
 ***************************************************************
-* dialog.load
+* dialog.open
 * Open Dialog for loading DV 80 file
 ***************************************************************
-* bl @dialog.load
+* bl @dialog.open
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.load:
+dialog.open:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -29,29 +29,29 @@ dialog.load:
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp0       ; Editor dirty?
-        jeq   dialog.load.setup     ; No, skip "Unsaved changes"
+        jeq   dialog.open.setup     ; No, skip "Unsaved changes"
 
         bl    @dialog.unsaved       ; Show dialog
-        jmp   dialog.load.exit      ; Exit early
+        jmp   dialog.open.exit      ; Exit early
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-dialog.load.setup:
+dialog.open.setup:
         bl    @fb.scan.fname        ; Get possible device/filename
 
-        li    tmp0,id.dialog.load
+        li    tmp0,id.dialog.open
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
-        li    tmp0,txt.head.load
+        li    tmp0,txt.head.open
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         clr   @cmdb.paninfo         ; No info message, do input prompt
         clr   @cmdb.panmarkers      ; No key markers
 
-        li    tmp0,txt.hint.load
+        li    tmp0,txt.hint.open
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
 
-        li    tmp0,txt.hint.load2
+        li    tmp0,txt.hint.open2
         mov   tmp0,@cmdb.panhint2   ; Show extra hint
 
         abs   @fh.offsetopcode      ; FastMode is off ?
@@ -59,21 +59,21 @@ dialog.load.setup:
         ;-------------------------------------------------------
         ; Show that FastMode is on
         ;-------------------------------------------------------
-        li    tmp0,txt.keys.load2   ; Highlight FastMode
-        jmp   dialog.load.keylist
+        li    tmp0,txt.keys.open2   ; Highlight FastMode
+        jmp   dialog.open.keylist
         ;-------------------------------------------------------
         ; Show that FastMode is off
         ;-------------------------------------------------------
-!       li    tmp0,txt.keys.load
+!       li    tmp0,txt.keys.open
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
-dialog.load.keylist:
+dialog.open.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set filename (1) 
         ;-------------------------------------------------------
-dialog.load.set.filename1:
+dialog.open.set.filename1:
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @cat.device = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
@@ -87,30 +87,30 @@ dialog.load.set.filename1:
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
-        jmp   dialog.load.cursor    ; Set cursor shape
+        jmp   dialog.open.cursor    ; Set cursor shape
         ;-------------------------------------------------------
         ; Set filename (2) 
         ;-------------------------------------------------------
-dialog.load.set.filename2:
+dialog.open.set.filename2:
         li    tmp0,edb.filename     ; Set filename
-        jeq   dialog.load.clearcmd  ; No filename to set
+        jeq   dialog.open.clearcmd  ; No filename to set
 
         mov   tmp0,@parm1           ; Get pointer to string
         bl    @cmdb.cmd.set         ; Set command value
                                     ; \ i  @parm1 = Pointer to string w. preset
                                     ; /
-        jmp   dialog.load.cursor    ; Set cursor shape
+        jmp   dialog.open.cursor    ; Set cursor shape
         ;------------------------------------------------------
         ; Clear filename
         ;------------------------------------------------------
-dialog.load.clearcmd:        
+dialog.open.clearcmd:        
         clr   @cmdb.cmdlen          ; Reset length 
         bl    @film                 ; Clear command
               data  cmdb.cmd,>00,80
         ;-------------------------------------------------------
         ; Set cursor shape
         ;-------------------------------------------------------
-dialog.load.cursor:
+dialog.open.cursor:
         bl    @pane.cursor.blink    ; Show cursor
         mov   @tv.curshape,@ramsat+2
                                     ; Get cursor shape and color
@@ -121,7 +121,7 @@ dialog.load.cursor:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.load.exit:
+dialog.open.exit:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11

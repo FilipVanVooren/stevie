@@ -30,7 +30,7 @@ edkey.action.filebrowser.nextpage.page:
 edkey.action.filebrowser.nextpage.checkdialog:
         mov   @cmdb.dialog,tmp0     ; Get current dialog ID
 
-        ci    tmp0,id.dialog.load   ; \ First supported dialog
+        ci    tmp0,id.dialog.open   ; \ First supported dialog
         jlt   edkey.action.filebrowser.nextpage.exit
                                     ; / Not in supported dialog range. Skip 
 

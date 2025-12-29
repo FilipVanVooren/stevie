@@ -12,7 +12,7 @@ cpu.crash.showbank.bankstr:
 *--------------------------------------------------------------        
         aorg  bankx.vectab
 vec.1   data  dialog.help           ; Dialog "Help"
-vec.2   data  dialog.load           ; Dialog "Load file"
+vec.2   data  dialog.open           ; Dialog "Open file"
 vec.3   data  dialog.save           ; Dialog "Save file"
 vec.4   data  dialog.insert         ; Dialog "Insert file at line ..."
 vec.5   data  dialog.print          ; Dialog "Print file"
@@ -57,7 +57,7 @@ vec.40  data  cpu.crash             ;
 vec.41  data  cpu.crash             ;
 vec.42  data  dialog                ; Dialog initialisation code
 vec.43  data  dialog.find           ; Dialog "Find"
-vec.44  data  cpu.crash             ;
+vec.44  data  dialog.delete         ; Dialog "Delete file"
 vec.45  data  dialog.cart.fg99      ; Dialog "FinalGROM 99 Cartridge"
 vec.46  data  cpu.crash             ;
 vec.47  data  cpu.crash             ;

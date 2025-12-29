@@ -52,26 +52,14 @@ txt.hint.filepicker:
                    even
 
 ;--------------------------------------------------------------
-; Dialog "Load file"
+; Dialog "Open file"
 ;--------------------------------------------------------------
-txt.head.load      byte 13,4,1
+txt.head.open      byte 13,4,1
                    text ' Open file '
-txt.hint.load      equ  txt.hint.filepicker
-txt.hint.load2     stri 'Enter filename or pick file from catalog.'
-txt.keys.load      equ txt.keys.default1
-txt.keys.load2     equ txt.keys.default2
-                   even
-
-;--------------------------------------------------------------
-; Dialog "Run program image (EA5)"
-;--------------------------------------------------------------
-txt.head.run       byte 27,4,1
-                   text ' Run program image (EA5) '
-txt.info.run       stri 'Feature not yet available.'
-txt.hint.run       equ  txt.hint.filepicker
-txt.hint.run2      stri 'Enter filename or pick file from catalog.'
-txt.keys.run       equ txt.keys.default1
-txt.keys.run2      equ txt.keys.default2
+txt.hint.open      equ  txt.hint.filepicker
+txt.hint.open2     stri 'Enter filename or pick file from catalog.'
+txt.keys.open      equ txt.keys.default1
+txt.keys.open2     equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -92,7 +80,7 @@ txt.keys.save2     stri 'F9-Back  F3-Clear  *F6-Line term=on  FH-Home  FL-EOL'
 txt.head.append    byte 15,4,1
                    text ' Append file '
 txt.hint.append    equ txt.hint.filepicker                   
-txt.hint.append2   equ txt.hint.load2
+txt.hint.append2   equ txt.hint.open2
 txt.keys.append    equ txt.keys.default1
 txt.keys.append2   equ txt.keys.default2
                    even
@@ -103,9 +91,45 @@ txt.keys.append2   equ txt.keys.default2
 txt.head.insert    byte 23,4,1
                    text ' Insert file at line '
 txt.hint.insert    equ txt.hint.filepicker
-txt.hint.insert2   equ txt.hint.load2
+txt.hint.insert2   equ txt.hint.open2
 txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
+                   even
+
+
+;--------------------------------------------------------------
+; Dialog "Delete file"
+;--------------------------------------------------------------
+txt.head.delete    byte 15,4,1
+                   text ' Delete file '
+txt.hint.delete    equ txt.hint.filepicker
+txt.hint.delete2   equ txt.hint.open2
+txt.keys.delete    equ txt.keys.default1
+txt.keys.delete2   equ txt.keys.default2
+                   even
+
+;--------------------------------------------------------------
+; Dialog "Print file"
+;--------------------------------------------------------------
+txt.head.print     byte 14,4,1
+                   text ' Print file '
+txt.head.print2    byte 15,4,1
+                   text ' Print block '
+txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
+txt.keys.print1    equ  txt.keys.save1
+txt.keys.print2    equ  txt.keys.save2
+                   even
+
+;--------------------------------------------------------------
+; Dialog "Run program image (EA5)"
+;--------------------------------------------------------------
+txt.head.run       byte 27,4,1
+                   text ' Run program image (EA5) '
+txt.info.run       stri 'Feature not yet available.'
+txt.hint.run       equ  txt.hint.filepicker
+txt.hint.run2      stri 'Enter filename or pick file from catalog.'
+txt.keys.run       equ txt.keys.default1
+txt.keys.run2      equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -129,17 +153,7 @@ txt.hint.clipboard  stri 'Press 1 to 3 to copy clipboard file, F7 to configure.'
 txt.keys.clipboard  stri 'F9-Back  F7-Configure'
                     even
 
-;--------------------------------------------------------------
-; Dialog "Print file"
-;--------------------------------------------------------------
-txt.head.print     byte 14,4,1
-                   text ' Print file '
-txt.head.print2    byte 15,4,1
-                   text ' Print block '
-txt.hint.print     stri 'Enter printer device name (PIO, PI.PIO, ...)'
-txt.keys.print1    equ  txt.keys.save1
-txt.keys.print2    equ  txt.keys.save2
-                   even
+
 
 ;--------------------------------------------------------------
 ; Dialog "Goto line"
@@ -197,11 +211,11 @@ txt.keys.menu2     equ  txt.keys.menu
 ;--------------------------------------------------------------
 txt.head.file      byte 8,4,1
                    text ' File '
-txt.info.file      stri 'New   Open   Run   Save   Insert   Append   Catalog   Print'
-pos.info.file      byte 0,6,13,19,26,35,44,54,>ff
+txt.info.file      stri 'New   Open   Save   Insert/Append   Delete   Print   Run   Catalog'
+pos.info.file      byte 0,6,13,20,27,36,45,53,59,>ff
                    even
-txt.info.filelock  stri 'New   Open   Run   Save   Catalog   Print'
-pos.info.filelock  byte 0,6,13,19,26,36,>ff
+txt.info.filelock  stri 'New   Open   Save   Delete   Print   Run   Catalog'
+pos.info.filelock  byte 0,6,13,20,29,37,43,>ff
                    even
 txt.keys.file      stri 'F9-Back  SPACE-Close menu'
                    even

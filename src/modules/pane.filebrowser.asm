@@ -354,7 +354,7 @@ pane.filebrowser.show.sizelist:
 pane.filebrowser.marker:
         mov   @cmdb.dialog,tmp0     ; Get current dialog ID
 
-        ci    tmp0,id.dialog.load   ; \ First supported dialog
+        ci    tmp0,id.dialog.open   ; \ First supported dialog
         jlt   pane.filebrowser.exit ; / Not in supported dialog range. Skip 
 
         ci    tmp0,id.dialog.run    ; \ Last supported dialog

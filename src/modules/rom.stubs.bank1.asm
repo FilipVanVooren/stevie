@@ -283,13 +283,13 @@ dialog.help.vector:
 
 
 ***************************************************************
-* Stub for dialog "Load file"
+* Stub for dialog "Open file"
 * bank3 vec.2
 ********|*****|*********************|**************************
-dialog.load:
-        mov   @dialog.load.vector,@trmpvector
+dialog.open:
+        mov   @dialog.open.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.load.vector:
+dialog.open.vector:
         data  vec.2
 
 

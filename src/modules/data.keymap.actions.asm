@@ -168,7 +168,7 @@ keymap_actions.editor:
         data  dialog.save
 
         byte  key.ctrl.o, pane.focus.fb
-        data  dialog.load
+        data  dialog.open
 
         byte  key.ctrl.u, pane.focus.fb
         data  dialog.shortcuts
@@ -234,7 +234,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.file.new
 
         byte  key.uc.o, id.dialog.file
-        data  dialog.load
+        data  dialog.open
 
         byte  key.uc.s, id.dialog.file
         data  dialog.save
@@ -256,19 +256,19 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.load
+        byte  key.fctn.5, id.dialog.open
         data  edkey.action.cmdb.fastmode.toggle
 
-        byte  key.enter, id.dialog.load
+        byte  key.enter, id.dialog.open
         data  edkey.action.cmdb.load
 
-        byte  key.fctn.e, id.dialog.load
+        byte  key.fctn.e, id.dialog.open
         data  edkey.action.cmdb.pick.prev
 
-        byte  key.fctn.x, id.dialog.load
+        byte  key.fctn.x, id.dialog.open
         data  edkey.action.cmdb.pick.next
 
-        byte  key.space, id.dialog.load
+        byte  key.space, id.dialog.open
         data  edkey.action.cmdb.updir
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...

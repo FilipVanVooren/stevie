@@ -37,7 +37,7 @@ fm.fastmode:
 fm.fastmode.off:        
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
 
-        li    tmp2,id.dialog.load
+        li    tmp2,id.dialog.open
         c     tmp1,tmp2
         jeq   fm.fastmode.off.1
 
@@ -57,7 +57,7 @@ fm.fastmode.off:
         ; Keylist fastmode off
         ;------------------------------------------------------  
 fm.fastmode.off.1:
-        li    tmp0,txt.keys.load
+        li    tmp0,txt.keys.open
         jmp   fm.fastmode.keylist
 fm.fastmode.off.2:
         li    tmp0,txt.keys.insert
@@ -72,7 +72,7 @@ fm.fastmode.on:
         li    tmp0,>40              ; Data buffer in CPU RAM
         mov   tmp0,@fh.offsetopcode
 
-        li    tmp2,id.dialog.load
+        li    tmp2,id.dialog.open
         c     tmp1,tmp2
         jeq   fm.fastmode.on.1
 
@@ -92,7 +92,7 @@ fm.fastmode.on:
         ; Keylist fastmode on
         ;------------------------------------------------------  
 fm.fastmode.on.1:
-        li    tmp0,txt.keys.load2
+        li    tmp0,txt.keys.open2
         jmp   fm.fastmode.keylist
 fm.fastmode.on.2:
         li    tmp0,txt.keys.insert2
