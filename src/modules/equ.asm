@@ -32,20 +32,20 @@ tv.colorscheme.entries    equ 12       ; Entries in colorscheme table
 id.dialog.open            equ  10      ; "Open file"
 id.dialog.insert          equ  11      ; "Insert file"
 id.dialog.append          equ  12      ; "Append file"
-id.dialog.cat             equ  13      ; "Catalog"
-id.dialog.save            equ  15      ; "Save file"
-id.dialog.saveblock       equ  16      ; "Save block to file"
-id.dialog.delete          equ  19      ; "Delete file"
+id.dialog.delete          equ  13      ; "Delete file"
 id.dialog.opt.clip        equ  20      ; "Configure clipboard"
+id.dialog.cat             equ  25      ; "Catalog"
 id.dialog.run             equ  30      ; "Run program file"
 ;-----------------------------------------------------------------
 ;   Dialog ID's > 30 means file catalog is unsupported
 ;-----------------------------------------------------------------
-id.dialog.print           equ  40      ; "Print file"
-id.dialog.printblock      equ  50      ; "Print block"
-id.dialog.goto            equ  60      ; "Goto"
-id.dialog.find            equ  70      ; "Find"
-id.dialog.cart.fg99       equ  80      ; "FinalGROM 99 Cartridge"
+id.dialog.save            equ  40      ; "Save file"
+id.dialog.saveblock       equ  41      ; "Save block to file"
+id.dialog.print           equ  50      ; "Print file"
+id.dialog.printblock      equ  60      ; "Print block"
+id.dialog.goto            equ  70      ; "Goto"
+id.dialog.find            equ  80      ; "Find"
+id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
 ;-----------------------------------------------------------------
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.

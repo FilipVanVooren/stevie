@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251229-2125290
+0002               * BUILD: 251229-2136110
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -215,20 +215,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032      000A     id.dialog.open            equ  10      ; "Open file"
 0033      000B     id.dialog.insert          equ  11      ; "Insert file"
 0034      000C     id.dialog.append          equ  12      ; "Append file"
-0035      000D     id.dialog.cat             equ  13      ; "Catalog"
-0036      000F     id.dialog.save            equ  15      ; "Save file"
-0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
-0038      0013     id.dialog.delete          equ  19      ; "Delete file"
-0039      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
-0040      001E     id.dialog.run             equ  30      ; "Run program file"
+0035      000D     id.dialog.delete          equ  13      ; "Delete file"
+0036      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
+0037      0019     id.dialog.cat             equ  25      ; "Catalog"
+0038      001E     id.dialog.run             equ  30      ; "Run program file"
+0039               ;-----------------------------------------------------------------
+0040               ;   Dialog ID's > 30 means file catalog is unsupported
 0041               ;-----------------------------------------------------------------
-0042               ;   Dialog ID's > 30 means file catalog is unsupported
-0043               ;-----------------------------------------------------------------
-0044      0028     id.dialog.print           equ  40      ; "Print file"
-0045      0032     id.dialog.printblock      equ  50      ; "Print block"
-0046      003C     id.dialog.goto            equ  60      ; "Goto"
-0047      0046     id.dialog.find            equ  70      ; "Find"
-0048      0050     id.dialog.cart.fg99       equ  80      ; "FinalGROM 99 Cartridge"
+0042      0028     id.dialog.save            equ  40      ; "Save file"
+0043      0029     id.dialog.saveblock       equ  41      ; "Save block to file"
+0044      0032     id.dialog.print           equ  50      ; "Print file"
+0045      003C     id.dialog.printblock      equ  60      ; "Print block"
+0046      0046     id.dialog.goto            equ  70      ; "Goto"
+0047      0050     id.dialog.find            equ  80      ; "Find"
+0048      005A     id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
 0049               ;-----------------------------------------------------------------
 0050               ;   Dialog ID's >= 100 indicate that command prompt should be
 0051               ;   hidden and no characters added to CMDB keyboard buffer.
@@ -10132,7 +10132,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036                       ;-------------------------------------------------------
 0037               dialog.cart.fg99.setup:
 0038 6184 0204  20         li    tmp0,id.dialog.cart.fg99
-     6186 0050     
+     6186 005A     
 0039 6188 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      618A A720     
 0040               
@@ -10451,7 +10451,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      62CC 6E4E     
 0042               
 0043 62CE 0204  20         li    tmp0,id.dialog.saveblock
-     62D0 0010     
+     62D0 0029     
 0044 62D2 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      62D4 A720     
 0045 62D6 0204  20         li    tmp0,txt.head.save2   ; Title "Save block to file"
@@ -10464,7 +10464,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0050                       ;-------------------------------------------------------
 0051               dialog.save.default:
 0052 62E0 0204  20         li    tmp0,id.dialog.save
-     62E2 000F     
+     62E2 0028     
 0053 62E4 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      62E6 A720     
 0054 62E8 0204  20         li    tmp0,txt.head.save    ; Title "Save file"
@@ -10882,7 +10882,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6480 71D0     
 0041               
 0042 6482 0204  20         li    tmp0,id.dialog.delete
-     6484 0013     
+     6484 000D     
 0043 6486 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      6488 A720     
 0044               
@@ -11032,7 +11032,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0039                       ; Setup dialog title
 0040                       ;-------------------------------------------------------
 0041 6514 0204  20         li    tmp0,id.dialog.printblock
-     6516 0032     
+     6516 003C     
 0042 6518 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      651A A720     
 0043 651C 0204  20         li    tmp0,txt.head.print2  ; Title "Print block to file"
@@ -11044,7 +11044,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0048                       ;-------------------------------------------------------
 0049               dialog.print.default:
 0050 6522 0204  20         li    tmp0,id.dialog.print
-     6524 0028     
+     6524 0032     
 0051 6526 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      6528 A720     
 0052 652A 0204  20         li    tmp0,txt.head.print   ; Title "Print file"
@@ -11317,7 +11317,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ; Setup dialog
 0028                       ;-------------------------------------------------------
 0029 6626 0204  20         li    tmp0,id.dialog.cat
-     6628 000D     
+     6628 0019     
 0030 662A C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      662C A720     
 0031               
@@ -12141,7 +12141,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0027                       ; Setup dialog
 0028                       ;-------------------------------------------------------
 0029 695C 0204  20         li    tmp0,id.dialog.goto
-     695E 003C     
+     695E 0046     
 0030 6960 C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      6962 A720     
 0031               
@@ -12231,7 +12231,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031                       ; Setup dialog
 0032                       ;-------------------------------------------------------
 0033 69BA 0204  20         li    tmp0,id.dialog.find
-     69BC 0046     
+     69BC 0050     
 0034 69BE C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      69C0 A720     
 0035               
@@ -13936,12 +13936,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      70B0 A720     
 0077               
 0078 70B2 0206  20         li    tmp2,id.dialog.save   ; \
-     70B4 000F     
+     70B4 0028     
 0079 70B6 8185  18         c     tmp1,tmp2             ; |  Save dialog?
 0080 70B8 131C  14         jeq   fm.lineterm.on.1      ; /
 0081               
 0082 70BA 0206  20         li    tmp2,id.dialog.print  ; \
-     70BC 0028     
+     70BC 0032     
 0083 70BE 8185  18         c     tmp1,tmp2             ; |  Print dialog?
 0084 70C0 131B  14         jeq   fm.lineterm.on.2      ; /
 0085                       ;------------------------------------------------------
@@ -13958,12 +13958,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      70CC A72A     
 0094               
 0095 70CE 0206  20         li    tmp2,id.dialog.save   ; \
-     70D0 000F     
+     70D0 0028     
 0096 70D2 8185  18         c     tmp1,tmp2             ; |  Save dialog?
 0097 70D4 1308  14         jeq   fm.lineterm.off.1     ; /
 0098               
 0099 70D6 0206  20         li    tmp2,id.dialog.print  ; \
-     70D8 0028     
+     70D8 0032     
 0100 70DA 8185  18         c     tmp1,tmp2             ; |  Print dialog?
 0101 70DC 1307  14         jeq   fm.lineterm.off.2     ; /
 0102                       ;------------------------------------------------------
@@ -15349,13 +15349,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      77DC 20       
 0189                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 77DD   32                        text '251229-2125290'
+0001 77DD   32                        text '251229-2136110'
      77DE 3531     
      77E0 3232     
      77E2 392D     
      77E4 3231     
-     77E6 3235     
-     77E8 3239     
+     77E6 3336     
+     77E8 3131     
      77EA 30       
                    < data.dialogs.asm
 0190 77EB   20                        text ' - Stevie 1.9.5 - (c)2018-2026 Filip Van Vooren'
@@ -17009,28 +17009,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.APPEND.... >000C :     
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
-    ID.DIALOG.CART.FG99. >0050 :     
+    ID.DIALOG.CART.FG99. >005A :     
     ID.DIALOG.CART.TYPE. >006A :     
-    ID.DIALOG.CAT....... >000D :     
+    ID.DIALOG.CAT....... >0019 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
-    ID.DIALOG.DELETE.... >0013 :     
+    ID.DIALOG.DELETE.... >000D :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
-    ID.DIALOG.FIND...... >0046 :     
+    ID.DIALOG.FIND...... >0050 :     
     ID.DIALOG.FIND.BROWSE >0078 :     
     ID.DIALOG.FONT...... >006E :     
-    ID.DIALOG.GOTO...... >003C :     
+    ID.DIALOG.GOTO...... >0046 :     
     ID.DIALOG.HELP...... >0068 :     
     ID.DIALOG.INSERT.... >000B :     
     ID.DIALOG.MENU...... >0064 :     
     ID.DIALOG.OPEN...... >000A :     
     ID.DIALOG.OPT....... >006C :     
     ID.DIALOG.OPT.CLIP.. >0014 :     
-    ID.DIALOG.PRINT..... >0028 :     
-    ID.DIALOG.PRINTBLOCK >0032 :     
+    ID.DIALOG.PRINT..... >0032 :     
+    ID.DIALOG.PRINTBLOCK >003C :     
     ID.DIALOG.RUN....... >001E :     
-    ID.DIALOG.SAVE...... >000F :     
-    ID.DIALOG.SAVEBLOCK. >0010 :     
+    ID.DIALOG.SAVE...... >0028 :     
+    ID.DIALOG.SAVEBLOCK. >0029 :     
     ID.DIALOG.SHORTCUTS. >006F :     
     ID.DIALOG.UNSAVED... >0065 :     
     ID.FILE.APPENDFILE.. >0003 :     

@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251229-2125290
+0002               * BUILD: 251229-2136110
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -218,20 +218,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032      000A     id.dialog.open            equ  10      ; "Open file"
 0033      000B     id.dialog.insert          equ  11      ; "Insert file"
 0034      000C     id.dialog.append          equ  12      ; "Append file"
-0035      000D     id.dialog.cat             equ  13      ; "Catalog"
-0036      000F     id.dialog.save            equ  15      ; "Save file"
-0037      0010     id.dialog.saveblock       equ  16      ; "Save block to file"
-0038      0013     id.dialog.delete          equ  19      ; "Delete file"
-0039      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
-0040      001E     id.dialog.run             equ  30      ; "Run program file"
+0035      000D     id.dialog.delete          equ  13      ; "Delete file"
+0036      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
+0037      0019     id.dialog.cat             equ  25      ; "Catalog"
+0038      001E     id.dialog.run             equ  30      ; "Run program file"
+0039               ;-----------------------------------------------------------------
+0040               ;   Dialog ID's > 30 means file catalog is unsupported
 0041               ;-----------------------------------------------------------------
-0042               ;   Dialog ID's > 30 means file catalog is unsupported
-0043               ;-----------------------------------------------------------------
-0044      0028     id.dialog.print           equ  40      ; "Print file"
-0045      0032     id.dialog.printblock      equ  50      ; "Print block"
-0046      003C     id.dialog.goto            equ  60      ; "Goto"
-0047      0046     id.dialog.find            equ  70      ; "Find"
-0048      0050     id.dialog.cart.fg99       equ  80      ; "FinalGROM 99 Cartridge"
+0042      0028     id.dialog.save            equ  40      ; "Save file"
+0043      0029     id.dialog.saveblock       equ  41      ; "Save block to file"
+0044      0032     id.dialog.print           equ  50      ; "Print file"
+0045      003C     id.dialog.printblock      equ  60      ; "Print block"
+0046      0046     id.dialog.goto            equ  70      ; "Goto"
+0047      0050     id.dialog.find            equ  80      ; "Find"
+0048      005A     id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
 0049               ;-----------------------------------------------------------------
 0050               ;   Dialog ID's >= 100 indicate that command prompt should be
 0051               ;   hidden and no characters added to CMDB keyboard buffer.
@@ -13986,7 +13986,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042                       ; Update command line with device path if catalog dialog
 0043                       ;-------------------------------------------------------
 0044 6FA8 0204  20         li    tmp0,id.dialog.cat    ;
-     6FAA 000D     
+     6FAA 0019     
 0045 6FAC 8120  34         c     @cmdb.dialog,tmp0     ; Is catalog dialog active?
      6FAE A720     
 0046 6FB0 1610  14         jne   edkey.action.cmdb.updir.exit
@@ -18046,19 +18046,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0341                       ;-------------------------------------------------------
 0342                       ; Dialog: Catalog drive/directory
 0343                       ;-------------------------------------------------------
-0344 7D5E 0D0D             byte  key.enter, id.dialog.cat
+0344 7D5E 0D19             byte  key.enter, id.dialog.cat
 0345 7D60 6B2A             data  edkey.action.cmdb.load
 0346               
-0347 7D62 0B0D             byte  key.fctn.e, id.dialog.cat
+0347 7D62 0B19             byte  key.fctn.e, id.dialog.cat
 0348 7D64 6F42             data  edkey.action.cmdb.pick.prev
 0349               
-0350 7D66 0A0D             byte  key.fctn.x, id.dialog.cat
+0350 7D66 0A19             byte  key.fctn.x, id.dialog.cat
 0351 7D68 6F66             data  edkey.action.cmdb.pick.next
 0352               
-0353 7D6A 200D             byte  key.space, id.dialog.cat
+0353 7D6A 2019             byte  key.space, id.dialog.cat
 0354 7D6C 6F8A             data  edkey.action.cmdb.updir
 0355               
-0356 7D6E 0D0D             byte  key.enter, id.dialog.cat
+0356 7D6E 0D19             byte  key.enter, id.dialog.cat
 0357 7D70 6EB2             data  edkey.action.cmdb.file.directory.device
 0358                       ;-------------------------------------------------------
 0359                       ; Dialog: Options
@@ -18090,44 +18090,44 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0385                       ;-------------------------------------------------------
 0386                       ; Dialog: Save file
 0387                       ;-------------------------------------------------------
-0388 7D8E 0D0F             byte  key.enter, id.dialog.save
+0388 7D8E 0D28             byte  key.enter, id.dialog.save
 0389 7D90 6CF4             data  edkey.action.cmdb.save
 0390               
-0391 7D92 0D10             byte  key.enter, id.dialog.saveblock
+0391 7D92 0D29             byte  key.enter, id.dialog.saveblock
 0392 7D94 6CF4             data  edkey.action.cmdb.save
 0393               
-0394 7D96 0C0F             byte  key.fctn.6, id.dialog.save
+0394 7D96 0C28             byte  key.fctn.6, id.dialog.save
 0395 7D98 700E             data  edkey.action.cmdb.lineterm.toggle
 0396               
-0397 7D9A 0C10             byte  key.fctn.6, id.dialog.saveblock
+0397 7D9A 0C29             byte  key.fctn.6, id.dialog.saveblock
 0398 7D9C 700E             data  edkey.action.cmdb.lineterm.toggle
 0399                       ;-------------------------------------------------------
 0400                       ; Dialog: Print file
 0401                       ;-------------------------------------------------------
-0402 7D9E 0D28             byte  key.enter, id.dialog.print
+0402 7D9E 0D32             byte  key.enter, id.dialog.print
 0403 7DA0 6D74             data  edkey.action.cmdb.print
 0404               
-0405 7DA2 0D32             byte  key.enter, id.dialog.printblock
+0405 7DA2 0D3C             byte  key.enter, id.dialog.printblock
 0406 7DA4 6D74             data  edkey.action.cmdb.print
 0407               
-0408 7DA6 0C28             byte  key.fctn.6, id.dialog.print
+0408 7DA6 0C32             byte  key.fctn.6, id.dialog.print
 0409 7DA8 700E             data  edkey.action.cmdb.lineterm.toggle
 0410               
-0411 7DAA 0C32             byte  key.fctn.6, id.dialog.printblock
+0411 7DAA 0C3C             byte  key.fctn.6, id.dialog.printblock
 0412 7DAC 700E             data  edkey.action.cmdb.lineterm.toggle
 0413                       ;-------------------------------------------------------
 0414                       ; Dialog: Delete file
 0415                       ;-------------------------------------------------------
-0416 7DAE 0D13             byte  key.enter, id.dialog.delete
+0416 7DAE 0D0D             byte  key.enter, id.dialog.delete
 0417 7DB0 6B2A             data  edkey.action.cmdb.load
 0418               
-0419 7DB2 0B13             byte  key.fctn.e, id.dialog.delete
+0419 7DB2 0B0D             byte  key.fctn.e, id.dialog.delete
 0420 7DB4 6F42             data  edkey.action.cmdb.pick.prev
 0421               
-0422 7DB6 0A13             byte  key.fctn.x, id.dialog.delete
+0422 7DB6 0A0D             byte  key.fctn.x, id.dialog.delete
 0423 7DB8 6F66             data  edkey.action.cmdb.pick.next
 0424               
-0425 7DBA 2013             byte  key.space, id.dialog.delete
+0425 7DBA 200D             byte  key.space, id.dialog.delete
 0426 7DBC 6F8A             data  edkey.action.cmdb.updir
 0427                       ;-------------------------------------------------------
 0428                       ; Dialog: Unsaved changes
@@ -18151,7 +18151,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0446                       ;-------------------------------------------------------
 0447                       ; Dialog: FinalGROM 99
 0448                       ;-------------------------------------------------------
-0449 7DCE 0D50             byte  key.enter, id.dialog.cart.fg99
+0449 7DCE 0D5A             byte  key.enter, id.dialog.cart.fg99
 0450 7DD0 7B68             data  cart.fg99.mgr
 0451                       ;-------------------------------------------------------
 0452                       ; Dialog: Basic
@@ -18198,12 +18198,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0493                       ;-------------------------------------------------------
 0494                       ; Dialog: Goto
 0495                       ;-------------------------------------------------------
-0496 7E02 0D3C             byte  key.enter, id.dialog.goto
+0496 7E02 0D46             byte  key.enter, id.dialog.goto
 0497 7E04 7082             data  edkey.action.cmdb.goto
 0498                       ;-------------------------------------------------------
 0499                       ; Dialog: find
 0500                       ;-------------------------------------------------------
-0501 7E06 0D46             byte  key.enter, id.dialog.find
+0501 7E06 0D50             byte  key.enter, id.dialog.find
 0502 7E08 722E             data  edkey.action.cmdb.find.search
 0503                       ;-------------------------------------------------------
 0504                       ; Dialog: Help
@@ -19549,28 +19549,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.APPEND.... >000C :     
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
-    ID.DIALOG.CART.FG99. >0050 :     
+    ID.DIALOG.CART.FG99. >005A :     
     ID.DIALOG.CART.TYPE. >006A :     
-    ID.DIALOG.CAT....... >000D :     
+    ID.DIALOG.CAT....... >0019 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
-    ID.DIALOG.DELETE.... >0013 :     
+    ID.DIALOG.DELETE.... >000D :     
     ID.DIALOG.EDITOR.... >006D :     
     ID.DIALOG.FILE...... >0069 :     
-    ID.DIALOG.FIND...... >0046 :     
+    ID.DIALOG.FIND...... >0050 :     
     ID.DIALOG.FIND.BROWSE >0078 :     
     ID.DIALOG.FONT...... >006E :     
-    ID.DIALOG.GOTO...... >003C :     
+    ID.DIALOG.GOTO...... >0046 :     
     ID.DIALOG.HELP...... >0068 :     
     ID.DIALOG.INSERT.... >000B :     
     ID.DIALOG.MENU...... >0064 :     
     ID.DIALOG.OPEN...... >000A :     
     ID.DIALOG.OPT....... >006C :     
     ID.DIALOG.OPT.CLIP.. >0014 :     
-    ID.DIALOG.PRINT..... >0028 :     
-    ID.DIALOG.PRINTBLOCK >0032 :     
+    ID.DIALOG.PRINT..... >0032 :     
+    ID.DIALOG.PRINTBLOCK >003C :     
     ID.DIALOG.RUN....... >001E :     
-    ID.DIALOG.SAVE...... >000F :     
-    ID.DIALOG.SAVEBLOCK. >0010 :     
+    ID.DIALOG.SAVE...... >0028 :     
+    ID.DIALOG.SAVEBLOCK. >0029 :     
     ID.DIALOG.SHORTCUTS. >006F :     
     ID.DIALOG.UNSAVED... >0065 :     
     ID.FILE.APPENDFILE.. >0003 :     
