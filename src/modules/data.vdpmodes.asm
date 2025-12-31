@@ -12,6 +12,12 @@
 *--------------------------------------------------------------
 *
 * ; VDP#0 Control bits
+* ;      bit 0=0: reserved
+* ;      bit 1=0: reserved
+* ;      bit 2=0: reserved
+* ;      bit 3=0: reserved
+* ;      bit 4=0: reserved
+* ;      bit 5=1: 80-column mode F18A
 * ;      bit 6=0: M3 | Graphics 1 mode
 * ;      bit 7=0: Disable external VDP input
 * ; VDP#1 Control bits
@@ -24,14 +30,14 @@
 * ;      bit 6=0: 8x8 sprites
 * ;      bit 7=0: Sprite magnification (1x)
 * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-* ; VDP#3 PCT (Pattern color table)      at >0980  (>26 * >040)
-* ; VDP#4 PDT (Pattern descriptor table) at >1800  (>03 * >800)
+* ; VDP#3 PCT (Pattern color table)      at >0f00  (>3c * >040)
+* ; VDP#4 PDT (Pattern descriptor table) at >2000  (>04 * >800)
 * ; VDP#5 SAT (sprite attribute table)   at >1300  (>26 * >080)
-* ; VDP#6 SPT (Sprite pattern table)     at >1800  (>03 * >800)
+* ; VDP#6 SPT (Sprite pattern table)     at >2000  (>04 * >800)
 * ; VDP#7 Set foreground/background color
 ***************************************************************
 stevie.80x30:
-        byte  >04,>f0,>00,>26,>03,>26,>03,SPFCLR,0,80
+        byte  >0c,>f0,>00,>3c,>04,>26,>04,SPFCLR,0,80
 
 ***************************************************************
 * TI Basic mode (32 columns/24 rows)

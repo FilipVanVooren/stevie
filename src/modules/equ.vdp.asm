@@ -20,3 +20,8 @@
   .ifeq vdpmode, 3081
     copy 'equ.f18a.3081.asm'        ; Character cursor
   .endif
+
+**************************** PICO9918 48x80 ************************************
+  .ifeq vdpmode, 4881
+    copy 'equ.pico9918.4881.asm'    ; Character cursor
+  .endif

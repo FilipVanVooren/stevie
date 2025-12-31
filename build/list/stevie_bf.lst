@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251229-2136110
+0002               * BUILD: 251230-2134350
 0003               ***************************************************************
                    < stevie_bf.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -129,31 +129,35 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               ***************************** F18a 24x80 ***************************************
 0013               
 0014               ***************************** F18a 30x80 ***************************************
-0016                   copy 'equ.f18a.3080.asm'        ; Sprite cursor/rulers
-     **** ****     > equ.f18a.3080.asm
-0001               * FILE......: equ.f18a.3080.asm
-0002               * Purpose...: F18a 30x80 mode (with sprite cursor/rulers)
+0018               
+0019               ***************************** F18a 30x80 ***************************************
+0023               
+0024               **************************** PICO9918 48x80 ************************************
+0026                   copy 'equ.pico9918.4881.asm'    ; Character cursor
+     **** ****     > equ.pico9918.4881.asm
+0001               * FILE......: equ.pico9918.4881.asm
+0002               * Purpose...: PICO9918 48x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 30x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 30 rows
-0011      0980     vdp.tat.base              equ  >0980   ; VDP TAT base address
-0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 30 rows
-0013      1800     vdp.pdt.base              equ  >1800   ; VDP PDT base address
+0010      0F00     vdp.sit.size              equ  48*80   ; VDP SIT size 80 columns, 48 rows
+0011      0F00     vdp.tat.base              equ  >0f00   ; VDP TAT base address
+0012      0F00     vdp.tat.size              equ  48*80   ; VDP TAT size 80 columns, 60 rows
+0013      2000     vdp.pdt.base              equ  >2000   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
-0016      09D0     vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
+0016      0F50     vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
 0017               
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      001D     pane.botrow               equ  29      ; Bottom row on screen
+0021      002F     pane.botrow               equ  47      ; Bottom row on screen
 0022      0050     colrow                    equ  80      ; Columns per row
 0023      0001     device.f18a               equ  1       ; F18a on
-0024      0001     spritecursor              equ  1       ; Use sprites for cursor and ruler
+0024      0000     spritecursor              equ  0       ; Use chars for cursor
 0025               
 0026               *--------------------------------------------------------------
 0027               * VDP memory setup for file handling
@@ -169,15 +173,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037      0004     spfbck  equ   >04                   ; Screen background color.
 0038      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 0039      000C     spfont  equ   >0c                   ; Font to load. See LDFONT for details.
-0040      0FC0     pctadr  equ   >0fc0                 ; \ VDP color table base.
-0041                                                   ; / Not used in F18a 80 columns mode
-0042      1900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-0043      1300     sprsat  equ   >1300                 ; VDP sprite attribute table
-0044      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
-0045               
+0040      0FC0     pctadr  equ   >0fc0                 ; VDP color table base
+0041      2100     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+0042      1300     sprsat  equ   >1300                 ; VDP sprite attribute table
+0043      1800     sprpdt  equ   >1800                 ; VDP sprite pattern table
+0044               
                    < equ.vdp.asm
-0018               
-0019               ***************************** F18a 30x80 ***************************************
                    < stevie_bf.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -949,16 +950,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0035 6010 0C53                 stri 'STEVIE 1.9.5'
+0037               
+0041               
+0045               
+0049               
+0051 6010 0C53                 stri 'STEVIE 1.9.5'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
      601C 35       
-0037               
-0041               
-0045               
                    < stevie_bf.asm
 0040               
 0041               ***************************************************************
@@ -6340,7 +6342,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0383 70DC 1304  14         jeq   runlid                ; Yes, skip it
 0384 70DE 06A0  32         bl    @ldfnt
      70E0 63A4     
-0385 70E2 1900             data  fntadr,spfont         ; Load specified font
+0385 70E2 2100             data  fntadr,spfont         ; Load specified font
      70E4 000C     
 0386               *--------------------------------------------------------------
 0387               * Did a system crash occur before runlib was called?
@@ -6729,89 +6731,95 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0012               *--------------------------------------------------------------
 0013               *
 0014               * ; VDP#0 Control bits
-0015               * ;      bit 6=0: M3 | Graphics 1 mode
-0016               * ;      bit 7=0: Disable external VDP input
-0017               * ; VDP#1 Control bits
-0018               * ;      bit 0=1: 16K selection
-0019               * ;      bit 1=1: Enable display
-0020               * ;      bit 2=1: Enable VDP interrupt
-0021               * ;      bit 3=1: M1 \ TEXT MODE
-0022               * ;      bit 4=0: M2 /
-0023               * ;      bit 5=0: reserved
-0024               * ;      bit 6=0: 8x8 sprites
-0025               * ;      bit 7=0: Sprite magnification (1x)
-0026               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-0027               * ; VDP#3 PCT (Pattern color table)      at >0980  (>26 * >040)
-0028               * ; VDP#4 PDT (Pattern descriptor table) at >1800  (>03 * >800)
-0029               * ; VDP#5 SAT (sprite attribute table)   at >1300  (>26 * >080)
-0030               * ; VDP#6 SPT (Sprite pattern table)     at >1800  (>03 * >800)
-0031               * ; VDP#7 Set foreground/background color
-0032               ***************************************************************
-0033               stevie.80x30:
-0034 7F50 04F0             byte  >04,>f0,>00,>26,>03,>26,>03,SPFCLR,0,80
-     7F52 0026     
-     7F54 0326     
-     7F56 03F4     
+0015               * ;      bit 0=0: reserved
+0016               * ;      bit 1=0: reserved
+0017               * ;      bit 2=0: reserved
+0018               * ;      bit 3=0: reserved
+0019               * ;      bit 4=0: reserved
+0020               * ;      bit 5=1: 80-column mode F18A
+0021               * ;      bit 6=0: M3 | Graphics 1 mode
+0022               * ;      bit 7=0: Disable external VDP input
+0023               * ; VDP#1 Control bits
+0024               * ;      bit 0=1: 16K selection
+0025               * ;      bit 1=1: Enable display
+0026               * ;      bit 2=1: Enable VDP interrupt
+0027               * ;      bit 3=1: M1 \ TEXT MODE
+0028               * ;      bit 4=0: M2 /
+0029               * ;      bit 5=0: reserved
+0030               * ;      bit 6=0: 8x8 sprites
+0031               * ;      bit 7=0: Sprite magnification (1x)
+0032               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
+0033               * ; VDP#3 PCT (Pattern color table)      at >0f00  (>3c * >040)
+0034               * ; VDP#4 PDT (Pattern descriptor table) at >2000  (>04 * >800)
+0035               * ; VDP#5 SAT (sprite attribute table)   at >1300  (>26 * >080)
+0036               * ; VDP#6 SPT (Sprite pattern table)     at >2000  (>04 * >800)
+0037               * ; VDP#7 Set foreground/background color
+0038               ***************************************************************
+0039               stevie.80x30:
+0040 7F50 0CF0             byte  >0c,>f0,>00,>3c,>04,>26,>04,SPFCLR,0,80
+     7F52 003C     
+     7F54 0426     
+     7F56 04F4     
      7F58 0050     
-0035               
-0036               ***************************************************************
-0037               * TI Basic mode (32 columns/24 rows)
-0038               *--------------------------------------------------------------
-0039               tibasic.32x24:
-0040 7F5A 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+0041               
+0042               ***************************************************************
+0043               * TI Basic mode (32 columns/24 rows)
+0044               *--------------------------------------------------------------
+0045               tibasic.32x24:
+0046 7F5A 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
      7F5C 000C     
      7F5E 0006     
      7F60 0007     
      7F62 0020     
-0041               *
-0042               * ; VDP#0 Control bits
-0043               * ;      bit 6=0: M3 | Graphics 1 mode
-0044               * ;      bit 7=0: Disable external VDP input
-0045               * ; VDP#1 Control bits
-0046               * ;      bit 0=1: 16K selection
-0047               * ;      bit 1=1: Enable display
-0048               * ;      bit 2=1: Enable VDP interrupt
-0049               * ;      bit 3=0: M1 \ Graphics 1 mode
-0050               * ;      bit 4=0: M2 /
-0051               * ;      bit 5=0: reserved
-0052               * ;      bit 6=1: 16x16 sprites
-0053               * ;      bit 7=0: Sprite magnification (1x)
-0054               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-0055               * ; VDP#3 PCT (Pattern color table)      at >0300  (>0C * >040)
-0056               * ; VDP#4 PDT (Pattern descriptor table) at >0000  (>00 * >800)
-0057               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
-0058               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
-0059               * ; VDP#7 Set screen background color
-0060               
-0061               
-0062               ***************************************************************
-0063               * Editor/Assembler (32 columns/24 rows)
-0064               *--------------------------------------------------------------
-0065               edasm.32x24:
-0066 7F64 00E2             byte  >00,>e2,>00,>0e,>01,>06,>00,>03,0,32
+0047               *
+0048               * ; VDP#0 Control bits
+0049               * ;      bit 6=0: M3 | Graphics 1 mode
+0050               * ;      bit 7=0: Disable external VDP input
+0051               * ; VDP#1 Control bits
+0052               * ;      bit 0=1: 16K selection
+0053               * ;      bit 1=1: Enable display
+0054               * ;      bit 2=1: Enable VDP interrupt
+0055               * ;      bit 3=0: M1 \ Graphics 1 mode
+0056               * ;      bit 4=0: M2 /
+0057               * ;      bit 5=0: reserved
+0058               * ;      bit 6=1: 16x16 sprites
+0059               * ;      bit 7=0: Sprite magnification (1x)
+0060               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
+0061               * ; VDP#3 PCT (Pattern color table)      at >0300  (>0C * >040)
+0062               * ; VDP#4 PDT (Pattern descriptor table) at >0000  (>00 * >800)
+0063               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
+0064               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
+0065               * ; VDP#7 Set screen background color
+0066               
+0067               
+0068               ***************************************************************
+0069               * Editor/Assembler (32 columns/24 rows)
+0070               *--------------------------------------------------------------
+0071               edasm.32x24:
+0072 7F64 00E2             byte  >00,>e2,>00,>0e,>01,>06,>00,>03,0,32
      7F66 000E     
      7F68 0106     
      7F6A 0003     
      7F6C 0020     
-0067               *
-0068               * ; VDP#0 Control bits
-0069               * ;      bit 6=0: M3 | Graphics 1 mode
-0070               * ;      bit 7=0: Disable external VDP input
-0071               * ; VDP#1 Control bits
-0072               * ;      bit 0=1: 16K selection
-0073               * ;      bit 1=1: Enable display
-0074               * ;      bit 2=1: Enable VDP interrupt
-0075               * ;      bit 3=0: M1 \ Graphics 1 mode
-0076               * ;      bit 4=0: M2 /
-0077               * ;      bit 5=0: reserved
-0078               * ;      bit 6=1: 16x16 sprites
-0079               * ;      bit 7=0: Sprite magnification (1x)
-0080               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
-0081               * ; VDP#3 PCT (Pattern color table)      at >0380  (>0E * >040)
-0082               * ; VDP#4 PDT (Pattern descriptor table) at >0800  (>01 * >800)
-0083               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
-0084               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
-0085               * ; VDP#7 Set screen background color
+0073               *
+0074               * ; VDP#0 Control bits
+0075               * ;      bit 6=0: M3 | Graphics 1 mode
+0076               * ;      bit 7=0: Disable external VDP input
+0077               * ; VDP#1 Control bits
+0078               * ;      bit 0=1: 16K selection
+0079               * ;      bit 1=1: Enable display
+0080               * ;      bit 2=1: Enable VDP interrupt
+0081               * ;      bit 3=0: M1 \ Graphics 1 mode
+0082               * ;      bit 4=0: M2 /
+0083               * ;      bit 5=0: reserved
+0084               * ;      bit 6=1: 16x16 sprites
+0085               * ;      bit 7=0: Sprite magnification (1x)
+0086               * ; VDP#2 PNT (Pattern name table)       at >0000  (>00 * >960)
+0087               * ; VDP#3 PCT (Pattern color table)      at >0380  (>0E * >040)
+0088               * ; VDP#4 PDT (Pattern descriptor table) at >0800  (>01 * >800)
+0089               * ; VDP#5 SAT (sprite attribute list)    at >0300  (>06 * >080)
+0090               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
+0091               * ; VDP#7 Set screen background color
                    < stevie_bf.asm
 0089                       ;-----------------------------------------------------------------------
 0090                       ; Vector table
@@ -7306,7 +7314,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FNOPT6.............. >8006 :     
     FNOPT7.............. >800C :     
     FNOPT8.............. >8012 :     
-    FNTADR.............. >1900 :     
+    FNTADR.............. >2100 :     
     FREE1............... >A000 :     
     FREE2............... >A002 :     
     FREE3............... >A004 :     
@@ -7623,7 +7631,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >6060 :     
-    PANE.BOTROW......... >001D :     
+    PANE.BOTROW......... >002F :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PARM1............... >A006 :     
@@ -7807,7 +7815,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     SPFONT.............. >000C :     
     SPKOFF.............. >FF00 :     
     SPKON............... >6000 :     
-    SPRITECURSOR........ >0001 :     
+    SPRITECURSOR........ >0000 :     
     SPRPDT.............. >1800 :     
     SPRSAT.............. >1300 :     
     SPVMOD.............. >7F50 :     
@@ -7949,12 +7957,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VCHAR2.............. >68B2 :     
     VCHAR3.............. >68CA :     
     VDP.FB.TOPROW.SIT... >0050 :     
-    VDP.FB.TOPROW.TAT... >09D0 :     
-    VDP.PDT.BASE........ >1800 :     
+    VDP.FB.TOPROW.TAT... >0F50 :     
+    VDP.PDT.BASE........ >2000 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0960 :     
-    VDP.TAT.BASE........ >0980 :     
-    VDP.TAT.SIZE........ >0960 :     
+    VDP.SIT.SIZE........ >0F00 :     
+    VDP.TAT.BASE........ >0F00 :     
+    VDP.TAT.SIZE........ >0F00 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >6954 :     
     VDPLA2.............. >695A :     

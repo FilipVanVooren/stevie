@@ -46,3 +46,7 @@ rom.program1:
         .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
             stri 'STEVIE 1.9.5'                   
         .endif
+
+        .ifeq vdpmode, 4881         ; PICO9918 48x80 character cursor
+            stri 'STEVIE 1.9.5'                   
+        .endif

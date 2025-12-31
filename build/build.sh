@@ -41,6 +41,12 @@ setbin() {
           return          
           ;;
 
+        # PICO9918 48x80 character cursor
+        4881)
+          binary="stevie48t.bin"
+          return          
+          ;;
+
         # F18a 60x80 character cursor
         6081)
           binary="stevie60t.bin"
