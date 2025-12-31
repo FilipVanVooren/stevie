@@ -68,9 +68,7 @@ edk.fb.char.overwrite:
         ; Draw cursor (TAT)
         ;-------------------------------------------------------
 edk.fb.char.drawcursor:
-      .ifeq  spritecursor,0
-        bl    @vdp.cursor.tat       ; Draw cursor
-      .endif            
+        bl    @vdp.cursor.tat       ; Draw cursor at current position
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

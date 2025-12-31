@@ -90,11 +90,7 @@ fb.cursor.up.exit:
                                     ; | i   @fb.column   = Current column in FB
                                     ; | i   @fb.colsline = Columns per line FB 
                                     ; | 
-                                    ; / o   @fb.current  = Updated pointer
-                                    
-      .ifeq  spritecursor,0
+                                    ; / o   @fb.current  = Updated pointer                                    
         bl    @vdp.cursor.tat       ; Update cursor
-      .endif     
-
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return     

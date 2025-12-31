@@ -17,39 +17,27 @@ source helper.sh
 setbin() {    
     vdpmode="${1:-3080}"
     case "$vdpmode" in
-        # F18a 24x80 sprite cursor/ruler
+        # F18a/PICO9918 24x80
         2480)
-          binary="stevie24s.bin"
+          binary="stevie24.bin"
           return
           ;;
 
-        # F18a 24x80 character cursor
-        2481)
-          binary="stevie24t.bin"
-          return          
-          ;;
-
-        # F18a 30x80 sprite cursor/ruler
+        # F18a/PICO9918 30x80
         3080)
-          binary="stevie30s.bin"
+          binary="stevie30.bin"
           return          
           ;;
 
-        # F18a 30x80 character cursor
-        3081)
-          binary="stevie30t.bin"
+        # PICO9918 48x80
+        4880)
+          binary="stevie48.bin"
           return          
           ;;
 
-        # PICO9918 48x80 character cursor
-        4881)
-          binary="stevie48t.bin"
-          return          
-          ;;
-
-        # F18a 60x80 character cursor
-        6081)
-          binary="stevie60t.bin"
+        # F18a 60x80
+        6080)
+          binary="stevie60.bin"
           return          
           ;;
 

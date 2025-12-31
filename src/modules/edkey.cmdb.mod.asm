@@ -86,10 +86,7 @@ edkey.action.cmdb.char:
         sla   tmp0,8                ; Move to MSB 
         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
 
-      .ifeq  spritecursor,0
         bl    @vdp.cursor.tat       ; Update cursor
-      .endif
-
         bl    @cmdb.refresh_prompt  ; Draw command line
         ;-------------------------------------------------------
         ; Exit

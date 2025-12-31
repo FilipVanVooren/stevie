@@ -106,11 +106,7 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
-        mov   *tmp0,tmp1            ; Get colors MNOP
-        andi  tmp1,>00f0            ; Only keep O
-        sla   tmp1,4                ; Move O to MSB
-        movb  tmp1,@ramsat+7        ; Line indicator FG color to SAT
-        movb  tmp1,@ramsat+11       ; Column indicator FG color to SAT
+        nop
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -312,8 +308,7 @@ pane.colorscheme.cursorcolor.fb:
         mov   @tv.curcolor,tmp0     ; Get cursor color
         andi  tmp0,>0f              ; Only keep low-nibble -> Word 2 (H)
         sla   tmp0,8                ; Move to MSB
-!       movb  tmp0,@ramsat+3        ; Update FG color in sprite table (SAT)
-        movb  tmp0,@tv.curshape+1   ; Save cursor color
+!       movb  tmp0,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

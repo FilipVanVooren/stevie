@@ -21,12 +21,7 @@ pane.cursor.hide:
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
         ; Hide cursor
-        ;-------------------------------------------------------
-        bl    @filv                 ; Clear sprite SAT in VDP RAM
-              data sprsat,>00,8     ; \ i  p0 = VDP destination
-                                    ; | i  p1 = Byte to write
-                                    ; / i  p2 = Number of bytes to write
-   
+        ;-------------------------------------------------------   
         bl    @clslot
               data 1                ; Terminate task.vdp.copy.sat
 
@@ -62,26 +57,9 @@ pane.cursor.blink:
         ;-------------------------------------------------------
         ; Hide cursor
         ;-------------------------------------------------------
-        bl    @filv                 ; Clear sprite SAT in VDP RAM
-              data sprsat,>00,4     ; \ i  p0 = VDP destination
-                                    ; | i  p1 = Byte to write
-                                    ; / i  p2 = Number of bytes to write
-
-      .ifeq spritecursor,1
-
-        bl    @mkslot
-              data >0102,task.vdp.copy.sat ; Task 1 - Update cursor position
-              data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
-              data eol
-
-      .else
-
         bl    @mkslot
               data >020f,task.vdp.cursor   ; Task 2 - Toggle cursor shape
               data eol
-
-      .endif
-
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

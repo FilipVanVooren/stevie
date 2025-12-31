@@ -111,11 +111,8 @@ dialog.run.clearcmd:
         ; Set cursor shape
         ;-------------------------------------------------------
 dialog.run.cursor:
-        bl      @pane.cursor.hide   ; No cursor at this time
-
+        bl    @pane.cursor.hide   ; No cursor at this time
         bl    @pane.cursor.blink  ; Show cursor
-        mov   @tv.curshape,@ramsat+2
-                                    ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------

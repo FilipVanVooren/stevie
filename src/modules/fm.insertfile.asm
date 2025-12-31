@@ -35,11 +35,6 @@ fm.insertfile:
         dect  stack
         mov   @parm3,*stack         ; Push @parm3
         ;-------------------------------------------------------
-        ; Clear VDP screen buffer
-        ;-------------------------------------------------------
-!       bl    @filv
-              data sprsat,>0000,16  ; Turn off sprites (cursor)
-        ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
         mov   @parm2,@parm7         ; Get line number

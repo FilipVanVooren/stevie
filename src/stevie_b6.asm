@@ -74,7 +74,6 @@ main:
         copy  "vdp.cursor.tat.asm"      ; VDP cursor handling (tat version)
         copy  "vdp.cursor.fb.tat.asm"   ; VDP cursor framebuffer
         copy  "vdp.cursor.cmdb.tat.asm" ; VDP cursor CMDB
-        copy  "vdp.cursor.sprite.asm"   ; VDP cursor handling (sprite version)
         copy  "tv.set.font.asm"         ; Set current font
         ;-----------------------------------------------------------------------
         ; Stubs
@@ -84,7 +83,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.patterns.asm"    ; Pattern definitions sprites & chars        
+        copy  "data.patterns.asm"    ; Pattern definitions
         ;-----------------------------------------------------------------------
         ; Fonts
         ;-----------------------------------------------------------------------        

@@ -44,17 +44,7 @@
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
-        .ifeq spritecursor,1
-        
-        copy  "task.vdp.cursor.sat.asm"     ; Copy cursor SAT to VDP
-        copy  "task.vdp.cursor.sprite.asm"  ; Set cursor shape in VDP (blink)
-
-        .else
-
-        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
-
-        .endif
-    
+        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)    
         copy  "task.oneshot.asm"            ; Run "one shot" task                                       
         ;------------------------------------------------------
         ; Program data

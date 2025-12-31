@@ -7,25 +7,26 @@
 ***************************************************************
 
 txt.stevie:
-        .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
+        .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
             text '  Stevie 1.9.5   '
             even
         .endif
 
-        .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            text '  Stevie 1.9.5   '     
-            even
-        .endif
-
-        .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
+        .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
             text '  Stevie 1.9.5   '
             even
         .endif
 
-        .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
+        .ifeq vdpmode, 4880         ; PICO9918 48x80
             text '  Stevie 1.9.5   '  
             even
         .endif
+
+        .ifeq vdpmode, 6080         ; PICO9918 60x80
+            text '  Stevie 1.9.5   '  
+            even
+        .endif
+
 
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs

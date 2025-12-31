@@ -122,8 +122,7 @@ keycode2          equ  core1.top + 42  ; Previous key scanned
 uint16.unpacked   equ  core1.top + 44  ; Unpacked uint16 (len-prefixed string)
 uint16.packed     equ  core1.top + 50  ; Packed uint16 (2 bytes)
 trmpvector        equ  core1.top + 52  ; Vector trampoline (if p1|tmp1 = >ffff)
-core1.free1       equ  core1.top + 54  ; 54-85 **free**
-ramsat            equ  core1.top + 86  ; Sprite Attr. Table in RAM (14 bytes)
+core1.free1       equ  core1.top + 54  ; 54-99 **free**
 timers            equ  core1.top + 100 ; Timers (80 bytes)
                   ;--------------------------------------------
                   ; TI Basic related

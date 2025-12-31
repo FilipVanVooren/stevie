@@ -1,10 +1,10 @@
 * FILE......: vdpdump.patterns.asm
-* Purpose...: Dump sprite/character patterns to VDP
+* Purpose...: Dump patterns to VDP
 
 
 ***************************************************************
 * vdpdump.patterns
-* Dump Stevie sprite & tile patterns to VDP
+* Dump patterns to VDP
 ***************************************************************
 * bl @vdpdump.patterns
 *--------------------------------------------------------------
@@ -23,15 +23,6 @@
 vdp.dump.patterns:
         dect  stack
         mov   r11,*stack            ; Push return address
-        ;-------------------------------------------------------
-        ; Dump sprite patterns from ROM to VDP SDT
-        ;-------------------------------------------------------
-        .ifeq spritecursor,1
-
-        bl    @cpym2v
-              data sprpdt + >0410,cursors,3*8
-              
-        .endif
         ;-------------------------------------------------------
         ; Dump character patterns from ROM to VDP PDT
         ;-------------------------------------------------------

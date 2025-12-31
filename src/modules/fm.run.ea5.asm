@@ -33,19 +33,14 @@ fm.run.ea5:
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp1       ; Get dirty flag
         jeq   !                     ; Load file unless dirty
-
         seto  @outparm1             ; \ Editor buffer dirty, set flag
         jmp   fm.run.ea5.exit       ; / and exit early 
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
-!       bl    @filv
-              data sprsat,>0000,16  ; Turn off sprites (cursor)
-
-        mov   @fb.scrrows.max,tmp1
+!       mov   @fb.scrrows.max,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
- 
         bl    @scroff               ; Turn off screen
 
         li    tmp0,vdp.fb.toprow.sit - 80

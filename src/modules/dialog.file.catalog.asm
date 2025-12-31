@@ -61,9 +61,7 @@ dialog.cat.set.filename1:
         ; Set cursor shape
         ;-------------------------------------------------------
 dialog.cat.cursor:
-        bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2
-                                    ; Get cursor shape and color        
+        bl    @pane.cursor.blink    ; Show cursor     
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------
