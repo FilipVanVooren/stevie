@@ -409,22 +409,16 @@ idx.size          equ  4096            ; Index size
 edb.top           equ  >c000           ; Editor buffer high memory
 edb.size          equ  4096            ; Editor buffer size
 ;-----------------------------------------------------------------
-; Frame buffer & uncrunch area         @>d000-dcff    (3584 bytes)
+; Frame buffer & uncrunch area         @>d000-e21f    (4640 bytes)
 ;-----------------------------------------------------------------
-fb.top            equ  >d000           ; Frame buffer (2400 char)
-fb.size           equ  80*30           ; Frame buffer size
+fb.top            equ  >d000           ; Frame buffer (4640 char)
+fb.size           equ  80*60           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
 ;-----------------------------------------------------------------
-; Defaults area                        @>de00-dfff     (512 bytes)
+; Directory/File catalog               @>e220-f0e4    (3780 bytes)
 ;-----------------------------------------------------------------
-tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
-tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
-tv.cat.fname      equ  >dea0           ; Default catalog device (80 bytes)
-;-----------------------------------------------------------------
-; Directory/File catalog               @>e000-eeff    (3840 bytes)
-;-----------------------------------------------------------------
-cat.top           equ  >e000           ; Top of file catalog
+cat.top           equ  >e220           ; Top of file catalog
 cat.filecount     equ  cat.top         ; Total files in catalog
 cat.fpicker.idx   equ  cat.top + 2     ; Index in catalog (1st entry on page)
 cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
@@ -457,21 +451,15 @@ cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
 cat.volsize       equ  cat.top + 888   ; Volume size
 cat.volused       equ  cat.top + 890   ; Volume used
 cat.volfree       equ  cat.top + 892   ; Volume free
-cat.free1         equ  cat.top + 894   ; **free** up to 954
 ;-----------------------------------------------------------------
 ; Directory/File catalog strings (always length byte included)
 ;-----------------------------------------------------------------
-cat.volname       equ  cat.top + 954   ; Volume name (12)
-cat.typelist      equ  cat.top + 966   ; Filetype string list (762=127*6)
-cat.sizelist      equ  cat.top + 1728  ; Filesize string list (508=127*4)
-cat.fnlist        equ  cat.top + 2236  ; Filename string list (1524=127*12) 
-cat.device        equ  cat.top + 3760  ; Current device name string (80)
-cat.size          equ  3840            ; Catalog total size
-;-----------------------------------------------------------------
-; Command buffer                       ; @>ef00-efff   (256 bytes)
-;-----------------------------------------------------------------
-cmdb.top          equ  >ef00           ; Top of command history buffer
-cmdb.size         equ  256             ; Command buffer size
+cat.volname       equ  cat.top + 894   ; Volume name (12)
+cat.typelist      equ  cat.top + 906   ; Filetype string list (762=127*6)
+cat.sizelist      equ  cat.top + 1668  ; Filesize string list (508=127*4)
+cat.fnlist        equ  cat.top + 2176  ; Filename string list (1524=127*12) 
+cat.device        equ  cat.top + 3700  ; Current device name string (80)
+cat.size          equ  3780            ; Catalog total size
 ;-----------------------------------------------------------------
 ; Heap & Strings area                  @>f000-f0ff     (256 bytes)
 ;-----------------------------------------------------------------
@@ -489,14 +477,25 @@ edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
 edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
 edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
 ;-----------------------------------------------------------------
+; Defaults area                        @>fe00-feef     (240 bytes)
+;-----------------------------------------------------------------
+tv.printer.fname  equ  >fe00           ; Default printer         (80 bytes)
+tv.clip.fname     equ  >fe50           ; Default clipboard       (80 bytes)
+tv.cat.fname      equ  >fea0           ; Default catalog device  (80 bytes)
+;-----------------------------------------------------------------
+; Command buffer                       ; @>fef0-ffff   (272 bytes)
+;-----------------------------------------------------------------
+cmdb.top          equ  >fef0           ; Top of command history buffer
+cmdb.size         equ  256             ; Command buffer size  
+;-----------------------------------------------------------------
 ; Stevie specific equates
 ;-----------------------------------------------------------------
 fh.fopmode.none      equ  0            ; No file operation in progress
 fh.fopmode.readfile  equ  1            ; Read file from disk to memory
 fh.fopmode.writefile equ  2            ; Save file from memory to disk
-fh.ea5.vdpbuf        equ  >2000        ; VRAM address for storing EA5 image chunk
+fh.ea5.vdpbuf        equ  >2000        ; VRAM address for storing EA5 chunk
 cmdb.rows            equ  6            ; Number of rows in CMDB pane
-rom0_kscan_out       equ  keycode1     ; W here to store value of key pressed
+rom0_kscan_out       equ  keycode1     ; Where to store value of key pressed
 tv.colorize.reset    equ  >9900        ; Colorization off
 tv.1timeonly         equ  254          ; One-time only flag indicator
 tv.sams.maxpage      equ  256          ; Max SAMS pages supported

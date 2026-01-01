@@ -25,9 +25,13 @@ device.f18a               equ  1       ; F18a/PICO9918 on
 *--------------------------------------------------------------
 * VDP memory setup for file handling
 *--------------------------------------------------------------
-fh.vrecbuf                equ  >2000   ; VDP address record buffer
+fh.vpab                   equ  >2580   ; \ VDP address PAB 
+                                       ; | Range >2580 - 261f
+                                       ; / Reserve max 160 bytes for 1 PAB
+fh.vrecbuf                equ  >2620   ; \ VDP address record buffer 
+                                       ; | Range >2620 - 27ff       
+                                       ; / Reserve max 480 bytes for 1 record
 fh.filebuf                equ  >2000   ; VDP address binary file buffer
-fh.vpab                   equ  >1400   ; VDP address PAB
 
 *--------------------------------------------------------------
 * Video mode configuration (spectra2)

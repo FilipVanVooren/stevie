@@ -86,22 +86,24 @@ Note regarding column "SAMS/Addr.":
 | >c000-cfff |   #30-xx   |  4096 | Editor buffer page, bankswitched in SAMS / |
 |            |            |       | EA5 image in RAM, bankswitched in SAMS     |
 |------------|------------|-------|--------------------------------------------|
-| >d000-dfff |     #05    |  4096 | Frame buffer, uncrunch, default filenames  |
-|            | >d000-d95f |  2400 |   Frame buffer for max. 80x30 rows         |
+| >d000-dfff |     #05    |  4096 | Frame buffer part 1, uncrunch              |
+|            | >d000-dfff |  4096 |   Frame buffer for max. 80x58 rows         |
 |            | >d960-dcff |       |   Uncrunched TI Basic statement            |
-|            | >de00-deff |       |   Default filenames                        |
-|            | >df00-dfff |   256 |   FREE                                     |
 |------------|------------|-------|--------------------------------------------|
-| >e000-efff |     #06    |  4096 | Directory file catalog (max. 127 files)    |
+| >e000-efff |     #06    |  4096 | Frame buffer part 2, File catalog          |
+|            |            |       | (max 127 files), command buffer            |
+|            | >e000-e21f |   544 |   Frame buffer for max. 80x58 rows         |
 |            | >e000-e001 |     2 |   Variables, volume name                   |
-| >e000-efff | >e00e-e574 |  1398 |   length-prefixed file names list (127*11) |
-| >e000-efff | >e575-e5ff |  1398 |   File size list (127*2)                   |
+|            | >e00e-e574 |  1398 |   length-prefixed file names list (127*11) |
+|            | >e575-e5ff |  1398 |   File size list (127*2)                   |
 |------------|------------|-------|--------------------------------------------|
 | >f000-ffff |     #07    |  4096 | Heap, Strings area, Search results index   |
 |            | >f000-f0ff |   256 |   Heap & Strings area                      |
 |            | >f100-f8ff |  2048 |   Search results index (rows)              |
 |            | >f900-fcff |  1024 |   Search results index (columns)           |
-|            | >fe00-ffff |  1024 |   FREE                                     |
+|            | >fe00-feef |   240 |   Default filenames                        |
+|            | >fef0-ffef |   256 | Command buffer space                       |
+|            | >fff0-ffff |    16 | FREE                                       |
 
 ### Memory layout when activating TI Basic
 
@@ -122,43 +124,55 @@ Note: Other memory ranges are the same as the regular memory map.
 |            | >f960-f97f |    32 |   TI Basic scratchpad memory               |
 |            | >f980-ffff |  1664 |   FREE                                     |
 
-## VDP RAM
+## VDP VRAM map
 
-### F18a 30x80 mode with sprites (cursor, ruler)
+The VDP tables are kept the same, independently of the used GPU and rows mode.
+Actual allocation depends on the number of rows per screen.
 
-| Address    | Size | VDP# | Value/Base | Purpose                  |
-|------------|------|------|------------|--------------------------|
-| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
-| >0960-097f |  160 |      |            | PAB definition           |
-| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >12e0-12ff |   16 |      |            | **FREE**                 |
-| >1300-13ff |  256 | #05  | >26 * >080 | Sprite attribute table   |
-| >1400-144f |   80 |      |            | PAB                      |
-| >1450-17ff |  944 |      |            | **FREE**                 |
-| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
-| >1800-19ff |      | #06  | >03 * >800 | Sprite pattern table     |
-| >2000-3fff | 8192 |      |            | Record/File buffer       |
-| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
-| >4000-47ff | 2048 |      |            | F18a extended memory     |
+| Address    | Size | VDP# | Value/Base | Purpose                            |
+|------------|------|------|------------|------------------------------------|
+| >0000-12bf | 4800 | #02  | >00 * >960 | Pattern name table for max 60 rows |
+| >12c0-257f | 4800 | #03  | >4b * >040 | Color table (PAT) for max 60 rows  |
+| >2580-27ff |  640 | #05  | >4b * >080 | Sprite SAT table. Not used /       |
+|            |      |      |            | File PAB and record buffer         |
+| >2800-2fff | 2048 | #04  | >05 * >800 | Pattern descriptor table           |
+| >2800-2fff | 2048 | #06  | >05 * >800 | Sprite SPT table. Not used         |
+| >3000-3fff | 4096 |      |            | Multi-purpose. See usage           |
+| >4000-47ff | 2048 |      |            | F18a extended memory               |
 
-- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >0980.
-- Sprite pattern table is overlayed with pattern descriptor table. 
-  Cursor patterns are dumped to >1c00
-- File buffer header setup by TI-Disk Controller on startup
-  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
-  
-### F18a 24x80 mode without sprites
+Notes:
+- Using position-based Pattern Color Table of max 4800 bytes (60 * 80) at >12c0.
+- Sprite SAT table not used in text mode, >2580-27ff used for 
+  file PAB and record buffer.
+- File buffer header setup by TI-Disk Controller on startup   
+  [Docs](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
 
-| Address    | Size | VDP# | Value/Base | Purpose                  |
-|------------|------|------|------------|--------------------------|
-| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
-| >0960-097f |  160 |      |            | PAB definition           |
-| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
-| >2000-3fff | 8192 |      |            | Record/File buffer       |
-| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
-| >4000-47ff | 2048 |      |            | F18a extended memory     |
+### Allocation of VDP tables
 
-- Using position-based Pattern Color Table of 1920 bytes (24 * 80) at >0980.
-- File buffer header setup by TI-Disk Controller on startup
-  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
+#### Screen table
+
+| PNT   | rows | end (+1) | Size | Hex   | gpu
+|-------|------|----------|------|-------|----------------|
+| >0000 | 24   | >0780    | 1920 | >780  | f18a, pico9918 |
+| >0000 | 30   | >0960    | 2400 | >960  | f18a, pico9918 |
+| >0000 | 48   | >0f00    | 3840 | >f00  | pico9918       |
+| >0000 | 60   | >12c0    | 4800 | >12c0 | pico9918       |
+
+#### Color table
+
+| PCT   | rows | end (+1) | Size | Hex   | gpu
+|-------|------|----------|------|-------|----------------|
+| >12c0 | 24   | >1a40    | 1920 | >780  | f18a, pico9918 |
+| >12c0 | 30   | >1c20    | 2400 | >960  | f18a, pico9918 |
+| >12c0 | 48   | >21c0    | 3840 | >f00  | pico9918       |
+| >12c0 | 60   | >2580    | 4800 | >12c0 | pico9918       |
+
+#### Free space between PCT and PDT
+
+>2580 - >27ff for file PAB and record buffer.
+
+#### Pattern descriptor table
+
+| PDT   | patterns | end (-1) | Size | Hex  |
+|-------|----------|----------|------|------|
+| >2800 | 256      | >3000    | 2048 | >800 |

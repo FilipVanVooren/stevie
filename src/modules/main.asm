@@ -43,13 +43,15 @@ main.continue:
         bl    @mute                 ; Turn sound generators off
         bl    @scroff               ; Turn screen off
         ;------------------------------------------------------
-        ; Clear VDP memory >0000 - >0fff
+        ; Clear VDP memory
         ;------------------------------------------------------
         bl    @filv
-              data >0000,32,>0960   ; Clear screen area
+              data >0000,32,>12c0   ; Clear screen area
 
         bl    @filv
-              data >0960,00,>06a0   ; Clear area for record buffer + PAB, etc.
+              data fh.vpab,0,vdp.pdt.base - fh.vpab
+                                    ; \ Clear area between TAT and PDT
+                                    ; / 
         ;------------------------------------------------------
         ; Initialize high memory expansion
         ;------------------------------------------------------
@@ -78,7 +80,7 @@ main.continue:
               data >3202            ; F18a VR50 (>32), bit 2
 
         bl    @putvr                ; Set stop sprite
-              data >3300            ; F18a VR51 (>33), 
+              data >3300            ; F18a VR51 (>33), no sprites
 
         ; mov   @romsat+2,@tv.curshape
                                     ; Save cursor shape & color
@@ -146,4 +148,18 @@ main.continue:
         b     @tmgr                 ; Run kernel and timers
 
 
+ .ifeq vdpmode, 2480
 txt.nof18a stri 'NO F18A OR PICO9918 FOUND. CANNOT RUN.'
+ .endif
+
+ .ifeq vdpmode, 3080
+txt.nof18a stri 'NO F18A OR PICO9918 FOUND. CANNOT RUN.'
+ .endif
+
+ .ifeq vdpmode, 4880
+txt.nof18a stri 'NO PICO9918 FOUND. CANNOT RUN.'
+ .endif
+
+ .ifeq vdpmode, 6080
+txt.nof18a stri 'NO PICO9918 FOUND. CANNOT RUN.'
+ .endif

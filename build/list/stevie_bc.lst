@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 251231-1703290
+0002               * BUILD: 260101-2102270
 0003               ***************************************************************
                    < stevie_bc.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -159,22 +159,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025               *--------------------------------------------------------------
 0026               * VDP memory setup for file handling
 0027               *--------------------------------------------------------------
-0028      2000     fh.vrecbuf                equ  >2000   ; VDP address record buffer
-0029      2000     fh.filebuf                equ  >2000   ; VDP address binary file buffer
-0030      1400     fh.vpab                   equ  >1400   ; VDP address PAB
-0031               
-0032               *--------------------------------------------------------------
-0033               * Video mode configuration (spectra2)
-0034               *--------------------------------------------------------------
-0035      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
-0036      0004     spfbck  equ   >04                   ; Screen background color.
-0037      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
-0038      000C     spfont  equ   >0c                   ; Font to load. See LDFONT for details.
-0039      12C0     pctadr  equ   >12c0                 ; VDP color table base
-0040      2900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
-0041      2580     sprsat  equ   >2580                 ; VDP sprite attribute table
-0042      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
-0043               
+0028      2580     fh.vpab                   equ  >2580   ; \ VDP address PAB
+0029                                                      ; | Range >2580 - 261f
+0030                                                      ; / Reserve max 160 bytes for 1 PAB
+0031      2620     fh.vrecbuf                equ  >2620   ; \ VDP address record buffer
+0032                                                      ; | Range >2620 - 27ff
+0033                                                      ; / Reserve max 480 bytes for 1 record
+0034      2000     fh.filebuf                equ  >2000   ; VDP address binary file buffer
+0035               
+0036               *--------------------------------------------------------------
+0037               * Video mode configuration (spectra2)
+0038               *--------------------------------------------------------------
+0039      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
+0040      0004     spfbck  equ   >04                   ; Screen background color.
+0041      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0042      000C     spfont  equ   >0c                   ; Font to load. See LDFONT for details.
+0043      12C0     pctadr  equ   >12c0                 ; VDP color table base
+0044      2900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
+0045      2580     sprsat  equ   >2580                 ; VDP sprite attribute table
+0046      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
+0047               
                    < equ.vdp.asm
                    < stevie_bc.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
@@ -590,97 +594,96 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0409      C000     edb.top           equ  >c000           ; Editor buffer high memory
 0410      1000     edb.size          equ  4096            ; Editor buffer size
 0411               ;-----------------------------------------------------------------
-0412               ; Frame buffer & uncrunch area         @>d000-dcff    (3584 bytes)
+0412               ; Frame buffer & uncrunch area         @>d000-e21f    (4640 bytes)
 0413               ;-----------------------------------------------------------------
-0414      D000     fb.top            equ  >d000           ; Frame buffer (2400 char)
-0415      0960     fb.size           equ  80*30           ; Frame buffer size
+0414      D000     fb.top            equ  >d000           ; Frame buffer (4640 char)
+0415      12C0     fb.size           equ  80*60           ; Frame buffer size
 0416      D960     fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 0417                                                      ; / >d960->dcff
 0418               ;-----------------------------------------------------------------
-0419               ; Defaults area                        @>de00-dfff     (512 bytes)
+0419               ; Directory/File catalog               @>e220-f0e4    (3780 bytes)
 0420               ;-----------------------------------------------------------------
-0421      DE00     tv.printer.fname  equ  >de00           ; Default printer        (80 bytes)
-0422      DE50     tv.clip.fname     equ  >de50           ; Default clipboard      (80 bytes)
-0423      DEA0     tv.cat.fname      equ  >dea0           ; Default catalog device (80 bytes)
-0424               ;-----------------------------------------------------------------
-0425               ; Directory/File catalog               @>e000-eeff    (3840 bytes)
-0426               ;-----------------------------------------------------------------
-0427      E000     cat.top           equ  >e000           ; Top of file catalog
-0428      E000     cat.filecount     equ  cat.top         ; Total files in catalog
-0429      E002     cat.fpicker.idx   equ  cat.top + 2     ; Index in catalog (1st entry on page)
-0430      E004     cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
-0431      E006     cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
-0432      E008     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
-0433      E00A     cat.nofilescol    equ  cat.top + 10    ; Number of files per column
-0434      E00C     cat.currentpage   equ  cat.top + 12    ; Current page
-0435      E00E     cat.totalpages    equ  cat.top + 14    ; Total number of pages
-0436      E010     cat.previouspage  equ  cat.top + 16    ; Previous page
-0437      E012     cat.shortcut.idx  equ  cat.top + 18    ; Index in catalog(current entry on page)
-0438      E014     cat.norowscol     equ  cat.top + 20    ; Number of rows per column
-0439      E016     cat.fullfname     equ  cat.top + 22    ; Device & filename string (80)
-0440               ;-----------------------------------------------------------------
-0441               ; Directory/File catalog pointers and numbers
-0442               ;-----------------------------------------------------------------
-0443      E066     cat.var1          equ  cat.top + 102   ; Temp variable 1
-0444      E068     cat.var2          equ  cat.top + 104   ; Temp variable 2
-0445      E06A     cat.var3          equ  cat.top + 106   ; Temp variable 3
-0446      E06C     cat.var4          equ  cat.top + 108   ; Temp variable 4
-0447      E06E     cat.var5          equ  cat.top + 110   ; Temp variable 5
-0448      E070     cat.var6          equ  cat.top + 112   ; Temp variable 6
-0449      E072     cat.var7          equ  cat.top + 114   ; Temp variable 7
-0450      E074     cat.var8          equ  cat.top + 116   ; Temp variable 8
-0451      E076     cat.ptrlist       equ  cat.top + 118   ; Pointer list to filenames (254=127*2)
-0452      E174     cat.ftlist        equ  cat.top + 372   ; Filetype list (128)
-0453      E1F4     cat.fslist        equ  cat.top + 500   ; Filesize size (256)
-0454      E2F4     cat.rslist        equ  cat.top + 756   ; Record size list (128)
-0455      E374     cat.barpos        equ  cat.top + 884   ; Color bar YX position (backup)
-0456      E376     cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
-0457      E378     cat.volsize       equ  cat.top + 888   ; Volume size
-0458      E37A     cat.volused       equ  cat.top + 890   ; Volume used
-0459      E37C     cat.volfree       equ  cat.top + 892   ; Volume free
-0460      E37E     cat.free1         equ  cat.top + 894   ; **free** up to 954
-0461               ;-----------------------------------------------------------------
-0462               ; Directory/File catalog strings (always length byte included)
+0421      E220     cat.top           equ  >e220           ; Top of file catalog
+0422      E220     cat.filecount     equ  cat.top         ; Total files in catalog
+0423      E222     cat.fpicker.idx   equ  cat.top + 2     ; Index in catalog (1st entry on page)
+0424      E224     cat.hilit.colrow  equ  cat.top + 4     ; File picker column, row offset
+0425      E226     cat.hilit.colrow2 equ  cat.top + 6     ; File picker previous column, row offset
+0426      E228     cat.nofilespage   equ  cat.top + 8     ; Number of files per page
+0427      E22A     cat.nofilescol    equ  cat.top + 10    ; Number of files per column
+0428      E22C     cat.currentpage   equ  cat.top + 12    ; Current page
+0429      E22E     cat.totalpages    equ  cat.top + 14    ; Total number of pages
+0430      E230     cat.previouspage  equ  cat.top + 16    ; Previous page
+0431      E232     cat.shortcut.idx  equ  cat.top + 18    ; Index in catalog(current entry on page)
+0432      E234     cat.norowscol     equ  cat.top + 20    ; Number of rows per column
+0433      E236     cat.fullfname     equ  cat.top + 22    ; Device & filename string (80)
+0434               ;-----------------------------------------------------------------
+0435               ; Directory/File catalog pointers and numbers
+0436               ;-----------------------------------------------------------------
+0437      E286     cat.var1          equ  cat.top + 102   ; Temp variable 1
+0438      E288     cat.var2          equ  cat.top + 104   ; Temp variable 2
+0439      E28A     cat.var3          equ  cat.top + 106   ; Temp variable 3
+0440      E28C     cat.var4          equ  cat.top + 108   ; Temp variable 4
+0441      E28E     cat.var5          equ  cat.top + 110   ; Temp variable 5
+0442      E290     cat.var6          equ  cat.top + 112   ; Temp variable 6
+0443      E292     cat.var7          equ  cat.top + 114   ; Temp variable 7
+0444      E294     cat.var8          equ  cat.top + 116   ; Temp variable 8
+0445      E296     cat.ptrlist       equ  cat.top + 118   ; Pointer list to filenames (254=127*2)
+0446      E394     cat.ftlist        equ  cat.top + 372   ; Filetype list (128)
+0447      E414     cat.fslist        equ  cat.top + 500   ; Filesize size (256)
+0448      E514     cat.rslist        equ  cat.top + 756   ; Record size list (128)
+0449      E594     cat.barpos        equ  cat.top + 884   ; Color bar YX position (backup)
+0450      E596     cat.barcol        equ  cat.top + 886   ; Color bar column 0-2
+0451      E598     cat.volsize       equ  cat.top + 888   ; Volume size
+0452      E59A     cat.volused       equ  cat.top + 890   ; Volume used
+0453      E59C     cat.volfree       equ  cat.top + 892   ; Volume free
+0454               ;-----------------------------------------------------------------
+0455               ; Directory/File catalog strings (always length byte included)
+0456               ;-----------------------------------------------------------------
+0457      E59E     cat.volname       equ  cat.top + 894   ; Volume name (12)
+0458      E5AA     cat.typelist      equ  cat.top + 906   ; Filetype string list (762=127*6)
+0459      E8A4     cat.sizelist      equ  cat.top + 1668  ; Filesize string list (508=127*4)
+0460      EAA0     cat.fnlist        equ  cat.top + 2176  ; Filename string list (1524=127*12)
+0461      F094     cat.device        equ  cat.top + 3700  ; Current device name string (80)
+0462      0EC4     cat.size          equ  3780            ; Catalog total size
 0463               ;-----------------------------------------------------------------
-0464      E3BA     cat.volname       equ  cat.top + 954   ; Volume name (12)
-0465      E3C6     cat.typelist      equ  cat.top + 966   ; Filetype string list (762=127*6)
-0466      E6C0     cat.sizelist      equ  cat.top + 1728  ; Filesize string list (508=127*4)
-0467      E8BC     cat.fnlist        equ  cat.top + 2236  ; Filename string list (1524=127*12)
-0468      EEB0     cat.device        equ  cat.top + 3760  ; Current device name string (80)
-0469      0F00     cat.size          equ  3840            ; Catalog total size
-0470               ;-----------------------------------------------------------------
-0471               ; Command buffer                       ; @>ef00-efff   (256 bytes)
-0472               ;-----------------------------------------------------------------
-0473      EF00     cmdb.top          equ  >ef00           ; Top of command history buffer
-0474      0100     cmdb.size         equ  256             ; Command buffer size
-0475               ;-----------------------------------------------------------------
-0476               ; Heap & Strings area                  @>f000-f0ff     (256 bytes)
-0477               ;-----------------------------------------------------------------
-0478      F000     heap.top          equ  >f000           ; 80 Current filename
-0479      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
-0480      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0464               ; Heap & Strings area                  @>f000-f0ff     (256 bytes)
+0465               ;-----------------------------------------------------------------
+0466      F000     heap.top          equ  >f000           ; 80 Current filename
+0467      F050     ram.msg1          equ  >f050           ; 80 txt.hint.memstat
+0468      F0A0     ram.msg2          equ  >f0a0           ; 80 txt.hint.lineterm
+0469               ;-----------------------------------------------------------------
+0470               ; Search results index for rows        @>f100-f8ff    (2048 bytes)
+0471               ;-----------------------------------------------------------------
+0472      F100     edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
+0473      0800     edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
+0474               ;-----------------------------------------------------------------
+0475               ; Search results index for columns     @>f900-fcff    (1024 bytes)
+0476               ;-----------------------------------------------------------------
+0477      F900     edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
+0478      0400     edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
+0479               ;-----------------------------------------------------------------
+0480               ; Defaults area                        @>fe00-feef     (240 bytes)
 0481               ;-----------------------------------------------------------------
-0482               ; Search results index for rows        @>f100-f8ff    (2048 bytes)
-0483               ;-----------------------------------------------------------------
-0484      F100     edb.srch.idx.rtop   equ  >f100         ; Search match index for rows
-0485      0800     edb.srch.idx.rsize  equ  2048          ; Size of search match index for rows
-0486               ;-----------------------------------------------------------------
-0487               ; Search results index for columns     @>f900-fcff    (1024 bytes)
-0488               ;-----------------------------------------------------------------
-0489      F900     edb.srch.idx.ctop   equ  >f900         ; Search match index for columns
-0490      0400     edb.srch.idx.csize  equ  1024          ; Size of search match index for columns
-0491               ;-----------------------------------------------------------------
-0492               ; Stevie specific equates
-0493               ;-----------------------------------------------------------------
-0494      0000     fh.fopmode.none      equ  0            ; No file operation in progress
-0495      0001     fh.fopmode.readfile  equ  1            ; Read file from disk to memory
-0496      0002     fh.fopmode.writefile equ  2            ; Save file from memory to disk
-0497      2000     fh.ea5.vdpbuf        equ  >2000        ; VRAM address for storing EA5 image chunk
-0498      0006     cmdb.rows            equ  6            ; Number of rows in CMDB pane
-0499      A028     rom0_kscan_out       equ  keycode1     ; W here to store value of key pressed
-0500      9900     tv.colorize.reset    equ  >9900        ; Colorization off
-0501      00FE     tv.1timeonly         equ  254          ; One-time only flag indicator
-0502      0100     tv.sams.maxpage      equ  256          ; Max SAMS pages supported
+0482      FE00     tv.printer.fname  equ  >fe00           ; Default printer         (80 bytes)
+0483      FE50     tv.clip.fname     equ  >fe50           ; Default clipboard       (80 bytes)
+0484      FEA0     tv.cat.fname      equ  >fea0           ; Default catalog device  (80 bytes)
+0485               ;-----------------------------------------------------------------
+0486               ; Command buffer                       ; @>fef0-ffff   (272 bytes)
+0487               ;-----------------------------------------------------------------
+0488      FEF0     cmdb.top          equ  >fef0           ; Top of command history buffer
+0489      0100     cmdb.size         equ  256             ; Command buffer size
+0490               ;-----------------------------------------------------------------
+0491               ; Stevie specific equates
+0492               ;-----------------------------------------------------------------
+0493      0000     fh.fopmode.none      equ  0            ; No file operation in progress
+0494      0001     fh.fopmode.readfile  equ  1            ; Read file from disk to memory
+0495      0002     fh.fopmode.writefile equ  2            ; Save file from memory to disk
+0496      2000     fh.ea5.vdpbuf        equ  >2000        ; VRAM address for storing EA5 chunk
+0497      0006     cmdb.rows            equ  6            ; Number of rows in CMDB pane
+0498      A028     rom0_kscan_out       equ  keycode1     ; Where to store value of key pressed
+0499      9900     tv.colorize.reset    equ  >9900        ; Colorization off
+0500      00FE     tv.1timeonly         equ  254          ; One-time only flag indicator
+0501      0100     tv.sams.maxpage      equ  256          ; Max SAMS pages supported
                    < stevie_bc.asm
 0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
@@ -6647,9 +6650,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0053                       ;------------------------------------------------------
 0054 31AC 06A0  32         bl    @film
      31AE 2236     
-0055 31B0 D000             data  fb.top,>00,fb.size    ; Clear it all the way
+0055 31B0 D000                   data  fb.top,>00,fb.size
      31B2 0000     
-     31B4 0960     
+     31B4 12C0     
 0056                       ;------------------------------------------------------
 0057                       ; Exit
 0058                       ;------------------------------------------------------
@@ -7247,7 +7250,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029                       ; Initialize
 0030                       ;------------------------------------------------------
 0031 3388 0204  20         li    tmp0,cmdb.top         ; \ Set pointer to command buffer
-     338A EF00     
+     338A FEF0     
 0032 338C C804  38         mov   tmp0,@cmdb.top.ptr    ; /
      338E A700     
 0033               
@@ -7287,7 +7290,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054                       ;------------------------------------------------------
 0055 33C6 06A0  32         bl    @film
      33C8 2236     
-0056 33CA EF00                   data  cmdb.top,>00,cmdb.size
+0056 33CA FEF0                   data  cmdb.top,>00,cmdb.size
      33CC 0000     
      33CE 0100     
 0057                                                   ; Clear it all the way
@@ -7414,19 +7417,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0046 3434 06A0  32         bl    @cpym2m
      3436 253A     
 0047 3438 3D32                   data def.printer.fname,tv.printer.fname,7
-     343A DE00     
+     343A FE00     
      343C 0007     
 0048               
 0049 343E 06A0  32         bl    @cpym2m
      3440 253A     
 0050 3442 3D39                   data def.clip.fname.a,tv.clip.fname,10
-     3444 DE50     
+     3444 FE50     
      3446 000A     
 0051               
 0052 3448 06A0  32         bl    @cpym2m
      344A 253A     
 0053 344C 3D7E                   data def.device,cat.device,6
-     344E EEB0     
+     344E F094     
      3450 0006     
 0054               
 0055               
@@ -10026,43 +10029,42 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     C99_QUIT............ >0114 :     
     C99_SMAX............ >0112 :     
     CART.FG99.RUN....... >3876 :     
-    CAT.BARCOL.......... >E376 :     
-    CAT.BARPOS.......... >E374 :     
-    CAT.CURRENTPAGE..... >E00C :     
-    CAT.DEVICE.......... >EEB0 :     
-    CAT.FILECOUNT....... >E000 :     
-    CAT.FNLIST.......... >E8BC :     
-    CAT.FPICKER.IDX..... >E002 :     
-    CAT.FREE1........... >E37E :     
-    CAT.FSLIST.......... >E1F4 :     
-    CAT.FTLIST.......... >E174 :     
-    CAT.FULLFNAME....... >E016 :     
-    CAT.HILIT.COLROW.... >E004 :     
-    CAT.HILIT.COLROW2... >E006 :     
-    CAT.NOFILESCOL...... >E00A :     
-    CAT.NOFILESPAGE..... >E008 :     
-    CAT.NOROWSCOL....... >E014 :     
-    CAT.PREVIOUSPAGE.... >E010 :     
-    CAT.PTRLIST......... >E076 :     
-    CAT.RSLIST.......... >E2F4 :     
-    CAT.SHORTCUT.IDX.... >E012 :     
-    CAT.SIZE............ >0F00 :     
-    CAT.SIZELIST........ >E6C0 :     
-    CAT.TOP............. >E000 :     
-    CAT.TOTALPAGES...... >E00E :     
-    CAT.TYPELIST........ >E3C6 :     
-    CAT.VAR1............ >E066 :     
-    CAT.VAR2............ >E068 :     
-    CAT.VAR3............ >E06A :     
-    CAT.VAR4............ >E06C :     
-    CAT.VAR5............ >E06E :     
-    CAT.VAR6............ >E070 :     
-    CAT.VAR7............ >E072 :     
-    CAT.VAR8............ >E074 :     
-    CAT.VOLFREE......... >E37C :     
-    CAT.VOLNAME......... >E3BA :     
-    CAT.VOLSIZE......... >E378 :     
-    CAT.VOLUSED......... >E37A :     
+    CAT.BARCOL.......... >E596 :     
+    CAT.BARPOS.......... >E594 :     
+    CAT.CURRENTPAGE..... >E22C :     
+    CAT.DEVICE.......... >F094 :     
+    CAT.FILECOUNT....... >E220 :     
+    CAT.FNLIST.......... >EAA0 :     
+    CAT.FPICKER.IDX..... >E222 :     
+    CAT.FSLIST.......... >E414 :     
+    CAT.FTLIST.......... >E394 :     
+    CAT.FULLFNAME....... >E236 :     
+    CAT.HILIT.COLROW.... >E224 :     
+    CAT.HILIT.COLROW2... >E226 :     
+    CAT.NOFILESCOL...... >E22A :     
+    CAT.NOFILESPAGE..... >E228 :     
+    CAT.NOROWSCOL....... >E234 :     
+    CAT.PREVIOUSPAGE.... >E230 :     
+    CAT.PTRLIST......... >E296 :     
+    CAT.RSLIST.......... >E514 :     
+    CAT.SHORTCUT.IDX.... >E232 :     
+    CAT.SIZE............ >0EC4 :     
+    CAT.SIZELIST........ >E8A4 :     
+    CAT.TOP............. >E220 :     
+    CAT.TOTALPAGES...... >E22E :     
+    CAT.TYPELIST........ >E5AA :     
+    CAT.VAR1............ >E286 :     
+    CAT.VAR2............ >E288 :     
+    CAT.VAR3............ >E28A :     
+    CAT.VAR4............ >E28C :     
+    CAT.VAR5............ >E28E :     
+    CAT.VAR6............ >E290 :     
+    CAT.VAR7............ >E292 :     
+    CAT.VAR8............ >E294 :     
+    CAT.VOLFREE......... >E59C :     
+    CAT.VOLNAME......... >E59E :     
+    CAT.VOLSIZE......... >E598 :     
+    CAT.VOLUSED......... >E59A :     
     CLHOOK.............. >2FAC :     
     CLIP1............... >3100 :     
     CLIP2............... >3200 :     
@@ -10100,7 +10102,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
-    CMDB.TOP............ >EF00 :     
+    CMDB.TOP............ >FEF0 :     
     CMDB.TOP.PTR........ >A700 :     
     CMDB.VDPTOP......... >A712 :     
     CMDB.VISIBLE........ >A702 :     
@@ -10314,7 +10316,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.RULER.TAT........ >A372 :     
     FB.SCRROWS.......... >A31E :     
     FB.SCRROWS.MAX...... >A320 :     
-    FB.SIZE............. >0960 :     
+    FB.SIZE............. >12C0 :     
     FB.STATUS.DIRTY..... >A31C :     
     FB.STRUCT........... >A300 :     
     FB.TOP.............. >D000 :     
@@ -10369,8 +10371,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.TEMP1............ >A460 :     
     FH.TEMP2............ >A462 :     
     FH.TEMP3............ >A464 :     
-    FH.VPAB............. >1400 :     
-    FH.VRECBUF.......... >2000 :     
+    FH.VPAB............. >2580 :     
+    FH.VRECBUF.......... >2620 :     
     FH.WORKMODE......... >A45A :     
     FIL.EXIT............ >228C :     
     FIL16B.............. >2276 :     
@@ -11018,8 +11020,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.1TIMEONLY........ >00FE :     
     TV.BOTCOLOR......... >A21C :     
     TV.BUSYCOLOR........ >A220 :     
-    TV.CAT.FNAME........ >DEA0 :     
-    TV.CLIP.FNAME....... >DE50 :     
+    TV.CAT.FNAME........ >FEA0 :     
+    TV.CLIP.FNAME....... >FE50 :     
     TV.CMDB.COLOR....... >A224 :     
     TV.CMDB.HCOLOR...... >A226 :     
     TV.COLOR............ >A218 :     
@@ -11044,7 +11046,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.PAD.STRING.LOOP.. >3594 :     
     TV.PAD.STRING.PANIC. >35A2 :     
     TV.PANE.FOCUS....... >A22A :     
-    TV.PRINTER.FNAME.... >DE00 :     
+    TV.PRINTER.FNAME.... >FE00 :     
     TV.QUIT............. >346C :     
     TV.RULER.VISIBLE.... >A210 :     
     TV.RULERCOLOR....... >A222 :     
