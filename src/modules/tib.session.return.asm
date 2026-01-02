@@ -71,41 +71,13 @@ tib.run.return.2:
         ;-------------------------------------------------------
 tib.run.return.3:
         c     @tib.session,@const.3
-        jne   tib.run.return.4      ; Not the current session, check next one.
+        jne   tib.run.return.failed ; Not the current session, abort here
 
         bl    @cpym2m
               data >8300,>f300,256  ; Backup TI Basic scratchpad to >f300
 
         bl    @cpym2m
               data >ef00,>f800,256  ; Backup auxiliary memory to >f800
-
-        jmp   tib.return.page_in    ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 4
-        ;-------------------------------------------------------
-tib.run.return.4:
-        c     @tib.session,@const.4
-        jne   tib.run.return.5      ; Not the current session, check next one.
-
-        bl    @cpym2m
-              data >8300,>f400,256  ; Backup TI Basic scratchpad to >f400
-
-        bl    @cpym2m
-              data >ef00,>f900,256  ; Backup auxiliary memory to >f900
-
-        jmp   tib.return.page_in    ; Skip to page-in
-        ;-------------------------------------------------------
-        ; Backup scratchpad of TI-Basic session 5
-        ;-------------------------------------------------------
-tib.run.return.5:
-        c     @tib.session,@const.5
-        jne   tib.run.return.failed ; Not the current session, abort here
-
-        bl    @cpym2m
-              data >8300,>f500,256  ; Backup TI Basic scratchpad to >f500
-
-        bl    @cpym2m
-              data >ef00,>fa00,256  ; Backup auxiliary memory to >fa00
 
         jmp   tib.return.page_in    ; Skip to page-in
         ;-------------------------------------------------------
@@ -170,15 +142,29 @@ tib.run.return.stevie:
                                     ; | be active and may not switch to
                                     ; / another bank.
         ;-------------------------------------------------------
-        ; Setup F18a 80x30 mode again
+        ; Setup F18a again
         ;-------------------------------------------------------
         bl    @f18unl               ; Unlock the F18a
-        .ifeq device.f18a,1
+
+        .ifeq vdpmode, 3080
 
         bl    @putvr                ; Turn on 30 rows mode.
               data >3140            ; F18a VR49 (>31), bit 40
 
         .endif
+
+        .ifeq vdpmode, 6080
+
+        bl    @putvr                ; Turn on 30 rows mode.
+              data >3140            ; F18a VR49 (>31), bit 40
+
+        .endif
+
+        bl    @putvr                ; Turn on position based attributes
+              data >3202            ; F18a VR50 (>32), bit 2
+
+        bl    @putvr                ; Set stop sprite
+              data >3300            ; F18a VR51 (>33), no sprites
         ;-------------------------------------------------------
         ; Restore video mode & content
         ;-------------------------------------------------------
