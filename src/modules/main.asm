@@ -82,9 +82,6 @@ main.continue:
         bl    @putvr                ; Set stop sprite
               data >3300            ; F18a VR51 (>33), no sprites
 
-        ; mov   @romsat+2,@tv.curshape
-                                    ; Save cursor shape & color
-
         bl    @vdp.dump.patterns    ; Dump patterns to VDP
 
         clr   @parm1                ; Pick font 0
