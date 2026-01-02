@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260102-2106340
+0002               * BUILD: 260102-2108230
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -127,19 +127,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************** F18a/PICO9918 24x80 ******************************
 0008               
 0009               ***************************** F18a/PICO9918 30x80 ******************************
-0011                   copy 'equ.vdp.3080.asm' ; Character cursor
-     **** ****     > equ.vdp.3080.asm
-0001               * FILE......: equ.vdp.3080.asm
-0002               * Purpose...: F18a/PICO9918 30x80 mode
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
+0021                   copy 'equ.vdp.6080.asm' ; Character cursor
+     **** ****     > equ.vdp.6080.asm
+0001               * FILE......: equ.vdp.6080.asm
+0002               * Purpose...: PICO9918 60x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 30x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 48 rows
+0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
+0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -148,7 +152,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      001D     pane.botrow               equ  29      ; Bottom row on screen
+0021      003B     pane.botrow               equ  59      ; Bottom row on screen
 0022      0050     colrow                    equ  80      ; Columns per row
 0023      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0024               
@@ -176,10 +180,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0046      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0047               
                    < equ.vdp.asm
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b2.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -960,16 +960,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; 15 /
 0033               
 0037               
-0039 6010 0F53                 stri 'STEVIE 1.9.6-30'
+0041               
+0045               
+0047 6010 0F53                 stri 'STEVIE 1.9.6-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
      601C 362D     
-     601E 3330     
-0041               
-0045               
+     601E 3630     
                    < stevie_b2.asm
 0040               
 0041               ***************************************************************
@@ -6637,7 +6637,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      318E A310     
 0038               
 0039 3190 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     3192 001C     
+     3192 003A     
 0040 3194 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      3196 A320     
 0041               
@@ -7285,7 +7285,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33B0 0204  20         li    tmp0,pane.botrow      ; \
-     33B2 001D     
+     33B2 003B     
 0047 33B4 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33B6 A706     
 0048 33B8 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -12607,7 +12607,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031               
 0032 6D8E 06A0  32         bl    @putat
      6D90 2442     
-0033 6D92 1D00                   byte pane.botrow,0
+0033 6D92 3B00                   byte pane.botrow,0
 0034 6D94 39B4                   data txt.clearmem     ; Display "Clearing memory...."
 0035               *--------------------------------------------------------------
 0036               * Clear SAMS pages and exit editor
@@ -12887,7 +12887,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0073               fm.loadsave.cb.indicator1.savefile:
 0074 6EC0 06A0  32         bl    @putat
      6EC2 2442     
-0075 6EC4 1D00                   byte pane.botrow,0
+0075 6EC4 3B00                   byte pane.botrow,0
 0076 6EC6 3916                   data txt.saving       ; Display "Saving...."
 0077 6EC8 1022  14         jmp   fm.loadsave.cb.indicator1.filename
 0078                       ;------------------------------------------------------
@@ -12896,7 +12896,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0081               fm.loadsave.cb.indicator1.saveblock:
 0082 6ECA 06A0  32         bl    @putat
      6ECC 2442     
-0083 6ECE 1D00                   byte pane.botrow,0
+0083 6ECE 3B00                   byte pane.botrow,0
 0084 6ED0 3976                   data txt.block.save   ; Display "Saving block...."
 0085               
 0086 6ED2 1024  14         jmp   fm.loadsave.cb.indicator1.exit
@@ -12906,7 +12906,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0090               fm.loadsave.cb.indicator1.printfile:
 0091 6ED4 06A0  32         bl    @putat
      6ED6 2442     
-0092 6ED8 1D00                   byte pane.botrow,0
+0092 6ED8 3B00                   byte pane.botrow,0
 0093 6EDA 3922                   data txt.printing    ; Display "Printing...."
 0094 6EDC 101F  14         jmp   fm.loadsave.cb.indicator1.exit
 0095                       ;------------------------------------------------------
@@ -12915,7 +12915,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0098               fm.loadsave.cb.indicator1.printblock:
 0099 6EDE 06A0  32         bl    @putat
      6EE0 2442     
-0100 6EE2 1D00                   byte pane.botrow,0
+0100 6EE2 3B00                   byte pane.botrow,0
 0101 6EE4 39A2                   data txt.block.print  ; Display "Printing block...."
 0102 6EE6 101A  14         jmp   fm.loadsave.cb.indicator1.exit
 0103                       ;------------------------------------------------------
@@ -12924,7 +12924,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0106               fm.loadsave.cb.indicator1.clipblock:
 0107 6EE8 06A0  32         bl    @putat
      6EEA 2442     
-0108 6EEC 1D00                   byte pane.botrow,0
+0108 6EEC 3B00                   byte pane.botrow,0
 0109 6EEE 3988                   data txt.block.clip  ; Display "Copying to clipboard...."
 0110 6EF0 1015  14         jmp   fm.loadsave.cb.indicator1.exit
 0111               
@@ -12934,7 +12934,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0115               fm.loadsave.cb.indicator1.loading:
 0116 6EF2 06A0  32         bl    @putat
      6EF4 2442     
-0117 6EF6 1D00                   byte pane.botrow,0
+0117 6EF6 3B00                   byte pane.botrow,0
 0118 6EF8 390A                   data txt.loading      ; Display "Loading file...."
 0119               
 0120 6EFA C120  34         mov   @fh.temp1,tmp0
@@ -12955,7 +12955,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0131               fm.loadsave.cb.indicator1.filename:
 0132 6F0E 06A0  32         bl    @at
      6F10 2726     
-0133 6F12 1D0B                   byte pane.botrow,11   ; Cursor YX position
+0133 6F12 3B0B                   byte pane.botrow,11   ; Cursor YX position
 0134               
 0135 6F14 C160  34         mov   @parm1,tmp1           ; Get pointer to file descriptor
      6F16 A006     
@@ -13115,7 +13115,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0255               fm.loadsave.cb.indicator2.lines:
 0256 6FC4 06A0  32         bl    @putnum
      6FC6 2AD4     
-0257 6FC8 1D48                   byte pane.botrow,72   ; Show lines processed
+0257 6FC8 3B48                   byte pane.botrow,72   ; Show lines processed
 0258 6FCA A43C                   data fh.records,rambuf,>3020
      6FCC A100     
      6FCE 3020     
@@ -13185,7 +13185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0312               
 0313 701C 06A0  32         bl    @putnum
      701E 2AD4     
-0314 7020 1D48                   byte pane.botrow,72   ; Show lines processed
+0314 7020 3B48                   byte pane.botrow,72   ; Show lines processed
 0315 7022 A504                   data edb.lines,rambuf,>3020
      7024 A100     
      7026 3020     
@@ -13281,7 +13281,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0394                       ;------------------------------------------------------
 0395 7094 06A0  32         bl    @hchar
      7096 2832     
-0396 7098 1D00                   byte pane.botrow,0,32,80
+0396 7098 3B00                   byte pane.botrow,0,32,80
      709A 2050     
 0397 709C FFFF                   data EOL              ; Erase loading/saving indicator
 0398                       ;------------------------------------------------------
@@ -13407,7 +13407,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0493               
 0494 713A 06A0  32         bl    @putnum               ; Convert unsigned number to string
      713C 2AD4     
-0495 713E 1C0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
+0495 713E 3A0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
 0496 7140 A438                   data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
 0497 7142 A100                   data rambuf           ; | i p2  = Pointer to 5 byte string buffer
 0498 7144 30                     byte 48               ; | i p3H = Offset for ASCII digit 0
@@ -13415,7 +13415,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0500               
 0501 7146 06A0  32         bl    @putat                ; Display "I/O error code:"
      7148 2442     
-0502 714A 1C00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+0502 714A 3A00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
 0503 714C 3D0E                   data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
 0504                       ;------------------------------------------------------
 0505                       ; Restore status line colors
@@ -13477,7 +13477,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0554                       ;------------------------------------------------------
 0555 718A 06A0  32         bl    @hchar
      718C 2832     
-0556 718E 1D00                   byte pane.botrow,0,32,55
+0556 718E 3B00                   byte pane.botrow,0,32,55
      7190 2037     
 0557 7192 FFFF                   data EOL              ; Erase loading indicator
 0558                       ;------------------------------------------------------
@@ -13644,12 +13644,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0124               
 0125 71DE 06A0  32         bl    @putat
      71E0 2442     
-0126 71E2 1D00                   byte pane.botrow,0
+0126 71E2 3B00                   byte pane.botrow,0
 0127 71E4 39C8                   data txt.readdir      ; Display "Reading catalog..."
 0128               
 0129 71E6 06A0  32         bl    @at
      71E8 2726     
-0130 71EA 1D13                   byte pane.botrow,19   ; Set cursor YX position
+0130 71EA 3B13                   byte pane.botrow,19   ; Set cursor YX position
 0131               
 0132 71EC C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to device/directory name
      71EE A444     
@@ -14261,7 +14261,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025               fm.load.ea5.cb.indicator1.loading:
 0026 742E 06A0  32         bl    @putat
      7430 2442     
-0027 7432 1D00                   byte pane.botrow,0
+0027 7432 3B00                   byte pane.botrow,0
 0028 7434 390A                   data txt.loading      ; Display "Loading file...."
 0029                       ;------------------------------------------------------
 0030                       ; Display device/filename
@@ -14269,7 +14269,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032               fm.load.ea5.cb.indicator1.filename:
 0033 7436 06A0  32         bl    @at
      7438 2726     
-0034 743A 1D0B                   byte pane.botrow,11   ; Cursor YX position
+0034 743A 3B0B                   byte pane.botrow,11   ; Cursor YX position
 0035               
 0036 743C C160  34         mov   @parm1,tmp1           ; Get pointer to file descriptor
      743E A006     
@@ -14399,7 +14399,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      74CC 6D7E     
 0146 74CE 06A0  32         bl    @hchar
      74D0 2832     
-0147 74D2 1D00                   byte pane.botrow,0,32,80
+0147 74D2 3B00                   byte pane.botrow,0,32,80
      74D4 2050     
 0148 74D6 FFFF                   data EOL              ; Erase loading/saving indicator
 0149                       ;------------------------------------------------------
@@ -14459,7 +14459,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0194               
 0195 7516 06A0  32         bl    @putnum               ; Convert unsigned number to string
      7518 2AD4     
-0196 751A 1C0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
+0196 751A 3A0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
 0197 751C A438                   data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
 0198 751E A100                   data rambuf           ; | i p2  = Pointer to 5 byte string buffer
 0199 7520 30                     byte 48               ; | i p3H = Offset for ASCII digit 0
@@ -14467,7 +14467,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0201               
 0202 7522 06A0  32         bl    @putat                ; Display "I/O error code:"
      7524 2442     
-0203 7526 1C00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+0203 7526 3A00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
 0204 7528 3D0E                   data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
 0205                       ;------------------------------------------------------
 0206                       ; Restore status line colors
@@ -15087,7 +15087,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      778A 228E     
 0067 778C 0050                   data 80,32,(pane.botrow - cmdb.rows - 1) * 80
      778E 0020     
-     7790 06E0     
+     7790 1040     
 0068                                                   ; Clear files list on screen
 0069               
 0070 7792 0204  20         li    tmp0,vdp.tat.base + 80
@@ -15096,7 +15096,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7798 A218     
 0072 779A 06C5  14         swpb  tmp1                  ; /
 0073 779C 0206  20         li    tmp2,(pane.botrow - cmdb.rows - 1) * 80
-     779E 06E0     
+     779E 1040     
 0074               
 0075 77A0 06A0  32         bl    @xfilv                ; Fill colors
      77A2 2294     
@@ -15790,12 +15790,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079               
 0080 7AC0 06A0  32         bl    @putat
      7AC2 2442     
-0081 7AC4 1D00                   byte pane.botrow,0
+0081 7AC4 3B00                   byte pane.botrow,0
 0082 7AC6 3930                   data txt.searching    ; Show "Searching..."
 0083               
 0084 7AC8 06A0  32         bl    @putat
      7ACA 2442     
-0085 7ACC 1D0D                   byte pane.botrow,13
+0085 7ACC 3B0D                   byte pane.botrow,13
 0086 7ACE A576                   data edb.srch.str     ; Show search string
 0087               
 0088               
@@ -15945,7 +15945,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0198               edb.find.scan.showline:
 0199 7B72 06A0  32         bl    @putnum
      7B74 2AD4     
-0200 7B76 1D4A                   byte pane.botrow,74   ; Show lines processed
+0200 7B76 3B4A                   byte pane.botrow,74   ; Show lines processed
 0201 7B78 A43C                   data fh.records,rambuf,>3020
      7B7A A100     
      7B7C 3020     
@@ -16854,7 +16854,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0045 7F50 04              byte   >04
+0051 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -18072,7 +18072,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PALON............... >201C :     
     PANE.BOTLINE.BUSY.OFF >7CE8 :     
     PANE.BOTLINE.BUSY.ON >7CD6 :     
-    PANE.BOTROW......... >001D :     
+    PANE.BOTROW......... >003B :     
     PANE.CMDB.HIDE...... >7CA0 :     
     PANE.CMDB.SHOW...... >7C8E :     
     PANE.COLORSCHEME.BOTLINE >7C7C :     
@@ -18516,9 +18516,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0960 :     
+    VDP.SIT.SIZE........ >12C0 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >0960 :     
+    VDP.TAT.SIZE........ >12C0 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     
