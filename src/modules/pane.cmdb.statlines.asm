@@ -8,7 +8,7 @@
 * bl  @pane.cmdb.statlines
 *--------------------------------------------------------------
 * INPUT
-* @cat.device      = Pointer to string with device path
+* @tv.devpath      = Pointer to string with device path
 * @tv.sams.maxpage = Number of SAMS pages in system
 * @tv.sams.hipage  = Highest page in use
 *--------------------------------------------------------------
@@ -85,7 +85,7 @@ pane.cmdb.statlines:
         ;-------------------------------------------------------
         ; Show path
         ;-------------------------------------------------------
-        movb  @cat.device,tmp0         ; Path set?
+        movb  @tv.devpath,tmp0         ; Path set?
         srl   tmp0,8                   ; Check length byte
         jeq   pane.cmdb.statlines.exit ; Nothing set, skip
 
@@ -93,7 +93,7 @@ pane.cmdb.statlines:
               data txt.hint.path+1,ram.msg2+1,5
 
         bl    @cpym2m               ; Copy device path
-              data cat.device,ram.msg2+6,60
+              data tv.devpath,ram.msg2+6,60
 
         li    tmp0,>2000            ; \ Overwrite length byte with whitespace
         movb  tmp0,@ram.msg2+6      ; /

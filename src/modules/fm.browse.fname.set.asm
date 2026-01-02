@@ -8,7 +8,7 @@
 * bl   @fm.browse.fname.set
 *--------------------------------------------------------------
 * INPUT
-* @cat.device       = Current device name
+* @tv.devpath       = Current device name
 * @cat.shortcut.idx = Index in catalog filename pointerlist
 *--------------------------------------------------------------- 
 * OUTPUT
@@ -35,9 +35,9 @@ fm.browse.fname.set:
         ;------------------------------------------------------
         ; Set device name
         ;------------------------------------------------------
-        li    tmp0,cat.device
+        li    tmp0,tv.devpath
         li    tmp1,cat.fullfname        
-        movb  @cat.device,tmp2      ; Get length byte of device name
+        movb  @tv.devpath,tmp2      ; Get length byte of device name
         srl   tmp2,8                ; MSB to LSB
         jeq   fm.browse.fname.set.exit
                                     ; Exit early if no device set

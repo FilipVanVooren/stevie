@@ -58,7 +58,7 @@ dialog.file:
         ;-------------------------------------------------------
 dialog.file.statlines:
         bl    @pane.cmdb.statlines  ; Show status lines
-                                    ; i \   @cat.device = Pointer to device path 
+                                    ; i \   @tv.devpath = Pointer to device path 
                                     ; i |   @tv.sams.maxpage = SAMS pages in system
                                     ; i |   @tv.sams.hipage = Highest page in use
                                     ; o |   @ram.msg1 = SAMS free status line

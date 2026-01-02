@@ -154,9 +154,9 @@ edb.find.scan.compare:
         ;------------------------------------------------------
         ; Check if match buffer is full
         ;------------------------------------------------------
-        li    tmp0,1000              ; \ Exit if 1000 matches reached
+        li    tmp0,512               ; \ 512 matches reached?
         c     @edb.srch.matches,tmp0 ; / 
-        jeq   edb.find.scan.bufffull ; Buffer is full, halt the scan
+        jeq   edb.find.scan.bufffull ; Buffer is full, halt scan
 
         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
         jmp   edb.find.scan.compare.nextchar

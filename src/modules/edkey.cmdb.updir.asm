@@ -19,7 +19,7 @@ edkey.action.cmdb.updir:
         ; Go up one directory level
         ;------------------------------------------------------
         bl    @fm.browse.updir      ; Go up one directory level
-                                    ; \ i @cat.device = Current device name/path
+                                    ; \ i @tv.devpath = Current device name/path
                                     ; | o @outparm1   = >0000 if dir unchanged
                                     ; /                 >ffff if dir changed
 
@@ -28,7 +28,7 @@ edkey.action.cmdb.updir:
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------
-        li    tmp0,cat.device       ; \
+        li    tmp0,tv.devpath       ; \
         mov   tmp0,@parm1           ; / Set device name/path
         clr   @parm2
 
@@ -47,7 +47,7 @@ edkey.action.cmdb.updir:
                                     ; No, exit
 
         bl    @cpym2m
-              data cat.device,cmdb.cmdall,80
+              data tv.devpath,cmdb.cmdall,80
                                     ; Copy device path to command line
 
         seto  @cmdb.dirty           ; Set CMDB dirty flag (trigger redraw)        

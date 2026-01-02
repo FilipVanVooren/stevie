@@ -54,7 +54,7 @@ fm.directory:
         bl    @film
               data cat.top,>00,cat.size - 80
                                     ; Clear catalog area except current device
-                                    ; @cat.device (is at end of memory area)
+                                    ; @tv.devpath (is at end of memory area)
         ;------------------------------------------------------
         ; Remove filepicker color bar and old files from screen
         ;------------------------------------------------------
@@ -130,7 +130,7 @@ fm.directory.read:
         ; Setup path
         ;-------------------------------------------------------
         mov   @parm1,tmp0           ; Get device name
-        li    tmp1,cat.device
+        li    tmp1,tv.devpath
         
         movb  *tmp0,tmp2            ; \ Get number of bytes to copy
         srl   tmp2,8                ; | including length byte itself.
@@ -339,7 +339,7 @@ fm.directory.ftloop.next:
 fm.directory.browser:
         clr   @cat.shortcut.idx     ; 1st file/dir in list
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 

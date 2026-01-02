@@ -68,7 +68,7 @@ fm.browse.fname.next.page:
         bl    @pane.filebrowser     ; Refresh filebrowser pane
 
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 
@@ -83,7 +83,7 @@ fm.browse.fname.next.set:
         inc   @cat.shortcut.idx     ; Next file in catalog
 
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 

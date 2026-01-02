@@ -75,7 +75,7 @@ dialog.run.keylist:
         ;-------------------------------------------------------
 dialog.run.set.filename1:
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 
