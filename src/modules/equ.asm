@@ -393,18 +393,27 @@ sp2.stktop        equ  >a900           ; \
                                        ; | user hook "edkey.keyscan.hook"
                                        ; /
 ;-------------------------------------------------------------------------------
-; Scratchpad memory work copy          @>ad00-aeff                   (256 bytes)
+; FREE                                 @>a900-adff                  (1280 bytes)
+;------------------------------------------------------------------------------- 
+free.a900         equ  >a900           ; **free** 256
+free.aa00         equ  >aa00           ; **free** 256
+free.ab00         equ  >ab00           ; **free** 256
+free.ac00         equ  >ac00           ; **free** 256
+free.ad00         equ  >ad00           ; **free** 256
 ;-------------------------------------------------------------------------------
+; Scratchpad memory work copy          @>ae00-aeff                   (256 bytes)
+;-------------------------------------------------------------------------------
+cpu.scrpad2       equ  >ae00           ; Stevie secondary scratchpad, used when
+                                       ; calling TI Basic/External programs
+
+cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
+
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm
 
 cpu.scrpad.tgt    equ  >f000           ; \ Fixed memory location used for
                                        ; | scratchpad backup/restore routines.
-                                       ; /
-
-cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
-cpu.scrpad2       equ  >ad00           ; Stevie secondary scratchpad, used when
-                                       ; calling TI Basic/External programs
+                                       ; /                                   
 ;-------------------------------------------------------------------------------
 ; Farjump return stack                 @>af00-afff                   (256 bytes)
 ;-------------------------------------------------------------------------------
