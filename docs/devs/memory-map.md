@@ -1,6 +1,6 @@
 # Memory map
 
-## CPU RAM (SAMS MEMEXP 32K)
+## CPU RAM (SAMS 32K range)
 
 The following table reflects the CPU-side RAM layout derived from `equ.asm`.  
 Sizes are approximate where structures contain many small fields; see `equ.asm` 
@@ -65,16 +65,16 @@ for exact offsets and field names.
 
 Note: Other memory ranges are the same as the regular memory map.
 
-| Address    | SAMS/Addr. | Bytes | Purpose                                    |
-| ---------- | ---------- | ----- | -------------------------------------------|
-| >b000-bfff |     #10    |  4096 | TI Basic VDP buffer                        |
-| >c000-cfff |     #11    |  4096 | TI Basic VDP buffer                        |
-| >d000-dfff |     #12    |  4096 | TI Basic VDP buffer                        |
-| >e000-efff |     #13    |  4096 | TI Basic VDP buffer                        |
-| >f000-ffff |     #07    |  4096 | Stevie VDP, scratchpad, ...                |
-|            | >f000-f95f |  2400 |   Stevie VDP screen buffer copy 80x30      |
-|            | >f960-f97f |    32 |   TI Basic scratchpad memory               |
-|            | >f980-ffff |  1664 |   FREE                                     |
+| Address    | SAMS | Size | Purpose                                        |
+|------------|------|------|------------------------------------------------|
+| >b000-bfff |  #10 | 4096 | TI Basic VDP buffer                            |
+| >c000-cfff |  #11 | 4096 | TI Basic VDP buffer                            |
+| >d000-dfff |  #12 | 4096 | TI Basic VDP buffer                            |
+| >e000-efff |  #13 | 4096 | TI Basic VDP buffer                            |
+| >f000-ffff |  #07 | 4096 | Stevie VDP, scratchpad, ...                    |
+|            |      |      | >f000-f95f  2400  Stevie VDP scrbuf copy 80x30 |
+|            |      |      | >f960-f97f    32  TI Basic scratchpad memory   |
+|            |      |      | >f980-ffff  1664  FREE                         |
 
 ## VDP VRAM map
 
@@ -103,7 +103,7 @@ Notes:
 
 #### Screen table
 
-| PNT   | rows | end (+1) | Size | Hex   | gpu
+| PNT   | rows | end (+1) | Size | Hex   | gpu            |
 |-------|------|----------|------|-------|----------------|
 | >0000 | 24   | >0780    | 1920 | >780  | f18a, pico9918 |
 | >0000 | 30   | >0960    | 2400 | >960  | f18a, pico9918 |
@@ -112,7 +112,7 @@ Notes:
 
 #### Color table
 
-| PCT   | rows | end (+1) | Size | Hex   | gpu
+| PCT   | rows | end (+1) | Size | Hex   | gpu            | 
 |-------|------|----------|------|-------|----------------|
 | >12c0 | 24   | >1a40    | 1920 | >780  | f18a, pico9918 |
 | >12c0 | 30   | >1c20    | 2400 | >960  | f18a, pico9918 |
@@ -121,7 +121,7 @@ Notes:
 
 #### Free space between PCT and PDT
 
->2580 - >27ff for file PAB and record buffer.
+>2580 - 27ff for file PAB and record buffer.
 
 #### Pattern descriptor table
 
