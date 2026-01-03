@@ -14,7 +14,7 @@ cpu.crash.showbank.bankstr:
 vec.1   data  vdp.dump.patterns     ; Dump character patterns to VDP
 vec.2   data  vdp.dump.font         ; Dump font to VDP
 vec.3   data  vdp.colors.line       ; Set colors for specified line
-vec.4   data  vdp.cursor.fb.tat     ; Set cursor shape (fb tat)
+vec.4   data  vdp.cursor.tat.fb     ; Set cursor shape (fb tat)
 vec.5   data  vdp.cursor.tat        ; Set cursor shape (cmdb/fb tat)
 vec.6   data  cpu.crash             ;
 vec.7   data  cpu.crash             ;

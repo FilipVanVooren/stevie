@@ -22,7 +22,7 @@ vec.8   data  edb.block.delete      ;
 vec.9   data  edb.block.copy        ;
 vec.10  data  edb.line.del          ;
 vec.11  data  edb.line.copy         ;
-vec.12  data  cpu.crash             ;
+vec.12  data  edb.block.match       ;
 vec.13  data  cpu.crash             ;
 vec.14  data  cpu.crash             ;
 vec.15  data  cpu.crash             ;

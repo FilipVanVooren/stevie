@@ -44,13 +44,11 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; Calculate index into colorscheme table
         ;-------------------------------------------------------
-!       mov   @tv.colorscheme,tmp0      ; Get color scheme index
-        dec   tmp0                      ; Internally work with base 0
-        mov   tmp0,tmp1                 ; \
-        sla   tmp0,3                    ; | index = index * 10
-        sla   tmp1,1                    ; | 
-        a     tmp1,tmp0                 ; /
-        ai    tmp0,tv.colorscheme.table ; Add base for color scheme data table                                    
+!       bl    @pane.colorscheme.address 
+                                      ; Get address of current color scheme
+                                      ; \ i  @tv.colorscheme = Index entry
+                                      ; / o  outparm1 = Address color scheme
+        mov   @outparm1,tmp0
         ;-------------------------------------------------------
         ; ABCD) Get FG/BG colors framebuffer and topline
         ;-------------------------------------------------------
@@ -106,7 +104,7 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
-        nop
+        ; Deprecated - not used anymore
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -292,7 +290,7 @@ pane.colorscheme.ruler:
               data fb.ruler.tat
               data 80               ; Show ruler colors
         ;-------------------------------------------------------
-        ; Dump cursor FG color to sprite table (SAT)
+        ; Dump cursor FG color
         ;-------------------------------------------------------
 pane.colorscheme.cursorcolor:
         mov   @tv.pane.focus,tmp0   ; Get pane with focus

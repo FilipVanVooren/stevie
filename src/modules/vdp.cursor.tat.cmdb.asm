@@ -2,10 +2,10 @@
 * Purpose...: Set VDP cursor shape (character version)
 
 ***************************************************************
-* vdp.cursor.cmdb.tat
+* vdp.cursor.tat.cmdb
 * Set VDP cursor shape (character version)
 ***************************************************************
-* bl @vdp.cursor.cmdb.tat
+* bl @vdp.cursor.tat.cmdb
 *--------------------------------------------------------------
 * INPUT
 * @wyx           = New Cursor position
@@ -17,7 +17,7 @@
 * Register usage
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
-vdp.cursor.cmdb.tat:
+vdp.cursor.tat.cmdb:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack        
@@ -56,12 +56,12 @@ vdp.cursor.tat.cmdb.hide:
         ; Check if cursor needs to be shown
         ;------------------------------------------------------
         inv   @fb.curtoggle            ; Flip cursor shape flag
-        jeq   vdp.cursor.cmdb.tat.show ; Show CMDB cursor
-        jmp   vdp.cursor.cmdb.tat.exit ; Exit
+        jeq   vdp.cursor.tat.cmdb.show ; Show CMDB cursor
+        jmp   vdp.cursor.tat.cmdb.exit ; Exit
         ;------------------------------------------------------
         ; Show cursor
         ;------------------------------------------------------                
-vdp.cursor.cmdb.tat.show:
+vdp.cursor.tat.cmdb.show:
         mov   @cmdb.cursor,@wyx
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
@@ -84,7 +84,7 @@ vdp.cursor.cmdb.tat.show:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-vdp.cursor.cmdb.tat.exit:
+vdp.cursor.tat.cmdb.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0

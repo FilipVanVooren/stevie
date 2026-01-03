@@ -1,11 +1,13 @@
-* FILE......: vdp.cursor.fb.tat.asm
+* FILE......: vdp.cursor.tat.fb.asm
 * Purpose...: Set VDP cursor shape (character version)
 
+
+
 ***************************************************************
-* vdp.cursor.fb.tat
+* vdp.cursor.tat.fb
 * Set VDP cursor shape (character version)
 ***************************************************************
-* bl @vdp.cursor.fb.tat
+* bl @vdp.cursor.tat.fb
 *--------------------------------------------------------------
 * INPUT
 * @wyx           = New Cursor position
@@ -17,7 +19,7 @@
 * Register usage
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
-vdp.cursor.fb.tat:
+vdp.cursor.tat.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack        
@@ -34,12 +36,12 @@ vdp.cursor.fb.tat:
         mov   @fb.prevcursor,tmp0    ; Get previous cursor position
         ai    tmp0,>0100             ; Add topline
         mov   @tv.ruler.visible,tmp1
-        jeq   vdp.cursor.fb.tat.hide ; No ruler visible
+        jeq   vdp.cursor.tat.fb.hide ; No ruler visible
         ai    tmp0,>0100             ; Add ruler line
         ;------------------------------------------------------
-        ; Hide cursor on previous position
+        ; Step 1: Hide cursor on previous position
         ;------------------------------------------------------
-vdp.cursor.fb.tat.hide:
+vdp.cursor.tat.fb.hide:
         dect  stack                 ; \ Push cursor position
         mov   @wyx,*stack           ; /
         mov   tmp0,@wyx             ; Set cursor position
@@ -47,11 +49,20 @@ vdp.cursor.fb.tat.hide:
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
-
         ai    tmp0,vdp.tat.base     ; Add TAT base
-        mov   @tv.color,tmp1        ; Get text color
-        srl   tmp1,8                ; MSB to LSB
+        ;------------------------------------------------------
+        ; Determine background color of cursor
+        ;------------------------------------------------------
+        mov   @fb.prevcursor,tmp1   ; Get previous cursor position
+        bl    @get_cursorcolor      ; Get cursor FG/BG color
+                                    ; \ i  tmp1 = previous cursor position
+                                    ; / o  outparm1 = cursor FG/BG color
+        mov   @outparm1,tmp1        ; Get cursor color
 
+        ;------------------------------------------------------
+        ; Write to VDP TAT to hide cursor
+        ;------------------------------------------------------
+vdp.cursor.tat.fb.hide.dump:
         bl    @xvputb               ; VDP put single byte
                                     ; \ i  tmp0 = VDP write address
                                     ; / i  tmp1 = Byte to write 
@@ -59,43 +70,51 @@ vdp.cursor.fb.tat.hide:
         mov   *stack+,@wyx          ; Pop cursor position
         mov   @wyx,@fb.prevcursor   ; Update cursor position
         ;------------------------------------------------------
-        ; Check if cursor needs to be shown
+        ; Step 2: Check if cursor needs to be shown
         ;------------------------------------------------------
         inv   @fb.curtoggle          ; Flip cursor shape flag
-        jeq   vdp.cursor.fb.tat.show ; Show FB cursor
-        jmp   vdp.cursor.fb.tat.exit ; Exit
+        jeq   vdp.cursor.tat.fb.show ; Show FB cursor
+        jmp   vdp.cursor.tat.fb.exit ; Exit
         ;------------------------------------------------------
-        ; Show cursor
+        ; Step 3: Show cursor
         ;------------------------------------------------------
-vdp.cursor.fb.tat.show:
+vdp.cursor.tat.fb.show:
         mov   @tv.ruler.visible,tmp0
-        jeq   vdp.cursor.fb.tat.show.noruler
+        jeq   vdp.cursor.tat.fb.show.noruler
         ;------------------------------------------------------
         ; Cursor position adjustment, ruler visible
         ;------------------------------------------------------
         mov   @wyx,tmp0             ; Get cursor YX
         ai    tmp0,>0200            ; Topline + ruler adjustment
         mov   tmp0,@wyx             ; Save cursor YX
-        jmp   vdp.cursor.fb.tat.dump
+        jmp   vdp.cursor.tat.fb.dump
         ;------------------------------------------------------
         ; Cursor position adjustment, ruler hidden
         ;------------------------------------------------------
-vdp.cursor.fb.tat.show.noruler:
+vdp.cursor.tat.fb.show.noruler:
         mov   @wyx,tmp0             ; Get cursor YX
         ai    tmp0,>0100            ; Topline adjustment
         mov   tmp0,@wyx             ; Save cursor YX
         ;------------------------------------------------------
         ; Calculate VDP address
         ;------------------------------------------------------
-vdp.cursor.fb.tat.dump:        
+vdp.cursor.tat.fb.dump:        
         bl    @yx2pnt               ; Calculate VDP address from @WYX
                                     ; \ i  @wyx = Cursor position
                                     ; / o  tmp0 = VDP address
         ai    tmp0,vdp.tat.base     ; Add TAT base
         ;------------------------------------------------------
-        ; Dump cursor color to TAT
+        ; Determine background color of cursor
+        ;------------------------------------------------------
+        mov   @wyx,tmp1             ; Get cursor position
+        bl    @get_cursorcolor      ; Get cursor FG/BG color
+                                    ; \ i  tmp1 = Cursor position
+                                    ; / o  outparm1 = Cursor FG/BG color
+        mov   @outparm1,tmp1        ; Get cursor color
+        mov   @tv.curcolor,tmp1     ; Get cursor color        
+        ;------------------------------------------------------
+        ; Write to VDP TAT to show cursor
         ;------------------------------------------------------        
-        mov   @tv.curcolor,tmp1     ; Get cursor color
         mov   tmp1,tmp2             ; \ 
         andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
         sla   tmp1,4                ; | Solid cursor FG/BG 
@@ -107,9 +126,87 @@ vdp.cursor.fb.tat.dump:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-vdp.cursor.fb.tat.exit:
+vdp.cursor.tat.fb.exit:
         mov   *stack+,@wyx          ; Pop cursor position
         mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+
+***************************************************************
+* get_cursorcolor
+* Determine cursor foreground/background color
+***************************************************************
+* bl @get_cursorcolor
+*--------------------------------------------------------------
+* INPUT
+* tmp1 = Cursor position
+*--------------------------------------------------------------
+* OUTPUT
+* outparm1 = Cursor foreground/background color
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1
+********|*****|*********************|**************************
+get_cursorcolor:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack        
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack        
+        mov   tmp1,*stack           ; Push tmp1
+        ;------------------------------------------------------
+        ; Check if within block markers M1-M2
+        ;------------------------------------------------------
+        srl   tmp1,8                ; MSB to LSB
+        mov   tmp1,@parm1           ; Set row to check
+        
+        bl    @edb.block.match      ; Check if line within block markers M1-M2
+                                    ; \ i  parm1 = row to check
+                                    ; | o  outparm1 = >0000 if outside block
+                                    ; /               >ffff if within block
+
+        mov   @outparm1,tmp1        ; Get result
+        jeq   !                     ; Outside block, use normal bg color
+        ;------------------------------------------------------
+        ; Use FG/BG color of block marking
+        ;------------------------------------------------------
+        bl    @pane.colorscheme.index 
+                                    ; Get colorscheme address
+                                    ; \ i  @pane.colorscheme.index = Colorscheme
+                                    ; | o  @outparm1 = Word 0 ABCD
+                                    ; | o  @outparm2 = Word 1 EFGH
+                                    ; | o  @outparm3 = Word 2 IJKL
+                                    ; | o  @outparm4 = Word 3 MNOP
+                                    ; / o  @outparm5 = Word 4 QRST
+
+        mov   @outparm3,tmp1        ; Get word 2 IJKL
+        andi  tmp1,>00ff            ; Isolate KL (FG/BG color)
+        mov   tmp1,@outparm1        ; Return color in outparm1
+        jmp   get_cursorcolor.exit  ; Exit
+        ;------------------------------------------------------
+        ; Use FG/BG color of framebuffer
+        ;------------------------------------------------------        
+!       bl    @pane.colorscheme.index 
+                                    ; Get colorscheme address
+                                    ; \ i  @pane.colorscheme.index = Colorscheme
+                                    ; | o  @outparm1 = Word 0 ABCD
+                                    ; | o  @outparm2 = Word 1 EFGH
+                                    ; | o  @outparm3 = Word 2 IJKL
+                                    ; | o  @outparm4 = Word 3 MNOP
+                                    ; / o  @outparm5 = Word 4 QRST
+
+        mov   @outparm1,tmp1        ; Get word 0 ABCD
+        srl   tmp1,8                ; Isolate AB (framebuffer FG/BG color)
+        mov   tmp1,@outparm1        ; Return color in outparm1
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+get_cursorcolor.exit:        
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11

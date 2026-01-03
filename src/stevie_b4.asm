@@ -104,6 +104,7 @@ main:
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
         copy  "pane.colorscheme.cycle.asm"   ; Cycle through color schemes        
+        copy  "pane.colorscheme.index.asm"   ; Get address of color scheme
         copy  "pane.colorscheme.load.asm"    ; Load color scheme        
         copy  "pane.colorscheme.botline.asm" ; Set colors for bottom line
         ;-----------------------------------------------------------------------

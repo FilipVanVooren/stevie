@@ -53,7 +53,7 @@ pane.cmdb.show.rest:
         cb    @fb.prevcursor,@fb.scrrows+1
         jgt   !
         clr   @fb.curtoggle         ; \ Hide cursor in frambuffer
-        bl    @vdp.cursor.fb.tat    ; /
+        bl    @vdp.cursor.tat.fb    ; /
         ;------------------------------------------------------
         ; Determine initial cursor position
         ;------------------------------------------------------

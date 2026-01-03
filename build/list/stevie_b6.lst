@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260102-2143190
+0002               * BUILD: 260103-2308010
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -127,23 +127,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************** F18a/PICO9918 24x80 ******************************
 0008               
 0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
-0021                   copy 'equ.vdp.6080.asm' ; Character cursor
-     **** ****     > equ.vdp.6080.asm
-0001               * FILE......: equ.vdp.6080.asm
-0002               * Purpose...: PICO9918 60x80 mode
+0011                   copy 'equ.vdp.3080.asm' ; Character cursor
+     **** ****     > equ.vdp.3080.asm
+0001               * FILE......: equ.vdp.3080.asm
+0002               * Purpose...: F18a/PICO9918 30x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 48x80
+0007               * Video mode configuration (stevie) - Graphics mode 30x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
+0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
+0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -152,7 +148,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      003B     pane.botrow               equ  59      ; Bottom row on screen
+0021      001D     pane.botrow               equ  29      ; Bottom row on screen
 0022      0050     colrow                    equ  80      ; Columns per row
 0023      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0024               
@@ -180,6 +176,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0046      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0047               
                    < equ.vdp.asm
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b6.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -960,16 +960,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; 15 /
 0033               
 0037               
-0041               
-0045               
-0047 6010 0F53                 stri 'STEVIE 1.9.6-60'
+0039 6010 0F53                 stri 'STEVIE 1.9.6-30'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
      601C 362D     
-     601E 3630     
+     601E 3330     
+0041               
+0045               
                    < stevie_b6.asm
 0040               
 0041               ***************************************************************
@@ -6637,7 +6637,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      318E A310     
 0038               
 0039 3190 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     3192 003A     
+     3192 001C     
 0040 3194 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      3196 A320     
 0041               
@@ -7285,7 +7285,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33B0 0204  20         li    tmp0,pane.botrow      ; \
-     33B2 003B     
+     33B2 001D     
 0047 33B4 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33B6 A706     
 0048 33B8 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9620,7 +9620,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6048 2026     
 0068                       ;-----------------------------------------------------------------------
 0069                       ; Patterns
-0070                       ;----------------------------- ------------------------------------------
+0070                       ;------------------------------------------------------------------------
 0071                       copy  "vdp.dump.patterns.asm"   ; Dump patterns to VDP
      **** ****     > vdp.dump.patterns.asm
 0001               * FILE......: vdpdump.patterns.asm
@@ -9654,7 +9654,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029 604E 06A0  32         bl    @cpym2v
      6050 24E6     
 0030 6052 2808                   data vdp.pdt.base+8,patterns,30*8
-     6054 62B0     
+     6054 632A     
      6056 00F0     
 0031                                                   ; Start with ASCII >01
 0032                       ;-------------------------------------------------------
@@ -9825,14 +9825,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0026                       ;------------------------------------------------------
 0027                       ; Get pane with focus
 0028                       ;------------------------------------------------------
-0029 60DC C120  34         mov   @tv.pane.focus,tmp0   ; Get pane with focus
+0029 60DC C120  34         mov   @tv.pane.focus,tmp0     ; Get pane with focus
      60DE A22A     
 0030 60E0 0284  22         ci    tmp0,pane.focus.fb
      60E2 0000     
-0031 60E4 130A  14         jeq   vdp.cursor.tat.fb     ; Frame buffer has focus
+0031 60E4 130A  14         jeq   vdp.cursor.tat.cur.fb   ; Frame buffer has focus
 0032 60E6 0284  22         ci    tmp0,pane.focus.cmdb
      60E8 0001     
-0033 60EA 1304  14         jeq   vdp.cursor.tat.cmdb   ; CMDB buffer has focus
+0033 60EA 1304  14         jeq   vdp.cursor.tat.cur.cmdb ; CMDB buffer has focus
 0034                       ;------------------------------------------------------
 0035                       ; Assert failed. Invalid value
 0036                       ;------------------------------------------------------
@@ -9843,15 +9843,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0039                       ;------------------------------------------------------
 0040                       ; CMDB buffer has focus, position CMDB cursor
 0041                       ;------------------------------------------------------
-0042               vdp.cursor.tat.cmdb:
-0043 60F4 06A0  32         bl    @vdp.cursor.cmdb.tat  ; Show cursor
-     60F6 61A2     
+0042               vdp.cursor.tat.cur.cmdb:
+0043 60F4 06A0  32         bl    @vdp.cursor.tat.cmdb  ; Show cursor
+     60F6 61F8     
 0044 60F8 1002  14         jmp   vdp.cursor.tat.exit   ; Exit
 0045                       ;------------------------------------------------------
 0046                       ; Frame buffer has focus, position FB cursor
 0047                       ;------------------------------------------------------
-0048               vdp.cursor.tat.fb:
-0049 60FA 06A0  32         bl     @vdp.cursor.fb.tat   ; Show cursor
+0048               vdp.cursor.tat.cur.fb:
+0049 60FA 06A0  32         bl     @vdp.cursor.tat.fb   ; Show cursor
      60FC 6104     
 0050                       ;------------------------------------------------------
 0051                       ; Exit
@@ -9861,163 +9861,275 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0055 6100 C2F9  30         mov   *stack+,r11           ; Pop r11
 0056 6102 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
-0075                       copy  "vdp.cursor.fb.tat.asm"   ; VDP cursor framebuffer
-     **** ****     > vdp.cursor.fb.tat.asm
-0001               * FILE......: vdp.cursor.fb.tat.asm
+0075                       copy  "vdp.cursor.tat.fb.asm"   ; VDP cursor framebuffer
+     **** ****     > vdp.cursor.tat.fb.asm
+0001               * FILE......: vdp.cursor.tat.fb.asm
 0002               * Purpose...: Set VDP cursor shape (character version)
 0003               
-0004               ***************************************************************
-0005               * vdp.cursor.fb.tat
-0006               * Set VDP cursor shape (character version)
-0007               ***************************************************************
-0008               * bl @vdp.cursor.fb.tat
-0009               *--------------------------------------------------------------
-0010               * INPUT
-0011               * @wyx           = New Cursor position
-0012               * @fb.prevcursor = Old cursor position
-0013               *--------------------------------------------------------------
-0014               * OUTPUT
-0015               * none
-0016               *--------------------------------------------------------------
-0017               * Register usage
-0018               * tmp0,tmp1,tmp2
-0019               ********|*****|*********************|**************************
-0020               vdp.cursor.fb.tat:
-0021 6104 0649  14         dect  stack
-0022 6106 C64B  30         mov   r11,*stack            ; Save return address
-0023 6108 0649  14         dect  stack
-0024 610A C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 610C 0649  14         dect  stack
-0026 610E C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 6110 0649  14         dect  stack
-0028 6112 C646  30         mov   tmp2,*stack           ; Push tmp2
-0029 6114 0649  14         dect  stack
-0030 6116 C660  42         mov   @wyx,*stack           ; Push cursor position
+0004               
+0005               
+0006               ***************************************************************
+0007               * vdp.cursor.tat.fb
+0008               * Set VDP cursor shape (character version)
+0009               ***************************************************************
+0010               * bl @vdp.cursor.tat.fb
+0011               *--------------------------------------------------------------
+0012               * INPUT
+0013               * @wyx           = New Cursor position
+0014               * @fb.prevcursor = Old cursor position
+0015               *--------------------------------------------------------------
+0016               * OUTPUT
+0017               * none
+0018               *--------------------------------------------------------------
+0019               * Register usage
+0020               * tmp0,tmp1,tmp2
+0021               ********|*****|*********************|**************************
+0022               vdp.cursor.tat.fb:
+0023 6104 0649  14         dect  stack
+0024 6106 C64B  30         mov   r11,*stack            ; Save return address
+0025 6108 0649  14         dect  stack
+0026 610A C644  30         mov   tmp0,*stack           ; Push tmp0
+0027 610C 0649  14         dect  stack
+0028 610E C645  30         mov   tmp1,*stack           ; Push tmp1
+0029 6110 0649  14         dect  stack
+0030 6112 C646  30         mov   tmp2,*stack           ; Push tmp2
+0031 6114 0649  14         dect  stack
+0032 6116 C660  42         mov   @wyx,*stack           ; Push cursor position
      6118 832A     
-0031                       ;------------------------------------------------------
-0032                       ; Get previous cursor position
 0033                       ;------------------------------------------------------
-0034 611A C120  34         mov   @fb.prevcursor,tmp0    ; Get previous cursor position
+0034                       ; Get previous cursor position
+0035                       ;------------------------------------------------------
+0036 611A C120  34         mov   @fb.prevcursor,tmp0    ; Get previous cursor position
      611C A316     
-0035 611E 0224  22         ai    tmp0,>0100             ; Add topline
+0037 611E 0224  22         ai    tmp0,>0100             ; Add topline
      6120 0100     
-0036 6122 C160  34         mov   @tv.ruler.visible,tmp1
+0038 6122 C160  34         mov   @tv.ruler.visible,tmp1
      6124 A210     
-0037 6126 1302  14         jeq   vdp.cursor.fb.tat.hide ; No ruler visible
-0038 6128 0224  22         ai    tmp0,>0100             ; Add ruler line
+0039 6126 1302  14         jeq   vdp.cursor.tat.fb.hide ; No ruler visible
+0040 6128 0224  22         ai    tmp0,>0100             ; Add ruler line
      612A 0100     
-0039                       ;------------------------------------------------------
-0040                       ; Hide cursor on previous position
 0041                       ;------------------------------------------------------
-0042               vdp.cursor.fb.tat.hide:
-0043 612C 0649  14         dect  stack                 ; \ Push cursor position
-0044 612E C660  42         mov   @wyx,*stack           ; /
+0042                       ; Step 1: Hide cursor on previous position
+0043                       ;------------------------------------------------------
+0044               vdp.cursor.tat.fb.hide:
+0045 612C 0649  14         dect  stack                 ; \ Push cursor position
+0046 612E C660  42         mov   @wyx,*stack           ; /
      6130 832A     
-0045 6132 C804  30         mov   tmp0,@wyx             ; Set cursor position
+0047 6132 C804  30         mov   tmp0,@wyx             ; Set cursor position
      6134 832A     
-0046               
-0047 6136 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
+0048               
+0049 6136 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
      6138 23FA     
-0048                                                   ; \ i  @wyx = Cursor position
-0049                                                   ; / o  tmp0 = VDP address
-0050               
-0051 613A 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
+0050                                                   ; \ i  @wyx = Cursor position
+0051                                                   ; / o  tmp0 = VDP address
+0052 613A 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
      613C 12C0     
-0052 613E C160  34         mov   @tv.color,tmp1        ; Get text color
-     6140 A218     
-0053 6142 0985  32         srl   tmp1,8                ; MSB to LSB
-0054               
-0055 6144 06A0  32         bl    @xvputb               ; VDP put single byte
-     6146 22CC     
-0056                                                   ; \ i  tmp0 = VDP write address
-0057                                                   ; / i  tmp1 = Byte to write
-0058               
-0059 6148 C839  42         mov   *stack+,@wyx          ; Pop cursor position
-     614A 832A     
-0060 614C C820  50         mov   @wyx,@fb.prevcursor   ; Update cursor position
-     614E 832A     
-     6150 A316     
-0061                       ;------------------------------------------------------
-0062                       ; Check if cursor needs to be shown
-0063                       ;------------------------------------------------------
-0064 6152 0560  34         inv   @fb.curtoggle          ; Flip cursor shape flag
-     6154 A314     
-0065 6156 1301  14         jeq   vdp.cursor.fb.tat.show ; Show FB cursor
-0066 6158 101D  14         jmp   vdp.cursor.fb.tat.exit ; Exit
-0067                       ;------------------------------------------------------
-0068                       ; Show cursor
-0069                       ;------------------------------------------------------
-0070               vdp.cursor.fb.tat.show:
-0071 615A C120  34         mov   @tv.ruler.visible,tmp0
-     615C A210     
-0072 615E 1307  14         jeq   vdp.cursor.fb.tat.show.noruler
-0073                       ;------------------------------------------------------
-0074                       ; Cursor position adjustment, ruler visible
-0075                       ;------------------------------------------------------
-0076 6160 C120  30         mov   @wyx,tmp0             ; Get cursor YX
-     6162 832A     
-0077 6164 0224  22         ai    tmp0,>0200            ; Topline + ruler adjustment
-     6166 0200     
-0078 6168 C804  30         mov   tmp0,@wyx             ; Save cursor YX
-     616A 832A     
-0079 616C 1006  14         jmp   vdp.cursor.fb.tat.dump
+0053                       ;------------------------------------------------------
+0054                       ; Determine background color of cursor
+0055                       ;------------------------------------------------------
+0056 613E C160  34         mov   @fb.prevcursor,tmp1   ; Get previous cursor position
+     6140 A316     
+0057 6142 06A0  32         bl    @get_cursorcolor      ; Get cursor FG/BG color
+     6144 61B4     
+0058                                                   ; \ i  tmp1 = previous cursor position
+0059                                                   ; / o  outparm1 = cursor FG/BG color
+0060 6146 C160  34         mov   @outparm1,tmp1        ; Get cursor color
+     6148 A018     
+0061               
+0062                       ;------------------------------------------------------
+0063                       ; Write to VDP TAT to hide cursor
+0064                       ;------------------------------------------------------
+0065               vdp.cursor.tat.fb.hide.dump:
+0066 614A 06A0  32         bl    @xvputb               ; VDP put single byte
+     614C 22CC     
+0067                                                   ; \ i  tmp0 = VDP write address
+0068                                                   ; / i  tmp1 = Byte to write
+0069               
+0070 614E C839  42         mov   *stack+,@wyx          ; Pop cursor position
+     6150 832A     
+0071 6152 C820  50         mov   @wyx,@fb.prevcursor   ; Update cursor position
+     6154 832A     
+     6156 A316     
+0072                       ;------------------------------------------------------
+0073                       ; Step 2: Check if cursor needs to be shown
+0074                       ;------------------------------------------------------
+0075 6158 0560  34         inv   @fb.curtoggle          ; Flip cursor shape flag
+     615A A314     
+0076 615C 1301  14         jeq   vdp.cursor.tat.fb.show ; Show FB cursor
+0077 615E 1023  14         jmp   vdp.cursor.tat.fb.exit ; Exit
+0078                       ;------------------------------------------------------
+0079                       ; Step 3: Show cursor
 0080                       ;------------------------------------------------------
-0081                       ; Cursor position adjustment, ruler hidden
-0082                       ;------------------------------------------------------
-0083               vdp.cursor.fb.tat.show.noruler:
-0084 616E C120  30         mov   @wyx,tmp0             ; Get cursor YX
+0081               vdp.cursor.tat.fb.show:
+0082 6160 C120  34         mov   @tv.ruler.visible,tmp0
+     6162 A210     
+0083 6164 1307  14         jeq   vdp.cursor.tat.fb.show.noruler
+0084                       ;------------------------------------------------------
+0085                       ; Cursor position adjustment, ruler visible
+0086                       ;------------------------------------------------------
+0087 6166 C120  30         mov   @wyx,tmp0             ; Get cursor YX
+     6168 832A     
+0088 616A 0224  22         ai    tmp0,>0200            ; Topline + ruler adjustment
+     616C 0200     
+0089 616E C804  30         mov   tmp0,@wyx             ; Save cursor YX
      6170 832A     
-0085 6172 0224  22         ai    tmp0,>0100            ; Topline adjustment
-     6174 0100     
-0086 6176 C804  30         mov   tmp0,@wyx             ; Save cursor YX
-     6178 832A     
-0087                       ;------------------------------------------------------
-0088                       ; Calculate VDP address
-0089                       ;------------------------------------------------------
-0090               vdp.cursor.fb.tat.dump:
-0091 617A 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
-     617C 23FA     
-0092                                                   ; \ i  @wyx = Cursor position
-0093                                                   ; / o  tmp0 = VDP address
-0094 617E 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
-     6180 12C0     
-0095                       ;------------------------------------------------------
-0096                       ; Dump cursor color to TAT
-0097                       ;------------------------------------------------------
-0098 6182 C160  34         mov   @tv.curcolor,tmp1     ; Get cursor color
-     6184 A216     
-0099 6186 C185  18         mov   tmp1,tmp2             ; \
-0100 6188 0246  22         andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
-     618A 000F     
-0101 618C 0A45  24         sla   tmp1,4                ; | Solid cursor FG/BG
-0102 618E E146  18         soc   tmp2,tmp1             ; /
-0103               
-0104 6190 06A0  32         bl    @xvputb               ; VDP put single byte
-     6192 22CC     
-0105                                                   ; \ i  tmp0 = VDP write address
-0106                                                   ; / i  tmp1 = Byte to write
-0107                       ;------------------------------------------------------
-0108                       ; Exit
-0109                       ;------------------------------------------------------
-0110               vdp.cursor.fb.tat.exit:
-0111 6194 C839  42         mov   *stack+,@wyx          ; Pop cursor position
-     6196 832A     
-0112 6198 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0113 619A C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0114 619C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0115 619E C2F9  30         mov   *stack+,r11           ; Pop r11
-0116 61A0 045B  20         b     *r11                  ; Return to caller
+0090 6172 1006  14         jmp   vdp.cursor.tat.fb.dump
+0091                       ;------------------------------------------------------
+0092                       ; Cursor position adjustment, ruler hidden
+0093                       ;------------------------------------------------------
+0094               vdp.cursor.tat.fb.show.noruler:
+0095 6174 C120  30         mov   @wyx,tmp0             ; Get cursor YX
+     6176 832A     
+0096 6178 0224  22         ai    tmp0,>0100            ; Topline adjustment
+     617A 0100     
+0097 617C C804  30         mov   tmp0,@wyx             ; Save cursor YX
+     617E 832A     
+0098                       ;------------------------------------------------------
+0099                       ; Calculate VDP address
+0100                       ;------------------------------------------------------
+0101               vdp.cursor.tat.fb.dump:
+0102 6180 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
+     6182 23FA     
+0103                                                   ; \ i  @wyx = Cursor position
+0104                                                   ; / o  tmp0 = VDP address
+0105 6184 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
+     6186 12C0     
+0106                       ;------------------------------------------------------
+0107                       ; Determine background color of cursor
+0108                       ;------------------------------------------------------
+0109 6188 C160  30         mov   @wyx,tmp1             ; Get cursor position
+     618A 832A     
+0110 618C 06A0  32         bl    @get_cursorcolor      ; Get cursor FG/BG color
+     618E 61B4     
+0111                                                   ; \ i  tmp1 = Cursor position
+0112                                                   ; / o  outparm1 = Cursor FG/BG color
+0113 6190 C160  34         mov   @outparm1,tmp1        ; Get cursor color
+     6192 A018     
+0114 6194 C160  34         mov   @tv.curcolor,tmp1     ; Get cursor color
+     6196 A216     
+0115                       ;------------------------------------------------------
+0116                       ; Write to VDP TAT to show cursor
+0117                       ;------------------------------------------------------
+0118 6198 C185  18         mov   tmp1,tmp2             ; \
+0119 619A 0246  22         andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
+     619C 000F     
+0120 619E 0A45  24         sla   tmp1,4                ; | Solid cursor FG/BG
+0121 61A0 E146  18         soc   tmp2,tmp1             ; /
+0122               
+0123 61A2 06A0  32         bl    @xvputb               ; VDP put single byte
+     61A4 22CC     
+0124                                                   ; \ i  tmp0 = VDP write address
+0125                                                   ; / i  tmp1 = Byte to write
+0126                       ;------------------------------------------------------
+0127                       ; Exit
+0128                       ;------------------------------------------------------
+0129               vdp.cursor.tat.fb.exit:
+0130 61A6 C839  42         mov   *stack+,@wyx          ; Pop cursor position
+     61A8 832A     
+0131 61AA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0132 61AC C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0133 61AE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0134 61B0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0135 61B2 045B  20         b     *r11                  ; Return to caller
+0136               
+0137               
+0138               
+0139               
+0140               ***************************************************************
+0141               * get_cursorcolor
+0142               * Determine cursor foreground/background color
+0143               ***************************************************************
+0144               * bl @get_cursorcolor
+0145               *--------------------------------------------------------------
+0146               * INPUT
+0147               * tmp1 = Cursor position
+0148               *--------------------------------------------------------------
+0149               * OUTPUT
+0150               * outparm1 = Cursor foreground/background color
+0151               *--------------------------------------------------------------
+0152               * Register usage
+0153               * tmp0,tmp1
+0154               ********|*****|*********************|**************************
+0155               get_cursorcolor:
+0156 61B4 0649  14         dect  stack
+0157 61B6 C64B  30         mov   r11,*stack            ; Save return address
+0158 61B8 0649  14         dect  stack
+0159 61BA C644  30         mov   tmp0,*stack           ; Push tmp0
+0160 61BC 0649  14         dect  stack
+0161 61BE C645  30         mov   tmp1,*stack           ; Push tmp1
+0162                       ;------------------------------------------------------
+0163                       ; Check if within block markers M1-M2
+0164                       ;------------------------------------------------------
+0165 61C0 0985  32         srl   tmp1,8                ; MSB to LSB
+0166 61C2 C805  38         mov   tmp1,@parm1           ; Set row to check
+     61C4 A006     
+0167               
+0168 61C6 06A0  32         bl    @edb.block.match      ; Check if line within block markers M1-M2
+     61C8 62B8     
+0169                                                   ; \ i  parm1 = row to check
+0170                                                   ; | o  outparm1 = >0000 if outside block
+0171                                                   ; /               >ffff if within block
+0172               
+0173 61CA C160  34         mov   @outparm1,tmp1        ; Get result
+     61CC A018     
+0174 61CE 1309  14         jeq   !                     ; Outside block, use normal bg color
+0175                       ;------------------------------------------------------
+0176                       ; Use FG/BG color of block marking
+0177                       ;------------------------------------------------------
+0178 61D0 06A0  32         bl    @pane.colorscheme.index
+     61D2 62A6     
+0179                                                   ; Get colorscheme address
+0180                                                   ; \ i  @pane.colorscheme.index = Colorscheme
+0181                                                   ; | o  @outparm1 = Word 0 ABCD
+0182                                                   ; | o  @outparm2 = Word 1 EFGH
+0183                                                   ; | o  @outparm3 = Word 2 IJKL
+0184                                                   ; | o  @outparm4 = Word 3 MNOP
+0185                                                   ; / o  @outparm5 = Word 4 QRST
+0186               
+0187 61D4 C160  34         mov   @outparm3,tmp1        ; Get word 2 IJKL
+     61D6 A01C     
+0188 61D8 0245  22         andi  tmp1,>00ff            ; Isolate KL (FG/BG color)
+     61DA 00FF     
+0189 61DC C805  38         mov   tmp1,@outparm1        ; Return color in outparm1
+     61DE A018     
+0190 61E0 1007  14         jmp   get_cursorcolor.exit  ; Exit
+0191                       ;------------------------------------------------------
+0192                       ; Use FG/BG color of framebuffer
+0193                       ;------------------------------------------------------
+0194 61E2 06A0  32 !       bl    @pane.colorscheme.index
+     61E4 62A6     
+0195                                                   ; Get colorscheme address
+0196                                                   ; \ i  @pane.colorscheme.index = Colorscheme
+0197                                                   ; | o  @outparm1 = Word 0 ABCD
+0198                                                   ; | o  @outparm2 = Word 1 EFGH
+0199                                                   ; | o  @outparm3 = Word 2 IJKL
+0200                                                   ; | o  @outparm4 = Word 3 MNOP
+0201                                                   ; / o  @outparm5 = Word 4 QRST
+0202               
+0203 61E6 C160  34         mov   @outparm1,tmp1        ; Get word 0 ABCD
+     61E8 A018     
+0204 61EA 0985  32         srl   tmp1,8                ; Isolate AB (framebuffer FG/BG color)
+0205 61EC C805  38         mov   tmp1,@outparm1        ; Return color in outparm1
+     61EE A018     
+0206                       ;------------------------------------------------------
+0207                       ; Exit
+0208                       ;------------------------------------------------------
+0209               get_cursorcolor.exit:
+0210 61F0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0211 61F2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0212 61F4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0213 61F6 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
-0076                       copy  "vdp.cursor.cmdb.tat.asm" ; VDP cursor CMDB
-     **** ****     > vdp.cursor.cmdb.tat.asm
+0076                       copy  "vdp.cursor.tat.cmdb.asm" ; VDP cursor CMDB
+     **** ****     > vdp.cursor.tat.cmdb.asm
 0001               * FILE......: vdp.cursor.cmdb.tat.asm
 0002               * Purpose...: Set VDP cursor shape (character version)
 0003               
 0004               ***************************************************************
-0005               * vdp.cursor.cmdb.tat
+0005               * vdp.cursor.tat.cmdb
 0006               * Set VDP cursor shape (character version)
 0007               ***************************************************************
-0008               * bl @vdp.cursor.cmdb.tat
+0008               * bl @vdp.cursor.tat.cmdb
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * @wyx           = New Cursor position
@@ -10029,99 +10141,99 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017               * Register usage
 0018               * tmp0,tmp1,tmp2
 0019               ********|*****|*********************|**************************
-0020               vdp.cursor.cmdb.tat:
-0021 61A2 0649  14         dect  stack
-0022 61A4 C64B  30         mov   r11,*stack            ; Save return address
-0023 61A6 0649  14         dect  stack
-0024 61A8 C644  30         mov   tmp0,*stack           ; Push tmp0
-0025 61AA 0649  14         dect  stack
-0026 61AC C645  30         mov   tmp1,*stack           ; Push tmp1
-0027 61AE 0649  14         dect  stack
-0028 61B0 C646  30         mov   tmp2,*stack           ; Push tmp2
+0020               vdp.cursor.tat.cmdb:
+0021 61F8 0649  14         dect  stack
+0022 61FA C64B  30         mov   r11,*stack            ; Save return address
+0023 61FC 0649  14         dect  stack
+0024 61FE C644  30         mov   tmp0,*stack           ; Push tmp0
+0025 6200 0649  14         dect  stack
+0026 6202 C645  30         mov   tmp1,*stack           ; Push tmp1
+0027 6204 0649  14         dect  stack
+0028 6206 C646  30         mov   tmp2,*stack           ; Push tmp2
 0029                       ;------------------------------------------------------
 0030                       ; Hide CMDB cursor
 0031                       ;------------------------------------------------------
 0032               vdp.cursor.tat.cmdb.hide:
-0033 61B2 C120  34         mov   @cmdb.prevcursor,tmp0 ; Get previous cursor position
-     61B4 A710     
-0034 61B6 1604  14         jne   !
-0035 61B8 C120  34         mov   @cmdb.cursor,tmp0
-     61BA A70A     
-0036 61BC C804  38         mov   tmp0,@cmdb.prevcursor
-     61BE A710     
+0033 6208 C120  34         mov   @cmdb.prevcursor,tmp0 ; Get previous cursor position
+     620A A710     
+0034 620C 1604  14         jne   !
+0035 620E C120  34         mov   @cmdb.cursor,tmp0
+     6210 A70A     
+0036 6212 C804  38         mov   tmp0,@cmdb.prevcursor
+     6214 A710     
 0037               
-0038 61C0 0649  14 !       dect  stack                 ; \ Push cursor position
-0039 61C2 C660  42         mov   @wyx,*stack           ; /
-     61C4 832A     
+0038 6216 0649  14 !       dect  stack                 ; \ Push cursor position
+0039 6218 C660  42         mov   @wyx,*stack           ; /
+     621A 832A     
 0040               
-0041 61C6 C804  30         mov   tmp0,@wyx             ; Set cursor position
-     61C8 832A     
+0041 621C C804  30         mov   tmp0,@wyx             ; Set cursor position
+     621E 832A     
 0042               
-0043 61CA 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
-     61CC 23FA     
+0043 6220 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
+     6222 23FA     
 0044                                                   ; \ i  @wyx = Cursor position
 0045                                                   ; / o  tmp0 = VDP address
 0046               
-0047 61CE 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
-     61D0 12C0     
-0048 61D2 C160  34         mov   @tv.cmdb.color,tmp1   ; Get CMDB color
-     61D4 A224     
+0047 6224 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
+     6226 12C0     
+0048 6228 C160  34         mov   @tv.cmdb.color,tmp1   ; Get CMDB color
+     622A A224     
 0049               
-0050 61D6 06A0  32         bl    @xvputb               ; VDP put single byte
-     61D8 22CC     
+0050 622C 06A0  32         bl    @xvputb               ; VDP put single byte
+     622E 22CC     
 0051                                                   ; \ i  tmp0 = VDP write address
 0052                                                   ; / i  tmp1 = Byte to write
 0053               
-0054 61DA C839  42         mov   *stack+,@wyx          ; Pop cursor position
-     61DC 832A     
+0054 6230 C839  42         mov   *stack+,@wyx          ; Pop cursor position
+     6232 832A     
 0055                       ;------------------------------------------------------
 0056                       ; Check if cursor needs to be shown
 0057                       ;------------------------------------------------------
-0058 61DE 0560  34         inv   @fb.curtoggle            ; Flip cursor shape flag
-     61E0 A314     
-0059 61E2 1301  14         jeq   vdp.cursor.cmdb.tat.show ; Show CMDB cursor
-0060 61E4 1013  14         jmp   vdp.cursor.cmdb.tat.exit ; Exit
+0058 6234 0560  34         inv   @fb.curtoggle            ; Flip cursor shape flag
+     6236 A314     
+0059 6238 1301  14         jeq   vdp.cursor.tat.cmdb.show ; Show CMDB cursor
+0060 623A 1013  14         jmp   vdp.cursor.tat.cmdb.exit ; Exit
 0061                       ;------------------------------------------------------
 0062                       ; Show cursor
 0063                       ;------------------------------------------------------
-0064               vdp.cursor.cmdb.tat.show:
-0065 61E6 C820  46         mov   @cmdb.cursor,@wyx
-     61E8 A70A     
-     61EA 832A     
-0066 61EC 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
-     61EE 23FA     
+0064               vdp.cursor.tat.cmdb.show:
+0065 623C C820  46         mov   @cmdb.cursor,@wyx
+     623E A70A     
+     6240 832A     
+0066 6242 06A0  32         bl    @yx2pnt               ; Calculate VDP address from @WYX
+     6244 23FA     
 0067                                                   ; \ i  @wyx = Cursor position
 0068                                                   ; / o  tmp0 = VDP address
-0069 61F0 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
-     61F2 12C0     
+0069 6246 0224  22         ai    tmp0,vdp.tat.base     ; Add TAT base
+     6248 12C0     
 0070                       ;------------------------------------------------------
 0071                       ; Dump cursor color to TAT
 0072                       ;------------------------------------------------------
-0073 61F4 0205  20         li    tmp1,>000f
-     61F6 000F     
-0074 61F8 C185  18         mov   tmp1,tmp2             ; \
-0075 61FA 0246  22         andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
-     61FC 000F     
-0076 61FE 0A45  24         sla   tmp1,4                ; | Solid cursor FG/BG
-0077 6200 E146  18         soc   tmp2,tmp1             ; /
+0073 624A 0205  20         li    tmp1,>000f
+     624C 000F     
+0074 624E C185  18         mov   tmp1,tmp2             ; \
+0075 6250 0246  22         andi  tmp2,>000f            ; | LSB dup low nibble to high-nibble
+     6252 000F     
+0076 6254 0A45  24         sla   tmp1,4                ; | Solid cursor FG/BG
+0077 6256 E146  18         soc   tmp2,tmp1             ; /
 0078               
-0079 6202 06A0  32         bl    @xvputb               ; VDP put single byte
-     6204 22CC     
+0079 6258 06A0  32         bl    @xvputb               ; VDP put single byte
+     625A 22CC     
 0080                                                   ; \ i  tmp0 = VDP write address
 0081                                                   ; / i  tmp1 = Byte to write
 0082               
-0083 6206 C820  54         mov   @cmdb.cursor,@cmdb.prevcursor
-     6208 A70A     
-     620A A710     
+0083 625C C820  54         mov   @cmdb.cursor,@cmdb.prevcursor
+     625E A70A     
+     6260 A710     
 0084                       ;------------------------------------------------------
 0085                       ; Exit
 0086                       ;------------------------------------------------------
-0087               vdp.cursor.cmdb.tat.exit:
-0088 620C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0089 620E C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0090 6210 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0091 6212 C2F9  30         mov   *stack+,r11           ; Pop r11
-0092 6214 045B  20         b     *r11                  ; Return to caller
+0087               vdp.cursor.tat.cmdb.exit:
+0088 6262 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0089 6264 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0090 6266 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0091 6268 C2F9  30         mov   *stack+,r11           ; Pop r11
+0092 626A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0077                       copy  "tv.set.font.asm"         ; Set current font
      **** ****     > tv.set.font.asm
@@ -10148,55 +10260,55 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0021               * Dumps current font to VDP
 0022               ********|*****|*********************|**************************
 0023               tv.set.font:
-0024 6216 0649  14         dect  stack
-0025 6218 C64B  30         mov   r11,*stack            ; Save return address
-0026 621A 0649  14         dect  stack
-0027 621C C644  30         mov   tmp0,*stack           ; Push tmp0
-0028 621E 0649  14         dect  stack
-0029 6220 C645  30         mov   tmp1,*stack           ; Push tmp1
+0024 626C 0649  14         dect  stack
+0025 626E C64B  30         mov   r11,*stack            ; Save return address
+0026 6270 0649  14         dect  stack
+0027 6272 C644  30         mov   tmp0,*stack           ; Push tmp0
+0028 6274 0649  14         dect  stack
+0029 6276 C645  30         mov   tmp1,*stack           ; Push tmp1
 0030                       ;------------------------------------------------------
 0031                       ; Assert check index
 0032                       ;------------------------------------------------------
-0033 6222 C120  34         mov   @parm1,tmp0           ; Get index
-     6224 A006     
-0034 6226 0284  22         ci    tmp0,5                ; Valid index entry?
-     6228 0005     
-0035 622A 1204  14         jle   tv.set.font.ptr       ; Yes, set pointer
+0033 6278 C120  34         mov   @parm1,tmp0           ; Get index
+     627A A006     
+0034 627C 0284  22         ci    tmp0,5                ; Valid index entry?
+     627E 0005     
+0035 6280 1204  14         jle   tv.set.font.ptr       ; Yes, set pointer
 0036                       ;------------------------------------------------------
 0037                       ; Assert failed
 0038                       ;------------------------------------------------------
-0039 622C C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     622E FFCE     
-0040 6230 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     6232 2026     
+0039 6282 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     6284 FFCE     
+0040 6286 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     6288 2026     
 0041                       ;------------------------------------------------------
 0042                       ; Set pointer to font
 0043                       ;------------------------------------------------------
 0044               tv.set.font.ptr:
-0045 6234 0204  20         li    tmp0,784              ; Size of font dump (in bytes)
-     6236 0310     
-0046 6238 3920  74         mpy   @parm1,tmp0           ; Result is in tmp1
-     623A A006     
-0047 623C 0225  22         ai    tmp1,font1            ; Add font base address
-     623E 63A0     
-0048 6240 C805  38         mov   tmp1,@tv.font.ptr     ; Set pointer
-     6242 A228     
+0045 628A 0204  20         li    tmp0,784              ; Size of font dump (in bytes)
+     628C 0310     
+0046 628E 3920  74         mpy   @parm1,tmp0           ; Result is in tmp1
+     6290 A006     
+0047 6292 0225  22         ai    tmp1,font1            ; Add font base address
+     6294 641A     
+0048 6296 C805  38         mov   tmp1,@tv.font.ptr     ; Set pointer
+     6298 A228     
 0049                       ;------------------------------------------------------
 0050                       ; Dump font to VDP
 0051                       ;------------------------------------------------------
 0052               tv.set.font.vdpdump:
-0053 6244 06A0  32         bl    @vdp.dump.font        ; Dump font to VDP
-     6246 605C     
+0053 629A 06A0  32         bl    @vdp.dump.font        ; Dump font to VDP
+     629C 605C     
 0054                                                   ; \ i  @tv.font.ptr = Pointer to font in ROM
 0055                                                   ; /
 0056                       ;------------------------------------------------------
 0057                       ; Exit
 0058                       ;------------------------------------------------------
 0059               tv.set.font.exit:
-0060 6248 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0061 624A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0062 624C C2F9  30         mov   *stack+,r11           ; Pop R11
-0063 624E 045B  20         b     *r11                  ; Return to caller
+0060 629E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0061 62A0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0062 62A2 C2F9  30         mov   *stack+,r11           ; Pop R11
+0063 62A4 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0078                       ;-----------------------------------------------------------------------
 0079                       ; Stubs
@@ -10205,6 +10317,50 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      **** ****     > rom.stubs.bank6.asm
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
+0003               
+0004               
+0005               ***************************************************************
+0006               * Stub for "pane.colorscheme.index"
+0007               * bank4 vec.43
+0008               ********|*****|*********************|**************************
+0009               pane.colorscheme.index:
+0010 62A6 0649  14         dect  stack
+0011 62A8 C64B  30         mov   r11,*stack            ; Save return address
+0012                       ;------------------------------------------------------
+0013                       ; Call function in bank 1
+0014                       ;------------------------------------------------------
+0015 62AA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     62AC 30B4     
+0016 62AE 6008                   data bank4.rom        ; | i  p0 = bank address
+0017 62B0 7FC4                   data vec.43           ; | i  p1 = Vector with target address
+0018 62B2 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0019                       ;------------------------------------------------------
+0020                       ; Exit
+0021                       ;------------------------------------------------------
+0022 62B4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 62B6 045B  20         b     *r11                  ; Return to caller
+0024               
+0025               
+0026               ***************************************************************
+0027               * Stub for "edb.block.match"
+0028               * bank5 vec.12
+0029               ********|*****|*********************|**************************
+0030               edb.block.match:
+0031 62B8 0649  14         dect  stack
+0032 62BA C64B  30         mov   r11,*stack            ; Save return address
+0033                       ;------------------------------------------------------
+0034                       ; Call function in bank 1
+0035                       ;------------------------------------------------------
+0036 62BC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     62BE 30B4     
+0037 62C0 600A                   data bank5.rom        ; | i  p0 = bank address
+0038 62C2 7F86                   data vec.12           ; | i  p1 = Vector with target address
+0039 62C4 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0040                       ;------------------------------------------------------
+0041                       ; Exit
+0042                       ;------------------------------------------------------
+0043 62C6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 62C8 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0082                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
@@ -10218,21 +10374,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 6250 0649  14         dect  stack
-0013 6252 C64B  30         mov   r11,*stack            ; Save return address
+0012 62CA 0649  14         dect  stack
+0013 62CC C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 6254 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6256 30B4     
-0018 6258 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 625A 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0020 625C 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 62CE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     62D0 30B4     
+0018 62D2 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 62D4 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0020 62D6 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 625E C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 6260 045B  20         b     *r11                  ; Return to caller
+0024 62D8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 62DA 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -10241,21 +10397,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 6262 0649  14         dect  stack
-0038 6264 C64B  30         mov   r11,*stack            ; Save return address
+0037 62DC 0649  14         dect  stack
+0038 62DE C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 6266 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6268 30B4     
-0043 626A 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 626C 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 626E 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 62E0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     62E2 30B4     
+0043 62E4 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 62E6 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 62E8 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 6270 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 6272 045B  20         b     *r11                  ; Return to caller
+0049 62EA C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 62EC 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -10264,21 +10420,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 6274 0649  14         dect  stack
-0060 6276 C64B  30         mov   r11,*stack            ; Save return address
+0059 62EE 0649  14         dect  stack
+0060 62F0 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 6278 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     627A 30B4     
-0065 627C 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 627E 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 6280 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 62F2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     62F4 30B4     
+0065 62F6 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 62F8 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 62FA 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 6282 C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 6284 045B  20         b     *r11                  ; Return to caller
+0071 62FC C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 62FE 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -10286,21 +10442,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 6286 0649  14         dect  stack
-0081 6288 C64B  30         mov   r11,*stack            ; Save return address
+0080 6300 0649  14         dect  stack
+0081 6302 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 628A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     628C 30B4     
-0086 628E 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 6290 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 6292 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 6304 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6306 30B4     
+0086 6308 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 630A 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 630C 600C                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 6294 C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 6296 045B  20         b     *r11                  ; Return to caller
+0092 630E C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 6310 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b6.asm
 0083                       ;-----------------------------------------------------------------------
@@ -10315,947 +10471,947 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0005               ; Sprite patterns
 0006               ;--------------------------------------------------------------
 0007               cursors:
-0008 6298 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor
-     629A 1C1C     
-     629C 1C1C     
-     629E 1C00     
-0009 62A0 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
-     62A2 0307     
-     62A4 0703     
-     62A6 0100     
-0010 62A8 1C08             byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
-     62AA 0000     
-     62AC 0000     
-     62AE 0000     
+0008 6312 1C1C             byte  >1c,>1c,>1c,>1c,>1c,>1c,>1c,>00 ; Cursor
+     6314 1C1C     
+     6316 1C1C     
+     6318 1C00     
+0009 631A 0001             byte  >00,>01,>03,>07,>07,>03,>01,>00 ; Current line indicator    <
+     631C 0307     
+     631E 0703     
+     6320 0100     
+0010 6322 1C08             byte  >1c,>08,>00,>00,>00,>00,>00,>00 ; Current column indicator  v
+     6324 0000     
+     6326 0000     
+     6328 0000     
 0011               
 0012               ;--------------------------------------------------------------
 0013               ; Character patterns
 0014               ;--------------------------------------------------------------
 0015               patterns:
-0016 62B0 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
-     62B2 0000     
-     62B4 FF00     
-     62B6 0000     
-0017 62B8 F0F0             data  >F0F0,>C0C0,>C0C0,>F0F0 ; 02. Marker [
-     62BA C0C0     
-     62BC C0C0     
-     62BE F0F0     
-0018 62C0 3C3C             data  >3C3C,>0C0C,>0C0C,>3C3C ; 03. Marker ]
-     62C2 0C0C     
-     62C4 0C0C     
-     62C6 3C3C     
+0016 632A 0000             data  >0000,>0000,>ff00,>0000 ; 01. Single line (top)
+     632C 0000     
+     632E FF00     
+     6330 0000     
+0017 6332 F0F0             data  >F0F0,>C0C0,>C0C0,>F0F0 ; 02. Marker [
+     6334 C0C0     
+     6336 C0C0     
+     6338 F0F0     
+0018 633A 3C3C             data  >3C3C,>0C0C,>0C0C,>3C3C ; 03. Marker ]
+     633C 0C0C     
+     633E 0C0C     
+     6340 3C3C     
 0019               
 0020               patterns.box:
-0021 62C8 0000             data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
-     62CA 0000     
-     62CC FF80     
-     62CE 8080     
-0022 62D0 0000             data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
-     62D2 0000     
-     62D4 FF04     
-     62D6 FF04     
-0023 62D8 8080             data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
-     62DA 8080     
-     62DC 8080     
-     62DE 8080     
-0024 62E0 0404             data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
-     62E2 0404     
-     62E4 0404     
-     62E6 0404     
-0025 62E8 8080             data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
-     62EA 8080     
-     62EC 8080     
-     62EE FF00     
-0026 62F0 0404             data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
-     62F2 0404     
-     62F4 0404     
-     62F6 FF00     
-0027 62F8 0000             data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
-     62FA 0000     
-     62FC 0000     
-     62FE FF00     
-0028 6300 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
-     6302 0F0F     
-     6304 0F0F     
-     6306 0000     
+0021 6342 0000             data  >0000,>0000,>ff80,>8080 ; 04. Top left corner
+     6344 0000     
+     6346 FF80     
+     6348 8080     
+0022 634A 0000             data  >0000,>0000,>ff04,>ff04 ; 05. Top right corner
+     634C 0000     
+     634E FF04     
+     6350 FF04     
+0023 6352 8080             data  >8080,>8080,>8080,>8080 ; 06. Left vertical single line
+     6354 8080     
+     6356 8080     
+     6358 8080     
+0024 635A 0404             data  >0404,>0404,>0404,>0404 ; 07. Right vertical single line
+     635C 0404     
+     635E 0404     
+     6360 0404     
+0025 6362 8080             data  >8080,>8080,>8080,>ff00 ; 08. Bottom left corner
+     6364 8080     
+     6366 8080     
+     6368 FF00     
+0026 636A 0404             data  >0404,>0404,>0404,>ff00 ; 09. Bottom right corner
+     636C 0404     
+     636E 0404     
+     6370 FF00     
+0027 6372 0000             data  >0000,>0000,>0000,>ff00 ; 10. Single line (bottom)
+     6374 0000     
+     6376 0000     
+     6378 FF00     
+0028 637A 0000             data  >0000,>0f0f,>0f0f,>0000 ; 11. Double line top right corner
+     637C 0F0F     
+     637E 0F0F     
+     6380 0000     
 0029               
 0030               
 0031               patterns.cr:
-0032 6308 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
-     630A 6C48     
-     630C 4800     
-     630E 7C00     
-0033 6310 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
-     6312 64FC     
-     6314 6020     
-     6316 0000     
+0032 6382 6C48             data  >6c48,>6c48,>4800,>7c00 ; 12. FF (Form Feed)
+     6384 6C48     
+     6386 4800     
+     6388 7C00     
+0033 638A 0024             data  >0024,>64fc,>6020,>0000 ; 13. CR (Carriage return) - arrow
+     638C 64FC     
+     638E 6020     
+     6390 0000     
 0034               
 0035               
 0036               alphalock:
-0037 6318 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
-     631A 8894     
-     631C 9C94     
-     631E C0FF     
-0038 6320 FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
-     6322 4444     
-     6324 4474     
-     6326 0CFC     
+0037 6392 FFC0             data  >ffc0,>8894,>9c94,>c0ff ; 14. alpha lock down - char1
+     6394 8894     
+     6396 9C94     
+     6398 C0FF     
+0038 639A FC0C             data  >fc0c,>4444,>4474,>0cfc ; 15. alpha lock down - char2
+     639C 4444     
+     639E 4474     
+     63A0 0CFC     
 0039               
 0040               
 0041               vertline:
-0042 6328 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
-     632A 1010     
-     632C 1010     
-     632E 1010     
-0043 6330 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
-     6332 0030     
-     6334 3030     
-     6336 3030     
+0042 63A2 1010             data  >1010,>1010,>1010,>1010 ; 16. Vertical line
+     63A4 1010     
+     63A6 1010     
+     63A8 1010     
+0043 63AA 0000             data  >0000,>0030,>3030,>3030 ; 17. Tab indicator
+     63AC 0030     
+     63AE 3030     
+     63B0 3030     
 0044               
 0045               
 0046               low.digits:                           ; digits 1-4 (18-21)
-0047 6338 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
-     633A 0010     
-     633C 3010     
-     633E 1038     
-0048 6340 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
-     6342 0038     
-     6344 0838     
-     6346 2038     
-0049 6348 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
-     634A 0038     
-     634C 0838     
-     634E 0838     
-0050 6350 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
-     6352 0028     
-     6354 2838     
-     6356 0808     
+0047 63B2 0000             byte >00,>00,>00,>10,>30,>10,>10,>38
+     63B4 0010     
+     63B6 3010     
+     63B8 1038     
+0048 63BA 0000             byte >00,>00,>00,>38,>08,>38,>20,>38
+     63BC 0038     
+     63BE 0838     
+     63C0 2038     
+0049 63C2 0000             byte >00,>00,>00,>38,>08,>38,>08,>38
+     63C4 0038     
+     63C6 0838     
+     63C8 0838     
+0050 63CA 0000             byte >00,>00,>00,>28,>28,>38,>08,>08
+     63CC 0028     
+     63CE 2838     
+     63D0 0808     
 0051                                                     ; digits 5-8 (22-25)
-0052 6358 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
-     635A 0038     
-     635C 2038     
-     635E 0838     
-0053 6360 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
-     6362 0038     
-     6364 2038     
-     6366 2838     
-0054 6368 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
-     636A 0038     
-     636C 0810     
-     636E 2020     
-0055 6370 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
-     6372 0038     
-     6374 2838     
-     6376 2838     
+0052 63D2 0000             byte >00,>00,>00,>38,>20,>38,>08,>38
+     63D4 0038     
+     63D6 2038     
+     63D8 0838     
+0053 63DA 0000             byte >00,>00,>00,>38,>20,>38,>28,>38
+     63DC 0038     
+     63DE 2038     
+     63E0 2838     
+0054 63E2 0000             byte >00,>00,>00,>38,>08,>10,>20,>20
+     63E4 0038     
+     63E6 0810     
+     63E8 2020     
+0055 63EA 0000             byte >00,>00,>00,>38,>28,>38,>28,>38
+     63EC 0038     
+     63EE 2838     
+     63F0 2838     
 0056               
-0057 6378 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
-     637A 7F7F     
-     637C 7F7F     
-     637E 7F7F     
-0058 6380 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
-     6382 0010     
-     6384 08FC     
-     6386 0810     
-0059 6388 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
-     638A 0000     
-     638C 0000     
-     638E 0000     
-0060 6390 0070     lock:   data  >0070,>8888,>F8F8,>D8F8 ; 29. Lock
-     6392 8888     
-     6394 F8F8     
-     6396 D8F8     
-0061 6398 0000             data  >0000,>0000,>0000,>0000 ; 30. FREE
-     639A 0000     
-     639C 0000     
-     639E 0000     
+0057 63F2 007F     cursor: data  >007f,>7f7f,>7f7f,>7f7f ; 26. Cursor
+     63F4 7F7F     
+     63F6 7F7F     
+     63F8 7F7F     
+0058 63FA 0000     arrow:  data  >0000,>0010,>08fc,>0810 ; 27. Arrow
+     63FC 0010     
+     63FE 08FC     
+     6400 0810     
+0059 6402 00FF     hline:  data  >00ff,>0000,>0000,>0000 ; 28. Key marker
+     6404 0000     
+     6406 0000     
+     6408 0000     
+0060 640A 0070     lock:   data  >0070,>8888,>F8F8,>D8F8 ; 29. Lock
+     640C 8888     
+     640E F8F8     
+     6410 D8F8     
+0061 6412 0000             data  >0000,>0000,>0000,>0000 ; 30. FREE
+     6414 0000     
+     6416 0000     
+     6418 0000     
                    < stevie_b6.asm
 0087                       ;-----------------------------------------------------------------------
 0088                       ; Fonts
 0089                       ;-----------------------------------------------------------------------
-0090 63A0 0000     font1   bcopy "FONTX.bin"            ; Default font as of Stevie 1.4A
-     63A2 0000     
-     63A4 0000     
-     63A6 0000     
-     63A8 0000     
-     63AA 0000     
-     63AC 0000     
-     63AE 0000     
-     63B0 0000     
-     63B2 0000     
-     63B4 0000     
-     63B6 0000     
-     63B8 0010     
-     63BA 1010     
-     63BC 1010     
-     63BE 0010     
-     63C0 0028     
-     63C2 2828     
-     63C4 0000     
-     63C6 0000     
-     63C8 0028     
-     63CA 287C     
-     63CC 287C     
-     63CE 2828     
-     63D0 0038     
-     63D2 5450     
-     63D4 3814     
-     63D6 5438     
-     63D8 0060     
-     63DA 6408     
-     63DC 1020     
-     63DE 4C0C     
-     63E0 0020     
-     63E2 5050     
-     63E4 2054     
-     63E6 4834     
-     63E8 0008     
-     63EA 0810     
-     63EC 0000     
-     63EE 0000     
-     63F0 0008     
-     63F2 1020     
-     63F4 2020     
-     63F6 1008     
-     63F8 0020     
-     63FA 1008     
-     63FC 0808     
-     63FE 1020     
-     6400 0000     
-     6402 2810     
-     6404 7C10     
-     6406 2800     
-     6408 0000     
-     640A 1010     
-     640C 7C10     
-     640E 1000     
-     6410 0000     
-     6412 0000     
-     6414 0030     
-     6416 1020     
-     6418 0000     
-     641A 0000     
-     641C 7C00     
+0090 641A 0000     font1   bcopy "FONTX.bin"            ; Default font as of Stevie 1.4A
+     641C 0000     
      641E 0000     
      6420 0000     
      6422 0000     
      6424 0000     
-     6426 3030     
+     6426 0000     
      6428 0000     
-     642A 0408     
-     642C 1020     
-     642E 4000     
-     6430 0038     
-     6432 4444     
-     6434 5444     
-     6436 4438     
+     642A 0000     
+     642C 0000     
+     642E 0000     
+     6430 0000     
+     6432 0010     
+     6434 1010     
+     6436 1010     
      6438 0010     
-     643A 3010     
-     643C 1010     
-     643E 1038     
-     6440 0038     
-     6442 4404     
-     6444 0810     
-     6446 207C     
-     6448 0038     
-     644A 4404     
-     644C 1804     
-     644E 4438     
-     6450 0008     
-     6452 1828     
-     6454 487C     
-     6456 0808     
-     6458 007C     
-     645A 4078     
-     645C 0404     
-     645E 4438     
-     6460 0018     
-     6462 2040     
-     6464 7844     
-     6466 4438     
-     6468 007C     
-     646A 0408     
+     643A 0028     
+     643C 2828     
+     643E 0000     
+     6440 0000     
+     6442 0028     
+     6444 287C     
+     6446 287C     
+     6448 2828     
+     644A 0038     
+     644C 5450     
+     644E 3814     
+     6450 5438     
+     6452 0060     
+     6454 6408     
+     6456 1020     
+     6458 4C0C     
+     645A 0020     
+     645C 5050     
+     645E 2054     
+     6460 4834     
+     6462 0008     
+     6464 0810     
+     6466 0000     
+     6468 0000     
+     646A 0008     
      646C 1020     
      646E 2020     
-     6470 0038     
-     6472 4444     
-     6474 3844     
-     6476 4438     
-     6478 0038     
-     647A 4444     
-     647C 3C04     
-     647E 0830     
-     6480 0000     
-     6482 3030     
-     6484 0030     
-     6486 3000     
-     6488 0000     
-     648A 3030     
-     648C 0030     
-     648E 1020     
-     6490 0008     
-     6492 1020     
-     6494 4020     
-     6496 1008     
+     6470 1008     
+     6472 0020     
+     6474 1008     
+     6476 0808     
+     6478 1020     
+     647A 0000     
+     647C 2810     
+     647E 7C10     
+     6480 2800     
+     6482 0000     
+     6484 1010     
+     6486 7C10     
+     6488 1000     
+     648A 0000     
+     648C 0000     
+     648E 0030     
+     6490 1020     
+     6492 0000     
+     6494 0000     
+     6496 7C00     
      6498 0000     
-     649A 007C     
-     649C 007C     
+     649A 0000     
+     649C 0000     
      649E 0000     
-     64A0 0020     
-     64A2 1008     
+     64A0 3030     
+     64A2 0000     
      64A4 0408     
      64A6 1020     
-     64A8 0038     
-     64AA 4404     
-     64AC 0810     
-     64AE 0010     
-     64B0 0038     
-     64B2 445C     
-     64B4 545C     
-     64B6 4038     
-     64B8 0038     
-     64BA 4444     
-     64BC 7C44     
-     64BE 4444     
-     64C0 0078     
-     64C2 2424     
-     64C4 3824     
-     64C6 2478     
-     64C8 0038     
-     64CA 4440     
-     64CC 4040     
-     64CE 4438     
-     64D0 0078     
-     64D2 2424     
-     64D4 2424     
-     64D6 2478     
-     64D8 007C     
-     64DA 4040     
-     64DC 7840     
-     64DE 407C     
-     64E0 007C     
-     64E2 4040     
-     64E4 7840     
-     64E6 4040     
-     64E8 003C     
-     64EA 4040     
-     64EC 5C44     
-     64EE 4438     
-     64F0 0044     
-     64F2 4444     
-     64F4 7C44     
-     64F6 4444     
-     64F8 0038     
-     64FA 1010     
-     64FC 1010     
-     64FE 1038     
-     6500 0004     
-     6502 0404     
-     6504 0404     
-     6506 4438     
-     6508 0044     
-     650A 4850     
-     650C 6050     
-     650E 4844     
-     6510 0040     
-     6512 4040     
-     6514 4040     
-     6516 407C     
-     6518 0044     
-     651A 6C54     
-     651C 5444     
-     651E 4444     
-     6520 0044     
-     6522 6464     
-     6524 544C     
-     6526 4C44     
-     6528 0038     
-     652A 4444     
-     652C 4444     
-     652E 4438     
-     6530 0078     
-     6532 4444     
-     6534 7840     
-     6536 4040     
-     6538 0038     
-     653A 4444     
-     653C 4454     
-     653E 4834     
-     6540 0078     
-     6542 4444     
-     6544 7850     
-     6546 4844     
-     6548 0038     
-     654A 4440     
-     654C 3804     
-     654E 4438     
-     6550 007C     
-     6552 1010     
-     6554 1010     
-     6556 1010     
-     6558 0044     
-     655A 4444     
-     655C 4444     
-     655E 4438     
-     6560 0044     
-     6562 4444     
-     6564 2828     
-     6566 1010     
-     6568 0044     
-     656A 4444     
-     656C 5454     
-     656E 5428     
-     6570 0044     
-     6572 4428     
-     6574 1028     
-     6576 4444     
-     6578 0044     
-     657A 4428     
-     657C 1010     
-     657E 1010     
-     6580 007C     
-     6582 0408     
-     6584 1020     
-     6586 407C     
-     6588 0038     
-     658A 2020     
-     658C 2020     
-     658E 2038     
-     6590 0000     
-     6592 4020     
-     6594 1008     
-     6596 0400     
-     6598 0038     
-     659A 0808     
-     659C 0808     
-     659E 0838     
-     65A0 0000     
-     65A2 1028     
-     65A4 4400     
-     65A6 0000     
-     65A8 0000     
-     65AA 0000     
-     65AC 0000     
-     65AE 007C     
-     65B0 0000     
-     65B2 2010     
-     65B4 0800     
-     65B6 0000     
-     65B8 0000     
-     65BA 0038     
-     65BC 043C     
-     65BE 443C     
-     65C0 0040     
-     65C2 4078     
-     65C4 4444     
-     65C6 4478     
-     65C8 0000     
-     65CA 003C     
-     65CC 4040     
-     65CE 403C     
-     65D0 0004     
-     65D2 043C     
+     64A8 4000     
+     64AA 0038     
+     64AC 4444     
+     64AE 5444     
+     64B0 4438     
+     64B2 0010     
+     64B4 3010     
+     64B6 1010     
+     64B8 1038     
+     64BA 0038     
+     64BC 4404     
+     64BE 0810     
+     64C0 207C     
+     64C2 0038     
+     64C4 4404     
+     64C6 1804     
+     64C8 4438     
+     64CA 0008     
+     64CC 1828     
+     64CE 487C     
+     64D0 0808     
+     64D2 007C     
+     64D4 4078     
+     64D6 0404     
+     64D8 4438     
+     64DA 0018     
+     64DC 2040     
+     64DE 7844     
+     64E0 4438     
+     64E2 007C     
+     64E4 0408     
+     64E6 1020     
+     64E8 2020     
+     64EA 0038     
+     64EC 4444     
+     64EE 3844     
+     64F0 4438     
+     64F2 0038     
+     64F4 4444     
+     64F6 3C04     
+     64F8 0830     
+     64FA 0000     
+     64FC 3030     
+     64FE 0030     
+     6500 3000     
+     6502 0000     
+     6504 3030     
+     6506 0030     
+     6508 1020     
+     650A 0008     
+     650C 1020     
+     650E 4020     
+     6510 1008     
+     6512 0000     
+     6514 007C     
+     6516 007C     
+     6518 0000     
+     651A 0020     
+     651C 1008     
+     651E 0408     
+     6520 1020     
+     6522 0038     
+     6524 4404     
+     6526 0810     
+     6528 0010     
+     652A 0038     
+     652C 445C     
+     652E 545C     
+     6530 4038     
+     6532 0038     
+     6534 4444     
+     6536 7C44     
+     6538 4444     
+     653A 0078     
+     653C 2424     
+     653E 3824     
+     6540 2478     
+     6542 0038     
+     6544 4440     
+     6546 4040     
+     6548 4438     
+     654A 0078     
+     654C 2424     
+     654E 2424     
+     6550 2478     
+     6552 007C     
+     6554 4040     
+     6556 7840     
+     6558 407C     
+     655A 007C     
+     655C 4040     
+     655E 7840     
+     6560 4040     
+     6562 003C     
+     6564 4040     
+     6566 5C44     
+     6568 4438     
+     656A 0044     
+     656C 4444     
+     656E 7C44     
+     6570 4444     
+     6572 0038     
+     6574 1010     
+     6576 1010     
+     6578 1038     
+     657A 0004     
+     657C 0404     
+     657E 0404     
+     6580 4438     
+     6582 0044     
+     6584 4850     
+     6586 6050     
+     6588 4844     
+     658A 0040     
+     658C 4040     
+     658E 4040     
+     6590 407C     
+     6592 0044     
+     6594 6C54     
+     6596 5444     
+     6598 4444     
+     659A 0044     
+     659C 6464     
+     659E 544C     
+     65A0 4C44     
+     65A2 0038     
+     65A4 4444     
+     65A6 4444     
+     65A8 4438     
+     65AA 0078     
+     65AC 4444     
+     65AE 7840     
+     65B0 4040     
+     65B2 0038     
+     65B4 4444     
+     65B6 4454     
+     65B8 4834     
+     65BA 0078     
+     65BC 4444     
+     65BE 7850     
+     65C0 4844     
+     65C2 0038     
+     65C4 4440     
+     65C6 3804     
+     65C8 4438     
+     65CA 007C     
+     65CC 1010     
+     65CE 1010     
+     65D0 1010     
+     65D2 0044     
      65D4 4444     
-     65D6 443C     
-     65D8 0000     
-     65DA 0038     
-     65DC 447C     
-     65DE 403C     
-     65E0 0018     
-     65E2 2420     
-     65E4 7820     
-     65E6 2020     
-     65E8 0000     
-     65EA 003C     
-     65EC 443C     
-     65EE 0438     
-     65F0 0040     
-     65F2 4078     
-     65F4 4444     
-     65F6 4444     
-     65F8 0010     
-     65FA 0030     
-     65FC 1010     
-     65FE 1038     
-     6600 0008     
-     6602 0008     
-     6604 0808     
-     6606 4830     
-     6608 0040     
-     660A 4044     
-     660C 4870     
-     660E 4844     
-     6610 0030     
-     6612 1010     
-     6614 1010     
-     6616 1038     
-     6618 0000     
-     661A 0068     
-     661C 5454     
-     661E 5454     
+     65D6 4444     
+     65D8 4438     
+     65DA 0044     
+     65DC 4444     
+     65DE 2828     
+     65E0 1010     
+     65E2 0044     
+     65E4 4444     
+     65E6 5454     
+     65E8 5428     
+     65EA 0044     
+     65EC 4428     
+     65EE 1028     
+     65F0 4444     
+     65F2 0044     
+     65F4 4428     
+     65F6 1010     
+     65F8 1010     
+     65FA 007C     
+     65FC 0408     
+     65FE 1020     
+     6600 407C     
+     6602 0038     
+     6604 2020     
+     6606 2020     
+     6608 2038     
+     660A 0000     
+     660C 4020     
+     660E 1008     
+     6610 0400     
+     6612 0038     
+     6614 0808     
+     6616 0808     
+     6618 0838     
+     661A 0000     
+     661C 1028     
+     661E 4400     
      6620 0000     
-     6622 0058     
-     6624 6444     
-     6626 4444     
-     6628 0000     
-     662A 0038     
-     662C 4444     
-     662E 4438     
+     6622 0000     
+     6624 0000     
+     6626 0000     
+     6628 007C     
+     662A 0000     
+     662C 2010     
+     662E 0800     
      6630 0000     
-     6632 0078     
-     6634 4478     
-     6636 4040     
-     6638 0000     
-     663A 003C     
-     663C 443C     
-     663E 0404     
-     6640 0000     
-     6642 0058     
-     6644 6440     
+     6632 0000     
+     6634 0038     
+     6636 043C     
+     6638 443C     
+     663A 0040     
+     663C 4078     
+     663E 4444     
+     6640 4478     
+     6642 0000     
+     6644 003C     
      6646 4040     
-     6648 0000     
-     664A 003C     
-     664C 4038     
-     664E 0478     
-     6650 0020     
-     6652 2078     
-     6654 2020     
-     6656 2418     
-     6658 0000     
-     665A 0044     
-     665C 4444     
-     665E 443C     
-     6660 0000     
-     6662 0044     
-     6664 4428     
-     6666 2810     
-     6668 0000     
-     666A 0044     
-     666C 4454     
-     666E 5428     
-     6670 0000     
-     6672 0044     
-     6674 2810     
-     6676 2844     
-     6678 0000     
-     667A 0044     
-     667C 443C     
-     667E 0438     
-     6680 0000     
-     6682 007C     
-     6684 0810     
-     6686 207C     
-     6688 0018     
-     668A 2020     
-     668C 4020     
-     668E 2018     
-     6690 0010     
-     6692 1010     
-     6694 0010     
-     6696 1010     
-     6698 0030     
-     669A 0808     
-     669C 0408     
-     669E 0830     
-     66A0 0000     
-     66A2 0020     
-     66A4 5408     
-     66A6 0000     
-     66A8 007C     
-     66AA 7C7C     
-     66AC 7C7C     
-     66AE 7C7C     
-0091 66B0 0000     font2   bcopy "FONT7.bin"            ; Default font (Stevie 1.0 - 1.3Q)
+     6648 403C     
+     664A 0004     
+     664C 043C     
+     664E 4444     
+     6650 443C     
+     6652 0000     
+     6654 0038     
+     6656 447C     
+     6658 403C     
+     665A 0018     
+     665C 2420     
+     665E 7820     
+     6660 2020     
+     6662 0000     
+     6664 003C     
+     6666 443C     
+     6668 0438     
+     666A 0040     
+     666C 4078     
+     666E 4444     
+     6670 4444     
+     6672 0010     
+     6674 0030     
+     6676 1010     
+     6678 1038     
+     667A 0008     
+     667C 0008     
+     667E 0808     
+     6680 4830     
+     6682 0040     
+     6684 4044     
+     6686 4870     
+     6688 4844     
+     668A 0030     
+     668C 1010     
+     668E 1010     
+     6690 1038     
+     6692 0000     
+     6694 0068     
+     6696 5454     
+     6698 5454     
+     669A 0000     
+     669C 0058     
+     669E 6444     
+     66A0 4444     
+     66A2 0000     
+     66A4 0038     
+     66A6 4444     
+     66A8 4438     
+     66AA 0000     
+     66AC 0078     
+     66AE 4478     
+     66B0 4040     
      66B2 0000     
-     66B4 0000     
-     66B6 0000     
-     66B8 0000     
+     66B4 003C     
+     66B6 443C     
+     66B8 0404     
      66BA 0000     
-     66BC 0000     
-     66BE 0000     
-     66C0 0000     
+     66BC 0058     
+     66BE 6440     
+     66C0 4040     
      66C2 0000     
-     66C4 0000     
-     66C6 0000     
-     66C8 0010     
-     66CA 1010     
-     66CC 1010     
-     66CE 0010     
-     66D0 0028     
-     66D2 2828     
-     66D4 0000     
-     66D6 0000     
-     66D8 0028     
-     66DA 287C     
-     66DC 287C     
-     66DE 2828     
-     66E0 0038     
-     66E2 5450     
-     66E4 3814     
-     66E6 5438     
-     66E8 0060     
-     66EA 6408     
-     66EC 1020     
-     66EE 4C0C     
-     66F0 0020     
-     66F2 5050     
-     66F4 2054     
-     66F6 4834     
-     66F8 0008     
-     66FA 0810     
-     66FC 0000     
-     66FE 0000     
-     6700 0008     
-     6702 1020     
+     66C4 003C     
+     66C6 4038     
+     66C8 0478     
+     66CA 0020     
+     66CC 2078     
+     66CE 2020     
+     66D0 2418     
+     66D2 0000     
+     66D4 0044     
+     66D6 4444     
+     66D8 443C     
+     66DA 0000     
+     66DC 0044     
+     66DE 4428     
+     66E0 2810     
+     66E2 0000     
+     66E4 0044     
+     66E6 4454     
+     66E8 5428     
+     66EA 0000     
+     66EC 0044     
+     66EE 2810     
+     66F0 2844     
+     66F2 0000     
+     66F4 0044     
+     66F6 443C     
+     66F8 0438     
+     66FA 0000     
+     66FC 007C     
+     66FE 0810     
+     6700 207C     
+     6702 0018     
      6704 2020     
-     6706 1008     
-     6708 0020     
-     670A 1008     
-     670C 0808     
-     670E 1020     
-     6710 0000     
-     6712 2810     
-     6714 7C10     
-     6716 2800     
-     6718 0000     
-     671A 1010     
-     671C 7C10     
-     671E 1000     
+     6706 4020     
+     6708 2018     
+     670A 0010     
+     670C 1010     
+     670E 0010     
+     6710 1010     
+     6712 0030     
+     6714 0808     
+     6716 0408     
+     6718 0830     
+     671A 0000     
+     671C 0020     
+     671E 5408     
      6720 0000     
-     6722 0000     
-     6724 0030     
-     6726 1020     
-     6728 0000     
-     672A 0000     
-     672C 7C00     
+     6722 007C     
+     6724 7C7C     
+     6726 7C7C     
+     6728 7C7C     
+0091 672A 0000     font2   bcopy "FONT7.bin"            ; Default font (Stevie 1.0 - 1.3Q)
+     672C 0000     
      672E 0000     
      6730 0000     
      6732 0000     
      6734 0000     
-     6736 3030     
+     6736 0000     
      6738 0000     
-     673A 0408     
-     673C 1020     
-     673E 4000     
-     6740 0038     
-     6742 4444     
-     6744 4444     
-     6746 4438     
+     673A 0000     
+     673C 0000     
+     673E 0000     
+     6740 0000     
+     6742 0010     
+     6744 1010     
+     6746 1010     
      6748 0010     
-     674A 3010     
-     674C 1010     
-     674E 1038     
-     6750 0038     
-     6752 4404     
-     6754 0810     
-     6756 207C     
-     6758 0038     
-     675A 4404     
-     675C 1804     
-     675E 4438     
-     6760 0008     
-     6762 1828     
-     6764 487C     
-     6766 0808     
-     6768 007C     
-     676A 4078     
-     676C 0404     
-     676E 4438     
-     6770 0018     
-     6772 2040     
-     6774 7844     
-     6776 4438     
-     6778 007C     
-     677A 0408     
+     674A 0028     
+     674C 2828     
+     674E 0000     
+     6750 0000     
+     6752 0028     
+     6754 287C     
+     6756 287C     
+     6758 2828     
+     675A 0038     
+     675C 5450     
+     675E 3814     
+     6760 5438     
+     6762 0060     
+     6764 6408     
+     6766 1020     
+     6768 4C0C     
+     676A 0020     
+     676C 5050     
+     676E 2054     
+     6770 4834     
+     6772 0008     
+     6774 0810     
+     6776 0000     
+     6778 0000     
+     677A 0008     
      677C 1020     
      677E 2020     
-     6780 0038     
-     6782 4444     
-     6784 3844     
-     6786 4438     
-     6788 0038     
-     678A 4444     
-     678C 3C04     
-     678E 0830     
-     6790 0000     
-     6792 3030     
-     6794 0030     
-     6796 3000     
-     6798 0000     
-     679A 3030     
-     679C 0030     
-     679E 1020     
-     67A0 0008     
-     67A2 1020     
-     67A4 4020     
-     67A6 1008     
+     6780 1008     
+     6782 0020     
+     6784 1008     
+     6786 0808     
+     6788 1020     
+     678A 0000     
+     678C 2810     
+     678E 7C10     
+     6790 2800     
+     6792 0000     
+     6794 1010     
+     6796 7C10     
+     6798 1000     
+     679A 0000     
+     679C 0000     
+     679E 0030     
+     67A0 1020     
+     67A2 0000     
+     67A4 0000     
+     67A6 7C00     
      67A8 0000     
-     67AA 007C     
-     67AC 007C     
+     67AA 0000     
+     67AC 0000     
      67AE 0000     
-     67B0 0020     
-     67B2 1008     
+     67B0 3030     
+     67B2 0000     
      67B4 0408     
      67B6 1020     
-     67B8 0038     
-     67BA 4404     
-     67BC 0810     
-     67BE 0010     
-     67C0 0038     
-     67C2 445C     
-     67C4 545C     
-     67C6 4038     
-     67C8 0038     
-     67CA 4444     
-     67CC 7C44     
-     67CE 4444     
-     67D0 0078     
-     67D2 2424     
-     67D4 3824     
-     67D6 2478     
-     67D8 0038     
-     67DA 4440     
-     67DC 4040     
-     67DE 4438     
-     67E0 0078     
-     67E2 2424     
-     67E4 2424     
-     67E6 2478     
-     67E8 007C     
-     67EA 4040     
-     67EC 7840     
-     67EE 407C     
-     67F0 007C     
-     67F2 4040     
-     67F4 7840     
-     67F6 4040     
-     67F8 003C     
-     67FA 4040     
-     67FC 5C44     
-     67FE 4438     
-     6800 0044     
-     6802 4444     
-     6804 7C44     
-     6806 4444     
-     6808 0038     
-     680A 1010     
-     680C 1010     
-     680E 1038     
-     6810 0004     
-     6812 0404     
-     6814 0404     
-     6816 4438     
-     6818 0044     
-     681A 4850     
-     681C 6050     
-     681E 4844     
-     6820 0040     
-     6822 4040     
-     6824 4040     
-     6826 407C     
-     6828 0044     
-     682A 6C54     
-     682C 5444     
-     682E 4444     
-     6830 0044     
-     6832 6464     
-     6834 544C     
-     6836 4C44     
-     6838 007C     
-     683A 4444     
-     683C 4444     
-     683E 447C     
-     6840 0078     
-     6842 4444     
-     6844 7840     
-     6846 4040     
-     6848 0038     
-     684A 4444     
-     684C 4454     
-     684E 4834     
-     6850 0078     
-     6852 4444     
-     6854 7850     
-     6856 4844     
-     6858 0038     
-     685A 4440     
-     685C 3804     
-     685E 4438     
-     6860 007C     
-     6862 1010     
-     6864 1010     
-     6866 1010     
-     6868 0044     
-     686A 4444     
-     686C 4444     
-     686E 4438     
-     6870 0044     
-     6872 4444     
-     6874 2828     
-     6876 1010     
-     6878 0044     
-     687A 4444     
-     687C 5454     
-     687E 5428     
-     6880 0044     
-     6882 4428     
-     6884 1028     
-     6886 4444     
-     6888 0044     
-     688A 4428     
-     688C 1010     
-     688E 1010     
-     6890 007C     
-     6892 0408     
-     6894 1020     
-     6896 407C     
-     6898 0038     
-     689A 2020     
-     689C 2020     
-     689E 2038     
-     68A0 0000     
-     68A2 4020     
-     68A4 1008     
-     68A6 0400     
-     68A8 0038     
-     68AA 0808     
-     68AC 0808     
-     68AE 0838     
-     68B0 0000     
-     68B2 1028     
-     68B4 4400     
-     68B6 0000     
-     68B8 0000     
-     68BA 0000     
-     68BC 0000     
-     68BE 007C     
-     68C0 0000     
-     68C2 2010     
-     68C4 0800     
-     68C6 0000     
-     68C8 0000     
-     68CA 0038     
-     68CC 447C     
-     68CE 4444     
-     68D0 0000     
-     68D2 0078     
-     68D4 2438     
-     68D6 2478     
-     68D8 0000     
-     68DA 003C     
-     68DC 4040     
-     68DE 403C     
-     68E0 0000     
-     68E2 0078     
-     68E4 2424     
-     68E6 2478     
-     68E8 0000     
-     68EA 007C     
-     68EC 4078     
-     68EE 407C     
-     68F0 0000     
-     68F2 007C     
-     68F4 4078     
-     68F6 4040     
-     68F8 0000     
-     68FA 003C     
-     68FC 405C     
-     68FE 4438     
-     6900 0000     
+     67B8 4000     
+     67BA 0038     
+     67BC 4444     
+     67BE 4444     
+     67C0 4438     
+     67C2 0010     
+     67C4 3010     
+     67C6 1010     
+     67C8 1038     
+     67CA 0038     
+     67CC 4404     
+     67CE 0810     
+     67D0 207C     
+     67D2 0038     
+     67D4 4404     
+     67D6 1804     
+     67D8 4438     
+     67DA 0008     
+     67DC 1828     
+     67DE 487C     
+     67E0 0808     
+     67E2 007C     
+     67E4 4078     
+     67E6 0404     
+     67E8 4438     
+     67EA 0018     
+     67EC 2040     
+     67EE 7844     
+     67F0 4438     
+     67F2 007C     
+     67F4 0408     
+     67F6 1020     
+     67F8 2020     
+     67FA 0038     
+     67FC 4444     
+     67FE 3844     
+     6800 4438     
+     6802 0038     
+     6804 4444     
+     6806 3C04     
+     6808 0830     
+     680A 0000     
+     680C 3030     
+     680E 0030     
+     6810 3000     
+     6812 0000     
+     6814 3030     
+     6816 0030     
+     6818 1020     
+     681A 0008     
+     681C 1020     
+     681E 4020     
+     6820 1008     
+     6822 0000     
+     6824 007C     
+     6826 007C     
+     6828 0000     
+     682A 0020     
+     682C 1008     
+     682E 0408     
+     6830 1020     
+     6832 0038     
+     6834 4404     
+     6836 0810     
+     6838 0010     
+     683A 0038     
+     683C 445C     
+     683E 545C     
+     6840 4038     
+     6842 0038     
+     6844 4444     
+     6846 7C44     
+     6848 4444     
+     684A 0078     
+     684C 2424     
+     684E 3824     
+     6850 2478     
+     6852 0038     
+     6854 4440     
+     6856 4040     
+     6858 4438     
+     685A 0078     
+     685C 2424     
+     685E 2424     
+     6860 2478     
+     6862 007C     
+     6864 4040     
+     6866 7840     
+     6868 407C     
+     686A 007C     
+     686C 4040     
+     686E 7840     
+     6870 4040     
+     6872 003C     
+     6874 4040     
+     6876 5C44     
+     6878 4438     
+     687A 0044     
+     687C 4444     
+     687E 7C44     
+     6880 4444     
+     6882 0038     
+     6884 1010     
+     6886 1010     
+     6888 1038     
+     688A 0004     
+     688C 0404     
+     688E 0404     
+     6890 4438     
+     6892 0044     
+     6894 4850     
+     6896 6050     
+     6898 4844     
+     689A 0040     
+     689C 4040     
+     689E 4040     
+     68A0 407C     
+     68A2 0044     
+     68A4 6C54     
+     68A6 5444     
+     68A8 4444     
+     68AA 0044     
+     68AC 6464     
+     68AE 544C     
+     68B0 4C44     
+     68B2 007C     
+     68B4 4444     
+     68B6 4444     
+     68B8 447C     
+     68BA 0078     
+     68BC 4444     
+     68BE 7840     
+     68C0 4040     
+     68C2 0038     
+     68C4 4444     
+     68C6 4454     
+     68C8 4834     
+     68CA 0078     
+     68CC 4444     
+     68CE 7850     
+     68D0 4844     
+     68D2 0038     
+     68D4 4440     
+     68D6 3804     
+     68D8 4438     
+     68DA 007C     
+     68DC 1010     
+     68DE 1010     
+     68E0 1010     
+     68E2 0044     
+     68E4 4444     
+     68E6 4444     
+     68E8 4438     
+     68EA 0044     
+     68EC 4444     
+     68EE 2828     
+     68F0 1010     
+     68F2 0044     
+     68F4 4444     
+     68F6 5454     
+     68F8 5428     
+     68FA 0044     
+     68FC 4428     
+     68FE 1028     
+     6900 4444     
      6902 0044     
-     6904 447C     
-     6906 4444     
-     6908 0000     
-     690A 0038     
-     690C 1010     
-     690E 1038     
-     6910 0000     
-     6912 0008     
-     6914 0808     
-     6916 4830     
-     6918 0000     
-     691A 0024     
-     691C 2830     
-     691E 2824     
-     6920 0000     
-     6922 0040     
-     6924 4040     
-     6926 407C     
-     6928 0000     
-     692A 0044     
-     692C 6C54     
-     692E 4444     
+     6904 4428     
+     6906 1010     
+     6908 1010     
+     690A 007C     
+     690C 0408     
+     690E 1020     
+     6910 407C     
+     6912 0038     
+     6914 2020     
+     6916 2020     
+     6918 2038     
+     691A 0000     
+     691C 4020     
+     691E 1008     
+     6920 0400     
+     6922 0038     
+     6924 0808     
+     6926 0808     
+     6928 0838     
+     692A 0000     
+     692C 1028     
+     692E 4400     
      6930 0000     
-     6932 0044     
-     6934 6454     
-     6936 4C44     
-     6938 0000     
-     693A 007C     
-     693C 4444     
-     693E 447C     
+     6932 0000     
+     6934 0000     
+     6936 0000     
+     6938 007C     
+     693A 0000     
+     693C 2010     
+     693E 0800     
      6940 0000     
-     6942 0078     
-     6944 4478     
-     6946 4040     
-     6948 0000     
-     694A 0038     
-     694C 4454     
-     694E 4834     
-     6950 0000     
-     6952 0078     
-     6954 4478     
-     6956 4844     
-     6958 0000     
-     695A 003C     
-     695C 4038     
-     695E 0478     
-     6960 0000     
-     6962 007C     
-     6964 1010     
-     6966 1010     
-     6968 0000     
-     696A 0044     
-     696C 4444     
-     696E 4438     
-     6970 0000     
-     6972 0044     
-     6974 4428     
-     6976 2810     
-     6978 0000     
-     697A 0044     
-     697C 4454     
-     697E 5428     
-     6980 0000     
-     6982 0044     
-     6984 2810     
-     6986 2844     
-     6988 0000     
-     698A 0044     
-     698C 2810     
-     698E 1010     
-     6990 0000     
-     6992 007C     
-     6994 0810     
-     6996 207C     
-     6998 0018     
-     699A 2020     
-     699C 4020     
-     699E 2018     
-     69A0 0010     
-     69A2 1010     
-     69A4 0010     
-     69A6 1010     
-     69A8 0030     
-     69AA 0808     
-     69AC 0408     
-     69AE 0830     
-     69B0 0000     
-     69B2 2054     
-     69B4 0800     
-     69B6 0000     
-     69B8 007C     
-     69BA 7C7C     
-     69BC 7C7C     
-     69BE 7C7C     
+     6942 0000     
+     6944 0038     
+     6946 447C     
+     6948 4444     
+     694A 0000     
+     694C 0078     
+     694E 2438     
+     6950 2478     
+     6952 0000     
+     6954 003C     
+     6956 4040     
+     6958 403C     
+     695A 0000     
+     695C 0078     
+     695E 2424     
+     6960 2478     
+     6962 0000     
+     6964 007C     
+     6966 4078     
+     6968 407C     
+     696A 0000     
+     696C 007C     
+     696E 4078     
+     6970 4040     
+     6972 0000     
+     6974 003C     
+     6976 405C     
+     6978 4438     
+     697A 0000     
+     697C 0044     
+     697E 447C     
+     6980 4444     
+     6982 0000     
+     6984 0038     
+     6986 1010     
+     6988 1038     
+     698A 0000     
+     698C 0008     
+     698E 0808     
+     6990 4830     
+     6992 0000     
+     6994 0024     
+     6996 2830     
+     6998 2824     
+     699A 0000     
+     699C 0040     
+     699E 4040     
+     69A0 407C     
+     69A2 0000     
+     69A4 0044     
+     69A6 6C54     
+     69A8 4444     
+     69AA 0000     
+     69AC 0044     
+     69AE 6454     
+     69B0 4C44     
+     69B2 0000     
+     69B4 007C     
+     69B6 4444     
+     69B8 447C     
+     69BA 0000     
+     69BC 0078     
+     69BE 4478     
+     69C0 4040     
+     69C2 0000     
+     69C4 0038     
+     69C6 4454     
+     69C8 4834     
+     69CA 0000     
+     69CC 0078     
+     69CE 4478     
+     69D0 4844     
+     69D2 0000     
+     69D4 003C     
+     69D6 4038     
+     69D8 0478     
+     69DA 0000     
+     69DC 007C     
+     69DE 1010     
+     69E0 1010     
+     69E2 0000     
+     69E4 0044     
+     69E6 4444     
+     69E8 4438     
+     69EA 0000     
+     69EC 0044     
+     69EE 4428     
+     69F0 2810     
+     69F2 0000     
+     69F4 0044     
+     69F6 4454     
+     69F8 5428     
+     69FA 0000     
+     69FC 0044     
+     69FE 2810     
+     6A00 2844     
+     6A02 0000     
+     6A04 0044     
+     6A06 2810     
+     6A08 1010     
+     6A0A 0000     
+     6A0C 007C     
+     6A0E 0810     
+     6A10 207C     
+     6A12 0018     
+     6A14 2020     
+     6A16 4020     
+     6A18 2018     
+     6A1A 0010     
+     6A1C 1010     
+     6A1E 0010     
+     6A20 1010     
+     6A22 0030     
+     6A24 0808     
+     6A26 0408     
+     6A28 0830     
+     6A2A 0000     
+     6A2C 2054     
+     6A2E 0800     
+     6A30 0000     
+     6A32 007C     
+     6A34 7C7C     
+     6A36 7C7C     
+     6A38 7C7C     
 0092                       ;-----------------------------------------------------------------------
 0093                       ; Bank full check
 0094                       ;-----------------------------------------------------------------------
@@ -11323,7 +11479,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0051 7F50 0C              byte   >0c
+0045 7F50 04              byte   >04
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -11414,7 +11570,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014 7F70 604A     vec.1   data  vdp.dump.patterns     ; Dump character patterns to VDP
 0015 7F72 605C     vec.2   data  vdp.dump.font         ; Dump font to VDP
 0016 7F74 608A     vec.3   data  vdp.colors.line       ; Set colors for specified line
-0017 7F76 6104     vec.4   data  vdp.cursor.fb.tat     ; Set cursor shape (fb tat)
+0017 7F76 6104     vec.4   data  vdp.cursor.tat.fb     ; Set cursor shape (fb tat)
 0018 7F78 60D4     vec.5   data  vdp.cursor.tat        ; Set cursor shape (cmdb/fb tat)
 0019 7F7A 2026     vec.6   data  cpu.crash             ;
 0020 7F7C 2026     vec.7   data  cpu.crash             ;
@@ -11446,7 +11602,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0046               *--------------------------------------------------------------
 0047               * ROM 6: Vectors 33-64
 0048               *--------------------------------------------------------------
-0049 7FB0 6216     vec.33  data  tv.set.font           ; Set current font
+0049 7FB0 626C     vec.33  data  tv.set.font           ; Set current font
 0050 7FB2 2026     vec.34  data  cpu.crash             ;
 0051 7FB4 2026     vec.35  data  cpu.crash             ;
 0052 7FB6 2026     vec.36  data  cpu.crash             ;
@@ -11481,9 +11637,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
                    < stevie_b6.asm
 0110                                                   ; Vector table bank 6
 
-    ALPHALOCK........... >6318 :     
+    ALPHALOCK........... >6392 :     
     ANYKEY.............. >200A :     
-    ARROW............... >6380 :     
+    ARROW............... >63FA :     
     AT.................. >2726 :     
     BANK0.RAM........... >6800 :     
     BANK0.ROM........... >6000 :     
@@ -11716,8 +11872,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CPYMZ............... >2592 :     
     CPYODD.............. >2594 :     
     CPYV2M.............. >2518 :     
-    CURSOR.............. >6378 :     
-    CURSORS............. >6298 :     
+    CURSOR.............. >63F2 :     
+    CURSORS............. >6312 :     
     DEBUG............... >0000 :     
     DEF.CLIP.FNAME.A.... >3D39 :     
     DEF.CLIP.FNAME.B.... >3D44 :     
@@ -11764,6 +11920,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.BK.FB.TOPLINE... >A51E :     
     EDB.BLOCK.M1........ >A50E :     
     EDB.BLOCK.M2........ >A510 :     
+    EDB.BLOCK.MATCH..... >62B8 :     
     EDB.BLOCK.VAR....... >A512 :     
     EDB.DIRTY........... >A506 :     
     EDB.FILENAME........ >A526 :     
@@ -11942,8 +12099,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FNOPT7.............. >800C :     
     FNOPT8.............. >8012 :     
     FNTADR.............. >2900 :     
-    FONT1............... >63A0 :     
-    FONT2............... >66B0 :     
+    FONT1............... >641A :     
+    FONT2............... >672A :     
     FREE.A900........... >A900 :     
     FREE.AA00........... >AA00 :     
     FREE.AB00........... >AB00 :     
@@ -11953,6 +12110,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FREE1............... >A000 :     
     FREE2............... >A002 :     
     FREE3............... >A004 :     
+    GET_CURSORCOLOR..... >61B4 :     
+    GET_CURSORCOLOR.EXIT >61F0 :     
     GRAPH1.............. >21F2 :     
     GRMRA............... >9802 :     
     GRMRD............... >9800 :     
@@ -11964,7 +12123,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     HCHARX.............. >2838 :     
     HEAP.FREE........... >F8E0 :     
     HEAP.TOP............ >F700 :     
-    HLINE............... >6388 :     
+    HLINE............... >6402 :     
     HOOKOK.............. >2EF2 :     
     ID.DIALOG.APPEND.... >000C :     
     ID.DIALOG.BASIC..... >006B :     
@@ -12247,16 +12406,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     LDFNT3.............. >23C6 :     
     LDFNT4.............. >23DA :     
     LOADMC.............. >221A :     
-    LOCK................ >6390 :     
-    LOW.DIGITS.......... >6338 :     
+    LOCK................ >640A :     
+    LOW.DIGITS.......... >63B2 :     
     MAIN................ >6046 :     
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.SET.BOOT... >6274 :     
-    MEM.SAMS.SET.LEGACY. >6262 :     
-    MEM.SAMS.SET.STEVIE. >6286 :     
-    MEM.SAMS.SETUP.STEVIE >6250 :     
+    MEM.SAMS.SET.BOOT... >62EE :     
+    MEM.SAMS.SET.LEGACY. >62DC :     
+    MEM.SAMS.SET.STEVIE. >6300 :     
+    MEM.SAMS.SETUP.STEVIE >62CA :     
     MKHEX............... >29C8 :     
     MKHEX1.............. >29E0 :     
     MKHEX1.DIGIT09...... >29F6 :     
@@ -12291,7 +12450,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >003B :     
+    PANE.BOTROW......... >001D :     
+    PANE.COLORSCHEME.INDEX >62A6 :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >3856 :     
@@ -12305,9 +12465,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PARM7............... >A012 :     
     PARM8............... >A014 :     
     PARM9............... >A016 :     
-    PATTERNS............ >62B0 :     
-    PATTERNS.BOX........ >62C8 :     
-    PATTERNS.CR......... >6308 :     
+    PATTERNS............ >632A :     
+    PATTERNS.BOX........ >6342 :     
+    PATTERNS.CR......... >6382 :     
     PCTADR.............. >12C0 :     
     POPR0............... >2230 :     
     POPR1............... >222E :     
@@ -12616,10 +12776,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     TV.SAMS.E000........ >A20C :     
     TV.SAMS.F000........ >A20E :     
     TV.SAMS.MAXPAGE..... >0100 :     
-    TV.SET.FONT......... >6216 :     
-    TV.SET.FONT.EXIT.... >6248 :     
-    TV.SET.FONT.PTR..... >6234 :     
-    TV.SET.FONT.VDPDUMP. >6244 :     
+    TV.SET.FONT......... >626C :     
+    TV.SET.FONT.EXIT.... >629E :     
+    TV.SET.FONT.PTR..... >628A :     
+    TV.SET.FONT.VDPDUMP. >629A :     
     TV.SHOW.LINELEN..... >A23E :     
     TV.SP2.CONF......... >A234 :     
     TV.SP2.STACK........ >A236 :     
@@ -12716,20 +12876,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VCHAR3.............. >2886 :     
     VDP.COLORS.LINE..... >608A :     
     VDP.COLORS.LINE.EXIT >60C2 :     
-    VDP.CURSOR.CMDB.TAT. >61A2 :     
-    VDP.CURSOR.CMDB.TAT.EXIT >620C :     
-    VDP.CURSOR.CMDB.TAT.SHOW >61E6 :     
-    VDP.CURSOR.FB.TAT... >6104 :     
-    VDP.CURSOR.FB.TAT.DUMP >617A :     
-    VDP.CURSOR.FB.TAT.EXIT >6194 :     
-    VDP.CURSOR.FB.TAT.HIDE >612C :     
-    VDP.CURSOR.FB.TAT.SHOW >615A :     
-    VDP.CURSOR.FB.TAT.SHOW.NORULER >616E :     
     VDP.CURSOR.TAT...... >60D4 :     
-    VDP.CURSOR.TAT.CMDB. >60F4 :     
-    VDP.CURSOR.TAT.CMDB.HIDE >61B2 :     
+    VDP.CURSOR.TAT.CMDB. >61F8 :     
+    VDP.CURSOR.TAT.CMDB.EXIT >6262 :     
+    VDP.CURSOR.TAT.CMDB.HIDE >6208 :     
+    VDP.CURSOR.TAT.CMDB.SHOW >623C :     
+    VDP.CURSOR.TAT.CUR.CMDB >60F4 :     
+    VDP.CURSOR.TAT.CUR.FB >60FA :     
     VDP.CURSOR.TAT.EXIT. >60FE :     
-    VDP.CURSOR.TAT.FB... >60FA :     
+    VDP.CURSOR.TAT.FB... >6104 :     
+    VDP.CURSOR.TAT.FB.DUMP >6180 :     
+    VDP.CURSOR.TAT.FB.EXIT >61A6 :     
+    VDP.CURSOR.TAT.FB.HIDE >612C :     
+    VDP.CURSOR.TAT.FB.HIDE.DUMP >614A :     
+    VDP.CURSOR.TAT.FB.SHOW >6160 :     
+    VDP.CURSOR.TAT.FB.SHOW.NORULER >6174 :     
     VDP.DUMP.FONT....... >605C :     
     VDP.DUMP.FONT.EXIT.. >6080 :     
     VDP.DUMP.PATTERNS... >604A :     
@@ -12738,9 +12899,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >12C0 :     
+    VDP.SIT.SIZE........ >0960 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >12C0 :     
+    VDP.TAT.SIZE........ >0960 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     
@@ -12819,7 +12980,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VEC.7............... >7F7C :     
     VEC.8............... >7F7E :     
     VEC.9............... >7F80 :     
-    VERTLINE............ >6328 :     
+    VERTLINE............ >63A2 :     
     VGETB............... >22E2 :     
     VIDTA1.............. >2314 :     
     VIDTAB.............. >22F8 :     

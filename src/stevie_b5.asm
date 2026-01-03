@@ -76,6 +76,7 @@ main:
         copy  "edb.block.reset.asm" ; Reset markers
         copy  "edb.block.del.asm"   ; Delete code block
         copy  "edb.block.copy.asm"  ; Copy code block
+        copy  "edb.block.match.asm" ; Check if within marked block
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
