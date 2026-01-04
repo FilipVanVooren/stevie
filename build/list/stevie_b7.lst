@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260103-2312120
+0002               * BUILD: 260104-1056220
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -8798,10 +8798,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ;-----------------------------------------------------------------------
 0045                       ; Background tasks
 0046                       ;-----------------------------------------------------------------------
-0047                       copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)
-     **** ****     > task.vdp.cursor.char.asm
-0001               * FILE......: task.vdp.cursor.char.asm
-0002               * Purpose...: VDP cursor shape (character version)
+0047                       copy  "task.vdp.cursor.asm"         ; Set cursor shape in VDP (blink)
+     **** ****     > task.vdp.cursor.asm
+0001               * FILE......: task.vdp.cursor.asm
+0002               * Purpose...: VDP cursor shape
 0003               
 0004               ***************************************************************
 0005               * Task - Update cursor shape (blink)
@@ -8810,7 +8810,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0008 3896 0649  14         dect  stack
 0009 3898 C64B  30         mov   r11,*stack            ; Save return address
 0010                       ;------------------------------------------------------
-0011                       ; Set cursor shape (character version)
+0011                       ; Set cursor shape
 0012                       ;------------------------------------------------------
 0013 389A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      389C 30B4     

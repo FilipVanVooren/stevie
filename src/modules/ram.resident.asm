@@ -44,7 +44,7 @@
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------
-        copy  "task.vdp.cursor.char.asm"    ; Set cursor shape in VDP (blink)    
+        copy  "task.vdp.cursor.asm"         ; Set cursor shape in VDP (blink)    
         copy  "task.oneshot.asm"            ; Run "one shot" task                                       
         ;------------------------------------------------------
         ; Program data
