@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260104-1546050
+0002               * BUILD: 260104-1620000
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -618,7 +618,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0433               ; Frame buffer & uncrunch area         @>d000-e21f                  (4640 bytes)
 0434               ;-------------------------------------------------------------------------------
 0435      D000     fb.top            equ  >d000           ; Frame buffer (4640)
-0436      12C0     fb.size           equ  80*60           ; Frame buffer size
+0436      1220     fb.size           equ  80*58           ; Frame buffer size
 0437      D960     fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
 0438                                                      ; / >d960->dcff
 0439               ;-------------------------------------------------------------------------------
@@ -6662,7 +6662,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31AE 2236     
 0055 31B0 D000                   data  fb.top,>00,fb.size
      31B2 0000     
-     31B4 12C0     
+     31B4 1220     
 0056                       ;------------------------------------------------------
 0057                       ; Exit
 0058                       ;------------------------------------------------------
@@ -17422,7 +17422,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.RULER.TAT........ >A372 :     
     FB.SCRROWS.......... >A31E :     
     FB.SCRROWS.MAX...... >A320 :     
-    FB.SIZE............. >12C0 :     
+    FB.SIZE............. >1220 :     
     FB.STATUS.DIRTY..... >A31C :     
     FB.STRUCT........... >A300 :     
     FB.TOP.............. >D000 :     

@@ -433,7 +433,7 @@ edb.size          equ  4096            ; Editor buffer size
 ; Frame buffer & uncrunch area         @>d000-e21f                  (4640 bytes)
 ;-------------------------------------------------------------------------------
 fb.top            equ  >d000           ; Frame buffer (4640)
-fb.size           equ  80*60           ; Frame buffer size
+fb.size           equ  80*58           ; Frame buffer size
 fb.uncrunch.area  equ  >d960           ; \ Uncrunched TI Basic statement
                                        ; / >d960->dcff
 ;-------------------------------------------------------------------------------
