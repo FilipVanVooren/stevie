@@ -10,7 +10,7 @@ for exact offsets and field names.
 |------------|--------|------|-------------------------------------------------|
 | >2000-2fff |  #02   | 4096 | Resident spectra2 and Stevie modules            |
 | >3000-3fff |  #03   | 4096 | Resident spectra2 and Stevie modules            |
-| >a000-a0ff |  #0a   |  256 | Stevie core 1 RAM                               |
+| >a000-a0ff |  #04   |  256 | Stevie core 1 RAM                               |
 |            |        |      | >a006-a016 : parm1..parm9 (input parameters)    |
 |            |        |      | >a018-a024 : outparm1..outparm7 (output params) |
 |            |        |      | >a026-a02b : keyboard flags / keycodes          |
@@ -20,32 +20,32 @@ for exact offsets and field names.
 |            |        |      | >a064-a0b3 : timers (80 bytes)                  |
 |            |        |      | >a0b4-a0d3 : TI-Basic session management area   |
 |            |        |      | >a0d4-a0f9 : TI-Basic temporary/free area       |
-| >a100-a1ff |  #0a   |  256 | Stevie core 2 RAM (RAM workbuffer at >a100)     |
-| >a200-a2ff |  #0a   |  256 | Shared Stevie editor structure (`tv.struct`)    |
+| >a100-a1ff |  #04   |  256 | Stevie core 2 RAM (RAM workbuffer at >a100)     |
+| >a200-a2ff |  #04   |  256 | Shared Stevie editor structure (`tv.struct`)    |
 |            |        |      | `tv.sams.*`, color scheme, cursor, pane focus,  |
 |            |        |      | pointers to font, error msg, device path, ...   |
-| >a300-a3ff |  #0a   |  256 | Frame buffer structure (`fb.struct`)            |
+| >a300-a3ff |  #04   |  256 | Frame buffer structure (`fb.struct`)            |
 |            |        |      | framebuffer pointers, current row/col, ruler,   |
 |            |        |      | colorize flags, cursor toggle, dirty flags, ... |
-| >a400-a4ff |  #0a   |  256 | File handle structures (`fh.struct`)            |
+| >a400-a4ff |  #04   |  256 | File handle structures (`fh.struct`)            |
 |            |        |      | `dsrlnk` workspace, PAB pointers, I/O status,   |
 |            |        |      | file memory buffer, callbacks, EA5 trans. state |
-| >a500-a5ff |  #0a   |  256 | Editor buffer structure (`edb.struct`)          |
+| >a500-a5ff |  #04   |  256 | Editor buffer structure (`edb.struct`)          |
 |            |        |      | buffer pointers, index ptr, lines count,        |
 |            |        |      | insert/autoinsert flags, block marks, filename, |
 |            |        |      | search string buffer and search state           |
-| >a600-a6ff |  #0a   |  256 | Index structure (`idx.struct`)                  |
-| >a700-a7ff |  #0a   |  256 | Command buffer structure (`cmdb.struct`)        |
+| >a600-a6ff |  #04   |  256 | Index structure (`idx.struct`)                  |
+| >a700-a7ff |  #04   |  256 | Command buffer structure (`cmdb.struct`)        |
 |            |        |      | history buffer pointer, pane sizing, dialog ids,|
 |            |        |      | current command buffer and pane header buffers  |
-| >a800-a8ff |  #0a   |  256 | Stevie value stack (SP2 user stack area)        |
-| >a900-a9ff |  #0a   |  256 | FREE                                            |
-| >aa00-aaff |  #0a   |  256 | FREE                                            |
-| >ab00-abff |  #0a   |  256 | FREE                                            |
-| >ac00-acff |  #0a   |  256 | FREE                                            |
-| >ad00-adff |  #0a   |  256 | FREE                                            |
-| >ae00-aeff |  #0a   |  256 | Paged-out scratchpad memory (maps >8300-83ff)   |
-| >af00-afff |  #0a   |  256 | Far-jump / cartridge bankswitch trampoline stack|
+| >a800-a8ff |  #04   |  256 | Stevie value stack (SP2 user stack area)        |
+| >a900-a9ff |  #04   |  256 | FREE                                            |
+| >aa00-aaff |  #04   |  256 | FREE                                            |
+| >ab00-abff |  #04   |  256 | FREE                                            |
+| >ac00-acff |  #04   |  256 | FREE                                            |
+| >ad00-adff |  #04   |  256 | FREE                                            |
+| >ae00-aeff |  #04   |  256 | Paged-out scratchpad memory (maps >8300-83ff)   |
+| >af00-afff |  #04   |  256 | Far-jump / cartridge bankswitch trampoline stack|
 | >b000-bfff | #10-1f | 4096 | Index / bankswitched pages (EA5 image, index)   |
 | >c000-cfff | #30-xx | 4096 | Editor buffer pages (bankswitched via SAMS)     |
 | >d000-dfff |  #05   | 4096 | Frame buffer area and uncrunch space            |
@@ -59,6 +59,23 @@ for exact offsets and field names.
 |            |        |      | >f500-f6ff : search results index (cols)        |
 |            |        |      | >f900-f9ff : command history buffer             |
 |            |        |      | >fa00-ffff : free (1536 bytes)                  |
+
+
+### Memory layout when activiating index
+
+The index contains the mapping between editor buffer line numbers and 
+actual line content. The index is activated when inserting or removing lines, 
+or when searching.
+
+Note: Other memory ranges are the same as the regular memory map.
+
+| Address    |  SAMS  | Size | Purpose                                         |
+|------------|--------|------|-------------------------------------------------|
+| >b000-bfff |  #20   | 4096 | SAMS line index                                 |
+| >c000-cfff |  #21   | 4096 | SAMS line index                                 |
+| >d000-dfff |  #22   | 4096 | SAMS line index                                 |
+| >e000-efff |  #23   | 4096 | SAMS line index                                 |
+| >f000-ffff |  #24   | 4096 | SAMS line index                                 |
 
 
 ### Memory layout when activating TI Basic

@@ -27,13 +27,13 @@ pane.filebrowser:
         ; Initialisation
         ;------------------------------------------------------
         bl    @filv
-              data vdp.sit.base,32,vdp.sit.size - 560
+              data vdp.sit.base,32,vdp.sit.size - ((cmdb.rows + 1) * 80)
                                     ; Clear screen (up to CMDB)
 
         ;------------------------------------------------------
         ; Load colorscheme and turn on screen
         ;------------------------------------------------------
-        clr   @parm1                ; Screen off while reloading color scheme
+        clr   @parm1                ; Screen on while reloading color scheme
         seto  @parm2                ; Skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
 
