@@ -52,16 +52,20 @@ fm.directory:
         ; Clear catalog space
         ;------------------------------------------------------
         bl    @film
-              data cat.top,>00,cat.size - 80
-                                    ; Clear catalog area except current device
-                                    ; @tv.devpath (is at end of memory area)
+              data cat.top,>00,cat.size
+                                    ; Clear catalog space in RAM
         ;------------------------------------------------------
         ; Remove filepicker color bar and old files from screen
         ;------------------------------------------------------
+        bl    @vdp.cursor.tat.cmdb.hide
+                                    ; Hide CMDB cursor
+                                    ; \ i @cmdb.cursor     = New Cursor position
+                                    ; / i @cmdb.prevcursor = Old cursor position
+
         bl    @pane.filebrowser.colbar.remove
                                     ; Remove filepicker color bar
-                                    ; i \  @cat.barpos = YX position color bar
-                                    ;   /                                
+                                    ; \ i  @cat.barpos = YX position color bar
+                                    ; /                                
 
         bl    @filv
               data 80,32,(pane.botrow - cmdb.rows - 1) * 80

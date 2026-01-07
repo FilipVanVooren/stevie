@@ -8,8 +8,8 @@
 * bl @vdp.cursor.tat.cmdb
 *--------------------------------------------------------------
 * INPUT
-* @wyx           = New Cursor position
-* @fb.prevcursor = Old cursor position
+* @cmdb.cursor     = New Cursor position
+* @cmdb.prevcursor = Old cursor position
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -29,29 +29,10 @@ vdp.cursor.tat.cmdb:
         ;------------------------------------------------------
         ; Hide CMDB cursor
         ;------------------------------------------------------
-vdp.cursor.tat.cmdb.hide:
-        mov   @cmdb.prevcursor,tmp0 ; Get previous cursor position
-        jne   !
-        mov   @cmdb.cursor,tmp0
-        mov   tmp0,@cmdb.prevcursor
-
-!       dect  stack                 ; \ Push cursor position
-        mov   @wyx,*stack           ; /
-
-        mov   tmp0,@wyx             ; Set cursor position
-
-        bl    @yx2pnt               ; Calculate VDP address from @WYX
-                                    ; \ i  @wyx = Cursor position
-                                    ; / o  tmp0 = VDP address
-
-        ai    tmp0,vdp.tat.base     ; Add TAT base
-        mov   @tv.cmdb.color,tmp1   ; Get CMDB color
-
-        bl    @xvputb               ; VDP put single byte
-                                    ; \ i  tmp0 = VDP write address
-                                    ; / i  tmp1 = Byte to write 
-
-        mov   *stack+,@wyx          ; Pop cursor position
+        bl    @vdp.cursor.tat.cmdb.hide
+                                    ; Hide CMDB cursor
+                                    ; \ i @cmdb.cursor     = New Cursor position
+                                    ; / i @cmdb.prevcursor = Old cursor position
         ;------------------------------------------------------
         ; Check if cursor needs to be shown
         ;------------------------------------------------------
