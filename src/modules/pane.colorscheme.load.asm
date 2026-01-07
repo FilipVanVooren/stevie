@@ -165,6 +165,10 @@ pane.colorscheme.fbdump:
         mov   @parm2,tmp0
         ci    tmp0,>ffff            ; Skip colorize flag is on?
         jeq   pane.colorscheme.cmdbpane
+        ;-------------------------------------------------------
+        ; Dump colors for frame buffer (TAT)
+        ;-------------------------------------------------------
+        clr   @parm1                ; Clear force refresh flag
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
         bl    @fb.colorlines        ; Colorize lines
                                     ; \ i  @parm1       = Force refresh if >ffff
@@ -201,10 +205,10 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Row 1-5: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All 5 rows
+        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All rows
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
-        li    tmp2,5*80             ; Number of bytes to fill 
+        li    tmp2,(cmdb.rows-1)*80 ; Number of bytes to fill 
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
@@ -224,7 +228,7 @@ pane.colorscheme.cmdbpane:
         ; Row 4: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
-        ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
+        ai    tmp0,4 * 80 + 2       ; / VDP start address (CMDB top line + 4)
         mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors

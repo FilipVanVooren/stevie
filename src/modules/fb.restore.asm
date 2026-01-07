@@ -31,7 +31,7 @@ fb.restore:
         ;------------------------------------------------------
         ; Color marked lines
         ;------------------------------------------------------
-        seto  @parm1                ; Skip Asserts
+        seto  @parm1                ; Force refresh
         bl    @fb.colorlines        ; Colorize frame buffer content
                                     ; \ i  @parm1 = Force refresh if >ffff
                                     ; /

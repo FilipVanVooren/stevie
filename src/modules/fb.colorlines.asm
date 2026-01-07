@@ -44,9 +44,11 @@ fb.colorlines:
         ;------------------------------------------------------
         ; Speedup screen refresh dramatically
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0
+        mov   @edb.block.m1,tmp0    ; \ M1 marker unset?
+        ci    tmp4,>ffff            ; / 
         jeq   fb.colorlines.exit    ; Exit if marker M1 unset
-        mov   @edb.block.m2,tmp0
+        mov   @edb.block.m2,tmp0    ; \ M2 marker unset?
+        ci    tmp4,>ffff            ; /         
         jeq   fb.colorlines.exit    ; Exit if marker M2 unset
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
