@@ -50,7 +50,7 @@ edkey.action.filebrowser.nextcol.checkdialog:
         ;-------------------------------------------------------
 edkey.action.filebrowser.nextcol.page.display:                
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 

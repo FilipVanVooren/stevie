@@ -32,10 +32,7 @@ edkey.action.cmdb.pick.next.setfile:
                                     
         bl    @cmdb.refresh_prompt  ; Refresh command line
         bl    @cmdb.cmd.cursor_eol  ; Cursor at end of input
-        
-      .ifeq  spritecursor,0
         bl    @vdp.cursor.tat       ; Update cursor
-      .endif
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------

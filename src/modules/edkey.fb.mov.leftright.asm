@@ -14,6 +14,8 @@ edkey.action.left:
         dec   @wyx                  ; Column-- VDP cursor
         dec   @fb.current
         seto  @fb.status.dirty      ; Trigger refresh of status lines
+        clr   @fb.curtoggle         ; \ Turn cursor on
+        bl    @task.vdp.cursor      ; / Update VDP cursor shape
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -34,6 +36,8 @@ edkey.action.right:
         inc   @wyx                  ; Column++ VDP cursor
         inc   @fb.current  
         seto  @fb.status.dirty      ; Trigger refresh of status lines
+        clr   @fb.curtoggle         ; \ Turn cursor on
+        bl    @task.vdp.cursor      ; / Update VDP cursor shape
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

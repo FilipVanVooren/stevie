@@ -75,7 +75,7 @@ dialog.open.keylist:
         ;-------------------------------------------------------
 dialog.open.set.filename1:
         bl    @fm.browse.fname.set  ; Create string with device & filename
-                                    ; \ i  @cat.device = Current device name
+                                    ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
                                     ; |        filename pointerlist
                                     ; | 
@@ -112,8 +112,6 @@ dialog.open.clearcmd:
         ;-------------------------------------------------------
 dialog.open.cursor:
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2
-                                    ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------

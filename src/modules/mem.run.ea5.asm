@@ -67,7 +67,7 @@ mem.run.ea5:
         ; Setup scratchpad memory (inline memory copy)
         ;-------------------------------------------------------
         mov   r1,r0                 ; parm1 (R1) to R0 for later use
-        li    r1,scrpad.monitor + 8 ; Source address
+        li    r1,scrpad.edasm + 8   ; Source address
         li    r2,>8308              ; Target address
         li    r3,248                ; Number of bytes to copy
 !       mov   *r1+,*r2+             ; Copy word from ROM to scratchpad RAM
@@ -77,18 +77,36 @@ mem.run.ea5:
         ; Put remaining words in place and activate WS
         ;-------------------------------------------------------
         mov   r0,@>83E0             ; Put parm1 (entrypoint) in workspace
-        mov   @scrpad.monitor + 0,@>8300
-        mov   @scrpad.monitor + 2,@>8302
-        mov   @scrpad.monitor + 4,@>8304           
-        mov   @scrpad.monitor + 6,@>8306        
-        lwpi  >83E0                 ; Activate WS in scratchpad                         
+        mov   @scrpad.edasm + 0,@>8300
+        mov   @scrpad.edasm + 2,@>8302
+        mov   @scrpad.edasm + 4,@>8304           
+        mov   @scrpad.edasm + 6,@>8306                             
         ;-------------------------------------------------------
-        ; Start program
+        ; Start external program
         ;-------------------------------------------------------
+        lwpi  >83E0                 ; Activate WS in scratchpad            
         limi  0                     ; Disable interrupts             
         bl    *r0                   ; Run!
         ;-------------------------------------------------------
-        ; Exit
+        ; Return from external program
         ;-------------------------------------------------------
-mem.run.ea5.exit:
-        b     *r11                  ; Return
+        ;
+        ; We assume everything can be broken after retuning from
+        ; an external program (scratchpad, SAMS, VRAM, VDP regs, ...)
+        ;
+        ; Poke small assembly program to scratchpad for 
+        ; jumping to bank 0 address >6040
+        ; 
+        lwpi  >8300                 ; Activate primary scratchpad
+        mov   @loader,r0            ; 
+        mov   @loader+2,r1          ;
+        mov   @loader+4,r2          ; 
+        mov   @loader+6,r3          ;
+        b     @>8300                ; Run loader
+        ;-------------------------------------------------------
+        ; Loader code
+        ;-------------------------------------------------------
+loader: data  >0720                 ; \ seto @>6000  ; Activate bank 0
+        data  >6000                 ; / 
+        data  >0460                 ; \ b @6040      ; Stevie cold start
+        data  >6040                 ; / 

@@ -50,13 +50,13 @@ vec.33  data  pane.topline           ; Draw topline
 vec.34  data  pane.botline           ; Draw bottom line
 vec.35  data  pane.errline.show      ; Show error line
 vec.36  data  pane.errline.hide      ; Hide error line
-vec.37  data  pane.errline.drawcolor
+vec.37  data  pane.errline.drawcolor ; Draw error line
 vec.38  data  pane.botline.busy.on   ; Turn on busy indicator on bottom line
 vec.39  data  pane.botline.busy.off  ; Turn off busy indicator on bottom line
-vec.40  data  pane.colorscheme.cycle ;
-vec.41  data  pane.colorscheme.load  ;
+vec.40  data  pane.colorscheme.cycle ; Cycle through color schemes
+vec.41  data  pane.colorscheme.load  ; Load color scheme
 vec.42  data  pane.colorscheme.botline
-vec.43  data  cpu.crash              ;
+vec.43  data  pane.colorscheme.index ; Get address of color scheme
 vec.44  data  cpu.crash              ;
 vec.45  data  cpu.crash              ;
 vec.46  data  cpu.crash              ;

@@ -44,13 +44,11 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; Calculate index into colorscheme table
         ;-------------------------------------------------------
-!       mov   @tv.colorscheme,tmp0      ; Get color scheme index
-        dec   tmp0                      ; Internally work with base 0
-        mov   tmp0,tmp1                 ; \
-        sla   tmp0,3                    ; | index = index * 10
-        sla   tmp1,1                    ; | 
-        a     tmp1,tmp0                 ; /
-        ai    tmp0,tv.colorscheme.table ; Add base for color scheme data table                                    
+!       bl    @pane.colorscheme.address 
+                                      ; Get address of current color scheme
+                                      ; \ i  @tv.colorscheme = Index entry
+                                      ; / o  outparm1 = Address color scheme
+        mov   @outparm1,tmp0
         ;-------------------------------------------------------
         ; ABCD) Get FG/BG colors framebuffer and topline
         ;-------------------------------------------------------
@@ -106,11 +104,7 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
-        mov   *tmp0,tmp1            ; Get colors MNOP
-        andi  tmp1,>00f0            ; Only keep O
-        sla   tmp1,4                ; Move O to MSB
-        movb  tmp1,@ramsat+7        ; Line indicator FG color to SAT
-        movb  tmp1,@ramsat+11       ; Column indicator FG color to SAT
+        ; Deprecated - not used anymore
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -171,6 +165,10 @@ pane.colorscheme.fbdump:
         mov   @parm2,tmp0
         ci    tmp0,>ffff            ; Skip colorize flag is on?
         jeq   pane.colorscheme.cmdbpane
+        ;-------------------------------------------------------
+        ; Dump colors for frame buffer (TAT)
+        ;-------------------------------------------------------
+        clr   @parm1                ; Clear force refresh flag
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
         bl    @fb.colorlines        ; Colorize lines
                                     ; \ i  @parm1       = Force refresh if >ffff
@@ -207,10 +205,10 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Row 1-5: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All 5 rows
+        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All rows
         ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
-        li    tmp2,5*80             ; Number of bytes to fill 
+        li    tmp2,(cmdb.rows-1)*80 ; Number of bytes to fill 
         bl    @xfilv                ; Fill colors
                                     ; i \  tmp0 = start address
                                     ; i |  tmp1 = byte to fill
@@ -230,7 +228,7 @@ pane.colorscheme.cmdbpane:
         ; Row 4: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
-        ai    tmp0,322              ; / VDP start address (CMDB top line + 4)
+        ai    tmp0,4 * 80 + 2       ; / VDP start address (CMDB top line + 4)
         mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
@@ -296,7 +294,7 @@ pane.colorscheme.ruler:
               data fb.ruler.tat
               data 80               ; Show ruler colors
         ;-------------------------------------------------------
-        ; Dump cursor FG color to sprite table (SAT)
+        ; Dump cursor FG color
         ;-------------------------------------------------------
 pane.colorscheme.cursorcolor:
         mov   @tv.pane.focus,tmp0   ; Get pane with focus
@@ -312,8 +310,7 @@ pane.colorscheme.cursorcolor.fb:
         mov   @tv.curcolor,tmp0     ; Get cursor color
         andi  tmp0,>0f              ; Only keep low-nibble -> Word 2 (H)
         sla   tmp0,8                ; Move to MSB
-!       movb  tmp0,@ramsat+3        ; Update FG color in sprite table (SAT)
-        movb  tmp0,@tv.curshape+1   ; Save cursor color
+!       movb  tmp0,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

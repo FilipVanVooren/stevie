@@ -31,18 +31,18 @@ rom.program1:
         data  kickstart.resume      ; 14 \ Program address                 >600e
                                     ; 15 /
 
-        .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            stri 'STEVIE 1.9.5'
-        .endif
-
-        .ifeq vdpmode, 3081         ; F18a 30x80 character cursor
-            stri 'STEVIE 1.9.5'     
-        .endif
-
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            stri 'STEVIE 1.9.5'
+            stri 'STEVIE 1.9.6-24'
         .endif
 
-        .ifeq vdpmode, 2481         ; F18a 24x80 character cursor
-            stri 'STEVIE 1.9.5'                   
+        .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
+            stri 'STEVIE 1.9.6-30'
         .endif
+
+        .ifeq vdpmode, 4880         ; PICO9918 48x80 character cursor
+            stri 'STEVIE 1.9.6-48'                   
+        .endif
+
+        .ifeq vdpmode, 6080         ; PICO9918 60x80 character cursor
+            stri 'STEVIE 1.9.6-60'                   
+        .endif        

@@ -73,11 +73,8 @@ edkey.action.pword.exit:
                                     ; | i   @fb.colsline = Columns per line FB 
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer
-
-      .ifeq  spritecursor,0
-        bl    @vdp.cursor.tat       ; Update cursor
-      .endif    
-                                    
+        clr   @fb.curtoggle         ; \ Turn cursor on
+        bl    @task.vdp.cursor      ; / Update VDP cursor shape
 !       b     @edkey.keyscan.hook.debounce ; Back to editor main
 
 
@@ -168,10 +165,8 @@ edkey.action.nword.exit:
                                     ; | i   @fb.column   = Current column in FB
                                     ; | i   @fb.colsline = Columns per line FB 
                                     ; | 
-                                    ; / o   @fb.current  = Updated pointer
-                                    
-      .ifeq  spritecursor,0
-        bl    @vdp.cursor.tat       ; Update cursor
-      .endif    
+                                    ; / o   @fb.current  = Updated pointer                                    
+        clr   @fb.curtoggle         ; \ Turn cursor on
+        bl    @task.vdp.cursor      ; / Update VDP cursor shape
 
-!       b     @edkey.keyscan.hook.debounce; Back to editor main
+!       b     @edkey.keyscan.hook.debounce ; Back to editor main

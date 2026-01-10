@@ -1,5 +1,5 @@
 * FILE......: vdpdump.font.asm
-* Purpose...: Dump sprite/character patterns to VDP
+* Purpose...: Dump character patterns to VDP
 
 ***************************************************************
 * vdp.dump.font

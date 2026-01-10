@@ -54,8 +54,6 @@ dialog.cfg.clip:
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2
-                                    ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

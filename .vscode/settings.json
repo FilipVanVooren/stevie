@@ -4,8 +4,21 @@
     "strings": "off",
     "other": "off"
   },
-  "editor.quickSuggestions": false,
+  
+  // Turn off AI code suggestions
+  "github.copilot.enable": false,
+
   "editor.suggestOnTriggerCharacters": false,
   "editor.wordBasedSuggestions": "off",
-  "editor.parameterHints.enabled": false
+  "editor.parameterHints.enabled": false,
+    
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#0080ff",
+    "titleBar.activeForeground": "#000000"
+  },
+
+  "search.exclude": {
+    "build/**": true
+  }
+
 }

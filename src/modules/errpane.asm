@@ -35,7 +35,7 @@ errpane.init:
         mov   tmp0,@tv.error.rows   ; Number of rows in error pane
 
         bl    @film
-              data tv.error.msg,0,160
+              data tv.error.msg,0,80
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
@@ -45,4 +45,3 @@ errpane.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
-

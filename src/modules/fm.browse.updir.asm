@@ -8,7 +8,7 @@
 * bl   @fm.browse.updir
 *--------------------------------------------------------------
 * INPUT
-* @cat.device = Current device name
+* @tv.devpath = Current device name
 *--------------------------------------------------------------- 
 * OUTPUT
 * @outparm1 = >0000 if at root or no subdirectory on device.
@@ -32,10 +32,10 @@ fm.browse.updir:
         ; Get device name/path
         ;------------------------------------------------------
         clr   @outparm1             ; Clear success flag        
-        movb  @cat.device,tmp0      ; Get length current device name/path
+        movb  @tv.devpath,tmp0      ; Get length current device name/path
         srl   tmp0,8                ; MSB to LSB
         mov   tmp0,tmp1             ; Save length
-        ai    tmp1,cat.device       ; Point to last character
+        ai    tmp1,tv.devpath       ; Point to last character
         mov   tmp0,tmp2             ; Set counter
         clr   tmp3                  ; Clear dot count        
         li    tmp0,>2e00            ; Dot '.' character in MSB
@@ -64,10 +64,10 @@ fm.browse.updir.loop1.cont:
         ; Remove last part of device name/path
         ;------------------------------------------------------        
         mov   @cat.var1,tmp1        ; Get position of 2nd dot
-        ai    tmp1,-cat.device      ; Calculate length of device name/path
+        ai    tmp1,-tv.devpath      ; Calculate length of device name/path
         mov   tmp1,@cat.var2        ; Backup length of device name/path
         sla   tmp1,8                ; LSB to MSB
-        movb  tmp1,@cat.device      ; Set new length
+        movb  tmp1,@tv.devpath      ; Set new length
         seto  @outparm1             ; Set success flag
         ;------------------------------------------------------
         ; Clear rest of device name/path

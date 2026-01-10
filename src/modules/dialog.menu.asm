@@ -41,7 +41,7 @@ dialog.menu:
         mov   tmp0,@cmdb.panhead    ; Header for dialog
 
         mov   @edb.locked,tmp0      ; Is editor locked?
-        jeq   !                     ; yes, no "Unlock" option in menu
+        jeq   !                     ; no, hide "Unlock" option in menu
         ;-------------------------------------------------------
         ; Menu with "Unlock" option
         ;-------------------------------------------------------
@@ -64,7 +64,7 @@ dialog.menu:
         ;-------------------------------------------------------
 dialog.menu.statlines:
         bl    @pane.cmdb.statlines  ; Show status lines
-                                    ; i \   @cat.device = Pointer to device path 
+                                    ; i \   @tv.devpath = Pointer to device path 
                                     ; i |   @tv.sams.maxpage = SAMS pages in system
                                     ; i |   @tv.sams.hipage = Highest page in use
                                     ; o |   @ram.msg1 = SAMS free status line

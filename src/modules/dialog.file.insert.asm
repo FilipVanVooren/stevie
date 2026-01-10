@@ -117,8 +117,6 @@ dialog.insert.keylist:
         ;-------------------------------------------------------
 dialog.insert.cursor:
         bl    @pane.cursor.blink    ; Show cursor
-        mov   @tv.curshape,@ramsat+2
-                                    ; Get cursor shape and color
         ;-------------------------------------------------------
         ; Show file browser
         ;-------------------------------------------------------

@@ -42,10 +42,7 @@ fb.cursor.home:
                                     ; / o   @fb.current  = Updated pointer
 
         seto  @fb.status.dirty      ; Trigger refresh of status lines
-
-      .ifeq  spritecursor,0
         bl    @vdp.cursor.tat       ; Update cursor
-      .endif                
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

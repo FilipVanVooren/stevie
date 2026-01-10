@@ -26,11 +26,11 @@ vdp.cursor.tat:
         ;------------------------------------------------------
         ; Get pane with focus
         ;------------------------------------------------------
-        mov   @tv.pane.focus,tmp0   ; Get pane with focus
+        mov   @tv.pane.focus,tmp0     ; Get pane with focus
         ci    tmp0,pane.focus.fb
-        jeq   vdp.cursor.tat.fb     ; Frame buffer has focus
+        jeq   vdp.cursor.tat.cur.fb   ; Frame buffer has focus
         ci    tmp0,pane.focus.cmdb
-        jeq   vdp.cursor.tat.cmdb   ; CMDB buffer has focus
+        jeq   vdp.cursor.tat.cur.cmdb ; CMDB buffer has focus
         ;------------------------------------------------------
         ; Assert failed. Invalid value
         ;------------------------------------------------------
@@ -39,14 +39,14 @@ vdp.cursor.tat:
         ;------------------------------------------------------
         ; CMDB buffer has focus, position CMDB cursor
         ;------------------------------------------------------
-vdp.cursor.tat.cmdb:
-        bl    @vdp.cursor.cmdb.tat  ; Show cursor
+vdp.cursor.tat.cur.cmdb:
+        bl    @vdp.cursor.tat.cmdb  ; Show cursor
         jmp   vdp.cursor.tat.exit   ; Exit
         ;------------------------------------------------------
         ; Frame buffer has focus, position FB cursor
         ;------------------------------------------------------
-vdp.cursor.tat.fb:
-        bl     @vdp.cursor.fb.tat   ; Show cursor
+vdp.cursor.tat.cur.fb:
+        bl     @vdp.cursor.tat.fb   ; Show cursor
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -1,3 +1,6 @@
+* FILE......: edb.block.reset.asm
+* Purpose...: Reset block markers M1/M2
+
 ***************************************************************
 * edb.block.mark.reset
 * Reset block markers M1/M2

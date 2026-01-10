@@ -1,164 +1,147 @@
 # Memory map
 
-## CPU RAM (SAMS MEMEXP 32K)
+## CPU RAM (SAMS 32K range)
 
-For each of the 256 bytes ranges, there are structures defined in ``equ.asm``.  
-Check there for free memory ranges, because most structures do not use full
-256 bytes range. First free address has equate <struct>.free
+The following table reflects the CPU-side RAM layout derived from `equ.asm`.  
+Sizes are approximate where structures contain many small fields; see `equ.asm` 
+for exact offsets and field names.
 
-Note regarding column "SAMS/Addr.":
+| Address    |  SAMS  | Size | Purpose                                         |
+|------------|--------|------|-------------------------------------------------|
+| >2000-2fff |  #02   | 4096 | Resident spectra2 and Stevie modules            |
+| >3000-3fff |  #03   | 4096 | Resident spectra2 and Stevie modules            |
+| >a000-a0ff |  #04   |  256 | Stevie core 1 RAM                               |
+|            |        |      | >a006-a016 : parm1..parm9 (input parameters)    |
+|            |        |      | >a018-a024 : outparm1..outparm7 (output params) |
+|            |        |      | >a026-a02b : keyboard flags / keycodes          |
+|            |        |      | >a02c-a031 : unpacked/packed uint16 workbuffers |
+|            |        |      | >a034      : trampoline vector                  |
+|            |        |      | >a036-a063 : free / temporary workspace         |
+|            |        |      | >a064-a0b3 : timers (80 bytes)                  |
+|            |        |      | >a0b4-a0d3 : TI-Basic session management area   |
+|            |        |      | >a0d4-a0f9 : TI-Basic temporary/free area       |
+| >a100-a1ff |  #04   |  256 | Stevie core 2 RAM (RAM workbuffer at >a100)     |
+| >a200-a2ff |  #04   |  256 | Shared Stevie editor structure (`tv.struct`)    |
+|            |        |      | `tv.sams.*`, color scheme, cursor, pane focus,  |
+|            |        |      | pointers to font, error msg, device path, ...   |
+| >a300-a3ff |  #04   |  256 | Frame buffer structure (`fb.struct`)            |
+|            |        |      | framebuffer pointers, current row/col, ruler,   |
+|            |        |      | colorize flags, cursor toggle, dirty flags, ... |
+| >a400-a4ff |  #04   |  256 | File handle structures (`fh.struct`)            |
+|            |        |      | `dsrlnk` workspace, PAB pointers, I/O status,   |
+|            |        |      | file memory buffer, callbacks, EA5 trans. state |
+| >a500-a5ff |  #04   |  256 | Editor buffer structure (`edb.struct`)          |
+|            |        |      | buffer pointers, index ptr, lines count,        |
+|            |        |      | insert/autoinsert flags, block marks, filename, |
+|            |        |      | search string buffer and search state           |
+| >a600-a6ff |  #04   |  256 | Index structure (`idx.struct`)                  |
+| >a700-a7ff |  #04   |  256 | Command buffer structure (`cmdb.struct`)        |
+|            |        |      | history buffer pointer, pane sizing, dialog ids,|
+|            |        |      | current command buffer and pane header buffers  |
+| >a800-a8ff |  #04   |  256 | Stevie value stack (SP2 user stack area)        |
+| >a900-a9ff |  #04   |  256 | FREE                                            |
+| >aa00-aaff |  #04   |  256 | FREE                                            |
+| >ab00-abff |  #04   |  256 | FREE                                            |
+| >ac00-acff |  #04   |  256 | FREE                                            |
+| >ad00-adff |  #04   |  256 | FREE                                            |
+| >ae00-aeff |  #04   |  256 | Paged-out scratchpad memory (maps >8300-83ff)   |
+| >af00-afff |  #04   |  256 | Far-jump / cartridge bankswitch trampoline stack|
+| >b000-bfff | #10-1f | 4096 | Index / bankswitched pages (EA5 image, index)   |
+| >c000-cfff | #30-xx | 4096 | Editor buffer pages (bankswitched via SAMS)     |
+| >d000-dfff |  #05   | 4096 | Frame buffer area and uncrunch space            |
+|            |        |      | >d000-dfff : framebuffer                        |
+|            |        |      | >d960-dcff : uncrunch area for TI-Basic lines   |
+| >e000-efff |  #06   | 4096 | Frame buffer / file catalog / command buffers   |
+|            |        |      | catalog and filename lists starting at >e220    |
+| >f000-ffff |  #07   | 4096 | Heap, strings, search indices and misc          |
+|            |        |      | >f000-f0ff : heap & strings (heap.top = >f700)  |
+|            |        |      | >f100-f4ff : search results index (rows)        |
+|            |        |      | >f500-f6ff : search results index (cols)        |
+|            |        |      | >f900-f9ff : command history buffer             |
+|            |        |      | >fa00-ffff : free (1536 bytes)                  |
 
-- The format ``>`` means MEMEXP memory range in hex.
-- The format ``#`` means the SAMS page number in hex.
 
-| Address    | SAMS/Addr. | Bytes | Purpose                                    | 
-| ---------- | ---------- | ----- | -------------------------------------------|
-| >2000-2fff |    #02     |  4096 | Resident spectra2 and Stevie modules       |
-|------------|------------|-------|--------------------------------------------|
-| >3000-3fff |    #03     |  4096 | Resident spectra2 and Stevie modules       |
-|------------|------------|-------|--------------------------------------------|
-| >a000-a0ff |    #0a     |   256 | Stevie core 1 RAM                          |
-|            | >a006-a017 |    18 |   Input parameters parm1-parm9             |
-|            | >a018-a025 |    14 |   Output parameters outparm1-outparm7      |
-|            | >a026-a029 |     4 |   Keyboard flags, keycodes                 |
-|            | >a02c-a035 |    10 |   Packed/Unpacked uint16, vector           |
-|            | >0036-a055 |    32 |   FREE                                     |
-|            | >a056-a063 |    14 |   Shadow Sprite attribute table, ramsat    |
-|            | >a064-a0b3 |    80 |   Timers for stevie background tasks       |
-|            | >a0b4-a0d3 |    30 |   TI Basic session pointers, variables     |
-|            | >a0d4-a0e9 |    22 |   FREE                                     |
-|            | >a0ea-a0ff |    22 |   TI Basic pointers, temporary variables   |
-|            |            |       |                                            |
-| >a100-a1ff |    #0a     |   256 | Stevie core 2 RAM                          |
-|            | >a100-a1ff |   256 |   RAM workbuffer for various stuff         |
-|            |            |       |                                            |
-| >a200-a2ff |    #0a     |   256 | Stevie editor shared structure             |
-|            | >a200-a20f |    16 |   SAMS page in window >2000, >3000, ...    |
-|            | >a210-a237 |       |   Variables, pointers, flags, ...          |
-|            | >a238-a2d7 |   160 |   Error message (max 160 chars)            |
-|            | >a2d8-a2ff |       |   FREE                                     |
-|            |            |       |                                            |
-| >a300-a3ff |    #0a     |   256 | Frame buffer structure                     |
-|            | >a300-a31f |    32 |   Variables, pointers, flags, ...          |
-|            | >a320-a36f |    80 |   Ruler ascii chars                        |
-|            | >a370-a3bf |    80 |   Ruler color attributes                   |
-|            | >a3c0-a3ff |       |   FREE                                     |
-|            |            |       |                                            |
-| >a400-a4ff |    #0a     |   256 | File handle structure                      |
-|            | >a400-a41f |    32 |   dsrlnk workspace                         |
-|            | >a420-a435 |    32 |   dsrlnk variables, pointers, flags, ...   |
-|            | >a436-a469 |    30 |   Variables, pointers, flags, ...          |
-|            | >a46a-a4b9 |    80 |   Memory buffer for file handle            |
-|            | >a4ba-a4ff |       |   FREE                                     |
-|            |            |       |                                            |
-| >a500-a5ff |     #0a    |   256 | Editor buffer structure                    |
-|            | >a500-a525 |    38 |   Variables, pointers, flags, ...          |
-|            | >a526-a575 |    80 |   Buffer for filename                      |
-|            | >a576-a5d9 |   100 |   Search string buffer, pointers, counters |
-|            | >a5da-a5ff |       |   FREE                                     |
-|            |            |       |                                            |
-| >a600-a6ff |     #0a    |   256 | Index structure                            |
-|            | >a600-a605 |     6 |   SAMS page counters                       |
-|            | >a606-a6ff |       |   FREE                                     |
-|            |            |       |                                            |
-| >a700-a7ff |     #0a    |   256 | Command buffer structure                   |
-|            | >a700-a72d |    46 |   Variables, pointers, flags, ...          |
-|            | >a72e-a77f |    80 |   Buffer for current command               |
-|            | >a780-a7b1 |    50 |   String buffer for pane header            |
-|            | >a7b2-a7ff |    50 |   Buffer for default filename              |
-|            |            |       |                                            |
-| >a800-a8ff |     #0a    |   256 | Stevie value stack                         |
-|            |            |       |                                            |
-| >a900-a9ff |     #0a    |   256 | FREE                                       |
-| >aa00-aaff |     #0a    |   256 | FREE                                       |
-| >ab00-abff |     #0a    |   256 | FREE                                       |
-| >ac00-acff |     #0a    |   256 | FREE                                       |
-| >ac00-acff |     #0a    |   256 | FREE                                       |
-|            |            |       |                                            |
-| >ad00-adff |     #0a    |   256 | Paged-out scratchpad memory >8300-83ff     |
-| >ae00-aeff |     #0a    |   256 | FREE                                       |
-|            |            |       |                                            |
-| >af00-afff |     #0a    |   256 | Cart bankswitch trampoline return stack    |
-|------------|------------|-------|--------------------------------------------|
-| >b000-bfff |   #10-1f   |  4096 | Index page, bankswitched in SAMS /         |
-|            |            |       | EA5 image in RAM, bankswitched in SAMS     |
-|------------|------------|-------|--------------------------------------------|
-| >c000-cfff |   #30-xx   |  4096 | Editor buffer page, bankswitched in SAMS / |
-|            |            |       | EA5 image in RAM, bankswitched in SAMS     |
-|------------|------------|-------|--------------------------------------------|
-| >d000-dfff |     #05    |  4096 | Frame buffer, uncrunch, default filenames  |
-|            | >d000-d95f |  2400 |   Frame buffer for max. 80x30 rows         |
-|            | >d960-dcff |       |   Uncrunched TI Basic statement            |
-|            | >de00-deff |       |   Default filenames                        |
-|            | >df00-dfff |   256 |   FREE                                     |
-|------------|------------|-------|--------------------------------------------|
-| >e000-efff |     #06    |  4096 | Directory file catalog (max. 127 files)    |
-|            | >e000-e001 |     2 |   Variables, volume name                   |
-| >e000-efff | >e00e-e574 |  1398 |   length-prefixed file names list (127*11) |
-| >e000-efff | >e575-e5ff |  1398 |   File size list (127*2)                   |
-|------------|------------|-------|--------------------------------------------|
-| >f000-ffff |     #07    |  4096 | Heap, Strings area, Search results index   |
-|            | >f000-f0ff |   256 |   Heap & Strings area                      |
-|            | >f100-f8ff |  2048 |   Search results index (rows)              |
-|            | >f900-fcff |  1024 |   Search results index (columns)           |
-|            | >fe00-ffff |  1024 |   FREE                                     |
+### Memory layout when activiating index
+
+The index contains the mapping between editor buffer line numbers and 
+actual line content. The index is activated when inserting or removing lines, 
+or when searching.
+
+Note: Other memory ranges are the same as the regular memory map.
+
+| Address    |  SAMS  | Size | Purpose                                         |
+|------------|--------|------|-------------------------------------------------|
+| >b000-bfff |  #20   | 4096 | SAMS line index                                 |
+| >c000-cfff |  #21   | 4096 | SAMS line index                                 |
+| >d000-dfff |  #22   | 4096 | SAMS line index                                 |
+| >e000-efff |  #23   | 4096 | SAMS line index                                 |
+| >f000-ffff |  #24   | 4096 | SAMS line index                                 |
+
 
 ### Memory layout when activating TI Basic
 
 Note: Other memory ranges are the same as the regular memory map.
 
-| Address    | SAMS/Addr. | Bytes | Purpose                                    |
-| ---------- | ---------- | ----- | -------------------------------------------|
-| >b000-bfff |     #10    |  4096 | TI Basic VDP buffer                        |
-|------------|------------|-------|--------------------------------------------|
-| >c000-cfff |     #11    |  4096 | TI Basic VDP buffer                        |
-|------------|------------|-------|--------------------------------------------|
-| >d000-dfff |     #12    |  4096 | TI Basic VDP buffer                        |
-|------------|------------|-------|--------------------------------------------|
-| >e000-efff |     #13    |  4096 | TI Basic VDP buffer                        |
-|------------|------------|-------|--------------------------------------------|
-| >f000-ffff |     #07    |  4096 | Stevie VDP, scratchpad, ...                |
-|            | >f000-f95f |  2400 |   Stevie VDP screen buffer copy 80x30      |
-|            | >f960-f97f |    32 |   TI Basic scratchpad memory               |
-|            | >f980-ffff |  1664 |   FREE                                     |
+| Address    | SAMS | Size | Purpose                                        |
+|------------|------|------|------------------------------------------------|
+| >b000-bfff |  #10 | 4096 | TI Basic VDP buffer                            |
+| >c000-cfff |  #11 | 4096 | TI Basic VDP buffer                            |
+| >d000-dfff |  #12 | 4096 | TI Basic VDP buffer                            |
+| >e000-efff |  #13 | 4096 | TI Basic VDP buffer                            |
+| >f000-ffff |  #07 | 4096 | Stevie VDP, scratchpad, ...                    |
+|            |      |      | >f000-f95f  2400  Stevie VDP scrbuf copy 80x30 |
+|            |      |      | >f960-f97f    32  TI Basic scratchpad memory   |
+|            |      |      | >f980-ffff  1664  FREE                         |
 
-## VDP RAM
+## VDP VRAM map
 
-### F18a 30x80 mode with sprites (cursor, ruler)
+The VDP tables are kept the same, independently of the used GPU and rows mode.  
+Actual allocation depends on the number of rows per screen.
 
-| Address    | Size | VDP# | Value/Base | Purpose                  |
-|------------|------|------|------------|--------------------------|
-| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
-| >0960-097f |  160 |      |            | PAB definition           |
-| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >12e0-12ff |   16 |      |            | **FREE**                 |
-| >1300-13ff |  256 | #05  | >26 * >080 | Sprite attribute table   |
-| >1400-144f |   80 |      |            | PAB                      |
-| >1450-17ff |  944 |      |            | **FREE**                 |
-| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
-| >1800-19ff |      | #06  | >03 * >800 | Sprite pattern table     |
-| >2000-3fff | 8192 |      |            | Record/File buffer       |
-| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
-| >4000-47ff | 2048 |      |            | F18a extended memory     |
+| Address    | Size | VDP# | Value/Base | Purpose                            |
+|------------|------|------|------------|------------------------------------|
+| >0000-12bf | 4800 | #02  | >00 * >960 | Pattern name table for max 60 rows |
+| >12c0-257f | 4800 | #03  | >4b * >040 | Color table (PAT) for max 60 rows  |
+| >2580-27ff |  640 | #05  | >4b * >080 | Sprite SAT table. Not used /       |
+|            |      |      |            | File PAB and record buffer         |
+| >2800-2fff | 2048 | #04  | >05 * >800 | Pattern descriptor table           |
+| >2800-2fff | 2048 | #06  | >05 * >800 | Sprite SPT table. Not used         |
+| >3000-3fff | 4096 |      |            | Multi-purpose. See usage           |
+| >4000-47ff | 2048 |      |            | F18a extended memory               |
 
-- Using position-based Pattern Color Table of 2400 bytes (30 * 80) at >0980.
-- Sprite pattern table is overlayed with pattern descriptor table. 
-  Cursor patterns are dumped to >1c00
-- File buffer header setup by TI-Disk Controller on startup
-  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
-  
-### F18a 24x80 mode without sprites
+Notes:
+- Using position-based Pattern Color Table of max 4800 bytes (60 * 80) at >12c0.
+- Sprite SAT table not used in text mode, >2580-27ff used for 
+  file PAB and record buffer.
+- File buffer header setup by TI-Disk Controller on startup   
+  [Docs](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
 
-| Address    | Size | VDP# | Value/Base | Purpose                  |
-|------------|------|------|------------|--------------------------|
-| >0000-095f | 2400 | #02  | >00 * >960 | Pattern name table       |
-| >0960-097f |  160 |      |            | PAB definition           |
-| >0980-12cf | 2400 | #03  | >26 * >040 | Pattern color table      |
-| >1800-19ff | 2048 | #04  | >03 * >800 | Pattern descriptor table |
-| >2000-3fff | 8192 |      |            | Record/File buffer       |
-| >37d8-3fff | 8192 |      |            | File buffer (headers)    |
-| >4000-47ff | 2048 |      |            | F18a extended memory     |
+### Allocation of VDP tables
 
-- Using position-based Pattern Color Table of 1920 bytes (24 * 80) at >0980.
-- File buffer header setup by TI-Disk Controller on startup
-  [File buffers in VDP memory](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
+#### Screen table
+
+| PNT   | rows | end (+1) | Size | Hex   | gpu            |
+|-------|------|----------|------|-------|----------------|
+| >0000 | 24   | >0780    | 1920 | >780  | f18a, pico9918 |
+| >0000 | 30   | >0960    | 2400 | >960  | f18a, pico9918 |
+| >0000 | 48   | >0f00    | 3840 | >f00  | pico9918       |
+| >0000 | 60   | >12c0    | 4800 | >12c0 | pico9918       |
+
+#### Color table
+
+| PCT   | rows | end (+1) | Size | Hex   | gpu            | 
+|-------|------|----------|------|-------|----------------|
+| >12c0 | 24   | >1a40    | 1920 | >780  | f18a, pico9918 |
+| >12c0 | 30   | >1c20    | 2400 | >960  | f18a, pico9918 |
+| >12c0 | 48   | >21c0    | 3840 | >f00  | pico9918       |
+| >12c0 | 60   | >2580    | 4800 | >12c0 | pico9918       |
+
+#### Free space between PCT and PDT
+
+>2580 - 27ff for file PAB and record buffer.
+
+#### Pattern descriptor table
+
+| PDT   | patterns | end (-1) | Size | Hex  |
+|-------|----------|----------|------|------|
+| >2800 | 256      | >3000    | 2048 | >800 |

@@ -87,9 +87,9 @@ edkey.action.cmdb.file.directory.ide3:
 
 edkey.action.cmdb.file.directory.device:
         bl    @cpym2m
-              data cmdb.cmdall,cat.device,80
+              data cmdb.cmdall,tv.devpath,80
                                     ; Copy filename from command line to buffer
-        li    tmp0,cat.device
+        li    tmp0,tv.devpath
         mov   tmp0,@parm1
         clr   @parm2
 

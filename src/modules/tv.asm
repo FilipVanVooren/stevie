@@ -50,7 +50,7 @@ tv.init:
               data def.clip.fname.a,tv.clip.fname,10
 
         bl    @cpym2m
-              data def.device,cat.device,6
+              data def.device,tv.devpath,6
 
 
         clr   @edb.autoinsert       ; Set AutoInsert off by default

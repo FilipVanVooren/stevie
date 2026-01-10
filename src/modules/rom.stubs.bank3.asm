@@ -332,10 +332,10 @@ dialog.help.content:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "vdp.cursor.fb.tat"
+* Stub for "vdp.cursor.tat.fb"
 * bank6 vec.4
 ********|*****|*********************|**************************
-vdp.cursor.fb.tat:
+vdp.cursor.tat.fb:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

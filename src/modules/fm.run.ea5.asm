@@ -33,19 +33,14 @@ fm.run.ea5:
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp1       ; Get dirty flag
         jeq   !                     ; Load file unless dirty
-
         seto  @outparm1             ; \ Editor buffer dirty, set flag
         jmp   fm.run.ea5.exit       ; / and exit early 
         ;-------------------------------------------------------
         ; Clear VDP screen buffer
         ;-------------------------------------------------------
-!       bl    @filv
-              data sprsat,>0000,16  ; Turn off sprites (cursor)
-
-        mov   @fb.scrrows.max,tmp1
+!       mov   @fb.scrrows.max,tmp1
         mpy   @fb.colsline,tmp1     ; columns per line * rows on screen
                                     ; 16 bit part is in tmp2!
- 
         bl    @scroff               ; Turn off screen
 
         li    tmp0,vdp.fb.toprow.sit - 80
@@ -93,13 +88,13 @@ fm.run.ea5:
         ; Load EA5 program image into memory
         ;-------------------------------------------------------
         bl    @fh.file.load.ea5     ; Load EA5 memory image into memory
-                                    ; \ i  @parm1    = Pointer to length prefixed 
-                                    ; |                file descriptor
+                                    ; \ i  @parm1    = Pointer to length
+                                    ; |                prefixed  file descriptor
                                     ; | o  @outparm1 = Entrypoint in EA5 program
                                     ; /                or >FFFF if load failed
 
         mov   @outparm1,tmp0        ; \  
-        ci    tmp0,>ffff            ; | Exit early with error if file load failed
+        ci    tmp0,>ffff            ; | Exit early with error if load failed
         jeq   fm.run.ea5.error      ; / 
         mov   tmp0,@parm1           ; Set entrypoint                
 

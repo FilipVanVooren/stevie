@@ -85,7 +85,7 @@ main:
         copy  "tib.uncrunch.token.asm"     ; Decode statement token
         copy  "tib.uncrunch.line.pack.asm" ; Pack line to editor buffer
         ;-----------------------------------------------------------------------
-        ; Run Ea5 binary image in memory
+        ; Run EA5 binary image in memory
         ;-----------------------------------------------------------------------        
         copy  "mem.run.ea5.asm"            ; Run loaded EA5 binary image
         ;-----------------------------------------------------------------------
@@ -106,7 +106,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Scratchpad memory dump
         ;-----------------------------------------------------------------------
-        aorg >7e00
+        aorg >7d00
         copy  "data.scrpad.asm"            ; Required for TI Basic
         ;-----------------------------------------------------------------------
         ; Bank full check
