@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260110-1436290
+0002               * BUILD: 260110-1539450
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -951,13 +951,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 1.9.6-60'
+0047 6010 0F53                 stri 'STEVIE 1.9.7-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 362D     
+     601C 372D     
      601E 3630     
                    < stevie_b1.asm
 0042               
@@ -9643,7 +9643,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      604C 201E     
 0029 604E 1304  14         jeq   main.continue         ; Yes, we're good. Initialize
 0030                       ;------------------------------------------------------
-0031                       ; Show "F18A OR PICO9918NOT FOUND" message
+0031                       ; Show "F18A OR PICO9918 NOT FOUND" message
 0032                       ;------------------------------------------------------
 0033 6050 06A0  32         bl    @putstr
      6052 241E     

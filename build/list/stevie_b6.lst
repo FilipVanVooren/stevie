@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260110-1436290
+0002               * BUILD: 260110-1539450
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -962,13 +962,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 1.9.6-60'
+0047 6010 0F53                 stri 'STEVIE 1.9.7-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 362D     
+     601C 372D     
      601E 3630     
                    < stevie_b6.asm
 0040               

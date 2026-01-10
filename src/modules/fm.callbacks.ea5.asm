@@ -140,9 +140,35 @@ fm.load.ea5.cb.fioerr:
         dect  stack                          
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
+        ; Restore VDP patterns, set font and colorscheme
+        ;------------------------------------------------------
+        bl    @vdp.dump.patterns    ; Dump patterns to VDP
+
+        clr   @parm1                ; Pick font 0
+        bl    @tv.set.font          ; Set current font (dumps font to VDP)
+                                    ; \ i  @parm1       = Font index (0-5)
+                                    ; / o  @tv.font.ptr = Pointer to font
+
+        bl    @pane.colorscheme.load
+                                    ; Reload color scheme
+                                    ; \ i  @parm1 = Skip screen off if >FFFF
+                                    ; | i  @parm2 = Skip colorizing marked lines
+                                    ; |             if >FFFF                                    
+                                    ; | i  @parm3 = Only colorize CMDB pane 
+                                    ; /             if >FFFF
+        ;------------------------------------------------------
         ; Build I/O error message
         ;------------------------------------------------------
         bl    @fm.newfile           ; Make sure no file is in memory
+
+        seto  @parm1                ; \ Do not turn screen off while reloading
+                                    ; / color scheme
+
+        seto  @parm2                ; Skip marked lines colorization
+        clr   @parm3                ; Colorize all panes
+
+        clr   @tv.error.visible     ; No error message/pane
+
         bl    @hchar
               byte pane.botrow,0,32,80
               data EOL              ; Erase loading/saving indicator

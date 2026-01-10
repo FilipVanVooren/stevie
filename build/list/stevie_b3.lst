@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260110-1436290
+0002               * BUILD: 260110-1539450
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -948,13 +948,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 1.9.6-60'
+0047 6010 0F53                 stri 'STEVIE 1.9.7-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 362D     
+     601C 372D     
      601E 3630     
                    < stevie_b3.asm
 0039               
@@ -14362,13 +14362,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0014               
 0019               
 0024               
-0026 7278 2020                 text '  Stevie 1.9.6   '
+0026 7278 2020                 text '  Stevie 1.9.7   '
      727A 5374     
      727C 6576     
      727E 6965     
      7280 2031     
      7282 2E39     
-     7284 2E36     
+     7284 2E37     
      7286 2020     
      7288 20       
 0027                           even
@@ -15161,23 +15161,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      77AC 20       
 0190                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 77AD   32                        text '260110-1436290'
+0001 77AD   32                        text '260110-1539450'
      77AE 3630     
      77B0 3131     
      77B2 302D     
-     77B4 3134     
-     77B6 3336     
-     77B8 3239     
+     77B4 3135     
+     77B6 3339     
+     77B8 3435     
      77BA 30       
                    < data.dialogs.asm
-0191 77BB   20                        text ' - Stevie 1.9.6 - (c)2018-2026 Filip Van Vooren'
+0191 77BB   20                        text ' - Stevie 1.9.7 - (c)2018-2026 Filip Van Vooren'
      77BC 2D20     
      77BE 5374     
      77C0 6576     
      77C2 6965     
      77C4 2031     
      77C6 2E39     
-     77C8 2E36     
+     77C8 2E37     
      77CA 202D     
      77CC 2028     
      77CE 6329     

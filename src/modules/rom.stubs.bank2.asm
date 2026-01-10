@@ -375,6 +375,27 @@ fb.refresh:
 
 
 ***************************************************************
+* Stub for "vdp.dump.patterns"
+* bank6 vec.1
+********|*****|*********************|**************************
+vdp.dump.patterns:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 6
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank6.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for "vdp.colors.line"
 * bank6 vec.3
 ********|*****|*********************|**************************
@@ -413,6 +434,28 @@ vdp.cursor.tat.cmdb.hide:
         ; Exit
         ;------------------------------------------------------
 vdp.cursor.tat.cmdb.hide.exit:        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "tv.set.font"
+* bank6 vec.33
+********|*****|*********************|**************************
+tv.set.font:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 6
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank6.rom        ; | i  p0 = bank address
+              data vec.33           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+tv.set.font.exit:        
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
