@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260108-2049560
+0002               * BUILD: 260110-1436290
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12767,14 +12767,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089                       ;-------------------------------------------------------
 0090 6E3E 06A0  32         bl    @fh.file.load.ea5     ; Load EA5 memory image into memory
      6E40 68B6     
-0091                                                   ; \ i  @parm1    = Pointer to length prefixed
-0092                                                   ; |                file descriptor
+0091                                                   ; \ i  @parm1    = Pointer to length
+0092                                                   ; |                prefixed  file descriptor
 0093                                                   ; | o  @outparm1 = Entrypoint in EA5 program
 0094                                                   ; /                or >FFFF if load failed
 0095               
 0096 6E42 C120  34         mov   @outparm1,tmp0        ; \
      6E44 A018     
-0097 6E46 0284  22         ci    tmp0,>ffff            ; | Exit early with error if file load failed
+0097 6E46 0284  22         ci    tmp0,>ffff            ; | Exit early with error if load failed
      6E48 FFFF     
 0098 6E4A 1305  14         jeq   fm.run.ea5.error      ; /
 0099 6E4C C804  38         mov   tmp0,@parm1           ; Set entrypoint

@@ -25,10 +25,10 @@
 * Main
 ********|*****|*********************|**************************
 main.stevie:
-        coc   @wbit1,config         ; F18a detected?
+        coc   @wbit1,config         ; F18a / PICO9918 detected?
         jeq   main.continue         ; Yes, we're good. Initialize
         ;------------------------------------------------------
-        ; Show "F18A NOT FOUND" message
+        ; Show "F18A OR PICO9918 NOT FOUND" message
         ;------------------------------------------------------
         bl    @putstr
               data txt.nof18a       ; Show message

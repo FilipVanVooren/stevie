@@ -19,7 +19,7 @@
 tib.run.return:
         li    r12,>1e00             ; \ Enable SAMS mapper again with        
         sbo   1                     ; | sams layout table
-                                    ; / mem.sams.layout.basic[1-5]
+                                    ; / mem.sams.layout.basic[1-3]
 
         lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
                                     ; paged-out in tibasic.init

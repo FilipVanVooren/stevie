@@ -88,13 +88,13 @@ fm.run.ea5:
         ; Load EA5 program image into memory
         ;-------------------------------------------------------
         bl    @fh.file.load.ea5     ; Load EA5 memory image into memory
-                                    ; \ i  @parm1    = Pointer to length prefixed 
-                                    ; |                file descriptor
+                                    ; \ i  @parm1    = Pointer to length
+                                    ; |                prefixed  file descriptor
                                     ; | o  @outparm1 = Entrypoint in EA5 program
                                     ; /                or >FFFF if load failed
 
         mov   @outparm1,tmp0        ; \  
-        ci    tmp0,>ffff            ; | Exit early with error if file load failed
+        ci    tmp0,>ffff            ; | Exit early with error if load failed
         jeq   fm.run.ea5.error      ; / 
         mov   tmp0,@parm1           ; Set entrypoint                
 

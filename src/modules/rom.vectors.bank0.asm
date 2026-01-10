@@ -10,7 +10,7 @@ cpu.crash.showbank.bankstr:
 * ROM 0: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   equ   bankx.vectab          ;
+vec.1   equ   new.stevie            ; Stevie cold startup
 vec.2   equ   bankx.vectab + 2      ;
 vec.3   equ   bankx.vectab + 4      ;
 vec.4   equ   bankx.vectab + 6      ;

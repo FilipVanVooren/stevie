@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260108-2049560
+0002               * BUILD: 260110-1436290
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -1096,7 +1096,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042 60C4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      60C6 30B4     
 0043 60C8 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 60CA 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0044 60CA 6040                   data vec.1            ; | i  p1 = Vector with target address
 0045 60CC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
@@ -9929,7 +9929,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010               * ROM 0: Vectors 1-32
 0011               *--------------------------------------------------------------
 0012                       aorg  bankx.vectab
-0013      7F70     vec.1   equ   bankx.vectab          ;
+0013      6040     vec.1   equ   new.stevie            ; Stevie cold startup
 0014      7F72     vec.2   equ   bankx.vectab + 2      ;
 0015      7F74     vec.3   equ   bankx.vectab + 4      ;
 0016      7F76     vec.4   equ   bankx.vectab + 6      ;
@@ -11236,7 +11236,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDPW................ >8C00 :     
     VDRA................ >22BA :     
     VDWA................ >22B6 :     
-    VEC.1............... >7F70 :     
+    VEC.1............... >6040 :     
     VEC.10.............. >7F82 :     
     VEC.11.............. >7F84 :     
     VEC.12.............. >7F86 :     
