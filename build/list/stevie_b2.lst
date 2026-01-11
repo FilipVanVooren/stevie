@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260111-1859200
+0002               * BUILD: 260111-2024040
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -960,13 +960,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; 15 /
 0033               
 0037               
-0039 6010 0F53                 stri 'STEVIE 1.9.7-30'
+0039 6010 0F53                 stri 'STEVIE 1.9.8-30'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 372D     
+     601C 382D     
      601E 3330     
 0041               
 0045               
@@ -9245,7 +9245,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3B28 6323     
      3B2A 20       
 0092                                  even
-0093 3B2C 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
+0093 3B2C 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^4=Done'
      3B2E 392D     
      3B30 4D65     
      3B32 6E75     
@@ -9264,11 +9264,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3B4C 6578     
      3B4E 7420     
      3B50 205E     
-     3B52 2F3D     
+     3B52 343D     
      3B54 446F     
      3B56 6E65     
 0094                                  even
-0095 3B58 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
+0095 3B58 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^4=Done'
      3B5A 392D     
      3B5C 4D65     
      3B5E 6E75     
@@ -9293,7 +9293,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3B84 6578     
      3B86 7420     
      3B88 205E     
-     3B8A 2F3D     
+     3B8A 343D     
      3B8C 446F     
      3B8E 6E65     
 0096                                  even

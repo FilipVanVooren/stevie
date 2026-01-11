@@ -146,9 +146,12 @@ keymap_actions.editor:
 
         byte  key.ctrl.0, pane.focus.fb
         data  dialog.basic
+        
+        byte  key.ctrl.4, pane.focus.fb
+        data  edkey.action.find.reset
 
         byte  key.ctrl.slash, pane.focus.fb
-        data  edkey.action.find.reset
+        data  dialog.shortcuts
         ;-------------------------------------------------------
         ; Dialog keys
         ;-------------------------------------------------------

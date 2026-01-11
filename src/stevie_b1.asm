@@ -99,6 +99,7 @@ main:
         copy  "edkey.fb.tabs.asm"           ; tab-key related actions
         copy  "edkey.fb.clip.asm"           ; Clipboard actions
         copy  "edkey.fb.mov.match.asm"      ; Goto search matches
+        copy  "edkey.fb.find.reset.asm"     ; Reset results of find operation
         copy  "edk.fb.char.asm"             ; Process character
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer

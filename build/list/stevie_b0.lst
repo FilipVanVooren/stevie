@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260111-1859200
+0002               * BUILD: 260111-2024040
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -952,13 +952,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032                                                   ; 15 /
 0033               
 0037               
-0039 6010 0F53                 stri 'STEVIE 1.9.7-30'
+0039 6010 0F53                 stri 'STEVIE 1.9.8-30'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 372D     
+     601C 382D     
      601E 3330     
 0041               
 0045               
@@ -9422,7 +9422,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7C1E 6323     
      7C20 20       
 0092                                  even
-0093 7C22 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^/=Done'
+0093 7C22 2B46     txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,=Prev  ^.=Next  ^4=Done'
      7C24 392D     
      7C26 4D65     
      7C28 6E75     
@@ -9441,11 +9441,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7C42 6578     
      7C44 7420     
      7C46 205E     
-     7C48 2F3D     
+     7C48 343D     
      7C4A 446F     
      7C4C 6E65     
 0094                                  even
-0095 7C4E 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^/=Done'
+0095 7C4E 3746     txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,=Prev  ^.=Next  ^4=Done'
      7C50 392D     
      7C52 4D65     
      7C54 6E75     
@@ -9470,7 +9470,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7C7A 6578     
      7C7C 7420     
      7C7E 205E     
-     7C80 2F3D     
+     7C80 343D     
      7C82 446F     
      7C84 6E65     
 0096                                  even

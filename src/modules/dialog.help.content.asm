@@ -133,8 +133,8 @@ dialog.help.content.exit:
 
 dialog.help.data.pages:
         data  dialog.help.data.page1.left,16
-        data  dialog.help.data.page1.right,13
-        data  dialog.help.data.page2.left,15
+        data  dialog.help.data.page1.right,14
+        data  dialog.help.data.page2.left,16
         data  dialog.help.data.page2.right,17
 
 
@@ -166,6 +166,7 @@ dialog.help.data.page1.right:
         stri 'Ctrl g   ^g   Goto line'        
         stri 'Ctrl ,   ^,   Goto previous match'
         stri 'Ctrl .   ^.   Goto next match'
+        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
@@ -176,8 +177,7 @@ dialog.help.data.page1.right:
         stri 'Ctrl o   ^o   Open file'
         stri 'Ctrl p   ^p   Print file'
         stri 'Ctrl r   ^r   Run program image (EA5)'        
-        stri 'Ctrl s   ^s   Save file'
-        
+        stri 'Ctrl s   ^s   Save file'        
 
 dialog.help.data.page2.left:
         byte    35
@@ -191,6 +191,7 @@ dialog.help.data.page2.left:
         stri 'Fctn 8        Insert line'
         stri 'Fctn .        Insert/Overwrite'
         stri 'Ctrl c   ^c   Copy clipboard'
+        stri 'Ctrl u   ^u   Unlock editor'
         stri ' '
         byte    35
         byte    1,1,1,1,1,1
