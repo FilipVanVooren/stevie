@@ -273,6 +273,9 @@ keymap_actions.cmdb:
 
         byte  key.space, id.dialog.open
         data  edkey.action.cmdb.updir
+
+        byte  key.ctrl.r, id.dialog.open
+        data  dialog.run        
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
@@ -323,7 +326,10 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.pick.next
 
         byte  key.space, id.dialog.run
-        data  edkey.action.cmdb.updir                        
+        data  edkey.action.cmdb.updir 
+
+        byte  key.ctrl.o, id.dialog.run
+        data  dialog.open                        
         ;-------------------------------------------------------
         ; Dialog: Copy clipboard to line ...
         ;-------------------------------------------------------

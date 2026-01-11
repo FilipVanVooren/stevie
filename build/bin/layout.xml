@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <romset version="1.0">
    <resources>
-      <rom id="romimage" file="stevie60.bin"/>
+      <rom id="romimage" file="stevie30.bin"/>
       <rom id="gromimage" file="phm3055g3.bin"/>
    </resources>
    <configuration>

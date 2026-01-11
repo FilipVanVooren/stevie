@@ -57,10 +57,8 @@ dialog.clipboard.setup:
               data rambuf,cmdb.panhead.buf + 27,5
                                     ; Add line number to buffer
 
-        li    tmp0,32
-        sla   tmp0,8
-        movb  tmp0,@cmdb.panhead.buf
-                                    ; Set length byte
+        li    tmp0,>2000              ; \
+        movb  tmp0,@cmdb.panhead.buf  ; / Set MSB (length byte) to 32
 
         li    tmp0,cmdb.panhead.buf
         mov   tmp0,@cmdb.panhead    ; Header for dialog
@@ -74,6 +72,9 @@ dialog.clipboard.setup:
         mov   tmp0,@cmdb.paninfo    ; Show info message
 
         clr   @cmdb.panmarkers      ; No key markers
+
+        li    tmp0,txt.ws4          ; \ Empty hint
+        mov   tmp0,@cmdb.panhint2   ; / 
 
         bl    @cmdb.cmd.clear       ; Clear current command
 

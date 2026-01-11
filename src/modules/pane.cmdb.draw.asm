@@ -94,7 +94,7 @@ pane.cmdb.draw:
         jle   pane.cmdb.draw.nomarkers ; | buffer input if dialog ID > 99
         seto  @waux1                   ; /
         ;------------------------------------------------------
-        ; Show menu entries
+        ; Show menu entries (@cmdb.paninfo)
         ;------------------------------------------------------
         mov   @cmdb.paninfo,tmp1     ; Null pointer?
         jeq   pane.cmdb.draw.markers ; Yes, skip menu/info message
@@ -122,8 +122,8 @@ pane.cmdb.draw:
         ; Show menu key markers ?
         ;------------------------------------------------------
 pane.cmdb.draw.markers:
-        mov   @cmdb.panmarkers,tmp0 ; Show markers?
-        jeq   pane.cmdb.draw.hint   ; no, skip
+        mov   @cmdb.panmarkers,tmp0    ; Show markers?
+        jeq   pane.cmdb.draw.nomarkers ; no, skip
         ;------------------------------------------------------
         ; Prepare memory for menu key markers (including color)
         ;------------------------------------------------------
