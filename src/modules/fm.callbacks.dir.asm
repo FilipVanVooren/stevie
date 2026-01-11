@@ -466,8 +466,14 @@ fm.dir.callback2.recsize.store:
         sla   tmp1,8                ; | LSB to MSB
         movb  tmp1,*tmp0            ; /
         ;------------------------------------------------------
-        ; Prepare for exit
+        ; Show filecount
         ;------------------------------------------------------
+        bl    @putnum               ; Show filecount
+              byte pane.botrow,72   ; \ i p1 = Y,X
+              data cat.filecount    ; | i p2 = Number to display
+              data rambuf           ; | i p3 = Workbuffer for string conversion
+              data >3020            ; / i p4 = ASCII offset, fill character
+
         inc   @cat.filecount
         ;------------------------------------------------------
         ; Exit
