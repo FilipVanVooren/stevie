@@ -30,9 +30,14 @@ edb.unlock:
         ;-------------------------------------------------------
         ; Show message 'Editor unlocked'
         ;-------------------------------------------------------
+        dect  stack
+        mov   @wyx,*stack           ; Save cursor position
+
         bl    @putat
               byte 0,52
               data txt.unlocked     ; Display message
+
+        mov   *stack+,@wyx          ; Restore cursor position
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------

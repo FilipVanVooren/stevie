@@ -10,6 +10,11 @@ edkey.action.cmdb.insert:
         dect  stack
         mov   @fb.topline,*stack    ; Push line number of fb top row
         ;-------------------------------------------------------
+        ; Exit if editor is locked
+        ;-------------------------------------------------------
+        mov   @edb.locked,tmp0               ; Locked?
+        jne   edkey.action.cmdb.insert.exit  ; Yes, exit early
+        ;-------------------------------------------------------
         ; Read directory if last character is '.'
         ;-------------------------------------------------------
         movb  @cmdb.cmdlen,tmp0     ; Get length-byte prefix of filename

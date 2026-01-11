@@ -141,8 +141,6 @@ main:
         ;-----------------------------------------------------------------------
         copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
-        copy  "edb.lock.asm"                ; Lock editor buffer
-        copy  "edb.unlock.asm"              ; Unlock editor buffer
         copy  "edb.autoinsert.toggle.asm"   ; Toggle auto insert mode for buffer
         ;-----------------------------------------------------------------------
         ; Logic for Editor settings

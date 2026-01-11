@@ -164,6 +164,9 @@ keymap_actions.editor:
         byte  key.ctrl.i, pane.focus.fb
         data  dialog.insert
 
+        byte  key.ctrl.l, pane.focus.fb
+        data  edkey.action.cmdb.lock
+
         byte  key.ctrl.s, pane.focus.fb
         data  dialog.save
 
@@ -171,7 +174,7 @@ keymap_actions.editor:
         data  dialog.open
 
         byte  key.ctrl.u, pane.focus.fb
-        data  dialog.shortcuts
+        data  edkey.action.cmdb.unlock
 
         byte  key.ctrl.p, pane.focus.fb
         data  dialog.print

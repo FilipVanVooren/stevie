@@ -1196,6 +1196,27 @@ edb.line.del.vector:
         data  vec.10
 
 
+***************************************************************
+* Stub for "edb.lock"
+* bank5 vec.13
+********|*****|*********************|**************************
+edb.lock:
+        mov   @edb.lock.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.lock.vector:
+        data  vec.13
+
+
+***************************************************************
+* Stub for "edb.unlock"
+* bank5 vec.14
+********|*****|*********************|**************************
+edb.unlock:
+        mov   @edb.unlock.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+edb.unlock.vector:
+        data  vec.14
+
 
 ***************************************************************
 * Trampoline bank 5 with return

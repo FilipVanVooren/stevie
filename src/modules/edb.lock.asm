@@ -30,7 +30,7 @@ edb.lock:
         ; Show message 'Editor locked'
         ;-------------------------------------------------------
         dect  stack
-        mov   @wyx,*stack           ; Backup current cursor position
+        mov   @wyx,*stack           ; Save cursor position
 
         bl    @putat
               byte 0,52

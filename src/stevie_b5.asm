@@ -77,6 +77,8 @@ main:
         copy  "edb.block.del.asm"   ; Delete code block
         copy  "edb.block.copy.asm"  ; Copy code block
         copy  "edb.block.match.asm" ; Check if within marked block
+        copy  "edb.lock.asm"        ; Lock editor buffer
+        copy  "edb.unlock.asm"      ; Unlock editor buffer        
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
