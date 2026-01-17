@@ -19,7 +19,7 @@
 * File: stevie_b5.asm
 *
 * Bank 5 "Jumbo"
-* Editor Buffer methods delegated from bank 1
+* Editor Buffer methods delegated from banks 1 and 2
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -78,7 +78,10 @@ main:
         copy  "edb.block.copy.asm"  ; Copy code block
         copy  "edb.block.match.asm" ; Check if within marked block
         copy  "edb.lock.asm"        ; Lock editor buffer
-        copy  "edb.unlock.asm"      ; Unlock editor buffer        
+        copy  "edb.unlock.asm"      ; Unlock editor buffer    
+        copy  "edb.find.asm"        ; Initialize for find function
+        copy  "edb.find.search.asm" ; Find functionality
+        copy  "edb.find.scan.asm"   ; Scan editor buffer for matches            
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

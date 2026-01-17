@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260111-2038070
+0002               * BUILD: 260117-1638060
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -10392,7 +10392,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6324 A00C     
 0080               
 0081 6326 06A0  32         bl    @fm.savefile          ; Save DV80 file
-     6328 6600     
+     6328 663A     
 0082                                                   ; \ i  parm1 = Pointer to length-prefixed
 0083                                                   ; |            device/filename string
 0084                                                   ; | i  parm2 = First line to save (base 0)
@@ -10462,7 +10462,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      635C A00A     
 0041               
 0042 635E 06A0  32         bl    @pane.colorscheme.load
-     6360 6612     
+     6360 664C     
 0043                                                   ; Reload color scheme
 0044                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0045                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -10478,7 +10478,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6364 A21C     
      6366 A006     
 0055 6368 06A0  32         bl    @pane.colorscheme.botline
-     636A 6624     
+     636A 665E     
 0056                                                   ; Set colors for bottom line
 0057                                                   ; \ i  @parm1 = Color combination
 0058                                                   ; /
@@ -10566,7 +10566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      63AE A220     
      63B0 A006     
 0059 63B2 06A0  32         bl    @pane.colorscheme.botline
-     63B4 6624     
+     63B4 665E     
 0060                                                   ; Set colors for bottom line
 0061                                                   ; \ i  @parm1 = Color combination
 0062                                                   ; /
@@ -10642,7 +10642,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0114                       ;------------------------------------------------------
 0115               edb.block.delete.fb.refresh:
 0116 6410 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     6412 6636     
+     6412 6670     
 0117                                                   ; | i  @parm1 = Line to start with
 0118                                                   ; /             (becomes @fb.topline)
 0119               
@@ -10758,7 +10758,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6480 0035     
 0076               
 0077 6482 06A0  32         bl    @pane.errline.show    ; Show error line
-     6484 65EE     
+     6484 6628     
 0078               
 0079 6486 04E0  34         clr   @outparm1             ; No action (>0000)
      6488 A018     
@@ -10770,7 +10770,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      648E A220     
      6490 A006     
 0085 6492 06A0  32         bl    @pane.colorscheme.botline
-     6494 6624     
+     6494 665E     
 0086                                                   ; Set colors for bottom line
 0087                                                   ; \ i  @parm1 = Color combination
 0088                                                   ; /
@@ -11116,10 +11116,71 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      65EC 6564     
 0059                       even
                    < stevie_b5.asm
-0082                       ;-----------------------------------------------------------------------
-0083                       ; Stubs
-0084                       ;-----------------------------------------------------------------------
-0085                       copy  "rom.stubs.bank5.asm" ; Bank specific stubs
+0082                       copy  "edb.find.asm"        ; Initialize for find function
+     **** ****     > edb.find.asm
+0001               * FILE......: edb.find.asm
+0002               * Purpose...: Initialize memory used for editor buffer find functionality
+0003               ***************************************************************
+0004               * edb.find.init
+0005               * Scan source code for search string
+0006               ***************************************************************
+0007               *  bl   @edb.find.init
+0008               *--------------------------------------------------------------
+0009               * INPUT
+0010               * NONE
+0011               *--------------------------------------------------------------
+0012               * OUTPUT
+0013               * NONE
+0014               *--------------------------------------------------------------
+0015               * Register usage
+0016               * tmp0, tmp1, tmp2, tmp3, tmp4, r1
+0017               ********|*****|*********************|**************************
+0018               edb.find.init:
+0019 65EE 0649  14         dect  stack
+0020 65F0 C64B  30         mov   r11,*stack            ; Save return address
+0021 65F2 0649  14         dect  stack
+0022 65F4 C644  30         mov   tmp0,*stack           ; Push tmp0
+0023 65F6 0649  14         dect  stack
+0024 65F8 C645  30         mov   tmp1,*stack           ; Push tmp1
+0025 65FA 0649  14         dect  stack
+0026 65FC C646  30         mov   tmp2,*stack           ; Push tmp2
+0027                       ;------------------------------------------------------
+0028                       ; Initialisation
+0029                       ;------------------------------------------------------
+0030 65FE 06A0  32         bl    @film
+     6600 2236     
+0031 6602 F100                   data edb.srch.idx.rtop
+0032 6604 00FF                   data >ff
+0033 6606 0600                   data edb.srch.idx.rsize + edb.srch.idx.csize
+0034                                                   ; Clear search results index for rows and
+0035                                                   ; columns. Using >ff as "unset" value
+0036               
+0037 6608 04E0  34         clr   @edb.srch.offset      ; Reset offset into search results row index
+     660A A5D6     
+0038 660C 04E0  34         clr   @edb.srch.matches     ; Reset matches counter
+     660E A5CE     
+0039 6610 04E0  34         clr   @edb.srch.curmatch    ; Reset current match
+     6612 A5D0     
+0040 6614 04E0  34         clr   @edb.srch.startln     ; 1st line to search
+     6616 A5C8     
+0041 6618 C820  54         mov   @edb.lines,@edb.srch.endln
+     661A A504     
+     661C A5CA     
+0042                                                   ; Last line to search
+0043                       ;------------------------------------------------------
+0044                       ; Exit
+0045                       ;------------------------------------------------------
+0046               edb.find.init.exit:
+0047 661E C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0048 6620 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0049 6622 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0050 6624 C2F9  30         mov   *stack+,r11           ; Pop r11
+0051 6626 045B  20         b     *r11                  ; Return to caller
+                   < stevie_b5.asm
+0083                       ;-----------------------------------------------------------------------
+0084                       ; Stubs
+0085                       ;-----------------------------------------------------------------------
+0086                       copy  "rom.stubs.bank5.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bank5.asm
 0001               * FILE......: rom.stubs.bank5.asm
 0002               * Purpose...: Bank 5 stubs for functions in other banks
@@ -11130,21 +11191,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               * bank1 vec.30
 0008               ********|*****|*********************|**************************
 0009               pane.errline.show:
-0010 65EE 0649  14         dect  stack
-0011 65F0 C64B  30         mov   r11,*stack            ; Save return address
+0010 6628 0649  14         dect  stack
+0011 662A C64B  30         mov   r11,*stack            ; Save return address
 0012                       ;------------------------------------------------------
 0013                       ; Call function in bank 1
 0014                       ;------------------------------------------------------
-0015 65F2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     65F4 30B4     
-0016 65F6 6002                   data bank1.rom        ; | i  p0 = bank address
-0017 65F8 7FAA                   data vec.30           ; | i  p1 = Vector with target address
-0018 65FA 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0015 662C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     662E 30B4     
+0016 6630 6002                   data bank1.rom        ; | i  p0 = bank address
+0017 6632 7FAA                   data vec.30           ; | i  p1 = Vector with target address
+0018 6634 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0019                       ;------------------------------------------------------
 0020                       ; Exit
 0021                       ;------------------------------------------------------
-0022 65FC C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 65FE 045B  20         b     *r11                  ; Return to caller
+0022 6636 C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 6638 045B  20         b     *r11                  ; Return to caller
 0024               
 0025               
 0026               ***************************************************************
@@ -11152,21 +11213,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               * bank2 vec.4
 0029               ********|*****|*********************|**************************
 0030               fm.savefile:
-0031 6600 0649  14         dect  stack
-0032 6602 C64B  30         mov   r11,*stack            ; Save return address
+0031 663A 0649  14         dect  stack
+0032 663C C64B  30         mov   r11,*stack            ; Save return address
 0033                       ;------------------------------------------------------
 0034                       ; Call function in bank 2
 0035                       ;------------------------------------------------------
-0036 6604 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6606 30B4     
-0037 6608 6004                   data bank2.rom        ; | i  p0 = bank address
-0038 660A 7F76                   data vec.4            ; | i  p1 = Vector with target address
-0039 660C 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 663E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6640 30B4     
+0037 6642 6004                   data bank2.rom        ; | i  p0 = bank address
+0038 6644 7F76                   data vec.4            ; | i  p1 = Vector with target address
+0039 6646 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Exit
 0042                       ;------------------------------------------------------
-0043 660E C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 6610 045B  20         b     *r11                  ; Return to caller
+0043 6648 C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 664A 045B  20         b     *r11                  ; Return to caller
 0045               
 0046               
 0047               ***************************************************************
@@ -11174,21 +11235,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0049               * bank4 vec.41
 0050               ********|*****|*********************|**************************
 0051               pane.colorscheme.load:
-0052 6612 0649  14         dect  stack
-0053 6614 C64B  30         mov   r11,*stack            ; Save return address
+0052 664C 0649  14         dect  stack
+0053 664E C64B  30         mov   r11,*stack            ; Save return address
 0054                       ;------------------------------------------------------
 0055                       ; Call function in bank 4
 0056                       ;------------------------------------------------------
-0057 6616 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6618 30B4     
-0058 661A 6008                   data bank4.rom        ; | i  p0 = bank address
-0059 661C 7FC0                   data vec.41           ; | i  p1 = Vector with target address
-0060 661E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0057 6650 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6652 30B4     
+0058 6654 6008                   data bank4.rom        ; | i  p0 = bank address
+0059 6656 7FC0                   data vec.41           ; | i  p1 = Vector with target address
+0060 6658 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0061                       ;------------------------------------------------------
 0062                       ; Exit
 0063                       ;------------------------------------------------------
-0064 6620 C2F9  30         mov   *stack+,r11           ; Pop r11
-0065 6622 045B  20         b     *r11                  ; Return to caller
+0064 665A C2F9  30         mov   *stack+,r11           ; Pop r11
+0065 665C 045B  20         b     *r11                  ; Return to caller
 0066               
 0067               
 0068               ***************************************************************
@@ -11196,21 +11257,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0070               * bank4 vec.42
 0071               ********|*****|*********************|**************************
 0072               pane.colorscheme.botline:
-0073 6624 0649  14         dect  stack
-0074 6626 C64B  30         mov   r11,*stack            ; Save return address
+0073 665E 0649  14         dect  stack
+0074 6660 C64B  30         mov   r11,*stack            ; Save return address
 0075                       ;------------------------------------------------------
 0076                       ; Call function in bank 1
 0077                       ;------------------------------------------------------
-0078 6628 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     662A 30B4     
-0079 662C 6008                   data bank4.rom        ; | i  p0 = bank address
-0080 662E 7FC2                   data vec.42           ; | i  p1 = Vector with target address
-0081 6630 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0078 6662 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6664 30B4     
+0079 6666 6008                   data bank4.rom        ; | i  p0 = bank address
+0080 6668 7FC2                   data vec.42           ; | i  p1 = Vector with target address
+0081 666A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0082                       ;------------------------------------------------------
 0083                       ; Exit
 0084                       ;------------------------------------------------------
-0085 6632 C2F9  30         mov   *stack+,r11           ; Pop r11
-0086 6634 045B  20         b     *r11                  ; Return to caller
+0085 666C C2F9  30         mov   *stack+,r11           ; Pop r11
+0086 666E 045B  20         b     *r11                  ; Return to caller
 0087               
 0088               
 0089               ***************************************************************
@@ -11218,23 +11279,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0091               * bank4 vec.8
 0092               ********|*****|*********************|**************************
 0093               fb.refresh:
-0094 6636 0649  14         dect  stack
-0095 6638 C64B  30         mov   r11,*stack            ; Save return address
+0094 6670 0649  14         dect  stack
+0095 6672 C64B  30         mov   r11,*stack            ; Save return address
 0096                       ;------------------------------------------------------
 0097                       ; Call function in bank 4
 0098                       ;------------------------------------------------------
-0099 663A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     663C 30B4     
-0100 663E 6008                   data bank4.rom        ; | i  p0 = bank address
-0101 6640 7F7E                   data vec.8            ; | i  p1 = Vector with target address
-0102 6642 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0099 6674 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6676 30B4     
+0100 6678 6008                   data bank4.rom        ; | i  p0 = bank address
+0101 667A 7F7E                   data vec.8            ; | i  p1 = Vector with target address
+0102 667C 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0103                       ;------------------------------------------------------
 0104                       ; Exit
 0105                       ;------------------------------------------------------
-0106 6644 C2F9  30         mov   *stack+,r11           ; Pop r11
-0107 6646 045B  20         b     *r11                  ; Return to caller
+0106 667E C2F9  30         mov   *stack+,r11           ; Pop r11
+0107 6680 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0086                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+0087                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -11246,21 +11307,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 6648 0649  14         dect  stack
-0013 664A C64B  30         mov   r11,*stack            ; Save return address
+0012 6682 0649  14         dect  stack
+0013 6684 C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 664C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     664E 30B4     
-0018 6650 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 6652 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0020 6654 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 6686 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6688 30B4     
+0018 668A 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 668C 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0020 668E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 6656 C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 6658 045B  20         b     *r11                  ; Return to caller
+0024 6690 C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 6692 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -11269,21 +11330,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 665A 0649  14         dect  stack
-0038 665C C64B  30         mov   r11,*stack            ; Save return address
+0037 6694 0649  14         dect  stack
+0038 6696 C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 665E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6660 30B4     
-0043 6662 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 6664 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 6666 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 6698 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     669A 30B4     
+0043 669C 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 669E 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 66A0 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 6668 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 666A 045B  20         b     *r11                  ; Return to caller
+0049 66A2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 66A4 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -11292,21 +11353,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 666C 0649  14         dect  stack
-0060 666E C64B  30         mov   r11,*stack            ; Save return address
+0059 66A6 0649  14         dect  stack
+0060 66A8 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 6670 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6672 30B4     
-0065 6674 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 6676 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 6678 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 66AA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     66AC 30B4     
+0065 66AE 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 66B0 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 66B2 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 667A C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 667C 045B  20         b     *r11                  ; Return to caller
+0071 66B4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 66B6 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -11314,34 +11375,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 667E 0649  14         dect  stack
-0081 6680 C64B  30         mov   r11,*stack            ; Save return address
+0080 66B8 0649  14         dect  stack
+0081 66BA C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 6682 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6684 30B4     
-0086 6686 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 6688 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 668A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 66BC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     66BE 30B4     
+0086 66C0 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 66C2 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 66C4 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 668C C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 668E 045B  20         b     *r11                  ; Return to caller
+0092 66C6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 66C8 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b5.asm
-0087                       ;-----------------------------------------------------------------------
-0088                       ; Program data
-0089                       ;-----------------------------------------------------------------------
-0090                                                   ; Not applicable
-0091                       ;-----------------------------------------------------------------------
-0092                       ; Bank full check
-0093                       ;-----------------------------------------------------------------------
-0097                       ;-----------------------------------------------------------------------
-0098                       ; Show ROM bank in CPU crash screen
-0099                       ;-----------------------------------------------------------------------
-0100                       copy  "rom.crash.asm"
+0088                       ;-----------------------------------------------------------------------
+0089                       ; Program data
+0090                       ;-----------------------------------------------------------------------
+0091                                                   ; Not applicable
+0092                       ;-----------------------------------------------------------------------
+0093                       ; Bank full check
+0094                       ;-----------------------------------------------------------------------
+0098                       ;-----------------------------------------------------------------------
+0099                       ; Show ROM bank in CPU crash screen
+0100                       ;-----------------------------------------------------------------------
+0101                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -11357,10 +11418,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_b5.asm
-0101                       ;-----------------------------------------------------------------------
-0102                       ; Table for VDP modes
-0103                       ;-----------------------------------------------------------------------
-0104                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0102                       ;-----------------------------------------------------------------------
+0103                       ; Table for VDP modes
+0104                       ;-----------------------------------------------------------------------
+0105                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -11470,10 +11531,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_b5.asm
-0105                       ;-----------------------------------------------------------------------
-0106                       ; Vector table
-0107                       ;-----------------------------------------------------------------------
-0108                       copy  "rom.vectors.bank5.asm"
+0106                       ;-----------------------------------------------------------------------
+0107                       ; Vector table
+0108                       ;-----------------------------------------------------------------------
+0109                       copy  "rom.vectors.bank5.asm"
      **** ****     > rom.vectors.bank5.asm
 0001               * FILE......: rom.vectors.bank5.asm
 0002               * Purpose...: Bank 5 vectors for trampoline function
@@ -11558,7 +11619,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_b5.asm
-0109                                                   ; Vector table bank 5
+0110                                                   ; Vector table bank 5
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     
@@ -11873,6 +11934,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.FILENAME........ >A526 :     
     EDB.FILENAME.PTR.... >A514 :     
     EDB.FILETYPE.PTR.... >A516 :     
+    EDB.FIND.INIT....... >65EE :     
+    EDB.FIND.INIT.EXIT.. >661E :     
     EDB.FREE............ >A5DC :     
     EDB.HIPAGE.ALLOC.... >3810 :     
     EDB.HIPAGE.ALLOC.CHECK_SETPAGE >381C :     
@@ -11966,7 +12029,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FB.INIT............. >3164 :     
     FB.INIT.EXIT........ >31B6 :     
     FB.PREVCURSOR....... >A316 :     
-    FB.REFRESH.......... >6636 :     
+    FB.REFRESH.......... >6670 :     
     FB.ROW.............. >A306 :     
     FB.ROW.DIRTY........ >A30A :     
     FB.ROW.LENGTH....... >A308 :     
@@ -12053,7 +12116,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FILV................ >228E :     
     FILZZ............... >22B4 :     
     FJ.BOTTOM........... >B000 :     
-    FM.SAVEFILE......... >6600 :     
+    FM.SAVEFILE......... >663A :     
     FNOPT1.............. >0000 :     
     FNOPT2.............. >0006 :     
     FNOPT3.............. >000C :     
@@ -12369,10 +12432,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     MCCODE.............. >2210 :     
     MCLOOP.............. >8320 :     
     MCSPRD.............. >8322 :     
-    MEM.SAMS.SET.BOOT... >666C :     
-    MEM.SAMS.SET.LEGACY. >665A :     
-    MEM.SAMS.SET.STEVIE. >667E :     
-    MEM.SAMS.SETUP.STEVIE >6648 :     
+    MEM.SAMS.SET.BOOT... >66A6 :     
+    MEM.SAMS.SET.LEGACY. >6694 :     
+    MEM.SAMS.SET.STEVIE. >66B8 :     
+    MEM.SAMS.SETUP.STEVIE >6682 :     
     MKHEX............... >29C8 :     
     MKHEX1.............. >29E0 :     
     MKHEX1.DIGIT09...... >29F6 :     
@@ -12408,9 +12471,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
     PANE.BOTROW......... >001D :     
-    PANE.COLORSCHEME.BOTLINE >6624 :     
-    PANE.COLORSCHEME.LOAD >6612 :     
-    PANE.ERRLINE.SHOW... >65EE :     
+    PANE.COLORSCHEME.BOTLINE >665E :     
+    PANE.COLORSCHEME.LOAD >664C :     
+    PANE.ERRLINE.SHOW... >6628 :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >3856 :     

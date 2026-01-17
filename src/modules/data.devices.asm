@@ -21,6 +21,7 @@ def.scs3      stri 'SCS3.'
 def.ide1      stri 'IDE1.'
 def.ide2      stri 'IDE2.'
 def.ide3      stri 'IDE3.'
+def.clock     stri 'CLOCK'
 
 *---------------------------------------------------------------
 * List with device names

@@ -79,7 +79,8 @@ main:
         copy  "fm.insertfile.asm"        ; Insert DV80 file into editor buffer
         copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
         copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
-        copy  "fm.run.ea5.asm"           ; Run EA5 program image   
+        copy  "fm.run.ea5.asm"           ; Run EA5 program image
+        copy  "fm.clock.asm"             ; Read Date/Time from clock device
         copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
         copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
         copy  "fm.callbacks.ea5.asm"     ; Callbacks for EA5 file IO
@@ -88,9 +89,6 @@ main:
         copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
         copy  "fm.browse.updir.asm"      ; Directory up
         copy  "fm.directory.asm"         ; File manager drive/directory listing
-        copy  "edb.find.asm"             ; Initialize for find function
-        copy  "edb.find.search.asm"      ; Find functionality
-        copy  "edb.find.scan.asm"        ; Scan editor buffer for matches
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
