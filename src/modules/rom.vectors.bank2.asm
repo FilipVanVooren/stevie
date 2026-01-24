@@ -24,8 +24,8 @@ vec.10  data  fm.browse.fname.prev  ;
 vec.11  data  fm.browse.fname.next  ;
 vec.12  data  fm.browse.fname.set   ;
 vec.13  data  fm.browse.updir       ;
-vec.14  data  file.vmem             ;
-vec.15  data  fh.file.load.bin      ;
+vec.14  data  fm.read.clock         ;
+vec.15  data  cpu.crash             ;
 vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cpu.crash             ;
@@ -42,7 +42,7 @@ vec.28  data  cpu.crash             ;
 vec.29  data  cpu.crash             ;
 vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
-vec.32  data  cpu.crash             ;
+vec.32  data  file.vmem             ;
 *--------------------------------------------------------------
 * ROM 2: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------

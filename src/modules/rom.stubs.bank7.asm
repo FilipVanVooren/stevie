@@ -47,7 +47,7 @@ fm.newfile:
 
 ***************************************************************
 * Stub for "file.vmem"
-* bank2 vec.14
+* bank2 vec.32
 ********|*****|*********************|**************************
 file.vmem:
         dect  stack
@@ -57,7 +57,7 @@ file.vmem:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
-              data vec.14           ; | i  p1 = Vector with target address
+              data vec.32           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

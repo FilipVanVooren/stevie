@@ -1,31 +1,27 @@
-* FILE......: fm.clock.asm
+* FILE......: fm.readclock.asm
 * Purpose...: File Manager - Catalog drive/directory
 
 
 ***************************************************************
-* fm.clock
+* fm.read.clock
 * Read date & time from clock device
 ***************************************************************
-* bl  @fm.clock
+* bl  @fm.read.clock
 *--------------------------------------------------------------
 * INPUT
-* parm1  = Pointer to length-prefixed string containing device
-*          or >0000 if using parm2.
-* parm2  = Index in device list (ignored if parm1 set)
+* NONE
 *--------------------------------------------------------------- 
 * OUTPUT
 * NONE
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0
 ********|*****|*********************|**************************
-fm.clock:
+fm.read.clock:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
@@ -47,17 +43,16 @@ fm.clock:
         ;-------------------------------------------------------
         ; Read clock data into memory
         ;-------------------------------------------------------
-fm.clock.read:
         li    tmp0,def.clock        ; \ Pointer to clock device string
         mov   tmp0,@parm1           ; / 
         clr   @parm2                ; Callback function "Before open file"
-        clr   @parm3                ; Callback function "Read line from file"
+
+        li    tmp0,fm.read.clock.cb.stopflag
+        mov   tmp0,@parm3           ; Callback function "Read line from file"
+        
         clr   @parm4                ; Callback function "Close file"
         clr   @parm5                ; Callback function "File I/O error"
         clr   @parm6                ; Callback function "Memory full"
-
-        li    tmp0,fm.dir.callback2 ; Callback function "Read line from file"
-        mov   tmp0,@parm3           ; Register callback 2
         
         li    tmp0,rambuf
         mov   tmp0,@parm7           ; Destination RAM memory address
@@ -91,7 +86,7 @@ fm.clock.read:
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fm.clock.exit:
+fm.readclock.exit:
         mov   *stack+,@parm9        ; Pop @parm9
         mov   *stack+,@parm8        ; Pop @parm8
         mov   *stack+,@parm7        ; Pop @parm7
@@ -101,7 +96,6 @@ fm.clock.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0      
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

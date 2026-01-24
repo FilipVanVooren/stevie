@@ -29,7 +29,7 @@
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
 
-****************************************************s***********
+***************************************************************
 * BANK 3
 ********|*****|*********************|**************************
 bankid  equ   bank3.rom             ; Set bank identifier to current bank

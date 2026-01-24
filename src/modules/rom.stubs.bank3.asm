@@ -22,7 +22,6 @@ edb.line.pack:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "edkey.action.cmdb.show"
 * bank1 vec.15
@@ -43,7 +42,6 @@ edkey.action.cmdb.show:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fb.refresh"
 * bank1 vec.20
@@ -63,7 +61,6 @@ fb.refresh:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.errline.hide"
@@ -86,7 +83,6 @@ pane.errline.hide:
         b     *r11                  ; Return to caller
 
 
-
 ***************************************************************
 * Stub for "pane.cursor.blink"
 * bank1 vec.28
@@ -106,7 +102,6 @@ pane.cursor.blink:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.cursor.hide"
@@ -128,7 +123,6 @@ pane.cursor.hide:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.errline.show"
 * bank1 vec.30
@@ -148,7 +142,6 @@ pane.errline.show:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "fm.directory"
@@ -170,7 +163,6 @@ fm.directory:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fm.browse.fname.set"
 * bank2 vec.12
@@ -184,6 +176,26 @@ fm.browse.fname.set:
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
               data vec.12           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+***************************************************************
+* Stub for "fm.read.clock"
+* bank2 vec.14
+********|*****|*********************|**************************
+fm.read.clock:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2.rom        ; | i  p0 = bank address
+              data vec.14           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
