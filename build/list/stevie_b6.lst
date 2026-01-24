@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260117-1643570
+0002               * BUILD: 260124-1945200
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11642,11 +11642,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042 7FA8 2026     vec.29  data  cpu.crash                ;
 0043 7FAA 2026     vec.30  data  cpu.crash                ;
 0044 7FAC 2026     vec.31  data  cpu.crash                ;
-0045 7FAE 2026     vec.32  data  cpu.crash                ;
+0045 7FAE 6284     vec.32  data  tv.set.font              ; Set font
 0046               *--------------------------------------------------------------
 0047               * ROM 6: Vectors 33-64
 0048               *--------------------------------------------------------------
-0049 7FB0 6284     vec.33  data  tv.set.font           ; Set current font
+0049 7FB0 2026     vec.33  data  cpu.crash             ;
 0050 7FB2 2026     vec.34  data  cpu.crash             ;
 0051 7FB4 2026     vec.35  data  cpu.crash             ;
 0052 7FB6 2026     vec.36  data  cpu.crash             ;

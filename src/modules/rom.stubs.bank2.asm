@@ -376,7 +376,7 @@ fb.refresh:
 
 ***************************************************************
 * Stub for "edb.find.init"
-* bank5 vec.20
+* bank5 vec.15
 ********|*****|*********************|**************************
 edb.find.init:
         dect  stack
@@ -386,7 +386,7 @@ edb.find.init:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data vec.15           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -397,7 +397,7 @@ edb.find.init:
 
 ***************************************************************
 * Stub for "edb.find.search"
-* bank5 vec.21
+* bank5 vec.16
 ********|*****|*********************|**************************
 edb.find.search:
         dect  stack
@@ -407,28 +407,7 @@ edb.find.search:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.21           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
-***************************************************************
-* Stub for "edb.find.scan"
-* bank5 vec.22
-********|*****|*********************|**************************
-edb.find.scan:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 5
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank5.rom        ; | i  p0 = bank address
-              data vec.21           ; | i  p1 = Vector with target address
+              data vec.16           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -503,7 +482,7 @@ vdp.cursor.tat.cmdb.hide.exit:
 
 ***************************************************************
 * Stub for "tv.set.font"
-* bank6 vec.33
+* bank6 vec.32
 ********|*****|*********************|**************************
 tv.set.font:
         dect  stack
@@ -513,7 +492,7 @@ tv.set.font:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank6.rom        ; | i  p0 = bank address
-              data vec.33           ; | i  p1 = Vector with target address
+              data vec.32           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

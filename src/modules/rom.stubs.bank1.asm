@@ -223,46 +223,47 @@ fm.browse.updir:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-***************************************************************
-* Stub for "edb.find.search"
-* bank2 vec.21
-********|*****|*********************|**************************
-edb.find.search:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 2
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2.rom        ; | i  p0 = bank address
-              data vec.21           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "edb.find.init"
-* bank2 vec.20
+* bank5 vec.15
 ********|*****|*********************|**************************
 edb.find.init:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 2
+        ; Call function in bank 5
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.15           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11         
+
+
+***************************************************************
+* Stub for "edb.find.search"
+* bank5 vec.16
+********|*****|*********************|**************************
+edb.find.search:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 5
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.16           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
 
 
 ***************************************************************
@@ -1284,13 +1285,13 @@ vdp.cursor.tat.vector:
 
 ***************************************************************
 * Stub for "tv.set.font"
-* bank6 vec.33
+* bank6 vec.32
 ********|*****|*********************|**************************
 tv.set.font:
         mov   @tv.set.font.vector,@trmpvector
         jmp   _trampoline.bank6.ret ; Longjump
 tv.set.font.vector:
-        data  vec.33
+        data  vec.32
 
 
 ***************************************************************

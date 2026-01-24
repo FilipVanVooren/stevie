@@ -30,9 +30,9 @@ vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cpu.crash             ;
 vec.19  data  cpu.crash             ;
-vec.20  data  edb.find.init         ;
-vec.21  data  edb.find.search       ;
-vec.22  data  edb.find.scan         ;
+vec.20  data  cpu.crash             ;
+vec.21  data  cpu.crash             ;
+vec.22  data  cpu.crash             ;
 vec.23  data  cpu.crash             ;
 vec.24  data  cpu.crash             ;
 vec.25  data  cpu.crash             ;
@@ -44,7 +44,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 2: Vectors 33-64
+* ROM 2: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

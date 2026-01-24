@@ -68,7 +68,7 @@ file.vmem:
 
 ***************************************************************
 * Stub for "edb.find.init"
-* bank2 vec.20
+* bank5 vec.15
 ********|*****|*********************|**************************
 edb.find.init:
         dect  stack
@@ -77,8 +77,8 @@ edb.find.init:
         ; Call function in bank 2
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank2.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.15           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

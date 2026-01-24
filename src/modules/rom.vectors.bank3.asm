@@ -44,7 +44,7 @@ vec.30  data  dialog.menu           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
 *--------------------------------------------------------------
-* ROM 3: Vectors 33-64
+* ROM 3: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
 vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print

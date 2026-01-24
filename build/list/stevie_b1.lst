@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260117-1643570
+0002               * BUILD: 260124-1945200
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12263,7 +12263,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0021                       ; Reset search results
 0022                       ;-------------------------------------------------------
 0023 69CA 06A0  32         bl    @edb.find.init        ; Reset search results
-     69CC 76E0     
+     69CC 76CE     
 0024 69CE 0720  34         seto  @fb.dirty             ; Frame buffer dirty
      69D0 A31A     
 0025 69D2 0720  34         seto  @fb.status.dirty      ; Trigger status lines update
@@ -14664,7 +14664,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0006               ********|*****|*********************|**************************
 0007               edkey.action.cmdb.find.search:
 0008 7268 06A0  32         bl    @edb.find.search      ; Perform search operation
-     726A 76CE     
+     726A 76E0     
 0009 726C 0760  38         abs   @edb.srch.matches     ; Any search matches found?
      726E A5CE     
 0010 7270 1504  14         jgt   edkey.action.cmdb.find.search.exit
@@ -15947,1439 +15947,1440 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0223 76CA C2F9  30         mov   *stack+,r11           ; Pop r11
 0224 76CC 045B  20         b     *r11                  ; Return to caller
 0225               
-0226               ***************************************************************
-0227               * Stub for "edb.find.search"
-0228               * bank2 vec.21
-0229               ********|*****|*********************|**************************
-0230               edb.find.search:
-0231 76CE 0649  14         dect  stack
-0232 76D0 C64B  30         mov   r11,*stack            ; Save return address
-0233                       ;------------------------------------------------------
-0234                       ; Call function in bank 2
-0235                       ;------------------------------------------------------
-0236 76D2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0226               
+0227               ***************************************************************
+0228               * Stub for "edb.find.init"
+0229               * bank5 vec.15
+0230               ********|*****|*********************|**************************
+0231               edb.find.init:
+0232 76CE 0649  14         dect  stack
+0233 76D0 C64B  30         mov   r11,*stack            ; Save return address
+0234                       ;------------------------------------------------------
+0235                       ; Call function in bank 5
+0236                       ;------------------------------------------------------
+0237 76D2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      76D4 30B4     
-0237 76D6 6004                   data bank2.rom        ; | i  p0 = bank address
-0238 76D8 7F98                   data vec.21           ; | i  p1 = Vector with target address
-0239 76DA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-0240                       ;------------------------------------------------------
-0241                       ; Exit
-0242                       ;------------------------------------------------------
-0243 76DC C2F9  30         mov   *stack+,r11           ; Pop r11
-0244 76DE 045B  20         b     *r11                  ; Return to caller
-0245               
+0238 76D6 600A                   data bank5.rom        ; | i  p0 = bank address
+0239 76D8 7F8C                   data vec.15           ; | i  p1 = Vector with target address
+0240 76DA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0241                       ;------------------------------------------------------
+0242                       ; Exit
+0243                       ;------------------------------------------------------
+0244 76DC C2F9  30         mov   *stack+,r11           ; Pop r11
+0245 76DE 045B  20         b     *r11
 0246               
-0247               ***************************************************************
-0248               * Stub for "edb.find.init"
-0249               * bank2 vec.20
-0250               ********|*****|*********************|**************************
-0251               edb.find.init:
-0252 76E0 0649  14         dect  stack
-0253 76E2 C64B  30         mov   r11,*stack            ; Save return address
-0254                       ;------------------------------------------------------
-0255                       ; Call function in bank 2
-0256                       ;------------------------------------------------------
-0257 76E4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0247               
+0248               ***************************************************************
+0249               * Stub for "edb.find.search"
+0250               * bank5 vec.16
+0251               ********|*****|*********************|**************************
+0252               edb.find.search:
+0253 76E0 0649  14         dect  stack
+0254 76E2 C64B  30         mov   r11,*stack            ; Save return address
+0255                       ;------------------------------------------------------
+0256                       ; Call function in bank 5
+0257                       ;------------------------------------------------------
+0258 76E4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      76E6 30B4     
-0258 76E8 6004                   data bank2.rom        ; | i  p0 = bank address
-0259 76EA 7F96                   data vec.20           ; | i  p1 = Vector with target address
-0260 76EC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-0261                       ;------------------------------------------------------
-0262                       ; Exit
-0263                       ;------------------------------------------------------
-0264 76EE C2F9  30         mov   *stack+,r11           ; Pop r11
-0265 76F0 045B  20         b     *r11
-0266               
+0259 76E8 600A                   data bank5.rom        ; | i  p0 = bank address
+0260 76EA 7F8E                   data vec.16           ; | i  p1 = Vector with target address
+0261 76EC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0262                       ;------------------------------------------------------
+0263                       ; Exit
+0264                       ;------------------------------------------------------
+0265 76EE C2F9  30         mov   *stack+,r11           ; Pop r11
+0266 76F0 045B  20         b     *r11                  ; Return to caller
 0267               
-0268               ***************************************************************
-0269               * Stub for dialog "Help"
-0270               * bank3 vec.1
-0271               ********|*****|*********************|**************************
-0272               dialog.help.next:
-0273 76F2 8820  50         c     @w$0008,@cmdb.dialog.var
+0268               
+0269               ***************************************************************
+0270               * Stub for dialog "Help"
+0271               * bank3 vec.1
+0272               ********|*****|*********************|**************************
+0273               dialog.help.next:
+0274 76F2 8820  50         c     @w$0008,@cmdb.dialog.var
      76F4 2008     
      76F6 A722     
-0274 76F8 1304  14         jeq   !
-0275 76FA A820  54         a     @w$0008,@cmdb.dialog.var
+0275 76F8 1304  14         jeq   !
+0276 76FA A820  54         a     @w$0008,@cmdb.dialog.var
      76FC 2008     
      76FE A722     
-0276 7700 1002  14         jmp   dialog.help
-0277 7702 04E0  34 !       clr   @cmdb.dialog.var
+0277 7700 1002  14         jmp   dialog.help
+0278 7702 04E0  34 !       clr   @cmdb.dialog.var
      7704 A722     
-0278               dialog.help:
-0279 7706 C820  54         mov   @dialog.help.vector,@trmpvector
+0279               dialog.help:
+0280 7706 C820  54         mov   @dialog.help.vector,@trmpvector
      7708 770E     
      770A A034     
-0280 770C 1072  14         jmp   _trampoline.bank3     ; Show dialog
-0281               dialog.help.vector:
-0282 770E 7F70             data  vec.1
-0283               
+0281 770C 1072  14         jmp   _trampoline.bank3     ; Show dialog
+0282               dialog.help.vector:
+0283 770E 7F70             data  vec.1
 0284               
-0285               ***************************************************************
-0286               * Stub for dialog "Open file"
-0287               * bank3 vec.2
-0288               ********|*****|*********************|**************************
-0289               dialog.open:
-0290 7710 C820  54         mov   @dialog.open.vector,@trmpvector
+0285               
+0286               ***************************************************************
+0287               * Stub for dialog "Open file"
+0288               * bank3 vec.2
+0289               ********|*****|*********************|**************************
+0290               dialog.open:
+0291 7710 C820  54         mov   @dialog.open.vector,@trmpvector
      7712 7718     
      7714 A034     
-0291 7716 106D  14         jmp   _trampoline.bank3     ; Show dialog
-0292               dialog.open.vector:
-0293 7718 7F72             data  vec.2
-0294               
+0292 7716 106D  14         jmp   _trampoline.bank3     ; Show dialog
+0293               dialog.open.vector:
+0294 7718 7F72             data  vec.2
 0295               
-0296               ***************************************************************
-0297               * Stub for dialog "Save file"
-0298               * bank3 vec.3
-0299               ********|*****|*********************|**************************
-0300               dialog.save:
-0301 771A C820  54         mov   @dialog.save.vector,@trmpvector
+0296               
+0297               ***************************************************************
+0298               * Stub for dialog "Save file"
+0299               * bank3 vec.3
+0300               ********|*****|*********************|**************************
+0301               dialog.save:
+0302 771A C820  54         mov   @dialog.save.vector,@trmpvector
      771C 7722     
      771E A034     
-0302 7720 1068  14         jmp   _trampoline.bank3     ; Show dialog
-0303               dialog.save.vector:
-0304 7722 7F74             data  vec.3
-0305               
+0303 7720 1068  14         jmp   _trampoline.bank3     ; Show dialog
+0304               dialog.save.vector:
+0305 7722 7F74             data  vec.3
 0306               
-0307               ***************************************************************
-0308               * Stub for dialog "Insert file at line"
-0309               * bank3 vec.4
-0310               ********|*****|*********************|**************************
-0311               dialog.insert:
-0312 7724 C820  54         mov   @dialog.insert.vector,@trmpvector
+0307               
+0308               ***************************************************************
+0309               * Stub for dialog "Insert file at line"
+0310               * bank3 vec.4
+0311               ********|*****|*********************|**************************
+0312               dialog.insert:
+0313 7724 C820  54         mov   @dialog.insert.vector,@trmpvector
      7726 772C     
      7728 A034     
-0313 772A 1063  14         jmp   _trampoline.bank3     ; Show dialog
-0314               dialog.insert.vector:
-0315 772C 7F76             data  vec.4
-0316               
+0314 772A 1063  14         jmp   _trampoline.bank3     ; Show dialog
+0315               dialog.insert.vector:
+0316 772C 7F76             data  vec.4
 0317               
-0318               ***************************************************************
-0319               * Stub for dialog "Print file"
-0320               * bank3 vec.5
-0321               ********|*****|*********************|**************************
-0322               dialog.print:
-0323 772E C820  54         mov   @dialog.print.vector,@trmpvector
+0318               
+0319               ***************************************************************
+0320               * Stub for dialog "Print file"
+0321               * bank3 vec.5
+0322               ********|*****|*********************|**************************
+0323               dialog.print:
+0324 772E C820  54         mov   @dialog.print.vector,@trmpvector
      7730 7736     
      7732 A034     
-0324 7734 105E  14         jmp   _trampoline.bank3    ; Show dialog
-0325               dialog.print.vector:
-0326 7736 7F78             data  vec.5
-0327               
+0325 7734 105E  14         jmp   _trampoline.bank3    ; Show dialog
+0326               dialog.print.vector:
+0327 7736 7F78             data  vec.5
 0328               
-0329               ***************************************************************
-0330               * Stub for dialog "File"
-0331               * bank3 vec.6
-0332               ********|*****|*********************|**************************
-0333               dialog.file:
-0334 7738 C820  54         mov   @dialog.file.vector,@trmpvector
+0329               
+0330               ***************************************************************
+0331               * Stub for dialog "File"
+0332               * bank3 vec.6
+0333               ********|*****|*********************|**************************
+0334               dialog.file:
+0335 7738 C820  54         mov   @dialog.file.vector,@trmpvector
      773A 7740     
      773C A034     
-0335 773E 1059  14         jmp   _trampoline.bank3     ; Show dialog
-0336               dialog.file.vector:
-0337 7740 7F7A             data  vec.6
-0338               
+0336 773E 1059  14         jmp   _trampoline.bank3     ; Show dialog
+0337               dialog.file.vector:
+0338 7740 7F7A             data  vec.6
 0339               
-0340               ***************************************************************
-0341               * Stub for dialog "Unsaved Changes"
-0342               * bank3 vec.7
-0343               ********|*****|*********************|**************************
-0344               dialog.unsaved:
-0345 7742 04E0  34         clr   @cmdb.panmarkers      ; No key markers
+0340               
+0341               ***************************************************************
+0342               * Stub for dialog "Unsaved Changes"
+0343               * bank3 vec.7
+0344               ********|*****|*********************|**************************
+0345               dialog.unsaved:
+0346 7742 04E0  34         clr   @cmdb.panmarkers      ; No key markers
      7744 A72C     
-0346 7746 C820  54         mov   @dialog.unsaved.vector,@trmpvector
+0347 7746 C820  54         mov   @dialog.unsaved.vector,@trmpvector
      7748 774E     
      774A A034     
-0347 774C 1052  14         jmp   _trampoline.bank3     ; Show dialog
-0348               dialog.unsaved.vector:
-0349 774E 7F7C             data  vec.7
-0350               
+0348 774C 1052  14         jmp   _trampoline.bank3     ; Show dialog
+0349               dialog.unsaved.vector:
+0350 774E 7F7C             data  vec.7
 0351               
-0352               ***************************************************************
-0353               * Stub for dialog "Copy clipboard to line ..."
-0354               * bank3 vec.8
-0355               ********|*****|*********************|**************************
-0356               dialog.clipboard:
-0357 7750 C820  54         mov   @dialog.clipboard.vector,@trmpvector
+0352               
+0353               ***************************************************************
+0354               * Stub for dialog "Copy clipboard to line ..."
+0355               * bank3 vec.8
+0356               ********|*****|*********************|**************************
+0357               dialog.clipboard:
+0358 7750 C820  54         mov   @dialog.clipboard.vector,@trmpvector
      7752 7758     
      7754 A034     
-0358 7756 104D  14         jmp   _trampoline.bank3     ; Show dialog
-0359               dialog.clipboard.vector:
-0360 7758 7F7E             data  vec.8
-0361               
+0359 7756 104D  14         jmp   _trampoline.bank3     ; Show dialog
+0360               dialog.clipboard.vector:
+0361 7758 7F7E             data  vec.8
 0362               
-0363               ***************************************************************
-0364               * Stub for dialog "Configure clipboard device"
-0365               * bank3 vec.9
-0366               ********|*****|*********************|**************************
-0367               dialog.clipdev:
-0368 775A C820  54         mov   @dialog.clipdev.vector,@trmpvector
+0363               
+0364               ***************************************************************
+0365               * Stub for dialog "Configure clipboard device"
+0366               * bank3 vec.9
+0367               ********|*****|*********************|**************************
+0368               dialog.clipdev:
+0369 775A C820  54         mov   @dialog.clipdev.vector,@trmpvector
      775C 7762     
      775E A034     
-0369 7760 1048  14         jmp   _trampoline.bank3     ; Show dialog
-0370               dialog.clipdev.vector:
-0371 7762 7F80             data  vec.9
-0372               
+0370 7760 1048  14         jmp   _trampoline.bank3     ; Show dialog
+0371               dialog.clipdev.vector:
+0372 7762 7F80             data  vec.9
 0373               
-0374               ***************************************************************
-0375               * Stub for dialog "Configure"
-0376               * bank3 vec.10
-0377               ********|*****|*********************|**************************
-0378               dialog.config:
-0379 7764 C820  54         mov   @dialog.config.vector,@trmpvector
+0374               
+0375               ***************************************************************
+0376               * Stub for dialog "Configure"
+0377               * bank3 vec.10
+0378               ********|*****|*********************|**************************
+0379               dialog.config:
+0380 7764 C820  54         mov   @dialog.config.vector,@trmpvector
      7766 776C     
      7768 A034     
-0380 776A 1043  14         jmp   _trampoline.bank3     ; Show dialog
-0381               dialog.config.vector:
-0382 776C 7F82             data  vec.10
-0383               
+0381 776A 1043  14         jmp   _trampoline.bank3     ; Show dialog
+0382               dialog.config.vector:
+0383 776C 7F82             data  vec.10
 0384               
-0385               ***************************************************************
-0386               * Stub for dialog "Append file"
-0387               * bank3 vec.11
-0388               ********|*****|*********************|**************************
-0389               dialog.append:
-0390 776E C820  54         mov   @dialog.append.vector,@trmpvector
+0385               
+0386               ***************************************************************
+0387               * Stub for dialog "Append file"
+0388               * bank3 vec.11
+0389               ********|*****|*********************|**************************
+0390               dialog.append:
+0391 776E C820  54         mov   @dialog.append.vector,@trmpvector
      7770 7776     
      7772 A034     
-0391 7774 103E  14         jmp   _trampoline.bank3     ; Show dialog
-0392               dialog.append.vector:
-0393 7776 7F84             data  vec.11
-0394               
+0392 7774 103E  14         jmp   _trampoline.bank3     ; Show dialog
+0393               dialog.append.vector:
+0394 7776 7F84             data  vec.11
 0395               
-0396               ***************************************************************
-0397               * Stub for dialog "Cartridge"
-0398               * bank3 vec.12
-0399               ********|*****|*********************|**************************
-0400               dialog.cartridge:
-0401 7778 C820  54         mov   @dialog.cartridge.vector,@trmpvector
+0396               
+0397               ***************************************************************
+0398               * Stub for dialog "Cartridge"
+0399               * bank3 vec.12
+0400               ********|*****|*********************|**************************
+0401               dialog.cartridge:
+0402 7778 C820  54         mov   @dialog.cartridge.vector,@trmpvector
      777A 7780     
      777C A034     
-0402 777E 1039  14         jmp   _trampoline.bank3     ; Show dialog
-0403               dialog.cartridge.vector:
-0404 7780 7F86             data  vec.12
-0405               
+0403 777E 1039  14         jmp   _trampoline.bank3     ; Show dialog
+0404               dialog.cartridge.vector:
+0405 7780 7F86             data  vec.12
 0406               
-0407               ***************************************************************
-0408               * Stub for dialog "Basic"
-0409               * bank3 vec.13
-0410               ********|*****|*********************|**************************
-0411               dialog.basic:
-0412 7782 C820  54         mov   @dialog.basic.vector,@trmpvector
+0407               
+0408               ***************************************************************
+0409               * Stub for dialog "Basic"
+0410               * bank3 vec.13
+0411               ********|*****|*********************|**************************
+0412               dialog.basic:
+0413 7782 C820  54         mov   @dialog.basic.vector,@trmpvector
      7784 778A     
      7786 A034     
-0413 7788 1034  14         jmp   _trampoline.bank3     ; Show dialog
-0414               dialog.basic.vector:
-0415 778A 7F88             data  vec.13
-0416               
+0414 7788 1034  14         jmp   _trampoline.bank3     ; Show dialog
+0415               dialog.basic.vector:
+0416 778A 7F88             data  vec.13
 0417               
-0418               ***************************************************************
-0419               * Stub for dialog "Shortcuts"
-0420               * bank3 vec.14
-0421               ********|*****|*********************|**************************
-0422               dialog.shortcuts:
-0423 778C C820  54         mov   @dialog.shortcuts.vector,@trmpvector
+0418               
+0419               ***************************************************************
+0420               * Stub for dialog "Shortcuts"
+0421               * bank3 vec.14
+0422               ********|*****|*********************|**************************
+0423               dialog.shortcuts:
+0424 778C C820  54         mov   @dialog.shortcuts.vector,@trmpvector
      778E 7794     
      7790 A034     
-0424 7792 102F  14         jmp   _trampoline.bank3     ; Show dialog
-0425               dialog.shortcuts.vector:
-0426 7794 7F8A             data  vec.14
-0427               
+0425 7792 102F  14         jmp   _trampoline.bank3     ; Show dialog
+0426               dialog.shortcuts.vector:
+0427 7794 7F8A             data  vec.14
 0428               
-0429               ***************************************************************
-0430               * Stub for dialog "Dir"
-0431               * bank3 vec.15
-0432               ********|*****|*********************|**************************
-0433               dialog.cat:
-0434 7796 C820  54         mov   @dialog.cat.vector,@trmpvector
+0429               
+0430               ***************************************************************
+0431               * Stub for dialog "Dir"
+0432               * bank3 vec.15
+0433               ********|*****|*********************|**************************
+0434               dialog.cat:
+0435 7796 C820  54         mov   @dialog.cat.vector,@trmpvector
      7798 779E     
      779A A034     
-0435 779C 102A  14         jmp   _trampoline.bank3     ; Show dialog
-0436               dialog.cat.vector:
-0437 779E 7F8C             data  vec.15
-0438               
+0436 779C 102A  14         jmp   _trampoline.bank3     ; Show dialog
+0437               dialog.cat.vector:
+0438 779E 7F8C             data  vec.15
 0439               
-0440               ***************************************************************
-0441               * Stub for dialog "Go to line"
-0442               * bank3 vec.16
-0443               ********|*****|*********************|**************************
-0444               dialog.goto:
-0445 77A0 C820  54         mov   @dialog.goto.vector,@trmpvector
+0440               
+0441               ***************************************************************
+0442               * Stub for dialog "Go to line"
+0443               * bank3 vec.16
+0444               ********|*****|*********************|**************************
+0445               dialog.goto:
+0446 77A0 C820  54         mov   @dialog.goto.vector,@trmpvector
      77A2 77A8     
      77A4 A034     
-0446 77A6 1025  14         jmp   _trampoline.bank3     ; Show dialog
-0447               dialog.goto.vector:
-0448 77A8 7F8E             data  vec.16
-0449               
+0447 77A6 1025  14         jmp   _trampoline.bank3     ; Show dialog
+0448               dialog.goto.vector:
+0449 77A8 7F8E             data  vec.16
 0450               
-0451               ***************************************************************
-0452               * Stub for dialog "Configure font"
-0453               * bank3 vec.17
-0454               ********|*****|*********************|**************************
-0455               dialog.font:
-0456 77AA C820  54         mov   @dialog.font.vector,@trmpvector
+0451               
+0452               ***************************************************************
+0453               * Stub for dialog "Configure font"
+0454               * bank3 vec.17
+0455               ********|*****|*********************|**************************
+0456               dialog.font:
+0457 77AA C820  54         mov   @dialog.font.vector,@trmpvector
      77AC 77B2     
      77AE A034     
-0457 77B0 1020  14         jmp   _trampoline.bank3     ; Show dialog
-0458               dialog.font.vector:
-0459 77B2 7F90             data  vec.17
-0460               
+0458 77B0 1020  14         jmp   _trampoline.bank3     ; Show dialog
+0459               dialog.font.vector:
+0460 77B2 7F90             data  vec.17
 0461               
-0462               ***************************************************************
-0463               * Stub for dialog "Run"
-0464               * bank3 vec.18
-0465               ********|*****|*********************|**************************
-0466               dialog.run:
-0467 77B4 C820  54         mov   @dialog.run.vector,@trmpvector
+0462               
+0463               ***************************************************************
+0464               * Stub for dialog "Run"
+0465               * bank3 vec.18
+0466               ********|*****|*********************|**************************
+0467               dialog.run:
+0468 77B4 C820  54         mov   @dialog.run.vector,@trmpvector
      77B6 77BC     
      77B8 A034     
-0468 77BA 101B  14         jmp   _trampoline.bank3     ; Show dialog
-0469               dialog.run.vector:
-0470 77BC 7F92             data  vec.18
-0471               
+0469 77BA 101B  14         jmp   _trampoline.bank3     ; Show dialog
+0470               dialog.run.vector:
+0471 77BC 7F92             data  vec.18
 0472               
-0473               ***************************************************************
-0474               * Stub for dialog "Main Menu"
-0475               * bank3 vec.30
-0476               ********|*****|*********************|**************************
-0477               dialog.menu:
-0478                       ;------------------------------------------------------
-0479                       ; Check if block mode is active
-0480                       ;------------------------------------------------------
-0481 77BE C120  34         mov   @edb.block.m2,tmp0    ; \
+0473               
+0474               ***************************************************************
+0475               * Stub for dialog "Main Menu"
+0476               * bank3 vec.30
+0477               ********|*****|*********************|**************************
+0478               dialog.menu:
+0479                       ;------------------------------------------------------
+0480                       ; Check if block mode is active
+0481                       ;------------------------------------------------------
+0482 77BE C120  34         mov   @edb.block.m2,tmp0    ; \
      77C0 A510     
-0482 77C2 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
-0483                                                   ; /
-0484 77C4 1302  14         jeq   !                     ; Block mode inactive, show dialog
-0485                       ;------------------------------------------------------
-0486                       ; Special treatment for block mode
-0487                       ;------------------------------------------------------
-0488 77C6 0460  28         b     @edkey.action.block.reset
+0483 77C2 0584  14         inc   tmp0                  ; | Skip if M2 unset (>ffff)
+0484                                                   ; /
+0485 77C4 1302  14         jeq   !                     ; Block mode inactive, show dialog
+0486                       ;------------------------------------------------------
+0487                       ; Special treatment for block mode
+0488                       ;------------------------------------------------------
+0489 77C6 0460  28         b     @edkey.action.block.reset
      77C8 685C     
-0489                                                   ; Reset block mode
-0490                       ;------------------------------------------------------
-0491                       ; Show dialog
-0492                       ;------------------------------------------------------
-0493 77CA C820  54 !       mov   @dialog.menu.vector,@trmpvector
+0490                                                   ; Reset block mode
+0491                       ;------------------------------------------------------
+0492                       ; Show dialog
+0493                       ;------------------------------------------------------
+0494 77CA C820  54 !       mov   @dialog.menu.vector,@trmpvector
      77CC 77D2     
      77CE A034     
-0494 77D0 1010  14         jmp   _trampoline.bank3     ; Show dialog
-0495               dialog.menu.vector:
-0496 77D2 7FAA             data  vec.30
-0497               
+0495 77D0 1010  14         jmp   _trampoline.bank3     ; Show dialog
+0496               dialog.menu.vector:
+0497 77D2 7FAA             data  vec.30
 0498               
-0499               ***************************************************************
-0500               * Stub for dialog "Find"
-0501               * bank3 vec.43
-0502               ********|*****|*********************|**************************
-0503               dialog.find:
-0504 77D4 C820  54         mov   @dialog.find.vector,@trmpvector
+0499               
+0500               ***************************************************************
+0501               * Stub for dialog "Find"
+0502               * bank3 vec.43
+0503               ********|*****|*********************|**************************
+0504               dialog.find:
+0505 77D4 C820  54         mov   @dialog.find.vector,@trmpvector
      77D6 77DC     
      77D8 A034     
-0505 77DA 100B  14         jmp   _trampoline.bank3     ; Show dialog
-0506               dialog.find.vector:
-0507 77DC 7FC4             data  vec.43
-0508               
+0506 77DA 100B  14         jmp   _trampoline.bank3     ; Show dialog
+0507               dialog.find.vector:
+0508 77DC 7FC4             data  vec.43
 0509               
-0510               ***************************************************************
-0511               * Stub for dialog "Delete File"
-0512               * bank3 vec.44
-0513               ********|*****|*********************|**************************
-0514               dialog.delete:
-0515 77DE C820  54         mov   @dialog.delete.vector,@trmpvector
+0510               
+0511               ***************************************************************
+0512               * Stub for dialog "Delete File"
+0513               * bank3 vec.44
+0514               ********|*****|*********************|**************************
+0515               dialog.delete:
+0516 77DE C820  54         mov   @dialog.delete.vector,@trmpvector
      77E0 77E6     
      77E2 A034     
-0516 77E4 1006  14         jmp   _trampoline.bank3     ; Show dialog
-0517               dialog.delete.vector:
-0518 77E6 7FC6             data  vec.44
-0519               
-0520               ***************************************************************
-0521               * Stub for dialog "FinalGROM 99 Cartridge"
-0522               * bank3 vec.45
-0523               ********|*****|*********************|**************************
-0524               dialog.cart.fg99:
-0525 77E8 C820  54         mov   @dialog.cart.fg99.vector,@trmpvector
+0517 77E4 1006  14         jmp   _trampoline.bank3     ; Show dialog
+0518               dialog.delete.vector:
+0519 77E6 7FC6             data  vec.44
+0520               
+0521               ***************************************************************
+0522               * Stub for dialog "FinalGROM 99 Cartridge"
+0523               * bank3 vec.45
+0524               ********|*****|*********************|**************************
+0525               dialog.cart.fg99:
+0526 77E8 C820  54         mov   @dialog.cart.fg99.vector,@trmpvector
      77EA 77F0     
      77EC A034     
-0526 77EE 1001  14         jmp   _trampoline.bank3     ; Show dialog
-0527               dialog.cart.fg99.vector:
-0528 77F0 7FC8             data  vec.45
-0529               
+0527 77EE 1001  14         jmp   _trampoline.bank3     ; Show dialog
+0528               dialog.cart.fg99.vector:
+0529 77F0 7FC8             data  vec.45
 0530               
-0531               ***************************************************************
-0532               * Trampoline 1 (bank 3, dialog)
-0533               ********|*****|*********************|**************************
-0534               _trampoline.bank3:
-0535 77F2 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
+0531               
+0532               ***************************************************************
+0533               * Trampoline 1 (bank 3, dialog)
+0534               ********|*****|*********************|**************************
+0535               _trampoline.bank3:
+0536 77F2 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
      77F4 752C     
-0536                       ;------------------------------------------------------
-0537                       ; Call routine in specified bank
-0538                       ;------------------------------------------------------
-0539 77F6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0537                       ;------------------------------------------------------
+0538                       ; Call routine in specified bank
+0539                       ;------------------------------------------------------
+0540 77F6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      77F8 30B4     
-0540 77FA 6006                   data bank3.rom        ; | i  p0 = bank address
-0541 77FC FFFF                   data >ffff            ; | i  p1 = Vector with target address
-0542                                                   ; |         (deref @trmpvector)
-0543 77FE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-0544                       ;------------------------------------------------------
-0545                       ; Exit
-0546                       ;------------------------------------------------------
-0547 7800 0460  28         b     @edkey.action.cmdb.show
+0541 77FA 6006                   data bank3.rom        ; | i  p0 = bank address
+0542 77FC FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0543                                                   ; |         (deref @trmpvector)
+0544 77FE 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0545                       ;------------------------------------------------------
+0546                       ; Exit
+0547                       ;------------------------------------------------------
+0548 7800 0460  28         b     @edkey.action.cmdb.show
      7802 6AFA     
-0548                                                   ; Show dialog in CMDB pane
-0549               
+0549                                                   ; Show dialog in CMDB pane
 0550               
-0551               ***************************************************************
-0552               * Stub for "pane.show_hintx"
-0553               * bank3 vec.19
-0554               ********|*****|*********************|**************************
-0555               pane.show_hintx:
-0556 7804 C820  54         mov   @pane.show_hintx.vector,@trmpvector
+0551               
+0552               ***************************************************************
+0553               * Stub for "pane.show_hintx"
+0554               * bank3 vec.19
+0555               ********|*****|*********************|**************************
+0556               pane.show_hintx:
+0557 7804 C820  54         mov   @pane.show_hintx.vector,@trmpvector
      7806 780C     
      7808 A034     
-0557 780A 104C  14         jmp   _trampoline.bank3.ret ; Longjump
-0558               pane.show_hintx.vector:
-0559 780C 7F94             data  vec.19
-0560               
+0558 780A 104C  14         jmp   _trampoline.bank3.ret ; Longjump
+0559               pane.show_hintx.vector:
+0560 780C 7F94             data  vec.19
 0561               
-0562               ***************************************************************
-0563               * Stub for "pane.cmdb.show"
-0564               * bank3 vec.20
-0565               ********|*****|*********************|**************************
-0566               pane.cmdb.show:
-0567 780E C820  54         mov   @pane.cmdb.show.vector,@trmpvector
+0562               
+0563               ***************************************************************
+0564               * Stub for "pane.cmdb.show"
+0565               * bank3 vec.20
+0566               ********|*****|*********************|**************************
+0567               pane.cmdb.show:
+0568 780E C820  54         mov   @pane.cmdb.show.vector,@trmpvector
      7810 7816     
      7812 A034     
-0568 7814 1047  14         jmp   _trampoline.bank3.ret ; Longjump
-0569               pane.cmdb.show.vector:
-0570 7816 7F96             data  vec.20
-0571               
+0569 7814 1047  14         jmp   _trampoline.bank3.ret ; Longjump
+0570               pane.cmdb.show.vector:
+0571 7816 7F96             data  vec.20
 0572               
-0573               ***************************************************************
-0574               * Stub for "pane.cmdb.hide"
-0575               * bank3 vec.21
-0576               ********|*****|*********************|**************************
-0577               pane.cmdb.hide:
-0578 7818 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
+0573               
+0574               ***************************************************************
+0575               * Stub for "pane.cmdb.hide"
+0576               * bank3 vec.21
+0577               ********|*****|*********************|**************************
+0578               pane.cmdb.hide:
+0579 7818 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
      781A 7820     
      781C A034     
-0579 781E 1042  14         jmp   _trampoline.bank3.ret ; Longjump
-0580               pane.cmdb.hide.vector:
-0581 7820 7F98             data  vec.21
-0582               
+0580 781E 1042  14         jmp   _trampoline.bank3.ret ; Longjump
+0581               pane.cmdb.hide.vector:
+0582 7820 7F98             data  vec.21
 0583               
-0584               ***************************************************************
-0585               * Stub for "pane.cmdb.draw"
-0586               * bank3 vec.22
-0587               ********|*****|*********************|**************************
-0588               pane.cmdb.draw:
-0589 7822 C820  54         mov   @pane.cmdb.draw.vector,@trmpvector
+0584               
+0585               ***************************************************************
+0586               * Stub for "pane.cmdb.draw"
+0587               * bank3 vec.22
+0588               ********|*****|*********************|**************************
+0589               pane.cmdb.draw:
+0590 7822 C820  54         mov   @pane.cmdb.draw.vector,@trmpvector
      7824 782A     
      7826 A034     
-0590 7828 103D  14         jmp   _trampoline.bank3.ret ; Longjump
-0591               pane.cmdb.draw.vector:
-0592 782A 7F9A             data  vec.22
-0593               
+0591 7828 103D  14         jmp   _trampoline.bank3.ret ; Longjump
+0592               pane.cmdb.draw.vector:
+0593 782A 7F9A             data  vec.22
 0594               
-0595               ***************************************************************
-0596               * Stub for "cmdb.refresh_prompt"
-0597               * bank3 vec.24
-0598               ********|*****|*********************|**************************
-0599               cmdb.refresh_prompt:
-0600 782C C820  54         mov   @cmdb.refresh_prompt.vector,@trmpvector
+0595               
+0596               ***************************************************************
+0597               * Stub for "cmdb.refresh_prompt"
+0598               * bank3 vec.24
+0599               ********|*****|*********************|**************************
+0600               cmdb.refresh_prompt:
+0601 782C C820  54         mov   @cmdb.refresh_prompt.vector,@trmpvector
      782E 7834     
      7830 A034     
-0601 7832 1038  14         jmp   _trampoline.bank3.ret ; Longjump
-0602               cmdb.refresh_prompt.vector:
-0603 7834 7F9E             data  vec.24
-0604               
+0602 7832 1038  14         jmp   _trampoline.bank3.ret ; Longjump
+0603               cmdb.refresh_prompt.vector:
+0604 7834 7F9E             data  vec.24
 0605               
-0606               ***************************************************************
-0607               * Stub for "cmdb.cmd.clear"
-0608               * bank3 vec.25
-0609               ********|*****|*********************|**************************
-0610               cmdb.cmd.clear:
-0611 7836 C820  54         mov   @cmdb.cmd.clear.vector,@trmpvector
+0606               
+0607               ***************************************************************
+0608               * Stub for "cmdb.cmd.clear"
+0609               * bank3 vec.25
+0610               ********|*****|*********************|**************************
+0611               cmdb.cmd.clear:
+0612 7836 C820  54         mov   @cmdb.cmd.clear.vector,@trmpvector
      7838 783E     
      783A A034     
-0612 783C 1033  14         jmp   _trampoline.bank3.ret ; Longjump
-0613               cmdb.cmd.clear.vector:
-0614 783E 7FA0             data  vec.25
-0615               
+0613 783C 1033  14         jmp   _trampoline.bank3.ret ; Longjump
+0614               cmdb.cmd.clear.vector:
+0615 783E 7FA0             data  vec.25
 0616               
-0617               ***************************************************************
-0618               * Stub for "cmdb.cmdb.getlength"
-0619               * bank3 vec.26
-0620               ********|*****|*********************|**************************
-0621               cmdb.cmd.getlength:
-0622 7840 C820  54         mov   @cmdb.cmd.getlength.vector,@trmpvector
+0617               
+0618               ***************************************************************
+0619               * Stub for "cmdb.cmdb.getlength"
+0620               * bank3 vec.26
+0621               ********|*****|*********************|**************************
+0622               cmdb.cmd.getlength:
+0623 7840 C820  54         mov   @cmdb.cmd.getlength.vector,@trmpvector
      7842 7848     
      7844 A034     
-0623 7846 102E  14         jmp   _trampoline.bank3.ret ; Longjump
-0624               cmdb.cmd.getlength.vector:
-0625 7848 7FA2             data  vec.26
-0626               
+0624 7846 102E  14         jmp   _trampoline.bank3.ret ; Longjump
+0625               cmdb.cmd.getlength.vector:
+0626 7848 7FA2             data  vec.26
 0627               
-0628               ***************************************************************
-0629               * Stub for "cmdb.cmdb.preset"
-0630               * bank3 vec.27
-0631               ********|*****|*********************|**************************
-0632               cmdb.cmd.preset:
-0633 784A C820  54         mov   @cmdb.cmd.preset.vector,@trmpvector
+0628               
+0629               ***************************************************************
+0630               * Stub for "cmdb.cmdb.preset"
+0631               * bank3 vec.27
+0632               ********|*****|*********************|**************************
+0633               cmdb.cmd.preset:
+0634 784A C820  54         mov   @cmdb.cmd.preset.vector,@trmpvector
      784C 7852     
      784E A034     
-0634 7850 1029  14         jmp   _trampoline.bank3.ret ; Longjump
-0635               cmdb.cmd.preset.vector:
-0636 7852 7FA4             data  vec.27
-0637               
+0635 7850 1029  14         jmp   _trampoline.bank3.ret ; Longjump
+0636               cmdb.cmd.preset.vector:
+0637 7852 7FA4             data  vec.27
 0638               
-0639               ***************************************************************
-0640               * Stub for "cmdb.cmdb.set"
-0641               * bank3 vec.28
-0642               ********|*****|*********************|**************************
-0643               cmdb.cmd.set:
-0644 7854 C820  54         mov   @cmdb.cmd.set.vector,@trmpvector
+0639               
+0640               ***************************************************************
+0641               * Stub for "cmdb.cmdb.set"
+0642               * bank3 vec.28
+0643               ********|*****|*********************|**************************
+0644               cmdb.cmd.set:
+0645 7854 C820  54         mov   @cmdb.cmd.set.vector,@trmpvector
      7856 785C     
      7858 A034     
-0645 785A 1024  14         jmp   _trampoline.bank3.ret ; Longjump
-0646               cmdb.cmd.set.vector:
-0647 785C 7FA6             data  vec.28
-0648               
+0646 785A 1024  14         jmp   _trampoline.bank3.ret ; Longjump
+0647               cmdb.cmd.set.vector:
+0648 785C 7FA6             data  vec.28
 0649               
-0650               ***************************************************************
-0651               * Stub for "cmdb.cmd.cursor_eol"
-0652               * bank3 vec.29
-0653               ********|*****|*********************|**************************
-0654               cmdb.cmd.cursor_eol:
-0655 785E C820  54         mov   @cmdb.cmd.cursor_eol.vector,@trmpvector
+0650               
+0651               ***************************************************************
+0652               * Stub for "cmdb.cmd.cursor_eol"
+0653               * bank3 vec.29
+0654               ********|*****|*********************|**************************
+0655               cmdb.cmd.cursor_eol:
+0656 785E C820  54         mov   @cmdb.cmd.cursor_eol.vector,@trmpvector
      7860 7866     
      7862 A034     
-0656 7864 101F  14         jmp   _trampoline.bank3.ret ; Longjump
-0657               cmdb.cmd.cursor_eol.vector:
-0658 7866 7FA8             data  vec.29
-0659               
+0657 7864 101F  14         jmp   _trampoline.bank3.ret ; Longjump
+0658               cmdb.cmd.cursor_eol.vector:
+0659 7866 7FA8             data  vec.29
 0660               
-0661               ***************************************************************
-0662               * Stub for "tibasic.am.toggle"
-0663               * bank3 vec.31
-0664               ********|*****|*********************|**************************
-0665               tibasic.am.toggle:
-0666 7868 C820  54         mov   @tibasic.am.toggle.vector,@trmpvector
+0661               
+0662               ***************************************************************
+0663               * Stub for "tibasic.am.toggle"
+0664               * bank3 vec.31
+0665               ********|*****|*********************|**************************
+0666               tibasic.am.toggle:
+0667 7868 C820  54         mov   @tibasic.am.toggle.vector,@trmpvector
      786A 7870     
      786C A034     
-0667 786E 101A  14         jmp   _trampoline.bank3.ret ; Longjump
-0668               tibasic.am.toggle.vector:
-0669 7870 7FAC             data  vec.31
-0670               
+0668 786E 101A  14         jmp   _trampoline.bank3.ret ; Longjump
+0669               tibasic.am.toggle.vector:
+0670 7870 7FAC             data  vec.31
 0671               
-0672               ***************************************************************
-0673               * Stub for "fm.fastmode"
-0674               * bank3 vec.32
-0675               ********|*****|*********************|**************************
-0676               fm.fastmode:
-0677 7872 C820  54         mov   @fm.fastmode.vector,@trmpvector
+0672               
+0673               ***************************************************************
+0674               * Stub for "fm.fastmode"
+0675               * bank3 vec.32
+0676               ********|*****|*********************|**************************
+0677               fm.fastmode:
+0678 7872 C820  54         mov   @fm.fastmode.vector,@trmpvector
      7874 787A     
      7876 A034     
-0678 7878 1015  14         jmp   _trampoline.bank3.ret ; Longjump
-0679               fm.fastmode.vector:
-0680 787A 7FAE             data  vec.32
-0681               
+0679 7878 1015  14         jmp   _trampoline.bank3.ret ; Longjump
+0680               fm.fastmode.vector:
+0681 787A 7FAE             data  vec.32
 0682               
-0683               ***************************************************************
-0684               * Stub for "cmdb.cfg.fname"
-0685               * bank3 vec.33
-0686               ********|*****|*********************|**************************
-0687               cmdb.cfg.fname:
-0688 787C C820  54         mov   @cmdb.cfg.fname.vector,@trmpvector
+0683               
+0684               ***************************************************************
+0685               * Stub for "cmdb.cfg.fname"
+0686               * bank3 vec.33
+0687               ********|*****|*********************|**************************
+0688               cmdb.cfg.fname:
+0689 787C C820  54         mov   @cmdb.cfg.fname.vector,@trmpvector
      787E 7884     
      7880 A034     
-0689 7882 1010  14         jmp   _trampoline.bank3.ret ; Longjump
-0690               cmdb.cfg.fname.vector:
-0691 7884 7FB0             data  vec.33
-0692               
-0693               ***************************************************************
-0694               * Stub for "fm.lineterm"
-0695               * bank3 vec.34
-0696               ********|*****|*********************|**************************
-0697               fm.lineterm:
-0698 7886 C820  54         mov   @fm.lineterm.vector,@trmpvector
+0690 7882 1010  14         jmp   _trampoline.bank3.ret ; Longjump
+0691               cmdb.cfg.fname.vector:
+0692 7884 7FB0             data  vec.33
+0693               
+0694               ***************************************************************
+0695               * Stub for "fm.lineterm"
+0696               * bank3 vec.34
+0697               ********|*****|*********************|**************************
+0698               fm.lineterm:
+0699 7886 C820  54         mov   @fm.lineterm.vector,@trmpvector
      7888 788E     
      788A A034     
-0699 788C 100B  14         jmp   _trampoline.bank3.ret ; Longjump
-0700               fm.lineterm.vector:
-0701 788E 7FB2             data  vec.34
-0702               
+0700 788C 100B  14         jmp   _trampoline.bank3.ret ; Longjump
+0701               fm.lineterm.vector:
+0702 788E 7FB2             data  vec.34
 0703               
-0704               ***************************************************************
-0705               * Stub for "dialog"
-0706               * bank3 vec.42
-0707               ********|*****|*********************|**************************
-0708               dialog:
-0709 7890 C820  54         mov   @dialog.vector,@trmpvector
+0704               
+0705               ***************************************************************
+0706               * Stub for "dialog"
+0707               * bank3 vec.42
+0708               ********|*****|*********************|**************************
+0709               dialog:
+0710 7890 C820  54         mov   @dialog.vector,@trmpvector
      7892 7898     
      7894 A034     
-0710 7896 1006  14         jmp   _trampoline.bank3.ret ; Longjump
-0711               dialog.vector:
-0712 7898 7FC2             data  vec.42
-0713               
+0711 7896 1006  14         jmp   _trampoline.bank3.ret ; Longjump
+0712               dialog.vector:
+0713 7898 7FC2             data  vec.42
 0714               
-0715               ***************************************************************
-0716               * Stub for "error.display"
-0717               * bank3 vec.48
-0718               ********|*****|*********************|**************************
-0719               error.display:
-0720 789A C820  54         mov   @error.display.vector,@trmpvector
+0715               
+0716               ***************************************************************
+0717               * Stub for "error.display"
+0718               * bank3 vec.48
+0719               ********|*****|*********************|**************************
+0720               error.display:
+0721 789A C820  54         mov   @error.display.vector,@trmpvector
      789C 78A2     
      789E A034     
-0721 78A0 1001  14         jmp   _trampoline.bank3.ret ; Longjump
-0722               error.display.vector:
-0723 78A2 7FCE             data  vec.48
-0724               
+0722 78A0 1001  14         jmp   _trampoline.bank3.ret ; Longjump
+0723               error.display.vector:
+0724 78A2 7FCE             data  vec.48
 0725               
 0726               
-0727               ***************************************************************
-0728               * Trampoline bank 3 with return
-0729               ********|*****|*********************|**************************
-0730               _trampoline.bank3.ret:
-0731 78A4 0649  14         dect  stack
-0732 78A6 C64B  30         mov   r11,*stack            ; Save return address
-0733                       ;------------------------------------------------------
-0734                       ; Call routine in specified bank
-0735                       ;------------------------------------------------------
-0736 78A8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0727               
+0728               ***************************************************************
+0729               * Trampoline bank 3 with return
+0730               ********|*****|*********************|**************************
+0731               _trampoline.bank3.ret:
+0732 78A4 0649  14         dect  stack
+0733 78A6 C64B  30         mov   r11,*stack            ; Save return address
+0734                       ;------------------------------------------------------
+0735                       ; Call routine in specified bank
+0736                       ;------------------------------------------------------
+0737 78A8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      78AA 30B4     
-0737 78AC 6006                   data bank3.rom        ; | i  p0 = bank address
-0738 78AE FFFF                   data >ffff            ; | i  p1 = Vector with target address
-0739                                                   ; |         (deref @trmpvector)
-0740 78B0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-0741                       ;------------------------------------------------------
-0742                       ; Exit
-0743                       ;------------------------------------------------------
-0744 78B2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0745 78B4 045B  20         b     *r11                  ; Return to caller
-0746               
+0738 78AC 6006                   data bank3.rom        ; | i  p0 = bank address
+0739 78AE FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0740                                                   ; |         (deref @trmpvector)
+0741 78B0 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0742                       ;------------------------------------------------------
+0743                       ; Exit
+0744                       ;------------------------------------------------------
+0745 78B2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0746 78B4 045B  20         b     *r11                  ; Return to caller
 0747               
-0748               ***************************************************************
-0749               * Stub for "fb.ruler.init"
-0750               * bank4 vec.2
-0751               ********|*****|*********************|**************************
-0752               fb.ruler.init:
-0753 78B6 C820  54         mov   @fb.ruler.init.vector,@trmpvector
+0748               
+0749               ***************************************************************
+0750               * Stub for "fb.ruler.init"
+0751               * bank4 vec.2
+0752               ********|*****|*********************|**************************
+0753               fb.ruler.init:
+0754 78B6 C820  54         mov   @fb.ruler.init.vector,@trmpvector
      78B8 78C0     
      78BA A034     
-0754 78BC 0460  28         b     @_trampoline.bank4.ret ; Longjump
+0755 78BC 0460  28         b     @_trampoline.bank4.ret ; Longjump
      78BE 79EA     
-0755               fb.ruler.init.vector:
-0756 78C0 7F72             data  vec.2
-0757               
+0756               fb.ruler.init.vector:
+0757 78C0 7F72             data  vec.2
 0758               
-0759               ***************************************************************
-0760               * Stub for "fb.colorlines"
-0761               * bank4 vec.3
-0762               ********|*****|*********************|**************************
-0763               fb.colorlines:
-0764 78C2 C820  54         mov   @fb.colorlines.vector,@trmpvector
+0759               
+0760               ***************************************************************
+0761               * Stub for "fb.colorlines"
+0762               * bank4 vec.3
+0763               ********|*****|*********************|**************************
+0764               fb.colorlines:
+0765 78C2 C820  54         mov   @fb.colorlines.vector,@trmpvector
      78C4 78CC     
      78C6 A034     
-0765 78C8 0460  28         b     @_trampoline.bank4.ret ; Longjump
+0766 78C8 0460  28         b     @_trampoline.bank4.ret ; Longjump
      78CA 79EA     
-0766               fb.colorlines.vector:
-0767 78CC 7F74             data  vec.3
-0768               
+0767               fb.colorlines.vector:
+0768 78CC 7F74             data  vec.3
 0769               
-0770               ***************************************************************
-0771               * Stub for "fb.vdpdump"
-0772               * bank4 vec.4
-0773               ********|*****|*********************|**************************
-0774               fb.vdpdump:
-0775 78CE C820  54         mov   @fb.vdpdump.vector,@trmpvector
+0770               
+0771               ***************************************************************
+0772               * Stub for "fb.vdpdump"
+0773               * bank4 vec.4
+0774               ********|*****|*********************|**************************
+0775               fb.vdpdump:
+0776 78CE C820  54         mov   @fb.vdpdump.vector,@trmpvector
      78D0 78D8     
      78D2 A034     
-0776 78D4 0460  28         b     @_trampoline.bank4.ret ; Longjump
+0777 78D4 0460  28         b     @_trampoline.bank4.ret ; Longjump
      78D6 79EA     
-0777               fb.vdpdump.vector:
-0778 78D8 7F76             data  vec.4
-0779               
+0778               fb.vdpdump.vector:
+0779 78D8 7F76             data  vec.4
 0780               
-0781               ***************************************************************
-0782               * Stub for "fb.hscroll"
-0783               * bank4 vec.6
-0784               ********|*****|*********************|**************************
-0785               fb.hscroll:
-0786 78DA C820  54         mov   @fb.hscroll.vector,@trmpvector
+0781               
+0782               ***************************************************************
+0783               * Stub for "fb.hscroll"
+0784               * bank4 vec.6
+0785               ********|*****|*********************|**************************
+0786               fb.hscroll:
+0787 78DA C820  54         mov   @fb.hscroll.vector,@trmpvector
      78DC 78E4     
      78DE A034     
-0787 78E0 0460  28         b     @_trampoline.bank4.ret ; Longjump
+0788 78E0 0460  28         b     @_trampoline.bank4.ret ; Longjump
      78E2 79EA     
-0788               fb.hscroll.vector:
-0789 78E4 7F7A             data  vec.6
-0790               
+0789               fb.hscroll.vector:
+0790 78E4 7F7A             data  vec.6
 0791               
-0792               ***************************************************************
-0793               * Stub for "fb.restore"
-0794               * bank4 vec.7
-0795               ********|*****|*********************|**************************
-0796               fb.restore:
-0797 78E6 C820  54         mov   @fb.restore.vector,@trmpvector
+0792               
+0793               ***************************************************************
+0794               * Stub for "fb.restore"
+0795               * bank4 vec.7
+0796               ********|*****|*********************|**************************
+0797               fb.restore:
+0798 78E6 C820  54         mov   @fb.restore.vector,@trmpvector
      78E8 78EE     
      78EA A034     
-0798 78EC 107E  14         jmp   _trampoline.bank4.ret ; Longjump
-0799               fb.restore.vector:
-0800 78EE 7F7C             data  vec.7
-0801               
+0799 78EC 107E  14         jmp   _trampoline.bank4.ret ; Longjump
+0800               fb.restore.vector:
+0801 78EE 7F7C             data  vec.7
 0802               
-0803               ***************************************************************
-0804               * Stub for "fb.refresh"
-0805               * bank4 vec.8
-0806               ********|*****|*********************|**************************
-0807               fb.refresh:
-0808 78F0 C820  54         mov   @fb.refresh.vector,@trmpvector
+0803               
+0804               ***************************************************************
+0805               * Stub for "fb.refresh"
+0806               * bank4 vec.8
+0807               ********|*****|*********************|**************************
+0808               fb.refresh:
+0809 78F0 C820  54         mov   @fb.refresh.vector,@trmpvector
      78F2 78F8     
      78F4 A034     
-0809 78F6 1079  14         jmp   _trampoline.bank4.ret ; Longjump
-0810               fb.refresh.vector:
-0811 78F8 7F7E             data  vec.8
-0812               
+0810 78F6 1079  14         jmp   _trampoline.bank4.ret ; Longjump
+0811               fb.refresh.vector:
+0812 78F8 7F7E             data  vec.8
 0813               
-0814               ***************************************************************
-0815               * Stub for "fb.get.nonblank"
-0816               * bank4 vec.9
-0817               ********|*****|*********************|**************************
-0818               fb.get.nonblank:
-0819 78FA C820  54         mov   @fb.get.nonblank.vector,@trmpvector
+0814               
+0815               ***************************************************************
+0816               * Stub for "fb.get.nonblank"
+0817               * bank4 vec.9
+0818               ********|*****|*********************|**************************
+0819               fb.get.nonblank:
+0820 78FA C820  54         mov   @fb.get.nonblank.vector,@trmpvector
      78FC 7902     
      78FE A034     
-0820 7900 1074  14         jmp   _trampoline.bank4.ret ; Longjump
-0821               fb.get.nonblank.vector:
-0822 7902 7F80             data  vec.9
-0823               
+0821 7900 1074  14         jmp   _trampoline.bank4.ret ; Longjump
+0822               fb.get.nonblank.vector:
+0823 7902 7F80             data  vec.9
 0824               
-0825               ***************************************************************
-0826               * Stub for "fb.tab.prev"
-0827               * bank4 vec.10
-0828               ********|*****|*********************|**************************
-0829               fb.tab.prev:
-0830 7904 C820  54         mov   @fb.tab.prev.vector,@trmpvector
+0825               
+0826               ***************************************************************
+0827               * Stub for "fb.tab.prev"
+0828               * bank4 vec.10
+0829               ********|*****|*********************|**************************
+0830               fb.tab.prev:
+0831 7904 C820  54         mov   @fb.tab.prev.vector,@trmpvector
      7906 790C     
      7908 A034     
-0831 790A 106F  14         jmp   _trampoline.bank4.ret ; Longjump
-0832               fb.tab.prev.vector:
-0833 790C 7F82             data  vec.10
-0834               
+0832 790A 106F  14         jmp   _trampoline.bank4.ret ; Longjump
+0833               fb.tab.prev.vector:
+0834 790C 7F82             data  vec.10
 0835               
-0836               ***************************************************************
-0837               * Stub for "fb.tab.next"
-0838               * bank4 vec.11
-0839               ********|*****|*********************|**************************
-0840               fb.tab.next:
-0841 790E C820  54         mov   @fb.tab.next.vector,@trmpvector
+0836               
+0837               ***************************************************************
+0838               * Stub for "fb.tab.next"
+0839               * bank4 vec.11
+0840               ********|*****|*********************|**************************
+0841               fb.tab.next:
+0842 790E C820  54         mov   @fb.tab.next.vector,@trmpvector
      7910 7916     
      7912 A034     
-0842 7914 106A  14         jmp   _trampoline.bank4.ret ; Longjump
-0843               fb.tab.next.vector:
-0844 7916 7F84             data  vec.11
-0845               
+0843 7914 106A  14         jmp   _trampoline.bank4.ret ; Longjump
+0844               fb.tab.next.vector:
+0845 7916 7F84             data  vec.11
 0846               
-0847               ***************************************************************
-0848               * Stub for "fb.cursor.up"
-0849               * bank4 vec.12
-0850               ********|*****|*********************|**************************
-0851               fb.cursor.up:
-0852 7918 C820  54         mov   @fb.cursor.up.vector,@trmpvector
+0847               
+0848               ***************************************************************
+0849               * Stub for "fb.cursor.up"
+0850               * bank4 vec.12
+0851               ********|*****|*********************|**************************
+0852               fb.cursor.up:
+0853 7918 C820  54         mov   @fb.cursor.up.vector,@trmpvector
      791A 7920     
      791C A034     
-0853 791E 1065  14         jmp   _trampoline.bank4.ret ; Longjump
-0854               fb.cursor.up.vector:
-0855 7920 7F86             data  vec.12
-0856               
+0854 791E 1065  14         jmp   _trampoline.bank4.ret ; Longjump
+0855               fb.cursor.up.vector:
+0856 7920 7F86             data  vec.12
 0857               
-0858               ***************************************************************
-0859               * Stub for "fb.cursor.down"
-0860               * bank4 vec.13
-0861               ********|*****|*********************|**************************
-0862               fb.cursor.down:
-0863 7922 C820  54         mov   @fb.cursor.down.vector,@trmpvector
+0858               
+0859               ***************************************************************
+0860               * Stub for "fb.cursor.down"
+0861               * bank4 vec.13
+0862               ********|*****|*********************|**************************
+0863               fb.cursor.down:
+0864 7922 C820  54         mov   @fb.cursor.down.vector,@trmpvector
      7924 792A     
      7926 A034     
-0864 7928 1060  14         jmp   _trampoline.bank4.ret ; Longjump
-0865               fb.cursor.down.vector:
-0866 792A 7F88             data  vec.13
-0867               
+0865 7928 1060  14         jmp   _trampoline.bank4.ret ; Longjump
+0866               fb.cursor.down.vector:
+0867 792A 7F88             data  vec.13
 0868               
-0869               ***************************************************************
-0870               * Stub for "fb.cursor.home"
-0871               * bank4 vec.14
-0872               ********|*****|*********************|**************************
-0873               fb.cursor.home:
-0874 792C C820  54         mov   @fb.cursor.home.vector,@trmpvector
+0869               
+0870               ***************************************************************
+0871               * Stub for "fb.cursor.home"
+0872               * bank4 vec.14
+0873               ********|*****|*********************|**************************
+0874               fb.cursor.home:
+0875 792C C820  54         mov   @fb.cursor.home.vector,@trmpvector
      792E 7934     
      7930 A034     
-0875 7932 105B  14         jmp   _trampoline.bank4.ret ; Longjump
-0876               fb.cursor.home.vector:
-0877 7934 7F8A             data  vec.14
-0878               
+0876 7932 105B  14         jmp   _trampoline.bank4.ret ; Longjump
+0877               fb.cursor.home.vector:
+0878 7934 7F8A             data  vec.14
 0879               
-0880               ***************************************************************
-0881               * Stub for "fb.insert.line"
-0882               * bank4 vec.15
-0883               ********|*****|*********************|**************************
-0884               fb.insert.line:
-0885 7936 C820  54         mov   @fb.insert.line.vector,@trmpvector
+0880               
+0881               ***************************************************************
+0882               * Stub for "fb.insert.line"
+0883               * bank4 vec.15
+0884               ********|*****|*********************|**************************
+0885               fb.insert.line:
+0886 7936 C820  54         mov   @fb.insert.line.vector,@trmpvector
      7938 793E     
      793A A034     
-0886 793C 1056  14         jmp   _trampoline.bank4.ret ; Longjump
-0887               fb.insert.line.vector:
-0888 793E 7F8C             data  vec.15
-0889               
+0887 793C 1056  14         jmp   _trampoline.bank4.ret ; Longjump
+0888               fb.insert.line.vector:
+0889 793E 7F8C             data  vec.15
 0890               
-0891               ***************************************************************
-0892               * Stub for "fb.cursor.top"
-0893               * bank4 vec.16
-0894               ********|*****|*********************|**************************
-0895               fb.cursor.top:
-0896 7940 C820  54         mov   @fb.cursor.top.vector,@trmpvector
+0891               
+0892               ***************************************************************
+0893               * Stub for "fb.cursor.top"
+0894               * bank4 vec.16
+0895               ********|*****|*********************|**************************
+0896               fb.cursor.top:
+0897 7940 C820  54         mov   @fb.cursor.top.vector,@trmpvector
      7942 7948     
      7944 A034     
-0897 7946 1051  14         jmp   _trampoline.bank4.ret ; Longjump
-0898               fb.cursor.top.vector:
-0899 7948 7F8E             data  vec.16
-0900               
+0898 7946 1051  14         jmp   _trampoline.bank4.ret ; Longjump
+0899               fb.cursor.top.vector:
+0900 7948 7F8E             data  vec.16
 0901               
-0902               ***************************************************************
-0903               * Stub for "fb.cursor.topscr"
-0904               * bank4 vec.17
-0905               ********|*****|*********************|**************************
-0906               fb.cursor.topscr:
-0907 794A C820  54         mov   @fb.cursor.topscr.vector,@trmpvector
+0902               
+0903               ***************************************************************
+0904               * Stub for "fb.cursor.topscr"
+0905               * bank4 vec.17
+0906               ********|*****|*********************|**************************
+0907               fb.cursor.topscr:
+0908 794A C820  54         mov   @fb.cursor.topscr.vector,@trmpvector
      794C 7952     
      794E A034     
-0908 7950 104C  14         jmp   _trampoline.bank4.ret ; Longjump
-0909               fb.cursor.topscr.vector:
-0910 7952 7F90             data  vec.17
-0911               
+0909 7950 104C  14         jmp   _trampoline.bank4.ret ; Longjump
+0910               fb.cursor.topscr.vector:
+0911 7952 7F90             data  vec.17
 0912               
-0913               ***************************************************************
-0914               * Stub for "fb.cursor.bot"
-0915               * bank4 vec.18
-0916               ********|*****|*********************|**************************
-0917               fb.cursor.bot:
-0918 7954 C820  54         mov   @fb.cursor.bot.vector,@trmpvector
+0913               
+0914               ***************************************************************
+0915               * Stub for "fb.cursor.bot"
+0916               * bank4 vec.18
+0917               ********|*****|*********************|**************************
+0918               fb.cursor.bot:
+0919 7954 C820  54         mov   @fb.cursor.bot.vector,@trmpvector
      7956 795C     
      7958 A034     
-0919 795A 1047  14         jmp   _trampoline.bank4.ret ; Longjump
-0920               fb.cursor.bot.vector:
-0921 795C 7F92             data  vec.18
-0922               
+0920 795A 1047  14         jmp   _trampoline.bank4.ret ; Longjump
+0921               fb.cursor.bot.vector:
+0922 795C 7F92             data  vec.18
 0923               
-0924               ***************************************************************
-0925               * Stub for "fb.cursor.botscr"
-0926               * bank4 vec.19
-0927               ********|*****|*********************|**************************
-0928               fb.cursor.botscr:
-0929 795E C820  54         mov   @fb.cursor.botscr.vector,@trmpvector
+0924               
+0925               ***************************************************************
+0926               * Stub for "fb.cursor.botscr"
+0927               * bank4 vec.19
+0928               ********|*****|*********************|**************************
+0929               fb.cursor.botscr:
+0930 795E C820  54         mov   @fb.cursor.botscr.vector,@trmpvector
      7960 7966     
      7962 A034     
-0930 7964 1042  14         jmp   _trampoline.bank4.ret ; Longjump
-0931               fb.cursor.botscr.vector:
-0932 7966 7F94             data  vec.19
-0933               
+0931 7964 1042  14         jmp   _trampoline.bank4.ret ; Longjump
+0932               fb.cursor.botscr.vector:
+0933 7966 7F94             data  vec.19
 0934               
-0935               ***************************************************************
-0936               * Stub for "fb.insert.char"
-0937               * bank4 vec.20
-0938               ********|*****|*********************|**************************
-0939               fb.insert.char:
-0940 7968 C820  54         mov   @fb.insert.char.vector,@trmpvector
+0935               
+0936               ***************************************************************
+0937               * Stub for "fb.insert.char"
+0938               * bank4 vec.20
+0939               ********|*****|*********************|**************************
+0940               fb.insert.char:
+0941 7968 C820  54         mov   @fb.insert.char.vector,@trmpvector
      796A 7970     
      796C A034     
-0941 796E 103D  14         jmp   _trampoline.bank4.ret ; Longjump
-0942               fb.insert.char.vector:
-0943 7970 7F96             data  vec.20
-0944               
+0942 796E 103D  14         jmp   _trampoline.bank4.ret ; Longjump
+0943               fb.insert.char.vector:
+0944 7970 7F96             data  vec.20
 0945               
-0946               ***************************************************************
-0947               * Stub for "fb.replace.char"
-0948               * bank4 vec.21
-0949               ********|*****|*********************|**************************
-0950               fb.replace.char:
-0951 7972 C820  54         mov   @fb.replace.char.vector,@trmpvector
+0946               
+0947               ***************************************************************
+0948               * Stub for "fb.replace.char"
+0949               * bank4 vec.21
+0950               ********|*****|*********************|**************************
+0951               fb.replace.char:
+0952 7972 C820  54         mov   @fb.replace.char.vector,@trmpvector
      7974 797A     
      7976 A034     
-0952 7978 1038  14         jmp   _trampoline.bank4.ret ; Longjump
-0953               fb.replace.char.vector:
-0954 797A 7F98             data  vec.21
-0955               
+0953 7978 1038  14         jmp   _trampoline.bank4.ret ; Longjump
+0954               fb.replace.char.vector:
+0955 797A 7F98             data  vec.21
 0956               
-0957               ***************************************************************
-0958               * Stub for "fb.goto.prevmatch"
-0959               * bank4 vec.22
-0960               ********|*****|*********************|**************************
-0961               fb.goto.prevmatch:
-0962 797C C820  54         mov   @fb.goto.prevmatch.vector,@trmpvector
+0957               
+0958               ***************************************************************
+0959               * Stub for "fb.goto.prevmatch"
+0960               * bank4 vec.22
+0961               ********|*****|*********************|**************************
+0962               fb.goto.prevmatch:
+0963 797C C820  54         mov   @fb.goto.prevmatch.vector,@trmpvector
      797E 7984     
      7980 A034     
-0963 7982 1033  14         jmp   _trampoline.bank4.ret ; Longjump
-0964               fb.goto.prevmatch.vector:
-0965 7984 7F9A             data  vec.22
-0966               
+0964 7982 1033  14         jmp   _trampoline.bank4.ret ; Longjump
+0965               fb.goto.prevmatch.vector:
+0966 7984 7F9A             data  vec.22
 0967               
-0968               ***************************************************************
-0969               * Stub for "fb.goto.nextmatch"
-0970               * bank4 vec.23
-0971               ********|*****|*********************|**************************
-0972               fb.goto.nextmatch:
-0973 7986 C820  54         mov   @fb.goto.nextmatch.vector,@trmpvector
+0968               
+0969               ***************************************************************
+0970               * Stub for "fb.goto.nextmatch"
+0971               * bank4 vec.23
+0972               ********|*****|*********************|**************************
+0973               fb.goto.nextmatch:
+0974 7986 C820  54         mov   @fb.goto.nextmatch.vector,@trmpvector
      7988 798E     
      798A A034     
-0974 798C 102E  14         jmp   _trampoline.bank4.ret ; Longjump
-0975               fb.goto.nextmatch.vector:
-0976 798E 7F9C             data  vec.23
-0977               
+0975 798C 102E  14         jmp   _trampoline.bank4.ret ; Longjump
+0976               fb.goto.nextmatch.vector:
+0977 798E 7F9C             data  vec.23
 0978               
-0979               ***************************************************************
-0980               * Stub for "pane.topline"
-0981               * bank4 vec.33
-0982               ********|*****|*********************|**************************
-0983               pane.topline:
-0984 7990 C820  54         mov   @pane.topline.vector,@trmpvector
+0979               
+0980               ***************************************************************
+0981               * Stub for "pane.topline"
+0982               * bank4 vec.33
+0983               ********|*****|*********************|**************************
+0984               pane.topline:
+0985 7990 C820  54         mov   @pane.topline.vector,@trmpvector
      7992 7998     
      7994 A034     
-0985 7996 1029  14         jmp   _trampoline.bank4.ret ; Longjump
-0986               pane.topline.vector:
-0987 7998 7FB0             data  vec.33
-0988               
+0986 7996 1029  14         jmp   _trampoline.bank4.ret ; Longjump
+0987               pane.topline.vector:
+0988 7998 7FB0             data  vec.33
 0989               
-0990               ***************************************************************
-0991               * Stub for "pane.botline"
-0992               * bank4 vec.34
-0993               ********|*****|*********************|**************************
-0994               pane.botline:
-0995 799A C820  54         mov   @pane.botline.vector,@trmpvector
+0990               
+0991               ***************************************************************
+0992               * Stub for "pane.botline"
+0993               * bank4 vec.34
+0994               ********|*****|*********************|**************************
+0995               pane.botline:
+0996 799A C820  54         mov   @pane.botline.vector,@trmpvector
      799C 79A2     
      799E A034     
-0996 79A0 1024  14         jmp   _trampoline.bank4.ret ; Longjump
-0997               pane.botline.vector:
-0998 79A2 7FB2             data  vec.34
-0999               
+0997 79A0 1024  14         jmp   _trampoline.bank4.ret ; Longjump
+0998               pane.botline.vector:
+0999 79A2 7FB2             data  vec.34
 1000               
-1001               ***************************************************************
-1002               * Stub for "pane.errline.show"
-1003               * bank4 vec.35
-1004               ********|*****|*********************|**************************
-1005               pane.errline.show:
-1006 79A4 C820  54         mov   @pane.errline.show.vector,@trmpvector
+1001               
+1002               ***************************************************************
+1003               * Stub for "pane.errline.show"
+1004               * bank4 vec.35
+1005               ********|*****|*********************|**************************
+1006               pane.errline.show:
+1007 79A4 C820  54         mov   @pane.errline.show.vector,@trmpvector
      79A6 79AC     
      79A8 A034     
-1007 79AA 101F  14         jmp   _trampoline.bank4.ret ; Longjump
-1008               pane.errline.show.vector:
-1009 79AC 7FB4             data  vec.35
-1010               
+1008 79AA 101F  14         jmp   _trampoline.bank4.ret ; Longjump
+1009               pane.errline.show.vector:
+1010 79AC 7FB4             data  vec.35
 1011               
-1012               ***************************************************************
-1013               * Stub for "pane.errline.hide"
-1014               * bank4 vec.36
-1015               ********|*****|*********************|**************************
-1016               pane.errline.hide:
-1017 79AE C820  54         mov   @pane.errline.hide.vector,@trmpvector
+1012               
+1013               ***************************************************************
+1014               * Stub for "pane.errline.hide"
+1015               * bank4 vec.36
+1016               ********|*****|*********************|**************************
+1017               pane.errline.hide:
+1018 79AE C820  54         mov   @pane.errline.hide.vector,@trmpvector
      79B0 79B6     
      79B2 A034     
-1018 79B4 101A  14         jmp   _trampoline.bank4.ret ; Longjump
-1019               pane.errline.hide.vector:
-1020 79B6 7FB6             data  vec.36
-1021               
+1019 79B4 101A  14         jmp   _trampoline.bank4.ret ; Longjump
+1020               pane.errline.hide.vector:
+1021 79B6 7FB6             data  vec.36
 1022               
-1023               ***************************************************************
-1024               * Stub for "pane.errline.drawcolor"
-1025               * bank4 vec.37
-1026               ********|*****|*********************|**************************
-1027               pane.errline.drawcolor:
-1028 79B8 C820  54         mov   @pane.errline.drawcolor.vector,@trmpvector
+1023               
+1024               ***************************************************************
+1025               * Stub for "pane.errline.drawcolor"
+1026               * bank4 vec.37
+1027               ********|*****|*********************|**************************
+1028               pane.errline.drawcolor:
+1029 79B8 C820  54         mov   @pane.errline.drawcolor.vector,@trmpvector
      79BA 79C0     
      79BC A034     
-1029 79BE 1015  14         jmp   _trampoline.bank4.ret ; Longjump
-1030               pane.errline.drawcolor.vector:
-1031 79C0 7FB8             data  vec.37
-1032               
+1030 79BE 1015  14         jmp   _trampoline.bank4.ret ; Longjump
+1031               pane.errline.drawcolor.vector:
+1032 79C0 7FB8             data  vec.37
 1033               
-1034               ***************************************************************
-1035               * Stub for "pane.colorscheme.cycle"
-1036               * bank4 vec.40
-1037               ********|*****|*********************|**************************
-1038               pane.colorscheme.cycle:
-1039 79C2 C820  54         mov   @pane.colorscheme.cycle.vector,@trmpvector
+1034               
+1035               ***************************************************************
+1036               * Stub for "pane.colorscheme.cycle"
+1037               * bank4 vec.40
+1038               ********|*****|*********************|**************************
+1039               pane.colorscheme.cycle:
+1040 79C2 C820  54         mov   @pane.colorscheme.cycle.vector,@trmpvector
      79C4 79CA     
      79C6 A034     
-1040 79C8 1010  14         jmp   _trampoline.bank4.ret ; Longjump
-1041               pane.colorscheme.cycle.vector:
-1042 79CA 7FBE             data  vec.40
-1043               
+1041 79C8 1010  14         jmp   _trampoline.bank4.ret ; Longjump
+1042               pane.colorscheme.cycle.vector:
+1043 79CA 7FBE             data  vec.40
 1044               
-1045               ***************************************************************
-1046               * Stub for "pane.colorscheme.load"
-1047               * bank4 vec.41
-1048               ********|*****|*********************|**************************
-1049               pane.colorscheme.load:
-1050 79CC C820  54         mov   @pane.colorscheme.load.vector,@trmpvector
+1045               
+1046               ***************************************************************
+1047               * Stub for "pane.colorscheme.load"
+1048               * bank4 vec.41
+1049               ********|*****|*********************|**************************
+1050               pane.colorscheme.load:
+1051 79CC C820  54         mov   @pane.colorscheme.load.vector,@trmpvector
      79CE 79D4     
      79D0 A034     
-1051 79D2 100B  14         jmp   _trampoline.bank4.ret ; Longjump
-1052               pane.colorscheme.load.vector:
-1053 79D4 7FC0             data  vec.41
-1054               
+1052 79D2 100B  14         jmp   _trampoline.bank4.ret ; Longjump
+1053               pane.colorscheme.load.vector:
+1054 79D4 7FC0             data  vec.41
 1055               
-1056               ***************************************************************
-1057               * Stub for "pane.filebrowser"
-1058               * bank4 vec.50
-1059               ********|*****|*********************|**************************
-1060               pane.filebrowser:
-1061 79D6 C820  54         mov   @pane.filebrowser.vector,@trmpvector
+1056               
+1057               ***************************************************************
+1058               * Stub for "pane.filebrowser"
+1059               * bank4 vec.50
+1060               ********|*****|*********************|**************************
+1061               pane.filebrowser:
+1062 79D6 C820  54         mov   @pane.filebrowser.vector,@trmpvector
      79D8 79DE     
      79DA A034     
-1062 79DC 1006  14         jmp   _trampoline.bank4.ret ; Longjump
-1063               pane.filebrowser.vector:
-1064 79DE 7FD2             data  vec.50
-1065               
+1063 79DC 1006  14         jmp   _trampoline.bank4.ret ; Longjump
+1064               pane.filebrowser.vector:
+1065 79DE 7FD2             data  vec.50
 1066               
-1067               ***************************************************************
-1068               * Stub for "pane.filebrowser.hilight"
-1069               * bank4 vec.51
-1070               ********|*****|*********************|**************************
-1071               pane.filebrowser.hilight:
-1072 79E0 C820  54         mov   @pane.filebrowser.hilight.vector,@trmpvector
+1067               
+1068               ***************************************************************
+1069               * Stub for "pane.filebrowser.hilight"
+1070               * bank4 vec.51
+1071               ********|*****|*********************|**************************
+1072               pane.filebrowser.hilight:
+1073 79E0 C820  54         mov   @pane.filebrowser.hilight.vector,@trmpvector
      79E2 79E8     
      79E4 A034     
-1073 79E6 1001  14         jmp   _trampoline.bank4.ret ; Longjump
-1074               pane.filebrowser.hilight.vector:
-1075 79E8 7FD4             data  vec.51
-1076               
+1074 79E6 1001  14         jmp   _trampoline.bank4.ret ; Longjump
+1075               pane.filebrowser.hilight.vector:
+1076 79E8 7FD4             data  vec.51
 1077               
-1078               ***************************************************************
-1079               * Trampoline bank 4 with return
-1080               ********|*****|*********************|**************************
-1081               _trampoline.bank4.ret:
-1082 79EA 0649  14         dect  stack
-1083 79EC C64B  30         mov   r11,*stack            ; Save return address
-1084                       ;------------------------------------------------------
-1085                       ; Call routine in specified bank
-1086                       ;------------------------------------------------------
-1087 79EE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1078               
+1079               ***************************************************************
+1080               * Trampoline bank 4 with return
+1081               ********|*****|*********************|**************************
+1082               _trampoline.bank4.ret:
+1083 79EA 0649  14         dect  stack
+1084 79EC C64B  30         mov   r11,*stack            ; Save return address
+1085                       ;------------------------------------------------------
+1086                       ; Call routine in specified bank
+1087                       ;------------------------------------------------------
+1088 79EE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      79F0 30B4     
-1088 79F2 6008                   data bank4.rom        ; | i  p0 = bank address
-1089 79F4 FFFF                   data >ffff            ; | i  p1 = Vector with target address
-1090                                                   ; |         (deref @trmpvector)
-1091 79F6 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1092                       ;------------------------------------------------------
-1093                       ; Exit
-1094                       ;------------------------------------------------------
-1095 79F8 C2F9  30         mov   *stack+,r11           ; Pop r11
-1096 79FA 045B  20         b     *r11                  ; Return to caller
-1097               
+1089 79F2 6008                   data bank4.rom        ; | i  p0 = bank address
+1090 79F4 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+1091                                                   ; |         (deref @trmpvector)
+1092 79F6 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1093                       ;------------------------------------------------------
+1094                       ; Exit
+1095                       ;------------------------------------------------------
+1096 79F8 C2F9  30         mov   *stack+,r11           ; Pop r11
+1097 79FA 045B  20         b     *r11                  ; Return to caller
 1098               
 1099               
-1100               ***************************************************************
-1101               * Stub for "edb.clear.sams"
-1102               * bank5 vec.1
-1103               ********|*****|*********************|**************************
-1104               edb.clear.sams:
-1105 79FC C820  54         mov   @edb.clear.sams.vector,@trmpvector
+1100               
+1101               ***************************************************************
+1102               * Stub for "edb.clear.sams"
+1103               * bank5 vec.1
+1104               ********|*****|*********************|**************************
+1105               edb.clear.sams:
+1106 79FC C820  54         mov   @edb.clear.sams.vector,@trmpvector
      79FE 7A04     
      7A00 A034     
-1106 7A02 1033  14         jmp   _trampoline.bank5.ret ; Longjump
-1107               edb.clear.sams.vector:
-1108 7A04 7F70             data  vec.1
-1109               
+1107 7A02 1033  14         jmp   _trampoline.bank5.ret ; Longjump
+1108               edb.clear.sams.vector:
+1109 7A04 7F70             data  vec.1
 1110               
-1111               ***************************************************************
-1112               * Stub for "edb.block.mark"
-1113               * bank5 vec.3
-1114               ********|*****|*********************|**************************
-1115               edb.block.mark:
-1116 7A06 C820  54         mov   @edb.block.mark.vector,@trmpvector
+1111               
+1112               ***************************************************************
+1113               * Stub for "edb.block.mark"
+1114               * bank5 vec.3
+1115               ********|*****|*********************|**************************
+1116               edb.block.mark:
+1117 7A06 C820  54         mov   @edb.block.mark.vector,@trmpvector
      7A08 7A0E     
      7A0A A034     
-1117 7A0C 102E  14         jmp   _trampoline.bank5.ret ; Longjump
-1118               edb.block.mark.vector:
-1119 7A0E 7F74             data  vec.3
-1120               
+1118 7A0C 102E  14         jmp   _trampoline.bank5.ret ; Longjump
+1119               edb.block.mark.vector:
+1120 7A0E 7F74             data  vec.3
 1121               
-1122               ***************************************************************
-1123               * Stub for "edb.block.mark.m1"
-1124               * bank5 vec.4
-1125               ********|*****|*********************|**************************
-1126               edb.block.mark.m1:
-1127 7A10 C820  54         mov   @edb.block.mark.m1.vector,@trmpvector
+1122               
+1123               ***************************************************************
+1124               * Stub for "edb.block.mark.m1"
+1125               * bank5 vec.4
+1126               ********|*****|*********************|**************************
+1127               edb.block.mark.m1:
+1128 7A10 C820  54         mov   @edb.block.mark.m1.vector,@trmpvector
      7A12 7A18     
      7A14 A034     
-1128 7A16 1029  14         jmp   _trampoline.bank5.ret ; Longjump
-1129               edb.block.mark.m1.vector:
-1130 7A18 7F76             data  vec.4
-1131               
+1129 7A16 1029  14         jmp   _trampoline.bank5.ret ; Longjump
+1130               edb.block.mark.m1.vector:
+1131 7A18 7F76             data  vec.4
 1132               
-1133               ***************************************************************
-1134               * Stub for "edb.block.mark.m2"
-1135               * bank5 vec.5
-1136               ********|*****|*********************|**************************
-1137               edb.block.mark.m2:
-1138 7A1A C820  54         mov   @edb.block.mark.m2.vector,@trmpvector
+1133               
+1134               ***************************************************************
+1135               * Stub for "edb.block.mark.m2"
+1136               * bank5 vec.5
+1137               ********|*****|*********************|**************************
+1138               edb.block.mark.m2:
+1139 7A1A C820  54         mov   @edb.block.mark.m2.vector,@trmpvector
      7A1C 7A22     
      7A1E A034     
-1139 7A20 1024  14         jmp   _trampoline.bank5.ret ; Longjump
-1140               edb.block.mark.m2.vector:
-1141 7A22 7F78             data  vec.5
-1142               
+1140 7A20 1024  14         jmp   _trampoline.bank5.ret ; Longjump
+1141               edb.block.mark.m2.vector:
+1142 7A22 7F78             data  vec.5
 1143               
-1144               ***************************************************************
-1145               * Stub for "edb.block.clip"
-1146               * bank5 vec.6
-1147               ********|*****|*********************|**************************
-1148               edb.block.clip:
-1149 7A24 C820  54         mov   @edb.block.clip.vector,@trmpvector
+1144               
+1145               ***************************************************************
+1146               * Stub for "edb.block.clip"
+1147               * bank5 vec.6
+1148               ********|*****|*********************|**************************
+1149               edb.block.clip:
+1150 7A24 C820  54         mov   @edb.block.clip.vector,@trmpvector
      7A26 7A2C     
      7A28 A034     
-1150 7A2A 101F  14         jmp   _trampoline.bank5.ret ; Longjump
-1151               edb.block.clip.vector:
-1152 7A2C 7F7A             data  vec.6
-1153               
+1151 7A2A 101F  14         jmp   _trampoline.bank5.ret ; Longjump
+1152               edb.block.clip.vector:
+1153 7A2C 7F7A             data  vec.6
 1154               
-1155               ***************************************************************
-1156               * Stub for "edb.block.reset"
-1157               * bank5 vec.7
-1158               ********|*****|*********************|**************************
-1159               edb.block.reset:
-1160 7A2E C820  54         mov   @edb.block.reset.vector,@trmpvector
+1155               
+1156               ***************************************************************
+1157               * Stub for "edb.block.reset"
+1158               * bank5 vec.7
+1159               ********|*****|*********************|**************************
+1160               edb.block.reset:
+1161 7A2E C820  54         mov   @edb.block.reset.vector,@trmpvector
      7A30 7A36     
      7A32 A034     
-1161 7A34 101A  14         jmp   _trampoline.bank5.ret ; Longjump
-1162               edb.block.reset.vector:
-1163 7A36 7F7C             data  vec.7
-1164               
+1162 7A34 101A  14         jmp   _trampoline.bank5.ret ; Longjump
+1163               edb.block.reset.vector:
+1164 7A36 7F7C             data  vec.7
 1165               
-1166               ***************************************************************
-1167               * Stub for "edb.block.delete"
-1168               * bank5 vec.8
-1169               ********|*****|*********************|**************************
-1170               edb.block.delete:
-1171 7A38 C820  54         mov   @edb.block.delete.vector,@trmpvector
+1166               
+1167               ***************************************************************
+1168               * Stub for "edb.block.delete"
+1169               * bank5 vec.8
+1170               ********|*****|*********************|**************************
+1171               edb.block.delete:
+1172 7A38 C820  54         mov   @edb.block.delete.vector,@trmpvector
      7A3A 7A40     
      7A3C A034     
-1172 7A3E 1015  14         jmp   _trampoline.bank5.ret ; Longjump
-1173               edb.block.delete.vector:
-1174 7A40 7F7E             data  vec.8
-1175               
+1173 7A3E 1015  14         jmp   _trampoline.bank5.ret ; Longjump
+1174               edb.block.delete.vector:
+1175 7A40 7F7E             data  vec.8
 1176               
-1177               ***************************************************************
-1178               * Stub for "edb.block.copy"
-1179               * bank5 vec.9
-1180               ********|*****|*********************|**************************
-1181               edb.block.copy:
-1182 7A42 C820  54         mov   @edb.block.copy.vector,@trmpvector
+1177               
+1178               ***************************************************************
+1179               * Stub for "edb.block.copy"
+1180               * bank5 vec.9
+1181               ********|*****|*********************|**************************
+1182               edb.block.copy:
+1183 7A42 C820  54         mov   @edb.block.copy.vector,@trmpvector
      7A44 7A4A     
      7A46 A034     
-1183 7A48 1010  14         jmp   _trampoline.bank5.ret ; Longjump
-1184               edb.block.copy.vector:
-1185 7A4A 7F80             data  vec.9
-1186               
+1184 7A48 1010  14         jmp   _trampoline.bank5.ret ; Longjump
+1185               edb.block.copy.vector:
+1186 7A4A 7F80             data  vec.9
 1187               
-1188               ***************************************************************
-1189               * Stub for "edb.line.del"
-1190               * bank5 vec.10
-1191               ********|*****|*********************|**************************
-1192               edb.line.del:
-1193 7A4C C820  54         mov   @edb.line.del.vector,@trmpvector
+1188               
+1189               ***************************************************************
+1190               * Stub for "edb.line.del"
+1191               * bank5 vec.10
+1192               ********|*****|*********************|**************************
+1193               edb.line.del:
+1194 7A4C C820  54         mov   @edb.line.del.vector,@trmpvector
      7A4E 7A54     
      7A50 A034     
-1194 7A52 100B  14         jmp   _trampoline.bank5.ret ; Longjump
-1195               edb.line.del.vector:
-1196 7A54 7F82             data  vec.10
-1197               
+1195 7A52 100B  14         jmp   _trampoline.bank5.ret ; Longjump
+1196               edb.line.del.vector:
+1197 7A54 7F82             data  vec.10
 1198               
-1199               ***************************************************************
-1200               * Stub for "edb.lock"
-1201               * bank5 vec.13
-1202               ********|*****|*********************|**************************
-1203               edb.lock:
-1204 7A56 C820  54         mov   @edb.lock.vector,@trmpvector
+1199               
+1200               ***************************************************************
+1201               * Stub for "edb.lock"
+1202               * bank5 vec.13
+1203               ********|*****|*********************|**************************
+1204               edb.lock:
+1205 7A56 C820  54         mov   @edb.lock.vector,@trmpvector
      7A58 7A5E     
      7A5A A034     
-1205 7A5C 1006  14         jmp   _trampoline.bank5.ret ; Longjump
-1206               edb.lock.vector:
-1207 7A5E 7F88             data  vec.13
-1208               
+1206 7A5C 1006  14         jmp   _trampoline.bank5.ret ; Longjump
+1207               edb.lock.vector:
+1208 7A5E 7F88             data  vec.13
 1209               
-1210               ***************************************************************
-1211               * Stub for "edb.unlock"
-1212               * bank5 vec.14
-1213               ********|*****|*********************|**************************
-1214               edb.unlock:
-1215 7A60 C820  54         mov   @edb.unlock.vector,@trmpvector
+1210               
+1211               ***************************************************************
+1212               * Stub for "edb.unlock"
+1213               * bank5 vec.14
+1214               ********|*****|*********************|**************************
+1215               edb.unlock:
+1216 7A60 C820  54         mov   @edb.unlock.vector,@trmpvector
      7A62 7A68     
      7A64 A034     
-1216 7A66 1001  14         jmp   _trampoline.bank5.ret ; Longjump
-1217               edb.unlock.vector:
-1218 7A68 7F8A             data  vec.14
-1219               
+1217 7A66 1001  14         jmp   _trampoline.bank5.ret ; Longjump
+1218               edb.unlock.vector:
+1219 7A68 7F8A             data  vec.14
 1220               
-1221               ***************************************************************
-1222               * Trampoline bank 5 with return
-1223               ********|*****|*********************|**************************
-1224               _trampoline.bank5.ret:
-1225 7A6A 0649  14         dect  stack
-1226 7A6C C64B  30         mov   r11,*stack            ; Save return address
-1227                       ;------------------------------------------------------
-1228                       ; Call routine in specified bank
-1229                       ;------------------------------------------------------
-1230 7A6E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1221               
+1222               ***************************************************************
+1223               * Trampoline bank 5 with return
+1224               ********|*****|*********************|**************************
+1225               _trampoline.bank5.ret:
+1226 7A6A 0649  14         dect  stack
+1227 7A6C C64B  30         mov   r11,*stack            ; Save return address
+1228                       ;------------------------------------------------------
+1229                       ; Call routine in specified bank
+1230                       ;------------------------------------------------------
+1231 7A6E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7A70 30B4     
-1231 7A72 600A                   data bank5.rom        ; | i  p0 = bank address
-1232 7A74 FFFF                   data >ffff            ; | i  p1 = Vector with target address
-1233                                                   ; |         (deref @trmpvector)
-1234 7A76 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1235                       ;------------------------------------------------------
-1236                       ; Exit
-1237                       ;------------------------------------------------------
-1238 7A78 C2F9  30         mov   *stack+,r11           ; Pop r11
-1239 7A7A 045B  20         b     *r11                  ; Return to caller
-1240               
+1232 7A72 600A                   data bank5.rom        ; | i  p0 = bank address
+1233 7A74 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+1234                                                   ; |         (deref @trmpvector)
+1235 7A76 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1236                       ;------------------------------------------------------
+1237                       ; Exit
+1238                       ;------------------------------------------------------
+1239 7A78 C2F9  30         mov   *stack+,r11           ; Pop r11
+1240 7A7A 045B  20         b     *r11                  ; Return to caller
 1241               
-1242               ***************************************************************
-1243               * Stub for "vdp.dump.patterns"
-1244               * bank6 vec.1
-1245               ********|*****|*********************|**************************
-1246               vdp.dump.patterns:
-1247 7A7C C820  54         mov   @vdp.dump.patterns.vector,@trmpvector
+1242               
+1243               ***************************************************************
+1244               * Stub for "vdp.dump.patterns"
+1245               * bank6 vec.1
+1246               ********|*****|*********************|**************************
+1247               vdp.dump.patterns:
+1248 7A7C C820  54         mov   @vdp.dump.patterns.vector,@trmpvector
      7A7E 7A84     
      7A80 A034     
-1248 7A82 1015  14         jmp   _trampoline.bank6.ret ; Longjump
-1249               vdp.dump.patterns.vector:
-1250 7A84 7F70             data  vec.1
-1251               
+1249 7A82 1015  14         jmp   _trampoline.bank6.ret ; Longjump
+1250               vdp.dump.patterns.vector:
+1251 7A84 7F70             data  vec.1
 1252               
-1253               ***************************************************************
-1254               * Stub for "vdp.dump.font"
-1255               * bank6 vec.2
-1256               ********|*****|*********************|**************************
-1257               vdp.dump.font:
-1258 7A86 C820  54         mov   @vdp.dump.font.vector,@trmpvector
+1253               
+1254               ***************************************************************
+1255               * Stub for "vdp.dump.font"
+1256               * bank6 vec.2
+1257               ********|*****|*********************|**************************
+1258               vdp.dump.font:
+1259 7A86 C820  54         mov   @vdp.dump.font.vector,@trmpvector
      7A88 7A8E     
      7A8A A034     
-1259 7A8C 1010  14         jmp   _trampoline.bank6.ret ; Longjump
-1260               vdp.dump.font.vector:
-1261 7A8E 7F72             data  vec.2
-1262               
+1260 7A8C 1010  14         jmp   _trampoline.bank6.ret ; Longjump
+1261               vdp.dump.font.vector:
+1262 7A8E 7F72             data  vec.2
 1263               
-1264               ***************************************************************
-1265               * Stub for "vdp.colors.line"
-1266               * bank6 vec.3
-1267               ********|*****|*********************|**************************
-1268               vdp.colors.line:
-1269 7A90 C820  54         mov   @vdp.colors.line.vector,@trmpvector
+1264               
+1265               ***************************************************************
+1266               * Stub for "vdp.colors.line"
+1267               * bank6 vec.3
+1268               ********|*****|*********************|**************************
+1269               vdp.colors.line:
+1270 7A90 C820  54         mov   @vdp.colors.line.vector,@trmpvector
      7A92 7A98     
      7A94 A034     
-1270 7A96 100B  14         jmp   _trampoline.bank6.ret ; Longjump
-1271               vdp.colors.line.vector:
-1272 7A98 7F74             data  vec.3
-1273               
-1274               ***************************************************************
-1275               * Stub for "vdp.cursor.tat"
-1276               * bank6 vec.5
-1277               ********|*****|*********************|**************************
-1278               vdp.cursor.tat:
-1279 7A9A C820  54         mov   @vdp.cursor.tat.vector,@trmpvector
+1271 7A96 100B  14         jmp   _trampoline.bank6.ret ; Longjump
+1272               vdp.colors.line.vector:
+1273 7A98 7F74             data  vec.3
+1274               
+1275               ***************************************************************
+1276               * Stub for "vdp.cursor.tat"
+1277               * bank6 vec.5
+1278               ********|*****|*********************|**************************
+1279               vdp.cursor.tat:
+1280 7A9A C820  54         mov   @vdp.cursor.tat.vector,@trmpvector
      7A9C 7AA2     
      7A9E A034     
-1280 7AA0 1006  14         jmp   _trampoline.bank6.ret ; Longjump
-1281               vdp.cursor.tat.vector:
-1282 7AA2 7F78             data  vec.5
-1283               
+1281 7AA0 1006  14         jmp   _trampoline.bank6.ret ; Longjump
+1282               vdp.cursor.tat.vector:
+1283 7AA2 7F78             data  vec.5
 1284               
-1285               ***************************************************************
-1286               * Stub for "tv.set.font"
-1287               * bank6 vec.33
-1288               ********|*****|*********************|**************************
-1289               tv.set.font:
-1290 7AA4 C820  54         mov   @tv.set.font.vector,@trmpvector
+1285               
+1286               ***************************************************************
+1287               * Stub for "tv.set.font"
+1288               * bank6 vec.32
+1289               ********|*****|*********************|**************************
+1290               tv.set.font:
+1291 7AA4 C820  54         mov   @tv.set.font.vector,@trmpvector
      7AA6 7AAC     
      7AA8 A034     
-1291 7AAA 1001  14         jmp   _trampoline.bank6.ret ; Longjump
-1292               tv.set.font.vector:
-1293 7AAC 7FB0             data  vec.33
-1294               
+1292 7AAA 1001  14         jmp   _trampoline.bank6.ret ; Longjump
+1293               tv.set.font.vector:
+1294 7AAC 7FAE             data  vec.32
 1295               
-1296               ***************************************************************
-1297               * Trampoline bank 6 with return
-1298               ********|*****|*********************|**************************
-1299               _trampoline.bank6.ret:
-1300 7AAE 0649  14         dect  stack
-1301 7AB0 C64B  30         mov   r11,*stack            ; Save return address
-1302                       ;------------------------------------------------------
-1303                       ; Call routine in specified bank
-1304                       ;------------------------------------------------------
-1305 7AB2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1296               
+1297               ***************************************************************
+1298               * Trampoline bank 6 with return
+1299               ********|*****|*********************|**************************
+1300               _trampoline.bank6.ret:
+1301 7AAE 0649  14         dect  stack
+1302 7AB0 C64B  30         mov   r11,*stack            ; Save return address
+1303                       ;------------------------------------------------------
+1304                       ; Call routine in specified bank
+1305                       ;------------------------------------------------------
+1306 7AB2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7AB4 30B4     
-1306 7AB6 600C                   data bank6.rom        ; | i  p0 = bank address
-1307 7AB8 FFFF                   data >ffff            ; | i  p1 = Vector with target address
-1308                                                   ; |         (deref @trmpvector)
-1309 7ABA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1310                       ;------------------------------------------------------
-1311                       ; Exit
-1312                       ;------------------------------------------------------
-1313 7ABC C2F9  30         mov   *stack+,r11           ; Pop r11
-1314 7ABE 045B  20         b     *r11                  ; Return to caller
-1315               
+1307 7AB6 600C                   data bank6.rom        ; | i  p0 = bank address
+1308 7AB8 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+1309                                                   ; |         (deref @trmpvector)
+1310 7ABA 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1311                       ;------------------------------------------------------
+1312                       ; Exit
+1313                       ;------------------------------------------------------
+1314 7ABC C2F9  30         mov   *stack+,r11           ; Pop r11
+1315 7ABE 045B  20         b     *r11                  ; Return to caller
 1316               
-1317               ***************************************************************
-1318               * Stub for "tibasic"
-1319               * bank7 vec.10
-1320               ********|*****|*********************|**************************
-1321               tibasic1:
-1322 7AC0 C820  54         mov   @const.1,@tib.session
+1317               
+1318               ***************************************************************
+1319               * Stub for "tibasic"
+1320               * bank7 vec.10
+1321               ********|*****|*********************|**************************
+1322               tibasic1:
+1323 7AC0 C820  54         mov   @const.1,@tib.session
      7AC2 2002     
      7AC4 A0B4     
-1323 7AC6 1007  14         jmp   tibasic
-1324               tibasic2:
-1325 7AC8 C820  54         mov   @const.2,@tib.session
+1324 7AC6 1007  14         jmp   tibasic
+1325               tibasic2:
+1326 7AC8 C820  54         mov   @const.2,@tib.session
      7ACA 2004     
      7ACC A0B4     
-1326 7ACE 1003  14         jmp   tibasic
-1327               tibasic3:
-1328 7AD0 C820  54         mov   @const.3,@tib.session
+1327 7ACE 1003  14         jmp   tibasic
+1328               tibasic3:
+1329 7AD0 C820  54         mov   @const.3,@tib.session
      7AD2 38CE     
      7AD4 A0B4     
-1329               tibasic:
-1330 7AD6 0649  14         dect  stack
-1331 7AD8 C64B  30         mov   r11,*stack            ; Save return address
-1332 7ADA 0649  14         dect  stack
-1333 7ADC C644  30         mov   tmp0,*stack           ; Push tmp0
-1334                       ;------------------------------------------------------
-1335                       ; Exit early if no TI Basic session
-1336                       ;------------------------------------------------------
-1337 7ADE C120  34         mov   @tib.session,tmp0     ; Get session ID
+1330               tibasic:
+1331 7AD6 0649  14         dect  stack
+1332 7AD8 C64B  30         mov   r11,*stack            ; Save return address
+1333 7ADA 0649  14         dect  stack
+1334 7ADC C644  30         mov   tmp0,*stack           ; Push tmp0
+1335                       ;------------------------------------------------------
+1336                       ; Exit early if no TI Basic session
+1337                       ;------------------------------------------------------
+1338 7ADE C120  34         mov   @tib.session,tmp0     ; Get session ID
      7AE0 A0B4     
-1338 7AE2 130A  14         jeq   tibasic.exit          ; Exit early if no session
-1339                       ;------------------------------------------------------
-1340                       ; Run TI Basic session
-1341                       ;------------------------------------------------------
-1342 7AE4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1339 7AE2 130A  14         jeq   tibasic.exit          ; Exit early if no session
+1340                       ;------------------------------------------------------
+1341                       ; Run TI Basic session
+1342                       ;------------------------------------------------------
+1343 7AE4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7AE6 30B4     
-1343 7AE8 600E                   data bank7.rom        ; | i  p0 = bank address
-1344 7AEA 7F82                   data vec.10           ; | i  p1 = Vector with target address
-1345 7AEC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1346               
-1347 7AEE C120  34         mov   @tib.autounpk,tmp0    ; AutoUnpack flag set?
+1344 7AE8 600E                   data bank7.rom        ; | i  p0 = bank address
+1345 7AEA 7F82                   data vec.10           ; | i  p1 = Vector with target address
+1346 7AEC 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1347               
+1348 7AEE C120  34         mov   @tib.autounpk,tmp0    ; AutoUnpack flag set?
      7AF0 A0C0     
-1348 7AF2 1302  14         jeq   tibasic.exit          ; No, skip uncrunching
-1349               
-1350 7AF4 06A0  32         bl    @tibasic.uncrunch     ; Uncrunch TI Basic program
+1349 7AF2 1302  14         jeq   tibasic.exit          ; No, skip uncrunching
+1350               
+1351 7AF4 06A0  32         bl    @tibasic.uncrunch     ; Uncrunch TI Basic program
      7AF6 7B02     
-1351                       ;------------------------------------------------------
-1352                       ; Exit
-1353                       ;------------------------------------------------------
-1354               tibasic.exit:
-1355 7AF8 0720  34         seto  @fb.status.dirty      ; Trigger status lines update
+1352                       ;------------------------------------------------------
+1353                       ; Exit
+1354                       ;------------------------------------------------------
+1355               tibasic.exit:
+1356 7AF8 0720  34         seto  @fb.status.dirty      ; Trigger status lines update
      7AFA A31C     
-1356 7AFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-1357 7AFE C2F9  30         mov   *stack+,r11           ; Pop r11
-1358 7B00 045B  20         b     *r11                  ; Return to caller
-1359               
+1357 7AFC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+1358 7AFE C2F9  30         mov   *stack+,r11           ; Pop r11
+1359 7B00 045B  20         b     *r11                  ; Return to caller
 1360               
 1361               
-1362               ***************************************************************
-1363               * Stub for "tibasic.uncrunch"
-1364               * bank7 vec.11
-1365               ********|*****|*********************|**************************
-1366               tibasic.uncrunch:
-1367 7B02 0649  14         dect  stack
-1368 7B04 C64B  30         mov   r11,*stack            ; Save return address
-1369                       ;------------------------------------------------------
-1370                       ; Uncrunch TI basic program
-1371                       ;------------------------------------------------------
-1372 7B06 C820  54         mov   @tib.session,@parm1   ; Get current session
+1362               
+1363               ***************************************************************
+1364               * Stub for "tibasic.uncrunch"
+1365               * bank7 vec.11
+1366               ********|*****|*********************|**************************
+1367               tibasic.uncrunch:
+1368 7B02 0649  14         dect  stack
+1369 7B04 C64B  30         mov   r11,*stack            ; Save return address
+1370                       ;------------------------------------------------------
+1371                       ; Uncrunch TI basic program
+1372                       ;------------------------------------------------------
+1373 7B06 C820  54         mov   @tib.session,@parm1   ; Get current session
      7B08 A0B4     
      7B0A A006     
-1373 7B0C 1305  14         jeq   tibasic.uncrunch.exit ; Exit early if no session
-1374               
-1375 7B0E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1374 7B0C 1305  14         jeq   tibasic.uncrunch.exit ; Exit early if no session
+1375               
+1376 7B0E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7B10 30B4     
-1376 7B12 600E                   data bank7.rom        ; | i  p0 = bank address
-1377 7B14 7F84                   data vec.11           ; | i  p1 = Vector with target address
-1378 7B16 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1379                       ;------------------------------------------------------
-1380                       ; Exit
-1381                       ;------------------------------------------------------
-1382               tibasic.uncrunch.exit:
-1383 7B18 C2F9  30         mov   *stack+,r11           ; Pop r11
-1384 7B1A 045B  20         b     *r11                  ; Return to caller
-1385               
+1377 7B12 600E                   data bank7.rom        ; | i  p0 = bank address
+1378 7B14 7F84                   data vec.11           ; | i  p1 = Vector with target address
+1379 7B16 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1380                       ;------------------------------------------------------
+1381                       ; Exit
+1382                       ;------------------------------------------------------
+1383               tibasic.uncrunch.exit:
+1384 7B18 C2F9  30         mov   *stack+,r11           ; Pop r11
+1385 7B1A 045B  20         b     *r11                  ; Return to caller
 1386               
-1387               ***************************************************************
-1388               * Stub for "tv.reset"
-1389               * bank7 vec.23
-1390               ********|*****|*********************|**************************
-1391               tv.reset:
-1392 7B1C 0649  14         dect  stack
-1393 7B1E C64B  30         mov   r11,*stack            ; Save return address
-1394                       ;------------------------------------------------------
-1395                       ; Call routine in specified bank
-1396                       ;------------------------------------------------------
-1397 7B20 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1387               
+1388               ***************************************************************
+1389               * Stub for "tv.reset"
+1390               * bank7 vec.23
+1391               ********|*****|*********************|**************************
+1392               tv.reset:
+1393 7B1C 0649  14         dect  stack
+1394 7B1E C64B  30         mov   r11,*stack            ; Save return address
+1395                       ;------------------------------------------------------
+1396                       ; Call routine in specified bank
+1397                       ;------------------------------------------------------
+1398 7B20 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7B22 30B4     
-1398 7B24 600E                   data bank7.rom        ; | i  p0 = bank address
-1399 7B26 7F9C                   data vec.23           ; | i  p1 = Vector with target address
-1400 7B28 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1401                       ;------------------------------------------------------
-1402                       ; Exit
-1403                       ;------------------------------------------------------
-1404               tv.reset.exit:
-1405 7B2A C2F9  30         mov   *stack+,r11           ; Pop r11
-1406 7B2C 045B  20         b     *r11                  ; Return to caller
-1407               
+1399 7B24 600E                   data bank7.rom        ; | i  p0 = bank address
+1400 7B26 7F9C                   data vec.23           ; | i  p1 = Vector with target address
+1401 7B28 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1402                       ;------------------------------------------------------
+1403                       ; Exit
+1404                       ;------------------------------------------------------
+1405               tv.reset.exit:
+1406 7B2A C2F9  30         mov   *stack+,r11           ; Pop r11
+1407 7B2C 045B  20         b     *r11                  ; Return to caller
 1408               
-1409               ***************************************************************
-1410               * Stub for "cart.fg99.mgr"
-1411               * bank7 vec.24
-1412               ********|*****|*********************|**************************
-1413               cart.fg99.mgr:
-1414 7B2E 0649  14         dect  stack
-1415 7B30 C64B  30         mov   r11,*stack            ; Save return address
-1416                       ;------------------------------------------------------
-1417                       ; Call routine in specified bank
-1418                       ;------------------------------------------------------
-1419 7B32 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+1409               
+1410               ***************************************************************
+1411               * Stub for "cart.fg99.mgr"
+1412               * bank7 vec.24
+1413               ********|*****|*********************|**************************
+1414               cart.fg99.mgr:
+1415 7B2E 0649  14         dect  stack
+1416 7B30 C64B  30         mov   r11,*stack            ; Save return address
+1417                       ;------------------------------------------------------
+1418                       ; Call routine in specified bank
+1419                       ;------------------------------------------------------
+1420 7B32 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7B34 30B4     
-1420 7B36 600E                   data bank7.rom        ; | i  p0 = bank address
-1421 7B38 7F9E                   data vec.24           ; | i  p1 = Vector with target address
-1422 7B3A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1423                       ;------------------------------------------------------
-1424                       ; Exit
-1425                       ;------------------------------------------------------
-1426               cart.fg99.mgr.exit:
-1427 7B3C C2F9  30         mov   *stack+,r11           ; Pop r11
-1428 7B3E 045B  20         b     *r11                  ; Return to caller
-1429               
+1421 7B36 600E                   data bank7.rom        ; | i  p0 = bank address
+1422 7B38 7F9E                   data vec.24           ; | i  p1 = Vector with target address
+1423 7B3A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+1424                       ;------------------------------------------------------
+1425                       ; Exit
+1426                       ;------------------------------------------------------
+1427               cart.fg99.mgr.exit:
+1428 7B3C C2F9  30         mov   *stack+,r11           ; Pop r11
+1429 7B3E 045B  20         b     *r11                  ; Return to caller
 1430               
 1431               
 1432               
-1433               strg.module:
-1434 7B40 0204  20         li   tmp0,'*'*256           ; Cartridge load command
+1433               
+1434               strg.module:
+1435 7B40 0204  20         li   tmp0,'*'*256           ; Cartridge load command
      7B42 2A00     
-1435 7B44 04E0  34         clr  @>77fc                 ; @LIST_VAR
+1436 7B44 04E0  34         clr  @>77fc                 ; @LIST_VAR
      7B46 77FC     
-1436 7B48 04E0  34         clr  @>7fe0                 ; @VDP_DESTA
+1437 7B48 04E0  34         clr  @>7fe0                 ; @VDP_DESTA
      7B4A 7FE0     
-1437               strg.module.load:
-1438 7B4C 04E0  34         clr  @>7ff2                 ; Clear @WAIT_FLAG
+1438               strg.module.load:
+1439 7B4C 04E0  34         clr  @>7ff2                 ; Clear @WAIT_FLAG
      7B4E 7FF2     
-1439 7B50 D804  38         movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
+1440 7B50 D804  38         movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
      7B52 7FF0     
-1440 7B54 C120  34 !       mov  @>7ff2,tmp0            ; Get @WAIT_FLAG
+1441 7B54 C120  34 !       mov  @>7ff2,tmp0            ; Get @WAIT_FLAG
      7B56 7FF2     
-1441 7B58 13FD  14         jeq  -!                     ; Not ready yet? Wait
-1442 7B5A 0284  22         ci   tmp0,>0200             ; Wait flag 2?
+1442 7B58 13FD  14         jeq  -!                     ; Not ready yet? Wait
+1443 7B5A 0284  22         ci   tmp0,>0200             ; Wait flag 2?
      7B5C 0200     
-1443 7B5E 13F6  14         jeq  strg.module.load       ; Wait some more
-1444 7B60 0300  22         limi 0
+1444 7B5E 13F6  14         jeq  strg.module.load       ; Wait some more
+1445 7B60 0300  22         limi 0
      7B62 0000     
-1445 7B64 0420  42         blwp @0                     ; Reset console
+1446 7B64 0420  42         blwp @0                     ; Reset console
      7B66 0000     
                    < stevie_b1.asm
 0167                       copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks
@@ -18802,8 +18803,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     EDB.FILENAME........ >A526 :     
     EDB.FILENAME.PTR.... >A514 :     
     EDB.FILETYPE.PTR.... >A516 :     
-    EDB.FIND.INIT....... >76E0 :     
-    EDB.FIND.SEARCH..... >76CE :     
+    EDB.FIND.INIT....... >76CE :     
+    EDB.FIND.SEARCH..... >76E0 :     
     EDB.FREE............ >A5DC :     
     EDB.HIPAGE.ALLOC.... >3810 :     
     EDB.HIPAGE.ALLOC.CHECK_SETPAGE >381C :     

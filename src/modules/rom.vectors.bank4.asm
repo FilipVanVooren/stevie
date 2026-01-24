@@ -44,7 +44,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 4: Vectors 33-64
+* ROM 4: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  data  pane.topline           ; Draw topline
 vec.34  data  pane.botline           ; Draw bottom line

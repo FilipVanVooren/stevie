@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260117-1643570
+0002               * BUILD: 260124-1945200
 0003               ***************************************************************
                    < stevie_b7.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -12730,7 +12730,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0068               
 0069               ***************************************************************
 0070               * Stub for "edb.find.init"
-0071               * bank2 vec.20
+0071               * bank5 vec.15
 0072               ********|*****|*********************|**************************
 0073               edb.find.init:
 0074 6BEA 0649  14         dect  stack
@@ -12740,8 +12740,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0078                       ;------------------------------------------------------
 0079 6BEE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6BF0 30B4     
-0080 6BF2 6004                   data bank2.rom        ; | i  p0 = bank address
-0081 6BF4 7F96                   data vec.20           ; | i  p1 = Vector with target address
+0080 6BF2 600A                   data bank5.rom        ; | i  p0 = bank address
+0081 6BF4 7F8C                   data vec.15           ; | i  p1 = Vector with target address
 0082 6BF6 600E                   data bankid           ; / i  p2 = Source ROM bank for return
 0083                       ;------------------------------------------------------
 0084                       ; Exit
