@@ -1,10 +1,19 @@
-* FILE......: task.clock.read.asm
-* Purpose...: Read clock device task
+* FILE......: pane.clock.display
+* Purpose...: Display clock time in pane
 
 ***************************************************************
-* Task - Read date/time from clock device
+* pane.clock.display
+* Display clock time in pane
 ***************************************************************
-task.clock.read:
+* bl  @pane.clock.display
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2
+********|*****|*********************|**************************
+pane.clock.display:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -23,8 +32,8 @@ task.clock.read:
         ;------------------------------------------------------
         ; Display time?
         ;------------------------------------------------------
-        mov   @cmdb.visible,tmp0     ; Is CMDB pane visible?
-        jne   task.clock.read.exit   ; Yes, skip time display update
+        mov   @cmdb.visible,tmp0      ; Is CMDB pane visible?
+        jne   pane.clock.display.exit ; Yes, skip time display update
         ;------------------------------------------------------
         ; Display time at bottom row
         ;------------------------------------------------------
@@ -35,9 +44,9 @@ task.clock.read:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-task.clock.read.exit:
+pane.clock.display.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
-        b     @slotok               ; Exit task
+        b     *r11                  ; Return
