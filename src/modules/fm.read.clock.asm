@@ -54,13 +54,14 @@ fm.read.clock:
         clr   @parm5                ; Callback function "File I/O error"
         clr   @parm6                ; Callback function "Memory full"
         
-        li    tmp0,rambuf
+        li    tmp0,fh.clock.datetime
         mov   tmp0,@parm7           ; Destination RAM memory address
 
         li    tmp0,fh.file.pab.header
         mov   tmp0,@parm8           ; PAB Header template for reading clock
 
-        li    tmp0,io.seq.inp.dis.var
+        ;li    tmp0,io.seq.inp.dis.var
+        li    tmp0,io.rel.inp.dis.var
         mov   tmp0,@parm9           ; File type/mode for reading catalog                
         ;-------------------------------------------------------
         ; Read data into memory

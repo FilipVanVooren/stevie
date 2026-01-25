@@ -34,8 +34,6 @@ dialog.menu:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        ; bl    @fm.read.clock        ; Read clock                                                            
-
         li    tmp0,id.dialog.menu
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
@@ -78,6 +76,9 @@ dialog.menu.statlines:
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
                                     ;   / 
+
+  
+
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

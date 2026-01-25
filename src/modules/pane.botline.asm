@@ -163,7 +163,8 @@ pane.botline.show_keys.default:
         ;------------------------------------------------------
         bl    @putat
               byte pane.botrow,0
-              data txt.keys.defaultc  ; Show default keys, including search keys
+              data txt.keys.defaultc  
+                                    ; Show default keys, including search keys
 
         bl    @hchar
               byte pane.botrow,43,32,21
@@ -177,12 +178,17 @@ pane.botline.show_keys.default:
               data txt.keys.default ; Show default keys only
 
         bl    @hchar
-              byte pane.botrow,18,32,60
-              data EOL              ; Remove any leftover junk after key markers
+              byte pane.botrow,18,32,32
+              data EOL              ; Remove any leftover junk after key markers             
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
 pane.botline.show_mode:
+        bl    @cpym2v                     ; \ Copy time to VDP memory
+              data pane.botrow * 80 + 18  ; | i  p1 = Destination VDP address
+              data fh.clock.datetime + 50 ; | i  p2 = Source RAM address
+              data 8                      ; / i  p3 = Number of bytes to copy 
+
         mov   @edb.insmode,tmp0
         jne   pane.botline.show_mode.insert
         ;------------------------------------------------------

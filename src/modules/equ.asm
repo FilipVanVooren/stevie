@@ -237,7 +237,7 @@ fb.scrrows        equ  fb.struct + 30  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 32  ; Max # of rows on physical screen for fb
 fb.ruler.sit      equ  fb.struct + 34  ; 80 char ruler  (no length-prefix!)
 fb.ruler.tat      equ  fb.struct + 114 ; 80 char colors (no length-prefix!)
-fb.free           equ  fb.struct + 194 ; End of structure
+fb.free           equ  fb.struct + 194 ; **free** up to 256
 ;-------------------------------------------------------------------------------
 ; File handle structure                @>a400-a4ff                   (256 bytes)
 ;-------------------------------------------------------------------------------
@@ -288,7 +288,8 @@ fh.ea5.ramtgt     equ  fh.struct + 112 ; RAM target address for EA5 image chunk
 fh.ea5.size       equ  fh.struct + 114 ; Size of EA5 image chunk
 fh.ea5.startaddr  equ  fh.struct + 116 ; EA5 program start address
 fh.membuffer      equ  fh.struct + 118 ; 80 bytes file memory buffer
-fh.free           equ  fh.struct + 198 ; **free** up to 256
+fh.clock.datetime equ  fh.struct + 198 ; Date/time structure (19 bytes) 
+fh.free           equ  fh.struct + 218 ; **free** up to 256
 ;-------------------------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff                   (256 bytes)
 ; Overloads file handle structure!

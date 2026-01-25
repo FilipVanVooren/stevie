@@ -45,6 +45,7 @@
         ; Background tasks
         ;-----------------------------------------------------------------------
         copy  "task.vdp.cursor.asm"         ; Set cursor shape in VDP (blink)    
+        copy  "task.clock.read.asm"         ; Read date/time from clock device
         copy  "task.oneshot.asm"            ; Run "one shot" task                                       
         ;------------------------------------------------------
         ; Program data
