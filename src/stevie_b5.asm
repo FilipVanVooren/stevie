@@ -19,7 +19,7 @@
 * File: stevie_b5.asm
 *
 * Bank 5 "Jumbo"
-* Editor Buffer methods delegated from banks 1 and 2
+* Methods delegated from banks 1 and 2
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -66,7 +66,7 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Logic for Editor Buffer (2)
+        ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------
         copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer
         copy  "edb.line.del.asm"    ; Delete line
@@ -81,7 +81,13 @@ main:
         copy  "edb.unlock.asm"      ; Unlock editor buffer    
         copy  "edb.find.asm"        ; Initialize for find function
         copy  "edb.find.search.asm" ; Find functionality
-        copy  "edb.find.scan.asm"   ; Scan editor buffer for matches            
+        copy  "edb.find.scan.asm"   ; Scan editor buffer for matches
+        ;-----------------------------------------------------------------------
+        ; Clock device support
+        ;-----------------------------------------------------------------------                    
+        copy  "pane.clock.time.asm" ; Read date/time from clock and display
+        copy  "pane.clock.on.asm"   ; Turn clock reading/display on
+        copy  "pane.clock.off.asm"  ; Turn clock reading/display off
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

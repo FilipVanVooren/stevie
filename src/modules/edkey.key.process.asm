@@ -5,9 +5,20 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+
         bl    @rsslot               ; \ Reset loop counter slot 1
               data 1                ; / Prevent reading clock
 
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+        
         mov   @keycode1,tmp1        ; Get key pressed
         sla   tmp1,8                ; Move to MSB
         seto  tmp3                  ; EOL marker

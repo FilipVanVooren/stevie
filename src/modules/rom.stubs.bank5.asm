@@ -3,6 +3,27 @@
 
 
 ***************************************************************
+* Stub for "tv.clock.start"
+* bank1 vec.3
+********|*****|*********************|**************************
+tv.clock.start:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 1
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank1.rom        ; | i  p0 = bank address
+              data vec.3            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for "edb.line.unpack"
 * bank1 vec.11
 ********|*****|*********************|**************************

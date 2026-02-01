@@ -151,13 +151,13 @@ main:
         ; Background tasks
         ;-----------------------------------------------------------------------
         copy  "task.vdp.panes.asm"          ; Draw editor panes in VDP
-        copy  "task.clock.read.asm"         ; Update clock time in pane
+        copy  "task.clock.asm"              ; Update clock date/time in pane
+        copy  "tv.clock.start.asm"          ; Start clock task
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------
         copy  "pane.cursor.blink.asm"       ; Cursor blink
         copy  "pane.cursor.hide.asm"        ; Cursor hide
-        copy  "pane.clock.time.asm"         ; Show clock time in pane
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------

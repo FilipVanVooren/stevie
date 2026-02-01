@@ -1,11 +1,11 @@
-* FILE......: dialog.cfg.asm
-* Purpose...: Dialog "Configure"
+* FILE......: dialog.opt.asm
+* Purpose...: Dialog "Options"
 
 ***************************************************************
-* dialog.cfg
-* Open Dialog "Configure"
+* dialog.opt
+* Open Dialog "Options"
 ***************************************************************
-* bl @dialog.cfg
+* bl @dialog.opt
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.cfg:
+dialog.opt:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -44,7 +44,7 @@ dialog.cfg:
 
         li    tmp0,pos.info.conflock
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-        jmp   dialog.cfg.keylist
+        jmp   dialog.opt.keylist
         ;-------------------------------------------------------
         ; All options
         ;-------------------------------------------------------
@@ -56,7 +56,7 @@ dialog.cfg:
         ;-------------------------------------------------------
         ; Rest of dialog setup
         ;-------------------------------------------------------
-dialog.cfg.keylist:
+dialog.opt.keylist:
         clr   @cmdb.panhint         ; No hint to display
         clr   @cmdb.panhint2        ; No extra hint to display
  
@@ -67,7 +67,7 @@ dialog.cfg.keylist:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.cfg.exit:
+dialog.opt.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

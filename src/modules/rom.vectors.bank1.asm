@@ -12,7 +12,7 @@ cpu.crash.showbank.bankstr:
         aorg  bankx.vectab
 vec.1   data  mem.sams.setup.stevie ;
 vec.2   data  tv.linelen.toggle     ; Toggle line length display
-vec.3   data  cpu.crash             ;
+vec.3   data  tv.clock.start        ; Start clock task
 vec.4   data  cpu.crash             ;
 vec.5   data  cpu.crash             ;
 vec.6   data  cpu.crash             ;
@@ -40,7 +40,7 @@ vec.27  data  pane.errline.hide     ;
 vec.28  data  pane.cursor.blink     ;
 vec.29  data  pane.cursor.hide      ;
 vec.30  data  pane.errline.show     ;
-vec.31  data  pane.clock.time       ;
+vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
 * ROM 1: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)

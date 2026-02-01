@@ -1,11 +1,11 @@
-* FILE......: dialog.cfg.clip.asm
+* FILE......: dialog.opt.clip.asm
 * Purpose...: Dialog "Configure clipboard"
 
 ***************************************************************
-* dialog.cfg.clip
+* dialog.opt.clip
 * Open Dialog "Configure clipboard"
 ***************************************************************
-* bl @dialog.cfg.clip
+* bl @dialog.opt.clip
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.cfg.clip:
+dialog.opt.clip:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -57,7 +57,7 @@ dialog.cfg.clip:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.cfg.clip.exit:
+dialog.opt.clip.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

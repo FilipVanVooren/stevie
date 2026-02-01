@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260201-1606010
+0002               * BUILD: 260201-1949040
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -946,13 +946,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031 600E 6038             data  kickstart.resume      ; 14 \ Program address                 >600e
 0032                                                   ; 15 /
 0033               
-0035 6010 0F53                 stri 'STEVIE 1.9.8-24'
+0035 6010 0F53                 stri 'STEVIE 1.9.9-24'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
-     601C 382D     
+     601C 392D     
      601E 3234     
 0037               
 0041               
@@ -11206,16 +11206,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0074 6652 C2F9  30         mov   *stack+,r11           ; Pop R11
 0075 6654 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0084                       copy  "dialog.cfg.asm"          ; Dialog "Configure"
-     **** ****     > dialog.cfg.asm
-0001               * FILE......: dialog.cfg.asm
-0002               * Purpose...: Dialog "Configure"
+0084                       copy  "dialog.opt.asm"          ; Dialog "Configure"
+     **** ****     > dialog.opt.asm
+0001               * FILE......: dialog.opt.asm
+0002               * Purpose...: Dialog "Options"
 0003               
 0004               ***************************************************************
-0005               * dialog.cfg
-0006               * Open Dialog "Configure"
+0005               * dialog.opt
+0006               * Open Dialog "Options"
 0007               ***************************************************************
-0008               * bl @dialog.cfg
+0008               * bl @dialog.opt
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * none
@@ -11228,7 +11228,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Notes
 0020               ********|*****|*********************|**************************
-0021               dialog.cfg:
+0021               dialog.opt:
 0022 6656 0649  14         dect  stack
 0023 6658 C64B  30         mov   r11,*stack            ; Save return address
 0024 665A 0649  14         dect  stack
@@ -11263,7 +11263,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      667E 7BF1     
 0046 6680 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      6682 A72C     
-0047 6684 1008  14         jmp   dialog.cfg.keylist
+0047 6684 1008  14         jmp   dialog.opt.keylist
 0048                       ;-------------------------------------------------------
 0049                       ; All options
 0050                       ;-------------------------------------------------------
@@ -11279,7 +11279,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0056                       ;-------------------------------------------------------
 0057                       ; Rest of dialog setup
 0058                       ;-------------------------------------------------------
-0059               dialog.cfg.keylist:
+0059               dialog.opt.keylist:
 0060 6696 04E0  34         clr   @cmdb.panhint         ; No hint to display
      6698 A728     
 0061 669A 04E0  34         clr   @cmdb.panhint2        ; No extra hint to display
@@ -11295,21 +11295,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0067                       ;-------------------------------------------------------
 0068                       ; Exit
 0069                       ;-------------------------------------------------------
-0070               dialog.cfg.exit:
+0070               dialog.opt.exit:
 0071 66AA C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0072 66AC C2F9  30         mov   *stack+,r11           ; Pop R11
 0073 66AE 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0085                       copy  "dialog.cfg.clip.asm"     ; Dialog "Configure clipboard"
-     **** ****     > dialog.cfg.clip.asm
-0001               * FILE......: dialog.cfg.clip.asm
+0085                       copy  "dialog.opt.clip.asm"     ; Dialog "Configure clipboard"
+     **** ****     > dialog.opt.clip.asm
+0001               * FILE......: dialog.opt.clip.asm
 0002               * Purpose...: Dialog "Configure clipboard"
 0003               
 0004               ***************************************************************
-0005               * dialog.cfg.clip
+0005               * dialog.opt.clip
 0006               * Open Dialog "Configure clipboard"
 0007               ***************************************************************
-0008               * bl @dialog.cfg.clip
+0008               * bl @dialog.opt.clip
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * none
@@ -11322,7 +11322,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Notes
 0020               ********|*****|*********************|**************************
-0021               dialog.cfg.clip:
+0021               dialog.opt.clip:
 0022 66B0 0649  14         dect  stack
 0023 66B2 C64B  30         mov   r11,*stack            ; Save return address
 0024 66B4 0649  14         dect  stack
@@ -11376,7 +11376,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057                       ;-------------------------------------------------------
 0058                       ; Exit
 0059                       ;-------------------------------------------------------
-0060               dialog.cfg.clip.exit:
+0060               dialog.opt.clip.exit:
 0061 66F4 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0062 66F6 C2F9  30         mov   *stack+,r11           ; Pop R11
 0063 66F8 045B  20         b     *r11                  ; Return to caller
@@ -14382,13 +14382,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0007               ***************************************************************
 0008               
 0009               txt.stevie:
-0011 729A 2020                 text '  Stevie 1.9.8   '
+0011 729A 2020                 text '  Stevie 1.9.9   '
      729C 5374     
      729E 6576     
      72A0 6965     
      72A2 2031     
      72A4 2E39     
-     72A6 2E38     
+     72A6 2E39     
      72A8 2020     
      72AA 20       
 0012                           even
@@ -15184,23 +15184,23 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      77CE 20       
 0190                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 77CF   32                        text '260201-1606010'
+0001 77CF   32                        text '260201-1949040'
      77D0 3630     
      77D2 3230     
      77D4 312D     
-     77D6 3136     
-     77D8 3036     
-     77DA 3031     
+     77D6 3139     
+     77D8 3439     
+     77DA 3034     
      77DC 30       
                    < data.dialogs.asm
-0191 77DD   20                        text ' - Stevie 1.9.8 - (c)2018-2026 Filip Van Vooren'
+0191 77DD   20                        text ' - Stevie 1.9.9 - (c)2018-2026 Filip Van Vooren'
      77DE 2D20     
      77E0 5374     
      77E2 6576     
      77E4 6965     
      77E6 2031     
      77E8 2E39     
-     77EA 2E38     
+     77EA 2E39     
      77EC 202D     
      77EE 2028     
      77F0 6329     
@@ -16179,8 +16179,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019 7F7A 60D4     vec.6   data  dialog.file           ; Dialog "File"
 0020 7F7C 67D0     vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
 0021 7F7E 673C     vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
-0022 7F80 66B0     vec.9   data  dialog.cfg.clip       ; Dialog "Configure clipboard"
-0023 7F82 6656     vec.10  data  dialog.cfg            ; Dialog "Configure"
+0022 7F80 66B0     vec.9   data  dialog.opt.clip       ; Dialog "Configure clipboard"
+0023 7F82 6656     vec.10  data  dialog.opt            ; Dialog "Configure"
 0024 7F84 6330     vec.11  data  dialog.append         ; Dialog "Append file"
 0025 7F86 612A     vec.12  data  dialog.cart.type      ; Dialog "Cartridge Type"
 0026 7F88 681C     vec.13  data  dialog.basic          ; Dialog "TI Basic"
@@ -16522,11 +16522,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.CAT.EXIT..... >6650 :     
     DIALOG.CAT.KEYLIST.. >6634 :     
     DIALOG.CAT.SET.FILENAME1 >6638 :     
-    DIALOG.CFG.......... >6656 :     
-    DIALOG.CFG.CLIP..... >66B0 :     
-    DIALOG.CFG.CLIP.EXIT >66F4 :     
-    DIALOG.CFG.EXIT..... >66AA :     
-    DIALOG.CFG.KEYLIST.. >6696 :     
     DIALOG.CLIPBOARD.... >673C :     
     DIALOG.CLIPBOARD.EXIT >67CA :     
     DIALOG.CLIPBOARD.KEYLIST >67C2 :     
@@ -16571,6 +16566,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.OPEN.SET.FILENAME1 >6264 :     
     DIALOG.OPEN.SET.FILENAME2 >6276 :     
     DIALOG.OPEN.SETUP... >6224 :     
+    DIALOG.OPT.......... >6656 :     
+    DIALOG.OPT.CLIP..... >66B0 :     
+    DIALOG.OPT.CLIP.EXIT >66F4 :     
+    DIALOG.OPT.EXIT..... >66AA :     
+    DIALOG.OPT.KEYLIST.. >6696 :     
     DIALOG.PRINT........ >64DC :     
     DIALOG.PRINT.CMDLINE >654E :     
     DIALOG.PRINT.DEFAULT >650A :     
